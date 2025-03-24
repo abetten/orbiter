@@ -492,7 +492,7 @@ void combinatorics_with_action::refine_decomposition_by_group_orbits_one_side(
 		Schreier->init(
 				A_on_points_or_lines,
 				verbose_level - 2);
-		Schreier->initialize_tables();
+		//Schreier->initialize_tables();
 		Schreier->init_generators(
 				*gens->gens /* *generators */,
 				verbose_level - 2);
@@ -500,14 +500,14 @@ void combinatorics_with_action::refine_decomposition_by_group_orbits_one_side(
 
 		if (f_v) {
 			cout << "combinatorics_with_action::refine_decomposition_by_group_orbits "
-					"found " << Schreier->nb_orbits
+					"found " << Schreier->Forest->nb_orbits
 					<< " orbits on points" << endl;
 		}
 		Decomposition->Stack->split_by_orbit_partition(
-				Schreier->nb_orbits,
-				Schreier->orbit_first,
-				Schreier->orbit_len,
-				Schreier->orbit,
+				Schreier->Forest->nb_orbits,
+				Schreier->Forest->orbit_first,
+				Schreier->Forest->orbit_len,
+				Schreier->Forest->orbit,
 				offset,
 			verbose_level - 2);
 
@@ -552,13 +552,13 @@ void combinatorics_with_action::compute_decomposition_based_on_orbits(
 		cout << "combinatorics_with_action::compute_decomposition_based_on_orbits "
 				"before Sch1->get_orbit_partition" << endl;
 	}
-	Sch1->get_orbit_partition(
+	Sch1->Forest->get_orbit_partition(
 			*S1, 0 /*verbose_level*/);
 	if (f_v) {
 		cout << "combinatorics_with_action::compute_decomposition_based_on_orbits "
 				"before Sch2->get_orbit_partition" << endl;
 	}
-	Sch2->get_orbit_partition(
+	Sch2->Forest->get_orbit_partition(
 			*S2, 0 /*verbose_level*/);
 	if (f_v) {
 		cout << "combinatorics_with_action::compute_decomposition_based_on_orbits "
@@ -599,8 +599,8 @@ void combinatorics_with_action::compute_decomposition_based_on_orbit_length(
 
 	int *L1, *L2;
 
-	Sch1->get_orbit_length(L1, 0 /* verbose_level */);
-	Sch2->get_orbit_length(L2, 0 /* verbose_level */);
+	Sch1->Forest->get_orbit_length(L1, 0 /* verbose_level */);
+	Sch2->Forest->get_orbit_length(L2, 0 /* verbose_level */);
 
 	other::data_structures::tally T1, T2;
 

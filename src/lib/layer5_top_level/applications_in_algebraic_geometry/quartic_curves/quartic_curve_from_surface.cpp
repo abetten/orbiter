@@ -197,7 +197,7 @@ void quartic_curve_from_surface::quartic(
 	}
 
 
-	if (SOA->Orbits_on_points_not_on_lines->nb_orbits == 0) {
+	if (SOA->Orbits_on_points_not_on_lines->Forest->nb_orbits == 0) {
 		return;
 	}
 
@@ -543,7 +543,7 @@ void quartic_curve_from_surface::map_surface_to_special_form(
 				"Orbits_on_points_not_on_lines has not been computed" << endl;
 		exit(1);
 	}
-	if (pt_orbit >= SOA->Orbits_on_points_not_on_lines->nb_orbits) {
+	if (pt_orbit >= SOA->Orbits_on_points_not_on_lines->Forest->nb_orbits) {
 		cout << "quartic_curve_from_surface::map_surface_to_special_form "
 				"pt_orbit >= Orbits_on_points_not_on_lines->nb_orbits" << endl;
 		exit(1);
@@ -556,9 +556,9 @@ void quartic_curve_from_surface::map_surface_to_special_form(
 	v[2] = 0;
 	v[3] = 0;
 	pt_B = SOA->Surf->rank_point(v); // = 0
-	fst = SOA->Orbits_on_points_not_on_lines->orbit_first[pt_orbit];
-	po_index = SOA->Orbits_on_points_not_on_lines->orbit_len[pt_orbit];
-	i = SOA->Orbits_on_points_not_on_lines->orbit[fst];
+	fst = SOA->Orbits_on_points_not_on_lines->Forest->orbit_first[pt_orbit];
+	po_index = SOA->Orbits_on_points_not_on_lines->Forest->orbit_len[pt_orbit];
+	i = SOA->Orbits_on_points_not_on_lines->Forest->orbit[fst];
 	pt_A = SOA->SO->SOP->Pts_not_on_lines[i];
 
 	SOA->Surf->unrank_point(pt_A_coeff, pt_A);

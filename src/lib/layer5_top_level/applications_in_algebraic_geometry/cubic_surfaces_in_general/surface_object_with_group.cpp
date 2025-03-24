@@ -757,7 +757,7 @@ void surface_object_with_group::init_orbits_on_points(
 	}
 	if (f_v) {
 		cout << "surface_object_with_group::init_orbits_on_points "
-				"We found " << Orbits_on_points->nb_orbits
+				"We found " << Orbits_on_points->Forest->nb_orbits
 				<< " orbits on points" << endl;
 	}
 
@@ -812,7 +812,7 @@ void surface_object_with_group::init_orbits_on_Eckardt_points(
 				A_on_Eckardt_points, print_interval, 0 /*verbose_level*/);
 	}
 	if (f_v) {
-		cout << "We found " << Orbits_on_Eckardt_points->nb_orbits
+		cout << "We found " << Orbits_on_Eckardt_points->Forest->nb_orbits
 				<< " orbits on Eckardt points" << endl;
 	}
 
@@ -863,7 +863,7 @@ void surface_object_with_group::init_orbits_on_Double_points(
 				A_on_Double_points, print_interval, 0 /*verbose_level*/);
 	}
 	if (f_v) {
-		cout << "We found " << Orbits_on_Double_points->nb_orbits
+		cout << "We found " << Orbits_on_Double_points->Forest->nb_orbits
 				<< " orbits on Double points" << endl;
 	}
 
@@ -914,7 +914,7 @@ void surface_object_with_group::init_orbits_on_Single_points(
 				A_on_Single_points, print_interval, 0 /*verbose_level*/);
 	}
 	if (f_v) {
-		cout << "We found " << Orbits_on_Single_points->nb_orbits
+		cout << "We found " << Orbits_on_Single_points->Forest->nb_orbits
 				<< " orbits on Single points" << endl;
 	}
 
@@ -966,7 +966,7 @@ void surface_object_with_group::init_orbits_on_lines(
 				A_on_the_lines, print_interval, 0 /*verbose_level*/);
 	}
 	if (f_v) {
-		cout << "We found " << Orbits_on_lines->nb_orbits
+		cout << "We found " << Orbits_on_lines->Forest->nb_orbits
 				<< " orbits on lines" << endl;
 	}
 
@@ -1011,7 +1011,7 @@ void surface_object_with_group::init_orbits_on_half_double_sixes(
 		cout << "computing orbits on single sixes done" << endl;
 	}
 	if (f_v) {
-		cout << "We found " << Orbits_on_single_sixes->nb_orbits
+		cout << "We found " << Orbits_on_single_sixes->Forest->nb_orbits
 				<< " orbits on single sixes" << endl;
 	}
 
@@ -1067,7 +1067,7 @@ void surface_object_with_group::init_orbits_on_double_sixes(
 		cout << "computing orbits on double sixes done" << endl;
 	}
 	if (f_v) {
-		cout << "We found " << Orbits_on_double_sixes->nb_orbits
+		cout << "We found " << Orbits_on_double_sixes->Forest->nb_orbits
 				<< " orbits on double sixes" << endl;
 	}
 
@@ -1109,13 +1109,13 @@ void surface_object_with_group::init_orbits_on_tritangent_planes(
 				A_on_tritangent_planes, print_interval, 0 /*verbose_level*/);
 	}
 	if (f_v) {
-		cout << "We found " << Orbits_on_tritangent_planes->nb_orbits
+		cout << "We found " << Orbits_on_tritangent_planes->Forest->nb_orbits
 				<< " orbits on the set of " << SO->SOP->SmoothProperties->nb_tritangent_planes
 				<< " tritangent planes" << endl;
 	}
 
 	if (f_vv) {
-		Orbits_on_tritangent_planes->print_and_list_orbits(cout);
+		Orbits_on_tritangent_planes->Forest->print_and_list_orbits(cout);
 	}
 
 	if (f_v) {
@@ -1162,13 +1162,13 @@ void surface_object_with_group::init_orbits_on_Hesse_planes(
 				A_on_Hesse_planes, print_interval, 0 /*verbose_level*/);
 	}
 	if (f_v) {
-		cout << "We found " << Orbits_on_Hesse_planes->nb_orbits
+		cout << "We found " << Orbits_on_Hesse_planes->Forest->nb_orbits
 				<< " orbits on the set of " << SO->SOP->nb_Hesse_planes
 				<< " Hesse planes" << endl;
 	}
 
 	if (f_vv) {
-		Orbits_on_Hesse_planes->print_and_list_orbits(cout);
+		Orbits_on_Hesse_planes->Forest->print_and_list_orbits(cout);
 	}
 
 	if (f_v) {
@@ -1223,13 +1223,13 @@ void surface_object_with_group::init_orbits_on_axes(
 				A_on_axes, print_interval, 0 /*verbose_level*/);
 	}
 	if (f_v) {
-		cout << "We found " << Orbits_on_axes->nb_orbits
+		cout << "We found " << Orbits_on_axes->Forest->nb_orbits
 				<< " orbits on the set of " << SO->SOP->nb_axes
 				<< " axes" << endl;
 	}
 
 	if (f_vv) {
-		Orbits_on_axes->print_and_list_orbits(cout);
+		Orbits_on_axes->Forest->print_and_list_orbits(cout);
 	}
 
 	if (f_v) {
@@ -1269,12 +1269,12 @@ void surface_object_with_group::init_orbits_on_trihedral_pairs(
 				A_on_trihedral_pairs, print_interval, 0 /*verbose_level*/);
 	}
 	if (f_v) {
-		cout << "We found " << Orbits_on_trihedral_pairs->nb_orbits
+		cout << "We found " << Orbits_on_trihedral_pairs->Forest->nb_orbits
 				<< " orbits on trihedral pairs" << endl;
 	}
 
 	if (f_vv) {
-		Orbits_on_trihedral_pairs->print_and_list_orbits(cout);
+		Orbits_on_trihedral_pairs->Forest->print_and_list_orbits(cout);
 	}
 
 	if (f_v) {
@@ -1322,12 +1322,12 @@ void surface_object_with_group::init_orbits_on_points_not_on_lines(
 						A_on_pts_not_on_lines,  print_interval, 0 /*verbose_level*/);
 	}
 	if (f_v) {
-		cout << "We found " << Orbits_on_points_not_on_lines->nb_orbits
+		cout << "We found " << Orbits_on_points_not_on_lines->Forest->nb_orbits
 				<< " orbits on points not on lines" << endl;
 	}
 
 	if (f_vv) {
-		Orbits_on_points_not_on_lines->print_and_list_orbits(cout);
+		Orbits_on_points_not_on_lines->Forest->print_and_list_orbits(cout);
 	}
 
 	if (f_v) {
@@ -1437,7 +1437,7 @@ void surface_object_with_group::print_automorphism_group(
 
 		my_fname_mask = fname_mask + "_Eckardt_points";
 
-		Orbits_on_Eckardt_points->make_orbit_trees(ost,
+		Orbits_on_Eckardt_points->Forest->make_orbit_trees(ost,
 				my_fname_mask, Opt,
 				verbose_level);
 	}
@@ -1461,14 +1461,14 @@ void surface_object_with_group::print_automorphism_group(
 
 
 	ost << "\\subsection*{Orbits on lines}" << endl;
-	Orbits_on_lines->print_and_list_orbits_tex(ost);
+	Orbits_on_lines->Forest->print_and_list_orbits_tex(ost);
 	if (f_print_orbits) {
 
 		string my_fname_mask;
 
 		my_fname_mask = fname_mask + "_on_lines";
 
-		Orbits_on_lines->make_orbit_trees(ost,
+		Orbits_on_lines->Forest->make_orbit_trees(ost,
 				my_fname_mask, Opt,
 				verbose_level);
 	}
@@ -1491,7 +1491,7 @@ void surface_object_with_group::print_automorphism_group(
 			ost, Surf_A->A, Aut_gens,
 			verbose_level);
 	int orbit_idx;
-	for (orbit_idx = 0; orbit_idx < Orbits_on_lines->nb_orbits; orbit_idx++) {
+	for (orbit_idx = 0; orbit_idx < Orbits_on_lines->Forest->nb_orbits; orbit_idx++) {
 
 		groups::strong_generators *gens_stab;
 
@@ -1517,9 +1517,9 @@ void surface_object_with_group::print_automorphism_group(
 	int *Decomp_scheme;
 	int nb;
 	int block_width = 10;
-	nb = Orbits_on_lines->nb_orbits;
+	nb = Orbits_on_lines->Forest->nb_orbits;
 
-	Orbits_on_lines->get_orbit_decomposition_scheme_of_graph(
+	Orbits_on_lines->Forest->get_orbit_decomposition_scheme_of_graph(
 			SO->SOP->Adj_line_intersection_graph,
 			SO->Variety_object->Line_sets->Set_size[0],
 			Decomp_scheme,
@@ -1569,7 +1569,7 @@ void surface_object_with_group::print_orbits_on_schlaefli_related_things(
 	}
 
 	ost << "\\subsection*{Orbits on single sixes}" << endl;
-	Orbits_on_single_sixes->print_and_list_orbits_tex(ost);
+	Orbits_on_single_sixes->Forest->print_and_list_orbits_tex(ost);
 
 	if (f_print_orbits) {
 
@@ -1577,14 +1577,14 @@ void surface_object_with_group::print_orbits_on_schlaefli_related_things(
 
 		my_fname_mask = fname_mask + "_single_sixes";
 
-		Orbits_on_single_sixes->make_orbit_trees(
+		Orbits_on_single_sixes->Forest->make_orbit_trees(
 				ost,
 				my_fname_mask, Opt,
 				verbose_level);
 	}
 
 	ost << "\\subsection*{Orbits on double sixes}" << endl;
-	Orbits_on_double_sixes->print_and_list_orbits_tex(ost);
+	Orbits_on_double_sixes->Forest->print_and_list_orbits_tex(ost);
 	Orbits_on_double_sixes->print_and_list_all_orbits_and_stabilizers_with_list_of_elements_tex(
 			ost, Surf_A->A, Aut_gens,
 			verbose_level);
@@ -1595,7 +1595,7 @@ void surface_object_with_group::print_orbits_on_schlaefli_related_things(
 
 		my_fname_mask = fname_mask + "_double_sixes";
 
-		Orbits_on_double_sixes->make_orbit_trees(
+		Orbits_on_double_sixes->Forest->make_orbit_trees(
 				ost,
 				my_fname_mask, Opt,
 				verbose_level);
@@ -1603,7 +1603,7 @@ void surface_object_with_group::print_orbits_on_schlaefli_related_things(
 
 	int orbit_idx;
 
-	for (orbit_idx = 0; orbit_idx < Orbits_on_lines->nb_orbits; orbit_idx++) {
+	for (orbit_idx = 0; orbit_idx < Orbits_on_lines->Forest->nb_orbits; orbit_idx++) {
 
 		groups::strong_generators *gens_stab;
 
@@ -1627,7 +1627,7 @@ void surface_object_with_group::print_orbits_on_schlaefli_related_things(
 	}
 
 	ost << "\\subsection*{Orbits on tritangent planes}" << endl;
-	Orbits_on_tritangent_planes->print_and_list_orbits_tex(ost);
+	Orbits_on_tritangent_planes->Forest->print_and_list_orbits_tex(ost);
 	Orbits_on_tritangent_planes->print_and_list_all_orbits_and_stabilizers_with_list_of_elements_tex(
 			ost, Surf_A->A, Aut_gens,
 			verbose_level);
@@ -1637,14 +1637,14 @@ void surface_object_with_group::print_orbits_on_schlaefli_related_things(
 
 		my_fname_mask = fname_mask + "_tritangent_planes";
 
-		Orbits_on_tritangent_planes->make_orbit_trees(
+		Orbits_on_tritangent_planes->Forest->make_orbit_trees(
 				ost,
 				my_fname_mask, Opt,
 				verbose_level);
 	}
 
 	ost << "\\subsection*{Orbits on Hesse planes}" << endl;
-	Orbits_on_Hesse_planes->print_and_list_orbits_tex(ost);
+	Orbits_on_Hesse_planes->Forest->print_and_list_orbits_tex(ost);
 	Orbits_on_Hesse_planes->print_and_list_all_orbits_and_stabilizers_with_list_of_elements_tex(
 			ost, Surf_A->A, Aut_gens,
 			verbose_level);
@@ -1654,7 +1654,7 @@ void surface_object_with_group::print_orbits_on_schlaefli_related_things(
 
 		my_fname_mask = fname_mask + "_Hesse_planes";
 
-		Orbits_on_Hesse_planes->make_orbit_trees(
+		Orbits_on_Hesse_planes->Forest->make_orbit_trees(
 				ost,
 				my_fname_mask, Opt,
 				verbose_level);
@@ -1664,7 +1664,7 @@ void surface_object_with_group::print_orbits_on_schlaefli_related_things(
 			verbose_level);
 
 	ost << "\\subsection*{Orbits on trihedral pairs}" << endl;
-	Orbits_on_trihedral_pairs->print_and_list_orbits_tex(ost);
+	Orbits_on_trihedral_pairs->Forest->print_and_list_orbits_tex(ost);
 
 	if (f_v) {
 		cout << "surface_object_with_group::print_orbits_on_schlaefli_related_things done" << endl;
@@ -1712,23 +1712,23 @@ void surface_object_with_group::cheat_sheet_basic(
 		ost << "Orbits on half double-sixes:\\\\" << endl;
 		int i, idx;
 
-		for (i = 0; i < Orbits_on_single_sixes->nb_orbits; i++) {
+		for (i = 0; i < Orbits_on_single_sixes->Forest->nb_orbits; i++) {
 
 			//ost << "\\bigskip" << endl;
 			//ost << "" << endl;
-			ost << "Orbit " << i << " / " << Orbits_on_single_sixes->nb_orbits
-					<< " of length " << Orbits_on_single_sixes->orbit_len[i]
+			ost << "Orbit " << i << " / " << Orbits_on_single_sixes->Forest->nb_orbits
+					<< " of length " << Orbits_on_single_sixes->Forest->orbit_len[i]
 					<< " consists of the following half double sixes:" << endl;
 
 
 			ost << "$$" << endl;
 			L.int_set_print_tex(ost,
-				Orbits_on_single_sixes->orbit +
-					Orbits_on_single_sixes->orbit_first[i],
-				Orbits_on_single_sixes->orbit_len[i]);
+				Orbits_on_single_sixes->Forest->orbit +
+					Orbits_on_single_sixes->Forest->orbit_first[i],
+				Orbits_on_single_sixes->Forest->orbit_len[i]);
 			ost << "$$" << endl;
 
-			idx = Orbits_on_single_sixes->orbit[Orbits_on_single_sixes->orbit_first[i]];
+			idx = Orbits_on_single_sixes->Forest->orbit[Orbits_on_single_sixes->Forest->orbit_first[i]];
 
 			ost << "orbit rep:" << endl;
 			ost << "$$" << endl;
@@ -2049,7 +2049,7 @@ void surface_object_with_group::cheat_sheet_group_elements(
 
 			Classify_orbits_by_length = NEW_OBJECT(other::data_structures::tally);
 
-			Classify_orbits_by_length->init(Orbits[j]->orbit_len, Orbits[j]->nb_orbits, false, 0);
+			Classify_orbits_by_length->init(Orbits[j]->Forest->orbit_len, Orbits[j]->Forest->nb_orbits, false, 0);
 
 			cout << "j=" << j << " : ";
 			s = Classify_orbits_by_length->stringify_bare_tex(false);
@@ -2651,12 +2651,12 @@ void surface_object_with_group::all_quartic_curves(
 
 
 	ost << "Orbits on points not on lines nb orbits = "
-			<< Orbits_on_points_not_on_lines->nb_orbits << "\\\\" << endl;
+			<< Orbits_on_points_not_on_lines->Forest->nb_orbits << "\\\\" << endl;
 
-	for (pt_orbit = 0; pt_orbit < Orbits_on_points_not_on_lines->nb_orbits; pt_orbit++) {
+	for (pt_orbit = 0; pt_orbit < Orbits_on_points_not_on_lines->Forest->nb_orbits; pt_orbit++) {
 
 		ost << "\\section{Quartic curve associated with orbit " << pt_orbit
-				<< " / " << Orbits_on_points_not_on_lines->nb_orbits << "}" << endl;
+				<< " / " << Orbits_on_points_not_on_lines->Forest->nb_orbits << "}" << endl;
 
 
 		quartic_curves::quartic_curve_from_surface *QC;
@@ -2721,25 +2721,25 @@ void surface_object_with_group::export_all_quartic_curves(
 	if (f_v) {
 		cout << "surface_object_with_group::export_all_quartic_curves" << endl;
 		cout << "surface_object_with_group::export_all_quartic_curves "
-				"nb_orbits = " << Orbits_on_points_not_on_lines->nb_orbits << endl;
+				"nb_orbits = " << Orbits_on_points_not_on_lines->Forest->nb_orbits << endl;
 	}
 	int pt_orbit;
 	//long int po_go;
 
 	//po_go = Aut_gens->group_order_as_lint();
 
-	nb_rows = Orbits_on_points_not_on_lines->nb_orbits;
+	nb_rows = Orbits_on_points_not_on_lines->Forest->nb_orbits;
 
 	create_heading(headings, nb_cols);
 
 	Table = new string[nb_rows * nb_cols];
 
 
-	for (pt_orbit = 0; pt_orbit < Orbits_on_points_not_on_lines->nb_orbits; pt_orbit++) {
+	for (pt_orbit = 0; pt_orbit < Orbits_on_points_not_on_lines->Forest->nb_orbits; pt_orbit++) {
 
 		if (f_vv) {
 			cout << "Quartic curve associated with surface and with orbit counter = " << pt_orbit
-					<< " / " << Orbits_on_points_not_on_lines->nb_orbits << "}" << endl;
+					<< " / " << Orbits_on_points_not_on_lines->Forest->nb_orbits << "}" << endl;
 		}
 
 
@@ -2993,13 +2993,13 @@ void surface_object_with_group::print_full_del_Pezzo(
 	//schreier *Orbits_on_points_not_on_lines;
 
 	ost << "Full del Pezzo surfaces:\\\\" << endl;
-	ost << "testing all " << Orbits_on_points_not_on_lines->nb_orbits << " orbits:\\\\" << endl;
+	ost << "testing all " << Orbits_on_points_not_on_lines->Forest->nb_orbits << " orbits:\\\\" << endl;
 
 	ost << "$$" << endl;
 	ost << "\\begin{array}{|c|c|c|c|c|}" << endl;
-	for (i = 0; i < Orbits_on_points_not_on_lines->nb_orbits; i++) {
-		f = Orbits_on_points_not_on_lines->orbit_first[i];
-		P_idx_local = Orbits_on_points_not_on_lines->orbit[f];
+	for (i = 0; i < Orbits_on_points_not_on_lines->Forest->nb_orbits; i++) {
+		f = Orbits_on_points_not_on_lines->Forest->orbit_first[i];
+		P_idx_local = Orbits_on_points_not_on_lines->Forest->orbit[f];
 		P = SO->SOP->Pts_not_on_lines[P_idx_local];
 		if (!SO->find_point(P, P_idx)) {
 			cout << "surface_object_with_group::print_full_del_Pezzo "
@@ -3282,18 +3282,18 @@ void surface_object_with_group::print_summary(
 	string s_orbits_tritangent_planes;
 	string s_orbits_trihedral_pairs;
 
-	Orbits_on_lines->print_orbit_length_distribution_to_string(s_orbits_lines);
-	Orbits_on_points->print_orbit_length_distribution_to_string(s_orbits_points);
-	Orbits_on_Eckardt_points->print_orbit_length_distribution_to_string(s_orbits_Eckardt_points);
-	Orbits_on_Double_points->print_orbit_length_distribution_to_string(s_orbits_Double_points);
-	Orbits_on_Single_points->print_orbit_length_distribution_to_string(s_orbits_Single_points);
-	Orbits_on_points_not_on_lines->print_orbit_length_distribution_to_string(s_orbits_Zero_points);
-	Orbits_on_Hesse_planes->print_orbit_length_distribution_to_string(s_orbits_Hesse_planes);
-	Orbits_on_axes->print_orbit_length_distribution_to_string(s_orbits_Axes);
-	Orbits_on_single_sixes->print_orbit_length_distribution_to_string(s_orbits_single_sixes);
-	Orbits_on_double_sixes->print_orbit_length_distribution_to_string(s_orbits_double_sixes);
-	Orbits_on_tritangent_planes->print_orbit_length_distribution_to_string(s_orbits_tritangent_planes);
-	Orbits_on_trihedral_pairs->print_orbit_length_distribution_to_string(s_orbits_trihedral_pairs);
+	Orbits_on_lines->Forest->print_orbit_length_distribution_to_string(s_orbits_lines);
+	Orbits_on_points->Forest->print_orbit_length_distribution_to_string(s_orbits_points);
+	Orbits_on_Eckardt_points->Forest->print_orbit_length_distribution_to_string(s_orbits_Eckardt_points);
+	Orbits_on_Double_points->Forest->print_orbit_length_distribution_to_string(s_orbits_Double_points);
+	Orbits_on_Single_points->Forest->print_orbit_length_distribution_to_string(s_orbits_Single_points);
+	Orbits_on_points_not_on_lines->Forest->print_orbit_length_distribution_to_string(s_orbits_Zero_points);
+	Orbits_on_Hesse_planes->Forest->print_orbit_length_distribution_to_string(s_orbits_Hesse_planes);
+	Orbits_on_axes->Forest->print_orbit_length_distribution_to_string(s_orbits_Axes);
+	Orbits_on_single_sixes->Forest->print_orbit_length_distribution_to_string(s_orbits_single_sixes);
+	Orbits_on_double_sixes->Forest->print_orbit_length_distribution_to_string(s_orbits_double_sixes);
+	Orbits_on_tritangent_planes->Forest->print_orbit_length_distribution_to_string(s_orbits_tritangent_planes);
+	Orbits_on_trihedral_pairs->Forest->print_orbit_length_distribution_to_string(s_orbits_trihedral_pairs);
 
 
 	ost << "{\\renewcommand{\\arraystretch}{1.5}" << endl;

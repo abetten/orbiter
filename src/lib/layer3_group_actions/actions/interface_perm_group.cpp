@@ -134,8 +134,12 @@ void action_pointer_table::init_function_pointers_permutation_group()
 			perm_group_element_print_for_make_element_no_commas;
 #endif
 	ptr_print_point = perm_group_print_point;
+	ptr_unrank_point = NULL;
+	ptr_rank_point = NULL;
 	ptr_stringify_point = perm_group_stringify_point;
 }
+
+
 
 
 static long int perm_group_element_image_of(

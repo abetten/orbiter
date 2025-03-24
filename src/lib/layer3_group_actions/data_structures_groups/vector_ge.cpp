@@ -124,7 +124,7 @@ void vector_ge::init_by_hdl(
 		cout << "vector_ge::init_by_hdl" << endl;
 	}
 	init(A, verbose_level);
-	allocate(gen_hdl.size(), verbose_level);
+	//allocate(gen_hdl.size(), verbose_level);
 	for (i = 0; i < gen_hdl.size(); i++) {
 		A->Group_element->element_retrieve(gen_hdl[i], ith(i), 0);
 	}
@@ -1510,7 +1510,7 @@ groups::schreier *vector_ge::compute_all_point_orbits_schreier(
 	Sch = NEW_OBJECT(groups::schreier);
 
 	Sch->init(A_given, verbose_level - 2);
-	Sch->initialize_tables();
+	//Sch->initialize_tables();
 	Sch->init_generators(*this, verbose_level - 2);
 	if (f_v) {
 		cout << "vector_ge::compute_all_point_orbits_schreier "
@@ -1524,7 +1524,7 @@ groups::schreier *vector_ge::compute_all_point_orbits_schreier(
 
 	if (f_v) {
 		cout << "vector_ge::compute_all_point_orbits_schreier "
-				"we found " << Sch->nb_orbits << " orbits" << endl;
+				"we found " << Sch->Forest->nb_orbits << " orbits" << endl;
 	}
 
 	if (f_v) {

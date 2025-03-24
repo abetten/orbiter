@@ -851,14 +851,14 @@ void packing_long_orbits::read_and_process_solutions(
 	}
 
 	int *iso_type;
-	iso_type = NEW_int(Orbits->nb_orbits * PWF->PW->Spread_tables_reduced->nb_iso_types_of_spreads);
-	Int_vec_zero(iso_type, Orbits->nb_orbits * PWF->PW->Spread_tables_reduced->nb_iso_types_of_spreads);
+	iso_type = NEW_int(Orbits->Forest->nb_orbits * PWF->PW->Spread_tables_reduced->nb_iso_types_of_spreads);
+	Int_vec_zero(iso_type, Orbits->Forest->nb_orbits * PWF->PW->Spread_tables_reduced->nb_iso_types_of_spreads);
 
 	int idx, i, j;
 	long int a, b;
 
-	for (i = 0; i < Orbits->nb_orbits; i++) {
-		idx = Orbits->orbit[Orbits->orbit_first[i]];
+	for (i = 0; i < Orbits->Forest->nb_orbits; i++) {
+		idx = Orbits->Forest->orbit[Orbits->Forest->orbit_first[i]];
 
 		vector<int> Packing;
 		for (j = 0; j < PWF->PW->P->size_of_packing; j++) {
@@ -882,13 +882,13 @@ void packing_long_orbits::read_and_process_solutions(
 		Packings_flag_orbits.push_back(Packing);
 	}
 
-	for (i = 0; i < Orbits->nb_orbits; i++) {
+	for (i = 0; i < Orbits->Forest->nb_orbits; i++) {
 		int h;
 		int len;
 
-		len = Orbits->orbit_len[i];
+		len = Orbits->Forest->orbit_len[i];
 		for (h= 0; h < len; h++) {
-			idx = Orbits->orbit[Orbits->orbit_first[i] + h];
+			idx = Orbits->Forest->orbit[Orbits->Forest->orbit_first[i] + h];
 
 			vector<int> Packing;
 			for (j = 0; j < PWF->PW->P->size_of_packing; j++) {
@@ -920,7 +920,7 @@ void packing_long_orbits::read_and_process_solutions(
 
 	T.init(
 			iso_type,
-			Orbits->nb_orbits,
+			Orbits->Forest->nb_orbits,
 			PWF->PW->Spread_tables_reduced->nb_iso_types_of_spreads,
 			verbose_level);
 	if (f_v) {
@@ -952,11 +952,11 @@ void packing_long_orbits::read_and_process_solutions(
 	{
 		other::data_structures::tally Cl;
 
-		Cl.init(Orbits->orbit_len, Orbits->nb_orbits, false, 0);
+		Cl.init(Orbits->Forest->orbit_len, Orbits->Forest->nb_orbits, false, 0);
 		Cl.print_tex_no_lf(false);
 		cout << " & ";
 	}
-	cout << Orbits->nb_orbits;
+	cout << Orbits->Forest->nb_orbits;
 	cout << " \\\\TEX" << endl;
 
 
@@ -1389,7 +1389,7 @@ void packing_long_orbits::filter_orbits(
 		for (i = 0; i < Input->Set_size[t]; i++) {
 			b = Input->element(t, i);
 
-			PWF->PW->reduced_spread_orbits_under_H->Sch->get_orbit(
+			PWF->PW->reduced_spread_orbits_under_H->Sch->Forest->get_orbit(
 					b,
 					set, len1, 0 /* verbose_level*/);
 			if (len1 != orbit_length) {

@@ -404,19 +404,19 @@ void orbits_global::orbits_on_set_system_from_file(
 
 	if (f_v) {
 		cout << "The orbit lengths are:" << endl;
-		Sch->print_orbit_lengths(cout);
+		Sch->Forest->print_orbit_lengths(cout);
 	}
 
 	if (f_v) {
 		cout << "The orbits are:" << endl;
 		//Sch->print_and_list_orbits(cout);
-		for (i = 0; i < Sch->nb_orbits; i++) {
-			cout << " Orbit " << i << " / " << Sch->nb_orbits
-					<< " : " << Sch->orbit_first[i] << " : " << Sch->orbit_len[i];
+		for (i = 0; i < Sch->Forest->nb_orbits; i++) {
+			cout << " Orbit " << i << " / " << Sch->Forest->nb_orbits
+					<< " : " << Sch->Forest->orbit_first[i] << " : " << Sch->Forest->orbit_len[i];
 			cout << " : ";
 
-			first = Sch->orbit_first[i];
-			a = Sch->orbit[first + 0];
+			first = Sch->Forest->orbit_first[i];
+			a = Sch->Forest->orbit[first + 0];
 			cout << a << " : ";
 			Lint_vec_print(cout, Table + a * set_size, set_size);
 			cout << endl;
@@ -433,17 +433,17 @@ void orbits_global::orbits_on_set_system_from_file(
 	{
 		ofstream ost(fname);
 
-		for (i = 0; i < Sch->nb_orbits; i++) {
+		for (i = 0; i < Sch->Forest->nb_orbits; i++) {
 
-			first = Sch->orbit_first[i];
-			a = Sch->orbit[first + 0];
+			first = Sch->Forest->orbit_first[i];
+			a = Sch->Forest->orbit[first + 0];
 			ost << set_size;
 			for (j = 0; j < set_size; j++) {
 				ost << " " << Table[a * set_size + j];
 			}
 			ost << endl;
 		}
-		ost << -1 << " " << Sch->nb_orbits << endl;
+		ost << -1 << " " << Sch->Forest->nb_orbits << endl;
 	}
 	if (f_v) {
 		cout << "orbits_global::orbits_on_set_system_from_file done" << endl;
@@ -550,7 +550,7 @@ void orbits_global::orbit_of(
 	Sch->init_generators(
 			*AG->Subgroup_gens->gens /* *strong_generators */,
 			verbose_level - 2);
-	Sch->initialize_tables();
+	//Sch->initialize_tables();
 	Sch->compute_point_orbit(point_idx, print_interval, verbose_level);
 
 	int orbit_idx = 0;
@@ -567,15 +567,15 @@ void orbits_global::orbit_of(
 
 	if (f_v) {
 		cout << "orbits_global::orbit_of "
-				"before Sch->export_tree_as_layered_graph_and_save" << endl;
+				"before Sch->Forest->export_tree_as_layered_graph_and_save" << endl;
 	}
-	Sch->export_tree_as_layered_graph_and_save(
+	Sch->Forest->export_tree_as_layered_graph_and_save(
 			orbit_idx,
 			fname_tree_mask,
 			verbose_level - 1);
 	if (f_v) {
 		cout << "orbits_global::orbit_of "
-				"after Sch->export_tree_as_layered_graph_and_save" << endl;
+				"after Sch->Forest->export_tree_as_layered_graph_and_save" << endl;
 	}
 
 	groups::strong_generators *SG_stab;
@@ -588,7 +588,7 @@ void orbits_global::orbit_of(
 		cout << "orbits_global::orbit_of computing the stabilizer "
 				"of the rep of orbit " << orbit_idx << endl;
 		cout << "orbits_global::orbit_of "
-				"orbit length = " << Sch->orbit_len[orbit_idx] << endl;
+				"orbit length = " << Sch->Forest->orbit_len[orbit_idx] << endl;
 	}
 
 	if (f_v) {

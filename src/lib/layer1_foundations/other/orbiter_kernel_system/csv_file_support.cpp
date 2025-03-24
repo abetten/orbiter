@@ -533,7 +533,7 @@ void csv_file_support::read_column_as_table_of_int(
 				"reading file " << fname << ", column " << col_label << endl;
 	}
 
-	Fio.Csv_file_support->read_column_and_parse(
+	Fio.Csv_file_support->read_column_as_set_of_sets(
 			fname, col_label,
 				SoS,
 				verbose_level);
@@ -588,7 +588,7 @@ void csv_file_support::read_column_as_table_of_lint(
 				"reading file " << fname << ", column " << col_label << endl;
 	}
 
-	Fio.Csv_file_support->read_column_and_parse(
+	Fio.Csv_file_support->read_column_as_set_of_sets(
 			fname, col_label,
 				SoS,
 				verbose_level);
@@ -2380,7 +2380,9 @@ void csv_file_support::read_csv_file_and_tally(
 
 	lint_matrix_read_csv(fname, M, m, n, verbose_level);
 
-	cout << "The matrix has size " << m << " x " << n << endl;
+	if (f_v) {
+		cout << "The matrix has size " << m << " x " << n << endl;
+	}
 
 	data_structures::tally T;
 
@@ -2415,6 +2417,95 @@ void csv_file_support::read_csv_file_and_tally(
 	}
 }
 
+
+void csv_file_support::tally_column(
+		std::string &fname, std::string &column, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "csv_file_support::tally_column" << endl;
+	}
+
+	other::orbiter_kernel_system::file_io Fio;
+
+	other::data_structures::set_of_sets *SoS;
+
+	if (f_v) {
+		cout << "csv_file_support::tally_column "
+				"before Fio.Csv_file_support->read_column_as_set_of_sets" << endl;
+	}
+	Fio.Csv_file_support->read_column_as_set_of_sets(
+			fname,
+			column,
+			SoS,
+			verbose_level);
+	if (f_v) {
+		cout << "csv_file_support::tally_column "
+				"after Fio.Csv_file_support->read_column_as_set_of_sets" << endl;
+	}
+
+	if (f_v) {
+		cout << "csv_file_support::tally_column "
+				"SoS=" << endl;
+		SoS->print();
+	}
+
+	if (!SoS->has_constant_size_property()) {
+		cout << "csv_file_support::tally_column !SoS->has_constant_size_property()" << endl;
+		exit(1);
+	}
+	int m, n;
+	int i, j;
+
+	m = SoS->nb_sets;
+	n = SoS->get_constant_size();
+
+	int *Data;
+
+	Data = NEW_int(m * n);
+	for (i = 0; i < m; i++) {
+		for (j = 0; j < n; j++) {
+			Data[i * n + j] = SoS->Sets[i][j];
+		}
+	}
+
+
+
+
+	data_structures::tally_vector_data T;
+
+	T.init(Data, m, n, 0);
+
+	if (f_v) {
+		cout << "csv_file_support::tally_column tally_vector_data:" << endl;
+		T.print();
+		cout << endl;
+	}
+
+
+	data_structures::set_of_sets *SoS_fibers;
+
+	SoS_fibers = T.get_set_partition(verbose_level);
+
+	cout << "fibers:" << endl;
+	for (i = 0; i < SoS_fibers->nb_sets; i++) {
+		cout << i << " : " << SoS_fibers->Set_size[i] << " : ";
+		Lint_vec_print(cout, SoS_fibers->Sets[i], SoS_fibers->Set_size[i]);
+		cout << endl;
+	}
+
+	//cout << "set partition:" << endl;
+	//SoS->print_table();
+
+	FREE_int(Data);
+	FREE_OBJECT(SoS);
+	FREE_OBJECT(SoS_fibers);
+
+	if (f_v) {
+		cout << "csv_file_support::tally_column done" << endl;
+	}
+}
 
 
 
@@ -2832,7 +2923,7 @@ int csv_file_support::read_column_and_count_nb_sets(
 }
 
 
-void csv_file_support::read_column_and_parse(
+void csv_file_support::read_column_as_set_of_sets(
 		std::string &fname, std::string &col_label,
 		data_structures::set_of_sets *&SoS,
 		int verbose_level)
@@ -2841,11 +2932,11 @@ void csv_file_support::read_column_and_parse(
 	int f_vv = false; //(verbose_level >= 1);
 
 	if (f_v) {
-		cout << "csv_file_support::read_column_and_parse "
+		cout << "csv_file_support::read_column_as_set_of_sets "
 				"reading file " << fname << endl;
 	}
 	if (Fio->file_size(fname) <= 0) {
-		cout << "csv_file_support::read_column_and_parse file " << fname
+		cout << "csv_file_support::read_column_as_set_of_sets file " << fname
 			<< " does not exist or is empty" << endl;
 		cout << "file_size(fname)=" << Fio->file_size(fname) << endl;
 		exit(1);
@@ -2861,7 +2952,7 @@ void csv_file_support::read_column_and_parse(
 
 		idx = S.find_column(col_label);
 		if (idx == -1) {
-			cout << "csv_file_support::read_column_and_parse "
+			cout << "csv_file_support::read_column_as_set_of_sets "
 					"cannot find column " << col_label << endl;
 			exit(1);
 		}
@@ -2877,7 +2968,7 @@ void csv_file_support::read_column_and_parse(
 		for (i = 0; i < nb_sets; i++) {
 
 			if (f_vv) {
-				cout << "csv_file_support::read_column_and_parse "
+				cout << "csv_file_support::read_column_as_set_of_sets "
 						"i= " << i << " / " << nb_sets << endl;
 			}
 
@@ -2889,7 +2980,7 @@ void csv_file_support::read_column_and_parse(
 			S.get_string(str1, i + 1, idx);
 
 			if (f_vv) {
-				cout << "csv_file_support::read_column_and_parse "
+				cout << "csv_file_support::read_column_as_set_of_sets "
 						"str1 = " << str1 << endl;
 			}
 
@@ -2897,14 +2988,14 @@ void csv_file_support::read_column_and_parse(
 				str1, str2);
 
 			if (f_vv) {
-				cout << "csv_file_support::read_column_and_parse "
+				cout << "csv_file_support::read_column_as_set_of_sets "
 						"str2 = " << str2 << endl;
 			}
 
 			Lint_vec_scan(str2, set, sz);
 
 			if (f_vv) {
-				cout << "csv_file_support::read_column_and_parse "
+				cout << "csv_file_support::read_column_as_set_of_sets "
 						"str = ";
 				Lint_vec_print(cout, set, sz);
 				cout << endl;
@@ -2915,7 +3006,7 @@ void csv_file_support::read_column_and_parse(
 		}
 	}
 	if (f_v) {
-		cout << "csv_file_support::read_column_and_parse done" << endl;
+		cout << "csv_file_support::read_column_as_set_of_sets done" << endl;
 	}
 
 }

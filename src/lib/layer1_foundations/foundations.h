@@ -682,6 +682,7 @@ namespace other {
 		class data_file;
 		class data_structures_global;
 		class fancy_set;
+		class forest;
 		class int_matrix;
 		class int_vec;
 		class int_vector;

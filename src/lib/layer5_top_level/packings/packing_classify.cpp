@@ -497,7 +497,7 @@ int packing_classify::test_if_orbit_is_partial_packing(
 		cout << "packing_classify::test_if_orbit_is_partial_packing "
 				"orbit_idx = " << orbit_idx << endl;
 	}
-	Orbits->get_orbit(orbit_idx, orbit1, len, 0 /* verbose_level*/);
+	Orbits->Forest->get_orbit(orbit_idx, orbit1, len, 0 /* verbose_level*/);
 	return Spread_table_with_selection->Spread_tables->test_if_set_of_spreads_is_line_disjoint(orbit1, len);
 }
 
@@ -518,8 +518,8 @@ int packing_classify::test_if_pair_of_orbits_are_adjacent(
 	if (a == b) {
 		return false;
 	}
-	Orbits->get_orbit(a, orbit1, len1, 0 /* verbose_level*/);
-	Orbits->get_orbit(b, orbit2, len2, 0 /* verbose_level*/);
+	Orbits->Forest->get_orbit(a, orbit1, len1, 0 /* verbose_level*/);
+	Orbits->Forest->get_orbit(b, orbit2, len2, 0 /* verbose_level*/);
 
 	return Spread_table_with_selection->Spread_tables->test_if_pair_of_sets_are_adjacent(
 			orbit1, len1,

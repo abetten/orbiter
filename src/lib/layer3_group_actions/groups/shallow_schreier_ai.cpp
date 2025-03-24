@@ -48,8 +48,8 @@ void shallow_schreier_ai::generate_shallow_tree(groups::schreier& sch, int verbo
 	for (int step = 0, ns = gens2->len, gen_idx = 0; step < ns; ++step, ++gen_idx) {
 
 		groups::schreier* previous_schreier = S;
-		if (S->nb_orbits == 0) {
-			printf("S->nb_orbits=%d\n", S->nb_orbits);
+		if (S->Forest->nb_orbits == 0) {
+			printf("S->nb_orbits=%d\n", S->Forest->nb_orbits);
 			break;
 		}
 
@@ -57,10 +57,10 @@ void shallow_schreier_ai::generate_shallow_tree(groups::schreier& sch, int verbo
 
 		//
 		other::orbiter_kernel_system::os_interface Os;
-		int random_orbit_idx = Os.random_integer(S->nb_orbits);
+		int random_orbit_idx = Os.random_integer(S->Forest->nb_orbits);
 		int random_orbit_idx_cpy = random_orbit_idx;
-		int random_point_idx = Os.random_integer(S->orbit_len[random_orbit_idx]);
-		int random_point = S->orbit[S->orbit_first[random_orbit_idx]
+		int random_point_idx = Os.random_integer(S->Forest->orbit_len[random_orbit_idx]);
+		int random_point = S->Forest->orbit[S->Forest->orbit_first[random_orbit_idx]
 				+ random_point_idx];
 		int random_generator_idx = gen_idx; //random_integer(gens2->len);
 
@@ -105,7 +105,7 @@ void shallow_schreier_ai::generate_shallow_tree(groups::schreier& sch, int verbo
 		// then an invalid move has been made.
 
 		if (/*S->get_num_points() != total_points_in_old_forest
-				|| */ S->nb_orbits != sch.nb_orbits) {
+				|| */ S->Forest->nb_orbits != sch.Forest->nb_orbits) {
 			FREE_OBJECT(S);
 			if (true) {
 				cout << "schreier::shallow_tree_generators_ai reverting to previous schreier" << endl;
@@ -146,8 +146,8 @@ void shallow_schreier_ai::get_degree_sequence (groups::schreier& sch, int vl) {
 	deg_seq = new int [nb_nodes] ();
 
 	for (int i=0; i<nb_nodes; ++i) {
-		int pt = sch.orbit[i];
-		int parent = sch.prev[pt];
+		int pt = sch.Forest->orbit[i];
+		int parent = sch.Forest->prev[pt];
 		bool root_node = (parent == -1);
 		if (!root_node) {
 			deg_seq[parent] += 1;
@@ -164,7 +164,7 @@ void shallow_schreier_ai::print_degree_sequence () {
 			<< ":shallow_schreier_ai::print_degree_sequence" << endl;
 
 	for (int i=0; i<this->nb_nodes; ++i) {
-		cout << "Node " << s->orbit[i] << " -> " << this->deg_seq[i] << endl;
+		cout << "Node " << s->Forest->orbit[i] << " -> " << this->deg_seq[i] << endl;
 	}
 
 	cout << __FILE__ << ":" << __LINE__

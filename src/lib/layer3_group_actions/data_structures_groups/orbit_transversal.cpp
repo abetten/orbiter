@@ -48,7 +48,7 @@ void orbit_transversal::init_from_schreier(
 	}
 	A = default_action;
 	A2 = Sch->A;
-	nb_orbits = Sch->nb_orbits;
+	nb_orbits = Sch->Forest->nb_orbits;
 	Reps = NEW_OBJECTS(set_and_stabilizer, nb_orbits);
 	for (orbit_idx = 0; orbit_idx < nb_orbits; orbit_idx++) {
 		Sch->get_orbit_rep_to(default_action,

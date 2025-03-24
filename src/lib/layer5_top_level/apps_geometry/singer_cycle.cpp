@@ -277,19 +277,19 @@ void singer_cycle::init_lines(
 
 	Sch = NEW_OBJECT(groups::schreier);
 	Sch->init(A2, verbose_level - 2);
-	Sch->initialize_tables();
+	//Sch->initialize_tables();
 	Sch->init_single_generator(nice_gens->ith(0), verbose_level - 2);
 
 	int print_interval = 10000;
 
 	Sch->compute_all_point_orbits(print_interval, 0);
 	if (f_v) {
-		cout << "Found " << Sch->nb_orbits << " orbits on lines" << endl;
-		for (i = 0; i < Sch->nb_orbits; i++) {
-			cout << "Orbit " << i << " of length " << Sch->orbit_len[i] << endl;
+		cout << "Found " << Sch->Forest->nb_orbits << " orbits on lines" << endl;
+		for (i = 0; i < Sch->Forest->nb_orbits; i++) {
+			cout << "Orbit " << i << " of length " << Sch->Forest->orbit_len[i] << endl;
 		}
 	}
-	nb_line_orbits = Sch->nb_orbits;
+	nb_line_orbits = Sch->Forest->nb_orbits;
 	line_orbit_reps = NEW_int(nb_line_orbits);
 	line_orbit_len = NEW_int(nb_line_orbits);
 	line_orbit_first = NEW_int(nb_line_orbits);
@@ -298,10 +298,10 @@ void singer_cycle::init_lines(
 	line_orbit_label_tex = new string[P->Subspaces->N_lines];
 	line_orbit = NEW_int(P->Subspaces->N_lines);
 	line_orbit_inv = NEW_int(P->Subspaces->N_lines);
-	for (i = 0; i < Sch->nb_orbits; i++) {
-		line_orbit_reps[i] = Sch->orbit[Sch->orbit_first[i]];
-		line_orbit_len[i] = Sch->orbit_len[i];
-		line_orbit_first[i] = Sch->orbit_first[i];
+	for (i = 0; i < Sch->Forest->nb_orbits; i++) {
+		line_orbit_reps[i] = Sch->Forest->orbit[Sch->Forest->orbit_first[i]];
+		line_orbit_len[i] = Sch->Forest->orbit_len[i];
+		line_orbit_first[i] = Sch->Forest->orbit_first[i];
 	}
 	if (f_v) {
 		cout << "line_orbit_reps:";

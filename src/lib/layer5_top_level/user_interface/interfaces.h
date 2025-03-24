@@ -952,6 +952,10 @@ class interface_toolkit {
 	int f_csv_file_tally;
 	std::string csv_file_tally_fname;
 
+	int f_tally_column;
+	std::string tally_column_fname;
+	std::string tally_column_column;
+
 	int f_collect_stats;
 	std::string collect_stats_fname_mask;
 	std::string collect_stats_fname_out;

@@ -482,7 +482,7 @@ void set_and_stabilizer::rearrange_by_orbits(
 
 	data2 = NEW_lint(sz);
 
-	nb_orbits = Orb->nb_orbits;
+	nb_orbits = Orb->Forest->nb_orbits;
 	orbit_first = NEW_int(nb_orbits);
 	orbit_length = NEW_int(nb_orbits);
 	orbit = NEW_int(sz);
@@ -497,13 +497,13 @@ void set_and_stabilizer::rearrange_by_orbits(
 	//int d;
 
 	d = 0;
-	C.init(Orb->orbit_len, Orb->nb_orbits, false, 0);
+	C.init(Orb->Forest->orbit_len, Orb->Forest->nb_orbits, false, 0);
 	for (t = 0; t < C.nb_types; t++) {
 		ff = C.type_first[t];
 		c = C.data_sorted[ff + 0];
-		for (h = 0; h < Orb->nb_orbits; h++) {
-			f = Orb->orbit_first[h];
-			l = Orb->orbit_len[h];
+		for (h = 0; h < Orb->Forest->nb_orbits; h++) {
+			f = Orb->Forest->orbit_first[h];
+			l = Orb->Forest->orbit_len[h];
 #if 1
 			if (l != c) {
 				continue;
@@ -511,12 +511,12 @@ void set_and_stabilizer::rearrange_by_orbits(
 #endif
 			orbit_length[d] = l;
 			for (j = 0; j < l; j++) {
-				a = Orb->orbit[f + j];
+				a = Orb->Forest->orbit[f + j];
 				b = data[a];
 				orbit[cur] = a;
 				data2[cur++] = b;
 			}
-			if (d < Orb->nb_orbits - 1) {
+			if (d < Orb->Forest->nb_orbits - 1) {
 				orbit_first[d + 1] = orbit_first[d] + l;
 			}
 			d++;

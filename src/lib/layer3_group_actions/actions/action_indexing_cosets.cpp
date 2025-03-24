@@ -73,13 +73,13 @@ void action::coset_unrank(
 		}
 
 	G_orb.init(this, verbose_level - 2);
-	G_orb.initialize_tables(); // not needed, already done in init
+	//G_orb.initialize_tables(); // not needed, already done in init
 	G_orb.init_generators(G->gens, verbose_level - 2);
 
 		// G_orb is used to determine representatives of the double cosets
 	
 	U_orb.init(this, verbose_level - 2);
-	U_orb.initialize_tables(); // not needed, already done in init
+	//U_orb.initialize_tables(); // not needed, already done in init
 	U_orb.init_generators(U->gens, verbose_level - 2);
 	
 	for (i = 0; i < base_len(); i++) {
@@ -149,29 +149,29 @@ void action::coset_unrank(
 	G_orb.compute_point_orbit(base_pt, print_interval, 0 /* verbose_level - 2*/);
 	}
 	if (f_v) {
-		cout << "orbit of base_pt under G has length " << G_orb.orbit_len[0] << endl;
+		cout << "orbit of base_pt under G has length " << G_orb.Forest->orbit_len[0] << endl;
 		}
 
-	if (G_orb.orbit_len[0] != orbit_len) {
-		cout << "action::coset_unrank G_orb.orbit_len[0] != orbit_len" << endl;
+	if (G_orb.Forest->orbit_len[0] != orbit_len) {
+		cout << "action::coset_unrank G_orb.Forest->orbit_len[0] != orbit_len" << endl;
 		exit(1);
 		}
 
 	U_orb.orbits_on_invariant_subset_fast(orbit_len, orbit, verbose_level - 2);
-	nb_U_orbits_on_subset = U_orb.nb_orbits;
+	nb_U_orbits_on_subset = U_orb.Forest->nb_orbits;
 	if (f_v) {
 		cout << "U-orbits: ";
-		U_orb.print_orbit_length_distribution(cout);
+		U_orb.Forest->print_orbit_length_distribution(cout);
 		cout << endl;
 		cout << "in order:" << endl;
-		U_orb.print_orbit_lengths(cout);
+		U_orb.Forest->print_orbit_lengths(cout);
 		cout << endl;
-		U_orb.print_and_list_orbits(cout);
+		U_orb.Forest->print_and_list_orbits(cout);
 		}
 	
 	rank0 = 0;
 	for (k = 0; k < nb_U_orbits_on_subset; k++) {
-		len = U_orb.orbit_len[k];
+		len = U_orb.Forest->orbit_len[k];
 		b.create(len);
 		D.mult(G0_order, b, c);
 		D.integral_division(c, U_order, d, rem, 0);
@@ -184,7 +184,7 @@ void action::coset_unrank(
 
 			// nb = length of k-th U-orbit * |G0| / |U|
 
-		elt_k = U_orb.orbit[U_orb.orbit_first[k]];
+		elt_k = U_orb.Forest->orbit[U_orb.Forest->orbit_first[k]];
 		if (f_v) {
 			cout << "double coset k=" << k << " elt_k=" << elt_k
 					<< " nb=" << nb << endl;
@@ -197,10 +197,10 @@ void action::coset_unrank(
 
 
 			if (f_v) {
-				G_orb.print_and_list_orbits(cout);
+				G_orb.Forest->print_and_list_orbits(cout);
 				}
 			//G->coset_rep(base_idx, G->orbit_inv[base_idx][elt_k], 0/* verbose_level*/);
-			G_orb.coset_rep(G_orb.orbit_inv[elt_k], 0 /* verbose_level */);
+			G_orb.coset_rep(G_orb.Forest->orbit_inv[elt_k], 0 /* verbose_level */);
 			Group_element->element_move(G_orb.cosetrep, Elt_gk, 0);
 
 			if (f_v) {
@@ -227,7 +227,7 @@ void action::coset_unrank(
 			groups::sims *Uk = NULL;
 			int print_interval = 10000;
 
-			G_orb.initialize_tables();
+			G_orb.Forest->initialize_tables(verbose_level - 2);
 			G_orb.init_generators(G->gens, verbose_level - 2);
 				// this is redundant as the generators for G are already in G_orb
 				// in fact, it might be a memory leak
@@ -238,7 +238,7 @@ void action::coset_unrank(
 				// the stabilizer of elt_k in G
 
 			if (f_v) {
-				cout << "orbit of elt_k under G has length " << G_orb.orbit_len[0] << endl;
+				cout << "orbit of elt_k under G has length " << G_orb.Forest->orbit_len[0] << endl;
 				}
 			G_orb.point_stabilizer(this, G_order, Gk, 0, 0/*verbose_level - 2*/);
 			
@@ -352,11 +352,11 @@ long int action::coset_rank(
 		}
 
 	G_orb.init(this, verbose_level - 2);
-	G_orb.initialize_tables();
+	//G_orb.initialize_tables();
 	G_orb.init_generators(G->gens, verbose_level - 2);
 	
 	U_orb.init(this, verbose_level - 2);
-	U_orb.initialize_tables();
+	//U_orb.initialize_tables();
 	U_orb.init_generators(U->gens, verbose_level - 2);
 	
 	for (i = 0; i < base_len(); i++) {
@@ -420,21 +420,21 @@ long int action::coset_rank(
 	G_orb.compute_point_orbit(base_pt, print_interval, 0 /* verbose_level - 2*/);
 	}
 	if (f_v) {
-		cout << "orbit of base_pt under G has length " << G_orb.orbit_len[0] << endl;
+		cout << "orbit of base_pt under G has length " << G_orb.Forest->orbit_len[0] << endl;
 		cout << "G-orbits: ";
-		G_orb.print_and_list_orbits(cout);
+		G_orb.Forest->print_and_list_orbits(cout);
 		}
 
 	U_orb.orbits_on_invariant_subset_fast(orbit_len, orbit, verbose_level - 2);
 	//nb_U_orbits_on_subset = U_orb.nb_orbits;
 	if (f_v) {
 		cout << "U-orbits: ";
-		U_orb.print_orbit_length_distribution(cout);
+		U_orb.Forest->print_orbit_length_distribution(cout);
 		cout << endl;
 		cout << "in order:" << endl;
-		U_orb.print_orbit_lengths(cout);
+		U_orb.Forest->print_orbit_lengths(cout);
 		cout << endl;
-		U_orb.print_and_list_orbits(cout);
+		U_orb.Forest->print_and_list_orbits(cout);
 		}
 	
 	Group_element->element_move(Elt, Elt1, 0);
@@ -442,12 +442,12 @@ long int action::coset_rank(
 	if (f_v) {
 		cout << "image of base point " << base_pt << " is " << im << endl;
 		}
-	k = U_orb.orbit_number(im); //U_orb.orbit_no[U_orb.orbit_inv[im]];
+	k = U_orb.Forest->orbit_number(im); //U_orb.orbit_no[U_orb.orbit_inv[im]];
 	if (f_v) {
 		cout << "Which lies in orbit " << k << endl;
 		}
 	for (kk = 0; kk < k; kk++) {
-		len = U_orb.orbit_len[kk];
+		len = U_orb.Forest->orbit_len[kk];
 		b.create(len);
 		D.mult(G0_order, b, c);
 		D.integral_division(c, U_order, d, rem, 0);
@@ -461,7 +461,7 @@ long int action::coset_rank(
 	if (f_v) {
 		cout << "after going through the previous double cosets, rank=" << rank << endl;
 		}
-	len = U_orb.orbit_len[k];
+	len = U_orb.Forest->orbit_len[k];
 	b.create(len);
 	D.mult(G0_order, b, c);
 	D.integral_division(c, U_order, d, rem, 0);
@@ -470,13 +470,13 @@ long int action::coset_rank(
 		exit(1);
 		}
 	nb = d.as_int();
-	elt_k = U_orb.orbit[U_orb.orbit_first[k]];
+	elt_k = U_orb.Forest->orbit[U_orb.Forest->orbit_first[k]];
 	if (f_v) {
 		cout << "elt_k=" << elt_k << endl;
 		}
 
 
-	G_orb.coset_rep(G_orb.orbit_inv[elt_k], 0 /* verbose_level */);
+	G_orb.coset_rep(G_orb.Forest->orbit_inv[elt_k], 0 /* verbose_level */);
 	Group_element->element_move(G_orb.cosetrep, Elt_gk, 0);
 
 	if (Group_element->element_image_of(base_pt, Elt_gk, 0) != elt_k) {
@@ -524,13 +524,13 @@ long int action::coset_rank(
 
 		int print_interval = 10000;
 
-	G_orb.initialize_tables();
+	G_orb.Forest->initialize_tables(verbose_level - 2);
 	G_orb.init_generators(G->gens, verbose_level - 2);
 	G_orb.compute_point_orbit(elt_k, print_interval,
 			0 /* verbose_level - 2*/);
 
 	if (f_v) {
-		cout << "orbit of elt_k under G has length " << G_orb.orbit_len[0] << endl;
+		cout << "orbit of elt_k under G has length " << G_orb.Forest->orbit_len[0] << endl;
 	}
 	G_orb.point_stabilizer(this, G_order, Gk, 0, 0/*verbose_level - 2*/);
 			
@@ -575,7 +575,7 @@ long int action::coset_rank(
 					"from the right so that elt_k is fixed" << endl;
 			}
 		
-		U_orb.coset_rep_inv(U_orb.orbit_inv[im], 0 /* verbose_level */);
+		U_orb.coset_rep_inv(U_orb.Forest->orbit_inv[im], 0 /* verbose_level */);
 		Group_element->element_move(U_orb.cosetrep, Elt_u, 0);
 		if (f_v) {
 			cout << "Elt_u =" << endl;

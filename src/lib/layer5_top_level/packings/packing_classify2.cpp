@@ -580,12 +580,12 @@ void packing_classify::report_isomorphism_type(
 	other::data_structures::tally C;
 
 
-	C.init(Orb.orbit_len, Orb.nb_orbits, false, 0);
+	C.init(Orb.Forest->orbit_len, Orb.Forest->nb_orbits, false, 0);
 
 
 	ost << "\\bigskip" << endl;
 
-	ost << "There are $" << Orb.nb_orbits
+	ost << "There are $" << Orb.Forest->nb_orbits
 			<< "$ orbits on the set.\\\\" << endl;
 	ost << "The orbit type is $[$ ";
 	C.print_bare_tex(ost, false /*f_backwards*/);

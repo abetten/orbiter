@@ -2458,7 +2458,10 @@ void wreath_product::compute_permutations_and_write_to_file(
 void wreath_product::make_fname(
 		std::string &fname, int nb_factors, int h, int b)
 {
-	fname = "w" + std::to_string(nb_factors) + "_h" + std::to_string(h) + "_b" + std::to_string(b) + ".bin";
+	fname = "w" + std::to_string(nb_factors)
+			+ "_h" + std::to_string(h)
+			+ "_b" + std::to_string(b)
+			+ ".bin";
 }
 
 int wreath_product::test_if_file_exists(
@@ -2724,7 +2727,10 @@ void wreath_product::orbits_using_files_and_union_find(
 		}
 		string fname_orbit;
 
-		fname_orbit = "wreath_q" + std::to_string(q) + "_w" + std::to_string(nb_factors) + "_orbit_" + std::to_string(orbit_idx) + ".bin";
+		fname_orbit = "wreath_q" + std::to_string(q)
+				+ "_w" + std::to_string(nb_factors)
+				+ "_orbit_" + std::to_string(orbit_idx)
+				+ ".bin";
 		if (f_v) {
 			cout << "Writing the file " << fname_orbit << endl;
 		}
@@ -3140,7 +3146,7 @@ void wreath_product::orbits_restricted_compute(
 	Sch = NEW_OBJECT(groups::schreier);
 
 	Sch->init(A_perm, verbose_level - 2);
-	Sch->initialize_tables();
+	//Sch->initialize_tables();
 	Sch->init_generators(*Gens, verbose_level - 2);
 
 	int print_interval = 10000;
@@ -3155,11 +3161,11 @@ void wreath_product::orbits_restricted_compute(
 				"after Sch->compute_all_point_orbits" << endl;
 	}
 
-	Sch->print_orbit_lengths_tex(cout);
-	Sch->print_and_list_orbits_tex(cout);
+	Sch->Forest->print_orbit_lengths_tex(cout);
+	Sch->Forest->print_and_list_orbits_tex(cout);
 
 	other::data_structures::set_of_sets *Orbits;
-	Sch->orbits_as_set_of_sets(Orbits, verbose_level);
+	Sch->Forest->orbits_as_set_of_sets(Orbits, verbose_level);
 
 	A->group_order(go);
 	if (f_v) {
@@ -3177,7 +3183,7 @@ void wreath_product::orbits_restricted_compute(
 	}
 
 
-	for (orbit_idx = 0; orbit_idx < Sch->nb_orbits; orbit_idx++) {
+	for (orbit_idx = 0; orbit_idx < Sch->Forest->nb_orbits; orbit_idx++) {
 		if (f_v) {
 			cout << "wreath_product::orbits_restricted_compute "
 					"computing point stabilizer for orbit "
@@ -3188,7 +3194,7 @@ void wreath_product::orbits_restricted_compute(
 		long int orbit_rep_in_PG;
 		uint32_t orbit_rep_in_PG_uint;
 
-		orb_rep = Sch->orbit[Sch->orbit_first[orbit_idx]];
+		orb_rep = Sch->Forest->orbit[Sch->Forest->orbit_first[orbit_idx]];
 
 		orbit_rep_in_PG = Set_in_PG[orb_rep];
 
@@ -3322,9 +3328,9 @@ void wreath_product::orbits_restricted_compute(
 
 		if (f_v) {
 			cout << "wreath_product::orbits_restricted_compute "
-					"Found " << Sch_orbit->nb_orbits << " orbits" << endl;
-			Sch_orbit->print_orbit_lengths_tex(cout);
-			Sch_orbit->print_and_list_orbits_tex(cout);
+					"Found " << Sch_orbit->Forest->nb_orbits << " orbits" << endl;
+			Sch_orbit->Forest->print_orbit_lengths_tex(cout);
+			Sch_orbit->Forest->print_and_list_orbits_tex(cout);
 		}
 #endif
 

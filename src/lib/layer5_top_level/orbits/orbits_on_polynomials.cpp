@@ -174,7 +174,7 @@ void orbits_on_polynomials::init(
 
 
 
-	Sch->print_orbit_reps(cout);
+	Sch->Forest->print_orbit_reps(cout);
 
 
 	if (f_v) {
@@ -905,7 +905,7 @@ void orbits_on_polynomials::export_something_worker(
 			int *Pts;
 			int i;
 
-			Sch->get_orbit_in_order(Orb,
+			Sch->Forest->get_orbit_in_order(Orb,
 					orbit_idx, verbose_level);
 
 			Pts = NEW_int(Orb.size());

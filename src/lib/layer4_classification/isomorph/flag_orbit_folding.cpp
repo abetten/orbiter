@@ -1545,9 +1545,9 @@ void flag_orbit_folding::print_isomorphism_types(
 
 		AA->compute_all_point_orbits(Orb, Stab->gens, verbose_level - 2);
 		cout << "Computed all orbits on the set, found "
-				<< Orb.nb_orbits << " orbits" << endl;
+				<< Orb.Forest->nb_orbits << " orbits" << endl;
 		cout << "orbit lengths: ";
-		Int_vec_print(cout, Orb.orbit_len, Orb.nb_orbits);
+		Int_vec_print(cout, Orb.Forest->orbit_len, Orb.Forest->nb_orbits);
 		cout << endl;
 
 		if (Iso->print_set_function) {
@@ -4472,7 +4472,7 @@ void flag_orbit_folding::compute_stabilizer(
 	if (f_v) {
 		cout << "flag_orbit_folding::compute_stabilizer orbit "
 				<< current_flag_orbit
-				<< " found " << Schreier->nb_orbits
+				<< " found " << Schreier->Forest->nb_orbits
 				<< " orbits" << endl;
 	}
 
@@ -4503,7 +4503,7 @@ void flag_orbit_folding::compute_stabilizer(
 				<< go << endl;
 		cout << "flag_orbit_folding::compute_stabilizer "
 				"orbit " << orb_no << " has length "
-				<< Schreier->orbit_len[orb_no] << endl;
+				<< Schreier->Forest->orbit_len[orb_no] << endl;
 		cout << "flag_orbit_folding::compute_stabilizer "
 				"new stabilizer has order " << so << endl;
 		cout << "flag_orbit_folding::compute_stabilizer "

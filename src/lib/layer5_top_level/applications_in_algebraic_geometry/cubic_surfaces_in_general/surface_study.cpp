@@ -658,17 +658,17 @@ void surface_study::study_orbits_on_lines(
 			A_on_lines, print_interval, verbose_level);
 
 	cout << "orbits on lines:" << endl;
-	Orb->print_and_list_orbits(cout);
+	Orb->Forest->print_and_list_orbits(cout);
 
 	int f, l, b, ii, i, a;
 	int Basis[8];
 
-	if (Orb->find_shortest_orbit_if_unique(shortest_line_orbit_idx)) {
-		f = Orb->orbit_first[shortest_line_orbit_idx];
-		l = Orb->orbit_len[shortest_line_orbit_idx];
+	if (Orb->Forest->find_shortest_orbit_if_unique(shortest_line_orbit_idx)) {
+		f = Orb->Forest->orbit_first[shortest_line_orbit_idx];
+		l = Orb->Forest->orbit_len[shortest_line_orbit_idx];
 		cout << "The unique shortest orbit has length " << l << ":" << endl;
 		for (i = 0; i < l; i++) {
-			a = Orb->orbit[f + i];
+			a = Orb->Forest->orbit[f + i];
 			b = SaS->data[a];
 			cout << i << " : " << a << " : " << b << endl;
 
@@ -676,12 +676,12 @@ void surface_study::study_orbits_on_lines(
 			Int_matrix_print(Basis, 2, 4);
 			}
 
-		for (ii = 0; ii < Orb->nb_orbits; ii++) {
-			f = Orb->orbit_first[ii];
-			l = Orb->orbit_len[ii];
+		for (ii = 0; ii < Orb->Forest->nb_orbits; ii++) {
+			f = Orb->Forest->orbit_first[ii];
+			l = Orb->Forest->orbit_len[ii];
 			cout << "Orbit " << ii << " has length " << l << ":" << endl;
 			for (i = 0; i < l; i++) {
-				a = Orb->orbit[f + i];
+				a = Orb->Forest->orbit[f + i];
 				b = SaS->data[a];
 				cout << i << " : " << a << " : " << b << endl;
 
@@ -759,8 +759,8 @@ void surface_study::study_find_eckardt_points(
 		L.lint_matrix_print_with_labels_and_partition(fp,
 			Intersection_pt, SaS->sz, SaS->sz,
 			orbit, orbit,
-			Orb->orbit_first, Orb->orbit_len, Orb->nb_orbits,
-			Orb->orbit_first, Orb->orbit_len, Orb->nb_orbits,
+			Orb->Forest->orbit_first, Orb->Forest->orbit_len, Orb->Forest->nb_orbits,
+			Orb->Forest->orbit_first, Orb->Forest->orbit_len, Orb->Forest->nb_orbits,
 			matrix_entry_print, (void *) Surf,
 			true /* f_tex */);
 		fp << "$$}" << endl;
@@ -1021,23 +1021,23 @@ void surface_study::study_surface_with_6_eckardt_points(
 	Orb2 = SaS->Strong_gens->compute_all_point_orbits_schreier(
 			A_on_double_pts, print_interval, verbose_level);
 	cout << "orbits on double points off the triangle:" << endl;
-	Orb2->print_and_list_orbits(cout);
+	Orb2->Forest->print_and_list_orbits(cout);
 
 
 	int idx, f, l, a, b;
 
-	if (!Orb2->find_shortest_orbit_if_unique(idx)) {
+	if (!Orb2->Forest->find_shortest_orbit_if_unique(idx)) {
 		cout << "the shortest orbit on double points "
 				"is not unique" << endl;
 		exit(1);
 		}
 
-	f = Orb2->orbit_first[idx];
-	l = Orb2->orbit_len[idx];
+	f = Orb2->Forest->orbit_first[idx];
+	l = Orb2->Forest->orbit_len[idx];
 	cout << "The unique shortest orbit on double points off "
 			"the triangle has length " << l << ":" << endl;
 	for (i = 0; i < l; i++) {
-		a = Orb2->orbit[f + i];
+		a = Orb2->Forest->orbit[f + i];
 		b = Double_pts[a];
 		//cout << i << " : " << a << " : " << b << endl;
 		}
@@ -1046,11 +1046,11 @@ void surface_study::study_surface_with_6_eckardt_points(
 	long int *short_orbit;
 	int short_orbit_len;
 
-	f = Orb2->orbit_first[idx];
-	short_orbit_len = Orb2->orbit_len[idx];
+	f = Orb2->Forest->orbit_first[idx];
+	short_orbit_len = Orb2->Forest->orbit_len[idx];
 	short_orbit = NEW_lint(short_orbit_len);
 	for (i = 0; i < short_orbit_len; i++) {
-		a = Orb2->orbit[f + i];
+		a = Orb2->Forest->orbit[f + i];
 		b = Double_pts[a];
 		short_orbit[i] = b;
 		}
@@ -1088,10 +1088,10 @@ void surface_study::study_surface_with_6_eckardt_points(
 			OS->position_of_original_set,
 			verbose_level);
 	cout << "orbits on set of six points:" << endl;
-	Orb_six_points->print(cout);
+	Orb_six_points->Forest->print(cout);
 	//Orb_six_points->print_and_list_orbits(cout);
 
-	l = Orb_six_points->orbit_len[0];
+	l = Orb_six_points->Forest->orbit_len[0];
 
 
 	int *Coeff;

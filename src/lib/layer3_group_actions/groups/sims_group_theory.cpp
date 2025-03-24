@@ -135,7 +135,7 @@ int sims::transitive_extension_tolerant(
 	algebra::ring_theory::longinteger_domain D;
 	other::orbiter_kernel_system::os_interface Os;
 
-	orbit_len = O.orbit_len[0];
+	orbit_len = O.Forest->orbit_len[0];
 	if (f_v) {
 		cout << "sims::transitive_extension_tolerant "
 				"computing transitive extension" << endl;
@@ -497,14 +497,14 @@ void sims::point_stabilizer_stabchain_with_action(
 	}
 
 
-	orbit_len = O.orbit_len[0];
+	orbit_len = O.Forest->orbit_len[0];
 	if (f_v) {
 		cout << "sims::point_stabilizer_stabchain_with_action "
 				"found orbit of length " << orbit_len << endl;
 	}
 
 	if (f_vvv && A2->degree < 150) {
-		O.print(cout);
+		O.Forest->print(cout);
 	}
 	D.integral_division_by_int(go, orbit_len, stab_order, r);
 	if (r != 0) {
@@ -710,7 +710,7 @@ void sims::point_stabilizer_stabchain_with_action(
 					<< " verbose_level=" << verbose_level << endl;
 			cout << "internal action: " << A->label << endl;
 			cout << "The orbit of point " << pt << " is:" << endl;
-			O.print_and_list_orbits(cout);
+			O.Forest->print_and_list_orbits(cout);
 			//O.print_tables(cout, true /* f_with_cosetrep */);
 			cout << "sims::point_stabilizer_stabchain_with_action "
 					"cur_stab_order > stab_order, error" << endl;
@@ -1869,15 +1869,15 @@ void sims::compute_conjugacy_classes(
 	Sch->compute_all_point_orbits(print_interval, verbose_level);
 
 
-	nb_classes = Sch->nb_orbits;
+	nb_classes = Sch->Forest->nb_orbits;
 
 	class_size = NEW_int(nb_classes);
 	class_rep = NEW_int(nb_classes);
 
 	for (i = 0; i < nb_classes; i++) {
-		class_size[i] = Sch->orbit_len[i];
-		f = Sch->orbit_first[i];
-		class_rep[i] = Sch->orbit[f];
+		class_size[i] = Sch->Forest->orbit_len[i];
+		f = Sch->Forest->orbit_first[i];
+		class_rep[i] = Sch->Forest->orbit[f];
 	}
 
 	if (f_v) {

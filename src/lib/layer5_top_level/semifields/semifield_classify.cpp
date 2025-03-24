@@ -622,9 +622,9 @@ void semifield_classify::report(
 				L2->Stabilizer_gens[po].group_order(go);
 
 
-				for (so = 0; so < L3->Downstep_nodes[po].Sch->nb_orbits; so++) {
+				for (so = 0; so < L3->Downstep_nodes[po].Sch->Forest->nb_orbits; so++) {
 
-					ol = L3->Downstep_nodes[po].Sch->orbit_len[so];
+					ol = L3->Downstep_nodes[po].Sch->Forest->orbit_len[so];
 
 
 					Go[f] = go.as_lint() / ol;

@@ -789,10 +789,10 @@ void action::compute_stabilizer_orbits(
 		compute_all_point_orbits(Schreier, gen, 0 /*verbose_level - 2*/);
 
 		if (false) {
-			Schreier.print(cout);
+			Schreier.Forest->print(cout);
 		}
 
-		Schreier.get_orbit_partition(*S, 0 /*verbose_level - 2*/);
+		Schreier.Forest->get_orbit_partition(*S, 0 /*verbose_level - 2*/);
 		if (false) {
 			cout << "found " << S->ht << " orbits" << endl;
 		}

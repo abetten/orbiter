@@ -254,10 +254,10 @@ void stabilizer_orbits_and_types::compute_stabilizer_orbits_and_find_minimal_pat
 	if (f_v) {
 		cout << "stabilizer_orbits_and_types::compute_stabilizer_orbits_and_find_minimal_pattern "
 				"after compute_all_point_orbits_schreier, "
-				"we found " << Schreier->nb_orbits << " orbits" << endl;
+				"we found " << Schreier->Forest->nb_orbits << " orbits" << endl;
 	}
 
-	nb_orbits = Schreier->nb_orbits;
+	nb_orbits = Schreier->Forest->nb_orbits;
 	orbit_count1 = NEW_int(nb_orbits);
 	orbit_count2 = NEW_int(nb_orbits);
 	Int_vec_zero(orbit_count1, nb_orbits);
@@ -296,7 +296,7 @@ void stabilizer_orbits_and_types::compute_stabilizer_orbits_and_find_minimal_pat
 	if (f_v) {
 		cout << "orbit patterns (top row is orbit length): " << endl;
 		Int_vec_print_integer_matrix_width(cout,
-				Schreier->orbit_len, 1, nb_orbits, nb_orbits, 2);
+				Schreier->Forest->orbit_len, 1, nb_orbits, nb_orbits, 2);
 		if (CS->SubSt->nb_interesting_subsets < 100) {
 			Int_vec_print_integer_matrix_width(cout,
 				Orbit_patterns,
@@ -489,7 +489,7 @@ void stabilizer_orbits_and_types::find_orbit_pattern(
 		cout << endl;
 	}
 
-	Schreier->compute_orbit_statistic_lint(
+	Schreier->Forest->compute_orbit_statistic_lint(
 			reduced_set1, reduced_set_size,
 			orbit_count1, verbose_level - 1);
 
@@ -526,7 +526,7 @@ void stabilizer_orbits_and_types::find_interesting_orbits(
 		if (orbit_count2[i]) {
 			orbit_to_interesting_orbit[i] = nb_interesting_orbits;
 			interesting_orbits[nb_interesting_orbits++] = i;
-			nb_interesting_points += Schreier->orbit_len[i];
+			nb_interesting_points += Schreier->Forest->orbit_len[i];
 		}
 		else {
 			orbit_to_interesting_orbit[i] = -1;
@@ -555,12 +555,12 @@ void stabilizer_orbits_and_types::find_interesting_orbits(
 	j = 0;
 	for (k = 0; k < nb_interesting_orbits; k++) {
 		idx = interesting_orbits[k];
-		f = Schreier->orbit_first[idx];
-		l = Schreier->orbit_len[idx];
+		f = Schreier->Forest->orbit_first[idx];
+		l = Schreier->Forest->orbit_len[idx];
 		interesting_orbit_first[k] = j;
 		interesting_orbit_len[k] = l;
 		for (ii = 0; ii < l; ii++) {
-			interesting_points[j++] = Schreier->orbit[f + ii];
+			interesting_points[j++] = Schreier->Forest->orbit[f + ii];
 		}
 		Sorting.lint_vec_heapsort(
 				interesting_points + interesting_orbit_first[k], l);
@@ -598,7 +598,7 @@ void stabilizer_orbits_and_types::compute_local_labels(
 
 	for (i = 0; i < sz; i++) {
 		a = set_in[i];
-		idx = Schreier->orbit_number(a);
+		idx = Schreier->Forest->orbit_number(a);
 		idx1 = orbit_to_interesting_orbit[idx];
 		f = interesting_orbit_first[idx1];
 		l = interesting_orbit_len[idx1];
@@ -766,7 +766,7 @@ void stabilizer_orbits_and_types::map_reduced_set_and_do_orbit_counting(
 		cout << endl;
 	}
 
-	Schreier->compute_orbit_statistic_lint(reduced_set1,
+	Schreier->Forest->compute_orbit_statistic_lint(reduced_set1,
 			reduced_set_size,
 			orbit_count1,
 			verbose_level - 1);
@@ -861,7 +861,7 @@ void stabilizer_orbits_and_types::print_minimal_orbit_pattern()
 			<< minimal_orbit_pattern_idx << endl;
 
 	Int_vec_print_integer_matrix_width(cout,
-			Schreier->orbit_len, 1, nb_orbits, nb_orbits, 2);
+			Schreier->Forest->orbit_len, 1, nb_orbits, nb_orbits, 2);
 
 	Int_vec_print_integer_matrix_width(cout,
 			orbit_count2, 1, nb_orbits, nb_orbits, 2);

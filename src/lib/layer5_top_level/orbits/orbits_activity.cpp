@@ -709,19 +709,19 @@ void orbits_activity::do_export_trees(
 
 		fname_tree_mask = "orbit_" + OC->Group->A->label + "_%d.layered_graph";
 
-		for (orbit_idx = 0; orbit_idx < OC->Orb->Sch->nb_orbits; orbit_idx++) {
+		for (orbit_idx = 0; orbit_idx < OC->Orb->Sch->Forest->nb_orbits; orbit_idx++) {
 
 			if (f_v) {
-				cout << "orbit " << orbit_idx << " / " <<  OC->Orb->Sch->nb_orbits
+				cout << "orbit " << orbit_idx << " / " <<  OC->Orb->Sch->Forest->nb_orbits
 						<< " before Sch->export_tree_as_layered_graph_and_save" << endl;
 			}
 
-			OC->Orb->Sch->export_tree_as_layered_graph_and_save(
+			OC->Orb->Sch->Forest->export_tree_as_layered_graph_and_save(
 					orbit_idx,
 					fname_tree_mask,
 					verbose_level - 1);
 			if (f_v) {
-				cout << "orbit " << orbit_idx << " / " <<  OC->Orb->Sch->nb_orbits
+				cout << "orbit " << orbit_idx << " / " <<  OC->Orb->Sch->Forest->nb_orbits
 						<< " after Sch->export_tree_as_layered_graph_and_save" << endl;
 			}
 		}
@@ -956,7 +956,7 @@ void orbits_activity::do_export_levels(
 		fname_tree_mask = "orbit_" + OC->Group->A->label + "_orbit_" + std::to_string(orbit_idx);
 		other::data_structures::set_of_sets *SoS;
 
-		OC->Orb->Sch->get_orbit_by_levels(
+		OC->Orb->Sch->Forest->get_orbit_by_levels(
 				orbit_idx,
 				SoS,
 				verbose_level);
@@ -1156,9 +1156,9 @@ void orbits_activity::do_draw_tree(
 
 		if (f_v) {
 			cout << "orbits_activity::do_draw_tree "
-					"before OC->Orb->Sch->draw_tree" << endl;
+					"before OC->Orb->Sch->Forest->draw_tree" << endl;
 		}
-		OC->Orb->Sch->draw_tree(
+		OC->Orb->Sch->Forest->draw_tree(
 				fname,
 				Draw_options,
 				Descr->draw_tree_idx,
@@ -1166,21 +1166,21 @@ void orbits_activity::do_draw_tree(
 				verbose_level);
 		if (f_v) {
 			cout << "orbits_activity::do_draw_tree "
-					"after OC->Orb->Sch->draw_tree" << endl;
+					"after OC->Orb->Sch->Forest->draw_tree" << endl;
 		}
 
 		std::vector<int> Orb;
 
 		if (f_v) {
 			cout << "orbits_activity::do_draw_tree "
-					"before OC->Orb->Sch->get_orbit_in_order" << endl;
+					"before OC->Orb->Sch->Forest->get_orbit_in_order" << endl;
 		}
-		OC->Orb->Sch->get_orbit_in_order(
+		OC->Orb->Sch->Forest->get_orbit_in_order(
 				Orb,
 				Descr->draw_tree_idx, verbose_level);
 		if (f_v) {
 			cout << "orbits_activity::do_draw_tree "
-					"after OC->Orb->Sch->get_orbit_in_order" << endl;
+					"after OC->Orb->Sch->Forest->get_orbit_in_order" << endl;
 		}
 
 		other::orbiter_kernel_system::file_io Fio;
@@ -1251,7 +1251,7 @@ void orbits_activity::do_draw_tree(
 
 		fname = OC->prefix + "_orbit_" + std::to_string(Descr->draw_tree_idx) + "_tree";
 
-		OC->On_polynomials->Sch->draw_tree(
+		OC->On_polynomials->Sch->Forest->draw_tree(
 				fname,
 				Draw_options,
 				Descr->draw_tree_idx,

@@ -821,7 +821,7 @@ void graph_theoretic_activity::perform_activity(
 		int c;
 
 
-		Fio.Csv_file_support->read_column_and_parse(
+		Fio.Csv_file_support->read_column_as_set_of_sets(
 				Descr->split_by_starters_fname_reps,
 				Descr->split_by_starters_col_label,
 				Reps, verbose_level);
@@ -868,7 +868,7 @@ void graph_theoretic_activity::perform_activity(
 		int c;
 
 
-		Fio.Csv_file_support->read_column_and_parse(
+		Fio.Csv_file_support->read_column_as_set_of_sets(
 				Descr->combine_by_starters_fname_reps,
 				Descr->combine_by_starters_col_label,
 				Reps, verbose_level);

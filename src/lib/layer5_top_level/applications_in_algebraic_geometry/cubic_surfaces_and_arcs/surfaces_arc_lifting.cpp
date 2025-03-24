@@ -564,10 +564,10 @@ void surfaces_arc_lifting::downstep_one_arc(
 
 			int f, l, partition_rk, p0, p1;
 
-			f = Sch->orbit_first[orbit_on_partition_idx];
-			l = Sch->orbit_len[orbit_on_partition_idx];
+			f = Sch->Forest->orbit_first[orbit_on_partition_idx];
+			l = Sch->Forest->orbit_len[orbit_on_partition_idx];
 
-			partition_rk = Sch->orbit[f + 0];
+			partition_rk = Sch->Forest->orbit[f + 0];
 			if (f_v) {
 				cout << "surfaces_arc_lifting::downstep_one_arc "
 						"orbit on partitions "
@@ -1218,10 +1218,10 @@ void surfaces_arc_lifting::report_flag_orbits_in_detail(
 
 		int f, l, orbit_rep;
 
-		f = Sch->orbit_first[part_idx];
-		l = Sch->orbit_len[part_idx];
+		f = Sch->Forest->orbit_first[part_idx];
+		l = Sch->Forest->orbit_len[part_idx];
 
-		orbit_rep = Sch->orbit[f + 0];
+		orbit_rep = Sch->Forest->orbit[f + 0];
 		ost << "orbit of $" << orbit_rep << "$ has length " << l
 				<< ", and corresponds to the partition $";
 		Combi.set_partition_4_into_2_unrank(orbit_rep, part);

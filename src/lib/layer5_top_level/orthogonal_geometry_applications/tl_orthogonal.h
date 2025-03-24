@@ -620,6 +620,13 @@ public:
 	int f_create_orthogonal_reflection;
 	std::string create_orthogonal_reflection_points;
 
+	int f_create_Siegel_transformation;
+	std::string create_Siegel_transformation_u;
+	std::string create_Siegel_transformation_v;
+
+	// ToDo: undocumented
+	int f_make_all_Siegel_transformations;
+
 	int f_create_orthogonal_reflection_6_and_4;
 	std::string create_orthogonal_reflection_6_and_4_points;
 	std::string create_orthogonal_reflection_6_and_4_A4;
@@ -751,6 +758,10 @@ public:
 			int verbose_level);
 	void create_orthogonal_reflections(
 			long int *pts, int nb_pts,
+			data_structures_groups::vector_ge *&vec,
+			int verbose_level);
+	void create_Siegel_transformation(
+			int *u, int *v, int len,
 			data_structures_groups::vector_ge *&vec,
 			int verbose_level);
 	void create_orthogonal_reflections_6x6_and_4x4(

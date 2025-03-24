@@ -276,7 +276,7 @@ void action_on_forms::orbits_on_functions(
 		cout << "action_on_forms::orbits_on_functions" << endl;
 	}
 	Classify_orbits_by_length = NEW_OBJECT(other::data_structures::tally);
-	Classify_orbits_by_length->init(Orb->orbit_len, Orb->nb_orbits, false, 0);
+	Classify_orbits_by_length->init(Orb->Forest->orbit_len, Orb->Forest->nb_orbits, false, 0);
 
 
 	other::data_structures::set_of_sets *SoS;
@@ -300,10 +300,10 @@ void action_on_forms::orbits_on_functions(
 
 	if (f_v) {
 		cout << "action::orbits_on_equations "
-				"We found " << Orb->nb_orbits
+				"We found " << Orb->Forest->nb_orbits
 				<< " orbits on the equations. "
 						"The non-trivial orbits are:" << endl;
-		Orb->print_and_list_non_trivial_orbits_tex(cout);
+		Orb->Forest->print_and_list_non_trivial_orbits_tex(cout);
 
 		cout << "action::orbits_on_equations "
 				"The orbits that are not long are:" << endl;
@@ -324,7 +324,7 @@ void action_on_forms::orbits_on_functions(
 				<< " orbits of length " << types[t] << ":" << endl;
 
 			for (h = 0; h < SoS->Set_size[t]; h++) {
-				Orb->print_and_list_orbit_tex(SoS->Sets[t][h], cout);
+				Orb->Forest->print_and_list_orbit_tex(SoS->Sets[t][h], cout);
 			}
 			cout << endl;
 			for (h = 0; h < SoS->Set_size[t]; h++) {
@@ -334,8 +334,8 @@ void action_on_forms::orbits_on_functions(
 
 				cout << "orbit " << h << " / " << SoS->Set_size[t] << " of length " << types[t]
 						<< " is orbit " << SoS->Sets[t][h] << ":" << endl;
-				Orb->print_and_list_orbit_tex(SoS->Sets[t][h], cout);
-				Orb->get_orbit_sorted(v, orbit_len, SoS->Sets[t][h]);
+				Orb->Forest->print_and_list_orbit_tex(SoS->Sets[t][h], cout);
+				Orb->Forest->get_orbit_sorted(v, orbit_len, SoS->Sets[t][h]);
 
 				for (u = 0; u < orbit_len; u++) {
 

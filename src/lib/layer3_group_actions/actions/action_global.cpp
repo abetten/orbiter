@@ -1161,7 +1161,7 @@ void action_global::perm_print_cycles_sorted_by_length_offset(
 			verbose_level);
 	if (f_v) {
 		cout << "after S.compute_all_point_orbits, "
-				"nb_orbits=" << S.nb_orbits << endl;
+				"nb_orbits=" << S.Forest->nb_orbits << endl;
 	}
 	//S.print_orbit_lengths(cout);
 	//S.print_orbit_length_distribution(ost);
@@ -1176,7 +1176,7 @@ void action_global::perm_print_cycles_sorted_by_length_offset(
 	other::data_structures::sorting Sorting;
 	
 	Sorting.int_vec_classify(
-			S.nb_orbits, S.orbit_len, orbit_len_sorted,
+			S.Forest->nb_orbits, S.Forest->orbit_len, orbit_len_sorted,
 		sorting_perm, sorting_perm_inv, 
 		nb_types, type_first, type_len);
 
@@ -1219,12 +1219,12 @@ void action_global::perm_print_cycles_sorted_by_length_offset(
 			for (j = 0; j < l; j++) {
 				orbit_idx = sorting_perm_inv[f + j];
 				//ost << "orbit " << orbit_idx << ": ";
-				F = S.orbit_first[orbit_idx];
-				L = S.orbit_len[orbit_idx];
-				m = S.orbit[F];
+				F = S.Forest->orbit_first[orbit_idx];
+				L = S.Forest->orbit_len[orbit_idx];
+				m = S.Forest->orbit[F];
 				for (h = 1; h < L; h++) {
-					if (S.orbit[F + h] < m) {
-						m = S.orbit[F + h];
+					if (S.Forest->orbit[F + h] < m) {
+						m = S.Forest->orbit[F + h];
 					}
 				}
 				// now m is the least element in the orbit
@@ -2160,9 +2160,9 @@ void action_global::orbits_on_equations(
 
 	if (false) {
 		cout << "action_global::orbits_on_equations "
-				"We found " << Orb->nb_orbits
+				"We found " << Orb->Forest->nb_orbits
 				<< " orbits on the equations:" << endl;
-		Orb->print_and_list_orbits_tex(cout);
+		Orb->Forest->print_and_list_orbits_tex(cout);
 	}
 
 	if (f_v) {
@@ -3358,10 +3358,10 @@ void action_global::compute_orbit_of_point(
 	Schreier.init(A, verbose_level - 2);
 	Schreier.init_generators(strong_generators, verbose_level - 2);
 	Schreier.compute_point_orbit(pt, print_interval, 0);
-	f = Schreier.orbit_first[0];
-	len = Schreier.orbit_len[0];
+	f = Schreier.Forest->orbit_first[0];
+	len = Schreier.Forest->orbit_len[0];
 	for (i = 0; i < len; i++) {
-		orbit[i] = Schreier.orbit[f + i];
+		orbit[i] = Schreier.Forest->orbit[f + i];
 	}
 	if (f_v) {
 		cout << "action_global::compute_orbit_of_point done" << endl;
@@ -3412,9 +3412,9 @@ int action_global::least_image_of_point(
 	Schreier.init(A, verbose_level - 2);
 	Schreier.init_generators(strong_generators, verbose_level - 2);
 	Schreier.compute_point_orbit(pt, print_interval, 0);
-	len = Schreier.orbit_len[0];
-	image = Int_vec_minimum(Schreier.orbit, len);
-	pos = Schreier.orbit_inv[image];
+	len = Schreier.Forest->orbit_len[0];
+	image = Int_vec_minimum(Schreier.Forest->orbit, len);
+	pos = Schreier.Forest->orbit_inv[image];
 	Schreier.coset_rep(pos, 0 /* verbose_level */);
 	A->Group_element->element_move(
 			Schreier.cosetrep, transporter, 0);
@@ -3561,7 +3561,7 @@ void action_global::get_orbits_on_points_as_characteristic_vector(
 	int pt;
 
 	for (pt = 0; pt < A->degree; pt++) {
-		orbit_no[pt] = Schreier.orbit_number(pt);
+		orbit_no[pt] = Schreier.Forest->orbit_number(pt);
 	}
 
 	if (f_v) {
@@ -4977,11 +4977,11 @@ void action_global::lexorder_test(
 
 	if (f_v) {
 		cout << "action_global::lexorder_test: there are "
-				<< Sch->nb_orbits << " orbits on set" << endl;
-		Sch->print_orbit_length_distribution(cout);
+				<< Sch->Forest->nb_orbits << " orbits on set" << endl;
+		Sch->Forest->print_orbit_length_distribution(cout);
 	}
 	if (f_v5) {
-		Sch->print_and_list_orbits(cout);
+		Sch->Forest->print_and_list_orbits(cout);
 	}
 
 	if (f_v) {
@@ -4995,9 +4995,9 @@ void action_global::lexorder_test(
 			cout << "action_global::lexorder_test "
 					"Looking at point " << a << endl;
 		}
-		orb = Sch->orbit_number(a);
-		first = Sch->orbit_first[orb];
-		a0 = Sch->orbit[first];
+		orb = Sch->Forest->orbit_number(a);
+		first = Sch->Forest->orbit_first[orb];
+		a0 = Sch->Forest->orbit[first];
 		if (a0 < max_starter) {
 			if (f_v) {
 				cout << "action_global::lexorder_test  Point " << a
@@ -5060,12 +5060,12 @@ void action_global::compute_orbits_on_points(
 		cout << "action_global::compute_orbits_on_points "
 				"after Sch->compute_all_point_orbits" << endl;
 		cout << "action_global::compute_orbits_on_points "
-				"Sch->nb_orbits=" << Sch->nb_orbits << endl;
+				"Sch->nb_orbits=" << Sch->Forest->nb_orbits << endl;
 	}
 	//Sch.print_and_list_orbits(cout);
 	if (f_v) {
 		cout << "action_global::compute_orbits_on_points done, we found "
-				<< Sch->nb_orbits << " orbits" << endl;
+				<< Sch->Forest->nb_orbits << " orbits" << endl;
 	}
 }
 
@@ -5101,13 +5101,13 @@ void action_global::point_stabilizer_any_point(
 	//*Strong_gens->gens, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "computing all point orbits done, found "
-				<< Sch->nb_orbits << " orbits" << endl;
+				<< Sch->Forest->nb_orbits << " orbits" << endl;
 	}
 
 
-	f = Sch->orbit_first[0];
-	//len = Sch->orbit_len[0];
-	pt = Sch->orbit[f];
+	f = Sch->Forest->orbit_first[0];
+	//len = Sch->Forest->orbit_len[0];
+	pt = Sch->Forest->orbit[f];
 
 	if (f_v) {
 		cout << "action_global::point_stabilizer_any_point "
@@ -5178,12 +5178,12 @@ void action_global::point_stabilizer_any_point_with_given_group(
 	}
 	//compute_all_point_orbits(Sch, *Strong_gens->gens, 0 /* verbose_level */);
 	cout << "computing all point orbits done, found "
-			<< Sch->nb_orbits << " orbits" << endl;
+			<< Sch->Forest->nb_orbits << " orbits" << endl;
 
 
-	f = Sch->orbit_first[0];
-	//len = Sch->orbit_len[0];
-	pt = Sch->orbit[f];
+	f = Sch->Forest->orbit_first[0];
+	//len = Sch->Forest->orbit_len[0];
+	pt = Sch->Forest->orbit[f];
 
 	if (f_v) {
 		cout << "action_global::point_stabilizer_any_point_with_given_group "
@@ -5271,7 +5271,7 @@ void action_global::move_a_to_b_and_stabilizer_of_b(
 	if (f_v) {
 		cout << "action_global::move_a_to_b_and_stabilizer_of_b "
 				"after compute_all_point_orbits_schreier" << endl;
-		cout << "We found " << Schreier->nb_orbits
+		cout << "We found " << Schreier->Forest->nb_orbits
 				<< " orbits of the group" << endl;
 	}
 
@@ -5283,8 +5283,8 @@ void action_global::move_a_to_b_and_stabilizer_of_b(
 
 	int idx1, idx2;
 
-	idx1 = Schreier->orbit_number(a);
-	idx2 = Schreier->orbit_number(b);
+	idx1 = Schreier->Forest->orbit_number(a);
+	idx2 = Schreier->Forest->orbit_number(b);
 	if (idx1 != idx2) {
 		cout << "action_global::move_a_to_b_and_stabilizer_of_b "
 				"the two points lie in different orbits" << endl;
@@ -7233,10 +7233,10 @@ void action_global::report_induced_action_on_set_and_kernel(
 					AAA->Kernel->gens, verbose_level - 2);
 			int *val, *mult, len;
 
-			file << "The kernel has $" << Orb.nb_orbits
+			file << "The kernel has $" << Orb.Forest->nb_orbits
 					<< "$ orbits on the object.\\\\" << endl;
 			Int_vec_distribution(
-					Orb.orbit_len, Orb.nb_orbits,
+					Orb.Forest->orbit_len, Orb.Forest->nb_orbits,
 					val, mult, len);
 			file << "The orbit length are $[";
 			for (i = len - 1; i >= 0; i--) {

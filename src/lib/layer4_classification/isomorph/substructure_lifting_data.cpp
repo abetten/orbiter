@@ -883,9 +883,9 @@ void substructure_lifting_data::orbits_of_stabilizer_case(
 	}
 
 	for (k = 0; k < l; k++) {
-		p = Schreier->orbit[k];
-		prev = Schreier->prev[k];
-		hdl = Schreier->label[k];
+		p = Schreier->Forest->orbit[k];
+		prev = Schreier->Forest->prev[k];
+		hdl = Schreier->Forest->label[k];
 		//cout << "coset " << k << " point p=" << p
 		// << " prev=" << prev << " label " << hdl << endl;
 		if (prev != -1) {
@@ -906,21 +906,21 @@ void substructure_lifting_data::orbits_of_stabilizer_case(
 			}
 		}
 	}
-	for (k = 0; k < Schreier->nb_orbits; k++) {
-		ff = Schreier->orbit_first[k];
-		ll = Schreier->orbit_len[k];
+	for (k = 0; k < Schreier->Forest->nb_orbits; k++) {
+		ff = Schreier->Forest->orbit_first[k];
+		ll = Schreier->Forest->orbit_len[k];
 		for (h = 0; h < ll; h++) {
-			p = f + Schreier->orbit[ff + h];
+			p = f + Schreier->Forest->orbit[ff + h];
 			flag_orbit_of_solution[f + ff + h] = nb_flag_orbits;
 			orbit_perm[f + ff + h] = p;
 			orbit_perm_inv[p] = f + ff + h;
-			schreier_vector[f + ff + h] = Schreier->label[ff + h];
+			schreier_vector[f + ff + h] = Schreier->Forest->label[ff + h];
 			if (h == 0) {
 				schreier_prev[f + ff + h] = -1;
 			}
 			else {
 				schreier_prev[f + ff + h] =
-						f + Schreier->prev[ff + h];
+						f + Schreier->Forest->prev[ff + h];
 			}
 		}
 		flag_orbit_solution_len[nb_flag_orbits] = ll;

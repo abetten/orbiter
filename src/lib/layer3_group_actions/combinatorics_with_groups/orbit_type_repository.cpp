@@ -402,7 +402,7 @@ void orbit_type_repository::report_one_type(
 
 						for (h = 0; h < len; h++) {
 							a = set2[h];
-							b = Oos->Sch->orbit_number(a);
+							b = Oos->Sch->Forest->orbit_number(a);
 							v[h] = b;
 						}
 						other::data_structures::tally By_orbit_number;

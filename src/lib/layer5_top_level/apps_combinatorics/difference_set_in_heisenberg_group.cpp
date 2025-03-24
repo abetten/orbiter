@@ -243,9 +243,9 @@ void difference_set_in_heisenberg_group::do_n2q3(
 	Sch->init_generators(*U_gens, verbose_level - 2);
 	Sch->compute_all_point_orbits(print_interval, 0 /*verbose_level*/);
 	cout << "The orbits of U are:" << endl;
-	Sch->print_and_list_orbits_tex(cout);
-	Sch->print_orbit_lengths(cout);
-	Sch->print_orbit_length_distribution(cout);
+	Sch->Forest->print_and_list_orbits_tex(cout);
+	Sch->Forest->print_orbit_lengths(cout);
+	Sch->Forest->print_orbit_length_distribution(cout);
 
 	prefix = "N_U_2_3";
 
@@ -302,46 +302,46 @@ void difference_set_in_heisenberg_group::do_n2q3(
 			<< N_on_orbits->degree << endl;
 
 
-	Paired_with = NEW_int(Sch->nb_orbits);
-	for (i = 0; i < Sch->nb_orbits; i++) {
-		f = Sch->orbit_first[i];
+	Paired_with = NEW_int(Sch->Forest->nb_orbits);
+	for (i = 0; i < Sch->Forest->nb_orbits; i++) {
+		f = Sch->Forest->orbit_first[i];
 		//l = Sch->orbit_len[i];
-		a = Sch->orbit[f];
+		a = Sch->Forest->orbit[f];
 		b = H->element_negate_by_rank(a, 0 /* verbose_level */);
 		//pos = Sch->orbit_inv[b];
-		j = Sch->orbit_number(b);
+		j = Sch->Forest->orbit_number(b);
 			// Sch->orbit_no[pos];
 		Paired_with[i] = j;
 	}
 	cout << "Paired_with:" << endl;
-	for (i = 0; i < Sch->nb_orbits; i++) {
+	for (i = 0; i < Sch->Forest->nb_orbits; i++) {
 		cout << i << " : " << Paired_with[i] << endl;
 	}
 	nb_paired_orbits = 0;
-	Pairs = NEW_lint(Sch->nb_orbits * 2);
-	Pair_orbit_length = NEW_int(Sch->nb_orbits);
-	for (i = 0; i < Sch->nb_orbits; i++) {
+	Pairs = NEW_lint(Sch->Forest->nb_orbits * 2);
+	Pair_orbit_length = NEW_int(Sch->Forest->nb_orbits);
+	for (i = 0; i < Sch->Forest->nb_orbits; i++) {
 		if (Paired_with[i] <= i) {
 			// omit the self paired orbit of the identity element
 			continue;
 		}
 		Pairs[2 * nb_paired_orbits + 0] = i;
 		Pairs[2 * nb_paired_orbits + 1] = Paired_with[i];
-		Pair_orbit_length[nb_paired_orbits] = Sch->orbit_len[i];
+		Pair_orbit_length[nb_paired_orbits] = Sch->Forest->orbit_len[i];
 		nb_paired_orbits++;
 	}
 	cout << "We found " << nb_paired_orbits << " paired orbits" << endl;
 	for (h = 0; h < nb_paired_orbits; h++) {
 		a = Pairs[2 * h + 0];
 		b = Pairs[2 * h + 1];
-		u = Sch->orbit_first[a];
-		v = Sch->orbit_first[b];
-		len1 = Sch->orbit_len[a];
-		len2 = Sch->orbit_len[b];
+		u = Sch->Forest->orbit_first[a];
+		v = Sch->Forest->orbit_first[b];
+		len1 = Sch->Forest->orbit_len[a];
+		len2 = Sch->Forest->orbit_len[b];
 		cout << h << " / " << nb_paired_orbits << " : "
 			<< a << "," << b << " = {";
 		for (k = 0; k < len1; k++) {
-			i = Sch->orbit[u + k];
+			i = Sch->Forest->orbit[u + k];
 			cout << i;
 			if (k < len1 - 1) {
 				cout << ", ";
@@ -350,7 +350,7 @@ void difference_set_in_heisenberg_group::do_n2q3(
 		cout << "}, ";
 		cout << "{";
 		for (k = 0; k < len2; k++) {
-			j = Sch->orbit[v + k];
+			j = Sch->Forest->orbit[v + k];
 			cout << j;
 			if (k < len2 - 1) {
 				cout << ", ";
@@ -392,27 +392,27 @@ void difference_set_in_heisenberg_group::do_n2q3(
 		h = Pairs_of_type1[s];
 		a = Pairs[2 * h + 0];
 		b = Pairs[2 * h + 1];
-		u = Sch->orbit_first[a];
-		v = Sch->orbit_first[b];
-		len1 = Sch->orbit_len[a];
-		len2 = Sch->orbit_len[b];
-		Sets1[s * 2 + 0] = Sch->orbit[u];
-		Sets1[s * 2 + 1] = Sch->orbit[v];
+		u = Sch->Forest->orbit_first[a];
+		v = Sch->Forest->orbit_first[b];
+		len1 = Sch->Forest->orbit_len[a];
+		len2 = Sch->Forest->orbit_len[b];
+		Sets1[s * 2 + 0] = Sch->Forest->orbit[u];
+		Sets1[s * 2 + 1] = Sch->Forest->orbit[v];
 	}
 	Sets2 = NEW_int(nb_pairs_of_type2 * 6);
 	for (s = 0; s < nb_pairs_of_type2; s++) {
 		h = Pairs_of_type2[s];
 		a = Pairs[2 * h + 0];
 		b = Pairs[2 * h + 1];
-		u = Sch->orbit_first[a];
-		v = Sch->orbit_first[b];
-		len1 = Sch->orbit_len[a];
-		len2 = Sch->orbit_len[b];
+		u = Sch->Forest->orbit_first[a];
+		v = Sch->Forest->orbit_first[b];
+		len1 = Sch->Forest->orbit_len[a];
+		len2 = Sch->Forest->orbit_len[b];
 		for (k = 0; k < 3; k++) {
-			Sets2[s * 6 + k] = Sch->orbit[u + k];
+			Sets2[s * 6 + k] = Sch->Forest->orbit[u + k];
 		}
 		for (k = 0; k < 3; k++) {
-			Sets2[s * 6 + 3 + k] = Sch->orbit[v + k];
+			Sets2[s * 6 + 3 + k] = Sch->Forest->orbit[v + k];
 		}
 	}
 	cout << "Sets1:" << endl;
@@ -432,8 +432,8 @@ void difference_set_in_heisenberg_group::do_n2q3(
 	Short_pairs = NEW_lint(nb_short_orbits);
 	Long_pairs = NEW_lint(nb_long_orbits);
 
-	Short_orbit_inverse = NEW_int(Sch->nb_orbits);
-	Int_vec_mone(Short_orbit_inverse, Sch->nb_orbits);
+	Short_orbit_inverse = NEW_int(Sch->Forest->nb_orbits);
+	Int_vec_mone(Short_orbit_inverse, Sch->Forest->nb_orbits);
 
 	for (s = 0; s < nb_pairs_of_type1; s++) {
 		h = Pairs_of_type1[s];
@@ -557,14 +557,14 @@ void difference_set_in_heisenberg_group::check_overgroups_of_order_nine(
 		Sch1->init_generators(*O_gens, verbose_level - 2);
 		Sch1->compute_all_point_orbits(print_interval, 0 /*verbose_level*/);
 		cout << "The orbits of O are:" << endl;
-		Sch1->print_and_list_orbits_tex(cout);
-		Sch1->print_orbit_lengths(cout);
-		Sch1->print_orbit_length_distribution(cout);
+		Sch1->Forest->print_and_list_orbits_tex(cout);
+		Sch1->Forest->print_orbit_lengths(cout);
+		Sch1->Forest->print_orbit_length_distribution(cout);
 
 
 		other::data_structures::tally Overgroup_orbit_type;
-		Overgroup_orbit_type.init(Sch1->orbit_len,
-				Sch1->nb_orbits, false, 0);
+		Overgroup_orbit_type.init(Sch1->Forest->orbit_len,
+				Sch1->Forest->nb_orbits, false, 0);
 		cout << "Overgroup orbit type:" << endl;
 		Overgroup_orbit_type.print_bare(true);
 		cout << endl;
@@ -574,24 +574,24 @@ void difference_set_in_heisenberg_group::check_overgroups_of_order_nine(
 
 
 		Pairing = NEW_int(nb_long_orbits);
-		for (a = 0; a < Sch1->nb_orbits; a++) {
-			f = Sch1->orbit_first[a];
-			l = Sch1->orbit_len[a];
-			o1 = Sch1->orbit[f];
+		for (a = 0; a < Sch1->Forest->nb_orbits; a++) {
+			f = Sch1->Forest->orbit_first[a];
+			l = Sch1->Forest->orbit_len[a];
+			o1 = Sch1->Forest->orbit[f];
 			o2 = Paired_with[o1];
 
 
 			cout << "normalizer orbit " << a << " / "
-					<< Sch1->nb_orbits << " is U-orbit " << o1 << endl;
+					<< Sch1->Forest->nb_orbits << " is U-orbit " << o1 << endl;
 			cout << "U-orbit " << o1 << " is paired with U-orbit " << o2 << endl;
 			//pos = Sch1->orbit_inv[o2];
-			b = Sch1->orbit_number(o2); // Sch1->orbit_no[pos];
+			b = Sch1->Forest->orbit_number(o2); // Sch1->orbit_no[pos];
 			cout << "Which is normalizer orbit " << b << endl;
 			Pairing[a] = b;
 		}
 		cout << "Pairing:" << endl;
 		L.print_integer_matrix_with_standard_labels(cout,
-				Pairing, Sch1->nb_orbits, 1, false /* f_tex */);
+				Pairing, Sch1->Forest->nb_orbits, 1, false /* f_tex */);
 
 
 		int *long_orbits;
@@ -611,7 +611,7 @@ void difference_set_in_heisenberg_group::check_overgroups_of_order_nine(
 
 
 
-		Pairs_of_long_orbits = NEW_int(Sch1->nb_orbits * 2);
+		Pairs_of_long_orbits = NEW_int(Sch1->Forest->nb_orbits * 2);
 		nb_pairs_of_long_orbits = 0;
 		for (s = 0; s < nb_long_orbits; s++) {
 			a = long_orbits[s];
@@ -658,8 +658,8 @@ void difference_set_in_heisenberg_group::check_overgroups_of_order_nine(
 				else {
 					a = Pairs_of_long_orbits[t * 2 + 0];
 				}
-				f = Sch1->orbit_first[a];
-				l = Sch1->orbit_len[a];
+				f = Sch1->Forest->orbit_first[a];
+				l = Sch1->Forest->orbit_len[a];
 				if (l != 3) {
 					cout << "l != 3" << endl;
 					cout << "a=" << a << endl;
@@ -673,15 +673,15 @@ void difference_set_in_heisenberg_group::check_overgroups_of_order_nine(
 					exit(1);
 				}
 				for (v = 0; v < l; v++) {
-					o1 = Sch1->orbit[f + v];
-					ff = Sch->orbit_first[o1];
-					ll = Sch->orbit_len[o1];
+					o1 = Sch1->Forest->orbit[f + v];
+					ff = Sch->Forest->orbit_first[o1];
+					ll = Sch->Forest->orbit_len[o1];
 					if (ll != 3) {
 						cout << "ll != 3" << endl;
 						exit(1);
 					}
 					for (k = 0; k < ll; k++) {
-						D[D_sz++] = Sch->orbit[ff + k];
+						D[D_sz++] = Sch->Forest->orbit[ff + k];
 					}
 				}
 			}
@@ -950,7 +950,7 @@ void difference_set_in_heisenberg_group::create_minimal_overgroups(
 			if (f_v) {
 				cout << "difference_set_in_heisenberg_group::create_minimal_overgroups "
 						"found an orbit of conjugate subgroups of length "
-						<< Sch_subgroups->orbit_len[0] << endl;
+						<< Sch_subgroups->Forest->orbit_len[0] << endl;
 			}
 
 			// compute minimal overgroups:
@@ -1082,21 +1082,21 @@ void difference_set_in_heisenberg_group::create_minimal_overgroups(
 					cout << "difference_set_in_heisenberg_group::create_minimal_overgroups "
 							"The conjugacy classes of overgroups of order "
 							<< oo << " have the following lengths: ";
-					Sch_overgroups->print_orbit_length_distribution(cout);
+					Sch_overgroups->Forest->print_orbit_length_distribution(cout);
 					cout << "difference_set_in_heisenberg_group::create_minimal_overgroups "
-							"There are " << Sch_overgroups->nb_orbits
+							"There are " << Sch_overgroups->Forest->nb_orbits
 							<< " classes" << endl;
 					cout << "difference_set_in_heisenberg_group::create_minimal_overgroups "
 							"Representatives of the conjugacy "
 							"classes are:" << endl;
 
 					int *second_generator;
-					second_generator = NEW_int(Sch_overgroups->nb_orbits);
-					for (j = 0; j < Sch_overgroups->nb_orbits; j++) {
+					second_generator = NEW_int(Sch_overgroups->Forest->nb_orbits);
+					for (j = 0; j < Sch_overgroups->Forest->nb_orbits; j++) {
 						//cout << "orbit " << j << " / "
 						//<< Sch_overgroups->nb_orbits << ":" << endl;
-						f = Sch_overgroups->orbit_first[j];
-						a = Sch_overgroups->orbit[f];
+						f = Sch_overgroups->Forest->orbit_first[j];
+						a = Sch_overgroups->Forest->orbit[f];
 						//Overgroups_of_order[a]->print();
 						for (t = 0; t < 2; t++) {
 							if (Overgroups_of_order[a]->gens[t] != rk_E1) {
@@ -1115,7 +1115,7 @@ void difference_set_in_heisenberg_group::create_minimal_overgroups(
 					// second_generator, Sch_overgroups->nb_orbits,
 					// 1, false /* f_tex */);
 					other::orbiter_kernel_system::Orbiter->Int_vec->print_Cpp(cout,
-						second_generator, Sch_overgroups->nb_orbits);
+						second_generator, Sch_overgroups->Forest->nb_orbits);
 					cout << endl;
 				}
 			} // next ii

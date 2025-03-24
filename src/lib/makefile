@@ -254,6 +254,8 @@ ORBITER_MODULES= \
 		layer1_foundations/other/data_structures/data_file.o \
 		layer1_foundations/other/data_structures/data_structures_global.o \
 		layer1_foundations/other/data_structures/fancy_set.o \
+		layer1_foundations/other/data_structures/forest_io.o \
+		layer1_foundations/other/data_structures/forest.o \
 		layer1_foundations/other/data_structures/int_matrix.o \
 		layer1_foundations/other/data_structures/int_vec.o \
 		layer1_foundations/other/data_structures/int_vector.o \

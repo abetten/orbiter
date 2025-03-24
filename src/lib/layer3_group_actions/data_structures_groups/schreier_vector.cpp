@@ -813,7 +813,7 @@ void schreier_vector::init_from_schreier(
 	if (f_v) {
 		cout << "schreier_vector::init_from_schreier" << endl;
 	}
-	S->create_point_list_sorted(point_list, n);
+	S->Forest->create_point_list_sorted(point_list, n);
 
 
 	if (f_trivial_group) {
@@ -829,9 +829,9 @@ void schreier_vector::init_from_schreier(
 	if (!f_trivial_group) {
 		for (i = 0; i < n; i++) {
 			p = point_list[i];
-			j = S->orbit_inv[p];
-			pr = S->prev[j];
-			la = S->label[j];
+			j = S->Forest->orbit_inv[p];
+			pr = S->Forest->prev[j];
+			la = S->Forest->label[j];
 			svec[1 + n + i] = pr;
 			svec[1 + 2 * n + i] = la;
 			}
@@ -861,7 +861,7 @@ void schreier_vector::init_shallow_schreier_forest(
 	if (f_v) {
 		cout << "schreier_vector::init_shallow_schreier_forest" << endl;
 	}
-	S->create_point_list_sorted(point_list, n);
+	S->Forest->create_point_list_sorted(point_list, n);
 
 
 	if (f_trivial_group) {
@@ -887,11 +887,11 @@ void schreier_vector::init_shallow_schreier_forest(
 		local_gens = NEW_OBJECT(vector_ge);
 		local_gens->init(S->A, verbose_level - 2);
 		fst_gen_idx = 0;
-		for (orbit_idx = 0; orbit_idx < S->nb_orbits; orbit_idx++) {
+		for (orbit_idx = 0; orbit_idx < S->Forest->nb_orbits; orbit_idx++) {
 			if (f_v) {
 				cout << "schreier_vector::init_shallow_schreier_forest "
 						"orbit_idx=" << orbit_idx
-						<< " / " << S->nb_orbits << endl;
+						<< " / " << S->Forest->nb_orbits << endl;
 			}
 			groups::schreier *Shallow_tree;
 
@@ -907,8 +907,8 @@ void schreier_vector::init_shallow_schreier_forest(
 				cout << "schreier_vector::init_shallow_schreier_forest "
 						"creating shallow tree done" << endl;
 			}
-			fst = Shallow_tree->orbit_first[0];
-			len = Shallow_tree->orbit_len[0];
+			fst = Shallow_tree->Forest->orbit_first[0];
+			len = Shallow_tree->Forest->orbit_len[0];
 			nb_gens = Shallow_tree->gens.len;
 			if (f_v) {
 				cout << "schreier_vector::init_shallow_schreier_forest "
@@ -919,9 +919,9 @@ void schreier_vector::init_shallow_schreier_forest(
 				local_gens->append(Shallow_tree->gens.ith(i), verbose_level - 2);
 			}
 			for (i = 0; i < len; i++) {
-				pt = Shallow_tree->orbit[fst + i];
-				pr = Shallow_tree->prev[fst + i];
-				la = Shallow_tree->label[fst + i];
+				pt = Shallow_tree->Forest->orbit[fst + i];
+				pr = Shallow_tree->Forest->prev[fst + i];
+				la = Shallow_tree->Forest->label[fst + i];
 				if (!Sorting.int_vec_search(points, n, pt, j)) {
 					cout << "schreier_vector::init_shallow_schreier_forest "
 							"could not find point" << endl;

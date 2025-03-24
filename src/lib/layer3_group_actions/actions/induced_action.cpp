@@ -2143,8 +2143,8 @@ action *induced_action::induced_action_on_orbits(
 
 	A = NEW_OBJECT(action);
 
-	A->label = A_old->label + "_on_orbits_" + std::to_string(Sch->nb_orbits);
-	A->label_tex = A_old->label_tex + "{\\rm OnOrbits}_{" + std::to_string(Sch->nb_orbits) + "}";
+	A->label = A_old->label + "_on_orbits_" + std::to_string(Sch->Forest->nb_orbits);
+	A->label_tex = A_old->label_tex + "{\\rm OnOrbits}_{" + std::to_string(Sch->Forest->nb_orbits) + "}";
 
 
 	On_orbits = NEW_OBJECT(induced_actions::action_on_orbits);

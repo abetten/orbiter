@@ -97,7 +97,8 @@ void classes_of_elements_expanded::init(
 	if (f_v) {
 		cout << "classes_of_elements_expanded::init "
 				"We found " << nb_idx
-				<< "conjugacy classes of groups of order at most " << expand_by_go << endl;
+				<< "conjugacy classes of groups of order "
+						"at most " << expand_by_go << endl;
 		cout << "They are: ";
 		Int_vec_print(cout, Idx, nb_idx);
 		cout << endl;

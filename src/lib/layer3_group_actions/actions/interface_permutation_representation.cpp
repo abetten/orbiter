@@ -149,8 +149,13 @@ void action_pointer_table::init_function_pointers_permutation_representation_gro
 			permutation_representation_group_element_print_for_make_element_no_commas;
 #endif
 	ptr_print_point = permutation_representation_group_print_point;
+	ptr_unrank_point = NULL;
+	ptr_rank_point = NULL;
 	ptr_stringify_point = permutation_representation_group_stringify_point;
 }
+
+
+
 
 
 

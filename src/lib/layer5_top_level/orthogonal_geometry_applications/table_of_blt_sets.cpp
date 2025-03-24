@@ -227,7 +227,7 @@ void table_of_blt_sets::do_export(
 		if (f_v) {
 			cout << "table_of_blt_sets::do_export before Row[3]" << endl;
 		}
-		Row[3] = Object_with_action[h].Blt_set_group_properties->Orbits_on_points->Sch->nb_orbits;
+		Row[3] = Object_with_action[h].Blt_set_group_properties->Orbits_on_points->Sch->Forest->nb_orbits;
 
 
 

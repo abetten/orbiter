@@ -1600,7 +1600,8 @@ void group_theoretic_activity::perform_activity(
 		int *Images;
 		int m, n;
 		Get_matrix(
-				Descr->group_of_automorphisms_by_images_of_generators_images, Images, m, n);
+				Descr->group_of_automorphisms_by_images_of_generators_images,
+				Images, m, n);
 
 		if (f_v) {
 			cout << "m = " << m << endl;

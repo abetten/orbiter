@@ -124,9 +124,9 @@ void arc_lifting_simeon::init(
 
 	Sch = A->Strong_gens->compute_all_point_orbits_schreier(A, print_interval, verbose_level);
 
-	cout << "We have " << Sch->nb_orbits << " orbits on points" << endl;
+	cout << "We have " << Sch->Forest->nb_orbits << " orbits on points" << endl;
 
-	Sch->print_and_list_orbits(cout);
+	Sch->Forest->print_and_list_orbits(cout);
 
 	P = NEW_OBJECT(geometry::projective_geometry::projective_space);
 

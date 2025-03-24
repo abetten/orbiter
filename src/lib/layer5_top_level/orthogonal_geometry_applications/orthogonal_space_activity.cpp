@@ -446,6 +446,86 @@ void orthogonal_space_activity::perform_activity(
 		}
 
 	}
+	else if (Descr->f_create_Siegel_transformation) {
+
+		if (f_v) {
+			cout << "orthogonal_space_activity::perform_activity f_create_Siegel_transformation" << endl;
+		}
+
+		int *u;
+		int *v;
+		int sz1;
+		int sz2;
+
+		Int_vec_scan(Descr->create_Siegel_transformation_u, u, sz1);
+		Int_vec_scan(Descr->create_Siegel_transformation_v, v, sz2);
+
+		if (sz1 != sz2) {
+			cout << "orthogonal_space_activity::perform_activity sz1 != sz2" << endl;
+			exit(1);
+		}
+
+		if (f_v) {
+			cout << "orthogonal_space_activity::perform_activity "
+					"Computing the Siegel transformation associated with ";
+			cout << "u = ";
+			Int_vec_print(cout, u, sz1);
+			cout << endl;
+			cout << "v = ";
+			Int_vec_print(cout, v, sz1);
+			cout << endl;
+		}
+
+		data_structures_groups::vector_ge *vec;
+
+		if (f_v) {
+			cout << "orthogonal_space_activity::perform_activity "
+					"before OA->create_Siegel_transformation" << endl;
+		}
+		OA->create_Siegel_transformation(
+				u, v, sz1,
+				vec,
+				verbose_level);
+		if (f_v) {
+			cout << "orthogonal_space_activity::perform_activity "
+					"after OA->create_Siegel_transformation" << endl;
+		}
+
+
+
+
+		other::orbiter_kernel_system::file_io Fio;
+		std::string fname;
+
+		fname = OA->O->label_txt + "_Siegel_transformation.csv";
+
+		vec->save_csv(
+				fname, verbose_level);
+
+		if (f_v) {
+			cout << "orthogonal_space_activity::perform_activity "
+					"Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+		}
+
+	}
+	else if (Descr->f_make_all_Siegel_transformations) {
+
+		if (f_v) {
+			cout << "orthogonal_space_activity::perform_activity f_make_all_Siegel_transformations" << endl;
+		}
+
+		if (f_v) {
+			cout << "orthogonal_space_activity::perform_activity "
+					"before OA->O->Orthogonal_group->make_all_Siegel_Transformations" << endl;
+		}
+		OA->O->Orthogonal_group->make_all_Siegel_Transformations(
+				verbose_level - 2);
+		if (f_v) {
+			cout << "orthogonal_space_activity::perform_activity "
+					"after OA->O->Orthogonal_group->make_all_Siegel_Transformations" << endl;
+		}
+
+	}
 
 	else if (Descr->f_create_orthogonal_reflection_6_and_4) {
 

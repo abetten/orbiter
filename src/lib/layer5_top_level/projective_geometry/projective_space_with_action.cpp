@@ -453,7 +453,7 @@ void projective_space_with_action::report_orbits_on_points_lines_and_planes(
 			*Sch,
 			Elt,
 			0 /*verbose_level*/);
-	Sch->print_orbit_lengths_tex(ost);
+	Sch->Forest->print_orbit_lengths_tex(ost);
 
 
 	FREE_OBJECT(Sch);
@@ -472,7 +472,7 @@ void projective_space_with_action::report_orbits_on_points_lines_and_planes(
 				*Sch,
 				Elt,
 				0 /*verbose_level*/);
-		Sch->print_orbit_lengths_tex(ost);
+		Sch->Forest->print_orbit_lengths_tex(ost);
 
 
 		FREE_OBJECT(Sch);
@@ -494,7 +494,7 @@ void projective_space_with_action::report_orbits_on_points_lines_and_planes(
 				*Sch,
 				Elt,
 				0 /*verbose_level*/);
-		Sch->print_orbit_lengths_tex(ost);
+		Sch->Forest->print_orbit_lengths_tex(ost);
 
 
 		FREE_OBJECT(Sch);

@@ -45,7 +45,7 @@ void surface_clebsch_map::report(
 {
 
 	ost << "\\subsection*{Orbit on single sixes " << orbit_idx << " / "
-		<< SOA->Orbits_on_single_sixes->nb_orbits << "}" << endl;
+		<< SOA->Orbits_on_single_sixes->Forest->nb_orbits << "}" << endl;
 
 
 	Clebsch_map->report(ost, verbose_level);
@@ -61,19 +61,19 @@ void surface_clebsch_map::init(
 	if (f_v) {
 		cout << "surface_clebsch_map::init orbit "
 			"on single sixes " << orbit_idx << " / "
-			<< SOA->Orbits_on_single_sixes->nb_orbits << ":" << endl;
+			<< SOA->Orbits_on_single_sixes->Forest->nb_orbits << ":" << endl;
 	}
 
 	surface_clebsch_map::SOA = SOA;
 	surface_clebsch_map::orbit_idx = orbit_idx;
 
 
-	f = SOA->Orbits_on_single_sixes->orbit_first[orbit_idx];
-	l = SOA->Orbits_on_single_sixes->orbit_len[orbit_idx];
+	f = SOA->Orbits_on_single_sixes->Forest->orbit_first[orbit_idx];
+	l = SOA->Orbits_on_single_sixes->Forest->orbit_len[orbit_idx];
 	if (f_v) {
 		cout << "orbit " << orbit_idx << " has f=" << f <<  " l=" << l << endl;
 	}
-	hds = SOA->Orbits_on_single_sixes->orbit[f];
+	hds = SOA->Orbits_on_single_sixes->Forest->orbit[f];
 
 	if (f_v) {
 		cout << "The half double six is no " << hds << " : ";
@@ -89,14 +89,14 @@ void surface_clebsch_map::init(
 	if (f_v) {
 		cout << "surface_clebsch_map::init orbit "
 			"on single sixes " << orbit_idx << " / "
-			<< SOA->Orbits_on_single_sixes->nb_orbits
+			<< SOA->Orbits_on_single_sixes->Forest->nb_orbits
 			<< " before Clebsch_map->init_half_double_six" << endl;
 	}
 	Clebsch_map->init_half_double_six(SOA->SO, hds, verbose_level);
 	if (f_v) {
 		cout << "surface_clebsch_map::init orbit "
 			"on single sixes " << orbit_idx << " / "
-			<< SOA->Orbits_on_single_sixes->nb_orbits
+			<< SOA->Orbits_on_single_sixes->Forest->nb_orbits
 			<< " after Clebsch_map->init_half_double_six" << endl;
 	}
 
@@ -105,14 +105,14 @@ void surface_clebsch_map::init(
 	if (f_v) {
 		cout << "surface_clebsch_map::init orbit "
 			"on single sixes " << orbit_idx << " / "
-			<< SOA->Orbits_on_single_sixes->nb_orbits
+			<< SOA->Orbits_on_single_sixes->Forest->nb_orbits
 			<< " before Clebsch_map->compute_Clebsch_map_down" << endl;
 	}
 	Clebsch_map->compute_Clebsch_map_down(verbose_level);
 	if (f_v) {
 		cout << "surface_clebsch_map::init orbit "
 			"on single sixes " << orbit_idx << " / "
-			<< SOA->Orbits_on_single_sixes->nb_orbits
+			<< SOA->Orbits_on_single_sixes->Forest->nb_orbits
 			<< " after Clebsch_map->compute_Clebsch_map_down" << endl;
 	}
 

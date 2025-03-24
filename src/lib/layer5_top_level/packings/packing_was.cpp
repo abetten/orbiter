@@ -886,7 +886,7 @@ void packing_was::test_orbits_on_spreads(
 	if (f_v) {
 		cout << "packing_was::test_orbits_on_spreads "
 				"We will now test "
-				"which of the " << Spread_orbits_under_H->Sch->nb_orbits
+				"which of the " << Spread_orbits_under_H->Sch->Forest->nb_orbits
 				<< " orbits are partial packings:" << endl;
 	}
 
@@ -907,8 +907,8 @@ void packing_was::test_orbits_on_spreads(
 				0 /* verbose_level */);
 
 		nb_good_orbits = m;
-		Good_orbit_idx = NEW_lint(Spread_orbits_under_H->Sch->nb_orbits);
-		Good_orbit_len = NEW_lint(Spread_orbits_under_H->Sch->nb_orbits);
+		Good_orbit_idx = NEW_lint(Spread_orbits_under_H->Sch->Forest->nb_orbits);
+		Good_orbit_len = NEW_lint(Spread_orbits_under_H->Sch->Forest->nb_orbits);
 		for (i = 0; i < m; i++) {
 			Good_orbit_idx[i] = M[i * 2 + 0];
 			Good_orbit_len[i] = M[i * 2 + 1];
@@ -927,10 +927,10 @@ void packing_was::test_orbits_on_spreads(
 		int orbit_idx;
 
 		nb_good_orbits = 0;
-		Good_orbit_idx = NEW_lint(Spread_orbits_under_H->Sch->nb_orbits);
-		Good_orbit_len = NEW_lint(Spread_orbits_under_H->Sch->nb_orbits);
+		Good_orbit_idx = NEW_lint(Spread_orbits_under_H->Sch->Forest->nb_orbits);
+		Good_orbit_len = NEW_lint(Spread_orbits_under_H->Sch->Forest->nb_orbits);
 		for (orbit_idx = 0;
-				orbit_idx < Spread_orbits_under_H->Sch->nb_orbits;
+				orbit_idx < Spread_orbits_under_H->Sch->Forest->nb_orbits;
 				orbit_idx++) {
 
 
@@ -939,7 +939,7 @@ void packing_was::test_orbits_on_spreads(
 					orb, 0 /* verbose_level*/)) {
 				Good_orbit_idx[nb_good_orbits] = orbit_idx;
 				Good_orbit_len[nb_good_orbits] =
-						Spread_orbits_under_H->Sch->orbit_len[orbit_idx];
+						Spread_orbits_under_H->Sch->Forest->orbit_len[orbit_idx];
 				nb_good_orbits++;
 			}
 
@@ -1004,7 +1004,7 @@ void packing_was::reduce_spreads(
 	nb_good_spreads = 0;
 	for (i = 0; i < nb_good_orbits; i++) {
 		j = Good_orbit_idx[i];
-		nb_good_spreads += Spread_orbits_under_H->Sch->orbit_len[j];
+		nb_good_spreads += Spread_orbits_under_H->Sch->Forest->orbit_len[j];
 	}
 
 	if (f_v) {
@@ -1017,10 +1017,10 @@ void packing_was::reduce_spreads(
 	c = 0;
 	for (i = 0; i < nb_good_orbits; i++) {
 		j = Good_orbit_idx[i];
-		f = Spread_orbits_under_H->Sch->orbit_first[j];
-		l = Spread_orbits_under_H->Sch->orbit_len[j];
+		f = Spread_orbits_under_H->Sch->Forest->orbit_first[j];
+		l = Spread_orbits_under_H->Sch->Forest->orbit_len[j];
 		for (h = 0; h < l; h++) {
-			good_spreads[c++] = Spread_orbits_under_H->Sch->orbit[f + h];
+			good_spreads[c++] = Spread_orbits_under_H->Sch->Forest->orbit[f + h];
 		}
 	}
 	if (c != nb_good_spreads) {
@@ -1173,7 +1173,7 @@ void packing_was::compute_H_orbits_on_reduced_spreads(
 
 	if (f_v) {
 		cout << "reduced_spread_orbits_under_H->Sch->nb_orbits = "
-				<< reduced_spread_orbits_under_H->Sch->nb_orbits << endl;
+				<< reduced_spread_orbits_under_H->Sch->Forest->nb_orbits << endl;
 	}
 
 
@@ -1511,10 +1511,10 @@ int packing_was::evaluate_orbit_invariant_function(
 	// based on
 	// orbit_type_repository *Spread_type_reduced;
 
-	f = reduced_spread_orbits_under_H->Sch->orbit_first[a];
-	l = reduced_spread_orbits_under_H->Sch->orbit_len[a];
+	f = reduced_spread_orbits_under_H->Sch->Forest->orbit_first[a];
+	l = reduced_spread_orbits_under_H->Sch->Forest->orbit_len[a];
 	for (h = 0; h < l; h++) {
-		spread_idx = reduced_spread_orbits_under_H->Sch->orbit[f + h];
+		spread_idx = reduced_spread_orbits_under_H->Sch->Forest->orbit[f + h];
 		type_value = Spread_type_reduced->type[spread_idx];
 		if (h == 0) {
 			val = type_value;
@@ -1629,10 +1629,10 @@ void packing_was::report_orbit_invariant(
 			ost << "Orbits of length one:\\\\" << endl;
 			for (j = 0; j < l; j++) {
 				a = reduced_spread_orbits_under_H->Classify_orbits_by_length->Set_partition->Sets[i][j];
-				fst = reduced_spread_orbits_under_H->Sch->orbit_first[a];
-				len = reduced_spread_orbits_under_H->Sch->orbit_len[a];
+				fst = reduced_spread_orbits_under_H->Sch->Forest->orbit_first[a];
+				len = reduced_spread_orbits_under_H->Sch->Forest->orbit_len[a];
 				for (h = 0; h < len; h++) {
-					b = reduced_spread_orbits_under_H->Sch->orbit[fst + h];
+					b = reduced_spread_orbits_under_H->Sch->Forest->orbit[fst + h];
 						// b the the index into Spread_tables_reduced
 					e_idx = Regular_packing->spread_to_external_line_idx[b];
 					e = Regular_packing->External_lines[e_idx];
@@ -1841,7 +1841,7 @@ void packing_was::report_line_orbits_under_H(
 			std::vector<int> Orb;
 
 
-			Line_orbits_under_H->Sch->get_orbit_in_order(Orb,
+			Line_orbits_under_H->Sch->Forest->get_orbit_in_order(Orb,
 					a /* orbit_idx */, 0 /* verbose_level */);
 
 			for (h = 0; h < Orb.size(); h++) {
@@ -1898,7 +1898,7 @@ void packing_was::get_spreads_in_reduced_orbits_by_type(
 		orbit_idx[j] = a;
 		std::vector<int> Orb;
 
-		reduced_spread_orbits_under_H->Sch->get_orbit_in_order(
+		reduced_spread_orbits_under_H->Sch->Forest->get_orbit_in_order(
 				Orb,
 				a /* orbit_idx */, 0 /* verbose_level */);
 
@@ -1927,7 +1927,7 @@ void packing_was::get_spreads_in_reduced_orbits_by_type(
 		std::vector<int> Orb;
 
 
-		reduced_spread_orbits_under_H->Sch->get_orbit_in_order(
+		reduced_spread_orbits_under_H->Sch->Forest->get_orbit_in_order(
 				Orb,
 				a /* orbit_idx */, 0 /* verbose_level */);
 

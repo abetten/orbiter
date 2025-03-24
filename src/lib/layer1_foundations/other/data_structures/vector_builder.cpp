@@ -172,7 +172,7 @@ void vector_builder::init(
 					<< ", column " << Descr->file_column_label << endl;
 		}
 
-		Fio.Csv_file_support->read_column_and_parse(
+		Fio.Csv_file_support->read_column_as_set_of_sets(
 				Descr->file_column_name, Descr->file_column_label,
 					SoS,
 					verbose_level);

@@ -140,7 +140,7 @@ void arc_partition::init(
 			The_pair->Strong_gens,
 			verbose_level);
 
-	nb_orbits_on_partition = Orbits_on_partition->nb_orbits;
+	nb_orbits_on_partition = Orbits_on_partition->Forest->nb_orbits;
 
 	if (f_v) {
 		cout << "arc_partition::init done" << endl;

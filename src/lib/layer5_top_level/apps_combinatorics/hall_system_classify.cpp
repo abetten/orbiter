@@ -341,12 +341,12 @@ void hall_system_classify::orbits_on_triples(
 		Orbits_on_triples = NEW_OBJECT(groups::schreier);
 
 		Orbits_on_triples->init(A_on_triples, verbose_level - 2);
-		Orbits_on_triples->initialize_tables();
+		//Orbits_on_triples->initialize_tables();
 		Orbits_on_triples->init_generators(
 				*Strong_gens_Hall_reflection->gens, verbose_level - 2);
 		{
 			ifstream fp(fname_orbits_on_triples);
-			Orbits_on_triples->read_from_file_binary(fp, verbose_level);
+			Orbits_on_triples->Forest->read_from_file_binary(fp, verbose_level);
 		}
 		if (f_v) {
 			cout << "hall_system_classify::orbits_on_triples "
@@ -370,14 +370,14 @@ void hall_system_classify::orbits_on_triples(
 		if (f_v) {
 			cout << "hall_system_classify::orbits_on_triples "
 					"computing orbits done" << endl;
-			cout << "We found " << Orbits_on_triples->nb_orbits
+			cout << "We found " << Orbits_on_triples->Forest->nb_orbits
 					<< " orbits of the selected group on lines" << endl;
 		}
 
 
 		{
 			ofstream fp(fname_orbits_on_triples);
-			Orbits_on_triples->write_to_file_binary(fp, verbose_level);
+			Orbits_on_triples->Forest->write_to_file_binary(fp, verbose_level);
 		}
 		cout << "Written file " << fname_orbits_on_triples << " of size "
 				<< Fio.file_size(fname_orbits_on_triples) << endl;
@@ -385,7 +385,7 @@ void hall_system_classify::orbits_on_triples(
 
 	if (f_v) {
 		cout << "Orbits_on_triples:" << endl;
-		Orbits_on_triples->print(cout);
+		Orbits_on_triples->Forest->print(cout);
 	}
 	//A_on_orbits = NEW_OBJECT(actions::action);
 	A_on_orbits = A_on_triples->Induced_action->induced_action_on_orbits(
@@ -421,10 +421,10 @@ void hall_system_classify::print(
 
 		orb = S[i];
 
-		f = Orbits_on_triples->orbit_first[orb];
-		l = Orbits_on_triples->orbit_len[orb];
+		f = Orbits_on_triples->Forest->orbit_first[orb];
+		l = Orbits_on_triples->Forest->orbit_len[orb];
 		for (j = 0; j < l; j++ ) {
-			t = Orbits_on_triples->orbit[f + j];
+			t = Orbits_on_triples->Forest->orbit[f + j];
 			unrank_triple(T, t);
 			for (a = 0; a < 3; a++) {
 				cout << T[a];
@@ -516,10 +516,10 @@ void hall_system_classify::early_test_func(
 
 		orb = S[i];
 
-		f = Orbits_on_triples->orbit_first[orb];
-		l = Orbits_on_triples->orbit_len[orb];
+		f = Orbits_on_triples->Forest->orbit_first[orb];
+		l = Orbits_on_triples->Forest->orbit_len[orb];
 		for (j = 0; j < l; j++ ) {
-			t = Orbits_on_triples->orbit[f + j];
+			t = Orbits_on_triples->Forest->orbit[f + j];
 			unrank_triple(T, t);
 			for (a = 0; a < 3; a++) {
 				row_sum[T[a]]++;
@@ -549,14 +549,14 @@ void hall_system_classify::early_test_func(
 
 		orb = candidates[j];
 
-		f = Orbits_on_triples->orbit_first[orb];
-		l = Orbits_on_triples->orbit_len[orb];
+		f = Orbits_on_triples->Forest->orbit_first[orb];
+		l = Orbits_on_triples->Forest->orbit_len[orb];
 
 		if (f_vv) {
 			cout << "Testing candidate " << j << " = "
 					<< candidates[j] << " which is ";
 			for (h = 0; h < l; h++ ) {
-				t = Orbits_on_triples->orbit[f + h];
+				t = Orbits_on_triples->Forest->orbit[f + h];
 				unrank_triple(T, t);
 				Lint_vec_print(cout, T, 3);
 				cout << ", ";
@@ -568,7 +568,7 @@ void hall_system_classify::early_test_func(
 		f_OK = true;
 
 		for (h = 0; h < l; h++ ) {
-			t = Orbits_on_triples->orbit[f + h];
+			t = Orbits_on_triples->Forest->orbit[f + h];
 			unrank_triple(T, t);
 			for (a = 0; a < 3; a++) {
 				if (row_sum[T[a]] == nb_pairs - 1) {
@@ -587,7 +587,7 @@ void hall_system_classify::early_test_func(
 
 		if (f_OK) {
 			for (h = 0; h < l; h++ ) {
-				t = Orbits_on_triples->orbit[f + h];
+				t = Orbits_on_triples->Forest->orbit[f + h];
 				unrank_triple(T, t);
 				for (a = 0; a < 3; a++) {
 					for (b = a + 1; b < 3; b++) {

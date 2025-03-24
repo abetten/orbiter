@@ -1783,7 +1783,8 @@ void strong_generators::field_reduction(
 void strong_generators::generators_for_translation_plane_in_andre_model(
 		actions::action *A_PGL_n1_q,
 		actions::action *A_PGL_n_q,
-		algebra::basic_algebra::matrix_group *Mtx_n1, algebra::basic_algebra::matrix_group *Mtx_n,
+		algebra::basic_algebra::matrix_group *Mtx_n1,
+		algebra::basic_algebra::matrix_group *Mtx_n,
 	strong_generators *spread_stab_gens,
 	int verbose_level)
 {
@@ -4014,7 +4015,8 @@ void strong_generators::normalizer_of_a_Hall_reflection(
 
 void strong_generators::hyperplane_lifting_with_two_lines_fixed(
 	strong_generators *SG_hyperplane,
-	geometry::projective_geometry::projective_space *P, int line1, int line2,
+	geometry::projective_geometry::projective_space *P,
+	int line1, int line2,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

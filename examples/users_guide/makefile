@@ -10170,12 +10170,15 @@ orbits_PGL_4_2_on_points_draw_tree:
 		-end \
 		-with Orb -do -orbits_activity \
 			-export_something "orbit" 0 \
-		-end
+		-end \
 		-with Orb -do -orbits_activity \
 			-draw_tree 0 Do \
 		-end
-	$(PDFLATEX) PGL_4_2_orbits_report.tex
-	$(OPEN) PGL_4_2_orbits_report.pdf
+	#$(PDFLATEX) PGL_4_2_orbits_report.tex
+	#$(OPEN) PGL_4_2_orbits_report.pdf
+	$(PDFLATEX) PGL_4_2_orbit_0_tree.tex
+	$(OPEN) PGL_4_2_orbit_0_tree.pdf
+
 
 
 orbits_PGL_4_2_on_points_export_trees:
@@ -10507,13 +10510,17 @@ poset_of_4subsets:
 			-problem_label poset_4 \
 			-W -depth 4 \
 		-end \
+		-define Do -draw_options -radius 150 -end \
 		-define G -permutation_group -identity_group 4 -end \
-		-define Orb -orbits -group G \
+		-define Orb -orbits \
+			-group G \
+			-group_action G \
 			-on_subsets 4 Control \
 		-end \
 		-define ro \
 			-poset_classification_report_options \
 				-draw_poset -type_ordinary \
+			-draw_options Do \
 		-end \
 		-with Orb -do -orbits_activity \
 			-report \
@@ -10545,12 +10552,15 @@ poset_of_5subsets:
 			-draw_options Do \
 		-end \
 		-define G -permutation_group -identity_group 5 -end \
-		-define Orb -orbits -group G \
+		-define Orb -orbits \
+			-group G \
+			-group_action G \
 			-on_subsets 5 Control \
 		-end \
 		-define ro \
 			-poset_classification_report_options \
 				-draw_poset -type_ordinary \
+			-draw_options Do \
 		-end \
 		-with Orb -do -orbits_activity \
 			-report \
@@ -10573,6 +10583,8 @@ poset_of_5subsets_draw:
 
 
 
+#ToDo error:
+
 Symmetric_4_on_pairs_poset:
 	$(ORBITER) -v 3 \
 		-orbiter_path $(ORBITER_EXE_PATH) \
@@ -10586,12 +10598,15 @@ Symmetric_4_on_pairs_poset:
 		-define G_on_2subsets -modified_group -from G \
 			-on_k_subsets 2 \
 		-end \
-		-define Orb -orbits -group G_on_2subsets \
+		-define Orb -orbits \
+			-group G \
+			-group_action G_on_2subsets \
 			-on_subsets 6 Control \
 		-end \
 		-define ro \
 			-poset_classification_report_options \
 				-draw_poset -type_ordinary \
+			-draw_options Do \
 		-end \
 		-with Orb -do -orbits_activity \
 			-report \

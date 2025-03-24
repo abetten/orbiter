@@ -21,7 +21,8 @@ namespace data_structures {
 
 
 
-static int classify_int_vec_compare_function(void *a, void *b, void *data);
+static int classify_int_vec_compare_function(
+		void *a, void *b, void *data);
 
 tally_vector_data::tally_vector_data()
 {
@@ -197,7 +198,8 @@ void tally_vector_data::init(
 
 }
 
-int tally_vector_data::hash_and_find(int *data,
+int tally_vector_data::hash_and_find(
+		int *data,
 		int &idx, uint32_t &h, int verbose_level)
 {
 	int f_found;
@@ -362,8 +364,38 @@ void tally_vector_data::print_classes_bigger_than_one(
 	}
 }
 
+data_structures::set_of_sets *tally_vector_data::get_set_partition(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	data_structures::set_of_sets *SoS;
+	int i, j, f, l;
 
-static int classify_int_vec_compare_function(void *a, void *b, void *data)
+	if (f_v) {
+		cout << "tally_vector_data::get_set_partition" << endl;
+	}
+
+	SoS = NEW_OBJECT(data_structures::set_of_sets);
+	SoS->init_basic_with_Sz_in_int(data_length /* underlying_set_size */,
+			nb_types, Frequency, 0 /* verbose_level */);
+	for (i = 0; i < nb_types; i++) {
+		f = type_first[i];
+		l = Frequency[i];
+		for (j = 0; j < l; j++) {
+			SoS->Sets[i][j] = sorting_perm_inv[f + j];
+		}
+	}
+
+	if (f_v) {
+		cout << "tally_vector_data::get_set_partition done" << endl;
+	}
+	return SoS;
+}
+
+
+
+static int classify_int_vec_compare_function(
+		void *a, void *b, void *data)
 {
 	tally_vector_data *C = (tally_vector_data *) data;
 	int *A = (int *) a;

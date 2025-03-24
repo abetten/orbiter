@@ -258,14 +258,14 @@ void table_of_surfaces::create_table(
 		Table[h * nb_cols + 8] = std::to_string(SC[h].SO->SOP->nb_pts_not_on_lines);
 		Table[h * nb_cols + 9] = std::to_string(SC[h].SO->SOP->nb_Hesse_planes);
 		Table[h * nb_cols + 10] = std::to_string(SC[h].SO->SOP->nb_axes);
-		Table[h * nb_cols + 11] = std::to_string(SOG[h].Orbits_on_Eckardt_points->nb_orbits);
-		Table[h * nb_cols + 12] = std::to_string(SOG[h].Orbits_on_Double_points->nb_orbits);
-		Table[h * nb_cols + 13] = std::to_string(SOG[h].Orbits_on_points_not_on_lines->nb_orbits);
-		Table[h * nb_cols + 14] = std::to_string(SOG[h].Orbits_on_lines->nb_orbits);
-		Table[h * nb_cols + 15] = std::to_string(SOG[h].Orbits_on_single_sixes->nb_orbits);
-		Table[h * nb_cols + 16] = std::to_string(SOG[h].Orbits_on_tritangent_planes->nb_orbits);
-		Table[h * nb_cols + 17] = std::to_string(SOG[h].Orbits_on_Hesse_planes->nb_orbits);
-		Table[h * nb_cols + 18] = std::to_string(SOG[h].Orbits_on_trihedral_pairs->nb_orbits);
+		Table[h * nb_cols + 11] = std::to_string(SOG[h].Orbits_on_Eckardt_points->Forest->nb_orbits);
+		Table[h * nb_cols + 12] = std::to_string(SOG[h].Orbits_on_Double_points->Forest->nb_orbits);
+		Table[h * nb_cols + 13] = std::to_string(SOG[h].Orbits_on_points_not_on_lines->Forest->nb_orbits);
+		Table[h * nb_cols + 14] = std::to_string(SOG[h].Orbits_on_lines->Forest->nb_orbits);
+		Table[h * nb_cols + 15] = std::to_string(SOG[h].Orbits_on_single_sixes->Forest->nb_orbits);
+		Table[h * nb_cols + 16] = std::to_string(SOG[h].Orbits_on_tritangent_planes->Forest->nb_orbits);
+		Table[h * nb_cols + 17] = std::to_string(SOG[h].Orbits_on_Hesse_planes->Forest->nb_orbits);
+		Table[h * nb_cols + 18] = std::to_string(SOG[h].Orbits_on_trihedral_pairs->Forest->nb_orbits);
 
 
 		Table[h * nb_cols + 19] = "\"" + SC[h].SO->stringify_eqn() + "\"";

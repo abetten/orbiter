@@ -210,7 +210,7 @@ void semifield_downstep_node::init(
 			cout << "semifield_downstep_node::init "
 					"Reading schreier data structure from "
 					"file " << fname << endl;
-			Sch->read_file_binary(fname, verbose_level);
+			Sch->Forest->read_file_binary(fname, verbose_level);
 			}
 		else {
 			if (f_v) {
@@ -224,7 +224,7 @@ void semifield_downstep_node::init(
 					A_on_cosets, print_interval, verbose_level);
 			cout << "Writing schreier data structure to "
 					"file " << fname << endl;
-			Sch->write_file_binary(fname, verbose_level);
+			Sch->Forest->write_file_binary(fname, verbose_level);
 
 			Sch->delete_images(); // make space
 

@@ -598,7 +598,7 @@ void combinatorial_object_with_properties::latex_report(
 		int *block_labels;
 
 		Enc->compute_labels(
-				Sch->nb_orbits, Sch->orbit_first, Sch->orbit_len, Sch->orbit,
+				Sch->Forest->nb_orbits, Sch->Forest->orbit_first, Sch->Forest->orbit_len, Sch->Forest->orbit,
 				point_labels, block_labels,
 				verbose_level);
 
@@ -657,7 +657,7 @@ void combinatorial_object_with_properties::latex_report(
 
 	canonical_row = NO->canonical_labeling[Enc->nb_rows - 1];
 
-	canonical_orbit = Sch->orbit_number(canonical_row);
+	canonical_orbit = Sch->Forest->orbit_number(canonical_row);
 
 	ost << "canonical row = " << canonical_row << "\\\\" << endl;
 	ost << "canonical orbit number = " << canonical_orbit << "\\\\" << endl;
@@ -691,7 +691,7 @@ void combinatorial_object_with_properties::latex_report(
 		for (i = 0; i < v; i++) {
 
 			a = NO->canonical_labeling[i];
-			if (Sch->orbit_number(a) == canonical_orbit) {
+			if (Sch->Forest->orbit_number(a) == canonical_orbit) {
 				point_labels[i] = "*" + std::to_string(a);
 			}
 			else {

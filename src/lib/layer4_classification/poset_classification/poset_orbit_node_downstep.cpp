@@ -71,7 +71,7 @@ void poset_orbit_node::compute_flag_orbits(
 		gen->root[49].print_extensions(cout);
 	}
 #endif
-	nb_orbits = Schreier.nb_orbits;
+	nb_orbits = Schreier.Forest->nb_orbits;
 
 
 #if 0
@@ -391,7 +391,7 @@ void poset_orbit_node::compute_schreier_vector(
 	}
 	if (f_v) {
 		cout << "poset_orbit_node::compute_schreier_vector "
-				"the stabilizer has " << Schreier->nb_orbits
+				"the stabilizer has " << Schreier->Forest->nb_orbits
 				<< " orbits overall" << endl;
 		}
 	
@@ -401,9 +401,9 @@ void poset_orbit_node::compute_schreier_vector(
 	
 	if (f_v) {
 		cout << "poset_orbit_node::compute_schreier_vector "
-				"the stabilizer has " << Schreier->nb_orbits
+				"the stabilizer has " << Schreier->Forest->nb_orbits
 			<< " good orbits with "
-			<< Schreier->sum_up_orbit_lengths() << " points" << endl;
+			<< Schreier->Forest->sum_up_orbit_lengths() << " points" << endl;
 		}
 
 	if (f_v) {
@@ -798,7 +798,7 @@ void poset_orbit_node::schreier_forest(
 	if (f_v) {
 		gen->print_level_info(lvl, node);
 		cout << "poset_orbit_node::schreier_forest: we found "
-				<< Schreier.nb_orbits << " orbits" << endl;
+				<< Schreier.Forest->nb_orbits << " orbits" << endl;
 	}
 	if (subset) {
 		FREE_lint(subset);
@@ -945,8 +945,8 @@ void poset_orbit_node::downstep_implicit_fusion(
 			f_using_invariant_subset, lvl,
 			verbose_level - 3);
 
-		good_orbits2 = Schreier.nb_orbits;
-		nb_points2 = Schreier.sum_up_orbit_lengths();
+		good_orbits2 = Schreier.Forest->nb_orbits;
+		nb_points2 = Schreier.Forest->sum_up_orbit_lengths();
 
 		if (f_vv) {
 			gen->print_level_info(lvl, node);
@@ -993,29 +993,29 @@ void poset_orbit_node::find_extensions(
 	
 	if (f_v) {
 		cout << "poset_orbit_node::find_extensions computing all possible "
-				"extensions (out of " << O.nb_orbits << " orbits)" << endl;
+				"extensions (out of " << O.Forest->nb_orbits << " orbits)" << endl;
 		}
 	if (f_vv) {
 		cout << "the stabilizer orbits are:" << endl;
 		cout << "i : orbit length : representative" << endl;
-		for (k = 0; k < O.nb_orbits; k++) {
-			fst = O.orbit_first[k];
-			rep = O.orbit[fst];
+		for (k = 0; k < O.Forest->nb_orbits; k++) {
+			fst = O.Forest->orbit_first[k];
+			rep = O.Forest->orbit[fst];
 			if (f_using_invariant_subset) {
 				rep = ABR->points[rep];
 				}
-			cout << k << " : " << O.orbit_len[k] << " : " << rep << endl;
+			cout << k << " : " << O.Forest->orbit_len[k] << " : " << rep << endl;
 			}
 		}
-	E = NEW_OBJECTS(extension, O.nb_orbits);
+	E = NEW_OBJECTS(extension, O.Forest->nb_orbits);
 
 	store_set(gen, lvl - 1);
 
 	nb_extensions = 0;
-	for (k = 0; k < O.nb_orbits; k++) {
-		fst = O.orbit_first[k];
-		//len = O.orbit_len[k];
-		rep = O.orbit[fst];
+	for (k = 0; k < O.Forest->nb_orbits; k++) {
+		fst = O.Forest->orbit_first[k];
+		//len = O.Forest->orbit_len[k];
+		rep = O.Forest->orbit[fst];
 		if (f_using_invariant_subset) {
 			rep = ABR->points[rep];
 			}
@@ -1072,7 +1072,7 @@ void poset_orbit_node::find_extensions(
 			
 
 		E[nb_extensions].set_pt(rep);
-		E[nb_extensions].set_orbit_len(O.orbit_len[k]);
+		E[nb_extensions].set_orbit_len(O.Forest->orbit_len[k]);
 		//E[nb_extensions].type = EXTENSION_TYPE_UNPROCESSED;
 		//E[nb_extensions].data = 0;
 		//E[nb_extensions].data1 = 0;
@@ -1085,7 +1085,7 @@ void poset_orbit_node::find_extensions(
 	if (f_vv) {
 		cout << "found " << nb_extensions << " extensions with "
 				<< nb_extension_points() << " points (out of "
-				<< O.nb_orbits << " orbits)" << endl;
+				<< O.Forest->nb_orbits << " orbits)" << endl;
 		}
 #if 0
 	if (node == 49) {
@@ -1240,13 +1240,13 @@ int poset_orbit_node::downstep_get_invariant_subset(
 				int print_interval = 10000;
 
 				S.compute_point_orbit(pt, print_interval, 0/*verbose_level*/);
-				if (S.orbit_len[0] != l) {
+				if (S.Forest->orbit_len[0] != l) {
 					cout << "poset_orbit_node::downstep_get_invariant_subset "
 							"fatal: S.orbit_len[0] != l" << endl;
 					exit(1);
 				}
-				for (j = 0; j < S.orbit_len[0]; j++) {
-					a = S.orbit[S.orbit_first[0] + j];
+				for (j = 0; j < S.Forest->orbit_len[0]; j++) {
+					a = S.Forest->orbit[S.Forest->orbit_first[0] + j];
 					subset[cur_length++] = a;
 				}
 			}
@@ -1377,8 +1377,8 @@ void poset_orbit_node::check_orbits_wrapper(
 			verbose_level - 3);
 
 
-	nb_good_orbits1 = Schreier->nb_orbits;
-	nb_points1 = Schreier->sum_up_orbit_lengths();
+	nb_good_orbits1 = Schreier->Forest->nb_orbits;
+	nb_points1 = Schreier->Forest->sum_up_orbit_lengths();
 	
 	if (f_v) {
 		cout << "poset_orbit_node::check_orbits_wrapper "
@@ -1414,15 +1414,15 @@ void poset_orbit_node::test_orbits_for_implicit_fusion(
 	
 	store_set(gen, lvl - 1);
 	
-	L = Schreier.nb_orbits;
+	L = Schreier.Forest->nb_orbits;
 	if (f_v) {
 		cout << "test_orbits_for_implicit_fusion: "
 				"testing " << L << " orbits" << endl;
 		}
 	for (k = 0; k < L; k++) {
-		fst = Schreier.orbit_first[k];
-		len = Schreier.orbit_len[k];
-		rep = Schreier.orbit[fst];
+		fst = Schreier.Forest->orbit_first[k];
+		len = Schreier.Forest->orbit_len[k];
+		rep = Schreier.Forest->orbit[fst];
 		if (f_using_invariant_subset) {
 			rep = ABR->points[rep];
 			}
@@ -1444,11 +1444,11 @@ void poset_orbit_node::test_orbits_for_implicit_fusion(
 				}
 			}
 
-		Schreier.orbit_first[u] = fst;
-		Schreier.orbit_len[u] = len;
+		Schreier.Forest->orbit_first[u] = fst;
+		Schreier.Forest->orbit_len[u] = len;
 		u++;
 		}
-	Schreier.nb_orbits = u;
+	Schreier.Forest->nb_orbits = u;
 	if (f_v) {
 		cout << "test_orbits_for_implicit_fusion: "
 				"orbit testing "
@@ -1458,10 +1458,10 @@ void poset_orbit_node::test_orbits_for_implicit_fusion(
 	if (f_vvv) {
 		cout << "the good orbits are:" << endl;
 		cout << "i : representative : orbit length" << endl;
-		for (k = 0; k < Schreier.nb_orbits; k++) {
-			fst = Schreier.orbit_first[k];
-			len = Schreier.orbit_len[k];
-			rep = Schreier.orbit[fst];
+		for (k = 0; k < Schreier.Forest->nb_orbits; k++) {
+			fst = Schreier.Forest->orbit_first[k];
+			len = Schreier.Forest->orbit_len[k];
+			rep = Schreier.Forest->orbit[fst];
 			if (f_using_invariant_subset) {
 				rep = ABR->points[rep];
 				}
@@ -1498,7 +1498,7 @@ void poset_orbit_node::check_orbits(
 		}
 	store_set(gen, lvl - 1);
 	
-	L = Schreier->nb_orbits;
+	L = Schreier->Forest->nb_orbits;
 	if (f_v) {
 		cout << "check_orbits: testing " << L << " orbits" << endl;
 		}
@@ -1507,9 +1507,9 @@ void poset_orbit_node::check_orbits(
 		//f_vvv = false;
 	}
 	for (k = 0; k < L; k++) {
-		fst = Schreier->orbit_first[k];
-		len = Schreier->orbit_len[k];
-		rep = Schreier->orbit[fst];
+		fst = Schreier->Forest->orbit_first[k];
+		len = Schreier->Forest->orbit_len[k];
+		rep = Schreier->Forest->orbit[fst];
 		//if (f_using_invariant_subset) {
 			rep = ABR->points[rep];
 		//	}
@@ -1556,11 +1556,11 @@ void poset_orbit_node::check_orbits(
 			continue;
 			}
 
-		Schreier->orbit_first[u] = fst;
-		Schreier->orbit_len[u] = len;
+		Schreier->Forest->orbit_first[u] = fst;
+		Schreier->Forest->orbit_len[u] = len;
 		u++;
 		}
-	Schreier->nb_orbits = u;
+	Schreier->Forest->nb_orbits = u;
 	if (f_v) {
 		cout << "check_orbits: orbit testing finished: " << u
 				<< " orbits out of " << L << " accepted" << endl;
@@ -1568,10 +1568,10 @@ void poset_orbit_node::check_orbits(
 	if (false) {
 		cout << "the good orbits are:" << endl;
 		cout << "i : representative : orbit length" << endl;
-		for (k = 0; k < Schreier->nb_orbits; k++) {
-			fst = Schreier->orbit_first[k];
-			len = Schreier->orbit_len[k];
-			rep = Schreier->orbit[fst];
+		for (k = 0; k < Schreier->Forest->nb_orbits; k++) {
+			fst = Schreier->Forest->orbit_first[k];
+			len = Schreier->Forest->orbit_len[k];
+			rep = Schreier->Forest->orbit[fst];
 			//if (f_using_invariant_subset) {
 				rep = ABR->points[rep];
 			//	}
@@ -1701,31 +1701,31 @@ void poset_orbit_node::downstep_orbits_print(
 	int max_orbits, int max_points_per_orbit)
 {
 	gen->print_level_info(lvl, node);
-	cout << "The " << Schreier->nb_orbits << " orbits are:" << endl;
+	cout << "The " << Schreier->Forest->nb_orbits << " orbits are:" << endl;
 	int h, rep;
 	induced_actions::action_by_restriction *ABR = NULL;
 	
 	cout << "h : orbit_len[h] : points[rep[h]] : "
 			"orbit (if size is less than "
 			<< max_points_per_orbit << ")" << endl;
-	if (Schreier->nb_orbits <= max_orbits) {
+	if (Schreier->Forest->nb_orbits <= max_orbits) {
 		//if (f_using_invariant_subset) {
 			ABR = AR->G.ABR;
 		//	}
 			
-		for (h = 0; h < Schreier->nb_orbits; h++) {
-			rep = Schreier->orbit[Schreier->orbit_first[h]];
+		for (h = 0; h < Schreier->Forest->nb_orbits; h++) {
+			rep = Schreier->Forest->orbit[Schreier->Forest->orbit_first[h]];
 			//if (f_using_invariant_subset) {
 				rep = ABR->points[rep];
 			//	}
 			cout << setw(4) << h << " : " 
-				<< setw(5) << Schreier->orbit_len[h] <<  " : "
+				<< setw(5) << Schreier->Forest->orbit_len[h] <<  " : "
 				<< setw(5) << rep;
 			if (f_print_orbits) {
-				if (Schreier->orbit_len[h] <= max_points_per_orbit) {
+				if (Schreier->Forest->orbit_len[h] <= max_points_per_orbit) {
 					cout << " : ";
 					//if (f_using_invariant_subset) {
-						Schreier->print_orbit_through_labels(
+						Schreier->Forest->print_orbit_through_labels(
 								cout, h, ABR->points);
 					//	}
 					//else {
@@ -1739,17 +1739,17 @@ void poset_orbit_node::downstep_orbits_print(
 			cout << endl;
 			}
 		if (false) {
-			Schreier->print(cout);
+			Schreier->Forest->print(cout);
 			Schreier->print_generators();
 			if (gen->get_A()->degree < 1000 && false) {
-				Schreier->print_tree(0);
+				Schreier->Forest->print_tree(0);
 				Schreier->print_tables(cout, false /* f_with_cosetrep */);
 				}
 			}
 		}
 	else {
 		cout << "Too many orbits to print: we have "
-				<< Schreier->nb_orbits << " orbits" << endl;
+				<< Schreier->Forest->nb_orbits << " orbits" << endl;
 		}
 }
 

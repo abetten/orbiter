@@ -94,7 +94,7 @@ groups::subgroup *subgroup_lattice_layer::get_subgroup_by_orbit(
 	int group_idx;
 
 
-	group_idx = Sch_on_groups->orbit[Sch_on_groups->orbit_first[orbit_idx] + group_in_orbit_idx];
+	group_idx = Sch_on_groups->Forest->orbit[Sch_on_groups->Forest->orbit_first[orbit_idx] + group_in_orbit_idx];
 	Subgroup = Hash_table_subgroups->get_subgroup(group_idx);
 
 	return Subgroup;
@@ -106,7 +106,7 @@ int subgroup_lattice_layer::get_orbit_length(
 	int len;
 
 
-	len = Sch_on_groups->orbit_len[orbit_idx];
+	len = Sch_on_groups->Forest->orbit_len[orbit_idx];
 
 	return len;
 }
@@ -214,19 +214,19 @@ void subgroup_lattice_layer::group_global_to_orbit_and_group_local(
 
 	int coset;
 
-	coset = Sch_on_groups->orbit_inv[group_idx_global];
-	for (orb = 0; orb < Sch_on_groups->nb_orbits; orb++) {
-		if (Sch_on_groups->orbit_first[orb] <= coset &&
-				Sch_on_groups->orbit_first[orb] + Sch_on_groups->orbit_len[orb] > coset) {
+	coset = Sch_on_groups->Forest->orbit_inv[group_idx_global];
+	for (orb = 0; orb < Sch_on_groups->Forest->nb_orbits; orb++) {
+		if (Sch_on_groups->Forest->orbit_first[orb] <= coset &&
+				Sch_on_groups->Forest->orbit_first[orb] + Sch_on_groups->Forest->orbit_len[orb] > coset) {
 			break;
 		}
 	}
-	if (orb == Sch_on_groups->nb_orbits) {
+	if (orb == Sch_on_groups->Forest->nb_orbits) {
 		cout << "subgroup_lattice_layer::group_global_to_orbit_and_group_local not found" << endl;
 		exit(1);
 	}
 
-	group_idx_local = coset - Sch_on_groups->orbit_first[orb];
+	group_idx_local = coset - Sch_on_groups->Forest->orbit_first[orb];
 
 	if (f_v) {
 		cout << "subgroup_lattice_layer::group_global_to_orbit_and_group_local done" << endl;
@@ -241,7 +241,7 @@ int subgroup_lattice_layer::nb_subgroups()
 
 int subgroup_lattice_layer::nb_orbits()
 {
-	return Sch_on_groups->nb_orbits;
+	return Sch_on_groups->Forest->nb_orbits;
 }
 
 void subgroup_lattice_layer::orbits_under_conjugation(
@@ -297,7 +297,7 @@ void subgroup_lattice_layer::orbits_under_conjugation(
 		cout << "subgroup_lattice_layer::orbits_under_conjugation "
 				"layer " << layer_idx << " / " << Subgroup_lattice->nb_layers
 				<< " The conjugacy classes of groups have the following lengths: ";
-		Sch_on_groups->print_orbit_length_distribution(cout);
+		Sch_on_groups->Forest->print_orbit_length_distribution(cout);
 	}
 
 	if (f_v) {
@@ -489,7 +489,7 @@ void subgroup_lattice_layer::do_export_to_string(
 		cout << "subgroup_lattice::do_export_to_string" << endl;
 	}
 
-	nb_rows = Sch_on_groups->nb_orbits;
+	nb_rows = Sch_on_groups->Forest->nb_orbits;
 	nb_cols = 4;
 
 	int i;
@@ -503,15 +503,15 @@ void subgroup_lattice_layer::do_export_to_string(
 
 		int fst, len, idx;
 
-		fst = Sch_on_groups->orbit_first[i];
-		len = Sch_on_groups->orbit_len[i];
-		idx = Sch_on_groups->orbit[fst];
+		fst = Sch_on_groups->Forest->orbit_first[i];
+		len = Sch_on_groups->Forest->orbit_len[i];
+		idx = Sch_on_groups->Forest->orbit[fst];
 
 		Subgroup = Hash_table_subgroups->get_subgroup(idx);
 
 		Table[i * nb_cols + 1] = std::to_string(Subgroup->group_order);
 		Table[i * nb_cols + 2] = std::to_string(len);
-		Table[i * nb_cols + 3] = "\"" + Int_vec_stringify(Sch_on_groups->orbit + fst, len) + "\"";;
+		Table[i * nb_cols + 3] = "\"" + Int_vec_stringify(Sch_on_groups->Forest->orbit + fst, len) + "\"";;
 	}
 
 	if (f_v) {

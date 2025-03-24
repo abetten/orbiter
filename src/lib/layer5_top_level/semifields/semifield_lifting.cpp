@@ -226,7 +226,7 @@ void semifield_lifting::report(
 		ost << "\\hline" << endl;
 		for (i = 0; i < prev_level_nb_orbits; i++) {
 			ost << i << " & " << L2->Nb_candidates[i] << " & "
-					<< Downstep_nodes[i].Sch->nb_orbits << "\\\\" << endl;
+					<< Downstep_nodes[i].Sch->Forest->nb_orbits << "\\\\" << endl;
 		}
 		ost << "\\hline" << endl;
 		ost << "\\end{array}" << endl;
@@ -493,7 +493,7 @@ void semifield_lifting::compute_level_three(
 		cout << "Orbit : # candidates : # orbits" << endl;
 		for (orbit = 0; orbit < prev_level_nb_orbits; orbit++) {
 			cout << orbit << " : " << L2->Nb_candidates[orbit]
-				<< " : " << Downstep_nodes[orbit].Sch->nb_orbits << endl;
+				<< " : " << Downstep_nodes[orbit].Sch->Forest->nb_orbits << endl;
 		}
 	}
 
@@ -603,7 +603,7 @@ void semifield_lifting::level_two_down(
 		cout << "Orbit : # candidates : # orbits" << endl;
 		for (orbit = 0; orbit < prev_level_nb_orbits; orbit++) {
 			cout << orbit << " : " << L2->Nb_candidates[orbit]
-				<< " : " << Downstep_nodes[orbit].Sch->nb_orbits << endl;
+				<< " : " << Downstep_nodes[orbit].Sch->Forest->nb_orbits << endl;
 		}
 	}
 	if (f_v) {
@@ -712,14 +712,14 @@ void semifield_lifting::downstep(
 			Candidates[orbit], Nb_candidates[orbit], first_flag_orbit,
 			verbose_level - 2);
 
-		first_flag_orbit += Downstep_nodes[orbit].Sch->nb_orbits;
+		first_flag_orbit += Downstep_nodes[orbit].Sch->Forest->nb_orbits;
 
 		if (f_v) {
 			cout << "semifield_lifting::downstep "
 					"level = " << level
 					<< " orbit " << orbit << " / "
 					<< prev_level_nb_orbits << " : we found "
-					<< Downstep_nodes[orbit].Sch->nb_orbits << " orbits" << endl;
+					<< Downstep_nodes[orbit].Sch->Forest->nb_orbits << " orbits" << endl;
 		}
 
 		//cout << "semifield_starter::downstep processing "
@@ -736,14 +736,14 @@ void semifield_lifting::downstep(
 		cout << "orbit : candidates : number of down orbits" << endl;
 		for (orbit = 0; orbit < prev_level_nb_orbits; orbit++) {
 			cout << orbit << " : " << Nb_candidates[orbit]
-				<< " : " << Downstep_nodes[orbit].Sch->nb_orbits << endl;
+				<< " : " << Downstep_nodes[orbit].Sch->Forest->nb_orbits << endl;
 		}
 	}
 	if (f_v) {
 		int *Nb_orbits;
 		Nb_orbits = NEW_int(prev_level_nb_orbits);
 		for (orbit = 0; orbit < prev_level_nb_orbits; orbit++) {
-			Nb_orbits[orbit] = Downstep_nodes[orbit].Sch->nb_orbits;
+			Nb_orbits[orbit] = Downstep_nodes[orbit].Sch->Forest->nb_orbits;
 		}
 		other::data_structures::tally C;
 
@@ -796,7 +796,7 @@ void semifield_lifting::compute_flag_orbits(
 	for (po = 0; po < prev_level_nb_orbits; po++) {
 
 		flag_orbit_first[po] = nb_flag_orbits;
-		flag_orbit_len[po] = Downstep_nodes[po].Sch->nb_orbits;
+		flag_orbit_len[po] = Downstep_nodes[po].Sch->Forest->nb_orbits;
 
 		if (flag_orbit_first[po] != Downstep_nodes[po].first_flag_orbit) {
 			cout << "semifield_lifting::compute_flag_orbits "
@@ -812,7 +812,7 @@ void semifield_lifting::compute_flag_orbits(
 				"done with downstep at level " << level << ":" << endl;
 		cout << "orbit : number of orbits" << endl;
 		for (po = 0; po < prev_level_nb_orbits; po++) {
-			cout << po << " : " << Downstep_nodes[po].Sch->nb_orbits << endl;
+			cout << po << " : " << Downstep_nodes[po].Sch->Forest->nb_orbits << endl;
 		}
 	}
 	if (f_v) {
@@ -845,20 +845,20 @@ void semifield_lifting::compute_flag_orbits(
 					"at level " << level << ": orbit = " << po
 					<< " / " << prev_level_nb_orbits
 					<< " stabilizer order " << go_prev
-					<< " nb_secondary_orbits = " << S->nb_orbits
+					<< " nb_secondary_orbits = " << S->Forest->nb_orbits
 					<< " flag orbit f = " << f << " / " << nb_flag_orbits
 					<< endl;
 		}
 
-		for (so = 0; so < S->nb_orbits; so++, f++) {
+		for (so = 0; so < S->Forest->nb_orbits; so++, f++) {
 
 			groups::sims *Stab;
 			int r;
 			int f_long_orbit;
 
-			pt_local = S->orbit[S->orbit_first[so]];
+			pt_local = S->Forest->orbit[S->Forest->orbit_first[so]];
 			pt = Downstep_nodes[po].Candidates[pt_local];
-			len = S->orbit_len[so];
+			len = S->Forest->orbit_len[so];
 			if (len == go_prev_int) {
 				f_long_orbit = true;
 			}
@@ -875,7 +875,7 @@ void semifield_lifting::compute_flag_orbits(
 						<< " po = " << po << " / "
 						<< prev_level_nb_orbits
 						<< " so = " << so
-						<< " / " << S->nb_orbits
+						<< " / " << S->Forest->nb_orbits
 						<< " pt_local=" << pt_local
 						<< " / " << Downstep_nodes[po].nb_candidates
 						<< " pt=" << pt
@@ -923,7 +923,7 @@ void semifield_lifting::compute_flag_orbits(
 					"at level " << level << ": orbit = " << po
 					<< " / " << prev_level_nb_orbits
 					<< " stabilizer order " << go_prev
-					<< " nb_secondary_orbits = " << S->nb_orbits
+					<< " nb_secondary_orbits = " << S->Forest->nb_orbits
 					<< " done" << endl;
 		}
 	}
@@ -1826,8 +1826,8 @@ void semifield_lifting::trace_very_general(
 				"a_local = " << a_local << endl;
 	}
 
-	pos = Downstep_nodes[trace_po].Sch->orbit_inv[a_local];
-	trace_so = Downstep_nodes[trace_po].Sch->orbit_number(a_local);
+	pos = Downstep_nodes[trace_po].Sch->Forest->orbit_inv[a_local];
+	trace_so = Downstep_nodes[trace_po].Sch->Forest->orbit_number(a_local);
 		// Level_two_down[trace_po].Sch->orbit_no[pos];
 
 	if (f_vv) {

@@ -953,11 +953,16 @@ public:
 	void make_orthogonal_reflection(
 			int *M, int *z,
 		int verbose_level);
+	void make_all_Siegel_Transformations(
+			int verbose_level);
+	void make_all_valid_pairs_for_Siegel_Transformations(
+			std::vector<std::vector<long int> > &Valid_pairs,
+			int verbose_level);
 	void make_Siegel_Transformation(
 			int *M, int *v, int *u,
 		int n, int *Gram, int verbose_level);
 		// if u is singular and v \in \la u \ra^\perp, then
-		// \pho_{u,v}(x) :=
+		// \rho_{u,v}(x) :=
 		// x + \beta(x,v) u - \beta(x,u) v - Q(v) \beta(x,u) u
 		// is called Siegel transform (see Taylor p. 148)
 		// Here Q is the quadratic form and

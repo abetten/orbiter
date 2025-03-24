@@ -1145,12 +1145,12 @@ void arc_generator::report_do_the_work(
 		
 		Iso.Folding->AA->compute_all_point_orbits(Orb,
 				Stab->gens, verbose_level - 2);
-		ost << "With " << Orb.nb_orbits
+		ost << "With " << Orb.Forest->nb_orbits
 				<< " orbits on the set.\\\\" << endl;
 
 		other::data_structures::tally C_ol;
 
-		C_ol.init(Orb.orbit_len, Orb.nb_orbits, false, 0);
+		C_ol.init(Orb.Forest->orbit_len, Orb.Forest->nb_orbits, false, 0);
 
 		ost << "Orbit lengths: ";
 		//int_vec_print(f, Orb.orbit_len, Orb.nb_orbits);

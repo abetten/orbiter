@@ -58,6 +58,13 @@ orthogonal_space_activity_description::orthogonal_space_activity_description()
 	f_create_orthogonal_reflection = false;
 	//std::string create_orthogonal_reflection_points;
 
+
+	f_create_Siegel_transformation = false;
+	//std::string create_Siegel_transformation_u;
+	//std::string create_Siegel_transformation_v;
+
+	f_make_all_Siegel_transformations = false;
+
 	f_create_orthogonal_reflection_6_and_4 = false;
 	//std::string create_orthogonal_reflection_6_and_4_points;
 	//std::string create_orthogonal_reflection_6_and_4_A4;
@@ -173,6 +180,25 @@ int orthogonal_space_activity_description::read_arguments(
 				cout << "-create_orthogonal_reflection " << create_orthogonal_reflection_points << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-create_Siegel_transformation") == 0) {
+			f_create_Siegel_transformation = true;
+			create_Siegel_transformation_u.assign(argv[++i]);
+			create_Siegel_transformation_v.assign(argv[++i]);
+			if (f_v) {
+				cout << "-create_Siegel_transformation "
+						<< " " << create_Siegel_transformation_u
+						<< " " << create_Siegel_transformation_v
+						<< endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-make_all_Siegel_transformations") == 0) {
+			f_make_all_Siegel_transformations = true;
+			if (f_v) {
+				cout << "-make_all_Siegel_transformations " << endl;
+			}
+		}
+
+
 		else if (ST.stringcmp(argv[i], "-create_orthogonal_reflection_6_and_4") == 0) {
 			f_create_orthogonal_reflection_6_and_4 = true;
 			create_orthogonal_reflection_6_and_4_points.assign(argv[++i]);
@@ -183,6 +209,9 @@ int orthogonal_space_activity_description::read_arguments(
 						<< " " << create_orthogonal_reflection_6_and_4_A4 << endl;
 			}
 		}
+
+
+
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
 				cout << "-end" << endl;
@@ -249,6 +278,15 @@ void orthogonal_space_activity_description::print()
 	}
 	if (f_create_orthogonal_reflection) {
 		cout << "-create_orthogonal_reflection " << create_orthogonal_reflection_points << endl;
+	}
+	if (f_create_Siegel_transformation) {
+		cout << "-create_Siegel_transformation "
+				<< " " << create_Siegel_transformation_u
+				<< " " << create_Siegel_transformation_v
+				<< endl;
+	}
+	if (f_make_all_Siegel_transformations) {
+		cout << "-make_all_Siegel_transformations " << endl;
 	}
 	if (f_create_orthogonal_reflection_6_and_4) {
 		cout << "-f_create_orthogonal_reflection_6_and_4 "

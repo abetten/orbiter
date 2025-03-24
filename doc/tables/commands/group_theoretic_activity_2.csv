@@ -8,7 +8,7 @@ ROW,C1,C2,C3
 1,"\verb'-normalizer_of_cyclic_subgroup' ","  ","Computes the normalizer of a cyclic group, see Section~\ref{sec:group:magma}."
 1,"\verb'-classes' ","  ","Computes the conjugacy classes of elements, see Section~\ref{sec:group:magma}."
 1,"\verb'-split_by_classes' "," fname column "," Splits the sets from the given csv file in the given column accoding to the different conjugacy classes of the group."
-1,"\verb'-conjugacy_class_of' "," $g$ "," Computes the conjugacy class of $g$. "
+1,"\verb'-conjugacy_class_of' "," label $g$ "," Computes the conjugacy class of $g$. "
 1,"\verb'-isomorphism_Klein_quadric' "," fname "," "
 1,"\verb'-print_elements' "," ","Produces a printout of all group elements. "
 1,"\verb'-print_elements_tex' "," ","Produces a latex report of all group elements. "

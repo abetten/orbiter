@@ -221,7 +221,7 @@ int upstep_work::upstep_subspace_action(
 	if (f_vv) {
 		cout << "upstep_work::upstep_subspace_action "
 				"the initial orbits on hyperplanes are:" << endl;
-		up_orbit.print_and_list_orbits(cout);
+		up_orbit.Forest->print_and_list_orbits(cout);
 	}
 
 	if (f_vv) {
@@ -483,7 +483,7 @@ int upstep_work::upstep_subspace_action(
 			if (f_vv) {
 				cout << "upstep_work::upstep_subspace_action "
 						"new orbit length upstep = "
-						<< up_orbit.orbit_len[0] << endl;
+						<< up_orbit.Forest->orbit_len[0] << endl;
 			}
 		}
 		else if (r == not_canonical) {
@@ -528,13 +528,13 @@ int upstep_work::upstep_subspace_action(
 		cout << "upstep_work::upstep_subspace_action "
 				"upstep orbit length for set ";
 		Lint_vec_set_print(cout, gen->get_S(), size);
-		cout << " is " << up_orbit.orbit_len[0] << endl;
+		cout << " is " << up_orbit.Forest->orbit_len[0] << endl;
 	}
 
 	if (f_vv) {
 		cout << "upstep_work::upstep_subspace_action "
 				"the final orbits on hyperplanes are:" << endl;
-		up_orbit.print_and_list_orbits(cout);
+		up_orbit.Forest->print_and_list_orbits(cout);
 	}
 
 

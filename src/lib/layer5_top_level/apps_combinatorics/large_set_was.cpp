@@ -333,8 +333,8 @@ void large_set_was::do_normalizer_on_orbits_of_a_given_length_single_orbit(
 	if (f_v) {
 		cout << "large_set_was::do_normalizer_on_orbits_of_a_given_length "
 				"the number of orbits of the normalizer on the "
-				"good orbits is " << Sch->nb_orbits << endl;
-		Sch->print_and_list_orbits_tex(cout);
+				"good orbits is " << Sch->Forest->nb_orbits << endl;
+		Sch->Forest->print_and_list_orbits_tex(cout);
 
 #if 0
 		cout << "printing orbits through Design_table_reduced_idx:" << endl;
@@ -350,18 +350,18 @@ void large_set_was::do_normalizer_on_orbits_of_a_given_length_single_orbit(
 		int i, a, l;
 
 
-		Orbits_under_N = NEW_lint(Sch->nb_orbits * 2);
+		Orbits_under_N = NEW_lint(Sch->Forest->nb_orbits * 2);
 
 		fname_out = Descr->prefix + "_N_orbit_reps.csv";
 
-		for (i = 0; i < Sch->nb_orbits; i++) {
-			l = Sch->orbit_len[i];
-			a = Sch->orbit[Sch->orbit_first[i]];
+		for (i = 0; i < Sch->Forest->nb_orbits; i++) {
+			l = Sch->Forest->orbit_len[i];
+			a = Sch->Forest->orbit[Sch->Forest->orbit_first[i]];
 			Orbits_under_N[2 * i + 0] = a;
 			Orbits_under_N[2 * i + 1] = l;
 		}
 		Fio.Csv_file_support->lint_matrix_write_csv(
-				fname_out, Orbits_under_N, Sch->nb_orbits, 2);
+				fname_out, Orbits_under_N, Sch->Forest->nb_orbits, 2);
 
 		FREE_lint(Orbits_under_N);
 	}
@@ -694,7 +694,8 @@ void large_set_was::read_solution_file(
 				// H_orbits->Orbits_classified->Sets[selected_type_idx][]
 			//b = H_orbits->Orbits_classified->Sets[selected_type_idx][a];
 #endif
-			H_orbits->Sch->get_orbit(b,
+			H_orbits->Sch->Forest->get_orbit(
+					b,
 					Large_sets + i * sz + starter_set_sz + j * orbit_length,
 					l, 0 /* verbose_level*/);
 			if (l != orbit_length) {

@@ -104,7 +104,7 @@ void orbits_on_something::init(
 		Sch = NEW_OBJECT(schreier);
 
 		Sch->init(A, 0 /*verbose_level*/);
-		Sch->initialize_tables();
+		//Sch->initialize_tables();
 		Sch->init_generators(*SG->gens, 0 /*verbose_level*/);
 		//Orbits_on_lines->compute_all_point_orbits(verbose_level);
 		{
@@ -114,7 +114,7 @@ void orbits_on_something::init(
 						"before reading orbits from file "
 						<< fname << endl;
 			}
-			Sch->read_from_file_binary(fp, verbose_level);
+			Sch->Forest->read_from_file_binary(fp, verbose_level);
 		}
 		if (f_v) {
 			cout << "orbits_on_something::init "
@@ -139,7 +139,7 @@ void orbits_on_something::init(
 		if (f_v) {
 			cout << "orbits_on_something::init "
 					"computing orbits done" << endl;
-			cout << "We found " << Sch->nb_orbits
+			cout << "We found " << Sch->Forest->nb_orbits
 					<< " orbits of the group" << endl;
 		}
 
@@ -151,12 +151,12 @@ void orbits_on_something::init(
 				ofstream fp(fname);
 				if (f_v) {
 					cout << "orbits_on_something::init "
-							"before Sch->write_to_file_binary" << endl;
+							"before Sch->Forest->write_to_file_binary" << endl;
 				}
-				Sch->write_to_file_binary(fp, verbose_level);
+				Sch->Forest->write_to_file_binary(fp, verbose_level);
 				if (f_v) {
 					cout << "orbits_on_something::init "
-							"after Sch->write_to_file_binary" << endl;
+							"after Sch->Forest->write_to_file_binary" << endl;
 				}
 			}
 			cout << "Written file " << fname << " of size "
@@ -164,12 +164,12 @@ void orbits_on_something::init(
 
 			if (f_v) {
 				cout << "orbits_on_something::init "
-						"before Sch->write_to_file_csv" << endl;
+						"before Sch->Forest->write_to_file_csv" << endl;
 			}
-			Sch->write_to_file_csv(fname_csv, verbose_level);
+			Sch->Forest->write_to_file_csv(fname_csv, verbose_level);
 			if (f_v) {
 				cout << "orbits_on_something::init "
-						"after Sch->write_to_file_csv" << endl;
+						"after Sch->Forest->write_to_file_csv" << endl;
 			}
 			cout << "Written file " << fname_csv << " of size "
 					<< Fio.file_size(fname_csv) << endl;
@@ -179,7 +179,7 @@ void orbits_on_something::init(
 	if (f_v) {
 		cout << "orbits_on_something::init "
 				"orbit length distribution:" << endl;
-		Sch->print_orbit_length_distribution(cout);
+		Sch->Forest->print_orbit_length_distribution(cout);
 	}
 
 	classify_orbits_by_length(verbose_level);
@@ -231,7 +231,7 @@ void orbits_on_something::init_from_vector_ge(
 		Sch = NEW_OBJECT(schreier);
 
 		Sch->init(A, 0 /*verbose_level*/);
-		Sch->initialize_tables();
+		//Sch->initialize_tables();
 		Sch->init_generators(*gens, 0 /*verbose_level*/);
 		//Orbits_on_lines->compute_all_point_orbits(verbose_level);
 		{
@@ -241,7 +241,7 @@ void orbits_on_something::init_from_vector_ge(
 						"before reading orbits from file "
 						<< fname << endl;
 			}
-			Sch->read_from_file_binary(fp, verbose_level);
+			Sch->Forest->read_from_file_binary(fp, verbose_level);
 		}
 		if (f_v) {
 			cout << "orbits_on_something::init_from_vector_ge "
@@ -262,7 +262,7 @@ void orbits_on_something::init_from_vector_ge(
 		if (f_v) {
 			cout << "orbits_on_something::init_from_vector_ge "
 					"after compute_all_point_orbits_schreier" << endl;
-			cout << "We found " << Sch->nb_orbits
+			cout << "We found " << Sch->Forest->nb_orbits
 					<< " orbits of the group" << endl;
 		}
 
@@ -275,12 +275,12 @@ void orbits_on_something::init_from_vector_ge(
 				ofstream fp(fname);
 				if (f_v) {
 					cout << "orbits_on_something::init_from_vector_ge "
-							"before Sch->write_to_file_binary" << endl;
+							"before Sch->Forest->write_to_file_binary" << endl;
 				}
-				Sch->write_to_file_binary(fp, verbose_level);
+				Sch->Forest->write_to_file_binary(fp, verbose_level);
 				if (f_v) {
 					cout << "orbits_on_something::init_from_vector_ge "
-							"after Sch->write_to_file_binary" << endl;
+							"after Sch->Forest->write_to_file_binary" << endl;
 				}
 			}
 			cout << "Written file " << fname << " of size "
@@ -288,9 +288,9 @@ void orbits_on_something::init_from_vector_ge(
 
 			if (f_v) {
 				cout << "orbits_on_something::init_from_vector_ge "
-						"before Sch->write_to_file_csv" << endl;
+						"before Sch->Forest->write_to_file_csv" << endl;
 			}
-			Sch->write_to_file_csv(fname_csv, verbose_level);
+			Sch->Forest->write_to_file_csv(fname_csv, verbose_level);
 			if (f_v) {
 				cout << "orbits_on_something::init_from_vector_ge "
 						"after Sch->write_to_file_csv" << endl;
@@ -304,7 +304,7 @@ void orbits_on_something::init_from_vector_ge(
 	if (f_v) {
 		cout << "orbits_on_something::init_from_vector_ge "
 				"orbit length distribution:" << endl;
-		Sch->print_orbit_length_distribution(cout);
+		Sch->Forest->print_orbit_length_distribution(cout);
 	}
 
 	classify_orbits_by_length(verbose_level);
@@ -361,7 +361,7 @@ void orbits_on_something::stabilizer_of_orbit_representative(
 		cout << "orbits_on_something::stabilizer_of_orbit_representative" << endl;
 	}
 
-	orbit_rep = Sch->orbit[Sch->orbit_first[orbit_idx]];
+	orbit_rep = Sch->Forest->orbit[Sch->Forest->orbit_first[orbit_idx]];
 
 	stabilizer_of(orbit_idx, Stab, verbose_level);
 
@@ -394,7 +394,7 @@ void orbits_on_something::stabilizer_of(
 				"orbit_idx = " << orbit_idx << endl;
 		cout << "orbits_on_something::init "
 				"orbit length = ";
-		cout << Sch->orbit_len[orbit_idx] << endl;
+		cout << Sch->Forest->orbit_len[orbit_idx] << endl;
 	}
 	Stab = Sch->stabilizer_orbit_rep(
 		SG->A,
@@ -462,8 +462,8 @@ void orbits_on_something::idx_of_points_in_orbits_of_length_l(
 
 	for (i = 0; i < set_sz; i++) {
 		a = set[i];
-		b = Sch->orbit_number(a);
-		if (Sch->orbit_len[b] == l) {
+		b = Sch->Forest->orbit_number(a);
+		if (Sch->Forest->orbit_len[b] == l) {
 			Idx.push_back(i);
 		}
 	}
@@ -497,9 +497,9 @@ void orbits_on_something::orbit_type_of_set(
 	// intersects the set in c elements.
 	for (i = 0; i < set_sz; i++) {
 		a = set[i];
-		b = Sch->orbit_number(a);
+		b = Sch->Forest->orbit_number(a);
 		v[i] = b;
-		l = Sch->orbit_len[b];
+		l = Sch->Forest->orbit_len[b];
 		if (l > go) {
 			cout << "orbits_on_something::orbit_type_of_set l > go" << endl;
 			exit(1);
@@ -511,7 +511,7 @@ void orbits_on_something::orbit_type_of_set(
 	for (i = 1; i <= set_sz; i++) {
 		if (i == set_sz || v[i] != v[i - 1]) {
 			b = v[i - 1];
-			l = Sch->orbit_len[b];
+			l = Sch->Forest->orbit_len[b];
 			if (l > go) {
 				cout << "orbits_on_something::orbit_type_of_set l > go" << endl;
 				exit(1);
@@ -648,7 +648,7 @@ void orbits_on_something::compute_compact_type(
 void orbits_on_something::report_orbit_lengths(
 		std::ostream &ost)
 {
-	Sch->print_orbit_lengths_tex(ost);
+	Sch->Forest->print_orbit_lengths_tex(ost);
 }
 
 void orbits_on_something::print_orbits_based_on_filtered_orbits(
@@ -671,7 +671,7 @@ void orbits_on_something::print_orbits_based_on_filtered_orbits(
 		for (j = 0; j < Filtered_orbits->Set_size[i]; j++) {
 			a = Filtered_orbits->Sets[i][j];
 			ost << "orbit " << j << " / " << Filtered_orbits->Set_size[i] << " is " << a << " : ";
-			Sch->get_orbit(a, Orbit1, l, 0 /* verbose_level*/);
+			Sch->Forest->get_orbit(a, Orbit1, l, 0 /* verbose_level*/);
 			if (l != len) {
 				cout << "orbits_on_something::print_orbits_based_on_filtered_orbits l != len" << endl;
 				exit(1);
@@ -694,7 +694,7 @@ void orbits_on_something::classify_orbits_by_length(
 		cout << "orbits_on_something::classify_orbits_by_length" << endl;
 	}
 	Classify_orbits_by_length = NEW_OBJECT(other::data_structures::tally);
-	Classify_orbits_by_length->init(Sch->orbit_len, Sch->nb_orbits, false, 0);
+	Classify_orbits_by_length->init(Sch->Forest->orbit_len, Sch->Forest->nb_orbits, false, 0);
 
 	if (f_v) {
 		cout << "orbits_on_something::classify_orbits_by_length "
@@ -862,7 +862,7 @@ void orbits_on_something::test_orbits_of_a_certain_length(
 	j = 0;
 	for (i = 0; i < nb_points; i++) {
 		a = Classify_orbits_by_length->Set_partition->Sets[type_idx][i];
-		Sch->get_orbit(a, orbit, l, 0 /* verbose_level*/);
+		Sch->Forest->get_orbit(a, orbit, l, 0 /* verbose_level*/);
 		if (l != orbit_length) {
 			cout << "orbits_on_something::test_orbits_of_a_certain_length "
 					"l != orbit_length" << endl;
@@ -914,7 +914,7 @@ void orbits_on_something::print_orbits_of_a_certain_length(
 	if (Classify_orbits_by_length->Set_partition->Set_size[type_idx] < 1000) {
 		for (i = 0; i < Classify_orbits_by_length->Set_partition->Set_size[type_idx]; i++) {
 			a = Classify_orbits_by_length->Set_partition->Sets[type_idx][i];
-			Sch->get_orbit(a, orbit, l, 0 /* verbose_level*/);
+			Sch->Forest->get_orbit(a, orbit, l, 0 /* verbose_level*/);
 
 			cout << i << " : ";
 			Lint_vec_print(cout, orbit, l);
@@ -951,14 +951,14 @@ int orbits_on_something::test_pair_of_orbits_of_a_equal_length(
 	int ret;
 
 	a = Classify_orbits_by_length->Set_partition->Sets[type_idx][idx1];
-	Sch->get_orbit(a, Orbit1, l, 0 /* verbose_level*/);
+	Sch->Forest->get_orbit(a, Orbit1, l, 0 /* verbose_level*/);
 	if (l != orbit_length) {
 		cout << "orbits_on_something::test_pair_of_orbits_of_a_equal_length "
 				"l != orbit_length" << endl;
 		exit(1);
 	}
 	b = Classify_orbits_by_length->Set_partition->Sets[type_idx][idx2];
-	Sch->get_orbit(b, Orbit2, l, 0 /* verbose_level*/);
+	Sch->Forest->get_orbit(b, Orbit2, l, 0 /* verbose_level*/);
 	if (l != orbit_length) {
 		cout << "orbits_on_something::test_pair_of_orbits_of_a_equal_length "
 				"l != orbit_length" << endl;
@@ -991,7 +991,7 @@ void orbits_on_something::report_orbits_of_type(
 
 	for (i = 0; i < nb_points; i++) {
 		a = Classify_orbits_by_length->Set_partition->Sets[type_idx][i];
-		Sch->get_orbit(a, orbit, len, 0 /* verbose_level*/);
+		Sch->Forest->get_orbit(a, orbit, len, 0 /* verbose_level*/);
 		ost << i << " : " << a << " : ";
 		Lint_vec_print(ost, orbit, len);
 		ost << "\\\\" << endl;
@@ -1056,7 +1056,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filte
 	filtered_set_of_orbits = NEW_lint(nb_points_original);
 	for (i = 0; i < nb_points_original; i++) {
 		a = Classify_orbits_by_length->Set_partition->Sets[type_idx][i];
-		Sch->get_orbit(a, orbit1, l1, 0 /* verbose_level*/);
+		Sch->Forest->get_orbit(a, orbit1, l1, 0 /* verbose_level*/);
 		if (l1 != orbit_length) {
 			cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filtering "
 					"l1 != orbit_length" << endl;
@@ -1124,7 +1124,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filte
 		for (i = 0; i < filtered_set_of_orbits_size; i++) {
 			a = filtered_set_of_orbits[i];
 			//a = Orbits_classified->Sets[type_idx][i];
-			Sch->get_orbit(a, orbit1, l1, 0 /* verbose_level*/);
+			Sch->Forest->get_orbit(a, orbit1, l1, 0 /* verbose_level*/);
 			if (l1 != orbit_length) {
 				cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filtering "
 						"l1 != orbit_length" << endl;
@@ -1178,7 +1178,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filte
 		for (i = 0; i < filtered_set_of_orbits_size; i++) {
 			a = filtered_set_of_orbits[i];
 			//a = Orbits_classified->Sets[type_idx][i];
-			Sch->get_orbit(a, orbit1, l1, 0 /* verbose_level*/);
+			Sch->Forest->get_orbit(a, orbit1, l1, 0 /* verbose_level*/);
 			Lint_vec_print(cout, orbit1, l1);
 			if (i < filtered_set_of_orbits_size - 1) {
 				cout << ",";
@@ -1191,7 +1191,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filte
 	for (i = 0; i < filtered_set_of_orbits_size; i++) {
 		a = filtered_set_of_orbits[i];
 		//a = Orbits_classified->Sets[type_idx][i];
-		Sch->get_orbit(a, orbit1, l1, 0 /* verbose_level*/);
+		Sch->Forest->get_orbit(a, orbit1, l1, 0 /* verbose_level*/);
 		if (l1 != orbit_length) {
 			cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filtering "
 					"l1 != orbit_length" << endl;
@@ -1200,7 +1200,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filte
 		for (j = i + 1; j < filtered_set_of_orbits_size; j++) {
 			b = filtered_set_of_orbits[j];
 			//b = Orbits_classified->Sets[type_idx][j];
-			Sch->get_orbit(b, orbit2, l2, 0 /* verbose_level*/);
+			Sch->Forest->get_orbit(b, orbit2, l2, 0 /* verbose_level*/);
 			if (l2 != orbit_length) {
 				cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filtering "
 						"l2 != orbit_length" << endl;
@@ -1358,7 +1358,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 		point_color = NEW_int(nb_points * orbit_length);
 		for (i = 0; i < nb_points; i++) {
 			a = Classify_orbits_by_length->Set_partition->Sets[type_idx][i];
-			Sch->get_orbit(a, orbit1, l1, 0 /* verbose_level*/);
+			Sch->Forest->get_orbit(a, orbit1, l1, 0 /* verbose_level*/);
 			if (l1 != orbit_length) {
 				cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length l1 != orbit_length" << endl;
 				exit(1);
@@ -1390,7 +1390,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 		cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length point sets:" << endl;
 		for (i = 0; i < nb_points; i++) {
 			a = Classify_orbits_by_length->Set_partition->Sets[type_idx][i];
-			Sch->get_orbit(a, orbit1, l1, 0 /* verbose_level*/);
+			Sch->Forest->get_orbit(a, orbit1, l1, 0 /* verbose_level*/);
 			Lint_vec_print(cout, orbit1, l1);
 			if (i < nb_points - 1) {
 				cout << ",";
@@ -1402,7 +1402,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 	k = 0;
 	for (i = 0; i < nb_points; i++) {
 		a = Classify_orbits_by_length->Set_partition->Sets[type_idx][i];
-		Sch->get_orbit(a, orbit1, l1, 0 /* verbose_level*/);
+		Sch->Forest->get_orbit(a, orbit1, l1, 0 /* verbose_level*/);
 		if (l1 != orbit_length) {
 			cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length "
 					"l1 != orbit_length" << endl;
@@ -1410,7 +1410,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 		}
 		for (j = i + 1; j < nb_points; j++) {
 			b = Classify_orbits_by_length->Set_partition->Sets[type_idx][j];
-			Sch->get_orbit(b, orbit2, l2, 0 /* verbose_level*/);
+			Sch->Forest->get_orbit(b, orbit2, l2, 0 /* verbose_level*/);
 			if (l2 != orbit_length) {
 				cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length "
 						"l2 != orbit_length" << endl;
@@ -1551,7 +1551,7 @@ void orbits_on_something::extract_orbits(
 	for (i = 0; i < nb_orbits; i++) {
 		a = orbits[i];
 		//b = my_orbits_classified->Sets[type_idx][a];
-		Sch->get_orbit(a, orbit, l, 0 /* verbose_level*/);
+		Sch->Forest->get_orbit(a, orbit, l, 0 /* verbose_level*/);
 		if (l != orbit_length) {
 			cout << "orbits_on_something::extract_orbits l != orbit_length" << endl;
 			exit(1);
@@ -1589,7 +1589,7 @@ void orbits_on_something::extract_orbits_using_classification(
 	for (i = 0; i < nb_orbits; i++) {
 		a = orbits_idx[i];
 		b = Classify_orbits_by_length->Set_partition->Sets[type_idx][a];
-		Sch->get_orbit(b, orbit, l, 0 /* verbose_level*/);
+		Sch->Forest->get_orbit(b, orbit, l, 0 /* verbose_level*/);
 		if (l != orbit_length) {
 			cout << "orbits_on_something::extract_orbits_using_classification "
 					"l != orbit_length" << endl;
@@ -1667,7 +1667,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_or
 	k = 0;
 	for (i = 0; i < nb_points; i++) {
 		a = my_orbits_classified->Sets[type_idx][i];
-		Sch->get_orbit(a, orbit1, l1, 0 /* verbose_level*/);
+		Sch->Forest->get_orbit(a, orbit1, l1, 0 /* verbose_level*/);
 		if (l1 != orbit_length) {
 			cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_orbits_classified "
 					"l1 != orbit_length" << endl;
@@ -1675,7 +1675,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_or
 		}
 		for (j = i + 1; j < nb_points; j++) {
 			b = my_orbits_classified->Sets[type_idx][j];
-			Sch->get_orbit(b, orbit2, l2, 0 /* verbose_level*/);
+			Sch->Forest->get_orbit(b, orbit2, l2, 0 /* verbose_level*/);
 			if (l2 != orbit_length) {
 				cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_orbits_classified "
 						"l2 != orbit_length" << endl;
@@ -1901,7 +1901,7 @@ void orbits_on_something::create_weighted_graph_on_orbits(
 		ol1 = Orbit_lengths[I];
 		for (i = 0; i < Pts_len[I]; i++) {
 			a = my_orbits_classified->Sets[Type_idx[I]][i];
-			Sch->get_orbit(a, orbit1, l1, 0 /* verbose_level*/);
+			Sch->Forest->get_orbit(a, orbit1, l1, 0 /* verbose_level*/);
 			if (l1 != ol1) {
 				cout << "orbits_on_something::create_weighted_graph_on_orbits "
 						"l1 != ol1" << endl;
@@ -1917,7 +1917,7 @@ void orbits_on_something::create_weighted_graph_on_orbits(
 				}
 				for (j = j0; j < Pts_len[J]; j++) {
 					b = my_orbits_classified->Sets[Type_idx[J]][j];
-					Sch->get_orbit(b, orbit2, l2, 0 /* verbose_level*/);
+					Sch->Forest->get_orbit(b, orbit2, l2, 0 /* verbose_level*/);
 					if (l2 != ol2) {
 						cout << "orbits_on_something::create_weighted_graph_on_orbits "
 								"l2 != ol2" << endl;
@@ -2073,7 +2073,7 @@ void orbits_on_something::get_orbit_number_and_position(
 		cout << "orbits_on_something::get_orbit_number_and_position" << endl;
 	}
 
-	Sch->get_orbit_number_and_position(a, orbit_idx, orbit_pos, verbose_level);
+	Sch->Forest->get_orbit_number_and_position(a, orbit_idx, orbit_pos, verbose_level);
 
 	if (f_v) {
 		cout << "orbits_on_something::get_orbit_number_and_position done" << endl;
@@ -2090,12 +2090,12 @@ int orbits_on_something::get_orbit_rep(
 		cout << "orbits_on_something::get_orbit_rep" << endl;
 	}
 
-	if (orbit_idx >= Sch->nb_orbits) {
+	if (orbit_idx >= Sch->Forest->nb_orbits) {
 		cout << "orbits_on_something::get_orbit_rep "
 				"orbit_idx >= Sch->nb_orbits" << endl;
 		exit(1);
 	}
-	rep = Sch->orbit[Sch->orbit_first[orbit_idx]];
+	rep = Sch->Forest->orbit[Sch->Forest->orbit_first[orbit_idx]];
 
 	if (f_v) {
 		cout << "orbits_on_something::get_orbit_rep done" << endl;
@@ -2312,13 +2312,13 @@ void orbits_on_something::report(
 			ost << "Orbit " << idx << ":" << endl;
 
 
-			if (Sch->orbit_len[idx] != orbit_length) {
-				cout << "orbits_on_something::report Sch->orbit_len[idx] != orbit_length" << endl;
-				cout << "Sch->orbit_len[idx] = " << Sch->orbit_len[idx] << endl;
+			if (Sch->Forest->orbit_len[idx] != orbit_length) {
+				cout << "orbits_on_something::report Sch->Forest->orbit_len[idx] != orbit_length" << endl;
+				cout << "Sch->orbit_len[idx] = " << Sch->Forest->orbit_len[idx] << endl;
 				cout << "orbit_length = " << orbit_length << endl;
 				exit(1);
 			}
-			Sch->get_orbit(idx, Orb, l1, 0 /* verbose_level*/);
+			Sch->Forest->get_orbit(idx, Orb, l1, 0 /* verbose_level*/);
 
 			a = Orb[0];
 
@@ -2355,7 +2355,7 @@ void orbits_on_something::report(
 		for (j = 0; j < nb_orbits; j++) {
 			idx = Classify_orbits_by_length->Set_partition->Sets[i][j];
 			ost << "Orbit " << idx << ":" << endl;
-			Sch->get_orbit(idx, Orb, l1, 0 /* verbose_level*/);
+			Sch->Forest->get_orbit(idx, Orb, l1, 0 /* verbose_level*/);
 			//ost << "$$" << endl;
 			Lint_vec_print(ost, Orb, orbit_length);
 			//ost << "$$" << endl;
@@ -2554,7 +2554,7 @@ void orbits_on_something::export_something_worker(
 		int *Pts;
 		int i;
 
-		Sch->get_orbit_in_order(Orb,
+		Sch->Forest->get_orbit_in_order(Orb,
 				orbit_idx, verbose_level);
 
 		Pts = NEW_int(Orb.size());

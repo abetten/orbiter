@@ -225,7 +225,7 @@ void group_action_on_combinatorial_object::init(
 
 	Sch_points = NEW_OBJECT(groups::schreier);
 	Sch_points->init(A_on_points, verbose_level - 2);
-	Sch_points->initialize_tables();
+	//Sch_points->initialize_tables();
 	if (f_v) {
 		cout << "group_action_on_combinatorial_object::init "
 				"before Sch_points->init_generators" << endl;
@@ -251,7 +251,7 @@ void group_action_on_combinatorial_object::init(
 
 	if (f_v) {
 		cout << "group_action_on_combinatorial_object::init "
-				"found " << Sch_points->nb_orbits
+				"found " << Sch_points->Forest->nb_orbits
 				<< " orbits on points" << endl;
 	}
 
@@ -263,7 +263,7 @@ void group_action_on_combinatorial_object::init(
 
 	Sch_lines = NEW_OBJECT(groups::schreier);
 	Sch_lines->init(A_on_lines, verbose_level - 2);
-	Sch_lines->initialize_tables();
+	//Sch_lines->initialize_tables();
 	Sch_lines->init_generators(
 			*gens->gens /* *generators */, verbose_level - 2);
 	if (f_v) {
@@ -278,7 +278,7 @@ void group_action_on_combinatorial_object::init(
 
 	if (f_v) {
 		cout << "group_action_on_combinatorial_object::init "
-				"found " << Sch_lines->nb_orbits
+				"found " << Sch_lines->Forest->nb_orbits
 				<< " orbits on lines" << endl;
 	}
 
@@ -288,14 +288,14 @@ void group_action_on_combinatorial_object::init(
 	}
 
 	Decomposition->Stack->split_by_orbit_partition(
-			Sch_points->nb_orbits,
-		Sch_points->orbit_first, Sch_points->orbit_len, Sch_points->orbit,
+			Sch_points->Forest->nb_orbits,
+		Sch_points->Forest->orbit_first, Sch_points->Forest->orbit_len, Sch_points->Forest->orbit,
 		0 /* offset */,
 		verbose_level - 2);
 
 	Decomposition->Stack->split_by_orbit_partition(
-			Sch_lines->nb_orbits,
-		Sch_lines->orbit_first, Sch_lines->orbit_len, Sch_lines->orbit,
+			Sch_lines->Forest->nb_orbits,
+		Sch_lines->Forest->orbit_first, Sch_lines->Forest->orbit_len, Sch_lines->Forest->orbit,
 		Decomposition->Inc->nb_points() /* offset */,
 		verbose_level - 2);
 
@@ -483,20 +483,20 @@ void group_action_on_combinatorial_object::export_TDA_with_flag_orbits(
 		Inc_flag_orbits = NEW_int(Enc->nb_rows * Enc->nb_cols);
 		Inc_TDA = NEW_int(Enc->nb_rows * Enc->nb_cols);
 
-		nb_orbits_on_flags = Flags->Orb->Sch->nb_orbits;
+		nb_orbits_on_flags = Flags->Orb->Sch->Forest->nb_orbits;
 		for (i = 0; i < Enc->nb_rows; i++) {
-			i0 = Sch_points->orbit[i];
+			i0 = Sch_points->Forest->orbit[i];
 			for (j = 0; j < Enc->nb_cols; j++) {
-				j0 = Sch_lines->orbit[j];
+				j0 = Sch_lines->Forest->orbit[j];
 				if (Enc->get_incidence_ij(i0, j0)) {
 					idx = Flags->find_flag(i0, j0 + Enc->nb_rows);
-					orbit_idx = Flags->Orb->Sch->orbit_number(idx);
+					orbit_idx = Flags->Orb->Sch->Forest->orbit_number(idx);
 					Inc_flag_orbits[i * Enc->nb_cols + j] = orbit_idx + 1;
 					Inc_TDA[i * Enc->nb_cols + j] = 1;
 				}
 				else {
 					idx = Anti_Flags->find_flag(i0, j0 + Enc->nb_rows);
-					orbit_idx = Anti_Flags->Orb->Sch->orbit_number(idx);
+					orbit_idx = Anti_Flags->Orb->Sch->Forest->orbit_number(idx);
 					Inc_flag_orbits[i * Enc->nb_cols + j] = nb_orbits_on_flags + orbit_idx + 1;
 					Inc_TDA[i * Enc->nb_cols + j] = 0;
 				}
@@ -542,9 +542,9 @@ void group_action_on_combinatorial_object::export_TDA_with_flag_orbits(
 		// +1 avoids the color white
 
 		for (i = 0; i < Enc->nb_rows; i++) {
-			i0 = Sch_points->orbit[i];
+			i0 = Sch_points->Forest->orbit[i];
 			for (j = 0; j < Enc->nb_cols; j++) {
-				j0 = Sch_lines->orbit[j];
+				j0 = Sch_lines->Forest->orbit[j];
 				if (Enc->get_incidence_ij(i0, j0)) {
 					Inc2[i * Enc->nb_cols + j] = 1;
 				}
@@ -612,20 +612,20 @@ void group_action_on_combinatorial_object::export_INP_with_flag_orbits(
 
 		Inc = NEW_int(Enc->nb_rows * Enc->nb_cols);
 		Inc_flag_orbits = NEW_int(Enc->nb_rows * Enc->nb_cols);
-		nb_orbits_on_flags = Flags->Orb->Sch->nb_orbits;
+		nb_orbits_on_flags = Flags->Orb->Sch->Forest->nb_orbits;
 		for (i = 0; i < Enc->nb_rows; i++) {
 			i0 = i;
 			for (j = 0; j < Enc->nb_cols; j++) {
 				j0 = j;
 				if (Enc->get_incidence_ij(i0, j0)) {
 					idx = Flags->find_flag(i0, j0 + Enc->nb_rows);
-					orbit_idx = Flags->Orb->Sch->orbit_number(idx);
+					orbit_idx = Flags->Orb->Sch->Forest->orbit_number(idx);
 					Inc_flag_orbits[i * Enc->nb_cols + j] = orbit_idx + 1;
 					Inc[i * Enc->nb_cols + j] = 1;
 				}
 				else {
 					idx = Anti_Flags->find_flag(i0, j0 + Enc->nb_rows);
-					orbit_idx = Anti_Flags->Orb->Sch->orbit_number(idx);
+					orbit_idx = Anti_Flags->Orb->Sch->Forest->orbit_number(idx);
 					Inc_flag_orbits[i * Enc->nb_cols + j] = nb_orbits_on_flags + orbit_idx + 1;
 					Inc[i * Enc->nb_cols + j] = 0;
 				}

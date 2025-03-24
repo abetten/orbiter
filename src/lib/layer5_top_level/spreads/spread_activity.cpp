@@ -327,7 +327,7 @@ void spread_activity::report2(
 				verbose_level);
 
 		ost << "Orbits on grassmannian: ";
-		O1->Sch->print_orbit_lengths_tex(ost);
+		O1->Sch->Forest->print_orbit_lengths_tex(ost);
 		ost << "\\\\" << endl;
 
 		O2 = NEW_OBJECT(groups::orbits_on_something);
@@ -341,14 +341,14 @@ void spread_activity::report2(
 
 
 		ost << "Orbits on spread: ";
-		O2->Sch->print_orbit_lengths_tex(ost);
+		O2->Sch->Forest->print_orbit_lengths_tex(ost);
 		ost << "\\\\" << endl;
 
 		O2->Classify_orbits_by_length->Set_partition->print_table_latex_simple(ost);
 
 
 		ost << "Orbits: \\\\";
-		O2->Sch->list_all_orbits_tex(ost);
+		O2->Sch->Forest->list_all_orbits_tex(ost);
 		ost << "\\\\" << endl;
 
 		int f, l, j;
@@ -356,13 +356,13 @@ void spread_activity::report2(
 		long int *Orbit_elements;
 		long int *Orbit_elements_lines;
 
-		for (i = 0; i < O2->Sch->nb_orbits; i++) {
-			f = O2->Sch->orbit_first[i];
-			l = O2->Sch->orbit_len[i];
+		for (i = 0; i < O2->Sch->Forest->nb_orbits; i++) {
+			f = O2->Sch->Forest->orbit_first[i];
+			l = O2->Sch->Forest->orbit_len[i];
 			Orbit_elements = NEW_lint(l);
 			Orbit_elements_lines = NEW_lint(l);
 			for (j = 0; j < l; j++) {
-				a = O2->Sch->orbit[f + j];
+				a = O2->Sch->Forest->orbit[f + j];
 				Orbit_elements[j] = a;
 			}
 
@@ -435,9 +435,9 @@ void spread_activity::report2(
 			long int line_rk;
 
 
-			for (i = 0; i < O2->Sch->nb_orbits; i++) {
-				f = O2->Sch->orbit_first[i];
-				l = O2->Sch->orbit_len[i];
+			for (i = 0; i < O2->Sch->Forest->nb_orbits; i++) {
+				f = O2->Sch->Forest->orbit_first[i];
+				l = O2->Sch->Forest->orbit_len[i];
 
 				if (f_v) {
 					cout << "spread_activity::report2 orbit " << i << " of length " << l << endl;
@@ -448,7 +448,7 @@ void spread_activity::report2(
 				Pts_on_Klein = NEW_lint(l);
 				Pts_in_PG5 = NEW_lint(l);
 				for (j = 0; j < l; j++) {
-					a = O2->Sch->orbit[f + j];
+					a = O2->Sch->Forest->orbit[f + j];
 					Orbit_elements[j] = a;
 				}
 

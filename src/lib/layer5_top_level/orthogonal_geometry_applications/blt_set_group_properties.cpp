@@ -153,7 +153,7 @@ void blt_set_group_properties::init_orbits_on_points(
 	if (f_v) {
 		cout << "blt_set_group_properties::init_orbits_on_points "
 				"Orbits on points:" << endl;
-		Orbits_on_points->Sch->print_and_list_orbits(cout);
+		Orbits_on_points->Sch->Forest->print_and_list_orbits(cout);
 	}
 
 
@@ -181,28 +181,28 @@ void blt_set_group_properties::init_flocks(
 	int point_idx;
 
 	if (f_v) {
-		cout << "blt_set_with_action::init_flocks nb of orbits = " << Orbits_on_points->Sch->nb_orbits << endl;
+		cout << "blt_set_with_action::init_flocks nb of orbits = " << Orbits_on_points->Sch->Forest->nb_orbits << endl;
 	}
 
 
-	Flock = NEW_OBJECTS(flock_from_blt_set, Orbits_on_points->Sch->nb_orbits);
-	Point_idx = NEW_int(Orbits_on_points->Sch->nb_orbits);
+	Flock = NEW_OBJECTS(flock_from_blt_set, Orbits_on_points->Sch->Forest->nb_orbits);
+	Point_idx = NEW_int(Orbits_on_points->Sch->Forest->nb_orbits);
 
-	for (orb_idx = 0; orb_idx < Orbits_on_points->Sch->nb_orbits; orb_idx++) {
+	for (orb_idx = 0; orb_idx < Orbits_on_points->Sch->Forest->nb_orbits; orb_idx++) {
 
 		if (f_v) {
 			cout << "blt_set_with_action::init_flocks "
-					"orbit " << orb_idx << " / " << Orbits_on_points->Sch->nb_orbits << endl;
+					"orbit " << orb_idx << " / " << Orbits_on_points->Sch->Forest->nb_orbits << endl;
 		}
 
-		fst = Orbits_on_points->Sch->orbit_first[orb_idx];
-		point_idx = Orbits_on_points->Sch->orbit[fst];
+		fst = Orbits_on_points->Sch->Forest->orbit_first[orb_idx];
+		point_idx = Orbits_on_points->Sch->Forest->orbit[fst];
 		Point_idx[orb_idx] = point_idx;
 
 		if (f_v) {
 			cout << "blt_set_group_properties::init_flocks "
 					"computing flock associated with orbit "
-					<< orb_idx << " / " << Orbits_on_points->Sch->nb_orbits << endl;
+					<< orb_idx << " / " << Orbits_on_points->Sch->Forest->nb_orbits << endl;
 		}
 
 		if (f_v) {
@@ -240,7 +240,7 @@ void blt_set_group_properties::print_automorphism_group(
 
 		{
 			string str;
-			Orbits_on_points->Sch->print_orbit_length_distribution_to_string(str);
+			Orbits_on_points->Sch->Forest->print_orbit_length_distribution_to_string(str);
 			ost << "Orbits on points: $" << str << "$\\\\" << endl;
 		}
 
@@ -290,9 +290,9 @@ void blt_set_group_properties::report(
 
 	int orb_idx;
 
-	for (orb_idx = 0; orb_idx < Orbits_on_points->Sch->nb_orbits; orb_idx++) {
+	for (orb_idx = 0; orb_idx < Orbits_on_points->Sch->Forest->nb_orbits; orb_idx++) {
 
-		ost << "\\subsubsection*{Flock " << orb_idx << " / " << Orbits_on_points->Sch->nb_orbits << "}" << endl;
+		ost << "\\subsubsection*{Flock " << orb_idx << " / " << Orbits_on_points->Sch->Forest->nb_orbits << "}" << endl;
 
 		Flock[orb_idx].report(ost, verbose_level);
 
@@ -319,7 +319,7 @@ void blt_set_group_properties::print_summary(
 	ost << "\\mbox{Points} & " << Blt_set_with_action->Blt_set_domain_with_action->Blt_set_domain->target_size << " & ";
 	{
 		string str;
-		Orbits_on_points->Sch->print_orbit_length_distribution_to_string(str);
+		Orbits_on_points->Sch->Forest->print_orbit_length_distribution_to_string(str);
 		ost << str;
 	}
 	ost << "\\\\" << endl;

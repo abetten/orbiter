@@ -2347,14 +2347,14 @@ void strong_generators::compute_schreier_with_given_action(
 	int print_interval = 10000;
 
 	Sch->init(A_given, verbose_level - 2);
-	Sch->initialize_tables();
+	//Sch->initialize_tables();
 	Sch->init_generators(*gens, verbose_level - 2);
 	Sch->compute_all_point_orbits(print_interval, verbose_level - 2);
 
 
 	if (f_v) {
 		cout << "strong_generators::compute_schreier_with_given_action done, we found "
-				<< Sch->nb_orbits << " orbits" << endl;
+				<< Sch->Forest->nb_orbits << " orbits" << endl;
 	}
 }
 
@@ -2372,7 +2372,7 @@ void strong_generators::compute_schreier_with_given_action_on_a_given_set(
 	Sch = NEW_OBJECT(schreier);
 
 	Sch->init(A_given, verbose_level - 2);
-	Sch->initialize_tables();
+	//Sch->initialize_tables();
 	Sch->init_generators(*gens, verbose_level - 2);
 	Sch->compute_all_orbits_on_invariant_subset_lint(
 			len, set,
@@ -2383,7 +2383,7 @@ void strong_generators::compute_schreier_with_given_action_on_a_given_set(
 	if (f_v) {
 		cout << "strong_generators::compute_schreier_with_given_action_on_a_given_set "
 				"done, we found "
-				<< Sch->nb_orbits << " orbits" << endl;
+				<< Sch->Forest->nb_orbits << " orbits" << endl;
 	}
 }
 
@@ -2412,11 +2412,11 @@ void strong_generators::orbits_on_points(
 	}
 
 
-	nb_orbits = Sch->nb_orbits;
+	nb_orbits = Sch->Forest->nb_orbits;
 	orbit_reps = NEW_int(nb_orbits);
 	for (i = 0; i < nb_orbits; i++) {
-		f = Sch->orbit_first[i];
-		a = Sch->orbit[f];
+		f = Sch->Forest->orbit_first[i];
+		a = Sch->Forest->orbit[f];
 		orbit_reps[i] = a;
 	}
 
@@ -2491,7 +2491,7 @@ void strong_generators::orbits_on_set_with_given_action_after_restriction(
 	other::data_structures::tally *Classify_orbits_by_length;
 
 	Classify_orbits_by_length = NEW_OBJECT(other::data_structures::tally);
-	Classify_orbits_by_length->init(Orb->Sch->orbit_len, Orb->Sch->nb_orbits, false, 0);
+	Classify_orbits_by_length->init(Orb->Sch->Forest->orbit_len, Orb->Sch->Forest->nb_orbits, false, 0);
 	Classify_orbits_by_length->print_bare_stringstream(orbit_type, true /* f_backwards */);
 
 
@@ -2572,7 +2572,7 @@ void strong_generators::extract_orbit_on_set_with_given_action_after_restriction
 	int idx, orb_idx, len;
 
 	Classify_orbits_by_length = NEW_OBJECT(other::data_structures::tally);
-	Classify_orbits_by_length->init(Orb->Sch->orbit_len, Orb->Sch->nb_orbits, false, 0);
+	Classify_orbits_by_length->init(Orb->Sch->Forest->orbit_len, Orb->Sch->Forest->nb_orbits, false, 0);
 
 	SoS = Classify_orbits_by_length->get_set_partition_and_types(types,
 			nb_types, verbose_level);
@@ -2602,7 +2602,7 @@ void strong_generators::extract_orbit_on_set_with_given_action_after_restriction
 	orb_idx = SoS->Sets[idx][0];
 	extracted_set = NEW_lint(desired_orbit_length);
 
-	Orb->Sch->get_orbit(orb_idx, extracted_set, len, verbose_level);
+	Orb->Sch->Forest->get_orbit(orb_idx, extracted_set, len, verbose_level);
 	if (len != desired_orbit_length) {
 		cout << "len != desired_orbit_length" << endl;
 		exit(1);
@@ -2692,8 +2692,8 @@ void strong_generators::extract_specific_orbit_on_set_with_given_action_after_re
 
 	Classify_orbits_by_length = NEW_OBJECT(other::data_structures::tally);
 	Classify_orbits_by_length->init(
-			Orb->Sch->orbit_len,
-			Orb->Sch->nb_orbits,
+			Orb->Sch->Forest->orbit_len,
+			Orb->Sch->Forest->nb_orbits,
 			false, 0);
 
 	SoS = Classify_orbits_by_length->get_set_partition_and_types(types,
@@ -2723,7 +2723,7 @@ void strong_generators::extract_specific_orbit_on_set_with_given_action_after_re
 	orb_idx = SoS->Sets[idx][desired_orbit_idx];
 	extracted_set = NEW_lint(desired_orbit_length);
 
-	Orb->Sch->get_orbit(orb_idx, extracted_set, len, verbose_level);
+	Orb->Sch->Forest->get_orbit(orb_idx, extracted_set, len, verbose_level);
 	if (len != desired_orbit_length) {
 		cout << "len != desired_orbit_length" << endl;
 		exit(1);
@@ -2768,11 +2768,11 @@ void strong_generators::orbits_on_points_with_given_action(
 				"after compute_schreier_with_given_action" << endl;
 	}
 
-	nb_orbits = Sch->nb_orbits;
+	nb_orbits = Sch->Forest->nb_orbits;
 	orbit_reps = NEW_int(nb_orbits);
 	for (i = 0; i < nb_orbits; i++) {
-		f = Sch->orbit_first[i];
-		a = Sch->orbit[f];
+		f = Sch->Forest->orbit_first[i];
+		a = Sch->Forest->orbit[f];
 		orbit_reps[i] = a;
 	}
 
@@ -2821,7 +2821,7 @@ schreier *strong_generators::compute_all_point_orbits_schreier(
 	Sch = NEW_OBJECT(schreier);
 
 	Sch->init(A_given, verbose_level - 2);
-	Sch->initialize_tables();
+	//Sch->initialize_tables();
 	if (f_v) {
 		cout << "strong_generators::compute_all_point_orbits_schreier "
 				"before Sch->init_generators" << endl;
@@ -2839,7 +2839,7 @@ schreier *strong_generators::compute_all_point_orbits_schreier(
 
 	if (f_v) {
 		cout << "strong_generators::compute_all_point_orbits_schreier "
-				"done, we found " << Sch->nb_orbits << " orbits" << endl;
+				"done, we found " << Sch->Forest->nb_orbits << " orbits" << endl;
 	}
 	return Sch;
 }
@@ -2860,7 +2860,7 @@ schreier *strong_generators::orbit_of_one_point_schreier(
 	int print_interval = 10000;
 
 	Sch->init(A_given, verbose_level - 2);
-	Sch->initialize_tables();
+	//Sch->initialize_tables();
 	Sch->init_generators(*gens, verbose_level - 2);
 	if (f_v) {
 		cout << "strong_generators::orbit_of_one_point_schreier "
@@ -2875,7 +2875,7 @@ schreier *strong_generators::orbit_of_one_point_schreier(
 	if (f_v) {
 		cout << "strong_generators::orbit_of_one_point_schreier "
 				"done, we found one orbit of length "
-				<< Sch->orbit_len[0] << endl;
+				<< Sch->Forest->orbit_len[0] << endl;
 	}
 	return Sch;
 }
@@ -3410,32 +3410,32 @@ void strong_generators::compute_and_print_orbits_on_a_given_set(
 			A_given, Sch, set, len, verbose_level - 2);
 
 	cout << "orbits on the set: " << endl;
-	for (i = 0; i < Sch->nb_orbits; i++) {
-		f = Sch->orbit_first[i];
-		for (j = 0; j < Sch->orbit_len[i]; j++) {
-			a = Sch->orbit[f + j];
+	for (i = 0; i < Sch->Forest->nb_orbits; i++) {
+		f = Sch->Forest->orbit_first[i];
+		for (j = 0; j < Sch->Forest->orbit_len[i]; j++) {
+			a = Sch->Forest->orbit[f + j];
 			cout << a << " ";
 		}
-		if (i < Sch->nb_orbits - 1) {
+		if (i < Sch->Forest->nb_orbits - 1) {
 			cout << "| ";
 		}
 	}
 	cout << endl;
 	cout << "partition: " << len << " = ";
-	for (i = 0; i < Sch->nb_orbits; i++) {
-		l = Sch->orbit_len[i];
+	for (i = 0; i < Sch->Forest->nb_orbits; i++) {
+		l = Sch->Forest->orbit_len[i];
 		cout << l << " ";
-		if (i < Sch->nb_orbits - 1) {
+		if (i < Sch->Forest->nb_orbits - 1) {
 			cout << "+ ";
 		}
 	}
 	cout << endl;
 	cout << "representatives for each of the "
-			<< Sch->nb_orbits << " orbits:" << endl;
-	for (i = 0; i < Sch->nb_orbits; i++) {
-		f = Sch->orbit_first[i];
-		l = Sch->orbit_len[i];
-		a = Sch->orbit[f + 0];
+			<< Sch->Forest->nb_orbits << " orbits:" << endl;
+	for (i = 0; i < Sch->Forest->nb_orbits; i++) {
+		f = Sch->Forest->orbit_first[i];
+		l = Sch->Forest->orbit_len[i];
+		a = Sch->Forest->orbit[f + 0];
 		cout << setw(5) << a << " : " << setw(5) << l << " : ";
 		A_given->Group_element->print_point(a, cout);
 		cout << endl;
@@ -3457,38 +3457,38 @@ void strong_generators::compute_and_print_orbits(
 	compute_schreier_with_given_action(A_given, Sch, verbose_level - 2);
 
 	cout << "orbits on the set: " << endl;
-	for (i = 0; i < Sch->nb_orbits; i++) {
-		f = Sch->orbit_first[i];
-		l = Sch->orbit_len[i];
+	for (i = 0; i < Sch->Forest->nb_orbits; i++) {
+		f = Sch->Forest->orbit_first[i];
+		l = Sch->Forest->orbit_len[i];
 		if (l >= 10) {
 			cout << "too long to list ";
 		}
 		else {
-			for (j = 0; j < Sch->orbit_len[i]; j++) {
-				a = Sch->orbit[f + j];
+			for (j = 0; j < Sch->Forest->orbit_len[i]; j++) {
+				a = Sch->Forest->orbit[f + j];
 				cout << a << " ";
 			}
 		}
-		if (i < Sch->nb_orbits - 1) {
+		if (i < Sch->Forest->nb_orbits - 1) {
 			cout << "| ";
 		}
 	}
 	cout << endl;
 	cout << "partition: " << A_given->degree << " = ";
-	for (i = 0; i < Sch->nb_orbits; i++) {
-		l = Sch->orbit_len[i];
+	for (i = 0; i < Sch->Forest->nb_orbits; i++) {
+		l = Sch->Forest->orbit_len[i];
 		cout << l << " ";
-		if (i < Sch->nb_orbits - 1) {
+		if (i < Sch->Forest->nb_orbits - 1) {
 			cout << "+ ";
 		}
 	}
 	cout << endl;
 	cout << "representatives for each of the "
-			<< Sch->nb_orbits << " orbits:" << endl;
-	for (i = 0; i < Sch->nb_orbits; i++) {
-		f = Sch->orbit_first[i];
-		l = Sch->orbit_len[i];
-		a = Sch->orbit[f + 0];
+			<< Sch->Forest->nb_orbits << " orbits:" << endl;
+	for (i = 0; i < Sch->Forest->nb_orbits; i++) {
+		f = Sch->Forest->orbit_first[i];
+		l = Sch->Forest->orbit_len[i];
+		a = Sch->Forest->orbit[f + 0];
 		cout << setw(5) << a << " : " << setw(5) << l << " : ";
 		A_given->Group_element->print_point(a, cout);
 		cout << endl;
@@ -3779,7 +3779,7 @@ strong_generators *strong_generators::point_stabilizer(
 	if (f_v) {
 		cout << "strong_generators::point_stabilizer "
 				"orbit of point " << pt << " has length "
-				<< Sch->orbit_len[0] << endl;
+				<< Sch->Forest->orbit_len[0] << endl;
 	}
 	Sch->point_stabilizer(
 			A, G_order,
@@ -3888,14 +3888,14 @@ void strong_generators::make_element_which_moves_a_point_from_A_to_B(
 				"after orbit_of_one_point_schreier" << endl;
 	}
 
-	len = Orb->orbit_len[0];
+	len = Orb->Forest->orbit_len[0];
 
 	if (f_v) {
 		cout << "strong_generators::make_element_which_moves_a_point_from_A_to_B "
 				"orbit length = " << len << endl;
 	}
 
-	if (Orb->orbit_inv[pt_B] >= len) {
+	if (Orb->Forest->orbit_inv[pt_B] >= len) {
 		cout << "strong_generators::make_element_which_moves_a_point_from_A_to_B "
 				"the two points are not in the same orbit" << endl;
 		exit(1);

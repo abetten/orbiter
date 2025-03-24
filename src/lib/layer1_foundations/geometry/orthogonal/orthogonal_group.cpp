@@ -1006,11 +1006,213 @@ void orthogonal_group::make_orthogonal_reflection(
 	}
 }
 
+void orthogonal_group::make_all_Siegel_Transformations(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orthogonal_group::make_all_Siegel_Transformations" << endl;
+	}
+
+	std::vector<std::vector<long int> > Valid_pairs;
+
+	if (f_v) {
+		cout << "orthogonal_group::make_all_Siegel_Transformations "
+				"before make_all_valid_pairs_for_Siegel_Transformations" << endl;
+	}
+	make_all_valid_pairs_for_Siegel_Transformations(
+			Valid_pairs,
+			verbose_level);
+	if (f_v) {
+		cout << "orthogonal_group::make_all_Siegel_Transformations "
+				"after make_all_valid_pairs_for_Siegel_Transformations" << endl;
+	}
+
+	if (f_v) {
+		cout << "orthogonal_group::make_all_Siegel_Transformations "
+				"number of valid pairs = " << Valid_pairs.size() << endl;
+	}
+
+	int n;
+	int q;
+	int idx;
+	long int rk1, rk2;
+	int *w1;
+	int *w2;
+	int *M;
+
+	geometry::other_geometry::geometry_global Geometry_global;
+
+	n = O->Quadratic_form->n;
+	q = O->F->q;
+
+	w1 = NEW_int(n);
+	w2 = NEW_int(n);
+	M = NEW_int(n * n);
+
+
+	std::string *Table;
+	int nb_rows, nb_cols;
+
+	nb_rows = Valid_pairs.size();
+	nb_cols = 6;
+
+	Table = new std::string [nb_rows * nb_cols];
+
+
+
+	for (idx = 0; idx < Valid_pairs.size(); idx++) {
+
+		rk1 = Valid_pairs[idx][0];
+		rk2 = Valid_pairs[idx][1];
+
+		O->Hyperbolic_pair->unrank_point(
+				w1, 1,
+				rk1,
+				0 /*verbose_level*/);
+
+		Geometry_global.AG_element_unrank(
+				q, w2, 1 /* stride */, n, rk2);
+
+
+		make_Siegel_Transformation(
+				M, w1, w2,
+				n, O->Quadratic_form->Gram_matrix, 0 /*verbose_level*/);
+
+		Table[idx * nb_cols + 0] = std::to_string(idx);
+		Table[idx * nb_cols + 1] = std::to_string(rk1);
+		Table[idx * nb_cols + 2] = std::to_string(rk2);
+		Table[idx * nb_cols + 3] = "\"" + Int_vec_stringify(w1, n) + "\"";
+		Table[idx * nb_cols + 4] = "\"" + Int_vec_stringify(w2, n) + "\"";
+		Table[idx * nb_cols + 5] = "\"" + Int_vec_stringify(M, n * n) + "\"";
+
+
+	}
+
+	other::orbiter_kernel_system::file_io Fio;
+	std::string fname;
+
+	fname = "all_Siegel.csv";
+
+	std::string *Col_headings;
+
+	Col_headings = new string [nb_cols];
+
+	Col_headings[0] = "idx";
+	Col_headings[1] = "rk1";
+	Col_headings[2] = "rk2";
+	Col_headings[3] = "u";
+	Col_headings[4] = "v";
+	Col_headings[5] = "transform";
+
+
+	Fio.Csv_file_support->write_table_of_strings_with_col_headings(
+			fname,
+			nb_rows, nb_cols, Table,
+			Col_headings,
+			verbose_level);
+
+	if (f_v) {
+		cout << "orthogonal_group::make_all_Siegel_Transformations "
+				"written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+
+	delete [] Col_headings;
+	delete [] Table;
+
+
+
+	FREE_int(w1);
+	FREE_int(w2);
+
+	if (f_v) {
+		cout << "orthogonal_group::make_all_Siegel_Transformations done" << endl;
+	}
+}
+
+void orthogonal_group::make_all_valid_pairs_for_Siegel_Transformations(
+		std::vector<std::vector<long int> > &Valid_pairs,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i, j, Qv, e;
+
+	if (f_v) {
+		cout << "orthogonal_group::make_all_valid_pairs_for_Siegel_Transformations" << endl;
+	}
+
+	int *M;
+	int *v;
+	int *u;
+	long int rk1, rk2, N;
+	int *w1;
+	int *w2;
+	int form_value;
+
+	geometry::other_geometry::geometry_global Geometry_global;
+
+	N = Geometry_global.nb_AG_elements(
+			O->Quadratic_form->n, O->F->q);
+
+
+	w1 = NEW_int(O->Quadratic_form->n);
+	w2 = NEW_int(O->Quadratic_form->n);
+
+
+	for (rk1 = 0; rk1 < O->Hyperbolic_pair->nb_points; rk1++) {
+
+		O->Hyperbolic_pair->unrank_point(
+				w1, 1,
+				rk1,
+				0 /*verbose_level*/);
+
+
+		for (rk2 = 0; rk2 < N; rk2++) {
+
+
+			Geometry_global.AG_element_unrank(
+					O->F->q, w2, 1 /* stride */, O->Quadratic_form->n, rk2);
+
+
+			form_value = O->Quadratic_form->evaluate_bilinear_form(
+						w1, w2, 1 /* stride */);
+
+			if (form_value) {
+				continue;
+			}
+
+			vector<long int> pair;
+
+			pair.push_back(rk1);
+			pair.push_back(rk2);
+
+			Valid_pairs.push_back(pair);
+
+
+		}
+	}
+	if (f_v) {
+		cout << "orthogonal_group::make_all_valid_pairs_for_Siegel_Transformations "
+				"number of valid pairs = " << Valid_pairs.size() << endl;
+	}
+
+
+	FREE_int(w1);
+	FREE_int(w2);
+
+	if (f_v) {
+		cout << "orthogonal_group::make_all_valid_pairs_for_Siegel_Transformations done" << endl;
+	}
+}
+
 void orthogonal_group::make_Siegel_Transformation(
 		int *M, int *v, int *u,
 	int n, int *Gram, int verbose_level)
 // if u is singular and v \in \la u \ra^\perp, then
-// \pho_{u,v}(x) := x + \beta(x,v) u - \beta(x,u) v - Q(v) \beta(x,u) u
+// \rho_{u,v}(x) := x + \beta(x,v) u - \beta(x,u) v - Q(v) \beta(x,u) u
 // is called Siegel transform (see Taylor p. 148)
 // Here Q is the quadratic form and \beta is
 // the corresponding bilinear form

@@ -237,7 +237,7 @@ void trihedral_pair_with_action::init(
 		cout << "trihedral_pair_with_action::init the orbits "
 				"on the pencil of surfaces are:" << endl;
 	}
-	Orb->print_and_list_orbits(cout);
+	Orb->Forest->print_and_list_orbits(cout);
 
 
 
@@ -1366,7 +1366,7 @@ void trihedral_pair_with_action::report(
 	Orb->print_fancy(
 			ost, true, AL->Surf_A->A, stab_gens_trihedral_pair);
 #else
-	ost << "The stabilizer of the trihedral pair has " << Orb->nb_orbits << " orbits on the pencil of surfaces.\\\\" << endl;
+	ost << "The stabilizer of the trihedral pair has " << Orb->Forest->nb_orbits << " orbits on the pencil of surfaces.\\\\" << endl;
 #endif
 
 

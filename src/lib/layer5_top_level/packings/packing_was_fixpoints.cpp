@@ -824,17 +824,17 @@ long int packing_was_fixpoints::fixpoint_to_reduced_spread(
 				"b=" << b << endl;
 	}
 
-	if (b >= PW->reduced_spread_orbits_under_H->Sch->nb_orbits) {
+	if (b >= PW->reduced_spread_orbits_under_H->Sch->Forest->nb_orbits) {
 		cout << "packing_was_fixpoints::fixpoint_to_reduced_spread "
 				"b >= PW->reduced_spread_orbits_under_H->Sch->nb_orbits" << endl;
 		exit(1);
 	}
-	if (PW->reduced_spread_orbits_under_H->Sch->orbit_len[b] != 1) {
+	if (PW->reduced_spread_orbits_under_H->Sch->Forest->orbit_len[b] != 1) {
 		cout << "packing_was_fixpoints::fixpoint_to_reduced_spread "
 				"PW->reduced_spread_orbits_under_H->Sch->orbit_len[b] != 1" << endl;
 		exit(1);
 	}
-	PW->reduced_spread_orbits_under_H->Sch->get_orbit(
+	PW->reduced_spread_orbits_under_H->Sch->Forest->get_orbit(
 			b /* orbit_idx */, set, len,
 			0 /*verbose_level */);
 	if (len != 1) {

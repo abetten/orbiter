@@ -729,7 +729,7 @@ public:
 // schreier.cpp
 // #############################################################################
 
-//! Schreier trees for the orbits of a group in a fixed permutation action
+//! Schreier trees for the orbits of a group acting on a set
 
 class schreier {
 
@@ -753,34 +753,7 @@ public:
 		// in A->degree..2*A->degree-1
 	
 
-	// suggested new class: schreier_forest:
-	// long int degree
-	int *orbit; // [A->degree]
-	int *orbit_inv; // [A->degree]
-
-		// prev and label are indexed
-		// by the points in the order as listed in orbit.
-
-	int *prev; // [A->degree]
-	int *label; // [A->degree]
-
-		// prev[coset] is the point which maps
-		// to orbit[coset] under generator label[coset]
-
-	//int *orbit_no; // [A->degree]
-		// to find out which orbit point a lies in, 
-		// use orbit_number(pt).
-		// It used to be orbit_no[orbit_inv[a]]
-	// from extend_orbits:
-	//prev[total] = cur_pt;
-	//label[total] = i;
-
-	int *orbit_first;  // [A->degree + 1]
-	int *orbit_len;  // [A->degree]
-	int nb_orbits;
-	
-	// end schreier_forest
-
+	other::data_structures::forest *Forest;
 
 
 	int *Elt1, *Elt2, *Elt3;
@@ -822,9 +795,7 @@ public:
 			int verbose_level);
 	void init(
 			actions::action *A, int verbose_level);
-	void allocate_tables();
 	void init2();
-	void initialize_tables();
 	void init_single_generator(
 			int *elt, int verbose_level);
 	void init_generators(
@@ -868,15 +839,7 @@ public:
 			int verbose_level);
 	long int get_image(
 			long int i, int gen_idx, int verbose_level);
-	void swap_points(
-			int i, int j, int verbose_level);
-	void move_point_here(
-			int here, int pt);
-	int orbit_representative(
-			int pt);
-	int depth_in_tree(
-			int j);
-		// j is a coset, not a point
+
 	void transporter_from_orbit_rep_to_point(
 			int pt,
 		int &orbit_idx, int *Elt, int verbose_level);
@@ -897,11 +860,6 @@ public:
 	void compute_all_point_orbits(
 			int print_interval,
 			int verbose_level);
-#if 0
-	void compute_all_point_orbits_with_preferred_reps(
-		int *preferrd_reps, int nb_preferred_reps,
-		int verbose_level);
-#endif
 	void compute_all_point_orbits_with_preferred_labels(
 		long int *preferred_labels, int verbose_level);
 	void compute_all_orbits_on_invariant_subset(
@@ -915,7 +873,6 @@ public:
 			int verbose_level);
 	void compute_point_orbit_with_limited_depth(
 			int pt, int max_depth, int verbose_level);
-	int sum_up_orbit_lengths();
 	void non_trivial_random_schreier_generator(
 			actions::action *A_original,
 			int *Elt, int verbose_level);
@@ -934,13 +891,6 @@ public:
 	void get_path_and_labels(
 			std::vector<int> &path, std::vector<int> &labels,
 			int i, int verbose_level);
-	void trace_back(
-			int i, int &j);
-	void trace_back_and_record_path(
-			int *path, int i, int &j);
-	void intersection_vector(
-			int *set, int len,
-		int *intersection_cnt);
 	void orbits_on_invariant_subset_fast(
 			int len,
 		int *subset, int verbose_level);
@@ -950,15 +900,7 @@ public:
 			int len, int *subset,
 		int &nb_orbits_on_subset,
 		int *&orbit_perm, int *&orbit_perm_inv);
-	void get_orbit_partition_of_points_and_lines(
-			other::data_structures::partitionstack &S,
-			int verbose_level);
-	void get_orbit_partition(
-			other::data_structures::partitionstack &S,
-		int verbose_level);
-	void get_orbit_in_order(
-			std::vector<int> &Orb,
-		int orbit_idx, int verbose_level);
+
 	strong_generators *stabilizer_any_point_plus_cosets(
 			actions::action *default_action,
 			algebra::ring_theory::longinteger_object &full_group_order,
@@ -990,40 +932,6 @@ public:
 			groups::sims *&Stab,
 			int orbit_no, int verbose_level);
 		// this function allocates a sims structure into Stab.
-	void get_orbit(
-			int orbit_idx, long int *set, int &len,
-		int verbose_level);
-	void compute_orbit_statistic(
-			int *set, int set_size,
-		int *orbit_count, int verbose_level);
-	void compute_orbit_statistic_lint(
-			long int *set, int set_size,
-		int *orbit_count, int verbose_level);
-	void orbits_as_set_of_sets(
-			other::data_structures::set_of_sets *&S,
-			int verbose_level);
-	void get_orbit_reps(
-			int *&Reps, int &nb_reps, int verbose_level);
-	int find_shortest_orbit_if_unique(
-			int &idx);
-	void elements_in_orbit_of(
-			int pt, int *orb, int &nb,
-		int verbose_level);
-	void get_orbit_length(
-			int *&orbit_length, int verbose_level);
-	void get_orbit_lengths_once_each(
-			int *&orbit_lengths,
-		int &nb_orbit_lengths);
-	int orbit_number(
-			int pt);
-	void get_orbit_number_and_position(
-			int pt, int &orbit_idx, int &orbit_pos,
-			int verbose_level);
-	void get_orbit_decomposition_scheme_of_graph(
-		int *Adj, int n, int *&Decomp_scheme,
-		int verbose_level);
-	void create_point_list_sorted(
-			int *&point_list, int &point_list_length);
 	void shallow_tree_generators(
 			int orbit_idx,
 			int f_randomized,
@@ -1035,13 +943,6 @@ public:
 			enum shallow_schreier_tree_strategy
 				Shallow_schreier_tree_strategy,
 			int verbose_level);
-	int get_num_points();
-		// This function returns the number of points in the
-		// schreier forest
-	double get_average_word_length();
-		// This function returns the average word length of the forest.
-	double get_average_word_length(
-			int orbit_idx);
 	void compute_orbit_invariant(
 			int *&orbit_invariant,
 			int (*compute_orbit_invariant_callback)(schreier *Sch,
@@ -1049,46 +950,12 @@ public:
 			void *compute_orbit_invariant_data,
 			int verbose_level);
 
+
+
 	// schreier_io.cpp:
 	void latex(
 			std::string &fname);
-	void print_orbit_lengths(
-			std::ostream &ost);
-	void print_orbit_lengths_tex(
-			std::ostream &ost);
-	void print_fixed_points_tex(
-			std::ostream &ost);
-	void print_orbit_length_distribution(
-			std::ostream &ost);
-	void print_orbit_length_distribution_to_string(
-			std::string &str);
-	void print_orbit_reps(
-			std::ostream &ost);
-	void print(
-			std::ostream &ost);
-	void print_and_list_orbits(
-			std::ostream &ost);
-	void print_and_list_orbits_with_original_labels(
-			std::ostream &ost);
-	void print_and_list_orbits_tex(
-			std::ostream &ost);
-	void print_and_list_non_trivial_orbits_tex(
-			std::ostream &ost);
-	void print_and_list_all_orbits_and_stabilizers_with_list_of_elements_tex(
-			std::ostream &ost,
-			actions::action *default_action,
-			strong_generators *gens,
-			int verbose_level);
-	void make_orbit_trees(
-			std::ostream &ost,
-			std::string &fname_mask,
-			other::graphics::layered_graph_draw_options *Opt,
-			int verbose_level);
-	void print_and_list_orbits_with_original_labels_tex(
-			std::ostream &ost);
-	void print_and_list_orbits_of_given_length(
-			std::ostream &ost,
-		int len);
+
 	void print_and_list_orbits_and_stabilizer(
 			std::ostream &ost,
 			actions::action *default_action,
@@ -1096,6 +963,11 @@ public:
 		void (*print_point)(
 				std::ostream &ost, int pt, void *data),
 			void *data);
+	void print_and_list_all_orbits_and_stabilizers_with_list_of_elements_tex(
+			std::ostream &ost,
+			actions::action *default_action,
+			strong_generators *gens,
+			int verbose_level);
 	void print_and_list_orbits_using_labels(
 			std::ostream &ost,
 		long int *labels);
@@ -1107,21 +979,7 @@ public:
 	void print_generators_latex(
 			std::ostream &ost);
 	void print_generators_with_permutations();
-	void print_orbit(
-			int orbit_no);
-	void print_orbit_using_labels(
-			int orbit_no, long int *labels);
-	void print_orbit(
-			std::ostream &ost, int orbit_no);
-	void print_orbit_with_original_labels(
-			std::ostream &ost, int orbit_no);
-	void print_orbit_tex(
-			std::ostream &ost, int orbit_no);
-	void print_orbit_sorted_tex(
-			std::ostream &ost,
-			int orbit_no, int f_truncate, int max_length);
-	void get_orbit_sorted(
-			int *&v, int &len, int orbit_no);
+
 	void print_and_list_orbit_and_stabilizer_tex(
 			int i,
 			actions::action *default_action,
@@ -1139,9 +997,10 @@ public:
 	void print_and_list_orbit_and_stabilizer_with_list_of_elements_tex(
 		int i, actions::action *default_action,
 		strong_generators *gens, std::ostream &ost);
-	void print_and_list_orbit_tex(
-			int i, std::ostream &ost);
+
 	void print_and_list_orbits_sorted_by_length_tex(
+			std::ostream &ost);
+	void print_and_list_orbits_sorted_by_length(
 			std::ostream &ost);
 	void print_and_list_orbits_and_stabilizer_sorted_by_length(
 			std::ostream &ost, int f_tex,
@@ -1151,100 +1010,16 @@ public:
 			std::ostream &ost, int f_tex,
 			actions::action *default_action,
 			strong_generators *gens_full_group);
-	void print_and_list_orbits_sorted_by_length(
+	void list_elements_as_permutations_vertically(
 			std::ostream &ost);
-	void print_and_list_orbits_sorted_by_length(
-			std::ostream &ost, int f_tex);
+	void print_orbit_with_original_labels(
+			std::ostream &ost, int orbit_no);
 	void print_orbit_sorted_with_original_labels_tex(
 			std::ostream &ost,
 			int orbit_no, int f_truncate, int max_length);
-	void print_orbit_using_labels(
-			std::ostream &ost, int orbit_no, long int *labels);
-	void print_orbit_using_callback(
-			std::ostream &ost, int orbit_no,
-		void (*print_point)(
-				std::ostream &ost, int pt, void *data),
-		void *data);
-	void print_orbit_type(
-			int f_backwards);
-	void list_all_orbits_tex(
+	void print_and_list_orbits_with_original_labels_tex(
 			std::ostream &ost);
-	void print_orbit_through_labels(
-			std::ostream &ost,
-		int orbit_no, long int *point_labels);
-	void print_orbit_sorted(
-			std::ostream &ost, int orbit_no);
-	void print_orbit(
-			int cur, int last);
-	void print_tree(
-			int orbit_no);
-	void draw_forest(
-			std::string &fname_mask,
-			other::graphics::layered_graph_draw_options *Opt,
-			int f_has_point_labels, long int *point_labels,
-			int verbose_level);
-	void get_orbit_by_levels(
-			int orbit_no,
-			other::data_structures::set_of_sets *&SoS,
-			int verbose_level);
-	void export_tree_as_layered_graph_and_save(
-			int orbit_no,
-			std::string &fname_mask,
-			int verbose_level);
-	void export_tree_as_layered_graph(
-			int orbit_no,
-			combinatorics::graph_theory::layered_graph *&LG,
-			int verbose_level);
-	void draw_tree(
-			std::string &fname,
-			other::graphics::layered_graph_draw_options *Opt,
-			int orbit_no,
-			int f_has_point_labels, long int *point_labels,
-			int verbose_level);
-	void draw_tree2(
-			std::string &fname,
-			other::graphics::layered_graph_draw_options *Opt,
-			int *weight, int *placement_x, int max_depth,
-			int i, int last,
-			int f_has_point_labels, long int *point_labels,
-			int verbose_level);
-	void subtree_draw_lines(
-			other::graphics::mp_graphics &G,
-			other::graphics::layered_graph_draw_options *Opt,
-			int parent_x, int parent_y, int *weight,
-			int *placement_x, int max_depth, int i, int last,
-			int y_max,
-			int verbose_level);
-	void subtree_draw_vertices(
-			other::graphics::mp_graphics &G,
-			other::graphics::layered_graph_draw_options *Opt,
-			int parent_x, int parent_y, int *weight,
-			int *placement_x, int max_depth, int i, int last,
-			int f_has_point_labels, long int *point_labels,
-			int y_max,
-			int verbose_level);
-	void subtree_place(
-			int *weight, int *placement_x,
-		int left, int right, int i, int last);
-	int subtree_calc_weight(
-			int *weight, int &max_depth,
-		int i, int last);
-	int subtree_depth_first(
-			std::ostream &ost, int *path, int i, int last);
-	void print_path(
-			std::ostream &ost, int *path, int l);
-	void write_to_file_csv(
-			std::string &fname_csv, int verbose_level);
-	void write_to_file_binary(
-			std::ofstream &fp, int verbose_level);
-	void read_from_file_binary(
-			std::ifstream &fp, int verbose_level);
-	void write_file_binary(
-			std::string &fname, int verbose_level);
-	void read_file_binary(
-			std::string &fname, int verbose_level);
-	void list_elements_as_permutations_vertically(
-			std::ostream &ost);
+
 };
 
 // #############################################################################
@@ -2332,7 +2107,8 @@ public:
 	void generators_for_translation_plane_in_andre_model(
 			actions::action *A_PGL_n1_q,
 			actions::action *A_PGL_n_q,
-			algebra::basic_algebra::matrix_group *Mtx_n1, algebra::basic_algebra::matrix_group *Mtx_n,
+			algebra::basic_algebra::matrix_group *Mtx_n1,
+			algebra::basic_algebra::matrix_group *Mtx_n,
 		strong_generators *spread_stab_gens,
 		int verbose_level);
 	void generators_for_the_stabilizer_of_two_components(
@@ -2361,7 +2137,6 @@ public:
 			algebra::basic_algebra::matrix_group *Mtx, int verbose_level);
 	void generators_for_the_orthogonal_group(
 			actions::action *A,
-			//field_theory::finite_field *F, int n, int epsilon,
 			geometry::orthogonal_geometry::orthogonal *O,
 			int f_semilinear,
 			int verbose_level);
@@ -2415,7 +2190,8 @@ public:
 		int nb_pairs, int &degree, int verbose_level);
 	void hyperplane_lifting_with_two_lines_fixed(
 		strong_generators *SG_hyperplane,
-		geometry::projective_geometry::projective_space *P, int line1, int line2,
+		geometry::projective_geometry::projective_space *P,
+		int line1, int line2,
 		int verbose_level);
 	void exterior_square(
 			actions::action *A_detached,

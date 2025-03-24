@@ -355,7 +355,7 @@ int data_input_stream::count_number_of_objects_to_test(
 			other::data_structures::set_of_sets *SoS_blocks;
 
 
-			Fio.Csv_file_support->read_column_and_parse(
+			Fio.Csv_file_support->read_column_as_set_of_sets(
 					fname_blocks, col_label,
 					SoS_blocks,
 					0 /*verbose_level*/);
@@ -648,7 +648,7 @@ int data_input_stream::count_number_of_objects_to_test(
             int nb_sol;
 
 
-            Fio.Csv_file_support->read_column_and_parse(
+            Fio.Csv_file_support->read_column_as_set_of_sets(
                     fname, col_label,
                     SoS,
                     0 /*verbose_level - 2*/);
@@ -1123,7 +1123,7 @@ void data_input_stream::read_objects(
 				cout << "data_input_stream::read_objects "
 						"Reading the file " << Descr->Input[input_idx].input_string << endl;
 			}
-			Fio.Csv_file_support->read_column_and_parse(
+			Fio.Csv_file_support->read_column_as_set_of_sets(
 					Descr->Input[input_idx].input_string, column_header,
 					SoS,
 					verbose_level);
@@ -1201,7 +1201,7 @@ void data_input_stream::read_objects(
 			col_label = "C1";
 
 
-			Fio.Csv_file_support->read_column_and_parse(
+			Fio.Csv_file_support->read_column_as_set_of_sets(
 					fname_block_orbits, col_label,
 					SoS,
 					0 /*verbose_level*/);
@@ -1289,7 +1289,7 @@ void data_input_stream::read_objects(
 			other::data_structures::set_of_sets *SoS_blocks;
 
 
-			Fio.Csv_file_support->read_column_and_parse(
+			Fio.Csv_file_support->read_column_as_set_of_sets(
 					fname_blocks, col_label,
 					SoS_blocks,
 					0 /*verbose_level*/);
@@ -1493,7 +1493,7 @@ void data_input_stream::read_objects(
 
 			SoS = NEW_OBJECT(other::data_structures::set_of_sets);
 
-			Fio.Csv_file_support->read_column_and_parse(
+			Fio.Csv_file_support->read_column_as_set_of_sets(
 					Descr->Input[input_idx].input_string,
 					Descr->Input[input_idx].input_string2 /* col_label */,
 					SoS,
@@ -1547,7 +1547,7 @@ void data_input_stream::read_objects(
 			col_label.assign("REP");
 
 
-			Fio.Csv_file_support->read_column_and_parse(
+			Fio.Csv_file_support->read_column_as_set_of_sets(
 					cases_fname,
 					col_label,
 					Reps, 0 /*verbose_level*/);
@@ -1704,7 +1704,7 @@ void data_input_stream::read_objects(
 			int nb_sol;
 
 
-			Fio.Csv_file_support->read_column_and_parse(
+			Fio.Csv_file_support->read_column_as_set_of_sets(
 					fname, col_label,
 					SoS,
 					0 /* verbose_level - 2*/);
@@ -1779,7 +1779,7 @@ void data_input_stream::read_objects(
 			other::data_structures::set_of_sets *Reps;
 
 
-			Fio.Csv_file_support->read_column_and_parse(
+			Fio.Csv_file_support->read_column_as_set_of_sets(
 					Descr->Input[input_idx].input_string,
 					Descr->Input[input_idx].input_string2 /* col_label */,
 					Reps, 0 /*verbose_level*/);

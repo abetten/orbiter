@@ -15,6 +15,8 @@ MODULES = \
 	data_file.o \
 	data_structures_global.o \
 	fancy_set.o \
+	forest_io.o \
+	forest.o \
 	int_matrix.o \
 	int_vec.o \
 	int_vector.o \

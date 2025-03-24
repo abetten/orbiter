@@ -436,6 +436,110 @@ void orthogonal_space_with_action::create_orthogonal_reflections(
 }
 
 
+
+void orthogonal_space_with_action::create_Siegel_transformation(
+		int *u, int *v, int len,
+		data_structures_groups::vector_ge *&vec,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orthogonal_space_with_action::create_Siegel_transformation" << endl;
+	}
+	if (f_v) {
+		cout << "orthogonal_space_with_action::create_Siegel_transformation "
+				"u = ";
+		Int_vec_print(cout, u, len);
+		cout << endl;
+		cout << "orthogonal_space_with_action::create_Siegel_transformation "
+				"v = ";
+		Int_vec_print(cout, v, len);
+		cout << endl;
+	}
+
+	if (len != O->Quadratic_form->n) {
+		cout << "orthogonal_space_with_action::create_Siegel_transformation "
+				"len != O->Quadratic_form->n" << endl;
+		exit(1);
+	}
+
+	int nb_pts = 1;
+
+	int *z;
+	int *Data;
+	int i, d, sz;
+
+	d = P->Subspaces->n + 1;
+
+	sz = d * d;
+	if (f_semilinear) {
+		sz++;
+	}
+
+	z = NEW_int(d);
+	Data = NEW_int(nb_pts * sz);
+	for (i = 0; i < nb_pts; i++) {
+
+		if (f_v) {
+			cout << "orthogonal_space_with_action::create_Siegel_transformation "
+					"i = " << i << " / " << nb_pts << endl;
+		}
+		//P->Subspaces->unrank_point(z, pts[i]);
+
+		//O->Orthogonal_group->make_orthogonal_reflection(
+		//		Data + i * sz, z, verbose_level);
+
+		O->Orthogonal_group->make_Siegel_Transformation(
+				Data + i * sz, v, u,
+			len /* n */, O->Quadratic_form->Gram_matrix, verbose_level - 2);
+		// if u is singular and v \in \la u \ra^\perp, then
+		// \rho_{u,v}(x) := x + \beta(x,v) u - \beta(x,u) v - Q(v) \beta(x,u) u
+		// is called Siegel transform (see Taylor p. 148)
+		// Here Q is the quadratic form and \beta is
+		// the corresponding bilinear form
+
+
+		if (f_semilinear) {
+			Data[i * sz + d * d] = 0;
+		}
+
+	}
+
+
+	vec = NEW_OBJECT(data_structures_groups::vector_ge);
+
+	if (f_v) {
+		cout << "orthogonal_space_with_action::create_Siegel_transformation "
+				"A = " << endl;
+		A->print_info();
+	}
+
+	if (f_v) {
+		cout << "orthogonal_space_with_action::create_Siegel_transformation "
+				"before vec->init_from_data" << endl;
+	}
+	vec->init_from_data(
+			A, Data,
+			nb_pts, sz, verbose_level);
+	if (f_v) {
+		cout << "orthogonal_space_with_action::create_Siegel_transformation "
+				"after vec->init_from_data" << endl;
+	}
+
+	FREE_int(Data);
+	FREE_int(z);
+
+
+
+	if (f_v) {
+		cout << "orthogonal_space_with_action::create_Siegel_transformation done" << endl;
+	}
+}
+
+
+
+
 void orthogonal_space_with_action::create_orthogonal_reflections_6x6_and_4x4(
 		long int *pts, int nb_pts,
 		actions::action *A4,

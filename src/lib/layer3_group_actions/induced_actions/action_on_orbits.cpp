@@ -43,7 +43,7 @@ void action_on_orbits::init(
 	action_on_orbits::A = A;
 	action_on_orbits::Sch = Sch;
 	action_on_orbits::f_play_it_safe = f_play_it_safe;
-	degree = Sch->nb_orbits;
+	degree = Sch->Forest->nb_orbits;
 	if (f_v) {
 		cout << "action_on_orbits::init done" << endl;
 		}
@@ -65,20 +65,20 @@ long int action_on_orbits::compute_image(
 				"i = " << i << " out of range" << endl;
 		exit(1);
 		}
-	f = Sch->orbit_first[i];
-	l = Sch->orbit_len[i];
-	a = Sch->orbit[f];
+	f = Sch->Forest->orbit_first[i];
+	l = Sch->Forest->orbit_len[i];
+	a = Sch->Forest->orbit[f];
 	b = A->Group_element->element_image_of(a, Elt, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "action_on_orbits::compute_image "
 				"image of " << a << " is " << b << endl;
 		}
-	j = Sch->orbit_number(b); //Sch->orbit_no[Sch->orbit_inv[b]];
+	j = Sch->Forest->orbit_number(b); //Sch->orbit_no[Sch->orbit_inv[b]];
 	if (f_play_it_safe) {
 		for (h = 1; h < l; h++) {
-			a = Sch->orbit[f + h];
+			a = Sch->Forest->orbit[f + h];
 			b = A->Group_element->element_image_of(a, Elt, 0 /* verbose_level */);
-			j1 = Sch->orbit_number(b); //Sch->orbit_no[Sch->orbit_inv[b]];
+			j1 = Sch->Forest->orbit_number(b); //Sch->orbit_no[Sch->orbit_inv[b]];
 			if (j1 != j) {
 				cout << "action_on_orbits::compute_image "
 						"playing it safe, there is a problem" << endl;

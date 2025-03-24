@@ -236,24 +236,24 @@ void orbit_based_testing::early_test_func_by_using_group(
 	if (f_v) {
 		cout << "orbit_based_testing::early_test_func_by_using_group "
 				"after Schreier.compute_all_orbits_on_invariant_subset, we found "
-		<< Schreier.nb_orbits << " orbits" << endl;
+		<< Schreier.Forest->nb_orbits << " orbits" << endl;
 	}
 	nb_good_candidates = 0;
 	nb_good_orbits = 0;
-	for (i = 0; i < Schreier.nb_orbits; i++) {
-		f = Schreier.orbit_first[i];
-		l = Schreier.orbit_len[i];
-		pt = Schreier.orbit[f];
+	for (i = 0; i < Schreier.Forest->nb_orbits; i++) {
+		f = Schreier.Forest->orbit_first[i];
+		l = Schreier.Forest->orbit_len[i];
+		pt = Schreier.Forest->orbit[f];
 		local_S[len] = pt;
 		f_orbit_is_good = true;
 		if (f_v) {
 			cout << "orbit_based_testing::early_test_func_by_using_group "
-					"testing orbit " << i << " / " << Schreier.nb_orbits << " of length " << l << endl;
+					"testing orbit " << i << " / " << Schreier.Forest->nb_orbits << " of length " << l << endl;
 		}
 		for (j = 0; j < nb_callback; j++) {
 			if (f_v) {
 				cout << "orbit_based_testing::early_test_func_by_using_group "
-						"testing orbit " << i << " / " << Schreier.nb_orbits << " of length " << l
+						"testing orbit " << i << " / " << Schreier.Forest->nb_orbits << " of length " << l
 						<< " calling test function " << j << " / " << nb_callback << endl;
 			}
 			if (!(*callback_testing[j])(this,
@@ -286,7 +286,7 @@ void orbit_based_testing::early_test_func_by_using_group(
 
 		if (f_orbit_is_good) {
 			for (j = 0; j < l; j++) {
-				pt = Schreier.orbit[f + j];
+				pt = Schreier.Forest->orbit[f + j];
 				good_candidates[nb_good_candidates++] = pt;
 			}
 			nb_good_orbits++;

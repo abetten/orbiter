@@ -593,9 +593,9 @@ void subgroup_lattice::save_csv(
 
 			if (Subgroup_lattice_layer[layer_idx]->Sch_on_groups) {
 
-				coset = Subgroup_lattice_layer[layer_idx]->Sch_on_groups->orbit_inv[group_idx];
-				previous = Subgroup_lattice_layer[layer_idx]->Sch_on_groups->prev[coset];
-				label = Subgroup_lattice_layer[layer_idx]->Sch_on_groups->label[coset];
+				coset = Subgroup_lattice_layer[layer_idx]->Sch_on_groups->Forest->orbit_inv[group_idx];
+				previous = Subgroup_lattice_layer[layer_idx]->Sch_on_groups->Forest->prev[coset];
+				label = Subgroup_lattice_layer[layer_idx]->Sch_on_groups->Forest->label[coset];
 
 			}
 			else {
@@ -734,14 +734,14 @@ void subgroup_lattice::save_rearranged_by_orbits_csv(
 
 				if (Subgroup_lattice_layer[layer_idx]->Sch_on_groups) {
 
-					coset = Subgroup_lattice_layer[layer_idx]->Sch_on_groups->orbit_first[orb_idx] + group_idx;
+					coset = Subgroup_lattice_layer[layer_idx]->Sch_on_groups->Forest->orbit_first[orb_idx] + group_idx;
 					//coset = Subgroup_lattice_layer[layer_idx]->Sch_on_groups->orbit_inv[group_idx];
-					previous = Subgroup_lattice_layer[layer_idx]->Sch_on_groups->prev[coset];
+					previous = Subgroup_lattice_layer[layer_idx]->Sch_on_groups->Forest->prev[coset];
 					if (previous >= 0) {
-						previous = Subgroup_lattice_layer[layer_idx]->Sch_on_groups->orbit_inv[previous];
+						previous = Subgroup_lattice_layer[layer_idx]->Sch_on_groups->Forest->orbit_inv[previous];
 							//- Subgroup_lattice_layer[layer_idx]->Sch_on_groups->orbit_first[orb_idx];
 					}
-					label = Subgroup_lattice_layer[layer_idx]->Sch_on_groups->label[coset];
+					label = Subgroup_lattice_layer[layer_idx]->Sch_on_groups->Forest->label[coset];
 
 				}
 				else {

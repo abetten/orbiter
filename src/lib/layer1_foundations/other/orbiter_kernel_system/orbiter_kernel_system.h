@@ -265,6 +265,8 @@ public:
 			int verbose_level);
 	void read_csv_file_and_tally(
 			std::string &fname, int verbose_level);
+	void tally_column(
+			std::string &fname, std::string &column, int verbose_level);
 
 	void grade_statistic_from_csv(
 			std::string &fname_csv,
@@ -301,7 +303,7 @@ public:
 	int read_column_and_count_nb_sets(
 			std::string &fname, std::string &col_label,
 			int verbose_level);
-	void read_column_and_parse(
+	void read_column_as_set_of_sets(
 			std::string &fname, std::string &col_label,
 			data_structures::set_of_sets *&SoS,
 			int verbose_level);

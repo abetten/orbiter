@@ -329,7 +329,8 @@ public:
 		int *character_degree, int *class_size,
 		int verbose_level);
 	void compute_character_table(
-			algebra::basic_algebra::a_domain *D, int nb_classes, int *Omega,
+			algebra::basic_algebra::a_domain *D,
+			int nb_classes, int *Omega,
 		int *character_degree, int *class_size,
 		int *&character_table, int verbose_level);
 	void compute_character_degrees(

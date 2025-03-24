@@ -95,7 +95,7 @@ void packings_global::orbits_under_conjugation(
 	if (f_v) {
 		cout << "packings_global::orbits_under_conjugation "
 				"after Classes.compute_all_point_orbits" << endl;
-		cout << "found " << Classes.nb_orbits << " conjugacy classes" << endl;
+		cout << "found " << Classes.Forest->nb_orbits << " conjugacy classes" << endl;
 	}
 
 
@@ -160,13 +160,13 @@ void packings_global::create_subgroups(
 	Sorting.lint_vec_heapsort_with_log(the_set_sorted, position, set_size);
 
 
-	cout << "There are " << Classes->nb_orbits << " orbits "
+	cout << "There are " << Classes->Forest->nb_orbits << " orbits "
 			"on the given set of elements by conjugation" << endl;
-	for (i = 0; i < Classes->nb_orbits; i++) {
+	for (i = 0; i < Classes->Forest->nb_orbits; i++) {
 
-		f = Classes->orbit_first[i];
-		l = Classes->orbit_len[i];
-		rep = Classes->orbit[f];
+		f = Classes->Forest->orbit_first[i];
+		l = Classes->Forest->orbit_len[i];
+		rep = Classes->Forest->orbit[f];
 		if (f_v) {
 			cout << "Orbit " << i << " has length " << l
 					<< " representative is " << rep << " = " << the_set[rep] << endl;
@@ -191,32 +191,32 @@ void packings_global::create_subgroups(
 	Elt1 = NEW_int(S->A->elt_size_in_int);
 	Elt2 = NEW_int(S->A->elt_size_in_int);
 
-	f = Classes->orbit_first[0];
-	l = Classes->orbit_len[0];
+	f = Classes->Forest->orbit_first[0];
+	l = Classes->Forest->orbit_len[0];
 	if (l != 1) {
 		cout << "packings_global::create_subgroups l != 1" << endl;
 		exit(1);
 	}
-	rep = Classes->orbit[f];
+	rep = Classes->Forest->orbit[f];
 	rk0 = the_set[rep];
 
 	S->element_unrank_lint(rk0, Elt0);
 
 	nb_flag_orbits = 0;
-	Flags = NEW_lint(Classes->nb_orbits * 3);
-	Flag_stab = new groups::pstrong_generators [Classes->nb_orbits];
-	SO = NEW_int(Classes->nb_orbits);
-	SOL = NEW_int(Classes->nb_orbits);
+	Flags = NEW_lint(Classes->Forest->nb_orbits * 3);
+	Flag_stab = new groups::pstrong_generators [Classes->Forest->nb_orbits];
+	SO = NEW_int(Classes->Forest->nb_orbits);
+	SOL = NEW_int(Classes->Forest->nb_orbits);
 
 	nb_reject = 0;
 
-	for (j = 1; j < Classes->nb_orbits; j++) {
+	for (j = 1; j < Classes->Forest->nb_orbits; j++) {
 
 
 
-		f = Classes->orbit_first[j];
-		l = Classes->orbit_len[j];
-		rep = Classes->orbit[f];
+		f = Classes->Forest->orbit_first[j];
+		l = Classes->Forest->orbit_len[j];
+		rep = Classes->Forest->orbit[f];
 		rk1 = the_set[rep];
 		rk2 = S->mult_by_rank(rk0, rk1, 0 /*verbose_level*/);
 
@@ -402,7 +402,7 @@ void packings_global::create_subgroups(
 				exit(1);
 			}
 			pt = position[idx];
-			j = Classes->orbit_number(pt);
+			j = Classes->Forest->orbit_number(pt);
 
 
 			if (j == SO[flag]) {

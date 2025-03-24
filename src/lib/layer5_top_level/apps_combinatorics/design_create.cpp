@@ -412,7 +412,7 @@ void design_create::init(
 		other::orbiter_kernel_system::file_io Fio;
 		other::data_structures::set_of_sets *SoS_base_blocks;
 
-		Fio.Csv_file_support->read_column_and_parse(
+		Fio.Csv_file_support->read_column_as_set_of_sets(
 				Descr->list_of_base_blocks_fname,
 				Descr->list_of_base_blocks_col,
 				SoS_base_blocks,
@@ -721,16 +721,16 @@ void design_create::init(
 
 		if (f_v) {
 			cout << "design_create::init "
-					"before Fio.Csv_file_support->read_column_and_parse" << endl;
+					"before Fio.Csv_file_support->read_column_as_set_of_sets" << endl;
 		}
-		Fio.Csv_file_support->read_column_and_parse(
+		Fio.Csv_file_support->read_column_as_set_of_sets(
 				Descr->list_of_blocks_from_file_fname,
 				Descr->list_of_blocks_from_file_column,
 				SoS,
 				verbose_level);
 		if (f_v) {
 			cout << "design_create::init "
-					"after Fio.Csv_file_support->read_column_and_parse" << endl;
+					"after Fio.Csv_file_support->read_column_as_set_of_sets" << endl;
 		}
 
 		if (f_v) {

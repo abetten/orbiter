@@ -141,12 +141,12 @@ void character_table_burnside::do_it(
 	int nb_classes;
 	int *class_size;
 
-	nb_classes = Sch->nb_orbits;
+	nb_classes = Sch->Forest->nb_orbits;
 
 	class_size = NEW_int(nb_classes);
 
 	for (i = 0; i < nb_classes; i++) {
-		class_size[i] = Sch->orbit_len[i];
+		class_size[i] = Sch->Forest->orbit_len[i];
 	}
 	if (f_v) {
 		cout << "class sizes : ";
@@ -555,7 +555,8 @@ void character_table_burnside::create_matrix(
 
 
 void character_table_burnside::compute_character_table(
-		algebra::basic_algebra::a_domain *D, int nb_classes, int *Omega,
+		algebra::basic_algebra::a_domain *D,
+		int nb_classes, int *Omega,
 	int *character_degree, int *class_size,
 	int *&character_table, int verbose_level)
 {
@@ -863,28 +864,28 @@ void character_table_burnside::compute_multiplication_constants_center_of_group_
 
 
 	for (r = 0; r < nb_classes; r++) {
-		rl = Sch->orbit_len[r];
-		rf = Sch->orbit_first[r];
+		rl = Sch->Forest->orbit_len[r];
+		rf = Sch->Forest->orbit_first[r];
 
 		for (s = 0; s < nb_classes; s++) {
-			sl = Sch->orbit_len[s];
-			sf = Sch->orbit_first[s];
+			sl = Sch->Forest->orbit_len[s];
+			sf = Sch->Forest->orbit_first[s];
 
 
 			for (i = 0; i < rl; i++) {
-				a = Sch->orbit[rf + i];
+				a = Sch->Forest->orbit[rf + i];
 
 				for (j = 0; j < sl; j++) {
-					b = Sch->orbit[sf + j];
+					b = Sch->Forest->orbit[sf + j];
 
 					c = ABC->multiply(A, a, b, 0 /*verbose_level*/);
 
 
-					idx = Sch->orbit_inv[c];
+					idx = Sch->Forest->orbit_inv[c];
 
-					t = Sch->orbit_number(c); //Sch->orbit_no[idx];
+					t = Sch->Forest->orbit_number(c); //Sch->orbit_no[idx];
 
-					tf = Sch->orbit_first[t];
+					tf = Sch->Forest->orbit_first[t];
 					//tl = Sch->orbit_len[t];
 
 					if (idx == tf) {
@@ -956,7 +957,7 @@ void character_table_burnside::compute_Distribution_table(
 
 			//idx = Sch->orbit_inv[i];
 
-			j = Sch->orbit_number(i); // Sch->orbit_no[idx];
+			j = Sch->Forest->orbit_number(i); // Sch->orbit_no[idx];
 
 
 			if (f_vvv) {

@@ -806,7 +806,7 @@ int upstep_work::upstep_for_sets(
 
 		if (f_v4) {
 			print_level_extension_coset_info();
-			cout << " orbit length upstep so far: " << up_orbit.orbit_len[0] 
+			cout << " orbit length upstep so far: " << up_orbit.Forest->orbit_len[0]
 				<< " checking possible image " << possible_image << endl;
 		}
 
@@ -894,7 +894,7 @@ int upstep_work::upstep_for_sets(
 			up_orbit.extend_orbit(aut, verbose_level - 5);
 			if (f_vvv) {
 				cout << "upstep_work::upstep_for_sets new orbit length "
-						"upstep = " << up_orbit.orbit_len[0] << endl;
+						"upstep = " << up_orbit.Forest->orbit_len[0] << endl;
 			}
 		}
 		else if (r == not_canonical) {
@@ -938,7 +938,7 @@ int upstep_work::upstep_for_sets(
 		cout << "upstep_work::upstep_for_sets upstep orbit "
 				"length for set ";
 		Lint_vec_set_print(cout, gen->get_S(), size);
-		cout << " is " << up_orbit.orbit_len[0] << endl;
+		cout << " is " << up_orbit.Forest->orbit_len[0] << endl;
 
 		cout << "coset_table of length " << nb_cosets_processed
 				<< ":" << endl;
@@ -951,7 +951,7 @@ int upstep_work::upstep_for_sets(
 	if (f_vvv) {
 		cout << "upstep_work::upstep_for_sets H->S->transitive_extension_tolerant "
 				"up_orbit.orbit_len[0]="
-				<< up_orbit.orbit_len[0] << endl;
+				<< up_orbit.Forest->orbit_len[0] << endl;
 	}
 	H->S->transitive_extension_tolerant(
 			up_orbit,

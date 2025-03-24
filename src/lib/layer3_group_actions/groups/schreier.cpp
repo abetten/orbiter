@@ -27,12 +27,19 @@ schreier::schreier()
 	degree = 0;
 	nb_images = 0;
 	images = NULL;
+
+	Forest = NULL;
+
+#if 0
 	orbit = NULL;
 	orbit_inv = NULL;
 	prev = NULL;
 	label = NULL;
 	orbit_first = NULL;
 	orbit_len = NULL;
+	nb_orbits = 0;
+#endif
+
 	Elt1 = NULL;
 	Elt2 = NULL;
 	Elt3 = NULL;
@@ -43,7 +50,6 @@ schreier::schreier()
 	f_print_function = false;
 	print_function = NULL;
 	print_function_data = NULL;
-	nb_orbits = 0;
 
 	f_preferred_choice_function = false;
 	preferred_choice_function = NULL;
@@ -57,7 +63,13 @@ schreier::~schreier()
 {
 	Record_death();
 	//cout << "deleting A" << endl;
+
+	if (Forest) {
+		FREE_OBJECT(Forest);
+	}
 	if (A) {
+
+#if 0
 		//cout << "deleting orbit" << endl;
 		FREE_int(orbit);
 		//cout << "deleting orbit_inv" << endl;
@@ -70,6 +82,7 @@ schreier::~schreier()
 		FREE_int(orbit_first);
 		//cout << "deleting orbit_len" << endl;
 		FREE_int(orbit_len);
+#endif
 		//cout << "deleting Elt1" << endl;
 		FREE_int(Elt1);
 		//cout << "deleting Elt2" << endl;
@@ -198,7 +211,7 @@ void schreier::init_images_only(
 				schreier::images[i] + degree,
 				degree);
 	}
-	allocate_tables();
+	Forest->allocate_tables(verbose_level - 2);// ToDo  ???
 	if (f_v) {
 		cout << "schreier::init_images_only done" << endl;
 	}
@@ -324,6 +337,13 @@ void schreier::images_append(
 void schreier::init(
 		actions::action *A, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "schreier::init" << endl;
+	}
+
+
 	schreier::A = A;
 	degree = A->degree;
 
@@ -331,21 +351,25 @@ void schreier::init(
 		cout << "schreier::init degree > INT_MAX" << endl;
 		exit(1);
 	}
-	allocate_tables();
+
+	Forest = NEW_OBJECT(other::data_structures::forest);
+
+	if (f_v) {
+		cout << "schreier::init before Forest->init" << endl;
+	}
+	Forest->init(A->degree, verbose_level - 1);
+	if (f_v) {
+		cout << "schreier::init after Forest->init" << endl;
+	}
+
+	//allocate_tables();
 	gens.init(A, verbose_level - 2);
 	gens_inv.init(A, verbose_level - 2);
-	initialize_tables();
+	//initialize_tables();
 	init2();
-}
-
-void schreier::allocate_tables()
-{
-	orbit = NEW_int(degree);
-	orbit_inv = NEW_int(degree);
-	prev = NEW_int(degree);
-	label = NEW_int(degree);
-	orbit_first = NEW_int(degree + 1);
-	orbit_len = NEW_int(degree);
+	if (f_v) {
+		cout << "schreier::init done" << endl;
+	}
 }
 
 void schreier::init2()
@@ -357,23 +381,6 @@ void schreier::init2()
 	schreier_gen1 = NEW_int(A->elt_size_in_int);
 	cosetrep = NEW_int(A->elt_size_in_int);
 	cosetrep_tmp = NEW_int(A->elt_size_in_int);
-}
-
-void schreier::initialize_tables()
-{
-	combinatorics::other_combinatorics::combinatorics_domain Combi;
-	long int i;
-	
-	nb_orbits = 0;
-	Combi.Permutations->perm_identity(orbit, degree);
-	Combi.Permutations->perm_identity(orbit_inv, degree);
-	orbit_first[0] = 0;
-
-	// initialize prev and label with -1:
-	for (i = 0; i < degree; i++) {
-		prev[i] = -1;
-		label[i] = -1;
-	}
 }
 
 void schreier::init_single_generator(
@@ -526,7 +533,8 @@ void schreier::init_generators_recycle_images(
 				gens_inv.ith(i), 0);
 	}
 	init_images_recycle(nb, old_images,
-			idx_generator_to_delete, 0 /* verbose_level */);
+			idx_generator_to_delete,
+			0 /* verbose_level */);
 	if (f_v) {
 		cout << "schreier::init_generators_recycle_images done" << endl;
 	}
@@ -726,68 +734,6 @@ long int schreier::get_image(
 	return a;
 }
 
-void schreier::swap_points(
-		int i, int j, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int pi, pj;
-	
-	if (f_v) {
-		cout << "schreier::swap_points "
-				"i=" << i << " j=" << j << endl;
-	}
-	pi = orbit[i];
-	pj = orbit[j];
-	orbit[i] = pj;
-	orbit[j] = pi;
-	orbit_inv[pi] = j;
-	orbit_inv[pj] = i;
-	if (f_v) {
-		cout << "schreier::swap_points done" << endl;
-	}
-}
-
-void schreier::move_point_here(
-		int here, int pt)
-{
-	int a, loc;
-	if (orbit[here] == pt) {
-		return;
-	}
-	a = orbit[here];
-	loc = orbit_inv[pt];
-	orbit[here] = pt;
-	orbit[loc] = a;
-	orbit_inv[a] = loc;
-	orbit_inv[pt] = here;
-}
-
-int schreier::orbit_representative(
-		int pt)
-{
-	int j;
-	
-	while (true) {
-		j = orbit_inv[pt];
-		if (prev[j] == -1) {
-			return pt;
-		}
-		pt = prev[j];
-	}
-}
-
-int schreier::depth_in_tree(
-		int j)
-// j is a coset, not a point
-{
-	if (prev[j] == -1) {
-		return 0;
-	}
-	else {
-		return depth_in_tree(orbit_inv[prev[j]]) + 1;
-	}
-}
-
 void schreier::transporter_from_orbit_rep_to_point(
 		int pt,
 	int &orbit_idx, int *Elt, int verbose_level)
@@ -803,8 +749,8 @@ void schreier::transporter_from_orbit_rep_to_point(
 				"is not allowed if f_images_only is true" << endl;
 		exit(1);
 	}
-	pos = orbit_inv[pt];
-	orbit_idx = orbit_number(pt); //orbit_no[pos];
+	pos = Forest->orbit_inv[pt];
+	orbit_idx = Forest->orbit_number(pt); //orbit_no[pos];
 	//cout << "lies in orbit " << orbit_idx << endl;
 	coset_rep(pos, verbose_level - 1);
 	A->Group_element->element_move(cosetrep, Elt, 0);
@@ -829,8 +775,8 @@ void schreier::transporter_from_point_to_orbit_rep(
 				"is not allowed if f_images_only is true" << endl;
 		exit(1);
 	}
-	pos = orbit_inv[pt];
-	orbit_idx = orbit_number(pt); //orbit_no[pos];
+	pos = Forest->orbit_inv[pt];
+	orbit_idx = Forest->orbit_number(pt); //orbit_no[pos];
 	//cout << "lies in orbit " << orbit_idx << endl;
 
 	coset_rep(pos, verbose_level - 1);
@@ -856,24 +802,24 @@ void schreier::coset_rep(
 	
 	if (f_v) {
 		cout << "schreier::coset_rep coset "
-				"j=" << j << " pt=" << orbit[j] << endl;
+				"j=" << j << " pt=" << Forest->orbit[j] << endl;
 	}
 	if (f_images_only) {
 		cout << "schreier::coset_rep is not "
 				"allowed if f_images_only is true" << endl;
 		exit(1);
 	}
-	if (prev[j] != -1) {
+	if (Forest->prev[j] != -1) {
 		if (f_v) {
 			cout << "schreier::coset_rep "
-					"j=" << j << " pt=" << orbit[j];
-			cout << " prev[j]=" << prev[j];
-			cout << " orbit_inv[prev[j]]=" << orbit_inv[prev[j]];
-			cout << " label[j]=" << label[j] << endl;
+					"j=" << j << " pt=" << Forest->orbit[j];
+			cout << " prev[j]=" << Forest->prev[j];
+			cout << " orbit_inv[prev[j]]=" << Forest->orbit_inv[Forest->prev[j]];
+			cout << " label[j]=" << Forest->label[j] << endl;
 		}
 		coset_rep(
-				orbit_inv[prev[j]], verbose_level);
-		gen = gens.ith(label[j]);
+				Forest->orbit_inv[Forest->prev[j]], verbose_level);
+		gen = gens.ith(Forest->label[j]);
 		A->Group_element->element_mult(
 				cosetrep, gen, cosetrep_tmp, 0);
 		A->Group_element->element_move(
@@ -884,7 +830,7 @@ void schreier::coset_rep(
 	}
 	if (f_v) {
 		cout << "schreier::coset_rep "
-				"j=" << j << " pt=" << orbit[j]<< " done" << endl;
+				"j=" << j << " pt=" << Forest->orbit[j]<< " done" << endl;
 	}
 }
 
@@ -905,14 +851,14 @@ void schreier::coset_rep_inv(
 				"allowed if f_images_only is true" << endl;
 		exit(1);
 	}
-	if (prev[j] != -1) {
+	if (Forest->prev[j] != -1) {
 		if (f_v) {
 			cout << "schreier::coset_rep_inv j=" << j
-					<< " orbit_inv[prev[j]]=" << orbit_inv[prev[j]]
-					<< " label[j]=" << label[j] << endl;
+					<< " orbit_inv[prev[j]]=" << Forest->orbit_inv[Forest->prev[j]]
+					<< " label[j]=" << Forest->label[j] << endl;
 		}
-		coset_rep_inv(orbit_inv[prev[j]], verbose_level);
-		gen = gens_inv.ith(label[j]);
+		coset_rep_inv(Forest->orbit_inv[Forest->prev[j]], verbose_level);
+		gen = gens_inv.ith(Forest->label[j]);
 		A->Group_element->element_mult(gen, cosetrep, cosetrep_tmp, 0);
 		A->Group_element->element_move(cosetrep_tmp, cosetrep, 0);
 	}
@@ -942,8 +888,8 @@ void schreier::extend_orbit(
 	}
 	if (f_vv) {
 		cout << "schreier::extend_orbit extending orbit "
-				<< nb_orbits - 1 << " of length "
-			<< orbit_len[nb_orbits - 1] << endl;
+				<< Forest->nb_orbits - 1 << " of length "
+			<< Forest->orbit_len[Forest->nb_orbits - 1] << endl;
 	}
 
 	gens.append(elt, verbose_level - 2);
@@ -951,10 +897,10 @@ void schreier::extend_orbit(
 	gens_inv.append(A->Group_element->Elt1, verbose_level - 2);
 	images_append(verbose_level - 2);
 	
-	cur = orbit_first[nb_orbits - 1];
-	total = total0 = orbit_first[nb_orbits];
+	cur = Forest->orbit_first[Forest->nb_orbits - 1];
+	total = total0 = Forest->orbit_first[Forest->nb_orbits];
 	while (cur < total) {
-		cur_pt = orbit[cur];
+		cur_pt = Forest->orbit[cur];
 		if (false) {
 			cout << "schreier::extend_orbit "
 					"applying generator to " << cur_pt << endl;
@@ -970,7 +916,7 @@ void schreier::extend_orbit(
 			next_pt = get_image(
 					cur_pt, i, 0/*verbose_level - 3*/);
 				// A->element_image_of(cur_pt, gens.ith(i), false);
-			next_pt_loc = orbit_inv[next_pt];
+			next_pt_loc = Forest->orbit_inv[next_pt];
 			if (false) {
 				cout << "schreier::extend_orbit generator "
 						<< i << " maps " << cur_pt
@@ -984,31 +930,31 @@ void schreier::extend_orbit(
 						<< next_pt << " reached from "
 						<< cur_pt << " under generator " << i << endl;
 			}
-			swap_points(
+			Forest->swap_points(
 					total, next_pt_loc, 0 /*verbose_level*/);
-			prev[total] = cur_pt;
-			label[total] = i;
+			Forest->prev[total] = cur_pt;
+			Forest->label[total] = i;
 			total++;
 			if (false) {
 				cout << "cur = " << cur << endl;
 				cout << "total = " << total << endl;
-				print_orbit(cur, total - 1);
+				Forest->print_orbit(cur, total - 1);
 			}
 		}
 		cur++;
 	}
-	orbit_first[nb_orbits] = total;
-	orbit_len[nb_orbits - 1] = total - orbit_first[nb_orbits - 1];
+	Forest->orbit_first[Forest->nb_orbits] = total;
+	Forest->orbit_len[Forest->nb_orbits - 1] = total - Forest->orbit_first[Forest->nb_orbits - 1];
 	if (f_v) {
 		cout << "schreier::extend_orbit orbit extended to length "
-				<< orbit_len[nb_orbits - 1] << endl;
+				<< Forest->orbit_len[Forest->nb_orbits - 1] << endl;
 	}
 	if (false) {
 		cout << "{ ";
-		for (i = orbit_first[nb_orbits - 1];
-				i < orbit_first[nb_orbits]; i++) {
-			cout << orbit[i];
-			if (i < orbit_first[nb_orbits] - 1) {
+		for (i = Forest->orbit_first[Forest->nb_orbits - 1];
+				i < Forest->orbit_first[Forest->nb_orbits]; i++) {
+			cout << Forest->orbit[i];
+			if (i < Forest->orbit_first[Forest->nb_orbits] - 1) {
 				cout << ", ";
 			}
 		}
@@ -1048,7 +994,7 @@ void schreier::compute_all_point_orbits(
 		cout << "schreier::compute_all_point_orbits "
 				"before initialize_tables" << endl;
 	}
-	initialize_tables();
+	Forest->initialize_tables(verbose_level - 2);
 	if (f_v) {
 		cout << "schreier::compute_all_point_orbits "
 				"after initialize_tables" << endl;
@@ -1057,9 +1003,9 @@ void schreier::compute_all_point_orbits(
 
 	for (pt0 = 0, pt = 0; pt < degree; pt++) {
 
-		pt_loc = orbit_inv[pt];
+		pt_loc = Forest->orbit_inv[pt];
 
-		cur = orbit_first[nb_orbits];
+		cur = Forest->orbit_first[Forest->nb_orbits];
 
 		if (pt_loc < cur) {
 			continue;
@@ -1084,7 +1030,7 @@ void schreier::compute_all_point_orbits(
 						"pt=" << pt << " pt_pref=" << pt_pref << endl;
 			}
 
-			if (orbit_inv[pt_pref] < cur) {
+			if (Forest->orbit_inv[pt_pref] < cur) {
 				cout << "schreier::compute_all_point_orbits "
 						"preferred point is already in "
 						"some other orbit" << endl;
@@ -1104,7 +1050,7 @@ void schreier::compute_all_point_orbits(
 		if (f_v) {
 			cout << "schreier::compute_all_point_orbits pt = "
 					<< pt << " / " << degree
-					<< " nb_orbits=" << nb_orbits
+					<< " nb_orbits=" << Forest->nb_orbits
 					<< " cur=" << cur
 					<< ", computing orbit of "
 							"pt_pref=" << pt_pref << endl;
@@ -1112,7 +1058,7 @@ void schreier::compute_all_point_orbits(
 		if (degree > ONE_MILLION && (pt - pt0) > 50000) {
 			cout << "schreier::compute_all_point_orbits pt = "
 					<< pt << " / " << degree
-					<< " nb_orbits=" << nb_orbits
+					<< " nb_orbits=" << Forest->nb_orbits
 					<< " cur=" << cur
 					<< ", computing orbit of "
 							"pt_pref=" << pt_pref << endl;
@@ -1122,52 +1068,14 @@ void schreier::compute_all_point_orbits(
 	}
 	if (f_v) {
 		cout << "schreier::compute_all_point_orbits found "
-				<< nb_orbits << " orbits" << endl;
+				<< Forest->nb_orbits << " orbits" << endl;
 		other::data_structures::tally Cl;
 
-		Cl.init(orbit_len, nb_orbits, false, 0);
+		Cl.init(Forest->orbit_len, Forest->nb_orbits, false, 0);
 		cout << "The distribution of orbit lengths is: ";
 		Cl.print(false);
 	}
 }
-
-#if 0
-void schreier::compute_all_point_orbits_with_preferred_reps(
-	int *preferred_reps, int nb_preferred_reps,
-	int verbose_level)
-{
-	int i, pt, pt_loc, cur;
-	int f_v = (verbose_level >= 1);
-	
-	if (f_v) {
-		cout << "schreier::compute_all_point_orbits_with_preferred_reps" << endl;
-	}
-	initialize_tables();
-	for (i = 0; i < nb_preferred_reps; i++) {
-		pt = preferred_reps[i];
-		pt_loc = orbit_inv[pt];
-		cur = orbit_first[nb_orbits];
-		if (pt_loc < cur) {
-			continue;
-		}
-		compute_point_orbit(
-				pt, 0 /*verbose_level - 1*/);
-	}
-	for (pt = 0; pt < degree; pt++) {
-		pt_loc = orbit_inv[pt];
-		cur = orbit_first[nb_orbits];
-		if (pt_loc < cur) {
-			continue;
-		}
-		compute_point_orbit(
-				pt, 0 /*verbose_level - 1*/);
-	}
-	if (f_v) {
-		cout << "found " << nb_orbits << " orbits";
-		cout << " on points" << endl;
-	}
-}
-#endif
 
 void schreier::compute_all_point_orbits_with_preferred_labels(
 	long int *preferred_labels, int verbose_level)
@@ -1189,7 +1097,7 @@ void schreier::compute_all_point_orbits_with_preferred_labels(
 		cout << "schreier::compute_all_point_orbits_with_"
 				"preferred_labels allocating tables" << endl;
 	}
-	initialize_tables();
+	Forest->initialize_tables(verbose_level - 2);
 	labels = NEW_int(degree);
 	perm = NEW_int(degree);
 	perm_inv = NEW_int(degree);
@@ -1212,8 +1120,8 @@ void schreier::compute_all_point_orbits_with_preferred_labels(
 	
 	for (a = 0; a < degree; a++) {
 		pt = perm_inv[a];
-		pt_loc = orbit_inv[pt];
-		cur = orbit_first[nb_orbits];
+		pt_loc = Forest->orbit_inv[pt];
+		cur = Forest->orbit_first[Forest->nb_orbits];
 		if (pt_loc < cur) {
 			continue;
 		}
@@ -1221,7 +1129,7 @@ void schreier::compute_all_point_orbits_with_preferred_labels(
 		// is moved to position cur:
 		// actually this is not needed as the
 		// function compute_point_orbit does this, too.
-		swap_points(cur, pt_loc, 0 /*verbose_level*/);
+		Forest->swap_points(cur, pt_loc, 0 /*verbose_level*/);
 		
 		if (f_v) {
 			cout << "schreier::compute_all_point_orbits_with_"
@@ -1229,19 +1137,20 @@ void schreier::compute_all_point_orbits_with_preferred_labels(
 					<< pt << " = " << a << " / " << degree << endl;
 		}
 		compute_point_orbit(
-				pt, print_interval,
+				pt,
+				print_interval,
 				0 /*verbose_level - 2*/);
 		if (f_v) {
 			cout << "schreier::compute_all_point_orbits_with_"
 					"preferred_labels computing orbit of point "
 					<< pt << " done, found an orbit of length "
-					<< orbit_len[nb_orbits - 1]
-					<< " nb_orbits = " << nb_orbits << endl;
+					<< Forest->orbit_len[Forest->nb_orbits - 1]
+					<< " nb_orbits = " << Forest->nb_orbits << endl;
 		}
 	}
 	if (f_v) {
-		cout << "found " << nb_orbits << " orbit";
-		if (nb_orbits != 1) {
+		cout << "found " << Forest->nb_orbits << " orbit";
+		if (Forest->nb_orbits != 1) {
 			cout << "s";
 		}
 		cout << " on points" << endl;
@@ -1268,16 +1177,19 @@ void schreier::compute_all_orbits_on_invariant_subset(
 
 	int print_interval = 10000;
 
-	initialize_tables();
+	Forest->initialize_tables(verbose_level - 2);
 	for (i = 0; i < len; i++) {
-		move_point_here(i, subset[i]);
+		Forest->move_point_here(i, subset[i]);
 	}
 	while (true) {
-		f = orbit_first[nb_orbits];
+		f = Forest->orbit_first[Forest->nb_orbits];
 		if (f >= len) {
 			break;
 		}
-		compute_point_orbit(orbit[f], print_interval, 0 /* verbose_level */);
+		compute_point_orbit(
+				Forest->orbit[f],
+				print_interval,
+				0 /* verbose_level */);
 	}
 	if (f > len) {
 		cout << "schreier::compute_all_orbits_on_invariant_subset "
@@ -1285,8 +1197,8 @@ void schreier::compute_all_orbits_on_invariant_subset(
 		exit(1);
 	}
 	if (f_v) {
-		cout << "found " << nb_orbits << " orbits" << endl;
-		print_orbit_length_distribution(cout);
+		cout << "found " << Forest->nb_orbits << " orbits" << endl;
+		Forest->print_orbit_length_distribution(cout);
 	}
 	if (f_v) {
 		cout << "schreier::compute_all_orbits_on_invariant_subset done" << endl;
@@ -1306,16 +1218,19 @@ void schreier::compute_all_orbits_on_invariant_subset_lint(
 
 	int print_interval = 10000;
 
-	initialize_tables();
+	Forest->initialize_tables(verbose_level - 2);
 	for (i = 0; i < len; i++) {
-		move_point_here(i, subset[i]);
+		Forest->move_point_here(i, subset[i]);
 	}
 	while (true) {
-		f = orbit_first[nb_orbits];
+		f = Forest->orbit_first[Forest->nb_orbits];
 		if (f >= len) {
 			break;
 		}
-		compute_point_orbit(orbit[f], print_interval, 0 /* verbose_level */);
+		compute_point_orbit(
+				Forest->orbit[f],
+				print_interval,
+				0 /* verbose_level */);
 	}
 	if (f > len) {
 		cout << "schreier::compute_all_orbits_on_invariant_subset "
@@ -1323,8 +1238,8 @@ void schreier::compute_all_orbits_on_invariant_subset_lint(
 		exit(1);
 	}
 	if (f_v) {
-		cout << "found " << nb_orbits << " orbits" << endl;
-		print_orbit_length_distribution(cout);
+		cout << "found " << Forest->nb_orbits << " orbits" << endl;
+		Forest->print_orbit_length_distribution(cout);
 	}
 	if (f_v) {
 		cout << "schreier::compute_all_orbits_on_invariant_subset done" << endl;
@@ -1357,8 +1272,8 @@ void schreier::compute_point_orbit(
 				"verbose_level = " << verbose_level << endl;
 	}
 	//exit(1);
-	pt_loc = orbit_inv[pt];
-	cur = orbit_first[nb_orbits];
+	pt_loc = Forest->orbit_inv[pt];
+	cur = Forest->orbit_first[Forest->nb_orbits];
 	if (pt_loc < cur) {
 		cout << "schreier::compute_point_orbit "
 				"i < orbit_first[nb_orbits]" << endl;
@@ -1368,17 +1283,20 @@ void schreier::compute_point_orbit(
 		cout << "schreier::compute_point_orbit "
 				"computing orbit of pt " << pt << " cur=" << cur << endl;
 		cout << "schreier::compute_point_orbit "
-				"nb_orbits=" << nb_orbits << endl;
+				"nb_orbits=" << Forest->nb_orbits << endl;
 		cout << "schreier::compute_point_orbit "
 				"pt_loc=" << pt_loc << endl;
 		cout << "schreier::compute_point_orbit "
 				"cur=" << cur << endl;
 	}
-	if (pt_loc > orbit_first[nb_orbits]) {
+	if (pt_loc > Forest->orbit_first[Forest->nb_orbits]) {
 		if (f_v) {
 			cout << "schreier::compute_point_orbit before swap_points" << endl;
 		}
-		swap_points(orbit_first[nb_orbits], pt_loc, 0 /* verbose_level */);
+		Forest->swap_points(
+				Forest->orbit_first[Forest->nb_orbits],
+				pt_loc,
+				0 /* verbose_level */);
 		if (f_v) {
 			cout << "schreier::compute_point_orbit after swap_points" << endl;
 		}
@@ -1386,8 +1304,8 @@ void schreier::compute_point_orbit(
 	//orbit_no[orbit_first[nb_orbits]] = nb_orbits;
 	total = cur + 1;
 
-	prev[cur] = -1; //pt;
-	label[cur] = -1;
+	Forest->prev[cur] = -1; //pt;
+	Forest->label[cur] = -1;
 
 	while (cur < total) {
 		if (f_vv) {
@@ -1395,7 +1313,7 @@ void schreier::compute_point_orbit(
 					"cur=" << cur << " total=" << total << endl;
 		}
 
-		cur_pt = orbit[cur];
+		cur_pt = Forest->orbit[cur];
 		if (f_vv) {
 			cout << "schreier::compute_point_orbit "
 					"expanding point " << cur_pt << endl;
@@ -1424,7 +1342,7 @@ void schreier::compute_point_orbit(
 			}
 
 				// A->element_image_of(cur_pt, gens.ith(i), false);
-			next_pt_loc = orbit_inv[next_pt];
+			next_pt_loc = Forest->orbit_inv[next_pt];
 
 			if (f_vv) {
 				cout << "schreier::compute_point_orbit " << cur_pt
@@ -1437,24 +1355,25 @@ void schreier::compute_point_orbit(
 			if (f_vv) {
 				cout << "schreier::compute_point_orbit "
 						"expanding: cur_pt = "
-						<< cur_pt << " -> next_pt = " << next_pt << " under generator " << i << " / " << nb_images << endl;
+						<< cur_pt << " -> next_pt = " << next_pt
+						<< " under generator " << i << " / " << nb_images << endl;
 			}
-			swap_points(total, next_pt_loc, 0 /*verbose_level*/);
-			prev[total] = cur_pt;
-			label[total] = i;
+			Forest->swap_points(total, next_pt_loc, 0 /*verbose_level*/);
+			Forest->prev[total] = cur_pt;
+			Forest->label[total] = i;
 			//orbit_no[total] = nb_orbits;
 			total++;
-			total1 = total - orbit_first[nb_orbits];
-			cur1 = cur - orbit_first[nb_orbits];
+			total1 = total - Forest->orbit_first[Forest->nb_orbits];
+			cur1 = cur - Forest->orbit_first[Forest->nb_orbits];
 			if ((total1 % print_interval) == 0 ||
 					(cur1 > 0 && (cur1 % print_interval) == 0)) {
 				cout << "schreier::compute_point_orbit"
 						<< " degree = " << degree
 						<< " length = " << total1
 						<< " processed = " << cur1 << " nb_orbits="
-						<< nb_orbits << " cur_pt=" << cur_pt << " next_pt="
+						<< Forest->nb_orbits << " cur_pt=" << cur_pt << " next_pt="
 						<< next_pt << " orbit_first[nb_orbits]="
-						<< orbit_first[nb_orbits] << endl;
+						<< Forest->orbit_first[Forest->nb_orbits] << endl;
 			}
 			if (false) {
 				cout << "schreier::compute_point_orbit "
@@ -1472,22 +1391,22 @@ void schreier::compute_point_orbit(
 	}
 	if (f_v) {
 		cout << "schreier::compute_point_orbit "
-				"orbit is complete, nb_orbits = " << nb_orbits  + 1 << endl;
+				"orbit is complete, nb_orbits = " << Forest->nb_orbits  + 1 << endl;
 	}
-	orbit_first[nb_orbits + 1] = total;
-	orbit_len[nb_orbits] = total - orbit_first[nb_orbits];
+	Forest->orbit_first[Forest->nb_orbits + 1] = total;
+	Forest->orbit_len[Forest->nb_orbits] = total - Forest->orbit_first[Forest->nb_orbits];
 	if (f_v) {
 		cout << "schreier::compute_point_orbit "
-				"found orbit of length " << orbit_len[nb_orbits]
+				"found orbit of length " << Forest->orbit_len[Forest->nb_orbits]
 				<< " total length " << total
 				<< " degree=" << degree << endl;
 	}
 	if (f_vvv) {
 		cout << "{ ";
-		for (i = orbit_first[nb_orbits];
-				i < orbit_first[nb_orbits + 1]; i++) {
-			cout << orbit[i];
-			if (i < orbit_first[nb_orbits + 1] - 1) {
+		for (i = Forest->orbit_first[Forest->nb_orbits];
+				i < Forest->orbit_first[Forest->nb_orbits + 1]; i++) {
+			cout << Forest->orbit[i];
+			if (i < Forest->orbit_first[Forest->nb_orbits + 1] - 1) {
 				cout << ", ";
 			}
 		}
@@ -1495,19 +1414,19 @@ void schreier::compute_point_orbit(
 	}
 	if (false) {
 		cout << "coset reps:" << endl;
-		for (i = orbit_first[nb_orbits];
-				i < orbit_first[nb_orbits + 1]; i++) {
+		for (i = Forest->orbit_first[Forest->nb_orbits];
+				i < Forest->orbit_first[Forest->nb_orbits + 1]; i++) {
 			cout << i << " : " << endl;
 			coset_rep(i, verbose_level - 1);
 			A->Group_element->element_print(cosetrep, cout);
-			cout << "image = " << orbit[i] << " = "
+			cout << "image = " << Forest->orbit[i] << " = "
 					<< A->Group_element->element_image_of(
 							pt, cosetrep, 0) << endl;
 			cout << endl;
 
 		}
 	}
-	nb_orbits++;
+	Forest->nb_orbits++;
 	if (f_v) {
 		cout << "schreier::compute_point_orbit done" << endl;
 	}
@@ -1530,8 +1449,8 @@ void schreier::compute_point_orbit_with_limited_depth(
 	}
 	depth = NEW_int(A->degree);
 	Int_vec_zero(depth, A->degree);
-	pt_loc = orbit_inv[pt];
-	cur = orbit_first[nb_orbits];
+	pt_loc = Forest->orbit_inv[pt];
+	cur = Forest->orbit_first[Forest->nb_orbits];
 	if (pt_loc < cur) {
 		cout << "schreier::compute_point_orbit_with_limited_depth "
 				"i < orbit_first[nb_orbits]" << endl;
@@ -1541,15 +1460,15 @@ void schreier::compute_point_orbit_with_limited_depth(
 		cout << "schreier::compute_point_orbit_with_limited_depth "
 				"computing orbit of pt " << pt << endl;
 	}
-	if (pt_loc > orbit_first[nb_orbits]) {
-		swap_points(
-				orbit_first[nb_orbits], pt_loc,
+	if (pt_loc > Forest->orbit_first[Forest->nb_orbits]) {
+		Forest->swap_points(
+				Forest->orbit_first[Forest->nb_orbits], pt_loc,
 				0 /*verbose_level*/);
 	}
 	depth[cur] = 0;
 	total = cur + 1;
 	while (cur < total) {
-		cur_pt = orbit[cur];
+		cur_pt = Forest->orbit[cur];
 		if (depth[cur] > max_depth) {
 			break;
 		}
@@ -1567,7 +1486,7 @@ void schreier::compute_point_orbit_with_limited_depth(
 			next_pt = get_image(cur_pt, i,
 				0 /*verbose_level - 5*/); // !!
 				// A->element_image_of(cur_pt, gens.ith(i), false);
-			next_pt_loc = orbit_inv[next_pt];
+			next_pt_loc = Forest->orbit_inv[next_pt];
 			if (f_vv) {
 				cout << "schreier::compute_point_orbit_with_limited_depth "
 						"generator "
@@ -1583,58 +1502,45 @@ void schreier::compute_point_orbit_with_limited_depth(
 						<< next_pt << " reached from "
 						<< cur_pt << " under generator " << i << endl;
 			}
-			swap_points(total, next_pt_loc, 0 /*verbose_level*/);
+			Forest->swap_points(total, next_pt_loc, 0 /*verbose_level*/);
 			depth[total] = depth[cur] + 1;
-			prev[total] = cur_pt;
-			label[total] = i;
+			Forest->prev[total] = cur_pt;
+			Forest->label[total] = i;
 			total++;
-			total1 = total - orbit_first[nb_orbits];
-			cur1 = cur - orbit_first[nb_orbits];
+			total1 = total - Forest->orbit_first[Forest->nb_orbits];
+			cur1 = cur - Forest->orbit_first[Forest->nb_orbits];
 			if ((total1 % 10000) == 0 ||
 					(cur1 > 0 && (cur1 % 10000) == 0)) {
 				cout << "schreier::compute_point_orbit_with_limited_depth "
 						"degree = "
 						<< A->degree << " length = " << total1
 					<< " processed = " << cur1 << " nb_orbits="
-					<< nb_orbits << " cur_pt=" << cur_pt << " next_pt="
+					<< Forest->nb_orbits << " cur_pt=" << cur_pt << " next_pt="
 					<< next_pt << " orbit_first[nb_orbits]="
-					<< orbit_first[nb_orbits] << endl;
+					<< Forest->orbit_first[Forest->nb_orbits] << endl;
 			}
 			if (false) {
 				cout << "cur = " << cur << endl;
 				cout << "total = " << total << endl;
-				print_orbit(cur, total - 1);
+				Forest->print_orbit(cur, total - 1);
 			}
 		}
 		cur++;
 	}
-	orbit_first[nb_orbits + 1] = total;
-	orbit_len[nb_orbits] = total - orbit_first[nb_orbits];
+	Forest->orbit_first[Forest->nb_orbits + 1] = total;
+	Forest->orbit_len[Forest->nb_orbits] = total - Forest->orbit_first[Forest->nb_orbits];
 	if (f_v) {
 		cout << "schreier::compute_point_orbit_with_limited_depth "
 				"found an incomplete orbit of length "
-				<< orbit_len[nb_orbits]
+				<< Forest->orbit_len[Forest->nb_orbits]
 				<< " total length " << total
 				<< " degree=" << A->degree << endl;
 	}
 	FREE_int(depth);
-	nb_orbits++;
+	Forest->nb_orbits++;
 	if (f_v) {
 		cout << "schreier::compute_point_orbit_with_limited_depth done" << endl;
 	}
-}
-
-
-int schreier::sum_up_orbit_lengths()
-{
-	int i, l, N;
-	
-	N = 0;
-	for (i = 0; i < nb_orbits; i++) {
-		l = orbit_len[i];
-		N += l;
-	}
-	return N;
 }
 
 void schreier::non_trivial_random_schreier_generator(
@@ -1723,32 +1629,32 @@ void schreier::random_schreier_generator_ith_orbit(
 				"generators are:" << endl;
 		gens.print(cout);
 	}
-	first = orbit_first[orbit_no];
-	len = orbit_len[orbit_no];
-	pt = orbit[first];
+	first = Forest->orbit_first[orbit_no];
+	len = Forest->orbit_len[orbit_no];
+	pt = Forest->orbit[first];
 	if (f_vv) {
 		cout << "schreier::random_schreier_generator_ith_orbit "
 				"pt=" << pt << endl;
 		cout << "schreier::random_schreier_generator_ith_orbit "
-				"orbit_first[orbit_no]=" << orbit_first[orbit_no] << endl;
+				"orbit_first[orbit_no]=" << Forest->orbit_first[orbit_no] << endl;
 		cout << "schreier::random_schreier_generator_ith_orbit "
-				"orbit_len[orbit_no]=" << orbit_len[orbit_no] << endl;
+				"orbit_len[orbit_no]=" << Forest->orbit_len[orbit_no] << endl;
 		cout << "schreier::random_schreier_generator_ith_orbit "
 				"gens.len=" << gens.len << endl;
 	}
 	
 	// get a random coset:
-	r1 = Os.random_integer(orbit_len[orbit_no]);
+	r1 = Os.random_integer(Forest->orbit_len[orbit_no]);
 	if (f_vv) {
 		cout << "schreier::random_schreier_generator_ith_orbit "
 				"r1=" << r1 << endl;
 	}
 	//pt1 = orbit[r1];
-	coset_rep(orbit_first[orbit_no] + r1, verbose_level - 1);
+	coset_rep(Forest->orbit_first[orbit_no] + r1, verbose_level - 1);
 	// coset rep now in cosetrep
 	if (f_vvv) {
 		cout << "schreier::random_schreier_generator_ith_orbit "
-				"cosetrep " << orbit_first[orbit_no] + r1 << endl;
+				"cosetrep " << Forest->orbit_first[orbit_no] + r1 << endl;
 		A->Group_element->element_print_quick(cosetrep, cout);
 		if (A->degree < 100) {
 			A->Group_element->element_print_as_permutation(cosetrep, cout);
@@ -1795,7 +1701,7 @@ void schreier::random_schreier_generator_ith_orbit(
 		cout << "schreier::random_schreier_generator_ith_orbit "
 				"maps " << pt << " to " << pt2 << endl;
 	}
-	pt2_coset = orbit_inv[pt2];
+	pt2_coset = Forest->orbit_inv[pt2];
 	if (f_vv) {
 		cout << "schreier::random_schreier_generator_ith_orbit "
 				"pt2_coset=" << pt2_coset << endl;
@@ -1863,7 +1769,7 @@ void schreier::random_schreier_generator(
 	if (f_v) {
 		cout << "schreier::random_schreier_generator "
 				"orbit_len = "
-			<< orbit_len[0] << " nb generators = "
+			<< Forest->orbit_len[0] << " nb generators = "
 			<< gens.len << " in action " << A->label << endl;
 	}
 	if (f_images_only) {
@@ -1871,14 +1777,14 @@ void schreier::random_schreier_generator(
 				"allowed if f_images_only is true" << endl;
 		exit(1);
 	}
-	pt = orbit[0];
+	pt = Forest->orbit[0];
 	if (f_vv) {
 		cout << "schreier::random_schreier_generator pt=" << pt << endl;
 	}
 	
 	// get a random coset:
-	r1 = Os.random_integer(orbit_len[0]);
-	pt1 = orbit[r1];
+	r1 = Os.random_integer(Forest->orbit_len[0]);
+	pt1 = Forest->orbit[r1];
 	
 	coset_rep(r1, verbose_level - 1);
 	// coset rep now in cosetrep
@@ -1980,7 +1886,7 @@ void schreier::random_schreier_generator(
 		exit(1);
 	}
 	//cout << "maps " << pt << " to " << pt2 << endl;
-	pt2_coset = orbit_inv[pt2];
+	pt2_coset = Forest->orbit_inv[pt2];
 	
 	coset_rep_inv(pt2_coset, verbose_level - 1);
 	// coset rep now in cosetrep
@@ -2067,100 +1973,6 @@ void schreier::random_schreier_generator(
 	}
 }
 
-void schreier::get_path_and_labels(
-		std::vector<int> &path, std::vector<int> &labels,
-		int i, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "schreier::get_path_and_labels at " << i << endl;
-	}
-	int ii = orbit_inv[i];
-
-	if (prev[ii] == -1) {
-		//path.push_back(i);
-		//labels.push_back(label[i]);
-	}
-	else {
-		get_path_and_labels(
-				path, labels, prev[ii], verbose_level);
-		path.push_back(i);
-		labels.push_back(label[ii]);
-	}
-
-	if (f_v) {
-		cout << "schreier::get_path_and_labels done" << endl;
-	}
-}
-
-void schreier::trace_back(
-		int i, int &j)
-{
-	int ii = orbit_inv[i];
-	
-	if (prev[ii] == -1) {
-
-#if 0
-		if (path) {
-			path[0] = i;
-		}
-#endif
-
-		j = 1;
-	}
-	else {
-		trace_back(prev[ii], j);
-
-#if 0
-		if (path) {
-			path[j] = i;
-		}
-#endif
-
-		j++;
-	}
-}
-
-void schreier::trace_back_and_record_path(
-		int *path, int i, int &j)
-{
-	int ii = orbit_inv[i];
-
-	if (prev[ii] == -1) {
-		//if (path) {
-			path[0] = i;
-		//}
-		j = 1;
-	}
-	else {
-		trace_back_and_record_path(path, prev[ii], j);
-		//if (path) {
-			path[j] = i;
-		//}
-		j++;
-	}
-}
-
-void schreier::intersection_vector(
-		int *set,
-		int len, int *intersection_cnt)
-// intersection_cnt[nb_orbits]
-{
-	int i, pt, o;
-	
-	Int_vec_zero(intersection_cnt, nb_orbits);
-#if 0
-	for (i = 0; i < nb_orbits; i++) {
-		intersection_cnt[i] = 0;
-	}
-#endif
-	for (i = 0; i < len; i++) {
-		pt = set[i];
-		o = orbit_number(pt);
-		intersection_cnt[o]++;
-	}
-}
 
 void schreier::orbits_on_invariant_subset_fast(
 	int len, int *subset, int verbose_level)
@@ -2186,11 +1998,11 @@ void schreier::orbits_on_invariant_subset_fast(
 	
 	for (i = 0; i < len; i++) {
 		p = subset[i];
-		j = orbit_inv[p];
-		if (j >= orbit_first[nb_orbits]) {
+		j = Forest->orbit_inv[p];
+		if (j >= Forest->orbit_first[Forest->nb_orbits]) {
 			if (f_vvv) {
 				cout << "schreier::orbits_on_invariant_subset_fast "
-						"computing orbit no " << nb_orbits << endl;
+						"computing orbit no " << Forest->nb_orbits << endl;
 			}
 			compute_point_orbit(p, print_interval, 0);
 		}
@@ -2211,7 +2023,7 @@ void schreier::orbits_on_invariant_subset_fast(
 #endif
 	if (f_v) {
 		cout << "schreier::orbits_on_invariant_subset_fast "
-			"found " << nb_orbits
+			"found " << Forest->nb_orbits
 			<< " orbits on the invariant subset of size " << len << endl;
 	}
 }
@@ -2240,11 +2052,11 @@ void schreier::orbits_on_invariant_subset_fast_lint(
 
 	for (i = 0; i < len; i++) {
 		p = subset[i];
-		j = orbit_inv[p];
-		if (j >= orbit_first[nb_orbits]) {
+		j = Forest->orbit_inv[p];
+		if (j >= Forest->orbit_first[Forest->nb_orbits]) {
 			if (f_vvv) {
 				cout << "schreier::orbits_on_invariant_subset_fast_lint "
-						"computing orbit no " << nb_orbits << endl;
+						"computing orbit no " << Forest->nb_orbits << endl;
 			}
 			compute_point_orbit(p, print_interval, 0);
 		}
@@ -2265,7 +2077,7 @@ void schreier::orbits_on_invariant_subset_fast_lint(
 #endif
 	if (f_v) {
 		cout << "schreier::orbits_on_invariant_subset_fast_lint "
-			"found " << nb_orbits
+			"found " << Forest->nb_orbits
 			<< " orbits on the invariant subset of size " << len << endl;
 	}
 }
@@ -2280,14 +2092,14 @@ void schreier::orbits_on_invariant_subset(
 	
 	compute_all_point_orbits(print_interval, 0);
 	nb_orbits_on_subset = 0;
-	orbit_perm = NEW_int(nb_orbits);
-	orbit_perm_inv = NEW_int(nb_orbits);
-	for (i = 0; i < nb_orbits; i++) {
+	orbit_perm = NEW_int(Forest->nb_orbits);
+	orbit_perm_inv = NEW_int(Forest->nb_orbits);
+	for (i = 0; i < Forest->nb_orbits; i++) {
 		orbit_perm_inv[i] = -1;
 	}
-	for (i = 0; i < nb_orbits; i++) {
-		j = orbit_first[i];
-		a = orbit[j];
+	for (i = 0; i < Forest->nb_orbits; i++) {
+		j = Forest->orbit_first[i];
+		a = Forest->orbit[j];
 		for (pos = 0; pos < len; pos++) {
 			if (subset[pos] == a) {
 				orbit_perm[nb_orbits_on_subset] = i;
@@ -2298,92 +2110,12 @@ void schreier::orbits_on_invariant_subset(
 		}
 	}
 	j = nb_orbits_on_subset;
-	for (i = 0; i < nb_orbits; i++) {
+	for (i = 0; i < Forest->nb_orbits; i++) {
 		if (orbit_perm_inv[i] == -1) {
 			orbit_perm[j] = i;
 			orbit_perm_inv[i] = j;
 			j++;
 		}
-	}
-}
-
-void schreier::get_orbit_partition_of_points_and_lines(
-		other::data_structures::partitionstack &S,
-		int verbose_level)
-{
-	int first_column_element, pos, first_column_orbit, i, j, f, l, a;
-	int f_v = (verbose_level >= 1);
-	
-	if (f_v) {
-		cout << "schreier::get_orbit_partition_of_points_and_lines" << endl;
-	}
-	first_column_element = S.startCell[1];
-	if (f_v) {
-		cout << "first_column_element = "
-				<< first_column_element << endl;
-	}
-	pos = orbit_inv[first_column_element];
-	first_column_orbit = orbit_number(first_column_element);
-	
-	for (i = first_column_orbit - 1; i > 0; i--) {
-		f = orbit_first[i];
-		l = orbit_len[i];
-		for (j = 0; j < l; j++) {
-			pos = f + j;
-			a = orbit[pos];
-			S.subset[j] = a;
-		}
-		S.subset_size = l;
-		S.split_cell(false);
-	}
-	for (i = nb_orbits - 1; i > first_column_orbit; i--) {
-		f = orbit_first[i];
-		l = orbit_len[i];
-		for (j = 0; j < l; j++) {
-			pos = f + j;
-			a = orbit[pos];
-			S.subset[j] = a;
-		}
-		S.subset_size = l;
-		S.split_cell(false);
-	}
-}
-
-void schreier::get_orbit_partition(
-		other::data_structures::partitionstack &S,
-	int verbose_level)
-{
-	int pos, i, j, f, l, a;
-	int f_v = (verbose_level >= 1);
-	
-	if (f_v) {
-		cout << "schreier::get_orbit_partition" << endl;
-	}
-	for (i = nb_orbits - 1; i > 0; i--) {
-		f = orbit_first[i];
-		l = orbit_len[i];
-		for (j = 0; j < l; j++) {
-			pos = f + j;
-			a = orbit[pos];
-			S.subset[j] = a;
-		}
-		S.subset_size = l;
-		S.split_cell(false);
-	}
-}
-
-void schreier::get_orbit_in_order(
-		std::vector<int> &Orb,
-	int orbit_idx, int verbose_level)
-{
-	int f, l, j, a, pos;
-
-	f = orbit_first[orbit_idx];
-	l = orbit_len[orbit_idx];
-	for (j = 0; j < l; j++) {
-		pos = f + j;
-		a = orbit[pos];
-		Orb.push_back(a);
 	}
 }
 
@@ -2416,7 +2148,7 @@ strong_generators *schreier::stabilizer_any_point_plus_cosets(
 	transporter = NEW_int(A->elt_size_in_int);
 	transporter1 = NEW_int(A->elt_size_in_int);
 	
-	orbit_index = orbit_number(pt);
+	orbit_index = Forest->orbit_number(pt);
 
 	if (f_v) {
 		cout << "schreier::stabilizer_any_point_plus_cosets "
@@ -2431,8 +2163,8 @@ strong_generators *schreier::stabilizer_any_point_plus_cosets(
 				"after stabilizer_orbit_rep" << endl;
 	}
 
-	fst = orbit_first[orbit_index];
-	len = orbit_len[orbit_index];
+	fst = Forest->orbit_first[orbit_index];
+	len = Forest->orbit_len[orbit_index];
 	cosets->allocate(len, verbose_level - 2);
 
 	if (f_v) {
@@ -2475,7 +2207,7 @@ strong_generators *schreier::stabilizer_any_point_plus_cosets(
 		}
 	for (i = 0; i < len; i++) {
 		transporter_from_orbit_rep_to_point(
-				orbit[fst + i],
+				Forest->orbit[fst + i],
 				orbit_index1, transporter1,
 				0 /* verbose_level */);
 		A->Group_element->element_mult(
@@ -2520,7 +2252,7 @@ strong_generators *schreier::stabilizer_any_point(
 	
 	transporter = NEW_int(A->elt_size_in_int);
 	
-	orbit_index = orbit_number(pt);
+	orbit_index = Forest->orbit_number(pt);
 
 	if (f_v) {
 		cout << "schreier::stabilizer_any_point "
@@ -2608,7 +2340,7 @@ data_structures_groups::set_and_stabilizer
 				"after stabilizer_orbit_rep" << endl;
 	}
 	Set = NEW_lint(1);
-	Set[0] = orbit[orbit_first[orbit_idx]];
+	Set[0] = Forest->orbit[Forest->orbit_first[orbit_idx]];
 	if (f_v) {
 		cout << "schreier::get_orbit_rep "
 				"before SaS->init_everything" << endl;
@@ -2658,7 +2390,7 @@ void schreier::get_orbit_rep_to(
 				"after stabilizer_orbit_rep" << endl;
 	}
 	Set = NEW_lint(1);
-	Set[0] = orbit[orbit_first[orbit_idx]];
+	Set[0] = Forest->orbit[Forest->orbit_first[orbit_idx]];
 	if (f_v) {
 		cout << "schreier::get_orbit_rep_to "
 				"before Rep->init_everything" << endl;
@@ -2679,7 +2411,8 @@ void schreier::get_orbit_rep_to(
 
 strong_generators *schreier::stabilizer_orbit_rep(
 		actions::action *default_action,
-		algebra::ring_theory::longinteger_object &full_group_order, int orbit_idx,
+		algebra::ring_theory::longinteger_object &full_group_order,
+		int orbit_idx,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2786,7 +2519,7 @@ void schreier::point_stabilizer(
 		default_action->print_info();
 		cout << endl;
 	}
-	len = orbit_len[orbit_no];
+	len = Forest->orbit_len[orbit_no];
 	D.integral_division_by_int(go, len, target_go, r);
 	if (r) {	
 		cout << "schreier::point_stabilizer "
@@ -2960,388 +2693,13 @@ void schreier::point_stabilizer(
 	}
 }
 
-void schreier::get_orbit(
-		int orbit_idx, long int *set, int &len,
-	int verbose_level)
-{
-	int f, i;
-
-	f = orbit_first[orbit_idx];
-	len = orbit_len[orbit_idx];
-	for (i = 0; i < len; i++) {
-		set[i] = orbit[f + i];
-	}
-}
-
-void schreier::compute_orbit_statistic(
-		int *set, int set_size,
-	int *orbit_count, int verbose_level)
-// orbit_count[nb_orbits]
-{
-	int f_v = (verbose_level >= 1);
-	int i, a, o;
-
-	if (f_v) {
-		cout << "schreier::compute_orbit_statistic" << endl;
-	}
-	Int_vec_zero(orbit_count, nb_orbits);
-	for (i = 0; i < set_size; i++) {
-		a = set[i];
-		o = orbit_number(a);
-		orbit_count[o]++;
-	}
-	if (f_v) {
-		cout << "schreier::compute_orbit_statistic done" << endl;
-	}
-}
-
-void schreier::compute_orbit_statistic_lint(
-		long int *set, int set_size,
-	int *orbit_count, int verbose_level)
-// orbit_count[nb_orbits]
-{
-	int f_v = (verbose_level >= 1);
-	int i, a, o;
-
-	if (f_v) {
-		cout << "schreier::compute_orbit_statistic_lint" << endl;
-	}
-	Int_vec_zero(orbit_count, nb_orbits);
-	for (i = 0; i < set_size; i++) {
-		a = set[i];
-		o = orbit_number(a);
-		orbit_count[o]++;
-	}
-	if (f_v) {
-		cout << "schreier::compute_orbit_statistic_lint done" << endl;
-	}
-}
-
-
-void schreier::orbits_as_set_of_sets(
-		other::data_structures::set_of_sets *&S,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int *Sz;
-	int i, j, a, f, l;
-	
-	if (f_v) {
-		cout << "schreier::orbits_as_set_of_sets" << endl;
-	}
-	S = NEW_OBJECT(other::data_structures::set_of_sets);
-	Sz = NEW_int(nb_orbits);
-	for (i = 0; i < nb_orbits; i++) {
-		l = orbit_len[i];
-		Sz[i] = l;
-	}
-	
-	S->init_basic_with_Sz_in_int(
-			degree /* underlying_set_size */,
-			nb_orbits, Sz, 0 /* verbose_level */);
-	for (i = 0; i < nb_orbits; i++) {
-		f = orbit_first[i];
-		l = orbit_len[i];
-		for (j = 0; j < l; j++) {
-			a = orbit[f + j];
-			S->Sets[i][j] = a;
-		}
-	}
-	FREE_int(Sz);
-	if (f_v) {
-		cout << "schreier::orbits_as_set_of_sets done" << endl;
-	}
-}
-
-void schreier::get_orbit_reps(
-		int *&Reps,
-		int &nb_reps, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int i, a, f;
-	
-	if (f_v) {
-		cout << "schreier::get_orbit_reps" << endl;
-	}
-	nb_reps = nb_orbits;
-	Reps = NEW_int(nb_reps);
-	for (i = 0; i < nb_reps; i++) {
-		f = orbit_first[i];
-		a = orbit[f];
-		Reps[i] = a;
-	}
-	if (f_v) {
-		cout << "schreier::get_orbit_reps done" << endl;
-	}
-}
-
-int schreier::find_shortest_orbit_if_unique(
-		int &idx)
-{
-	int l_min = 0, l, i;
-	int idx_min = -1;
-	int f_is_unique = true;
-	
-	for (i = 0; i < nb_orbits; i++) {
-		l = orbit_len[i];
-		if (idx_min == -1) {
-			l_min = l;
-			idx_min = i;
-			f_is_unique = true;
-		}
-		else if (l < l_min) {
-			l_min = l;
-			idx_min = i;
-			f_is_unique = true;
-		}
-		else if (l_min == l) {
-			f_is_unique = false;
-		}
-	}
-	idx = idx_min;
-	return f_is_unique;
-}
-
-void schreier::elements_in_orbit_of(
-		int pt,
-	int *orb, int &nb, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int idx, f;
-
-	if (f_v) {
-		cout << "schreier::elements_in_orbit_of" << endl;
-	}
-	idx = orbit_number(pt);
-	f = orbit_first[idx];
-	nb = orbit_len[idx];
-	Int_vec_copy(orbit + f, orb, nb);
-	if (f_v) {
-		cout << "schreier::elements_in_orbit_of done" << endl;
-	}
-}
-
-void schreier::get_orbit_length(
-		int *&orbit_length, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int I, f, l, h, a;
-
-	if (f_v) {
-		cout << "schreier::get_orbit_length" << endl;
-	}
-	orbit_length = NEW_int(A->degree);
-	for (I = 0; I < nb_orbits; I++) {
-		f = orbit_first[I];
-		l = orbit_len[I];
-		for (h = 0; h < l; h++) {
-			a = orbit[f + h];
-			orbit_length[a] = l;
-		}
-	}
-	if (f_v) {
-		cout << "schreier::get_orbit_length done" << endl;
-	}
-}
-
-void schreier::get_orbit_lengths_once_each(
-	int *&orbit_lengths, int &nb_orbit_lengths)
-{
-	int *val, *mult, len;	
-	
-	other::orbiter_kernel_system::Orbiter->Int_vec->distribution(
-			orbit_len, nb_orbits, val, mult, len);
-	//int_distribution_print(ost, val, mult, len);
-	//ost << endl;
-	
-	nb_orbit_lengths = len;
-
-	orbit_lengths = NEW_int(nb_orbit_lengths);
-
-	Int_vec_copy(val, orbit_lengths, nb_orbit_lengths);
-
-	FREE_int(val);
-	FREE_int(mult);
-}
-
-
-int schreier::orbit_number(
-		int pt)
-{
-	int pos;
-	int idx;
-	other::data_structures::sorting Sorting;
-
-	pos = orbit_inv[pt];
-	if (Sorting.int_vec_search(orbit_first, nb_orbits, pos, idx)) {
-		;
-	}
-	else {
-		if (idx == 0) {
-			cout << "schreier::orbit_number idx == 0" << endl;
-			exit(1);
-		}
-		idx--;
-	}
-	if (orbit_first[idx] <= pos &&
-			pos < orbit_first[idx] + orbit_len[idx]) {
-		return idx;
-	}
-	else {
-		cout << "schreier::orbit_number something is wrong, "
-				"perhaps the orbit of the point has not yet "
-				"been computed" << endl;
-		exit(1);
-	}
-}
-
-void schreier::get_orbit_number_and_position(
-		int pt, int &orbit_idx, int &orbit_pos,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int pos;
-	other::data_structures::sorting Sorting;
-
-	if (f_v) {
-		cout << "schreier::get_orbit_number_and_position" << endl;
-	}
-	pos = orbit_inv[pt];
-	if (Sorting.int_vec_search(orbit_first, nb_orbits, pos, orbit_idx)) {
-		;
-	}
-	else {
-		if (orbit_idx == 0) {
-			cout << "schreier::get_orbit_number_and_position "
-					"orbit_idx == 0" << endl;
-			exit(1);
-		}
-		orbit_idx--;
-	}
-	if (orbit_first[orbit_idx] <= pos &&
-			pos < orbit_first[orbit_idx] + orbit_len[orbit_idx]) {
-		orbit_pos = pos - orbit_first[orbit_idx];
-	}
-	else {
-		cout << "schreier::get_orbit_number_and_position something is wrong, "
-				"perhaps the orbit of the point has not yet "
-				"been computed" << endl;
-		exit(1);
-	}
-	if (f_v) {
-		cout << "schreier::get_orbit_number_and_position done" << endl;
-	}
-}
-
-
-void schreier::get_orbit_decomposition_scheme_of_graph(
-	int *Adj, int n, int *&Decomp_scheme, 
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int I, J;
-	int f1, l1;
-	int f2, l2;
-	int i, j, r, r0, a, b;
-
-	if (f_v) {
-		cout << "schreier::get_orbit_decomposition_scheme_of_graph" << endl;
-	}
-	Decomp_scheme = NEW_int(nb_orbits * nb_orbits);
-	Int_vec_zero(Decomp_scheme, nb_orbits * nb_orbits);
-	for (I = 0; I < nb_orbits; I++) {
-		f1 = orbit_first[I];
-		l1 = orbit_len[I];
-		if (false) {
-			cout << "I = " << I << " f1 = " << f1
-					<< " l1 = " << l1 << endl;
-		}
-		for (J = 0; J < nb_orbits; J++) {
-			r0 = 0;
-			f2 = orbit_first[J];
-			l2 = orbit_len[J];
-			if (false) {
-				cout << "J = " << J << " f2 = " << f2
-						<< " l2 = " << l2 << endl;
-			}
-			for (i = 0; i < l1; i++) {
-				a = orbit[f1 + i];
-				r = 0;
-				for (j = 0; j < l2; j++) {
-					b = orbit[f2 + j];
-					if (Adj[a * n + b]) {
-						r++;
-					}
-				}
-				if (i == 0) {
-					r0 = r;
-				}
-				else {
-					if (r0 != r) {
-						cout << "schreier::get_orbit_decomposition_scheme_of_graph "
-								"not tactical" << endl;
-						cout << "I=" << I << endl;
-						cout << "J=" << J << endl;
-						cout << "r0=" << r0 << endl;
-						cout << "r=" << r << endl;
-						exit(1); 
-					}
-				}
-			}
-			if (false) {
-				cout << "I = " << I << " J = " << J << " r = " << r0 << endl;
-			}
-			Decomp_scheme[I * nb_orbits + J] = r0;
-		}
-	}
-	if (f_v) {
-		cout << "Decomp_scheme = " << endl;
-		Int_matrix_print(Decomp_scheme, nb_orbits, nb_orbits);
-	}
-	if (f_v) {
-		cout << "schreier::get_orbit_decomposition_"
-				"scheme_of_graph done" << endl;
-	}
-}
-
-
-
-void schreier::create_point_list_sorted(
-		int *&point_list, int &point_list_length)
-{
-	int i, j, k, f, l, ff, p;
-	other::data_structures::sorting Sorting;
-
-	point_list_length = 0;
-	for (k = 0; k < nb_orbits; k++) {
-		point_list_length += orbit_len[k];
-	}
-	point_list = NEW_int(point_list_length);
-
-	ff = 0;
-	for (k = 0; k < nb_orbits; k++) {
-		f = orbit_first[k];
-		l = orbit_len[k];
-		for (j = 0; j < l; j++) {
-			i = f + j;
-			p = orbit[i];
-			point_list[ff + j] = p;
-		}
-		ff += l;
-	}
-	if (ff != point_list_length) {
-		cout << "schreier::create_point_list_sorted "
-				"ff != point_list_length" << endl;
-		exit(1);
-	}
-	Sorting.int_vec_heapsort(point_list, point_list_length);
-}
 
 void schreier::shallow_tree_generators(
 		int orbit_idx,
 		int f_randomized,
 		schreier *&shallow_tree,
 		int verbose_level)
+// Seress algorithm: double the cube
 {
 	int f_v = (verbose_level >= 1);
 	int fst, len, root, cnt, l;
@@ -3356,9 +2714,9 @@ void schreier::shallow_tree_generators(
 		cout << "computing shallow tree for orbit " << orbit_idx
 				<< " in action " << A->label << endl;
 	}
-	fst = orbit_first[orbit_idx];
-	len = orbit_len[orbit_idx];
-	root = orbit[fst];
+	fst = Forest->orbit_first[orbit_idx];
+	len = Forest->orbit_len[orbit_idx];
+	root = Forest->orbit[fst];
 
 	data_structures_groups::vector_ge *gens;
 
@@ -3389,7 +2747,7 @@ void schreier::shallow_tree_generators(
 		S->compute_point_orbit_with_limited_depth(root,
 				gens->len, 0 /*verbose_level*/);
 		//S->compute_point_orbit(root, 0 /*verbose_level*/);
-		l = S->orbit_len[0];
+		l = S->Forest->orbit_len[0];
 		if (f_v) {
 			cout << "schreier::shallow_tree_generators "
 					"iteration " << cnt
@@ -3406,10 +2764,10 @@ void schreier::shallow_tree_generators(
 		// to the new orbit (the good Schreier tree).
 		// When l < len, such an element must exist.
 		nb_candidates = 0;
-		f = S->orbit_first[0];
+		f = S->Forest->orbit_first[0];
 		for (i = 0; i < len; i++) {
-			a = orbit[fst + i];
-			j = S->orbit_inv[a];
+			a = Forest->orbit[fst + i];
+			j = S->Forest->orbit_inv[a];
 			if (j >= f + l) {
 				candidates[nb_candidates++] = a;
 			}
@@ -3468,7 +2826,7 @@ void schreier::shallow_tree_generators(
 		cout << "schreier::shallow_tree_generators cnt=" << cnt
 				<< " number of generators=" << gens->len << endl;
 		cout << "done" << endl;
-		}
+	}
 
 	FREE_int(candidates);
 	FREE_OBJECT(gens);
@@ -3572,7 +2930,8 @@ data_structures_groups::schreier_vector *schreier::get_schreier_vector(
 					"shallow_schreier_tree_Seress" << endl;
 		}
 
-		Schreier_vector->init_shallow_schreier_forest(this,
+		Schreier_vector->init_shallow_schreier_forest(
+				this,
 			f_trivial_group,
 			false /* f_randomized*/,
 			verbose_level);
@@ -3656,51 +3015,6 @@ data_structures_groups::schreier_vector *schreier::get_schreier_vector(
 
 
 
-int schreier::get_num_points() {
-	// This function returns the number of points in the schreier forest
-
-	int total_points_in_forest = 0;
-
-	for (int orbit_idx = 0; orbit_idx < nb_orbits; orbit_idx++) {
-		total_points_in_forest += this->orbit_len[orbit_idx];
-	}
-
-	return total_points_in_forest;
-}
-
-double schreier::get_average_word_length() {
-	// This function returns the average word length of the forest.
-
-	double avgwl = 0.0;
-	int total_points_in_forest = get_num_points();
-
-	for (int orbit_idx = 0; orbit_idx < nb_orbits; orbit_idx++) {
-		avgwl += get_average_word_length(orbit_idx) * orbit_len[orbit_idx]
-				/ total_points_in_forest;
-	}
-
-	return avgwl;
-}
-
-double schreier::get_average_word_length(
-		int orbit_idx)
-{
-	int fst = orbit_first[orbit_idx];
-	//int len = orbit_len[orbit_idx];
-	//int root = orbit[fst];
-	int l;
-
-	// Average and optimal word lengths of old tree
-	int last = orbit_first[orbit_idx + 1];
-	int L = 0, N = last - fst;
-	for (int j = 0; j < last; j++) {
-		trace_back(orbit[j], l);
-		L += l;
-	}
-
-	return L / double(N);
-}
-
 void schreier::compute_orbit_invariant(
 		int *&orbit_invariant,
 		int (*compute_orbit_invariant_callback)(schreier *Sch,
@@ -3714,8 +3028,8 @@ void schreier::compute_orbit_invariant(
 	if (f_v) {
 		cout << "schreier::compute_orbit_invariant" << endl;
 	}
-	orbit_invariant = NEW_int(nb_orbits);
-	for (orbit_idx = 0; orbit_idx < nb_orbits; orbit_idx++) {
+	orbit_invariant = NEW_int(Forest->nb_orbits);
+	for (orbit_idx = 0; orbit_idx < Forest->nb_orbits; orbit_idx++) {
 		orbit_invariant[orbit_idx] = (*compute_orbit_invariant_callback)
 				(this, orbit_idx, compute_orbit_invariant_data, verbose_level - 2);
 	}

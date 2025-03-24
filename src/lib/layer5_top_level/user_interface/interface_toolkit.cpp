@@ -38,6 +38,10 @@ interface_toolkit::interface_toolkit()
 	f_csv_file_tally = false;
 	//std::string csv_file_tally_fname;
 
+	f_tally_column = false;
+	std::string tally_column_fname;
+	std::string tally_column_column;
+
 	f_collect_stats = false;
 	//std::string collect_stats_fname_mask;
 	//std::string collect_stats_fname_out;
@@ -268,6 +272,9 @@ void interface_toolkit::print_help(
 	else if (ST.stringcmp(argv[i], "-csv_file_tally") == 0) {
 		cout << "-csv_file_tally <string : label>" << endl;
 	}
+	else if (ST.stringcmp(argv[i], "-tally_column") == 0) {
+		cout << "-tally_column <string : fname> <string : column>" << endl;
+	}
 	else if (ST.stringcmp(argv[i], "-collect_stats") == 0) {
 		cout << "-collect_stats <string : fname_mask> <string : fname_out> <int : first> <int : last> <int : step>" << endl;
 	}
@@ -425,6 +432,9 @@ int interface_toolkit::recognize_keyword(
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-csv_file_tally") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-tally_column") == 0) {
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-collect_stats") == 0) {
@@ -637,6 +647,17 @@ void interface_toolkit::read_arguments(
 		csv_file_tally_fname.assign(argv[++i]);
 		if (f_v) {
 			cout << "-csv_file_tally " << csv_file_tally_fname << endl;
+		}
+	}
+	else if (ST.stringcmp(argv[i], "-tally_column") == 0) {
+		f_tally_column = true;
+		tally_column_fname.assign(argv[++i]);
+		tally_column_column.assign(argv[++i]);
+		if (f_v) {
+			cout << "-tally_column "
+					<< " " << tally_column_fname
+					<< " " << tally_column_column
+					<< endl;
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-collect_stats") == 0) {
@@ -1312,6 +1333,12 @@ void interface_toolkit::print()
 	if (f_csv_file_tally) {
 		cout << "-csv_file_tally " << csv_file_tally_fname << endl;
 	}
+	if (f_tally_column) {
+		cout << "-tally_column "
+				<< " " << tally_column_fname
+				<< " " << tally_column_column
+				<< endl;
+	}
 	if (f_collect_stats) {
 		cout << "-collect_stats"
 				<< " " << collect_stats_fname_mask
@@ -1654,6 +1681,20 @@ void interface_toolkit::worker(
 
 		Fio.Csv_file_support->read_csv_file_and_tally(
 				csv_file_tally_fname, verbose_level);
+
+	}
+	else if (f_tally_column) {
+
+		if (f_v) {
+			cout << "interface_toolkit::worker -tally_column" << endl;
+		}
+
+		cout << "-tally_column " << tally_column_fname << endl;
+
+		other::orbiter_kernel_system::file_io Fio;
+
+		Fio.Csv_file_support->tally_column(
+				tally_column_fname, tally_column_column, verbose_level);
 
 	}
 	else if (f_collect_stats) {

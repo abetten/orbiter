@@ -11,5 +11,7 @@ ROW,C1,C2,C3
 1,"\verb'-intersect_with_subspace'  "," $M$ ","Find the points in the intersection of the quadric with the subspace whose generating matrix has label $M$. "
 1,"\verb'-table_of_blt_sets'  "," "," Export a table of BLT-sets. We must be in an $Q^4(q)$ space.  "
 1,"\verb'-create_orthogonal_reflection'  "," points "," Create the orthogonal reflections associated with the given set of points, encoded as a vector. The points must be off the quadric. The points are given as point ranks in projective space. "
+1,"\verb'-create_Siegel_transformation'  "," u v "," Create the Siegel transformation defined by the vectors $u$ and $v$. The Siegel transformation is defined as $\rho_{u,v}(x) := x + \beta(x,v) u - \beta(x,u) v - Q(v) \beta(x,u) u.$  Here, $Q$ is the quadratic form and $\beta$ is the associated bilinear form. The vector $u$ must be singular and $v$ must be in $u^\perp.$ "
+1,"\verb'-make_all_Siegel_transformations'  "," "," Make all Siegel transformations by looping over all possible pairs for $u$ and $v$.  "
 1,"\verb'-create_orthogonal_reflection_6_and_4'  "," points A4 "," Create the orthogonal reflections associated with the given set of point. Once done, turn the mappings into mappings of $\PG(3,q)$, using the action A4. "
 END

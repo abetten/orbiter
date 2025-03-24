@@ -136,13 +136,13 @@ void spread_classify::print_isomorphism_type2(
 	other::data_structures::tally C;
 
 
-	C.init(Orb.orbit_len, Orb.nb_orbits, false, 0);
+	C.init(Orb.Forest->orbit_len, Orb.Forest->nb_orbits, false, 0);
 
 	ost << "Stabilizer has order " << so << "\\\\" << endl;
 	
 	ost << "\\bigskip" << endl;
 
-	ost << "There are $" << Orb.nb_orbits
+	ost << "There are $" << Orb.Forest->nb_orbits
 			<< "$ orbits on the set.\\\\" << endl;
 	ost << "The orbit type is $[";
 	C.print_bare_tex(ost, false /*f_backwards*/);
@@ -217,13 +217,13 @@ void spread_classify::print_isomorphism_type2(
 	pt_list = NEW_lint(Iso->size);
 	
 	ost << "The orbits on the set are:\\\\" << endl;
-	for (i = 0; i < Orb.nb_orbits; i++) {
-		f = Orb.orbit_first[i];
-		l = Orb.orbit_len[i];
+	for (i = 0; i < Orb.Forest->nb_orbits; i++) {
+		f = Orb.Forest->orbit_first[i];
+		l = Orb.Forest->orbit_len[i];
 		ost << "$O_{" << i << "}=\\{";
 		for (j = 0; j < l; j++) {
 			idx = f + j;
-			pt = Orb.orbit[idx];
+			pt = Orb.Forest->orbit[idx];
 			pt_list[j] = pt;
 		}
 		
@@ -832,12 +832,12 @@ void spread_classify::report3(
 		
 		Iso.Folding->AA->compute_all_point_orbits(Orb,
 				Stab->gens, verbose_level - 2);
-		ost << "With " << Orb.nb_orbits
+		ost << "With " << Orb.Forest->nb_orbits
 				<< " orbits on the subspaces\\\\" << endl;
 
 		other::data_structures::tally C_ol;
 
-		C_ol.init(Orb.orbit_len, Orb.nb_orbits, false, 0);
+		C_ol.init(Orb.Forest->orbit_len, Orb.Forest->nb_orbits, false, 0);
 
 		ost << "Orbit lengths: $";
 		//int_vec_print(f, Orb.orbit_len, Orb.nb_orbits);
@@ -845,7 +845,7 @@ void spread_classify::report3(
 		ost << "$ \\\\" << endl;
 
 		ost << "Orbits: $";
-		Orb.list_all_orbits_tex(ost);
+		Orb.Forest->list_all_orbits_tex(ost);
 		ost << "$ \\\\" << endl;
 
 	
@@ -909,10 +909,10 @@ void spread_classify::report3(
 		ost << "\\mbox{Orbit} & \\mbox{Length} & \\mbox{Induced} "
 				"& \\mbox{Kernel} \\\\" << endl;
 		ost << "\\hline" << endl;
-		for (i = 0; i < Orb.nb_orbits; i++) {
+		for (i = 0; i < Orb.Forest->nb_orbits; i++) {
 			int fst, len, j;
-			fst = Orb.orbit_first[i];
-			len = Orb.orbit_len[i];
+			fst = Orb.Forest->orbit_first[i];
+			len = Orb.Forest->orbit_len[i];
 
 			cout << "inducing action on orbit " << i
 					<< " of length " << len << endl;
@@ -924,7 +924,7 @@ void spread_classify::report3(
 			set = NEW_lint(len);
 			//A1 = NEW_OBJECT(action);
 			for (j = 0; j < len; j++) {
-				set[j] = data[Orb.orbit[fst + j]];
+				set[j] = data[Orb.Forest->orbit[fst + j]];
 			}
 
 
@@ -959,10 +959,10 @@ void spread_classify::report3(
 
 
 
-		for (i = 0; i < Orb.nb_orbits; i++) {
+		for (i = 0; i < Orb.Forest->nb_orbits; i++) {
 			int fst, len, j;
-			fst = Orb.orbit_first[i];
-			len = Orb.orbit_len[i];
+			fst = Orb.Forest->orbit_first[i];
+			len = Orb.Forest->orbit_len[i];
 
 			cout << "inducing action on orbit " << i
 					<< " of length " << len << endl;
@@ -979,7 +979,7 @@ void spread_classify::report3(
 			gens = NEW_OBJECT(data_structures_groups::vector_ge);
 			tl = NEW_int(Iso.A_base->base_len());
 			for (j = 0; j < len; j++) {
-				set[j] = data[Orb.orbit[fst + j]];
+				set[j] = data[Orb.Forest->orbit[fst + j]];
 			}
 
 			std::string label_of_set;
@@ -1158,7 +1158,7 @@ void spread_classify::cooperstein_thas_quotients(
 
 	if (f_vv) {
 		cout << "spread_classify::cooperstein_thas_quotients There are "
-				<< Orb.nb_orbits << " orbits on points" << endl;
+				<< Orb.Forest->nb_orbits << " orbits on points" << endl;
 	}
 
 
@@ -1184,11 +1184,11 @@ void spread_classify::cooperstein_thas_quotients(
 		Sorting.lint_vec_heapsort(Pts[i], nb_points);
 	}
 
-	for (u = 0; u < Orb.nb_orbits; u++) {
-		fst = Orb.orbit_first[u];
-		orbit_length = Orb.orbit_len[u];
+	for (u = 0; u < Orb.Forest->nb_orbits; u++) {
+		fst = Orb.Forest->orbit_first[u];
+		orbit_length = Orb.Forest->orbit_len[u];
 		
-		the_point = Orb.orbit[fst];
+		the_point = Orb.Forest->orbit[fst];
 		Dom.integral_division_by_int(go, orbit_length, stab_order, rem);
 
 		if (f_vv) {
@@ -1262,7 +1262,7 @@ void spread_classify::cooperstein_thas_quotients(
 			cout << "spread_classify::cooperstein_thas_quotients "
 					"The quotient "
 					"system with respect to orbit " << u << " / "
-					<< Orb.nb_orbits << " is:" << endl;
+					<< Orb.Forest->nb_orbits << " is:" << endl;
 			Lint_vec_print(cout, data2, order);
 			cout << endl;
 		}
@@ -1347,11 +1347,11 @@ void spread_classify::orbit_info_short(
 	Iso.Folding->AA->compute_all_point_orbits(Orb, Stab->gens, 0 /*verbose_level - 2*/);
 	//f << "With " << Orb.nb_orbits << " orbits on the subspaces\\\\" << endl;
 
-	ost << " & " << Orb.nb_orbits << " & ";
+	ost << " & " << Orb.Forest->nb_orbits << " & ";
 
 	other::data_structures::tally C_ol;
 
-	C_ol.init(Orb.orbit_len, Orb.nb_orbits, false, 0);
+	C_ol.init(Orb.Forest->orbit_len, Orb.Forest->nb_orbits, false, 0);
 
 	//f << "Orbit lengths: ";
 	//int_vec_print(f, Orb.orbit_len, Orb.nb_orbits);

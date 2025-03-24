@@ -1705,7 +1705,7 @@ void algebra_global_with_action::identify_groups_from_csv_file(
 
 	if (f_v) {
 		cout << "algebra_global_with_action::identify_groups_from_csv_file "
-				"before Fio.Csv_file_support->read_column_and_parse" << endl;
+				"before Fio.Csv_file_support->read_column_as_set_of_sets" << endl;
 	}
 #if 0
 	SoS->init_from_csv_file(
@@ -1713,14 +1713,14 @@ void algebra_global_with_action::identify_groups_from_csv_file(
 			fname,
 			verbose_level);
 #endif
-	Fio.Csv_file_support->read_column_and_parse(
+	Fio.Csv_file_support->read_column_as_set_of_sets(
 			fname, col_label,
 			SoS,
 			verbose_level);
 
 	if (f_v) {
 		cout << "algebra_global_with_action::identify_groups_from_csv_file "
-				"after Fio.Csv_file_support->read_column_and_parse" << endl;
+				"after Fio.Csv_file_support->read_column_as_set_of_sets" << endl;
 	}
 
 	other::data_structures::sorting Sorting;
@@ -2023,16 +2023,16 @@ void algebra_global_with_action::split_by_classes(
 
 	if (f_v) {
 		cout << "algebra_global_with_action::split_by_classes "
-				"before SoS->init_from_csv_file" << endl;
+				"before read_column_as_set_of_sets" << endl;
 	}
-	Fio.Csv_file_support->read_column_and_parse(
+	Fio.Csv_file_support->read_column_as_set_of_sets(
 			fname, col_label,
 			SoS,
 			verbose_level);
 
 	if (f_v) {
 		cout << "algebra_global_with_action::split_by_classes "
-				"after SoS->init_from_csv_file" << endl;
+				"after read_column_as_set_of_sets" << endl;
 	}
 
 	other::data_structures::sorting Sorting;
@@ -2312,16 +2312,16 @@ void algebra_global_with_action::identify_elements_by_classes(
 
 	if (f_v) {
 		cout << "algebra_global_with_action::identify_elements_by_classes "
-				"before SoS->init_from_csv_file" << endl;
+				"before read_column_as_set_of_sets" << endl;
 	}
-	Fio.Csv_file_support->read_column_and_parse(
+	Fio.Csv_file_support->read_column_as_set_of_sets(
 			fname, col_label,
 			SoS,
 			verbose_level);
 
 	if (f_v) {
 		cout << "algebra_global_with_action::identify_elements_by_classes "
-				"after SoS->init_from_csv_file" << endl;
+				"after read_column_as_set_of_sets" << endl;
 	}
 
 	int nb_elements;
