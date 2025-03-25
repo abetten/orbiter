@@ -282,7 +282,17 @@ void poset_classification::report_orbits_in_detail(
 				orbit_at_level < nb_orbits;
 				orbit_at_level++) {
 
-			report_orbit(level, orbit_at_level, Opt, ost, verbose_level);
+			if (f_v) {
+				cout << "poset_classification::report "
+						"Orbits at Level " << level << " : orbit " << orbit_at_level << " / " << nb_orbits
+						<< " before report_orbit" << endl;
+			}
+			report_orbit(level, orbit_at_level, Opt, ost, verbose_level - 2);
+			if (f_v) {
+				cout << "poset_classification::report "
+						"Orbits at Level " << level << " : orbit " << orbit_at_level << " / " << nb_orbits
+						<< " after report_orbit" << endl;
+			}
 
 		}
 	}
@@ -763,12 +773,36 @@ void poset_classification::report_orbit(
 
 	nb_orbits = nb_orbits_at_level(level);
 
+	if (f_v) {
+		cout << "poset_classification::report_orbit "
+				"level = " << level
+				<< " orbit_at_level = " << orbit_at_level
+				<< " nb_orbits = " << nb_orbits
+				<< " before get_node_ij" << endl;
+	}
+
 	O = get_node_ij(level, orbit_at_level);
+
+	if (f_v) {
+		cout << "poset_classification::report_orbit "
+				"level = " << level
+				<< " orbit_at_level = " << orbit_at_level
+				<< " nb_orbits = " << nb_orbits
+				<< " before O->get_stabilizer_order_lint" << endl;
+	}
 
 	so = O->get_stabilizer_order_lint(this);
 
 	if (!Opt->is_selected_by_group_order(so)) {
 		return;
+	}
+
+	if (f_v) {
+		cout << "poset_classification::report_orbit "
+				"level = " << level
+				<< " orbit_at_level = " << orbit_at_level
+				<< " nb_orbits = " << nb_orbits
+				<< " before latex output" << endl;
 	}
 
 	ost << "\\subsection*{Orbit " << orbit_at_level
@@ -783,8 +817,18 @@ void poset_classification::report_orbit(
 
 	groups::strong_generators *gens;
 
-	get_stabilizer_generators(gens,
-			level, orbit_at_level, Control->verbose_level);
+	if (f_v) {
+		cout << "poset_classification::report_orbit "
+				"level = " << level
+				<< " orbit_at_level = " << orbit_at_level
+				<< " nb_orbits = " << nb_orbits
+				<< " before get_stabilizer_generators" << endl;
+	}
+
+
+	get_stabilizer_generators(
+			gens,
+			level, orbit_at_level, verbose_level);
 
 
 #if 0
@@ -802,6 +846,14 @@ void poset_classification::report_orbit(
 	}
 #endif
 
+	if (f_v) {
+		cout << "poset_classification::report_orbit "
+				"level = " << level
+				<< " orbit_at_level = " << orbit_at_level
+				<< " nb_orbits = " << nb_orbits
+				<< " before get_orbit_length_and_stabilizer_order" << endl;
+	}
+
 	get_orbit_length_and_stabilizer_order(
 			orbit_at_level, level,
 		stab_order, orbit_length);
@@ -812,11 +864,33 @@ void poset_classification::report_orbit(
 
 	//orbit_length.print_to_string(str);
 
+	if (f_v) {
+		cout << "poset_classification::report_orbit "
+				"level = " << level
+				<< " orbit_at_level = " << orbit_at_level
+				<< " nb_orbits = " << nb_orbits
+				<< " before O->get_Schreier_vector" << endl;
+	}
 	Schreier_vector = O->get_Schreier_vector();
 
+	if (f_v) {
+		cout << "poset_classification::report_orbit "
+				"level = " << level
+				<< " orbit_at_level = " << orbit_at_level
+				<< " nb_orbits = " << nb_orbits
+				<< " before get_set_by_level" << endl;
+	}
 
 	get_set_by_level(level, orbit_at_level, rep);
 
+
+	if (f_v) {
+		cout << "poset_classification::report_orbit "
+				"level = " << level
+				<< " orbit_at_level = " << orbit_at_level
+				<< " nb_orbits = " << nb_orbits
+				<< " before latex output (2)" << endl;
+	}
 
 	// print the set and stabilizer order:
 
@@ -864,6 +938,15 @@ void poset_classification::report_orbit(
 			<< "\\\\" << endl;
 
 	if (Schreier_vector) {
+
+		if (f_v) {
+			cout << "poset_classification::report_orbit "
+					"level = " << level
+					<< " orbit_at_level = " << orbit_at_level
+					<< " nb_orbits = " << nb_orbits
+					<< " has Schreier_vector" << endl;
+		}
+
 		int nb_orbits_sv = Schreier_vector->number_of_orbits;
 
 		if (Schreier_vector->f_has_local_generators) {

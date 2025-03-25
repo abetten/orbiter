@@ -1130,9 +1130,18 @@ void poset_classification::get_stabilizer_generators(
 
 	//node = first_poset_orbit_node_at_level[level] + orbit_at_level;
 	//O = root + node;
-	O = get_node_ij(level, orbit_at_level);
+	O = get_node_ij(
+			level, orbit_at_level);
 
-	O->get_stabilizer_generators(this, gens, verbose_level);
+	if (f_v) {
+		cout << "poset_classification::get_stabilizer_generators "
+				"level=" << level
+				<< " orbit_at_level=" << orbit_at_level
+				<< " before O->get_stabilizer_generators" << endl;
+	}
+
+	O->get_stabilizer_generators(
+			this, gens, verbose_level);
 
 	if (f_v) {
 		cout << "poset_classification::get_stabilizer_generators "

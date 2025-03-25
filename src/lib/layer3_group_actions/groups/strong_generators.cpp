@@ -216,6 +216,9 @@ void strong_generators::init_by_hdl_and_with_tl(
 		cout << "strong_generators::init_by_hdl_and_with_tl" << endl;
 	}
 
+	if (f_v) {
+		cout << "strong_generators::init_by_hdl_and_with_tl A->base_len() = " << A->base_len() << endl;
+	}
 
 	init(A, 0);
 	strong_generators::tl = NEW_int(A->base_len());
@@ -223,7 +226,15 @@ void strong_generators::init_by_hdl_and_with_tl(
 		strong_generators::tl[i] = tl[i];
 	}
 	gens = NEW_OBJECT(data_structures_groups::vector_ge);
-	gens->init_by_hdl(A, gen_handle, 0 /*verbose_level */);
+	if (f_v) {
+		cout << "strong_generators::init_by_hdl_and_with_tl "
+				"before gens->init_by_hdl" << endl;
+	}
+	gens->init_by_hdl(A, gen_handle, verbose_level);
+	if (f_v) {
+		cout << "strong_generators::init_by_hdl_and_with_tl "
+				"after gens->init_by_hdl" << endl;
+	}
 
 	if (f_v) {
 		cout << "strong_generators::init_by_hdl_and_with_tl done" << endl;

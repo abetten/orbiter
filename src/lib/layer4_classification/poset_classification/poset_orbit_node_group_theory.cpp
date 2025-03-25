@@ -174,15 +174,36 @@ void poset_orbit_node::get_stabilizer_generators(
 	std::vector<int> gen_handle;
 	std::vector<int> tl;
 
+	if (f_v) {
+		cout << "poset_orbit_node::get_stabilizer_generators" << endl;
+		cout << "poset_orbit_node::get_stabilizer_generators "
+				"nb_strong_generators=" << nb_strong_generators
+				<< " before get_strong_generators_handle" << endl;
+	}
 	get_strong_generators_handle(gen_handle, verbose_level - 2);
+	if (f_v) {
+		cout << "poset_orbit_node::get_stabilizer_generators" << endl;
+		cout << "poset_orbit_node::get_stabilizer_generators "
+				"nb_strong_generators=" << nb_strong_generators
+				<< " before get_tl" << endl;
+	}
 	get_tl(tl, PC, verbose_level - 2);
 
+	if (f_v) {
+		cout << "poset_orbit_node::get_stabilizer_generators" << endl;
+		cout << "poset_orbit_node::get_stabilizer_generators "
+				"nb_strong_generators=" << nb_strong_generators
+				<< " before Strong_gens->init_by_hdl_and_with_tl" << endl;
+	}
 	Strong_gens->init_by_hdl_and_with_tl(PC->get_A(),
 			gen_handle,
 			tl,
-			verbose_level - 3);
+			verbose_level);
 #endif
 
+	if (f_v) {
+		cout << "poset_orbit_node::get_stabilizer_generators done" << endl;
+	}
 }
 
 void poset_orbit_node::init_extension_node_prepare_G(

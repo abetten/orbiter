@@ -10583,7 +10583,6 @@ poset_of_5subsets_draw:
 
 
 
-#ToDo error:
 
 Symmetric_4_on_pairs_poset:
 	$(ORBITER) -v 3 \
@@ -10614,6 +10613,8 @@ Symmetric_4_on_pairs_poset:
 		-end 
 	$(PDFLATEX) Sym4_on2_poset.tex
 	$(OPEN) Sym4_on2_poset.pdf
+
+
 
 
 V_3_2_trivial:
@@ -10708,7 +10709,9 @@ PG_2_2_subsets:
 		-end \
 		-define F -finite_field -q 2 -end \
 		-define G -linear_group -PGL 3 F -end \
-		-define Orb -orbits -group G \
+		-define Orb -orbits \
+			-group G \
+			-group_action G \
 			-on_subsets 7 Control \
 		-end \
 		-define ro \
@@ -10730,8 +10733,10 @@ PG_2_2_subsets:
 	$(OPEN) PGL_3_2_poset.pdf
 
 
+
 # PG(3,2) has 2^3+2^2+2^1+1 = 15 points:
 # PG(3,3) has 3^3+3^2+3^1+1 = 27 + 9 + 3 + 1 = 40 points.
+
 
 
 
@@ -10750,7 +10755,9 @@ PG_3_2_subsets:
 		-end \
 		-define F -finite_field -q 2 -end \
 		-define G -linear_group -PGL 4 F -end \
-		-define Orb -orbits -group G \
+		-define Orb -orbits \
+			-group G \
+			-group_action G \
 			-on_subsets 15 Control \
 		-end \
 		-define ro \
@@ -10777,7 +10784,9 @@ PGL_3_2_singer:
 			-draw_options Do \
 		-end \
 		-define G -linear_group -PGL 3 2 -singer 1 -end \
-		-define Orb -orbits -group G \
+		-define Orb -orbits \
+			-group G \
+			-group_action G \
 			-on_subsets 7 Control \
 		-end \
 		-define ro \
@@ -10808,7 +10817,9 @@ PGL_3_2_on_lines:
 		-define G_on_lines -modified_group -from G \
 			-on_k_subspaces 2 \
 		-end \
-		-define Orb -orbits -group G_on_lines \
+		-define Orb -orbits \
+			-group G \
+			-group_action G_on_lines \
 			-on_subsets 7 Control \
 		-end \
 		-define ro \
@@ -10836,7 +10847,9 @@ PGL_2_5_on_subsets:
 			-W -depth 6 \
 		-end \
 		-define G -linear_group -PGL 2 5 -end \
-		-define Orb -orbits -group G \
+		-define Orb -orbits \
+			-group G \
+			-group_action G \
 			-on_subsets 6 Control \
 		-end \
 		-define ro \
@@ -10862,7 +10875,9 @@ PGL_2_7_on_subsets:
 			-W -depth 8 \
 		-end \
 		-define G -linear_group -PGL 2 7 -end \
-		-define Orb -orbits -group G \
+		-define Orb -orbits \
+			-group G \
+			-group_action G \
 			-on_subsets 8 Control \
 		-end \
 		-define ro \
@@ -10888,7 +10903,9 @@ PGGL_2_8_on_subsets:
 			-W -depth 9 \
 		-end \
 		-define G -linear_group -PGGL 2 8 -end \
-		-define Orb -orbits -group G \
+		-define Orb -orbits \
+			-group G \
+			-group_action G \
 			-on_subsets 9 Control \
 		-end \
 		-define ro \
@@ -10915,7 +10932,9 @@ PGGL_2_9_on_subsets:
 			-W -depth 10 \
 		-end \
 		-define G -linear_group -PGGL 2 9 -end \
-		-define Orb -orbits -group G \
+		-define Orb -orbits \
+			-group G \
+			-group_action G \
 			-on_subsets 10 Control \
 		-end \
 		-define ro \
@@ -10942,7 +10961,9 @@ PGL_2_11_on_subsets:
 			-W -depth 12 \
 		-end \
 		-define G -linear_group -PGL 2 11 -end \
-		-define Orb -orbits -group G \
+		-define Orb -orbits \
+			-group G \
+			-group_action G \
 			-on_subsets 12 Control \
 		-end \
 		-define ro \
@@ -10970,7 +10991,9 @@ PGGL_2_16_on_subsets:
 			-W -depth 10 \
 		-end \
 		-define G -linear_group -PGGL 2 16 -end \
-		-define Orb -orbits -group G \
+		-define Orb -orbits \
+			-group G \
+			-group_action G \
 			-on_subsets 10 Control \
 		-end \
 		-define ro \
@@ -10997,7 +11020,9 @@ PGGL_2_32_on_subsets:
 			-W -depth 8 \
 		-end \
 		-define G -linear_group -PGGL 2 32 -end \
-		-define Orb -orbits -group G \
+		-define Orb -orbits \
+			-group G \
+			-group_action G \
 			-on_subsets 8 Control \
 		-end \
 		-define ro \
@@ -11024,7 +11049,9 @@ PG_3_4_subsets:
 			-depth 5 \
 		-end \
 		-define G -linear_group -PGGL 4 4 -end \
-		-define Orb -orbits -group G \
+		-define Orb -orbits \
+			-group G \
+			-group_action G \
 			-on_subsets 5 Control \
 		-end \
 		-define ro \
@@ -11050,7 +11077,9 @@ PGGL_2_9_orbits:
 			-problem_label PGGL_2_9 -W -depth 5 \
 		-end \
 		-define G -linear_group -PGGL 2 9 -end \
-		-define Orb -orbits -group G \
+		-define Orb -orbits \
+			-group G \
+			-group_action G \
 			-on_subsets 5 Control \
 		-end \
 		-define ro \
@@ -11081,7 +11110,9 @@ PGO_5_2_on_subsets:
 		-end \
 		-define F -finite_field -q 2 -end \
 		-define G -linear_group -PGO 5 F -end \
-		-define Orb -orbits -group G \
+		-define Orb -orbits \
+			-group G \
+			-group_action G \
 			-on_subsets 15 Control \
 		-end \
 		-define ro \
@@ -11132,7 +11163,9 @@ PGL_5_3_wedge_subspace_orbits:
 		-define Control -poset_classification_control \
 			-problem_label PGL_5_3_wedge -W -depth 5 \
 		-end \
-		-define Orb -orbits -group G2 \
+		-define Orb -orbits \
+			-group G \
+			-group_action G2 \
 			-on_subspaces 5 Control \
 		-end \
 		-with Orb -do -orbits_activity \
@@ -11154,7 +11187,9 @@ subspaces_Op_4_2:
 			-problem_label Op_4_2 -W -depth 4 \
 		-end \
 		-define G -linear_group -PGL 4 2 -orthogonal 1 -end \
-		-define Orb -orbits -group G \
+		-define Orb -orbits \
+			-group G \
+			-group_action G \
 			-on_subspaces 4 Control \
 		-end \
 		-define ro \
@@ -11185,7 +11220,9 @@ PGL_4_2_on_subspaces:
 			-W -depth 4 \
 		-end \
 		-define G -linear_group -PGL 4 2 -end \
-		-define Orb -orbits -group G \
+		-define Orb -orbits \
+			-group G \
+			-group_action G \
 			-on_subspaces 4 Control \
 		-end \
 		-define ro \
@@ -11214,7 +11251,9 @@ PGL_4_2_singer_on_subspaces:
 			-W -depth 4 \
 		-end \
 		-define G -linear_group -PGL 4 2 -singer 1 -end \
-		-define Orb -orbits -group G \
+		-define Orb -orbits \
+			-group G \
+			-group_action G \
 			-on_subspaces 4 Control \
 		-end \
 		-define ro \
@@ -11243,7 +11282,9 @@ PGL_8_2_singer_on_subspaces:
 			-W -depth 8 \
 		-end \
 		-define G -linear_group -PGL 8 2 -singer 1 -end \
-		-define Orb -orbits -group G \
+		-define Orb -orbits \
+			-group G \
+			-group_action G \
 			-on_subspaces 8 Control \
 		-end \
 		-define ro \
@@ -11260,6 +11301,10 @@ PGL_8_2_singer_on_subspaces:
 
 # May 7, 2020: 16 sec on Mac
 # 1643 orbits in total
+# Mar 25, 2025:
+#User time: 2:6 (slow)
+
+
 
 Op_6_2_orbits_on_subspaces:
 	$(ORBITER) -v 5 \
@@ -11269,7 +11314,9 @@ Op_6_2_orbits_on_subspaces:
 			-depth 6 \
 		-end \
 		-define G -linear_group -PGL 6 2 -orthogonal 1 -end \
-		-define Orb -orbits -group G \
+		-define Orb -orbits \
+			-group G \
+			-group_action G \
 			-on_subspaces 6 Control \
 		-end
 
@@ -11283,7 +11330,9 @@ Op_6_3_orbits_on_subspaces:
 			-depth 6 \
 		-end \
 		-define G -linear_group -PGL 6 3 -orthogonal 1 -end \
-		-define Orb -orbits -group G \
+		-define Orb -orbits \
+			-group G \
+			-group_action G \
 			-on_subspaces 6 Control \
 		-end
 
@@ -11299,7 +11348,9 @@ Op_6_11_orbits_on_subspaces:
 			-depth 6 \
 		-end \
 		-define G -linear_group -PGL 6 11 -orthogonal 1 -end \
-		-define Orb -orbits -group G \
+		-define Orb -orbits \
+			-group G \
+			-group_action G \
 			-on_subspaces 6 Control \
 		-end
 
@@ -11317,7 +11368,9 @@ Op_8_2_orbits_on_subspaces:
 			-problem_label Op_8_2 -W -depth 8 \
 		-end \
 		-define G -linear_group -PGL 8 2 -orthogonal 1 -end \
-		-define Orb -orbits -group G \
+		-define Orb -orbits \
+			-group G \
+			-group_action G \
 			-on_subspaces 8 Control \
 		-end \
 		-define ro \
@@ -11343,7 +11396,9 @@ PGO_7_2_on_subspaces:
 		-end \
 		-define F -finite_field -q 2 -end \
 		-define G -linear_group -PGL 7 F -orthogonal 0 -end \
-		-define Orb -orbits -group G \
+		-define Orb -orbits \
+			-group G \
+			-group_action G \
 			-on_subspaces 7 Control \
 		-end
 
@@ -11371,7 +11426,9 @@ C6_on_partition:
 			-W \
 		-end \
 		-define G -permutation_group -cyclic_group 6 -end \
-		-define Orb -orbits -group G \
+		-define Orb -orbits \
+			-group G \
+			-group_action G \
 			-on_partition 2 Control \
 		-end
 
@@ -11384,7 +11441,9 @@ PGL_2_17_on_partition:
 			-W \
 		-end \
 		-define G -linear_group -PGL 2 17 -end \
-		-define Orb -orbits -group G \
+		-define Orb -orbits \
+			-group G \
+			-group_action G \
 			-on_partition 6 Control \
 		-end
 

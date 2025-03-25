@@ -124,7 +124,15 @@ void vector_ge::init_by_hdl(
 		cout << "vector_ge::init_by_hdl" << endl;
 	}
 	init(A, verbose_level);
-	//allocate(gen_hdl.size(), verbose_level);
+
+	if (f_v) {
+		cout << "vector_ge::init_by_hdl before allocate" << endl;
+	}
+	allocate(gen_hdl.size(), verbose_level);
+	if (f_v) {
+		cout << "vector_ge::init_by_hdl after allocate" << endl;
+	}
+
 	for (i = 0; i < gen_hdl.size(); i++) {
 		A->Group_element->element_retrieve(gen_hdl[i], ith(i), 0);
 	}
@@ -765,6 +773,9 @@ void vector_ge::allocate(
 		A->print_info();
 	}
 	if (data) {
+		if (f_v) {
+			cout << "vector_ge::allocate before FREE-int(data)" << endl;
+		}
 		FREE_int(data);
 		//cout << "vector_ge::allocate warning, data != NULL, "
 		//"we seem to be having a memory leak here" << endl;
