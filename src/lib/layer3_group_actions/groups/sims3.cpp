@@ -26,7 +26,7 @@ void sims::subgroup_make_characteristic_vector(
 
 	if (f_v) {
 		cout << "sims::subgroup_make_characteristic_vector" << endl;
-		}
+	}
 
 	go = group_order_lint();
 	Int_vec_zero(C, go);
@@ -35,15 +35,15 @@ void sims::subgroup_make_characteristic_vector(
 		Sub->element_unrank_lint(i, Elt1);
 		j = element_rank_lint(Elt1);
 		C[j] = true;
-		}
+	}
 	if (f_v) {
 		cout << "The characteristic vector of the "
 				"subgroup of order " << go_sub << " is:" << endl;
 		other::orbiter_kernel_system::Orbiter->Int_vec->print_as_table(cout, C, go, 25);
-		}
+	}
 	if (f_v) {
 		cout << "sims::subgroup_make_characteristic_vector done" << endl;
-		}
+	}
 }
 
 void sims::normalizer_based_on_characteristic_vector(
@@ -59,7 +59,7 @@ void sims::normalizer_based_on_characteristic_vector(
 
 	if (f_v) {
 		cout << "sims::normalizer_based_on_characteristic_vector" << endl;
-		}
+	}
 
 	gens = NEW_OBJECT(data_structures_groups::vector_ge);
 	gens->init(A, verbose_level - 2);
@@ -67,7 +67,7 @@ void sims::normalizer_based_on_characteristic_vector(
 	for (j = 0; j < nb_gens; j++) {
 		a = Gen_idx[j];
 		element_unrank_lint(a, gens->ith(j));
-		}
+	}
 
 	go = group_order_lint();
 	Int_vec_zero(N, go);
@@ -82,17 +82,17 @@ void sims::normalizer_based_on_characteristic_vector(
 			a = element_rank_lint(Elt4);
 			if (!C_sub[a]) {
 				break;
-				}
 			}
+		}
 		if (j == nb_gens) {
 			N[i]++;
 			N_go++;
-			}
 		}
+	}
 	FREE_OBJECT(gens);
 	if (f_v) {
 		cout << "sims::normalizer_based_on_characteristic_vector done" << endl;
-		}
+	}
 }
 
 void sims::order_structure_relative_to_subgroup(
@@ -106,7 +106,7 @@ void sims::order_structure_relative_to_subgroup(
 
 	if (f_v) {
 		cout << "sims::order_structure_relative_to_subgroup" << endl;
-		}
+	}
 
 
 	go = group_order_lint();
@@ -117,10 +117,10 @@ void sims::order_structure_relative_to_subgroup(
 			a = element_rank_lint(Elt2);
 			if (C_sub[a]) {
 				break;
-				}
+			}
 			A->Group_element->element_mult(Elt2, Elt1, Elt3, 0);
 			A->Group_element->element_move(Elt3, Elt2, 0);
-			}
+		}
 		Order[i] = j;
 		Residue[i] = a;
 #if 0
@@ -128,13 +128,13 @@ void sims::order_structure_relative_to_subgroup(
 			cout << "element " << i << " has relative order " << j << endl;
 			cout << "element:" << endl;
 			A->element_print(Elt1, cout);
-			}
-#endif
 		}
+#endif
+	}
 
 	if (f_v) {
 		cout << "sims::order_structure_relative_to_subgroup done" << endl;
-		}
+	}
 }
 
 }}}

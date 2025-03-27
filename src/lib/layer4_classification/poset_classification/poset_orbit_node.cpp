@@ -153,7 +153,8 @@ void poset_orbit_node::init_root_node(
 }
 
 void poset_orbit_node::init_node(
-		int node, int prev, long int pt, int verbose_level)
+		int node, int prev, long int pt,
+		int verbose_level)
 {
 	//freeself();
 	poset_orbit_node::node = node;
@@ -474,7 +475,9 @@ void poset_orbit_node::log_current_node_without_group(
 
 void poset_orbit_node::log_current_node(
 		poset_classification *gen,
-		int s, std::ostream &f, int f_with_stabilizer_generators,
+		int s,
+		std::ostream &f,
+		int f_with_stabilizer_generators,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

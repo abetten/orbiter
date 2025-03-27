@@ -1174,7 +1174,8 @@ public:
 	// poset_classification_trace.cpp:
 	int find_isomorphism(
 			long int *set1, long int *set2, int sz,
-		int *transporter, int &orbit_idx, int verbose_level);
+		int *transporter, int &orbit_idx,
+		int verbose_level);
 	void identify_and_get_stabilizer(
 			long int *set, int sz, int *transporter,
 			int &orbit_at_level,
@@ -1507,7 +1508,8 @@ public:
 		// copies gen->SG0 and gen->tl into the poset_orbit_node 
 		// structure using store_strong_generators
 	void init_node(
-			int node, int prev, long int pt, int verbose_level);
+			int node, int prev, long int pt,
+			int verbose_level);
 	int get_node();
 	void set_node(
 			int node);
@@ -1555,8 +1557,10 @@ public:
 			poset_classification *gen,
 		int s, std::ostream &f, int verbose_level);
 	void log_current_node(
-			poset_classification *gen, int s,
-			std::ostream &f, int f_with_stabilizer_poset_classifications,
+			poset_classification *gen,
+			int s,
+			std::ostream &f,
+			int f_with_stabilizer_poset_classifications,
 		int verbose_level);
 	void log_current_node_after_applying_group_element(
 		poset_classification *gen, int s,
@@ -1892,7 +1896,6 @@ public:
 			groups::schreier *Schreier, actions::action *AR,
 		int lvl, 
 		int &nb_good_orbits1, int &nb_points1, 
-		//int f_use_incremental_test_func_if_available,
 		int verbose_level);
 		// called from downstep_orbit_test_and_schreier_vector
 		// This function and create_schreier_vector_wrapper 
@@ -1911,9 +1914,7 @@ public:
 	void check_orbits(
 			poset_classification *gen,
 			groups::schreier *Schreier, actions::action *AR,
-		//int f_using_invariant_subset,
 		int lvl, 
-		//int f_use_incremental_test_func_if_available,
 		int verbose_level);
 		// called from compute_schreier_vector 
 		// and check_orbits_wrapper (which is called from 

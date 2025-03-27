@@ -1,7 +1,8 @@
 ROW,C1,C2,C3
 0,"tab:orbits",,
 1,"Computing Orbits",,
-1,"\verb'-group' ","  G "," Specify the group that acts. "
+1,"\verb'-group' ","  G "," Specify the group. "
+1,"\verb'-group_action' ","  G "," Specify the action. "
 1,"\verb'-on_points' ","   "," Perform Schreier algorithm to compute the orbits of $G$ in the natural action and under the group included in the action. "
 1,"\verb'-on_points_with_generators' "," gens  "," Perform Schreier algorithm to compute the orbits of $G$ in the natural action and under the group given by a set of generators. "
 1,"\verb'-on_subsets' "," $k$ control "," Consider the induced action on subsets of size $k$. This option will invoke the poset algorithm. "

@@ -25,7 +25,6 @@ orbits_create_description::orbits_create_description()
 	f_group = false;
 	//std::string group_label;
 
-	// ToDo: undocumented
 	f_group_action = false;
 	//std::string group_action_label;
 
