@@ -3100,7 +3100,8 @@ void surface_create::do_report2(
 			cout << "surface_create::do_report2 "
 					"before SOG->cheat_sheet" << endl;
 		}
-		SOG->cheat_sheet(ost,
+		SOG->cheat_sheet(
+				ost,
 				f_print_orbits, fname_mask,
 				Draw_options,
 				verbose_level);

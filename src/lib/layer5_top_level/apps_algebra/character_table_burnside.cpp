@@ -123,7 +123,7 @@ void character_table_burnside::do_it(
 		}
 #endif
 
-	Sch->init_generators(*SG->gens, verbose_level - 2);
+	Sch->Generators_and_images->init_generators(*SG->gens, verbose_level - 2);
 
 	int print_interval = 10000;
 

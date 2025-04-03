@@ -96,10 +96,24 @@ void geometry_builder::init_description(
 		exit(1);
 	}
 	Int_vec_scan(Descr->V_text, v, v_len);
+
+	if (f_v) {
+		cout << "v_len=" << v_len << endl;
+		cout << "v=";
+		Int_vec_print(cout, v, v_len);
+		cout << endl;
+	}
+
+
 	V = 0;
 	for (i = 0; i < v_len; i++) {
 		V += v[i];
 	}
+
+	if (f_v) {
+		cout << "V=" << V << endl;
+	}
+
 	V_partition = NEW_int(V + 1);
 	for (i = 0; i < V + 1; i++) {
 		V_partition[i] = false;
@@ -113,6 +127,11 @@ void geometry_builder::init_description(
 	}
 	V_partition[V] = true;
 
+	if (f_v) {
+		cout << "V_partition=";
+		Int_vec_print(cout, V_partition, V + 1);
+		cout << endl;
+	}
 
 	if (!Descr->f_B) {
 		cout << "please use option -B to specify the column partition" << endl;
@@ -122,6 +141,15 @@ void geometry_builder::init_description(
 	B = 0;
 	for (i = 0; i < b_len; i++) {
 		B += b[i];
+	}
+	if (f_v) {
+		cout << "b_len=" << b_len << endl;
+		cout << "b=";
+		Int_vec_print(cout, b, b_len);
+		cout << endl;
+	}
+	if (f_v) {
+		cout << "B=" << B << endl;
 	}
 
 
@@ -138,6 +166,13 @@ void geometry_builder::init_description(
 
 	if (Descr->f_fuse) {
 		Int_vec_scan(Descr->fuse_text, fuse, fuse_len);
+
+		if (f_v) {
+			cout << "fuse=";
+			Int_vec_print(cout, fuse, fuse_len);
+			cout << endl;
+		}
+
 		int f;
 
 		f = 0;

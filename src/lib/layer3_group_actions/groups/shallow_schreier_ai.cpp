@@ -7,7 +7,9 @@
 
 #include "shallow_schreier_ai.h"
 
-void shallow_schreier_ai::generate_shallow_tree(groups::schreier& sch, int verbose_level) {
+#if 0
+void shallow_schreier_ai::generate_shallow_tree(
+		groups::schreier& sch, int verbose_level) {
 
 	int f_v = (verbose_level >= 1);
 	int *Elt1;
@@ -17,20 +19,20 @@ void shallow_schreier_ai::generate_shallow_tree(groups::schreier& sch, int verbo
 	}
 
 
-	if (sch.A->degree == 0) {
+	if (sch.Generators_and_images->A->degree == 0) {
 		if (f_v) {
 			cout << "schreier::shallow_tree_generators_ai degree is zero, returning" << endl;
 		}
 		return;
 	}
-	Elt1 = NEW_int(sch.A->elt_size_in_int);
+	Elt1 = NEW_int(sch.Generators_and_images->A->elt_size_in_int);
 
 
 	// Make a copy of the current generators
 	data_structures_groups::vector_ge* gens2 = NEW_OBJECT(data_structures_groups::vector_ge);
-	gens2->init(sch.A, verbose_level - 2);
-	for (int el = 0; el < sch.gens.len; el++)
-		gens2->append(sch.gens.ith(el), verbose_level - 2);
+	gens2->init(sch.Generators_and_images->A, verbose_level - 2);
+	for (int el = 0; el < sch.Generators_and_images->gens.len; el++)
+		gens2->append(sch.Generators_and_images->gens.ith(el), verbose_level - 2);
 
 
 
@@ -38,8 +40,9 @@ void shallow_schreier_ai::generate_shallow_tree(groups::schreier& sch, int verbo
 
 	// Create a new schreier forest with the same generators
 	groups::schreier* S = NEW_OBJECT(groups::schreier);
-	S->init(sch.A, verbose_level - 2);
-	S->init_generators_recycle_images(*gens2, sch.images, verbose_level - 2);
+	S->init(sch.Generators_and_images->A, verbose_level - 2);
+	S->Generators_and_images->init_generators_recycle_images(
+			*gens2, sch.Generators_and_images->images, verbose_level - 2);
 	S->compute_all_point_orbits(print_interval, 0);
 
 
@@ -65,7 +68,8 @@ void shallow_schreier_ai::generate_shallow_tree(groups::schreier& sch, int verbo
 		int random_generator_idx = gen_idx; //random_integer(gens2->len);
 
 
-		sch.transporter_from_orbit_rep_to_point(random_point,
+		sch.Generators_and_images->transporter_from_orbit_rep_to_point(
+				random_point,
 				random_orbit_idx_cpy, Elt1, 0 /*verbose_level*/);
 
 
@@ -73,7 +77,7 @@ void shallow_schreier_ai::generate_shallow_tree(groups::schreier& sch, int verbo
 
 		// Create a new generating set with the new element
 		data_structures_groups::vector_ge* new_gens = NEW_OBJECT(data_structures_groups::vector_ge);
-		new_gens->init(sch.A, verbose_level - 2);
+		new_gens->init(sch.Generators_and_images->A, verbose_level - 2);
 		for (int el = 0; el < gens2->len; el++) {
 			(el != random_generator_idx) ?  new_gens->append(gens2->ith(el), verbose_level - 2) :
 											new_gens->append(Elt1, verbose_level - 2);
@@ -85,12 +89,12 @@ void shallow_schreier_ai::generate_shallow_tree(groups::schreier& sch, int verbo
 
 		// Create a new schreier tree with the new generating set
 		S = NEW_OBJECT(groups::schreier);
-		S->init(sch.A, verbose_level - 2);
+		S->init(sch.Generators_and_images->A, verbose_level - 2);
 
-		S->init_generators_recycle_images(
-				previous_schreier->nb_images,
+		S->Generators_and_images->init_generators_recycle_images(
+				previous_schreier->Generators_and_images->nb_images,
 				gens2->ith(0),
-				previous_schreier->images,
+				previous_schreier->Generators_and_images->images,
 				random_generator_idx);
 
 
@@ -122,8 +126,11 @@ void shallow_schreier_ai::generate_shallow_tree(groups::schreier& sch, int verbo
 
 
 
-	sch.init(sch.A, verbose_level - 2);
-	sch.init_generators_recycle_images(S->gens, S->images, verbose_level - 2);
+	sch.init(sch.Generators_and_images->A, verbose_level - 2);
+	sch.Generators_and_images->init_generators_recycle_images(
+			S->Generators_and_images->gens,
+			S->Generators_and_images->images,
+			verbose_level - 2);
 	sch.compute_all_point_orbits(print_interval, verbose_level);
 
 
@@ -139,9 +146,10 @@ void shallow_schreier_ai::generate_shallow_tree(groups::schreier& sch, int verbo
 }
 
 
-void shallow_schreier_ai::get_degree_sequence (groups::schreier& sch, int vl) {
+void shallow_schreier_ai::get_degree_sequence(
+		groups::schreier& sch, int vl) {
 
-	nb_nodes = sch.degree;
+	nb_nodes = sch.Generators_and_images->degree;
 	if (deg_seq) delete [] deg_seq;
 	deg_seq = new int [nb_nodes] ();
 
@@ -176,3 +184,6 @@ shallow_schreier_ai::~shallow_schreier_ai() {
 		delete [] deg_seq;
 	}
 }
+#endif
+
+

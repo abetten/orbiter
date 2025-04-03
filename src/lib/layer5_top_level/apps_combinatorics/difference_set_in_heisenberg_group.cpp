@@ -240,7 +240,7 @@ void difference_set_in_heisenberg_group::do_n2q3(
 
 	Sch = NEW_OBJECT(groups::schreier);
 	Sch->init(A, verbose_level - 2);
-	Sch->init_generators(*U_gens, verbose_level - 2);
+	Sch->Generators_and_images->init_generators(*U_gens, verbose_level - 2);
 	Sch->compute_all_point_orbits(print_interval, 0 /*verbose_level*/);
 	cout << "The orbits of U are:" << endl;
 	Sch->Forest->print_and_list_orbits_tex(cout);
@@ -554,7 +554,7 @@ void difference_set_in_heisenberg_group::check_overgroups_of_order_nine(
 
 		Sch1 = NEW_OBJECT(groups::schreier);
 		Sch1->init(N_on_orbits, verbose_level - 2);
-		Sch1->init_generators(*O_gens, verbose_level - 2);
+		Sch1->Generators_and_images->init_generators(*O_gens, verbose_level - 2);
 		Sch1->compute_all_point_orbits(print_interval, 0 /*verbose_level*/);
 		cout << "The orbits of O are:" << endl;
 		Sch1->Forest->print_and_list_orbits_tex(cout);

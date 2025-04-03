@@ -493,7 +493,7 @@ void combinatorics_with_action::refine_decomposition_by_group_orbits_one_side(
 				A_on_points_or_lines,
 				verbose_level - 2);
 		//Schreier->initialize_tables();
-		Schreier->init_generators(
+		Schreier->Generators_and_images->init_generators(
 				*gens->gens /* *generators */,
 				verbose_level - 2);
 		Schreier->compute_all_point_orbits(print_interval, 0 /*verbose_level - 2*/);
@@ -604,9 +604,9 @@ void combinatorics_with_action::compute_decomposition_based_on_orbit_length(
 
 	other::data_structures::tally T1, T2;
 
-	T1.init(L1, Sch1->A->degree, false, 0);
+	T1.init(L1, Sch1->Generators_and_images->A->degree, false, 0);
 
-	T2.init(L2, Sch2->A->degree, false, 0);
+	T2.init(L2, Sch2->Generators_and_images->A->degree, false, 0);
 
 
 

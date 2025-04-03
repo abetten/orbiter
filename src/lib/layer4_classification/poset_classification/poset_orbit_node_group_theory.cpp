@@ -863,15 +863,15 @@ void poset_orbit_node::create_schreier_vector_wrapper(
 
 		// ToDo: set the shallow schreier strategy
 
-		enum shallow_schreier_tree_strategy Shallow_schreier_tree_strategy =
-				shallow_schreier_tree_standard;
+		//enum shallow_schreier_tree_strategy Shallow_schreier_tree_strategy =
+		//		shallow_schreier_tree_standard;
 				//shallow_schreier_tree_Seress_deterministic;
 				//shallow_schreier_tree_Seress_randomized;
 				//shallow_schreier_tree_Sajeeb;
 		Schreier_vector = Schreier->get_schreier_vector(
 				gen_hdl_first,
 				nb_strong_generators,
-				Shallow_schreier_tree_strategy,
+				//Shallow_schreier_tree_strategy,
 				verbose_level - 1);
 		if (Schreier_vector->f_has_local_generators) {
 			Schreier_vector->local_gens->A = gen->get_schreier_vector_handler()->A2;
@@ -916,8 +916,8 @@ void poset_orbit_node::create_schreier_vector_wrapper_subspace_action(
 			gen_hdl_first = first_strong_generator_handle;
 		}
 
-		enum shallow_schreier_tree_strategy Shallow_schreier_tree_strategy =
-				shallow_schreier_tree_standard;
+		//enum shallow_schreier_tree_strategy Shallow_schreier_tree_strategy =
+		//		shallow_schreier_tree_standard;
 				//shallow_schreier_tree_Seress_deterministic;
 				//shallow_schreier_tree_Seress_randomized;
 				//shallow_schreier_tree_Sajeeb;
@@ -925,7 +925,7 @@ void poset_orbit_node::create_schreier_vector_wrapper_subspace_action(
 		Schreier_vector = Schreier.get_schreier_vector(
 				gen_hdl_first,
 				nb_strong_generators,
-				Shallow_schreier_tree_strategy,
+				//Shallow_schreier_tree_strategy,
 				0 /*verbose_level - 1*/);
 
 		if (f_vv) {

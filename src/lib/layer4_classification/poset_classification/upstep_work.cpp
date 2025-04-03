@@ -731,7 +731,7 @@ int upstep_work::upstep_for_sets(
 		print_level_extension_info();
 		cout << "initializing up_orbit with generators" << endl;
 	}
-	up_orbit.init_generators(*H->SG, verbose_level - 2);
+	up_orbit.Generators_and_images->init_generators(*H->SG, verbose_level - 2);
 
 
 

@@ -2275,7 +2275,7 @@ void surface_object_properties::print_double_points(
 			}
 			pt_idx[a * SO->Variety_object->Line_sets->Set_size[0] + b] = p;
 		}
-		ost << "\\begin{multicols}{2}" << endl;
+		ost << "\\begin{multicols}{1}" << endl;
 		ost << "\\noindent" << endl;
 
 		int cnt;
@@ -2527,7 +2527,7 @@ void surface_object_properties::print_points_on_surface_but_not_on_a_line(
 		//ost << "%%\\clearpage" << endl;
 		ost << "The points on the surface but not "
 				"on lines are:\\\\" << endl;
-		ost << "\\begin{multicols}{2}" << endl;
+		ost << "\\begin{multicols}{1}" << endl;
 		ost << "\\noindent" << endl;
 		for (i = 0; i < nb_pts_not_on_lines; i++) {
 			long int rk;
@@ -2543,7 +2543,20 @@ void surface_object_properties::print_points_on_surface_but_not_on_a_line(
 			//ost << "P_{" << Pts_not_on_lines[i] << "}=";
 			//Int_vec_print_fully(ost, v, 4);
 
-			ost << "$\\\\" << endl;
+			ost << "$" << endl;
+
+
+			//ToDo
+
+			int pt;
+
+			SO->Variety_object->find_point(rk, pt);
+
+			ost << " local pt = " << pt << " tangent plane: " << tangent_plane_rank_global[pt] << "\\\\" << endl;
+
+			ost << "\\\\" << endl;
+
+
 			}
 		ost << "\\end{multicols}" << endl;
 	}

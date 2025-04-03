@@ -567,6 +567,8 @@ class forest {
 			int i, int j, int verbose_level);
 	void move_point_here(
 			int here, int pt);
+	void move_point_set_lint_to_here(
+			long int *subset, int len);
 	int orbit_representative(
 			int pt);
 	int depth_in_tree(

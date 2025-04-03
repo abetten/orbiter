@@ -56,7 +56,8 @@ public:
 	void place_codewords(
 			int verbose_level);
 	void place_metric_balls(
-			int radius_of_metric_ball, int verbose_level);
+			int radius_of_metric_ball,
+			int verbose_level);
 	void compute_distances(
 			int verbose_level);
 	void dimensions(

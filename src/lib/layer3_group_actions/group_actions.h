@@ -102,6 +102,7 @@ namespace groups {
 	class conjugacy_class_of_elements;
 	class conjugacy_class_of_subgroups;
 	class exceptional_isomorphism_O4;
+	class generators_and_images;
 	class group_theory_global;
 	class orbits_on_something;
 	class schreier;

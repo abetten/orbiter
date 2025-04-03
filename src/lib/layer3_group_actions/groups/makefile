@@ -11,6 +11,7 @@ MODULES = \
 	conjugacy_class_of_elements.o \
 	conjugacy_class_of_subgroups.o \
 	exceptional_isomorphism_O4.o \
+	generators_and_images.o \
 	group_theory_global.o \
 	orbits_on_something.o \
 	schreier.o \

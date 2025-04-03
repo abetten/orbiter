@@ -3147,7 +3147,8 @@ void wreath_product::orbits_restricted_compute(
 
 	Sch->init(A_perm, verbose_level - 2);
 	//Sch->initialize_tables();
-	Sch->init_generators(*Gens, verbose_level - 2);
+	Sch->Generators_and_images->init_generators(
+			*Gens, verbose_level - 2);
 
 	int print_interval = 10000;
 

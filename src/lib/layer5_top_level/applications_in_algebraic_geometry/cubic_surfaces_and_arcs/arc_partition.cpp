@@ -167,7 +167,8 @@ void arc_partition::recognize(
 		cout << "arc_partition::recognize partition_idx=" << partition_idx << endl;
 	}
 
-	Orbits_on_partition->transporter_from_point_to_orbit_rep(partition_idx,
+	Orbits_on_partition->Generators_and_images->transporter_from_point_to_orbit_rep(
+			partition_idx,
 			orbit_idx, transporter, verbose_level - 2);
 
 	if (f_v) {

@@ -505,7 +505,6 @@ void sims::print_all_group_elements()
 
 void sims::print_all_group_elements_tex(
 		std::ostream &ost,
-		//int f_with_permutation,
 		int f_override_action, actions::action *A_special)
 {
 	int *Elt;
@@ -750,7 +749,8 @@ void sims::report_all_transversal_elements(
 		for (i = 0; i < A->base_len(); i++) {
 			string s1;
 
-			s1 = A->Group_element->stringify_point(A->base_i(i), verbose_level - 1);
+			s1 = A->Group_element->stringify_point(
+					A->base_i(i), verbose_level - 1);
 			cout << i << " : " << A->base_i(i) << " = " << s1 << "\\\\" << endl;
 		}
 	}
@@ -759,7 +759,8 @@ void sims::report_all_transversal_elements(
 	for (i = 0; i < A->base_len(); i++) {
 		string s1;
 
-		s1 = A->Group_element->stringify_point(A->base_i(i), verbose_level - 1);
+		s1 = A->Group_element->stringify_point(
+				A->base_i(i), verbose_level - 1);
 		ost << i << " : " << A->base_i(i) << " = " << s1 << "\\\\" << endl;
 	}
 
@@ -809,9 +810,11 @@ void sims::report_all_transversal_elements(
 
 			string s1, s2;
 
-			s1 = A->Group_element->stringify_point(A->base_i(i), verbose_level - 1);
+			s1 = A->Group_element->stringify_point(
+					A->base_i(i), verbose_level - 1);
 
-			s2 = A->Group_element->stringify_point(A->orbit_ij(i, j), verbose_level - 1);
+			s2 = A->Group_element->stringify_point(
+					A->orbit_ij(i, j), verbose_level - 1);
 
 			if (f_v) {
 				cout << "$" << A->base_i(i) << " \\mapsto " << A->orbit_ij(i, j) << "$\\\\" << endl;

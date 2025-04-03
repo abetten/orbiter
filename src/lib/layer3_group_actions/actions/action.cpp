@@ -623,7 +623,7 @@ void action::compute_all_point_orbits(
 	int print_interval = 10000;
 
 	S.init(this, verbose_level - 2);
-	S.init_generators(gens, verbose_level - 2);
+	S.Generators_and_images->init_generators(gens, verbose_level - 2);
 	S.compute_all_point_orbits(print_interval, verbose_level - 1);
 	if (f_v) {
 		cout << "action::compute_all_point_orbits done" << endl;

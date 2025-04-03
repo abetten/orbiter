@@ -164,7 +164,7 @@ void poset_orbit_node::compute_flag_orbits_subspace_action(
 
 	get_strong_generators_handle(gen_handle, verbose_level - 2);
 
-	Schreier->init_generators_by_handle(
+	Schreier->Generators_and_images->init_generators_by_handle(
 			gen_handle,
 			verbose_level - 1);
 
@@ -534,7 +534,7 @@ void poset_orbit_node::downstep_subspace_action_print_orbits(
 			"The " << Schreier.Forest->nb_orbits
 			<< " orbits are:" << endl;
 	
-	AF = Schreier.A->G.AF;
+	AF = Schreier.Generators_and_images->A->G.AF;
 	if (f_print_orbits) {
 		cout << "i : orbit rep : orbit length : orbit" << endl;
 	}
@@ -595,7 +595,7 @@ void poset_orbit_node::downstep_orbits_subspace_action(
 	if (false) {
 		gen->print_level_info(lvl, node);
 		cout << " : generators:" << endl;
-		Schreier.print_generators();
+		Schreier.Generators_and_images->print_generators();
 	}
 
 	if (f_vv) {
@@ -604,7 +604,7 @@ void poset_orbit_node::downstep_orbits_subspace_action(
 				"preferred_labels" << endl;
 	}
 	//Schreier.compute_all_point_orbits(verbose_level - 4);
-	AF = Schreier.A->G.AF;
+	AF = Schreier.Generators_and_images->A->G.AF;
 
 	Schreier.compute_all_point_orbits_with_preferred_labels(
 			AF->preimage_table, verbose_level);
@@ -845,7 +845,7 @@ void poset_orbit_node::find_extensions_subspace_action(
 	for (k = 0; k < nb_extensions; k++) {
 		E[k] = E2[k]; 
 		nb_extension_points += E[k].get_orbit_len();
-		}
+	}
 	FREE_OBJECTS(E2);
 #endif
 

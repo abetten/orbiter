@@ -547,7 +547,7 @@ void orbits_global::orbit_of(
 
 	int print_interval = 10000;
 
-	Sch->init_generators(
+	Sch->Generators_and_images->init_generators(
 			*AG->Subgroup_gens->gens /* *strong_generators */,
 			verbose_level - 2);
 	//Sch->initialize_tables();

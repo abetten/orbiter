@@ -210,13 +210,11 @@ public:
 	void order_of_products_of_pairs(
 			std::string &label_of_elements,
 			data_structures_groups::vector_ge *Elements,
-			//int *element_data, int nb_elements,
 			int verbose_level);
 	void conjugate(
 			std::string &label_of_elements,
 			std::string &conjugate_data,
 			data_structures_groups::vector_ge *Elements,
-			//int *element_data, int nb_elements,
 			int verbose_level);
 
 	void subgroup_lattice_compute(
@@ -418,6 +416,151 @@ public:
 			int *mtx4x4);
 };
 
+
+
+
+
+// #############################################################################
+// generators_and_images.cpp
+// #############################################################################
+
+//! generators for a group and their precomputed permutation representation
+
+
+class generators_and_images {
+
+public:
+
+	schreier *Schreier;
+
+	actions::action *A;
+
+	int f_images_only;
+	long int degree;
+	data_structures_groups::vector_ge gens;
+	data_structures_groups::vector_ge gens_inv;
+	int nb_images;
+	int **images;
+		// [nb_gens][2 * A->degree],
+		// allocated by init_images,
+		// called from init_generators
+		// for each generator,
+		// the permutation representation and the permutation
+		// representation of the inverse element
+		// are stored in succession. So,
+		// we store the permutation in 0..A->degree-1 ,
+		// then the inverse of the generator
+		// in A->degree..2*A->degree-1
+
+	int *Elt1, *Elt2, *Elt3;
+	int *schreier_gen, *schreier_gen1;
+		// used in random_schreier_generator
+	int *cosetrep, *cosetrep_tmp;
+		// used in coset_rep / coset_rep_inv
+
+
+	generators_and_images();
+	~generators_and_images();
+
+	void init(
+			schreier *Schreier,
+			actions::action *A,
+			int verbose_level);
+	void init2();
+	void delete_images();
+	void init_images(
+			int nb_images, int verbose_level);
+	void init_images_only(
+			schreier *Schreier,
+			actions::action *A,
+			int nb_images,
+			int *images, int verbose_level);
+#if 0
+	void init_images_recycle(
+			int nb_images,
+			int **old_images, int idx_deleted_generator,
+			int verbose_level);
+#endif
+	void init_images_recycle(
+			int nb_images,
+			int **old_images, int verbose_level);
+	void images_append(
+			int verbose_level);
+	void init_single_generator(
+			int *elt, int verbose_level);
+	void init_generators(
+			data_structures_groups::vector_ge &generators,
+			int verbose_level);
+	void init_generators(
+			int nb, int *elt, int verbose_level);
+
+#if 0
+	void init_generators_recycle_images(
+			data_structures_groups::vector_ge &generators,
+			int **old_images,
+			int idx_generator_to_delete, int verbose_level);
+	void init_generators_recycle_images(
+			data_structures_groups::vector_ge &generators,
+			int **old_images, int verbose_level);
+
+
+		// elt must point to nb * A->elt_size_in_int
+		// int's that are
+		// group elements in int format
+	void init_generators_recycle_images(
+			int nb, int *elt,
+			int **old_images,
+			int idx_generator_to_delete,
+			int verbose_level);
+	void init_generators_recycle_images(
+			int nb,
+			int *elt, int **old_images, int verbose_level);
+#endif
+	void init_generators_by_hdl(
+			int nb_gen, int *gen_hdl,
+		int verbose_level);
+	void init_generators_by_handle(
+			std::vector<int> &gen_hdl,
+			int verbose_level);
+	void append_one(
+			int *Elt, int verbose_level);
+	long int get_image(
+			long int i, int gen_idx, int verbose_level);
+	void transporter_from_orbit_rep_to_point(
+			int pt,
+			int &orbit_idx, int *Elt, int verbose_level);
+	void transporter_from_point_to_orbit_rep(
+			int pt,
+		int &orbit_idx, int *Elt, int verbose_level);
+	void coset_rep(
+			int j, int verbose_level);
+	// j is a coset, not a point
+	// result is in cosetrep
+	// determines an element in the group
+	// that moves the orbit representative
+	// to the j-th point in the orbit.
+	void coset_rep_inv(
+			int j, int verbose_level);
+	// j is a coset, not a point
+	// result is in cosetrep
+	void random_schreier_generator(
+			int *Elt, int verbose_level);
+	// computes random Schreier generator
+	// for the first orbit into Elt
+	void random_schreier_generator_ith_orbit(
+			int *Elt,
+			int orbit_no, int verbose_level);
+	// computes random Schreier generator
+	// for the orbit orbit_no into Elt
+	void print_generators();
+	void print_generators_latex(
+			std::ostream &ost);
+	void print_generators_with_permutations();
+	void list_elements_as_permutations_vertically(
+			std::ostream &ost);
+
+
+};
 
 
 
@@ -734,34 +877,13 @@ public:
 class schreier {
 
 public:
-	actions::action *A;
-	int f_images_only;
-	long int degree;
-	data_structures_groups::vector_ge gens;
-	data_structures_groups::vector_ge gens_inv;
-	int nb_images;
-	int **images;
-		// [nb_gens][2 * A->degree], 
-		// allocated by init_images, 
-		// called from init_generators
-		// for each generator,
-		// the permutation representation and the permutation
-		// representation of the inverse element
-		// are stored in succession. So,
-		// we store the permutation in 0..A->degree-1 ,
-		// then the inverse of the generator
-		// in A->degree..2*A->degree-1
-	
+
+
+	generators_and_images *Generators_and_images;
 
 	other::data_structures::forest *Forest;
 
 
-	int *Elt1, *Elt2, *Elt3;
-	int *schreier_gen, *schreier_gen1;
-		// used in random_schreier_generator
-	int *cosetrep, *cosetrep_tmp;
-		// used in coset_rep / coset_rep_inv
-	
 	int f_print_function;
 	void (*print_function)(std::ostream &ost, int pt, void *data);
 	void *print_function_data;
@@ -776,9 +898,7 @@ public:
 	schreier();
 	~schreier();
 
-	schreier(
-			actions::action *A, int verbose_level);
-	void delete_images();
+
 	void init_preferred_choice_function(
 			void (*preferred_choice_function)(
 					int pt, int &pt_pref, schreier *Sch,
@@ -786,75 +906,13 @@ public:
 			void *preferred_choice_function_data,
 			int preferred_choice_function_data2,
 			int verbose_level);
-	void init_images(
-			int nb_images, int verbose_level);
-	void init_images_only(
-			int nb_images,
-			long int degree, int *images, int verbose_level);
-	void images_append(
-			int verbose_level);
 	void init(
 			actions::action *A, int verbose_level);
-	void init2();
-	void init_single_generator(
-			int *elt, int verbose_level);
-	void init_generators(
-			data_structures_groups::vector_ge &generators,
+	void init_images_only(
+			actions::action *A,
+			int nb_images, int *images,
 			int verbose_level);
-	void init_images_recycle(
-			int nb_images,
-			int **old_images,
-			int idx_deleted_generator,
-			int verbose_level);
-	void init_images_recycle(
-			int nb_images,
-			int **old_images, int verbose_level);
-	void init_generators(
-			int nb, int *elt, int verbose_level);
-	void init_generators_recycle_images(
-			data_structures_groups::vector_ge &generators,
-			int **old_images,
-			int idx_generator_to_delete, int verbose_level);
-	void init_generators_recycle_images(
-			data_structures_groups::vector_ge &generators,
-			int **old_images, int verbose_level);
 
-
-		// elt must point to nb * A->elt_size_in_int 
-		// int's that are 
-		// group elements in int format
-	void init_generators_recycle_images(
-			int nb, int *elt,
-			int **old_images,
-			int idx_generator_to_delete,
-			int verbose_level);
-	void init_generators_recycle_images(
-			int nb,
-			int *elt, int **old_images, int verbose_level);
-	void init_generators_by_hdl(
-			int nb_gen, int *gen_hdl,
-		int verbose_level);
-	void init_generators_by_handle(
-			std::vector<int> &gen_hdl,
-			int verbose_level);
-	long int get_image(
-			long int i, int gen_idx, int verbose_level);
-
-	void transporter_from_orbit_rep_to_point(
-			int pt,
-		int &orbit_idx, int *Elt, int verbose_level);
-	void transporter_from_point_to_orbit_rep(
-			int pt,
-		int &orbit_idx, int *Elt, int verbose_level);
-	void coset_rep(
-			int j, int verbose_level);
-		// j is a coset, not a point
-		// result is in cosetrep
-		// determines an element in the group 
-		// that moves the orbit representative 
-		// to the j-th point in the orbit.
-	void coset_rep_inv(
-			int j, int verbose_level);
 	void extend_orbit(
 			int *elt, int verbose_level);
 	void compute_all_point_orbits(
@@ -879,15 +937,6 @@ public:
 		// computes non trivial random Schreier 
 		// generator into schreier_gen
 		// non-trivial is with respect to A_original
-	void random_schreier_generator_ith_orbit(
-			int *Elt, int orbit_no,
-			int verbose_level);
-		// computes random Schreier generator
-		// for the orbit orbit_no into Elt
-	void random_schreier_generator(
-			int *Elt, int verbose_level);
-		// computes random Schreier generator
-		// for the first orbit into Elt
 	void get_path_and_labels(
 			std::vector<int> &path, std::vector<int> &labels,
 			int i, int verbose_level);
@@ -937,11 +986,18 @@ public:
 			int f_randomized,
 			schreier *&shallow_tree,
 			int verbose_level);
+#if 0
 	data_structures_groups::schreier_vector
 		*get_schreier_vector(
 			int gen_hdl_first, int nb_gen,
 			enum shallow_schreier_tree_strategy
 				Shallow_schreier_tree_strategy,
+			int verbose_level);
+#endif
+	data_structures_groups::schreier_vector *get_schreier_vector(
+			int gen_hdl_first, int nb_gen,
+			//enum shallow_schreier_tree_strategy
+			//	Shallow_schreier_tree_strategy,
 			int verbose_level);
 	void compute_orbit_invariant(
 			int *&orbit_invariant,
@@ -975,10 +1031,6 @@ public:
 			std::ostream &ost, int f_with_cosetrep);
 	void print_tables_latex(
 			std::ostream &ost, int f_with_cosetrep);
-	void print_generators();
-	void print_generators_latex(
-			std::ostream &ost);
-	void print_generators_with_permutations();
 
 	void print_and_list_orbit_and_stabilizer_tex(
 			int i,
@@ -1160,9 +1212,11 @@ public:
 
 	int *path; // [my_base_len]
 	
+#if 0
 	// not used:
 	int nb_images;
 	int **images;
+#endif
 	
 
 private:
@@ -1209,13 +1263,16 @@ public:
 	// sims.cpp:
 	sims();
 	~sims();
+#if 0
 	sims(
 			actions::action *A, int verbose_level);
-
+#endif
+#if 0
 	void delete_images();
 	void init_images(
 			int nb_images);
 	void images_append();
+#endif
 	void init(
 			actions::action *A, int verbose_level);
 		// initializes the trivial group 
@@ -1585,10 +1642,6 @@ public:
 			int p, sims *P, int verbose_level);
 	int is_normalizing(
 			int *Elt, int verbose_level);
-	void create_Cayley_graph(
-			data_structures_groups::vector_ge *gens,
-			int *&Adj, long int &n,
-		int verbose_level);
 	void create_group_table(
 			int *&Table, long int &n, int verbose_level);
 	void compute_conjugacy_classes(

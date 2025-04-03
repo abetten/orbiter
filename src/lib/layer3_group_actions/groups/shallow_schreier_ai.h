@@ -25,6 +25,7 @@ using namespace orbiter::layer3_group_actions;
 
 
 
+#if 0
 class shallow_schreier_ai {
 
 
@@ -50,5 +51,6 @@ public:
 
 
 };
+#endif
 
 #endif /* SHALLOW_SCHREIER_AI_H_ */

@@ -83,7 +83,7 @@ void packings_global::orbits_under_conjugation(
 
 	groups::schreier Classes;
 	Classes.init(A_conj_restricted, verbose_level - 2);
-	Classes.init_generators(*SG->gens, verbose_level - 2);
+	Classes.Generators_and_images->init_generators(*SG->gens, verbose_level - 2);
 
 	int print_interval = 10000;
 
@@ -410,7 +410,7 @@ void packings_global::create_subgroups(
 
 				int orbit_idx;
 
-				Classes->transporter_from_point_to_orbit_rep(
+				Classes->Generators_and_images->transporter_from_point_to_orbit_rep(
 						pt,
 						orbit_idx, Elt1, verbose_level);
 

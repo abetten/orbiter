@@ -228,13 +228,13 @@ void group_action_on_combinatorial_object::init(
 	//Sch_points->initialize_tables();
 	if (f_v) {
 		cout << "group_action_on_combinatorial_object::init "
-				"before Sch_points->init_generators" << endl;
+				"before Sch_points->Generators_and_images->init_generators" << endl;
 	}
-	Sch_points->init_generators(
+	Sch_points->Generators_and_images->init_generators(
 			*gens->gens /* *generators */, verbose_level - 2);
 	if (f_v) {
 		cout << "group_action_on_combinatorial_object::init "
-				"after Sch_points->init_generators" << endl;
+				"after Sch_points->Generators_and_images->init_generators" << endl;
 	}
 
 	int print_interval = 10000;
@@ -264,8 +264,9 @@ void group_action_on_combinatorial_object::init(
 	Sch_lines = NEW_OBJECT(groups::schreier);
 	Sch_lines->init(A_on_lines, verbose_level - 2);
 	//Sch_lines->initialize_tables();
-	Sch_lines->init_generators(
-			*gens->gens /* *generators */, verbose_level - 2);
+	Sch_lines->Generators_and_images->init_generators(
+			*gens->gens /* *generators */,
+			verbose_level - 2);
 	if (f_v) {
 		cout << "group_action_on_combinatorial_object::init "
 				"before Sch_lines->compute_all_point_orbits" << endl;

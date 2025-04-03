@@ -94,7 +94,7 @@ void stabilizer_chain_base_data::allocate_base_data(
 		int base_len, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i, j;
+	int i;
 
 	if (f_v) {
 		cout << "stabilizer_chain_base_data::allocate_base_data "
@@ -117,10 +117,15 @@ void stabilizer_chain_base_data::allocate_base_data(
 		for (i = 0; i < base_len; i++) {
 			orbit[i] = NEW_lint(A->degree);
 			orbit_inv[i] = NEW_lint(A->degree);
+
+			Lint_vec_mone(orbit[i], A->degree);
+			Lint_vec_mone(orbit_inv[i], A->degree);
+#if 0
 			for (j = 0; j < A->degree; j++) {
 				orbit[i][j] = -1;
 				orbit_inv[i][j] = -1;
 			}
+#endif
 		}
 	}
 	else {
@@ -168,7 +173,7 @@ void stabilizer_chain_base_data::reallocate_base(
 
 		int f_vv = (verbose_level >= 2);
 
-		int i, j;
+		int i;
 		long int *old_base;
 		int *old_transversal_length;
 		long int **old_orbit;
@@ -181,7 +186,8 @@ void stabilizer_chain_base_data::reallocate_base(
 		old_path = path;
 
 		if (f_vv) {
-			cout << "stabilizer_chain_base_data::reallocate_base base_len = " << base_len << endl;
+			cout << "stabilizer_chain_base_data::reallocate_base "
+					"base_len = " << base_len << endl;
 		}
 		if (f_vv) {
 			cout << "stabilizer_chain_base_data::reallocate_base step1" << endl;
@@ -214,27 +220,40 @@ void stabilizer_chain_base_data::reallocate_base(
 		if (f_vv) {
 			cout << "stabilizer_chain_base_data::reallocate_base step4" << endl;
 		}
+
+		Lint_vec_mone(orbit[base_len], A->degree);
+		Lint_vec_mone(orbit_inv[base_len], A->degree);
+
+#if 0
 		for (j = 0; j < A->degree; j++) {
 			orbit[base_len][j] = -1;
 			orbit_inv[base_len][j] = -1;
 		}
+#endif
+
 		base_len++;
 		if (f_vv) {
 			cout << "stabilizer_chain_base_data::reallocate_base step5" << endl;
 		}
-		if (old_base)
+		if (old_base) {
 			FREE_lint(old_base);
-		if (old_transversal_length)
+		}
+		if (old_transversal_length) {
 			FREE_int(old_transversal_length);
-		if (old_orbit)
+		}
+		if (old_orbit) {
 			FREE_plint(old_orbit);
-		if (old_orbit_inv)
+		}
+		if (old_orbit_inv) {
 			FREE_plint(old_orbit_inv);
-		if (old_path)
+		}
+		if (old_path) {
 			FREE_int(old_path);
+		}
 	}
 	else {
-		cout << "stabilizer_chain_base_data::reallocate_base degree is too large" << endl;
+		cout << "stabilizer_chain_base_data::reallocate_base "
+				"degree is too large" << endl;
 	}
 	if (f_v) {
 		cout << "stabilizer_chain_base_data::reallocate_base done" << endl;
@@ -298,23 +317,34 @@ void stabilizer_chain_base_data::init_base_from_sims_after_shortening(
 
 	orbit = NEW_plint(base_len);
 	orbit_inv = NEW_plint(base_len);
+
 	for (i = 0; i < shortened_base_length; i++) {
+
 		idx = base_orbit_idx[i];
 		base[i] = Sims->A->base_i(idx);
 		orbit[i] = NEW_lint(Sims->A->degree);
 		orbit_inv[i] = NEW_lint(Sims->A->degree);
+
+		Lint_vec_mone(orbit[i], Sims->A->degree);
+		Lint_vec_mone(orbit_inv[i], Sims->A->degree);
+
+#if 0
 		for (j = 0; j < Sims->A->degree; j++) {
 			orbit[i][j] = -1;
 			orbit_inv[i][j] = -1;
 		}
+#endif
 	}
 
 	for (i = 0; i < base_len; i++) {
+
 		idx = base_orbit_idx[i];
 		k = Sims->get_orbit_length(idx);
 		transversal_length[i] = k;
+
 		for (j = 0; j < k; j++) {
 			a = Sims->get_orbit(idx, j);
+
 			if (a >= Sims->A->degree) {
 				cout << "stabilizer_chain_base_data::init_base_from_sims_after_shortening "
 						"initializing orbit " << i << " / " << base_len
@@ -401,10 +431,17 @@ void stabilizer_chain_base_data::init_base_from_sims(
 			//base[i] = bi = base[i];
 			//transversal_length[i] = tl[i];
 			//cout << "a" << endl;
+
+			Lint_vec_mone(orbit[i], A->degree);
+			Lint_vec_mone(orbit_inv[i], A->degree);
+
+#if 0
 			for (j = 0; j < A->degree; j++) {
 				orbit[i][j] = -1;
 				orbit_inv[i][j] = -1;
 			}
+#endif
+
 			k = transversal_length[i];
 			if (f_v) {
 				cout << "stabilizer_chain_base_data::init_base_from_sims "
@@ -538,7 +575,9 @@ void stabilizer_chain_base_data::group_order(
 {
 	algebra::ring_theory::longinteger_domain D;
 
-	D.multiply_up(go, transversal_length, base_len, 0 /* verbose_level */);
+	D.multiply_up(
+			go, transversal_length,
+			base_len, 0 /* verbose_level */);
 }
 
 void stabilizer_chain_base_data::init_projective_matrix_group(
@@ -556,7 +595,8 @@ void stabilizer_chain_base_data::init_projective_matrix_group(
 		algebra::basic_algebra::group_generators_domain GGD;
 
 
-		GGD.projective_matrix_group_base_and_orbits(n, F,
+		GGD.projective_matrix_group_base_and_orbits(
+				n, F,
 			f_semilinear,
 			base_len, degree,
 			base, transversal_length,
@@ -587,7 +627,8 @@ void stabilizer_chain_base_data::init_affine_matrix_group(
 
 		algebra::basic_algebra::group_generators_domain GGD;
 
-		GGD.affine_matrix_group_base_and_transversal_length(n, F,
+		GGD.affine_matrix_group_base_and_transversal_length(
+				n, F,
 			f_semilinear,
 			base_len, degree,
 			base, transversal_length,
@@ -596,7 +637,8 @@ void stabilizer_chain_base_data::init_affine_matrix_group(
 		//no orbit, orbit_inv
 	}
 	else {
-		cout << "stabilizer_chain_base_data::init_affine_matrix_group degree is too large" << endl;
+		cout << "stabilizer_chain_base_data::init_affine_matrix_group "
+				"degree is too large" << endl;
 		exit(1);
 	}
 
@@ -619,7 +661,8 @@ void stabilizer_chain_base_data::init_linear_matrix_group(
 
 		algebra::basic_algebra::group_generators_domain GGD;
 
-		GGD.general_linear_matrix_group_base_and_transversal_length(n, F,
+		GGD.general_linear_matrix_group_base_and_transversal_length(
+			n, F,
 			f_semilinear,
 			base_len, degree,
 			base, transversal_length,
@@ -651,6 +694,8 @@ void stabilizer_chain_base_data::report_basic_orbits(
 	}
 
 }
+
+
 }}}
 
 

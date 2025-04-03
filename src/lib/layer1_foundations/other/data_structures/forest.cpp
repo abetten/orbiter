@@ -169,6 +169,17 @@ void forest::move_point_here(
 	orbit_inv[pt] = here;
 }
 
+void forest::move_point_set_lint_to_here(
+		long int *subset, int len)
+{
+	int i;
+
+	for (i = 0; i < len; i++) {
+		move_point_here(i, subset[i]);
+	}
+
+}
+
 int forest::orbit_representative(
 		int pt)
 {

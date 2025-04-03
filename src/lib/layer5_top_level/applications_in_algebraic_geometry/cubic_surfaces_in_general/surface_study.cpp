@@ -1104,8 +1104,9 @@ void surface_study::study_surface_with_6_eckardt_points(
 		if ((j % 1000) == 0) {
 			cout << "coset " << j << " / " << l << ":" << endl;
 			}
-		Orb_six_points->coset_rep(j, 0 /* verbose_level */);
-		A->Group_element->element_move(Orb_six_points->cosetrep, Elt, 0);
+		Orb_six_points->Generators_and_images->coset_rep(j, 0 /* verbose_level */);
+		A->Group_element->element_move(
+				Orb_six_points->Generators_and_images->cosetrep, Elt, 0);
 
 		data_structures_groups::set_and_stabilizer *SaS2;
 
@@ -1177,8 +1178,9 @@ void surface_study::study_surface_with_6_eckardt_points(
 
 	if (j >= 0) {
 		cout << "coset " << j << " / " << l << ":" << endl;
-		Orb_six_points->coset_rep(j, 0 /* verbose_level */);
-		A->Group_element->element_move(Orb_six_points->cosetrep, Elt, 0);
+		Orb_six_points->Generators_and_images->coset_rep(j, 0 /* verbose_level */);
+		A->Group_element->element_move(
+				Orb_six_points->Generators_and_images->cosetrep, Elt, 0);
 
 		data_structures_groups::set_and_stabilizer *SaS2;
 

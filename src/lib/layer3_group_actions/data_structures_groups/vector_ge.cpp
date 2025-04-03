@@ -1522,7 +1522,8 @@ groups::schreier *vector_ge::compute_all_point_orbits_schreier(
 
 	Sch->init(A_given, verbose_level - 2);
 	//Sch->initialize_tables();
-	Sch->init_generators(*this, verbose_level - 2);
+	Sch->Generators_and_images->init_generators(
+			*this, verbose_level - 2);
 	if (f_v) {
 		cout << "vector_ge::compute_all_point_orbits_schreier "
 				"before Sch->compute_all_point_orbits" << endl;

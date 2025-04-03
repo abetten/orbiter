@@ -1835,15 +1835,16 @@ void semifield_lifting::trace_very_general(
 				"trace_so = " << trace_so << endl;
 	}
 
-	Downstep_nodes[trace_po].Sch->coset_rep_inv(pos, 0 /* verbose_level */);
+	Downstep_nodes[trace_po].Sch->Generators_and_images->coset_rep_inv(
+			pos, 0 /* verbose_level */);
 	A->Group_element->element_mult(transporter,
-			Downstep_nodes[trace_po].Sch->cosetrep,
+			Downstep_nodes[trace_po].Sch->Generators_and_images->cosetrep,
 			ELT3,
 			0 /* verbose_level */);
 	A->Group_element->element_move(ELT3, transporter, 0);
 	// apply cosetrep to base elements 2,...,basis_sz - 1:
 	SC->apply_element_and_copy_back(
-			Downstep_nodes[trace_po].Sch->cosetrep,
+			Downstep_nodes[trace_po].Sch->Generators_and_images->cosetrep,
 		input_basis, basis_tmp,
 		2, basis_sz, verbose_level);
 	if (f_vv) {

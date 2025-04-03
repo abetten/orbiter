@@ -105,7 +105,7 @@ void orbits_on_something::init(
 
 		Sch->init(A, 0 /*verbose_level*/);
 		//Sch->initialize_tables();
-		Sch->init_generators(*SG->gens, 0 /*verbose_level*/);
+		Sch->Generators_and_images->init_generators(*SG->gens, 0 /*verbose_level*/);
 		//Orbits_on_lines->compute_all_point_orbits(verbose_level);
 		{
 			ifstream fp(fname);
@@ -232,7 +232,7 @@ void orbits_on_something::init_from_vector_ge(
 
 		Sch->init(A, 0 /*verbose_level*/);
 		//Sch->initialize_tables();
-		Sch->init_generators(*gens, 0 /*verbose_level*/);
+		Sch->Generators_and_images->init_generators(*gens, 0 /*verbose_level*/);
 		//Orbits_on_lines->compute_all_point_orbits(verbose_level);
 		{
 			ifstream fp(fname);
@@ -2162,7 +2162,7 @@ void orbits_on_something::transporter_from_orbit_rep_to_point(
 	if (f_v) {
 		cout << "orbits_on_something::transporter_from_orbit_rep_to_point" << endl;
 	}
-	Sch->transporter_from_orbit_rep_to_point(
+	Sch->Generators_and_images->transporter_from_orbit_rep_to_point(
 			pt,
 			orbit_idx, Elt, verbose_level - 1);
 	if (f_v) {
@@ -2179,7 +2179,7 @@ void orbits_on_something::transporter_from_point_to_orbit_rep(
 	if (f_v) {
 		cout << "orbits_on_something::transporter_from_point_to_orbit_rep" << endl;
 	}
-	Sch->transporter_from_point_to_orbit_rep(
+	Sch->Generators_and_images->transporter_from_point_to_orbit_rep(
 			pt,
 			orbit_idx, Elt, verbose_level - 1);
 	if (f_v) {

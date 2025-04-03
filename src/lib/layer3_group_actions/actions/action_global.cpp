@@ -1156,7 +1156,7 @@ void action_global::perm_print_cycles_sorted_by_length_offset(
 	int print_interval = 10000;
 	
 	S.init(A, verbose_level - 2);
-	S.init_generators(Gens, verbose_level - 2);
+	S.Generators_and_images->init_generators(Gens, verbose_level - 2);
 	S.compute_all_point_orbits(print_interval,
 			verbose_level);
 	if (f_v) {
@@ -3356,7 +3356,8 @@ void action_global::compute_orbit_of_point(
 				"computing orbit of point " << pt << endl;
 	}
 	Schreier.init(A, verbose_level - 2);
-	Schreier.init_generators(strong_generators, verbose_level - 2);
+	Schreier.Generators_and_images->init_generators(
+			strong_generators, verbose_level - 2);
 	Schreier.compute_point_orbit(pt, print_interval, 0);
 	f = Schreier.Forest->orbit_first[0];
 	len = Schreier.Forest->orbit_len[0];
@@ -3410,14 +3411,15 @@ int action_global::least_image_of_point(
 				"computing least image of " << pt << endl;
 	}
 	Schreier.init(A, verbose_level - 2);
-	Schreier.init_generators(strong_generators, verbose_level - 2);
+	Schreier.Generators_and_images->init_generators(
+			strong_generators, verbose_level - 2);
 	Schreier.compute_point_orbit(pt, print_interval, 0);
 	len = Schreier.Forest->orbit_len[0];
 	image = Int_vec_minimum(Schreier.Forest->orbit, len);
 	pos = Schreier.Forest->orbit_inv[image];
-	Schreier.coset_rep(pos, 0 /* verbose_level */);
+	Schreier.Generators_and_images->coset_rep(pos, 0 /* verbose_level */);
 	A->Group_element->element_move(
-			Schreier.cosetrep, transporter, 0);
+			Schreier.Generators_and_images->cosetrep, transporter, 0);
 	// we check it:
 	i = A->Group_element->element_image_of(
 			pt, transporter, 0);
@@ -3514,7 +3516,7 @@ void action_global::all_point_orbits(
 				"!A->f_has_strong_generators" << endl;
 		exit(1);
 	}
-	Schreier.init_generators(
+	Schreier.Generators_and_images->init_generators(
 			*A->Strong_gens->gens /* *strong_generators */,
 			verbose_level - 2);
 	if (f_v) {
@@ -3595,7 +3597,7 @@ void action_global::all_point_orbits_from_generators(
 	int print_interval = 10000;
 	Schreier.init(A, verbose_level - 2);
 
-	Schreier.init_generators(
+	Schreier.Generators_and_images->init_generators(
 			*SG->gens /* *strong_generators */,
 			verbose_level);
 
@@ -3632,7 +3634,7 @@ void action_global::all_point_orbits_from_single_generator(
 	A->Group_element->element_move(Elt, gens.ith(0), 0);
 
 	Schreier.init(A, verbose_level - 2);
-	Schreier.init_generators(
+	Schreier.Generators_and_images->init_generators(
 			gens, verbose_level - 2);
 	if (f_v) {
 		cout << "action_global::all_point_orbits_from_single_generator "
@@ -4961,7 +4963,7 @@ void action_global::lexorder_test(
 				<< max_starter << endl;
 	}
 	Sch->init(A, verbose_level - 2);
-	Sch->init_generators(*gens, verbose_level - 2);
+	Sch->Generators_and_images->init_generators(*gens, verbose_level - 2);
 
 	//Sch->compute_all_point_orbits(0);
 	if (f_v) {
@@ -5047,9 +5049,9 @@ void action_global::compute_orbits_on_points(
 	Sch->init(A, verbose_level - 2);
 	if (f_v) {
 		cout << "action_global::compute_orbits_on_points "
-				"before Sch->init_generators" << endl;
+				"before Sch->Generators_and_images->init_generators" << endl;
 	}
-	Sch->init_generators(*gens, verbose_level - 2);
+	Sch->Generators_and_images->init_generators(*gens, verbose_level - 2);
 	if (f_v) {
 		cout << "action_global::compute_orbits_on_points "
 				"before Sch->compute_all_point_orbits, "
@@ -5293,7 +5295,7 @@ void action_global::move_a_to_b_and_stabilizer_of_b(
 	int orbit_idx;
 	int c;
 
-	Schreier->transporter_from_point_to_orbit_rep(
+	Schreier->Generators_and_images->transporter_from_point_to_orbit_rep(
 			a,
 		orbit_idx, Elt1, verbose_level);
 
@@ -5304,7 +5306,7 @@ void action_global::move_a_to_b_and_stabilizer_of_b(
 				Elt1, cout);
 	}
 
-	Schreier->transporter_from_orbit_rep_to_point(
+	Schreier->Generators_and_images->transporter_from_orbit_rep_to_point(
 			b,
 		orbit_idx, Elt2, verbose_level);
 

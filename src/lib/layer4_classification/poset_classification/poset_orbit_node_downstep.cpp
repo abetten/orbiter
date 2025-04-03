@@ -368,7 +368,7 @@ void poset_orbit_node::compute_schreier_vector(
 	get_strong_generators_handle(gen_handle, verbose_level - 2);
 
 
-	Schreier->init_generators_by_handle(
+	Schreier->Generators_and_images->init_generators_by_handle(
 			gen_handle,
 			verbose_level - 1);
 	if (f_v) {
@@ -701,27 +701,27 @@ void poset_orbit_node::schreier_forest(
 
 	if (f_v) {
 		gen->print_level_info(lvl, node);
-		cout << " : poset_orbit_node::schreier_forest before Schreier.init_generators_by_handle" << endl;
+		cout << " : poset_orbit_node::schreier_forest before Schreier.Generators_and_images->init_generators_by_handle" << endl;
 	}
-	Schreier.init_generators_by_handle(
+	Schreier.Generators_and_images->init_generators_by_handle(
 			gen_handle,
 			verbose_level - 1);
 	if (f_v) {
 		gen->print_level_info(lvl, node);
-		cout << " : poset_orbit_node::schreier_forest after Schreier.init_generators_by_handle" << endl;
+		cout << " : poset_orbit_node::schreier_forest after Schreier.Generators_and_images->init_generators_by_handle" << endl;
 	}
 
 	if (f_v) {
 		gen->print_level_info(lvl, node);
 		cout << " : poset_orbit_node::schreier_forest calling Schreier.compute_all_point_orbits "
-				"for a set of size " << Schreier.A->degree << endl;
+				"for a set of size " << Schreier.Generators_and_images->A->degree << endl;
 	}
 
 
 	if (false) {
 		gen->print_level_info(lvl, node);
 		cout << " : generators:" << endl;
-		Schreier.print_generators();
+		Schreier.Generators_and_images->print_generators();
 	}
 
 
@@ -1232,7 +1232,7 @@ int poset_orbit_node::downstep_get_invariant_subset(
 
 				O->get_strong_generators_handle(gen_handle, verbose_level - 2);
 
-				S.init_generators_by_handle(
+				S.Generators_and_images->init_generators_by_handle(
 						gen_handle,
 						verbose_level - 1);
 
@@ -1740,7 +1740,7 @@ void poset_orbit_node::downstep_orbits_print(
 			}
 		if (false) {
 			Schreier->Forest->print(cout);
-			Schreier->print_generators();
+			Schreier->Generators_and_images->print_generators();
 			if (gen->get_A()->degree < 1000 && false) {
 				Schreier->Forest->print_tree(0);
 				Schreier->print_tables(cout, false /* f_with_cosetrep */);

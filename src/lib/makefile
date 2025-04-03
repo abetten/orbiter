@@ -412,6 +412,7 @@ ORBITER_MODULES= \
 		layer3_group_actions/groups/conjugacy_class_of_elements.o \
 		layer3_group_actions/groups/conjugacy_class_of_subgroups.o \
 		layer3_group_actions/groups/exceptional_isomorphism_O4.o \
+		layer3_group_actions/groups/generators_and_images.o \
 		layer3_group_actions/groups/group_theory_global.o \
 		layer3_group_actions/groups/orbits_on_something.o \
 		layer3_group_actions/groups/schreier.o \

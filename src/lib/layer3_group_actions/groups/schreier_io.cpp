@@ -27,7 +27,7 @@ void schreier::latex(
 
 		L.head_easy(fp);
 
-		print_generators_latex(fp);
+		Generators_and_images->print_generators_latex(fp);
 
 		fp << "Orbit lengths: $";
 		Forest->print_orbit_length_distribution(fp);
@@ -35,7 +35,7 @@ void schreier::latex(
 
 		Forest->print_and_list_orbits_tex(fp);
 
-		if (A->degree < 100) {
+		if (Generators_and_images->A->degree < 100) {
 			print_tables_latex(fp, f_with_cosetrep);
 		}
 
@@ -55,7 +55,7 @@ void schreier::print_and_list_orbits_and_stabilizer(
 	int i;
 
 	ost << Forest->nb_orbits << " orbits" << endl;
-	ost << "orbit group with " << gens.len << " generators:" << endl;
+	ost << "orbit group with " << Generators_and_images->gens.len << " generators:" << endl;
 	ost << "i : orbit_first[i] : orbit_len[i]" << endl;
 	for (i = 0; i < Forest->nb_orbits; i++) {
 
@@ -206,7 +206,8 @@ void schreier::get_stabilizer_orbit_rep(
 
 	gens_stab = stabilizer_orbit_rep(
 		default_action,
-		full_group_order, orbit_idx, 0 /*verbose_level */);
+		full_group_order, orbit_idx,
+		0 /*verbose_level */);
 
 }
 
@@ -294,7 +295,7 @@ void schreier::print_and_list_orbits_and_stabilizer_sorted_by_length(
 			Perm, Perm_inv, true /*f_increasingly*/);
 
 	ost << "There are " << Forest->nb_orbits << " orbits under a group with "
-			<< gens.len << " generators:";
+			<< Generators_and_images->gens.len << " generators:";
 	if (f_tex) {
 		ost << "\\\\" << endl;
 	}
@@ -350,11 +351,12 @@ void schreier::print_fancy(
 	Perm = NEW_int(Forest->nb_orbits);
 	Perm_inv = NEW_int(Forest->nb_orbits);
 	Int_vec_copy(Forest->orbit_len, Len, Forest->nb_orbits);
-	Sorting.int_vec_sorting_permutation(Len, Forest->nb_orbits,
+	Sorting.int_vec_sorting_permutation(
+			Len, Forest->nb_orbits,
 			Perm, Perm_inv, true /*f_increasingly*/);
 
 	ost << "There are " << Forest->nb_orbits << " orbits under a group with "
-			<< gens.len << " generators:";
+			<< Generators_and_images->gens.len << " generators:";
 	if (f_tex) {
 		ost << "\\\\" << endl;
 	}
@@ -402,7 +404,7 @@ void schreier::print_and_list_orbits_using_labels(
 	int i;
 
 	ost << Forest->nb_orbits << " orbits" << endl;
-	ost << "orbit group with " << gens.len << " generators:" << endl;
+	ost << "orbit group with " << Generators_and_images->gens.len << " generators:" << endl;
 	ost << "i : orbit_first[i] : orbit_len[i]" << endl;
 	for (i = 0; i < Forest->nb_orbits; i++) {
 		ost << i << " : " << Forest->orbit_first[i]
@@ -434,15 +436,15 @@ void schreier::print_tables(
 	}
 	ost << endl;
 #endif
-	w = NT.int_log10(A->degree) + 1;
+	w = NT.int_log10(Generators_and_images->A->degree) + 1;
 	ost << "i : orbit[i] : orbit_inv[i] : prev[i] : label[i]";
 	if (f_with_cosetrep)
 		ost << " : coset_rep";
 	ost << endl;
 
-	if (A->degree < 100) {
-		for (i = 0; i < A->degree; i++) {
-			coset_rep(i, 0 /* verbose_level */);
+	if (Generators_and_images->A->degree < 100) {
+		for (i = 0; i < Generators_and_images->A->degree; i++) {
+			Generators_and_images->coset_rep(i, 0 /* verbose_level */);
 			//coset_rep_inv(i);
 			ost << setw(w) << i << " : " << " : "
 				<< setw(w) << Forest->orbit[i] << " : "
@@ -452,9 +454,11 @@ void schreier::print_tables(
 			if (f_with_cosetrep) {
 				ost << " : ";
 				//A->element_print(Elt1, cout);
-				A->Group_element->element_print_as_permutation(cosetrep, ost);
+				Generators_and_images->A->Group_element->element_print_as_permutation(
+						Generators_and_images->cosetrep, ost);
 				ost << endl;
-				A->Group_element->element_print_quick(cosetrep, ost);
+				Generators_and_images->A->Group_element->element_print_quick(
+						Generators_and_images->cosetrep, ost);
 			}
 			ost << endl;
 		}
@@ -485,7 +489,7 @@ void schreier::print_tables_latex(
 		}
 	ost << endl;
 #endif
-	w = NT.int_log10(A->degree) + 1;
+	w = NT.int_log10(Generators_and_images->A->degree) + 1;
 	ost << "$$" << endl;
 	ost << "\\begin{array}{|c|c|c|c|c|" << endl;
 	if (f_with_cosetrep) {
@@ -500,8 +504,8 @@ void schreier::print_tables_latex(
 	ost << "\\\\" << endl;
 	ost << "\\hline" << endl;
 	ost << "\\hline" << endl;
-	for (i = 0; i < A->degree; i++) {
-		coset_rep(i, 0 /* verbose_level */);
+	for (i = 0; i < Generators_and_images->A->degree; i++) {
+		Generators_and_images->coset_rep(i, 0 /* verbose_level */);
 		//coset_rep_inv(i);
 		ost << i << " & "
 			<< setw(w) << Forest->orbit[i] << " & "
@@ -513,7 +517,8 @@ void schreier::print_tables_latex(
 			//A->element_print(Elt1, cout);
 			//A->element_print_as_permutation(cosetrep, ost);
 			//ost << endl;
-			A->Group_element->element_print_latex(cosetrep, ost);
+			Generators_and_images->A->Group_element->element_print_latex(
+					Generators_and_images->cosetrep, ost);
 		}
 		ost << "\\\\" << endl;
 		ost << "\\hline" << endl;
@@ -542,75 +547,6 @@ void schreier::print_tables_latex(
 	ost << endl;
 }
 
-void schreier::print_generators()
-{
-	int j;
-
-	cout << gens.len << " generators in action "
-			<< A->label << " of degree " << A->degree << ":" << endl;
-	for (j = 0; j < gens.len; j++) {
-		cout << "generator " << j << ":" << endl;
-		//A->element_print(gens.ith(j), cout);
-		A->Group_element->element_print_quick(gens.ith(j), cout);
-		//A->element_print_as_permutation(gens.ith(j), cout);
-		if (j < gens.len - 1) {
-			cout << ", " << endl;
-		}
-	}
-}
-
-void schreier::print_generators_latex(
-		std::ostream &ost)
-{
-	int j;
-
-	ost << gens.len << " generators in action $"
-			<< A->label_tex << "$ of degree "
-			<< A->degree << ":\\\\" << endl;
-	for (j = 0; j < gens.len; j++) {
-		ost << "generator " << j << ":" << endl;
-		//A->element_print(gens.ith(j), cout);
-		ost << "$$" << endl;
-		A->Group_element->element_print_latex(gens.ith(j), ost);
-		//A->element_print_as_permutation(gens.ith(j), cout);
-		if (j < gens.len - 1) {
-			ost << ", " << endl;
-		}
-		ost << "$$" << endl;
-	}
-}
-
-void schreier::print_generators_with_permutations()
-{
-	int j;
-
-	cout << gens.len << " generators in action "
-			<< A->label << " of degree "
-			<< A->degree << ":" << endl;
-	for (j = 0; j < gens.len; j++) {
-		cout << "generator " << j << ":" << endl;
-		//A->element_print(gens.ith(j), cout);
-		A->Group_element->element_print_quick(gens.ith(j), cout);
-		A->Group_element->element_print_as_permutation(gens.ith(j), cout);
-		cout << endl;
-		if (j < gens.len - 1) {
-			cout << ", " << endl;
-		}
-	}
-}
-
-
-void schreier::list_elements_as_permutations_vertically(
-		std::ostream &ost)
-{
-	if (f_images_only) {
-		cout << "schreier::list_elements_as_permutations_vertically is not "
-				"allowed if f_images_only is true" << endl;
-		exit(1);
-	}
-	A->list_elements_as_permutations_vertically(&gens, ost);
-}
-
 void schreier::print_orbit_with_original_labels(
 		std::ostream &ost, int orbit_no)
 {
@@ -625,7 +561,7 @@ void schreier::print_orbit_with_original_labels(
 		v[i] = Forest->orbit[first + i];
 	}
 
-	A->Induced_action->original_point_labels(
+	Generators_and_images->A->Induced_action->original_point_labels(
 			v, len, w, 0 /*verbose_level*/);
 
 
@@ -658,7 +594,7 @@ void schreier::print_orbit_sorted_with_original_labels_tex(
 	Sorting.lint_vec_heapsort(v, len);
 	//int_vec_print_fully(ost, v, len);
 
-	A->Induced_action->original_point_labels(
+	Generators_and_images->A->Induced_action->original_point_labels(
 			v, len, w, 0 /*verbose_level*/);
 
 	if (f_truncate && len > max_length) {
@@ -681,7 +617,7 @@ void schreier::print_and_list_orbits_with_original_labels_tex(
 
 	ost << Forest->nb_orbits << " orbits:\\\\" << endl;
 	ost << "orbits under a group acting on a set of size "
-			<< degree << ":\\\\" << endl;
+			<< Generators_and_images->degree << ":\\\\" << endl;
 	//ost << "i : orbit_first[i] : orbit_len[i]" << endl;
 	for (orbit_no = 0; orbit_no < Forest->nb_orbits; orbit_no++) {
 		ost << " Orbit " << orbit_no << " / " << Forest->nb_orbits

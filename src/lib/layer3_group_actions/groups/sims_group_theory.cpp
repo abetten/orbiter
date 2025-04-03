@@ -167,7 +167,7 @@ int sims::transitive_extension_tolerant(
 			if (f_tolerant) {
 				cout << "we are tolerant, so we return false" << endl;
 				return false;
-				}
+			}
 			cout << "we are not tolerant, so we exit" << endl;
 			exit(1);
 		}
@@ -179,11 +179,13 @@ int sims::transitive_extension_tolerant(
 			}
 		}
 
-		O.coset_rep(j, 0 /* verbose_level */);
+		O.Generators_and_images->coset_rep(j, 0 /* verbose_level */);
 
 		random_element(Elt2, verbose_level - 1);
 
-		A->Group_element->element_mult(O.cosetrep, Elt2, Elt3, false);
+		A->Group_element->element_mult(
+				O.Generators_and_images->cosetrep, Elt2, Elt3,
+				0 /* verbose_level */);
 
 		if (f_vv) {
 			cout << "sims::transitive_extension_tolerant "
@@ -194,7 +196,7 @@ int sims::transitive_extension_tolerant(
 			//cout << endl;
 		}
 
-		if (!strip_and_add(Elt3, Elt1 /* residue */, 0/*verbose_level - 1*/)) {
+		if (!strip_and_add(Elt3, Elt1 /* residue */, 0 /*verbose_level - 1*/)) {
 			continue;
 		}
 
@@ -217,7 +219,9 @@ int sims::transitive_extension_tolerant(
 		cout << "sims::transitive_extension_tolerant "
 				"extracting strong generators" << endl;
 	}
-	extract_strong_generators_in_order(SG, tl, verbose_level - 2);
+	extract_strong_generators_in_order(
+			SG, tl, verbose_level - 2);
+
 	return true;
 }
 
@@ -236,7 +240,9 @@ void sims::transitive_extension_using_coset_representatives_extract_generators(
 	transitive_extension_using_coset_representatives(
 		coset_reps, nb_cosets,
 		verbose_level);
-	extract_strong_generators_in_order(SG, tl, verbose_level - 2);
+
+	extract_strong_generators_in_order(
+			SG, tl, verbose_level - 2);
 	if (f_v) {
 		cout << "sims::transitive_extension_using_coset_"
 				"representatives_extract_generators done" << endl;
@@ -257,15 +263,15 @@ void sims::transitive_extension_using_coset_representatives(
 
 	orbit_len = nb_cosets;
 	if (f_v) {
-		cout << "sims::transitive_extension_using_coset_"
-				"representatives computing transitive extension" << endl;
+		cout << "sims::transitive_extension_using_coset_representatives "
+				"computing transitive extension" << endl;
 	}
 	group_order(go);
 	ol.create(orbit_len);
 	D.mult(go, ol, ego);
 	if (f_v) {
-		cout << "sims::transitive_extension_using_coset_"
-				"representatives group order " << go
+		cout << "sims::transitive_extension_using_coset_representatives "
+				"group order " << go
 				<< ", orbit length " << orbit_len
 				<< ", current group order " << ego << endl;
 	}
@@ -280,8 +286,8 @@ void sims::transitive_extension_using_coset_representatives(
 		// hence the following makes sense:
 		// we want non trivial generators, hence we want j non zero.
 		if (D.compare_unsigned(cur_ego, ego) > 0) {
-			cout << "sims::transitive_extension_using_coset_"
-					"representatives fatal: group order "
+			cout << "sims::transitive_extension_using_coset_representatives "
+					"fatal: group order "
 					"overshoots target" << endl;
 			cout << "current group order = " << cur_ego << endl;
 			cout << "target group order = " << ego << endl;
@@ -303,8 +309,8 @@ void sims::transitive_extension_using_coset_representatives(
 				Elt2, Elt3, 0);
 
 		if (f_vv) {
-			cout << "sims::transitive_extension_using_coset_"
-					"representatives choosing random coset "
+			cout << "sims::transitive_extension_using_coset_representatives "
+					"choosing random coset "
 					<< j << ", random element ";
 			Int_vec_print(cout, path, A->base_len());
 			cout << endl;
@@ -320,8 +326,8 @@ void sims::transitive_extension_using_coset_representatives(
 
 		group_order(cur_ego);
 		if (f_v) {
-			cout << "sims::transitive_extension_using_coset_"
-					"representatives found an extension of order "
+			cout << "sims::transitive_extension_using_coset_representatives "
+					"found an extension of order "
 					<< cur_ego << " of " << ego
 				<< " with " << gens.len << " strong generators" << endl;
 			D.integral_division(ego, cur_ego, rgo, rem, 0);
@@ -332,8 +338,7 @@ void sims::transitive_extension_using_coset_representatives(
 
 	}
 	if (f_v) {
-		cout << "sims::transitive_extension_using_coset_"
-				"representatives done" << endl;
+		cout << "sims::transitive_extension_using_coset_representatives done" << endl;
 	}
 }
 
@@ -462,23 +467,24 @@ void sims::point_stabilizer_stabchain_with_action(
 
 	if (f_v) {
 		cout << "sims::point_stabilizer_stabchain_with_action "
-				"before O.init_generators" << endl;
+				"before O.Generators_and_images->init_generators" << endl;
 	}
-	O.init_generators(gens, verbose_level - 2);
+	O.Generators_and_images->init_generators(gens, verbose_level - 2);
 	if (f_v) {
 		cout << "sims::point_stabilizer_stabchain_with_action "
-				"after O.init_generators" << endl;
+				"after O.Generators_and_images->init_generators" << endl;
 	}
 
 	if (f_vvv && A2->degree < 150) {
-		O.print_generators();
-		O.print_generators_with_permutations();
+		O.Generators_and_images->print_generators();
+		O.Generators_and_images->print_generators_with_permutations();
 		int j;
-		for (j = 0; j < O.gens.len; j++) {
+		for (j = 0; j < O.Generators_and_images->gens.len; j++) {
 			cout << "generator " << j << ":" << endl;
 			//A->element_print(gens.ith(j), cout);
 			//A->element_print_quick(gens.ith(j), cout);
-			A->Group_element->element_print_as_permutation(O.gens.ith(j), cout);
+			A->Group_element->element_print_as_permutation(
+					O.Generators_and_images->gens.ith(j), cout);
 			cout << endl;
 		}
 	}
@@ -490,7 +496,8 @@ void sims::point_stabilizer_stabchain_with_action(
 		cout << "sims::point_stabilizer_stabchain_with_action "
 				"computing point orbit" << endl;
 	}
-	O.compute_point_orbit(pt, print_interval, 0/*verbose_level - 1*/);
+	O.compute_point_orbit(
+			pt, print_interval, 0/*verbose_level - 1*/);
 	if (f_v) {
 		cout << "sims::point_stabilizer_stabchain_with_action "
 				"computing point orbit done" << endl;
@@ -593,7 +600,7 @@ void sims::point_stabilizer_stabchain_with_action(
 			//O.non_trivial_random_schreier_generator(A2, Elt, verbose_level - 1);
 			// A Betten 9/1/2019
 			// this may get stuck in a forever loop, therefore we do this:
-			O.random_schreier_generator(Elt, verbose_level - 1);
+			O.Generators_and_images->random_schreier_generator(Elt, verbose_level - 1);
 			//p_schreier_gen = O.schreier_gen;
 		}
 		else {
@@ -622,7 +629,8 @@ void sims::point_stabilizer_stabchain_with_action(
 			A2->Group_element->element_print_as_permutation(Elt, cout);
 			cout << endl;
 		}
-		image = A2->Group_element->element_image_of(pt, Elt,
+		image = A2->Group_element->element_image_of(
+				pt, Elt,
 				0 /* verbose_level */);
 		if (image != pt) {
 			cout << "sims::point_stabilizer_stabchain_with_action "
@@ -739,10 +747,15 @@ void sims::point_stabilizer(
 	if (f_v) {
 		cout << "sims::point_stabilizer" << endl;
 	}
-	point_stabilizer_stabchain_with_action(A,
+
+	point_stabilizer_stabchain_with_action(
+			A,
 			S, pt, verbose_level);
-	S.extract_strong_generators_in_order(SG, tl,
+
+	S.extract_strong_generators_in_order(
+			SG, tl,
 			verbose_level - 2);
+
 	if (f_v) {
 		cout << "sims::point_stabilizer done" << endl;
 	}
@@ -1682,69 +1695,6 @@ int sims::is_normalizing(
 	return ret;
 }
 
-void sims::create_Cayley_graph(
-		data_structures_groups::vector_ge *gens,
-		int *&Adj, long int &n, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int i, h, j;
-	algebra::ring_theory::longinteger_object go;
-	int *Elt1;
-	int *Elt2;
-
-	if (f_v) {
-		cout << "sims::create_Cayley_graph" << endl;
-	}
-	group_order(go);
-	n = go.as_lint();
-	if (f_v) {
-		cout << "sims::create_Cayley_graph "
-				"Computing the adjacency matrix of a graph with "
-				<< n << " vertices" << endl;
-	}
-	Elt1 = NEW_int(A->elt_size_in_int);
-	Elt2 = NEW_int(A->elt_size_in_int);
-	Adj = NEW_int(n * n);
-	Int_vec_zero(Adj, n * n);
-	for (i = 0; i < n; i++) {
-		element_unrank_lint(i, Elt1);
-		//cout << "i=" << i << endl;
-		for (h = 0; h < gens->len; h++) {
-			A->Group_element->element_mult(Elt1, gens->ith(h), Elt2, 0);
-#if 0
-			cout << "i=" << i << " h=" << h << endl;
-			cout << "Elt1=" << endl;
-			A->element_print_quick(Elt1, cout);
-			cout << "g_h=" << endl;
-			A->element_print_quick(gens->ith(h), cout);
-			cout << "Elt2=" << endl;
-			A->element_print_quick(Elt2, cout);
-#endif
-			j = element_rank_lint(Elt2);
-			Adj[i * n + j] = Adj[j * n + i] = 1;
-#if 0
-			if (i == 0) {
-				cout << "edge " << i << " " << j << endl;
-			}
-#endif
-		}
-	}
-
-#if 0
-	cout << "The adjacency matrix of a graph with "
-			<< n << " vertices has been computed" << endl;
-	//int_matrix_print(Adj, goi, goi);
-#endif
-
-	FREE_int(Elt1);
-	FREE_int(Elt2);
-
-
-	if (f_v) {
-		cout << "sims::create_Cayley_graph done" << endl;
-	}
-}
-
 void sims::create_group_table(
 		int *&Table, long int &n,
 		int verbose_level)
@@ -1811,6 +1761,7 @@ void sims::compute_conjugacy_classes(
 	strong_generators *&SG, int &nb_classes,
 	int *&class_size, int *&class_rep,
 	int verbose_level)
+// only for small groups
 {
 	int f_v = (verbose_level >= 1);
 	int i, f;
@@ -1831,12 +1782,6 @@ void sims::compute_conjugacy_classes(
 		false /* f_basis */, NULL,
 		verbose_level - 1);
 
-#if 0
-	action *induced_action::create_induced_action_by_conjugation(
-			groups::sims *Base_group, int f_ownership,
-			int f_basis, groups::sims *old_G,
-			int verbose_level)
-#endif
 
 
 	if (f_v) {
@@ -1857,7 +1802,7 @@ void sims::compute_conjugacy_classes(
 	SG->init_from_sims(this, 0);
 
 
-	Sch->init_generators(*SG->gens, verbose_level - 2);
+	Sch->Generators_and_images->init_generators(*SG->gens, verbose_level - 2);
 
 
 	int print_interval = 10000;

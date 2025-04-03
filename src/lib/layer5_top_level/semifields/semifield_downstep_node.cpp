@@ -206,7 +206,7 @@ void semifield_downstep_node::init(
 
 		if (File_io.file_size(fname) > 0) {
 			Sch = NEW_OBJECT(groups::schreier);
-			Sch->A = A_on_cosets;
+			Sch->Generators_and_images->A = A_on_cosets;
 			cout << "semifield_downstep_node::init "
 					"Reading schreier data structure from "
 					"file " << fname << endl;
@@ -226,7 +226,7 @@ void semifield_downstep_node::init(
 					"file " << fname << endl;
 			Sch->Forest->write_file_binary(fname, verbose_level);
 
-			Sch->delete_images(); // make space
+			Sch->Generators_and_images->delete_images(); // make space
 
 			//delete Sch; // make space in memory
 			}

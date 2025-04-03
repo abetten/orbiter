@@ -563,14 +563,14 @@ strong_generators::init_point_stabilizer_of_arbitrary_point_through_schreier(
 
 	if (f_v) {
 		cout << "strong_generators::init_point_stabilizer_of_arbitrary_point_through_schreier "
-				"before Sch->transporter_from_point_to_orbit_rep" << endl;
+				"before Sch->Generators_and_images->transporter_from_point_to_orbit_rep" << endl;
 	}
-	Sch->transporter_from_point_to_orbit_rep(
+	Sch->Generators_and_images->transporter_from_point_to_orbit_rep(
 			pt, orbit_idx, Elt,
 			0 /* verbose_level */);
 	if (f_v) {
 		cout << "strong_generators::init_point_stabilizer_of_arbitrary_point_through_schreier "
-				"after Sch->transporter_from_point_to_orbit_rep" << endl;
+				"after Sch->Generators_and_images->transporter_from_point_to_orbit_rep" << endl;
 	}
 
 	SG0 = NEW_OBJECT(strong_generators);
@@ -2359,7 +2359,8 @@ void strong_generators::compute_schreier_with_given_action(
 
 	Sch->init(A_given, verbose_level - 2);
 	//Sch->initialize_tables();
-	Sch->init_generators(*gens, verbose_level - 2);
+	Sch->Generators_and_images->init_generators(
+			*gens, verbose_level - 2);
 	Sch->compute_all_point_orbits(print_interval, verbose_level - 2);
 
 
@@ -2384,7 +2385,8 @@ void strong_generators::compute_schreier_with_given_action_on_a_given_set(
 
 	Sch->init(A_given, verbose_level - 2);
 	//Sch->initialize_tables();
-	Sch->init_generators(*gens, verbose_level - 2);
+	Sch->Generators_and_images->init_generators(
+			*gens, verbose_level - 2);
 	Sch->compute_all_orbits_on_invariant_subset_lint(
 			len, set,
 			0 /* verbose_level */);
@@ -2835,12 +2837,12 @@ schreier *strong_generators::compute_all_point_orbits_schreier(
 	//Sch->initialize_tables();
 	if (f_v) {
 		cout << "strong_generators::compute_all_point_orbits_schreier "
-				"before Sch->init_generators" << endl;
+				"before Sch->Generators_and_images->init_generators" << endl;
 	}
-	Sch->init_generators(*gens, verbose_level - 2);
+	Sch->Generators_and_images->init_generators(*gens, verbose_level - 2);
 	if (f_v) {
 		cout << "strong_generators::compute_all_point_orbits_schreier "
-				"before Sch->compute_all_point_orbits" << endl;
+				"before Sch->Generators_and_images->compute_all_point_orbits" << endl;
 	}
 	Sch->compute_all_point_orbits(print_interval, verbose_level - 1);
 	if (f_v) {
@@ -2872,7 +2874,8 @@ schreier *strong_generators::orbit_of_one_point_schreier(
 
 	Sch->init(A_given, verbose_level - 2);
 	//Sch->initialize_tables();
-	Sch->init_generators(*gens, verbose_level - 2);
+	Sch->Generators_and_images->init_generators(
+			*gens, verbose_level - 2);
 	if (f_v) {
 		cout << "strong_generators::orbit_of_one_point_schreier "
 				"before Sch->compute_point_orbit" << endl;
@@ -3911,7 +3914,7 @@ void strong_generators::make_element_which_moves_a_point_from_A_to_B(
 				"the two points are not in the same orbit" << endl;
 		exit(1);
 	}
-	Orb->transporter_from_orbit_rep_to_point(
+	Orb->Generators_and_images->transporter_from_orbit_rep_to_point(
 			pt_B, orbit_idx, Elt,
 			0 /* verbose_level */);
 

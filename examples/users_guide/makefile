@@ -505,14 +505,23 @@ EDGE_CURVE_EQUATION_ALGEBRAIC="X^4 -Y^4 -Z^4 +2*f^2*Y^2*Z^2 +4*f*X^2*Y*Z"
 
 # Section 7.3 Orthogonal Spaces
 
+
+ORTHOGONAL_OP_6_2_POINTS_OFF="6,7,10,13,14,15,16,20,24,28,29,30,31,35,39,43, 44, 45, 46, 48, 49, 50, 52, 53, 54, 56, 57, 58"
+
+
+
 # Section 7.4 Hermitian Varieties
 
 # Section 7.5 Algebraic Varieties
 
+Op_6_eqn="X0*X1+X2*X3+X4*X5"
 
+
+CURVE_Q13_F0_CLEAN2_EQUATION="X0^4 + 4*X1^4 + 9*X2^4 + X0^2*X1^2 + 4*X0^2*X2^2 + 3*X1^2*X2^2"
 
 
 HIRSCHFELD_EQUATION_XYZW="X^2*W+X*W^2+Y^2*Z+Y*Z^2"
+
 
 
 CURVE_Q13_FLAG_1_EQN="10*x1^4 + 12*x2^4 + 9*x3^4 + 8*x1^3*x2 + 2*x1*x2^3 + 5*x2^3*x3 + 3*x2*x3^3 + 4*x1^2*x2^2 + 3*x1^2*x3^2 + x2^2*x3^2 + 12*x1^2*x2*x3 + 10*x1*x2^2*x3 + 9*x1*x2*x3^2"
@@ -540,14 +549,14 @@ QUARTIC_CURVE_Q13_FLAG_0_TRANS="0,6,8,6,8,10,3,12,1"
 
 
 
-Op_6_eqn="X0*X1+X2*X3+X4*X5"
-
-
-CURVE_Q13_F0_CLEAN2_EQUATION="X0^4 + 4*X1^4 + 9*X2^4 + X0^2*X1^2 + 4*X0^2*X2^2 + 3*X1^2*X2^2"
-
-
 BARTH_EQUATION_GENERAL="4*(PHI^2*X^2-Y^2)*(PHI^2*Y^2-Z^2)*(PHI^2*Z^2-X^2)-(1+2*PHI)*(X^2+Y^2+Z^2-W^2)^2*W^2"
 
+
+
+
+
+
+# Section 7.7 Mappings between Projective Spaces
 
 
 
@@ -569,39 +578,10 @@ CREMONA_MAP_Y3="0"
 
 
 
-PTS_OF_SURFACE_ORBIT211_Q3_L9_E4="\
-0,1,2,5,7,8,10,14,9,12, \
-15,3,16,37,31,34,20,19,17,32,36,33"
-
-SURFACE_F_9="x0*x0*x1 - x0*x1*x1 -x0*x1*x3 -x2*x2*x3 - x2*x3*x3"
 
 
-ENDRASS_SPARSE="\
-6,0,4,4,2,7,5,9,6,20,6,23,1,25,3,30,1,32,3,34,4,56,6,59,1,61,6,66, \
-2,68,6,70,3,77,2,79,6,83,6,120,2,123,5,125,3,130,1,132,3,134,3,141, \
-2,143,6,147,3,156"
+# End of Section 7
 
-
-
-SURFACE_F9_1_EQN="4*X0*X1^2+4*X1^2*X2+8*X0*X2^2+\
-3*X1*X2^2+3*X0*X1*X2+X0^2*X3+6*X0*X3^2+\
-5*X0*X1*X3+X0*X2*X3+5*X1*X2*X3"
-
-
-EC_11_EQUATION="1,0,3,0,0,0,10,1,0,0"
-
-
-
-
-HIRSCHFELD_SURFACE_EQUATION_ALGEBRAIC_FORM="X0^2*X3 + X1^2*X2 + X1*X2^2 + X0*X3^2"
-
-#X_0^2*X_3 + X_1^2*X_2 + X_1*X_2^2 + X_0*X_3^2
-#X^2*W+X*W^2+Y^2*Z+Y*Z^2
-
-
-
-
-ORTHOGONAL_OP_6_2_POINTS_OFF="6,7,10,13,14,15,16,20,24,28,29,30,31,35,39,43, 44, 45, 46, 48, 49, 50, 52, 53, 54, 56, 57, 58"
 
 
 
@@ -1693,6 +1673,8 @@ BARTH_SEXTIC_MOD_11_SINGULAR_POINTS="0, 1, 2, 4, 39, 44, 61, 63, 64, 66, 94, 96,
 NB_CUBIC_SURFACES_Q13=4
 
 
+HIRSCHFELD_SURFACE_EQUATION_ALGEBRAIC_FORM="X0^2*X3 + X1^2*X2 + X1*X2^2 + X0*X3^2"
+
 
 SUZUKI_8_GENERATORS="\
 1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1,1, \
@@ -2203,6 +2185,8 @@ test_2_4:
 	make vector_example_sparse
 	make matrix_example2
 	make matrix_example_co_1
+	make vector_index_set
+	make permutation_matrix
 
 
 vector_example1:
@@ -2279,6 +2263,31 @@ matrix_example_co_1:
 		-print_symbols
 
 
+
+
+
+vector_index_set:
+	$(ORBITER) -v 2 \
+		-define v -vector -dense "0,1,0,1,0,1,0,1,0,1,0,1" -end \
+		-define v2 -vector \
+			-index_of_support \
+			v \
+		-end \
+
+
+#1, 3, 5, 7, 9, 11
+
+
+
+permutation_matrix:
+	$(ORBITER) -v 2 \
+		-define P -vector -permutation_matrix "1,2,3,0" -end \
+
+
+#0 1 0 0 
+#0 0 1 0 
+#0 0 0 1 
+#1 0 0 0 
 
 
 
@@ -9115,6 +9124,8 @@ test_6_2:
 	make affine_map_F5_3
 	make affine_map_F5_4
 	make permutation_polynomial_F5
+	make conic_variety
+	make ideal_of_conic
 
 
 
@@ -9319,6 +9330,48 @@ permutation_polynomial_F5:
 			-field F \
 			-expand Y \
 		-end
+
+
+
+conic_variety:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 13 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 3 \
+			-homogeneous_of_degree 2 \
+			-monomial_ordering_partition \
+			-variables "X0,X1,X2" "X_0,X_1,X_2" \
+		-end \
+		-define V -variety \
+			-projective_space P \
+			-ring R \
+			-equation_in_algebraic_form \
+				"X0^2-X1*X2" \
+			-label_txt conic \
+			-label_tex "{\\rm conic}" \
+		-end
+
+# 1, 2, 3, 39, 57, 62, 68, 77, 134, 141, 150, 151, 175, 178
+
+ideal_of_conic:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 13 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 3 \
+			-homogeneous_of_degree 2 \
+			-monomial_ordering_partition \
+			-variables "X0,X1,X2" "X_0,X_1,X_2" \
+		-end \
+		-with R -do \
+			-ring_theoretic_activity \
+			-ideal "conic" "conic" "1, 2, 3, 39, 57, 62, 68, 77, 134, 141, 150, 151, 175, 178" \
+		-end
+
+#X0^2 + 12*X1*X2
+
 
 
 
@@ -9760,14 +9813,34 @@ H_3_4:
 # Section 7.5: Algebraic Varieties
 
 test_7_5:
+	make conic_variety_q13
 	make Op_6_2_variety
 	make curve_q13_f0
 	make Hirschfeld_q2
 	make quartic_curve_q13_f1_apply_transformation
 	make quartic_curve_q13_f0_apply_transformation
-	make Cremona_map
 
 
+
+conic_variety_q13:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 13 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 3 \
+			-homogeneous_of_degree 2 \
+			-monomial_ordering_partition \
+			-variables "X0,X1,X2" "X_0,X_1,X_2" \
+		-end \
+		-define V -variety \
+			-projective_space P \
+			-ring R \
+			-equation_in_algebraic_form \
+				"X0^2-X1*X2" \
+			-label_txt conic \
+			-label_tex "{\\rm conic}" \
+		-end
 
 
 
@@ -9890,37 +9963,6 @@ quartic_curve_q13_f0_apply_transformation:
 			-apply_transformation eqn trans \
 		-end 
 
-Cremona_map:
-	$(ORBITER) -v 6 \
-		-define F -finite_field -q 13 -end \
-		-define P -projective_space -n 2 -field F -v 0 -end \
-		-define R -polynomial_ring \
-			-field F \
-			-number_of_variables 3 \
-			-homogeneous_of_degree 6 \
-			-monomial_ordering_lex \
-			-variables "y0,y1,y2" "y_0,y_1,y_2" \
-			-end \
-		-define Y0 -symbolic_object \
-			-field F \
-			-text $(CREMONA_MAP_Y0) \
-			-end \
-		-define Y1 -symbolic_object \
-			-field F \
-			-text $(CREMONA_MAP_Y1) \
-			-end \
-		-define Y2 -symbolic_object \
-			-field F \
-			-text $(CREMONA_MAP_Y2) \
-			-end \
-		-define Cremona -symbolic_object \
-			-field F \
-			-text "Y0,Y1,Y2" \
-			-end \
-		-with P -do \
-		-projective_space_activity \
-			-map R Cremona "" \
-		-end
 
 
 
@@ -9931,12 +9973,37 @@ Cremona_map:
 
 
 test_7_6:
+	make conic_variety_q13_report
 	make Op_6_2_group
 	make curve_q13_f0_clean2_variety_compute_group
 	make Hirschfeld_q2_group
 	make Hirschfeld_q4_group
 	make Barth_sextic_mod_11
-	make Veronese_1_3_q7
+
+
+
+conic_variety_q13_report:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 13 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 3 \
+			-homogeneous_of_degree 2 \
+			-monomial_ordering_partition \
+			-variables "X0,X1,X2" "X_0,X_1,X_2" \
+		-end \
+		-define V -variety \
+			-projective_space P \
+			-ring R \
+			-equation_in_algebraic_form \
+				"X0^2-X1*X2" \
+			-label_txt conic \
+			-label_tex "{\\rm conic}" \
+		-end \
+		-with V -do -variety_activity -report -end
+	$(PDFLATEX) variety_conic_report.tex
+	$(OPEN) variety_conic_report.pdf
 
 
 
@@ -10082,6 +10149,55 @@ Barth_sextic_mod_11:
 	$(PDFLATEX) variety_Barth_q11_report.tex
 	$(OPEN) variety_Barth_q11_report.pdf
 
+
+
+
+
+
+###############################################################################
+# Section 7.7 Mappings between Projective Spaces
+
+
+
+test_7_7:
+	make Cremona_map
+	make Veronese_1_3_q7
+
+
+
+
+
+Cremona_map:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 13 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 3 \
+			-homogeneous_of_degree 6 \
+			-monomial_ordering_lex \
+			-variables "y0,y1,y2" "y_0,y_1,y_2" \
+			-end \
+		-define Y0 -symbolic_object \
+			-field F \
+			-text $(CREMONA_MAP_Y0) \
+			-end \
+		-define Y1 -symbolic_object \
+			-field F \
+			-text $(CREMONA_MAP_Y1) \
+			-end \
+		-define Y2 -symbolic_object \
+			-field F \
+			-text $(CREMONA_MAP_Y2) \
+			-end \
+		-define Cremona -symbolic_object \
+			-field F \
+			-text "Y0,Y1,Y2" \
+			-end \
+		-with P -do \
+		-projective_space_activity \
+			-map R Cremona "" \
+		-end
 
 
 
@@ -12097,6 +12213,8 @@ test_9_2:
 	make Eckardt_13_by_arc_lifting
 	make surface_F_abcd_Eckardt_q31_by_symbolic_object
 	make Dickson6_q2
+	make Dickson1_group
+	make Dickson2_group
 
 
 
@@ -12226,6 +12344,63 @@ Dickson6_q2:
 	$(OPEN) surface_by_coefficients_q2_report.pdf
 
 
+Dickson1_group:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 2 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 4 \
+			-homogeneous_of_degree 3 \
+			-monomial_ordering_partition \
+			-variables "X0,X1,X2,X3" "X_0,X_1,X_2,X_3" \
+		-end \
+		-define V -variety \
+			-projective_space P \
+			-ring R \
+			-equation_in_algebraic_form \
+				$(Dickson1_eqn_af) \
+			-label_txt Dickson_1 \
+			-label_tex "{\\rm Dickson\_1}" \
+		-end \
+		-with V -do -variety_activity \
+			-compute_group \
+			-nauty_control -save_orbit_of_equations eqn_ -end \
+		-end \
+		-with V -do -variety_activity -singular_points -end \
+		-with V -do -variety_activity -report -end
+	pdflatex variety_Dickson_1_report.tex
+	open variety_Dickson_1_report.pdf
+
+
+
+Dickson2_group:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 2 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 4 \
+			-homogeneous_of_degree 3 \
+			-monomial_ordering_partition \
+			-variables "X0,X1,X2,X3" "X_0,X_1,X_2,X_3" \
+		-end \
+		-define V -variety \
+			-projective_space P \
+			-ring R \
+			-equation_in_algebraic_form \
+				$(Dickson2_eqn_af) \
+			-label_txt Dickson_2 \
+			-label_tex "{\\rm Dickson\_2}" \
+		-end \
+		-with V -do -variety_activity \
+			-compute_group \
+			-nauty_control -save_orbit_of_equations eqn_ -end \
+		-end \
+		-with V -do -variety_activity -singular_points -end \
+		-with V -do -variety_activity -report -end
+	pdflatex variety_Dickson_2_report.tex
+	open variety_Dickson_2_report.pdf
 
 
 
@@ -23010,7 +23185,7 @@ quartic_curves_q13_classify_nauty:
 		-end_loop L \
 		-print_symbols
 	$(ORBITER) -v 3 \
-		-csv_file_concatenate_from_mask $(NB_CUBIC_SURFACES_Q13) \
+		-csv_file_concatenate_from_mask 0 3 \
 			surface_catalogue_q13_iso%ld_quartics.csv \
 			quartics_q13.csv
 	$(ORBITER) -v 3 \

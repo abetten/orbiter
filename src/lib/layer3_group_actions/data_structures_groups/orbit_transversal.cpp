@@ -47,7 +47,7 @@ void orbit_transversal::init_from_schreier(
 		cout << "orbit_transversal::init_from_schreier" << endl;
 	}
 	A = default_action;
-	A2 = Sch->A;
+	A2 = Sch->Generators_and_images->A;
 	nb_orbits = Sch->Forest->nb_orbits;
 	Reps = NEW_OBJECTS(set_and_stabilizer, nb_orbits);
 	for (orbit_idx = 0; orbit_idx < nb_orbits; orbit_idx++) {

@@ -30,8 +30,10 @@ sims::sims()
 	transversal_length = 0;
 	path = NULL;
 
+#if 0
 	nb_images = 0;
 	images = NULL;
+#endif
 
 	orbit_len = NULL;
 	orbit = NULL;
@@ -163,6 +165,8 @@ sims::~sims()
 		FREE_int(schreier_gen1);
 	}
 	A = NULL;
+
+#if 0
 	if (f_v) {
 		cout << "sims::~sims before delete_images" << endl;
 	}
@@ -170,18 +174,22 @@ sims::~sims()
 	if (f_v) {
 		cout << "sims::~sims before after_images" << endl;
 	}
+#endif
+
 	if (f_v) {
 		cout << "sims::~sims done" << endl;
 	}
 }
 
+#if 0
 sims::sims(
 		actions::action *A, int verbose_level)
 {
 	init(A, verbose_level);
 }
+#endif
 
-
+#if 0
 void sims::delete_images()
 {
 	int i;
@@ -252,6 +260,7 @@ void sims::images_append()
 
 #endif
 }
+#endif
 
 void sims::init(
 		actions::action *A, int verbose_level)
@@ -323,9 +332,12 @@ void sims::init(
 	
 	
 	nb_gen = NEW_int(my_base_len + 1);
+	Int_vec_zero(nb_gen, my_base_len + 1);
+#if 0
 	for (i = 0; i <= my_base_len; i++) {
 		nb_gen[i] = 0;
 	}
+#endif
 	
 	path = NEW_int(my_base_len);
 
@@ -358,8 +370,8 @@ void sims::init_without_base(
 				"A->degree=" << A->degree << endl;
 	}
 	sims::A = A;
-	nb_images = 0;
-	images = NULL;
+	//nb_images = 0;
+	//images = NULL;
 	
 	transversal_length = A->degree;
 	my_base_len = A->base_len();
@@ -710,6 +722,7 @@ void sims::init_generators(
 					<< " : after A->Group_element->element_invert" << endl;
 		}
 	}
+#if 0
 	if (f_v) {
 		cout << "sims::init_generators "
 				"before init_images" << endl;
@@ -719,6 +732,7 @@ void sims::init_generators(
 		cout << "sims::init_generators "
 				"after init_images" << endl;
 	}
+#endif
 	if (f_v) {
 		cout << "sims::init_generators "
 				"before init_generator_depth_and_perm" << endl;
@@ -750,7 +764,7 @@ void sims::init_generators_by_hdl(
 		A->Group_element->element_retrieve(gen_hdl[i], gens.ith(i), 0);
 		A->Group_element->element_invert(gens.ith(i), gens_inv.ith(i), 0);
 	}
-	init_images(nb_gen);	
+	//init_images(nb_gen);
 	init_generator_depth_and_perm(0);
 	if (f_v) {
 		cout << "sims::init_generators_by_hdl done" << endl;
@@ -918,6 +932,7 @@ void sims::add_generator(
 	A->Group_element->element_invert(
 			elt, gens_inv.ith(idx), false);
 	
+#if 0
 	if (f_v) {
 		cout << "sims::add_generator "
 				"before images_append" << endl;
@@ -927,6 +942,7 @@ void sims::add_generator(
 		cout << "sims::add_generator "
 				"after images_append" << endl;
 	}
+#endif
 
 	
 	if (f_v) {
@@ -1176,6 +1192,7 @@ int sims::get_image(
 {
 	int a;
 	
+#if 0
 	if (nb_images == 0 || images == NULL) {
 		a = A->Group_element->element_image_of(i, gens.ith(gen_idx), 0);
 		return a;
@@ -1183,13 +1200,16 @@ int sims::get_image(
 		//exit(1);
 	}
 	a = images[gen_idx][i];
-#if 1
+#endif
+#if 0
 	if (a == -1) {
 		a = A->Group_element->element_image_of(i, gens.ith(gen_idx), 0);
 		images[gen_idx][i] = a;
 		//images[gen_idx][A->degree + a] = i;
 	}
 #endif
+
+	a = A->Group_element->element_image_of(i, gens.ith(gen_idx), 0);
 	return a;
 }
 
