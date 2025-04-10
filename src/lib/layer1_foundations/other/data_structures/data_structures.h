@@ -603,6 +603,8 @@ class forest {
 	void compute_orbit_statistic_lint(
 			long int *set, int set_size,
 		int *orbit_count, int verbose_level);
+	other::data_structures::set_of_sets *get_set_of_sets(
+			int verbose_level);
 	void orbits_as_set_of_sets(
 			other::data_structures::set_of_sets *&S,
 			int verbose_level);
@@ -1590,12 +1592,15 @@ public:
 			long int *Pts, int sz, int verbose_level);
 	void init_from_file(
 			int &underlying_set_size,
-			std::string &fname, int verbose_level);
+			std::string &fname,
+			std::string &col_heading,
+			int verbose_level);
+	// two modes: one for reading csv files, one for reading inc files.
 	void init_from_csv_file(
 			int underlying_set_size,
 			std::string &fname, int verbose_level);
 	// outdated.
-	// Better use Fio.Csv_file_support->read_column_and_parse instead
+	// Better use Fio.Csv_file_support->read_column_as_set_of_sets instead
 	void init_from_orbiter_file(
 			int underlying_set_size,
 			std::string &fname, int verbose_level);
@@ -1635,7 +1640,8 @@ public:
 			int *&Inc, int &m, int &n,
 		int verbose_level);
 	void init_decomposition(
-			combinatorics::tactical_decompositions::decomposition *&D, int verbose_level);
+			combinatorics::tactical_decompositions::decomposition *&D,
+			int verbose_level);
 	void compute_tdo_decomposition(
 			combinatorics::tactical_decompositions::decomposition &D,
 		int verbose_level);
@@ -1827,7 +1833,8 @@ public:
 			void **v, int (*compare_func)(void *a, void *b, void *data),
 		void *data_for_compare,
 		int len, void *a, int &idx, int verbose_level);
-	int vec_search_general(void *vec,
+	int vec_search_general(
+			void *vec,
 		int (*compare_func)(void *vec,
 				void *a, int b, void *data_for_compare),
 		void *data_for_compare,

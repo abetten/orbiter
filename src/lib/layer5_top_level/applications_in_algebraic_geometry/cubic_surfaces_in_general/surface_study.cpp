@@ -38,7 +38,50 @@ static void matrix_entry_print(
 surface_study::surface_study()
 {
 	Record_birth();
+	q = 0;
+	nb = 0;
+	rep = NULL;
+	//std::string prefix;
+	F = NULL;
+	Surf = NULL;
+
+	nb_lines_PG_3 = 0;
+
+	data = NULL;
+	nb_gens = 0;
+	data_size = 0;
+	//std::string stab_order;
+
+	A = NULL;
+	A2 = NULL;
+	S = NULL;
+	Lines = NULL;
+	coeff = NULL;
+
+	f_semilinear = false;
+
+	SaS = NULL;
+
+	orbit_first = NULL;
+	orbit_length = NULL;
+	orbit = NULL;
+	nb_orbits = 0;
+
+	A_on_lines = NULL;
+	Orb = NULL;
+	shortest_line_orbit_idx = 0;
+
+	Adj = NULL;
+	R = NULL;
+	Intersection_pt = NULL;
+	Double_pts = NULL;
+	nb_double_pts = 0;
+	Eckardt_pts = NULL;
+	nb_Eckardt_pts = 0;
+
 }
+
+
 
 surface_study::~surface_study()
 {

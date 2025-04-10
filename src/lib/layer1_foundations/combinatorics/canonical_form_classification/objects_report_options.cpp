@@ -43,6 +43,8 @@ objects_report_options::objects_report_options()
 	f_incidence_draw_options = false;
 	//std::string incidence_draw_options_label;
 
+	f_canonical_forms = false;
+
 }
 
 objects_report_options::~objects_report_options()
@@ -160,6 +162,12 @@ int objects_report_options::read_arguments(
 				cout << "-incidence_draw_options " << incidence_draw_options_label << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-canonical_forms") == 0) {
+			f_canonical_forms = true;
+			if (f_v) {
+				cout << "-canonical_forms " << endl;
+			}
+		}
 
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
@@ -211,6 +219,9 @@ void objects_report_options::print()
 	}
 	if (f_incidence_draw_options) {
 		cout << "-incidence_draw_options " << incidence_draw_options_label << endl;
+	}
+	if (f_canonical_forms) {
+		cout << "-canonical_forms " << endl;
 	}
 
 }

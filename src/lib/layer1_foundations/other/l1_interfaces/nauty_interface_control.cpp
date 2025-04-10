@@ -30,6 +30,9 @@ nauty_interface_control::nauty_interface_control()
 	f_save_orbit_of_equations = false;
 	//std::string save_orbit_of_equations_prefix;
 
+	f_partition = false;
+	//std::string partition_text;
+
 }
 
 nauty_interface_control::~nauty_interface_control()
@@ -89,6 +92,13 @@ int nauty_interface_control::parse_arguments(
 				cout << "-save_orbit_of_equations " << save_orbit_of_equations_prefix << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-partition") == 0) {
+			f_partition = true;
+			partition_text.assign(argv[++i]);
+			if (f_v) {
+				cout << "-partition " << partition_text << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
 				cout << "-end" << endl;
@@ -113,6 +123,9 @@ void nauty_interface_control::print()
 	}
 	if (f_save_orbit_of_equations) {
 		cout << "-save_orbit_of_equations " << save_orbit_of_equations_prefix << endl;
+	}
+	if (f_partition) {
+		cout << "-partition " << partition_text << endl;
 	}
 }
 

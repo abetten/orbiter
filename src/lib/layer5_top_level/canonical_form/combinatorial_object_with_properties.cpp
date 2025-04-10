@@ -465,7 +465,8 @@ void combinatorial_object_with_properties::latex_report(
 		cout << "combinatorial_object_with_properties::latex_report "
 				"before compute_all_point_orbits_schreier" << endl;
 	}
-	Sch = A_perm->Strong_gens->compute_all_point_orbits_schreier(A_perm,
+	Sch = A_perm->Strong_gens->compute_all_point_orbits_schreier(
+			A_perm,
 			print_interval,
 			verbose_level);
 	if (f_v) {
@@ -598,7 +599,10 @@ void combinatorial_object_with_properties::latex_report(
 		int *block_labels;
 
 		Enc->compute_labels(
-				Sch->Forest->nb_orbits, Sch->Forest->orbit_first, Sch->Forest->orbit_len, Sch->Forest->orbit,
+				Sch->Forest->nb_orbits,
+				Sch->Forest->orbit_first,
+				Sch->Forest->orbit_len,
+				Sch->Forest->orbit,
 				point_labels, block_labels,
 				verbose_level);
 

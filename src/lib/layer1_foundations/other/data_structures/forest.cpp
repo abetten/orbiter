@@ -432,6 +432,47 @@ void forest::compute_orbit_statistic_lint(
 	}
 }
 
+other::data_structures::set_of_sets *forest::get_set_of_sets(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "forest::get_set_of_sets" << endl;
+	}
+
+	int *Sz;
+	int i, j, a, f, l;
+
+	other::data_structures::set_of_sets *S;
+
+	S = NEW_OBJECT(other::data_structures::set_of_sets);
+	Sz = NEW_int(nb_orbits);
+	for (i = 0; i < nb_orbits; i++) {
+		l = orbit_len[i];
+		Sz[i] = l;
+	}
+
+	S->init_basic_with_Sz_in_int(
+			degree /* underlying_set_size */,
+			nb_orbits, Sz, 0 /* verbose_level */);
+	for (i = 0; i < nb_orbits; i++) {
+		f = orbit_first[i];
+		l = orbit_len[i];
+		for (j = 0; j < l; j++) {
+			a = orbit[f + j];
+			S->Sets[i][j] = a;
+		}
+	}
+	FREE_int(Sz);
+	if (f_v) {
+		cout << "forest::get_set_of_sets done" << endl;
+	}
+
+	return S;
+
+}
 
 void forest::orbits_as_set_of_sets(
 		other::data_structures::set_of_sets *&S,

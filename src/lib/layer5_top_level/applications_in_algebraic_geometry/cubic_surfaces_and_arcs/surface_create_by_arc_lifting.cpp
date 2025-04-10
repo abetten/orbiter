@@ -428,17 +428,35 @@ void surface_create_by_arc_lifting::report(
 		cout << "surface_create_by_arc_lifting::report "
 			"before SOA->print_automorphism_group" << endl;
 	}
+	SOA->print_automorphism_group(
+			ost,
+		verbose_level - 1);
+	if (f_v) {
+		cout << "surface_create_by_arc_lifting::report "
+			"after SOA->print_automorphism_group" << endl;
+	}
 
 	string fname_mask;
 
 	fname_mask = "orbit_half_double_sixes_q" + std::to_string(SCA->Surf_A->PA->F->q)
 			+ "_iso_" + std::to_string(SCA->nb_surfaces) + "_%d";
 
-	SOA->print_automorphism_group(
+
+	if (f_v) {
+		cout << "surface_create_by_arc_lifting::report "
+			"before SOA->print_orbits_of_automorphism_group" << endl;
+	}
+	SOA->print_orbits_of_automorphism_group(
 			ost,
 		true /* f_print_orbits */,
 		fname_mask, Opt,
 		verbose_level - 1);
+	if (f_v) {
+		cout << "surface_create_by_arc_lifting::report "
+			"after SOA->print_orbits_of_automorphism_group" << endl;
+	}
+
+
 
 	ost << "arc " << arc_label << " yields a surface with "
 		<< AL->Web->E->nb_E << " Eckardt points and a "

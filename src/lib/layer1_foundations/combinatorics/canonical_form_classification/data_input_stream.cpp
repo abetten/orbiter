@@ -126,13 +126,18 @@ int data_input_stream::count_number_of_objects_to_test(
 
 		}
 		else if (Descr->Input[input_idx].input_type == t_data_input_stream_file_of_points) {
+
+			string fname;
+
+			fname = Descr->Input[input_idx].input_string;
+
 			if (f_v) {
 				cout << "input sets of points from file "
-						<< Descr->Input[input_idx].input_string << ":" << endl;
+						<< fname << ":" << endl;
 			}
 
-			if (Fio.file_size(Descr->Input[input_idx].input_string) <= 0) {
-				cout << "The file " << Descr->Input[input_idx].input_string << " does not exist" << endl;
+			if (Fio.file_size(fname) <= 0) {
+				cout << "The file " << fname << " does not exist" << endl;
 				exit(1);
 			}
 
@@ -140,18 +145,24 @@ int data_input_stream::count_number_of_objects_to_test(
 
 			SoS = NEW_OBJECT(other::data_structures::set_of_sets);
 
-			int underlying_set_size = 0;
+			int underlying_set_size;
 
 			if (f_v) {
 				cout << "data_input_stream::count_number_of_objects_to_test "
-						"Reading the file " << Descr->Input[input_idx].input_string << endl;
+						"Reading the file " << fname << endl;
 			}
+
+			string col_header;
+
+			col_header = "";
+
 			SoS->init_from_file(
 					underlying_set_size,
-					Descr->Input[input_idx].input_string, verbose_level);
+					fname, col_header,
+					verbose_level);
 			if (f_v) {
-				cout << "Read the file " << Descr->Input[input_idx].input_string
-						<< ", underlying_set_size=" << underlying_set_size << endl;
+				cout << "Read the file " << fname
+						<< endl;
 				cout << "number of sets = " << SoS->nb_sets << endl;
 			}
 
@@ -163,23 +174,31 @@ int data_input_stream::count_number_of_objects_to_test(
 		}
 
 		else if (Descr->Input[input_idx].input_type == t_data_input_stream_file_of_points_csv) {
+
+
+			string fname;
+			string col_header;
+
+			fname = Descr->Input[input_idx].input_string;
+			col_header = Descr->Input[input_idx].input_string2;
+
 			if (f_v) {
 				cout << "input sets of points from csv-file "
-						<< Descr->Input[input_idx].input_string
-						<< " column " << Descr->Input[input_idx].input_string2 << ":" << endl;
+						<< fname
+						<< " column " << col_header << ":" << endl;
 			}
 
 
-			if (Fio.file_size(Descr->Input[input_idx].input_string) <= 0) {
-				cout << "The file " << Descr->Input[input_idx].input_string << " does not exist" << endl;
+			if (Fio.file_size(fname) <= 0) {
+				cout << "The file " << fname << " does not exist" << endl;
 				exit(1);
 			}
 
 			int nb_sets;
 
 			nb_sets = Fio.Csv_file_support->read_column_and_count_nb_sets(
-					Descr->Input[input_idx].input_string,
-					Descr->Input[input_idx].input_string2 /* col_label */,
+					fname,
+					col_header,
 					0 /*verbose_level*/);
 
 			nb_objects_to_test += nb_sets;
@@ -224,15 +243,22 @@ int data_input_stream::count_number_of_objects_to_test(
 		}
 		else if (Descr->Input[input_idx].input_type ==
 				t_data_input_stream_file_of_packings_through_spread_table) {
+
+			string fname;
+			string spread_table;
+
+			fname = Descr->Input[input_idx].input_string;
+			spread_table = Descr->Input[input_idx].input_string2;
+
 			if (f_v) {
 				cout << "input sets of packings from file "
-					<< Descr->Input[input_idx].input_string << endl;
+					<< fname << endl;
 				cout << "through spread table "
-					<< Descr->Input[input_idx].input_string2 << " :" << endl;
+					<< spread_table << " :" << endl;
 			}
 
-			if (Fio.file_size(Descr->Input[input_idx].input_string) <= 0) {
-				cout << "The file " << Descr->Input[input_idx].input_string << " does not exist" << endl;
+			if (Fio.file_size(fname) <= 0) {
+				cout << "The file " << fname << " does not exist" << endl;
 				exit(1);
 			}
 			other::data_structures::set_of_sets *SoS;
@@ -241,15 +267,18 @@ int data_input_stream::count_number_of_objects_to_test(
 
 			int underlying_set_size = 0;
 
+			string col_label;
+
 			if (f_v) {
 				cout << "data_input_stream::count_number_of_objects_to_test "
-						"Reading the file " << Descr->Input[input_idx].input_string << endl;
+						"Reading the file " << fname << endl;
 			}
 			SoS->init_from_file(
 					underlying_set_size,
-					Descr->Input[input_idx].input_string, verbose_level);
+					fname, col_label,
+					verbose_level);
 			if (f_v) {
-				cout << "Read the file " << Descr->Input[input_idx].input_string
+				cout << "Read the file " << fname
 						<< ", underlying_set_size=" << underlying_set_size << endl;
 			}
 
@@ -259,7 +288,7 @@ int data_input_stream::count_number_of_objects_to_test(
 
 
 			if (f_v) {
-				cout << "The file " << Descr->Input[input_idx].input_string
+				cout << "The file " << fname
 					<< " has " << nb_obj << " objects" << endl;
 			}
 
@@ -424,13 +453,16 @@ int data_input_stream::count_number_of_objects_to_test(
 				nck = Combi.int_n_choose_k(N_points, k);
 				SoS = NEW_OBJECT(other::data_structures::set_of_sets);
 
+				string col_label;
+
 				cout << "classify_objects_using_nauty "
 						"Reading the file " << Descr->Input[input_idx].input_string
 					<<  " which contains designs on " << N_points
 					<< " points, nck=" << nck << endl;
 				SoS->init_from_file(
 						nck /* underlying_set_size */,
-						Descr->Input[input_idx].input_string, verbose_level);
+						Descr->Input[input_idx].input_string, col_label,
+						verbose_level);
 				cout << "Read the file " << Descr->Input[input_idx].input_string << endl;
 				nb_obj = SoS->nb_sets;
 				FREE_OBJECT(SoS);
@@ -1025,11 +1057,15 @@ void data_input_stream::read_objects(
 						"t_data_input_stream_file_of_designs" << endl;
 			}
 			int v, b, k, design_sz;
+			string fname, col_header;
 
 			v = Descr->Input[input_idx].input_data1;
 			b = Descr->Input[input_idx].input_data2;
 			k = Descr->Input[input_idx].input_data3;
 			design_sz = Descr->Input[input_idx].input_data4;
+
+			fname = Descr->Input[input_idx].input_string;
+			col_header = Descr->Input[input_idx].input_string2;
 
 			if (f_v) {
 				cout << "data_input_stream::read_objects "
@@ -1043,23 +1079,36 @@ void data_input_stream::read_objects(
 			}
 
 
+			other::orbiter_kernel_system::file_io Fio;
 			other::data_structures::set_of_sets *SoS;
 
 			SoS = NEW_OBJECT(other::data_structures::set_of_sets);
 
-			int underlying_set_size = v;
+			//int underlying_set_size = v;
 
 			if (f_v) {
 				cout << "data_input_stream::read_objects "
-						"Reading the file " << Descr->Input[input_idx].input_string << endl;
+						"Reading file " << fname
+						<< " column " << col_header << endl;
 			}
+			Fio.Csv_file_support->read_column_as_set_of_sets(
+					fname, col_header,
+					SoS,
+					verbose_level - 2);
+
+#if 0
 			SoS->init_from_file(
 					underlying_set_size,
-					Descr->Input[input_idx].input_string, verbose_level);
+					fname, verbose_level);
+#endif
+
+			//input_string2 is the column heading;
+
+
 			if (f_v) {
 				cout << "data_input_stream::read_objects "
-						"read the file " << Descr->Input[input_idx].input_string
-						<< ", underlying_set_size=" << underlying_set_size << endl;
+						"read the file " << fname
+						<< ", column=" << col_header << endl;
 			}
 
 			int h;
@@ -1353,6 +1402,7 @@ void data_input_stream::read_objects(
 			SoS = NEW_OBJECT(other::data_structures::set_of_sets);
 
 			int underlying_set_size = 0;
+			string col_label;
 
 			if (f_v) {
 				cout << "data_input_stream::read_objects "
@@ -1360,7 +1410,9 @@ void data_input_stream::read_objects(
 			}
 			SoS->init_from_file(
 					underlying_set_size,
-					Descr->Input[input_idx].input_string, verbose_level);
+					Descr->Input[input_idx].input_string,
+					col_label,
+					verbose_level);
 			if (f_v) {
 				cout << "Read the file " << Descr->Input[input_idx].input_string << ", "
 						"underlying_set_size=" << underlying_set_size << endl;
@@ -1404,6 +1456,7 @@ void data_input_stream::read_objects(
 			SoS = NEW_OBJECT(other::data_structures::set_of_sets);
 
 			int underlying_set_size = 0;
+			string col_label;
 
 			if (f_v) {
 				cout << "data_input_stream::read_objects "
@@ -1411,7 +1464,8 @@ void data_input_stream::read_objects(
 			}
 			SoS->init_from_file(
 					underlying_set_size,
-					Descr->Input[input_idx].input_string, verbose_level);
+					Descr->Input[input_idx].input_string, col_label,
+					verbose_level);
 			if (f_v) {
 				cout << "Read the file " << Descr->Input[input_idx].input_string
 						<< ", underlying_set_size=" << underlying_set_size << endl;
@@ -1447,6 +1501,7 @@ void data_input_stream::read_objects(
 			SoS = NEW_OBJECT(other::data_structures::set_of_sets);
 
 			int underlying_set_size = 0;
+			string col_label;
 
 			if (f_v) {
 				cout << "data_input_stream::read_objects "
@@ -1454,7 +1509,8 @@ void data_input_stream::read_objects(
 			}
 			SoS->init_from_file(
 					underlying_set_size,
-					Descr->Input[input_idx].input_string, verbose_level);
+					Descr->Input[input_idx].input_string, col_label,
+					verbose_level);
 			if (f_v) {
 				cout << "Read the file " << Descr->Input[input_idx].input_string
 						<< ", underlying_set_size=" << underlying_set_size << endl;
@@ -1520,6 +1576,7 @@ void data_input_stream::read_objects(
 		}
 
 		else if (Descr->Input[input_idx].input_type == t_data_input_stream_from_parallel_search) {
+
 			if (f_v) {
 				cout << "input from parallel search" << endl;
 			}

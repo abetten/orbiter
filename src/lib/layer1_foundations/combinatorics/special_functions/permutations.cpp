@@ -843,6 +843,64 @@ void permutations::lehmercode_to_permutation(
 }
 
 
+void permutations::apply_in_product_action(
+		int m, int n, int *perm_mn,
+		int *flags_in, int *flags_out, int nb_flags,
+		int verbose_level)
+// does not sort the output
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "permutations::apply_in_product_action" << endl;
+	}
+
+	int h, f, i, j, i1, j1, f1;
+
+	for (h = 0; h < nb_flags; h++) {
+		f = flags_in[h];
+		i = f / n;
+		j = f % n;
+		i1 = perm_mn[i];
+		j1 = perm_mn[m + j] - m;
+		f1 = i1 * n + j1;
+		flags_out[h] = f1;
+	}
+
+	if (f_v) {
+		cout << "permutations::apply_in_product_action done" << endl;
+	}
+}
+
+void permutations::apply_in_product_action_lint(
+		int m, int n, int *perm_mn,
+		long int *flags_in, long int *flags_out, int nb_flags,
+		int verbose_level)
+// does not sort the output
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "permutations::apply_in_product_action_lint" << endl;
+	}
+
+	int h, i, j, i1, j1;
+	long int f, f1;
+
+	for (h = 0; h < nb_flags; h++) {
+		f = flags_in[h];
+		i = f / n;
+		j = f % n;
+		i1 = perm_mn[i];
+		j1 = perm_mn[m + j] - m;
+		f1 = i1 * n + j1;
+		flags_out[h] = f1;
+	}
+
+	if (f_v) {
+		cout << "permutations::apply_in_product_action_lint done" << endl;
+	}
+}
 
 
 }}}}

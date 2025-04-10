@@ -74,6 +74,7 @@ ORBITER_MODULES= \
 		layer1_foundations/combinatorics/canonical_form_classification/classify_using_canonical_forms.o \
 		layer1_foundations/combinatorics/canonical_form_classification/data_input_stream_description_element.o \
 		layer1_foundations/combinatorics/canonical_form_classification/data_input_stream_description.o \
+		layer1_foundations/combinatorics/canonical_form_classification/data_input_stream_output.o \
 		layer1_foundations/combinatorics/canonical_form_classification/data_input_stream.o \
 		layer1_foundations/combinatorics/canonical_form_classification/encoded_combinatorial_object.o \
 		layer1_foundations/combinatorics/canonical_form_classification/objects_report_options.o \

@@ -187,6 +187,174 @@ surface_object_with_group::~surface_object_with_group()
 	}
 }
 
+void surface_object_with_group::cheat_sheet(
+		std::ostream &ost,
+		int f_print_orbits, std::string &fname_mask,
+		other::graphics::layered_graph_draw_options *Opt,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	other::orbiter_kernel_system::file_io Fio;
+
+	if (f_v) {
+		cout << "surface_object_with_group::cheat_sheet" << endl;
+		cout << "surface_object_with_group::cheat_sheet "
+				"verbose_level = " << verbose_level << endl;
+	}
+
+	if (f_v) {
+		cout << "surface_object_with_group::cheat_sheet "
+				"before SO->print_equation" << endl;
+	}
+	SO->SOP->print_equation(ost);
+	if (f_v) {
+		cout << "surface_object_with_group::cheat_sheet "
+				"after SO->print_equation" << endl;
+	}
+
+
+
+
+	algebra::ring_theory::longinteger_object ago;
+	Aut_gens->group_order(ago);
+	ost << "The automorphism group has order "
+			<< ago << "\\\\" << endl;
+
+
+
+
+	if (f_v) {
+		cout << "surface_object_with_group::cheat_sheet "
+				"before print_everything" << endl;
+	}
+
+	print_everything(ost, verbose_level - 1);
+
+
+
+	ost << "\\section*{The Automorphism Group}" << endl;
+
+
+	if (f_v) {
+		cout << "surface_object_with_group::cheat_sheet "
+				"after print_everything" << endl;
+	}
+
+	print_automorphism_group_generators(ost, verbose_level);
+
+
+
+	if (f_v) {
+		cout << "surface_object_with_group::cheat_sheet "
+				"before print_automorphism_group" << endl;
+	}
+	print_automorphism_group(
+			ost, verbose_level - 1);
+
+
+#if 0
+	if (SO->nb_pts_not_on_lines) {
+
+		if (f_v) {
+			cout << "surface_object_with_group::cheat_sheet "
+					"before cheat_sheet_quartic_curve" << endl;
+		}
+		cheat_sheet_quartic_curve(ost,
+			label_txt, label_tex, verbose_level);
+		if (f_v) {
+			cout << "surface_object_with_group::cheat_sheet "
+					"after cheat_sheet_quartic_curve" << endl;
+		}
+
+	}
+#endif
+
+
+	if (f_v) {
+		cout << "surface_object_with_group::cheat_sheet "
+				"before print_orbits_of_automorphism_group" << endl;
+	}
+	print_orbits_of_automorphism_group(
+			ost, f_print_orbits,
+			fname_mask, Opt, verbose_level - 1);
+	if (f_v) {
+		cout << "surface_object_with_group::cheat_sheet "
+				"after print_orbits_of_automorphism_group" << endl;
+	}
+
+
+
+
+	ost << "\\clearpage\\subsection*{The Elements of "
+			"the Automorphism Group}" << endl;
+
+
+	Aut_gens->print_elements_latex_ost(ost);
+
+	ost << "\\clearpage\\subsection*{The Group Table}" << endl;
+	long int go;
+	int block_width = 12;
+
+	go = Aut_gens->group_order_as_lint();
+	if (go < 50) {
+
+		other::l1_interfaces::latex_interface L;
+
+		int *Table;
+		Aut_gens->create_group_table(
+				Table, go, verbose_level - 1);
+		L.print_integer_matrix_tex_block_by_block(
+				ost,
+				Table, go, go, block_width);
+		FREE_int(Table);
+	}
+	else {
+		ost << "Too big to print." << endl;
+	}
+
+
+	Aut_gens->export_group_and_copy_to_latex(
+			SO->label_txt,
+			ost,
+			A_on_the_lines,
+			verbose_level - 2);
+
+
+	if (Aut_gens->A->degree < 500) {
+
+		Aut_gens->export_group_and_copy_to_latex(
+				SO->label_txt,
+				ost,
+				Aut_gens->A,
+				verbose_level - 2);
+
+	}
+	else {
+		cout << "permutation degree is too large, "
+				"skipping export to magma and GAP" << endl;
+	}
+
+	if (f_v) {
+		cout << "surface_object_with_group::cheat_sheet "
+				"before SO->Surf->Schlaefli->print_Steiner_and_Eckardt" << endl;
+	}
+
+	SO->Surf->Schlaefli->print_Steiner_and_Eckardt(ost);
+
+	if (f_v) {
+		cout << "surface_object_with_group::cheat_sheet "
+				"after SO->Surf->Schlaefli->print_Steiner_and_Eckardt" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "surface_object_with_group::cheat_sheet done" << endl;
+	}
+
+
+}
+
+
 void surface_object_with_group::init_equation(
 	surface_with_action *Surf_A, int *eqn,
 	groups::strong_generators *Aut_gens,
@@ -1398,8 +1566,6 @@ void surface_object_with_group::print_elements_on_tritangent_planes(
 
 void surface_object_with_group::print_automorphism_group(
 	std::ostream &ost,
-	int f_print_orbits, std::string &fname_mask,
-	other::graphics::layered_graph_draw_options *Opt,
 	int verbose_level)
 // called from surface_object_with_group::cheat_sheet
 {
@@ -1428,6 +1594,29 @@ void surface_object_with_group::print_automorphism_group(
 			verbose_level);
 
 
+	if (f_v) {
+		cout << "surface_object_with_group::print_automorphism_group done" << endl;
+	}
+}
+
+
+
+void surface_object_with_group::print_orbits_of_automorphism_group(
+	std::ostream &ost,
+	int f_print_orbits, std::string &fname_mask,
+	other::graphics::layered_graph_draw_options *Opt,
+	int verbose_level)
+// called from surface_object_with_group::cheat_sheet
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_object_with_group::print_orbits_of_automorphism_group" << endl;
+	}
+
+
+	algebra::ring_theory::longinteger_object go;
+	other::l1_interfaces::latex_interface L;
 
 	ost << "\\subsection*{Orbits on Eckardt points}" << endl;
 	Orbits_on_Eckardt_points->print_and_list_orbits_with_original_labels_tex(ost);
@@ -1535,7 +1724,7 @@ void surface_object_with_group::print_automorphism_group(
 	if (SO->Variety_object->Line_sets->Set_size[0] == 27) {
 
 		if (f_v) {
-			cout << "surface_object_with_group::print_automorphism_group "
+			cout << "surface_object_with_group::print_orbits_of_automorphism_group "
 					"before print_orbits_on_schlaefli_related_things" << endl;
 		}
 		print_orbits_on_schlaefli_related_things(ost,
@@ -1543,7 +1732,7 @@ void surface_object_with_group::print_automorphism_group(
 				Opt,
 				verbose_level);
 		if (f_v) {
-			cout << "surface_object_with_group::print_automorphism_group "
+			cout << "surface_object_with_group::print_orbits_of_automorphism_group "
 					"after print_orbits_on_schlaefli_related_things" << endl;
 		}
 	}
@@ -1552,7 +1741,7 @@ void surface_object_with_group::print_automorphism_group(
 	ost << "\\clearpage" << endl;
 
 	if (f_v) {
-		cout << "surface_object_with_group::print_automorphism_group done" << endl;
+		cout << "surface_object_with_group::print_orbits_of_automorphism_group done" << endl;
 	}
 }
 
@@ -1745,150 +1934,6 @@ void surface_object_with_group::cheat_sheet_basic(
 	}
 }
 
-void surface_object_with_group::cheat_sheet(
-		std::ostream &ost,
-		int f_print_orbits, std::string &fname_mask,
-		other::graphics::layered_graph_draw_options *Opt,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	other::orbiter_kernel_system::file_io Fio;
-
-	if (f_v) {
-		cout << "surface_object_with_group::cheat_sheet" << endl;
-		cout << "surface_object_with_group::cheat_sheet "
-				"verbose_level = " << verbose_level << endl;
-	}
-
-	if (f_v) {
-		cout << "surface_object_with_group::cheat_sheet "
-				"before SO->print_equation" << endl;
-	}
-	SO->SOP->print_equation(ost);
-	if (f_v) {
-		cout << "surface_object_with_group::cheat_sheet "
-				"after SO->print_equation" << endl;
-	}
-
-
-	algebra::ring_theory::longinteger_object ago;
-	Aut_gens->group_order(ago);
-	ost << "The automorphism group has order "
-			<< ago << "\\\\" << endl;
-
-
-
-
-	if (f_v) {
-		cout << "surface_object_with_group::cheat_sheet "
-				"before print_everything" << endl;
-	}
-
-	print_everything(ost, verbose_level - 1);
-
-	if (f_v) {
-		cout << "surface_object_with_group::cheat_sheet "
-				"after print_everything" << endl;
-	}
-
-	print_automorphism_group_generators(ost, verbose_level);
-
-
-
-	if (f_v) {
-		cout << "surface_object_with_group::cheat_sheet "
-				"before print_automorphism_group" << endl;
-	}
-	print_automorphism_group(
-			ost, f_print_orbits,
-			fname_mask, Opt, verbose_level - 1);
-
-
-#if 0
-	if (SO->nb_pts_not_on_lines) {
-
-		if (f_v) {
-			cout << "surface_object_with_group::cheat_sheet "
-					"before cheat_sheet_quartic_curve" << endl;
-		}
-		cheat_sheet_quartic_curve(ost,
-			label_txt, label_tex, verbose_level);
-		if (f_v) {
-			cout << "surface_object_with_group::cheat_sheet "
-					"after cheat_sheet_quartic_curve" << endl;
-		}
-
-	}
-#endif
-
-	ost << "\\clearpage\\subsection*{The Elements of "
-			"the Automorphism Group}" << endl;
-
-
-	Aut_gens->print_elements_latex_ost(ost);
-
-	ost << "\\clearpage\\subsection*{The Group Table}" << endl;
-	long int go;
-	int block_width = 12;
-
-	go = Aut_gens->group_order_as_lint();
-	if (go < 50) {
-
-		other::l1_interfaces::latex_interface L;
-
-		int *Table;
-		Aut_gens->create_group_table(
-				Table, go, verbose_level - 1);
-		L.print_integer_matrix_tex_block_by_block(
-				ost,
-				Table, go, go, block_width);
-		FREE_int(Table);
-	}
-	else {
-		ost << "Too big to print." << endl;
-	}
-
-
-	Aut_gens->export_group_and_copy_to_latex(
-			SO->label_txt,
-			ost,
-			A_on_the_lines,
-			verbose_level - 2);
-
-
-	if (Aut_gens->A->degree < 500) {
-
-		Aut_gens->export_group_and_copy_to_latex(
-				SO->label_txt,
-				ost,
-				Aut_gens->A,
-				verbose_level - 2);
-
-	}
-	else {
-		cout << "permutation degree is too large, "
-				"skipping export to magma and GAP" << endl;
-	}
-
-	if (f_v) {
-		cout << "surface_object_with_group::cheat_sheet "
-				"before SO->Surf->Schlaefli->print_Steiner_and_Eckardt" << endl;
-	}
-
-	SO->Surf->Schlaefli->print_Steiner_and_Eckardt(ost);
-
-	if (f_v) {
-		cout << "surface_object_with_group::cheat_sheet "
-				"after SO->Surf->Schlaefli->print_Steiner_and_Eckardt" << endl;
-	}
-
-
-	if (f_v) {
-		cout << "surface_object_with_group::cheat_sheet done" << endl;
-	}
-
-
-}
 
 void surface_object_with_group::cheat_sheet_group_elements(
 		std::ostream &ost,
@@ -2134,7 +2179,8 @@ void surface_object_with_group::cheat_sheet_group_elements(
 
 
 void surface_object_with_group::print_automorphism_group_generators(
-		std::ostream &ost, int verbose_level)
+		std::ostream &ost,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	other::orbiter_kernel_system::file_io Fio;
@@ -2162,7 +2208,8 @@ void surface_object_with_group::print_automorphism_group_generators(
 				"before Aut_gens->print_generators_in_different_action_tex" << endl;
 		A_on_the_lines->print_info();
 	}
-	Aut_gens->print_generators_in_different_action_tex(ost, A_on_the_lines);
+	Aut_gens->print_generators_in_different_action_tex(
+			ost, A_on_the_lines);
 
 
 	if (f_has_nice_gens) {
@@ -2724,9 +2771,6 @@ void surface_object_with_group::export_all_quartic_curves(
 				"nb_orbits = " << Orbits_on_points_not_on_lines->Forest->nb_orbits << endl;
 	}
 	int pt_orbit;
-	//long int po_go;
-
-	//po_go = Aut_gens->group_order_as_lint();
 
 	nb_rows = Orbits_on_points_not_on_lines->Forest->nb_orbits;
 
@@ -2923,7 +2967,8 @@ void surface_object_with_group::create_vector_of_strings(
 
 	s_eqn_surface = Surf->PolynomialDomains->Poly3_4->stringify(SO->Variety_object->eqn);
 
-	s_eqn_surface_algebraic = Surf->PolynomialDomains->Poly3_4->stringify_algebraic_notation(SO->Variety_object->eqn);
+	s_eqn_surface_algebraic = Surf->PolynomialDomains->Poly3_4->stringify_algebraic_notation(
+			SO->Variety_object->eqn);
 
 
 	pt_coeff = Int_vec_stringify(QC->pt_A_coeff, 4);
@@ -2940,7 +2985,9 @@ void surface_object_with_group::create_vector_of_strings(
 
 	s_Lines = Lint_vec_stringify(QC->Bitangents, QC->nb_bitangents);
 
-	s_Kovalevski = Lint_vec_stringify(QO->QP->Kovalevski->Kovalevski_points, QO->QP->Kovalevski->nb_Kovalevski);
+	s_Kovalevski = Lint_vec_stringify(
+			QO->QP->Kovalevski->Kovalevski_points,
+			QO->QP->Kovalevski->nb_Kovalevski);
 
 	algebra::ring_theory::longinteger_object ago;
 
@@ -3180,6 +3227,22 @@ void surface_object_with_group::print_everything(
 	}
 
 
+
+	if (f_v) {
+		cout << "surface_object_with_group::print_everything "
+				"before report_orbits" << endl;
+	}
+	report_orbits(
+			ost,
+			verbose_level);
+	if (f_v) {
+		cout << "surface_object_with_group::print_everything "
+				"after report_orbits" << endl;
+	}
+
+
+
+
 	//SO->print_planes_in_trihedral_pairs(ost);
 
 #if 0
@@ -3384,7 +3447,6 @@ void surface_object_with_group::print_summary(
 void surface_object_with_group::print_action_on_surface(
 		std::string &label_of_elements,
 		data_structures_groups::vector_ge *Elements,
-		//int *element_data, int nb_elements,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3588,6 +3650,183 @@ void surface_object_with_group::compute_tactical_decompositions(
 	if (f_v) {
 		cout << "surface_object_with_group::compute_tactical_decompositions done" << endl;
 	}
+}
+
+void surface_object_with_group::report_orbits(
+		std::ostream &ost,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_object_with_group::report_orbits" << endl;
+	}
+
+	ost << "\\subsection*{Orbits}" << endl;
+
+
+	other::data_structures::set_of_sets *SoS_Orbits_on_lines;
+	other::data_structures::set_of_sets *SoS_Orbits_on_points;
+	other::data_structures::set_of_sets *SoS_Orbits_on_Eckardt_points;
+	other::data_structures::set_of_sets *SoS_Orbits_on_Double_points;
+	other::data_structures::set_of_sets *SoS_Orbits_on_Single_points;
+	other::data_structures::set_of_sets *SoS_Orbits_on_points_not_on_lines;
+	other::data_structures::set_of_sets *SoS_Orbits_on_Hesse_planes;
+	other::data_structures::set_of_sets *SoS_Orbits_on_axes;
+	other::data_structures::set_of_sets *SoS_Orbits_on_single_sixes;
+	other::data_structures::set_of_sets *SoS_Orbits_on_double_sixes;
+	other::data_structures::set_of_sets *SoS_Orbits_on_tritangent_planes;
+	other::data_structures::set_of_sets *SoS_Orbits_on_trihedral_pairs;
+
+	SoS_Orbits_on_lines = Orbits_on_lines->Forest->get_set_of_sets(verbose_level);
+	SoS_Orbits_on_points = Orbits_on_points->Forest->get_set_of_sets(verbose_level);
+	SoS_Orbits_on_Eckardt_points = Orbits_on_Eckardt_points->Forest->get_set_of_sets(verbose_level);
+	SoS_Orbits_on_Double_points = Orbits_on_Double_points->Forest->get_set_of_sets(verbose_level);
+	SoS_Orbits_on_Single_points = Orbits_on_Single_points->Forest->get_set_of_sets(verbose_level);
+	SoS_Orbits_on_points_not_on_lines = Orbits_on_points_not_on_lines->Forest->get_set_of_sets(verbose_level);
+	SoS_Orbits_on_Hesse_planes = Orbits_on_Hesse_planes->Forest->get_set_of_sets(verbose_level);
+	SoS_Orbits_on_axes = Orbits_on_axes->Forest->get_set_of_sets(verbose_level);
+	SoS_Orbits_on_single_sixes = Orbits_on_single_sixes->Forest->get_set_of_sets(verbose_level);
+	SoS_Orbits_on_double_sixes = Orbits_on_double_sixes->Forest->get_set_of_sets(verbose_level);
+	SoS_Orbits_on_tritangent_planes = Orbits_on_tritangent_planes->Forest->get_set_of_sets(verbose_level);
+	SoS_Orbits_on_trihedral_pairs = Orbits_on_trihedral_pairs->Forest->get_set_of_sets(verbose_level);
+
+
+	ost << "\\subsection*{Orbits on Lines}" << endl;
+
+	//SoS_Orbits_on_lines->print_table_tex(ost);
+
+	{
+		other::l1_interfaces::latex_interface L;
+		int i, j, idx, len;
+
+		//cout << "set of sets with " << nb_sets << " sets :" << endl;
+		for (i = 0; i < SoS_Orbits_on_lines->nb_sets; i++) {
+
+			len = SoS_Orbits_on_lines->Set_size[i];
+
+			ost << "Set " << i << " has size " << len << " : ";
+
+			ost << "$";
+
+			L.lint_set_print_tex(ost, SoS_Orbits_on_lines->Sets[i], len);
+			//SO->Surf->print_lines_tex(ost, SoS_Orbits_on_lines->Sets[i], len);
+
+			ost << " = ";
+			ost << "\\{ ";
+			for (j = 0; j < len; j++) {
+				idx = SoS_Orbits_on_lines->Sets[i][j];
+				ost << SO->Surf->Schlaefli->Labels->Line_label_tex[idx];
+				if (j < len - 1) {
+					ost << ", ";
+				}
+			}
+			ost << " \\}";
+
+
+			ost << "$";
+
+
+			ost << "\\\\" << endl;
+		}
+	}
+
+
+	ost << "\\subsection*{Orbits on Points}" << endl;
+
+	SoS_Orbits_on_points->print_table_tex(ost);
+
+
+	ost << "\\subsection*{Orbits on Eckardt Points}" << endl;
+
+	SoS_Orbits_on_Eckardt_points->print_table_tex(ost);
+
+	ost << "\\subsection*{Orbits on Double Points}" << endl;
+
+	SoS_Orbits_on_Double_points->print_table_tex(ost);
+
+	ost << "\\subsection*{Orbits on Single Points}" << endl;
+
+	SoS_Orbits_on_Single_points->print_table_tex(ost);
+
+	ost << "\\subsection*{Orbits on Points not on Lines}" << endl;
+
+	SoS_Orbits_on_points_not_on_lines->print_table_tex(ost);
+
+	ost << "\\subsection*{Orbits on Hesse Planes}" << endl;
+
+	SoS_Orbits_on_Hesse_planes->print_table_tex(ost);
+
+	ost << "\\subsection*{Orbits on Axes}" << endl;
+
+	SoS_Orbits_on_axes->print_table_tex(ost);
+
+	ost << "\\subsection*{Orbits on Single Sixes}" << endl;
+
+	SoS_Orbits_on_single_sixes->print_table_tex(ost);
+
+	ost << "\\subsection*{Orbits on Double Sixes}" << endl;
+
+	SoS_Orbits_on_double_sixes->print_table_tex(ost);
+
+	ost << "\\subsection*{Orbits on Tritangent Planes}" << endl;
+
+	//SoS_Orbits_on_tritangent_planes->print_table_tex(ost);
+
+
+	{
+		other::l1_interfaces::latex_interface L;
+		int i, j, idx, len;
+
+		//cout << "set of sets with " << nb_sets << " sets :" << endl;
+		for (i = 0; i < SoS_Orbits_on_tritangent_planes->nb_sets; i++) {
+
+			len = SoS_Orbits_on_tritangent_planes->Set_size[i];
+
+			ost << "Set " << i << " has size " << len << " : ";
+
+			ost << "$";
+
+			L.lint_set_print_tex(ost, SoS_Orbits_on_tritangent_planes->Sets[i], len);
+			//SO->Surf->print_lines_tex(ost, SoS_Orbits_on_lines->Sets[i], len);
+
+			ost << " = ";
+			ost << "\\{ ";
+			for (j = 0; j < len; j++) {
+				idx = SoS_Orbits_on_tritangent_planes->Sets[i][j];
+				//ost << SO->Surf->Schlaefli->Labels->Tritangent_plane_label_tex[idx];
+
+				ost << "\\pi_{" << SO->Surf->Schlaefli->Schlaefli_tritangent_planes->Eckard_point_label_tex[idx] << "}";
+				//ost << SO->Surf->Schlaefli->Schlaefli_tritangent_planes->Eckard_point_label_tex[idx];
+				//ost << SO->Surf->Schlaefli->Schlaefli_tritangent_planes->Eckard_point_label_tex[idx];
+
+
+				if (j < len - 1) {
+					ost << ", ";
+				}
+			}
+			ost << " \\}";
+
+
+			ost << "$";
+
+
+			ost << "\\\\" << endl;
+		}
+	}
+
+
+
+	ost << "\\subsection*{Orbits on Trihedral Pairs}" << endl;
+
+	SoS_Orbits_on_trihedral_pairs->print_table_tex(ost);
+
+
+
+	if (f_v) {
+		cout << "surface_object_with_group::report_orbits done" << endl;
+	}
+
 }
 
 

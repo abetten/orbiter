@@ -346,6 +346,10 @@ void vector_builder::init(
 			v[cnt++] = i;
 
 		}
+		if (Descr->f_format) {
+			f_has_k = true;
+			k = Descr->format_k;
+		}
 		if (f_v) {
 			cout << "vector_builder::init found a vector of length " << len << endl;
 		}

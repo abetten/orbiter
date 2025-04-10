@@ -196,6 +196,7 @@ void csv_file_support::int_matrix_write_csv(
 void csv_file_support::lint_matrix_write_csv(
 		std::string &fname,
 		long int *M, int m, int n)
+// outdated, used write_table_of_strings_with_col_headings instead
 {
 	int i, j;
 
@@ -2927,6 +2928,7 @@ void csv_file_support::read_column_as_set_of_sets(
 		std::string &fname, std::string &col_label,
 		data_structures::set_of_sets *&SoS,
 		int verbose_level)
+// previously read_column_and_parse
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = false; //(verbose_level >= 1);
@@ -3883,7 +3885,8 @@ void csv_file_support::collect_stats(
 			Data[h] = Fio->count_number_of_data_lines_in_spreadsheet(
 					fname, 0 /* verbose_level */);
 			if (Data[h] == -1) {
-				cout << "csv_file_support::collect_stats cannot open the file " << fname << endl;
+				cout << "csv_file_support::collect_stats "
+						"cannot open the file " << fname << endl;
 				exit(1);
 			}
 			nb_sol_total += Data[h];
@@ -3895,7 +3898,8 @@ void csv_file_support::collect_stats(
 	}
 
 	if (f_v) {
-		cout << "csv_file_support::collect_stats nb_sol_total = " << nb_sol_total << endl;
+		cout << "csv_file_support::collect_stats "
+				"nb_sol_total = " << nb_sol_total << endl;
 	}
 
 	std::string *Table;

@@ -14,6 +14,7 @@ MODULES = \
 		classify_using_canonical_forms.o \
 		data_input_stream_description_element.o \
 		data_input_stream_description.o \
+		data_input_stream_output.o \
 		data_input_stream.o \
 		encoded_combinatorial_object.o \
 		objects_report_options.o

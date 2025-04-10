@@ -2772,6 +2772,49 @@ void geometry_global::conic_type2(
 }
 
 
+void geometry_global::do_union_of_lines_in_PG(
+		geometry::projective_geometry::projective_space *P,
+		std::string &lines_text,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "geometry_global::do_union_of_lines_in_PG" << endl;
+	}
+
+	int *Lines_rk;
+	int nb_lines;
+
+	Get_int_vector_from_label(lines_text, Lines_rk, nb_lines, 0 /* verbose_level */);
+
+	if (f_v) {
+		cout << "geometry_global::do_union_of_lines_in_PG Lines = ";
+		Int_vec_print(cout, Lines_rk, nb_lines);
+		cout << endl;
+	}
+
+	int *Union;
+	int sz;
+
+	P->Subspaces->Implementation->union_of_lines(
+			Lines_rk, nb_lines, Union, sz,
+			verbose_level);
+
+	if (f_v) {
+		cout << "geometry_global::do_union_of_lines_in_PG union has size " << sz << endl;
+		cout << "geometry_global::do_union_of_lines_in_PG union = ";
+		Int_vec_print(cout, Union, sz);
+		cout << endl;
+	}
+
+
+	if (f_v) {
+		cout << "geometry_global::do_union_of_lines_in_PG done" << endl;
+	}
+}
+
+
 void geometry_global::do_rank_lines_in_PG(
 		geometry::projective_geometry::projective_space *P,
 		std::string &label,

@@ -76,55 +76,6 @@ void combinatorial_object_stream::init(
 
 }
 
-#if 0
-void combinatorial_object_stream::init_from_geometric_object(
-		geometry::other_geometry::geometric_object_create *GOC,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "combinatorial_object_stream::init_from_geometric_object" << endl;
-	}
-
-
-	combinatorics::canonical_form_classification::data_input_stream_description *Data_input_stream_description;
-
-	Data_input_stream_description = NEW_OBJECT(combinatorics::canonical_form_classification::data_input_stream_description);
-
-	combinatorics::canonical_form_classification::data_input_stream_description_element *E;
-
-	E = NEW_OBJECT(combinatorics::canonical_form_classification::data_input_stream_description_element);
-	string a;
-
-	E->init_geometric_object(GOC);
-	Data_input_stream_description->Input.push_back(*E);
-	Data_input_stream_description->nb_inputs++;
-
-	Data_input_stream_description->f_label = true;
-	Data_input_stream_description->label_txt = GOC->label_txt;
-	Data_input_stream_description->label_tex = GOC->label_tex;
-
-	IS = NEW_OBJECT(combinatorics::canonical_form_classification::data_input_stream);
-
-	if (f_v) {
-		cout << "combinatorial_object_stream::init_from_geometric_object "
-				"before IS->init" << endl;
-	}
-
-	IS->init(Data_input_stream_description, verbose_level);
-
-	if (f_v) {
-		cout << "combinatorial_object_stream::init_from_geometric_object "
-				"after IS->init" << endl;
-	}
-
-
-	if (f_v) {
-		cout << "combinatorial_object_stream::init_from_geometric_object done" << endl;
-	}
-}
-#endif
 
 
 void combinatorial_object_stream::do_canonical_form(
@@ -152,7 +103,8 @@ void combinatorial_object_stream::do_canonical_form(
 	}
 	Classification_of_objects->perform_classification(
 			Canonical_form_Descr,
-			true /* f_projective_space */, P,
+			f_projective_space,
+			P,
 			IS,
 			verbose_level);
 	if (f_v) {
@@ -188,57 +140,6 @@ void combinatorial_object_stream::do_canonical_form(
 
 }
 
-#if 0
-void combinatorial_object_stream::do_canonical_form_not_PG(
-		canonical_form_classification::classification_of_objects_description
-			*Canonical_form_Descr,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "combinatorial_object_stream::do_canonical_form_not_PG" << endl;
-	}
-
-	Classification = NEW_OBJECT(canonical_form_classification::classification_of_objects);
-
-	if (f_v) {
-		cout << "combinatorial_object_stream::do_canonical_form_not_PG "
-				"before Classification->perform_classification" << endl;
-	}
-	Classification->perform_classification(
-			Canonical_form_Descr,
-			false /* f_projective_space */, NULL /* P */,
-			IS,
-			verbose_level);
-	if (f_v) {
-		cout << "combinatorial_object_stream::do_canonical_form_not_PG "
-				"after Combo->Classification->perform_classification" << endl;
-	}
-
-
-	Objects_after_classification = NEW_OBJECT(canonical_form::objects_after_classification);
-
-	if (f_v) {
-		cout << "combinatorial_object_stream::do_canonical_form_not_PG "
-				"before Objects_after_classification->init_after_nauty" << endl;
-	}
-	Objects_after_classification->init_after_nauty(
-			Classification,
-			false /* f_projective_space */, NULL,
-			verbose_level);
-	if (f_v) {
-		cout << "combinatorial_object_stream::do_canonical_form_not_PG "
-				"after Objects_after_classification->init_after_nauty" << endl;
-	}
-
-
-	if (f_v) {
-		cout << "combinatorial_object_stream::do_canonical_form_not_PG done" << endl;
-	}
-
-}
-#endif
 
 void combinatorial_object_stream::do_test_distinguishing_property(
 		combinatorics::graph_theory::colored_graph *CG,

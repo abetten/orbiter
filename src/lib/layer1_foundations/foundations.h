@@ -379,6 +379,7 @@ namespace combinatorics {
 		class classify_using_canonical_forms;
 		class data_input_stream_description_element;
 		class data_input_stream_description;
+		class data_input_stream_output;
 		class data_input_stream;
 		class encoded_combinatorial_object;
 		class objects_report_options;

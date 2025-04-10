@@ -769,17 +769,19 @@ void any_combinatorial_object::init_packing_from_spread_table(
 
 	if (f_v) {
 		cout << "any_combinatorial_object::init_packing_from_spread_table" << endl;
-		}
+	}
 	//object_with_canonical_form::P = P;
 	type = t_PAC;
 	//q = P->q;
 	size_of_spread = q * q + 1;
 	size_of_packing = q * q + q + 1;
+
 	if (spread_size != size_of_spread) {
 		cout << "any_combinatorial_object::init_packing_from_spread_table "
 				"spread_size != size_of_spread" << endl;
 		exit(1);
 	}
+
 	N_lines = size_of_spread * size_of_packing;
 
 	SoS = NEW_OBJECT(other::data_structures::set_of_sets);
@@ -792,7 +794,8 @@ void any_combinatorial_object::init_packing_from_spread_table(
 
 	for (i = 0; i < size_of_packing; i++) {
 		a = data[i];
-		Lint_vec_copy(Spread_table + a * size_of_spread,
+		Lint_vec_copy(
+				Spread_table + a * size_of_spread,
 				SoS->Sets[i], size_of_spread);
 	}
 	if (verbose_level >= 5) {
@@ -828,7 +831,7 @@ void any_combinatorial_object::init_packing_from_spread_table(
 
 	if (f_v) {
 		cout << "object_with_canonical_form::init_packing_from_spread_table done" << endl;
-		}
+	}
 }
 
 void any_combinatorial_object::init_design_from_block_orbits(
@@ -1870,7 +1873,8 @@ void any_combinatorial_object::canonical_form_given_canonical_labeling(
 				"after OiP->encode_incma" << endl;
 	}
 
-	Enc->canonical_form_given_canonical_labeling(canonical_labeling,
+	Enc->canonical_form_given_canonical_labeling(
+			canonical_labeling,
 				B,
 				verbose_level);
 

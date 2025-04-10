@@ -285,7 +285,10 @@ void set_of_sets::init_single(
 
 void set_of_sets::init_from_file(
 		int &underlying_set_size,
-		std::string &fname, int verbose_level)
+		std::string &fname,
+		std::string &col_heading,
+		int verbose_level)
+// two modes: one for reading csv files, one for reading inc files.
 {
 	int f_v = (verbose_level >= 1);
 	string_tools ST;
@@ -301,7 +304,11 @@ void set_of_sets::init_from_file(
 			cout << "set_of_sets::init_from_file "
 					"before init_from_csv_file" << endl;
 		}
-		init_from_csv_file(underlying_set_size, fname, verbose_level);
+
+		init_from_csv_file(
+				underlying_set_size, fname,
+				verbose_level);
+
 		if (f_v) {
 			cout << "set_of_sets::init_from_file "
 					"after init_from_csv_file" << endl;
@@ -329,7 +336,8 @@ void set_of_sets::init_from_file(
 
 		underlying_set_size = m * n;
 
-		init_basic_constant_size(underlying_set_size,
+		init_basic_constant_size(
+				underlying_set_size,
 				Geos.size() /* nb_sets */,
 				nb_flags/* constant_size */,
 				0 /* verbose_level */);
@@ -358,7 +366,7 @@ void set_of_sets::init_from_csv_file(
 		int underlying_set_size,
 		std::string &fname,
 		int verbose_level)
-// outdated. Better use Fio.Csv_file_support->read_column_and_parse instead
+// outdated. Better use Fio.Csv_file_support->read_column_as_set_of_sets instead
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -626,8 +634,10 @@ void set_of_sets::init_cycle_structure(
 		cout << endl;
 	}
 
-	init_basic(n /* underlying_set_size */,
-			nb_orbits, orbit_length, 0 /* verbose_level */);
+	init_basic(
+			n /* underlying_set_size */,
+			nb_orbits, orbit_length,
+			0 /* verbose_level */);
 
 	Int_vec_zero(have_seen, n);
 
@@ -835,8 +845,10 @@ void set_of_sets::dualize(
 		cout << "set_of_sets::dualize" << endl;
 	}
 	S = NEW_OBJECT(set_of_sets);
-	S->init_basic_constant_size(nb_sets,
-			underlying_set_size, nb_sets, verbose_level - 1);
+	S->init_basic_constant_size(
+			nb_sets,
+			underlying_set_size, nb_sets,
+			verbose_level - 1);
 	Lint_vec_zero(S->Set_size, underlying_set_size);
 	for (i = 0; i < nb_sets; i++) {
 		for (j = 0; j < Set_size[i]; j++) {
@@ -869,7 +881,9 @@ void set_of_sets::remove_sets_of_given_size(
 		}
 	}
 	Idx = NEW_int(l);
-	S.init_simple(underlying_set_size, l, verbose_level - 1);
+	S.init_simple(
+			underlying_set_size, l,
+			verbose_level - 1);
 	a = 0;
 	for (i = 0; i < nb_sets; i++) {
 		if (Set_size[i] != k) {
@@ -901,7 +915,8 @@ void set_of_sets::extract_largest_sets(
 	if (f_v) {
 		cout << "set_of_sets::extract_largest_sets" << endl;
 	}
-	C.init_lint(Set_size, nb_sets, f_second, 0);
+	C.init_lint(
+			Set_size, nb_sets, f_second, 0);
 	if (f_v) {
 		cout << "set_of_sets::extract_largest_sets set sizes: ";
 		C.print(false /* f_backwards*/);
@@ -911,7 +926,9 @@ void set_of_sets::extract_largest_sets(
 	nb_big_sets = C.type_len[C.nb_types - 1];
 	
 	Idx = NEW_int(nb_big_sets);
-	S.init_simple(underlying_set_size, nb_big_sets, verbose_level);
+	S.init_simple(
+			underlying_set_size, nb_big_sets,
+			verbose_level);
 	for (i = 0; i < nb_big_sets; i++) {
 		ii = C.sorting_perm_inv[f + i];
 		Idx[i] = ii;
@@ -953,9 +970,12 @@ void set_of_sets::intersection_matrix(
 	f = C.type_first[C.nb_types - 1];
 	highest_intersection_number = C.data_sorted[f];
 	intersection_type = NEW_int(highest_intersection_number + 1);
+	Int_vec_zero(intersection_type, highest_intersection_number + 1);
+#if 0
 	for (i = 0; i <= highest_intersection_number; i++) {
 		intersection_type[i] = 0;
 	}
+#endif
 	
 	for (i = 0; i < C.nb_types; i++) {
 		f = C.type_first[i];
@@ -974,9 +994,13 @@ void set_of_sets::intersection_matrix(
 	ItI = NEW_int(nb_big_sets * nb_big_sets);
 
 
+	Int_vec_zero(Incma, underlying_set_size * nb_big_sets);
+#if 0
 	for (i = 0; i < underlying_set_size * nb_big_sets; i++) {
 		Incma[i] = 0;
 	}
+#endif
+
 	for (i = 0; i < nb_big_sets; i++) {
 		ii = C.sorting_perm_inv[f + i];
 		for (j = 0; j < Set_size[ii]; j++) {
@@ -1001,7 +1025,8 @@ void set_of_sets::intersection_matrix(
 	}
 	if (false /*f_vv*/) {
 		cout << "I * I^\\top = " << endl;
-		Int_vec_print_integer_matrix_width(cout, IIt,
+		Int_vec_print_integer_matrix_width(
+				cout, IIt,
 				underlying_set_size, underlying_set_size,
 				underlying_set_size, 2);
 	}
@@ -1017,7 +1042,8 @@ void set_of_sets::intersection_matrix(
 	}
 	if (false /*f_v*/) {
 		cout << "I^\\top * I = " << endl;
-		Int_vec_print_integer_matrix_width(cout, ItI,
+		Int_vec_print_integer_matrix_width(
+				cout, ItI,
 				nb_big_sets, nb_big_sets, nb_big_sets, 3);
 	}
 	
@@ -1060,7 +1086,8 @@ void set_of_sets::compute_incidence_matrix(
 }
 
 void set_of_sets::init_decomposition(
-		combinatorics::tactical_decompositions::decomposition *&D, int verbose_level)
+		combinatorics::tactical_decompositions::decomposition *&D,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *Inc;
@@ -1073,8 +1100,10 @@ void set_of_sets::init_decomposition(
 
 	D = NEW_OBJECT(combinatorics::tactical_decompositions::decomposition);
 
-	D->init_incidence_matrix(underlying_set_size,
-			nb_sets, Inc, verbose_level - 1);
+	D->init_incidence_matrix(
+			underlying_set_size,
+			nb_sets, Inc,
+			verbose_level - 1);
 
 	FREE_int(Inc);
 
@@ -1084,7 +1113,8 @@ void set_of_sets::init_decomposition(
 }
 
 void set_of_sets::compute_tdo_decomposition(
-		combinatorics::tactical_decompositions::decomposition &D, int verbose_level)
+		combinatorics::tactical_decompositions::decomposition &D,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *Inc;
@@ -1115,8 +1145,10 @@ void set_of_sets::compute_tdo_decomposition(
 		cout << "set_of_sets::compute_tdo_decomposition "
 				"before D.init_incidence_matrix" << endl;
 	}
-	D.init_incidence_matrix(underlying_set_size,
-			nb_sets, Inc, verbose_level - 1);
+	D.init_incidence_matrix(
+			underlying_set_size,
+			nb_sets, Inc,
+			verbose_level - 1);
 	FREE_int(Inc);
 
 

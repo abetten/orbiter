@@ -250,12 +250,12 @@ void data_input_stream_description_element::init_file_of_points(
 }
 
 void data_input_stream_description_element::init_file_of_points_csv(
-		std::string &a, std::string &b)
+		std::string &fname, std::string &col_header)
 {
 	input_type = t_data_input_stream_file_of_points_csv;
 
-	input_string.assign(a);
-	input_string2.assign(b);
+	input_string.assign(fname);
+	input_string2.assign(col_header);
 
 }
 
@@ -323,13 +323,14 @@ void data_input_stream_description_element::init_file_of_point_set(
 }
 
 void data_input_stream_description_element::init_file_of_designs(
-		std::string &a,
+		std::string &fname, std::string &col_header,
 			int N_points, int b, int k,
 			int partition_class_size)
 {
 	input_type = t_data_input_stream_file_of_designs;
 
-	input_string.assign(a);
+	input_string.assign(fname);
+	input_string2.assign(col_header);
 	input_data1 = N_points;
 	input_data2 = b;
 	input_data3 = k;

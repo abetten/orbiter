@@ -677,6 +677,10 @@ public:
 			projective_geometry::projective_space *P,
 			long int *Pts, int nb_pts, int threshold,
 			int verbose_level);
+	void do_union_of_lines_in_PG(
+			geometry::projective_geometry::projective_space *P,
+			std::string &lines_text,
+			int verbose_level);
 	void do_rank_lines_in_PG(
 			projective_geometry::projective_space *P,
 			std::string &label,

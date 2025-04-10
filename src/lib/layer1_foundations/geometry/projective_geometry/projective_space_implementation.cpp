@@ -507,6 +507,37 @@ int projective_space_implementation::find_point_on_line(
 	}
 }
 
+void projective_space_implementation::union_of_lines(
+		int *Line_rk, int nb_lines, int *&Union, int &sz,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space_implementation::union_of_lines" << endl;
+	}
+	int i;
+	int k;
+
+	k = P->Subspaces->k;
+
+	sz = nb_lines * k;
+	Union = NEW_int(nb_lines * k);
+
+	for (i = 0; i < nb_lines; i++) {
+		Int_vec_copy(Lines + Line_rk[i] * k, Union + i * k, k);
+	}
+
+	other::data_structures::sorting Sorting;
+
+	Sorting.int_vec_sort_and_remove_duplicates(
+			Union, sz);
+
+	if (f_v) {
+		cout << "projective_space_implementation::union_of_lines done" << endl;
+	}
+}
+
 int projective_space_implementation::lines(
 		int i, int j)
 {

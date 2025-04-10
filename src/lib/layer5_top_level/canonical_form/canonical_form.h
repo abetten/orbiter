@@ -616,16 +616,28 @@ public:
 			combinatorics::canonical_form_classification::objects_report_options
 				*Report_options,
 			int verbose_level);
+	void report_all_canonical_forms(
+			std::ostream &ost,
+			combinatorics::canonical_form_classification::objects_report_options
+				*Report_options,
+			int verbose_level);
 	void report_isomorphism_type(
 			std::ostream &ost,
 			combinatorics::canonical_form_classification::objects_report_options
 				*Report_options,
-			int i, int verbose_level);
-	void report_object(
+			int iso_idx,
+			int verbose_level);
+	void report_object_with_properties(
 			std::ostream &ost,
 			combinatorics::canonical_form_classification::objects_report_options
 				*Report_options,
-			int i,
+				int input_idx, int iso_idx,
+			int verbose_level);
+	void report_input_object_only(
+			std::ostream &ost,
+			combinatorics::canonical_form_classification::objects_report_options
+				*Report_options,
+			int input_idx,
 			int verbose_level);
 
 

@@ -265,11 +265,6 @@ public:
 			combinatorics::canonical_form_classification::data_input_stream_description
 					*Data_input_stream_description,
 			int verbose_level);
-#if 0
-	void init_from_geometric_object(
-			geometry::other_geometry::geometric_object_create *GOC,
-			int verbose_level);
-#endif
 	void do_canonical_form(
 			combinatorics::canonical_form_classification::classification_of_objects_description
 					*Canonical_form_Descr,
@@ -357,7 +352,8 @@ public:
 	combinatorics_global();
 	~combinatorics_global();
 	void create_design_table(
-			design_create *DC,
+			//design_create *DC,
+			combinatorics::design_theory::design_object *Design_object,
 			std::string &problem_label,
 			design_tables *&T,
 			groups::strong_generators *Gens,

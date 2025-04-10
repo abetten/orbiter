@@ -346,6 +346,9 @@ public:
 	int f_incidence_draw_options;
 	std::string incidence_draw_options_label;
 
+	int f_canonical_forms;
+
+
 	objects_report_options();
 	~objects_report_options();
 	int read_arguments(
@@ -381,6 +384,11 @@ public:
 	data_input_stream *IS;
 
 
+	// output:
+
+	data_input_stream_output *Output;
+
+#if 0
 	classify_bitvectors *CB;
 
 	long int *Ago; // [IS->nb_objects_to_test]
@@ -402,6 +410,7 @@ public:
 
 	other::data_structures::tally *T_Ago;
 
+#endif
 
 
 	classification_of_objects();
@@ -416,10 +425,6 @@ public:
 			int verbose_level);
 	void classify_objects_using_nauty(
 		int verbose_level);
-	void save_automorphism_group_order(
-			int verbose_level);
-	void save_transversal(
-			int verbose_level);
 	void process_any_object(
 			any_combinatorial_object *OwCF,
 			int input_idx, long int &ago, int &f_reject,
@@ -434,12 +439,6 @@ public:
 		encoded_combinatorial_object *&Enc,
 		int verbose_level);
 	// returns f_found, which is true if the object is already in the list
-	void report_summary_of_orbits(
-			std::ostream &ost, int verbose_level);
-	void create_summary_table(
-			std::string *&Table,
-			int &nb_rows, int &nb_cols,
-			int verbose_level);
 
 
 };
@@ -633,7 +632,7 @@ public:
 	void init_file_of_points(
 			std::string &a);
 	void init_file_of_points_csv(
-			std::string &a, std::string &b);
+			std::string &fname, std::string &col_header);
 	void init_file_of_lines(
 			std::string &a);
 	void init_file_of_packings(
@@ -648,7 +647,7 @@ public:
 	void init_file_of_point_set(
 			std::string &a);
 	void init_file_of_designs(
-			std::string &a,
+			std::string &fname, std::string &col_header,
 				int N_points, int b, int k,
 				int partition_class_size);
 	void init_file_of_incidence_geometries(
@@ -727,6 +726,75 @@ public:
 
 
 };
+
+
+
+// #############################################################################
+// data_input_stream_output.cpp:
+// #############################################################################
+
+
+//! input data for classification of geometric objects from the command line
+
+
+class data_input_stream_output {
+public:
+
+
+	classification_of_objects *Classification_of_objects;
+
+
+	// output from the canonical form algorithm:
+
+	classify_bitvectors *CB;
+
+	int nb_input; // = Classification_of_objects->IS->Objects.size();
+
+
+	long int *Ago; // [nb_input]
+	int *F_reject; // [nb_input]
+	other::l1_interfaces::nauty_output **NO; // [nb_input]
+	any_combinatorial_object **OWCF; // [nb_orbits]
+
+
+
+	// the classification:
+
+	int nb_orbits; // number of isomorphism types
+
+	int *Idx_transversal; // [nb_orbits]
+
+	long int *Ago_transversal; // [nb_orbits]
+
+	//any_combinatorial_object **OWCF_transversal; // [nb_orbits]
+
+
+
+	other::data_structures::tally *T_Ago;
+
+
+	data_input_stream_output();
+	~data_input_stream_output();
+	void init(
+			classification_of_objects *Classification_of_objects,
+			int verbose_level);
+	void after_classification(
+			int verbose_level);
+	void save_automorphism_group_order(
+			int verbose_level);
+	void save_transversal(
+			int verbose_level);
+	void report_summary_of_iso_types(
+			std::ostream &ost, int verbose_level);
+	void create_summary_of_iso_types_table(
+			std::string *&Table,
+			int &nb_rows, int &nb_cols,
+			int verbose_level);
+
+
+
+};
+
 
 
 // #############################################################################

@@ -454,6 +454,9 @@ public:
 	int f_save_orbit_of_equations;
 	std::string save_orbit_of_equations_prefix;
 
+	int f_partition;
+	std::string partition_text;
+
 
 
 	nauty_interface_control();

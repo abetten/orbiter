@@ -1102,7 +1102,8 @@ int sorting::vec_search(
 	return f_found;
 }
 
-int sorting::vec_search_general(void *vec,
+int sorting::vec_search_general(
+		void *vec,
 	int (*compare_func)(void *vec,
 			void *a, int b, void *data_for_compare),
 	void *data_for_compare,

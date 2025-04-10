@@ -911,7 +911,7 @@ public:
 	std::string *Line_label_tex; // [27]
 
 	std::string *Tritangent_plane_label; // [45]
-	std::string *Tritangent_plane_label_tex; // [45]
+	std::string *Tritangent_plane_label_tex; // [45] label is \pi_{i}
 
 	schlaefli_labels();
 	~schlaefli_labels();
@@ -1008,6 +1008,8 @@ public:
 			std::ostream &ost);
 	void print_trihedral_pairs(
 			std::ostream &ost);
+	void trihedral_pairs_table_of_strings(
+			std::string *&Table, int &m, int &n);
 
 };
 
@@ -1750,8 +1752,8 @@ public:
 
 
 	//
-	int *Pluecker_coordinates; // [SO->nb_lines * 6];
-	long int *Pluecker_rk; // [SO->nb_lines];
+	int *Pluecker_coordinates; // [nb_lines * 6];
+	long int *Pluecker_rk; // [nb_lines];
 
 
 	long int *Eckardt_points;

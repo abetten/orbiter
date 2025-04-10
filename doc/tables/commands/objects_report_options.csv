@@ -9,5 +9,6 @@ ROW,C1,C2,C3
 1,"\verb'-export_group_orbiter' ","   ","  "
 1,"\verb'-export_group_GAP' ","   ","  "
 1,"\verb'-lex_least' ","  geo "," Show lex-least orbit representatives. Here, geo is a geometry builder object. "
+1,"\verb'-canonical_forms' ","   "," Report the canonical forms of each input object. "
 END
 

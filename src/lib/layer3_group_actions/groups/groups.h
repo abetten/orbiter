@@ -1263,16 +1263,6 @@ public:
 	// sims.cpp:
 	sims();
 	~sims();
-#if 0
-	sims(
-			actions::action *A, int verbose_level);
-#endif
-#if 0
-	void delete_images();
-	void init_images(
-			int nb_images);
-	void images_append();
-#endif
 	void init(
 			actions::action *A, int verbose_level);
 		// initializes the trivial group 
@@ -1745,6 +1735,8 @@ public:
 	void print_all_group_elements_as_permutations_in_special_action(
 			actions::action *A_special);
 	void print_all_transversal_elements();
+	void report_base_and_orbit_len(
+			std::ostream &ost, int verbose_level);
 	void report_all_transversal_elements(
 			std::ostream &ost, int verbose_level);
 	void save_list_of_elements(

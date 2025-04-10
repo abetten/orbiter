@@ -22,6 +22,9 @@ projective_space_activity_description::projective_space_activity_description()
 {
 	Record_birth();
 
+	// TABLES/projective_space_activity_1.tex
+
+
 	f_cheat_sheet = false;
 	//std::string cheat_sheet_draw_options_label;
 
@@ -93,6 +96,12 @@ projective_space_activity_description::projective_space_activity_description()
 	//f_create_surface = false;
 	//surface_description = NULL;
 
+
+
+	// TABLES/projective_space_activity_2.tex
+
+
+
 	f_sweep = false;
 	//std::string sweep_fname;
 
@@ -159,9 +168,19 @@ projective_space_activity_description::projective_space_activity_description()
 	f_dualize_rank_k_subspaces = false;
 	dualize_rank_k_subspaces_k = 0;
 
+
+
+	// TABLES/projective_space_activity_3.tex
+
+
+
 	f_lines_on_point_but_within_a_plane = false;
 	lines_on_point_but_within_a_plane_point_rk = 0;
 	lines_on_point_but_within_a_plane_plane_rk = 0;
+
+	f_union_of_lines = false;
+	//std::string union_of_lines_text;
+
 
 	f_rank_lines_in_PG = false;
 	//rank_lines_in_PG_label;
@@ -226,6 +245,9 @@ projective_space_activity_description::projective_space_activity_description()
 	//std::string polynomial_representation_set_label;
 
 
+
+
+	// TABLES/projective_space_activity_4.tex
 
 
 
@@ -296,6 +318,9 @@ int projective_space_activity_description::read_arguments(
 		cout << "projective_space_activity_description::read_arguments" << endl;
 	}
 	for (i = 0; i < argc; i++) {
+
+		// TABLES/projective_space_activity_1.tex
+
 
 		if (ST.stringcmp(argv[i], "-cheat_sheet") == 0) {
 			f_cheat_sheet = true;
@@ -511,6 +536,11 @@ int projective_space_activity_description::read_arguments(
 				cout << "-table_of_cubic_surfaces " << endl;
 			}
 		}
+
+
+		// TABLES/projective_space_activity_2.tex
+
+
 
 		else if (ST.stringcmp(argv[i], "-sweep") == 0) {
 			f_sweep = true;
@@ -762,6 +792,12 @@ int projective_space_activity_description::read_arguments(
 			}
 		}
 
+
+		// TABLES/projective_space_activity_3.tex
+
+
+
+
 		else if (ST.stringcmp(argv[i], "-lines_on_point_but_within_a_plane") == 0) {
 			f_lines_on_point_but_within_a_plane = true;
 			lines_on_point_but_within_a_plane_point_rk = ST.strtoi(argv[++i]);
@@ -773,6 +809,16 @@ int projective_space_activity_description::read_arguments(
 						<< endl;
 			}
 		}
+
+		else if (ST.stringcmp(argv[i], "-union_of_lines") == 0) {
+			f_union_of_lines = true;
+			union_of_lines_text.assign(argv[++i]);
+			if (f_v) {
+				cout << "-union_of_lines " << union_of_lines_text << endl;
+			}
+		}
+
+
 		else if (ST.stringcmp(argv[i], "-rank_lines_in_PG") == 0) {
 			f_rank_lines_in_PG = true;
 			rank_lines_in_PG_label.assign(argv[++i]);
@@ -922,6 +968,12 @@ int projective_space_activity_description::read_arguments(
 					<< endl;
 			}
 		}
+
+
+		// TABLES/projective_space_activity_4.tex
+
+
+
 
 
 		// classification stuff:
@@ -1135,6 +1187,8 @@ int projective_space_activity_description::read_arguments(
 
 void projective_space_activity_description::print()
 {
+	// TABLES/projective_space_activity_1.tex
+
 	if (f_cheat_sheet) {
 		cout << "-cheat_sheet " << cheat_sheet_draw_options_label << endl;
 	}
@@ -1231,6 +1285,10 @@ void projective_space_activity_description::print()
 	}
 
 
+	// TABLES/projective_space_activity_2.tex
+
+
+
 	if (f_sweep) {
 		cout << "-sweep " << sweep_fname << endl;
 	}
@@ -1316,12 +1374,21 @@ void projective_space_activity_description::print()
 				<< dualize_rank_k_subspaces_k
 				<< " " << dualize_input_set << endl;
 	}
+
+	// TABLES/projective_space_activity_3.tex
+
+
 	if (f_lines_on_point_but_within_a_plane) {
 		cout << "-lines_on_point_but_within_a_plane "
 				<< " " << lines_on_point_but_within_a_plane_point_rk
 				<< " " << lines_on_point_but_within_a_plane_plane_rk
 				<< endl;
 	}
+
+	if (f_union_of_lines) {
+		cout << "-union_of_lines " << union_of_lines_text << endl;
+	}
+
 	if (f_rank_lines_in_PG) {
 		cout << "-rank_lines_in_PG " << rank_lines_in_PG_label << endl;
 	}
@@ -1398,6 +1465,10 @@ void projective_space_activity_description::print()
 				<< " " << polynomial_representation_set_label
 			<< endl;
 	}
+
+
+	// TABLES/projective_space_activity_4.tex
+
 
 
 	// classification stuff:

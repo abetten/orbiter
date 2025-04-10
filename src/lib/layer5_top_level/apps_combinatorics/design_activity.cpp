@@ -37,19 +37,24 @@ void design_activity::perform_activity(
 
 	if (f_v) {
 		cout << "design_activity::perform_activity" << endl;
+		cout << "design_activity::perform_activity design = " << Design_object->label_txt << endl;
 	}
 
 	design_activity::Descr = Descr;
 
+	if (Design_object->DC == NULL) {
+		cout << "design_activity::perform_activity "
+				"Design_object->DC == NULL" << endl;
+		exit(1);
+	}
+	design_create *DC = (design_create *) Design_object->DC;
 
 	if (Descr->f_load_table) {
 
-		if (Design_object->DC == NULL) {
+		if (f_v) {
 			cout << "design_activity::perform_activity "
-					"Design_object->DC == NULL" << endl;
-			exit(1);
+					"f_load_table" << endl;
 		}
-		design_create *DC = (design_create *) Design_object->DC;
 
 		do_load_table(
 				DC,
@@ -62,8 +67,20 @@ void design_activity::perform_activity(
 				verbose_level);
 	}
 	else if (Descr->f_canonical_form) {
-		do_canonical_form(Descr->Canonical_form_Descr,
+
+		if (f_v) {
+			cout << "design_activity::perform_activity "
+					"f_canonical_form" << endl;
+		}
+
+
+		do_canonical_form(
+				Descr->Canonical_form_Descr,
 				verbose_level);
+		if (f_v) {
+			cout << "design_activity::perform_activity "
+					"f_canonical_form done" << endl;
+		}
 	}
 	else if (Descr->f_extract_solutions_by_index_csv) {
 
@@ -77,7 +94,6 @@ void design_activity::perform_activity(
 					"Design_object->DC == NULL" << endl;
 			exit(1);
 		}
-		design_create *DC = (design_create *) Design_object->DC;
 
 		do_extract_solutions_by_index(
 				DC,
@@ -341,7 +357,8 @@ void design_activity::do_extract_solutions_by_index(
 				"before Combi.load_design_table" << endl;
 	}
 
-	Combi.load_design_table(DC,
+	Combi.load_design_table(
+			DC,
 			label,
 			T,
 			AG->Subgroup_gens,
@@ -412,18 +429,38 @@ void design_activity::do_extract_solutions_by_index(
 
 #endif
 
+		other::data_structures::set_of_sets *SoS;
+
+		Fio.Csv_file_support->read_column_as_set_of_sets(
+				fname_in, col_label,
+				SoS,
+				verbose_level - 1);
+
+
+#if 0
 		int *Sol_idx_1;
 
 		Fio.Csv_file_support->read_table_of_strings_as_matrix(
 				fname_in, col_label,
-				Sol_idx_1, nb_sol, sol_width, verbose_level - 1);
+				Sol_idx_1, nb_sol, sol_width,
+				verbose_level - 1);
+#endif
 
+		nb_sol = SoS->nb_sets;
+
+		if (!SoS->has_constant_size_property()) {
+			cout << "design_activity::do_extract_solutions_by_index "
+					"the sets have different sizes" << endl;
+			exit(1);
+		}
+
+		sol_width = SoS->get_constant_size();
 
 		int i;
 
 		if (f_v) {
 			cout << "design_activity::do_extract_solutions_by_index "
-					"Sol_idx_1 has size " << nb_sol << " x " << sol_width << endl;
+					"solutions have size " << nb_sol << " x " << sol_width << endl;
 		}
 		Sol_idx = NEW_int(nb_sol * (prefix_sz + sol_width));
 		for (i = 0; i < nb_sol; i++) {
@@ -435,8 +472,9 @@ void design_activity::do_extract_solutions_by_index(
 #endif
 			//int *data;
 			//Int_vec_scan(Column[i], data, sol_width);
-			Int_vec_copy(
-					Sol_idx_1 + i * sol_width,
+			Lint_vec_copy_to_int(
+					//Sol_idx_1 + i * sol_width,
+					SoS->Sets[i],
 					Sol_idx + i * (prefix_sz + sol_width) + prefix_sz,
 					sol_width);
 			//FREE_int(data);
@@ -446,7 +484,10 @@ void design_activity::do_extract_solutions_by_index(
 			}
 #endif
 		}
-		FREE_int(Sol_idx_1);
+		FREE_OBJECT(SoS);
+
+		//FREE_int(Sol_idx_1);
+
 		sol_width += prefix_sz;
 	}
 	else {
@@ -455,7 +496,8 @@ void design_activity::do_extract_solutions_by_index(
 		int i, j;
 
 		SoS = NEW_OBJECT(other::data_structures::set_of_sets);
-		SoS->init_from_orbiter_file(underlying_set_size,
+		SoS->init_from_orbiter_file(
+				underlying_set_size,
 				fname_in, verbose_level);
 		nb_sol = SoS->nb_sets;
 
@@ -537,7 +579,8 @@ void design_activity::do_create_table(
 				"before Combi.create_design_table" << endl;
 	}
 
-	Combi.create_design_table(DC,
+	Combi.create_design_table(
+			DC->Design_object,
 			label,
 			T,
 			AG->Subgroup_gens,

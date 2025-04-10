@@ -2,6 +2,7 @@ ROW,C1,C2,C3
 0,"tab:projective:space:activities:3",,
 1,"Projective Space Activities (Part 3)",,
 1,"\verb'-lines_on_point_but_within_a_plane' "," pt-rk plane-rk  ","Compute the lines through a given point contained in a given plane. "
+1,"\verb'-union_of_lines' "," lines  ","Compute the union of points on the given lines. Duplicates will be removed. "
 1,"\verb'-rank_lines_in_PG' "," $M$  ","Rank lines. The generating systems for the lines are given in rows of the matrix $M$. "
 1,"\verb'-unrank_lines_in_PG' "," $v$  ","Unrank lines. The ranks are given in the vector $v$. "
 1,"\verb'-points_on_lines' "," $L$  ","Create the ranks of points on the given line $L$. "

@@ -166,101 +166,11 @@ sims::~sims()
 	}
 	A = NULL;
 
-#if 0
-	if (f_v) {
-		cout << "sims::~sims before delete_images" << endl;
-	}
-	delete_images();
-	if (f_v) {
-		cout << "sims::~sims before after_images" << endl;
-	}
-#endif
-
 	if (f_v) {
 		cout << "sims::~sims done" << endl;
 	}
 }
 
-#if 0
-sims::sims(
-		actions::action *A, int verbose_level)
-{
-	init(A, verbose_level);
-}
-#endif
-
-#if 0
-void sims::delete_images()
-{
-	int i;
-	
-	if (images) {
-		for (i = 0; i < nb_images; i++) {
-			FREE_int(images[i]);
-		}
-		nb_images = 0;
-		FREE_pint(images);
-		images = NULL;
-	}
-}
-
-void sims::init_images(
-		int nb_images)
-{
-#if 0
-	int i, j; //, a;
-	
-	cout << "sims::init_images" << endl;
-	if (A == NULL) {
-		cout << "sims::init_images() action is NULL" << endl;
-		exit(1);
-		}
-	delete_images();
-	sims::nb_images = nb_images;
-	images = NEW_pint(nb_images);
-	for (i = 0; i < nb_images; i++) {
-		images[i] = NEW_int(A->degree);
-		for (j = 0; j < A->degree; j++) {
-			images[i][j] = -1;
-			//a = A->image_of(gens.ith(i), j);
-			//images[i][j] = a;
-			//images[i][A->degree + a] = j;
-			}
-		}
-#else
-	//cout << "sims::init_images doing nothing" << endl;
-#endif
-}
-
-void sims::images_append()
-{
-#if 0
-	int **new_images = NEW_pint(nb_images + 1);
-	int i, j; //, a;
-	
-	new_images[nb_images] = NEW_int(A->degree);
-	for (j = 0; j < A->degree; j++) {
-		new_images[nb_images][j] = -1;
-		}
-	//for (j = 0; j < 2 * A->degree; j++) {
-		//new_images[i][j] = -1;
-		//a = A->image_of(gens.ith(nb_images), j);
-		//new_images[nb_images][j] = a;
-		//new_images[nb_images][A->degree + a] = j;
-		//}
-	for (i = 0; i < nb_images; i++) {
-		new_images[i] = images[i];
-		}
-	if (images)
-		FREE_pint(images);
-	images = new_images;
-	nb_images++;
-#else
-	//cout << "sims::images_append doing nothing" << endl;
-
-#endif
-}
-#endif
 
 void sims::init(
 		actions::action *A, int verbose_level)
@@ -333,11 +243,6 @@ void sims::init(
 	
 	nb_gen = NEW_int(my_base_len + 1);
 	Int_vec_zero(nb_gen, my_base_len + 1);
-#if 0
-	for (i = 0; i <= my_base_len; i++) {
-		nb_gen[i] = 0;
-	}
-#endif
 	
 	path = NEW_int(my_base_len);
 
@@ -722,17 +627,7 @@ void sims::init_generators(
 					<< " : after A->Group_element->element_invert" << endl;
 		}
 	}
-#if 0
-	if (f_v) {
-		cout << "sims::init_generators "
-				"before init_images" << endl;
-	}
-	init_images(nb);
-	if (f_v) {
-		cout << "sims::init_generators "
-				"after init_images" << endl;
-	}
-#endif
+
 	if (f_v) {
 		cout << "sims::init_generators "
 				"before init_generator_depth_and_perm" << endl;
@@ -931,19 +826,6 @@ void sims::add_generator(
 	}
 	A->Group_element->element_invert(
 			elt, gens_inv.ith(idx), false);
-	
-#if 0
-	if (f_v) {
-		cout << "sims::add_generator "
-				"before images_append" << endl;
-	}
-	images_append();
-	if (f_v) {
-		cout << "sims::add_generator "
-				"after images_append" << endl;
-	}
-#endif
-
 	
 	if (f_v) {
 		cout << "sims::add_generator "
@@ -1797,7 +1679,11 @@ void sims::coset_rep(
 	}
 	compute_coset_rep_path(
 			i, j, depth, Path, Label,
-			verbose_level - 2);
+			0 /*verbose_level - 2*/);
+
+	// Path[depth + 1]
+	// Label[depth]
+
 	if (f_v) {
 		cout << "sims::coset_rep "
 				"after compute_coset_rep_path" << endl;
@@ -1805,7 +1691,7 @@ void sims::coset_rep(
 	if (f_vv) {
 		cout << "sims::coset_rep depth=" << depth << endl;
 		cout << "sims::coset_rep Path=";
-		Int_vec_print(cout, Path, depth);
+		Int_vec_print(cout, Path, depth + 1);
 		cout << endl;
 		cout << "sims::coset_rep Label=";
 		Int_vec_print(cout, Label, depth);
@@ -1906,6 +1792,8 @@ void sims::compute_coset_rep_path(
 		int i, int j, int &depth,
 		int *&Path, int *&Label,
 		int verbose_level)
+// Path[depth + 1]
+// Label[depth]
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -2024,13 +1912,15 @@ void sims::coset_rep_inv(
 
 
 	if (f_v) {
-		cout << "sims::coset_rep_inv before "
-				"coset_rep(i,j)" << endl;
+		cout << "sims::coset_rep_inv "
+				"before coset_rep(i,j)" << endl;
 	}
-	coset_rep(Elt, i, j, verbose_level - 2);
+	coset_rep(Elt, i, j, 0 /*verbose_level - 2*/);
 	if (f_v) {
 		cout << "sims::coset_rep_inv "
-				"coset_rep(i=" << i << " j=" << j << ") done" << endl;
+				"after coset_rep(i,j)" << endl;
+	}
+	if (f_vv) {
 
 		cout << "cosetrep:" << endl;
 		A->Group_element->element_print_quick(Elt, cout);
@@ -2075,6 +1965,7 @@ void sims::coset_rep_inv(
 
 	A->Group_element->element_invert(Elt, cosetrep_tmp, 0 /* verbose_level */);
 	A->Group_element->element_move(cosetrep_tmp, Elt, 0 /* verbose_level */);
+
 	if (f_vv) {
 		cout << "sims::coset_rep_inv cosetrep^-1=:" << endl;
 		A->Group_element->element_print_quick(Elt, cout);

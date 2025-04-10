@@ -145,6 +145,7 @@ public:
 	void lint_matrix_write_csv(
 			std::string &fname,
 			long int *M, int m, int n);
+	// outdated, used write_table_of_strings_with_col_headings instead
 	void lint_matrix_write_csv_override_headers(
 			std::string &fname,
 			std::string *headers, long int *M, int m, int n);
@@ -249,7 +250,8 @@ public:
 			int N_min, int N_max,
 			std::string &fname_out,
 			int verbose_level);
-	void do_csv_file_latex(std::string &fname,
+	void do_csv_file_latex(
+			std::string &fname,
 			int f_produce_latex_header,
 			int nb_lines_per_table,
 			int verbose_level);

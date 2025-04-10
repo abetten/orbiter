@@ -401,7 +401,8 @@ void schlaefli_trihedral_pairs::make_trihedral_pair_disjointness_graph(
 	Int_vec_zero(Adj, nb_trihedral_pairs * nb_trihedral_pairs);
 	for (i = 0; i < nb_trihedral_pairs; i++) {
 		for (j = i + 1; j < nb_trihedral_pairs; j++) {
-			if (Sorting.int_vecs_are_disjoint(T + i * 9, 9, T + j * 9, 9)) {
+			if (Sorting.int_vecs_are_disjoint(
+					T + i * 9, 9, T + j * 9, 9)) {
 				Adj[i * nb_trihedral_pairs + j] = 1;
 				Adj[j * nb_trihedral_pairs + 1] = 1;
 			}
@@ -516,7 +517,7 @@ void schlaefli_trihedral_pairs::init_axes(
 		for (i = 0; i < 3; i++) {
 			for (j = 0; j < 3; j++) {
 				tritangent_plane[j] = Trihedral_pairs[t * 9 + i * 3 + j];
-				}
+			}
 			rk = Schlaefli->Schlaefli_tritangent_planes->Eckardt_point_from_tritangent_plane(tritangent_plane);
 			Axes[t * 6 + i] = rk;
 		}
@@ -545,7 +546,10 @@ void schlaefli_trihedral_pairs::init_axes(
 	for (t = 0; t < nb_trihedral_pairs; t++) {
 		for (i = 0; i < 2; i++) {
 			//Axes_sorted_perm_inv[2 * t + i] = 2 * t + i;
-			Lint_vec_copy_to_int(Axes + t * 6 + i * 3, Axes_sorted->M + 2 * t + i, 3);
+			Lint_vec_copy_to_int(
+					Axes + t * 6 + i * 3,
+					Axes_sorted->M + 2 * t + i,
+					3);
 			Sorting.int_vec_heapsort(Axes_sorted->M + 2 * t + i, 3);
 		}
 	}
@@ -578,7 +582,8 @@ int schlaefli_trihedral_pairs::identify_axis(
 	int idx;
 
 	if (!Axes_sorted->search(v, idx, 0 /*verbose_level*/)) {
-		cout << "schlaefli_trihedral_pairs::identify_axis cannot find the axis. Something is wrong." << endl;
+		cout << "schlaefli_trihedral_pairs::identify_axis "
+				"cannot find the axis. Something is wrong." << endl;
 		exit(1);
 	}
 	idx = Axes_sorted->perm_inv[idx];
@@ -607,7 +612,10 @@ void schlaefli_trihedral_pairs::init_collinear_Eckardt_triples(
 				subset[h] = Axes[6 * t + i * 3 + h];
 			}
 			Sorting.int_vec_heapsort(subset, 3);
-			rk = Combi.rank_k_subset(subset, Schlaefli->Schlaefli_tritangent_planes->nb_Eckardt_points, 3);
+			rk = Combi.rank_k_subset(
+					subset,
+					Schlaefli->Schlaefli_tritangent_planes->nb_Eckardt_points,
+					3);
 			collinear_Eckardt_triples_rank[t * 2 + i] = rk;
 		}
 	}
@@ -869,7 +877,7 @@ void schlaefli_trihedral_pairs::print_trihedral_pairs(
 		std::ostream &ost)
 {
 	other::l1_interfaces::latex_interface L;
-	int i, j, a;
+	int i, j;
 
 	//ost << "\\clearpage" << endl;
 
@@ -879,103 +887,82 @@ void schlaefli_trihedral_pairs::print_trihedral_pairs(
 	ost << "\\subsection*{Trihedral pairs}" << endl;
 	ost << "The 120 trihedral pairs are:\\\\" << endl;
 	ost << "{\\renewcommand{\\arraystretch}{1.3}" << endl;
-	ost << "$$" << endl;
 
-	int n = 6;
-	int n_offset = 0;
-	int m = 40;
-	int m_offset = 0;
-	long int *p = Axes;
+	std::string *Table;
+	int m, n;
 
-	ost << "\\begin{array}{|r|r|*{" << n << "}r|}" << endl;
-	ost << "\\hline" << endl;
-	ost << " & ";
-	for (j = 0; j < n; j++) {
-		ost << " & " << n_offset + j;
-	}
-	ost << "\\\\" << endl;
-	ost << "\\hline" << endl;
-	for (i = 0; i < m; i++) {
-		ost << m_offset + i << " & S_{";
-		ost << Trihedral_pair_labels[m_offset + i] << "}";
-		for (j = 0; j < n; j++) {
-			a = p[i * n + j];
-			ost << " & \\pi_{" << Schlaefli->Schlaefli_tritangent_planes->Eckard_point_label_tex[a] << "}";
+	trihedral_pairs_table_of_strings(
+			Table, m, n);
+
+
+	int I, m0, N = 4;
+
+	m0 = m / N;
+
+	for (I = 0; I < N; I++) {
+
+		ost << "$$" << endl;
+		ost << "\\begin{array}{|r|r|*{" << n << "}r|}" << endl;
+		ost << "\\hline" << endl;
+		ost << " &  & ";
+		for (j = 0; j < 6; j++) {
+			ost << j;
+			if (j < 6 - 1) {
+				ost << " & ";
+			}
 		}
-		ost << "\\\\";
-		ost << endl;
-	}
-	ost << "\\hline" << endl;
-	ost << "\\end{array}" << endl;
+		ost << "\\\\" << endl;
+		ost << "\\hline" << endl;
 
-	//L.print_integer_matrix_with_standard_labels(ost,
-	//	Surf->Trihedral_to_Eckardt, 40, 6, true /* f_tex */);
-	ost << "$$" << endl;
-
-
-	ost << "$$" << endl;
-
-	m_offset = 40;
-	p = Axes + 40 * 6;
-
-	ost << "\\begin{array}{|r|r|*{" << n << "}r|}" << endl;
-	ost << "\\hline" << endl;
-	ost << " & ";
-	for (j = 0; j < n; j++) {
-		ost << " & " << n_offset + j;
-	}
-	ost << "\\\\" << endl;
-	ost << "\\hline" << endl;
-	for (i = 0; i < m; i++) {
-		ost << m_offset + i << " & S_{";
-		ost << Trihedral_pair_labels[m_offset + i] << "}";
-		for (j = 0; j < n; j++) {
-			a = p[i * n + j];
-			ost << " & \\pi_{" << Schlaefli->Schlaefli_tritangent_planes->Eckard_point_label_tex[a] << "}";
+		for (i = 0; i < m0; i++) {
+			for (j = 0; j < n; j++) {
+				ost << Table[(m0 * I + i) * n + j];
+				if (j < n - 1) {
+					ost << " & ";
+				}
+			}
+			ost << "\\\\" << endl;
 		}
-		ost << "\\\\";
-		ost << endl;
+		ost << "\\hline" << endl;
+		ost << "\\end{array}" << endl;
+		ost << "$$" << endl;
+
+
+
 	}
-	ost << "\\hline" << endl;
-	ost << "\\end{array}" << endl;
+	ost << "}" << endl;
 
 
-	//L.print_integer_matrix_with_standard_labels_and_offset(ost,
-	//	Surf->Trihedral_to_Eckardt + 40 * 6, 40, 6, 40, 0,
-	//	true /* f_tex */);
-	ost << "$$" << endl;
-	ost << "$$" << endl;
-
-	m_offset = 80;
-	p = Axes + 80 * 6;
-
-	ost << "\\begin{array}{|r|r|*{" << n << "}r|}" << endl;
-	ost << "\\hline" << endl;
-	ost << " & ";
-	for (j = 0; j < n; j++) {
-		ost << " & " << n_offset + j;
-	}
-	ost << "\\\\" << endl;
-	ost << "\\hline" << endl;
-	for (i = 0; i < m; i++) {
-		ost << m_offset + i << " & S_{";
-		ost << Trihedral_pair_labels[m_offset + i] << "}";
-		for (j = 0; j < n; j++) {
-			a = p[i * n + j];
-			ost << " & \\pi_{" << Schlaefli->Schlaefli_tritangent_planes->Eckard_point_label_tex[a] << "}";
-		}
-		ost << "\\\\";
-		ost << endl;
-	}
-	ost << "\\hline" << endl;
-	ost << "\\end{array}" << endl;
+	delete [] Table;
 
 
-	//L.print_integer_matrix_with_standard_labels_and_offset(ost,
-	//	Surf->Trihedral_to_Eckardt + 80 * 6, 40, 6, 80, 0,
-	//	true /* f_tex */);
-	ost << "$$}" << endl;
 }
+
+
+void schlaefli_trihedral_pairs::trihedral_pairs_table_of_strings(
+		std::string *&Table, int &m, int &n)
+{
+	int i, j, a;
+
+
+	m = 120;
+	n = 8;
+
+	Table = new std::string[m * n];
+	for (i = 0; i < m; i++) {
+		Table[i * n + 0] = std::to_string(i);
+		Table[i * n + 1] = "S_{" + Trihedral_pair_labels[i] + "}";
+		for (j = 0; j < 6; j++) {
+			a = Axes[i * 6 + j];
+			Table[i * n + 2 + j] = "\\pi_{"
+					+ Schlaefli->Schlaefli_tritangent_planes->Eckard_point_label_tex[a]
+					+ "}";
+		}
+	}
+
+
+}
+
 
 
 

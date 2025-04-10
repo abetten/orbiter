@@ -294,19 +294,49 @@ void design_tables::extract_solutions_by_index(
 		k = 0;
 		for (j = 0; j < Index_width; j++, k += design_size) {
 			idx = Index[i * Index_width + j];
-			Lint_vec_copy(the_table + idx * design_size,
+			Lint_vec_copy(
+					the_table + idx * design_size,
 					Sol + i * N + j * design_size,
 					design_size);
 		}
 	}
 
+	int nb_rows = nb_sol;
+	int nb_cols = 2;
+	string *Table;
 
+	Table = new string[nb_rows * nb_cols];
+	for (i = 0; i < nb_sol; i++) {
+		Table[i * nb_cols + 0] = std::to_string(i);
+		Table[i * nb_cols + 1] = "\"" + Lint_vec_stringify(Sol + i * N, N) + "\"";
+	}
+
+	std::string *Col_headings;
+
+	Col_headings = new string[2];
+
+	Col_headings[0] = "line";
+	Col_headings[1] = "large_set";
+
+	Fio.Csv_file_support->write_table_of_strings_with_col_headings(
+			output_fname_csv,
+			nb_rows, nb_cols, Table,
+			Col_headings,
+			verbose_level);
+
+	delete [] Col_headings;
+	delete [] Table;
+
+#if 0
 	Fio.Csv_file_support->lint_matrix_write_csv(
 			output_fname_csv, Sol, nb_sol, N);
+#endif
+
 	if (f_v) {
 		cout << "design_tables::extract_solutions_by_index "
 				"Written file "
-				<< output_fname_csv << " of size " << Fio.file_size(output_fname_csv) << endl;
+				<< output_fname_csv << " of size "
+				<< Fio.file_size(output_fname_csv) << endl;
 	}
 
 	if (f_v) {
@@ -448,6 +478,7 @@ void design_tables::save(
 	Fio.Csv_file_support->lint_matrix_write_csv(
 			fname_design_table,
 			the_table, nb_designs, design_size);
+
 	if (f_v) {
 		cout << "design_tables::save "
 				"written file " << fname_design_table << endl;

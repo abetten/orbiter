@@ -31,6 +31,9 @@ classification_of_objects::classification_of_objects()
 
 	IS = NULL;
 
+	Output = NULL;
+
+#if 0
 	CB = NULL;
 
 	Ago = NULL;
@@ -43,40 +46,18 @@ classification_of_objects::classification_of_objects()
 	NO_transversal = NULL;
 
 	T_Ago = NULL;
+#endif
 
 }
 
 classification_of_objects::~classification_of_objects()
 {
 	Record_death();
-	if (Ago) {
-		FREE_lint(Ago);
-	}
-	if (F_reject) {
-		FREE_int(F_reject);
-	}
-	if (Idx_transversal) {
-		FREE_int(Idx_transversal);
-	}
-	if (Ago_transversal) {
-		FREE_lint(Ago_transversal);
-	}
-	if (T_Ago) {
-		FREE_OBJECT(T_Ago);
-	}
-	if (OWCF_transversal) {
-#if 0
-		int i;
 
-		for (i = 0; i < nb_orbits; i++) {
-			FREE_OBJECT(OWCF[i]);
-		}
-#endif
-		FREE_pvoid((void **) OWCF_transversal);
+	if (Output) {
+		FREE_OBJECT(Output);
 	}
-	if (NO_transversal) {
-		FREE_pvoid((void **) NO_transversal);
-	}
+
 }
 
 std::string classification_of_objects::get_label()
@@ -129,9 +110,26 @@ void classification_of_objects::perform_classification(
 
 	//int i;
 
-	CB = NEW_OBJECT(classify_bitvectors);
+	//CB = NEW_OBJECT(classify_bitvectors);
+
+	Output = NEW_OBJECT(data_input_stream_output);
+
+	if (f_v) {
+		cout << "classification_of_objects::perform_classification "
+				"before Output->init" << endl;
+	}
+	Output->init(this, verbose_level);
+	if (f_v) {
+		cout << "classification_of_objects::perform_classification "
+				"after Output->init" << endl;
+	}
 
 
+
+	if (Descr->f_nauty_control) {
+		cout << "classification_of_objects::perform_classification nauty_control: " << endl;
+		Descr->Nauty_control->print();
+	}
 
 
 
@@ -148,12 +146,25 @@ void classification_of_objects::perform_classification(
 	}
 
 
-	cout << "classification_of_objects::perform_classification We found "
-			<< CB->nb_types << " types" << endl;
+	if (f_v) {
+		cout << "classification_of_objects::perform_classification We found "
+				<< Output->CB->nb_types << " types" << endl;
+	}
 
 
+	if (f_v) {
+		cout << "classification_of_objects::perform_classification "
+				"before Output->after_classification" << endl;
+	}
 
 
+	Output->after_classification(
+			verbose_level);
+
+	if (f_v) {
+		cout << "classification_of_objects::perform_classification "
+				"after Output->after_classification" << endl;
+	}
 
 
 	if (f_v) {
@@ -189,7 +200,7 @@ void classification_of_objects::classify_objects_using_nauty(
 
 	t0 = Os.os_ticks();
 
-
+#if 0
 	Ago = NEW_lint(IS->Objects.size());
 
 	F_reject = NEW_int(IS->Objects.size());
@@ -197,14 +208,15 @@ void classification_of_objects::classify_objects_using_nauty(
 	OWCF_transversal = (any_combinatorial_object **) NEW_pvoid(IS->Objects.size());
 
 	NO_transversal = (other::l1_interfaces::nauty_output **) NEW_pvoid(IS->Objects.size());
+#endif
 
+	Output->nb_orbits = 0;
 
-	nb_orbits = 0;
-	for (input_idx = 0; input_idx < IS->Objects.size(); input_idx++) {
+	for (input_idx = 0; input_idx < Output->nb_input; input_idx++) {
 
 		if (f_v && (input_idx % 1000) == 0) {
 			cout << "classification_of_objects::classify_objects_using_nauty "
-					"input_idx = " << input_idx << " / " << IS->Objects.size() << endl;
+					"input_idx = " << input_idx << " / " << Output->nb_input << endl;
 		}
 
 		any_combinatorial_object *OwCF;
@@ -236,7 +248,7 @@ void classification_of_objects::classify_objects_using_nauty(
 
 		OwCF->set_label(object_label);
 
-		other::l1_interfaces::nauty_output *NO;
+		//other::l1_interfaces::nauty_output *NO;
 		encoded_combinatorial_object *Enc;
 
 
@@ -246,13 +258,14 @@ void classification_of_objects::classify_objects_using_nauty(
 					"before process_any_object" << endl;
 		}
 
+		Output->OWCF[input_idx] = (any_combinatorial_object *) IS->Objects[input_idx];
 
 		process_any_object(
-					OwCF,
+					Output->OWCF[input_idx],
 					input_idx,
-					Ago[input_idx],
-					F_reject[input_idx],
-					NO,
+					Output->Ago[input_idx],
+					Output->F_reject[input_idx],
+					Output->NO[input_idx],
 					Enc,
 					verbose_level - 2);
 
@@ -263,22 +276,23 @@ void classification_of_objects::classify_objects_using_nauty(
 
 		FREE_OBJECT(Enc);
 
+		//Output->NO[input_idx] = NO;
 
-		if (!F_reject[input_idx]) {
-			OWCF_transversal[nb_orbits] =
-					(any_combinatorial_object *) IS->Objects[input_idx];
-			NO_transversal[nb_orbits] = NO;
-			nb_orbits++;
+		if (!Output->F_reject[input_idx]) {
+			//Output->OWCF_transversal[Output->nb_orbits] = (any_combinatorial_object *) IS->Objects[input_idx];
+			Output->nb_orbits++;
 		}
 
 	}
 	if (f_v) {
 		cout << "classification_of_objects::classify_objects_using_nauty "
-				"nb_orbits = " << nb_orbits << endl;
+				"nb_orbits = " << Output->nb_orbits << endl;
 	}
 
-	Idx_transversal = NEW_int(nb_orbits);
-	Ago_transversal = NEW_lint(nb_orbits);
+
+#if 0
+	Output->Idx_transversal = NEW_int(Output->nb_orbits);
+	Output->Ago_transversal = NEW_lint(Output->nb_orbits);
 
 	int iso_idx;
 
@@ -288,15 +302,15 @@ void classification_of_objects::classify_objects_using_nauty(
 
 			input_idx++) {
 
-		if (F_reject[input_idx]) {
+		if (Output->F_reject[input_idx]) {
 			continue;
 		}
 
-		Idx_transversal[iso_idx] = input_idx;
-		Ago_transversal[iso_idx] = Ago[input_idx];
+		Output->Idx_transversal[iso_idx] = input_idx;
+		Output->Ago_transversal[iso_idx] = Output->Ago[input_idx];
 		iso_idx++;
 	}
-	if (iso_idx != nb_orbits) {
+	if (iso_idx != Output->nb_orbits) {
 		cout << "classification_of_objects::classify_objects_using_nauty "
 				"iso_idx != nb_orbits" << endl;
 		exit(1);
@@ -306,7 +320,7 @@ void classification_of_objects::classify_objects_using_nauty(
 		cout << "input object : ago : f_reject" << endl;
 		for (input_idx = 0; input_idx < IS->Objects.size(); input_idx++) {
 			cout << setw(3) << input_idx << " : " << setw(5)
-					<< Ago[input_idx] << " : " << F_reject[input_idx] << endl;
+					<< Output->Ago[input_idx] << " : " << Output->F_reject[input_idx] << endl;
 		}
 	}
 
@@ -315,7 +329,7 @@ void classification_of_objects::classify_objects_using_nauty(
 		int cnt;
 		cout << "iso type : input object : ago" << endl;
 		for (input_idx = 0, cnt = 0; input_idx < IS->Objects.size(); input_idx++) {
-			if (F_reject[input_idx]) {
+			if (Output->F_reject[input_idx]) {
 				continue;
 			}
 			cout << setw(3) << cnt << " : " << setw(3) << input_idx
@@ -329,15 +343,15 @@ void classification_of_objects::classify_objects_using_nauty(
 				"before CB->finalize" << endl;
 	}
 
-	CB->finalize(verbose_level); // computes C_type_of and perm
+	Output->CB->finalize(verbose_level); // computes C_type_of and perm
 
 
-	T_Ago = NEW_OBJECT(other::data_structures::tally);
-	T_Ago->init_lint(Ago_transversal, nb_orbits, false, 0);
+	Output->T_Ago = NEW_OBJECT(other::data_structures::tally);
+	Output->T_Ago->init_lint(Output->Ago_transversal, Output->nb_orbits, false, 0);
 
 	if (f_v) {
 		cout << "Automorphism group orders of orbit transversal: ";
-		T_Ago->print_first(true /* f_backwards */);
+		Output->T_Ago->print_first(true /* f_backwards */);
 		cout << endl;
 	}
 
@@ -362,6 +376,7 @@ void classification_of_objects::classify_objects_using_nauty(
 		save_transversal(verbose_level);
 
 	}
+#endif
 
 
 
@@ -376,64 +391,6 @@ void classification_of_objects::classify_objects_using_nauty(
 
 	if (f_v) {
 		cout << "classification_of_objects::classify_objects_using_nauty done" << endl;
-	}
-}
-
-void classification_of_objects::save_automorphism_group_order(
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "classification_of_objects::save_automorphism_group_order " << endl;
-	}
-	string ago_fname;
-	other::orbiter_kernel_system::file_io Fio;
-	other::data_structures::string_tools ST;
-
-	ago_fname = get_label();
-	ST.replace_extension_with(ago_fname, "_ago.csv");
-
-	string label;
-
-	label.assign("Ago");
-	Fio.Csv_file_support->lint_vec_write_csv(
-			Ago_transversal, nb_orbits, ago_fname, label);
-	if (f_v) {
-		cout << "Written file " << ago_fname
-				<< " of size " << Fio.file_size(ago_fname) << endl;
-	}
-	if (f_v) {
-		cout << "classification_of_objects::save_automorphism_group_order done" << endl;
-	}
-}
-
-void classification_of_objects::save_transversal(
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "classification_of_objects::save_transversal " << endl;
-	}
-	string fname;
-	other::orbiter_kernel_system::file_io Fio;
-	other::data_structures::string_tools ST;
-
-	fname = get_label();
-
-	ST.replace_extension_with(fname, "_transversal.csv");
-	string label;
-
-	label.assign("Transversal");
-
-	Fio.Csv_file_support->int_vec_write_csv(
-			Idx_transversal, nb_orbits, fname, label);
-	if (f_v) {
-		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-	}
-	if (f_v) {
-		cout << "classification_of_objects::save_transversal done" << endl;
 	}
 }
 
@@ -489,13 +446,13 @@ void classification_of_objects::process_any_object(
 		}
 #endif
 
-		FREE_OBJECT(NO); // ToDo ???
+		//FREE_OBJECT(NO); // we keep the NO in all cases
 	}
 	else {
 		if (f_v) {
 			cout << "classification_of_objects::process_any_object "
 					"New isomorphism type! The current number of "
-				"isomorphism types is " << CB->nb_types << endl;
+				"isomorphism types is " << Output->CB->nb_types << endl;
 		}
 		//int idx;
 
@@ -552,7 +509,7 @@ int classification_of_objects::process_object(
 
 	if (f_v) {
 		cout << "classification_of_objects::process_object "
-				"n=" << CB->n << endl;
+				"n=" << Output->CB->n << endl;
 	}
 
 
@@ -616,12 +573,12 @@ int classification_of_objects::process_object(
 
 	ago = go.as_lint();
 
-	if (CB->n == 0) {
+	if (Output->CB->n == 0) {
 		if (f_v) {
 			cout << "classification_of_objects::process_object "
 					"before CB->init" << endl;
 		}
-		CB->init(IS->nb_objects_to_test,
+		Output->CB->init(IS->nb_objects_to_test,
 
 				Canonical_form->get_allocated_length(),
 
@@ -638,7 +595,7 @@ int classification_of_objects::process_object(
 				"before CB->search_and_add_if_new" << endl;
 	}
 
-	CB->search_and_add_if_new(
+	Output->CB->search_and_add_if_new(
 
 			Canonical_form->get_data(),
 
@@ -854,153 +811,6 @@ void classification_of_objects::save(
 }
 #endif
 
-
-
-void classification_of_objects::report_summary_of_orbits(
-		std::ostream &ost, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "classification_of_objects::report_summary_of_orbits" << endl;
-	}
-	other::l1_interfaces::latex_interface L;
-
-
-	if (f_v) {
-		cout << "classification_of_objects::latex_report "
-				"before Summary of Orbits" << endl;
-	}
-
-	ost << "\\section*{Summary of Orbits}" << endl;
-
-	std::string *Table;
-	int nb_rows, nb_cols;
-
-	create_summary_table(
-			Table,
-			nb_rows, nb_cols,
-			verbose_level);
-
-
-	std::string *headers;
-
-	headers = new string[nb_cols];
-	headers[0] = "Iso";
-	headers[1] = "Rep";
-	headers[2] = "\\#";
-	headers[3] = "Ago";
-	headers[4] = "Objects";
-
-	ost << "$$" << endl;
-	L.print_table_of_strings_with_headers(
-			ost, headers, Table, nb_rows, nb_cols);
-	ost << "$$" << endl;
-
-#if 0
-	ost << "$$" << endl;
-	L.int_matrix_print_with_labels_and_partition(ost,
-			Table, CB->nb_types, 4,
-		row_labels, col_labels,
-		row_part_first, row_part_len, nb_row_parts,
-		col_part_first, col_part_len, nb_col_parts,
-		print_summary_table_entry,
-		this /*void *data*/,
-		true /* f_tex */);
-	ost << "$$" << endl;
-#endif
-
-	if (f_v) {
-		cout << "classification_of_objects::latex_report "
-				"after Summary of Orbits" << endl;
-	}
-
-	delete [] Table;
-
-	//FREE_int(Table);
-
-	if (f_v) {
-		cout << "classification_of_objects::report_summary_of_orbits done" << endl;
-	}
-
-}
-
-
-void classification_of_objects::create_summary_table(
-		std::string *&Table,
-		int &nb_rows, int &nb_cols,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "classification_of_objects::create_summary_table" << endl;
-	}
-	other::data_structures::sorting Sorting;
-
-	nb_rows = nb_orbits;
-	nb_cols = 5;
-
-	Table = new string[nb_rows * nb_cols];
-
-	int i;
-
-	for (i = 0; i < nb_rows; i++) {
-
-		int j = CB->perm[i];
-
-		string s_idx;
-		string s_orbit_rep;
-		string s_mult;
-		string s_ago;
-		string s_input_objects;
-
-
-		s_idx = std::to_string(i);
-		s_orbit_rep = std::to_string(CB->Type_rep[j]);
-		s_mult = std::to_string(CB->Type_mult[j]);
-
-
-
-		algebra::ring_theory::longinteger_object go;
-		go.create(Ago_transversal[i]);
-		//OiPA->Aut_gens->group_order(go);
-		//go.print_to_string(output);
-
-		s_ago = go.stringify();
-
-
-		int *Input_objects;
-		int nb_input_objects;
-		if (f_v) {
-			cout << "classification_of_objects::create_summary_table "
-					"before CB->C_type_of->get_class_by_value" << endl;
-		}
-		CB->C_type_of->get_class_by_value(
-				Input_objects,
-			nb_input_objects, j,
-			0 /*verbose_level */);
-		if (f_v) {
-			cout << "classification_of_objects::create_summary_table "
-					"after CB->C_type_of->get_class_by_value" << endl;
-		}
-		Sorting.int_vec_heapsort(Input_objects, nb_input_objects);
-
-		s_input_objects = Int_vec_stringify(Input_objects, nb_input_objects);
-
-
-		FREE_int(Input_objects);
-
-
-		Table[i * nb_cols + 0] = s_idx;
-		Table[i * nb_cols + 1] = s_orbit_rep;
-		Table[i * nb_cols + 2] = s_mult;
-		Table[i * nb_cols + 3] = s_ago;
-		Table[i * nb_cols + 4] = s_input_objects;
-
-	}
-
-}
 
 
 

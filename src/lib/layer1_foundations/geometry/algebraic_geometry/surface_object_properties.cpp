@@ -243,9 +243,13 @@ void surface_object_properties::init(
 	}
 	surface_object_properties::SO = SO;
 
+	int nb_lines;
+
+	nb_lines = SO->Variety_object->Line_sets->Set_size[0];
 
 
-	if (SO->Variety_object->Line_sets->Set_size[0] == 27) {
+
+	if (nb_lines == 27) {
 
 
 		SmoothProperties = NEW_OBJECT(smooth_surface_object_properties);
@@ -274,7 +278,7 @@ void surface_object_properties::init(
 				"after compute_properties" << endl;
 	}
 
-	if (SO->Variety_object->Line_sets->Set_size[0] == 27) {
+	if (nb_lines == 27) {
 
 		if (f_v) {
 			cout << "surface_object_properties::init "
@@ -304,17 +308,22 @@ void surface_object_properties::compute_properties(
 		cout << "surface_object_properties::compute_properties" << endl;
 	}
 
+	int nb_lines;
+
+	nb_lines = SO->Variety_object->Line_sets->Set_size[0];
+
 	int i;
 
-	Pluecker_coordinates = NEW_int(SO->Variety_object->Line_sets->Set_size[0] * 6);
-	Pluecker_rk = NEW_lint(SO->Variety_object->Line_sets->Set_size[0]);
+	Pluecker_coordinates = NEW_int(nb_lines * 6);
+	Pluecker_rk = NEW_lint(nb_lines);
 
-	for (i = 0; i < SO->Variety_object->Line_sets->Set_size[0]; i++) {
+	for (i = 0; i < nb_lines; i++) {
 
 		int v6[6];
 
 		SO->Surf->Gr->Pluecker_coordinates(
-				SO->Variety_object->Line_sets->Sets[0][i], v6, 0 /* verbose_level */);
+				SO->Variety_object->Line_sets->Sets[0][i],
+				v6, 0 /* verbose_level */);
 
 		Int_vec_copy(
 				v6, Pluecker_coordinates + i * 6, 6);
@@ -333,23 +342,29 @@ void surface_object_properties::compute_properties(
 		exit(1);
 	}
 
+	int nb_points;
+
+	nb_points = SO->Variety_object->Point_sets->Set_size[0];
+
+
+
 
 
 	Sorting.lint_vec_heapsort(
 			SO->Variety_object->Point_sets->Sets[0],
-			SO->Variety_object->Point_sets->Set_size[0]);
+			nb_points);
 
 	if (f_v) {
 		cout << "surface_object::compute_properties "
 				"we found "
-				<< SO->Variety_object->Point_sets->Set_size[0] << " points on the surface" << endl;
+				<< nb_points << " points on the surface" << endl;
 	}
 	if (f_vvv) {
 		cout << "surface_object_properties::compute_properties "
 				"The points on the surface are:" << endl;
 		L.print_lint_matrix_with_standard_labels(cout,
 				SO->Variety_object->Point_sets->Sets[0],
-				SO->Variety_object->Point_sets->Set_size[0],
+				nb_points,
 				1, false /* f_tex */);
 	}
 
@@ -371,8 +386,8 @@ void surface_object_properties::compute_properties(
 				"Surf->compute_points_on_lines" << endl;
 	}
 	SO->Surf->compute_points_on_lines(
-			SO->Variety_object->Point_sets->Sets[0], SO->Variety_object->Point_sets->Set_size[0],
-			SO->Variety_object->Line_sets->Sets[0], SO->Variety_object->Line_sets->Set_size[0],
+			SO->Variety_object->Point_sets->Sets[0], nb_points,
+			SO->Variety_object->Line_sets->Sets[0], nb_lines,
 		pts_on_lines,
 		f_is_on_line,
 		0 /* verbose_level */);
@@ -413,6 +428,9 @@ void surface_object_properties::compute_properties(
 		cout << endl;
 	}
 
+
+
+
 	if (f_v) {
 		cout << "surface_object::compute_properties "
 				"computing Eckardt points:" << endl;
@@ -432,7 +450,9 @@ void surface_object_properties::compute_properties(
 		cout << endl;
 	}
 	Eckardt_points = NEW_lint(nb_Eckardt_points);
-	Int_vec_apply_lint(Eckardt_points_index, SO->Variety_object->Point_sets->Sets[0],
+	Int_vec_apply_lint(
+			Eckardt_points_index,
+			SO->Variety_object->Point_sets->Sets[0],
 		Eckardt_points, nb_Eckardt_points);
 	if (f_v) {
 		cout << "surface_object::compute_properties "
@@ -445,8 +465,7 @@ void surface_object_properties::compute_properties(
 		cout << endl;
 	}
 
-
-	if (SO->Variety_object->Line_sets->Set_size[0] == 27) {
+	if (nb_lines == 27) {
 
 
 
@@ -558,13 +577,14 @@ void surface_object_properties::compute_properties(
 		cout << endl;
 	}
 
-
-	Pts_not_on_lines = NEW_lint(SO->Variety_object->Point_sets->Set_size[0]);
+	Pts_not_on_lines = NEW_lint(nb_points);
 	Lint_vec_copy(
 			SO->Variety_object->Point_sets->Sets[0],
 			Pts_not_on_lines,
-			SO->Variety_object->Point_sets->Set_size[0]);
-	nb_pts_not_on_lines = SO->Variety_object->Point_sets->Set_size[0];
+			nb_points);
+
+
+	nb_pts_not_on_lines = nb_points;
 
 	int j, a, b, idx, h;
 
@@ -790,10 +810,14 @@ void surface_object_properties::compute_singular_points_and_tangent_planes(
 	nb_singular_pts = 0;
 	nb_non_singular_pts = 0;
 
-	singular_pts = NEW_lint(SO->Variety_object->Point_sets->Set_size[0]);
-	tangent_plane_rank_global = NEW_lint(SO->Variety_object->Point_sets->Set_size[0]);
-	tangent_plane_rank_dual = NEW_lint(SO->Variety_object->Point_sets->Set_size[0]);
-	for (h = 0; h < SO->Variety_object->Point_sets->Set_size[0]; h++) {
+	int nb_points;
+
+	nb_points = SO->Variety_object->Point_sets->Set_size[0];
+
+	singular_pts = NEW_lint(nb_points);
+	tangent_plane_rank_global = NEW_lint(nb_points);
+	tangent_plane_rank_dual = NEW_lint(nb_points);
+	for (h = 0; h < nb_points; h++) {
 		if (f_vv) {
 			cout << "surface_object_properties::compute_singular_points_and_tangent_planes "
 					"h=" << h << " / " << SO->Variety_object->Point_sets->Set_size[0] << endl;
@@ -841,6 +865,7 @@ void surface_object_properties::compute_singular_points_and_tangent_planes(
 			tangent_plane_rank_global[h] = -1;
 		}
 		else {
+
 			long int plane_rk;
 
 			plane_rk = SO->Surf->P->Solid->plane_rank_using_dual_coordinates_in_three_space(
@@ -929,15 +954,19 @@ void surface_object_properties::compute_adjacency_matrix_of_line_intersection_gr
 		cout << "surface_object_properties::compute_adjacency_matrix_of_line_intersection_graph" << endl;
 	}
 
+	int nb_lines;
+
+	nb_lines = SO->Variety_object->Line_sets->Set_size[0];
+
+
 	if (f_v) {
-		cout << "surface_object_properties::compute_adjacency_matrix_of_"
-				"line_intersection_graph before Surf->compute_adjacency_"
-				"matrix_of_line_intersection_graph" << endl;
+		cout << "surface_object_properties::compute_adjacency_matrix_of_line_intersection_graph "
+				"before Surf->compute_adjacency_matrix_of_line_intersection_graph" << endl;
 	}
 	SO->Surf->compute_adjacency_matrix_of_line_intersection_graph(
 		Adj_line_intersection_graph,
 		SO->Variety_object->Line_sets->Sets[0],
-		SO->Variety_object->Line_sets->Set_size[0],
+		nb_lines,
 		verbose_level - 2);
 	if (f_v) {
 		cout << "surface_object_properties::compute_adjacency_matrix_of_line_intersection_graph "
@@ -945,24 +974,22 @@ void surface_object_properties::compute_adjacency_matrix_of_line_intersection_gr
 	}
 
 	Line_neighbors = NEW_OBJECT(other::data_structures::set_of_sets);
-	Line_neighbors->init_from_adjacency_matrix(SO->Variety_object->Line_sets->Set_size[0],
+	Line_neighbors->init_from_adjacency_matrix(nb_lines,
 		Adj_line_intersection_graph, 0 /* verbose_level*/);
 
 	if (f_v) {
-		cout << "surface_object_properties::compute_adjacency_matrix_of_"
-				"line_intersection_graph before Surf->compute_"
-				"intersection_points_and_indices" << endl;
+		cout << "surface_object_properties::compute_adjacency_matrix_of_line_intersection_graph "
+				"before Surf->compute_intersection_points_and_indices" << endl;
 	}
 	SO->Surf->compute_intersection_points_and_indices(
 		Adj_line_intersection_graph,
 		SO->Variety_object->Point_sets->Sets[0], SO->Variety_object->Point_sets->Set_size[0],
-		SO->Variety_object->Line_sets->Sets[0], SO->Variety_object->Line_sets->Set_size[0] /* nb_lines */,
+		SO->Variety_object->Line_sets->Sets[0], nb_lines,
 		Line_intersection_pt, Line_intersection_pt_idx,
 		verbose_level);
 	if (f_v) {
-		cout << "surface_object_properties::compute_adjacency_matrix_of_"
-				"line_intersection_graph after Surf->compute_"
-				"intersection_points_and_indices" << endl;
+		cout << "surface_object_properties::compute_adjacency_matrix_of_line_intersection_graph "
+				"after Surf->compute_intersection_points_and_indices" << endl;
 	}
 #if 0
 	Surf->compute_intersection_points(Adj_line_intersection_graph,
@@ -979,7 +1006,12 @@ void surface_object_properties::compute_adjacency_matrix_of_line_intersection_gr
 int surface_object_properties::Adj_ij(
 		int i, int j)
 {
-	return Adj_line_intersection_graph[i * SO->Variety_object->Line_sets->Set_size[0] + j];
+
+	int nb_lines;
+
+	nb_lines = SO->Variety_object->Line_sets->Set_size[0];
+
+	return Adj_line_intersection_graph[i * nb_lines + j];
 }
 
 void surface_object_properties::compute_plane_type_by_points(
@@ -1003,7 +1035,9 @@ void surface_object_properties::compute_plane_type_by_points(
 
 		C_plane_type_by_points = NEW_OBJECT(other::data_structures::tally);
 
-		C_plane_type_by_points->init(plane_type_by_points, nb_planes, false, 0);
+		C_plane_type_by_points->init(
+				plane_type_by_points, nb_planes,
+				false, 0);
 		if (f_v) {
 			cout << "plane types by points: ";
 			C_plane_type_by_points->print_bare(true);
@@ -1396,7 +1430,12 @@ void surface_object_properties::print_line_intersection_graph(
 void surface_object_properties::print_adjacency_list(
 		std::ostream &ost)
 {
-	if (SO->Variety_object->Line_sets->Set_size[0] < 128) {
+
+	int nb_lines;
+
+	nb_lines = SO->Variety_object->Line_sets->Set_size[0];
+
+	if (nb_lines < 128) {
 		int i, j, m, n, h;
 		int *p;
 		int *set;
@@ -1476,7 +1515,12 @@ void surface_object_properties::print_adjacency_list(
 void surface_object_properties::print_adjacency_matrix(
 		std::ostream &ost)
 {
-	if (SO->Variety_object->Line_sets->Set_size[0] < 128) {
+
+	int nb_lines;
+
+	nb_lines = SO->Variety_object->Line_sets->Set_size[0];
+
+	if (nb_lines < 128) {
 		int i, j, m, n;
 		int *p;
 
@@ -1522,8 +1566,11 @@ void surface_object_properties::print_adjacency_matrix(
 void surface_object_properties::print_adjacency_matrix_with_intersection_points(
 		std::ostream &ost)
 {
+	int nb_lines;
 
-	if (SO->Variety_object->Line_sets->Set_size[0] < 128) {
+	nb_lines = SO->Variety_object->Line_sets->Set_size[0];
+
+	if (nb_lines < 128) {
 		int i, j, m, n, idx;
 		int *p;
 
@@ -1539,7 +1586,7 @@ void surface_object_properties::print_adjacency_matrix_with_intersection_points(
 		}
 		ost << "\\\\" << endl;
 
-		if (SO->Variety_object->Line_sets->Set_size[0] == 27) {
+		if (nb_lines == 27) {
 			ost << " & ";
 			for (j = 0; j < n; j++) {
 				ost << " & " << SO->Surf->Schlaefli->Labels->Line_label_tex[j];
@@ -1584,6 +1631,10 @@ void surface_object_properties::print_neighbor_sets(
 	int i, j, h, p;
 	other::data_structures::sorting Sorting;
 
+	int nb_lines;
+
+	nb_lines = SO->Variety_object->Line_sets->Set_size[0];
+
 	//ost << "\\clearpage" << endl;
 	ost << "Neighbor sets in the line intersection graph:\\\\" << endl;
 	//Line_neighbors->print_table_tex(ost);
@@ -1606,7 +1657,7 @@ void surface_object_properties::print_neighbor_sets(
 			ost << "\\mbox{in point} ";
 			for (h = 0; h < Line_neighbors->Set_size[i]; h++) {
 				j = Line_neighbors->Sets[i][h];
-				p = Line_intersection_pt[i * SO->Variety_object->Line_sets->Set_size[0] + j];
+				p = Line_intersection_pt[i * nb_lines + j];
 
 #if 0
 				if (!Sorting.lint_vec_search_linear(SO->Pts, SO->nb_pts, p, idx)) {
@@ -1646,8 +1697,13 @@ void surface_object_properties::print_plane_type_by_points(
 void surface_object_properties::print_lines(
 		std::ostream &ost)
 {
-	ost << "\\subsection*{The " << SO->Variety_object->Line_sets->Set_size[0] << " Lines}" << endl;
-	SO->Surf->print_lines_tex(ost, SO->Variety_object->Line_sets->Sets[0], SO->Variety_object->Line_sets->Set_size[0]);
+
+	int nb_lines;
+
+	nb_lines = SO->Variety_object->Line_sets->Set_size[0];
+
+	ost << "\\subsection*{The " << nb_lines << " Lines}" << endl;
+	SO->Surf->print_lines_tex(ost, SO->Variety_object->Line_sets->Sets[0], nb_lines);
 }
 
 void surface_object_properties::print_lines_with_points_on_them(
@@ -1655,24 +1711,30 @@ void surface_object_properties::print_lines_with_points_on_them(
 {
 	other::l1_interfaces::latex_interface L;
 
-	ost << "\\subsection*{The " << SO->Variety_object->Line_sets->Set_size[0] << " lines with points on them}" << endl;
+	int nb_lines;
+
+	nb_lines = SO->Variety_object->Line_sets->Set_size[0];
+
+	ost << "\\subsection*{The " << nb_lines << " lines with points on them}" << endl;
 	int i, j;
 	int pt;
 
-	if (SO->Variety_object->Line_sets->Set_size[0] < 128) {
+
+	if (nb_lines < 128) {
 
 		ost << "As lines in ${\\rm PG}(3,q)$:\\\\" << endl;
-		Lint_vec_print(ost, SO->Variety_object->Line_sets->Sets[0], SO->Variety_object->Line_sets->Set_size[0]);
+		Lint_vec_print(ost, SO->Variety_object->Line_sets->Sets[0], nb_lines);
 		ost << "\\\\" << endl;
 
 		ost << "As elements on the Klein quadric (in the same order):\\\\" << endl;
-		for (i = 0; i < SO->Variety_object->Line_sets->Set_size[0]; i++) {
+		for (i = 0; i < nb_lines; i++) {
 
 			long int line_rk, a;
 
 			line_rk = SO->Variety_object->Line_sets->Sets[0][i];
 
-			a = SO->Surf->Klein->line_to_point_on_quadric(line_rk, 0 /* verbose_level*/);
+			a = SO->Surf->Klein->line_to_point_on_quadric(
+					line_rk, 0 /* verbose_level*/);
 			ost << a;
 			if (i < SO->Variety_object->Line_sets->Set_size[0] - 1) {
 				ost << ", ";
@@ -1683,12 +1745,14 @@ void surface_object_properties::print_lines_with_points_on_them(
 
 
 
-		for (i = 0; i < SO->Variety_object->Line_sets->Set_size[0]; i++) {
+		for (i = 0; i < nb_lines; i++) {
 			//ost << "Line " << i << " is " << v[i] << ":\\\\" << endl;
-			SO->Surf->Gr->unrank_lint(SO->Variety_object->Line_sets->Sets[0][i], 0 /*verbose_level*/);
+			SO->Surf->Gr->unrank_lint(
+					SO->Variety_object->Line_sets->Sets[0][i],
+					0 /*verbose_level*/);
 			ost << "$$" << endl;
 			ost << "\\ell_{" << i << "} ";
-			if (SO->Variety_object->Line_sets->Set_size[0] == 27) {
+			if (nb_lines == 27) {
 				ost << " = " << SO->Surf->Schlaefli->Labels->Line_label_tex[i];
 			}
 			ost << " = \\left[" << endl;
@@ -1753,7 +1817,9 @@ void surface_object_properties::print_equation(
 	ost << " is :" << endl;
 
 	int eqn20[20];
+
 	Int_vec_copy(SO->Variety_object->eqn, eqn20, 20);
+
 	SO->F->Projective_space_basic->PG_element_normalize_from_front(
 			eqn20, 1, 20);
 
@@ -1845,12 +1911,17 @@ void surface_object_properties::print_affine_points_in_source_code(
 	int i, j, cnt;
 	int v[4];
 
+	int nb_points;
+
+	nb_points = SO->Variety_object->Point_sets->Set_size[0];
+
+
 	//ost << "\\clearpage" << endl;
 	ost << "\\subsection*{Affine points on surface}" << endl;
 	ost << "\\begin{verbatim}" << endl;
 	ost << "int Pts[] = {" << endl;
 	cnt = 0;
-	for (i = 0; i < SO->Variety_object->Point_sets->Set_size[0]; i++) {
+	for (i = 0; i < nb_points; i++) {
 		SO->Surf->unrank_point(v, SO->Variety_object->Point_sets->Sets[0][i]);
 		SO->Surf->F->Projective_space_basic->PG_element_normalize(
 				v, 1, 4);
@@ -1923,11 +1994,16 @@ void surface_object_properties::print_Eckardt_points(
 	int v[4];
 
 	//ost << "\\clearpage" << endl;
+
 	ost << "The surface has " << nb_Eckardt_points
 			<< " Eckardt points:\\\\" << endl;
 
 
 
+
+	int nb_lines;
+
+	nb_lines = SO->Variety_object->Line_sets->Set_size[0];
 
 
 	//ost << "%%\\clearpage" << endl;
@@ -1943,7 +2019,7 @@ void surface_object_properties::print_Eckardt_points(
 		SO->Surf->unrank_point(v, Eckardt_points[i]);
 
 		ost << i << " : ";
-		if (SO->Variety_object->Line_sets->Set_size[0] == 27) {
+		if (nb_lines == 27) {
 			ost << "E_{" << SO->Surf->Schlaefli->Schlaefli_tritangent_planes->Eckard_point_label_tex[Eckardt_points_schlaefli_labels[i]] << "}=";
 		}
 
@@ -2055,7 +2131,8 @@ void surface_object_properties::print_Hesse_planes(
 	ost << "\\\\" << endl;
 
 	SO->Surf->Gr3->print_set_tex(
-			ost, Hesse_planes, nb_Hesse_planes, 0 /* verbose_level */);
+			ost, Hesse_planes, nb_Hesse_planes,
+			0 /* verbose_level */);
 
 
 	ost << endl;
@@ -2180,7 +2257,7 @@ void surface_object_properties::print_singular_points(
 
 
 	//ost << "The Eckardt points are:\\\\" << endl;
-	ost << "\\begin{multicols}{2}" << endl;
+	//ost << "\\begin{multicols}{2}" << endl;
 	//ost << "\\begin{align*}" << endl;
 	ost << "\\noindent" << endl;
 	for (i = 0; i < nb_singular_pts; i++) {
@@ -2207,7 +2284,7 @@ void surface_object_properties::print_singular_points(
 		ost << "$\\\\" << endl;
 		}
 	//ost << "\\end{align*}" << endl;
-	ost << "\\end{multicols}" << endl;
+	//ost << "\\end{multicols}" << endl;
 }
 
 
@@ -2257,13 +2334,18 @@ void surface_object_properties::print_double_points(
 		ost << "The double points on the surface are:\\\\" << endl;
 		//ost << "\\begin{multicols}{2}" << endl;
 
+		int nb_points;
+		int nb_lines;
 		int *pt_idx;
 
-		pt_idx = NEW_int(SO->Variety_object->Line_sets->Set_size[0] * SO->Variety_object->Line_sets->Set_size[0]);
-		for (i = 0; i < SO->Variety_object->Line_sets->Set_size[0] * SO->Variety_object->Line_sets->Set_size[0]; i++) {
+		nb_points = SO->Variety_object->Point_sets->Set_size[0];
+		nb_lines = SO->Variety_object->Line_sets->Set_size[0];
+
+		pt_idx = NEW_int(nb_lines * nb_lines);
+		for (i = 0; i < nb_lines * nb_lines; i++) {
 			pt_idx[i] = -1;
 		}
-		for (p = 0; p < SO->Variety_object->Point_sets->Set_size[0]; p++) {
+		for (p = 0; p < nb_points; p++) {
 			if (lines_on_point->Set_size[p] != 2) {
 				continue;
 			}
@@ -2273,18 +2355,21 @@ void surface_object_properties::print_double_points(
 				a = lines_on_point->Sets[p][1];
 				b = lines_on_point->Sets[p][0];
 			}
-			pt_idx[a * SO->Variety_object->Line_sets->Set_size[0] + b] = p;
+			pt_idx[a * nb_lines + b] = p;
 		}
-		ost << "\\begin{multicols}{1}" << endl;
+		//ost << "\\begin{multicols}{1}" << endl;
 		ost << "\\noindent" << endl;
 
 		int cnt;
 
 		cnt = 0;
 
-		for (a = 0; a < SO->Variety_object->Line_sets->Set_size[0]; a++) {
-			for (b = a + 1; b < SO->Variety_object->Line_sets->Set_size[0]; b++) {
-				p = pt_idx[a * SO->Variety_object->Line_sets->Set_size[0] + b];
+		for (a = 0; a < nb_lines; a++) {
+
+			for (b = a + 1; b < nb_lines; b++) {
+
+				p = pt_idx[a * nb_lines + b];
+
 				if (p == -1) {
 					continue;
 				}
@@ -2308,7 +2393,7 @@ void surface_object_properties::print_double_points(
 				//Int_vec_print_fully(ost, v, 4);
 
 
-				if (SO->Variety_object->Line_sets->Set_size[0] == 27) {
+				if (nb_lines == 27) {
 					ost << " = ";
 					ost << "\\ell_{" << a << "} \\cap ";
 					ost << "\\ell_{" << b << "} ";
@@ -2324,7 +2409,7 @@ void surface_object_properties::print_double_points(
 				ost << "$\\\\" << endl;
 			}
 		}
-		ost << "\\end{multicols}" << endl;
+		//ost << "\\end{multicols}" << endl;
 
 		FREE_int(pt_idx);
 	}
@@ -2360,7 +2445,7 @@ void surface_object_properties::print_single_points(
 
 		//ost << "\\clearpage" << endl;
 		ost << "The single points on the surface are:\\\\" << endl;
-		ost << "\\begin{multicols}{2}" << endl;
+		//ost << "\\begin{multicols}{2}" << endl;
 		ost << "\\noindent" << endl;
 		for (i = 0; i < nb_Single_points; i++) {
 
@@ -2390,7 +2475,7 @@ void surface_object_properties::print_single_points(
 			}
 			ost << "\\\\" << endl;
 		}
-		ost << "\\end{multicols}" << endl;
+		//ost << "\\end{multicols}" << endl;
 		ost << "The single points on the surface are:\\\\" << endl;
 		Lint_vec_print_fully(ost, Single_points, nb_Single_points);
 		ost << "\\\\" << endl;
@@ -2409,7 +2494,13 @@ void surface_object_properties::print_points_on_surface(
 	//int v[4];
 
 	//ost << "\\clearpage" << endl;
-	ost << "The surface has " << SO->Variety_object->Point_sets->Set_size[0] << " points\\\\" << endl;
+
+	int nb_points;
+
+
+	nb_points = SO->Variety_object->Point_sets->Set_size[0];
+
+	ost << "The surface has " << nb_points << " points\\\\" << endl;
 
 #if 0
 	if (SO->nb_pts < 1000) {
@@ -2442,28 +2533,41 @@ void surface_object_properties::print_all_points_on_surface(
 	//int v[4];
 
 	//ost << "\\clearpage" << endl;
-	ost << "The surface has " << SO->Variety_object->Point_sets->Set_size[0] << " points:\\\\" << endl;
 
-	if (SO->Variety_object->Point_sets->Set_size[0] < 2000) {
+	int nb_points;
+
+
+	nb_points = SO->Variety_object->Point_sets->Set_size[0];
+
+	ost << "The surface has "
+			<< nb_points
+			<< " points:\\\\" << endl;
+
+	if (nb_points < 2000) {
 		//ost << "$$" << endl;
 		//L.lint_vec_print_as_matrix(ost, SO->Pts, SO->nb_pts, 10, true /* f_tex */);
 		//ost << "$$" << endl;
 		//ost << "\\clearpage" << endl;
 		ost << "The points on the surface are:\\\\" << endl;
-		ost << "\\begin{multicols}{3}" << endl;
+		//ost << "\\begin{multicols}{3}" << endl;
 		ost << "\\noindent" << endl;
 		int i;
 		int v[4];
 
-		for (i = 0; i < SO->Variety_object->Point_sets->Set_size[0]; i++) {
-			SO->Surf->unrank_point(v, SO->Variety_object->Point_sets->Sets[0][i]);
+		for (i = 0; i < nb_points; i++) {
+			SO->Surf->unrank_point(v,
+					SO->Variety_object->Point_sets->Sets[0][i]);
 			ost << i;
 			ost << " : $";
-			SO->Surf->print_point_with_orbiter_rank(ost, SO->Variety_object->Point_sets->Sets[0][i], v);
+			SO->Surf->print_point_with_orbiter_rank(ost,
+					SO->Variety_object->Point_sets->Sets[0][i],
+					v);
 			ost << "$\\\\" << endl;
-			}
-		ost << "\\end{multicols}" << endl;
-		Lint_vec_print_fully(ost, SO->Variety_object->Point_sets->Sets[0], SO->Variety_object->Point_sets->Set_size[0]);
+		}
+		//ost << "\\end{multicols}" << endl;
+		Lint_vec_print_fully(ost,
+				SO->Variety_object->Point_sets->Sets[0],
+				SO->Variety_object->Point_sets->Set_size[0]);
 		ost << "\\\\" << endl;
 	}
 	else {
@@ -2512,9 +2616,12 @@ void surface_object_properties::print_points_on_surface_but_not_on_a_line(
 	int v[4];
 
 	//ost << "\\clearpage" << endl;
+
 	ost << "The surface has " << nb_pts_not_on_lines
 			<< " points not on any line:\\\\" << endl;
+
 	if (nb_pts_not_on_lines < 1000) {
+
 #if 0
 		ost << "$$" << endl;
 		L.lint_vec_print_as_matrix(ost,
@@ -2525,10 +2632,14 @@ void surface_object_properties::print_points_on_surface_but_not_on_a_line(
 		ost << "$$" << endl;
 #endif
 		//ost << "%%\\clearpage" << endl;
+
 		ost << "The points on the surface but not "
 				"on lines are:\\\\" << endl;
-		ost << "\\begin{multicols}{1}" << endl;
+
+		//ost << "\\begin{multicols}{1}" << endl;
+
 		ost << "\\noindent" << endl;
+
 		for (i = 0; i < nb_pts_not_on_lines; i++) {
 			long int rk;
 
@@ -2546,19 +2657,20 @@ void surface_object_properties::print_points_on_surface_but_not_on_a_line(
 			ost << "$" << endl;
 
 
-			//ToDo
+			// print tangent plane at point:
 
 			int pt;
 
 			SO->Variety_object->find_point(rk, pt);
 
-			ost << " local pt = " << pt << " tangent plane: " << tangent_plane_rank_global[pt] << "\\\\" << endl;
+			ost << " local pt = " << pt << " tangent plane: "
+					<< tangent_plane_rank_global[pt] << "\\\\" << endl;
 
 			ost << "\\\\" << endl;
 
 
-			}
-		ost << "\\end{multicols}" << endl;
+		}
+		//ost << "\\end{multicols}" << endl;
 	}
 	else {
 		ost << "Too many to print.\\\\" << endl;

@@ -597,8 +597,17 @@ void design_create::init(
 		degree = Descr->list_of_sets_coded_v;
 
 		Get_lint_vector_from_label(
-				Descr->list_of_sets_coded_label, Design_object->set, Design_object->sz,
+				Descr->list_of_sets_coded_label,
+				Design_object->set,
+				Design_object->sz,
 				0 /* verbose_level */);
+
+		if (f_v) {
+			cout << "design_create::init "
+					"blocks: ";
+			Lint_vec_print(cout, Design_object->set, Design_object->sz);
+			cout << endl;
+		}
 		//Lint_vec_scan(Descr->list_of_blocks_text, set, sz);
 
 		Design_object->f_has_set = true;
@@ -750,7 +759,9 @@ void design_create::init(
 
 		Design_object->nb_inc = 0;
 		Design_object->incma = NEW_int(Design_object->v * Design_object->b);
+
 		Int_vec_zero(Design_object->incma, Design_object->v * Design_object->b);
+
 		for (h = 0; h < Design_object->b; h++) {
 			s = SoS->Set_size[h];
 			for (u = 0; u < s; u++) {
@@ -844,8 +855,11 @@ void design_create::init(
 					"before Design.create_wreath_product_design" << endl;
 		}
 		Design.create_wreath_product_design(
-				n, Design_object->k,
-				Design_object->set, nb_blocks, verbose_level);
+				n,
+				Design_object->k,
+				Design_object->set,
+				nb_blocks,
+				verbose_level);
 		if (f_v) {
 			cout << "design_create::init "
 					"after Design.create_wreath_product_design" << endl;
@@ -1386,9 +1400,11 @@ void design_create::compute_incidence_matrix_from_set_of_codes(
 			int h;
 
 			Design.compute_incidence_matrix_from_sets(
-					Design_object->v, Design_object->b, Design_object->set,
-						Design_object->incma,
-						verbose_level);
+					Design_object->v,
+					Design_object->b,
+					Design_object->set,
+					Design_object->incma,
+					verbose_level);
 
 			Design_object->nb_inc = 0;
 			for (h = 0; h < Design_object->v * Design_object->b; h++) {
@@ -1408,9 +1424,12 @@ void design_create::compute_incidence_matrix_from_set_of_codes(
 						"before Design.compute_blocks_from_coding" << endl;
 			}
 			Design.compute_blocks_from_coding(
-					Design_object->v, Design_object->b,
-					Descr->list_of_blocks_coded_k, Design_object->set,
-					Blocks, verbose_level);
+					Design_object->v,
+					Design_object->b,
+					Descr->list_of_blocks_coded_k,
+					Design_object->set,
+					Blocks,
+					verbose_level);
 			if (f_v) {
 				cout << "design_create::compute_incidence_matrix_from_set_of_codes "
 						"after Design.compute_blocks_from_coding" << endl;
@@ -1430,9 +1449,12 @@ void design_create::compute_incidence_matrix_from_set_of_codes(
 						"before Design.compute_incidence_matrix_from_blocks" << endl;
 			}
 			Design.compute_incidence_matrix_from_blocks(
-					Design_object->v, Design_object->b,
-					Descr->list_of_blocks_coded_k, Blocks,
-					Design_object->incma, verbose_level);
+					Design_object->v,
+					Design_object->b,
+					Descr->list_of_blocks_coded_k,
+					Blocks,
+					Design_object->incma,
+					verbose_level);
 			if (f_v) {
 				cout << "design_create::compute_incidence_matrix_from_set_of_codes "
 						"after Design.compute_incidence_matrix_from_blocks" << endl;
@@ -1456,8 +1478,11 @@ void design_create::compute_incidence_matrix_from_set_of_codes(
 
 			Design_object->nb_inc = Design_object->k * Design_object->b;
 			Design.compute_incidence_matrix(
-					Design_object->v, Design_object->b, Design_object->k, Design_object->set,
-					Design_object->incma, verbose_level);
+					Design_object->v, Design_object->b,
+					Design_object->k,
+					Design_object->set,
+					Design_object->incma,
+					verbose_level);
 
 		}
 		Design_object->f_has_incma = true;

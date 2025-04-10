@@ -188,6 +188,9 @@ public:
 	long int lines_on_point_but_within_a_plane_point_rk;
 	long int lines_on_point_but_within_a_plane_plane_rk;
 
+	int f_union_of_lines;
+	std::string union_of_lines_text;
+
 	int f_rank_lines_in_PG;
 	std::string rank_lines_in_PG_label;
 

@@ -39,6 +39,8 @@ void projective_space_activity::perform_activity(
 		cout << "projective_space_activity::perform_activity" << endl;
 	}
 
+	// TABLES/projective_space_activity_1.tex
+
 	if (Descr->f_cheat_sheet) {
 
 		other::graphics::layered_graph_draw_options *O;
@@ -507,6 +509,9 @@ void projective_space_activity::perform_activity(
 		}
 	}
 
+	// TABLES/projective_space_activity_2.tex
+
+
 
 	else if (Descr->f_sweep_4_15_lines) {
 
@@ -870,6 +875,11 @@ void projective_space_activity::perform_activity(
 		FREE_lint(the_set_out);
 
 	}
+
+
+	// TABLES/projective_space_activity_3.tex
+
+
 	else if (Descr->f_lines_on_point_but_within_a_plane) {
 
 		if (f_v) {
@@ -907,6 +917,32 @@ void projective_space_activity::perform_activity(
 					"f_lines_on_point_but_within_a_plane done" << endl;
 		}
 	}
+
+	else if (Descr->f_union_of_lines) {
+
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"-union_of_lines " << Descr->union_of_lines_text << endl;
+		}
+
+		geometry::other_geometry::geometry_global Geo;
+
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"before Geo.do_union_of_lines_in_PG" << endl;
+		}
+		Geo.do_union_of_lines_in_PG(
+				PA->P,
+				Descr->union_of_lines_text,
+				verbose_level);
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"after Geo.do_union_of_lines_in_PG" << endl;
+		}
+
+
+	}
+
 	else if (Descr->f_rank_lines_in_PG) {
 
 
@@ -1325,6 +1361,7 @@ void projective_space_activity::perform_activity(
 	}
 
 
+	// TABLES/projective_space_activity_4.tex
 
 
 

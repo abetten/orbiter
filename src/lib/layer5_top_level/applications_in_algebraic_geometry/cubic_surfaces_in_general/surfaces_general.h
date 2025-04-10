@@ -591,6 +591,11 @@ public:
 
 	surface_object_with_group();
 	~surface_object_with_group();
+	void cheat_sheet(
+			std::ostream &ost,
+			int f_print_orbits, std::string &fname_mask,
+			other::graphics::layered_graph_draw_options *Opt,
+			int verbose_level);
 	void init_equation(
 			surface_with_action *Surf_A, int *eqn,
 			groups::strong_generators *Aut_gens,
@@ -661,6 +666,9 @@ public:
 			int verbose_level);
 	void print_automorphism_group(
 			std::ostream &ost,
+		int verbose_level);
+	void print_orbits_of_automorphism_group(
+		std::ostream &ost,
 		int f_print_orbits, std::string &fname_mask,
 		other::graphics::layered_graph_draw_options *Opt,
 		int verbose_level);
@@ -671,11 +679,6 @@ public:
 		int verbose_level);
 	void cheat_sheet_basic(
 			std::ostream &ost, int verbose_level);
-	void cheat_sheet(
-			std::ostream &ost,
-			int f_print_orbits, std::string &fname_mask,
-			other::graphics::layered_graph_draw_options *Opt,
-			int verbose_level);
 	void cheat_sheet_group_elements(
 			std::ostream &ost,
 			std::string &fname_csv,
@@ -741,6 +744,9 @@ public:
 #endif
 	void compute_tactical_decompositions(
 			int verbose_level);
+	void report_orbits(
+			std::ostream &ost,
+			int verbose_level);
 
 };
 
@@ -802,7 +808,8 @@ public:
 	surface_study();
 	~surface_study();
 	void init(
-			algebra::field_theory::finite_field *F, int nb, int verbose_level);
+			algebra::field_theory::finite_field *F,
+			int nb, int verbose_level);
 	void study_intersection_points(
 			int verbose_level);
 	void study_line_orbits(

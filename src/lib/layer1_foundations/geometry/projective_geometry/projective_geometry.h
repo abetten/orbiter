@@ -517,7 +517,7 @@ public:
 private:
 	other::data_structures::bitmatrix *Bitmatrix;
 
-	int *Lines; // [N_lines * k]
+	int *Lines; // [N_lines * k] = points on line
 	int *Lines_on_point; // [N_points * r]
 	int *Line_through_two_points; // [N_points * N_points]
 	int *Line_intersection; // [N_lines * N_lines]
@@ -539,6 +539,9 @@ public:
 	int has_lines_on_point();
 	int find_point_on_line(
 			int line_rk, int pt);
+	void union_of_lines(
+			int *Line_rk, int nb_lines, int *&Union, int &sz,
+			int verbose_level);
 	int lines(
 			int i, int j);
 	int lines_on_point(

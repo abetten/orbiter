@@ -247,6 +247,15 @@ public:
 			int n, int *v);
 	void lehmercode_to_permutation(
 			int n, int *code, int *perm);
+	void apply_in_product_action(
+			int m, int n, int *perm_mn,
+			int *flags_in, int *flags_out, int nb_flags,
+			int verbose_level);
+	// does not sort the output
+	void apply_in_product_action_lint(
+			int m, int n, int *perm_mn,
+			long int *flags_in, long int *flags_out, int nb_flags,
+			int verbose_level);
 
 };
 

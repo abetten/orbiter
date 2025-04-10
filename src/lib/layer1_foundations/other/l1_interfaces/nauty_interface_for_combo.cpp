@@ -77,6 +77,39 @@ void nauty_interface_for_combo::run_nauty_for_combo(
 	}
 
 
+	if (Nauty_control->f_partition) {
+		if (f_v) {
+			cout << "nauty_interface_for_combo::run_nauty_for_combo "
+					"f_partition" << endl;
+		}
+		int *part;
+		int sz;
+		int a, b, h;
+
+		Get_int_vector_from_label(Nauty_control->partition_text, part, sz, 0);
+		if (f_v) {
+			cout << "nauty_interface_for_combo::run_nauty_for_combo "
+					"part = ";
+			Int_vec_print(cout, part, sz);
+			cout << endl;
+		}
+
+		b = 0;
+		for (h = 0; h < sz; h++) {
+			a = part[h];
+			b += a;
+			Enc->partition[b - 1] = 0;
+		}
+		if (f_v) {
+			cout << "nauty_interface_for_combo::run_nauty_for_combo "
+					"Enc->partition = ";
+			Int_vec_print(cout, Enc->partition, Enc->canonical_labeling_len);
+			cout << endl;
+		}
+		FREE_int(part);
+
+	}
+
 
 	if (Nauty_control->f_save_nauty_input_graphs) {
 

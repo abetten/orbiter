@@ -3737,11 +3737,18 @@ void symbol_definition::definition_of_design_table(
 				"using existing design " << design_table_label_design << endl;
 	}
 	int idx;
-	apps_combinatorics::design_create *DC;
+	//apps_combinatorics::design_create *DC;
 
 	idx = Sym->Orbiter_top_level_session->find_symbol(design_table_label_design);
-	DC = (apps_combinatorics::design_create *)
-			Sym->Orbiter_top_level_session->get_object(idx);
+
+
+	combinatorics::design_theory::design_object *Design_object;
+
+	Design_object = (combinatorics::design_theory::design_object *)
+					Sym->Orbiter_top_level_session->get_object(idx);
+
+	//DC = (apps_combinatorics::design_create *)
+	//		Sym->Orbiter_top_level_session->get_object(idx);
 
 
 
@@ -3774,7 +3781,8 @@ void symbol_definition::definition_of_design_table(
 				"before Combi.create_design_table" << endl;
 	}
 
-	Combi.create_design_table(DC,
+	Combi.create_design_table(
+			Design_object,
 			design_table_label,
 			T,
 			AG->Subgroup_gens,
@@ -3796,7 +3804,12 @@ void symbol_definition::definition_of_design_table(
 				"before LS->init" << endl;
 	}
 
-	LS->init(DC,
+	apps_combinatorics::design_create *DC;
+
+	DC = (apps_combinatorics::design_create *) Design_object->DC;
+
+	LS->init(
+			DC,
 			T,
 			verbose_level);
 

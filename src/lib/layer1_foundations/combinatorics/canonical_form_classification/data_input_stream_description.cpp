@@ -143,12 +143,12 @@ int data_input_stream_description::read_arguments(
 		else if (ST.stringcmp(argv[i], "-file_of_points_csv") == 0) {
 
 			data_input_stream_description_element E;
-			string a, b;
+			string fname, col_header;
 
-			a.assign(argv[++i]);
-			b.assign(argv[++i]);
+			fname.assign(argv[++i]);
+			col_header.assign(argv[++i]);
 
-			E.init_file_of_points_csv(a, b);
+			E.init_file_of_points_csv(fname, col_header);
 			Input.push_back(E);
 
 			if (f_v) {
@@ -272,16 +272,18 @@ int data_input_stream_description::read_arguments(
 		else if (ST.stringcmp(argv[i], "-file_of_designs") == 0) {
 
 			data_input_stream_description_element E;
-			std::string a;
+			std::string fname;
+			std::string col_header;
 			int N_points, b, k, partition_class_size;
 
-			a.assign(argv[++i]);
+			fname.assign(argv[++i]);
+			col_header.assign(argv[++i]);
 			N_points = ST.strtoi(argv[++i]);
 			b = ST.strtoi(argv[++i]);
 			k = ST.strtoi(argv[++i]);
 			partition_class_size = ST.strtoi(argv[++i]);
 
-			E.init_file_of_designs(a,
+			E.init_file_of_designs(fname, col_header,
 							N_points, b, k, partition_class_size);
 			Input.push_back(E);
 

@@ -246,7 +246,7 @@ void sims::print_generators()
 void sims::print_generators_tex(
 		std::ostream &ost)
 {
-	int i, j, nbg, nbg1, gen_idx, cnt, f_first;
+	int i, j, nbg, nbg1, gen_idx; //, cnt, f_first;
 
 	ost << "basic orbits: ";
 	for (i = 0; i < A->base_len(); i++) {
@@ -256,32 +256,44 @@ void sims::print_generators_tex(
 		}
 	}
 	ost << "\\\\" << endl;
-	ost << "\\begin{align*}" << endl;
-	cnt = 0;
-	f_first = true;
+	//ost << "\\begin{align*}" << endl;
+	//cnt = 0;
+	//f_first = true;
 	for (i = A->base_len() - 1; i >= 0; i--) {
 		nbg = nb_gen[i];
 		nbg1 = nb_gen[i + 1];
 		//cout << "i=" << i << " nbg1=" << nbg1
 		//<< " nbg=" << nbg << endl;
+
+		ost << "Level " << i << "\\\\" << endl;
 		for (j = nbg1; j < nbg; j++) {
 			gen_idx = gen_perm[j];
 
+#if 0
 			if ((cnt % 3) == 0) {
 				if (!f_first) {
 					ost << "\\\\" << endl;
 				}
 				ost << "&" << endl;
 			}
+#endif
+
+			ost << "$$" << endl;
+			ost << "g_{" << j << "}=" << endl;
+			ost << "h_{" << gen_idx << "}=" << endl;
 			A->Group_element->element_print_latex(gens.ith(gen_idx), ost);
+			ost << "$$" << endl;
+
+#if 0
 			cnt++;
 			f_first = false;
 			if (j < nbg - 1) {
 				ost << ", \\; " << endl;
 			}
+#endif
 		}
 	}
-	ost << "\\end{align*}" << endl;
+	//ost << "\\end{align*}" << endl;
 }
 
 
@@ -728,21 +740,16 @@ void sims::print_all_transversal_elements()
 	FREE_int(Elt);
 }
 
-void sims::report_all_transversal_elements(
+void sims::report_base_and_orbit_len(
 		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "sims::report_all_transversal_elements" << endl;
+		cout << "sims::report_base_and_orbit_len" << endl;
 	}
 
-	int *Elt;
-	algebra::ring_theory::longinteger_object go;
-	int i, j, ii;
-
-	Elt = NEW_int(A->elt_size_in_int);
-	group_order(go);
+	int i;
 
 	if (f_v) {
 		cout << "Base = \\\\" << endl;
@@ -765,25 +772,60 @@ void sims::report_all_transversal_elements(
 	}
 
 	if (f_v) {
-		cout << "Transversal\\_length = ";
+		cout << "orbit\\_len = ";
 		for (i = 0; i < A->base_len(); i++) {
-			cout << A->transversal_length_i(i) << " ";
+			cout << orbit_len[i] << " ";
 		}
 		cout << "\\\\" << endl;
 
 	}
 
-	ost << "Transversal\\_length = ";
+	ost << "orbit\\_len = ";
 	for (i = 0; i < A->base_len(); i++) {
-		ost << A->transversal_length_i(i) << " ";
+		ost << orbit_len[i] << " ";
 	}
 	ost << "\\\\" << endl;
 
+
+	if (f_v) {
+		cout << "sims::report_base_and_orbit_len done" << endl;
+	}
+}
+
+
+void sims::report_all_transversal_elements(
+		std::ostream &ost, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "sims::report_all_transversal_elements" << endl;
+	}
+
+	int *Elt;
+	algebra::ring_theory::longinteger_object go;
+	int i, j, ii;
+
+	Elt = NEW_int(A->elt_size_in_int);
+	group_order(go);
+	if (f_v) {
+		cout << "sims::report_all_transversal_elements go = " << go << endl;
+	}
+
+	ost << "go = " << go << "\\\\" << endl;
+
+
+	report_base_and_orbit_len(ost, verbose_level);
+
+	ost << "Generators \\\\" << endl;
+	print_generators_tex(ost);
+
+
 	for (i = A->base_len() - 1; i >= 0; i--) {
 
-		for (j = 0; j < A->transversal_length_i(i); j++) {
+		for (j = 0; j < orbit_len[i]; j++) {
 
-			if (j == 0 && i < A->base_len() - 1) {
+			if (j == 0 && i < orbit_len[i] - 1) {
 				// skip the identity in the upper transversals
 				continue;
 			}
@@ -791,11 +833,23 @@ void sims::report_all_transversal_elements(
 			Int_vec_zero(path, A->base_len());
 			path[i] = j;
 
-			element_from_path(Elt, 10 /* verbose_level */);
+			if (f_v) {
+				cout << "sims::report_all_transversal_elements "
+						"before element_from_path Level " << i << " coset " << j << endl;
+			}
+
+			element_from_path(
+					Elt, 0 /* verbose_level */);
+
+			if (f_v) {
+				cout << "sims::report_all_transversal_elements "
+						"after element_from_path Level " << i << " coset " << j << endl;
+			}
+
 
 			if (f_v) {
 				cout << "sims::report_all_transversal_elements" << endl;
-				cout << "Level " << i << " coset " << j << " : path= ";
+				cout << "Level " << i << " coset " << j << " / " << orbit_len[i] << " : path= ";
 				for (ii = 0; ii < A->base_len(); ii++) {
 					cout << setw(5) << path[ii] << " ";
 				}
