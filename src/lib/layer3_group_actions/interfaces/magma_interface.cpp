@@ -1433,14 +1433,16 @@ void magma_interface::get_subgroup_lattice(
 	if (Fio.file_size(fname_output) > 0) {
 		if (f_v) {
 			cout << "magma_interface::get_subgroup_lattice "
-					"before read_subgroup_lattice" << endl;
+					"before read_subgroup_lattice_and_create_classes" << endl;
 		}
-		read_subgroup_lattice(A,
-				fname_output, override_Sims, //label, label_tex,
-				class_data, verbose_level);
+		read_subgroup_lattice_and_create_classes(
+				A,
+				fname_output, override_Sims,
+				class_data,
+				verbose_level);
 		if (f_v) {
 			cout << "magma_interface::get_subgroup_lattice "
-					"after read_subgroup_lattice" << endl;
+					"after read_subgroup_lattice_and_create_classes" << endl;
 		}
 
 
@@ -1450,7 +1452,8 @@ void magma_interface::get_subgroup_lattice(
 			cout << "magma_interface::get_subgroup_lattice before "
 					"subgroup_lattice_using_MAGMA" << endl;
 		}
-		subgroup_lattice_using_MAGMA(A, prefix,
+		subgroup_lattice_using_MAGMA(
+				A, prefix,
 				override_Sims, verbose_level);
 		if (f_v) {
 			cout << "magma_interface::get_subgroup_lattice after "
@@ -1599,23 +1602,21 @@ void magma_interface::subgroup_lattice_using_MAGMA(
 	}
 }
 
-void magma_interface::read_subgroup_lattice(
+void magma_interface::read_subgroup_lattice_and_create_classes(
 		actions::action *A,
 		std::string &fname,
 		groups::sims *override_sims,
-		//std::string &label,
-		//std::string &label_latex,
 		interfaces::conjugacy_classes_of_subgroups *&class_data,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "magma_interface::read_subgroup_lattice" << endl;
+		cout << "magma_interface::read_subgroup_lattice_and_create_classes" << endl;
 	}
 
 	if (f_v) {
-		cout << "magma_interface::read_subgroup_lattice "
+		cout << "magma_interface::read_subgroup_lattice_and_create_classes "
 				"before read_conjugacy_classes_of_subgroups_from_MAGMA" << endl;
 	}
 
@@ -1624,20 +1625,21 @@ void magma_interface::read_subgroup_lattice(
 			A,
 			fname,
 			class_data,
-			verbose_level - 1);
+			verbose_level - 2);
 	if (f_v) {
-		cout << "magma_interface::read_subgroup_lattice "
+		cout << "magma_interface::read_subgroup_lattice_and_create_classes "
 				"after read_conjugacy_classes_of_subgroups_from_MAGMA" << endl;
 	}
 
 	if (f_v) {
-		cout << "magma_interface::read_subgroup_lattice "
+		cout << "magma_interface::read_subgroup_lattice_and_create_classes "
 				"before class_data->create_classes" << endl;
 	}
 	class_data->create_classes(
-			override_sims, verbose_level);
+			override_sims,
+			verbose_level - 2);
 	if (f_v) {
-		cout << "magma_interface::read_subgroup_lattice "
+		cout << "magma_interface::read_subgroup_lattice_and_create_classes "
 				"after class_data->create_classes" << endl;
 	}
 
@@ -1646,7 +1648,7 @@ void magma_interface::read_subgroup_lattice(
 	//FREE_OBJECT(class_data);
 
 	if (f_v) {
-		cout << "magma_interface::read_conjugacy_classes_and_normalizers done" << endl;
+		cout << "magma_interface::read_subgroup_lattice_and_create_classes done" << endl;
 	}
 }
 
@@ -2517,7 +2519,7 @@ void magma_interface::export_matrix_group_with_field_reduction(
 	B = NEW_int(d * d);
 
 
-	if (!F->f_related_fields_have_been_computed) {
+	if (!F->Finite_field_properties->f_related_fields_have_been_computed) {
 		cout << "magma_interface::export_matrix_group_with_field_reduction "
 				"related fields have not yet been computed" << endl;
 		exit(1);
@@ -2528,7 +2530,7 @@ void magma_interface::export_matrix_group_with_field_reduction(
 
 	int a;
 
-	SubS = &F->Related_fields->SubS[0];
+	SubS = &F->Finite_field_properties->Related_fields->SubS[0];
 
 
 	ost << "F:=GF(" << F->p << ");" << endl;

@@ -3107,6 +3107,8 @@ void surface_object_with_group::print_everything(
 		cout << "surface_object_with_group::print_everything" << endl;
 	}
 
+#if 0
+	// this has already been printed:
 	if (f_v) {
 		cout << "surface_object_with_group::print_everything "
 				"before print_equation" << endl;
@@ -3116,6 +3118,7 @@ void surface_object_with_group::print_everything(
 		cout << "surface_object_with_group::print_everything "
 				"after print_equation" << endl;
 	}
+#endif
 
 	if (f_v) {
 		cout << "surface_object_with_group::print_everything "
@@ -3128,6 +3131,32 @@ void surface_object_with_group::print_everything(
 	}
 
 
+
+
+	string label_TDO;
+	string label_TDA;
+
+
+	label_TDO = "TDO";
+	label_TDA = "TDO";
+
+	if (f_v) {
+		cout << "surface_object_with_group::print_everything "
+				"before TD->report_decomposition_schemes" << endl;
+	}
+	TD->report_decomposition_schemes(
+			ost,
+			label_TDO,
+			label_TDA,
+			verbose_level);
+	if (f_v) {
+		cout << "surface_object_with_group::print_everything "
+				"after TD->report_decomposition_schemes" << endl;
+	}
+
+
+
+
 	if (f_v) {
 		cout << "surface_object_with_group::print_everything "
 				"before print_lines" << endl;
@@ -3136,6 +3165,18 @@ void surface_object_with_group::print_everything(
 	if (f_v) {
 		cout << "surface_object_with_group::print_everything "
 				"after print_lines" << endl;
+	}
+
+	if (f_v) {
+		cout << "surface_object_with_group::print_everything "
+				"before report_orbits_on_lines" << endl;
+	}
+	report_orbits_on_lines(
+			ost,
+			verbose_level);
+	if (f_v) {
+		cout << "surface_object_with_group::print_everything "
+				"after report_orbits_on_lines" << endl;
 	}
 
 
@@ -3148,6 +3189,31 @@ void surface_object_with_group::print_everything(
 		cout << "surface_object_with_group::print_everything "
 				"after print_points" << endl;
 	}
+
+	if (f_v) {
+		cout << "surface_object_with_group::print_everything "
+				"before report_orbits_on_points" << endl;
+	}
+	report_orbits_on_points(
+			ost,
+			verbose_level);
+	if (f_v) {
+		cout << "surface_object_with_group::print_everything "
+				"after report_orbits_on_points" << endl;
+	}
+
+	report_orbits_on_Eckardt_points(
+			ost,
+			verbose_level);
+	report_orbits_on_Double_points(
+			ost,
+			verbose_level);
+	report_orbits_on_Single_points(
+			ost,
+			verbose_level);
+	report_orbits_on_Zero_points(
+			ost,
+			verbose_level);
 
 
 	if (f_v) {
@@ -3203,7 +3269,9 @@ void surface_object_with_group::print_everything(
 				"after print_tritangent_planes" << endl;
 	}
 
-
+	report_orbits_on_tritangent_planes(
+				ost,
+				verbose_level);
 	if (f_v) {
 		cout << "surface_object_with_group::print_everything "
 				"before SO->SOP->print_Hesse_planes" << endl;
@@ -3214,7 +3282,9 @@ void surface_object_with_group::print_everything(
 				"after SO->SOP->print_Hesse_planes" << endl;
 	}
 
-
+	report_orbits_on_Hesse_planes(
+				ost,
+				verbose_level);
 
 	if (f_v) {
 		cout << "surface_object_with_group::print_everything "
@@ -3226,8 +3296,11 @@ void surface_object_with_group::print_everything(
 				"after SO->SOP->print_axes" << endl;
 	}
 
+	report_orbits_on_axes(
+				ost,
+				verbose_level);
 
-
+#if 0
 	if (f_v) {
 		cout << "surface_object_with_group::print_everything "
 				"before report_orbits" << endl;
@@ -3239,6 +3312,7 @@ void surface_object_with_group::print_everything(
 		cout << "surface_object_with_group::print_everything "
 				"after report_orbits" << endl;
 	}
+#endif
 
 
 
@@ -3263,6 +3337,10 @@ void surface_object_with_group::print_everything(
 				"after SO->print_double sixes" << endl;
 	}
 
+	report_orbits_on_Double_Sixes(
+				ost,
+				verbose_level);
+
 	if (f_v) {
 		cout << "surface_object_with_group::print_everything "
 				"before print_trihedral_pairs" << endl;
@@ -3277,6 +3355,10 @@ void surface_object_with_group::print_everything(
 		cout << "surface_object_with_group::print_everything "
 				"after print_half_double_sixes" << endl;
 	}
+
+	report_orbits_on_Single_Sixes(
+				ost,
+				verbose_level);
 
 	if (f_v) {
 		cout << "surface_object_with_group::print_everything "
@@ -3308,18 +3390,10 @@ void surface_object_with_group::print_everything(
 				"after print_trihedral_pairs_numerically" << endl;
 	}
 
-
-	if (f_v) {
-		cout << "surface_object_with_group::print_everything "
-				"before TD->report_decomposition_schemes" << endl;
-	}
-	TD->report_decomposition_schemes(
+	report_orbits_on_trihedral_pairs(
 			ost,
 			verbose_level);
-	if (f_v) {
-		cout << "surface_object_with_group::print_everything "
-				"after TD->report_decomposition_schemes" << endl;
-	}
+
 
 	if (f_v) {
 		cout << "surface_object_with_group::print_everything done" << endl;
@@ -3652,6 +3726,402 @@ void surface_object_with_group::compute_tactical_decompositions(
 	}
 }
 
+void surface_object_with_group::report_orbits_on_lines(
+		std::ostream &ost,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_object_with_group::report_orbits_on_lines" << endl;
+	}
+
+	other::data_structures::set_of_sets *SoS_Orbits_on_lines;
+
+	SoS_Orbits_on_lines = Orbits_on_lines->Forest->get_set_of_sets(verbose_level);
+
+	ost << "\\subsection*{Orbits on Lines}" << endl;
+
+	//SoS_Orbits_on_lines->print_table_tex(ost);
+
+	{
+		other::l1_interfaces::latex_interface L;
+		int i, j, idx, len;
+
+		//cout << "set of sets with " << nb_sets << " sets :" << endl;
+		for (i = 0; i < SoS_Orbits_on_lines->nb_sets; i++) {
+
+			len = SoS_Orbits_on_lines->Set_size[i];
+
+			ost << "Set " << i << " has size " << len << " : ";
+
+			ost << "$";
+
+			L.lint_set_print_tex(ost, SoS_Orbits_on_lines->Sets[i], len);
+			//SO->Surf->print_lines_tex(ost, SoS_Orbits_on_lines->Sets[i], len);
+
+			ost << " = ";
+			ost << "\\{ ";
+			for (j = 0; j < len; j++) {
+				idx = SoS_Orbits_on_lines->Sets[i][j];
+				ost << SO->Surf->Schlaefli->Labels->Line_label_tex[idx];
+				if (j < len - 1) {
+					ost << ", ";
+				}
+			}
+			ost << " \\}";
+
+
+			ost << "$";
+
+
+			ost << "\\\\" << endl;
+		}
+	}
+
+
+	if (f_v) {
+		cout << "surface_object_with_group::report_orbits_on_lines done" << endl;
+	}
+}
+
+void surface_object_with_group::report_orbits_on_points(
+		std::ostream &ost,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_object_with_group::report_orbits_on_points" << endl;
+	}
+
+	other::data_structures::set_of_sets *SoS_Orbits_on_points;
+
+	SoS_Orbits_on_points = Orbits_on_points->Forest->get_set_of_sets(verbose_level);
+
+	ost << "\\subsection*{Orbits on Points}" << endl;
+
+	SoS_Orbits_on_points->print_table_tex(ost);
+
+
+	if (f_v) {
+		cout << "surface_object_with_group::report_orbits_on_points done" << endl;
+	}
+
+}
+
+void surface_object_with_group::report_orbits_on_Eckardt_points(
+		std::ostream &ost,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_object_with_group::report_orbits_on_Eckardt_points" << endl;
+	}
+
+	other::data_structures::set_of_sets *SoS_Orbits_on_Eckardt_points;
+
+	SoS_Orbits_on_Eckardt_points = Orbits_on_Eckardt_points->Forest->get_set_of_sets(verbose_level);
+
+	ost << "\\subsection*{Orbits on Eckardt Points}" << endl;
+
+	if (SoS_Orbits_on_Eckardt_points->nb_sets == 0) {
+		ost << "There are no orbits on Eckardt points.\\\\" << endl;
+	}
+	else {
+		SoS_Orbits_on_Eckardt_points->print_table_tex(ost);
+	}
+
+	if (f_v) {
+		cout << "surface_object_with_group::report_orbits_on_Eckardt_points done" << endl;
+	}
+
+}
+
+void surface_object_with_group::report_orbits_on_Double_points(
+		std::ostream &ost,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_object_with_group::report_orbits_on_Double_points" << endl;
+	}
+
+	other::data_structures::set_of_sets *SoS_Orbits_on_Double_points;
+
+	SoS_Orbits_on_Double_points = Orbits_on_Double_points->Forest->get_set_of_sets(verbose_level);
+
+	ost << "\\subsection*{Orbits on Double Points}" << endl;
+
+	if (SoS_Orbits_on_Double_points->nb_sets == 0) {
+		ost << "There are no orbits on double points.\\\\" << endl;
+	}
+	else {
+		SoS_Orbits_on_Double_points->print_table_tex(ost);
+	}
+
+	if (f_v) {
+		cout << "surface_object_with_group::report_orbits_on_Double_points done" << endl;
+	}
+
+}
+
+void surface_object_with_group::report_orbits_on_Single_points(
+		std::ostream &ost,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_object_with_group::report_orbits_on_Single_points" << endl;
+	}
+
+	other::data_structures::set_of_sets *SoS_Orbits_on_Single_points;
+
+	SoS_Orbits_on_Single_points = Orbits_on_Single_points->Forest->get_set_of_sets(verbose_level);
+
+	ost << "\\subsection*{Orbits on Single Points}" << endl;
+
+	if (SoS_Orbits_on_Single_points->nb_sets == 0) {
+		ost << "There are no orbits on single points.\\\\" << endl;
+	}
+	else {
+		SoS_Orbits_on_Single_points->print_table_tex(ost);
+	}
+
+	if (f_v) {
+		cout << "surface_object_with_group::report_orbits_on_Single_points done" << endl;
+	}
+
+}
+
+void surface_object_with_group::report_orbits_on_Zero_points(
+		std::ostream &ost,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_object_with_group::report_orbits_on_Zero_points" << endl;
+	}
+
+	other::data_structures::set_of_sets *SoS_Orbits_on_points_not_on_lines;
+
+	SoS_Orbits_on_points_not_on_lines = Orbits_on_points_not_on_lines->Forest->get_set_of_sets(verbose_level);
+
+	ost << "\\subsection*{Orbits on Single Points}" << endl;
+
+	if (SoS_Orbits_on_points_not_on_lines->nb_sets == 0) {
+		ost << "There are no orbits on points not on lines.\\\\" << endl;
+	}
+	else {
+		SoS_Orbits_on_points_not_on_lines->print_table_tex(ost);
+	}
+
+	if (f_v) {
+		cout << "surface_object_with_group::report_orbits_on_Zero_points done" << endl;
+	}
+
+}
+
+
+void surface_object_with_group::report_orbits_on_Hesse_planes(
+		std::ostream &ost,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_object_with_group::report_orbits_on_Hesse_planes" << endl;
+	}
+
+	other::data_structures::set_of_sets *SoS_Orbits_on_Hesse_planes;
+
+	SoS_Orbits_on_Hesse_planes = Orbits_on_Hesse_planes->Forest->get_set_of_sets(verbose_level);
+
+	ost << "\\subsection*{Orbits on Hesse Planes}" << endl;
+
+	SoS_Orbits_on_Hesse_planes->print_table_tex(ost);
+
+
+	if (f_v) {
+		cout << "surface_object_with_group::report_orbits_on_Hesse_planes done" << endl;
+	}
+
+}
+
+void surface_object_with_group::report_orbits_on_axes(
+		std::ostream &ost,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_object_with_group::report_orbits_on_axes" << endl;
+	}
+
+	other::data_structures::set_of_sets *SoS_Orbits_on_axes;
+
+	SoS_Orbits_on_axes = Orbits_on_axes->Forest->get_set_of_sets(verbose_level);
+
+	ost << "\\subsection*{Orbits on axes}" << endl;
+
+	SoS_Orbits_on_axes->print_table_tex(ost);
+
+
+	if (f_v) {
+		cout << "surface_object_with_group::report_orbits_on_axes done" << endl;
+	}
+
+}
+
+void surface_object_with_group::report_orbits_on_Single_Sixes(
+		std::ostream &ost,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_object_with_group::report_orbits_on_Single_Sixes" << endl;
+	}
+
+	other::data_structures::set_of_sets *SoS_Orbits_on_single_sixes;
+
+	SoS_Orbits_on_single_sixes = Orbits_on_single_sixes->Forest->get_set_of_sets(verbose_level);
+
+	ost << "\\subsection*{Orbits on single sixes}" << endl;
+
+	SoS_Orbits_on_single_sixes->print_table_tex(ost);
+
+
+	if (f_v) {
+		cout << "surface_object_with_group::report_orbits_on_Single_Sixes done" << endl;
+	}
+
+}
+
+void surface_object_with_group::report_orbits_on_Double_Sixes(
+		std::ostream &ost,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_object_with_group::report_orbits_on_Double_Sixes" << endl;
+	}
+
+	other::data_structures::set_of_sets *SoS_Orbits_on_double_sixes;
+
+	SoS_Orbits_on_double_sixes = Orbits_on_double_sixes->Forest->get_set_of_sets(verbose_level);
+
+	ost << "\\subsection*{Orbits on double sixes}" << endl;
+
+	SoS_Orbits_on_double_sixes->print_table_tex(ost);
+
+
+	if (f_v) {
+		cout << "surface_object_with_group::report_orbits_on_Double_Sixes done" << endl;
+	}
+
+}
+
+void surface_object_with_group::report_orbits_on_tritangent_planes(
+		std::ostream &ost,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_object_with_group::report_orbits_on_tritangent_planes" << endl;
+	}
+
+	other::data_structures::set_of_sets *SoS_Orbits_on_tritangent_planes;
+
+	SoS_Orbits_on_tritangent_planes = Orbits_on_tritangent_planes->Forest->get_set_of_sets(verbose_level);
+
+	ost << "\\subsection*{Orbits on tritangent planes}" << endl;
+
+	//SoS_Orbits_on_tritangent_planes->print_table_tex(ost);
+
+	{
+		other::l1_interfaces::latex_interface L;
+		int i, j, idx, len;
+
+		//cout << "set of sets with " << nb_sets << " sets :" << endl;
+		for (i = 0; i < SoS_Orbits_on_tritangent_planes->nb_sets; i++) {
+
+			len = SoS_Orbits_on_tritangent_planes->Set_size[i];
+
+			ost << "Set " << i << " has size " << len << " : ";
+
+			ost << "$";
+
+			L.lint_set_print_tex(ost, SoS_Orbits_on_tritangent_planes->Sets[i], len);
+			//SO->Surf->print_lines_tex(ost, SoS_Orbits_on_lines->Sets[i], len);
+
+			ost << " = ";
+			ost << "\\{ ";
+			for (j = 0; j < len; j++) {
+				idx = SoS_Orbits_on_tritangent_planes->Sets[i][j];
+				//ost << SO->Surf->Schlaefli->Labels->Tritangent_plane_label_tex[idx];
+
+				ost << "\\pi_{" << SO->Surf->Schlaefli->Schlaefli_tritangent_planes->Eckard_point_label_tex[idx] << "}";
+				//ost << SO->Surf->Schlaefli->Schlaefli_tritangent_planes->Eckard_point_label_tex[idx];
+				//ost << SO->Surf->Schlaefli->Schlaefli_tritangent_planes->Eckard_point_label_tex[idx];
+
+
+				if (j < len - 1) {
+					ost << ", ";
+				}
+			}
+			ost << " \\}";
+
+
+			ost << "$";
+
+
+			ost << "\\\\" << endl;
+		}
+	}
+
+
+
+	if (f_v) {
+		cout << "surface_object_with_group::report_orbits_on_tritangent_planes done" << endl;
+	}
+
+}
+
+
+void surface_object_with_group::report_orbits_on_trihedral_pairs(
+		std::ostream &ost,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_object_with_group::report_orbits_on_trihedral_pairs" << endl;
+	}
+
+	other::data_structures::set_of_sets *SoS_Orbits_on_trihedral_pairs;
+
+	SoS_Orbits_on_trihedral_pairs = Orbits_on_trihedral_pairs->Forest->get_set_of_sets(verbose_level);
+
+	ost << "\\subsection*{Orbits on trihedral pairs}" << endl;
+
+	SoS_Orbits_on_trihedral_pairs->print_table_tex(ost);
+
+
+	if (f_v) {
+		cout << "surface_object_with_group::report_orbits_on_trihedral_pairs done" << endl;
+	}
+
+}
+
+
+#if 0
 void surface_object_with_group::report_orbits(
 		std::ostream &ost,
 		int verbose_level)
@@ -3665,33 +4135,33 @@ void surface_object_with_group::report_orbits(
 	ost << "\\subsection*{Orbits}" << endl;
 
 
-	other::data_structures::set_of_sets *SoS_Orbits_on_lines;
-	other::data_structures::set_of_sets *SoS_Orbits_on_points;
-	other::data_structures::set_of_sets *SoS_Orbits_on_Eckardt_points;
-	other::data_structures::set_of_sets *SoS_Orbits_on_Double_points;
-	other::data_structures::set_of_sets *SoS_Orbits_on_Single_points;
-	other::data_structures::set_of_sets *SoS_Orbits_on_points_not_on_lines;
-	other::data_structures::set_of_sets *SoS_Orbits_on_Hesse_planes;
-	other::data_structures::set_of_sets *SoS_Orbits_on_axes;
-	other::data_structures::set_of_sets *SoS_Orbits_on_single_sixes;
-	other::data_structures::set_of_sets *SoS_Orbits_on_double_sixes;
-	other::data_structures::set_of_sets *SoS_Orbits_on_tritangent_planes;
+	//other::data_structures::set_of_sets *SoS_Orbits_on_lines;
+	//other::data_structures::set_of_sets *SoS_Orbits_on_points;
+	//other::data_structures::set_of_sets *SoS_Orbits_on_Eckardt_points;
+	//other::data_structures::set_of_sets *SoS_Orbits_on_Double_points;
+	//other::data_structures::set_of_sets *SoS_Orbits_on_Single_points;
+	//other::data_structures::set_of_sets *SoS_Orbits_on_points_not_on_lines;
+	//other::data_structures::set_of_sets *SoS_Orbits_on_Hesse_planes;
+	//other::data_structures::set_of_sets *SoS_Orbits_on_axes;
+	//other::data_structures::set_of_sets *SoS_Orbits_on_single_sixes;
+	//other::data_structures::set_of_sets *SoS_Orbits_on_double_sixes;
+	//other::data_structures::set_of_sets *SoS_Orbits_on_tritangent_planes;
 	other::data_structures::set_of_sets *SoS_Orbits_on_trihedral_pairs;
 
-	SoS_Orbits_on_lines = Orbits_on_lines->Forest->get_set_of_sets(verbose_level);
-	SoS_Orbits_on_points = Orbits_on_points->Forest->get_set_of_sets(verbose_level);
-	SoS_Orbits_on_Eckardt_points = Orbits_on_Eckardt_points->Forest->get_set_of_sets(verbose_level);
-	SoS_Orbits_on_Double_points = Orbits_on_Double_points->Forest->get_set_of_sets(verbose_level);
-	SoS_Orbits_on_Single_points = Orbits_on_Single_points->Forest->get_set_of_sets(verbose_level);
-	SoS_Orbits_on_points_not_on_lines = Orbits_on_points_not_on_lines->Forest->get_set_of_sets(verbose_level);
-	SoS_Orbits_on_Hesse_planes = Orbits_on_Hesse_planes->Forest->get_set_of_sets(verbose_level);
-	SoS_Orbits_on_axes = Orbits_on_axes->Forest->get_set_of_sets(verbose_level);
-	SoS_Orbits_on_single_sixes = Orbits_on_single_sixes->Forest->get_set_of_sets(verbose_level);
-	SoS_Orbits_on_double_sixes = Orbits_on_double_sixes->Forest->get_set_of_sets(verbose_level);
-	SoS_Orbits_on_tritangent_planes = Orbits_on_tritangent_planes->Forest->get_set_of_sets(verbose_level);
+	//SoS_Orbits_on_lines = Orbits_on_lines->Forest->get_set_of_sets(verbose_level);
+	//SoS_Orbits_on_points = Orbits_on_points->Forest->get_set_of_sets(verbose_level);
+	//SoS_Orbits_on_Eckardt_points = Orbits_on_Eckardt_points->Forest->get_set_of_sets(verbose_level);
+	//SoS_Orbits_on_Double_points = Orbits_on_Double_points->Forest->get_set_of_sets(verbose_level);
+	//SoS_Orbits_on_Single_points = Orbits_on_Single_points->Forest->get_set_of_sets(verbose_level);
+	//SoS_Orbits_on_points_not_on_lines = Orbits_on_points_not_on_lines->Forest->get_set_of_sets(verbose_level);
+	//SoS_Orbits_on_Hesse_planes = Orbits_on_Hesse_planes->Forest->get_set_of_sets(verbose_level);
+	//SoS_Orbits_on_axes = Orbits_on_axes->Forest->get_set_of_sets(verbose_level);
+	//SoS_Orbits_on_single_sixes = Orbits_on_single_sixes->Forest->get_set_of_sets(verbose_level);
+	//SoS_Orbits_on_double_sixes = Orbits_on_double_sixes->Forest->get_set_of_sets(verbose_level);
+	//SoS_Orbits_on_tritangent_planes = Orbits_on_tritangent_planes->Forest->get_set_of_sets(verbose_level);
 	SoS_Orbits_on_trihedral_pairs = Orbits_on_trihedral_pairs->Forest->get_set_of_sets(verbose_level);
 
-
+#if 0
 	ost << "\\subsection*{Orbits on Lines}" << endl;
 
 	//SoS_Orbits_on_lines->print_table_tex(ost);
@@ -3815,6 +4285,7 @@ void surface_object_with_group::report_orbits(
 		}
 	}
 
+#endif
 
 
 	ost << "\\subsection*{Orbits on Trihedral Pairs}" << endl;
@@ -3828,6 +4299,7 @@ void surface_object_with_group::report_orbits(
 	}
 
 }
+#endif
 
 
 

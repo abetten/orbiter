@@ -1347,6 +1347,7 @@ public:
 			int verbose_level);
 	void make_Gram_matrix(
 			int verbose_level);
+	void perp_of_point(int *v, int *Perp, int verbose_level);
 
 	int evaluate_quadratic_form(
 			int *v, int stride);

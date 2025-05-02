@@ -426,6 +426,7 @@ void variety_compute_canonical_form::handle_repeated_canonical_form_of_set_new(
 		int &idx_equation,
 		int &f_found_eqn,
 		int verbose_level)
+// called from variety_compute_canonical_form::classify_using_nauty_new
 {
 	int f_v = (verbose_level >= 1);
 
@@ -544,6 +545,7 @@ int variety_compute_canonical_form::find_equation_new(
 		int verbose_level)
 // gets the variety_stabilizer_compute object from
 // Canonical_form_classifier->Output->CB->Type_extra_data[idx1]
+// called from variety_compute_canonical_form::handle_repeated_canonical_form_of_set_new
 {
 	int f_v = (verbose_level >= 1);
 

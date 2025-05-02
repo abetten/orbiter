@@ -32,6 +32,7 @@ ORBITER_MODULES= \
 		layer1_foundations/algebra/field_theory/finite_field_implementation_by_tables.o \
 		layer1_foundations/algebra/field_theory/finite_field_implementation_wo_tables.o \
 		layer1_foundations/algebra/field_theory/finite_field_io.o \
+		layer1_foundations/algebra/field_theory/finite_field_properties.o \
 		layer1_foundations/algebra/field_theory/finite_field.o \
 		layer1_foundations/algebra/field_theory/minimum_polynomial.o \
 		layer1_foundations/algebra/field_theory/norm_tables.o \
@@ -273,6 +274,8 @@ ORBITER_MODULES= \
 		layer1_foundations/other/data_structures/tally_lint.o \
 		layer1_foundations/other/data_structures/tally_vector_data.o \
 		layer1_foundations/other/data_structures/tally.o \
+		layer1_foundations/other/data_structures/text_builder_description.o \
+		layer1_foundations/other/data_structures/text_builder.o \
 		layer1_foundations/other/data_structures/vector_builder_description.o \
 		layer1_foundations/other/data_structures/vector_builder.o \
 		layer1_foundations/other/data_structures/vector_hashing.o \
@@ -648,6 +651,7 @@ ORBITER_MODULES= \
 		layer5_top_level/canonical_form/variety_compute_canonical_form.o \
 		layer5_top_level/canonical_form/variety_object_with_action.o \
 		layer5_top_level/canonical_form/variety_stabilizer_compute.o \
+		layer5_top_level/orbits/classify_cubic_surfaces_description.o \
 		layer5_top_level/orbits/orbit_cascade.o \
 		layer5_top_level/orbits/orbits_activity_description.o \
 		layer5_top_level/orbits/orbits_activity.o \

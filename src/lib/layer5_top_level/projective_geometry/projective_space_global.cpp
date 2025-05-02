@@ -1042,6 +1042,122 @@ void projective_space_global::classify_bent_functions(
 #endif
 
 
+#if 0
+void projective_space_global::transform_variety(
+		projective_space_with_action *PA,
+		int f_inverse,
+		int *transformation_coeffs, int transformation_coeffs_sz,
+		geometry::algebraic_geometry::variety_object *Variety_object,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "projective_space_global::transform_variety" << endl;
+	}
+
+
+	actions::action *A;
+	int *Elt1;
+	int *Elt2;
+	int *Elt3;
+
+	A = PA->A;
+
+	Elt1 = NEW_int(A->elt_size_in_int);
+	Elt2 = NEW_int(A->elt_size_in_int);
+	Elt3 = NEW_int(A->elt_size_in_int);
+
+
+	A->Group_element->make_element(
+			Elt1, transformation_coeffs, verbose_level);
+
+	if (f_inverse) {
+		A->Group_element->element_invert(
+				Elt1, Elt2, 0 /*verbose_level*/);
+	}
+	else {
+		A->Group_element->element_move(
+				Elt1, Elt2, 0 /*verbose_level*/);
+	}
+
+	//A->element_transpose(Elt2, Elt3, 0 /*verbose_level*/);
+
+	A->Group_element->element_invert(
+			Elt2, Elt3, 0 /*verbose_level*/);
+
+	if (f_v) {
+		cout << "projective_space_global::transform_variety "
+				"applying the transformation given by:" << endl;
+		cout << "$$" << endl;
+		A->Group_element->print_quick(cout, Elt2);
+		cout << endl;
+		cout << "$$" << endl;
+		cout << "projective_space_global::transform_variety "
+				"The inverse is:" << endl;
+		cout << "$$" << endl;
+		A->Group_element->print_quick(cout, Elt3);
+		cout << endl;
+		cout << "$$" << endl;
+	}
+
+
+	algebra::ring_theory::homogeneous_polynomial_domain *Ring;
+
+
+	Ring = Variety_object->Ring;
+
+	int *eqn_out;
+	int nb_monomials;
+	int frob = 0;
+
+	if (PA->f_semilinear) {
+		int d;
+
+		d = PA->d;
+		frob = Elt3[d * d];
+	}
+	nb_monomials = Ring->get_nb_monomials();
+
+	eqn_out = NEW_int(nb_monomials);
+
+	Ring->substitute_semilinear(
+			Variety_object->eqn /*coeff_in */,
+			eqn_out /*coeff_out*/,
+			PA->f_semilinear,
+			frob /*frob*/,
+			Elt3 /* Mtx_inv*/,
+			verbose_level);
+
+
+	Ring->F->Projective_space_basic->PG_element_normalize_from_front(
+			eqn_out, 1, nb_monomials);
+
+	Int_vec_copy(eqn_out, Variety_object->eqn, nb_monomials);
+	if (f_v) {
+		cout << "projective_space_global::transform_variety "
+				"The equation of the transformed variety is:" << endl;
+		cout << "$$" << endl;
+		Ring->print_equation_with_line_breaks_tex(
+				cout, Variety_object->eqn, 8 /* nb_terms_per_line*/,
+				"\\\\\n" /* const char *new_line_text*/);
+		cout << endl;
+		cout << "$$" << endl;
+	}
+
+
+	FREE_int(eqn_out);
+
+
+	if (f_v) {
+		cout << "projective_space_global::transform_variety done" << endl;
+	}
+
+}
+#endif
+
+
 }}}
 
 

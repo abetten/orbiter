@@ -1001,6 +1001,31 @@ isomorph::isomorph_arguments
 }
 
 
+orbits::classify_cubic_surfaces_description
+	*orbiter_top_level_session::get_classify_cubic_surfaces(
+			std::string &label)
+{
+	int idx;
+
+	idx = Orbiter_session->find_symbol(label);
+	if (idx == -1) {
+		cout << "orbiter_top_level_session::get_classify_cubic_surfaces "
+				"cannot find symbol " << label << endl;
+		exit(1);
+	}
+
+	if (get_object_type(idx) != layer1_foundations::other::orbiter_kernel_system::symbol_table_object_type::t_classify_cubic_surfaces) {
+		cout << "orbiter_top_level_session::get_classify_cubic_surfaces "
+				"object type != t_isomorph_arguments" << endl;
+		exit(1);
+	}
+
+
+	return (orbits::classify_cubic_surfaces_description *)
+			get_object(idx);
+}
+
+
 
 
 void free_symbol_table_entry_callback(

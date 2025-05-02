@@ -2108,16 +2108,18 @@ test_orbiter_session:
 SECTION_OBJECTS_AND_ACTIVITIES:
 
 test_2_2:
-	make example_set
+
+
+
+###############################################################################
+# Section 2.3: Orbiter Dash Code Language
+
+SECTION_ORBITER_DASH_CODE_LANGUAGE:
+
+test_2_3:
 	make object_F_2
 	make object_PG_3_2
 	make vector_ex
-
-
-example_set:
-	$(ORBITER) -v 2 \
-		-define S -set -here "2,3,5,7,11,13" -end \
-		-print_symbols
 
 
 
@@ -2141,19 +2143,18 @@ vector_ex:
 
 
 
-
-
-
-
 ###############################################################################
-# Section 2.3: Set Builder
+# Section 2.4: Set Builder
 
 SECTION_SET_BUILDER:
 
 
-test_2_3:
+test_2_4:
 	make set_of_primes
 	make set_interval
+
+
+
 
 set_of_primes:
 	$(ORBITER) -v 2 \
@@ -2168,12 +2169,12 @@ set_interval:
 
 
 ###############################################################################
-# Section 2.4: Vector Builder
+# Section 2.5: Vector Builder
 
 SECTION_VECTOR_BUILDER:
 
 
-test_2_4:
+test_2_5:
 	make vector_example1
 	make vector_example2
 	make vector_example_repeat
@@ -2292,12 +2293,12 @@ permutation_matrix:
 
 
 ###############################################################################
-# Section 2.5: Vector of Group Elements Builder
+# Section 2.6: Vector of Group Elements Builder
 
 SECTION_VECTOR_OF_GROUP_ELEMENTS_BUILDER:
 
 
-test_2_5:
+test_2_6:
 	make Hirschfeld_Class_2A
 	make surface_4_0_export_action
 
@@ -2346,12 +2347,14 @@ surface_4_0_export_action:
 		-end
 
 
+
+
 ###############################################################################
-# Section 2.6: Symbolic Algebra
+# Section 2.7: Symbolic Objects
 
-SECTION_FORMULA_BUILDER:
+SECTION_SYMBOLIC_OBJECTS:
 
-test_2_6:
+test_2_7:
 	make symbolic_poly
 	make symbolic_poly2
 	make symbolic_CRC32
@@ -2395,6 +2398,7 @@ test_2_6:
 	make symbolic_matrix_nullspace_2
 	make symbolic_Clebsch
 	make Clebsch_map_up_Fabcd
+	make Hirschfeld_evaluate_symbolic
 
 
 
@@ -3191,6 +3195,20 @@ Clebsch_map_up_Fabcd:
 		-end
 
 
+Hirschfeld_evaluate_symbolic:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 4 -end \
+		-define M -symbolic_object \
+			-field F \
+			-text "X0*X1^2+X0^2*X1+X2*X3^2+X2^2*X3" \
+		-end \
+		-define Mx -symbolic_object \
+			-field F \
+			-expand M \
+		-end \
+		-with Mx -do -symbolic_object_activity \
+			-evaluate_affine \
+		-end 
 
 
 
@@ -3222,6 +3240,8 @@ test_3_1:
 	make F_5_add_table
 	make F_7
 	make F_7_tables
+	make F_13
+	make F_19
 	make F_127
 	make F_11_product_of_all_nonzero_elements
 	make F_7_vandermonde
@@ -3303,6 +3323,26 @@ F_7_tables:
 		-end
 	convert GF_q7_table_add_draw.bmp GF_q7_table_add_draw.png
 	convert GF_q7_table_mul_draw.bmp GF_q7_table_mul_draw.png
+
+
+F_13:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 13 -end \
+		-with F -do -finite_field_activity \
+			-cheat_sheet_GF \
+		-end
+	$(PDFLATEX) GF_13.tex
+	$(OPEN) GF_13.pdf
+
+
+F_19:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 19 -end \
+		-with F -do -finite_field_activity \
+			-cheat_sheet_GF \
+		-end
+	$(PDFLATEX) GF_19.tex
+	$(OPEN) GF_19.pdf
 
 
 F_127:
@@ -3488,6 +3528,17 @@ F_16_tables:
 		-end
 	convert GF_q16_table_add_draw.bmp GF_q16_table_add_draw.png
 	convert GF_q16_table_mul_draw.bmp GF_q16_table_mul_draw.png
+
+
+
+F_25:
+	$(ORBITER) -v 10 \
+		-define F -finite_field -q 25 -compute_related_fields -end \
+		-with F -do -finite_field_activity \
+			-cheat_sheet_GF \
+		-end
+	$(PDFLATEX) GF_25.tex
+	$(OPEN) GF_25.pdf
 
 
 
@@ -4192,7 +4243,7 @@ PG_2_2_rank_lines:
 
 PG_2_2_unrank_lines:
 	$(ORBITER) -v 2 \
-		-define v -vector -format 4 \
+		-define v -vector \
 		-dense "0,1,2,3,4,5,6" \
 		-end \
 		-define F -finite_field -q 2 -end \
@@ -7180,7 +7231,6 @@ test_5_5:
 	make normal_forms_PGL_4_5
 	make on_planes
 	make PGL_4_2_random_element
-	make GL_2_3_RNF
 	make PGL_2_3_subgroup_lattice
 	make PGL_2_3_subgroup_lattice_load_and_draw_by_groups
 	make PGL_2_3_subgroup_lattice_load_and_draw_by_orbits
@@ -8303,7 +8353,7 @@ test_5_9:
 	make PGGL_4_4_classes_reps
 	make Sym_6_generators
 	make Sym_6_elements
-	make GL_2_3_RNF
+	make GL_2_3_RNF_elements
 	make PGL_4_2_orthogonal_reflections_report_vector_ge
 
 
@@ -8411,7 +8461,7 @@ Sym_6_elements:
 
 
 
-GL_2_3_RNF:
+GL_2_3_RNF_elements:
 	$(ORBITER) -v 2 \
 		-define Do -draw_options \
 			-radius 200 -line_width 0.3 \
@@ -10030,6 +10080,9 @@ Op_6_2_group:
 		-with V -do -variety_activity -compute_group \
 			-nauty_control -save_orbit_of_equations eqn_ -end \
 		-end \
+		-with V -do -variety_activity -compute_set_stabilizer \
+			-nauty_control -save_orbit_of_equations eqn_ -end \
+		-end \
 		-with V -do -variety_activity -singular_points -end \
 		-with V -do -variety_activity -report -end
 	$(PDFLATEX) variety_Op_6_2_report.tex
@@ -10055,13 +10108,13 @@ curve_q13_f0_clean2_variety_compute_group:
 			-equation_in_algebraic_form \
 				$(CURVE_Q13_F0_CLEAN2_EQUATION) \
 			-label_txt curve_q13_f0_clean2 \
-			-label_tex curve\_q13\_f0\_clean2 \
+			-label_tex "{\rm curve\_q13\_f0\_clean2}" \
 		-end \
 		-with V -do -variety_activity \
 			-compute_group -nauty_control -end \
 		-end 
-	$(PDFLATEX) curve_q13_f0_clean2_c_orbits.tex
-	$(OPEN) curve_q13_f0_clean2_c_orbits.pdf
+	$(PDFLATEX) variety_curve_q13_f0_clean2_report.tex
+	$(OPEN) variety_curve_q13_f0_clean2_report.pdf
 
 
 Hirschfeld_q2_group:
@@ -10641,7 +10694,7 @@ poset_of_4subsets:
 		-with Orb -do -orbits_activity \
 			-report \
 			-report_options ro \
-		-end 
+		-end \
 	$(PDFLATEX) poset_4_poset.tex
 	$(OPEN) poset_4_poset.pdf
 
@@ -12367,6 +12420,10 @@ Dickson1_group:
 			-compute_group \
 			-nauty_control -save_orbit_of_equations eqn_ -end \
 		-end \
+		-with V -do -variety_activity \
+			-compute_set_stabilizer \
+			-nauty_control -save_orbit_of_equations eqn_ -end \
+		-end \
 		-with V -do -variety_activity -singular_points -end \
 		-with V -do -variety_activity -report -end
 	pdflatex variety_Dickson_1_report.tex
@@ -13150,15 +13207,13 @@ move_two_lines:
 
 
 
-# ToDo: problem in latex report, $ missing
-
 surface_F_abcd_Eckardt_q31_by_symbolic_object_report:
-	$(ORBITER) -v 10 \
+	$(ORBITER) -v 7 \
 		-define Do -draw_options \
 			-radius 200 -line_width 0.3 -nodes_empty \
 		-end \
 		-define F -finite_field -q 31 -end \
-		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define P -projective_space -n 3 -field F -end \
 		-define R -polynomial_ring \
 			-field F \
 			-number_of_variables 4 \
@@ -13188,9 +13243,8 @@ surface_F_abcd_Eckardt_q31_by_symbolic_object_report:
 		-cubic_surface_activity \
 			-report Do \
 		-end
-	#$(PDFLATEX) surface_F_abcd_sub_report.tex
-	#$(OPEN) surface_F_abcd_sub_report.pdf
-
+	$(PDFLATEX) surface_equation_F_abcd_sub_q31_report.tex
+	$(OPEN) surface_equation_F_abcd_sub_q31_report.pdf
 
 
 surface_11_random_report:
@@ -13224,6 +13278,8 @@ surface_11_1:
 	$(PDFLATEX) surface_catalogue_q11_iso1_report.tex
 	$(OPEN) surface_catalogue_q11_iso1_report.pdf
 
+
+
 ###############################################################################
 # Section 9.4: Classification of Cubic Surfaces with 27 lines
 
@@ -13253,8 +13309,13 @@ surface_classify_q4:
 		-define Control -poset_classification_control -W \
 			-problem_label "surf_q4" \
 		-end \
+		-define Classify -classify_cubic_surfaces \
+			-use_double_sixes \
+			-projective_space P \
+			-poset_classification_control Control \
+		-end \
 		-define Orb -orbits \
-			-on_cubic_surfaces P Control \
+			-on_cubic_surfaces Classify \
 		-end \
 		-define Do -draw_options \
 			-radius 200 -line_width 0.3 -nodes_empty \
@@ -19971,6 +20032,9 @@ LSQ_5A:
 				-export_flags \
 		-end
 
+
+#latin_square_order5_LSQ5A_flags.txt
+
 LSQ_5B:
 	$(ORBITER) -v 8 \
 		-define LSQ5B -vector -format 5 -dense $(LSQ_5B_TABLE) -end \
@@ -19979,25 +20043,27 @@ LSQ_5B:
 		-end \
 		-with D -do \
 			-design_activity \
-				-export_inc \
+				-export_flags \
 		-end
 
-
-#latin_square_order5_LSQ5B_inc.txt
+#latin_square_order5_LSQ5B_flags.txt
 
 
 LSQ_5_c:
 	$(ORBITER) -v 3 \
+		-define Doinc -draw_incidence_structure_options \
+			-width 60 -width_10 6 -end \
 		-define C -combinatorial_object \
 			-label LSQ_5 LSQ\_5 \
-			-file_of_incidence_geometries latin_square_order5_LSQ5A_inc.txt 15 28 90 \
-			-file_of_incidence_geometries latin_square_order5_LSQ5B_inc.txt 15 28 90 \
+			-file_of_incidence_geometries latin_square_order5_LSQ5A_flags.txt 15 28 90 \
+			-file_of_incidence_geometries latin_square_order5_LSQ5B_flags.txt 15 28 90 \
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \
 			-canonical_form \
 				-save_ago \
 				-max_TDO_depth 4 \
+				-nauty_control -end \
 			-end \
 		-end \
 		-with C -do \
@@ -20007,6 +20073,7 @@ LSQ_5_c:
 				-show_TDO \
 				-show_TDA \
 				-dont_show_incidence_matrices \
+				-incidence_draw_options Doinc \
 			-end \
 		-end
 	$(PDFLATEX) LSQ_5_classification.tex
@@ -20410,7 +20477,7 @@ AG_2_3.inc:
 
 
 LS_AG_2_3_design_table_create:
-	$(ORBITER) -v 5 \
+	$(ORBITER) -v 50 \
 		-define B -vector -dense $(AG_2_3_BLOCKS) -end \
 		-define D -design -list_of_blocks_coded 9 3 B -end \
 		-define Sym9 -permutation_group -symmetric_group 9 -end \
@@ -20503,10 +20570,13 @@ LS_AG_2_3_disjoint_sets_graph_and_cliques:
 		-end \
 		-with Gamma -do \
 		-graph_theoretic_activity \
-			-find_cliques -target_size 7 -end \
+			-find_cliques -target_size 7 \
+				-output_file AG_2_3_design_table_cliques.csv \
+			-end \
 		-end \
 		-print_symbols
 
+#AG_2_3_design_table_cliques.csv
 
 #AG_2_3_design_table_disjoint_sets.colored_graph
 #User time: 0.66 of a second, dt=66 tps = 100
@@ -20539,15 +20609,15 @@ LS_AG_2_3_export_large_sets:
 		-with D -do \
 		-design_activity \
 			-extract_solutions_by_index_csv "AG_2_3" Sym9 \
-				AG_2_3_design_table_disjoint_sets_solutions.csv \
-				"clique" \
+				AG_2_3_design_table_cliques.csv \
+				"Solution" \
 				AG_2_3_large_sets.csv \
 				"" \
 		-end
 
-
+#AG_2_3_large_sets.csv
+# data is in column "large_set"
 #User time: 0.39 of a second, dt=39 tps = 100
-# AG_2_3_large_sets.csv
 
 
 
@@ -23926,16 +23996,16 @@ geo_7_3_c:
 	$(PDFLATEX) geo_7_3_classification.tex
 	$(OPEN) geo_7_3_classification.pdf
 	$(ORBITER) -v 2 -draw_matrix \
-		-input_csv_file geo_7_3_object0_TDA_flag_orbits.csv \
-		-secondary_input_csv_file geo_7_3_object0_TDA.csv \
+		-input_csv_file geo_7_3_object_0_TDA_flag_orbits.csv \
+		-secondary_input_csv_file geo_7_3_object_0_TDA.csv \
 		-box_width 32 -bit_depth 24 \
 		-end
 	$(ORBITER) -v 2 -draw_matrix \
-		-input_csv_file geo_7_3_object0_INP_flag_orbits.csv \
-		-secondary_input_csv_file geo_7_3_object0_INP.csv \
+		-input_csv_file geo_7_3_object_0_INP_flag_orbits.csv \
+		-secondary_input_csv_file geo_7_3_object_0_INP.csv \
 		-box_width 32 -bit_depth 24 \
 		-end
-	$(OPEN) geo_7_3_object0_INP_flag_orbits_draw.bmp
+	$(OPEN) geo_7_3_object_0_INP_flag_orbits_draw.bmp
 
 
 
@@ -24348,57 +24418,13 @@ SECTION_OBJECTS_FROM_DESIGN_THEORY:
 
 
 test_17_4:
-	make LS_AG_2_3_solutions_classify # needs Section 14.3
 	make design_27c
 	make design_PG_2_3_canonical
 	make wreath_product_designs_n8_k6_c
 	make wreath_product_designs_n4_k2_c
+	make LS_AG_2_3_solutions_classify # needs Section 14.3
+	make neumaier_graphs_16_classify
 
-
-
-# continuation of an example in Section 14.3
-# requires the file AG_2_3_large_sets.csv
-
-LS_AG_2_3_solutions_classify:
-	$(ORBITER) -v 2 \
-		-define Doinc -draw_incidence_structure_options \
-			-width 20 -width_10 2 -end \
-		-define C -combinatorial_object \
-			-label LS_AG_2_3 LS\_AG\_2\_3 \
-			-file_of_designs \
-			AG_2_3_large_sets.csv 9 84 3 12 \
-		-end \
-		-with C -do \
-		-combinatorial_object_activity \
-			-canonical_form \
-				-save_ago \
-				-save_transversal \
-				-max_TDO_depth 10 \
-				-nauty_control -end \
-			-end \
-		-end \
-		-with C -do \
-		-combinatorial_object_activity \
-			-report \
-				-export_flag_orbits \
-				-show_TDO \
-				-incidence_draw_options Doinc \
-			-end \
-		-end
-	$(PDFLATEX) LS_AG_2_3_classification.tex
-	$(OPEN) LS_AG_2_3_classification.pdf
-	$(ORBITER) -v 2 -draw_matrix \
-		-input_csv_file LS_AG_2_3_object0_INP_flag_orbits.csv \
-		-secondary_input_csv_file LS_AG_2_3_object0_INP.csv \
-		-box_width 12 -bit_depth 24 \
-		-end
-	$(OPEN) LS_AG_2_3_object0_INP_flag_orbits_draw.bmp
-	$(ORBITER) -v 2 -draw_matrix \
-		-input_csv_file LS_AG_2_3_object1_INP_flag_orbits.csv \
-		-secondary_input_csv_file LS_AG_2_3_object1_INP.csv \
-		-box_width 12 -bit_depth 24 \
-		-end
-	$(OPEN) LS_AG_2_3_object1_INP_flag_orbits_draw.bmp
 
 
 
@@ -24549,6 +24575,55 @@ wreath_product_designs_n8_k6_c:
 		-end
 	$(PDFLATEX) wreath_8_6_classification.tex
 	$(OPEN) wreath_8_6_classification.pdf
+
+
+
+# continuation of an example in Section 14.3
+# requires the file AG_2_3_large_sets.csv
+
+LS_AG_2_3_solutions_classify:
+	$(ORBITER) -v 2 \
+		-define Doinc -draw_incidence_structure_options \
+			-width 20 -width_10 2 -end \
+		-define C -combinatorial_object \
+			-label LS_AG_2_3 LS\_AG\_2\_3 \
+			-file_of_designs \
+			AG_2_3_large_sets.csv large_set 9 84 3 12 \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form \
+				-save_ago \
+				-save_transversal \
+				-max_TDO_depth 10 \
+				-nauty_control -end \
+			-end \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-report \
+				-export_flag_orbits \
+				-show_TDO \
+				-incidence_draw_options Doinc \
+			-end \
+		-end
+	$(PDFLATEX) LS_AG_2_3_classification.tex
+	$(OPEN) LS_AG_2_3_classification.pdf
+	$(ORBITER) -v 2 -draw_matrix \
+		-input_csv_file LS_AG_2_3_object_0_INP_flag_orbits.csv \
+		-secondary_input_csv_file LS_AG_2_3_object_0_INP.csv \
+		-box_width 12 -bit_depth 24 \
+		-end
+	$(OPEN) LS_AG_2_3_object_0_INP_flag_orbits_draw.bmp
+	$(ORBITER) -v 2 -draw_matrix \
+		-input_csv_file LS_AG_2_3_object_1_INP_flag_orbits.csv \
+		-secondary_input_csv_file LS_AG_2_3_object_1_INP.csv \
+		-box_width 12 -bit_depth 24 \
+		-end
+	$(OPEN) LS_AG_2_3_object_1_INP_flag_orbits_draw.bmp
+
+
+
 
 
 

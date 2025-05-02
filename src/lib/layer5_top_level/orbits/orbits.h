@@ -12,6 +12,43 @@ namespace orbiter {
 namespace layer5_applications {
 namespace orbits {
 
+
+
+// #############################################################################
+// classify_cubic_surfaces_description.cpp
+// #############################################################################
+
+//! to describe a problem of classification of cubic surfaces
+
+
+
+class classify_cubic_surfaces_description {
+
+public:
+
+	// doc/tables/commands/classify_cubic_surfaces.csv
+
+	int f_use_double_sixes;
+
+	int f_projective_space;
+	std::string projective_space_label;
+
+	int f_poset_classification_control;
+	std::string poset_classification_control_object;
+
+
+	classify_cubic_surfaces_description();
+	~classify_cubic_surfaces_description();
+	int read_arguments(
+			int argc, std::string *argv,
+		int verbose_level);
+	void print();
+
+
+};
+
+
+
 // #############################################################################
 // orbit_cascade.cpp
 // #############################################################################
@@ -255,8 +292,8 @@ public:
 	std::string on_cubic_curves_control;
 
 	int f_on_cubic_surfaces;
-	std::string on_cubic_surfaces_PA;
-	std::string on_cubic_surfaces_control;
+	//std::string on_cubic_surfaces_PA;
+	std::string on_cubic_surfaces_classify;
 
 	// undocumented:
 	int f_classify_semifields;

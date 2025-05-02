@@ -2091,6 +2091,164 @@ int string_tools::find_string_in_array(
 	return false;
 
 }
+
+std::string string_tools::texify(
+		std::string &input_string)
+{
+	std::string output;
+	int f_tab_no_triangle = true;
+	//int f_numbers = false;
+
+	int i, len;
+	char c;
+	len = 0;
+
+	for (i = 0; i < input_string.length(); i++) {
+		c = input_string[i];
+		if (c == '\t') {
+			if (f_tab_no_triangle) {
+				output += "\\>";
+			}
+			else {
+				output += "$\\triangleright$\\>";
+			}
+			/* printf("\\symbol{32}");
+			printf("\\symbol{32}"); */
+			/* putchar((char)'\\');
+			putchar((char)' ');
+			putchar((char)'\\');
+			putchar((char)' '); */
+			len += 2;
+		}
+	#if 1
+		else if (c == ' ') {
+			output += "\\ ";
+
+
+			len++;
+		}
+	#else
+		else if (c == ' ') {
+			output += "\\symbol{32}";
+			len++;
+		}
+	#endif
+		else if (c == '<') {
+			output += "{\\textless}";
+			len++;
+		}
+		else if (c == '>') {
+			output += "{\\textgreater}";
+			len++;
+		}
+		else if (c == '|') {
+			output += "{\\textbar}";
+			len++;
+		}
+		else if (c == '\\') {
+			output += "\\symbol{92}";
+			len++;
+		}
+		else if (c == '\'') { /* Akut */
+			output += "\\symbol{19}";
+			len++;
+		}
+		else if (c == ',') {
+			output += "\\symbol{44}";
+			len++;
+		}
+		else if (c == '!') {
+			output += "\\symbol{33}";
+			len++;
+		}
+		else if (c == '\"') {
+			output += "\\symbol{34}";
+			len++;
+		}
+		else if (c == '.') {
+			output += "\\symbol{46}";
+			len++;
+		}
+		else if (c == '-') {
+			output += "\\symbol{45}";
+			len++;
+		}
+		else if (c == '#') {
+			output += "\\symbol{35}";
+			/* putchar((char)'\\');
+			putchar((char)'#'); */
+			len++;
+		}
+		else if (c == '$') {
+			output += "\\symbol{36}";
+			/* putchar((char)'\\');
+			putchar((char)'$'); */
+			len++;
+		}
+		else if (c == '&') {
+			output += "\\symbol{38}";
+			/* putchar((char)'\\');
+			putchar((char)'&'); */
+			len++;
+		}
+		else if (c == '~') {
+			output += "\\symbol{126}";
+			/* putchar((char)'\\');
+			putchar((char)'~'); */
+			len++;
+		}
+		else if (c == '_') {
+			output += "\\_";
+			/* putchar((char)'\\');
+			putchar((char)'_'); */
+			len++;
+		}
+		else if (c == '^') {
+			output += "\\symbol{94}";
+			/* putchar((char)'\\');
+			putchar((char)'^'); */
+			len++;
+		}
+		else if (c == '%') {
+			output += "\\symbol{37}";
+			/* putchar((char)'\\');
+			putchar((char)'%'); */
+			len++;
+		}
+		else if (c == '{') {
+			output += "\\symbol{123}";
+			/* putchar((char)'\\');
+			putchar((char)'{'); */
+			len++;
+		}
+		else if (c == '}') {
+			output += "\\symbol{125}";
+			/* putchar((char)'\\');
+			putchar((char)'}'); */
+			len++;
+		}
+#if 0
+		else if (c == '\n') {
+			printf("\\\\[%dpt]\n", line_skip);
+			len = 0;
+			line++;
+			if (f_numbers) {
+				printf("%d\\>", line);
+			}
+		}
+#endif
+		else {
+			char str[10];
+
+			str[0] = c;
+			str[1] = 0;
+			output += str;
+			len++;
+		}
+	}
+	return output;
+}
+
 //#############################################################################
 
 

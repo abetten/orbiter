@@ -502,6 +502,13 @@ void modified_group_init_layer5::modified_group_create_stabilizer_of_variety(
 		exit(1);
 	}
 
+
+	canonical_form::variety_object_with_action **Input;
+
+
+	Input = (canonical_form::variety_object_with_action **) NEW_pvoid(1);
+	Input[0] = Input_Variety;
+
 	if (f_v) {
 		cout << "modified_group_init_layer5::modified_group_create_stabilizer_of_variety "
 				"before Classifier->init_direct" << endl;
@@ -509,7 +516,7 @@ void modified_group_init_layer5::modified_group_create_stabilizer_of_variety(
 
 	Classifier->init_direct(
 			1 /*nb_input_Vo*/,
-			Input_Variety,
+			Input,
 			fname_base,
 			Descr->f_nauty_control,
 			Descr->Nauty_interface_control,
@@ -643,6 +650,7 @@ void modified_group_init_layer5::modified_group_create_stabilizer_of_variety(
 	//Strong_gens = AG->class_data->Conjugacy_class[orbit_index]->gens->create_copy(verbose_level - 4);
 
 
+	FREE_pvoid((void **) Input);
 
 	if (f_v) {
 		cout << "modified_group_init_layer5::modified_group_create_stabilizer_of_variety done" << endl;

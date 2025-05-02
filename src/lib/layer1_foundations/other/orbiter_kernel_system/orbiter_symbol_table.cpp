@@ -327,6 +327,9 @@ std::string orbiter_symbol_table::stringify_type(
 	else if (t == t_vector) {
 		s = "t_vector";
 	}
+	else if (t == t_text) {
+		s = "t_text";
+	}
 	else if (t == t_symbolic_object) {
 		s = "t_symbolic_object";
 	}
@@ -345,9 +348,6 @@ std::string orbiter_symbol_table::stringify_type(
 	else if (t == t_orbits) {
 		s = "t_orbits";
 	}
-	else if (t == t_poset_classification_control) {
-		s = "t_poset_classification_control";
-	}
 
 
 	// group of 10:
@@ -360,8 +360,10 @@ std::string orbiter_symbol_table::stringify_type(
 	// t_mapping,
 	// t_variety,
 	// t_combo_with_group,
-	// t_isomorph_arguments,
 
+	else if (t == t_poset_classification_control) {
+		s = "t_poset_classification_control";
+	}
 	else if (t == t_poset_classification_report_options) {
 		s = "t_poset_classification_report_options";
 	}
@@ -389,8 +391,17 @@ std::string orbiter_symbol_table::stringify_type(
 	else if (t == t_combo_with_group) {
 		s = "t_combo_with_group";
 	}
+
+
+	// group of 2:
+	// t_isomorph_arguments,
+	// t_classify_cubic_surfaces,
+
 	else if (t == t_isomorph_arguments) {
 		s = "t_isomorph_arguments";
+	}
+	else if (t == t_classify_cubic_surfaces) {
+		s = "t_classify_cubic_surfaces";
 	}
 
 	else {

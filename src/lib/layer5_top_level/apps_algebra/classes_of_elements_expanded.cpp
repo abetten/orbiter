@@ -130,6 +130,12 @@ void classes_of_elements_expanded::init(
 
 	for (h = 0; h < nb_idx; h++) {
 
+		if (f_v) {
+			cout << "classes_of_elements_expanded::init "
+					"class " << h << " / " << nb_idx << endl;
+		}
+
+
 		idx = Idx[h];
 
 
@@ -147,7 +153,7 @@ void classes_of_elements_expanded::init(
 				A_conj,
 				Classes,
 				idx,
-				verbose_level);
+				verbose_level - 3);
 
 		if (f_v) {
 			cout << "classes_of_elements_expanded::init "

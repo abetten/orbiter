@@ -24,6 +24,16 @@ syntax_tree_latex::syntax_tree_latex()
 {
 	Record_birth();
 
+	output_stream = NULL;
+
+	//std::string indentation;
+	//std::string delimiter;
+
+	f_split = false;
+	split_level = 0;
+	split_r = 0;
+	split_mod = 0;
+
 }
 
 syntax_tree_latex::~syntax_tree_latex()
@@ -175,7 +185,8 @@ void syntax_tree_latex::add_prologue()
         << "\\begin{document}" << "\n";
 #endif
 
-	*output_stream << "\\begin{forest}" << "\n"
+	*output_stream
+		<< "\\begin{forest}" << "\n"
         << "for tree={" << "\n"
         << "grow'=0, treenode/.style = {align=center, inner sep=2.5pt," << "\n"
         << "    text centered, font=\\sffamily}," << "\n"
@@ -188,7 +199,8 @@ void syntax_tree_latex::add_prologue()
 
 void syntax_tree_latex::add_epilogue()
 {
-	*output_stream << "]" << "\n"
+	*output_stream
+		<< "]" << "\n"
         << "\\end{forest}" << endl;
     //    <<  "\\end{document}" << "\n";
 }

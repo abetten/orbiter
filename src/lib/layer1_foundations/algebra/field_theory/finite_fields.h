@@ -653,6 +653,42 @@ public:
 };
 
 
+// #############################################################################
+// finite_field_properties.cpp
+// #############################################################################
+
+//! precomputed properties of class finite_field
+
+class finite_field_properties {
+
+
+public:
+
+	finite_field *F;
+
+	int f_related_fields_have_been_computed;
+	related_fields *Related_fields;
+
+	int f_equianharmonic;
+	int equianharmonic_a;
+
+	finite_field_properties();
+	~finite_field_properties();
+	void init(
+			finite_field *F,
+			int f_compute_related_fields,
+			int verbose_level);
+	void compute_harmonics(
+			int verbose_level);
+	void setup_related_fields(
+			int f_compute_related_fields,
+			int verbose_level);
+	void report_latex(
+			std::ostream &ost, int verbose_level);
+
+};
+
+
 
 // #############################################################################
 // finite_field.cpp
@@ -713,8 +749,8 @@ public:
 
 	geometry::projective_geometry::projective_space_basic *Projective_space_basic;
 
-	int f_related_fields_have_been_computed;
-	related_fields *Related_fields;
+
+	finite_field_properties *Finite_field_properties;
 
 
 	finite_field();
@@ -734,7 +770,7 @@ public:
 			int f_without_tables,
 			int f_compute_related_fields,
 			int verbose_level);
-	void setup_related_fields(
+	void compute_properties(
 			int f_compute_related_fields,
 			int verbose_level);
 	void init_override_polynomial(

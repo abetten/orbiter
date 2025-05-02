@@ -254,7 +254,7 @@ public:
 			int verbose_level);
 	void init_direct(
 			int nb_input_Vo,
-			canonical_form::variety_object_with_action *Input_Vo,
+			canonical_form::variety_object_with_action **Input_Vo,
 			std::string &fname_base_out,
 			int f_nauty_control,
 			other::l1_interfaces::nauty_interface_control *Nauty_interface_control,
@@ -295,7 +295,6 @@ public:
 			applications_in_algebraic_geometry::quartic_curves::quartic_curve_from_surface
 				*Quartic_curve_from_surface,
 				other::l1_interfaces::nauty_interface_control *Nauty_control,
-				//int f_save_nauty_input_graphs,
 				automorphism_group_of_variety *&Aut_of_variety,
 				int verbose_level);
 	void find_isomorphism(
@@ -305,6 +304,11 @@ public:
 			int verbose_level);
 	// find gamma which maps the points of C1 to the points of C.
 	void compute_group_and_tactical_decomposition(
+			canonical_form::canonical_form_classifier *Classifier,
+			canonical_form::variety_object_with_action *Input_Vo,
+			canonical_form::classification_of_varieties_nauty *&Classification_of_varieties_nauty,
+			int verbose_level);
+	void compute_set_stabilizer_and_tactical_decomposition(
 			canonical_form::canonical_form_classifier *Classifier,
 			canonical_form::variety_object_with_action *Input_Vo,
 			canonical_form::classification_of_varieties_nauty *&Classification_of_varieties_nauty,
@@ -531,7 +535,7 @@ public:
 			int verbose_level);
 	void init_direct(
 			int nb_input_Vo,
-			canonical_form::variety_object_with_action *Input_Vo,
+			canonical_form::variety_object_with_action **Input_Vo,
 			std::string &fname_base_out,
 			int verbose_level);
 	int skip_this_one(
@@ -668,12 +672,16 @@ public:
 
 	int f_compute_group;
 
+	int f_compute_set_stabilizer;
+
 
 	int f_nauty_control;
 	other::l1_interfaces::nauty_interface_control *Nauty_interface_control;
 
 
 	int f_report;
+
+	int f_export;
 
 	int f_classify; // not yet implemented
 
@@ -710,7 +718,7 @@ public:
 	variety_activity_description *Descr;
 
 	int nb_input_Vo;
-	canonical_form::variety_object_with_action *Input_Vo; // [nb_input_Vo]
+	canonical_form::variety_object_with_action **Input_Vo; // [nb_input_Vo]
 
 
 
@@ -719,11 +727,17 @@ public:
 	void init(
 			variety_activity_description *Descr,
 			int nb_input_Vo,
-			canonical_form::variety_object_with_action *Input_Vo,
+			canonical_form::variety_object_with_action **Input_Vo,
 			int verbose_level);
 	void perform_activity(
 			int verbose_level);
 	void do_compute_group(
+			int f_has_output_fname_base,
+			std::string &output_fname_base,
+			int f_nauty_control,
+			other::l1_interfaces::nauty_interface_control *Nauty_interface_control,
+			int verbose_level);
+	void do_compute_set_stabilizer(
 			int f_has_output_fname_base,
 			std::string &output_fname_base,
 			int f_nauty_control,
@@ -879,7 +893,12 @@ public:
 	int f_has_automorphism_group;
 	groups::strong_generators *Stab_gens;
 
+	int f_has_set_stabilizer;
+	groups::strong_generators *Set_stab_gens;
+
 	apps_combinatorics::variety_with_TDO_and_TDA *TD;
+
+	apps_combinatorics::variety_with_TDO_and_TDA *TD_set_stabilizer;
 
 
 	variety_object_with_action();
@@ -896,6 +915,8 @@ public:
 			int verbose_level);
 	void compute_tactical_decompositions(
 			int verbose_level);
+	void compute_tactical_decompositions_wrt_set_stabilizer(
+			int verbose_level);
 	void print(
 			std::ostream &ost);
 	std::string stringify_Pts();
@@ -906,6 +927,10 @@ public:
 			std::ostream &ost, int verbose_level);
 	void print_summary(
 			std::ostream &ost);
+	void export_data(
+			std::vector<std::string> &Table, int verbose_level);
+	void do_export(
+			int verbose_level);
 
 };
 

@@ -593,15 +593,39 @@ void orbits_create::init(
 			cout << "orbits_create::init f_on_cubic_surfaces" << endl;
 		}
 		if (f_v) {
-			cout << "orbits_create::init control = " << Descr->on_cubic_surfaces_control << endl;
+			cout << "orbits_create::init classify = " << Descr->on_cubic_surfaces_classify << endl;
 		}
+
+		orbits::classify_cubic_surfaces_description *Classify_cubic_surfaces_description;
+
+		Classify_cubic_surfaces_description = Get_classify_cubic_surfaces(Descr->on_cubic_surfaces_classify);
+
+
+
+		if (!Classify_cubic_surfaces_description->f_use_double_sixes) {
+			cout << "please use the double six algorithm" << endl;
+			exit(1);
+		}
+
 		projective_geometry::projective_space_with_action *PA;
 
-		PA = Get_projective_space(Descr->on_cubic_surfaces_PA);
+		if (Classify_cubic_surfaces_description->f_projective_space == false) {
+			cout << "please specify a projective space" << endl;
+			exit(1);
+		}
+
+		PA = Get_projective_space(Classify_cubic_surfaces_description->projective_space_label);
+
+
+
+		if (Classify_cubic_surfaces_description->f_poset_classification_control == false) {
+			cout << "please specify a poset classification control object" << endl;
+			exit(1);
+		}
 
 		poset_classification::poset_classification_control *Control =
 				Get_poset_classification_control(
-						Descr->on_cubic_surfaces_control);
+						Classify_cubic_surfaces_description->poset_classification_control_object);
 
 		if (f_v) {
 			cout << "orbits_create::init "

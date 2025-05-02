@@ -1390,6 +1390,12 @@ public:
 			std::string &label);
 	data_structures::vector_builder *get_object_of_type_vector(
 			std::string &label);
+	int is_text_available(
+			std::string &label);
+	std::string get_text(
+			std::string &label);
+	std::string get_string(
+			std::string &label);
 	algebra::expression_parser::symbolic_object_builder *get_object_of_type_symbolic_object(
 			std::string &label);
 	combinatorics::coding_theory::crc_object *get_object_of_type_crc_code(
@@ -1416,6 +1422,8 @@ public:
 		*get_geometric_object(
 				std::string &label);
 	void *get_isomorph_arguments_opaque(
+			std::string &label);
+	void *get_classify_cubic_surfaces_opaque(
 			std::string &label);
 	void
 		*get_any_group_opaque(
@@ -1564,6 +1572,9 @@ public:
 	void init_vector(
 			std::string &label,
 			void *VB, int verbose_level);
+	void init_text(
+			std::string &label,
+			void *TB, int verbose_level);
 	void init_symbolic_object(
 			std::string &label,
 			void *SB, int verbose_level);
@@ -1616,6 +1627,9 @@ public:
 			std::string &label,
 			void *V, int verbose_level);
 	void init_isomorph_arguments(
+			std::string &label,
+			void *V, int verbose_level);
+	void init_classify_cubic_surfaces(
 			std::string &label,
 			void *V, int verbose_level);
 	void print();

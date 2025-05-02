@@ -61,6 +61,40 @@ void symbolic_object_activity::perform_activity(
 	}
 
 
+	if (Descr->f_evaluate_affine) {
+		if (f_v) {
+			cout << "symbolic_object_activity::perform_activity f_evaluate_affine" << endl;
+		}
+
+		if (f_v) {
+			cout << "symbolic_object_activity::perform_activity "
+					"before evaluate_affine" << endl;
+		}
+		evaluate_affine(
+				verbose_level);
+		if (f_v) {
+			cout << "symbolic_object_activity::perform_activity "
+					"after evaluate_affine" << endl;
+		}
+	}
+	else if (Descr->f_collect_monomials_binary) {
+		if (f_v) {
+			cout << "symbolic_object_activity::perform_activity f_collect_monomials_binary" << endl;
+		}
+
+		if (f_v) {
+			cout << "symbolic_object_activity::perform_activity "
+					"before collect_monomials_binary" << endl;
+		}
+		collect_monomials_binary(
+				verbose_level);
+		if (f_v) {
+			cout << "symbolic_object_activity::perform_activity "
+					"after collect_monomials_binary" << endl;
+		}
+	}
+
+
 #if 0
 	if (Descr->f_export) {
 
@@ -152,6 +186,202 @@ void symbolic_object_activity::perform_activity(
 	}
 
 }
+
+void symbolic_object_activity::evaluate_affine(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "symbolic_object_activity::evaluate_affine" << endl;
+	}
+
+
+	expression_parser::formula_vector *Vec;
+
+	Vec = f->Formula_vector;
+
+	if (Vec->len != 1) {
+		cout << "symbolic_object_activity::evaluate_affine len != 1" << endl;
+		exit(1);
+	}
+
+
+	if (Vec->V[0].tree->f_has_managed_variables) {
+		cout << "symbolic_object_activity::evaluate_affine "
+				"Vec->V[0].tree->f_has_managed_variables" << endl;
+		exit(1);
+	}
+
+	int nb_variables;
+	int i;
+
+	nb_variables = Vec->V[0].tree->variables.size();
+
+	cout << "symbolic_object_activity::evaluate_affine "
+			"nb_variables = " << nb_variables << endl;
+
+	for (i = 0; i < nb_variables; i++) {
+		cout << i << " : " << Vec->V[0].tree->variables[i] << endl;
+	}
+
+
+#if 0
+
+	int f_has_managed_variables;
+	std::string managed_variables_text;
+	std::vector<std::string> managed_variables;
+
+	algebra::field_theory::finite_field *Fq;
+
+	syntax_tree_node *Root;
+
+	std::vector<std::string> variables;
+#endif
+
+	std::map<std::string, std::string> symbol_table;
+	int *Values_in;
+	int *Values_out;
+	int *Index_set;
+	long int N;
+	int q;
+	long int rk;
+
+	q = Vec->V[0].tree->Fq->q;
+
+	geometry::other_geometry::geometry_global Geometry_global;
+
+	N = Geometry_global.nb_AG_elements(nb_variables, q);
+
+	Values_in = NEW_int(nb_variables);
+	Values_out = NEW_int(N);
+	Index_set = NEW_int(N);
+
+
+	for (rk = 0; rk < N; rk++) {
+
+		Geometry_global.AG_element_unrank(q, Values_in, 1, nb_variables, rk);
+
+		for (i = 0; i < nb_variables; i++) {
+			symbol_table[Vec->V[0].tree->variables[i]] = std::to_string(Values_in[i]);
+		}
+
+
+		Values_out[rk] = Vec->V[0].evaluate_with_symbol_table(
+				symbol_table,
+				0 /*verbose_level*/);
+
+
+
+	}
+
+
+	cout << "symbolic_object_activity::evaluate_affine Values_out:" << endl;
+	Int_vec_print(cout, Values_out, N);
+	cout << endl;
+	cout << "N=" << N << endl;
+
+	int sz;
+
+	sz = 0;
+	for (i = 0; i < N; i++) {
+		if (Values_out[i]) {
+			Index_set[sz++] = i;
+		}
+	}
+
+	cout << "symbolic_object_activity::evaluate_affine Index_set:" << endl;
+	Int_vec_print(cout, Index_set, sz);
+	cout << endl;
+
+	cout << "Size of index set = " << sz << endl;
+
+	FREE_int(Values_in);
+	FREE_int(Values_out);
+	FREE_int(Index_set);
+
+	if (f_v) {
+		cout << "symbolic_object_activity::evaluate_affine done" << endl;
+	}
+}
+
+void symbolic_object_activity::collect_monomials_binary(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "symbolic_object_activity::collect_monomials_binary" << endl;
+	}
+
+
+	expression_parser::formula_vector *Formula_vector;
+
+	Formula_vector = f->Formula_vector;
+
+
+	other::data_structures::int_matrix *I;
+	int *Coeff;
+
+	if (f_v) {
+		cout << "symbolic_object_activity::collect_monomials_binary "
+				"before Formula_vector->collect_terms_and_coefficients" << endl;
+	}
+	Formula_vector->collect_terms_and_coefficients(
+			I, Coeff,
+			verbose_level);
+	if (f_v) {
+		cout << "symbolic_object_activity::collect_monomials_binary "
+				"after Formula_vector->collect_terms_and_coefficients" << endl;
+	}
+
+	if (f_v) {
+
+		cout << "monomial table:" << endl;
+		int i;
+		int m, n;
+
+		m = I->m;
+		n = I->n;
+
+		for (i = 0; i < m; i++) {
+
+			cout << i << " : ";
+			Int_vec_print(cout, I->M + i * n, n);
+			cout << " : " << Coeff[i] << endl;
+		}
+
+	}
+	other::orbiter_kernel_system::file_io Fio;
+
+	string fname_monomial_table;
+
+	fname_monomial_table = Formula_vector->label_txt + "_monomial_table_binary.csv";
+
+	if (f_v) {
+		cout << "symbolic_object_activity::collect_monomials_binary "
+				"before I->write_index_set_csv" << endl;
+	}
+	I->write_index_set_csv(fname_monomial_table, verbose_level);
+	if (f_v) {
+		cout << "symbolic_object_activity::collect_monomials_binary "
+				"after I->write_index_set_csv" << endl;
+	}
+
+	cout << "symbolic_object_activity::collect_monomials_binary "
+			"written file " << fname_monomial_table
+			<< " of size " << Fio.file_size(fname_monomial_table) << endl;
+
+	FREE_OBJECT(I);
+
+	FREE_int(Coeff);
+
+	if (f_v) {
+		cout << "symbolic_object_activity::collect_monomials_binary done" << endl;
+	}
+}
+
+
 
 #if 0
 void symbolic_object_activity::do_sweep(

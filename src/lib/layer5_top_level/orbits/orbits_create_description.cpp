@@ -63,8 +63,7 @@ orbits_create_description::orbits_create_description()
 	//std::string on_cubic_curves_control;
 
 	f_on_cubic_surfaces = false;
-	//std::string on_cubic_surfaces_PA;
-	//std::string on_cubic_surfaces_control;
+	//std::string on_cubic_surfaces_classify;
 
 	f_classify_semifields = false;
 	//std::string classify_semifields_PA;
@@ -198,11 +197,10 @@ int orbits_create_description::read_arguments(
 		}
 		else if (ST.stringcmp(argv[i], "-on_cubic_surfaces") == 0) {
 			f_on_cubic_surfaces = true;
-			on_cubic_surfaces_PA.assign(argv[++i]);
-			on_cubic_surfaces_control.assign(argv[++i]);
+			on_cubic_surfaces_classify.assign(argv[++i]);
 			if (f_v) {
-				cout << "-on_cubic_surfaces " << on_cubic_surfaces_PA
-						<< " " << on_cubic_surfaces_control << endl;
+				cout << "-on_cubic_surfaces "
+						<< on_cubic_surfaces_classify << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-classify_semifields") == 0) {
@@ -351,8 +349,7 @@ void orbits_create_description::print()
 		cout << "-on_cubic_curves " << on_cubic_curves_control << endl;
 	}
 	if (f_on_cubic_surfaces) {
-		cout << "-on_cubic_surfaces " << on_cubic_surfaces_PA
-				<< " " << on_cubic_surfaces_control << endl;
+		cout << "-on_cubic_surfaces " << on_cubic_surfaces_classify << endl;
 	}
 	if (f_classify_semifields) {
 		cout << "-classify_semifields " << " " << classify_semifields_PA << " " << classify_semifields_control << endl;

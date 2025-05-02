@@ -104,13 +104,20 @@ void variety_object::init(
 			cout << "variety_object::init_from_string "
 					"equation = " << Descr->equation_in_algebraic_form_text << endl;
 		}
+
+		string *equation_text;
+
+		equation_text = new string;
+
+		*equation_text = Get_string(Descr->equation_in_algebraic_form_text);
+
 		if (Descr->f_set_parameters) {
 			if (f_v) {
 				cout << "variety_object::init "
 						"before parse_equation_in_algebraic_form" << endl;
 			}
 			parse_equation_in_algebraic_form_with_parameters(
-					Descr->equation_in_algebraic_form_text,
+					*equation_text,
 					Descr->set_parameters_label,
 					Descr->set_parameters_label_tex,
 					Descr->set_parameters_values,
@@ -127,7 +134,7 @@ void variety_object::init(
 						"before parse_equation_in_algebraic_form" << endl;
 			}
 			parse_equation_in_algebraic_form(
-					Descr->equation_in_algebraic_form_text,
+					*equation_text,
 					eqn,
 					verbose_level - 2);
 			if (f_v) {
@@ -165,11 +172,14 @@ void variety_object::init(
 		cout << endl;
 	}
 
-	int nb_pts;
-	int nb_bitangents;
 
 	if (Descr->f_points) {
+		if (f_v) {
+			cout << "variety_object::init f_points" << endl;
+		}
+
 		long int *Pts;
+		int nb_pts;
 
 		Lint_vec_scan(Descr->points_txt, Pts, nb_pts);
 		Point_sets = NEW_OBJECT(other::data_structures::set_of_sets);
@@ -180,12 +190,26 @@ void variety_object::init(
 		FREE_lint(Pts);
 	}
 	else {
-		cout << "variety_object::init computing the set of rational points" << endl;
+		if (f_v) {
+			cout << "variety_object::init computing the set of rational points" << endl;
+		}
+		if (f_v) {
+			cout << "variety_object::init before enumerate_points" << endl;
+		}
 		enumerate_points(verbose_level);
+		if (f_v) {
+			cout << "variety_object::init after enumerate_points" << endl;
+		}
 	}
 
 	if (Descr->f_bitangents) {
+
+		if (f_v) {
+			cout << "variety_object::init f_bitangents" << endl;
+		}
+
 		long int *Bitangents;
+		int nb_bitangents;
 
 		Lint_vec_scan(Descr->bitangents_txt, Bitangents, nb_bitangents);
 
@@ -201,12 +225,44 @@ void variety_object::init(
 
 	}
 	else {
-		cout << "variety_object::init please specify the set of bitangents" << endl;
-		exit(1);
+		if (f_v) {
+			cout << "variety_object::init !f_bitangents" << endl;
+		}
+
+		if (Descr->f_compute_lines) {
+
+			if (f_v) {
+				cout << "variety_object::init f_compute_lines" << endl;
+			}
+
+			if (f_v) {
+				cout << "variety_object::init "
+						"before enumerate_lines" << endl;
+			}
+			enumerate_lines(verbose_level - 2);
+			if (f_v) {
+				cout << "variety_object::init "
+						"after enumerate_lines" << endl;
+			}
+			if (f_v) {
+				cout << "variety_object::init The variety "
+						"has " << Line_sets->Set_size[0] << " lines" << endl;
+			}
+		}
+		else {
+			if (f_v) {
+				cout << "variety_object::init !f_compute_lines" << endl;
+			}
+
+
+		}
+		//cout << "variety_object::init please specify the set of bitangents" << endl;
+		//exit(1);
 	}
 	if (f_v) {
 		cout << "variety_object::init "
-				"nb_pts = " << nb_pts << " nb_bitangents=" << nb_bitangents << endl;
+				"nb_pts = " << get_nb_points()
+				<< " nb_bitangents=" << get_nb_lines() << endl;
 	}
 
 	if (Descr->f_label_txt) {
@@ -224,9 +280,39 @@ void variety_object::init(
 	}
 
 
+	int i;
+	for (i = 0; i < Descr->transformations.size(); i++) {
+		if (Descr->transformation_inverse[i]) {
+			cout << "-transform_inverse " << Descr->transformations[i] << endl;
+		}
+		else {
+			cout << "-transform " << Descr->transformations[i] << endl;
+		}
+	}
+
 
 	if (f_v) {
 		cout << "variety_object::init done" << endl;
+	}
+}
+
+int variety_object::get_nb_points()
+{
+	if (Point_sets) {
+		return Point_sets->Set_size[0];
+	}
+	else {
+		return -1;
+	}
+}
+
+int variety_object::get_nb_lines()
+{
+	if (Line_sets) {
+		return Line_sets->Set_size[0];
+	}
+	else {
+		return -1;
 	}
 }
 
@@ -469,7 +555,7 @@ void variety_object::parse_equation_in_algebraic_form_with_parameters(
 			equation_parameters_tex,
 			equation_parameter_values,
 			coeffs,
-			verbose_level - 1);
+			verbose_level - 2);
 
 	if (f_v) {
 		cout << "variety_object::parse_equation_in_algebraic_form_with_parameters "
@@ -670,9 +756,19 @@ void variety_object::enumerate_points(
 
 	Point_sets = NEW_OBJECT(other::data_structures::set_of_sets);
 
+	if (f_v) {
+		cout << "variety_object::enumerate_points "
+				"before Point_sets->init_single" << endl;
+	}
+
 	Point_sets->init_single(
 			Projective_space->Subspaces->N_points /* underlying_set_size */,
 			Pts, nb_pts, 0 /* verbose_level */);
+
+	if (f_v) {
+		cout << "variety_object::enumerate_points "
+				"after Point_sets->init_single" << endl;
+	}
 
 	FREE_lint(Pts);
 
@@ -710,6 +806,20 @@ void variety_object::enumerate_lines(
 	if (f_v) {
 		cout << "surface_object::enumerate_lines after "
 				"Geo.find_lines_which_are_contained" << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "surface_object::enumerate_lines before "
+				"find_real_lines" << endl;
+	}
+	find_real_lines(
+			The_Lines,
+			verbose_level - 2);
+	if (f_v) {
+		cout << "surface_object::enumerate_lines after "
+				"find_real_lines" << endl;
 	}
 
 	long int *Lines;
@@ -759,11 +869,16 @@ void variety_object::print(
 	}
 #endif
 
-	ost << " pts=";
-	Lint_vec_print_fully(ost, Point_sets->Sets[0], Point_sets->Set_size[0]);
-	ost << " bitangents=";
-	Lint_vec_print(ost, Line_sets->Sets[0], Line_sets->Set_size[0]);
-	ost << endl;
+	if (Point_sets) {
+		ost << "pts=";
+		Lint_vec_print_fully(ost, Point_sets->Sets[0], Point_sets->Set_size[0]);
+		ost << endl;
+	}
+	if (Line_sets) {
+		ost << "Lines=";
+		Lint_vec_print(ost, Line_sets->Sets[0], Line_sets->Set_size[0]);
+		ost << endl;
+	}
 }
 
 void variety_object::print_equation_with_line_breaks_tex(
@@ -830,7 +945,36 @@ void variety_object::print_equation(
 
 }
 
+std::string variety_object::stringify_points()
+{
+	string s;
 
+	if (Point_sets) {
+
+		other::data_structures::sorting Sorting;
+		Sorting.lint_vec_heapsort(Point_sets->Sets[0], Point_sets->Set_size[0]);
+		s = Lint_vec_stringify(
+			Point_sets->Sets[0],
+			Point_sets->Set_size[0]);
+	}
+	return s;
+}
+
+std::string variety_object::stringify_lines()
+{
+	string s;
+
+	if (Line_sets) {
+
+		other::data_structures::sorting Sorting;
+		Sorting.lint_vec_heapsort(Line_sets->Sets[0], Line_sets->Set_size[0]);
+
+		s = Lint_vec_stringify(
+				Line_sets->Sets[0],
+				Line_sets->Set_size[0]);
+	}
+	return s;
+}
 
 void variety_object::stringify(
 		std::string &s_Eqn1, //std::string &s_Eqn2,
@@ -977,6 +1121,78 @@ void variety_object::identify_lines(
 		cout << "variety_object::identify_lines done" << endl;
 	}
 }
+
+void variety_object::find_real_lines(
+		std::vector<long int> &The_Lines,
+		int verbose_level)
+// adapted from surface_object::find_real_lines
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "variety_object::find_real_lines" << endl;
+	}
+
+	int i, j, d;
+	long int rk;
+	int *M; // [2 * d]
+	int *coeff_out; // [Ring->degree + 1]
+
+
+	d = Projective_space->Subspaces->n + 1;
+	M = NEW_int(2 * d);
+	coeff_out = NEW_int(Ring->degree + 1);
+
+	if (f_v) {
+		cout << "variety_object::find_real_lines d = " << d << endl;
+		cout << "variety_object::find_real_lines Ring->nb_variables = " << Ring->nb_variables << endl;
+		cout << "variety_object::find_real_lines Ring->get_nb_monomials() = " << Ring->get_nb_monomials() << endl;
+		cout << "variety_object::find_real_lines Ring->degree + 1 = " << Ring->degree + 1 << endl;
+	}
+
+
+	for (i = 0, j = 0; i < The_Lines.size(); i++) {
+		rk = The_Lines[i];
+		Projective_space->Subspaces->Grass_lines->unrank_lint_here(
+				M, rk, 0 /* verbose_level */);
+		if (f_v) {
+			cout << "variety_object::find_real_lines testing line" << endl;
+			Int_matrix_print(M, 2, d);
+		}
+
+		Ring->substitute_line(
+			eqn /* coeff_in */,
+			coeff_out,
+			M /* Pt1_coeff */, M + d /* Pt2_coeff */,
+			verbose_level - 3);
+		// coeff_in[nb_monomials], coeff_out[degree + 1]
+
+		if (f_v) {
+			cout << "variety_object::find_real_lines coeff_out=";
+			Int_vec_print(cout, coeff_out, Ring->degree + 1);
+			cout << endl;
+		}
+		if (!Int_vec_is_zero(coeff_out, Ring->degree + 1)) {
+			if (f_v) {
+				cout << "variety_object::find_real_lines not a real line" << endl;
+			}
+		}
+		else {
+			The_Lines[j] = rk;
+			j++;
+		}
+	}
+	The_Lines.resize(j);
+
+	FREE_int(M);
+	FREE_int(coeff_out);
+
+	if (f_v) {
+		cout << "variety_object::find_real_lines done" << endl;
+	}
+}
+
+
 
 
 

@@ -129,6 +129,9 @@ public:
 			int f_has_managed_variables,
 			std::string &managed_variables_text,
 			int verbose_level);
+	void collect_terms_and_coefficients(
+			other::data_structures::int_matrix *&I, int *&Coeff,
+			int verbose_level);
 	void determinant(
 			formula_vector *A,
 			algebra::field_theory::finite_field *Fq,
@@ -220,6 +223,11 @@ public:
 
 	formula();
 	~formula();
+	void collect_terms_and_coefficients(
+			other::data_structures::int_matrix *&I, int *&Coeff,
+			int verbose_level);
+	void simplify(
+			int verbose_level);
 	std::string string_representation(
 			int f_latex, int verbose_level);
 	std::string string_representation_Sajeeb();
@@ -266,9 +274,8 @@ public:
 			ring_theory::homogeneous_polynomial_domain *Poly,
 			syntax_tree_node **&Subtrees, int &nb_monomials,
 			int verbose_level);
-	void evaluate_with_symbol_table(
+	long int evaluate_with_symbol_table(
 			std::map<std::string, std::string> &symbol_table,
-			int *Values,
 			int verbose_level);
 	void evaluate(
 			ring_theory::homogeneous_polynomial_domain *Poly,
@@ -297,8 +304,6 @@ public:
 			std::string &label_txt,
 			std::string &label_tex,
 			std::string &managed_variables_text,
-			int verbose_level);
-	void simplify(
 			int verbose_level);
 	void reduce_exponents(
 			int verbose_level);
@@ -361,6 +366,11 @@ public:
 	int f_print;
 	//std::string print_over_Fq_field_label;
 
+
+	int f_evaluate_affine;
+
+	int f_collect_monomials_binary;
+
 #if 0
 	int f_sweep;
 	std::string sweep_variables;
@@ -402,6 +412,10 @@ public:
 			symbolic_object_builder *f,
 			int verbose_level);
 	void perform_activity(
+			int verbose_level);
+	void evaluate_affine(
+			int verbose_level);
+	void collect_monomials_binary(
 			int verbose_level);
 #if 0
 	void do_sweep(
@@ -747,6 +761,18 @@ public:
 	syntax_tree_node();
 	~syntax_tree_node();
 	void null();
+	void simplify(
+			int verbose_level);
+	void combine_text_nodes_in_multiplication(
+			int verbose_level);
+	void combine_text_nodes_in_addition(
+			int verbose_level);
+	void combine_two_text_nodes_in_multiplication(
+			int i, int j, int verbose_level);
+	void combine_consecutive_int_nodes_in_multiplication(
+			int &i, int verbose_level);
+	void combine_consecutive_int_nodes_in_addition(
+			int &i, int verbose_level);
 	void add_numerical_factor(
 			int value, int verbose_level);
 	void add_numerical_summand(
@@ -846,8 +872,6 @@ public:
 			expression_parser::syntax_tree *Output_tree,
 			expression_parser::syntax_tree_node *Output_node,
 			int verbose_level);
-	void simplify(
-			int verbose_level);
 	void expand_in_place(
 			int verbose_level);
 	void expand_in_place_handle_multiplication_node(
@@ -859,7 +883,7 @@ public:
 	void reduce_exponents(
 			int verbose_level);
 	// X^q = X for all elements in F_q, hence we can reduce exponents "mod q-1"
-	// except X^q-1 canod reduce to X^0.
+	// except X^q-1 cannot reduce to X^0.
 	// So, we reduce to the least integer in {1,...,q-1} mod q-1.
 	void sort_terms(
 			int verbose_level);
@@ -879,6 +903,8 @@ public:
 			int verbose_level);
 	void simplify_constants(
 			int verbose_level);
+	void simplify_exponents_mod_qm1(
+			int q, int verbose_level);
 	void flatten(
 			int verbose_level);
 	void flatten_with_depth(
@@ -959,12 +985,14 @@ public:
 // syntax_tree.cpp
 // #############################################################################
 
-//! the syntax tree of an expression, possibly with managed variables
+//! the syntax tree of an expression, possibly with managed variables. It contains the root pointer of the tree.
 
 
 
 class syntax_tree {
+
 public:
+
 	int f_has_managed_variables;
 	std::string managed_variables_text;
 	std::vector<std::string> managed_variables;
@@ -980,7 +1008,8 @@ public:
 
 	void init(
 			algebra::field_theory::finite_field *Fq,
-			int f_managed_variables, std::string &managed_variables_text,
+			int f_managed_variables,
+			std::string &managed_variables_text,
 			int verbose_level);
 	void init_root_node(
 			int verbose_level);
@@ -991,6 +1020,11 @@ public:
 			algebra::field_theory::finite_field *Fq,
 			std::string &variable,
 			int *coeffs, int nb_coeffs,
+			int verbose_level);
+	void simplify(
+			int verbose_level);
+	void collect_terms_and_coefficients(
+			other::data_structures::int_matrix *&I, int *&Coeff,
 			int verbose_level);
 	void print_to_vector(
 			std::vector<std::string> &rep, int f_latex,
@@ -1024,8 +1058,6 @@ public:
 	void copy_to(
 			syntax_tree *Output_tree,
 			syntax_tree_node *Output_root_node,
-			int verbose_level);
-	void simplify(
 			int verbose_level);
 	void expand_in_place(
 			int verbose_level);
@@ -1064,7 +1096,8 @@ public:
 	void export_tree(
 			std::string &name, int verbose_level);
 	void latex_tree_split(
-			std::string &name, int split_level, int split_mod,
+			std::string &name,
+			int split_level, int split_mod,
 			int verbose_level);
 	void collect_variables(
 			int verbose_level);

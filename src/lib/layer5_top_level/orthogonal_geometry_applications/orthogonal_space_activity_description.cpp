@@ -58,6 +58,8 @@ orthogonal_space_activity_description::orthogonal_space_activity_description()
 	f_create_orthogonal_reflection = false;
 	//std::string create_orthogonal_reflection_points;
 
+	f_create_perp_of_points = false;
+	//std::string create_perp_of_points_points;
 
 	f_create_Siegel_transformation = false;
 	//std::string create_Siegel_transformation_u;
@@ -180,6 +182,13 @@ int orthogonal_space_activity_description::read_arguments(
 				cout << "-create_orthogonal_reflection " << create_orthogonal_reflection_points << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-create_perp_of_points") == 0) {
+			f_create_perp_of_points = true;
+			create_perp_of_points_points.assign(argv[++i]);
+			if (f_v) {
+				cout << "-create_perp_of_points " << create_perp_of_points_points << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-create_Siegel_transformation") == 0) {
 			f_create_Siegel_transformation = true;
 			create_Siegel_transformation_u.assign(argv[++i]);
@@ -278,6 +287,9 @@ void orthogonal_space_activity_description::print()
 	}
 	if (f_create_orthogonal_reflection) {
 		cout << "-create_orthogonal_reflection " << create_orthogonal_reflection_points << endl;
+	}
+	if (f_create_perp_of_points) {
+		cout << "-create_perp_of_points " << create_perp_of_points_points << endl;
 	}
 	if (f_create_Siegel_transformation) {
 		cout << "-create_Siegel_transformation "

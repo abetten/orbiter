@@ -570,7 +570,8 @@ void surface_domain_high_level::do_cubic_surface_properties(
 
 
 	F0 = NEW_OBJECT(algebra::field_theory::finite_field);
-	F0->finite_field_init_small_order(defining_q,
+	F0->finite_field_init_small_order(
+			defining_q,
 			false /* f_without_tables */,
 			false /* f_compute_related_fields */,
 			0);
@@ -945,11 +946,15 @@ void surface_domain_high_level::do_cubic_surface_properties_analyze(
 
 			ost << "\\section{Singular Surfaces}" << endl;
 
-			report_singular_surfaces(ost, Data, nb_orbits, verbose_level);
+			report_singular_surfaces(
+					ost, Data, nb_orbits,
+					verbose_level);
 
 			ost << "\\section{Nonsingular Surfaces}" << endl;
 
-			report_non_singular_surfaces(ost, Data, nb_orbits, verbose_level);
+			report_non_singular_surfaces(
+					ost, Data, nb_orbits,
+					verbose_level);
 
 
 

@@ -228,7 +228,7 @@ void canonical_form_classifier::init_objects_from_list_of_csv_files(
 
 void canonical_form_classifier::init_direct(
 		int nb_input_Vo,
-		canonical_form::variety_object_with_action *Input_Vo,
+		canonical_form::variety_object_with_action **Input_Vo,
 		std::string &fname_base_out,
 		int f_nauty_control,
 		other::l1_interfaces::nauty_interface_control *Nauty_interface_control,
@@ -260,7 +260,7 @@ void canonical_form_classifier::init_direct(
 		cout << "canonical_form_classifier::init_direct "
 				"before getting PA" << endl;
 	}
-	projective_geometry::projective_space_with_action *PA = Input_Vo->PA;
+	projective_geometry::projective_space_with_action *PA = Input_Vo[0]->PA;
 	if (f_v) {
 		cout << "canonical_form_classifier::init_direct "
 				"after getting PA" << endl;
@@ -270,7 +270,7 @@ void canonical_form_classifier::init_direct(
 		cout << "canonical_form_classifier::init_direct "
 				"before getting Poly_ring" << endl;
 	}
-	algebra::ring_theory::homogeneous_polynomial_domain *Poly_ring = Input_Vo->Variety_object->Ring;
+	algebra::ring_theory::homogeneous_polynomial_domain *Poly_ring = Input_Vo[0]->Variety_object->Ring;
 	if (f_v) {
 		cout << "canonical_form_classifier::init_direct "
 				"after getting Poly_ring" << endl;

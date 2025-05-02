@@ -324,12 +324,10 @@ public:
 			actions::action *A,
 			std::string &prefix,
 			groups::sims *G, int verbose_level);
-	void read_subgroup_lattice(
+	void read_subgroup_lattice_and_create_classes(
 			actions::action *A,
 			std::string &fname,
 			groups::sims *override_sims,
-			//std::string &label,
-			//std::string &label_latex,
 			interfaces::conjugacy_classes_of_subgroups *&class_data,
 			int verbose_level);
 	void read_conjugacy_classes_of_subgroups_from_MAGMA(

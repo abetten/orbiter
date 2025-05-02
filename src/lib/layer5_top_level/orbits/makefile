@@ -6,6 +6,7 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
+	classify_cubic_surfaces_description.o \
 	orbit_cascade.o \
 	orbits_activity_description.o \
 	orbits_activity.o \

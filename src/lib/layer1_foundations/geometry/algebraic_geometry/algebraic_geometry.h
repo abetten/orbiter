@@ -518,8 +518,8 @@ public:
 
 
 	int nb_Kovalevski;
-	int nb_Kovalevski_on;
-	int nb_Kovalevski_off;
+	//int nb_Kovalevski_on;
+	//int nb_Kovalevski_off;
 	int *Kovalevski_point_idx;
 	long int *Kovalevski_points;
 
@@ -2217,9 +2217,11 @@ public:
 	int f_equation_by_coefficients;
 	std::string equation_by_coefficients_text;
 
+	// unused:
 	int f_second_equation_in_algebraic_form;
 	std::string second_equation_in_algebraic_form_text;
 
+	// unused:
 	int f_second_equation_by_coefficients;
 	std::string second_equation_by_coefficients_text;
 
@@ -2229,7 +2231,9 @@ public:
 	int f_bitangents;
 	std::string bitangents_txt;
 
-	/// ToDo: undocumented:
+	int f_compute_lines;
+
+	std::vector<int> transformation_inverse;
 	std::vector<std::string> transformations;
 
 
@@ -2300,6 +2304,8 @@ public:
 	void init(
 			variety_description *Descr,
 			int verbose_level);
+	int get_nb_points();
+	int get_nb_lines();
 #if 0
 	void init_from_string(
 			geometry::projective_space *Projective_space,
@@ -2360,8 +2366,10 @@ public:
 			std::ostream &ost, int *coeffs);
 	void print_equation(
 			std::ostream &ost);
+	std::string stringify_points();
+	std::string stringify_lines();
 	void stringify(
-			std::string &s_Eqn, //std::string &s_Eqn2,
+			std::string &s_Eqn,
 			std::string &s_nb_Pts,
 			std::string &s_Pts,
 			std::string &s_Bitangents);
@@ -2379,6 +2387,9 @@ public:
 	void identify_lines(
 			long int *lines, int nb_lines,
 		int *line_idx, int verbose_level);
+	void find_real_lines(
+			std::vector<long int> &The_Lines,
+			int verbose_level);
 
 
 };

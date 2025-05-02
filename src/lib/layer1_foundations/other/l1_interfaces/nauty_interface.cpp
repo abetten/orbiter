@@ -528,8 +528,8 @@ static void nauty_interface_fill_nauty_output(
 		NO->Base_lint[base_length - 1 - i] = base[i];
 		NO->Transversal_length[base_length - 1 - i] = transversal_length[i];
 	}
-	if (f_vv) {
-		cout << "transversal_length : ";
+	if (true) {
+		cout << "nauty_interface_fill_nauty_output transversal_length : ";
 		for (i = base_length - 1; i >= 0; i--) {
 			cout << transversal_length[i];
 			if (i > 0) {

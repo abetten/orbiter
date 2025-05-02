@@ -265,6 +265,7 @@ namespace canonical_form {
 
 namespace orbits {
 
+	class classify_cubic_surfaces_description;
 	class orbit_cascade;
 	class orbits_activity_description;
 	class orbits_activity;
@@ -442,7 +443,8 @@ namespace user_interface {
 #define Get_orbits(label) user_interface::The_Orbiter_top_level_session->get_orbits(label)
 #define Get_variety(label) user_interface::The_Orbiter_top_level_session->get_variety(label)
 #define Get_combo_with_group(label) user_interface::The_Orbiter_top_level_session->get_combo_with_group(label)
-#define Get_isomorph_arguments(label) user_interface::The_Orbiter_top_level_session->get_combo_with_group(label)
+#define Get_isomorph_arguments(label) user_interface::The_Orbiter_top_level_session->get_isomorph_arguments(label)
+#define Get_classify_cubic_surfaces(label) user_interface::The_Orbiter_top_level_session->get_classify_cubic_surfaces(label)
 
 
 }}

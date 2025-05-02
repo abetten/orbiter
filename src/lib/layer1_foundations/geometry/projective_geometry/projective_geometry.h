@@ -316,11 +316,21 @@ public:
 			long int point_rk, int verbose_level);
 	void Pluecker_to_line(
 			int *v6, int *basis_line, int verbose_level);
+	// in:
+	// v6[0] = p12, v6[1] = p34, v6[2] = p13,
+	// v6[3] = -p24 = p42, v6[4] = p14, v6[5] = p23.
+	// out:
+	// basis_line[8]
 	long int Pluecker_to_line_rk(
 			int *v6, int verbose_level);
 	void exterior_square_to_line(
 			int *v, int *basis_line,
 			int verbose_level);
+	// in:
+	// v[0] = p12, v[1] = p13, v[2] = p14,
+	// v[3] = p23, v[4] = p24, v[5] = p25,
+	// out:
+	// basis_line[8]
 	void compute_external_lines(
 			std::vector<long int> &External_lines,
 			int verbose_level);
@@ -423,7 +433,7 @@ public:
 // projective_space_basic.cpp
 // #############################################################################
 
-//! basic functions for projective geometries over a finite field such as ranking and unranking
+//! basic functions for projective geometries over a finite field such as ranking and unranking. This class is available through the finite_field class.
 
 class projective_space_basic {
 

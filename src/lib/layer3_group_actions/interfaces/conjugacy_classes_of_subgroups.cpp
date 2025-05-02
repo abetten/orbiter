@@ -167,14 +167,21 @@ void conjugacy_classes_of_subgroups::create_classes(
 
 	int idx;
 
+
 	for (idx = 0; idx < nb_classes; idx++) {
+
+		if (f_v) {
+			cout << "conjugacy_classes_of_subgroups::create_classes class " << idx << " / " << nb_classes << endl;
+		}
+
+
 		Conjugacy_class[idx] = NEW_OBJECT(groups::conjugacy_class_of_subgroups);
 
 		Conjugacy_class[idx]->init(
 				this,
 				idx,
 				group_G,
-				verbose_level - 1);
+				verbose_level - 3);
 
 	}
 
@@ -265,13 +272,33 @@ void conjugacy_classes_of_subgroups::report(
 			groups::group_theory_global Group_theory_global;
 			std::string s;
 
-			s = Group_theory_global.order_invariant(
-					A, Conjugacy_class[i]->gens,
-					verbose_level);
+			if (f_v) {
+				cout << "conjugacy_classes_of_subgroups::report "
+						"class " << i << " / " << nb_classes
+						<< " before Group_theory_global.order_invariant" << endl;
+			}
 
+
+			if (Subgroup_order[i] < 3000) {
+
+
+				s = Group_theory_global.order_invariant(
+						A, Conjugacy_class[i]->gens,
+						verbose_level - 5);
+			}
+			else {
+				s = "-1";
+			}
 			//ost << "The order invariant is ";
 			//ost << "$" << s << "$";
 			//ost << "\\\\" << endl;
+
+			if (f_v) {
+				cout << "conjugacy_classes_of_subgroups::report "
+						"class " << i << " / " << nb_classes
+						<< " after Group_theory_global.order_invariant" << endl;
+			}
+
 
 			Table[i * nb_cols + 3] = "$" + s + "$";
 
@@ -440,7 +467,13 @@ void conjugacy_classes_of_subgroups::report_classes(
 
 		ost << "\\section{Conjugacy class of subgroups " << idx << " / " << nb_classes << "}" << endl;
 
-		Conjugacy_class[idx]->report_single_class(ost, verbose_level - 1);
+		if (f_v) {
+			cout << "conjugacy_classes_of_subgroups::report_classes class " << idx << " / " << nb_classes << endl;
+		}
+
+
+		Conjugacy_class[idx]->report_single_class(
+				ost, verbose_level - 1);
 
 	}
 

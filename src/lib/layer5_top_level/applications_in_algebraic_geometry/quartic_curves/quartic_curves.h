@@ -332,6 +332,7 @@ public:
 			applications_in_algebraic_geometry::quartic_curves::quartic_curve_create **QC,
 			int nb_quartic_curves,
 			std::string *&Table, int &nb_cols,
+			std::string &headings,
 			int verbose_level);
 
 };

@@ -351,12 +351,16 @@ void syntax_tree_node::print_expression(
 				}
 			}
 			else {
+				cout << "syntax_tree_node::print_expression neither mult nor plus" << endl;
+				exit(1);
+#if 0
 				if (f_has_minus) {
 					ost << "-";
 				}
 				for (i = 0; i < nb_nodes; i++) {
 					Nodes[i]->print_expression(ost);
 				}
+#endif
 			}
 			ost << ")";
 		}

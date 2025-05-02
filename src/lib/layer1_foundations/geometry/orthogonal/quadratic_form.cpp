@@ -316,7 +316,30 @@ void quadratic_form::make_Gram_matrix(
 	}
 }
 
+void quadratic_form::perp_of_point(int *v, int *Perp, int verbose_level)
+// Perp[(n - 1) * n]
+{
+	int f_v = (verbose_level >= 1);
 
+	if (f_v) {
+		cout << "quadratic_form::perp_of_point" << endl;
+	}
+	int *B;
+
+	B = NEW_int(n * n);
+
+	Int_vec_copy(v, B, n);
+
+	F->Linear_algebra->perp(
+			n, 1 /* k */, B /* A */, Gram_matrix,
+			0 /* verbose_level */);
+
+	Int_vec_copy(B + n, Perp, (n - 1) * n);
+
+	if (f_v) {
+		cout << "quadratic_form::perp_of_point done" << endl;
+	}
+}
 
 int quadratic_form::evaluate_quadratic_form(
 		int *v, int stride)

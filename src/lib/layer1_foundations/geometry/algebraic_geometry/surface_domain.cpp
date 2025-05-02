@@ -407,6 +407,7 @@ void surface_domain::create_starter_configuration(
 	other::data_structures::set_of_sets *line_neighbors,
 	long int *Lines, long int *S,
 	int verbose_level)
+// output S[6]
 {
 	int f_v = (verbose_level >= 1);
 	int subset[5];
@@ -419,14 +420,16 @@ void surface_domain::create_starter_configuration(
 	}
 	//nCk = int_n_choose_k(line_neighbors->Set_size[line_idx], 5);
 
-	Combi.unrank_k_subset(subset_idx, subset,
-		line_neighbors->Set_size[line_idx], 5);
+	Combi.unrank_k_subset(
+			subset_idx, subset,
+			line_neighbors->Set_size[line_idx], 5);
 
 	for (h = 0; h < 5; h++) {
 		subset2[h] = line_neighbors->Sets[line_idx][subset[h]];
 		S[h] = Lines[subset2[h]];
 	}
 	S[5] = Lines[line_idx];
+
 	if (f_v) {
 		cout << "surface_domain::create_starter_configuration done" << endl;
 	}
@@ -810,6 +813,13 @@ int surface_domain::create_surface_by_symbolic_object(
 	}
 	// build a surface_object and compute properties of the surface:
 
+	if (f_v) {
+		cout << "surface_domain::create_surface_by_symbolic_object "
+				"coeffs=" << endl;
+		Int_vec_print(cout, coeffs, nb_coeffs);
+		cout << endl;
+	}
+
 
 	if (Int_vec_is_zero(coeffs, nb_coeffs)) {
 		return false;
@@ -880,7 +890,7 @@ void surface_domain::create_surface_by_coefficient_vector(
 	SO->init_equation(
 			this, coeffs20,
 			label_txt, label_tex,
-			verbose_level);
+			verbose_level - 2);
 	if (f_v) {
 		cout << "surface_domain::create_surface_by_coefficient_vector "
 				"after SO->init_equation" << endl;
@@ -908,7 +918,7 @@ void surface_domain::create_surface_by_coefficient_vector(
 			pick_double_six(
 					select_double_six_string[i],
 					SO->Variety_object->Line_sets->Sets[0],
-					verbose_level);
+					verbose_level - 2);
 
 
 		}

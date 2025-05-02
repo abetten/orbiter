@@ -429,7 +429,8 @@ void combinatorial_object_activity::perform_activity_combo(
 
 	if (f_v) {
 		cout << "combinatorial_object_activity::perform_activity_combo" << endl;
-		cout << "combinatorial_object_activity::perform_activity_combo verbose_level=" << verbose_level << endl;
+		cout << "combinatorial_object_activity::perform_activity_combo "
+				"verbose_level=" << verbose_level << endl;
 	}
 
 	if (Descr->f_canonical_form_PG) {
@@ -494,7 +495,8 @@ void combinatorial_object_activity::perform_activity_combo(
 
 		if (f_v) {
 			cout << "combinatorial_object_activity::perform_activity "
-					"f_get_combo_with_group, iso type idx = " << Descr->get_combo_with_group_idx << endl;
+					"f_get_combo_with_group, iso type idx = "
+					<< Descr->get_combo_with_group_idx << endl;
 		}
 
 
@@ -514,7 +516,8 @@ void combinatorial_object_activity::perform_activity_combo(
 
 
 
-		output_label = Combo->IS->Descr->label_txt + "_object_" + std::to_string(Descr->get_combo_with_group_idx);
+		output_label = Combo->IS->Descr->label_txt + "_object_"
+				+ std::to_string(Descr->get_combo_with_group_idx);
 
 
 		if (f_v) {
@@ -564,7 +567,8 @@ void combinatorial_object_activity::perform_activity_combo(
 
 		other::graphics::draw_incidence_structure_description *Draw_incidence_structure_description;
 
-		Draw_incidence_structure_description = Get_draw_incidence_structure_options(Descr->draw_incidence_matrices_options_label);
+		Draw_incidence_structure_description =
+				Get_draw_incidence_structure_options(Descr->draw_incidence_matrices_options_label);
 
 		Combo->draw_incidence_matrices(
 				Descr->draw_incidence_matrices_prefix,

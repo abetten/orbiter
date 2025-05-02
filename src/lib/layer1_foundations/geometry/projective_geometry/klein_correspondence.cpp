@@ -108,7 +108,8 @@ void klein_correspondence::init(
 		cout << "klein_correspondence::init "
 				"before P3->projective_space_init" << endl;
 	}
-	P3->projective_space_init(3, F,
+	P3->projective_space_init(
+			3, F,
 		false /* f_init_incidence_structure */, 
 		verbose_level - 2);
 	if (f_v) {
@@ -122,7 +123,8 @@ void klein_correspondence::init(
 		cout << "klein_correspondence::init "
 				"before P5->projective_space_init" << endl;
 	}
-	P5->projective_space_init(5, F,
+	P5->projective_space_init(
+			5, F,
 		false /* f_init_incidence_structure */, 
 		verbose_level - 2);
 	if (f_v) {
@@ -203,7 +205,8 @@ void klein_correspondence::init(
 	for (i = 0; i < P3->N_lines; i++) {
 
 		if ((i % N100) == 0) {
-			cout << "klein_correspondence::init at " << i << " which is " << (double) i / (double) N100 << "%" << endl;
+			cout << "klein_correspondence::init "
+					"at " << i << " which is " << (double) i / (double) N100 << "%" << endl;
 		}
 		P3->unrank_line(basis_line, i);
 		x4 = basis_line;
@@ -386,10 +389,12 @@ void klein_correspondence::plane_intersections(
 	}
 	pts = NEW_lint(nb_lines);
 	
-	P3->Subspaces->Grass_lines->klein_correspondence(P3, //P5,
+	P3->Subspaces->Grass_lines->klein_correspondence(
+			P3,
 		lines_in_PG3, nb_lines, pts, 0/*verbose_level*/);
 
-	P5->plane_intersection_type_fast(Gr63, pts, nb_lines, 
+	P5->plane_intersection_type_fast(
+			Gr63, pts, nb_lines,
 		R, Pts_on_plane, nb_pts_on_plane, nb_planes, 
 		verbose_level - 3);
 
@@ -454,6 +459,7 @@ long int klein_correspondence::line_to_point_on_quadric(
 
 void klein_correspondence::line_to_Pluecker(
 		long int line_rk, int *v6, int verbose_level)
+// v6[0] = p12, v6[1] = p34, v6[2] = p13, v6[3] = p42, v6[4] = p14, v6[5] = p23,
 {
 	int f_v = (verbose_level >= 1);
 
@@ -472,10 +478,13 @@ void klein_correspondence::line_to_Pluecker(
 	v6[3] = F->Linear_algebra->Pluecker_42(x4, y4);
 	v6[4] = F->Linear_algebra->Pluecker_14(x4, y4);
 	v6[5] = F->Linear_algebra->Pluecker_23(x4, y4);
+
+	// test the hyperbolic quadratic form:
 	a = F->mult(v6[0], v6[1]);
 	b = F->mult(v6[2], v6[3]);
 	c = F->mult(v6[4], v6[5]);
 	val = F->add3(a, b, c);
+
 	//cout << "a=" << a << " b=" << b << " c=" << c << endl;
 	//cout << "val=" << val << endl;
 	if (val) {
@@ -508,14 +517,31 @@ long int klein_correspondence::point_on_quadric_to_line(
 		cout << endl;
 	}
 
+	if (f_v) {
+		cout << "klein_correspondence::point_on_quadric_to_line "
+				"before Pluecker_to_line" << endl;
+	}
+	// v6[0] = p12, v6[1] = p34, v6[2] = p13,
+	// v6[3] = -p24 = p42, v6[4] = p14, v6[5] = p23.
 	Pluecker_to_line(v6, basis_line, verbose_level);
+	if (f_v) {
+		cout << "klein_correspondence::point_on_quadric_to_line "
+				"after Pluecker_to_line" << endl;
+	}
+
+	if (f_v) {
+		cout << "klein_correspondence::point_on_quadric_to_line basis_line=" << endl;
+		Int_matrix_print(basis_line, 2, 4);
+	}
 
 	line_rk = P3->rank_line(basis_line);
+
 	if (f_v) {
 		cout << "klein_correspondence::point_on_quadric_to_line "
 				"point_rk=" << point_rk
 				<< " line_rk=" << line_rk << " done" << endl;
 	}
+
 	if (line_rk >= P3->Subspaces->N_lines) {
 		cout << "klein_correspondence::point_on_quadric_to_line "
 				"line_rk >= P3->N_lines" << endl;
@@ -530,6 +556,12 @@ long int klein_correspondence::point_on_quadric_to_line(
 
 void klein_correspondence::Pluecker_to_line(
 		int *v6, int *basis_line, int verbose_level)
+
+// in:
+// v6[0] = p12, v6[1] = p34, v6[2] = p13,
+// v6[3] = -p24 = p42, v6[4] = p14, v6[5] = p23.
+// out:
+// basis_line[8]
 {
 	//verbose_level = 1;
 	int f_v = (verbose_level >= 1);
@@ -554,9 +586,17 @@ void klein_correspondence::Pluecker_to_line(
 	v[4] = p24;
 	v[5] = p34;
 
+	if (f_v) {
+		cout << "klein_correspondence::Pluecker_to_line "
+				"before exterior_square_to_line" << endl;
+	}
 	exterior_square_to_line(
 			v,
 			basis_line, verbose_level);
+	if (f_v) {
+		cout << "klein_correspondence::Pluecker_to_line "
+				"before exterior_square_to_line" << endl;
+	}
 
 
 	if (f_v) {
@@ -592,6 +632,11 @@ long int klein_correspondence::Pluecker_to_line_rk(
 void klein_correspondence::exterior_square_to_line(
 		int *v, int *basis_line,
 		int verbose_level)
+// in:
+// v[0] = p12, v[1] = p13, v[2] = p14,
+// v[3] = p23, v[4] = p24, v[5] = p25,
+// out:
+// basis_line[8]
 {
 	//verbose_level = 1;
 	int f_v = (verbose_level >= 1);
@@ -603,7 +648,9 @@ void klein_correspondence::exterior_square_to_line(
 		cout << "klein_correspondence::exterior_square_to_line" << endl;
 	}
 
-#if 0
+#if 1
+	// ToDo this was if 0 and the other branch was one. Why?
+
 	p12 = v[0];
 	p13 = v[1];
 	p14 = v[2];
@@ -618,6 +665,16 @@ void klein_correspondence::exterior_square_to_line(
 	p14 = v[4];
 	p23 = v[5];
 #endif
+	if (f_v) {
+		cout << "klein_correspondence::exterior_square_to_line"
+				<< " p12 = " << p12
+				<< " p34 = " << p34
+				<< " p13 = " << p13
+				<< " p24 = " << p24
+				<< " p14 = " << p14
+				<< " p23 = " << p23
+				<< endl;
+	}
 
 
 	Int_vec_zero(basis_line, 8);

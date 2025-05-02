@@ -44,7 +44,8 @@ syntax_tree::~syntax_tree()
 
 void syntax_tree::init(
 		algebra::field_theory::finite_field *Fq,
-		int f_managed_variables, std::string &managed_variables_text,
+		int f_managed_variables,
+		std::string &managed_variables_text,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -162,6 +163,106 @@ void syntax_tree::init_monopoly(
 	}
 }
 
+
+
+void syntax_tree::simplify(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "syntax_tree::simplify" << endl;
+	}
+
+
+#if 0
+	if (Fq) {
+		int q;
+
+		q = Fq->q;
+		//qm1 = q - 1;
+
+
+		if (f_v) {
+			cout << "syntax_tree::simplify "
+					"q = " << q << endl;
+		}
+
+
+		if (f_v) {
+			cout << "syntax_tree::simplify "
+					"before Root->simplify_exponents_mod_qm1" << endl;
+		}
+
+		Root->simplify_exponents_mod_qm1(q, verbose_level);
+
+		if (f_v) {
+			cout << "syntax_tree::simplify "
+					"after Root->simplify_exponents_mod_qm1" << endl;
+		}
+#if 0
+		if (f_v) {
+			cout << "formula::simplify "
+					"after tree->Root->simplify_exponents_mod_qm1 tree = ";
+			tree->print_easy(cout);
+		}
+#endif
+
+	}
+	else {
+		if (f_v) {
+			cout << "syntax_tree::simplify "
+					"Fq is not available" << endl;
+		}
+
+	}
+#endif
+
+	if (f_v) {
+		cout << "syntax_tree::simplify "
+				"before Root->simplify" << endl;
+	}
+
+	Root->simplify(
+			verbose_level);
+
+	if (f_v) {
+		cout << "syntax_tree::simplify "
+				"after Root->simplify" << endl;
+	}
+
+	if (f_v) {
+		cout << "syntax_tree::simplify done" << endl;
+	}
+}
+
+void syntax_tree::collect_terms_and_coefficients(
+		other::data_structures::int_matrix *&I, int *&Coeff,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "syntax_tree::collect_terms_and_coefficients" << endl;
+	}
+
+	if (f_v) {
+		cout << "syntax_tree::collect_terms_and_coefficients "
+				"before Root->collect_terms_and_coefficients" << endl;
+	}
+	Root->collect_terms_and_coefficients(
+			I, Coeff,
+			verbose_level);
+	if (f_v) {
+		cout << "syntax_tree::collect_terms_and_coefficients "
+				"after Root->collect_terms_and_coefficients" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "syntax_tree::collect_terms_and_coefficients done" << endl;
+	}
+}
 
 
 
@@ -399,6 +500,7 @@ void syntax_tree::copy_to(
 		cout << "syntax_tree::copy_to "
 				"before Root->copy_to" << endl;
 	}
+
 	Root->copy_to(
 			Output_tree,
 			Output_root_node,
@@ -411,34 +513,6 @@ void syntax_tree::copy_to(
 
 	if (f_v) {
 		cout << "syntax_tree::copy_to done" << endl;
-	}
-}
-
-void syntax_tree::simplify(
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "syntax_tree::simplify" << endl;
-	}
-
-
-	if (f_v) {
-		cout << "syntax_tree::simplify "
-				"before Root->simplify" << endl;
-	}
-
-	Root->simplify(
-			verbose_level);
-
-	if (f_v) {
-		cout << "syntax_tree::simplify "
-				"after Root->simplify" << endl;
-	}
-
-	if (f_v) {
-		cout << "syntax_tree::simplify done" << endl;
 	}
 }
 
@@ -900,7 +974,8 @@ void syntax_tree::export_tree(
 }
 
 void syntax_tree::latex_tree_split(
-		std::string &name, int split_level, int split_mod,
+		std::string &name,
+		int split_level, int split_mod,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

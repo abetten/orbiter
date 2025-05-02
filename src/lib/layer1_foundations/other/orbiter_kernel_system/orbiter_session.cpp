@@ -815,18 +815,102 @@ vector_builder *orbiter_session::get_object_of_type_vector(
 
 }
 
-algebra::expression_parser::symbolic_object_builder *orbiter_session::get_object_of_type_symbolic_object(
+int orbiter_session::is_text_available(
 		std::string &label)
 {
 	int idx;
 
 	idx = Orbiter_symbol_table->find_symbol(label);
 	if (idx == -1) {
-		cout << "orbiter_session::get_object_of_type_symbolic_object cannot find symbol " << label << endl;
+		//cout << "orbiter_session::is_text_available cannot find symbol " << label << endl;
+		return false;
+	}
+	if (get_object_type(idx) != t_text) {
+		//cout << "orbiter_session::get_text object type != t_text" << endl;
+		return false;
+	}
+
+	text_builder *TB;
+
+	TB = (text_builder *) get_object(idx);
+	if (!TB->f_has_text) {
+		cout << "orbiter_session::get_text text is not available" << endl;
+		exit(1);
+	}
+	return true;
+
+
+}
+
+std::string orbiter_session::get_text(
+		std::string &label)
+{
+	int idx;
+
+	idx = Orbiter_symbol_table->find_symbol(label);
+	if (idx == -1) {
+		cout << "orbiter_session::get_text cannot find symbol " << label << endl;
+		exit(1);
+	}
+	if (get_object_type(idx) != t_text) {
+		cout << "orbiter_session::get_text object type != t_text" << endl;
+		exit(1);
+	}
+
+	text_builder *TB;
+
+	TB = (text_builder *) get_object(idx);
+	if (!TB->f_has_text) {
+		cout << "orbiter_session::get_text text is not available" << endl;
+		exit(1);
+	}
+	return TB->text;
+
+
+}
+
+std::string orbiter_session::get_string(
+		std::string &label)
+{
+	int idx;
+
+	idx = Orbiter_symbol_table->find_symbol(label);
+	if (idx == -1) {
+		return label;
+	}
+	if (get_object_type(idx) != t_text) {
+		cout << "orbiter_session::get_string object type != t_text" << endl;
+		exit(1);
+	}
+
+	text_builder *TB;
+
+	TB = (text_builder *) get_object(idx);
+	if (!TB->f_has_text) {
+		cout << "orbiter_session::get_string text is not available" << endl;
+		exit(1);
+	}
+	return TB->text;
+
+
+}
+
+
+algebra::expression_parser::symbolic_object_builder
+	*orbiter_session::get_object_of_type_symbolic_object(
+		std::string &label)
+{
+	int idx;
+
+	idx = Orbiter_symbol_table->find_symbol(label);
+	if (idx == -1) {
+		cout << "orbiter_session::get_object_of_type_symbolic_object "
+				"cannot find symbol " << label << endl;
 		exit(1);
 	}
 	if (get_object_type(idx) != t_symbolic_object) {
-		cout << "orbiter_session::get_object_of_type_symbolic_object object type != t_symbolic_object" << endl;
+		cout << "orbiter_session::get_object_of_type_symbolic_object "
+				"object type != t_symbolic_object" << endl;
 		exit(1);
 	}
 	return (algebra::expression_parser::symbolic_object_builder *) get_object(idx);
@@ -1060,6 +1144,31 @@ void *orbiter_session::get_isomorph_arguments_opaque(
 
 	return get_object(idx);
 }
+
+
+void *orbiter_session::get_classify_cubic_surfaces_opaque(
+		std::string &label)
+{
+	int idx;
+
+	idx = find_symbol(label);
+	if (idx == -1) {
+		cout << "orbiter_session::get_classify_cubic_surfaces_opaque "
+				"cannot find symbol " << label << endl;
+		cout << "symbol table:" << endl;
+		print_symbol_table();
+		exit(1);
+	}
+	if (get_object_type(idx) != t_classify_cubic_surfaces) {
+		cout << "orbiter_session::get_classify_cubic_surfaces_opaque "
+				"object type != t_classify_cubic_surfaces" << endl;
+		exit(1);
+	}
+
+
+	return get_object(idx);
+}
+
 
 
 

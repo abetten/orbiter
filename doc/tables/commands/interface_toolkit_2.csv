@@ -2,7 +2,7 @@ ROW,C1,C2,C3
 0,"tab:misc:2",,
 1,"Miscellaneous Orbiter Commands (Part 2)",,
 1,"\verb'-csv_file_join' "," fname n fname-label-pair-list  "," Joins csv file fname based on a list of fname-label pairs of length $n$. "
-1,"\verb'-csv_file_concatenate' "," fname-out f1 f2 ... ","Join csv files f1, f2, ... The output is written to fname-out. "
+1,"\verb'-csv_file_concatenate' "," fname-out n f1 f2 ... fn ","Join the n csv files f1, f2, ..., fn. The output is written to fname-out. "
 1,"\verb'-csv_file_concatenate_from_mask' "," N fname-mask fname-out ","Join csv files. The input files arise from fname-mask with all values $i=0,\ldots,N-1.$ The output is written to fname-out. "
 1,"\verb'-csv_file_extract_column_to_txt' "," fname  col-label "," "
 1,"\verb'-csv_file_latex' "," header fname   ","Produces a latex table from the given csv-file. The binary variable header determines whether a header is produced. "

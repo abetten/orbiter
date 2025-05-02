@@ -1829,6 +1829,8 @@ public:
 			int verbose_level);
 	void report_decomposition_schemes(
 			std::ostream &ost,
+			std::string &label_scheme_TDO,
+			std::string &label_scheme_TDA,
 			int verbose_level);
 
 

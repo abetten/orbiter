@@ -33,6 +33,8 @@ MODULES = \
 	tally_lint.o \
 	tally_vector_data.o \
 	tally.o \
+	text_builder_description.o \
+	text_builder.o \
 	vector_builder_description.o \
 	vector_builder.o \
 	vector_hashing.o 

@@ -25,10 +25,14 @@ variety_activity_description::variety_activity_description()
 
 	f_compute_group = false;
 
+	f_compute_set_stabilizer = false;
+
 	f_nauty_control = false;
 	Nauty_interface_control = NULL;
 
 	f_report = false;
+
+	f_export = false;
 
 	f_classify = false;
 
@@ -68,6 +72,12 @@ int variety_activity_description::read_arguments(
 				cout << "-compute_group " << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-compute_set_stabilizer") == 0) {
+			f_compute_set_stabilizer = true;
+			if (f_v) {
+				cout << "-compute_set_stabilizer " << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-nauty_control") == 0) {
 			if (f_v) {
 				cout << "-nauty_control " << endl;
@@ -92,6 +102,12 @@ int variety_activity_description::read_arguments(
 			f_report = true;
 			if (f_v) {
 				cout << "-report " << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-export") == 0) {
+			f_export = true;
+			if (f_v) {
+				cout << "-export " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-classify") == 0) {
@@ -146,12 +162,18 @@ void variety_activity_description::print()
 	if (f_compute_group) {
 		cout << "-compute_group " << endl;
 	}
+	if (f_compute_set_stabilizer) {
+		cout << "-compute_set_stabilizer " << endl;
+	}
 	if (f_nauty_control) {
 		cout << "-nauty_control " << endl;
 		Nauty_interface_control->print();
 	}
 	if (f_report) {
 		cout << "-report " << endl;
+	}
+	if (f_export) {
+		cout << "-export " << endl;
 	}
 	if (f_classify) {
 		cout << "-classify " << endl;

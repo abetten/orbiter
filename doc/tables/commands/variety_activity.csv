@@ -1,9 +1,11 @@
 ROW,C1,C2,C3
 0,"tab:variety:activities",,
 1,"Variety Activities",,
-1,"\verb'-compute_group' ","  "," Compute the group of the variety. "
+1,"\verb'-compute_group' ","  "," Compute the group of the variety (i.e., the stabilizer of the equation). "
+1,"\verb'-compute_set_stabilizer' ","  "," Compute the set stabilizer of the variety. This group contains the stabilizer of the equation as a subgroup. "
 1,"\verb'-nauty_control' ","  options "," Nauty options, see Table~\ref{tab:nauty:control}.  "
 1,"\verb'-report' ","  "," Produce a report of the variety. "
+1,"\verb'-export' ","  "," Export data about th variety to a csv file. "
 1,"\verb'-singular_points' ","  "," Compute the singular points of the variety. "
 1,"\verb'-output_fname_base' "," fname "," Set output filename base. "
 END

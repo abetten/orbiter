@@ -81,27 +81,58 @@ void variety_with_TDO_and_TDA::init_and_compute_tactical_decompositions(
 
 	variety_with_TDO_and_TDA::PA = PA;
 	variety_with_TDO_and_TDA::Variety_object = Variety_object;
+	variety_with_TDO_and_TDA::Aut_gens = Aut_gens;
 
 	A_on_points = PA->A;
 	A_on_lines = PA->A_on_lines;
 
-	variety_with_TDO_and_TDA::Aut_gens = Aut_gens;
+	if (Variety_object->Point_sets == NULL) {
+		cout << "variety_with_TDO_and_TDA::init_and_compute_tactical_decompositions "
+				"Variety_object->Point_sets == NULL" << endl;
+		exit(1);
+	}
 
-	if (f_v) {
+
+	if (Variety_object->Line_sets == NULL) {
 		cout << "variety_with_TDO_and_TDA::init_and_compute_tactical_decompositions "
-				"before Tactical_decomposition_domain.compute_TDO_decomposition_of_projective_space" << endl;
+				"Variety_object->Line_sets == NULL" << endl;
+		if (f_v) {
+			cout << "variety_with_TDO_and_TDA::init_and_compute_tactical_decompositions "
+					"before Tactical_decomposition_domain.compute_TDO_decomposition_of_projective_space" << endl;
+		}
+		Decomposition_scheme_TDO = Tactical_decomposition_domain.compute_TDO_decomposition_of_projective_space(
+				PA->P,
+				Variety_object->Point_sets->Sets[0],
+				Variety_object->Point_sets->Set_size[0],
+				NULL,
+				0,
+				verbose_level);
+		if (f_v) {
+			cout << "variety_with_TDO_and_TDA::init_and_compute_tactical_decompositions "
+					"after Tactical_decomposition_domain.compute_TDO_decomposition_of_projective_space" << endl;
+		}
+
 	}
-	Decomposition_scheme_TDO = Tactical_decomposition_domain.compute_TDO_decomposition_of_projective_space(
-			PA->P,
-			Variety_object->Point_sets->Sets[0],
-			Variety_object->Point_sets->Set_size[0],
-			Variety_object->Line_sets->Sets[0],
-			Variety_object->Line_sets->Set_size[0],
-			verbose_level);
-	if (f_v) {
-		cout << "variety_with_TDO_and_TDA::init_and_compute_tactical_decompositions "
-				"after Tactical_decomposition_domain.compute_TDO_decomposition_of_projective_space" << endl;
+	else {
+		if (f_v) {
+			cout << "variety_with_TDO_and_TDA::init_and_compute_tactical_decompositions "
+					"before Tactical_decomposition_domain.compute_TDO_decomposition_of_projective_space" << endl;
+		}
+		Decomposition_scheme_TDO = Tactical_decomposition_domain.compute_TDO_decomposition_of_projective_space(
+				PA->P,
+				Variety_object->Point_sets->Sets[0],
+				Variety_object->Point_sets->Set_size[0],
+				Variety_object->Line_sets->Sets[0],
+				Variety_object->Line_sets->Set_size[0],
+				verbose_level);
+		if (f_v) {
+			cout << "variety_with_TDO_and_TDA::init_and_compute_tactical_decompositions "
+					"after Tactical_decomposition_domain.compute_TDO_decomposition_of_projective_space" << endl;
+		}
+
+
 	}
+
 
 
 	if (Decomposition_scheme_TDO == NULL) {
@@ -189,6 +220,8 @@ void variety_with_TDO_and_TDA::init_and_compute_tactical_decompositions(
 
 void variety_with_TDO_and_TDA::report_decomposition_schemes(
 		std::ostream &ost,
+		std::string &label_scheme_TDO,
+		std::string &label_scheme_TDA,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -199,9 +232,8 @@ void variety_with_TDO_and_TDA::report_decomposition_schemes(
 
 	int upper_bound_on_size_for_printing = 100;
 
-	std::string label_scheme;
-
-	label_scheme = "TDO";
+	//std::string label_scheme;
+	//label_scheme = "TDO";
 
 
 	if (Decomposition_scheme_TDO == NULL) {
@@ -215,7 +247,7 @@ void variety_with_TDO_and_TDA::report_decomposition_schemes(
 	}
 	Decomposition_scheme_TDO->report_latex_with_external_files(
 			ost,
-			label_scheme,
+			label_scheme_TDO,
 			Variety_object->label_txt,
 			upper_bound_on_size_for_printing,
 			verbose_level - 2);
@@ -230,7 +262,7 @@ void variety_with_TDO_and_TDA::report_decomposition_schemes(
 				"before Decomposition_scheme_TDO->export_csv" << endl;
 	}
 	Decomposition_scheme_TDO->export_csv(
-			label_scheme,
+			label_scheme_TDO,
 			Variety_object->label_txt,
 			verbose_level - 2);
 	if (f_v) {
@@ -245,7 +277,7 @@ void variety_with_TDO_and_TDA::report_decomposition_schemes(
 		return;
 	}
 
-	label_scheme = "TDA";
+	//label_scheme = "TDA";
 
 	if (f_v) {
 		cout << "variety_with_TDO_and_TDA::report_decomposition_schemes "
@@ -253,7 +285,7 @@ void variety_with_TDO_and_TDA::report_decomposition_schemes(
 	}
 	Decomposition_scheme_TDA->report_latex_with_external_files(
 			ost,
-			label_scheme,
+			label_scheme_TDA,
 			Variety_object->label_txt,
 			upper_bound_on_size_for_printing,
 			verbose_level - 2);
@@ -268,7 +300,7 @@ void variety_with_TDO_and_TDA::report_decomposition_schemes(
 				"before Decomposition_scheme_TDA->export_csv" << endl;
 	}
 	Decomposition_scheme_TDA->export_csv(
-			label_scheme,
+			label_scheme_TDA,
 			Variety_object->label_txt,
 			verbose_level - 2);
 	if (f_v) {
@@ -279,7 +311,7 @@ void variety_with_TDO_and_TDA::report_decomposition_schemes(
 
 	ost << "TDO classes:\\\\" << endl;
 
-	label_scheme = "TDO";
+	//label_scheme = "TDO";
 
 	if (f_v) {
 		cout << "variety_with_TDO_and_TDA::report_decomposition_schemes "
@@ -287,7 +319,7 @@ void variety_with_TDO_and_TDA::report_decomposition_schemes(
 	}
 	Decomposition_scheme_TDO->report_classes_with_external_files(
 			ost,
-			label_scheme,
+			label_scheme_TDO,
 			Variety_object->label_txt,
 			verbose_level - 2);
 	if (f_v) {
@@ -297,7 +329,7 @@ void variety_with_TDO_and_TDA::report_decomposition_schemes(
 
 	ost << "TDA classes:\\\\" << endl;
 
-	label_scheme = "TDA";
+	//label_scheme = "TDA";
 
 	if (f_v) {
 		cout << "variety_with_TDO_and_TDA::report_decomposition_schemes "
@@ -305,7 +337,7 @@ void variety_with_TDO_and_TDA::report_decomposition_schemes(
 	}
 	Decomposition_scheme_TDA->report_classes_with_external_files(
 			ost,
-			label_scheme,
+			label_scheme_TDA,
 			Variety_object->label_txt,
 			verbose_level - 2);
 	if (f_v) {

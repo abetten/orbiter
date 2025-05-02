@@ -92,13 +92,13 @@ void formula_vector::init_from_text(
 
 	ST.parse_comma_separated_list(
 			text, input,
-			verbose_level);
+			0 /*verbose_level*/);
 
 	if (f_v) {
 		cout << "formula_vector::init_from_text "
 				"the input has size " << input.size() << endl;
 		cout << "formula_vector::init_from_text "
-				"the input is:" << endl;
+				"after parsing, the input is:" << endl;
 		int i;
 		for (i = 0; i < input.size(); i++) {
 			cout << i << " : " << input[i] << endl;
@@ -110,7 +110,7 @@ void formula_vector::init_from_text(
 			label_tex,
 			f_managed_variables,
 			managed_variables_text,
-			input.size(), verbose_level);
+			input.size(), verbose_level - 2);
 
 	if (f_v) {
 		cout << "formula_vector::init_from_text "
@@ -1094,11 +1094,19 @@ void formula_vector::simplify(
 		std::string &label_txt,
 		std::string &label_tex,
 		int verbose_level)
+// A is the old formula_vector
+// this is empty
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "formula_vector::simplify" << endl;
+		cout << "formula_vector::simplify q = " << Fq->q << endl;
+	}
+
+
+	if (f_v) {
+		cout << "formula_vector::simplify before init_and_allocate" << endl;
 	}
 	init_and_allocate(
 			label_txt,
@@ -1106,6 +1114,9 @@ void formula_vector::simplify(
 			A->f_has_managed_variables,
 			A->managed_variables_text,
 			A->len, verbose_level);
+	if (f_v) {
+		cout << "formula_vector::simplify after init_and_allocate" << endl;
+	}
 
 
 	f_matrix = A->f_matrix;
@@ -1113,6 +1124,10 @@ void formula_vector::simplify(
 	nb_cols = A->nb_cols;
 
 	int i;
+
+	if (f_v) {
+		cout << "formula_vector::simplify number of terms " << A->len << endl;
+	}
 
 	for (i = 0; i < A->len; i++) {
 		if (f_v) {
@@ -1432,6 +1447,45 @@ void formula_vector::characteristic_polynomial(
 		cout << "formula_vector::characteristic_polynomial done" << endl;
 	}
 }
+
+
+void formula_vector::collect_terms_and_coefficients(
+		other::data_structures::int_matrix *&I, int *&Coeff,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "formula_vector::collect_terms_and_coefficients" << endl;
+	}
+
+
+	if (len != 1) {
+		cout << "formula_vector::collect_terms_and_coefficients len != 1" << endl;
+		exit(1);
+	}
+
+	if (f_v) {
+		cout << "formula_vector::collect_terms_and_coefficients "
+				"node " << 0 << " / " << len
+				<< " before V[0].collect_terms_and_coefficients" << endl;
+	}
+
+
+	V[0].collect_terms_and_coefficients(I, Coeff, verbose_level);
+
+	if (f_v) {
+		cout << "formula_vector::collect_terms_and_coefficients "
+				"node " << 0 << " / " << len
+				<< " after V[0].collect_terms_and_coefficients" << endl;
+	}
+
+	if (f_v) {
+		cout << "formula_vector::collect_terms_and_coefficients done" << endl;
+	}
+
+}
+
 
 void formula_vector::determinant(
 		formula_vector *A,

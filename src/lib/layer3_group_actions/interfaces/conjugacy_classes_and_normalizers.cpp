@@ -206,6 +206,11 @@ void conjugacy_classes_and_normalizers::create_classes(
 	for (idx = 0; idx < nb_classes; idx++) {
 		Conjugacy_class[idx] = NEW_OBJECT(groups::conjugacy_class_of_elements);
 
+
+		if (f_v) {
+			cout << "conjugacy_classes_and_normalizers::create_classes idx=" << idx << " / " << nb_classes << endl;
+		}
+
 		Conjugacy_class[idx]->init(
 				this,
 				idx,
@@ -692,7 +697,8 @@ void conjugacy_classes_and_normalizers::export_csv(
 		cout << "conjugacy_classes_and_normalizers::export_csv "
 				"before Fio.Csv_file_support->write_table_of_strings" << endl;
 	}
-	Fio.Csv_file_support->write_table_of_strings(fname_csv,
+	Fio.Csv_file_support->write_table_of_strings(
+			fname_csv,
 			nb_classes, nb_cols, Table,
 			headings,
 			verbose_level);

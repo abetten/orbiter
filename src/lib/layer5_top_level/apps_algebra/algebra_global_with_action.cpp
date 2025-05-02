@@ -1923,7 +1923,7 @@ void algebra_global_with_action::get_classses_expanded(
 				"before AG->get_conjugacy_classes_of_elements" << endl;
 	}
 	Any_group->get_conjugacy_classes_of_elements(
-			Sims, class_data, verbose_level);
+			Sims, class_data, verbose_level - 2);
 	if (f_v) {
 		cout << "algebra_global_with_action::get_classses_expanded "
 				"after AG->get_conjugacy_classes_of_elements" << endl;
@@ -1937,7 +1937,7 @@ void algebra_global_with_action::get_classses_expanded(
 	class_data->get_representatives(
 			Sims,
 			Reps,
-			verbose_level);
+			verbose_level - 2);
 	if (f_v) {
 		cout << "algebra_global_with_action::get_classses_expanded "
 				"after class_data->get_representatives" << endl;

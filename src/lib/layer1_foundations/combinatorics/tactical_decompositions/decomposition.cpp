@@ -125,6 +125,7 @@ void decomposition::init_decomposition_of_projective_space(
 		long int *points, int nb_points,
 		long int *lines, int nb_lines,
 		int verbose_level)
+// nb_lines can be zero
 {
 	int f_v = (verbose_level >= 1);
 

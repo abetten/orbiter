@@ -830,6 +830,8 @@ public:
 			int value, int &idx, int verbose_level);
 	void write_csv(
 			std::string &fname, int verbose_level);
+	void write_index_set_csv(
+			std::string &fname, int verbose_level);
 
 };
 
@@ -2204,6 +2206,10 @@ public:
 			std::string *&Header_rows, std::string *&Header_cols, std::string *&T,
 			int &nb_r, int &nb_c,
 			int verbose_level);
+	void stringify_but_keep_first_column(
+			std::string *&Header_rows, std::string *&Header_cols, std::string *&T,
+			int &nb_r, int &nb_c,
+			int verbose_level);
 
 
 };
@@ -2371,6 +2377,8 @@ public:
 	int find_string_in_array(
 			std::string *String_array, int nb_strings,
 			std::string &str_to_find, int &pos);
+	std::string texify(
+			std::string &input_string);
 
 
 };
@@ -2683,6 +2691,63 @@ public:
 			int verbose_level);
 	data_structures::set_of_sets *get_set_partition(
 			int verbose_level);
+
+};
+
+
+// #############################################################################
+// text_builder_description.cpp
+// #############################################################################
+
+
+
+//! to define a text object
+
+
+class text_builder_description {
+public:
+
+	int f_here;
+	std::string here_text;
+
+	// TABLES/text_builder.tex
+
+	text_builder_description();
+	~text_builder_description();
+	int read_arguments(
+		int argc, std::string *argv,
+		int verbose_level);
+	void print();
+
+
+};
+
+
+
+// #############################################################################
+// text_builder.cpp
+// #############################################################################
+
+
+
+//! to create a text object from class text_builder_description
+
+
+class text_builder {
+public:
+
+	text_builder_description *Descr;
+
+	int f_has_text;
+	std::string text;
+
+	text_builder();
+	~text_builder();
+	void init(
+			text_builder_description *Descr,
+			int verbose_level);
+	void print(
+			std::ostream &ost);
 
 };
 

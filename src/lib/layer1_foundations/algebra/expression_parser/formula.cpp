@@ -54,6 +54,231 @@ formula::~formula()
 	}
 }
 
+
+void formula::collect_terms_and_coefficients(
+		other::data_structures::int_matrix *&I, int *&Coeff,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "formula::collect_terms_and_coefficients" << endl;
+	}
+
+	tree->collect_terms_and_coefficients(I, Coeff, verbose_level);
+
+	if (f_v) {
+		cout << "formula::collect_terms_and_coefficients done" << endl;
+	}
+}
+
+void formula::simplify(
+		int verbose_level)
+// called from formula_vector::simplify
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "formula::simplify" << endl;
+	}
+	if (f_v) {
+		cout << "formula::simplify beginning tree = ";
+		tree->print_easy(cout);
+	}
+
+	int verbose_level_down = 0;
+
+
+#if 1
+	if (f_v) {
+		cout << "formula::simplify "
+				"before tree->Root->simplify_exponents" << endl;
+	}
+
+	tree->Root->simplify_exponents(verbose_level_down);
+
+	if (f_v) {
+		cout << "formula::simplify "
+				"after tree->Root->simplify_exponents" << endl;
+	}
+	if (f_v) {
+		cout << "formula::simplify "
+				"after tree->Root->simplify_exponents tree = ";
+		tree->print_easy(cout);
+	}
+#endif
+
+
+	if (f_v) {
+		cout << "formula::simplify "
+				"before tree->Root->simplify_constants" << endl;
+	}
+
+	tree->Root->simplify_constants(verbose_level_down);
+
+	if (f_v) {
+		cout << "formula::simplify "
+				"after tree->Root->simplify_constants" << endl;
+	}
+
+	if (f_v) {
+		cout << "formula::simplify "
+				"after tree->Root->simplify_constants tree = ";
+		tree->print_easy(cout);
+	}
+
+	if (f_v) {
+		cout << "formula::simplify "
+				"before tree->simplify (1)" << endl;
+	}
+
+	tree->simplify(verbose_level /*verbose_level_down*/);
+
+	if (f_v) {
+		cout << "formula::simplify "
+				"after tree->simplify (1)" << endl;
+	}
+	if (f_v) {
+		cout << "formula::simplify "
+				"after tree->simplify tree = ";
+		tree->print_easy(cout);
+	}
+
+
+
+	if (f_v) {
+		cout << "formula::simplify "
+				"before tree->Root->simplify_constants" << endl;
+	}
+
+	tree->Root->simplify_constants(verbose_level_down);
+
+	if (f_v) {
+		cout << "formula::simplify "
+				"after tree->Root->simplify_constants" << endl;
+	}
+	if (f_v) {
+		cout << "formula::simplify "
+				"after tree->Root->simplify_constants tree = ";
+		tree->print_easy(cout);
+	}
+
+
+
+#if 0
+
+	if (f_v) {
+		cout << "formula::simplify "
+				"before tree->Root->simplify_exponents_mod_qm1" << endl;
+	}
+
+	tree->Root->simplify_exponents_mod_qm1(verbose_level_down);
+
+	if (f_v) {
+		cout << "formula::simplify "
+				"after tree->Root->simplify_exponents_mod_qm1" << endl;
+	}
+	if (f_v) {
+		cout << "formula::simplify "
+				"after tree->Root->simplify_exponents_mod_qm1 tree = ";
+		tree->print_easy(cout);
+	}
+
+#endif
+
+
+
+
+	if (f_v) {
+		cout << "formula::simplify "
+				"before tree->Root->flatten" << endl;
+	}
+
+	tree->Root->flatten(verbose_level_down);
+
+	if (f_v) {
+		cout << "formula::simplify "
+				"after tree->Root->flatten" << endl;
+	}
+	if (f_v) {
+		cout << "formula::simplify "
+				"after tree->Root->flatten tree = ";
+		tree->print_easy(cout);
+	}
+
+
+#if 0
+	// 1/30/2025 disabled ToDo
+	// sort_terms behaves weird and does not sort the monomials.
+	if (f_v) {
+		cout << "formula::simplify "
+				"before tree->Root->sort_terms" << endl;
+	}
+
+	tree->Root->sort_terms(verbose_level_down);
+
+	if (f_v) {
+		cout << "formula::simplify "
+				"after tree->Root->sort_terms" << endl;
+	}
+	if (f_v) {
+		cout << "formula::simplify "
+				"after tree->Root->sort_terms tree = ";
+		tree->print_easy(cout);
+	}
+#endif
+
+
+	if (f_v) {
+		cout << "formula::simplify "
+				"before tree->Root->simplify_constants" << endl;
+	}
+
+	tree->Root->simplify_constants(verbose_level_down);
+
+	if (f_v) {
+		cout << "formula::simplify "
+				"after tree->Root->simplify_constants" << endl;
+	}
+	if (f_v) {
+		cout << "formula::simplify "
+				"after tree->Root->simplify_constants "
+				"tree = ";
+		tree->print_easy(cout);
+	}
+
+	if (f_v) {
+		cout << "formula::simplify "
+				"before tree->simplify (2)" << endl;
+	}
+
+	tree->simplify(verbose_level /*verbose_level_down*/);
+
+	if (f_v) {
+		cout << "formula::simplify "
+				"after tree->simplify (2)" << endl;
+	}
+	if (f_v) {
+		cout << "formula::simplify "
+				"after tree->simplify tree = ";
+		tree->print_easy(cout);
+	}
+
+
+	if (f_v) {
+		cout << "formula::simplify "
+				"at the end formula:" << endl;
+		tree->print_easy(cout);
+		cout << endl;
+	}
+
+	if (f_v) {
+		cout << "formula::simplify done" << endl;
+	}
+
+}
+
+
 std::string formula::string_representation(
 		int f_latex, int verbose_level)
 {
@@ -500,9 +725,8 @@ void formula::get_subtrees(
 	}
 }
 
-void formula::evaluate_with_symbol_table(
+long int formula::evaluate_with_symbol_table(
 		std::map<std::string, std::string> &symbol_table,
-		int *Values,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -510,16 +734,16 @@ void formula::evaluate_with_symbol_table(
 	if (f_v) {
 		cout << "formula::evaluate_with_symbol_table" << endl;
 	}
-	//long int a;
+	long int a;
 
-	tree->evaluate(
+	a = tree->evaluate(
 			symbol_table, verbose_level - 1);
 
 
 	if (f_v) {
 		cout << "formula::evaluate_with_symbol_table done" << endl;
 	}
-
+	return a;
 }
 
 void formula::evaluate(
@@ -959,181 +1183,6 @@ void formula::make_linear_combination(
 }
 
 
-void formula::simplify(
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "formula::simplify" << endl;
-	}
-	if (f_v) {
-		cout << "formula::simplify beginning tree = ";
-		tree->print_easy(cout);
-	}
-
-	int verbose_level_down = 0;
-
-	if (f_v) {
-		cout << "formula::simplify "
-				"before tree->Root->simplify_exponents" << endl;
-	}
-
-	tree->Root->simplify_exponents(verbose_level_down);
-
-	if (f_v) {
-		cout << "formula::simplify "
-				"after tree->Root->simplify_exponents" << endl;
-	}
-	if (f_v) {
-		cout << "formula::simplify "
-				"after tree->Root->simplify_exponents tree = ";
-		tree->print_easy(cout);
-	}
-
-	if (f_v) {
-		cout << "formula::simplify "
-				"before tree->Root->simplify_constants" << endl;
-	}
-
-	tree->Root->simplify_constants(verbose_level_down);
-
-	if (f_v) {
-		cout << "formula::simplify "
-				"after tree->Root->simplify_constants" << endl;
-	}
-
-	if (f_v) {
-		cout << "formula::simplify "
-				"after tree->Root->simplify_constants tree = ";
-		tree->print_easy(cout);
-	}
-
-	if (f_v) {
-		cout << "formula::simplify "
-				"before tree->simplify" << endl;
-	}
-
-	tree->simplify(verbose_level_down);
-
-	if (f_v) {
-		cout << "formula::simplify "
-				"after tree->simplify" << endl;
-	}
-	if (f_v) {
-		cout << "formula::simplify "
-				"after tree->simplify tree = ";
-		tree->print_easy(cout);
-	}
-
-
-
-	if (f_v) {
-		cout << "formula::simplify "
-				"before tree->Root->simplify_constants" << endl;
-	}
-
-	tree->Root->simplify_constants(verbose_level_down);
-
-	if (f_v) {
-		cout << "formula::simplify "
-				"after tree->Root->simplify_constants" << endl;
-	}
-	if (f_v) {
-		cout << "formula::simplify "
-				"after tree->Root->simplify_constants tree = ";
-		tree->print_easy(cout);
-	}
-
-
-	if (f_v) {
-		cout << "formula::simplify "
-				"before tree->Root->flatten" << endl;
-	}
-
-	tree->Root->flatten(verbose_level_down);
-
-	if (f_v) {
-		cout << "formula::simplify "
-				"after tree->Root->flatten" << endl;
-	}
-	if (f_v) {
-		cout << "formula::simplify "
-				"after tree->Root->flatten tree = ";
-		tree->print_easy(cout);
-	}
-
-
-#if 0
-	// 1/30/2025 disabled ToDo
-	// sort_terms behaves weird and does not sort the monomials.
-	if (f_v) {
-		cout << "formula::simplify "
-				"before tree->Root->sort_terms" << endl;
-	}
-
-	tree->Root->sort_terms(verbose_level_down);
-
-	if (f_v) {
-		cout << "formula::simplify "
-				"after tree->Root->sort_terms" << endl;
-	}
-	if (f_v) {
-		cout << "formula::simplify "
-				"after tree->Root->sort_terms tree = ";
-		tree->print_easy(cout);
-	}
-#endif
-
-
-	if (f_v) {
-		cout << "formula::simplify "
-				"before tree->Root->simplify_constants" << endl;
-	}
-
-	tree->Root->simplify_constants(verbose_level_down);
-
-	if (f_v) {
-		cout << "formula::simplify "
-				"after tree->Root->simplify_constants" << endl;
-	}
-	if (f_v) {
-		cout << "formula::simplify "
-				"after tree->Root->simplify_constants "
-				"tree = ";
-		tree->print_easy(cout);
-	}
-
-	if (f_v) {
-		cout << "formula::simplify "
-				"before tree->simplify" << endl;
-	}
-
-	tree->simplify(verbose_level_down);
-
-	if (f_v) {
-		cout << "formula::simplify "
-				"after tree->simplify" << endl;
-	}
-	if (f_v) {
-		cout << "formula::simplify "
-				"after tree->simplify tree = ";
-		tree->print_easy(cout);
-	}
-
-
-	if (f_v) {
-		cout << "formula::simplify "
-				"at the end formula:" << endl;
-		tree->print_easy(cout);
-		cout << endl;
-	}
-
-	if (f_v) {
-		cout << "formula::simplify done" << endl;
-	}
-
-}
 
 void formula::reduce_exponents(
 		int verbose_level)

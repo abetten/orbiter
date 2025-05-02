@@ -358,6 +358,177 @@ void orthogonal_space_with_action::make_table_of_blt_sets(
 
 }
 
+void orthogonal_space_with_action::create_perp_of_point(
+		long int pt_rank_pg,
+		std::vector<long int> &Pts,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orthogonal_space_with_action::create_perp_of_point" << endl;
+	}
+
+
+	geometry::projective_geometry::projective_space_basic Projective_space_basic;
+
+	if (f_v) {
+		cout << "orthogonal_space_with_action::create_perp_of_point "
+				"before Projective_space_basic.init" << endl;
+	}
+	Projective_space_basic.init(P->Subspaces->F, verbose_level - 1);
+	if (f_v) {
+		cout << "orthogonal_space_with_action::create_perp_of_point "
+				"after Projective_space_basic.init" << endl;
+	}
+
+
+	int d, k;
+	int *v;
+	int *Perp;
+	int *message;
+	int *word;
+
+	d = P->Subspaces->n + 1;
+	k = d - 1;
+
+	v = NEW_int(d);
+
+	if (f_v) {
+		cout << "orthogonal_space_with_action::create_perp_of_point "
+				"v = ";
+		Int_vec_print(cout, v, d);
+		cout << endl;
+	}
+
+	Perp = NEW_int(d * d);
+
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
+
+	int nb_messages;
+	int h;
+
+	nb_messages = Combi.generalized_binomial(k, 1, P->Subspaces->F->q);
+	if (f_v) {
+		cout << "orthogonal_space_with_action::create_perp_of_point "
+				"nb_messages = " << nb_messages << endl;
+	}
+
+	message = NEW_int(k);
+	word = NEW_int(d);
+
+
+	P->Subspaces->unrank_point(v, pt_rank_pg);
+
+	O->Quadratic_form->perp_of_point(v, Perp, verbose_level - 1);
+	if (f_v) {
+		cout << "orthogonal_space_with_action::create_perp_of_point "
+				"Perp = " << endl;
+		Int_matrix_print(Perp, k, d);
+	}
+
+
+
+	long int rk;
+	int form_value;
+
+	if (f_v) {
+		cout << "projective_space_basic::all_PG_elements_in_subspace_array_is_given" << endl;
+	}
+
+	for (h = 0; h < nb_messages; h++) {
+
+		if (f_v) {
+			cout << "orthogonal_space_with_action::create_perp_of_point "
+					"message " << h << " / " << nb_messages << endl;
+		}
+
+		Projective_space_basic.PG_element_unrank_modified(message, 1, k, h);
+
+		if (f_v) {
+			cout << "orthogonal_space_with_action::create_perp_of_point "
+					"message " << h << " / " << nb_messages << " is ";
+			Int_vec_print(cout, message, k);
+			cout << endl;
+		}
+
+		P->Subspaces->F->Linear_algebra->mult_vector_from_the_left(
+				message, Perp, word, k, d);
+
+		if (f_v) {
+			cout << "orthogonal_space_with_action::create_perp_of_point yields word ";
+			Int_vec_print(cout, word, d);
+			cout << endl;
+		}
+
+		if (f_v) {
+			cout << "orthogonal_space_with_action::create_perp_of_point "
+					"before O->Quadratic_form->evaluate_quadratic_form" << endl;
+		}
+
+		form_value = O->Quadratic_form->evaluate_quadratic_form(
+						word, 1 /* stride */);
+
+		if (f_v) {
+			cout << "orthogonal_space_with_action::create_perp_of_point "
+					"after O->Quadratic_form->evaluate_quadratic_form" << endl;
+		}
+		if (f_v) {
+			cout << "orthogonal_space_with_action::create_perp_of_point "
+					"form_value = " << form_value << " not on the quadric" << endl;
+		}
+
+		if (form_value == 0) {
+
+			if (f_v) {
+				cout << "orthogonal_space_with_action::create_perp_of_point "
+						"the point lies on the quadric" << endl;
+			}
+
+			O->Orthogonal_indexing->Sbar_rank(word, 1 /* stride */, d / 2, rk, 0 /*verbose_level - 1*/);
+
+#if 0
+			rk = O->Hyperbolic_pair->rank_point(
+					word, 1 /* stride */, verbose_level - 1);
+#endif
+
+			if (f_v) {
+				cout << "orthogonal_space_with_action::create_perp_of_point "
+						"rk = " << rk << endl;
+			}
+
+			Pts.push_back(rk);
+
+		}
+		else {
+			if (f_v) {
+				cout << "orthogonal_space_with_action::create_perp_of_point "
+						"form_value = " << form_value << " not on the quadric" << endl;
+			}
+		}
+
+	}
+
+	if (f_v) {
+		cout << "orthogonal_space_with_action::create_perp_of_point "
+				"perp of point " << pt_rank_pg << " is the following set of size " << Pts.size() << ":" << endl;
+		Lint_vec_stl_print(cout, Pts);
+		cout << endl;
+	}
+
+
+
+	FREE_int(v);
+	FREE_int(Perp);
+	FREE_int(message);
+	FREE_int(word);
+
+	if (f_v) {
+		cout << "orthogonal_space_with_action::create_perp_of_point" << endl;
+	}
+}
+
 void orthogonal_space_with_action::create_orthogonal_reflections(
 		long int *pts, int nb_pts,
 		data_structures_groups::vector_ge *&vec,

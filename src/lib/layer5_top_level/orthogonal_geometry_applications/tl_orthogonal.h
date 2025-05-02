@@ -620,11 +620,13 @@ public:
 	int f_create_orthogonal_reflection;
 	std::string create_orthogonal_reflection_points;
 
+	int f_create_perp_of_points;
+	std::string create_perp_of_points_points;
+
 	int f_create_Siegel_transformation;
 	std::string create_Siegel_transformation_u;
 	std::string create_Siegel_transformation_v;
 
-	// ToDo: undocumented
 	int f_make_all_Siegel_transformations;
 
 	int f_create_orthogonal_reflection_6_and_4;
@@ -755,6 +757,10 @@ public:
 			other::graphics::layered_graph_draw_options *Draw_options,
 			int verbose_level);
 	void make_table_of_blt_sets(
+			int verbose_level);
+	void create_perp_of_point(
+			long int pt_rank_pg,
+			std::vector<long int> &Pts,
 			int verbose_level);
 	void create_orthogonal_reflections(
 			long int *pts, int nb_pts,

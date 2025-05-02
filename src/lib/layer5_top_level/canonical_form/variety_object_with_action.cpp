@@ -38,7 +38,12 @@ variety_object_with_action::variety_object_with_action()
 	f_has_automorphism_group = false;
 	Stab_gens = NULL;
 
+	f_has_set_stabilizer = false;
+	Set_stab_gens = NULL;
+
 	TD = NULL;
+
+	TD_set_stabilizer = NULL;
 
 }
 
@@ -51,8 +56,14 @@ variety_object_with_action::~variety_object_with_action()
 	if (f_has_automorphism_group && Stab_gens) {
 		FREE_OBJECT(Stab_gens);
 	}
+	if (f_has_set_stabilizer && Set_stab_gens) {
+		FREE_OBJECT(Set_stab_gens);
+	}
 	if (TD) {
 		FREE_OBJECT(TD);
+	}
+	if (TD_set_stabilizer) {
+		FREE_OBJECT(TD_set_stabilizer);
 	}
 }
 
@@ -84,11 +95,13 @@ void variety_object_with_action::create_variety(
 		VD->Projective_space_pointer = Get_projective_space(VD->projective_space_label)->P;
 	}
 
+
+#if 0
 	if (VD->f_bitangents == false) {
 		VD->f_bitangents = true;
 		VD->bitangents_txt = "";
 	}
-
+#endif
 
 
 	Variety_object = NEW_OBJECT(geometry::algebraic_geometry::variety_object);
@@ -111,7 +124,7 @@ void variety_object_with_action::create_variety(
 	for (i = 0; i < VD->transformations.size(); i++) {
 		if (f_v) {
 			cout << "variety_object_with_action::create_variety "
-					"-transform " << VD->transformations[i] << endl;
+					"transformation " << i << " / " << VD->transformations.size() << endl;
 		}
 
 		int *data;
@@ -120,8 +133,33 @@ void variety_object_with_action::create_variety(
 
 		Elt = NEW_int(PA->A->elt_size_in_int);
 
+
 		Int_vec_scan(VD->transformations[i], data, sz);
 		PA->A->Group_element->make_element(Elt, data, 0 /* verbose_level */);
+
+
+
+		if (VD->transformation_inverse[i]) {
+
+			if (f_v) {
+				cout << "variety_object_with_action::create_variety "
+						"-transform_inverse " << VD->transformations[i] << endl;
+			}
+			int *Elt1;
+
+			Elt1 = NEW_int(PA->A->elt_size_in_int);
+			PA->A->Group_element->element_invert(Elt, Elt1, 0 /* verbose_level */);
+			PA->A->Group_element->element_move(Elt1, Elt, 0 /* verbose_level */);
+			FREE_int(Elt1);
+		}
+		else {
+			if (f_v) {
+				cout << "variety_object_with_action::create_variety "
+						"-transform " << VD->transformations[i] << endl;
+			}
+
+		}
+
 
 		if (f_v) {
 			cout << "variety_object_with_action::create_variety "
@@ -149,7 +187,7 @@ void variety_object_with_action::create_variety(
 				"before compute_tactical_decompositions" << endl;
 	}
 	compute_tactical_decompositions(
-			verbose_level);
+			verbose_level - 2);
 	if (f_v) {
 		cout << "variety_object_with_action::create_variety "
 				"after compute_tactical_decompositions" << endl;
@@ -157,7 +195,9 @@ void variety_object_with_action::create_variety(
 
 
 	if (f_v) {
+		cout << "variety_object_with_action::create_variety before print" << endl;
 		print(cout);
+		cout << "variety_object_with_action::create_variety after print" << endl;
 	}
 
 	if (f_v) {
@@ -306,12 +346,58 @@ void variety_object_with_action::compute_tactical_decompositions(
 	}
 
 
+
+
 	if (f_v) {
 		cout << "variety_object_with_action::compute_tactical_decompositions done" << endl;
 	}
 
 
 }
+
+
+void variety_object_with_action::compute_tactical_decompositions_wrt_set_stabilizer(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "variety_object_with_action::compute_tactical_decompositions_wrt_set_stabilizer" << endl;
+	}
+
+
+	if (f_has_set_stabilizer && Set_stab_gens) {
+
+		TD_set_stabilizer = NEW_OBJECT(apps_combinatorics::variety_with_TDO_and_TDA);
+
+
+		if (f_v) {
+			cout << "variety_object_with_action::compute_tactical_decompositions_wrt_set_stabilizer "
+					"before TD_set_stabilizer->init_and_compute_tactical_decompositions" << endl;
+		}
+		TD_set_stabilizer->init_and_compute_tactical_decompositions(
+				PA, Variety_object, Set_stab_gens,
+				verbose_level);
+		if (f_v) {
+			cout << "variety_object_with_action::compute_tactical_decompositions_wrt_set_stabilizer "
+					"after TD_set_stabilizer->init_and_compute_tactical_decompositions" << endl;
+		}
+	}
+	else {
+		cout << "variety_object_with_action::compute_tactical_decompositions_wrt_set_stabilizer "
+				"the set stabilizer is not available" << endl;
+		TD_set_stabilizer = NULL;
+	}
+
+
+	if (f_v) {
+		cout << "variety_object_with_action::compute_tactical_decompositions_wrt_set_stabilizer done" << endl;
+	}
+
+
+}
+
+
 
 
 
@@ -446,6 +532,7 @@ void variety_object_with_action::do_report2(
 
 
 	if (f_has_automorphism_group) {
+		ost << "\\subsection*{Automorphism group}" << endl;
 		Stab_gens->print_generators_in_latex_individually(
 				ost, verbose_level);
 	}
@@ -453,33 +540,53 @@ void variety_object_with_action::do_report2(
 	}
 
 
+	if (f_has_set_stabilizer) {
+		ost << "\\subsection*{Set stabilizer}" << endl;
+		Set_stab_gens->print_generators_in_latex_individually(
+				ost, verbose_level);
+	}
+	else {
+	}
+
+
 	int d;
-	long int nb_pts;
-	long int *Points;
-	int *v;
 
 	d = Variety_object->Projective_space->Subspaces->n + 1;
-	nb_pts = Variety_object->Point_sets->Set_size[0];
-	Points = Variety_object->Point_sets->Sets[0];
-
-	v = NEW_int(d);
-
-	ost << "The variety has " << nb_pts << " points. They are: " << endl;
-	Lint_vec_print_fully(ost, Points, nb_pts);
-	ost << "\\\\" << endl;
 
 
-	ost << "\\begin{multicols}{3}" << endl;
-	ost << "\\noindent" << endl;
-	int i;
 
-	for (i = 0; i < nb_pts; i++) {
-		Variety_object->Projective_space->unrank_point(v, Points[i]);
-		ost << i << " : $P_{" << Points[i] << "}=";
-		Int_vec_print_fully(ost, v, d);
-		ost << "$\\\\" << endl;
+	long int nb_pts;
+	nb_pts = Variety_object->get_nb_points();
+
+
+	if (nb_pts >= 0) {
+		long int *Points;
+		int *v;
+
+		Points = Variety_object->Point_sets->Sets[0];
+
+		v = NEW_int(d);
+
+		ost << "The variety has " << nb_pts << " points. They are: " << endl;
+		Lint_vec_print_fully(ost, Points, nb_pts);
+		ost << "\\\\" << endl;
+
+
+		ost << "\\begin{multicols}{3}" << endl;
+		ost << "\\noindent" << endl;
+		int i;
+
+		for (i = 0; i < nb_pts; i++) {
+			Variety_object->Projective_space->unrank_point(v, Points[i]);
+			ost << i << " : $P_{" << Points[i] << "}=";
+			Int_vec_print_fully(ost, v, d);
+			ost << "$\\\\" << endl;
+		}
+		ost << "\\end{multicols}" << endl;
+		FREE_int(v);
 	}
-	ost << "\\end{multicols}" << endl;
+
+
 
 
 
@@ -487,9 +594,13 @@ void variety_object_with_action::do_report2(
 
 	if (Variety_object->f_has_singular_points) {
 
+		int *v;
+		v = NEW_int(d);
+
 		if (f_v) {
 			cout << "variety_object_with_action::do_report2 "
-					"number of singular points = " << Variety_object->Singular_points.size() << endl;
+					"number of singular points = "
+					<< Variety_object->Singular_points.size() << endl;
 		}
 
 		ost << "The singular points are: " << endl;
@@ -502,19 +613,63 @@ void variety_object_with_action::do_report2(
 		nb_pts = Variety_object->Singular_points.size();
 
 		for (i = 0; i < nb_pts; i++) {
-			Variety_object->Projective_space->unrank_point(v, Variety_object->Singular_points[i]);
+			Variety_object->Projective_space->unrank_point(
+					v, Variety_object->Singular_points[i]);
 			ost << i << " : $P_{" << Variety_object->Singular_points[i] << "}=";
 			Int_vec_print_fully(ost, v, d);
 			ost << "$\\\\" << endl;
 		}
 		ost << "\\end{multicols}" << endl;
 
+		FREE_int(v);
 
 	}
-	if (TD) {
-		TD->report_decomposition_schemes(ost, verbose_level);
+
+
+
+	if (Variety_object->get_nb_lines() >= 0) {
+
+		long int nb_lines;
+		long int *Lines;
+		int *w;
+		nb_lines = Variety_object->Line_sets->Set_size[0];
+		Lines = Variety_object->Line_sets->Sets[0];
+
+		w = NEW_int(2 * d);
+
+		ost << "The variety has " << nb_lines << " lines. They are: " << endl;
+		Lint_vec_print_fully(ost, Lines, nb_lines);
+		ost << "\\\\" << endl;
+		FREE_int(w);
+
 	}
-	FREE_int(v);
+
+
+
+
+
+	string TDO_label1;
+	string TDO_label2;
+	string TDA_label1;
+	string TDA_label2;
+
+	TDO_label1 = "TDO";
+	TDO_label2 = "TDOsetstab";
+	TDA_label1 = "TDA";
+	TDA_label2 = "TDAsetstab";
+
+	if (TD) {
+		TD->report_decomposition_schemes(ost,
+				TDO_label1,
+				TDA_label1,
+				verbose_level);
+	}
+	if (TD_set_stabilizer) {
+		TD_set_stabilizer->report_decomposition_schemes(ost,
+				TDO_label2,
+				TDA_label2,
+				verbose_level);
+	}
 
 
 
@@ -535,6 +690,7 @@ void variety_object_with_action::print_summary(
 	ost << "\\begin{array}{|l|r|}" << endl;
 
 	algebra::ring_theory::longinteger_object ago;
+	algebra::ring_theory::longinteger_object set_stab_go;
 
 	if (f_has_automorphism_group) {
 		Stab_gens->group_order(ago);
@@ -542,17 +698,211 @@ void variety_object_with_action::print_summary(
 	else {
 		ago.create(-1);
 	}
+
+	if (f_has_set_stabilizer) {
+		Set_stab_gens->group_order(set_stab_go);
+	}
+	else {
+		set_stab_go.create(-1);
+	}
+
+	int nb_points;
+	int nb_lines;
+	int nb_singular_points = -1;
+
+	nb_points = Variety_object->get_nb_points();
+	nb_lines = Variety_object->get_nb_lines();
+
+	if (Variety_object->f_has_singular_points) {
+		nb_singular_points = Variety_object->Singular_points.size();
+	}
+
 	ost << "\\hline" << endl;
 	ost << "\\mbox{Number of automorphisms} & " << ago << "\\\\" << endl;
 	ost << "\\hline" << endl;
-	ost << "\\mbox{Number of points} & " << Variety_object->Point_sets->Set_size[0] << "\\\\" << endl;
+	ost << "\\mbox{Order of set stabilizer} & " << set_stab_go << "\\\\" << endl;
 	ost << "\\hline" << endl;
-	ost << "\\mbox{Number of lines} & " << Variety_object->Line_sets->Set_size[0] << " \\\\" << endl;
+	ost << "\\mbox{Number of points} & " << nb_points << "\\\\" << endl;
 	ost << "\\hline" << endl;
-	ost << "\\mbox{Number of singular points} & " << Variety_object->Singular_points.size() << "\\\\" << endl;
+	ost << "\\mbox{Number of lines} & " << nb_lines << " \\\\" << endl;
+	ost << "\\hline" << endl;
+	ost << "\\mbox{Number of singular points} & " << nb_singular_points << "\\\\" << endl;
 	ost << "\\hline" << endl;
 	ost << "\\end{array}" << endl;
 	ost << "$$}" << endl;
+}
+
+
+void variety_object_with_action::export_data(
+		std::vector<std::string> &Table, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "variety_object_with_action::export_data" << endl;
+	}
+
+	algebra::ring_theory::longinteger_object ago;
+	algebra::ring_theory::longinteger_object set_stab_go;
+
+	if (f_has_automorphism_group) {
+		Stab_gens->group_order(ago);
+	}
+	else {
+		ago.create(-1);
+	}
+
+	if (f_has_set_stabilizer) {
+		Set_stab_gens->group_order(set_stab_go);
+	}
+	else {
+		set_stab_go.create(-1);
+	}
+
+
+	int nb_points;
+	int nb_lines;
+	int nb_singular_points = -1;
+
+	nb_points = Variety_object->get_nb_points();
+	nb_lines = Variety_object->get_nb_lines();
+
+	if (Variety_object->f_has_singular_points) {
+		nb_singular_points = Variety_object->Singular_points.size();
+	}
+
+	string s_Pts, s_Lines, s_Lines_Klein;
+
+	s_Pts = "\"" + Variety_object->stringify_points() + "\"";
+	s_Lines = "\"" + Variety_object->stringify_lines() + "\"";
+
+
+	if (PA->P->Subspaces->n == 3 && Variety_object->Line_sets) {
+
+
+
+		geometry::orthogonal_geometry::orthogonal *O;
+		geometry::projective_geometry::klein_correspondence *Klein;
+
+		O = PA->Surf_A->Surf->O;
+		Klein = PA->Surf_A->Surf->Klein;
+
+		int v[6];
+		long int *Lines;
+		long int *Points_on_Klein_quadric;
+		long int line_rk;
+		int i;
+
+		Lines = Variety_object->Line_sets->Sets[0];
+
+		Points_on_Klein_quadric = NEW_lint(nb_lines);
+
+		for (i = 0; i < nb_lines; i++) {
+			line_rk = Lines[i];
+
+			Klein->line_to_Pluecker(
+				line_rk, v, 0 /* verbose_level*/);
+
+			Points_on_Klein_quadric[i] = O->Orthogonal_indexing->Qplus_rank(
+					v,
+					1, 5, 0 /*verbose_level */);
+
+		}
+
+		other::data_structures::sorting Sorting;
+		Sorting.lint_vec_heapsort(Points_on_Klein_quadric, nb_lines);
+
+
+		s_Lines_Klein = "\"" + Lint_vec_stringify(Points_on_Klein_quadric, nb_lines) + "\"";
+
+		FREE_lint(Points_on_Klein_quadric);
+	}
+	else {
+		s_Lines_Klein = "\"\"";
+	}
+
+	Table.push_back(ago.stringify());
+	Table.push_back(set_stab_go.stringify());
+	Table.push_back(std::to_string(nb_points));
+	Table.push_back(std::to_string(nb_lines));
+	Table.push_back(std::to_string(nb_singular_points));
+	Table.push_back(s_Pts);
+	Table.push_back(s_Lines);
+	Table.push_back(s_Lines_Klein);
+
+	if (f_v) {
+		cout << "variety_object_with_action::export_data done" << endl;
+	}
+}
+
+
+void variety_object_with_action::do_export(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "variety_object_with_action::do_export" << endl;
+	}
+
+	std::vector<std::string> table;
+
+
+	export_data(
+			table, verbose_level);
+
+
+	string *Table;
+	int nb_cols;
+	int nb_rows;
+	int i, j;
+
+	nb_rows = 1;
+	nb_cols = table.size();
+
+	if (nb_cols != 8) {
+		cout << "variety_object_with_action::do_export nb_cols != 8" << endl;
+		exit(1);
+	}
+
+
+	Table = new string[nb_rows * nb_cols];
+	for (i = 0; i < nb_rows; i++) {
+		for (j = 0; j < nb_cols; j++) {
+			Table[i * nb_cols + j] =
+					table[j];
+		}
+	}
+
+	std::string Col_headings[8];
+
+	Col_headings[0] = "Ago";
+	Col_headings[1] = "SetStab";
+	Col_headings[2] = "NbPoints";
+	Col_headings[3] = "NbLines";
+	Col_headings[4] = "NbSingPoints";
+	Col_headings[5] = "Points";
+	Col_headings[6] = "Lines";
+	Col_headings[7] = "LinesKlein";
+	string fname;
+
+	fname = "variety_" + Variety_object->label_txt + "_data.csv";
+
+	other::orbiter_kernel_system::file_io Fio;
+
+
+	Fio.Csv_file_support->write_table_of_strings_with_col_headings(
+			fname,
+			nb_rows, nb_cols, Table,
+			Col_headings,
+			verbose_level);
+
+	delete [] Table;
+
+
+	if (f_v) {
+		cout << "variety_object_with_action::do_export done" << endl;
+	}
 }
 
 

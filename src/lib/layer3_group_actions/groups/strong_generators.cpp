@@ -94,7 +94,8 @@ void strong_generators::init_from_sims(
 		cout << "strong_generators::init_from_sims before "
 				"S->extract_strong_generators_in_order" << endl;
 	}
-	S->extract_strong_generators_in_order(*gens, tl,
+	S->extract_strong_generators_in_order(
+			*gens, tl,
 			verbose_level - 5);
 	if (f_v) {
 		cout << "strong_generators::init_from_sims after "
@@ -3681,7 +3682,25 @@ void strong_generators::set_of_coset_representatives(
 	S->group_order(G_order);
 	group_order(H_order);
 
+
+
+	if (f_v) {
+
+		cout << "strong_generators::set_of_coset_representatives the large group has order " << G_order << endl;
+		cout << "strong_generators::set_of_coset_representatives the small group has order " << H_order << endl;
+
+	}
+
+
+
 	subgroup_index = D.quotient_as_lint(G_order, H_order);
+
+
+	if (f_v) {
+
+		cout << "strong_generators::set_of_coset_representatives subgroup index is " << subgroup_index << endl;
+
+	}
 
 
 	coset_reps = NEW_OBJECT(data_structures_groups::vector_ge);
@@ -3749,6 +3768,13 @@ void strong_generators::set_of_coset_representatives(
 				len++;
 			}
 
+			if (len == subgroup_index) {
+				break;
+			}
+
+		}
+		if (len == subgroup_index) {
+			break;
 		}
 	}
 

@@ -651,7 +651,7 @@ void design_create::init(
 
 		if (f_v) {
 			cout << "design_create::init "
-					"list of blocks from file "
+					"list of blocks coded from file "
 					<< Descr->list_of_blocks_coded_from_file_fname << endl;
 		}
 
@@ -668,7 +668,7 @@ void design_create::init(
 
 		if (n != 1) {
 			cout << "design_create::init "
-					"f_list_of_blocks_from_file n != 1" << endl;
+					"f_list_of_blocks_coded_from_file n != 1" << endl;
 			exit(1);
 		}
 		Design_object->sz = m;
@@ -750,6 +750,12 @@ void design_create::init(
 
 		Design_object->v = degree;
 		Design_object->b = SoS->nb_sets;
+		if (f_v) {
+			cout << "design_create::init "
+					"v=" << Design_object->v
+					<< " b=" << Design_object->b
+					<< endl;
+		}
 
 
 		// extend the incidence matrix by three blocks
@@ -762,13 +768,23 @@ void design_create::init(
 
 		Int_vec_zero(Design_object->incma, Design_object->v * Design_object->b);
 
+		int nb_inc;
+
+		nb_inc = 0;
 		for (h = 0; h < Design_object->b; h++) {
 			s = SoS->Set_size[h];
+			nb_inc += s;
 			for (u = 0; u < s; u++) {
 				i = SoS->Sets[h][u];
 				Design_object->incma[i * Design_object->b + h] = 1;
 				Design_object->nb_inc++;
 			}
+		}
+
+		if (f_v) {
+			cout << "design_create::init "
+					"nb_inc=" << nb_inc
+					<< endl;
 		}
 
 		Design_object->f_has_set = false;

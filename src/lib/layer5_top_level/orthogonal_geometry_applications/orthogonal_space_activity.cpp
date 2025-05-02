@@ -446,6 +446,130 @@ void orthogonal_space_activity::perform_activity(
 		}
 
 	}
+
+
+	else if (Descr->f_create_perp_of_points) {
+
+		if (f_v) {
+			cout << "orthogonal_space_activity::perform_activity "
+					"-create_perp_of_points " << Descr->create_perp_of_points_points << endl;
+		}
+
+		long int *pts;
+		int nb_pts;
+
+		Get_vector_or_set(Descr->create_perp_of_points_points, pts, nb_pts);
+
+		if (f_v) {
+			cout << "orthogonal_space_activity::perform_activity "
+					"Computing the perps of the set of points ";
+			Lint_vec_print(cout, pts, nb_pts);
+			cout << endl;
+		}
+
+		int i;
+
+		for (i = 0; i < nb_pts; i++) {
+
+			std::vector<long int> Pts;
+			long int pt_rank_pg;
+
+			pt_rank_pg = pts[i];
+
+			if (f_v) {
+				cout << "orthogonal_space_activity::perform_activity "
+						"computing perp of point " << i << " / " << nb_pts << " which is " << pt_rank_pg << endl;
+			}
+
+
+			geometry::projective_geometry::projective_space_basic Projective_space_basic;
+
+			if (f_v) {
+				cout << "orthogonal_space_activity::perform_activity "
+						"before Projective_space_basic.init" << endl;
+			}
+			Projective_space_basic.init(OA->P->Subspaces->F, verbose_level - 1);
+			if (f_v) {
+				cout << "orthogonal_space_activity::perform_activity "
+						"after Projective_space_basic.init" << endl;
+			}
+
+
+			int d;
+			int *v;
+
+			d = OA->P->Subspaces->n + 1;
+
+			v = NEW_int(d);
+
+			OA->P->Subspaces->unrank_point(v, pt_rank_pg);
+
+			if (f_v) {
+				cout << "orthogonal_space_with_action::create_perp_of_point "
+						"v = ";
+				Int_vec_print(cout, v, d);
+				cout << endl;
+			}
+
+
+			if (f_v) {
+				cout << "orthogonal_space_activity::perform_activity "
+						"before OA->create_perp_of_point" << endl;
+			}
+
+			OA->create_perp_of_point(
+					pt_rank_pg,
+					Pts,
+					verbose_level - 3);
+
+			if (f_v) {
+				cout << "orthogonal_space_activity::perform_activity "
+						"after OA->create_perp_of_point" << endl;
+			}
+
+			if (false) {
+				cout << "orthogonal_space_activity::perform_activity "
+						"perp of point " << pt_rank_pg << " = ";
+
+				Int_vec_print(cout, v, d);
+
+				cout << " is the following set of size " << Pts.size() << ":" << endl;
+				Lint_vec_stl_print(cout, Pts);
+				cout << endl;
+			}
+
+			long int *Points;
+			int nb_points;
+			int h;
+
+			nb_points = Pts.size();
+			Points = NEW_lint(nb_points);
+			for (h = 0; h < nb_points; h++) {
+				Points[h] = Pts[h];
+			}
+
+			other::data_structures::sorting Sorting;
+			Sorting.lint_vec_heapsort(Points, nb_points);
+
+			if (f_v) {
+				cout << "orthogonal_space_activity::perform_activity "
+						"perp of point " << pt_rank_pg << " = ";
+
+				Int_vec_print(cout, v, d);
+
+				cout << " is the following set of size " << nb_points << ":" << endl;
+				Lint_vec_print(cout, Points, nb_points);
+				cout << endl;
+			}
+
+
+			FREE_lint(Points);
+			FREE_int(v);
+		}
+
+	}
+
+
 	else if (Descr->f_create_Siegel_transformation) {
 
 		if (f_v) {

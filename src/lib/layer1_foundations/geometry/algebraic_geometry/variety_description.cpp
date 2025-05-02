@@ -58,6 +58,7 @@ variety_description::variety_description()
 	f_equation_by_coefficients = false;
 	//std::string equation_by_coefficients_text;
 
+	// unused:
 	f_second_equation_in_algebraic_form = false;
 	//std::string second_equation_in_algebraic_form_text;
 
@@ -70,6 +71,9 @@ variety_description::variety_description()
 	f_bitangents = false;
 	//std::string bitangents_txt;
 
+	f_compute_lines = false;
+
+	//std::vector<int> transformation_inverse;
 	//std::vector<std::string> transformations;
 }
 
@@ -178,14 +182,32 @@ int variety_description::read_arguments(
 				cout << "-bitangents " << bitangents_txt << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-compute_lines") == 0) {
+			f_compute_lines = true;
+			if (f_v) {
+				cout << "-compute_lines " << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-transform") == 0) {
 
 			string s;
 
 			s.assign(argv[++i]);
 			transformations.push_back(s);
+			transformation_inverse.push_back(false);
 			if (f_v) {
 				cout << "-transform " << transformations[transformations.size() - 1] << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-transform_inverse") == 0) {
+
+			string s;
+
+			s.assign(argv[++i]);
+			transformations.push_back(s);
+			transformation_inverse.push_back(true);
+			if (f_v) {
+				cout << "-transform_inverse " << transformations[transformations.size() - 1] << endl;
 			}
 		}
 
@@ -245,10 +267,17 @@ void variety_description::print()
 	if (f_bitangents) {
 		cout << "-bitangents " << bitangents_txt << endl;
 	}
+	if (f_compute_lines) {
+		cout << "-compute_lines " << endl;
+	}
 	int i;
 	for (i = 0; i < transformations.size(); i++) {
-		cout << "-transform " << transformations[i] << endl;
-
+		if (transformation_inverse[i]) {
+			cout << "-transform_inverse " << transformations[i] << endl;
+		}
+		else {
+			cout << "-transform " << transformations[i] << endl;
+		}
 	}
 
 }

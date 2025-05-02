@@ -1366,7 +1366,8 @@ void orthogonal::perp_of_two_points(
 void orthogonal::perp_of_k_points(
 		long int *pts,
 		int nb_pts,
-		long int *&Perp, int &sz, int verbose_level)
+		long int *&Perp, int &sz,
+		int verbose_level)
 // requires k >= 2
 {
 	int f_v = (verbose_level >= 1);

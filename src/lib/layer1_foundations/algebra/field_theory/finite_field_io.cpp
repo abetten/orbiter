@@ -810,6 +810,18 @@ void finite_field_io::cheat_sheet(
 				"is " << F->my_poly << "\\\\" << endl;
 	}
 
+	if (f_v) {
+		cout << "finite_field_io::cheat_sheet "
+				"before F->Finite_field_properties->report_latex" << endl;
+	}
+	F->Finite_field_properties->report_latex(
+			f, verbose_level);
+	if (f_v) {
+		cout << "finite_field_io::cheat_sheet "
+				"after F->Finite_field_properties->report_latex" << endl;
+	}
+
+
 	int f_add_mult_table = true;
 
 	if (f_add_mult_table) {

@@ -1339,6 +1339,9 @@ public:
 	isomorph::isomorph_arguments
 		*get_isomorph_arguments(
 				std::string &label);
+	orbits::classify_cubic_surfaces_description
+		*get_classify_cubic_surfaces(
+				std::string &label);
 
 };
 
@@ -1365,7 +1368,7 @@ public:
 
 	std::string define_label;
 
-	// TABLES/orbiter_objects1.csv
+	// TABLES/general/orbiter_objects1.csv
 
 
 
@@ -1464,11 +1467,9 @@ public:
 	std::string packing_with_assumed_symmetry_label;
 	int packing_with_assumed_symmetry_choose_fixed_points_clique_size;
 	std::string packing_was_choose_fixed_points_control_label;
-	//poset_classification::poset_classification_control
-	//	*packing_with_assumed_symmetry_choose_fixed_points_control;
 
 
-	// TABLES/orbiter_objects2.csv
+	// TABLES/general/orbiter_objects2.csv
 
 	int f_packing_long_orbits;
 	std::string packing_long_orbits_choose_fixed_points_label;
@@ -1498,6 +1499,8 @@ public:
 	apps_combinatorics::large_set_was_description
 		*large_set_was_descr;
 
+	// set and vector:
+
 	int f_set;
 	other::data_structures::set_builder_description
 		*Set_builder_description;
@@ -1505,6 +1508,11 @@ public:
 	int f_vector;
 	other::data_structures::vector_builder_description
 		*Vector_builder_description;
+
+	int f_text;
+	other::data_structures::text_builder_description
+		*Text_builder_description;
+
 
 	int f_symbolic_object;
 	algebra::expression_parser::symbolic_object_builder_description
@@ -1538,11 +1546,9 @@ public:
 	poset_classification::poset_classification_report_options
 		*Poset_classification_report_options;
 
-	// new:
 	int f_draw_options;
 	other::graphics::layered_graph_draw_options *Draw_options;
 
-	// new:
 	int f_draw_incidence_structure_options;
 	other::graphics::draw_incidence_structure_description
 		*Draw_incidence_structure_description;
@@ -1568,6 +1574,8 @@ public:
 	int f_isomorph_arguments;
 	isomorph::isomorph_arguments *Isomorph_arguments;
 
+	int f_classify_cubic_surfaces;
+	orbits::classify_cubic_surfaces_description *Classify_cubic_surfaces_description;
 
 
 	symbol_definition();
@@ -1643,6 +1651,10 @@ public:
 			std::string &label,
 			other::data_structures::vector_builder_description *Descr,
 			int verbose_level);
+	void definition_of_text(
+			std::string &label,
+			other::data_structures::text_builder_description *Descr,
+			int verbose_level);
 	void definition_of_symbolic_object(
 			std::string &label,
 			algebra::expression_parser::symbolic_object_builder_description *Descr,
@@ -1681,6 +1693,8 @@ public:
 	void definition_of_variety(
 			int verbose_level);
 	void definition_of_isomorph_arguments(
+			int verbose_level);
+	void definition_of_classify_cubic_surfaces(
 			int verbose_level);
 
 

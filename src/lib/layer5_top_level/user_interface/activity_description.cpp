@@ -2852,25 +2852,39 @@ void activity_description::do_variety_activity(
 
 
 	int *Idx;
+	int nb_input;
 
 	Sym->Orbiter_top_level_session->find_symbols(Sym->with_labels, Idx);
+
+	nb_input = Sym->with_labels.size();
+
+	if (f_v) {
+		cout << "activity_description::do_variety_activity "
+				"nb_input = " << nb_input << endl;
+	}
 
 	if (Sym->with_labels.size() < 1) {
 		cout << "activity requires at least one input" << endl;
 		exit(1);
 	}
 
-	canonical_form::variety_object_with_action *V;
+	canonical_form::variety_object_with_action **V;
 
-	V = (canonical_form::variety_object_with_action *)
-			Sym->Orbiter_top_level_session->get_object(Idx[0]);
+	V = (canonical_form::variety_object_with_action **) NEW_pvoid(nb_input);
+
+	int i;
+
+	for (i = 0; i < nb_input; i++) {
+		V[i] = (canonical_form::variety_object_with_action *)
+			Sym->Orbiter_top_level_session->get_object(Idx[i]);
+	}
 	{
 
 		canonical_form::variety_activity Activity;
 
 		Activity.init(
 				Variety_activity_description,
-				1,
+				nb_input,
 				V,
 				verbose_level);
 
@@ -2889,6 +2903,7 @@ void activity_description::do_variety_activity(
 	}
 
 	FREE_int(Idx);
+	FREE_pvoid((void **) V);
 
 	if (f_v) {
 		cout << "activity_description::do_variety_activity done" << endl;

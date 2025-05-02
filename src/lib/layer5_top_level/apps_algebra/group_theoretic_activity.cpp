@@ -847,7 +847,7 @@ void group_theoretic_activity::perform_activity(
 
 		algebra_global_with_action Algebra_global_with_action;
 
-		int expand_by_go = 10000;
+		int expand_by_go = 2000;
 
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
@@ -2127,10 +2127,6 @@ void group_theoretic_activity::perform_activity(
 		groups::sims *Sims;
 		//interfaces::conjugacy_classes_of_subgroups *class_data;
 
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"before AG->get_subgroup_lattice" << endl;
-		}
 		//AG->subgroup_lattice_magma(verbose_level);
 
 		if (AG->Subgroup_sims == NULL) {
@@ -2141,10 +2137,15 @@ void group_theoretic_activity::perform_activity(
 
 		Sims = AG->Subgroup_sims;
 
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before AG->get_subgroup_lattice" << endl;
+		}
+
 		AG->get_subgroup_lattice(
 				Sims,
 				AG->class_data,
-				verbose_level);
+				verbose_level - 2);
 
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
@@ -2159,7 +2160,7 @@ void group_theoretic_activity::perform_activity(
 				Sims,
 				AG->label,
 				AG->label_tex,
-				verbose_level - 1);
+				verbose_level - 2);
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
 					"after class_data->report" << endl;
@@ -2171,7 +2172,7 @@ void group_theoretic_activity::perform_activity(
 		}
 		AG->class_data->export_csv(
 				Sims,
-				verbose_level);
+				verbose_level - 2);
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
 					"after class_data->export_csv" << endl;

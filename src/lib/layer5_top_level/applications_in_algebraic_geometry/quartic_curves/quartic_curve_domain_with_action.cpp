@@ -22,13 +22,14 @@ namespace quartic_curves {
 quartic_curve_domain_with_action::quartic_curve_domain_with_action()
 {
 	Record_birth();
-		PA = NULL;
-		f_semilinear = false;
-		Dom = NULL;
-		A = NULL;
-		A_on_lines = NULL;
-		Elt1 = NULL;
-		AonHPD_4_3 = NULL;
+
+	PA = NULL;
+	f_semilinear = false;
+	Dom = NULL;
+	A = NULL;
+	A_on_lines = NULL;
+	Elt1 = NULL;
+	AonHPD_4_3 = NULL;
 }
 
 
@@ -63,12 +64,14 @@ void quartic_curve_domain_with_action::init(
 
 	A_on_lines = PA->A_on_lines;
 	if (f_v) {
-		cout << "quartic_curve_domain_with_action::init action A_on_lines:" << endl;
+		cout << "quartic_curve_domain_with_action::init "
+				"action A_on_lines:" << endl;
 		A_on_lines->print_info();
 	}
 	f_semilinear = A->is_semilinear_matrix_group();
 	if (f_v) {
-		cout << "quartic_curve_domain_with_action::init f_semilinear=" << f_semilinear << endl;
+		cout << "quartic_curve_domain_with_action::init "
+				"f_semilinear=" << f_semilinear << endl;
 	}
 
 
@@ -121,6 +124,7 @@ void quartic_curve_domain_with_action::table_of_quartic_curves(
 	}
 
 
+	string headings;
 	std::string *Table;
 	int nb_cols;
 
@@ -128,6 +132,7 @@ void quartic_curve_domain_with_action::table_of_quartic_curves(
 				QC,
 				nb_quartic_curves,
 				Table, nb_cols,
+				headings,
 				verbose_level);
 
 	if (f_v) {
@@ -144,45 +149,17 @@ void quartic_curve_domain_with_action::table_of_quartic_curves(
 	other::orbiter_kernel_system::file_io Fio;
 
 	string fname;
-	string headings;
 
-	headings.assign("OCN,K,Kon,Koff,Ago,NbPts,BisecantType,Eqn15,Eqn,Pts,Bitangents28");
 
 	fname = "quartic_curves_q" + std::to_string(PA->F->q) + "_info.csv";
 
-	Fio.Csv_file_support->write_table_of_strings(fname,
+	Fio.Csv_file_support->write_table_of_strings(
+			fname,
 			nb_quartic_curves, nb_cols, Table,
 			headings,
 			verbose_level);
 
 
-#if 0
-	string fname;
-
-
-
-	{
-		ofstream f(fname);
-		int i, j;
-
-		f << "Row,OCN,K,Kon,Koff,Ago,NbPts,BisecantType,Eqn15,Eqn,Pts,Bitangents28";
-		f << endl;
-		for (i = 0; i < nb_quartic_curves; i++) {
-			f << i;
-
-			for (j = 0; j < nb_cols; j++) {
-				f << "," << Table[i * nb_cols + j];
-			}
-			f << endl;
-		}
-		f << "END" << endl;
-	}
-
-
-	if (f_v) {
-		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-	}
-#endif
 
 	delete [] Table;
 
@@ -261,6 +238,7 @@ void quartic_curve_domain_with_action::create_table_of_strings(
 		applications_in_algebraic_geometry::quartic_curves::quartic_curve_create **QC,
 		int nb_quartic_curves,
 		std::string *&Table, int &nb_cols,
+		std::string &headings,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -270,9 +248,11 @@ void quartic_curve_domain_with_action::create_table_of_strings(
 		cout << "quartic_curve_domain_with_action::create_table_of_strings" << endl;
 	}
 
-	nb_cols = 11;
 
 	int h;
+
+	headings.assign("OCN,K,Ago,NbPts,BisecantType,Eqn15,Eqn,Pts,Bitangents28");
+	nb_cols = 9;
 
 	Table = new string [nb_quartic_curves * nb_cols];
 
@@ -294,11 +274,11 @@ void quartic_curve_domain_with_action::create_table_of_strings(
 
 
 			Table[h * nb_cols + 1] = std::to_string(QC[h]->QO->QP->Kovalevski->nb_Kovalevski);
-			Table[h * nb_cols + 2] = std::to_string(QC[h]->QO->QP->Kovalevski->nb_Kovalevski_on);
-			Table[h * nb_cols + 3] = std::to_string(QC[h]->QO->QP->Kovalevski->nb_Kovalevski_off);
-			Table[h * nb_cols + 4] = QC[h]->QOG->Aut_gens->group_order_stringify();
-			Table[h * nb_cols + 5] = std::to_string(QC[h]->QO->nb_pts);
-			Table[h * nb_cols + 6] = "\"" + s_Bisecant_line_type + "\"";
+			//Table[h * nb_cols + 2] = std::to_string(QC[h]->QO->QP->Kovalevski->nb_Kovalevski_on);
+			//Table[h * nb_cols + 3] = std::to_string(QC[h]->QO->QP->Kovalevski->nb_Kovalevski_off);
+			Table[h * nb_cols + 2] = QC[h]->QOG->Aut_gens->group_order_stringify();
+			Table[h * nb_cols + 3] = std::to_string(QC[h]->QO->nb_pts);
+			Table[h * nb_cols + 4] = "\"" + s_Bisecant_line_type + "\"";
 		}
 
 		string s_Eqn;
@@ -312,16 +292,18 @@ void quartic_curve_domain_with_action::create_table_of_strings(
 		s_Eqn_maple = QC[h]->QCDA->Dom->stringify_equation_maple(
 				QC[h]->QO->eqn15);
 
-		Table[h * nb_cols + 7] = "\"" + s_Eqn + "\"";
-		Table[h * nb_cols + 8] = "\"$" + s_Eqn_maple + "$\"";
-		Table[h * nb_cols + 9] = "\"" + s_Pts + "\"";
-		Table[h * nb_cols + 10] = "\"" + s_Bitangents + "\"";
+		Table[h * nb_cols + 5] = "\"" + s_Eqn + "\"";
+		Table[h * nb_cols + 6] = "\"$" + s_Eqn_maple + "$\"";
+		Table[h * nb_cols + 7] = "\"" + s_Pts + "\"";
+		Table[h * nb_cols + 8] = "\"" + s_Bitangents + "\"";
 	}
 	if (f_v) {
 		cout << "quartic_curve_domain_with_action::create_table_of_strings done" << endl;
 	}
 
 }
+
+
 
 
 

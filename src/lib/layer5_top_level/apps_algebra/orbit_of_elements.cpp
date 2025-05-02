@@ -110,7 +110,7 @@ void orbit_of_elements::init(
 			A_conj,
 			Elements_P, go_P,
 			Any_group->Subgroup_gens->gens,
-			verbose_level);
+			verbose_level - 4);
 
 	if (f_v) {
 		cout << "orbit_of_elements::init "
@@ -122,7 +122,7 @@ void orbit_of_elements::init(
 
 	Orbits_P->get_table_of_orbits(
 			Table_of_elements,
-			orbit_length, set_size, verbose_level);
+			orbit_length, set_size, verbose_level - 4);
 
 	Sorting.lint_vec_heapsort(Table_of_elements, orbit_length);
 

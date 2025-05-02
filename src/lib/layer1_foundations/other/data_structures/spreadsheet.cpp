@@ -1728,6 +1728,67 @@ void spreadsheet::stringify(
 
 
 
+void spreadsheet::stringify_but_keep_first_column(
+		std::string *&Header_rows, std::string *&Header_cols, std::string *&T,
+		int &nb_r, int &nb_c,
+		int verbose_level)
+// Header_rows[nb_r]
+// Header_cols[nb_c]
+// T[nb_r * nb_c]
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "spreadsheet::stringify_but_keep_first_column" << endl;
+	}
+
+
+	nb_r = nb_rows - 1;
+	nb_c = nb_cols;
+	Header_rows = new string[nb_r];
+	Header_cols = new string[nb_c];
+	T = new string[nb_r * nb_c];
+
+	int i, j;
+
+	T = new string[nb_r * nb_c];
+
+	for (i = 0; i < nb_r; i++) {
+
+		string s;
+
+		get_string(s, i + 1, 0);
+
+		Header_rows[i] = s;
+	}
+
+	for (j = 0; j < nb_c; j++) {
+
+		string s;
+
+		get_string(s, 0, j);
+
+		Header_cols[j] = s;
+	}
+
+	for (i = 0; i < nb_r; i++) {
+		for (j = 0; j < nb_c; j++) {
+
+			string s;
+
+			get_string(s, i + 1, j);
+
+			T[i * nb_c + j] = s;
+		}
+	}
+
+	if (f_v) {
+		cout << "spreadsheet::stringify_but_keep_first_column done" << endl;
+	}
+}
+
+
+
 //
 
 

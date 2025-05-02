@@ -323,11 +323,124 @@ void int_matrix::write_csv(
 	}
 	orbiter_kernel_system::file_io Fio;
 
+#if 0
 	Fio.Csv_file_support->int_matrix_write_csv(
 			fname, M, m, n);
+#endif
+
+	string *Table;
+	int nb_cols;
+	int nb_rows;
+	int i;
+	int f_latex = false;
+
+	nb_rows = m;
+	nb_cols = 2;
+
+	Table = new string[nb_rows * nb_cols];
+	for (i = 0; i < nb_rows; i++) {
+
+		Table[i * nb_cols + 0] =
+				std::to_string(i);
+
+
+		Table[i * nb_cols + 1] =
+				"\"" + Int_vec_stringify(M + i * n, n) + "\"";
+	}
+
+	std::string Col_headings[2];
+
+	Col_headings[0] = "Idx";
+	Col_headings[1] = "Vector";
+
+
+	//other::orbiter_kernel_system::file_io Fio;
+
+
+	Fio.Csv_file_support->write_table_of_strings_with_col_headings(
+			fname,
+			nb_rows, nb_cols, Table,
+			Col_headings,
+			verbose_level);
+
+	delete [] Table;
+
 
 	if (f_v) {
 		cout << "int_matrix::write_csv Written file " << fname
+				<< " of size " << Fio.file_size(fname) << endl;
+	}
+
+}
+
+void int_matrix::write_index_set_csv(
+		std::string &fname, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "int_matrix::write_index_set_csv" << endl;
+	}
+	orbiter_kernel_system::file_io Fio;
+
+#if 0
+	Fio.Csv_file_support->int_matrix_write_csv(
+			fname, M, m, n);
+#endif
+
+	string *Table;
+	int nb_cols;
+	int nb_rows;
+	int i;
+	int f_latex = false;
+	int *index_set;
+	int sz, j;
+
+	nb_rows = m;
+	nb_cols = 3;
+
+	index_set = NEW_int(n);
+	Table = new string[nb_rows * nb_cols];
+	for (i = 0; i < nb_rows; i++) {
+
+		Table[i * nb_cols + 0] =
+				std::to_string(i);
+
+		sz = 0;
+		for (j = 0; j < n; j++) {
+			if (M[i * n + j]) {
+				index_set[sz++] = j;
+			}
+		}
+
+		Table[i * nb_cols + 1] =
+				std::to_string(sz);
+
+		Table[i * nb_cols + 2] =
+				"\"" + Int_vec_stringify(index_set, sz) + "\"";
+	}
+
+	std::string Col_headings[2];
+
+	Col_headings[0] = "Idx";
+	Col_headings[1] = "Sz";
+	Col_headings[2] = "Vector";
+
+
+	//other::orbiter_kernel_system::file_io Fio;
+
+
+	Fio.Csv_file_support->write_table_of_strings_with_col_headings(
+			fname,
+			nb_rows, nb_cols, Table,
+			Col_headings,
+			verbose_level);
+
+	delete [] Table;
+
+
+	if (f_v) {
+		cout << "int_matrix::write_index_set_csv Written file " << fname
 				<< " of size " << Fio.file_size(fname) << endl;
 	}
 

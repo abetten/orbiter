@@ -344,6 +344,12 @@ void design_object::do_export_flags(
 	if (f_v) {
 		cout << "design_object::do_export_flags "
 				"fname=" << fname << endl;
+		cout << "design_object::do_export_flags "
+				"v=" << v << endl;
+		cout << "design_object::do_export_flags "
+				"b=" << b << endl;
+		cout << "design_object::do_export_flags "
+				"nb_inc=" << nb_inc << endl;
 	}
 
 
@@ -351,14 +357,27 @@ void design_object::do_export_flags(
 		ofstream ost(fname);
 
 		int h;
+		int nb_inc1;
+
+		nb_inc1 = 0;
 		ost << v << " " << b << " " << nb_inc << endl;
 		for (h = 0; h < v * b; h++) {
 			if (incma[h]) {
 				ost << h << " ";
+				nb_inc1++;
 			}
 		}
 		ost << endl;
 		ost << "-1" << endl;
+
+		if (nb_inc1 != nb_inc) {
+			cout << "design_object::do_export_flags nb_inc1 != nb_inc" << endl;
+			cout << "design_object::do_export_flags "
+					"nb_inc=" << nb_inc << endl;
+			cout << "design_object::do_export_flags "
+					"nb_inc1=" << nb_inc1 << endl;
+			exit(1);
+		}
 	}
 	other::orbiter_kernel_system::file_io Fio;
 

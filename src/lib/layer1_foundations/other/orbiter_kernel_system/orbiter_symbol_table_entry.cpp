@@ -660,6 +660,25 @@ void orbiter_symbol_table_entry::init_vector(
 	}
 }
 
+void orbiter_symbol_table_entry::init_text(
+		std::string &label,
+		void *TB, int verbose_level)
+//other::data_structures::text_builder *TB
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_text" << endl;
+	}
+	orbiter_symbol_table_entry::label.assign(label);
+	type = t_object;
+	object_type = t_text;
+	ptr = TB;
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_text done" << endl;
+	}
+}
+
 void orbiter_symbol_table_entry::init_symbolic_object(
 		std::string &label,
 		void *SB, int verbose_level)
@@ -973,6 +992,23 @@ void orbiter_symbol_table_entry::init_isomorph_arguments(
 	}
 }
 
+void orbiter_symbol_table_entry::init_classify_cubic_surfaces(
+		std::string &label,
+		void *V, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_classify_cubic_surfaces" << endl;
+	}
+	orbiter_symbol_table_entry::label.assign(label);
+	type = t_object;
+	object_type = t_classify_cubic_surfaces;
+	ptr = V;
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_classify_cubic_surfaces done" << endl;
+	}
+}
 
 
 
@@ -1058,6 +1094,9 @@ void orbiter_symbol_table_entry::print()
 #endif
 
 
+		// group of ten:
+
+
 		else if (object_type == t_spread_classify) {
 			cout << "spread classify" << endl;
 		}
@@ -1112,6 +1151,8 @@ void orbiter_symbol_table_entry::print()
 #endif
 
 
+		// group of ten:
+
 
 		else if (object_type == t_translation_plane) {
 			cout << "translation plane" << endl;
@@ -1151,14 +1192,17 @@ void orbiter_symbol_table_entry::print()
 		t_large_set_was,
 		t_set,
 		t_vector,
+		t_text,
 		t_symbolic_object,
 		t_combinatorial_object,
 		t_geometry_builder,
 		t_vector_ge,
 		t_action_on_forms,
 		t_orbits,
-		t_poset_classification_control,
 #endif
+
+
+		// group of ten:
 
 		else if (object_type == t_large_set_was) {
 			cout << "large_set_was" << endl;
@@ -1173,6 +1217,13 @@ void orbiter_symbol_table_entry::print()
 
 			VB = (data_structures::vector_builder *) ptr;
 			VB->print(cout);
+		}
+		else if (object_type == t_text) {
+			cout << "text : ";
+			data_structures::text_builder *TB;
+
+			TB = (data_structures::text_builder *) ptr;
+			TB->print(cout);
 		}
 		else if (object_type == t_symbolic_object) {
 			cout << "symbolic object" << endl;
@@ -1192,13 +1243,11 @@ void orbiter_symbol_table_entry::print()
 		else if (object_type == t_orbits) {
 			cout << "orbits" << endl;
 		}
-		else if (object_type == t_poset_classification_control) {
-			cout << "poset_classification_control" << endl;
-		}
 
 
 #if 0
 		// group of 10:
+		t_poset_classification_control,
 		t_poset_classification_report_options,
 		t_draw_options,
 		t_draw_incidence_structure_options,
@@ -1208,10 +1257,15 @@ void orbiter_symbol_table_entry::print()
 		t_mapping,
 		t_variety,
 		t_combo_with_group,
-		t_isomorph_arguments
 #endif
 
 
+		// group of ten:
+
+
+		else if (object_type == t_poset_classification_control) {
+			cout << "poset_classification_control" << endl;
+		}
 		else if (object_type == t_poset_classification_report_options) {
 			cout << "poset_classification_report_options" << endl;
 		}
@@ -1239,8 +1293,21 @@ void orbiter_symbol_table_entry::print()
 		else if (object_type == t_combo_with_group) {
 			cout << "combo_with_group" << endl;
 		}
+
+
+		// group of 2:
+
+#if 0
+		// group of 2:
+		t_isomorph_arguments
+		t_classify_cubic_surfaces
+#endif
+
 		else if (object_type == t_isomorph_arguments) {
 			cout << "isomorph_arguments" << endl;
+		}
+		else if (object_type == t_classify_cubic_surfaces) {
+			cout << "classify_cubic_surfaces" << endl;
 		}
 
 	}

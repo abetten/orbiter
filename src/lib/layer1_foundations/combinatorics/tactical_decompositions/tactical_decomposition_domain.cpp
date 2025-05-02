@@ -245,13 +245,13 @@ void tactical_decomposition_domain::convert_stack_to_tdo(
 					cout << "end of file reached" << endl;
 				}
 				break;
-				}
+			}
 			if (!GP.input(f)) {
 				if (f_v) {
 					cout << "GP.input returns false" << endl;
 				}
 				break;
-				}
+			}
 			if (f_v) {
 				cout << "read decomposition " << i
 							<< " v=" << GP.v << " b=" << GP.b << endl;

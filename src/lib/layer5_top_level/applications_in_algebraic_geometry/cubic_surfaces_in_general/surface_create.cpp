@@ -118,7 +118,7 @@ void surface_create::create_cubic_surface(
 		cout << "surface_create::create_cubic_surface "
 				"before init" << endl;
 	}
-	init(Descr, verbose_level - 2);
+	init(Descr, verbose_level);
 	if (f_v) {
 		cout << "surface_create::create_cubic_surface "
 				"after init" << endl;
@@ -316,7 +316,7 @@ int surface_create::init(
 		cout << "surface_create::init "
 				"before create_surface_from_description" << endl;
 	}
-	if (!create_surface_from_description(verbose_level - 2)) {
+	if (!create_surface_from_description(verbose_level)) {
 		if (f_v) {
 			cout << "surface_create::init "
 					"create_surface_from_description "
@@ -608,7 +608,7 @@ int surface_create::create_surface_from_description(
 				Descr->by_symbolic_object_ring_label,
 				Descr->by_symbolic_object_name_of_formula,
 				Descr->select_double_six_string,
-				verbose_level - 2)) {
+				verbose_level)) {
 			if (f_v) {
 				cout << "surface_create::create_surface_from_description "
 						"cannot create surface" << endl;
@@ -1731,15 +1731,15 @@ int surface_create::create_surface_by_symbolic_object(
 
 	int ret;
 
-	if (f_v) {
-		cout << "surface_create::create_surface_by_symbolic_object "
-				"before Surf->create_surface_by_equation" << endl;
-	}
 
 	algebra::ring_theory::homogeneous_polynomial_domain *Ring;
 
 	Ring = Get_ring(ring_label);
 
+	if (f_v) {
+		cout << "surface_create::create_surface_by_symbolic_object "
+				"before Surf->create_surface_by_symbolic_object" << endl;
+	}
 
 	ret = Surf->create_surface_by_symbolic_object(
 			Ring,
@@ -1767,17 +1767,27 @@ int surface_create::create_surface_by_symbolic_object(
 	label_txt = "equation_" + name_of_formula + "_q" + std::to_string(F->q);
 
 
+	other::data_structures::string_tools String;
+
+
+
+	label_tex = "equation {\\tt " + String.texify(name_of_formula) + "} q" + std::to_string(F->q);
+
+	SO->label_txt = label_txt;
+	SO->label_tex = label_tex;
+
+#if 0
 	label_tex = name_of_formula;
 	ST.fix_escape_characters(label_tex);
 	ST.remove_specific_character(label_tex, '_');
-
+#endif
 
 
 
 	if (f_v) {
 		cout << "surface_create::create_surface_by_symbolic_object " << endl;
-		cout << "label_txt = " << label_txt << endl;
-		cout << "label_tex = " << label_tex << endl;
+		cout << "label_txt = " << SO->label_txt << endl;
+		cout << "label_tex = " << SO->label_tex << endl;
 	}
 
 

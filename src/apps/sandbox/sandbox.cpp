@@ -16,13 +16,153 @@ using namespace orbiter;
 
 int main()
 {
+
+
+#if 0
 	algebra::field_theory::finite_field_description Descr;
 	algebra::field_theory::finite_field Fq;
+
 
 	Descr.f_q = true;
 	Descr.q_text.assign("11");
 	Fq.init(&Descr, 1 /* verbose_level */);
+#endif
 
+
+#if 0
+	string mask;
+
+	mask =
+	"Dickson1_q2_eqn_%d:\n\
+		$(ORBITER) -v 6 \\\n\
+			-define F -finite_field -q 2 -end \\\n\
+			-define P -projective_space -n 3 -field F -v 0 -end \\\n\
+			-define R -polynomial_ring \\\n\
+				-field F \\\n\
+				-number_of_variables 4 \\\n\
+				-homogeneous_of_degree 3 \\\n\
+				-monomial_ordering_partition \\\n\
+				-variables \"X0,X1,X2,X3\" \"X_0,X_1,X_2,X_3\" \\\n\
+			-end \\\n\
+			-define V -variety \\\n\
+				-projective_space P \\\n\
+				-ring R \\\n\
+				-equation_by_coefficients \\\n\
+					$(DICKSON_1_Q2_EQN_%d) \\\n\
+				-label_txt Dickson_1_q2_eqn_%d \\\n\
+				-label_tex \"{\\rm Dickson\\_1\\_q2\\_eqn\\_%d}\" \\\n\
+				-compute_lines \\\n\
+			-end \\\n\
+			-with V -do -variety_activity \\\n\
+				-compute_group \\\n\
+				-nauty_control -save_orbit_of_equations eqn_ -end \\\n\
+			-end \\\n\
+			-with V -do -variety_activity \\\n\
+				-compute_set_stabilizer \\\n\
+				-nauty_control -save_orbit_of_equations eqn_ -end \\\n\
+			-end \\\n\
+			-with V -do -variety_activity -singular_points -end \\\n\
+			-with V -do -variety_activity -report -end \\\n\
+			-with V -do -variety_activity -export -end\n\
+		pdflatex variety_Dickson_1_q2_eqn_%d_report.tex\n\
+		open variety_Dickson_1_q2_eqn_%d_report.pdf\n";
+
+	char str[10000];
+
+
+	int i;
+	for (i = 1; i < 28; i++) {
+		snprintf(str, sizeof(str), mask.c_str(), i,i,i,i,i,i);
+
+		cout << endl;
+		cout << str << endl;
+		cout << endl;
+
+	}
+#endif
+
+#if 0
+	int i;
+	for (i = 1; i < 28; i++) {
+		cout << "\tmake Dickson1_q2_eqn_" << i << endl;
+	}
+#endif
+
+
+
+#if 0
+	string mask;
+
+	mask =
+	"Dickson%d_group:\n\
+		$(ORBITER) -v 6 \\\n\
+			-define F -finite_field -q 16 -end \\\n\
+			-define P -projective_space -n 3 -field F -v 0 -end \\\n\
+			-define R -polynomial_ring \\\n\
+				-field F \\\n\
+				-number_of_variables 4 \\\n\
+				-homogeneous_of_degree 3 \\\n\
+				-monomial_ordering_partition \\\n\
+				-variables \"X0,X1,X2,X3\" \"X_0,X_1,X_2,X_3\" \\\n\
+			-end \\\n\
+			-define V -variety \\\n\
+				-projective_space P \\\n\
+				-ring R \\\n\
+				-equation_in_algebraic_form \\\n\
+					$(Dickson%d_eqn_af) \\\n\
+				-label_txt Dickson_%d \\\n\
+				-label_tex \"{\\rm Dickson\\_%d}\" \\\n\
+				-compute_lines \\\n\
+			-end \\\n\
+			-with V -do -variety_activity \\\n\
+				-compute_group \\\n\
+				-nauty_control -save_orbit_of_equations eqn_ -end \\\n\
+			-end \\\n\
+			-with V -do -variety_activity \\\n\
+				-compute_set_stabilizer \\\n\
+				-nauty_control -save_orbit_of_equations eqn_ -end \\\n\
+			-end \\\n\
+			-with V -do -variety_activity -singular_points -end \\\n\
+			-with V -do -variety_activity -report -end \\\n\
+			-with V -do -variety_activity -export -end\n\
+		pdflatex variety_Dickson_%d_report.tex\n\
+		open variety_Dickson_%d_report.pdf\n";
+
+	char str[10000];
+
+
+	int i;
+	for (i = 1; i < 48; i++) {
+		snprintf(str, sizeof(str), mask.c_str(), i,i,i,i,i,i);
+
+		cout << endl;
+		cout << str << endl;
+		cout << endl;
+
+	}
+#endif
+
+#if 0
+	int i;
+	for (i = 1; i < 48; i++) {
+		cout << "\t\t\t-define Dickson" << i << " -text -here $(Dickson" << i << "_eqn_af) -end \\" << endl;
+	}
+#endif
+
+
+#if 0
+	int i;
+	for (i = 1; i < 48; i++) {
+		cout << "\tmake Dickson" << i << "_group" << endl;
+	}
+#endif
+
+#if 0
+	int i;
+	for (i = 1; i < 48; i++) {
+		cout << "\t\tvariety_Dickson_" << i << "_report.pdf \\" << endl;
+	}
+#endif
 
 #if 0
 	char str[10000];

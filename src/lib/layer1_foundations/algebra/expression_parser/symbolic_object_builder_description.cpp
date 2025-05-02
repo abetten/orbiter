@@ -421,7 +421,6 @@ int symbolic_object_builder_description::read_arguments(
 			}
 		}
 
-
 		else if (ST.stringcmp(argv[i], "-encode_CRC") == 0) {
 			f_encode_CRC = true;
 			encode_CRC_block_length = ST.strtoi(argv[++i]);
@@ -435,6 +434,7 @@ int symbolic_object_builder_description::read_arguments(
 						<< endl;
 			}
 		}
+
 		else if (ST.stringcmp(argv[i], "-decode_CRC") == 0) {
 			f_decode_CRC = true;
 			decode_CRC_block_length = ST.strtoi(argv[++i]);

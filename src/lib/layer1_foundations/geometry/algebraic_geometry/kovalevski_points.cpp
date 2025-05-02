@@ -40,8 +40,8 @@ kovalevski_points::kovalevski_points()
 
 
 	nb_Kovalevski = 0;
-	nb_Kovalevski_on = 0;
-	nb_Kovalevski_off = 0;
+	//nb_Kovalevski_on = 0;
+	//nb_Kovalevski_off = 0;
 	Kovalevski_point_idx = NULL;
 	Kovalevski_points = NULL;
 	Pts_off = NULL;
@@ -138,8 +138,9 @@ void kovalevski_points::compute_Kovalevski_points(
 	Pts_off = NEW_lint(QO->Dom->P->Subspaces->N_points);
 
 	Combi.set_complement_lint(
-			QO->Pts, QO->nb_pts, Pts_off /*complement*/,
-			nb_pts_off, QO->Dom->P->Subspaces->N_points);
+			QO->Pts, QO->nb_pts,
+			Pts_off /*complement*/, nb_pts_off,
+			QO->Dom->P->Subspaces->N_points);
 
 	if (f_v) {
 		cout << "kovalevski_points::compute_Kovalevski_points before "
@@ -198,24 +199,32 @@ void kovalevski_points::compute_Kovalevski_points(
 
 
 	f_is_full = true;
-	nb_Kovalevski_on = 0;
 	for (i = Point_type->nb_types - 1; i >= 0; i--) {
 		f = Point_type->type_first[i];
-		l = Point_type->type_len[i];
+		//l = Point_type->type_len[i];
 		a = Point_type->data_sorted[f];
 		if (a == 0) {
 			f_is_full = false;
 		}
+	}
+	f_fullness_has_been_established = true;
+
+
+#if 0
+	nb_Kovalevski = 0;
+	for (i = Point_type->nb_types - 1; i >= 0; i--) {
+		f = Point_type->type_first[i];
+		l = Point_type->type_len[i];
+		a = Point_type->data_sorted[f];
 		if (a == 4) {
-			nb_Kovalevski_on += l;
+			nb_Kovalevski += l;
 			for (j = 0; j < l; j++) {
 				b = Point_type->sorting_perm_inv[f + j];
 				K.push_back(b);
 			}
 		}
 	}
-	f_fullness_has_been_established = true;
-
+#endif
 
 
 	if (f_v) {
@@ -264,20 +273,19 @@ void kovalevski_points::compute_Kovalevski_points(
 	}
 
 
-	nb_Kovalevski_off = 0;
+	nb_Kovalevski = 0;
 	for (i = Point_off_type->nb_types - 1; i >= 0; i--) {
 		f = Point_off_type->type_first[i];
 		l = Point_off_type->type_len[i];
 		a = Point_off_type->data_sorted[f];
 		if (a == 4) {
-			nb_Kovalevski_off += l;
+			nb_Kovalevski += l;
 			for (j = 0; j < l; j++) {
 				b = Point_off_type->sorting_perm_inv[f + j];
 				K.push_back(b);
 			}
 		}
 	}
-	nb_Kovalevski = nb_Kovalevski_on + nb_Kovalevski_off;
 	if (K.size() != nb_Kovalevski) {
 		cout << "K.size() != nb_Kovalevski" << endl;
 		cout << "K.size()=" << K.size() << endl;
@@ -285,9 +293,8 @@ void kovalevski_points::compute_Kovalevski_points(
 		exit(1);
 	}
 	if (f_v) {
-		cout << "kovalevski_points::compute_Kovalevski_points nb_Kovalevski     = " << nb_Kovalevski << endl;
-		cout << "kovalevski_points::compute_Kovalevski_points nb_Kovalevski_on  = " << nb_Kovalevski_on << endl;
-		cout << "kovalevski_points::compute_Kovalevski_points nb_Kovalevski_off = " << nb_Kovalevski_off << endl;
+		cout << "kovalevski_points::compute_Kovalevski_points "
+				"nb_Kovalevski = " << nb_Kovalevski << endl;
 	}
 
 	Kovalevski_point_idx = NEW_int(nb_Kovalevski);
@@ -418,8 +425,10 @@ void kovalevski_points::compute_points_on_lines_worker(
 	Int_vec_zero(f_is_on_line, nb_points);
 
 	pts_on_lines = NEW_OBJECT(other::data_structures::set_of_sets);
+
 	pts_on_lines->init_basic_constant_size(nb_points,
 		nb_lines, QO->Dom->F->q + 1, 0 /* verbose_level */);
+
 	pt_coords = NEW_int(nb_points * 3);
 	for (i = 0; i < nb_points; i++) {
 		QO->Dom->P->unrank_point(pt_coords + i * 3, Pts[i]);
@@ -483,8 +492,10 @@ void kovalevski_points::compute_contact_multiplicity(
 
 			Int_vec_copy(QO->Dom->P->Subspaces->Grass_lines->M, Basis, 6);
 
-			QO->Dom->F->Linear_algebra->adjust_basis(Basis, w,
-					3 /* n */, 2 /* k */, 1 /* d */, verbose_level);
+			QO->Dom->F->Linear_algebra->adjust_basis(
+					Basis, w,
+					3 /* n */, 2 /* k */, 1 /* d */,
+					verbose_level);
 
 			// now the first row of Basis is w
 			// and the second row is another point on the line
@@ -716,7 +727,8 @@ void kovalevski_points::print_lines_and_points_of_contact(
 
 	for (i = 0; i < nb_lines; i++) {
 		//fp << "Line " << i << " is " << v[i] << ":\\\\" << endl;
-		QO->Dom->P->Subspaces->Grass_lines->unrank_lint(Lines[i], 0 /*verbose_level*/);
+		QO->Dom->P->Subspaces->Grass_lines->unrank_lint(
+				Lines[i], 0 /*verbose_level*/);
 		ost << "$" << endl;
 
 		ost << QO->Dom->Schlaefli->Line_label_tex[i];
@@ -730,7 +742,8 @@ void kovalevski_points::print_lines_and_points_of_contact(
 		ost << " = " << endl;
 		//print_integer_matrix_width(cout,
 		// P->Grass_lines->M, k, n, n, F->log10_of_q + 1);
-		QO->Dom->P->Subspaces->Grass_lines->latex_matrix(ost,
+		QO->Dom->P->Subspaces->Grass_lines->latex_matrix(
+				ost,
 				QO->Dom->P->Subspaces->Grass_lines->M);
 
 

@@ -297,6 +297,7 @@ namespace algebra {
 		class finite_field_activity;
 		class finite_field_description;
 		class finite_field_io;
+		class finite_field_properties;
 		class finite_field;
 		class finite_field_implementation_by_tables;
 		class finite_field_implementation_wo_tables;
@@ -700,6 +701,10 @@ namespace other {
 		class tally_lint;
 		class tally_vector_data;
 		class tally;
+		class text_builder_description;
+		class text_builder;
+		class vector_builder_description;
+		class vector_builder;
 		class vector_hashing;
 
 	}
@@ -818,15 +823,16 @@ namespace other {
 			t_large_set_was,
 			t_set,
 			t_vector,
+			t_text,
 			t_symbolic_object,
 			t_combinatorial_object,
 			t_geometry_builder,
 			t_vector_ge,
 			t_action_on_forms,
 			t_orbits,
-			t_poset_classification_control,
 
-			// group of 10:
+			// group of ten:
+			t_poset_classification_control,
 			t_poset_classification_report_options,
 			t_draw_options,
 			t_draw_incidence_structure_options,
@@ -836,10 +842,16 @@ namespace other {
 			t_mapping,
 			t_variety,
 			t_combo_with_group,
+
+
+			// group of 2:
 			t_isomorph_arguments,
+			t_classify_cubic_surfaces,
 
 		};
-		// please maintain orbiter_symbol_table::stringify_type and orbiter_symbol_table_entry::print
+		// please maintain:
+		// orbiter_kernel_system::orbiter_symbol_table::stringify_type
+		// orbiter_kernel_system::orbiter_symbol_table_entry::print
 
 
 		class activity_output;
@@ -1060,6 +1072,9 @@ namespace other {
 #define Lint_vec_stringify(v, len) other::orbiter_kernel_system::Orbiter->Lint_vec->stringify(v, len)
 
 #define Get_vector(A) other::orbiter_kernel_system::Orbiter->get_object_of_type_vector(A)
+#define Has_text(A) other::orbiter_kernel_system::Orbiter->is_text_available(A)
+#define Get_text(A) other::orbiter_kernel_system::Orbiter->get_text(A)
+#define Get_string(A) other::orbiter_kernel_system::Orbiter->get_string(A)
 #define Get_int_vector_from_label(A, B, C, D) other::orbiter_kernel_system::Orbiter->get_int_vector_from_label(A, B, C, D)
 #define Get_lint_vector_from_label(A, B, C, D) other::orbiter_kernel_system::Orbiter->get_lint_vector_from_label(A, B, C, D)
 #define Get_matrix(label, A, m, n) other::orbiter_kernel_system::Orbiter->get_matrix_from_label(label, A, m, n)
@@ -1077,7 +1092,7 @@ namespace other {
 #define Get_any_group_opaque(A) other::orbiter_kernel_system::Orbiter->get_any_group_opaque(A)
 #define Get_isomorph_arguments_opaque(A) other::orbiter_kernel_system::Orbiter->get_isomorph_arguments_opaque(A)
 #define Get_geometric_object(A) other::orbiter_kernel_system::Orbiter->get_geometric_object(A)
-
+#define Get_classify_cubic_surfaces_opaque() other::orbiter_kernel_system::Orbiter->get_classify_cubic_surfaces_opaque(A)
 
 
 

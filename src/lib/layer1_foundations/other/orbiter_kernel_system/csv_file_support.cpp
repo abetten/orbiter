@@ -1228,18 +1228,28 @@ void csv_file_support::do_csv_file_select_cols(
 		cout << "csv_file_support::do_csv_file_select_cols fname_append = " << fname_append << endl;
 		cout << "csv_file_support::do_csv_file_select_cols cols_text = " << cols_text << endl;
 	}
-	long int *Cols;
-	int nb_cols;
 
 	//Int_vec_scan(cols_text, Cols, nb_cols);
 
+	other::data_structures::string_tools String;
 
+	std::vector<std::string> headings_in;
+
+
+	String.parse_comma_separated_list(
+			cols_text,
+			headings_in,
+			verbose_level);
+
+
+#if 0
 	data_structures::vector_builder *vb;
 
 	vb = Get_vector(cols_text);
 
 	nb_cols = vb->len;
 	Cols = vb->v;
+#endif
 	//long int *v;
 	//int len;
 
@@ -1256,25 +1266,39 @@ void csv_file_support::do_csv_file_select_cols(
 		cout << "csv_file_support::do_csv_file_select_cols "
 				"nb_rows=" << nb_rows << endl;
 		cout << "csv_file_support::do_csv_file_select_cols "
-				"nb_cols=" << nb_cols << endl;
+				"cols_text=" << cols_text << endl;
+	}
+
+	long int *Cols;
+	int nb_cols;
+	int j;
+
+	nb_cols = headings_in.size();
+
+	Cols = NEW_lint(nb_cols);
+
+	for (j = 0; j < nb_cols; j++) {
+		Cols[j] = S.find_column(headings_in[j]);
+	}
+
+	if (f_v) {
 		cout << "csv_file_support::do_csv_file_select_cols "
 				"Cols=";
 		Lint_vec_print(cout, Cols, nb_cols);
 		cout << endl;
 	}
 
-
 	std::string *Header_rows;
 	std::string *Header_cols;
 	std::string *T;
 	int nb_r, nb_c;
 
-	S.stringify(
+	S.stringify_but_keep_first_column(
 			Header_rows, Header_cols, T,
 			nb_r, nb_c,
 			verbose_level - 1);
 
-	int i, j;
+	int i;
 
 	if (false) {
 		cout << "Header_cols" << endl;
@@ -1301,6 +1325,15 @@ void csv_file_support::do_csv_file_select_cols(
 	for (j = 0; j < nb_cols; j++) {
 		Header_cols2[j] = Header_cols[Cols[j]];
 	}
+
+	if (f_v) {
+		cout << "csv_file_support::do_csv_file_select_cols "
+				"Columns" << endl;
+		for (j = 0; j < nb_cols; j++) {
+			cout << j << " : " << headings_in[j] << " : " << Cols[j] << " : " << Header_cols2[j] << endl;
+		}
+	}
+
 
 	T2 = new string [nb_r * nb_cols];
 	for (i = 0; i < nb_r; i++) {
@@ -1352,7 +1385,8 @@ void csv_file_support::do_csv_file_select_cols(
 			<< " of size " << Fio->file_size(fname_out) << endl;
 
 
-	//FREE_int(Cols);
+	FREE_lint(Cols);
+
 	if (f_v) {
 		cout << "csv_file_support::do_csv_file_select_cols done" << endl;
 	}

@@ -2010,7 +2010,7 @@ void vector_ge::field_reduction(
 		exit(1);
 	}
 
-	if (!F->f_related_fields_have_been_computed) {
+	if (!F->Finite_field_properties->f_related_fields_have_been_computed) {
 		cout << "vector_ge::field_reduction "
 				"related fields have not yet been computed" << endl;
 		exit(1);
@@ -2033,7 +2033,7 @@ void vector_ge::field_reduction(
 				"order_of_subfield=" << order_of_subfield << endl;
 	}
 
-	idx = F->Related_fields->position_of_subfield(
+	idx = F->Finite_field_properties->Related_fields->position_of_subfield(
 			order_of_subfield);
 	if (f_v) {
 		cout << "vector_ge::field_reduction idx=" << idx << endl;
@@ -2041,7 +2041,8 @@ void vector_ge::field_reduction(
 
 	//algebra::field_theory::finite_field *Subfield = F->Related_fields->Subfield + idx; // [nb_subfields]
 
-	algebra::field_theory::subfield_structure *SubS = F->Related_fields->SubS + idx; // [nb_subfields]
+	algebra::field_theory::subfield_structure *SubS =
+			F->Finite_field_properties->Related_fields->SubS + idx; // [nb_subfields]
 
 	int h;
 	int *Elt;

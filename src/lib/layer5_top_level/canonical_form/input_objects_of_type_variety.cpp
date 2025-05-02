@@ -128,10 +128,10 @@ void input_objects_of_type_variety::read_objects_from_list_of_csv_files(
 
 void input_objects_of_type_variety::init_direct(
 		int nb_input_Vo,
-		canonical_form::variety_object_with_action *Input_Vo,
+		canonical_form::variety_object_with_action **Input_Vo,
 		std::string &fname_base_out,
 		int verbose_level)
-// Vo[i] = Input_Vo + i;
+// Vo[i] = Input_Vo[i];
 // Vo[nb_objects_to_test]
 {
 	int f_v = (verbose_level >= 1);
@@ -153,7 +153,7 @@ void input_objects_of_type_variety::init_direct(
 	int i;
 
 	for (i = 0; i < nb_objects_to_test; i++) {
-		Vo[i] = Input_Vo + i;
+		Vo[i] = Input_Vo[i];
 
 		if (f_v) {
 			cout << "input_objects_of_type_variety::init_direct "

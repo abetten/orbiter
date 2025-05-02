@@ -1,0 +1,5 @@
+ROW,C1,C2,C3
+0,"tab:text:builder",,
+1,"Text Builder Commands",,
+1,"\verb'-here' "," string "," Creates a text object from the given string. "
+END

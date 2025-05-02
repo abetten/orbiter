@@ -85,11 +85,19 @@ void surface_object::init_equation_points_and_lines_only(
 
 	Variety_object = NEW_OBJECT(variety_object);
 
+	if (f_v) {
+		cout << "surface_object::init_equation_points_and_lines_only "
+				"before Variety_object->init_equation_only" << endl;
+	}
 	Variety_object->init_equation_only(
 			Surf->P,
 			Surf->PolynomialDomains->Poly3_4,
 			eqn,
 			verbose_level);
+	if (f_v) {
+		cout << "surface_object::init_equation_points_and_lines_only "
+				"after Variety_object->init_equation_only" << endl;
+	}
 
 	// does not enumerate the points and lines
 
@@ -154,7 +162,8 @@ void surface_object::init_equation(
 					"find_double_six_and_rearrange_lines" << endl;
 		}
 		find_double_six_and_rearrange_lines(
-				Variety_object->Line_sets->Sets[0], 0/*verbose_level - 2*/);
+				Variety_object->Line_sets->Sets[0],
+				verbose_level - 2);
 
 		if (f_v) {
 			cout << "surface_object::init_equation after "
@@ -572,6 +581,8 @@ void surface_object::recompute_properties(
 void surface_object::find_double_six_and_rearrange_lines(
 	long int *Lines,
 	int verbose_level)
+// Lines are given as line ranks in PG(3,q)
+// there must be exactly 27 lines.
 {
 	int f_v = (verbose_level >= 1);
 	long int Lines0[27];
@@ -588,22 +599,56 @@ void surface_object::find_double_six_and_rearrange_lines(
 
 
 	if (f_v) {
-		cout << "surface_object::find_double_six_and_rearrange_lines" << endl;
+		cout << "surface_object::find_double_six_and_rearrange_lines, "
+				"verbose_level = " << verbose_level << endl;
 	}
 	Lint_vec_copy(Lines, Lines0, 27);
+	if (f_v) {
+		cout << "surface_object::find_double_six_and_rearrange_lines, "
+				"Lines = ";
+		Lint_vec_print(cout, Lines, 27);
+		cout << endl;
+	}
 
+	if (f_v) {
+		cout << "surface_object::find_double_six_and_rearrange_lines "
+				"before Surf->compute_adjacency_matrix_of_line_intersection_graph" << endl;
+	}
 	Surf->compute_adjacency_matrix_of_line_intersection_graph(
-			Adj, Lines0, 27, 0 /* verbose_level */);
+			Adj, Lines0, 27,
+			0 /* verbose_level */);
+	if (f_v) {
+		cout << "surface_object::find_double_six_and_rearrange_lines "
+				"after Surf->compute_adjacency_matrix_of_line_intersection_graph" << endl;
+	}
 
 	line_intersections = NEW_OBJECT(other::data_structures::set_of_sets);
 
+	if (f_v) {
+		cout << "surface_object::find_double_six_and_rearrange_lines "
+				"before line_intersections->init_from_adjacency_matrix" << endl;
+	}
 	line_intersections->init_from_adjacency_matrix(
 			27,
-			Adj, 0 /* verbose_level */);
+			Adj,
+			0 /* verbose_level */);
+	if (f_v) {
+		cout << "surface_object::find_double_six_and_rearrange_lines "
+				"after line_intersections->init_from_adjacency_matrix" << endl;
+	}
 
+	if (f_v) {
+		cout << "surface_object::find_double_six_and_rearrange_lines "
+				"before Surf->list_starter_configurations" << endl;
+	}
 	Surf->list_starter_configurations(
 			Lines0, 27,
-		line_intersections, Starter_Table, nb_starter, verbose_level);
+		line_intersections, Starter_Table, nb_starter,
+		verbose_level);
+	if (f_v) {
+		cout << "surface_object::find_double_six_and_rearrange_lines "
+				"after Surf->list_starter_configurations" << endl;
+	}
 
 		// 432 = 36 * 12
 		// is the number of double sixes with a distinguished line.
@@ -617,12 +662,35 @@ void surface_object::find_double_six_and_rearrange_lines(
 	line_idx = Starter_Table[l * 2 + 0];
 	subset_idx = Starter_Table[l * 2 + 1];
 
+	if (f_v) {
+		cout << "surface_object::find_double_six_and_rearrange_lines "
+				"line_idx = " << line_idx << endl;
+		cout << "surface_object::find_double_six_and_rearrange_lines "
+				"subset_idx = " << subset_idx << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "surface_object::find_double_six_and_rearrange_lines "
+				"before Surf->create_starter_configuration" << endl;
+	}
 	Surf->create_starter_configuration(
 			line_idx,
 		subset_idx, line_intersections, 
 		Lines0, S3, 
 		0 /* verbose_level */);
+	if (f_v) {
+		cout << "surface_object::find_double_six_and_rearrange_lines "
+				"after Surf->create_starter_configuration" << endl;
+	}
 
+	if (f_v) {
+		cout << "surface_object::find_double_six_and_rearrange_lines, "
+				"Starter configuration of 6 lines = ";
+		Lint_vec_print(cout, S3, 6);
+		cout << endl;
+	}
 
 
 	if (f_v) {
@@ -641,6 +709,12 @@ void surface_object::find_double_six_and_rearrange_lines(
 				"Surf->five_plus_one_to_double_six" << endl;
 	}
 
+	if (f_v) {
+		cout << "surface_object::find_double_six_and_rearrange_lines, "
+				"double_six = ";
+		Lint_vec_print(cout, double_six, 12);
+		cout << endl;
+	}
 
 	Lint_vec_copy(double_six, Lines1, 12);
 	
@@ -650,13 +724,25 @@ void surface_object::find_double_six_and_rearrange_lines(
 	}
 	Surf->create_remaining_fifteen_lines(
 			double_six,
-		Lines1 + 12, 0 /* verbose_level */);
+			Lines1 + 12,
+			verbose_level - 1);
 	if (f_v) {
 		cout << "surface_object::find_double_six_and_rearrange_lines "
 				"after Surf->create_remaining_fifteen_lines" << endl;
 	}
 
 	Lint_vec_copy(Lines1, Lines, 27);
+
+	if (f_v) {
+		cout << "surface_object::find_double_six_and_rearrange_lines, "
+				"double_six and remaining 15 lines = ";
+		Lint_vec_print(cout, Lines, 27);
+		cout << endl;
+	}
+
+
+	// check that Lines0 and Lines1 are the same set of lines:
+
 	Sorting.lint_vec_heapsort(Lines0, 27);
 	Sorting.lint_vec_heapsort(Lines1, 27);
 

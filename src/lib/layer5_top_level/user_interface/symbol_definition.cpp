@@ -108,7 +108,6 @@ symbol_definition::symbol_definition()
 	//std::string packing_with_assumed_symmetry_label;
 	packing_with_assumed_symmetry_choose_fixed_points_clique_size = 0;
 	//std::string packing_was_choose_fixed_points_control_label;
-	//packing_with_assumed_symmetry_choose_fixed_points_control = NULL;
 
 
 	f_packing_long_orbits = false;
@@ -141,6 +140,9 @@ symbol_definition::symbol_definition()
 
 	f_vector = false;
 	Vector_builder_description = false;
+
+	f_text = false;
+	Text_builder_description = false;
 
 	f_symbolic_object = false;
 	Symbolic_object_builder_description = NULL;
@@ -192,6 +194,9 @@ symbol_definition::symbol_definition()
 
 	f_isomorph_arguments = false;
 	Isomorph_arguments = NULL;
+
+	f_classify_cubic_surfaces = false;
+	Classify_cubic_surfaces_description = NULL;
 
 }
 
@@ -944,6 +949,33 @@ void symbol_definition::read_definition(
 			Vector_builder_description->print();
 		}
 	}
+
+	else if (ST.stringcmp(argv[i], "-text") == 0) {
+		f_text = true;
+
+
+		Text_builder_description =
+				NEW_OBJECT(other::data_structures::text_builder_description);
+		if (f_v) {
+			cout << "reading -text" << endl;
+		}
+		i += Text_builder_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		i++;
+
+		if (f_v) {
+			cout << "-text" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+			cout << "-text " << endl;
+			Text_builder_description->print();
+		}
+	}
+
 	else if (ST.stringcmp(argv[i], "-symbolic_object") == 0) {
 		f_symbolic_object = true;
 
@@ -1344,7 +1376,28 @@ void symbol_definition::read_definition(
 			}
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-classify_cubic_surfaces") == 0) {
+		f_classify_cubic_surfaces = true;
+		Classify_cubic_surfaces_description =
+				NEW_OBJECT(orbits::classify_cubic_surfaces_description);
+		if (f_v) {
+			cout << "reading -classify_cubic_surfaces" << endl;
+		}
+		i += Classify_cubic_surfaces_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
 
+		i++;
+
+		if (f_v) {
+			cout << "-classify_cubic_surfaces" << endl;
+			Classify_cubic_surfaces_description->print();
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+		}
+	}
 
 	else {
 		cout << "unrecognized command after -define" << endl;
@@ -1698,6 +1751,17 @@ void symbol_definition::perform_definition(
 					"after definition_of_vector" << endl;
 		}
 	}
+	else if (f_text) {
+		if (f_v) {
+			cout << "symbol_definition::perform_definition "
+					"before definition_of_text" << endl;
+		}
+		definition_of_text(define_label, Text_builder_description, verbose_level);
+		if (f_v) {
+			cout << "symbol_definition::perform_definition "
+					"after definition_of_text" << endl;
+		}
+	}
 	else if (f_symbolic_object) {
 		if (f_v) {
 			cout << "symbol_definition::perform_definition "
@@ -1911,6 +1975,17 @@ void symbol_definition::perform_definition(
 					"after definition_of_isomorph_arguments" << endl;
 		}
 	}
+	else if (f_classify_cubic_surfaces) {
+		if (f_v) {
+			cout << "symbol_definition::perform_definition "
+					"before definition_of_classify_cubic_surfaces" << endl;
+		}
+		definition_of_classify_cubic_surfaces(verbose_level);
+		if (f_v) {
+			cout << "symbol_definition::perform_definition "
+					"after definition_of_classify_cubic_surfaces" << endl;
+		}
+	}
 
 	else {
 		if (f_v) {
@@ -2060,6 +2135,10 @@ void symbol_definition::print()
 		cout << "-vector ";
 		Vector_builder_description->print();
 	}
+	else if (f_text) {
+		cout << "-text ";
+		Text_builder_description->print();
+	}
 	else if (f_symbolic_object) {
 		cout << "-symbolic_object ";
 		Symbolic_object_builder_description->print();
@@ -2125,6 +2204,10 @@ void symbol_definition::print()
 	else if (f_isomorph_arguments) {
 		cout << "-isomorph_arguments" << endl;
 		Isomorph_arguments->print();
+	}
+	else if (f_classify_cubic_surfaces) {
+		cout << "-classify_cubic_surfaces" << endl;
+		Classify_cubic_surfaces_description->print();
 	}
 	else {
 		cout << "symbol_definition::print unknown type" << endl;
@@ -4018,6 +4101,59 @@ void symbol_definition::definition_of_vector(
 }
 
 
+
+void symbol_definition::definition_of_text(
+		std::string &label,
+		other::data_structures::text_builder_description *Descr,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_text" << endl;
+	}
+
+
+	//algebra::field_theory::finite_field *F = NULL;
+
+	other::data_structures::text_builder *TB;
+
+	TB = NEW_OBJECT(other::data_structures::text_builder);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_text "
+				"before TB->init" << endl;
+	}
+
+	TB->init(Descr, verbose_level);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_text "
+				"after TB->init" << endl;
+	}
+
+
+	other::orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+
+	Symb = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb->init_text(
+			label, TB, verbose_level);
+	if (f_v) {
+		cout << "symbol_definition::definition_of_text "
+				"before add_symbol_table_entry" << endl;
+	}
+	Sym->Orbiter_top_level_session->add_symbol_table_entry(
+			define_label, Symb, verbose_level);
+
+
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_text done" << endl;
+	}
+}
+
+
+
 void symbol_definition::definition_of_symbolic_object(
 		std::string &label,
 		algebra::expression_parser::symbolic_object_builder_description *Descr,
@@ -4749,7 +4885,7 @@ void symbol_definition::definition_of_variety(
 				"after Variety->create_variety" << endl;
 	}
 	if (f_v) {
-		cout << "Variety->Variety_object->label_txt"
+		cout << "Variety->Variety_object->label_txt = "
 				<< Variety->Variety_object->label_txt << endl;
 	}
 
@@ -4814,6 +4950,42 @@ void symbol_definition::definition_of_isomorph_arguments(
 		cout << "symbol_definition::definition_of_isomorph_arguments done" << endl;
 	}
 }
+
+
+void symbol_definition::definition_of_classify_cubic_surfaces(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_classify_cubic_surfaces" << endl;
+	}
+
+
+
+
+	other::orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+
+	Symb = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb->init_classify_cubic_surfaces(
+			define_label, Classify_cubic_surfaces_description, verbose_level);
+
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_classify_cubic_surfaces "
+				"before add_symbol_table_entry" << endl;
+	}
+	Sym->Orbiter_top_level_session->add_symbol_table_entry(
+			define_label, Symb, verbose_level);
+
+
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_classify_cubic_surfaces done" << endl;
+	}
+}
+
+
 
 
 

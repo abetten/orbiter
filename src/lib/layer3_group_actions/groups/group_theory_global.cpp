@@ -160,6 +160,16 @@ void group_theory_global::set_of_coset_representatives(
 	// the large group
 
 	if (f_v) {
+
+		algebra::ring_theory::longinteger_object go_G;
+
+		S->group_order(go_G);
+
+		cout << "group_theory_global::set_of_coset_representatives the large group has order " << go_G << endl;
+
+	}
+
+	if (f_v) {
 		cout << "group_theory_global::set_of_coset_representatives "
 				"before Subgroup_gens_H->set_of_coset_representatives" << endl;
 	}

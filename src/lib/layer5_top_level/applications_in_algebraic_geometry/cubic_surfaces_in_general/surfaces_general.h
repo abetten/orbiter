@@ -736,17 +736,50 @@ public:
 	void print_action_on_surface(
 			std::string &label_of_elements,
 			data_structures_groups::vector_ge *Elements,
-			//int *element_data, int nb_elements,
 			int verbose_level);
-#if 0
-	void print_double_sixes(
-			std::ostream &ost);
-#endif
 	void compute_tactical_decompositions(
 			int verbose_level);
+	void report_orbits_on_lines(
+			std::ostream &ost,
+			int verbose_level);
+	void report_orbits_on_points(
+			std::ostream &ost,
+			int verbose_level);
+	void report_orbits_on_Eckardt_points(
+			std::ostream &ost,
+			int verbose_level);
+	void report_orbits_on_Double_points(
+			std::ostream &ost,
+			int verbose_level);
+	void report_orbits_on_Single_points(
+			std::ostream &ost,
+			int verbose_level);
+	void report_orbits_on_Zero_points(
+			std::ostream &ost,
+			int verbose_level);
+	void report_orbits_on_Hesse_planes(
+			std::ostream &ost,
+			int verbose_level);
+	void report_orbits_on_axes(
+			std::ostream &ost,
+			int verbose_level);
+	void report_orbits_on_Single_Sixes(
+			std::ostream &ost,
+			int verbose_level);
+	void report_orbits_on_Double_Sixes(
+			std::ostream &ost,
+			int verbose_level);
+	void report_orbits_on_tritangent_planes(
+			std::ostream &ost,
+			int verbose_level);
+	void report_orbits_on_trihedral_pairs(
+			std::ostream &ost,
+			int verbose_level);
+#if 0
 	void report_orbits(
 			std::ostream &ost,
 			int verbose_level);
+#endif
 
 };
 

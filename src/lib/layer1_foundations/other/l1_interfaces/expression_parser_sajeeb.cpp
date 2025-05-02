@@ -332,15 +332,18 @@ void expression_parser_sajeeb::init_formula(
 	}
 
 	if (f_is_homogeneous) {
-		cout << "expression_parser_sajeeb::init_formula before tree->is_homogeneous" << endl;
+		cout << "expression_parser_sajeeb::init_formula "
+				"before tree->is_homogeneous" << endl;
 	}
 	f_is_homogeneous = tree->is_homogeneous(degree, verbose_level - 3);
 	if (f_is_homogeneous) {
-		cout << "expression_parser_sajeeb::init_formula after tree->is_homogeneous" << endl;
+		cout << "expression_parser_sajeeb::init_formula "
+				"after tree->is_homogeneous" << endl;
 	}
 
 	if (f_is_homogeneous) {
-		cout << "expression_parser_sajeeb::init_formula the formula is homogeneous of degree " << degree << endl;
+		cout << "expression_parser_sajeeb::init_formula "
+				"the formula is homogeneous of degree " << degree << endl;
 	}
 #endif
 

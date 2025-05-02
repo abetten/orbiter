@@ -78,6 +78,12 @@ void symbolic_object_builder::init(
 					"-ring " << Descr->ring_label << endl;
 		}
 		Ring = Get_ring(Descr->ring_label);
+		if (f_v) {
+			cout << "symbolic_object_builder::init "
+					"using ring " << endl;
+			Ring->print();
+			cout << endl;
+		}
 	}
 
 	if (Descr->f_ring && !Descr->f_field && !Descr->f_field_pointer) {
@@ -165,6 +171,11 @@ void symbolic_object_builder::init(
 		Formula_vector->export_tree(verbose_level - 2);
 		cout << "symbolic_object_builder::init "
 				"after Formula_vector->export_tree" << endl;
+
+
+
+
+
 	}
 
 
@@ -201,7 +212,7 @@ void symbolic_object_builder::process_arguments(
 					"before Formula_vector->init_from_text" << endl;
 		}
 		Formula_vector->init_from_text(
-				label /*Descr->label_txt*/,
+				label,
 				Descr->label_tex,
 				Descr->text_txt,
 				Fq,
@@ -311,9 +322,14 @@ void symbolic_object_builder::process_arguments(
 					label,
 					verbose_level - 1);
 
+
+
+
 		if (f_v) {
 			cout << "symbolic_object_builder::process_arguments -expand finished" << endl;
 		}
+
+
 
 	}
 	else if (Descr->f_right_nullspace) {
@@ -574,6 +590,8 @@ void symbolic_object_builder::process_arguments(
 
 		}
 	}
+
+
 
 	if (f_v) {
 		cout << "symbolic_object_builder::process_arguments done" << endl;
@@ -851,7 +869,6 @@ void symbolic_object_builder::do_expand(
 		cout << "symbolic_object_builder::do_expand "
 				"after Formula_vector->expand" << endl;
 	}
-
 
 
 	if (f_v) {

@@ -1585,6 +1585,7 @@ void combinatorial_object_stream::make_polynomial_representation(
 		}
 
 
+		other::orbiter_kernel_system::file_io Fio;
 		std::string fname;
 
 		if (IS->Descr->f_label) {
@@ -1598,6 +1599,9 @@ void combinatorial_object_stream::make_polynomial_representation(
 
 			ost << poly_rep << endl;
 		}
+		cout << "combinatorial_object_stream::make_polynomial_representation "
+				"Written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
 
 
 		Equation[input_idx] = poly_rep;

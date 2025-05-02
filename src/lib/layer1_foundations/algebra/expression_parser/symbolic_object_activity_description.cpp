@@ -32,6 +32,10 @@ symbolic_object_activity_description::symbolic_object_activity_description()
 
 	f_print = false;
 
+	f_evaluate_affine = false;
+
+	f_collect_monomials_binary = false;
+
 #if 0
 	f_sweep = false;
 	//std::string sweep_variables;
@@ -83,6 +87,21 @@ int symbolic_object_activity_description::read_arguments(
 						<< endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-evaluate_affine") == 0) {
+			f_evaluate_affine = true;
+			if (f_v) {
+				cout << "-evaluate_affine " << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-collect_monomials_binary") == 0) {
+			f_collect_monomials_binary = true;
+			if (f_v) {
+				cout << "-collect_monomials_binary " << endl;
+			}
+		}
+
+
+
 #if 0
 		else if (ST.stringcmp(argv[i], "-sweep") == 0) {
 			f_sweep = true;
@@ -122,18 +141,20 @@ int symbolic_object_activity_description::read_arguments(
 
 void symbolic_object_activity_description::print()
 {
-#if 0
 	if (f_export) {
 		cout << "-export " << endl;
 	}
-	if (f_evaluate) {
-		cout << "-evaluate "
-				<< evaluate_assignment << endl;
-	}
 	if (f_print) {
-		cout << "-print "
-				<< endl;
+		cout << "-print " << endl;
 	}
+	if (f_evaluate_affine) {
+		cout << "-evaluate_affine " << endl;
+	}
+	if (f_collect_monomials_binary) {
+		cout << "-collect_monomials_binary " << endl;
+	}
+
+#if 0
 	if (f_sweep) {
 		cout << "-sweep "
 				<< " " << sweep_variables << endl;

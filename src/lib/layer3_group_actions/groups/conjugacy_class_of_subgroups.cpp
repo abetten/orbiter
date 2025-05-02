@@ -88,7 +88,7 @@ void conjugacy_class_of_subgroups::init(
 			Class_data->Nb_gens[idx],
 			Class_data->Subgroup_order[idx],
 			nice_gens,
-			verbose_level - 1);
+			verbose_level - 3);
 
 
 	if (f_v) {
@@ -231,9 +231,14 @@ void conjugacy_class_of_subgroups::report_single_class(
 	group_theory_global Group_theory_global;
 	std::string s;
 
-	s = Group_theory_global.order_invariant(
-			Class_data->A, gens,
-			verbose_level);
+	if (Class_data->Subgroup_order[idx] < 2500) {
+		s = Group_theory_global.order_invariant(
+				Class_data->A, gens,
+				verbose_level - 3);
+	}
+	else {
+		s = "-1";
+	}
 
 	ost << "The order invariant is ";
 	ost << "$" << s << "$";
