@@ -1367,7 +1367,7 @@ void projective_space_activity::perform_activity(
 
 	// classification stuff:
 
-
+#if 0
 	else if (Descr->f_classify_surfaces_with_double_sixes) {
 
 		applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_domain_high_level SH;
@@ -1394,6 +1394,7 @@ void projective_space_activity::perform_activity(
 				Descr->classify_surfaces_with_double_sixes_label, Symb, verbose_level);
 
 	}
+#endif
 
 	else if (Descr->f_classify_surfaces_through_arcs_and_two_lines) {
 

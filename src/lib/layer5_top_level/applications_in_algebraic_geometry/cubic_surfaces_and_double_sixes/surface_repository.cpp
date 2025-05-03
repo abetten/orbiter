@@ -25,6 +25,7 @@ surface_repository::surface_repository()
 	Wedge = NULL;
 	nb_surfaces = 0;
 	SaS = NULL;
+	SOA = NULL;
 	Lines = NULL;
 	Eqn = NULL;
 }
@@ -40,7 +41,16 @@ surface_repository::~surface_repository()
 			FREE_OBJECT(SaS[i]);
 		}
 		FREE_pvoid((void **) SaS);
-		//FREE_OBJECTS(SaS);
+	}
+	if (SOA) {
+		int i;
+
+		for (i = 0; i < nb_surfaces; i++) {
+			FREE_OBJECT(SOA[i]->SO);
+			SOA[i]->SO = NULL;
+			FREE_OBJECT(SOA[i]);
+		}
+		FREE_pvoid((void **) SOA);
 	}
 	if (Lines) {
 		FREE_lint(Lines);
@@ -69,8 +79,13 @@ void surface_repository::init(
 
 	nb_surfaces = Wedge->Surfaces->nb_orbits;
 
+	if (f_v) {
+		cout << "surface_repository::init nb_surfaces = " << nb_surfaces << endl;
+	}
+
 	//SaS = NEW_OBJECTS(data_structures_groups::set_and_stabilizer, nb_surfaces);
 	SaS = (data_structures_groups::set_and_stabilizer **) NEW_pvoid(nb_surfaces);
+	SOA = (cubic_surfaces_in_general::surface_object_with_group **) NEW_pvoid(nb_surfaces);
 
 	Lines = NEW_lint(nb_surfaces * 27);
 	Eqn = NEW_int(nb_surfaces * 20);
@@ -80,85 +95,24 @@ void surface_repository::init(
 				<< Wedge->Surfaces->nb_orbits << " surfaces" << endl;
 	}
 	for (orbit_index = 0;
-			orbit_index < Wedge->Surfaces->nb_orbits;
+			orbit_index < nb_surfaces;
 			orbit_index++) {
 
 
-		//long int Lines[27];
-		int equation[20];
+		if (f_v) {
+			cout << "surface_repository::init processing "
+					"before init_one_surface, "
+					"orbit_index = " << orbit_index << " / " << nb_surfaces << endl;
+		}
+
+		init_one_surface(
+				orbit_index, verbose_level - 2);
 
 		if (f_v) {
-			cout << "surface_repository::init "
-					"orbit_index = " << orbit_index
-					<< " / " << Wedge->Surfaces->nb_orbits << endl;
+			cout << "surface_repository::init processing "
+					"after init_one_surface, "
+					"orbit_index = " << orbit_index << " / " << nb_surfaces << endl;
 		}
-
-		SaS[orbit_index] = Wedge->Surfaces->get_set_and_stabilizer(
-				orbit_index, 0 /* verbose_level */);
-
-		Lint_vec_copy(SaS[orbit_index]->data, Lines + orbit_index * 27, 27);
-
-		if (f_v) {
-			cout << "surface_repository::init "
-					"orbit_index = " << orbit_index
-					<< " / " << Wedge->Surfaces->nb_orbits
-					<< " before Surf->build_cubic_surface_from_lines" << endl;
-		}
-		Wedge->Surf->build_cubic_surface_from_lines(
-				27,
-				Lines + orbit_index * 27,
-				equation, verbose_level - 2);
-		if (f_v) {
-			cout << "surface_repository::init "
-					"orbit_index = " << orbit_index
-					<< " / " << Wedge->Surfaces->nb_orbits
-					<< " after Surf->build_cubic_surface_from_lines" << endl;
-		}
-
-		Wedge->F->Projective_space_basic->PG_element_normalize_from_front(
-				equation, 1, 20);
-
-		if (f_v) {
-			cout << "surface_repository::init "
-					"orbit_index = " << orbit_index
-					<< " / " << Wedge->Surfaces->nb_orbits
-					<< " equation: " << endl;
-			Int_vec_print(cout, equation, 20);
-		}
-		Int_vec_copy(equation, Eqn + orbit_index * 20, 20);
-
-		if (f_v) {
-			cout << "surface_repository::init "
-					"orbit_index = " << orbit_index
-					<< " / " << Wedge->Surfaces->nb_orbits
-					<< " testing the generators on the equation" << endl;
-		}
-		int ret;
-
-		ret = SaS[orbit_index]->Strong_gens->test_if_they_stabilize_the_equation(
-				equation,
-				Wedge->Surf->PolynomialDomains->Poly3_4,
-				verbose_level);
-
-		if (!ret) {
-			cout << "surface_repository::init "
-					"orbit_index = " << orbit_index
-					<< " / " << Wedge->Surfaces->nb_orbits
-					<< " the generators do not fix the equation" << endl;
-			exit(1);
-		}
-		else {
-			if (f_v) {
-				cout << "surface_repository::init "
-						"orbit_index = " << orbit_index
-						<< " / " << Wedge->Surfaces->nb_orbits
-						<< " the generators fix the equation, good." << endl;
-			}
-
-		}
-
-		//FREE_OBJECT(SaS);
-
 	}
 	if (f_v) {
 		cout << "surface_repository::init processing "
@@ -167,6 +121,167 @@ void surface_repository::init(
 
 	if (f_v) {
 		cout << "surface_repository::init done" << endl;
+	}
+}
+
+void surface_repository::init_one_surface(
+		int orbit_index, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_repository::init_one_surface "
+				"orbit_index = " << orbit_index << " / " << nb_surfaces << endl;
+	}
+
+	//long int Lines[27];
+	int the_equation[20];
+
+	if (f_v) {
+		cout << "surface_repository::init_one_surface "
+				"orbit_index = " << orbit_index
+				<< " / " << Wedge->Surfaces->nb_orbits << endl;
+	}
+
+	SaS[orbit_index] = Wedge->Surfaces->get_set_and_stabilizer(
+			orbit_index, 0 /* verbose_level */);
+
+	Lint_vec_copy(SaS[orbit_index]->data, Lines + orbit_index * 27, 27);
+
+	if (f_v) {
+		cout << "surface_repository::init_one_surface "
+				"orbit_index = " << orbit_index
+				<< " / " << Wedge->Surfaces->nb_orbits
+				<< " before Surf->build_cubic_surface_from_lines" << endl;
+	}
+	Wedge->Surf->build_cubic_surface_from_lines(
+			27,
+			Lines + orbit_index * 27,
+			the_equation, verbose_level - 2);
+	if (f_v) {
+		cout << "surface_repository::init_one_surface "
+				"orbit_index = " << orbit_index
+				<< " / " << Wedge->Surfaces->nb_orbits
+				<< " after Surf->build_cubic_surface_from_lines" << endl;
+	}
+
+	Wedge->F->Projective_space_basic->PG_element_normalize_from_front(
+			the_equation, 1, 20);
+
+	if (f_v) {
+		cout << "surface_repository::init_one_surface "
+				"orbit_index = " << orbit_index
+				<< " / " << Wedge->Surfaces->nb_orbits
+				<< " equation: " << endl;
+		Int_vec_print(cout, the_equation, 20);
+	}
+	Int_vec_copy(the_equation, Eqn + orbit_index * 20, 20);
+
+	if (f_v) {
+		cout << "surface_repository::init_one_surface "
+				"orbit_index = " << orbit_index
+				<< " / " << Wedge->Surfaces->nb_orbits
+				<< " testing the generators on the equation" << endl;
+	}
+	int ret;
+
+	ret = SaS[orbit_index]->Strong_gens->test_if_they_stabilize_the_equation(
+			the_equation,
+			Wedge->Surf->PolynomialDomains->Poly3_4,
+			verbose_level);
+
+	if (!ret) {
+		cout << "surface_repository::init_one_surface "
+				"orbit_index = " << orbit_index
+				<< " / " << Wedge->Surfaces->nb_orbits
+				<< " the generators do not fix the equation" << endl;
+		exit(1);
+	}
+	else {
+		if (f_v) {
+			cout << "surface_repository::init_one_surface "
+					"orbit_index = " << orbit_index
+					<< " / " << Wedge->Surfaces->nb_orbits
+					<< " the generators fix the equation, good." << endl;
+		}
+
+	}
+
+
+
+	geometry::algebraic_geometry::surface_object *SO;
+	int *equation;
+
+	equation = Eqn + orbit_index * 20;
+
+	string label_txt;
+	string label_tex;
+
+	label_txt = "surface_q" + std::to_string(Wedge->q) + "_iso" + std::to_string(orbit_index);
+	label_tex = "surface\\_q" + std::to_string(Wedge->q) + "\\_iso" + std::to_string(orbit_index);
+
+	SO = NEW_OBJECT(geometry::algebraic_geometry::surface_object);
+
+	if (f_v) {
+		cout << "surface_repository::init_one_surface "
+				"before SO->init_with_27_lines "
+				"orbit_index = " << orbit_index << endl;
+	}
+	SO->init_with_27_lines(
+			Wedge->Surf,
+			Lines + orbit_index * 27,
+			equation,
+			label_txt, label_tex,
+			true /*f_find_double_six_and_rearrange_lines*/,
+			verbose_level - 2);
+	if (f_v) {
+		cout << "surface_repository::init_one_surface "
+				"after SO->init_with_27_lines "
+				"orbit_index = " << orbit_index << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "surface_repository::init_one_surface "
+				"before SO->compute_properties "
+				"orbit_index = " << orbit_index << endl;
+	}
+	SO->compute_properties(verbose_level - 2);
+	if (f_v) {
+		cout << "surface_repository::init_one_surface "
+				"after SO->compute_properties "
+				"orbit_index = " << orbit_index << endl;
+	}
+
+
+
+
+
+	SOA[orbit_index] = NEW_OBJECT(cubic_surfaces_in_general::surface_object_with_group);
+
+	if (f_v) {
+		cout << "surface_repository::init_one_surface "
+				"before SOA->init_surface_object "
+				"orbit_index = " << orbit_index << endl;
+	}
+	SOA[orbit_index]->init_surface_object(
+			Wedge->Surf_A, SO,
+			SaS[orbit_index]->Strong_gens,
+			verbose_level - 2);
+	if (f_v) {
+		cout << "surface_repository::init_one_surface "
+				"after SOA->init_surface_object "
+				"orbit_index = " << orbit_index << endl;
+	}
+
+
+
+
+	if (f_v) {
+		cout << "surface_repository::init_one_surface "
+				"orbit_index = " << orbit_index << " / " << nb_surfaces
+				<< " done" << endl;
 	}
 }
 
@@ -265,6 +380,7 @@ void surface_repository::generate_source_code(
 				orbit_index < nb_surfaces;
 				orbit_index++) {
 
+#if 0
 			long int *Pts;
 			int nb_pts;
 			other::data_structures::set_of_sets *pts_on_lines;
@@ -349,7 +465,8 @@ void surface_repository::generate_source_code(
 				Int_vec_print(cout, equation, 20);
 				cout << endl;
 				cout << "surface_repository::generate_source_code "
-						"pts_on_lines does not have the constant size property. Something is wrong." << endl;
+						"pts_on_lines does not have the constant size property. "
+						"Something is wrong." << endl;
 				exit(1);
 			}
 			if (pts_on_lines->get_constant_size() != Wedge->q + 1) {
@@ -360,7 +477,8 @@ void surface_repository::generate_source_code(
 				Int_vec_print(cout, equation, 20);
 				cout << endl;
 				cout << "surface_repository::generate_source_code "
-						"The lines do not have exactly q + 1 points. Something is wrong" << endl;
+						"The lines do not have exactly q + 1 points. "
+						"Something is wrong" << endl;
 				exit(1);
 
 			}
@@ -374,6 +492,11 @@ void surface_repository::generate_source_code(
 			FREE_int(f_is_on_line);
 
 			nb_E = pts_on_lines->number_of_eckardt_points(verbose_level);
+#endif
+
+			int nb_E;
+
+			nb_E = SOA[orbit_index]->SO->SOP->nb_Eckardt_points;
 
 			f << nb_E;
 			if (orbit_index < nb_surfaces - 1) {
@@ -384,8 +507,8 @@ void surface_repository::generate_source_code(
 			}
 
 
-			FREE_OBJECT(pts_on_lines);
-			FREE_lint(Pts);
+			//FREE_OBJECT(pts_on_lines);
+			//FREE_lint(Pts);
 		}
 		f << "};" << endl;
 
@@ -395,7 +518,7 @@ void surface_repository::generate_source_code(
 			cout << "surface_repository::generate_source_code "
 					"preparing Lines" << endl;
 		}
-		f << "// the lines in the order double six "
+		f << "// the lines in the order of the double six as "
 				"a_i, b_i and 15 more lines c_ij:" << endl;
 		f << "static long int " << fname_base << "_Lines[] = { " << endl;
 
@@ -537,7 +660,7 @@ void surface_repository::report_surface(
 
 
 	//Surf->print_equation_wrapped(ost, equation);
-
+#if 0
 	geometry::algebraic_geometry::surface_object *SO;
 	int *equation;
 
@@ -613,7 +736,11 @@ void surface_repository::report_surface(
 				"after SOA->init_surface_object "
 				"orbit_index = " << orbit_index << endl;
 	}
+#endif
 
+	geometry::algebraic_geometry::surface_object *SO;
+
+	SO = SOA[orbit_index]->SO;
 
 	algebra::ring_theory::longinteger_object ago;
 	SaS[orbit_index]->Strong_gens->group_order(ago);
@@ -725,6 +852,8 @@ void surface_repository::report_surface(
 	SOA->quartic(ost,  verbose_level);
 #endif
 
+
+#if 0
 	if (f_v) {
 		cout << "surface_repository::report_surface "
 				"before FREE_OBJECT(SOA) "
@@ -747,6 +876,7 @@ void surface_repository::report_surface(
 				"after FREE_OBJECT(SO) "
 				"orbit_index = " << orbit_index << endl;
 	}
+#endif
 
 	if (f_v) {
 		cout << "surface_repository::report_surface "

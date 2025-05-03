@@ -487,8 +487,178 @@ void surface_classify_wedge::sweep_Cayley(
 	}
 }
 
+
+void surface_classify_wedge::identify_general_abcd_and_print_table(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int a, b, c, d;
+	int q4, q3, q2;
+
+	if (f_v) {
+		cout << "surface_classify_wedge::identify_general_abcd_and_print_table" << endl;
+	}
+
+	q2 = q * q;
+	q3 = q2 * q;
+	q4 = q3 * q;
+
+	int *Iso_type;
+	int *Nb_lines;
+	//int *Nb_E;
+
+	Iso_type = NEW_int(q4);
+	Nb_lines = NEW_int(q4);
+	//Nb_E = NEW_int(q4);
+
+	for (a = 0; a < q4; a++) {
+		Iso_type[a] = -1;
+		Nb_lines[a] = -1;
+		//Nb_E[a] = -1;
+	}
+
+	if (f_v) {
+		cout << "surface_classify_wedge::identify_general_abcd_and_print_table "
+				"before identify_general_abcd" << endl;
+	}
+	identify_general_abcd(Iso_type, Nb_lines, verbose_level);
+	if (f_v) {
+		cout << "surface_classify_wedge::identify_general_abcd_and_print_table "
+				"after identify_general_abcd" << endl;
+	}
+
+
+	//cout << "\\begin{array}{|c|c|c|}" << endl;
+	//cout << "\\hline" << endl;
+	cout << "(a,b,c,d); \\# lines & \\mbox{OCN} \\\\" << endl;
+	//cout << "\\hline" << endl;
+	for (a = 1; a < q; a++) {
+		for (b = 1; b < q; b++) {
+			for (c = 1; c < q; c++) {
+				for (d = 1; d < q; d++) {
+					cout << "$(" << a << "," << b << "," << c << "," << d << ")$; ";
+#if 0
+					cout << "$(";
+						F->print_element(cout, a);
+						cout << ", ";
+						F->print_element(cout, b);
+						cout << ", ";
+						F->print_element(cout, c);
+						cout << ", ";
+						F->print_element(cout, d);
+						cout << ")$; ";
+#endif
+					cout << Nb_lines[a * q3 + b * q2 + c * q + d] << "; ";
+					//cout << Nb_E[a * q3 + b * q2 + c * q + d] << "; ";
+					cout << Iso_type[a * q3 + b * q2 + c * q + d];
+					cout << "\\\\" << endl;
+				}
+			}
+		}
+	}
+	//cout << "\\hline" << endl;
+	//cout << "\\end{array}" << endl;
+
+	//long int *Table;
+	string *Table;
+	int h = 0;
+	int nb_lines, iso, nb_e;
+	combinatorics::knowledge_base::knowledge_base K;
+	other::orbiter_kernel_system::file_io Fio;
+
+	//Table = NEW_lint(q4 * 7);
+
+	int nb_rows, nb_cols;
+
+	nb_rows = q4;
+	nb_cols = 4;
+
+	Table = new std::string [nb_rows * nb_cols];
+
+	for (a = 1; a < q; a++) {
+		for (b = 1; b < q; b++) {
+			for (c = 1; c < q; c++) {
+				for (d = 1; d < q; d++) {
+					nb_lines = Nb_lines[a * q3 + b * q2 + c * q + d];
+					iso = Iso_type[a * q3 + b * q2 + c * q + d];
+
+					if (iso == -1) {
+						continue;
+					}
+
+					if (iso >= 0) {
+						nb_e = K.cubic_surface_nb_Eckardt_points(q, iso);
+					}
+					else {
+						nb_e = -1;
+					}
+
+					int abcd[4];
+
+					abcd[0] = a;
+					abcd[1] = b;
+					abcd[2] = c;
+					abcd[3] = d;
+
+					Table[h * 7 + 0] = "\"" + Int_vec_stringify(abcd, 4) + "\"";
+					Table[h * 7 + 1] = std::to_string(nb_lines);
+					Table[h * 7 + 2] = std::to_string(iso);
+					Table[h * 7 + 3] = std::to_string(nb_e);
+					h++;
+				}
+			}
+		}
+	}
+
+	nb_rows = h;
+
+	std::string *Col_headings;
+
+	Col_headings = new string[4];
+	Col_headings[0] = "abcd";
+	Col_headings[1] = "NB_LINES";
+	Col_headings[2] = "OCN";
+	Col_headings[3] = "NB_E";
+
+	string fname;
+
+	fname = "surface_recognize_abcd_q" + std::to_string(q) + ".csv";
+
+
+	Fio.Csv_file_support->write_table_of_strings_with_col_headings(
+			fname,
+			nb_rows, nb_cols, Table,
+			Col_headings,
+			verbose_level);
+
+#if 0
+	Fio.Csv_file_support->lint_matrix_write_csv_override_headers(
+			fname,
+			headers, Table, h, 7);
+#endif
+
+
+	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+
+	delete [] Col_headings;
+
+
+	delete [] Table;
+
+	//FREE_lint(Table);
+	FREE_int(Iso_type);
+	FREE_int(Nb_lines);
+
+	if (f_v) {
+		cout << "surface_classify_wedge::identify_general_abcd_and_print_table done" << endl;
+	}
+}
+
+
 void surface_classify_wedge::identify_general_abcd(
-	int *Iso_type, int *Nb_lines, int verbose_level)
+	int *Iso_type, int *Nb_lines,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, a, b, c, d;
@@ -518,6 +688,7 @@ void surface_classify_wedge::identify_general_abcd(
 		Nb_lines[i] = -1;
 		//Nb_E[i] = -1;
 	}
+
 	for (a = 1; a < q; a++) {
 		if (f_v) {
 			cout << "surface_classify_wedge::identify_general_abcd "
@@ -703,13 +874,14 @@ void surface_classify_wedge::identify_general_abcd(
 					geometry::algebraic_geometry::surface_object *SO;
 
 					SO = Surf->create_surface_general_abcd(
-							a, b, c, d, verbose_level);
+							a, b, c, d,
+							verbose_level);
 
 
 					identify_surface(
 							SO->Variety_object->eqn,
-						iso_type, Elt,
-						verbose_level);
+							iso_type, Elt,
+							verbose_level);
 
 					if (f_v) {
 						cout << "surface_classify_wedge::identify_general_abcd "
@@ -733,152 +905,6 @@ void surface_classify_wedge::identify_general_abcd(
 	}
 }
 
-void surface_classify_wedge::identify_general_abcd_and_print_table(
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int a, b, c, d;
-	int q4, q3, q2;
-
-	if (f_v) {
-		cout << "surface_classify_wedge::identify_general_abcd_and_print_table" << endl;
-	}
-
-	q2 = q * q;
-	q3 = q2 * q;
-	q4 = q3 * q;
-
-	int *Iso_type;
-	int *Nb_lines;
-	//int *Nb_E;
-
-	Iso_type = NEW_int(q4);
-	Nb_lines = NEW_int(q4);
-	//Nb_E = NEW_int(q4);
-
-	for (a = 0; a < q4; a++) {
-		Iso_type[a] = -1;
-		Nb_lines[a] = -1;
-		//Nb_E[a] = -1;
-	}
-
-	if (f_v) {
-		cout << "surface_classify_wedge::identify_general_abcd_and_print_table "
-				"before identify_general_abcd" << endl;
-	}
-	identify_general_abcd(Iso_type, Nb_lines, verbose_level);
-	if (f_v) {
-		cout << "surface_classify_wedge::identify_general_abcd_and_print_table "
-				"after identify_general_abcd" << endl;
-	}
-
-
-	//cout << "\\begin{array}{|c|c|c|}" << endl;
-	//cout << "\\hline" << endl;
-	cout << "(a,b,c,d); \\# lines & \\mbox{OCN} \\\\" << endl;
-	//cout << "\\hline" << endl;
-	for (a = 1; a < q; a++) {
-		for (b = 1; b < q; b++) {
-			for (c = 1; c < q; c++) {
-				for (d = 1; d < q; d++) {
-					cout << "$(" << a << "," << b << "," << c << "," << d << ")$; ";
-#if 0
-					cout << "$(";
-						F->print_element(cout, a);
-						cout << ", ";
-						F->print_element(cout, b);
-						cout << ", ";
-						F->print_element(cout, c);
-						cout << ", ";
-						F->print_element(cout, d);
-						cout << ")$; ";
-#endif
-					cout << Nb_lines[a * q3 + b * q2 + c * q + d] << "; ";
-					//cout << Nb_E[a * q3 + b * q2 + c * q + d] << "; ";
-					cout << Iso_type[a * q3 + b * q2 + c * q + d];
-					cout << "\\\\" << endl;
-				}
-			}
-		}
-	}
-	//cout << "\\hline" << endl;
-	//cout << "\\end{array}" << endl;
-
-	long int *Table;
-	int h = 0;
-	int nb_lines, iso, nb_e;
-	combinatorics::knowledge_base::knowledge_base K;
-	other::orbiter_kernel_system::file_io Fio;
-
-	Table = NEW_lint(q4 * 7);
-
-
-	for (a = 1; a < q; a++) {
-		for (b = 1; b < q; b++) {
-			for (c = 1; c < q; c++) {
-				for (d = 1; d < q; d++) {
-					nb_lines = Nb_lines[a * q3 + b * q2 + c * q + d];
-					iso = Iso_type[a * q3 + b * q2 + c * q + d];
-
-					if (iso == -1) {
-						continue;
-					}
-
-					if (iso >= 0) {
-						nb_e = K.cubic_surface_nb_Eckardt_points(q, iso);
-					}
-					else {
-						nb_e = -1;
-					}
-
-					Table[h * 7 + 0] = a;
-					Table[h * 7 + 1] = b;
-					Table[h * 7 + 2] = c;
-					Table[h * 7 + 3] = d;
-					Table[h * 7 + 4] = nb_lines;
-					Table[h * 7 + 5] = iso;
-					Table[h * 7 + 6] = nb_e;
-					h++;
-				}
-			}
-		}
-	}
-
-	std::string *headers;
-
-	headers = new string[7];
-	headers[0] = "a";
-	headers[1] = "b";
-	headers[2] = "c";
-	headers[3] = "d";
-	headers[4] = "NB_LINES";
-	headers[5] = "OCN";
-	headers[6] = "NB_E";
-
-	string fname;
-
-	fname = "surface_recognize_abcd_q" + std::to_string(q) + ".csv";
-
-
-	Fio.Csv_file_support->lint_matrix_write_csv_override_headers(
-			fname,
-			headers, Table, h, 7);
-
-
-	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-
-
-	delete [] headers;
-
-
-	FREE_lint(Table);
-	FREE_int(Iso_type);
-	FREE_int(Nb_lines);
-
-	if (f_v) {
-		cout << "surface_classify_wedge::identify_general_abcd_and_print_table done" << endl;
-	}
-}
 
 void surface_classify_wedge::identify_Eckardt_and_print_table(
 		int verbose_level)

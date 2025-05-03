@@ -13291,11 +13291,8 @@ test_9_4:
 	make surface_classify_q4
 	make surface_classify_q4_arc_lifting_two_lines
 	make surface_classify_q7
-	make surface_classify_q9
-	make surface_classify_q11
-	make surface_classify_q13
 	make Family_general_F31_25_5_5_25_recognize
-	make surface_F_abcd_identify_q11
+	make surface_F_abcd_identify_q9
 	make Family_general_F11_iso_test
 
 
@@ -13328,41 +13325,19 @@ surface_classify_q4:
 		-with Orb -do -orbits_activity \
 			-report \
 			-report_options ro \
+		-end \
+		-with Orb -do -cubic_surfaces_after_classification_activity \
+			-create_source_code \
+		-end \
+		-with Orb -do -cubic_surfaces_after_classification_activity \
+			-identify_general_abcd \
 		-end
 	$(PDFLATEX) Surfaces_q4.tex 
 	$(OPEN) Surfaces_q4.pdf
 
 #			-draw_poset \
 
-
-surface_classify_q4_old:
-	$(ORBITER) -v 5 \
-		-define F -finite_field -q 4 -end \
-		-define P -projective_space -n 3 -field F -v 0 -end \
-		-define Control -poset_classification_control -W \
-			-problem_label "surf_q4" \
-		-end \
-		-with P -do \
-		-projective_space_activity \
-			-classify_surfaces_with_double_sixes Surf27 Control \
-		-end \
-		-with Surf27 -do \
-		-classification_of_cubic_surfaces_with_double_sixes_activity \
-			-report -end \
-		-end \
-		-with Surf27 -do \
-		-classification_of_cubic_surfaces_with_double_sixes_activity \
-			-create_source_code \
-		-end \
-		-with Surf27 -do \
-		-classification_of_cubic_surfaces_with_double_sixes_activity \
-			-stats surf_q4 \
-		-end \
-		-print_symbols
-	$(PDFLATEX) Surfaces_q4.tex
-	$(OPEN) Surfaces_q4.pdf
-
-# time: 0:00
+#surface_recognize_abcd_q4.csv
 
 
 
@@ -13407,136 +13382,27 @@ surface_classify_q7:
 				-draw_poset -type_aux \
 			-draw_options Do \
 		-end \
+		-define Classify -classify_cubic_surfaces \
+			-use_double_sixes \
+			-projective_space P \
+			-poset_classification_control Control \
+		-end \
 		-define Orb -orbits \
-			-on_cubic_surfaces P Control \
+			-on_cubic_surfaces Classify \
 		-end \
 		-with Orb -do -orbits_activity \
 			-report \
 			-report_options ro \
+		-end \
+		-with Orb -do -cubic_surfaces_after_classification_activity \
+			-create_source_code \
+		-end \
+		-with Orb -do -cubic_surfaces_after_classification_activity \
+			-identify_general_abcd \
 		-end
 	$(PDFLATEX) Surfaces_q7.tex 
 	$(OPEN) Surfaces_q7.pdf
 
-
-
-surface_classify_q7_old:
-	$(ORBITER) -v 5 \
-		-define F -finite_field -q 7 -end \
-		-define P -projective_space -n 3 -field F -end \
-		-define Control -poset_classification_control -W -end \
-		-with P -do \
-		-projective_space_activity \
-			-classify_surfaces_with_double_sixes Surf27 Control \
-		-end \
-		-with Surf27 -do \
-		-classification_of_cubic_surfaces_with_double_sixes_activity \
-			-report -end \
-		-end \
-		-print_symbols
-	$(PDFLATEX) Surfaces_q7.tex
-	$(OPEN) Surfaces_q7.pdf
-
-#neighbors_7.csv
-
-
-surface_classify_q9:
-	$(ORBITER) -v 5 \
-		-orbiter_path $(ORBITER_EXE_PATH) \
-		-define F -finite_field -q 9 -end \
-		-define P -projective_space -n 3 -field F -v 0 -end \
-		-define Control -poset_classification_control -W \
-			-problem_label "surf_q9" \
-		-end \
-		-define Do -draw_options \
-			-radius 200 -line_width 0.3 -nodes_empty \
-		-end \
-		-define ro \
-			-poset_classification_report_options \
-				-draw_poset -type_ordinary \
-			-draw_options Do \
-		-end \
-		-define Orb -orbits \
-			-on_cubic_surfaces P Control \
-		-end \
-		-with Orb -do -orbits_activity \
-			-report \
-			-report_options ro \
-		-end
-	$(PDFLATEX) Surfaces_q9.tex 
-	$(OPEN) Surfaces_q9.pdf
-
-
-surface_classify_q9_old:
-	$(ORBITER) -v 5 \
-		-define F -finite_field -q 9 -end \
-		-define P -projective_space -n 3 -field F -end \
-		-define Control -poset_classification_control -W -end \
-		-with P -do \
-		-projective_space_activity \
-			-classify_surfaces_with_double_sixes Surf27 Control \
-		-end \
-		-with Surf27 -do \
-		-classification_of_cubic_surfaces_with_double_sixes_activity \
-			-report -end \
-		-end \
-		-print_symbols
-	$(PDFLATEX) Surfaces_q9.tex
-	$(OPEN) Surfaces_q9.pdf
-
-
-
-surface_classify_q11:
-	$(ORBITER) -v 5 \
-		-orbiter_path $(ORBITER_EXE_PATH) \
-		-define F -finite_field -q 11 -end \
-		-define P -projective_space -n 3 -field F -v 0 -end \
-		-define Control -poset_classification_control -W \
-			-problem_label "surf_q11" \
-		-end \
-		-define Do -draw_options \
-			-radius 200 -line_width 0.3 -nodes_empty \
-		-end \
-		-define ro \
-			-poset_classification_report_options \
-				-draw_poset -type_ordinary \
-			-draw_options Do \
-		-end \
-		-define Orb -orbits \
-			-on_cubic_surfaces P Control \
-		-end \
-		-with Orb -do -orbits_activity \
-			-report \
-			-report_options ro \
-		-end
-	$(PDFLATEX) Surfaces_q11.tex 
-	$(OPEN) Surfaces_q11.pdf
-
-
-surface_classify_q13:
-	$(ORBITER) -v 5 \
-		-orbiter_path $(ORBITER_EXE_PATH) \
-		-define F -finite_field -q 13 -end \
-		-define P -projective_space -n 3 -field F -v 0 -end \
-		-define Control -poset_classification_control -W \
-			-problem_label "surf_q13" \
-		-end \
-		-define Do -draw_options \
-			-radius 200 -line_width 0.3 -nodes_empty \
-		-end \
-		-define ro \
-			-poset_classification_report_options \
-				-draw_poset -type_ordinary \
-			-draw_options Do \
-		-end \
-		-define Orb -orbits \
-			-on_cubic_surfaces P Control \
-		-end \
-		-with Orb -do -orbits_activity \
-			-report \
-			-report_options ro \
-		-end
-	$(PDFLATEX) Surfaces_q13.tex 
-	$(OPEN) Surfaces_q13.pdf
 
 
 
@@ -13558,50 +13424,46 @@ Family_general_F31_25_5_5_25_recognize:
 		-define Control -poset_classification_control -W \
 			-problem_label "surf_q31" \
 		-end \
-		-with P -do \
-		-projective_space_activity \
-			-classify_surfaces_with_double_sixes AllSurf Control \
+		-define Classify -classify_cubic_surfaces \
+			-use_double_sixes \
+			-projective_space P \
+			-poset_classification_control Control \
 		-end \
-		-with AllSurf -do \
-		-classification_of_cubic_surfaces_with_double_sixes_activity \
+		-define Orb -orbits \
+			-on_cubic_surfaces Classify \
+		-end \
+		-with Orb -do -orbits_activity \
+			-report \
+			-report_options ro \
+		-end \
+		-with Orb -do -cubic_surfaces_after_classification_activity \
+			-create_source_code \
+		-end \
+		-with Orb -do -cubic_surfaces_after_classification_activity \
 			-recognize Surf \
 		-end
 
 
 
+
+
 surface_F_abcd_identify_q9:
-	$(ORBITER) -v 3 \
-		-define F -finite_field -q 9 -end \
-		-define P -projective_space -n 3 -field F -v 0 -end \
-		-define Control -poset_classification_control -W \
-			-problem_label "surf_q9" \
-		-end \
-		-with P -do \
-		-projective_space_activity \
-			-classify_surfaces_with_double_sixes AllSurf Control \
-		-end \
-		-with AllSurf -do \
-		-classification_of_cubic_surfaces_with_double_sixes_activity \
-			-identify_general_abcd \
-		-end
-
-
-#User time: 2:14
-#surface_recognize_abcd_q9.csv
-
-surface_F_abcd_identify_q11:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 11 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
 		-define Control -poset_classification_control -W \
-			-problem_label "surf_q11" \
+			-problem_label "surf_q9" \
 		-end \
-		-with P -do \
-		-projective_space_activity \
-			-classify_surfaces_with_double_sixes AllSurf Control \
+		-define Classify -classify_cubic_surfaces \
+			-use_double_sixes \
+			-projective_space P \
+			-poset_classification_control Control \
 		-end \
-		-with AllSurf -do \
-		-classification_of_cubic_surfaces_with_double_sixes_activity \
+		-define Orb -orbits \
+			-on_cubic_surfaces Classify \
+		-end \
+		-with Orb -do \
+		-cubic_surfaces_after_classification_activity \
 			-identify_general_abcd \
 		-end
 
@@ -13619,12 +13481,16 @@ Family_general_F11_iso_test:
 		-define Control -poset_classification_control -W \
 			-problem_label "surf_q11" \
 		-end \
-		-with P -do \
-		-projective_space_activity \
-			-classify_surfaces_with_double_sixes AllSurf Control \
+		-define Classify -classify_cubic_surfaces \
+			-use_double_sixes \
+			-projective_space P \
+			-poset_classification_control Control \
 		-end \
-		-with AllSurf -do \
-		-classification_of_cubic_surfaces_with_double_sixes_activity \
+		-define Orb -orbits \
+			-on_cubic_surfaces Classify \
+		-end \
+		-with Orb -do \
+		-cubic_surfaces_after_classification_activity \
 			-isomorphism_testing Surf1 Surf2 \
 		-end
 

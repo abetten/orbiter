@@ -383,12 +383,12 @@ void activity_description::read_arguments(
 			}
 		}
 	}
-	else if (ST.stringcmp(argv[i], "-classification_of_cubic_surfaces_with_double_sixes_activity") == 0) {
+	else if (ST.stringcmp(argv[i], "-cubic_surfaces_after_classification_activity") == 0) {
 		f_classification_of_cubic_surfaces_with_double_sixes_activity = true;
 		Classification_of_cubic_surfaces_with_double_sixes_activity_description =
 				NEW_OBJECT(applications_in_algebraic_geometry::cubic_surfaces_and_double_sixes::classification_of_cubic_surfaces_with_double_sixes_activity_description);
 		if (f_v) {
-			cout << "reading -classification_of_cubic_surfaces_with_double_sixes_activity" << endl;
+			cout << "reading -cubic_surfaces_after_classification_activity" << endl;
 		}
 		i += Classification_of_cubic_surfaces_with_double_sixes_activity_description->read_arguments(argc - (i + 1),
 			argv + i + 1, verbose_level);
@@ -396,7 +396,7 @@ void activity_description::read_arguments(
 		i++;
 
 		if (f_v) {
-			cout << "-classification_of_cubic_surfaces_with_double_sixes_activity" << endl;
+			cout << "-cubic_surfaces_after_classification_activity" << endl;
 			Classification_of_cubic_surfaces_with_double_sixes_activity_description->print();
 			cout << "i = " << i << endl;
 			cout << "argc = " << argc << endl;
@@ -1972,7 +1972,23 @@ void activity_description::do_classification_of_cubic_surfaces_with_double_sixes
 	}
 
 
+	int *Idx;
 
+	Sym->Orbiter_top_level_session->find_symbols(Sym->with_labels, Idx);
+
+	if (Sym->with_labels.size() < 1) {
+		cout << "activity requires at least one input" << endl;
+		exit(1);
+	}
+
+	orbits::orbits_create *OC;
+
+	OC = (orbits::orbits_create *)
+			Sym->Orbiter_top_level_session->get_object(Idx[0]);
+
+
+
+#if 0
 	int *Idx;
 
 	Sym->Orbiter_top_level_session->find_symbols(Sym->with_labels, Idx);
@@ -1986,6 +2002,19 @@ void activity_description::do_classification_of_cubic_surfaces_with_double_sixes
 
 	SCW = (applications_in_algebraic_geometry::cubic_surfaces_and_double_sixes::surface_classify_wedge *)
 			Sym->Orbiter_top_level_session->get_object(Idx[0]);
+#endif
+
+	if (!OC->f_has_cubic_surfaces) {
+		cout << "The orbits data structure must be for cubic surfaces" << endl;
+		exit(1);
+	}
+
+
+	applications_in_algebraic_geometry::cubic_surfaces_and_double_sixes::surface_classify_wedge *SCW;
+
+
+	SCW = OC->SCW;
+
 	{
 		applications_in_algebraic_geometry::cubic_surfaces_and_double_sixes::classification_of_cubic_surfaces_with_double_sixes_activity
 			Activity;

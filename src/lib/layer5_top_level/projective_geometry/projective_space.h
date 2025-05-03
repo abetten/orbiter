@@ -255,10 +255,11 @@ public:
 
 	// classification stuff:
 
+#if 0
 	int f_classify_surfaces_with_double_sixes;
 	std::string classify_surfaces_with_double_sixes_label;
 	std::string classify_surfaces_with_double_sixes_control_label;
-
+#endif
 
 	int f_classify_surfaces_through_arcs_and_two_lines;
 

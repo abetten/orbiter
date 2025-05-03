@@ -254,10 +254,11 @@ projective_space_activity_description::projective_space_activity_description()
 
 	// classification stuff:
 
+#if 0
 	f_classify_surfaces_with_double_sixes = false;
 	//std::string classify_surfaces_with_double_sixes_label;
 	//std::string classify_surfaces_with_double_sixes_control_label;
-
+#endif
 
 
 	f_classify_surfaces_through_arcs_and_two_lines = false;
@@ -979,6 +980,8 @@ int projective_space_activity_description::read_arguments(
 		// classification stuff:
 
 		// cubic surfaces:
+
+#if 0
 		else if (ST.stringcmp(argv[i], "-classify_surfaces_with_double_sixes") == 0) {
 			f_classify_surfaces_with_double_sixes = true;
 			classify_surfaces_with_double_sixes_label.assign(argv[++i]);
@@ -990,6 +993,7 @@ int projective_space_activity_description::read_arguments(
 						<< " " << classify_surfaces_with_double_sixes_control_label << endl;
 			}
 		}
+#endif
 
 		else if (ST.stringcmp(argv[i], "-classify_surfaces_through_arcs_and_two_lines") == 0) {
 			f_classify_surfaces_through_arcs_and_two_lines = true;
@@ -1474,11 +1478,13 @@ void projective_space_activity_description::print()
 	// classification stuff:
 
 	// cubic surfaces:
+#if 0
 	if (f_classify_surfaces_with_double_sixes) {
 		cout << "-classify_surfaces_with_double_sixes "
 				<< classify_surfaces_with_double_sixes_label
 				<< " " << classify_surfaces_with_double_sixes_control_label << endl;
 	}
+#endif
 
 	if (f_classify_surfaces_through_arcs_and_two_lines) {
 		cout << "-classify_surfaces_through_arcs_and_two_lines " << endl;

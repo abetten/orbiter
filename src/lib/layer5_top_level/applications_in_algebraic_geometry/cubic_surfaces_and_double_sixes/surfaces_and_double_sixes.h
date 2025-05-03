@@ -473,10 +473,11 @@ public:
 
 	void sweep_Cayley(
 			int verbose_level);
-	void identify_general_abcd(
-		int *Iso_type, int *Nb_lines, int verbose_level);
 	void identify_general_abcd_and_print_table(
 			int verbose_level);
+	void identify_general_abcd(
+		int *Iso_type, int *Nb_lines,
+		int verbose_level);
 	void identify_Eckardt_and_print_table(
 			int verbose_level);
 	void identify_F13_and_print_table(
@@ -509,16 +510,19 @@ public:
 	surface_classify_wedge *Wedge;
 
 	int nb_surfaces;
-	data_structures_groups::set_and_stabilizer **SaS;
-		// [nb_surfaces]
+	data_structures_groups::set_and_stabilizer **SaS; // [nb_surfaces]
+	cubic_surfaces_in_general::surface_object_with_group **SOA; // [nb_surfaces]
 
 	long int *Lines; // [nb_surfaces * 27]
 	int *Eqn; // [nb_surfaces * 20]
+
 
 	surface_repository();
 	~surface_repository();
 	void init(
 			surface_classify_wedge *Wedge, int verbose_level);
+	void init_one_surface(
+			int orbit_index, int verbose_level);
 	void generate_source_code(
 			int verbose_level);
 	void report_surface(
