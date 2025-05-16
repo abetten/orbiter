@@ -110,9 +110,16 @@ test_problem:
 # Makefile Variables
 
 
+# Section 2.4 set builder
 
 
-# Section 2.5 vector of group elements
+
+# Section 2.5 vector builder
+
+
+
+
+# Section 2.6 Vector of group element
 
 
 HIRSCHFELD_STAB_GENERATORS="\
@@ -124,15 +131,13 @@ HIRSCHFELD_STAB_GENERATORS="\
 0,1,0,0,1,0,0,0,0,0,0,1,0,0,1,0,0"
 
 
-
-
 CLASS_2A_REP="1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1,1"
 
 FILE_NAME_CLASS_2A="PGGL_4_4_Subgroup_Hirschfeld_Stab_51840_class_of_2A.csv"
 
 
 
-# Section 2.6 Symbolic Algebra
+# Section 2.7 Symbolic Algebra
 
 TEST_FORMULA="(-a+b*b)*x*x+a*b*x"
 
@@ -507,6 +512,11 @@ EDGE_CURVE_EQUATION_ALGEBRAIC="X^4 -Y^4 -Z^4 +2*f^2*Y^2*Z^2 +4*f*X^2*Y*Z"
 
 
 ORTHOGONAL_OP_6_2_POINTS_OFF="6,7,10,13,14,15,16,20,24,28,29,30,31,35,39,43, 44, 45, 46, 48, 49, 50, 52, 53, 54, 56, 57, 58"
+
+
+SIEGEL_TRANSFORM_UV_2A="1,0,0,0,0,0,0,1,1,0,0,0,0,0,1,0,0,0,1,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,1"
+
+SIEGEL_TRANSFORM_UV_2C="1,0,0,0,0,0, 1,1,1,1,0,0, 1,0,1,0,0,0, 1,0,0,1,0,0, 0,0,0,0,1,0, 0,0,0,0,0,1"
 
 
 
@@ -5208,6 +5218,7 @@ test_5_2:
 	make L_5_3
 	make L_4_5
 	make PGL_4_5
+	make PGGL_2_9
 	make PGGL_3_4
 	#make PGGL_3_8 problem in Syl->init (too slow)
 	make AGGL_1_4
@@ -5477,6 +5488,21 @@ PGL_4_5:
 	$(PDFLATEX) PGL_4_5_report.tex
 	$(OPEN) PGL_4_5_report.pdf
 
+
+
+PGGL_2_9:
+	$(ORBITER) -v 2 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define G -linear_group -PGGL 2 9 -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end \
+		-print_symbols
+	$(PDFLATEX) PGGL_2_9_report.tex
+	$(OPEN) PGGL_2_9_report.pdf
 
 
 PGGL_3_4:
@@ -7211,6 +7237,7 @@ SECTION_GROUP_THEORETIC_ACTIVITIES:
 
 
 test_5_5:
+	make PGL_3_2_order_invariant
 	make PGL_3_2_elements
 	make Sym_3_elements
 	make Cycle_13_power
@@ -7234,6 +7261,18 @@ test_5_5:
 	make PGL_2_3_subgroup_lattice
 	make PGL_2_3_subgroup_lattice_load_and_draw_by_groups
 	make PGL_2_3_subgroup_lattice_load_and_draw_by_orbits
+
+
+PGL_3_2_order_invariant:
+	$(ORBITER) -v 5 \
+		-define G -linear_group -PGL 3 2 -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-order_invariant \
+		-end
+	$(PDFLATEX) PGL_3_2_order_invariant.tex
+	$(OPEN) PGL_3_2_order_invariant.pdf
+
 
 
 PGL_3_2_elements:
@@ -8342,7 +8381,7 @@ Butler12_PSP_6_2_conjugate:
 
 
 ###############################################################################
-# Section 5.9: Group Theory, activities for vectors of group elements
+# \: Group Theory, activities for vectors of group elements
 
 
 SECTION_GROUP_THEORY_ACTIVITIES_FOR_VECTORS:
@@ -9540,6 +9579,13 @@ test_7_3:
 	make BLT_database_7_1_print
 	make Doily_W_2
 	make Op_6_2_orthogonal_reflections
+	make Op_6_2_create_Siegel_transformation_2B
+	make Op_6_2_create_Siegel_transformation_2C
+	make Op_6_2_report_Siegel_transformation
+	make Op_6_2_Siegel_transformation_expand_class_2A
+	make Op_6_2_Siegel_transformation_expand_class_2C
+	make Op_6_2_make_all_Siegel_transformations
+	make Op_6_2_all_Siegel_transformations_tally
 
 
 
@@ -9804,6 +9850,151 @@ Op_6_2_orthogonal_reflections:
 	$(PDFLATEX) Op_6_2_orthogonal_reflections_elements.tex
 	$(OPEN) Op_6_2_orthogonal_reflections_elements.pdf
 
+
+
+# O_1_6_2_orthogonal_reflections.csv
+
+
+# create a Siegel transformation of class 2B:
+
+Op_6_2_create_Siegel_transformation_2B:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define G -linear_group -PGOp 6 F -end \
+		-define O -orthogonal_space 1 6 F -end \
+		-with O -do -orthogonal_space_activity \
+			-create_Siegel_transformation "1,0,0,0,0,0" "0,0,1,0,0,0" \
+		-end \
+		-define G -linear_group -PGOp 6 F -end \
+		-define siegel1 -vector_ge \
+			-action G \
+			-read_csv O_1_6_2_Siegel_transformation.csv Element \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-element_processing \
+				-input siegel1 \
+				-print \
+			-end \
+		-end
+	$(PDFLATEX) siegel1_elements.tex
+	$(OPEN) siegel1_elements.pdf
+
+
+#O_1_6_2_Siegel_transformation.csv
+
+
+
+Op_6_2_create_Siegel_transformation_2C:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define O -orthogonal_space 1 6 F -end \
+		-with O -do -orthogonal_space_activity \
+			-create_Siegel_transformation "1,0,0,0,0,0" "0,0,1,1,0,0" \
+		-end \
+		-define G -linear_group -PGOp 6 F -end \
+		-define siegel2 -vector_ge \
+			-action G \
+			-read_csv O_1_6_2_Siegel_transformation.csv Element \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-element_processing \
+				-input siegel2 \
+				-print \
+			-end \
+		-end
+	$(PDFLATEX) siegel2_elements.tex
+	$(OPEN) siegel2_elements.pdf
+
+
+#O_1_6_2_Siegel_transformation.csv
+
+
+
+Op_6_2_report_Siegel_transformation:
+	$(ORBITER) -v 2 \
+		-define Pts -vector \
+			-dense $(ORTHOGONAL_OP_6_2_POINTS_OFF) \
+		-end \
+		-define F -finite_field -q 2 -end \
+		-define G -linear_group -PGOp 6 F -end \
+		-define Siegel -vector_ge \
+			-action G \
+			-read_csv O_1_6_2_Siegel_transformation.csv Element \
+		-end \
+		-with Siegel -do \
+		-vector_ge_activity \
+			-report_with_options "dense=1" \
+		-end 
+	$(PDFLATEX) PGOp_6_2_Siegel_elements.tex
+	$(OPEN) PGOp_6_2_Siegel_elements.pdf
+
+
+Op_6_2_Siegel_transformation_expand_class_2A:
+	$(ORBITER) -v 2 \
+		-define Pts -vector \
+			-dense $(ORTHOGONAL_OP_6_2_POINTS_OFF) \
+		-end \
+		-define F -finite_field -q 2 -end \
+		-define G -linear_group -PGOp 6 F -end \
+		-define Siegel -vector_ge \
+			-action G \
+			-read_csv O_1_6_2_Siegel_transformation.csv Element \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-conjugacy_class_of "Siegel" \
+			$(SIEGEL_TRANSFORM_UV_2A) \
+		-end
+	$(PDFLATEX) PGOp_6_2_Siegel_elements.tex
+	$(OPEN) PGOp_6_2_Siegel_elements.pdf
+
+
+
+#PGOp_6_2_class_of_Siegel.csv
+# 105 elements, so class 2B
+
+
+Op_6_2_Siegel_transformation_expand_class_2C:
+	$(ORBITER) -v 2 \
+		-define Pts -vector \
+			-dense $(ORTHOGONAL_OP_6_2_POINTS_OFF) \
+		-end \
+		-define F -finite_field -q 2 -end \
+		-define G -linear_group -PGOp 6 F -end \
+		-define Siegel -vector_ge \
+			-action G \
+			-read_csv O_1_6_2_Siegel_transformation.csv Element \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-conjugacy_class_of "Siegel" \
+			$(SIEGEL_TRANSFORM_UV_2C) \
+		-end
+	#pdflatex PGOp_6_2_Siegel_elements.tex
+	#open PGOp_6_2_Siegel_elements.pdf
+
+#PGOp_6_2_class_of_Siegel.csv
+# class size 210, so 2C
+
+Op_6_2_make_all_Siegel_transformations:
+	$(ORBITER) -v 2 \
+		-define Pts -vector \
+			-dense $(ORTHOGONAL_OP_6_2_POINTS_OFF) \
+		-end \
+		-define F -finite_field -q 2 -end \
+		-define O -orthogonal_space 1 6 F -end \
+		-with O -do -orthogonal_space_activity \
+			-make_all_Siegel_transformations \
+		-end
+
+
+# all_Siegel.csv
+
+Op_6_2_all_Siegel_transformations_tally:
+	$(ORBITER) -v 2 \
+		-tally_column all_Siegel.csv transform
 
 
 
@@ -13326,10 +13517,12 @@ surface_classify_q4:
 			-report \
 			-report_options ro \
 		-end \
-		-with Orb -do -cubic_surfaces_after_classification_activity \
+		-with Orb -do \
+			-cubic_surfaces_after_classification_activity \
 			-create_source_code \
 		-end \
-		-with Orb -do -cubic_surfaces_after_classification_activity \
+		-with Orb -do \
+			-cubic_surfaces_after_classification_activity \
 			-identify_general_abcd \
 		-end
 	$(PDFLATEX) Surfaces_q4.tex 
@@ -13394,10 +13587,12 @@ surface_classify_q7:
 			-report \
 			-report_options ro \
 		-end \
-		-with Orb -do -cubic_surfaces_after_classification_activity \
+		-with Orb -do \
+			-cubic_surfaces_after_classification_activity \
 			-create_source_code \
 		-end \
-		-with Orb -do -cubic_surfaces_after_classification_activity \
+		-with Orb -do \
+			-cubic_surfaces_after_classification_activity \
 			-identify_general_abcd \
 		-end
 	$(PDFLATEX) Surfaces_q7.tex 
@@ -13436,10 +13631,12 @@ Family_general_F31_25_5_5_25_recognize:
 			-report \
 			-report_options ro \
 		-end \
-		-with Orb -do -cubic_surfaces_after_classification_activity \
+		-with Orb -do \
+			-cubic_surfaces_after_classification_activity \
 			-create_source_code \
 		-end \
-		-with Orb -do -cubic_surfaces_after_classification_activity \
+		-with Orb -do \
+			-cubic_surfaces_after_classification_activity \
 			-recognize Surf \
 		-end
 
@@ -13463,7 +13660,7 @@ surface_F_abcd_identify_q9:
 			-on_cubic_surfaces Classify \
 		-end \
 		-with Orb -do \
-		-cubic_surfaces_after_classification_activity \
+			-cubic_surfaces_after_classification_activity \
 			-identify_general_abcd \
 		-end
 
@@ -13490,7 +13687,7 @@ Family_general_F11_iso_test:
 			-on_cubic_surfaces Classify \
 		-end \
 		-with Orb -do \
-		-cubic_surfaces_after_classification_activity \
+			-cubic_surfaces_after_classification_activity \
 			-isomorphism_testing Surf1 Surf2 \
 		-end
 
@@ -25677,8 +25874,8 @@ Aut_Sym_6_subgroup_lattice:
 
 Aut_Sym_6_subgroup_lattice_load_and_draw:
 	$(ORBITER) -v 3 \
-		-draw_options -embedded \
-			-line_width 0.5 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.5 \
 		-end \
 		-define gens -vector -dense $(AUT_SYM_6_GENS) -end \
 		-define G -permutation_group \
@@ -25695,7 +25892,7 @@ Aut_Sym_6_subgroup_lattice_load_and_draw:
 		-end \
 		-with G -do \
 		-group_theoretic_activity \
-			-subgroup_lattice_draw_by_orbits \
+			-subgroup_lattice_draw_by_orbits Do \
 		-end
 	#$(PDFLATEX) AutSym6_drawing.tex
 	#$(OPEN) AutSym6_drawing.pdf

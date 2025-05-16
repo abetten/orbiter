@@ -2578,7 +2578,7 @@ void colored_graph::create_Levi_graph_from_incidence_matrix(
 
 
 
-
+#if 0
 void colored_graph::find_subgraph(
 		std::string &subgraph_label, int verbose_level)
 {
@@ -2671,8 +2671,10 @@ void colored_graph::find_subgraph(
 		cout << "colored_graph::find_subgraph done" << endl;
 	}
 }
+#endif
 
 void colored_graph::find_subgraph_E6(
+		std::vector<std::vector<int> > &Solutions,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2794,16 +2796,28 @@ void colored_graph::find_subgraph_E6(
 								}
 							}
 
+							std::vector<int> sol;
+
+							for (i = 0; i < 6; i++) {
+								sol.push_back(E6[i]);
+							}
+
+							Solutions.push_back(sol);
+
+
+
 							cnt++;
-							cout << "solution " << cnt << " : ";
-							Int_vec_print(cout, E6, 6);
-							cout << endl;
+							if (f_v) {
+								cout << "solution " << cnt << " : ";
+								Int_vec_print(cout, E6, 6);
+								cout << endl;
+							}
 							//Int_matrix_print(S, 6, 6);
 							//cout << endl;
 
 							for (i = 0; i < 36; i++) {
 								if (S[i] != T[i]) {
-									cout << "solution is not correct" << endl;
+									cout << "colored_graph::find_subgraph_E6 solution is not correct" << endl;
 									Int_matrix_print(S, 6, 6);
 									cout << endl;
 									exit(1);

@@ -792,6 +792,160 @@ void sims::report_base_and_orbit_len(
 	}
 }
 
+void sims::report_all_group_elements_to_file(
+		std::string &label, std::string &label_tex,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "sims::report_all_group_elements_to_file" << endl;
+	}
+
+
+	string fname;
+	string title;
+	string author, extra_praeamble;
+
+	title = "The elements of the group $" + label_tex + "$";
+	author = "";
+
+	fname = label + "_elements.tex";
+
+	if (f_v) {
+		cout << "sims::report_all_group_elements_to_file fname = " << fname << endl;
+	}
+
+	{
+
+		ofstream ost(fname);
+
+
+
+
+		other::l1_interfaces::latex_interface L;
+
+		L.head(ost,
+				false /* f_book*/,
+				true /* f_title */,
+				title, author,
+				false /* f_toc */,
+				false /* f_landscape */,
+				true /* f_12pt */,
+				true /* f_enlarged_page */,
+				true /* f_pagenumbers */,
+				extra_praeamble /* extra_praeamble */);
+
+
+
+		if (f_v) {
+			cout << "sims::report_all_group_elements_to_file "
+					"before report_all_group_elements" << endl;
+		}
+
+
+
+		report_all_group_elements(
+			ost, verbose_level);
+
+
+		if (f_v) {
+			cout << "sims::report_all_group_elements_to_file "
+					"after report_all_group_elements" << endl;
+		}
+
+
+		L.foot(ost);
+
+	}
+	other::orbiter_kernel_system::file_io Fio;
+
+	if (f_v) {
+		cout << "sims::report_all_group_elements_to_file "
+				"written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+
+	if (f_v) {
+		cout << "sims::report_all_group_elements_to_file done" << endl;
+	}
+}
+
+void sims::report_all_group_elements(
+		std::ostream &ost, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "sims::report_all_group_elements" << endl;
+	}
+
+	int *Elt;
+	algebra::ring_theory::longinteger_object go;
+	int i;
+
+	Elt = NEW_int(A->elt_size_in_int);
+	group_order(go);
+	if (f_v) {
+		cout << "sims::report_all_group_elements go = " << go << endl;
+	}
+
+	ost << "go = " << go << "\\\\" << endl;
+
+
+	if (f_v) {
+		cout << "sims::report_all_group_elements before report_base_and_orbit_len" << endl;
+	}
+
+	report_base_and_orbit_len(ost, verbose_level);
+
+	if (f_v) {
+		cout << "sims::report_all_group_elements after report_base_and_orbit_len" << endl;
+	}
+
+	ost << "Generators \\\\" << endl;
+	if (f_v) {
+		cout << "sims::report_all_group_elements before print_generators_tex" << endl;
+	}
+	print_generators_tex(ost);
+	if (f_v) {
+		cout << "sims::report_all_group_elements after print_generators_tex" << endl;
+	}
+
+
+
+	for (i = 0; i < go.as_lint(); i++) {
+
+		element_unrank_lint(i, Elt);
+
+
+
+		if (f_v) {
+			cout << "sims::report_all_group_elements" << endl;
+			cout << "Element " << i << "\\\\" << endl;
+		}
+
+		ost << "Element " << i;
+		ost << " : " << endl;
+
+		if (f_v) {
+			A->Group_element->element_print_latex(Elt, cout);
+		}
+		ost << "$" << endl;
+		//A->Group_element->element_print_latex(Elt, ost);
+		A->Group_element->element_print_as_permutation(Elt, ost);
+		ost << "$" << "\\\\" << endl;
+		//A->Group_element->element_print_as_permutation(Elt, ost);
+		//ost << endl;
+
+	}
+	FREE_int(Elt);
+
+	if (f_v) {
+		cout << "sims::report_all_group_elements done" << endl;
+	}
+}
+
 
 void sims::report_all_transversal_elements(
 		std::ostream &ost, int verbose_level)

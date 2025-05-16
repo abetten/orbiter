@@ -83,6 +83,53 @@ void subgroup::init_from_sims(
 	}
 }
 
+void subgroup::create_sims(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "subgroup::create_sims" << endl;
+	}
+
+	data_structures_groups::vector_ge *gen_vec;
+
+	gen_vec = NEW_OBJECT(data_structures_groups::vector_ge);
+
+	gen_vec->init(Subgroup_lattice->A, verbose_level);
+	gen_vec->allocate(nb_gens, 0 /* verbose_level */);
+
+	int i;
+
+	for (i = 0; i < nb_gens; i++) {
+		 Subgroup_lattice->Sims->element_unrank_lint(gens[i], gen_vec->ith(i));
+	}
+
+	long int target_go;
+
+	target_go = group_order;
+
+	if (f_v) {
+		cout << "subgroup::create_sims "
+				"before Subgroup_lattice->A->create_sims_from_generators_with_target_group_order_lint" << endl;
+	}
+	Sub = Subgroup_lattice->A->create_sims_from_generators_with_target_group_order_lint(
+			gen_vec,
+			target_go,
+			verbose_level - 2);
+	if (f_v) {
+		cout << "subgroup::create_sims "
+				"after Subgroup_lattice->A->create_sims_from_generators_with_target_group_order_lint" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "subgroup::create_sims done" << endl;
+	}
+
+}
+
+
 void subgroup::init(
 		groups::subgroup_lattice *Subgroup_lattice,
 		int *Elements,
@@ -101,6 +148,16 @@ void subgroup::init(
 	subgroup::nb_gens = nb_gens;
 	Int_vec_copy(Elements, subgroup::Elements, group_order);
 	Int_vec_copy(gens, subgroup::gens, nb_gens);
+
+	if (f_v) {
+		cout << "subgroup::init before create_sims" << endl;
+	}
+	create_sims(verbose_level - 2);
+	if (f_v) {
+		cout << "subgroup::init after create_sims" << endl;
+	}
+
+
 	if (f_v) {
 		cout << "subgroup::init done" << endl;
 	}
@@ -145,6 +202,36 @@ void subgroup::report(
 		std::ostream &ost)
 {
 	SG->print_generators_tex(ost);
+}
+
+void subgroup::report_elements_to_file(
+		std::string &label, std::string &label_tex,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "subgroup::report_elements_to_file" << endl;
+	}
+
+	if (f_v) {
+		cout << "subgroup::report_elements_to_file "
+				"before Subgroup_sims->report_all_group_elements_to_file" << endl;
+	}
+
+	Sub->report_all_group_elements_to_file(
+			label, label_tex,
+			verbose_level);
+
+	if (f_v) {
+		cout << "subgroup::report_elements_to_file "
+				"after Subgroup_sims->report_all_group_elements_to_file" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "subgroup::report_elements_to_file done" << endl;
+	}
 }
 
 uint32_t subgroup::compute_hash()

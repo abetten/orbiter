@@ -481,11 +481,18 @@ void vector_ge::report_elements(
 	other::data_structures::string_tools ST;
 
 	int f_dense = false;
+	int f_permutation = false;
+	int f_fix_structure = false;
 
 	if (options.length()) {
 
 		ST.parse_value_pairs(symbol_table,
 				options, verbose_level - 1);
+
+		if (f_v) {
+			cout << "vector_ge::report_elements parsing option pairs" << endl;
+		}
+
 
 
 		{
@@ -499,10 +506,47 @@ void vector_ge::report_elements(
 
 				label = it->first;
 				val = it->second;
+				if (f_v) {
+					cout << "vector_ge::report_elements key = " << label << " value = " << val << endl;
+				}
 				//std::cout << "Key: " << it->first << ", Value: " << it->second << std::endl;
 				//assignment.insert(std::make_pair(label, a));
-				if (ST.stringcmp(label, "dense") == 0) {
-					f_dense = true;;
+				if (label == "dense" /*ST.stringcmp(label, "dense") == 0*/) {
+					f_dense = true;
+					if (f_v) {
+						cout << "vector_ge::report_elements f_dense = true" << endl;
+					}
+				}
+				else if (label == "permutation" /*ST.stringcmp(label, "permutation") == 0*/) {
+					if (val == "on" /*ST.stringcmp(val, "on") == 0*/) {
+						f_permutation = true;
+						if (f_v) {
+							cout << "vector_ge::report_elements f_permutation = true" << endl;
+						}
+					}
+					else {
+						cout << "vector_ge::report_elements unknown value of option "
+								<< label << " value " << val << endl;
+						exit(1);
+					}
+				}
+				else if (label == "fix_structure" /*ST.stringcmp(label, "permutation") == 0*/) {
+					if (val == "on" /*ST.stringcmp(val, "on") == 0*/) {
+						f_fix_structure = true;
+						if (f_v) {
+							cout << "vector_ge::report_elements f_fix_structure = true" << endl;
+						}
+					}
+					else {
+						cout << "vector_ge::report_elements unknown value of option "
+								<< label << " value " << val << endl;
+						exit(1);
+					}
+				}
+				else {
+					cout << "vector_ge::report_elements unknown option "
+							<< label << " with value " << val << endl;
+					exit(1);
 				}
 				++it;
 			}
@@ -560,6 +604,9 @@ void vector_ge::report_elements(
 				A1->Group_element->element_print_latex(Elt, ost);
 				ost << "$" << endl;
 
+				ost << "$" << endl;
+				A1->Group_element->element_print_as_permutation(Elt, ost);
+				ost << "$" << endl;
 #if 0
 				A1->print_one_element_tex(
 						ost,
@@ -602,7 +649,19 @@ void vector_ge::report_elements(
 				Int_vec_print_bare_fully(ost, Elt, A->make_element_size);
 				ost << "\\\\" << endl;
 
+				if (f_permutation) {
 
+					ost << "$";
+					A1->Group_element->element_print_as_permutation(Elt, ost);
+					ost << "$";
+					ost << "\\\\" << endl;
+
+				}
+
+
+				if (f_fix_structure) {
+
+				}
 #if 0
 				A1->print_one_element_tex(
 						ost,

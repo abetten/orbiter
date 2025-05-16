@@ -1318,6 +1318,9 @@ public:
 			unipoly_object p);
 	void print_object_sstr_latex(
 			unipoly_object p, std::stringstream &ost);
+	void make_companion_matrix(
+			unipoly_object p, int *mtx, int verbose_level);
+	// mtx[d * d]
 	std::string stringify_object(
 			unipoly_object p);
 	void print_object_sstr(

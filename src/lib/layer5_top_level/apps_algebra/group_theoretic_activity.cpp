@@ -127,6 +127,35 @@ void group_theoretic_activity::perform_activity(
 
 	}
 
+	else if (Descr->f_order_invariant) {
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"f_order_invariant" << endl;
+		}
+
+		groups::sims *Sims;
+		if (AG->Subgroup_sims == NULL) {
+			cout << "group_theoretic_activity::perform_activity "
+					"Subgroup_sims == NULL" << endl;
+			exit(1);
+		}
+
+		Sims = AG->Subgroup_sims;
+
+		AG->create_order_invariant(
+				Sims,
+				verbose_level);
+
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after AG->create_latex_report" << endl;
+		}
+
+	}
+
+
 	else if (Descr->f_group_table) {
 
 		if (f_v) {
@@ -241,6 +270,52 @@ void group_theoretic_activity::perform_activity(
 		string output_label;
 
 		output_label = AG->label + "_elements";
+
+		apps_algebra::vector_ge_builder *VB;
+
+		VB = NEW_OBJECT(apps_algebra::vector_ge_builder);
+
+		VB->V = vec;
+
+		Output->init_vector_ge(output_label, VB, verbose_level);
+
+	}
+
+	else if (Descr->f_elements_by_class) {
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"f_elements_by_class, order = " << Descr->elements_by_class_order
+					<< " id=" << Descr->elements_by_class_id << endl;
+		}
+
+		algebra_global_with_action Algebra_global_with_action;
+		data_structures_groups::vector_ge *vec;
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before AG->all_elements" << endl;
+		}
+
+		Algebra_global_with_action.all_elements_by_class(
+				AG->Subgroup_sims,
+				AG,
+				Descr->elements_by_class_order,
+				Descr->elements_by_class_id,
+				vec,
+				verbose_level);
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after AG->all_elements" << endl;
+		}
+
+		nb_output = 1;
+		Output = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
+
+		string output_label;
+
+		output_label = AG->label + "_elements_of_class_" + std::to_string(Descr->elements_by_class_order) + "_" + std::to_string(Descr->elements_by_class_id);
 
 		apps_algebra::vector_ge_builder *VB;
 
@@ -2184,6 +2259,143 @@ void group_theoretic_activity::perform_activity(
 		//FREE_OBJECT(Sims);
 
 	}
+
+	else if (Descr->f_find_overgroup) {
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					<< " find_overgroup_order=" << Descr->find_overgroup_order
+					<< " find_overgroup_of=" << Descr->find_overgroup_of
+					<< endl;
+		}
+
+
+		groups::any_group *Subgroup;
+
+
+		Subgroup = Get_any_group(Descr->find_overgroup_of);
+
+		algebra_global_with_action Algebra_global_with_action;
+
+
+		classes_of_subgroups_expanded *Classes_of_subgroups_expanded;
+		std::vector<int> Class_idx;
+		std::vector<int> Class_idx_subgroup_idx;
+
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before Algebra_global_with_action.find_overgroup" << endl;
+		}
+		Algebra_global_with_action.find_overgroup(
+				AG,
+				Subgroup,
+				Descr->find_overgroup_order,
+				Classes_of_subgroups_expanded,
+				Class_idx, Class_idx_subgroup_idx,
+				verbose_level);
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after Algebra_global_with_action.find_overgroup" << endl;
+		}
+
+		int i, len, idx1, idx2;
+		int *Elt1;
+
+		len = Class_idx.size();
+
+		cout << "We found " << len << " overgroups:" << endl;
+
+		Elt1 = NEW_int(AG->A->elt_size_in_int);
+
+		for (i = 0; i < len; i++) {
+			idx1 = Class_idx[i];
+			idx2 = Class_idx_subgroup_idx[i];
+
+			cout << i << " : " << idx1 << " : " << idx2 << endl;
+
+			Classes_of_subgroups_expanded->Orbit_of_subgroups[idx1]->Orbits_P->coset_rep(idx2);
+
+			// result is in cosetrep
+			// determines an element in the group
+			// that moves the orbit representative
+			// to the j-th element in the orbit.
+
+			int *cosetrep;
+
+			cosetrep = Classes_of_subgroups_expanded->Orbit_of_subgroups[idx1]->Orbits_P->cosetrep;
+
+			AG->A->Group_element->element_move(cosetrep, Elt1, 0 /* verbose_level */);
+
+			std::vector<int> path;
+
+			Classes_of_subgroups_expanded->Orbit_of_subgroups[idx1]->Orbits_P->get_path(
+					path,
+					idx2);
+
+			cout << "path=";
+			Int_vec_stl_print(cout, path);
+			cout << endl;
+
+			groups::strong_generators *gens;
+			data_structures_groups::vector_ge *gens_conj;
+
+			//gens = Classes_of_subgroups_expanded->Orbit_of_subgroups[idx1]->Orbits_P->gens;
+
+			int h;
+
+			h = Classes_of_subgroups_expanded->Idx[idx1];
+
+			gens = Classes_of_subgroups_expanded->Classes->Conjugacy_class[h]->gens;
+
+			gens_conj = NEW_OBJECT(data_structures_groups::vector_ge);
+
+
+#if 0
+			gens_conj->init_conjugate_sasv_of(
+					gens, Elt1,
+					verbose_level);
+#else
+			gens_conj->init_conjugate_svas_of(
+					gens->gens, Elt1,
+					verbose_level);
+#endif
+
+			cout << "generating set for the orbit representative:" << endl;
+			gens->gens->print_quick(cout);
+
+			cout << "cosetrep:" << endl;
+			AG->A->Group_element->element_print_quick(cosetrep, cout);
+			cout << endl;
+
+			cout << "generating set for the overgroup:" << endl;
+			gens_conj->print_quick(cout);
+
+			int *Elt;
+			int j;
+
+			cout << "generating set:" << endl;
+			for (j = 0; j < gens_conj->len; j++) {
+
+				Elt = gens_conj->ith(j);
+
+				AG->A->Group_element->print_for_make_element(
+						cout, Elt);
+				cout << endl;
+			}
+
+
+
+		}
+
+		FREE_int(Elt1);
+		FREE_OBJECT(Classes_of_subgroups_expanded)
+
+
+	}
+
+
+
 	else if (Descr->f_identify_subgroups_from_file) {
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "

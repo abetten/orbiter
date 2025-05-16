@@ -2406,9 +2406,26 @@ void ring_theory_global::do_make_table_of_irreducible_polynomials(
 			ost << "\\bigskip" << endl;
 			ost << endl;
 			//ost << "\\begin{multicols}{2}" << endl;
+
+			long int *Rk;
+			int *mtx;
+
+			mtx = NEW_int(deg * deg);
+
+			Rk = NEW_lint(Table.size());
+
+			for (i = 0; i < Table.size(); i++) {
+				rk = GG.AG_element_rank(F->q, T + i * (deg + 1), 1, deg + 1);
+				Rk[i] = rk;
+			}
+
+
 			ost << "\\noindent" << endl;
 			for (i = 0; i < Table.size(); i++) {
-				ost << i << " : $";
+
+				ost << i << " : ";
+
+				ost << "$";
 				for (j = 0; j <= deg; j++) {
 					ost << T[i * (deg + 1) + j];
 				}
@@ -2430,8 +2447,20 @@ void ring_theory_global::do_make_table_of_irreducible_polynomials(
 
 				s = FX.stringify_object(m);
 
-				ost << " : $" << s << "$";
+				ost << " : ";
 
+				ost << "$" << s << "$";
+
+
+				FX.make_companion_matrix(
+						m, mtx, verbose_level);
+
+
+				s = Int_vec_stringify(mtx, deg * deg);
+
+				ost << " : ";
+
+				ost << "$" << s << "$";
 
 				ost << "\\\\" << endl;
 			}
@@ -2443,6 +2472,37 @@ void ring_theory_global::do_make_table_of_irreducible_polynomials(
 						"after report" << endl;
 			}
 
+			ost << "companion matrices only:\\\\" << endl;
+
+			for (i = 0; i < Table.size(); i++) {
+
+				rk = GG.AG_element_rank(F->q, T + i * (deg + 1), 1, deg + 1);
+
+
+				ring_theory::unipoly_object m;
+
+
+				FX.create_object_by_rank(
+					m, rk,
+					0 /*verbose_level*/);
+
+
+				FX.make_companion_matrix(
+						m, mtx, verbose_level);
+
+				string s;
+
+				s = Int_vec_stringify(mtx, deg * deg);
+
+				ost << "$" << s << ", $";
+
+				ost << "\\\\" << endl;
+
+
+			}
+
+			FREE_int(mtx);
+			FREE_lint(Rk);
 
 			L.foot(ost);
 
@@ -3865,6 +3925,10 @@ void ring_theory_global::make_table_of_monomials(
 			Col_headings,
 			verbose_level);
 
+	if (f_v) {
+		cout << "ring_theory_global::make_table_of_monomials "
+				"written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
 
 	if (f_v) {
 		cout << "ring_theory_global::make_table_of_monomials done" << endl;

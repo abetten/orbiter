@@ -654,6 +654,49 @@ void unipoly_domain::print_object_sstr_latex(
 	//return ost;
 }
 
+void unipoly_domain::make_companion_matrix(
+		unipoly_object p, int *mtx, int verbose_level)
+// mtx[d * d]
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "unipoly_domain::make_companion_matrix" << endl;
+	}
+
+	int *rep = (int *) p;
+	int d = rep[0]; // degree
+	int *coeff = rep + 1;
+	int i, j, a;
+
+	if (coeff[d] != 1) {
+		cout << "unipoly_domain::make_companion_matrix "
+				"leading coefficient must be equal to 1" << endl;
+		exit(1);
+	}
+
+	for (i = 0; i < d; i++) {
+		for (j = 0; j < d; j++) {
+			if (j < d - 1) {
+				if (i == j + 1) {
+					a = 1;
+				}
+				else {
+					a = 0;
+				}
+			}
+			else {
+				a = F->negate(coeff[i]);
+			}
+			mtx[i * d + j] = a;
+		}
+	}
+
+	if (f_v) {
+		cout << "unipoly_domain::make_companion_matrix done" << endl;
+	}
+}
+
 std::string unipoly_domain::stringify_object(
 		unipoly_object p)
 {

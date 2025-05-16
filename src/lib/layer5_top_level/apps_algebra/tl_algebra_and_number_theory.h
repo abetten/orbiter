@@ -267,11 +267,31 @@ public:
 
 
 
+	void find_overgroup(
+			groups::any_group *AG,
+			groups::any_group *Subgroup,
+			int overgroup_order,
+			classes_of_subgroups_expanded *&Classes_of_subgroups_expanded,
+			std::vector<int> &Class_idx, std::vector<int> &Class_idx_subgroup_idx,
+			int verbose_level);
 	void identify_subgroups_from_file(
 			groups::any_group *AG,
 			std::string &fname,
 			std::string &col_label,
 			int expand_go,
+			int verbose_level);
+	void all_elements_by_class(
+			groups::sims *Sims,
+			groups::any_group *Any_group,
+			int class_order,
+			int class_id,
+			data_structures_groups::vector_ge *&vec,
+			int verbose_level);
+	classes_of_subgroups_expanded *get_classes_of_subgroups_expanded(
+			interfaces::conjugacy_classes_of_subgroups *Classes,
+			groups::sims *sims_G,
+			groups::any_group *Any_group,
+			int expand_by_go,
 			int verbose_level);
 	void identify_groups_from_csv_file(
 			interfaces::conjugacy_classes_of_subgroups *Classes,
@@ -302,6 +322,11 @@ public:
 			int expand_by_go,
 			std::string &fname, std::string &col_label,
 			int *&Class_index,
+			int verbose_level);
+	void element_ranks_in_overgroup(
+			groups::sims *Sims_G,
+			groups::strong_generators *subgroup_gens,
+			groups::sims *&Sims_P, long int *&Elements_P, long int &go_P,
 			int verbose_level);
 
 
@@ -484,6 +509,12 @@ public:
 			std::string &label,
 			std::string &label_latex,
 			int verbose_level);
+	void find_overgroups(
+			long int *Elements_P,
+			long int go_P,
+			int overgroup_order,
+			std::vector<int> &Class_idx, std::vector<int> &Class_idx_subgroup_idx,
+			int verbose_level);
 	void report(
 			std::string &label,
 			std::string &label_tex,
@@ -561,6 +592,8 @@ public:
 	int f_report;
 	std::string report_draw_options;
 
+	int f_order_invariant;
+
 	int f_group_table;
 	std::string group_table_draw_options;
 
@@ -570,6 +603,12 @@ public:
 	int f_generators;
 
 	int f_elements;
+
+	// ToDo: undocumented
+	int f_elements_by_class;
+	int elements_by_class_order;
+	int elements_by_class_id;
+
 
 	int f_select_elements;
 	std::string select_elements_ranks;
@@ -845,6 +884,11 @@ public:
 
 
 	int f_subgroup_lattice_magma;
+
+	int f_find_overgroup;
+	int find_overgroup_order;
+	std::string find_overgroup_of;
+
 
 	int f_identify_subgroups_from_file;
 	std::string identify_subgroups_from_file_fname;
@@ -1165,8 +1209,11 @@ public:
 	// returns two vectors:
 	// the rational canonical forms and the base change matrices
 
-	// ToDo: not documented
 	int f_products_of_pairs;
+
+	int f_order_of_products_of_pairs;
+
+	int f_apply_isomorphism_wedge_product_4to6;
 
 
 	vector_ge_activity_description();

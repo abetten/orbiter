@@ -567,6 +567,109 @@ void vector_ge_activity::perform_activity(
 		Output[0].init_vector_ge(output_label0, VB0, verbose_level);
 
 	}
+	else if (Descr->f_order_of_products_of_pairs) {
+
+		if (f_v) {
+			cout << "vector_ge_activity::perform_activity "
+					"f_order_of_products_of_pairs" << endl;
+		}
+
+		actions::action_global Action_global;
+
+		data_structures_groups::vector_ge *Elements;
+
+		Elements = vec[0];
+
+		string label;
+
+		label = (*with_labels)[0];
+
+		if (f_v) {
+			cout << "vector_ge_activity::perform_activity "
+					"before Action_global.order_of_products_of_pairs" << endl;
+		}
+		Action_global.order_of_products_of_pairs(
+				Elements,
+				label,
+				verbose_level);
+		if (f_v) {
+			cout << "vector_ge_activity::perform_activity "
+					"after Action_global.order_of_products_of_pairs" << endl;
+		}
+
+#if 0
+		other::orbiter_kernel_system::file_io Fio;
+		string fname;
+
+		fname = (*with_labels)[0] + "_order_of_pairs.csv";
+
+		if (f_v) {
+			cout << "vector_ge_activity::perform_activity "
+					"before Products->save_csv" << endl;
+		}
+		Products->save_csv(
+				fname, verbose_level);
+		if (f_v) {
+			cout << "vector_ge_activity::perform_activity "
+					"after Products->save_csv" << endl;
+		}
+
+		if (f_v) {
+			cout << "vector_ge_activity::perform_activity "
+					"Written file " << fname << " of size "
+						<< Fio.file_size(fname) << endl;
+		}
+		nb_output = 1;
+		Output = NEW_OBJECTS(other::orbiter_kernel_system::orbiter_symbol_table_entry, nb_output);
+
+		string output_label0;
+
+		output_label0 = (*with_labels)[0] + "pairs";
+
+		apps_algebra::vector_ge_builder *VB0;
+
+		VB0 = NEW_OBJECT(apps_algebra::vector_ge_builder);
+
+		VB0->V = Products;
+
+		Output[0].init_vector_ge(output_label0, VB0, verbose_level);
+#endif
+
+	}
+	else if (Descr->f_apply_isomorphism_wedge_product_4to6) {
+		if (f_v) {
+			cout << "algebra_global_with_action::element_processing "
+					"f_apply_isomorphism_wedge_product_4to6" << endl;
+		}
+
+		actions::action_global Action_global;
+
+		data_structures_groups::vector_ge *Elements;
+
+		Elements = vec[0];
+
+		std::string label_in;
+
+		label_in = (*with_labels)[0];
+
+		if (f_v) {
+			cout << "algebra_global_with_action::element_processing "
+					"before Any_group->apply_isomorphism_wedge_product_4to6" << endl;
+		}
+
+		Action_global.apply_isomorphism_wedge_product_4to6(
+				Elements->A /* A_wedge */,
+				Elements,
+				label_in,
+				verbose_level);
+
+		if (f_v) {
+			cout << "algebra_global_with_action::element_processing "
+					"after Any_group->apply_isomorphism_wedge_product_4to6" << endl;
+		}
+
+
+	}
 
 
 

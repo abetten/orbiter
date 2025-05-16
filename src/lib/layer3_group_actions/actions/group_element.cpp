@@ -759,7 +759,8 @@ void group_element::element_print_as_permutation_with_offset(
 	}
 	compute_permutation(
 			elt,
-			perm, 0 /* verbose_level */);
+			perm,
+			0 /* verbose_level */);
 	if (f_v) {
 		cout << "group_element::element_print_as_permutation_with_offset "
 				"after compute_permutation" << endl;
@@ -771,7 +772,9 @@ void group_element::element_print_as_permutation_with_offset(
 				"before Combi.perm_print_offset" << endl;
 	}
 	Combi.Permutations->perm_print_offset(
-			ost, perm, A->degree, offset,
+			ost,
+			perm, A->degree,
+			offset,
 			f_print_cycles_of_length_one,
 			f_cycle_length,
 			f_max_cycle_length, max_cycle_length,

@@ -1727,6 +1727,10 @@ public:
 	int lint_vec_is_subset_of(
 			int *set, int sz,
 			long int *big_set, int big_set_sz, int verbose_level);
+	int lint_vec_is_subset_of_lint_vec(
+			long int *set, int sz,
+			long int *big_set, int big_set_sz,
+			int verbose_level);
 	void int_vec_swap_points(
 			int *list, int *list_inv, int idx1, int idx2);
 	int int_vec_is_sorted(

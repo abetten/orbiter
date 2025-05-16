@@ -2743,6 +2743,18 @@ void mp_graphics::color_tikz(
 		fp << "brown!50!red";
 	else if (color == 25)
 		fp << "purple!50!red";
+	else if (color == 26)
+		fp << "green!25!red";
+	else if (color == 27)
+		fp << "violet!25!red";
+	else if (color == 28)
+		fp << "cyan!25!red";
+	else if (color == 29)
+		fp << "green!25!blue";
+	else if (color == 30)
+		fp << "brown!25!red";
+	else if (color == 31)
+		fp << "purple!25!red";
 	else {
 		cout << "mp_graphics::color_tikz color = " << color 
 			<< ", we don't have a color for this" << endl;

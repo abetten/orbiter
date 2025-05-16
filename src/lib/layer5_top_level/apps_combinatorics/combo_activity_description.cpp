@@ -59,7 +59,7 @@ int combo_activity_description::read_arguments(
 		else if (ST.stringcmp(argv[i], "-get_group") == 0) {
 			f_get_group = true;
 			if (f_v) {
-				cout << "-get_group" << endl;
+				cout << "-get_group " << endl;
 			}
 		}
 
@@ -89,7 +89,7 @@ void combo_activity_description::print()
 		Objects_report_options->print();
 	}
 	if (f_get_group) {
-		cout << "-get_group" << endl;
+		cout << "-get_group " << endl;
 	}
 
 }

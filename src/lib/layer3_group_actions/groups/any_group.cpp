@@ -437,7 +437,6 @@ void any_group::create_latex_report(
 			}
 
 
-
 			if (f_v) {
 				cout << "any_group::create_latex_report after report" << endl;
 			}
@@ -460,6 +459,103 @@ void any_group::create_latex_report(
 	}
 }
 
+
+
+void any_group::create_order_invariant(
+		groups::sims *Sims,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "any_group::create_order_invariant" << endl;
+	}
+
+	{
+		string fname;
+		string title;
+		string author, extra_praeamble;
+
+		fname = label + "_order_invariant.tex";
+		title = "The group $" + label_tex + "$";
+		author = "";
+
+
+		{
+			ofstream ost(fname);
+			other::l1_interfaces::latex_interface L;
+
+			L.head(ost,
+					false /* f_book*/,
+					true /* f_title */,
+					title, author,
+					false /* f_toc */,
+					false /* f_landscape */,
+					true /* f_12pt */,
+					true /* f_enlarged_page */,
+					true /* f_pagenumbers */,
+					extra_praeamble /* extra_praeamble */);
+
+
+
+			actions::action_global Action_global;
+
+
+			if (f_v) {
+				cout << "any_group::create_order_invariant "
+						"before Action_global.report" << endl;
+			}
+			Action_global.report_order_invariant(
+					ost,
+					label,
+					label_tex,
+					A,
+					Subgroup_gens,
+					Sims,
+					verbose_level);
+			if (f_v) {
+				cout << "any_group::create_order_invariant "
+						"after Action_global.report" << endl;
+			}
+
+			ost << endl;
+			ost << "\\subsection*{Strong Generators}" << endl;
+			ost << endl;
+
+			if (f_v) {
+				cout << "any_group::create_order_invariant "
+						"before Subgroup_gens->print_generators_tex" << endl;
+			}
+
+			cout << "Strong generators:\\\\" << endl;
+			Subgroup_gens->print_generators_tex(ost);
+
+			if (f_v) {
+				cout << "any_group::create_order_invariant "
+						"after Subgroup_gens->print_generators_tex" << endl;
+			}
+
+
+
+			if (f_v) {
+				cout << "any_group::create_order_invariant after report" << endl;
+			}
+
+
+			L.foot(ost);
+
+		}
+		other::orbiter_kernel_system::file_io Fio;
+
+		cout << "written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+
+	if (f_v) {
+		cout << "any_group::create_order_invariant done" << endl;
+	}
+}
 
 void any_group::create_group_table_report(
 		other::graphics::layered_graph_draw_options *LG_Draw_options,
@@ -1498,6 +1594,10 @@ void any_group::all_elements(
 
 }
 
+
+
+
+
 void any_group::select_elements(
 		long int *Index_of_elements, int nb_elements,
 		data_structures_groups::vector_ge *&vec,
@@ -2226,6 +2326,8 @@ void any_group::print_given_elements_tex(
 
 
 
+// why is this here? it should be in action.
+
 void any_group::apply_isomorphism_wedge_product_4to6(
 		std::string &label_of_elements,
 		data_structures_groups::vector_ge *vec_in,
@@ -2336,7 +2438,6 @@ void any_group::order_of_products_of_pairs(
 	}
 
 
-	other::orbiter_kernel_system::file_io Fio;
 
 
 
@@ -2382,6 +2483,9 @@ void any_group::order_of_products_of_pairs(
 
 
 	}
+
+
+	other::orbiter_kernel_system::file_io Fio;
 
 	Fio.Csv_file_support->int_matrix_write_csv(
 			fname, Order_table, nb_elements, nb_elements);
@@ -2997,6 +3101,9 @@ void any_group::subgroup_lattice_create_flag_transitive_geometry_with_partition(
 				"intersection_size = " << intersection_size << endl;
 	}
 
+
+
+
 	int *intersection_matrix;
 	int nb_r, nb_c;
 
@@ -3021,7 +3128,7 @@ void any_group::subgroup_lattice_create_flag_transitive_geometry_with_partition(
 	}
 
 	if (f_v) {
-		cout << "subgroup_lattice_intersection_orbit_orbit intersection_matrix=" << endl;
+		cout << "any_group::subgroup_lattice_create_flag_transitive_geometry_with_partition intersection_matrix=" << endl;
 		Int_matrix_print_comma_separated(intersection_matrix, nb_r, nb_c);
 	}
 
@@ -3035,10 +3142,97 @@ void any_group::subgroup_lattice_create_flag_transitive_geometry_with_partition(
 		}
 	}
 
+
+	cout << "flags: " << endl;
+	for (i = 0; i < nb_r; i++) {
+		for (j = 0; j < nb_c; j++) {
+			if (intersection_matrix[i * nb_c + j]) {
+				cout << i * nb_c + j << ", ";
+			}
+		}
+	}
+	cout << endl;
+
+	cout << "Table of all group elements:" << endl;
+	Subgroup_sims->print_all_group_elements_as_permutations();
+
+#if 0
+	string fname;
+	string title;
+	string author, extra_praeamble;
+
+	title = "The elements of the group $" + label_tex + "$";
+	author = "";
+
+	fname = label + "_elements.tex";
+	{
+
+		ofstream ost(fname);
+
+
+
+
+		other::l1_interfaces::latex_interface L;
+
+		L.head(ost,
+				false /* f_book*/,
+				true /* f_title */,
+				title, author,
+				false /* f_toc */,
+				false /* f_landscape */,
+				true /* f_12pt */,
+				true /* f_enlarged_page */,
+				true /* f_pagenumbers */,
+				extra_praeamble /* extra_praeamble */);
+
+
+
+		if (f_v) {
+			cout << "any_group::subgroup_lattice_create_flag_transitive_geometry_with_partition before Subgroup_sims->report_all_group_elements" << endl;
+		}
+
+
+
+		Subgroup_sims->report_all_group_elements(
+			ost, 0 /* verbose_level */);
+
+
+		if (f_v) {
+			cout << "any_group::subgroup_lattice_create_flag_transitive_geometry_with_partition after Subgroup_sims->report_all_group_elements" << endl;
+		}
+
+
+		L.foot(ost);
+
+	}
+	other::orbiter_kernel_system::file_io Fio;
+
+	cout << "written file " << fname << " of size "
+			<< Fio.file_size(fname) << endl;
+#endif
+
+
 	if (f_v) {
-		cout << "subgroup_lattice_intersection_orbit_orbit intersection_matrix transposed=" << endl;
+		cout << "any_group::subgroup_lattice_create_flag_transitive_geometry_with_partition "
+				"before Subgroup_sims->report_all_group_elements_to_file" << endl;
+	}
+
+	Subgroup_sims->report_all_group_elements_to_file(
+			label, label_tex,
+			verbose_level);
+
+	if (f_v) {
+		cout << "any_group::subgroup_lattice_create_flag_transitive_geometry_with_partition "
+				"after Subgroup_sims->report_all_group_elements_to_file" << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "any_group::subgroup_lattice_create_flag_transitive_geometry_with_partition intersection_matrix transposed=" << endl;
 		Int_matrix_print_comma_separated(intersection_matrix_t, nb_c, nb_r);
 	}
+
 
 	FREE_int(intersection_matrix);
 	FREE_int(intersection_matrix_t);

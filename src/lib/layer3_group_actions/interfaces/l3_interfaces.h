@@ -103,7 +103,7 @@ public:
 	int *Subgroup_order; // [nb_classes]
 	int *Length; // [nb_classes]
 	int *Nb_gens; // [nb_classes]
-	int **subgroup_gens; // [nb_classes]
+	int **subgroup_gens; // [nb_classes][A->degree]
 
 	groups::conjugacy_class_of_subgroups **Conjugacy_class; // [nb_classes]
 

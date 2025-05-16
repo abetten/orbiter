@@ -102,7 +102,6 @@ void algebra_global_with_action::element_processing(
 		Any_group->apply_isomorphism_wedge_product_4to6(
 				element_processing_descr->input_label,
 				Elements,
-				//element_data, nb_elements,
 				verbose_level);
 		if (f_v) {
 			cout << "algebra_global_with_action::element_processing "
@@ -1503,7 +1502,8 @@ void algebra_global_with_action::create_flag_transitive_incidence_structure(
 
 	SoS->init_basic_with_Sz_in_int(
 			go_G,
-			nb_sets, Intersection, 0 /* verbose_level */);
+			nb_sets, Intersection,
+			0 /* verbose_level */);
 
 	if (f_v) {
 		cout << "algebra_global_with_action::create_flag_transitive_incidence_structure "
@@ -1571,6 +1571,118 @@ void algebra_global_with_action::create_flag_transitive_incidence_structure(
 }
 
 
+void algebra_global_with_action::find_overgroup(
+		groups::any_group *AG,
+		groups::any_group *Subgroup,
+		int overgroup_order,
+		classes_of_subgroups_expanded *&Classes_of_subgroups_expanded,
+		std::vector<int> &Class_idx, std::vector<int> &Class_idx_subgroup_idx,
+		int verbose_level)
+// uses AG->Subgroup_sims to define the ranks of group elements
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::find_overgroup" << endl;
+		cout << "algebra_global_with_action::find_overgroup "
+				"overgroup_order = " << overgroup_order << endl;
+	}
+
+
+	groups::sims *Sims_G;
+
+	if (AG->Subgroup_sims == NULL) {
+		cout << "algebra_global_with_action::find_overgroup "
+				"Subgroup_sims == NULL" << endl;
+		exit(1);
+	}
+
+	Sims_G = AG->Subgroup_sims;
+
+
+	interfaces::conjugacy_classes_of_subgroups *class_data;
+
+	if (f_v) {
+		cout << "algebra_global_with_action::find_overgroup "
+				"before AG->get_subgroup_lattice" << endl;
+	}
+	AG->get_subgroup_lattice(
+			Sims_G,
+			class_data,
+			verbose_level - 2);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::find_overgroup "
+				"after AG->get_subgroup_lattice" << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "algebra_global_with_action::find_overgroup "
+				"before get_classes_of_subgroups_expanded" << endl;
+	}
+
+	Classes_of_subgroups_expanded = get_classes_of_subgroups_expanded(
+			class_data,
+			Sims_G,
+			AG,
+			overgroup_order,
+			verbose_level - 2);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::find_overgroup "
+				"after get_classes_of_subgroups_expanded" << endl;
+	}
+
+	groups::sims *Sims_P;
+	long int *Elements_P;
+	long int go_P;
+
+	groups::strong_generators *subgroup_gens;
+
+	subgroup_gens = Subgroup->Subgroup_gens;
+
+	if (f_v) {
+		cout << "algebra_global_with_action::find_overgroup "
+				"before element_ranks_in_overgroup" << endl;
+	}
+	element_ranks_in_overgroup(
+			Sims_G,
+			subgroup_gens,
+			Sims_P, Elements_P, go_P,
+			verbose_level);
+	if (f_v) {
+		cout << "algebra_global_with_action::find_overgroup "
+				"after element_ranks_in_overgroup" << endl;
+	}
+
+	if (f_v) {
+		cout << "algebra_global_with_action::find_overgroup "
+				"before Classes_of_subgroups_expanded->find_overgroups" << endl;
+	}
+	Classes_of_subgroups_expanded->find_overgroups(
+			Elements_P,
+			go_P,
+			overgroup_order,
+			Class_idx, Class_idx_subgroup_idx,
+			verbose_level);
+	if (f_v) {
+		cout << "algebra_global_with_action::find_overgroup "
+				"after Classes_of_subgroups_expanded->find_overgroups" << endl;
+	}
+
+
+
+
+
+	FREE_lint(Elements_P);
+	FREE_OBJECT(Sims_P);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::find_overgroup done" << endl;
+	}
+}
 
 void algebra_global_with_action::identify_subgroups_from_file(
 		groups::any_group *AG,
@@ -1584,7 +1696,8 @@ void algebra_global_with_action::identify_subgroups_from_file(
 
 	if (f_v) {
 		cout << "algebra_global_with_action::identify_subgroups_from_file" << endl;
-		cout << "algebra_global_with_action::identify_subgroups_from_file expand_go = " << expand_go << endl;
+		cout << "algebra_global_with_action::identify_subgroups_from_file "
+				"expand_go = " << expand_go << endl;
 	}
 
 	groups::sims *Sims;
@@ -1638,6 +1751,196 @@ void algebra_global_with_action::identify_subgroups_from_file(
 	}
 }
 
+void algebra_global_with_action::all_elements_by_class(
+		groups::sims *Sims,
+		groups::any_group *Any_group,
+		int class_order,
+		int class_id,
+		data_structures_groups::vector_ge *&vec,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::all_elements_by_class, "
+				"class_order = " << class_order << " class_id = " << class_id << endl;
+	}
+
+
+	algebra::ring_theory::longinteger_object go;
+	long int goi;
+
+	Sims->group_order(go);
+	goi = go.as_int();
+
+
+	classes_of_elements_expanded *Classes_of_elements_expanded;
+	data_structures_groups::vector_ge *Reps;
+
+	if (f_v) {
+		cout << "algebra_global_with_action::all_elements_by_class "
+				"before get_classses_expanded" << endl;
+	}
+	get_classses_expanded(
+			Sims,
+			Any_group,
+			goi,
+			Classes_of_elements_expanded,
+			Reps,
+			verbose_level);
+	if (f_v) {
+		cout << "algebra_global_with_action::all_elements_by_class "
+				"after get_classses_expanded" << endl;
+	}
+#if 0
+	interfaces::conjugacy_classes_and_normalizers *Classes;
+	groups::sims *sims_G;
+	groups::any_group *Any_group;
+	int expand_by_go;
+	std::string label;
+	std::string label_latex;
+
+	int *Idx;
+	int nb_idx;
+
+	actions::action *A_conj;
+
+	orbit_of_elements **Orbit_of_elements; // [nb_idx]
+#endif
+
+	int nb_classes;
+	int h, cnt;
+
+
+	nb_classes = Classes_of_elements_expanded->Classes->nb_classes;
+
+	cout << "nb_classes = " << nb_classes << endl;
+	cnt = 0;
+	for (h = 0; h < nb_classes; h++) {
+		if (Classes_of_elements_expanded->Classes->class_order_of_element[h] == class_order) {
+			cout << "class " << h << " consists of elements of order " << class_order << endl;
+			if (cnt == class_id) {
+				cout << "found class, h=" << h << endl;
+				break;
+			}
+			cnt++;
+		}
+	}
+	if (h == nb_classes) {
+		cout << "did not find class class_order =" << class_order << " class_id=" << class_id << endl;
+		exit(1);
+	}
+	cout << "found class, h=" << h << endl;
+
+	int idx;
+
+	for (idx = 0; idx < Classes_of_elements_expanded->nb_idx; idx++) {
+		if (Classes_of_elements_expanded->Idx[idx] == h) {
+			cout << "found class, idx=" << idx << endl;
+			break;
+		}
+	}
+	if (idx == Classes_of_elements_expanded->nb_idx) {
+		cout << "did not find class" << endl;
+		exit(1);
+	}
+
+
+
+	//int go_P;
+
+	//go_P = Classes_of_elements_expanded->Orbit_of_elements[h]->go_P;
+
+#if 0
+	int idx;
+
+
+	long int go_P;
+	int *Element;
+	long int Element_rk;
+	long int *Elements_P;
+	orbits_schreier::orbit_of_sets *Orbits_P;
+
+	int orbit_length;
+	long int *Table_of_elements; // sorted
+
+#endif
+
+	int class_size;
+	long int *Table;
+
+	class_size = Classes_of_elements_expanded->Orbit_of_elements[idx]->orbit_length;
+	Table = Classes_of_elements_expanded->Orbit_of_elements[idx]->Table_of_elements;
+
+
+	cout << "class_size = " << class_size << endl;
+	cout << "Table_of_elements = ";
+	Lint_vec_print_fully(cout, Table, class_size);
+	cout << endl;
+
+
+
+	vec = NEW_OBJECT(data_structures_groups::vector_ge);
+	vec->init(Sims->A, 0 /*verbose_level*/);
+	vec->allocate(class_size, verbose_level);
+
+	int i;
+
+	for (i = 0; i < class_size; i++) {
+		Sims->element_unrank_lint(Table[i], vec->ith(i));
+	}
+
+
+	if (f_v) {
+		cout << "algebra_global_with_action::all_elements_by_class done" << endl;
+	}
+}
+
+
+
+
+classes_of_subgroups_expanded *algebra_global_with_action::get_classes_of_subgroups_expanded(
+		interfaces::conjugacy_classes_of_subgroups *Classes,
+		groups::sims *sims_G,
+		groups::any_group *Any_group,
+		int expand_by_go,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::get_classes_of_subgroups_expanded" << endl;
+		cout << "algebra_global_with_action::get_classes_of_subgroups_expanded expand_by_go = " << expand_by_go << endl;
+	}
+
+
+	classes_of_subgroups_expanded *Classes_of_subgroups_expanded;
+
+	Classes_of_subgroups_expanded = NEW_OBJECT(classes_of_subgroups_expanded);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::get_classes_of_subgroups_expanded "
+				"before Classes_of_subgroups_expanded->init" << endl;
+	}
+	Classes_of_subgroups_expanded->init(
+			Classes,
+			sims_G,
+			Any_group,
+			expand_by_go,
+			Any_group->label,
+			Any_group->label_tex,
+			verbose_level);
+	if (f_v) {
+		cout << "algebra_global_with_action::get_classes_of_subgroups_expanded "
+				"after Classes_of_subgroups_expanded->init" << endl;
+	}
+
+	if (f_v) {
+		cout << "algebra_global_with_action::get_classes_of_subgroups_expanded "
+				"done" << endl;
+	}
+	return Classes_of_subgroups_expanded;
+}
 
 
 void algebra_global_with_action::identify_groups_from_csv_file(
@@ -1660,6 +1963,24 @@ void algebra_global_with_action::identify_groups_from_csv_file(
 
 	classes_of_subgroups_expanded *Classes_of_subgroups_expanded;
 
+	if (f_v) {
+		cout << "algebra_global_with_action::identify_groups_from_csv_file "
+				"before get_classes_of_subgroups_expanded" << endl;
+	}
+
+	Classes_of_subgroups_expanded = get_classes_of_subgroups_expanded(
+			Classes,
+			sims_G,
+			Any_group,
+			expand_by_go,
+			verbose_level - 2);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::identify_groups_from_csv_file "
+				"after get_classes_of_subgroups_expanded" << endl;
+	}
+
+#if 0
 	Classes_of_subgroups_expanded = NEW_OBJECT(classes_of_subgroups_expanded);
 
 	if (f_v) {
@@ -1678,7 +1999,7 @@ void algebra_global_with_action::identify_groups_from_csv_file(
 		cout << "algebra_global_with_action::identify_groups_from_csv_file "
 				"after Classes_of_subgroups_expanded->init" << endl;
 	}
-
+#endif
 
 
 	if (f_v) {
@@ -2440,7 +2761,51 @@ void algebra_global_with_action::identify_elements_by_classes(
 	}
 }
 
+void algebra_global_with_action::element_ranks_in_overgroup(
+		groups::sims *Sims_G,
+		groups::strong_generators *subgroup_gens,
+		groups::sims *&Sims_P, long int *&Elements_P, long int &go_P,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
 
+	if (f_v) {
+		cout << "algebra_global_with_action::element_ranks_in_overgroup" << endl;
+	}
+
+	int *Elt;
+
+	Elt = NEW_int(Sims_G->A->elt_size_in_int);
+
+	long int rk;
+
+	Sims_P = subgroup_gens->create_sims(verbose_level);
+	go_P = Sims_P->group_order_lint();
+
+	Elements_P = NEW_lint(go_P);
+
+	int i;
+	for (i = 0; i < go_P; i++) {
+		Sims_P->element_unrank_lint(i, Elt);
+		rk = Sims_G->element_rank_lint(Elt);
+		Elements_P[i] = rk;
+	}
+
+	other::data_structures::sorting Sorting;
+
+	Sorting.lint_vec_heapsort(Elements_P, go_P);
+
+
+
+
+	FREE_int(Elt);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::element_ranks_in_overgroup done" << endl;
+	}
+
+
+}
 
 }}}
 

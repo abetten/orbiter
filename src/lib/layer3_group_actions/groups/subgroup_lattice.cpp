@@ -1319,16 +1319,23 @@ void subgroup_lattice::create_drawing_by_orbits(
 
 			string text3;
 
-#if 0
-			text3 = "${" + std::to_string(Subgroup1->group_order) + " \\atop "
-					+ std::to_string(Subgroup_lattice_layer[l1]->get_orbit_length(orb1))
+			string group_order;
+			string orbit_length;
+
+			group_order = std::to_string(Subgroup1->group_order);
+			orbit_length = std::to_string(Subgroup_lattice_layer[l1]->get_orbit_length(orb1));
+
+			text3 = "${" + group_order + " \\atop "
+					+ orbit_length
 					+ "}$";
-			text3 = "{\\tiny $" + std::to_string(Fst[l1] + orb1) + "^{" + std::to_string(Subgroup1->group_order) + "}_{"
-					+ std::to_string(Subgroup_lattice_layer[l1]->get_orbit_length(orb1))
+
+#if 0
+			text3 = "{\\tiny $" + std::to_string(Fst[l1] + orb1) + "^{" + group_order + "}_{"
+					+ orbit_length
 					+ "}$}";
+			text3 = "{\\tiny $" + std::to_string(Subgroup1->group_order) + "$}";
 #endif
 
-			text3 = "{\\tiny $" + std::to_string(Subgroup1->group_order) + "$}";
 			LG->add_text(l1, orb1, text3, 0/*verbose_level*/);
 		}
 	}
@@ -1780,6 +1787,12 @@ void subgroup_lattice::create_flag_transitive_geometry_with_partition(
 		cout << "subgroup_lattice::create_flag_transitive_geometry_with_partition intersection_size=" << intersection_size << endl;
 	}
 
+	string problem_label;
+
+	problem_label = std::to_string(P_layer) + "_" + std::to_string(P_orb_local)
+					+ "_" + std::to_string(Q_layer) + "_" + std::to_string(Q_orb_local)
+					+ "_" + std::to_string(R_layer) + "_" + std::to_string(R_orb_local)  + "_" + std::to_string(R_group);
+
 	int G_layer;
 
 	G_layer = nb_layers - 1;
@@ -1799,6 +1812,49 @@ void subgroup_lattice::create_flag_transitive_geometry_with_partition(
 	Subgroup_G = get_subgroup_by_orbit(
 			G_layer, 0, 0);
 
+	int group_idx;
+
+	int P_orbit_len;
+
+	P_orbit_len = Subgroup_lattice_layer[P_layer]->get_orbit_length(
+			P_orb_local);
+
+	if (f_v) {
+		cout << "subgroup_lattice::create_flag_transitive_geometry_with_partition P_orbit_len=" << P_orbit_len << endl;
+	}
+
+	for (group_idx = 0; group_idx < P_orbit_len; group_idx++) {
+
+		if (f_v) {
+			cout << "subgroup_lattice::create_flag_transitive_geometry_with_partition group_idx=" << group_idx << endl;
+		}
+
+		Subgroup_P = get_subgroup_by_orbit(
+			P_layer, P_orb_local, group_idx);
+
+		string label;
+		string label_tex;
+
+		label = "subgroup_P_" + std::to_string(group_idx);
+		label_tex = "subgroup P " + std::to_string(group_idx);
+
+
+		if (f_v) {
+			cout << "subgroup_lattice::create_flag_transitive_geometry_with_partition "
+					"before Subgroup_P->report_elements_to_file" << endl;
+		}
+
+		Subgroup_P->report_elements_to_file(
+			label, label_tex,
+			verbose_level);
+
+		if (f_v) {
+			cout << "subgroup_lattice::create_flag_transitive_geometry_with_partition "
+					"after Subgroup_P->report_elements_to_file" << endl;
+		}
+
+
+	}
 
 
 	int *cosets1; // right cosets for Q in R
@@ -1829,10 +1885,13 @@ void subgroup_lattice::create_flag_transitive_geometry_with_partition(
 			Subgroup_Q->group_order,
 			gens, nb_gens,
 		cosets1, nb_cosets1,
-		Subgroup_R->gens /* new_gens*/, Subgroup_R->nb_gens /* nb_new_gens */,
+		Subgroup_R->gens /* new_gens*/,
+		Subgroup_R->nb_gens /* nb_new_gens */,
 		group, group_sz,
 		0 /* verbose_level */);
 
+
+	// cosets1 = transversal for Q in R.
 
 	nb_gens = Subgroup_R->nb_gens;
 	Int_vec_copy(Subgroup_R->gens, gens, Subgroup_R->nb_gens);
@@ -1842,9 +1901,13 @@ void subgroup_lattice::create_flag_transitive_geometry_with_partition(
 			Subgroup_R->group_order,
 			gens, nb_gens,
 		cosets2, nb_cosets2,
-		Subgroup_G->gens /* new_gens*/, Subgroup_G->nb_gens /* nb_new_gens */,
+		Subgroup_G->gens /* new_gens*/,
+		Subgroup_G->nb_gens /* nb_new_gens */,
 		group, group_sz,
 		0 /* verbose_level */);
+
+
+	// cosets2 = transversal for R in G.
 
 	if (f_v) {
 		cout << "subgroup_lattice::create_flag_transitive_geometry_with_partition nb_cosets1=" << nb_cosets1 << endl;
@@ -1859,17 +1922,22 @@ void subgroup_lattice::create_flag_transitive_geometry_with_partition(
 	Elt2 = NEW_int(A->elt_size_in_int);
 
 
-	int P_orbit_len;
 	nb_c = nb_cosets1 * nb_cosets2;
 
-	P_orbit_len = Subgroup_lattice_layer[P_layer]->get_orbit_length(
-			P_orb_local);
 
 	nb_r = P_orbit_len;
 
 	intersection_matrix = NEW_int(nb_r * nb_c);
 
 
+	string *Table_of_subgroups;
+	int nb_rows;
+	int nb_cols;
+
+	nb_rows = nb_r * nb_c;
+	nb_cols = 7;
+
+	Table_of_subgroups = new string [nb_rows * nb_cols];
 
 	for (j2 = 0; j2 < nb_cosets2; j2++) {
 
@@ -1883,6 +1951,8 @@ void subgroup_lattice::create_flag_transitive_geometry_with_partition(
 				cout << "subgroup_lattice::create_flag_transitive_geometry_with_partition "
 						"before Sims->conjugate_numerical_set (1)" << endl;
 			}
+
+			// compute Q_image1 = Q^coset1[j1]:
 
 			Sims->conjugate_numerical_set(
 					Subgroup_Q->Elements, Subgroup_Q->group_order,
@@ -1899,6 +1969,8 @@ void subgroup_lattice::create_flag_transitive_geometry_with_partition(
 						"before Sims->conjugate_numerical_set (2)" << endl;
 			}
 
+			// compute Q_image2 = Q_image1^coset2[j2]:
+
 			Sims->conjugate_numerical_set(
 					Q_image1, Subgroup_Q->group_order,
 					Elt2, Q_image2,
@@ -1909,10 +1981,14 @@ void subgroup_lattice::create_flag_transitive_geometry_with_partition(
 						"after Sims->conjugate_numerical_set (2)" << endl;
 			}
 
-			int group_idx;
+			//int group_idx;
 			int S_layer_idx, S_orb_idx, S_group_idx;
 
 			for (group_idx = 0; group_idx < P_orbit_len; group_idx++) {
+
+
+				// get an element of \tilde{P}:
+
 
 				Subgroup_P = get_subgroup_by_orbit(
 						P_layer, P_orb_local, group_idx);
@@ -1953,12 +2029,65 @@ void subgroup_lattice::create_flag_transitive_geometry_with_partition(
 				else {
 					entry = 0;
 				}
-				intersection_matrix[group_idx * nb_c + j2 * nb_cosets1 + j1] = entry;
+
+				int row_idx;
+
+				row_idx = group_idx * nb_c + j2 * nb_cosets1 + j1;
+				intersection_matrix[row_idx] = entry;
+
+
+				groups::subgroup *Subgroup_S;
+
+
+				Subgroup_S = get_subgroup_by_orbit(
+						S_layer_idx, S_orb_idx, S_group_idx);
+
+
+
+				Table_of_subgroups[row_idx * nb_cols + 0] = std::to_string(group_idx);
+				Table_of_subgroups[row_idx * nb_cols + 1] = std::to_string(row_idx);
+				Table_of_subgroups[row_idx * nb_cols + 2] = std::to_string(S_Subgroup->group_order);
+				Table_of_subgroups[row_idx * nb_cols + 3] = std::to_string(S_layer_idx);
+				Table_of_subgroups[row_idx * nb_cols + 4] = std::to_string(S_orb_idx);
+				Table_of_subgroups[row_idx * nb_cols + 5] = std::to_string(S_group_idx);
+				Table_of_subgroups[row_idx * nb_cols + 6] =
+						"\"" + Int_vec_stringify(Subgroup_S->Elements, Subgroup_S->group_order) + "\"";
+
 
 
 			}
 		}
 	}
+
+	std::string Col_headings[7];
+
+	Col_headings[0] = "group_idx";
+	Col_headings[1] = "row_idx";
+	Col_headings[2] = "subgroup_order";
+	Col_headings[3] = "layer";
+	Col_headings[4] = "class_in_layer_idx";
+	Col_headings[5] = "group_idx";
+	Col_headings[6] = "elements";
+
+	string fname;
+
+	fname = problem_label + "_intersections.csv";
+
+	other::orbiter_kernel_system::file_io Fio;
+
+
+	Fio.Csv_file_support->write_table_of_strings_with_col_headings(
+			fname,
+			nb_rows, nb_cols, Table_of_subgroups,
+			Col_headings,
+			verbose_level);
+
+	if (f_v) {
+		cout << "subgroup_lattice::create_flag_transitive_geometry_with_partition "
+				"written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
+
+
 
 
 	FREE_int(Elt1);

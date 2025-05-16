@@ -558,6 +558,7 @@ public:
 
 	int f_nodes; // Turn on node drawing.
 	int f_nodes_empty; // Do not label the nodes. Default value: off.
+	int f_no_vertices; // do not draw the nodes
 
 	int f_show_colors; // indicate the color in the subscript of the vertex label
 

@@ -105,6 +105,9 @@ public:
 			other::graphics::layered_graph_draw_options *O,
 			groups::sims *Sims,
 			int verbose_level);
+	void create_order_invariant(
+			groups::sims *Sims,
+			int verbose_level);
 	void create_group_table_report(
 			other::graphics::layered_graph_draw_options *LG_Draw_options,
 			int verbose_level);
@@ -1212,11 +1215,6 @@ public:
 
 	int *path; // [my_base_len]
 	
-#if 0
-	// not used:
-	int nb_images;
-	int **images;
-#endif
 	
 
 private:
@@ -1736,6 +1734,11 @@ public:
 			actions::action *A_special);
 	void print_all_transversal_elements();
 	void report_base_and_orbit_len(
+			std::ostream &ost, int verbose_level);
+	void report_all_group_elements_to_file(
+			std::string &label, std::string &label_tex,
+			int verbose_level);
+	void report_all_group_elements(
 			std::ostream &ost, int verbose_level);
 	void report_all_transversal_elements(
 			std::ostream &ost, int verbose_level);
@@ -2503,6 +2506,8 @@ public:
 	int nb_gens;
 
 	sims *Sub;
+		// initialized by init_from_sims
+		// but not by init
 
 	strong_generators *SG;
 
@@ -2513,6 +2518,8 @@ public:
 			groups::subgroup_lattice *Subgroup_lattice,
 			sims *Sub,
 			strong_generators *SG, int verbose_level);
+	void create_sims(
+			int verbose_level);
 	void init(
 			groups::subgroup_lattice *Subgroup_lattice,
 			int *Elements, int group_order,
@@ -2524,6 +2531,9 @@ public:
 			int elt);
 	void report(
 			std::ostream &ost);
+	void report_elements_to_file(
+			std::string &label, std::string &label_tex,
+			int verbose_level);
 	uint32_t compute_hash();
 	// performs a sort of the group elements before hashing
 	int is_subgroup_of(

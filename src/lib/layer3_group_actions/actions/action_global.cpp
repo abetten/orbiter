@@ -6588,6 +6588,7 @@ void action_global::report(
 #endif
 
 		cout << "Strong generators:\\\\" << endl;
+		ost << "\\section*{Strong generators}" << endl;
 		if (f_v) {
 			cout << "action_global::report "
 					"before Strong_gens->print_generators_tex" << endl;
@@ -6596,6 +6597,14 @@ void action_global::report(
 		if (f_v) {
 			cout << "action_global::report "
 					"after Strong_gens->print_generators_tex" << endl;
+		}
+
+		if (A != Strong_gens->A) {
+
+			ost << "\\section*{Strong generators in the induced action}" << endl;
+			ost << "Strong generators in the induced action:\\\\" << endl;
+			Strong_gens->print_generators_in_different_action_tex(
+					ost, A);
 		}
 
 
@@ -6659,6 +6668,62 @@ void action_global::report(
 
 }
 
+
+void action_global::report_order_invariant(
+		std::ostream &ost,
+		std::string &label,
+		std::string &label_tex,
+		actions::action *A,
+		groups::strong_generators *Strong_gens,
+		groups::sims *Sims,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "action_global::report_order_invariant" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "action_global::report_order_invariant "
+				"creating report on the order invariant for group " << label << endl;
+	}
+
+
+	{
+
+
+		algebra::ring_theory::longinteger_object go;
+
+
+		ost << "\\section*{The Group $" << label_tex << "$}" << endl;
+
+
+		Sims->group_order(go);
+
+		ost << "\\noindent The order of the group $"
+				<< label_tex
+				<< "$ is " << go << "\\\\" << endl;
+
+
+		groups::group_theory_global Group_theory_global;
+		std::string s;
+
+			s = Group_theory_global.order_invariant(
+					A, Strong_gens,
+					verbose_level - 3);
+
+		ost << "The order invariant is ";
+		ost << "$" << s << "$";
+		ost << "\\\\" << endl;
+
+	}
+
+	if (f_v) {
+		cout << "action_global::report_order_invariant done" << endl;
+	}
+}
 
 void action_global::report_group_table(
 		std::ostream &ost,
@@ -7301,7 +7366,7 @@ void action_global::products_of_pairs(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "action_global::order_of_products_of_pairs" << endl;
+		cout << "action_global::products_of_pairs" << endl;
 	}
 
 
@@ -7341,10 +7406,272 @@ void action_global::products_of_pairs(
 
 
 	if (f_v) {
+		cout << "action_global::products_of_pairs done" << endl;
+	}
+}
+
+void action_global::order_of_products_of_pairs(
+		data_structures_groups::vector_ge *Elements,
+		std::string &label,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "action_global::order_of_products_of_pairs" << endl;
+	}
+
+
+
+
+	int nb_elements;
+
+	nb_elements = Elements->len;
+
+	data_structures_groups::vector_ge *Products;
+
+	Products = NEW_OBJECT(data_structures_groups::vector_ge);
+
+	Products->init(Elements->A, verbose_level);
+
+	Products->allocate(nb_elements * nb_elements, 0 /* verbose_level */);
+
+
+	int i, j;
+
+
+
+	for (i = 0; i < nb_elements; i++) {
+
+
+		for (j = 0; j < nb_elements; j++) {
+
+
+			Elements->A->Group_element->element_mult(
+					Elements->ith(i),
+					Elements->ith(j),
+					Products->ith(i * nb_elements + j), 0);
+
+
+		}
+	}
+
+	int *Order_table;
+
+	Order_table = NEW_int(nb_elements * nb_elements);
+
+	for (i = 0; i < nb_elements; i++) {
+
+
+		for (j = 0; j < nb_elements; j++) {
+
+			Order_table[i * nb_elements + j] =
+					Elements->A->Group_element->element_order(
+							Products->ith(i * nb_elements + j));
+		}
+	}
+
+	other::orbiter_kernel_system::file_io Fio;
+	std::string fname;
+
+	fname = label + "_order_of_product_of_pairs.csv";
+
+	Fio.Csv_file_support->int_matrix_write_csv(
+			fname, Order_table, nb_elements, nb_elements);
+
+	if (f_v) {
+		cout << "action_global::order_of_products_of_pairs "
+				"Written file " << fname << " of size "
+					<< Fio.file_size(fname) << endl;
+	}
+
+	FREE_OBJECT(Products);
+	FREE_int(Order_table);
+
+
+	if (f_v) {
 		cout << "action_global::order_of_products_of_pairs done" << endl;
 	}
 }
 
+
+void action_global::apply_isomorphism_wedge_product_4to6(
+		actions::action *A_wedge,
+		data_structures_groups::vector_ge *vec_in,
+		std::string &label_in,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "action_global::apply_isomorphism_wedge_product_4to6" << endl;
+	}
+
+	int *Elt_out;
+
+
+	int elt_size_out;
+
+	elt_size_out = 6 * 6 + 1;
+
+	Elt_out = NEW_int(elt_size_out);
+
+
+
+
+	if (A_wedge->type_G != action_on_wedge_product_t) {
+		cout << "action_global::apply_isomorphism_wedge_product_4to6 "
+				"the action is not of wedge product type" << endl;
+		exit(1);
+	}
+
+#if 0
+	data_structures_groups::vector_ge *vec_out;
+
+	vec_out = NEW_OBJECT(data_structures_groups::vector_ge);
+
+
+	vec_out->init(A_wedge, verbose_level);
+	vec_out->allocate(vec_in->len, 0 /* verbose_level */);
+#endif
+
+
+
+
+	{
+		int i, sz;
+
+		//int *Elt;
+		//int *data;
+		int nb_rows, nb_cols;
+		std::string *Table;
+		std::string *Col_headings;
+
+		nb_cols = 2;
+		nb_rows = vec_in->len;
+		Table = new std::string [nb_rows * nb_cols];
+		Col_headings = new std::string [nb_cols];
+
+		Col_headings[0] = "Row";
+		Col_headings[1] = "Element";
+
+		//data = NEW_int(A->make_element_size);
+
+		// forget about the field automorphism:
+
+		if (false /*A_wedge->is_semilinear_matrix_group()*/) {
+			sz = 6 * 6 + 1;
+		}
+		else {
+			sz = 6 * 6;
+		}
+
+		for (i = 0; i < vec_in->len; i++) {
+
+			if (f_v) {
+				cout << "action_global::apply_isomorphism_wedge_product_4to6 "
+						"i = " << i << " / " << vec_in->len << endl;
+			}
+
+
+			induced_actions::action_on_wedge_product *AW = A_wedge->G.AW;
+
+
+
+			//AW->create_induced_matrix(
+			//		Elt, Elt_out, verbose_level);
+
+			if (f_v) {
+				cout << "action_global::apply_isomorphism_wedge_product_4to6 "
+						"i = " << i << " / " << vec_in->len
+						<< " before wedge_product" << endl;
+			}
+			AW->F->Linear_algebra->wedge_product(
+					vec_in->ith(i), Elt_out,
+					AW->n, AW->wedge_dimension,
+					0 /* verbose_level */);
+			if (f_v) {
+				cout << "action_global::apply_isomorphism_wedge_product_4to6 "
+						"i = " << i << " / " << vec_in->len
+						<< " after wedge_product" << endl;
+			}
+
+
+			if (false /*A_wedge->is_semilinear_matrix_group()*/) {
+				Elt_out[6 * 6] = vec_in->ith(i)[4 * 4];
+			}
+
+			Table[nb_cols * i + 0] = std::to_string(i);
+			Table[nb_cols * i + 1] = "\"" + Int_vec_stringify(Elt_out, sz) + "\"";
+
+#if 0
+			if (f_v) {
+				cout << "action_global::apply_isomorphism_wedge_product_4to6 "
+						"i = " << i << " / " << vec_in->len
+						<< " before A6->Group_element->make_element" << endl;
+			}
+			A6->Group_element->make_element(
+					vec_out->ith(i), Elt_out,
+					0 /* verbose_level */);
+			if (f_v) {
+				cout << "action_global::apply_isomorphism_wedge_product_4to6 "
+						"i = " << i << " / " << vec_in->len
+						<< " after A6->Group_element->make_element" << endl;
+			}
+#endif
+
+
+		}
+
+		other::orbiter_kernel_system::file_io Fio;
+		string fname;
+
+		fname = label_in + "_wedge_4to6.csv";
+
+
+		Fio.Csv_file_support->write_table_of_strings_with_col_headings(
+				fname,
+				nb_rows, nb_cols, Table,
+				Col_headings,
+				verbose_level);
+
+
+		delete [] Col_headings;
+		delete [] Table;
+		//FREE_int(data);
+
+		if (f_v) {
+			cout << "vector_ge::save_csv Written file " << fname
+					<< " of size " << Fio.file_size(fname) << endl;
+		}
+
+
+	}
+
+
+
+
+#if 0
+	vec_out->save_csv(
+			fname, verbose_level - 1);
+
+	if (f_v) {
+		cout << "action_global::apply_isomorphism_wedge_product_4to6 "
+				"Written file " << fname << " of size "
+					<< Fio.file_size(fname) << endl;
+	}
+
+
+	FREE_OBJECT(vec_out);
+#endif
+
+	FREE_int(Elt_out);
+
+
+	if (f_v) {
+		cout << "action_global::apply_isomorphism_wedge_product_4to6 done" << endl;
+	}
+}
 
 
 

@@ -1351,9 +1351,23 @@ void geometry_global::do_unrank_points_in_PG(
 
 		cout << a << " : ";
 		Int_vec_print(cout, M + i * d, d);
+		cout << " : ";
+		other::orbiter_kernel_system::Orbiter->Int_vec->print_dense(
+					cout, M + i * d, d);
 		cout << endl;
 	}
 
+
+	for (i = 0; i < len; i++) {
+
+		a = v[i];
+
+		F->Projective_space_basic->PG_element_unrank_modified_lint(
+				M + i * d, 1, d, a);
+		other::orbiter_kernel_system::Orbiter->Int_vec->print_dense(
+					cout, M + i * d, d);
+		cout << "\\\\" << endl;
+	}
 
 	FREE_int(M);
 	FREE_lint(v);

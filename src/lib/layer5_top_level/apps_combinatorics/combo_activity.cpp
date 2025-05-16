@@ -102,12 +102,13 @@ void combo_activity::perform_activity(
 			cout << "combo_activity::perform_activity_combo "
 					"f_get_group" << endl;
 		}
-
+#if 1
 		if (nb_objects != 1) {
 			cout << "combo_activity::perform_activity_combo "
 					"f_get_group, nb_objects != 1" << endl;
 			exit(1);
 		}
+#endif
 
 #if 0
 		if (f_v) {

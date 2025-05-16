@@ -34,16 +34,16 @@ action_by_conjugation::~action_by_conjugation()
 	Record_death();
 	if (Base_group && f_ownership) {
 		FREE_OBJECT(Base_group);
-		}
+	}
 	if (Elt1) {
 		FREE_int(Elt1);
-		}
+	}
 	if (Elt2) {
 		FREE_int(Elt2);
-		}
+	}
 	if (Elt3) {
 		FREE_int(Elt3);
-		}
+	}
 }
 
 
@@ -66,18 +66,20 @@ void action_by_conjugation::init(
 	if (f_v) {
 		cout << "action_by_conjugation::init we are acting "
 				"on a group of order " << goi << endl;
-		}
+	}
 	Elt1 = NEW_int(A->elt_size_in_int);
 	Elt2 = NEW_int(A->elt_size_in_int);
 	Elt3 = NEW_int(A->elt_size_in_int);
 	if (f_v) {
 		cout << "action_by_conjugation::init done" << endl;
-		}
+	}
 }
 
 long int action_by_conjugation::compute_image(
 		actions::action *A,
 		int *Elt, long int i, int verbose_level)
+// computes s^-1 * a * s
+// where s = Elt and a = group element i from the Base_group
 {
 	int f_v = (verbose_level >= 1);
 	long int j;
@@ -85,12 +87,12 @@ long int action_by_conjugation::compute_image(
 	if (f_v) {
 		cout << "action_by_conjugation::compute_image "
 				"i = " << i << endl;
-		}
+	}
 	if (i < 0 || i >= goi) {
 		cout << "action_by_conjugation::compute_image "
 				"i = " << i << " out of range" << endl;
 		exit(1);
-		}
+	}
 	A->Group_element->invert(Elt, Elt2);
 	Base_group->element_unrank_lint(i, Elt1);
 	A->Group_element->mult(Elt2, Elt1, Elt3);
@@ -99,7 +101,7 @@ long int action_by_conjugation::compute_image(
 	if (f_v) {
 		cout << "action_by_conjugation::compute_image "
 				"image is " << j << endl;
-		}
+	}
 	return j;
 }
 
@@ -122,17 +124,17 @@ long int action_by_conjugation::multiply(
 
 	if (f_v) {
 		cout << "action_by_conjugation::multiply" << endl;
-		}
+	}
 	if (i < 0 || i >= goi) {
 		cout << "action_by_conjugation::multiply "
 				"i = " << i << " out of range" << endl;
 		exit(1);
-		}
+	}
 	if (j < 0 || j >= goi) {
 		cout << "action_by_conjugation::multiply "
 				"j = " << j << " out of range" << endl;
 		exit(1);
-		}
+	}
 	Base_group->element_unrank_lint(i, Elt1);
 	Base_group->element_unrank_lint(j, Elt2);
 	A->Group_element->mult(Elt1, Elt2, Elt3);
@@ -140,7 +142,7 @@ long int action_by_conjugation::multiply(
 	if (f_v) {
 		cout << "action_by_conjugation::multiply "
 				"the product is " << k << endl;
-		}
+	}
 	return k;
 }
 

@@ -6,6 +6,7 @@ ROW,C1,C2,C3
 1,"\verb'-rotated' ","   ","Rotate the output.  "
 1,"\verb'-nodes' ","   ","Turn on node drawing.  "
 1,"\verb'-nodes_empty' ","   ","Do not label the nodes. Default value: off."
+1,"\verb'-no_vertices' ","   ","Do not draw vertices."
 1,"\verb'-select_layers' ","  $S$ ","Draw layers whose index is given in the list $S$ only. "
 1,"\verb'-paths_in_between' "," $l_1$ $i_1$ $l_2$ $i_2$ ","Draw all paths from node $(l_1,i_1)$ to node $(l_2,i_2)$. Here, $(l,i)$ is the $i$-th node at layer $l$ (counting from zero). Delete all other edges between layers $l_1$ and $l_2.$ "
 END

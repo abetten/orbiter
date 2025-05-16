@@ -59,6 +59,7 @@ layered_graph_draw_options::layered_graph_draw_options()
 
 	f_nodes = false;
 	f_nodes_empty = false;
+	f_no_vertices = false;
 	f_show_colors = false;
 
 	f_select_layers = false;
@@ -230,6 +231,12 @@ int layered_graph_draw_options::read_arguments(
 				cout << "-nodes_empty " << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-no_vertices") == 0) {
+			f_no_vertices = true;
+			if (f_v) {
+				cout << "-no_vertices " << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-show_colors") == 0) {
 			f_show_colors = true;
 			if (f_v) {
@@ -288,7 +295,8 @@ void layered_graph_draw_options::print()
 		cout << "-paperwidth " << paperwidth << endl;
 	}
 
-	cout << "xin, xout, yin, yout=" << xin << ", " << xout << ", " << yin << ", " << yout << endl;
+	cout << "xin, xout, yin, yout=" << xin << ", " << xout
+			<< ", " << yin << ", " << yout << endl;
 	cout << "radius=" << rad << endl;
 
 	if (f_spanning_tree) {
@@ -332,6 +340,9 @@ void layered_graph_draw_options::print()
 	}
 	if (f_nodes_empty) {
 		cout << "nodes_empty" << endl;
+	}
+	if (f_no_vertices) {
+		cout << "-no_vertices " << endl;
 	}
 	if (f_show_colors) {
 		cout << "show_colors" << endl;

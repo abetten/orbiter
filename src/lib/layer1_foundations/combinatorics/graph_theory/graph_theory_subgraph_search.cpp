@@ -47,11 +47,27 @@ void graph_theory_subgraph_search::find_subgraph(
 			cout << "graph_theory_subgraph_search::find_subgraph "
 					"before find_subgraph_E6" << endl;
 		}
-		//find_subgraph_E6(verbose_level);
+		std::vector<std::vector<int> > Solutions;
+
+		CG[0]->find_subgraph_E6(Solutions, verbose_level);
 		if (f_v) {
 			cout << "graph_theory_subgraph_search::find_subgraph "
 					"after find_subgraph_E6" << endl;
 		}
+
+		other::orbiter_kernel_system::file_io Fio;
+		std::string fname;
+
+		fname = CG[0]->label + "_all_" + subgraph_label + ".csv";
+
+		Fio.Csv_file_support->vector_matrix_write_csv_compact(
+				fname,
+				Solutions);
+
+		if (f_v) {
+			cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+		}
+
 	}
 	else {
 		string first_letter;

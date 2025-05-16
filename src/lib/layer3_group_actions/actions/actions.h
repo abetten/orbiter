@@ -879,7 +879,14 @@ public:
 			groups::sims *Sims,
 			other::graphics::layered_graph_draw_options *LG_Draw_options,
 			int verbose_level);
-	// creates a new sims object from Strong_gens
+	void report_order_invariant(
+			std::ostream &ost,
+			std::string &label,
+			std::string &label_tex,
+			actions::action *A,
+			groups::strong_generators *Strong_gens,
+			groups::sims *Sims,
+			int verbose_level);
 	void report_group_table(
 			std::ostream &ost,
 			std::string &label,
@@ -926,6 +933,15 @@ public:
 	void products_of_pairs(
 			data_structures_groups::vector_ge *Elements,
 			data_structures_groups::vector_ge *&Products,
+			int verbose_level);
+	void order_of_products_of_pairs(
+			data_structures_groups::vector_ge *Elements,
+			std::string &label,
+			int verbose_level);
+	void apply_isomorphism_wedge_product_4to6(
+			actions::action *A_wedge,
+			data_structures_groups::vector_ge *vec_in,
+			std::string &label_in,
 			int verbose_level);
 
 };

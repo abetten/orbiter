@@ -945,33 +945,38 @@ void layered_graph::draw_vertices(
 				//label.assign("");
 			}
 
-			G->nice_circle(
-					x, y, O->rad * /*4 * */ L[i].Nodes[j].radius_factor);
+			if (O->f_no_vertices) {
 
-			if (O->f_nodes_empty) {
-				if (f_v) {
-					cout << "Vertex " << i << " " << j
-							<< " f_nodes_empty is true" << endl;
-				}
 			}
 			else {
-				if (O->f_has_draw_vertex_callback) {
-					//cout << "Vertex " << i << " " << j
-					//<< " before (*O->draw_vertex_callback)" << endl;
-					(*O->draw_vertex_callback)(this, G, i, j, x, y,
-							O->rad * /* 4 * */ L[i].Nodes[j].radius_factor,
-							O->rad * /*4 * */ L[i].Nodes[j].radius_factor);
+				G->nice_circle(
+						x, y, O->rad * /*4 * */ L[i].Nodes[j].radius_factor);
+
+				if (O->f_nodes_empty) {
+					if (f_v) {
+						cout << "Vertex " << i << " " << j
+								<< " f_nodes_empty is true" << endl;
+					}
 				}
 				else {
-					if (f_v) {
-						cout << "layer " << i << " node " << j
-								<< " label=" << label << endl;
+					if (O->f_has_draw_vertex_callback) {
+						//cout << "Vertex " << i << " " << j
+						//<< " before (*O->draw_vertex_callback)" << endl;
+						(*O->draw_vertex_callback)(this, G, i, j, x, y,
+								O->rad * /* 4 * */ L[i].Nodes[j].radius_factor,
+								O->rad * /*4 * */ L[i].Nodes[j].radius_factor);
 					}
+					else {
+						if (f_v) {
+							cout << "layer " << i << " node " << j
+									<< " label=" << label << endl;
+						}
 
-					if (label.length() /* L[i].Nodes[j].radius_factor >= 1.*/) {
-						//G.circle_text(x, y, L[i].Nodes[j].label);
-						G->aligned_text(x, y, "", label);
-						//G.aligned_text(x, y, "", L[i].Nodes[j].label);
+						if (label.length() /* L[i].Nodes[j].radius_factor >= 1.*/) {
+							//G.circle_text(x, y, L[i].Nodes[j].label);
+							G->aligned_text(x, y, "", label);
+							//G.aligned_text(x, y, "", L[i].Nodes[j].label);
+						}
 					}
 				}
 			}

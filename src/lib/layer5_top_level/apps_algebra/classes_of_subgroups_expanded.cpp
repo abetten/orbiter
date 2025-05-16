@@ -186,6 +186,84 @@ void classes_of_subgroups_expanded::init(
 	}
 }
 
+void classes_of_subgroups_expanded::find_overgroups(
+		long int *Elements_P,
+		long int go_P,
+		int overgroup_order,
+		std::vector<int> &Class_idx, std::vector<int> &Class_idx_subgroup_idx,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+
+	if (f_v) {
+		cout << "classes_of_subgroups_expanded::find_overgroups" << endl;
+	}
+
+	other::data_structures::sorting Sorting;
+
+	int h, a;
+
+	if (f_vv) {
+		cout << "classes_of_subgroups_expanded::find_overgroups looking for : ";
+		Lint_vec_print_fully(cout, Elements_P, go_P);
+		cout << endl;
+	}
+
+	for (h = 0; h < nb_idx; h++) {
+
+		if (Orbit_of_subgroups[h]->Orbits_P->sz == overgroup_order) {
+
+			if (f_v) {
+				cout << "classes_of_subgroups_expanded::find_overgroups h = " << h << endl;
+			}
+
+			orbit_of_subgroups *Orbit_of_subgroup;
+
+
+			Orbit_of_subgroup = Orbit_of_subgroups[h];
+
+
+			orbits_schreier::orbit_of_sets *Orbit;
+
+			Orbit = Orbit_of_subgroup->Orbits_P;
+
+			if (f_v) {
+				cout << "classes_of_subgroups_expanded::find_overgroups h = " << h << " number of groups in class = " << Orbit->used_length << endl;
+			}
+
+			for (a = 0; a < Orbit->used_length; a++) {
+
+				if (f_v) {
+					cout << "classes_of_subgroups_expanded::find_overgroups h = " << h << " a=" << a << " / " << Orbit->used_length << endl;
+				}
+				if (f_vv) {
+					cout << "classes_of_subgroups_expanded::find_overgroups : ";
+					Lint_vec_print_fully(cout, Orbit->Sets[a], Orbit->sz);
+					cout << endl;
+				}
+
+				if (Sorting.lint_vec_is_subset_of_lint_vec(
+					Elements_P, go_P,
+					Orbit->Sets[a], Orbit->sz,
+					verbose_level - 2)) {
+
+
+					Class_idx.push_back(h);
+					Class_idx_subgroup_idx.push_back(a);
+				}
+			}
+
+
+		}
+	}
+
+
+	if (f_v) {
+		cout << "classes_of_subgroups_expanded::find_overgroups done" << endl;
+	}
+}
+
 
 void classes_of_subgroups_expanded::report(
 		std::string &label,

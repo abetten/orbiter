@@ -540,9 +540,12 @@ public:
 		int verbose_level);
 	int is_cycle(
 			int nb_e, long int *edges, int verbose_level);
+#if 0
 	void find_subgraph(
 			std::string &subgraph_label, int verbose_level);
+#endif
 	void find_subgraph_E6(
+			std::vector<std::vector<int> > &Solutions,
 			int verbose_level);
 	void find_subgraph_An(
 			int n,

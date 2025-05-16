@@ -53,7 +53,12 @@ vector_ge_activity_description::vector_ge_activity_description()
 
 	f_products_of_pairs = false;
 
+	f_order_of_products_of_pairs = false;
+
+	f_apply_isomorphism_wedge_product_4to6 = false;
+
 }
+
 
 vector_ge_activity_description::~vector_ge_activity_description()
 {
@@ -150,6 +155,19 @@ int vector_ge_activity_description::read_arguments(
 				cout << "-products_of_pairs " << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-order_of_products_of_pairs") == 0) {
+			f_order_of_products_of_pairs = true;
+			if (f_v) {
+				cout << "-order_of_products_of_pairs " << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-apply_isomorphism_wedge_product_4to6") == 0) {
+			f_apply_isomorphism_wedge_product_4to6 = true;
+			if (f_v) {
+				cout << "-apply_isomorphism_wedge_product_4to6 " << endl;
+			}
+		}
+
 
 
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
@@ -208,6 +226,12 @@ void vector_ge_activity_description::print()
 	}
 	if (f_products_of_pairs) {
 		cout << "-products_of_pairs " << endl;
+	}
+	if (f_order_of_products_of_pairs) {
+		cout << "-order_of_products_of_pairs " << endl;
+	}
+	if (f_apply_isomorphism_wedge_product_4to6) {
+		cout << "-apply_isomorphism_wedge_product_4to6 " << endl;
 	}
 
 }

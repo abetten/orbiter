@@ -1486,6 +1486,7 @@ void projective_space_activity_description::print()
 	}
 #endif
 
+
 	if (f_classify_surfaces_through_arcs_and_two_lines) {
 		cout << "-classify_surfaces_through_arcs_and_two_lines " << endl;
 	}

@@ -65,7 +65,27 @@ void orbit_of_subgroups::init(
 
 	orbit_of_subgroups::idx = idx;
 
+	groups::strong_generators *subgroup_gens;
 
+	subgroup_gens = Classes->Conjugacy_class[idx]->gens;
+
+	algebra_global_with_action Algebra_global_with_action;
+
+	if (f_v) {
+		cout << "orbit_of_subgroups::init "
+				"before Algebra_global_with_action.element_ranks_in_overgroup" << endl;
+	}
+	Algebra_global_with_action.element_ranks_in_overgroup(
+			Sims_G,
+			subgroup_gens,
+			Sims_P, Elements_P, go_P,
+			verbose_level);
+	if (f_v) {
+		cout << "orbit_of_subgroups::init "
+				"after Algebra_global_with_action.element_ranks_in_overgroup" << endl;
+	}
+
+#if 0
 	other::data_structures::sorting Sorting;
 
 	int *Elt;
@@ -86,6 +106,8 @@ void orbit_of_subgroups::init(
 		Elements_P[i] = rk;
 	}
 	Sorting.lint_vec_heapsort(Elements_P, go_P);
+	FREE_int(Elt);
+#endif
 
 	if (f_v) {
 		cout << "orbit_of_subgroups::init "
@@ -114,7 +136,6 @@ void orbit_of_subgroups::init(
 				"after Orbits_P->init" << endl;
 	}
 
-	FREE_int(Elt);
 
 	if (f_v) {
 		cout << "orbit_of_subgroups::init done" << endl;

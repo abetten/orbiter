@@ -164,6 +164,37 @@ int sorting::lint_vec_is_subset_of(
 	return true;
 }
 
+int sorting::lint_vec_is_subset_of_lint_vec(
+		long int *set, int sz,
+		long int *big_set, int big_set_sz,
+		int verbose_level)
+{
+	long int i, j, a;
+	int f_v = (verbose_level >= 1);
+
+	j = 0;
+	for (i = 0; i < sz; i++) {
+		a = set[i];
+		while (big_set[j] < a && j < big_set_sz) {
+			j++;
+		}
+		if (j == big_set_sz) {
+			return false;
+		}
+		if (big_set[j] == a) {
+			j++;
+			if (f_v) {
+				cout << "element " << a << " has been found" << endl;
+			}
+			continue;
+		}
+		return false;
+	}
+	return true;
+}
+
+
+
 void sorting::int_vec_swap_points(
 		int *list, int *list_inv, int idx1, int idx2)
 {
