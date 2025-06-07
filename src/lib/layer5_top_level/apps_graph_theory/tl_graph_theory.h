@@ -628,6 +628,7 @@ public:
 	int f_combine_by_starters;
 	std::string combine_by_starters_fname_reps;
 	std::string combine_by_starters_col_label;
+	std::string combine_by_starters_mask_fname_solutions; // added recently
 
 	int f_split_by_clique;
 	std::string split_by_clique_label;
@@ -736,6 +737,12 @@ public:
 	void test_automorphism_property_of_group(
 			int nb, combinatorics::graph_theory::colored_graph **CG,
 			std::string &group_label, int verbose_level);
+	void combine_by_starters(
+			combinatorics::graph_theory::colored_graph *CG,
+			std::string &fname_reps,
+			std::string &fname_reps_col_label,
+			std::string &mask_fname_solutions,
+			int verbose_level);
 
 
 };

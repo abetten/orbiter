@@ -277,7 +277,7 @@ void quartic_curve_domain_with_action::create_table_of_strings(
 			//Table[h * nb_cols + 2] = std::to_string(QC[h]->QO->QP->Kovalevski->nb_Kovalevski_on);
 			//Table[h * nb_cols + 3] = std::to_string(QC[h]->QO->QP->Kovalevski->nb_Kovalevski_off);
 			Table[h * nb_cols + 2] = QC[h]->QOG->Aut_gens->group_order_stringify();
-			Table[h * nb_cols + 3] = std::to_string(QC[h]->QO->nb_pts);
+			Table[h * nb_cols + 3] = std::to_string(QC[h]->QO->get_nb_points());
 			Table[h * nb_cols + 4] = "\"" + s_Bisecant_line_type + "\"";
 		}
 
@@ -290,7 +290,7 @@ void quartic_curve_domain_with_action::create_table_of_strings(
 				s_Eqn, s_Pts, s_Bitangents);
 
 		s_Eqn_maple = QC[h]->QCDA->Dom->stringify_equation_maple(
-				QC[h]->QO->eqn15);
+				QC[h]->QO->Variety_object->eqn);
 
 		Table[h * nb_cols + 5] = "\"" + s_Eqn + "\"";
 		Table[h * nb_cols + 6] = "\"$" + s_Eqn_maple + "$\"";

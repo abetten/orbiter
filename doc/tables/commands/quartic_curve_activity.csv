@@ -2,7 +2,8 @@ ROW,C1,C2,C3
 0,"tab:quartic:curves:activities",,
 1,"Quartic Curve Activities",,
 1,"\verb'-report' "," "," Produce a latex report about the curve. "
-1,"\verb'-export_something' "," type "," Exports data of the quartic curve to a file. The type of data to be exported must be specified according to Table~\ref{tab:quartic:curve:export}. "
+1,"\verb'-export' "," "," Export data of the quartic curve to a csv file. "
+1,"\verb'-export_something' "," type "," Export selected data of the quartic curve to a file. The type of data to be exported must be specified according to Table~\ref{tab:quartic:curve:export}. "
 1,"\verb'-create_surface' "," "," Create a cubic surface from the curve. "
 1,"\verb'-extract_orbit_on_bitangents_' \verb'by_length' "," $l$ "," Extract the bitangents in the unique orbit of length $l$. If there is no orbit of length $l$, or if there are multiple orbits of length $l$, an error is raised. "
 1,"\verb'-extract_specific_orbit_on_' \verb'bitangents_by_length' "," $l$ $i$ "," Extract the $i$th orbit on bitangents of length $l$. "

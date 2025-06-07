@@ -163,10 +163,10 @@ void variety_object_with_action::create_variety(
 
 		if (f_v) {
 			cout << "variety_object_with_action::create_variety "
-					"before apply_transformation" << endl;
+					"before apply_transformation_to_self" << endl;
 		}
 
-		apply_transformation(
+		apply_transformation_to_self(
 				Elt,
 				PA->A,
 				PA->A_on_lines,
@@ -174,7 +174,7 @@ void variety_object_with_action::create_variety(
 
 		if (f_v) {
 			cout << "variety_object_with_action::create_variety "
-					"after apply_transformation" << endl;
+					"after apply_transformation_to_self" << endl;
 		}
 
 		FREE_int(data);
@@ -205,7 +205,7 @@ void variety_object_with_action::create_variety(
 	}
 }
 
-void variety_object_with_action::apply_transformation(
+void variety_object_with_action::apply_transformation_to_self(
 		int *Elt,
 		actions::action *A,
 		actions::action *A_on_lines,
@@ -215,7 +215,7 @@ void variety_object_with_action::apply_transformation(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "variety_object_with_action::apply_transformation" << endl;
+		cout << "variety_object_with_action::apply_transformation_to_self" << endl;
 	}
 
 
@@ -264,7 +264,7 @@ void variety_object_with_action::apply_transformation(
 
 
 	if (f_v) {
-		cout << "variety_object_with_action::apply_transformation "
+		cout << "variety_object_with_action::apply_transformation_to_self "
 				"before AG.set_of_sets_copy_and_apply, Point_sets" << endl;
 	}
 	Variety_object->Point_sets = AG.set_of_sets_copy_and_apply(
@@ -273,7 +273,7 @@ void variety_object_with_action::apply_transformation(
 			old_Variety_object->Point_sets,
 			verbose_level - 2);
 	if (f_v) {
-		cout << "variety_object_with_action::apply_transformation "
+		cout << "variety_object_with_action::apply_transformation_to_self "
 				"after AG.set_of_sets_copy_and_apply, Point_sets" << endl;
 	}
 
@@ -282,7 +282,7 @@ void variety_object_with_action::apply_transformation(
 	Variety_object->Point_sets->sort();
 
 	if (f_v) {
-		cout << "variety_object_with_action::apply_transformation "
+		cout << "variety_object_with_action::apply_transformation_to_self "
 				"before AG.set_of_sets_copy_and_apply, Line_sets" << endl;
 	}
 	Variety_object->Line_sets = AG.set_of_sets_copy_and_apply(
@@ -291,7 +291,7 @@ void variety_object_with_action::apply_transformation(
 			old_Variety_object->Line_sets,
 			verbose_level - 2);
 	if (f_v) {
-		cout << "variety_object_with_action::apply_transformation "
+		cout << "variety_object_with_action::apply_transformation_to_self "
 				"after AG.set_of_sets_copy_and_apply, Line_sets" << endl;
 	}
 
@@ -302,13 +302,13 @@ void variety_object_with_action::apply_transformation(
 
 
 	if (f_v) {
-		cout << "variety_object_with_action::apply_transformation "
+		cout << "variety_object_with_action::apply_transformation_to_self "
 				"after transforming:" << endl;
 		print(cout);
 	}
 
 	if (f_v) {
-		cout << "variety_object_with_action::apply_transformation done" << endl;
+		cout << "variety_object_with_action::apply_transformation_to_self done" << endl;
 	}
 }
 
@@ -733,6 +733,30 @@ void variety_object_with_action::print_summary(
 }
 
 
+void variety_object_with_action::export_col_headings(
+		std::string *&Col_headings, int &nb_cols,
+		int verbose_level)
+{
+	nb_cols = 15;
+	Col_headings = new std::string [nb_cols];
+
+	Col_headings[0] = "n";
+	Col_headings[1] = "q";
+	Col_headings[2] = "d";
+	Col_headings[3] = "label_txt";
+	Col_headings[4] = "label_tex";
+	Col_headings[5] = "equation_af";
+	Col_headings[6] = "equation_vec";
+	Col_headings[7] = "Ago";
+	Col_headings[8] = "SetStab";
+	Col_headings[9] = "NbPoints";
+	Col_headings[10] = "NbLines";
+	Col_headings[11] = "NbSingPoints";
+	Col_headings[12] = "Points";
+	Col_headings[13] = "Lines";
+	Col_headings[14] = "LinesKlein";
+}
+
 void variety_object_with_action::export_data(
 		std::vector<std::string> &Table, int verbose_level)
 {
@@ -744,6 +768,9 @@ void variety_object_with_action::export_data(
 
 	algebra::ring_theory::longinteger_object ago;
 	algebra::ring_theory::longinteger_object set_stab_go;
+
+
+
 
 	if (f_has_automorphism_group) {
 		Stab_gens->group_order(ago);
@@ -821,6 +848,28 @@ void variety_object_with_action::export_data(
 		s_Lines_Klein = "\"\"";
 	}
 
+	int n, q, d;
+	string s_eqn;
+	string s_eqn_vec;
+
+	n = PA->P->Subspaces->n;
+	q = PA->P->Subspaces->F->q;
+	d = Variety_object->Ring->degree;
+
+	s_eqn = "\"" + Variety_object->Ring->stringify_equation(Variety_object->eqn) + "\"";
+	s_eqn_vec = "\"" + Int_vec_stringify(Variety_object->eqn, Variety_object->Ring->get_nb_monomials()) + "\"";
+
+	Table.push_back(std::to_string(n));
+	Table.push_back(std::to_string(q));
+	Table.push_back(std::to_string(d));
+	Table.push_back("\"" + Variety_object->label_txt + "\"");
+	Table.push_back("\"" + Variety_object->label_tex + "\"");
+
+	Table.push_back(s_eqn);
+	Table.push_back(s_eqn_vec);
+
+
+
 	Table.push_back(ago.stringify());
 	Table.push_back(set_stab_go.stringify());
 	Table.push_back(std::to_string(nb_points));
@@ -845,6 +894,14 @@ void variety_object_with_action::do_export(
 		cout << "variety_object_with_action::do_export" << endl;
 	}
 
+	std::string *Col_headings;
+	int nb_cols2;
+
+	export_col_headings(
+			Col_headings, nb_cols2,
+			verbose_level);
+
+
 	std::vector<std::string> table;
 
 
@@ -860,8 +917,9 @@ void variety_object_with_action::do_export(
 	nb_rows = 1;
 	nb_cols = table.size();
 
-	if (nb_cols != 8) {
-		cout << "variety_object_with_action::do_export nb_cols != 8" << endl;
+	if (nb_cols2 != nb_cols) {
+		cout << "variety_object_with_action::do_export "
+				"nb_cols2 != nb_cols" << endl;
 		exit(1);
 	}
 
@@ -874,16 +932,7 @@ void variety_object_with_action::do_export(
 		}
 	}
 
-	std::string Col_headings[8];
 
-	Col_headings[0] = "Ago";
-	Col_headings[1] = "SetStab";
-	Col_headings[2] = "NbPoints";
-	Col_headings[3] = "NbLines";
-	Col_headings[4] = "NbSingPoints";
-	Col_headings[5] = "Points";
-	Col_headings[6] = "Lines";
-	Col_headings[7] = "LinesKlein";
 	string fname;
 
 	fname = "variety_" + Variety_object->label_txt + "_data.csv";
@@ -898,14 +947,13 @@ void variety_object_with_action::do_export(
 			verbose_level);
 
 	delete [] Table;
+	delete [] Col_headings;
 
 
 	if (f_v) {
 		cout << "variety_object_with_action::do_export done" << endl;
 	}
 }
-
-
 
 
 }}}

@@ -753,8 +753,11 @@ class quartic_curve_object {
 
 public:
 
+	// ToDo: why does this not use a variety_object ?
+
 	quartic_curve_domain *Dom; // we may not have it
 
+#if 0
 	std::string eqn_txt;
 
 	long int *Pts; // in increasing order
@@ -765,6 +768,13 @@ public:
 
 	int f_has_bitangents;
 	long int bitangents28[28];
+#else
+
+	geometry::algebraic_geometry::variety_object *Variety_object;
+
+	int f_has_bitangents;
+
+#endif
 
 	quartic_curve_object_properties *QP;
 
@@ -778,10 +788,10 @@ public:
 			std::string &eqn_txt,
 			std::string &pts_txt, std::string &bitangents_txt,
 			int verbose_level);
-#endif
 	void allocate_points(
 			int nb_pts,
 			int verbose_level);
+#endif
 	void init_equation_but_no_bitangents(
 			quartic_curve_domain *Dom,
 			int *eqn15,
@@ -794,6 +804,18 @@ public:
 			quartic_curve_domain *Dom,
 			int *eqn15, long int *bitangents28,
 			int verbose_level);
+	int get_nb_points();
+	long int get_point(
+			int idx);
+	void set_point(
+			int idx, long int rk);
+	long int *get_points();
+	int get_nb_lines();
+	long int get_line(
+			int idx);
+	void set_line(
+			int idx, long int rk);
+	long int *get_lines();
 	void enumerate_points(
 			algebra::ring_theory::homogeneous_polynomial_domain *Poly_ring,
 			int verbose_level);
@@ -804,6 +826,8 @@ public:
 	void identify_lines(
 			long int *lines, int nb_lines, int *line_idx,
 		int verbose_level);
+	int find_line(
+			long int P, int &idx);
 	int find_point(
 			long int P, int &idx);
 	void print(
@@ -1495,6 +1519,14 @@ public:
 			std::string &label_tex,
 			algebraic_geometry::surface_object *&SO,
 			int verbose_level);
+	void get_list_of_all_surfaces(
+			geometry::algebraic_geometry::surface_object **&SO,
+			int &nb_iso,
+			int verbose_level);
+	void dispose_of_list_of_all_surfaces(
+			geometry::algebraic_geometry::surface_object **&SO,
+			int verbose_level);
+	int get_number_of_isomorphism_types();
 	void create_surface_from_catalogue(
 			int iso,
 			std::vector<std::string> &select_double_six_string,
@@ -2360,6 +2392,23 @@ public:
 			int verbose_level);
 	void enumerate_lines(
 			int verbose_level);
+	void set_lines(
+			long int *Lines, int nb_lines,
+			int verbose_level);
+	long int *get_points();
+	long int get_point(
+			int idx);
+	void set_point(
+			int idx, long int rk);
+	long int *get_lines();
+	long int get_line(
+			int idx);
+	void set_line(
+			int idx, long int rk);
+	int find_point(
+			long int P, int &idx);
+	int find_line(
+			long int P, int &idx);
 	void print(
 			std::ostream &ost);
 	void print_equation_with_line_breaks_tex(
@@ -2368,6 +2417,7 @@ public:
 			std::ostream &ost);
 	std::string stringify_points();
 	std::string stringify_lines();
+	std::string stringify_equation();
 	void stringify(
 			std::string &s_Eqn,
 			std::string &s_nb_Pts,
@@ -2379,8 +2429,6 @@ public:
 			std::ostream &ost);
 	void report_equation2(
 			std::ostream &ost);
-	int find_point(
-			long int P, int &idx);
 	std::string stringify_eqn();
 	std::string stringify_Pts();
 	std::string stringify_Lines();

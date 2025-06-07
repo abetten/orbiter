@@ -894,7 +894,8 @@ void algorithms::dot_product_of_rows(
 }
 
 void algorithms::matrix_multiply_over_Z(
-		std::string &label1, std::string &label2, int verbose_level)
+		std::string &label1, std::string &label2,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1490,12 +1491,14 @@ void algorithms::create_layered_graph_from_tree(
 				"before adding edges" << endl;
 	}
 	for (i = 0; i <= max_depth; i++) {
+
 		if (f_vv) {
 			cout << "algorithms::create_layered_graph_from_tree "
 					"adding edges at depth "
 					"i=" << i << " / " << max_depth
 					<< " Nb[i]=" << Nb[i] << endl;
 		}
+
 		for (j = 0; j < Nb[i]; j++) {
 			n1 = Node[i][j];
 			if (f_vv) {
@@ -1527,9 +1530,11 @@ void algorithms::create_layered_graph_from_tree(
 				if (f_vvv) {
 					cout << "algorithms::create_layered_graph_from_tree "
 							"adding edge ("<< i - 1 << "," << j2 << ") "
-							"-> (" << i << "," << j << ") with color " << label[fst + n1] << endl;
+							"-> (" << i << "," << j << ") "
+									"with color " << label[fst + n1] << endl;
 				}
-				LG->add_edge(i - 1, j2, i, j,
+				LG->add_edge(
+						i - 1, j2, i, j,
 						label[fst + n1],
 						0 /*verbose_level*/);
 				//int l1, int n1, int l2, int n2,
@@ -1634,7 +1639,8 @@ void algorithms::tree_trace_back(
 		j = 1;
 	}
 	else {
-		tree_trace_back(orbit_inv, prev, prev[ii], j);
+		tree_trace_back(
+				orbit_inv, prev, prev[ii], j);
 
 #if 0
 		if (path) {
@@ -1647,7 +1653,8 @@ void algorithms::tree_trace_back(
 }
 
 void algorithms::make_layered_graph_for_schreier_vector_tree(
-	int n, int *pts, int *prev, int f_use_pts_inv, int *pts_inv,
+	int n, int *pts, int *prev,
+	int f_use_pts_inv, int *pts_inv,
 	std::string &fname_base,
 	combinatorics::graph_theory::layered_graph *&LG,
 	int verbose_level)
@@ -1723,7 +1730,8 @@ void algorithms::make_layered_graph_for_schreier_vector_tree(
 	int *types;
 	int nb_types;
 
-	SoS = C.get_set_partition_and_types(types,
+	SoS = C.get_set_partition_and_types(
+			types,
 			nb_types, verbose_level);
 	SoS->sort_all(verbose_level - 2);
 
@@ -1742,7 +1750,8 @@ void algorithms::make_layered_graph_for_schreier_vector_tree(
 	}
 
 	LG->init(
-			C.nb_types /* nb_layers */, Sz /* int *Nb_nodes_layer */,
+			C.nb_types /* nb_layers */,
+			Sz /* int *Nb_nodes_layer */,
 			fname_base, verbose_level);
 
 	FREE_int(Sz);
@@ -1777,6 +1786,7 @@ void algorithms::make_layered_graph_for_schreier_vector_tree(
 			int pt;
 
 			pt = prev[i];
+
 			if (!Sorting.int_vec_search(
 					pts, n, pt, pos1)) {
 				cout << "algorithms::make_layered_graph_for_schreier_vector_tree "
@@ -1790,19 +1800,23 @@ void algorithms::make_layered_graph_for_schreier_vector_tree(
 		}
 		d1 = depth[pos1];
 		d2 = depth[pos2];
+
 		if (!Sorting.lint_vec_search(
 				SoS->Sets[d1], SoS->Set_size[d1], pos1, n1, 0)) {
 			cout << "algorithms::make_layered_graph_for_schreier_vector_tree "
 					"cannot find point pos1" << endl;
 			exit(1);
 		}
+
 		if (!Sorting.lint_vec_search(
 				SoS->Sets[d2], SoS->Set_size[d2], pos2, n2, 0)) {
 			cout << "algorithms::make_layered_graph_for_schreier_vector_tree "
 					"cannot find point pos2" << endl;
 			exit(1);
 		}
-		LG->add_edge(d1, n1, d2, n2,
+
+		LG->add_edge(
+				d1, n1, d2, n2,
 				1, // edge_color
 				0 /*verbose_level*/);
 	}
@@ -1810,14 +1824,17 @@ void algorithms::make_layered_graph_for_schreier_vector_tree(
 	for (i = 0; i < n; i++) {
 		pos1 = i;
 		d1 = depth[pos1];
+
 		if (!Sorting.lint_vec_search(
 				SoS->Sets[d1], SoS->Set_size[d1], pos1, n1, 0)) {
 			cout << "algorithms::make_layered_graph_for_schreier_vector_tree "
 					"cannot find point pos1" << endl;
 			exit(1);
 		}
+
 		LG->add_node_data1(
-				d1, n1, pts[pos1], 0/*verbose_level*/);
+				d1, n1, pts[pos1],
+				0/*verbose_level*/);
 	}
 
 	FREE_int(depth);
@@ -1930,15 +1947,17 @@ void algorithms::schreier_vector_compute_depth_and_ancestor(
 	for (i = 0; i < n; i++) {
 		depth[i] = -1;
 		ancestor[i] = -1;
-		}
+	}
 	for (i = 0; i < n; i++) {
 		if (f_v) {
 			cout << "algorithms::schreier_vector_compute_depth_and_ancestor "
 					"i=" << i << " / " << n << endl;
 		}
-		schreier_vector_determine_depth_recursion(n,
-				pts, prev, f_prev_is_point_index, pts_inv, depth, ancestor, i);
-		}
+		schreier_vector_determine_depth_recursion(
+				n,
+				pts, prev, f_prev_is_point_index,
+				pts_inv, depth, ancestor, i);
+	}
 	if (f_v) {
 		cout << "algorithms::schreier_vector_compute_depth_and_ancestor done" << endl;
 	}
@@ -1946,8 +1965,8 @@ void algorithms::schreier_vector_compute_depth_and_ancestor(
 }
 
 int algorithms::schreier_vector_determine_depth_recursion(
-	int n, int *pts, int *prev, int f_use_pts_inv, int *pts_inv,
-	int *depth, int *ancestor, int pos)
+	int n, int *pts, int *prev, int f_use_pts_inv,
+	int *pts_inv, int *depth, int *ancestor, int pos)
 {
 	data_structures::sorting Sorting;
 
@@ -1997,9 +2016,11 @@ int algorithms::schreier_vector_determine_depth_recursion(
 		d++;
 	}
 	else {
+
 		d = algorithms::schreier_vector_determine_depth_recursion(n,
 				pts, prev, f_use_pts_inv, pts_inv,
 				depth, ancestor, pt_loc) + 1;
+
 	}
 	depth[pos] = d;
 	ancestor[pos] = ancestor[pt_loc];

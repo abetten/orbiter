@@ -4,6 +4,7 @@ ROW,C1,C2,C3
 1,"\verb'-make_elementary_symmetric_functions' "," $n$ $k_{\max}$ ","Computes all elementary symmetric functions in $n$ variables of degree $k$ with $1 \le k \le k_{\max}$"
 1,"\verb'-make_elementary_symmetric_function' "," $n$ $k$ ","Computes the elementary symmetric function in $n$ variables of degree $k.$"
 1,"\verb'-Dedekind_numbers' "," $n_{\min}$  $n_{\max}$ $q_{\min}$  $q_{\max}$ ","Computes the Dedekind numbers $D_{n,q}$ for $n_{\min} \le n \le n_{\max}$ and $q_{\min} \le q \le q_{\max}$"
+1,"\verb'-q_binomial' "," n k q ","Computes the $q$-binomial n,k,q. "
 1,"\verb'-rank_k_subset' "," $n$ $k$ $L$  "," Computes the ranks of $k$-subsets chosen from an $n$-set. $L$ is a list of $k$-sets taken from an $n$-set. "
 1,"\verb'-geometry_builder' ","   ","See Section~\ref{sec:configurations}."
 1,"\verb'-union' "," file input-file output-file  "," Perform the union of sets given in files. "

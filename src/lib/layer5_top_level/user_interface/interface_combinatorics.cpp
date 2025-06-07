@@ -111,6 +111,11 @@ interface_combinatorics::interface_combinatorics()
 	Dedekind_q_min = 0;
 	Dedekind_q_max = 0;
 
+	f_q_binomial = false;
+	q_binomial_n = 0;
+	q_binomial_k = 0;
+	q_binomial_q = 0;
+
 	f_rank_k_subset = false;
 	rank_k_subset_n = 0;
 	rank_k_subset_k = 0;
@@ -223,6 +228,9 @@ void interface_combinatorics::print_help(
 	else if (ST.stringcmp(argv[i], "-Dedekind_numbers") == 0) {
 		cout << "-Dedekind_numbers <int : n_min> <int : n_max> <int : q_min> <int : q_max>  " << endl;
 	}
+	else if (ST.stringcmp(argv[i], "-q_binomial") == 0) {
+		cout << "-q_binomial <int : n> <int : k> <int : q> " << endl;
+	}
 	else if (ST.stringcmp(argv[i], "-rank_k_subset") == 0) {
 		cout << "-rank_k_subset <int : n> <int : k> <string : text>  " << endl;
 	}
@@ -330,6 +338,9 @@ int interface_combinatorics::recognize_keyword(
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-Dedekind_numbers") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-q_binomial") == 0) {
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-rank_k_subset") == 0) {
@@ -583,6 +594,18 @@ void interface_combinatorics::read_arguments(
 				<< " " << endl;
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-q_binomial") == 0) {
+		f_q_binomial = true;
+		q_binomial_n = ST.strtoi(argv[++i]);
+		q_binomial_k = ST.strtoi(argv[++i]);
+		q_binomial_q = ST.strtoi(argv[++i]);
+		if (f_v) {
+			cout << "-q_binomial " << q_binomial_n
+				<< " " << q_binomial_k
+				<< " " << q_binomial_q
+				<< " " << endl;
+		}
+	}
 	else if (ST.stringcmp(argv[i], "-rank_k_subset") == 0) {
 		f_rank_k_subset = true;
 		rank_k_subset_n = ST.strtoi(argv[++i]);
@@ -802,6 +825,12 @@ void interface_combinatorics::print()
 				<< " " << Dedekind_q_min
 				<< " " << Dedekind_q_max
 				<< " " << endl;
+	}
+	if (f_q_binomial) {
+		cout << "-q_binomial " << q_binomial_n
+			<< " " << q_binomial_k
+			<< " " << q_binomial_q
+			<< " " << endl;
 	}
 	if (f_rank_k_subset) {
 		cout << "-rank_k_subset " << rank_k_subset_n
@@ -1051,6 +1080,20 @@ void interface_combinatorics::worker(
 		Combi.Dedekind_numbers(
 				Dedekind_n_min, Dedekind_n_max,
 				Dedekind_q_min, Dedekind_q_max,
+				verbose_level);
+
+	}
+	else if (f_q_binomial) {
+
+		cout << "-q_binomial " << q_binomial_n
+			<< " " << q_binomial_k
+			<< " " << q_binomial_q
+			<< " " << endl;
+
+		combinatorics::other_combinatorics::combinatorics_domain Combi;
+
+		Combi.do_q_binomial(
+				q_binomial_n, q_binomial_k, q_binomial_q,
 				verbose_level);
 
 	}

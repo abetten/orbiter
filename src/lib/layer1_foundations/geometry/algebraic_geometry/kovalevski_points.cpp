@@ -138,7 +138,7 @@ void kovalevski_points::compute_Kovalevski_points(
 	Pts_off = NEW_lint(QO->Dom->P->Subspaces->N_points);
 
 	Combi.set_complement_lint(
-			QO->Pts, QO->nb_pts,
+			QO->get_points(), QO->get_nb_points(),
 			Pts_off /*complement*/, nb_pts_off,
 			QO->Dom->P->Subspaces->N_points);
 
@@ -322,9 +322,9 @@ void kovalevski_points::compute_points_on_lines(
 		cout << "kovalevski_points::compute_points_on_lines" << endl;
 	}
 
-	Pts = QO->Pts;
-	nb_points = QO->nb_pts;
-	Lines = QO->bitangents28;
+	Pts = QO->get_points();
+	nb_points = QO->get_nb_points();
+	Lines = QO->get_lines();
 	nb_lines = 28;
 
 
@@ -387,7 +387,7 @@ void kovalevski_points::compute_off_points_on_lines(
 
 	Pts = Pts_off;
 	nb_points = nb_pts_off;
-	Lines = QO->bitangents28;
+	Lines = QO->get_lines();
 	nb_lines = 28;
 
 	compute_points_on_lines_worker(
@@ -488,7 +488,7 @@ void kovalevski_points::compute_contact_multiplicity(
 			a = Pts_on_lines->Sets[i][j];
 
 			// unrank the point of the line to w[]:
-			QO->Dom->unrank_point(w, QO->Pts[a]);
+			QO->Dom->unrank_point(w, QO->get_point(a));
 
 			Int_vec_copy(QO->Dom->P->Subspaces->Grass_lines->M, Basis, 6);
 
@@ -501,7 +501,7 @@ void kovalevski_points::compute_contact_multiplicity(
 			// and the second row is another point on the line
 
 			QO->Dom->Poly4_3->substitute_line(
-					QO->eqn15 /* int *coeff_in */, coeff_out,
+					QO->Variety_object->eqn /* int *coeff_in */, coeff_out,
 					Basis /* int *Pt1_coeff */, Basis + 3,
 					0 /*verbose_level*/);
 			// coeff_in[nb_monomials], coeff_out[degree + 1]
@@ -569,7 +569,7 @@ void kovalevski_points::print_lines_with_points_on_them(
 			cout << "quartic_curve_object_properties::report_properties_simple "
 					"before print_lines_and_points_of_contact" << endl;
 		}
-		print_lines_and_points_of_contact(ost, QO->bitangents28, 28);
+		print_lines_and_points_of_contact(ost, QO->get_lines(), 28);
 		if (f_v) {
 			cout << "quartic_curve_object_properties::report_properties_simple "
 					"after print_lines_and_points_of_contact" << endl;
@@ -763,9 +763,9 @@ void kovalevski_points::print_lines_and_points_of_contact(
 			a = pts_on_lines->Sets[i][j];
 
 			// unrank the point of the line to w[]:
-			QO->Dom->unrank_point(w, QO->Pts[a]);
+			QO->Dom->unrank_point(w, QO->get_point(a));
 
-			ost << "P_{" << QO->Pts[a] << "}";
+			ost << "P_{" << QO->get_point(a) << "}";
 			ost << "=\\bP";
 			Int_vec_print(ost, w, 3);
 

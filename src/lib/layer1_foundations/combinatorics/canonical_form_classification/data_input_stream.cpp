@@ -1200,8 +1200,14 @@ void data_input_stream::read_objects(
 
 			int h;
 
+
 			for (h = 0; h < SoS->nb_sets; h++) {
 
+				if ((SoS->nb_sets % 1000) == 0) {
+					cout << "data_input_stream::read_objects reading packing "
+							"h = " << h << " / " << SoS->nb_sets << endl;
+
+				}
 
 				any_combinatorial_object *Any_combo;
 
@@ -1212,7 +1218,7 @@ void data_input_stream::read_objects(
 						SoS->Sets[h],
 						Spread_table, nb_spreads, spread_size,
 						q,
-						verbose_level);
+						0 /*verbose_level*/);
 
 				Objects.push_back(Any_combo);
 			}

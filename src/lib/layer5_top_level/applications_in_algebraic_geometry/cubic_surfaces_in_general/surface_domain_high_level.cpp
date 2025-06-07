@@ -187,6 +187,71 @@ void surface_domain_high_level::do_study_surface(
 }
 
 
+void surface_domain_high_level::do_recognize_surfaces(
+		projective_geometry::projective_space_with_action *PA,
+		std::string &Control_six_arcs_label,
+		int f_test_nb_Eckardt_points, int nb_E,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_domain_high_level::do_recognize_surfaces" << endl;
+	}
+
+
+	cubic_surfaces_and_arcs::surfaces_arc_lifting *SAL;
+
+	SAL = NEW_OBJECT(cubic_surfaces_and_arcs::surfaces_arc_lifting);
+
+	if (f_v) {
+		cout << "surface_domain_high_level::do_recognize_surfaces "
+				"before SAL->init" << endl;
+	}
+	SAL->init(
+		PA->Surf_A,
+		Control_six_arcs_label,
+		f_test_nb_Eckardt_points, nb_E,
+		verbose_level - 2);
+	if (f_v) {
+		cout << "surface_domain_high_level::do_recognize_surfaces "
+				"after SAL->init" << endl;
+	}
+
+
+	// create all surfaces from the knowledge base
+
+	geometry::algebraic_geometry::surface_object **SO;
+	int nb_iso;
+
+	if (f_v) {
+		cout << "surface_domain_high_level::do_recognize_surfaces "
+				"before get_list_of_all_surfaces" << endl;
+	}
+	PA->Surf_A->Surf->get_list_of_all_surfaces(
+			SO, nb_iso,
+			verbose_level - 2);
+	if (f_v) {
+		cout << "surface_domain_high_level::do_recognize_surfaces "
+				"nb_iso = " << nb_iso << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "surface_domain_high_level::do_recognize_surfaces "
+				"after get_list_of_all_surfaces" << endl;
+	}
+
+	PA->Surf_A->Surf->dispose_of_list_of_all_surfaces(
+			SO,
+			verbose_level);
+
+
+	if (f_v) {
+		cout << "surface_domain_high_level::do_recognize_surfaces done" << endl;
+	}
+}
 
 
 void surface_domain_high_level::do_classify_surfaces_through_arcs_and_two_lines(
@@ -219,6 +284,20 @@ void surface_domain_high_level::do_classify_surfaces_through_arcs_and_two_lines(
 		cout << "surface_domain_high_level::do_classify_surfaces_through_arcs_and_two_lines "
 				"after SAL->init" << endl;
 	}
+
+	if (f_v) {
+		cout << "surface_domain_high_level::do_classify_surfaces_through_arcs_and_two_lines "
+				"before SAL->upstep" << endl;
+	}
+
+	SAL->upstep(
+		verbose_level);
+
+	if (f_v) {
+		cout << "surface_domain_high_level::do_classify_surfaces_through_arcs_and_two_lines "
+				"after SAL->upstep" << endl;
+	}
+
 
 	if (true) {
 		if (f_v) {

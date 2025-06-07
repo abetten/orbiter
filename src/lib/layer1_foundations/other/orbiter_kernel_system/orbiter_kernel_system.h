@@ -25,7 +25,7 @@ namespace orbiter_kernel_system {
 // #############################################################################
 
 
-//! collects return data from an object activity
+//! to collect return data from an object activity
 
 
 class activity_output {
@@ -142,10 +142,12 @@ public:
 			std::string &fname, std::string *column_label);
 	void int_matrix_write_csv(
 			std::string &fname, int *M, int m, int n);
+
 	void lint_matrix_write_csv(
 			std::string &fname,
 			long int *M, int m, int n);
 	// outdated, used write_table_of_strings_with_col_headings instead
+
 	void lint_matrix_write_csv_override_headers(
 			std::string &fname,
 			std::string *headers, long int *M, int m, int n);
@@ -309,6 +311,7 @@ public:
 			std::string &fname, std::string &col_label,
 			data_structures::set_of_sets *&SoS,
 			int verbose_level);
+
 #if 0
 	void save_fibration(
 			std::vector<std::vector<std::pair<int, int> > > &Fibration,
@@ -323,6 +326,7 @@ public:
 			std::vector<std::vector<int> > &Cumulative_data,
 			std::string &fname, int verbose_level);
 #endif
+
 	void write_characteristic_matrix(
 			std::string &fname,
 			long int *data, int nb_rows, int data_sz, int nb_cols,
@@ -369,7 +373,8 @@ public:
 			int *&M, int &m, int &n, int verbose_level);
 	void read_csv_file_and_get_column(
 			std::string &fname, std::string &col_header,
-			long int *&Data, int &data_size, int verbose_level);
+			long int *&Data, int &data_size,
+			int verbose_level);
 	void collect_stats(
 			std::string &fname_mask,
 			std::string &fname_out,

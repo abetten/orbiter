@@ -24,6 +24,8 @@ quartic_curve_activity_description::quartic_curve_activity_description()
 
 	f_report = false;
 
+	f_export = false;
+
 	f_export_something = false;
 	//std::string export_something_what;
 
@@ -63,6 +65,12 @@ int quartic_curve_activity_description::read_arguments(
 			f_report = true;
 			if (f_v) {
 				cout << "-report " << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-export") == 0) {
+			f_export = true;
+			if (f_v) {
+				cout << "-export " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-export_something") == 0) {
@@ -128,6 +136,9 @@ void quartic_curve_activity_description::print()
 {
 	if (f_report) {
 		cout << "-report " << endl;
+	}
+	if (f_export) {
+		cout << "-export " << endl;
 	}
 	if (f_export_something) {
 		cout << "-export_something " << export_something_what << endl;

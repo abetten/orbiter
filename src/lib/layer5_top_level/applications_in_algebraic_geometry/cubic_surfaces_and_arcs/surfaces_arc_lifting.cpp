@@ -125,6 +125,7 @@ void surfaces_arc_lifting::init(
 	std::string &Control_six_arcs_label,
 	int f_test_nb_Eckardt_points, int nb_E,
 	int verbose_level)
+// called from surface_domain_high_level::do_classify_surfaces_through_arcs_and_two_lines
 {
 	int f_v = (verbose_level >= 1);
 	apps_geometry::arc_generator_description *Descr;
@@ -202,27 +203,8 @@ void surfaces_arc_lifting::init(
 	//exit(1);
 
 
-	if (f_v) {
-		cout << "surfaces_arc_lifting::init "
-				"before Up->init" << endl;
-	}
 
 
-	surfaces_arc_lifting_upstep *Up;
-
-	Up = NEW_OBJECT(surfaces_arc_lifting_upstep);
-
-	Up->init(this, verbose_level - 2);
-
-	Up->D->report(verbose_level);
-
-	//upstep(verbose_level - 2);
-	if (f_v) {
-		cout << "surfaces_arc_lifting::init "
-				"after Up->init" << endl;
-	}
-
-	FREE_OBJECT(Up);
 
 
 	if (f_v) {
@@ -230,8 +212,52 @@ void surfaces_arc_lifting::init(
 	}
 }
 
+void surfaces_arc_lifting::upstep(
+	int verbose_level)
+// called from surface_domain_high_level::do_classify_surfaces_through_arcs_and_two_lines
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surfaces_arc_lifting::upstep" << endl;
+	}
+
+	surfaces_arc_lifting_upstep *Up;
+
+	Up = NEW_OBJECT(surfaces_arc_lifting_upstep);
+
+	if (f_v) {
+		cout << "surfaces_arc_lifting::init "
+				"before Up->init" << endl;
+	}
+	Up->init(this, verbose_level - 2);
+	if (f_v) {
+		cout << "surfaces_arc_lifting::init "
+				"after Up->init" << endl;
+	}
+
+	Up->D->report(verbose_level);
+
+	//upstep(verbose_level - 2);
+	if (f_v) {
+		cout << "surfaces_arc_lifting::upstep "
+				"after Up->init" << endl;
+	}
+
+	FREE_OBJECT(Up);
+
+	if (f_v) {
+		cout << "surfaces_arc_lifting::upstep done" << endl;
+	}
+
+}
+
+
 void surfaces_arc_lifting::downstep(
 		int verbose_level)
+// called from surfaces_arc_lifting::init
+// sets up the Flag_orbits data structure
+// and computes the flag orbits.
 {
 	int f_v = (verbose_level >= 1);
 	int arc_idx;
@@ -277,7 +303,8 @@ void surfaces_arc_lifting::downstep(
 			cout << "surfaces_arc_lifting::downstep "
 					"before Table_orbits_on_pairs[" << arc_idx << "].init" << endl;
 		}
-		Table_orbits_on_pairs[arc_idx].init(this, arc_idx,
+		Table_orbits_on_pairs[arc_idx].init(
+				this, arc_idx,
 				A3,
 				verbose_level - 2);
 
@@ -465,7 +492,8 @@ void surfaces_arc_lifting::downstep(
 
 void surfaces_arc_lifting::downstep_one_arc(
 		int arc_idx,
-		int &cur_flag_orbit, long int *Flag, int verbose_level)
+		int &cur_flag_orbit, long int *Flag,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -657,7 +685,8 @@ void surfaces_arc_lifting::downstep_one_arc(
 
 			P0 = Arc6[p0];
 			P1 = Arc6[p1];
-			Gg.rearrange_arc_for_lifting(Arc6,
+			Gg.rearrange_arc_for_lifting(
+					Arc6,
 					P0, P1, partition_rk, Arc6_rearranged,
 					verbose_level - 2);
 			if (f_v) {
@@ -667,7 +696,8 @@ void surfaces_arc_lifting::downstep_one_arc(
 				cout << endl;
 			}
 
-			Gg.find_two_lines_for_arc_lifting(Surf->P,
+			Gg.find_two_lines_for_arc_lifting(
+					Surf->P,
 					P0, P1, line1, line2,
 					verbose_level - 2);
 			if (f_v) {

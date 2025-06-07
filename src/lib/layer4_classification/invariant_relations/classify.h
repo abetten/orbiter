@@ -123,6 +123,8 @@ public:
 					void *data, int verbose_level),
 			void *free_received_trace_data,
 			int verbose_level);
+	long int *get_rep(
+			int f);
 	int find_node_by_po_so(
 			int po, int so, int &idx,
 		int verbose_level);

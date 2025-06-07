@@ -55,28 +55,28 @@ void plot_tools::draw_density(
 
 	if (f_v) {
 		cout << "plot_tools::draw_density" << endl;
-		}
+	}
 
 	set = NEW_int(set_size);
 	for (i = 0; i < set_size; i++) {
 		set[i] = the_set[i];
-		}
+	}
 	
 	if (f_vv) {
 		cout << "plot_tools::draw_density read the "
 				"following " << set_size << " numbers:" << endl;
 		for (i = 0; i < set_size; i++) {
 			cout << the_set[i] << endl;
-			}
 		}
+	}
 
 	Sorting.int_vec_heapsort(set, set_size);
 	if (f_vv) {
 		cout << "plot_tools::draw_density after sorting:" << endl;
 		for (i = 0; i < set_size; i++) {
 			cout << set[i] << endl;
-			}
 		}
+	}
 	
 	outline_value = NEW_int(set_size);
 	outline_number = NEW_int(set_size);
@@ -90,15 +90,15 @@ void plot_tools::draw_density(
 			outline_sz++;
 			prev = set[i];
 			//prev_start = i;
-			}
 		}
+	}
 	if (f_vv) {
 		cout << "plot_tools::draw_density "
 				"outline of size " << outline_sz << ":" << endl;
 		for (i = 0; i < outline_sz; i++) {
 			cout << outline_value[i] << " " << outline_number[i] << endl;
-			}
 		}
+	}
 
 
 	fname_full = prefix  + "_" + std::to_string(no) + ".mp";
@@ -118,7 +118,7 @@ void plot_tools::draw_density(
 		G.out_ymax() = ymax;
 		if (f_vv) {
 			cout << "xmax/ymax = " << xmax << " / " << ymax << endl;
-			}
+		}
 #endif
 
 		G.header();
@@ -142,7 +142,7 @@ void plot_tools::draw_density(
 	if (f_v) {
 		cout << "plot_tools::draw_density written file " << fname_full
 				<< " of size " << Fio.file_size(fname_full) << endl;
-		}
+	}
 	FREE_int(set);
 	
 }
@@ -209,21 +209,21 @@ void plot_tools::draw_density_multiple_curves(
 				outline_sz[curve]++;
 				prev = Data2[curve][i];
 				//prev_start = i;
-				}
 			}
+		}
 		if (f_v5) {
 			cout << "plot_tools::draw_density_multiple_curves outline "
 					"of size " << outline_sz[curve] << ":" << endl;
 			for (i = 0; i < outline_sz[curve]; i++) {
 				cout << outline_value[curve][i] << " "
 						<< outline_number[curve][i] << endl;
-				}
+			}
 
 
 
 		
-			}
 		}
+	}
 
 
 	fname_full = prefix + "_" + std::to_string(no) + ".mp";
@@ -244,7 +244,7 @@ void plot_tools::draw_density_multiple_curves(
 		G.out_ymax() = ymax;
 		if (f_v5) {
 			cout << "xmax/ymax = " << xmax << " / " << ymax << endl;
-			}
+		}
 #endif
 
 		G.header();
@@ -268,12 +268,12 @@ void plot_tools::draw_density_multiple_curves(
 	if (f_v) {
 		cout << "plot_tools::draw_density written file " << fname_full
 				<< " of size " << Fio.file_size(fname_full) << endl;
-		}
+	}
 	for (curve = 0; curve < nb_data_sets; curve++) {
 		FREE_int(Data2[curve]);
 		FREE_int(outline_value[curve]);
 		FREE_int(outline_number[curve]);
-		}
+	}
 	FREE_pint(Data2);
 	FREE_pint(outline_value);
 	FREE_pint(outline_number);
@@ -289,7 +289,7 @@ void plot_tools::get_coord(
 	Px[idx] = (int)(1000 * (double)(x - min_x) / (double)(max_x - min_x));
 	if (f_switch_x) {
 		Px[idx] = 1000 - Px[idx];
-		}
+	}
 	Py[idx] = (int)(1000 * (double)(y - min_y) / (double)(max_y - min_y));
 }
 
@@ -301,7 +301,7 @@ void plot_tools::get_coord_log(
 	Px[idx] = (int)(1000 * (double)(x - min_x) / (double)(max_x - min_x));
 	if (f_switch_x) {
 		Px[idx] = 1000 - Px[idx];
-		}
+	}
 	Py[idx] = (int)(1000 * log((double)(y - min_y + 1)) /  
 		((double)log(max_y - min_y + 1)));
 }
@@ -322,31 +322,31 @@ void plot_tools::y_to_pt_on_curve(
 		y = outline_value[idx];
 		if (f_v) {
 			cout << "y-value " << y_in << " found at " << x << endl;
-			}
 		}
+	}
 	else {
 		if (f_v) {
 			cout << "y-value " << y_in << " not found" << endl;
-			}
+		}
 		x = outline_number[idx];
 		y = outline_value[idx];
 		if (f_v) {
 			cout << "x1=" << x << " y1=" << outline_value[idx] << endl;
-			}
+		}
 		if (idx - 1 >= 0) {
 			x = outline_number[idx - 1];
 			if (f_v) {
 				cout << "x2=" << x << " y2=" << outline_value[idx - 1] << endl;
-				}
+			}
 			x = outline_number[idx - 1];
 			y = y_in;
-			}
+		}
 		else {
 			if (f_v) {
 				cout << "at the bottom" << endl;
-				}
 			}
 		}
+	}
 
 }
 
@@ -385,7 +385,7 @@ void plot_tools::projective_plane_draw_grid(
 		G.out_ymax() = O->yout;
 		if (f_v) {
 			cout << "plot_tools::projective_plane_draw_grid" << endl;
-			}
+		}
 #endif
 
 		G.header();
@@ -394,11 +394,14 @@ void plot_tools::projective_plane_draw_grid(
 		if (f_v) {
 			cout << "plot_tools::projective_plane_draw_grid "
 					"before projective_plane_draw_grid2" << endl;
-			}
-		G.projective_plane_draw_grid2(O,
+		}
+
+		G.projective_plane_draw_grid2(
+				O,
 				q, Table, nb,
 				f_point_labels, Point_labels,
 				verbose_level - 1);
+
 		if (f_v) {
 			cout << "plot_tools::projective_plane_draw_grid "
 					"after projective_plane_draw_grid2" << endl;
@@ -414,14 +417,15 @@ void plot_tools::projective_plane_draw_grid(
 			<< Fio.file_size(fname_full) << endl;
 	if (f_v) {
 		cout << "plot_tools::projective_plane_draw_grid done" << endl;
-		}
+	}
 	
 }
 
 
 
-void plot_tools::draw_mod_n(
+void plot_tools::draw_something(
 		draw_mod_n_description *Descr,
+		std::string &options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -429,7 +433,7 @@ void plot_tools::draw_mod_n(
 	string fname_full;
 
 	if (f_v) {
-		cout << "plot_tools::draw_mod_n" << endl;
+		cout << "plot_tools::draw_something" << endl;
 	}
 
 	graphics::layered_graph_draw_options *O;
@@ -450,6 +454,86 @@ void plot_tools::draw_mod_n(
 	fname_full = Descr->fname + "_draw.mp";
 
 
+
+	std::map<std::string, std::string> symbol_table;
+
+	other::data_structures::string_tools ST;
+
+	int f_mod_n = false;
+	int f_desargues = false;
+
+	if (options.length()) {
+
+		ST.parse_value_pairs(symbol_table,
+				options, verbose_level - 1);
+
+		if (f_v) {
+			cout << "plot_tools::draw_something parsing option pairs" << endl;
+		}
+
+
+
+		{
+			std::map<std::string, std::string>::iterator it = symbol_table.begin();
+
+
+			// Iterate through the map and print the elements
+			while (it != symbol_table.end()) {
+				string label;
+				string val;
+
+				label = it->first;
+				val = it->second;
+				if (f_v) {
+					cout << "plot_tools::draw_something key = " << label << " value = " << val << endl;
+				}
+				//std::cout << "Key: " << it->first << ", Value: " << it->second << std::endl;
+				//assignment.insert(std::make_pair(label, a));
+				if (label == "mod_n" /*ST.stringcmp(label, "dense") == 0*/) {
+					if (val == "on" /*ST.stringcmp(val, "on") == 0*/) {
+						f_mod_n = true;
+						if (f_v) {
+							cout << "plot_tools::draw_something f_mod_n = true" << endl;
+						}
+					}
+					else {
+						cout << "plot_tools::draw_something unknown value of option "
+								<< label << " value " << val << endl;
+						exit(1);
+					}
+					if (f_v) {
+						cout << "plot_tools::draw_something f_mod_n = true" << endl;
+					}
+				}
+				else if (label == "desargues" /*ST.stringcmp(label, "dense") == 0*/) {
+					if (val == "on" /*ST.stringcmp(val, "on") == 0*/) {
+						f_desargues = true;
+						if (f_v) {
+							cout << "plot_tools::draw_something f_desargues = true" << endl;
+						}
+					}
+					else {
+						cout << "plot_tools::draw_something unknown value of option "
+								<< label << " value " << val << endl;
+						exit(1);
+					}
+					if (f_v) {
+						cout << "plot_tools::draw_something f_desargues = true" << endl;
+					}
+				}
+
+				else {
+					cout << "plot_tools::draw_something unknown option "
+							<< label << " with value " << val << endl;
+					exit(1);
+				}
+				++it;
+			}
+		}
+	}
+
+
+
 	{
 		mp_graphics G;
 
@@ -460,17 +544,40 @@ void plot_tools::draw_mod_n(
 
 
 
-		if (f_v) {
-			cout << "plot_tools::draw_mod_n "
-					"before draw_mod_n_work" << endl;
+		if (f_mod_n) {
+			if (f_v) {
+				cout << "plot_tools::draw_something "
+						"before draw_mod_n_work" << endl;
+			}
+			draw_mod_n_work(
+					G,
+					O,
+					Descr,
+					verbose_level);
+			if (f_v) {
+				cout << "plot_tools::draw_something "
+						"after draw_mod_n_work" << endl;
+			}
 		}
-		draw_mod_n_work(G,
-				O,
-				Descr,
-				verbose_level);
-		if (f_v) {
-			cout << "plot_tools::draw_mod_n "
-					"after draw_mod_n_work" << endl;
+		else if (f_desargues) {
+			if (f_v) {
+				cout << "plot_tools::draw_something "
+						"before draw_desargues" << endl;
+			}
+			draw_desargues(
+					G,
+					O,
+					Descr,
+					verbose_level);
+			if (f_v) {
+				cout << "plot_tools::draw_something "
+						"after draw_desargues" << endl;
+			}
+
+		}
+		else {
+			cout << "plot_tools::draw_something please specify options" << endl;
+			exit(1);
 		}
 
 		double move_out = 0.01;
@@ -486,13 +593,17 @@ void plot_tools::draw_mod_n(
 	}
 	orbiter_kernel_system::file_io Fio;
 
-	cout << "written file " << fname_full << " of size "
-			<< Fio.file_size(fname_full) << endl;
 	if (f_v) {
-		cout << "plot_tools::draw_mod_n done" << endl;
+		cout << "written file " << fname_full << " of size "
+				<< Fio.file_size(fname_full) << endl;
+	}
+
+	if (f_v) {
+		cout << "plot_tools::draw_something done" << endl;
 	}
 
 }
+
 
 
 #ifndef M_PI
@@ -882,6 +993,264 @@ void plot_tools::draw_mod_n_work(
 
 }
 
+
+void plot_tools::draw_desargues(
+		mp_graphics &G,
+		layered_graph_draw_options *O,
+		draw_mod_n_description *Descr,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	double *Dx, *Dy;
+	int *Px, *Py;
+	double x_stretch = 1.;
+	double y_stretch = 1.;
+	int dx = O->xin * 0.25;
+	int dy = O->yin * 0.25; // stretch factor
+	int N = 1000;
+	int i;
+	double start_angle = 0;
+	orbiter_kernel_system::numerics Num;
+
+
+	//int n = Descr->n;
+	int n;
+
+	n = 40;
+
+	if (f_v) {
+		cout << "plot_tools::draw_desargues n=" << n << endl;
+	}
+
+
+	G.sl_thickness(100);
+	//G.sf_color(1);
+	//G.sf_interior(10);
+	Px = new int[N];
+	Py = new int[N];
+	Dx = new double[N];
+	Dy = new double[N];
+
+	int M, N0;
+
+	N0 = 4 * n;
+	M = N0 + n;
+
+	for (i = 0; i < n; i++) {
+		Num.on_circle_double(Dx, Dy, i, start_angle + i * 360. / (double) n, 1.0);
+	}
+
+
+
+	for (i = 0; i < n; i++) {
+		cout << "i=" << i << " Dx=" << Dx[i] << " Dy=" << Dy[i] << endl;
+	}
+
+	for (i = 0; i < M; i++) {
+		Px[i] = Dx[i] * dx * x_stretch;
+		Py[i] = Dy[i] * dy * y_stretch;
+	}
+
+	// big circle:
+	//G.circle(Px[n], Py[n], (int) dx * x_stretch);
+
+
+	int n0, n1, n2, n3, n4, n5, n6, n7, n8, n9;
+
+	n0 = 10;
+	n1 = n0 + n / 2 - 5;
+	n2 = n0 + n / 2 + 1;
+	n3 = n0 + n / 2 + 5;
+
+	n4 = n;
+	n5 = n + 1;
+	n6 = n + 2;
+	n7 = n + 4;
+	n8 = n + 5;
+	n9 = n + 6;
+
+
+	orbiter_kernel_system::numerics Numerics;
+
+	double f1 = 0.35;
+	double f2 = 0.7;
+	double f3 = 0.6;
+
+	if (f_v) {
+		cout << "plot_tools::draw_desargues before Numerics.affine_pt1" << endl;
+	}
+	Numerics.affine_pt1(
+			Px, Py,
+			n0, n0, n1, f1, n4);
+	Numerics.affine_pt1(
+			Px, Py,
+			n0, n0, n2, f2, n5);
+	Numerics.affine_pt1(
+			Px, Py,
+			n0, n0, n3, f3, n6);
+
+	if (f_v) {
+		cout << "plot_tools::draw_desargues before G.circle_with_array" << endl;
+	}
+
+
+	double a1, b1, c1;
+	double a2, b2, c2;
+
+	double x, y;
+
+
+	// compute point 7:
+
+	Numerics.line_through_points(
+			Px[n1], Py[n1],
+			Px[n2], Py[n2],
+			a1, b1, c1);
+
+	Numerics.line_through_points(
+			Px[n4], Py[n4],
+			Px[n5], Py[n5],
+			a2, b2, c2);
+
+	Numerics.intersection_of_lines(
+			a1, b1, c1,
+			a2, b2, c2,
+			x, y);
+
+	Px[n7] = x;
+	Py[n7] = y;
+
+
+	// compute point 8:
+
+	Numerics.line_through_points(
+			Px[n1], Py[n1],
+			Px[n3], Py[n3],
+			a1, b1, c1);
+
+	Numerics.line_through_points(
+			Px[n4], Py[n4],
+			Px[n6], Py[n6],
+			a2, b2, c2);
+
+	Numerics.intersection_of_lines(
+			a1, b1, c1,
+			a2, b2, c2,
+			x, y);
+
+	Px[n8] = x;
+	Py[n8] = y;
+
+	// compute point 9:
+
+	Numerics.line_through_points(
+			Px[n2], Py[n2],
+			Px[n3], Py[n3],
+			a1, b1, c1);
+
+	Numerics.line_through_points(
+			Px[n5], Py[n5],
+			Px[n6], Py[n6],
+			a2, b2, c2);
+
+	Numerics.intersection_of_lines(
+			a1, b1, c1,
+			a2, b2, c2,
+			x, y);
+
+	Px[n9] = x;
+	Py[n9] = y;
+
+
+
+
+
+	int Idx[3];
+
+	Idx[0] = n1;
+	Idx[1] = n2;
+	Idx[2] = n3;
+
+	//int fill_color = 1; // black
+	int fill_color = 2; // red
+	//int fill_color = 3; //
+
+	G.sf_color(fill_color);
+	G.sf_interior(100);
+
+	G.fill_idx(
+			Px, Py, Idx, 3,
+			"", true /* f_cycle*/);
+
+
+	Idx[0] = n4;
+	Idx[1] = n5;
+	Idx[2] = n6;
+
+	fill_color = 4; // 4 = blue
+
+	G.sf_color(fill_color);
+	G.sf_interior(100);
+
+	G.fill_idx(
+			Px, Py, Idx, 3,
+			"", true /* f_cycle*/);
+
+
+
+	G.polygon2(Px, Py, n0, n1);
+	G.polygon2(Px, Py, n0, n2);
+	G.polygon2(Px, Py, n0, n3);
+
+
+	G.polygon2(Px, Py, n8, n9);
+
+	G.polygon2(Px, Py, n4, n8);
+	G.polygon2(Px, Py, n1, n8);
+
+	G.polygon2(Px, Py, n1, n7);
+	G.polygon2(Px, Py, n4, n7);
+
+	G.polygon2(Px, Py, n3, n9);
+	G.polygon2(Px, Py, n6, n9);
+
+	string s0, s1, s2, s3, s4, s5, s6, s7, s8, s9;
+
+	s0 = "0";
+	s1 = "1";
+	s2 = "2";
+	s3 = "3";
+	s4 = "4";
+	s5 = "5";
+	s6 = "6";
+	s7 = "7";
+	s8 = "8";
+	s9 = "9";
+
+
+	G.sf_color(0 /*fill_color*/);
+
+	G.circle_text_array(Px, Py, n0, O->rad, s0);
+	G.circle_text_array(Px, Py, n1, O->rad, s1);
+	G.circle_text_array(Px, Py, n2, O->rad, s2);
+	G.circle_text_array(Px, Py, n3, O->rad, s3);
+	G.circle_text_array(Px, Py, n4, O->rad, s4);
+	G.circle_text_array(Px, Py, n5, O->rad, s5);
+	G.circle_text_array(Px, Py, n6, O->rad, s6);
+
+	G.circle_text_array(Px, Py, n7, O->rad, s7);
+	G.circle_text_array(Px, Py, n8, O->rad, s8);
+	G.circle_text_array(Px, Py, n9, O->rad, s9);
+
+
+	if (f_v) {
+		cout << "plot_tools::draw_desargues after G.circle_with_array" << endl;
+	}
+
+}
+
+
+
 void plot_tools::draw_point_set_in_plane(
 	std::string &fname,
 	layered_graph_draw_options *O,
@@ -917,7 +1286,8 @@ void plot_tools::draw_point_set_in_plane(
 			cout << "plot_tools::draw_point_set_in_plane "
 					"before projective_plane_draw_grid" << endl;
 		}
-		projective_plane_draw_grid(fname, O,
+		projective_plane_draw_grid(
+				fname, O,
 			q, Table, nb_pts, true, Labels,
 			verbose_level - 1);
 		if (f_v) {

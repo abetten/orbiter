@@ -331,6 +331,8 @@ public:
 class draw_projective_curve_description {
 public:
 
+	// ToDo: undocumented
+
 	int f_number;
 	int number;
 
@@ -905,10 +907,14 @@ public:
 			std::string &s);
 	void text(
 			int x, int y, std::string &s);
+	void circle_with_array(
+			int *Px, int *Py, int idx, int rad);
 	void circle(
 			int x, int y, int rad);
 	void circle_text(
 			int x, int y, int rad, std::string &s);
+	void circle_text_array(
+			int *Px, int *Py, int idx, int rad, std::string &s);
 	void polygon_idx2(
 			int *Px, int *Py, int *Idx, int n,
 			int f_cycle);
@@ -1247,10 +1253,16 @@ public:
 			int q, int *Table, int nb,
 			int f_point_labels, std::string *Point_labels,
 			int verbose_level);
-	void draw_mod_n(
+	void draw_something(
 			draw_mod_n_description *Descr,
+			std::string &options,
 			int verbose_level);
 	void draw_mod_n_work(
+			mp_graphics &G,
+			layered_graph_draw_options *O,
+			draw_mod_n_description *Descr,
+			int verbose_level);
+	void draw_desargues(
 			mp_graphics &G,
 			layered_graph_draw_options *O,
 			draw_mod_n_description *Descr,

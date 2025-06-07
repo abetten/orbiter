@@ -255,10 +255,12 @@ void permutations::perm_print_product_action(
 {
 	//cout << "perm_print_product_action" << endl;
 	ost << "(";
-	perm_print_offset(ost, a, m, offset, false,
+	perm_print_offset(
+			ost, a, m, offset, false,
 			f_cycle_length, false, 0, false, NULL, NULL);
 	ost << "; ";
-	perm_print_offset(ost, a + m, m_plus_n - m,
+	perm_print_offset(
+			ost, a + m, m_plus_n - m,
 			offset + m, false, f_cycle_length, false, 0, false, NULL, NULL);
 	ost << ")";
 	//cout << "perm_print_product_action done" << endl;
@@ -267,7 +269,8 @@ void permutations::perm_print_product_action(
 void permutations::perm_print(
 		std::ostream &ost, int *a, int n)
 {
-	perm_print_offset(ost, a, n, 0,
+	perm_print_offset(
+			ost, a, n, 0,
 			true, //f_print_cycles_of_length_one
 			false, false, 0, false, NULL, NULL);
 }
@@ -277,7 +280,8 @@ std::string permutations::stringify(
 {
 	string s;
 
-	s += perm_stringify_offset(a, n, 0,
+	s += perm_stringify_offset(
+			a, n, 0,
 			true, //f_print_cycles_of_length_one
 			false, false, 0, false, NULL, NULL);
 	return s;
@@ -288,7 +292,8 @@ void permutations::perm_print_with_point_labels(
 		int *a, int n,
 		std::string *Point_labels, void *data)
 {
-	perm_print_offset(ost, a, n, 0,
+	perm_print_offset(
+			ost, a, n, 0,
 			false, false, false, 0, false,
 			Point_labels, data);
 }
@@ -296,14 +301,16 @@ void permutations::perm_print_with_point_labels(
 void permutations::perm_print_with_cycle_length(
 		std::ostream &ost, int *a, int n)
 {
-	perm_print_offset(ost, a, n, 0,
+	perm_print_offset(
+			ost, a, n, 0,
 			false, true, false, 0, true, NULL, NULL);
 }
 
 void permutations::perm_print_counting_from_one(
 		ostream &ost, int *a, int n)
 {
-	perm_print_offset(ost, a, n, 1,
+	perm_print_offset(
+			ost, a, n, 1,
 			false, false, false, 0, false, NULL, NULL);
 }
 

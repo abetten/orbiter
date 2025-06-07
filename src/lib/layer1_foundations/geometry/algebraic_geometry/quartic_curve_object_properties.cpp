@@ -334,7 +334,8 @@ void quartic_curve_object_properties::print_equation(
 
 
 	int eqn15[15];
-	Int_vec_copy(QO->eqn15, eqn15, 15);
+	//Int_vec_copy(QO->eqn15, eqn15, 15);
+	Int_vec_copy(QO->Variety_object->eqn, eqn15, 15);
 
 	QO->Dom->F->Projective_space_basic->PG_element_normalize_from_front(
 			eqn15, 1, 15);
@@ -421,7 +422,7 @@ void quartic_curve_object_properties::print_general(
 	ost << "\\hline" << endl;
 	ost << "\\mbox{Number of bitangents} & " << nb_bitangents << "\\\\" << endl;
 	ost << "\\hline" << endl;
-	ost << "\\mbox{Number of points} & " << QO->nb_pts << "\\\\" << endl;
+	ost << "\\mbox{Number of points} & " << QO->get_nb_points() << "\\\\" << endl;
 	ost << "\\hline" << endl;
 
 	if (Kovalevski) {
@@ -463,9 +464,9 @@ void quartic_curve_object_properties::print_all_points(
 	//int v[4];
 
 	//ost << "\\clearpage" << endl;
-	ost << "The quartic has " << QO->nb_pts << " points:\\\\" << endl;
+	ost << "The quartic has " << QO->get_nb_points() << " points:\\\\" << endl;
 
-	if (QO->nb_pts < 1000) {
+	if (QO->get_nb_points() < 1000) {
 		//ost << "$$" << endl;
 		//L.lint_vec_print_as_matrix(ost, SO->Pts, SO->nb_pts, 10, true /* f_tex */);
 		//ost << "$$" << endl;
@@ -476,15 +477,15 @@ void quartic_curve_object_properties::print_all_points(
 		int i;
 		int v[3];
 
-		for (i = 0; i < QO->nb_pts; i++) {
-			QO->Dom->unrank_point(v, QO->Pts[i]);
-			ost << i << " : $P_{" << QO->Pts[i] << "}=";
+		for (i = 0; i < QO->get_nb_points(); i++) {
+			QO->Dom->unrank_point(v, QO->get_point(i));
+			ost << i << " : $P_{" << QO->get_point(i) << "}=";
 			Int_vec_print_fully(ost, v, 3);
 			ost << "$\\\\" << endl;
 		}
 		ost << "\\end{multicols}" << endl;
 		ost << "The points by rank are: " << endl;
-		Lint_vec_print_fully(ost, QO->Pts, QO->nb_pts);
+		Lint_vec_print_fully(ost, QO->get_points(), QO->get_nb_points());
 		ost << "\\\\" << endl;
 
 
@@ -506,7 +507,7 @@ void quartic_curve_object_properties::print_bitangents(
 {
 	if (QO->f_has_bitangents) {
 		ost << "\\subsection*{The 28 Bitangents}" << endl;
-		QO->Dom->print_lines_tex(ost, QO->bitangents28, 28);
+		QO->Dom->print_lines_tex(ost, QO->get_lines(), QO->get_nb_lines());
 
 		ost << "Curve Points on Bitangents:\\\\" << endl;
 		Kovalevski->pts_on_lines->print_table_tex(ost);
@@ -605,8 +606,13 @@ void quartic_curve_object_properties::compute_gradient(
 				"before QO->Dom->compute_gradient" << endl;
 	}
 
+	if (QO->Variety_object == NULL) {
+		cout << "quartic_curve_object_properties::compute_gradient "
+				"QO->Variety_object == NULL" << endl;
+		exit(1);
+	}
 	QO->Dom->compute_gradient(
-			QO->eqn15, gradient, verbose_level);
+			QO->Variety_object->eqn, gradient, verbose_level);
 
 	if (f_v) {
 		cout << "quartic_curve_object_properties::compute_gradient done" << endl;
@@ -646,15 +652,15 @@ void quartic_curve_object_properties::compute_singular_points_and_tangent_lines(
 	nb_singular_pts = 0;
 	nb_non_singular_pts = 0;
 
-	singular_pts = NEW_lint(QO->nb_pts);
-	tangent_line_rank_global = NEW_lint(QO->nb_pts);
-	tangent_line_rank_dual = NEW_lint(QO->nb_pts);
-	for (h = 0; h < QO->nb_pts; h++) {
+	singular_pts = NEW_lint(QO->get_nb_points());
+	tangent_line_rank_global = NEW_lint(QO->get_nb_points());
+	tangent_line_rank_dual = NEW_lint(QO->get_nb_points());
+	for (h = 0; h < QO->get_nb_points(); h++) {
 		if (f_vv) {
 			cout << "quartic_curve_object_properties::compute_singular_points_and_tangent_lines "
-					"h=" << h << " / " << QO->nb_pts << endl;
+					"h=" << h << " / " << QO->get_nb_points() << endl;
 		}
-		rk = QO->Pts[h];
+		rk = QO->get_point(h);
 		if (f_vv) {
 			cout << "quartic_curve_object_properties::compute_singular_points_and_tangent_lines "
 					"rk=" << rk << endl;
@@ -718,7 +724,8 @@ void quartic_curve_object_properties::compute_singular_points_and_tangent_lines(
 			tangent_line_rank_dual, nb_tangent_lines);
 
 	if (f_v) {
-		cout << "quartic_curve_object_properties::compute_singular_points_and_tangent_lines nb_tangent_lines " << nb_tangent_lines << endl;
+		cout << "quartic_curve_object_properties::compute_singular_points_and_tangent_lines "
+				"nb_tangent_lines " << nb_tangent_lines << endl;
 	}
 
 #if 0

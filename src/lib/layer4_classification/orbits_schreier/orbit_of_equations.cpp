@@ -115,7 +115,7 @@ void orbit_of_equations::init(
 	}
 	compute_orbit(
 			coeff_in,
-			0 /* verbose_level */);
+			verbose_level - 2);
 	if (f_v) {
 		cout << "orbit_of_equations::init "
 				"after compute_orbit" << endl;
@@ -135,6 +135,7 @@ void orbit_of_equations::init(
 void orbit_of_equations::map_an_equation(
 		int *object_in, int *object_out,
 	int *Elt, int verbose_level)
+// The output equation is left-normalized
 {
 	int f_v = (verbose_level >= 1);
 
@@ -382,6 +383,10 @@ void orbit_of_equations::compute_orbit(
 					}
 
 				}
+
+				// we will insert the new equation
+				// at position idx into the array of equations:
+
 				for (i = used_length; i > idx; i--) {
 					Equations[i] = Equations[i - 1];
 				}
@@ -391,7 +396,9 @@ void orbit_of_equations::compute_orbit(
 				for (i = used_length; i > idx; i--) {
 					label[i] = label[i - 1];
 				}
+
 				Equations[idx] = NEW_int(sz);
+
 				prev[idx] = cur;
 				label[idx] = j;
 
@@ -403,6 +410,10 @@ void orbit_of_equations::compute_orbit(
 				if (cur >= idx) {
 					cur++;
 				}
+
+				// update the arrays prev[] and Q[] because the
+				// indexing has changed:
+
 				for (i = 0; i < used_length + 1; i++) {
 					if (prev[i] >= 0 && prev[i] >= idx) {
 						prev[i]++;
@@ -413,12 +424,16 @@ void orbit_of_equations::compute_orbit(
 						Q[i]++;
 					}
 				}
+
 				used_length++;
 				if ((used_length % 10000) == 0) {
 					cout << "orbit_of_equations::compute_orbit  "
 							<< used_length << endl;
 				}
+
+				// add the new equation to the queue:
 				Q[Q_len++] = idx;
+
 				if (f_vvv) {
 					cout << "orbit_of_equations::compute_orbit  "
 							"storing new equation at position "
@@ -567,7 +582,9 @@ void orbit_of_equations::get_transporter(
 		l = label[idx1];
 		if (f_v) {
 			cout << "orbit_of_equations::get_transporter "
-					"at idx1 = " << idx1 << " idx0 = " << idx0 << " l=" << l << endl;
+					"at idx1 = " << idx1
+					<< " idx0 = " << idx0
+					<< " l=" << l << endl;
 		}
 
 		A->Group_element->element_mult(
@@ -666,6 +683,7 @@ void orbit_of_equations::get_random_schreier_generator(
 	map_an_equation(
 			cur_object, new_object, E5,
 			0 /* verbose_level*/);
+
 	if (search_data(new_object, pt3, false)) {
 		if (f_vv) {
 			cout << "testing: new object is at position " << pt3 << endl;
@@ -695,6 +713,7 @@ void orbit_of_equations::get_random_schreier_generator(
 	FREE_int(E5);
 	FREE_int(cur_object);
 	FREE_int(new_object);
+
 	if (f_v) {
 		cout << "orbit_of_equations::get_random_schreier_generator "
 				"done" << endl;
@@ -709,13 +728,17 @@ void orbit_of_equations::get_canonical_form(
 			algebra::ring_theory::longinteger_object
 			&full_group_order,
 		int verbose_level)
+
+// the canonical equation is the equation at index 0.
+// transporter_to_canonical_form is an element which maps the root node to the canonical equation.
 {
 	int f_v = (verbose_level >= 1);
 	int idx = 0;
 
 	if (f_v) {
 		cout << "orbit_of_equations::get_canonical_form" << endl;
-		cout << "orbit_of_equations::get_canonical_form verbose_level = " << verbose_level << endl;
+		cout << "orbit_of_equations::get_canonical_form "
+				"verbose_level = " << verbose_level << endl;
 	}
 
 	Int_vec_copy(
@@ -918,6 +941,85 @@ void orbit_of_equations::stabilizer_orbit_rep_work(
 	FREE_int(residue);
 	if (f_v) {
 		cout << "orbit_of_equations::stabilizer_orbit_rep_work finished" << endl;
+	}
+}
+
+void orbit_of_equations::get_transporter_from_a_to_b(
+		int idx_a, int idx_b,
+		int *Elt,
+		int verbose_level)
+// Elt is a group element which maps the object
+// at idx_a to the object at idx_b
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbit_of_equations::get_transporter_from_a_to_b" << endl;
+	}
+	int *transporter_a;
+	int *transporter_b;
+	int *transporter_a_inv;
+
+	transporter_a = NEW_int(A->elt_size_in_int);
+	transporter_b = NEW_int(A->elt_size_in_int);
+	transporter_a_inv = NEW_int(A->elt_size_in_int);
+
+	if (f_v) {
+		cout << "orbit_of_equations::stabilizer_any_point "
+				"before get_transporter(idx_a)" << endl;
+	}
+	get_transporter(
+			idx_a,
+			transporter_a,
+			0 /* verbose_level */);
+	// transporter_a is an element which maps
+	// the orbit representative to the given object at idx_a.
+	if (f_v) {
+		cout << "orbit_of_equations::stabilizer_any_point "
+				"after get_transporter(idx_a)" << endl;
+	}
+	if (f_v) {
+		cout << "orbit_of_equations::stabilizer_any_point "
+				"before A->Group_element->element_invert" << endl;
+	}
+	A->Group_element->element_invert(
+			transporter_a, transporter_a_inv, 0);
+	if (f_v) {
+		cout << "orbit_of_equations::stabilizer_any_point "
+				"after A->Group_element->element_invert" << endl;
+	}
+	if (f_v) {
+		cout << "orbit_of_equations::stabilizer_any_point "
+				"before get_transporter(idx_a)" << endl;
+	}
+	get_transporter(
+			idx_b,
+			transporter_b,
+			0 /* verbose_level */);
+	// transporter_b is an element which maps
+	// the orbit representative to the given object at idx_b.
+	if (f_v) {
+		cout << "orbit_of_equations::stabilizer_any_point "
+				"after get_transporter(idx_b)" << endl;
+	}
+	if (f_v) {
+		cout << "orbit_of_equations::stabilizer_any_point "
+				"before A->Group_element->element_invert" << endl;
+	}
+	A->Group_element->element_mult(
+			transporter_a_inv, transporter_b, Elt,
+			0);
+	if (f_v) {
+		cout << "orbit_of_equations::stabilizer_any_point "
+				"after A->Group_element->element_invert" << endl;
+	}
+
+	FREE_int(transporter_a);
+	FREE_int(transporter_b);
+	FREE_int(transporter_a_inv);
+
+	if (f_v) {
+		cout << "orbit_of_equations::get_transporter_from_a_to_b done" << endl;
 	}
 }
 

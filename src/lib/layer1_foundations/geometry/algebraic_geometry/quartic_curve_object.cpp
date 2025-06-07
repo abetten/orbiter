@@ -29,7 +29,7 @@ quartic_curve_object::quartic_curve_object()
 
 	//std::string eqn_txt;
 
-
+#if 0
 	Pts = NULL;
 	nb_pts = 0;
 
@@ -38,6 +38,14 @@ quartic_curve_object::quartic_curve_object()
 
 	f_has_bitangents = false;
 	//bitangents28[28]
+#else
+
+	Variety_object = NULL;
+
+	f_has_bitangents = false;
+
+#endif
+
 
 	QP = NULL;
 
@@ -52,9 +60,15 @@ quartic_curve_object::~quartic_curve_object()
 	if (f_v) {
 		cout << "quartic_curve_object::~quartic_curve_object" << endl;
 	}
+#if 0
 	if (Pts) {
 		FREE_lint(Pts);
 	}
+#else
+	if (Variety_object) {
+		FREE_OBJECT(Variety_object);
+	}
+#endif
 	if (QP) {
 		FREE_OBJECT(QP);
 	}
@@ -179,6 +193,7 @@ void quartic_curve_object::init_from_string(
 }
 #endif
 
+#if 0
 void quartic_curve_object::allocate_points(
 		int nb_pts,
 		int verbose_level)
@@ -196,6 +211,7 @@ void quartic_curve_object::allocate_points(
 		cout << "quartic_curve_object::allocate_points done" << endl;
 	}
 }
+#endif
 
 void quartic_curve_object::init_equation_but_no_bitangents(
 		quartic_curve_domain *Dom,
@@ -217,11 +233,33 @@ void quartic_curve_object::init_equation_but_no_bitangents(
 
 	quartic_curve_object::Dom = Dom;
 
+	Variety_object = NEW_OBJECT(geometry::algebraic_geometry::variety_object);
+
+	if (f_v) {
+		cout << "quartic_curve_object::init_equation_but_no_bitangents "
+				"before Variety_object->init_equation_only" << endl;
+	}
+
+	Variety_object->init_equation_only(
+			Dom->P,
+			Dom->Poly4_3,
+			eqn15,
+			verbose_level);
+
+	if (f_v) {
+		cout << "quartic_curve_object::init_equation_but_no_bitangents "
+				"after Variety_object->init_equation_only" << endl;
+	}
+
 	f_has_bitangents = false;
-	Int_vec_copy(eqn15, quartic_curve_object::eqn15, 15);
+
+	// geometry::algebraic_geometry::variety_object *Variety_object;
+
+	//f_has_bitangents = false;
+	//Int_vec_copy(eqn15, quartic_curve_object::eqn15, 15);
 
 
-
+#if 0
 	if (f_v) {
 		cout << "quartic_curve_object::init_equation_but_no_bitangents "
 				"before enumerate_points" << endl;
@@ -231,6 +269,18 @@ void quartic_curve_object::init_equation_but_no_bitangents(
 		cout << "quartic_curve_object::init_equation_but_no_bitangents "
 				"after enumerate_points" << endl;
 	}
+#else
+	if (f_v) {
+		cout << "quartic_curve_object::init_equation_but_no_bitangents "
+				"before enumerate_points" << endl;
+	}
+	Variety_object->enumerate_points(verbose_level - 1);
+	if (f_v) {
+		cout << "quartic_curve_object::init_equation_but_no_bitangents "
+				"after enumerate_points" << endl;
+	}
+#endif
+
 
 	if (f_v) {
 		cout << "quartic_curve_object::init_equation_but_no_bitangents "
@@ -267,20 +317,55 @@ void quartic_curve_object::init_equation_and_bitangents(
 
 	quartic_curve_object::Dom = Dom;
 
-	f_has_bitangents = true;
-	Int_vec_copy(eqn15, quartic_curve_object::eqn15, 15);
-	Lint_vec_copy(bitangents28, quartic_curve_object::bitangents28, 28);
+	//f_has_bitangents = true;
+	//Int_vec_copy(eqn15, quartic_curve_object::eqn15, 15);
+	//Lint_vec_copy(bitangents28, quartic_curve_object::bitangents28, 28);
 
 
+	Variety_object = NEW_OBJECT(geometry::algebraic_geometry::variety_object);
 
 	if (f_v) {
 		cout << "quartic_curve_object::init_equation_and_bitangents "
-				"before enumerate_points" << endl;
+				"before Variety_object->init_equation_only" << endl;
 	}
-	enumerate_points(Dom->Poly4_3, 0/*verbose_level - 1*/);
+
+	Variety_object->init_equation_only(
+			Dom->P,
+			Dom->Poly4_3,
+			eqn15,
+			verbose_level);
+
 	if (f_v) {
 		cout << "quartic_curve_object::init_equation_and_bitangents "
-				"after enumerate_points" << endl;
+				"after Variety_object->init_equation_only" << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "quartic_curve_object::init_equation_and_bitangents "
+				"before Variety_object->set_lines" << endl;
+	}
+
+	Variety_object->set_lines(
+			bitangents28, 28,
+			verbose_level);
+
+	if (f_v) {
+		cout << "quartic_curve_object::init_equation_and_bitangents "
+				"after Variety_object->set_lines" << endl;
+	}
+
+	f_has_bitangents = true;
+
+	if (f_v) {
+		cout << "quartic_curve_object::init_equation_and_bitangents "
+				"before Variety_object->enumerate_points" << endl;
+	}
+	Variety_object->enumerate_points(verbose_level - 2);
+	if (f_v) {
+		cout << "quartic_curve_object::init_equation_and_bitangents "
+				"after Variety_object->enumerate_points" << endl;
 	}
 
 	if (f_v) {
@@ -328,6 +413,86 @@ void quartic_curve_object::init_equation_and_bitangents_and_compute_properties(
 	}
 }
 
+int quartic_curve_object::get_nb_points()
+{
+	if (!Variety_object) {
+		cout << "quartic_curve_object::get_nb_points !Variety_object" << endl;
+	}
+	return Variety_object->get_nb_points();
+}
+
+
+long int quartic_curve_object::get_point(
+		int idx)
+{
+	if (Variety_object == NULL) {
+		cout << "quartic_curve_object::get_point Variety_object == NULL" << endl;
+		exit(1);
+	}
+	return Variety_object->get_point(idx);
+}
+
+void quartic_curve_object::set_point(
+		int idx, long int rk)
+{
+	if (Variety_object == NULL) {
+		cout << "quartic_curve_object::set_point Variety_object == NULL" << endl;
+		exit(1);
+	}
+	return Variety_object->set_point(idx, rk);
+}
+
+
+long int *quartic_curve_object::get_points()
+{
+	if (Variety_object == NULL) {
+		cout << "quartic_curve_object::get_point Variety_object == NULL" << endl;
+		exit(1);
+	}
+	return Variety_object->get_points();
+}
+
+
+
+int quartic_curve_object::get_nb_lines()
+{
+	if (!Variety_object) {
+		cout << "quartic_curve_object::get_nb_lines !Variety_object" << endl;
+	}
+	return Variety_object->get_nb_lines();
+}
+
+
+long int quartic_curve_object::get_line(
+		int idx)
+{
+	if (Variety_object == NULL) {
+		cout << "quartic_curve_object::get_line Variety_object == NULL" << endl;
+		exit(1);
+	}
+	return Variety_object->get_line(idx);
+}
+
+void quartic_curve_object::set_line(
+		int idx, long int rk)
+{
+	if (Variety_object == NULL) {
+		cout << "quartic_curve_object::get_line Variety_object == NULL" << endl;
+		exit(1);
+	}
+	return Variety_object->set_line(idx, rk);
+}
+
+long int *quartic_curve_object::get_lines()
+{
+	if (Variety_object == NULL) {
+		cout << "quartic_curve_object::get_line Variety_object == NULL" << endl;
+		exit(1);
+	}
+	return Variety_object->get_lines();
+}
+
+
 
 
 void quartic_curve_object::enumerate_points(
@@ -340,6 +505,7 @@ void quartic_curve_object::enumerate_points(
 		cout << "quartic_curve_object::enumerate_points" << endl;
 	}
 
+#if 0
 	if (f_v) {
 		cout << "quartic_curve_object::enumerate_points before "
 				"Dom->Poly4_3->enumerate_points" << endl;
@@ -351,9 +517,23 @@ void quartic_curve_object::enumerate_points(
 		cout << "quartic_curve_object::enumerate_points after "
 				"Dom->Poly4_3->enumerate_points" << endl;
 	}
+#else
+
+	if (f_v) {
+		cout << "quartic_curve_object::enumerate_points "
+				"before Variety_object->enumerate_points" << endl;
+	}
+	Variety_object->enumerate_points(verbose_level - 2);
+	if (f_v) {
+		cout << "quartic_curve_object::enumerate_points "
+				"after Variety_object->enumerate_points" << endl;
+	}
+
+#endif
+
 	if (f_v) {
 		cout << "quartic_curve_object::enumerate_points The curve "
-				"has " << nb_pts << " points" << endl;
+				"has " << get_nb_points() << " points" << endl;
 	}
 
 
@@ -375,7 +555,15 @@ void quartic_curve_object::compute_properties(
 
 	QP = NEW_OBJECT(quartic_curve_object_properties);
 
+	if (f_v) {
+		cout << "quartic_curve_object::compute_properties "
+				"before QP->init" << endl;
+	}
 	QP->init(this, verbose_level);
+	if (f_v) {
+		cout << "quartic_curve_object::compute_properties "
+				"after QP->init" << endl;
+	}
 
 	if (f_v) {
 		cout << "quartic_curve_object::compute_properties done" << endl;
@@ -399,7 +587,15 @@ void quartic_curve_object::recompute_properties(
 
 	QP = NEW_OBJECT(quartic_curve_object_properties);
 
+	if (f_v) {
+		cout << "quartic_curve_object::recompute_properties "
+				"before QP->init" << endl;
+	}
 	QP->init(this, verbose_level);
+	if (f_v) {
+		cout << "quartic_curve_object::recompute_properties "
+				"after QP->init" << endl;
+	}
 
 
 	if (f_v) {
@@ -415,24 +611,23 @@ void quartic_curve_object::recompute_properties(
 
 
 
-
 void quartic_curve_object::identify_lines(
 		long int *lines, int nb_lines,
 	int *line_idx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, idx;
-	other::data_structures::sorting Sorting;
+	//other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "quartic_curve_object::identify_lines" << endl;
 	}
 	for (i = 0; i < nb_lines; i++) {
-		if (!Sorting.lint_vec_search_linear(
-				bitangents28, 28, lines[i], idx)) {
+		if (!find_line(lines[i], idx) /*Sorting.lint_vec_search_linear(
+				bitangents28, 28, lines[i], idx)*/ ) {
 			cout << "quartic_curve_object::identify_lines could "
 					"not find lines[" << i << "]=" << lines[i]
-					<< " in bitangents28[]" << endl;
+					<< " in the list of lines" << endl;
 			exit(1);
 		}
 		line_idx[i] = idx;
@@ -442,32 +637,47 @@ void quartic_curve_object::identify_lines(
 	}
 }
 
+int quartic_curve_object::find_line(
+		long int P, int &idx)
+{
+
+	return Variety_object->find_line(
+			P, idx);
+}
 
 
 int quartic_curve_object::find_point(
 		long int P, int &idx)
 {
+
+	return Variety_object->find_point(
+			P, idx);
+
+#if 0
+
 	other::data_structures::sorting Sorting;
 
 	if (Sorting.lint_vec_search(
-			Pts, nb_pts, P,
+			Variety_object->get_points(), Variety_object->get_nb_points(), P,
 			idx, 0 /* verbose_level */)) {
 		return true;
 	}
 	else {
 		return false;
 	}
+#endif
+
 }
 
 void quartic_curve_object::print(
 		std::ostream &ost)
 {
 	ost << " eqn=";
-	Int_vec_print(ost, eqn15, 15);
+	Int_vec_print(ost, Variety_object->eqn, 15);
 	ost << " pts=";
-	Lint_vec_print(ost, Pts, nb_pts);
+	Lint_vec_print(ost, Variety_object->get_points(), Variety_object->get_nb_points());
 	ost << " bitangents=";
-	Lint_vec_print(ost, bitangents28, 28);
+	Lint_vec_print(ost, Variety_object->get_lines(), Variety_object->get_nb_lines());
 	ost << endl;
 }
 
@@ -475,14 +685,12 @@ void quartic_curve_object::stringify(
 		std::string &s_Eqn, std::string &s_Pts, std::string &s_Bitangents)
 {
 	s_Eqn = Int_vec_stringify(
-			eqn15,
-			15);
+			Variety_object->eqn, 15);
 	s_Pts = Lint_vec_stringify(
-			Pts,
-			nb_pts);
+			Variety_object->get_points(), Variety_object->get_nb_points());
 
 	s_Bitangents = Lint_vec_stringify(
-			bitangents28, 28);
+			Variety_object->get_lines(), Variety_object->get_nb_lines());
 
 }
 

@@ -62,6 +62,7 @@ graph_theoretic_activity_description::graph_theoretic_activity_description()
 	f_combine_by_starters = false;
 	//std::string combine_by_starters_fname_reps;
 	//std::string combine_by_starters_col_label;
+	//std::string combine_by_starters_mask_fname_solutions;
 
 
 	f_split_by_clique = false;
@@ -195,8 +196,13 @@ int graph_theoretic_activity_description::read_arguments(
 			f_combine_by_starters = true;
 			combine_by_starters_fname_reps.assign(argv[++i]);
 			combine_by_starters_col_label.assign(argv[++i]);
+			combine_by_starters_mask_fname_solutions.assign(argv[++i]);
 			if (f_v) {
-				cout << "-combine_by_starters " << combine_by_starters_fname_reps << " " << combine_by_starters_col_label << endl;
+				cout << "-combine_by_starters "
+						<< combine_by_starters_fname_reps << " "
+						<< combine_by_starters_col_label  << " "
+						<< combine_by_starters_mask_fname_solutions  << " "
+						<< endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-split_by_clique") == 0) {
@@ -310,7 +316,11 @@ void graph_theoretic_activity_description::print()
 		cout << "-split_by_starters " << split_by_starters_fname_reps << " " << split_by_starters_col_label << endl;
 	}
 	if (f_combine_by_starters) {
-		cout << "-combine_by_starters " << combine_by_starters_fname_reps << " " << combine_by_starters_col_label << endl;
+		cout << "-combine_by_starters "
+				<< combine_by_starters_fname_reps << " "
+				<< combine_by_starters_col_label  << " "
+				<< combine_by_starters_mask_fname_solutions  << " "
+				<< endl;
 	}
 	if (f_split_by_clique) {
 		cout << "-split_by_clique " << split_by_clique_label << " " << split_by_clique_set << endl;

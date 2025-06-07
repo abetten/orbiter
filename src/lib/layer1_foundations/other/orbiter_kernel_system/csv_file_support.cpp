@@ -540,7 +540,8 @@ void csv_file_support::read_column_as_table_of_int(
 				verbose_level);
 
 	if (SoS->nb_sets == 0) {
-		cout << "csv_file_support::read_column_as_table_of_int the file seems to be empty" << endl;
+		cout << "csv_file_support::read_column_as_table_of_int "
+				"the file seems to be empty" << endl;
 		exit(1);
 	}
 
@@ -597,7 +598,8 @@ void csv_file_support::read_column_as_table_of_lint(
 	m = SoS->nb_sets;
 
 	if (SoS->nb_sets == 0) {
-		cout << "csv_file_support::read_column_as_table_of_lint the file is empty" << endl;
+		cout << "csv_file_support::read_column_as_table_of_lint "
+				"the file is empty" << endl;
 		//exit(1);
 		n = 0;
 	}
@@ -1224,9 +1226,12 @@ void csv_file_support::do_csv_file_select_cols(
 		cout << "csv_file_support::do_csv_file_select_cols" << endl;
 	}
 	if (f_v) {
-		cout << "csv_file_support::do_csv_file_select_cols fname = " << fname << endl;
-		cout << "csv_file_support::do_csv_file_select_cols fname_append = " << fname_append << endl;
-		cout << "csv_file_support::do_csv_file_select_cols cols_text = " << cols_text << endl;
+		cout << "csv_file_support::do_csv_file_select_cols "
+				"fname = " << fname << endl;
+		cout << "csv_file_support::do_csv_file_select_cols "
+				"fname_append = " << fname_append << endl;
+		cout << "csv_file_support::do_csv_file_select_cols "
+				"cols_text = " << cols_text << endl;
 	}
 
 	//Int_vec_scan(cols_text, Cols, nb_cols);
@@ -1406,9 +1411,12 @@ void csv_file_support::do_csv_file_select_cols_by_label(
 		cout << "csv_file_support::do_csv_file_select_cols_by_label" << endl;
 	}
 	if (f_v) {
-		cout << "csv_file_support::do_csv_file_select_cols_by_label fname = " << fname << endl;
-		cout << "csv_file_support::do_csv_file_select_cols_by_label fname_append = " << fname_append << endl;
-		cout << "csv_file_support::do_csv_file_select_cols_by_label cols_label = " << cols_label << endl;
+		cout << "csv_file_support::do_csv_file_select_cols_by_label "
+				"fname = " << fname << endl;
+		cout << "csv_file_support::do_csv_file_select_cols_by_label "
+				"fname_append = " << fname_append << endl;
+		cout << "csv_file_support::do_csv_file_select_cols_by_label "
+				"cols_label = " << cols_label << endl;
 	}
 
 
@@ -2037,7 +2045,8 @@ void csv_file_support::do_csv_file_concatenate_from_mask(
 	}
 
 	if (f_v) {
-		cout << "Written file " << fname_out << " of size " << Fio->file_size(fname_out) << endl;
+		cout << "Written file " << fname_out
+				<< " of size " << Fio->file_size(fname_out) << endl;
 	}
 
 
@@ -2154,7 +2163,9 @@ void csv_file_support::prepare_tables_for_users_guide(
 	int h;
 
 	for (h = 0; h < tbl_fname.size(); h++) {
-		prepare_table_for_users_guide(tbl_fname[h], false /* f_general */, verbose_level);
+		prepare_table_for_users_guide(
+				tbl_fname[h], false /* f_general */,
+				verbose_level);
 	}
 	if (f_v) {
 		cout << "csv_file_support::prepare_tables_for_users_guide done" << endl;
@@ -2174,7 +2185,9 @@ void csv_file_support::prepare_general_tables_for_users_guide(
 	int h;
 
 	for (h = 0; h < tbl_fname.size(); h++) {
-		prepare_table_for_users_guide(tbl_fname[h], true /* f_general */, verbose_level);
+		prepare_table_for_users_guide(
+				tbl_fname[h], true /* f_general */,
+				verbose_level);
 	}
 	if (f_v) {
 		cout << "csv_file_support::prepare_general_tables_for_users_guide done" << endl;
@@ -2302,7 +2315,8 @@ void csv_file_support::prepare_table_for_users_guide(
 			header_ws = header_ug;
 		}
 		else {
-			cout << "number of columns must be either 2 or 3. Number of columns is = " << n << endl;
+			cout << "number of columns must be either 2 or 3. "
+					"Number of columns is = " << n << endl;
 		}
 	}
 
@@ -3913,16 +3927,19 @@ void csv_file_support::collect_stats(
 		{
 
 			if (f_v) {
-				cout << "csv_file_support::collect_stats file " << fname << endl;
+				cout << "csv_file_support::collect_stats "
+						"file " << fname << endl;
 			}
 
 			Data[h] = Fio->count_number_of_data_lines_in_spreadsheet(
 					fname, 0 /* verbose_level */);
+
 			if (Data[h] == -1) {
 				cout << "csv_file_support::collect_stats "
 						"cannot open the file " << fname << endl;
 				exit(1);
 			}
+
 			nb_sol_total += Data[h];
 
 		}
@@ -4005,7 +4022,8 @@ void csv_file_support::append_column_of_int(
 	}
 
 	if (m != data_sz) {
-		cout << "csv_file_support::append_column_of_int m != data_sz" << endl;
+		cout << "csv_file_support::append_column_of_int "
+				"m != data_sz" << endl;
 		exit(1);
 	}
 

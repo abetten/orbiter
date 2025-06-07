@@ -943,7 +943,80 @@ void surface_domain::create_surface_by_coefficient_vector(
 
 }
 
+void surface_domain::get_list_of_all_surfaces(
+		geometry::algebraic_geometry::surface_object **&SO,
+		int &nb_iso,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
 
+	if (f_v) {
+		cout << "surface_domain::get_list_of_all_surfaces" << endl;
+	}
+
+	nb_iso = get_number_of_isomorphism_types();
+
+	if (f_v) {
+		cout << "surface_domain::get_list_of_all_surfaces "
+				"number of cubic surfaces over this field = " << nb_iso << endl;
+	}
+
+	SO = (geometry::algebraic_geometry::surface_object **) NEW_pvoid(nb_iso);
+
+	int iso;
+
+	for (iso = 0; iso < nb_iso; iso++) {
+
+		std::vector<std::string> select_double_six_string;
+
+		if (f_v) {
+			cout << "surface_domain::get_list_of_all_surfaces "
+					"before create_surface_from_catalogue" << endl;
+		}
+		create_surface_from_catalogue(
+				iso,
+				select_double_six_string,
+				SO[iso],
+				verbose_level - 1);
+	}
+	if (f_v) {
+		cout << "surface_domain::get_list_of_all_surfaces done" << endl;
+	}
+
+}
+
+void surface_domain::dispose_of_list_of_all_surfaces(
+		geometry::algebraic_geometry::surface_object **&SO,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_domain::dispose_of_list_of_all_surfaces" << endl;
+	}
+	int nb_iso, iso;
+
+	nb_iso = get_number_of_isomorphism_types();
+
+	for (iso = 0; iso < nb_iso; iso++) {
+		FREE_OBJECT(SO[iso]);
+	}
+
+	FREE_pvoid((void **) SO);
+	if (f_v) {
+		cout << "surface_domain::dispose_of_list_of_all_surfaces done" << endl;
+	}
+}
+
+int surface_domain::get_number_of_isomorphism_types()
+{
+	combinatorics::knowledge_base::knowledge_base K;
+
+	int nb_iso;
+
+	nb_iso = K.cubic_surface_nb_reps(q);
+	return nb_iso;
+}
 
 void surface_domain::create_surface_from_catalogue(
 		int iso,

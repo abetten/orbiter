@@ -1396,6 +1396,30 @@ void projective_space_activity::perform_activity(
 	}
 #endif
 
+	else if (Descr->f_recognize_surfaces) {
+
+		if (!Descr->f_control_six_arcs) {
+			cout << "please use option -control_six_arcs <description> -end" << endl;
+			exit(1);
+		}
+		applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_domain_high_level SH;
+
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"before SH.do_recognize_surfaces" << endl;
+		}
+		SH.do_recognize_surfaces(
+				PA,
+				Descr->Control_six_arcs_label,
+				Descr->f_test_nb_Eckardt_points, Descr->nb_E,
+				verbose_level);
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"after SH.do_recognize_surfaces" << endl;
+		}
+
+	}
+
 	else if (Descr->f_classify_surfaces_through_arcs_and_two_lines) {
 
 		if (!Descr->f_control_six_arcs) {

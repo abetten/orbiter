@@ -74,7 +74,6 @@ void variety_stabilizer_compute::init(
 void variety_stabilizer_compute::compute_canonical_form_of_variety(
 		variety_object_with_action *Variety_object_with_action,
 		other::l1_interfaces::nauty_interface_control *Nauty_control,
-		//int f_save_nauty_input_graphs,
 		int verbose_level)
 // Computes the canonical labeling of the graph associated with
 // the set of rational points of the curve.

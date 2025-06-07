@@ -71,6 +71,8 @@ class packing_classify_activity_description {
 
 public:
 
+	// packing_classify.csv
+
 	int f_report;
 
 	int f_classify;

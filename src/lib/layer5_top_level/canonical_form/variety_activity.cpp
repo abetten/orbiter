@@ -46,7 +46,8 @@ void variety_activity::init(
 		cout << "variety_activity::init" << endl;
 	}
 	if (f_v) {
-		cout << "variety_activity::init nb_input_Vo = " << nb_input_Vo << endl;
+		cout << "variety_activity::init "
+				"nb_input_Vo = " << nb_input_Vo << endl;
 	}
 
 	variety_activity::Descr = Descr;
@@ -70,29 +71,124 @@ void variety_activity::perform_activity(
 	}
 
 	if (Descr->f_compute_group) {
+
+		if (f_v) {
+			cout << "variety_activity::perform_activity "
+					"-compute_group" << endl;
+		}
+
+		if (f_v) {
+			cout << "variety_activity::perform_activity "
+					"before do_compute_group" << endl;
+		}
+
 		do_compute_group(
 				Descr->f_output_fname_base,
 				Descr->output_fname_base,
 				Descr->f_nauty_control,
 				Descr->Nauty_interface_control,
 				verbose_level);
+		if (f_v) {
+			cout << "variety_activity::perform_activity "
+					"after do_compute_group" << endl;
+		}
 	}
 	if (Descr->f_compute_set_stabilizer) {
+
+		if (f_v) {
+			cout << "variety_activity::perform_activity "
+					"-compute_set_stabilizer" << endl;
+		}
+
+		if (f_v) {
+			cout << "variety_activity::perform_activity "
+					"before do_compute_set_stabilizer" << endl;
+		}
 		do_compute_set_stabilizer(
 				Descr->f_output_fname_base,
 				Descr->output_fname_base,
 				Descr->f_nauty_control,
 				Descr->Nauty_interface_control,
 				verbose_level);
+		if (f_v) {
+			cout << "variety_activity::perform_activity "
+					"after do_compute_set_stabilizer" << endl;
+		}
 	}
 	if (Descr->f_report) {
+
+		if (f_v) {
+			cout << "variety_activity::perform_activity "
+					"-report" << endl;
+		}
+
+		if (f_v) {
+			cout << "variety_activity::perform_activity "
+					"before Input_Vo[0]->do_report" << endl;
+		}
 		Input_Vo[0]->do_report(verbose_level);
+		if (f_v) {
+			cout << "variety_activity::perform_activity "
+					"after Input_Vo[0]->do_report" << endl;
+		}
 	}
 	if (Descr->f_export) {
+
+		if (f_v) {
+			cout << "variety_activity::perform_activity "
+					"-export" << endl;
+		}
+
+		if (f_v) {
+			cout << "variety_activity::perform_activity "
+					"before Input_Vo[0]->do_export" << endl;
+		}
 		Input_Vo[0]->do_export(verbose_level);
+		if (f_v) {
+			cout << "variety_activity::perform_activity "
+					"after Input_Vo[0]->do_export" << endl;
+		}
+	}
+	if (Descr->f_apply_transformation_to_self) {
+
+		if (f_v) {
+			cout << "variety_activity::perform_activity "
+					"-apply_transformation_to_self" << endl;
+		}
+
+		int f_inverse = false;
+
+		if (f_v) {
+			cout << "variety_activity::perform_activity "
+					"before do_apply_transformation_to_self" << endl;
+		}
+		do_apply_transformation_to_self(
+				f_inverse,
+				Descr->apply_transformation_to_self_group_element,
+				verbose_level);
+		if (f_v) {
+			cout << "variety_activity::perform_activity "
+					"after do_apply_transformation_to_self" << endl;
+		}
+
+
 	}
 	if (Descr->f_singular_points) {
+
+		if (f_v) {
+			cout << "variety_activity::perform_activity "
+					"-singular_points" << endl;
+		}
+
+		if (f_v) {
+			cout << "variety_activity::perform_activity "
+					"before do_singular_points" << endl;
+		}
 		do_singular_points(verbose_level);
+		if (f_v) {
+			cout << "variety_activity::perform_activity "
+					"after do_singular_points" << endl;
+		}
 	}
 
 
@@ -268,6 +364,101 @@ void variety_activity::do_compute_set_stabilizer(
 
 	if (f_v) {
 		cout << "variety_activity::do_compute_set_stabilizer done" << endl;
+	}
+}
+
+void variety_activity::do_apply_transformation_to_self(
+		int f_inverse,
+		std::string &transformation_coded,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "variety_activity::do_apply_transformation_to_self" << endl;
+	}
+
+
+	actions::action *A;
+
+	A = Input_Vo[0]->PA->A;
+
+	int *Elt1;
+	int *Elt2;
+	int *Elt3;
+
+	//A = PA->A;
+
+	Elt1 = NEW_int(A->elt_size_in_int);
+	Elt2 = NEW_int(A->elt_size_in_int);
+	Elt3 = NEW_int(A->elt_size_in_int);
+
+	int *v;
+	int sz;
+
+	Get_int_vector_from_label(transformation_coded, v, sz, verbose_level - 3);
+
+	if (sz != A->make_element_size) {
+		cout << "variety_activity::do_apply_transformation_to_self sz != A->make_element_size" << endl;
+		cout << "sz=" << sz << endl;
+		cout << "A->make_element_size=" << A->make_element_size << endl;
+		exit(1);
+	}
+
+	A->Group_element->make_element(
+			Elt1, v,
+			verbose_level);
+
+	if (f_inverse) {
+		A->Group_element->element_invert(
+				Elt1, Elt2, 0 /*verbose_level*/);
+	}
+	else {
+		A->Group_element->element_move(
+				Elt1, Elt2, 0 /*verbose_level*/);
+	}
+
+	//A->element_transpose(Elt2, Elt3, 0 /*verbose_level*/);
+
+	A->Group_element->element_invert(
+			Elt2, Elt3, 0 /*verbose_level*/);
+
+	if (f_v) {
+		cout << "variety_activity::do_apply_transformation_to_self "
+				"applying the transformation given by:" << endl;
+		cout << "$$" << endl;
+		A->Group_element->print_quick(cout, Elt2);
+		cout << endl;
+		cout << "$$" << endl;
+		cout << "variety_activity::do_apply_transformation_to_self "
+				"The inverse is:" << endl;
+		cout << "$$" << endl;
+		A->Group_element->print_quick(cout, Elt3);
+		cout << endl;
+		cout << "$$" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "variety_activity::do_apply_transformation_to_self "
+				"before Input_Vo[0]->apply_transformation_to_self" << endl;
+	}
+	Input_Vo[0]->apply_transformation_to_self(
+			Elt2,
+			Input_Vo[0]->PA->A,
+			Input_Vo[0]->PA->A_on_lines,
+			verbose_level);
+
+	if (f_v) {
+		cout << "variety_activity::do_apply_transformation_to_self "
+				"after Input_Vo[0]->apply_transformation_to_self" << endl;
+	}
+	FREE_int(Elt1);
+	FREE_int(Elt2);
+	FREE_int(Elt3);
+
+	if (f_v) {
+		cout << "variety_activity::do_apply_transformation_to_self done" << endl;
 	}
 }
 

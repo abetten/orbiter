@@ -10275,6 +10275,7 @@ Op_6_2_group:
 			-nauty_control -save_orbit_of_equations eqn_ -end \
 		-end \
 		-with V -do -variety_activity -singular_points -end \
+		-with V -do -variety_activity -export -end \
 		-with V -do -variety_activity -report -end
 	$(PDFLATEX) variety_Op_6_2_report.tex
 	$(OPEN) variety_Op_6_2_report.pdf
@@ -13692,6 +13693,12 @@ Family_general_F11_iso_test:
 		-end
 
 
+#The surfaces are isomorphic, an isomorphism from the first surface to the second is given by
+# 0  1  1  9 
+# 0  4  1  8 
+# 9  2  5  7 
+# 1 10 10  3 
+
 
 ###############################################################################
 # Section 9.5: Quartic Curves Creation
@@ -13704,15 +13711,10 @@ test_9_5:
 	make quartic_curve_9_0
 	make quartic_curve_edge_q9
 	make surface_7_0_make_quartic_curves
+	make quartic_curves_q7
 	make surface_9_1_make_quartic_curves
-	make quartic_curve_9_0_report
-	make quartic_curve_13_0_report
-	make PG_2_13_rank_lines
-	make PG_2_13_orbits_on_lines
-	make quartic_curve_13_1_report
-	make quartic_curves_19_report
-	make quartic_curve_q9_1
-	make quartic_curve_q13_f1_from_variety
+	make quartic_curves_q13
+	make quartic_curves_q19
 
 
 quartic_curve_9_0: 
@@ -13780,6 +13782,21 @@ surface_7_0_make_quartic_curves:
 	#$(OPEN) surface_catalogue_q7_iso0_report.pdf
 
 
+quartic_curves_q7:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 7 -end \
+		-define P -projective_space -n 3 -field F -end \
+		-loop L 0 $(NB_CUBIC_SURFACES_Q7) 1 \
+			-define S_%L -cubic_surface -space P -catalogue %L -end \
+		-end_loop L \
+		-print_symbols \
+		-loop L 0 $(NB_CUBIC_SURFACES_Q7) 1 \
+			-with S_%L -do \
+			-cubic_surface_activity \
+				-export_all_quartic_curves \
+			-end \
+		-end_loop L \
+		-print_symbols
 
 
 surface_9_1_make_quartic_curves:
@@ -13797,6 +13814,75 @@ surface_9_1_make_quartic_curves:
 		-end
 	#$(PDFLATEX) surface_catalogue_q9_iso1_report.tex
 	#$(OPEN) surface_catalogue_q9_iso1_report.pdf
+
+
+
+
+quartic_curves_q13:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 13 -end \
+		-define P -projective_space -n 3 -field F -end \
+		-loop L 0 $(NB_CUBIC_SURFACES_Q13) 1 \
+			-define S_%L -cubic_surface -space P -catalogue %L -end \
+		-end_loop L \
+		-print_symbols \
+		-loop L 0 $(NB_CUBIC_SURFACES_Q13) 1 \
+			-with S_%L -do \
+			-cubic_surface_activity \
+				-export_all_quartic_curves \
+			-end \
+		-end_loop L \
+		-print_symbols
+
+
+
+
+
+
+quartic_curves_q19:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 19 -end \
+		-define P -projective_space -n 3 -field F -end \
+		-loop L 0 $(NB_CUBIC_SURFACES_Q19) 1 \
+			-define S_%L -cubic_surface -space P -catalogue %L -end \
+		-end_loop L \
+		-print_symbols \
+		-loop L 0 $(NB_CUBIC_SURFACES_Q19) 1 \
+			-with S_%L -do \
+			-cubic_surface_activity \
+				-export_all_quartic_curves \
+			-end \
+		-end_loop L \
+		-print_symbols
+
+
+
+
+
+
+###############################################################################
+# Section 9.6: Quartic Curve Activities
+
+
+SECTION_QUARTIC_CURVE_ACTIVITIES:
+
+
+test_9_6:
+	make quartic_curve_9_0_report
+	make quartic_curve_13_0_report
+	make PG_2_13_rank_lines
+	make PG_2_13_orbits_on_lines
+	make quartic_curve_13_1_report
+	make quartic_curves_19_report
+	make quartic_curve_q9_1
+	make quartic_curve_q13_f1_from_variety
+
+
+
+
+
+
+
 
 
 quartic_curve_9_0_report: 
@@ -13977,79 +14063,6 @@ quartic_curve_q13_f1_from_variety:
 			-end
 	$(PDFLATEX) quartic_curve_V_q13_f1_report.tex
 	$(OPEN) quartic_curve_V_q13_f1_report.pdf
-
-
-
-
-###############################################################################
-# Section 9.6: Quartic Curve Activities
-
-
-SECTION_QUARTIC_CURVE_ACTIVITIES:
-
-
-test_9_6:
-	make quartic_curves_q7
-	make quartic_curves_q13
-	make quartic_curves_q19
-
-
-
-
-
-quartic_curves_q7:
-	$(ORBITER) -v 3 \
-		-define F -finite_field -q 7 -end \
-		-define P -projective_space -n 3 -field F -end \
-		-loop L 0 $(NB_CUBIC_SURFACES_Q7) 1 \
-			-define S_%L -cubic_surface -space P -catalogue %L -end \
-		-end_loop L \
-		-print_symbols \
-		-loop L 0 $(NB_CUBIC_SURFACES_Q7) 1 \
-			-with S_%L -do \
-			-cubic_surface_activity \
-				-export_all_quartic_curves \
-			-end \
-		-end_loop L \
-		-print_symbols
-
-quartic_curves_q13:
-	$(ORBITER) -v 3 \
-		-define F -finite_field -q 13 -end \
-		-define P -projective_space -n 3 -field F -end \
-		-loop L 0 $(NB_CUBIC_SURFACES_Q13) 1 \
-			-define S_%L -cubic_surface -space P -catalogue %L -end \
-		-end_loop L \
-		-print_symbols \
-		-loop L 0 $(NB_CUBIC_SURFACES_Q13) 1 \
-			-with S_%L -do \
-			-cubic_surface_activity \
-				-export_all_quartic_curves \
-			-end \
-		-end_loop L \
-		-print_symbols
-
-
-
-
-
-
-quartic_curves_q19:
-	$(ORBITER) -v 3 \
-		-define F -finite_field -q 19 -end \
-		-define P -projective_space -n 3 -field F -end \
-		-loop L 0 $(NB_CUBIC_SURFACES_Q19) 1 \
-			-define S_%L -cubic_surface -space P -catalogue %L -end \
-		-end_loop L \
-		-print_symbols \
-		-loop L 0 $(NB_CUBIC_SURFACES_Q19) 1 \
-			-with S_%L -do \
-			-cubic_surface_activity \
-				-export_all_quartic_curves \
-			-end \
-		-end_loop L \
-		-print_symbols
-
 
 
 
@@ -14281,6 +14294,7 @@ draw_mod_13:
 	$(ORBITER) -v 2 \
 		-define Do -draw_options -embedded -end \
 		-draw_mod_n \
+			"mod_n=on" \
 			-n 13 \
 			-file mod_13 \
 			-power_cycle 2 \
@@ -16655,6 +16669,7 @@ draw_cyclotomic_mod_51_q16:
 			-line_width 1.0 -embedded \
 		-end \
 		-draw_mod_n \
+			"mod_n=on" \
 			-n 51 \
 			-cyclotomic_sets 16 "1,2" \
 			-file cyclotomic_51 \
@@ -16673,6 +16688,7 @@ draw_cyclotomic_mod_21_q8:
 			-line_width 1.0 -embedded \
 		-end \
 		-draw_mod_n \
+			"mod_n=on" \
 			-n 21 \
 			-file mod_21_cyclotomic \
 			-cyclotomic_sets 8 "1,2,4,5,7,10,13" \
@@ -16836,6 +16852,7 @@ draw_mod_31:
 	$(ORBITER) -v 2 \
 		-define Do -draw_options -embedded -radius 50 -line_width 0.3 -end \
 		-draw_mod_n \
+			"mod_n=on" \
 			-n 31 \
 			-file mod_31 \
 			-power_cycle 2 \
@@ -16854,6 +16871,7 @@ draw_mod_127_power:
 	$(ORBITER) -v 2 \
 		-define Do -draw_options -radius 50 -scale 0.4 -embedded -line_width 0.3 -end \
 		-draw_mod_n \
+			"mod_n=on" \
 			-n 127 \
 			-dont_label_nodes \
 			-file mod_127 \
@@ -16867,6 +16885,7 @@ draw_mod_251:
 	$(ORBITER) -v 2 \
 		-define Do -draw_options -nodes_empty -radius 10 -embedded -end \
 		-draw_mod_n \
+			"mod_n=on" \
 			-n 251 \
 			-file mod_251 \
 			-label_nodes \
@@ -16883,6 +16902,7 @@ draw_mod_255_cyclotomic_1:
 		-define Do -draw_options -nodes_empty -radius 10 \
 			-line_width 0.4 -embedded -end \
 		-draw_mod_n \
+			"mod_n=on" \
 			-n 255 \
 			-file mod_255_cyclotomic_1 \
 			-label_nodes \
@@ -16897,6 +16917,7 @@ draw_mod_255_cyclotomic_3:
 		-define Do -draw_options -nodes_empty -radius 10 \
 			-line_width 0.4 -embedded -end \
 		-draw_mod_n \
+			"mod_n=on" \
 			-n 255 \
 			-file mod_255_cyclotomic_3 \
 			-label_nodes \
@@ -16911,6 +16932,7 @@ draw_mod_255_cyclotomic_1_and_3:
 		-define Do -draw_options -nodes_empty -radius 10 \
 			-line_width 0.4 -embedded -end \
 		-draw_mod_n \
+			"mod_n=on" \
 			-n 255 \
 			-file mod_255_cyclotomic_1_and_3 \
 			-label_nodes \
@@ -16925,6 +16947,7 @@ draw_mod_63_4_cyclotomic_3_6:
 		-define Do -draw_options -radius 20 \
 			-line_width 0.1 -embedded -end \
 		-draw_mod_n \
+			"mod_n=on" \
 			-n 63 \
 			-file mod_63_4_cyclotomic_3_6 \
 			-label_nodes \
@@ -17723,6 +17746,7 @@ test_12_1:
 	make random_k_subsets
 	make rank_k_subsets_test
 	make Walsh_matrix_4
+	make q_binomial_8_3_2
 	make Dedekind_10_10
 	make Dedekind_30_2
 	make Dedekind_100_2
@@ -17794,6 +17818,10 @@ Walsh_matrix_4:
 		-box_width 10 -bit_depth 24 -partition 3 16 16 -end
 	#$(PDFLATEX) GF_2.tex
 	#$(OPEN) GF_2.pdf
+
+q_binomial_8_3_2:
+	$(ORBITER) -v 3 \
+		-q_binomial 8 3 2
 
 
 Dedekind_10_10:

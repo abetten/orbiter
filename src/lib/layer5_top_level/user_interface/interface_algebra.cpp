@@ -92,6 +92,7 @@ interface_algebra::interface_algebra()
 	//std::string Chinese_remainders_M;
 
 	f_draw_mod_n = false;
+	//std::string Draw_mod_n_options;
 	Draw_mod_n_description = NULL;
 
 
@@ -219,7 +220,7 @@ void interface_algebra::print_help(
 		cout << "-Chinese_remainders <string : Remainders> <string : Moduli>" << endl;
 	}
 	else if (ST.stringcmp(argv[i], "-draw_mod_n") == 0) {
-		cout << "-draw_mod_n descr -end" << endl;
+		cout << "-draw_mod_n options descr -end" << endl;
 	}
 
 	// Section 10.1
@@ -543,6 +544,7 @@ void interface_algebra::read_arguments(
 	else if (ST.stringcmp(argv[i], "-draw_mod_n") == 0) {
 		f_draw_mod_n = true;
 		cout << "-draw_mod_n " << endl;
+		Draw_mod_n_options.assign(argv[++i]);
 		Draw_mod_n_description = NEW_OBJECT(other::graphics::draw_mod_n_description);
 		i += Draw_mod_n_description->read_arguments(argc - (i + 1),
 			argv + i + 1, verbose_level);
@@ -554,7 +556,7 @@ void interface_algebra::read_arguments(
 		if (i < argc) {
 			cout << "next argument is " << argv[i] << endl;
 		}
-		cout << "-draw_mod_n " << endl;
+		cout << "-draw_mod_n " << Draw_mod_n_options << endl;
 		Draw_mod_n_description->print();
 	}
 
@@ -1101,14 +1103,15 @@ void interface_algebra::worker(
 
 		if (f_v) {
 			cout << "interface_algebra::worker "
-					"before PT.draw_mod_n" << endl;
+					"before PT.draw_something" << endl;
 		}
-		PT.draw_mod_n(
+		PT.draw_something(
 				Draw_mod_n_description,
+				Draw_mod_n_options,
 				verbose_level);
 		if (f_v) {
 			cout << "interface_algebra::worker "
-					"after PT.draw_mod_n" << endl;
+					"after PT.draw_something" << endl;
 		}
 	}
 

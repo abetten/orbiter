@@ -36,8 +36,8 @@ variety_activity_description::variety_activity_description()
 
 	f_classify = false;
 
-	f_apply_transformation = false;
-	//std::string apply_transformation_group_element;
+	f_apply_transformation_to_self = false;
+	//std::string apply_transformation_to_self_group_element;
 
 	f_singular_points = false;
 
@@ -116,11 +116,11 @@ int variety_activity_description::read_arguments(
 				cout << "-classify " << endl;
 			}
 		}
-		else if (ST.stringcmp(argv[i], "-apply_transformation") == 0) {
-			f_apply_transformation = true;
-			apply_transformation_group_element.assign(argv[++i]);
+		else if (ST.stringcmp(argv[i], "-apply_transformation_to_self") == 0) {
+			f_apply_transformation_to_self = true;
+			apply_transformation_to_self_group_element.assign(argv[++i]);
 			if (f_v) {
-				cout << "-apply_transformation " << apply_transformation_group_element << endl;
+				cout << "-apply_transformation_to_self " << apply_transformation_to_self_group_element << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-singular_points") == 0) {
@@ -178,8 +178,8 @@ void variety_activity_description::print()
 	if (f_classify) {
 		cout << "-classify " << endl;
 	}
-	if (f_apply_transformation) {
-		cout << "-apply_transformation " << apply_transformation_group_element << endl;
+	if (f_apply_transformation_to_self) {
+		cout << "-apply_transformation_to_self " << apply_transformation_to_self_group_element << endl;
 	}
 	if (f_singular_points) {
 		cout << "-singular_points " << endl;

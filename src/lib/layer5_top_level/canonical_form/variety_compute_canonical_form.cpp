@@ -123,6 +123,7 @@ void variety_compute_canonical_form::compute_canonical_form_nauty_new(
 		int &idx_equation,
 		int &f_found_eqn,
 		int verbose_level)
+// called from classification_of_varieties_nauty::main_loop
 {
 	int f_v = (verbose_level >= 1);
 
@@ -213,7 +214,7 @@ void variety_compute_canonical_form::classify_using_nauty_new(
 			Vo,
 			Nauty_control,
 			verbose_level - 2);
-	// Computes the canonical labeling of the graph associated with
+	// Computes the canonical labeling of the Levi graph associated with
 	// the set of rational points of the variety.
 	// Computes the stabilizer of the set of rational points of the variety.
 	// Computes the orbit of the equation under the stabilizer of the set.
@@ -242,6 +243,9 @@ void variety_compute_canonical_form::classify_using_nauty_new(
 		cout << "variety_compute_canonical_form::classify_using_nauty_new "
 				"after Variety_stabilizer_compute->Orb->get_canonical_form" << endl;
 	}
+
+	// gens_stab_of_canonical_equation maps the root node to the canonical equation.
+
 
 	if (Nauty_control->f_save_orbit_of_equations) {
 		if (f_v) {
@@ -329,7 +333,6 @@ void variety_compute_canonical_form::classify_using_nauty_new(
 	if (Canonical_form_classifier->Classification_of_varieties_nauty->CB->n == 0) {
 		Canonical_form_classifier->Classification_of_varieties_nauty->CB->init(
 				Canonical_form_classifier->Classification_of_varieties_nauty->Input->nb_objects_to_test,
-				/*Canonical_form_classifier->Input->nb_objects_to_test,*/
 				Variety_stabilizer_compute->Canonical_form->get_allocated_length(),
 				verbose_level - 2);
 	}
@@ -447,7 +450,7 @@ void variety_compute_canonical_form::handle_repeated_canonical_form_of_set_new(
 
 
 
-		// test if entry at idx1 is equal to C.
+		// test if entry at idx_canonical_form is equal to C.
 		// if not, break
 
 		if (f_v) {
@@ -563,12 +566,20 @@ int variety_compute_canonical_form::find_equation_new(
 
 	canonical_form_global Canonical_form_global;
 
-	Canonical_form_global.find_isomorphism(
+	if (f_v) {
+		cout << "variety_compute_canonical_form::find_equation_new "
+				"before Canonical_form_global.find_isomorphism_between_set_of_rational_points" << endl;
+	}
+	Canonical_form_global.find_isomorphism_between_set_of_rational_points(
 			C1,
 			C,
 			alpha, gamma,
 			verbose_level - 2);
 	// find gamma which maps the points of C1 to the points of C.
+	if (f_v) {
+		cout << "variety_compute_canonical_form::find_equation_new "
+				"after Canonical_form_global.find_isomorphism_between_set_of_rational_points" << endl;
+	}
 
 
 	// gamma maps C1 to C.
@@ -584,7 +595,7 @@ int variety_compute_canonical_form::find_equation_new(
 	Ring_with_action->lift_mapping(
 			gamma,
 			Canonical_form_classifier->Classification_of_varieties_nauty->Elt,
-			verbose_level);
+			verbose_level - 2);
 	if (f_v) {
 		cout << "variety_compute_canonical_form::find_equation_new "
 				"after Ring_with_action->lift_mapping" << endl;
@@ -659,6 +670,14 @@ int variety_compute_canonical_form::find_equation_new(
 		}
 		f_found = true;
 		found_at = idx2;
+
+#if 0
+		void orbit_of_equations::get_transporter_from_a_to_b(
+				int idx_a, int idx_b,
+				int *Elt,
+				int verbose_level)
+#endif
+
 	}
 
 	if (f_v) {
@@ -728,16 +747,16 @@ void variety_compute_canonical_form::compute_canonical_object(
 
 	if (f_v) {
 		cout << "variety_compute_canonical_form::compute_canonical_object "
-				"before Vo->apply_transformation" << endl;
+				"before Vo->apply_transformation_to_self" << endl;
 	}
-	Vo->apply_transformation(
+	Vo->apply_transformation_to_self(
 			transporter_to_canonical_form,
 			A,
 			A_on_lines,
 			verbose_level);
 	if (f_v) {
 		cout << "variety_compute_canonical_form::compute_canonical_object "
-				"after Vo->apply_transformation" << endl;
+				"after Vo->apply_transformation_to_self" << endl;
 	}
 
 	Canonical_object = NULL; // ToDo

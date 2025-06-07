@@ -103,6 +103,12 @@ void flag_orbits::init(
 	}
 }
 
+long int *flag_orbits::get_rep(
+		int f)
+{
+	return Pt + f * pt_representation_sz;
+}
+
 int flag_orbits::find_node_by_po_so(
 		int po, int so, int &idx,
 	int verbose_level)

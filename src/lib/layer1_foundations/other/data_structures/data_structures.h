@@ -104,7 +104,8 @@ public:
 	void dot_product_of_rows(
 			std::string &label, int verbose_level);
 	void matrix_multiply_over_Z(
-			std::string &label1, std::string &label2, int verbose_level);
+			std::string &label1, std::string &label2,
+			int verbose_level);
 	void matrix_rowspan_over_R(
 			std::string &label, int verbose_level);
 	int binary_logarithm(
@@ -138,7 +139,8 @@ public:
 			int *prev,
 			int i, int &j);
 	void make_layered_graph_for_schreier_vector_tree(
-		int n, int *pts, int *prev, int f_use_pts_inv, int *pts_inv,
+		int n, int *pts, int *prev,
+		int f_use_pts_inv, int *pts_inv,
 		std::string &fname_base,
 		combinatorics::graph_theory::layered_graph *&LG,
 		int verbose_level);
@@ -152,8 +154,8 @@ public:
 		int n, int *pts, int *prev, int f_prev_is_point_index, int *pts_inv,
 		int *&depth, int *&ancestor, int verbose_level);
 	int schreier_vector_determine_depth_recursion(
-		int n, int *pts, int *prev, int f_use_pts_inv, int *pts_inv,
-		int *depth, int *ancestor, int pos);
+		int n, int *pts, int *prev, int f_use_pts_inv,
+		int *pts_inv, int *depth, int *ancestor, int pos);
 
 };
 

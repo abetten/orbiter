@@ -57,7 +57,7 @@ void quartic_curve_activity::perform_activity(
 
 	if (f_v) {
 		cout << "quartic_curve_activity::perform_activity" << endl;
-		Int_vec_print(cout, QC->QO->eqn15, 15);
+		Int_vec_print(cout, QC->QO->Variety_object->eqn, 15);
 		cout << endl;
 	}
 
@@ -73,6 +73,19 @@ void quartic_curve_activity::perform_activity(
 		if (f_v) {
 			cout << "quartic_curve_activity::perform_activity "
 					"after QC->do_report" << endl;
+		}
+
+	}
+	if (Descr->f_export) {
+
+		if (f_v) {
+			cout << "quartic_curve_activity::perform_activity "
+					"before QC->do_export" << endl;
+		}
+		QC->do_export(verbose_level);
+		if (f_v) {
+			cout << "quartic_curve_activity::perform_activity "
+					"after QC->do_export" << endl;
 		}
 
 	}
@@ -137,7 +150,7 @@ void quartic_curve_activity::perform_activity(
 			desired_orbit_length = Descr->extract_orbit_on_bitangents_by_length_length;
 
 			QC->QOG->Aut_gens->extract_orbit_on_set_with_given_action_after_restriction_by_length(
-					QC->PA->A_on_lines, QC->QO->bitangents28, 28,
+					QC->PA->A_on_lines, QC->QO->get_lines(), QC->QO->get_nb_lines(),
 					desired_orbit_length,
 					extracted_set,
 					verbose_level);
@@ -150,7 +163,7 @@ void quartic_curve_activity::perform_activity(
 
 			for (i = 0; i < desired_orbit_length; i++) {
 				idx = extracted_set[i];
-				extracted_lines[i] = QC->QO->bitangents28[idx];
+				extracted_lines[i] = QC->QO->get_line(idx);
 			}
 
 			cout << "Orbit on bitangents of length " << desired_orbit_length << " : ";
@@ -181,7 +194,7 @@ void quartic_curve_activity::perform_activity(
 
 			QC->QOG->Aut_gens->extract_specific_orbit_on_set_with_given_action_after_restriction_by_length(
 					QC->PA->A_on_lines,
-					QC->QO->bitangents28, 28,
+					QC->QO->get_lines(), QC->QO->get_nb_lines(),
 					desired_orbit_length,
 					desired_orbit_idx,
 					extracted_set,
@@ -195,7 +208,7 @@ void quartic_curve_activity::perform_activity(
 
 			for (i = 0; i < desired_orbit_length; i++) {
 				idx = extracted_set[i];
-				extracted_lines[i] = QC->QO->bitangents28[idx];
+				extracted_lines[i] = QC->QO->get_line(idx);
 			}
 
 			cout << "Orbit on bitangents of length "

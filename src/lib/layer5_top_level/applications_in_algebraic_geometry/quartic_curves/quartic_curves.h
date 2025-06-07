@@ -32,6 +32,8 @@ public:
 
 	int f_report;
 
+	int f_export;
+
 	int f_export_something;
 	std::string export_something_what;
 
@@ -209,7 +211,7 @@ public:
 	quartic_curves::quartic_curve_from_surface *QC_from_surface;
 
 
-	geometry::algebraic_geometry::variety_object *Variety_object;
+	//geometry::algebraic_geometry::variety_object *Variety_object;
 
 
 	quartic_curve_create();
@@ -275,6 +277,8 @@ public:
 			int f_inverse,
 			int *transformation_coeffs,
 			int sz, int verbose_level);
+	void do_export(
+			int verbose_level);
 	void export_something(
 			std::string &what, int verbose_level);
 	void do_report(
@@ -440,7 +444,7 @@ public:
 	void init_labels(
 			std::string &label, std::string &label_tex,
 			int verbose_level);
-	void quartic(
+	void create_quartic_curve(
 			int pt_orbit, int verbose_level);
 	void map_surface_to_special_form(
 			int pt_orbit,
@@ -504,6 +508,11 @@ public:
 	void export_something(
 			std::string &what,
 			std::string &fname_base, int verbose_level);
+	void export_col_headings(
+			std::string *&Col_headings, int &nb_cols,
+			int verbose_level);
+	void export_data(
+			std::vector<std::string> &Table, int verbose_level);
 
 };
 

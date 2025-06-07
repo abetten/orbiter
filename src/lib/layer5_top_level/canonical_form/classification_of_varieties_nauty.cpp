@@ -392,98 +392,19 @@ void classification_of_varieties_nauty::main_loop(
 		}
 		else {
 
-			other::l1_interfaces::nauty_interface_control *Nauty_control;
-
-
-
-			if (Classifier->f_nauty_control) {
-				Nauty_control = Classifier->Nauty_interface_control;
-			}
-			else {
-				cout << "classification_of_varieties_nauty::main_loop "
-						"Classifier->f_nauty_control is false, so no nauty_control" << endl;
-				exit(1);
-			}
-
-
-			int f_found_canonical_form;
-			int idx_canonical_form;
-			int idx_equation;
-			int f_found_eqn;
-
 
 			if (f_v) {
 				cout << "classification_of_varieties_nauty::main_loop "
-						"input_counter = " << input_counter << " / " << Input->nb_objects_to_test
-						<< " before Variety_compute_canonical_form->compute_canonical_form_nauty_new" << endl;
+						"before handle_one_input_case" << endl;
 			}
-			Variety_compute_canonical_form->compute_canonical_form_nauty_new(
-					Nauty_control,
-					f_found_canonical_form,
-					idx_canonical_form,
-					idx_equation,
-					f_found_eqn,
+			handle_one_input_case(
+					input_counter, nb_iso,
+					Variety_compute_canonical_form,
 					verbose_level);
-
-
 			if (f_v) {
 				cout << "classification_of_varieties_nauty::main_loop "
-						"input_counter = " << input_counter << " / " << Input->nb_objects_to_test
-						<< " after Variety_compute_canonical_form->compute_canonical_form_nauty_new" << endl;
+						"after handle_one_input_case" << endl;
 			}
-
-			Goi[input_counter] = Variety_compute_canonical_form->Variety_stabilizer_compute->Stab_gens_variety->group_order_as_lint();
-
-			if (f_found_canonical_form
-					&& f_found_eqn) {
-
-				F_first_time[input_counter] = false;
-
-			}
-			else if (f_found_canonical_form
-					&& !f_found_eqn) {
-
-				F_first_time[input_counter] = true;
-
-			}
-			else if (!f_found_canonical_form) {
-
-				F_first_time[input_counter] = true;
-
-			}
-			else {
-				cout << "classification_of_varieties_nauty::main_loop illegal combination" << endl;
-				exit(1);
-			}
-
-			Idx_canonical_form[input_counter] = idx_canonical_form;
-			Idx_equation[input_counter] = idx_equation;
-
-			if (F_first_time[input_counter]) {
-
-
-				Iso_idx[input_counter] = nb_iso;
-
-				int idx, i;
-
-
-				for (i = 0; i < input_counter; i++) {
-					idx = Idx_canonical_form[i];
-					if (idx >= idx_canonical_form) {
-						Idx_canonical_form[i]++;
-					}
-				}
-
-				Orbit_input_idx[nb_iso_orbits] = input_counter;
-				nb_iso_orbits++;
-
-				nb_iso++;
-
-			}
-			else {
-				Iso_idx[input_counter] = Iso_idx[Idx_canonical_form[input_counter]];
-			}
-
 
 		}
 
@@ -495,6 +416,116 @@ void classification_of_varieties_nauty::main_loop(
 	}
 }
 
+void classification_of_varieties_nauty::handle_one_input_case(
+		int input_counter, int &nb_iso,
+		variety_compute_canonical_form *Variety_compute_canonical_form,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+
+	if (f_v) {
+		cout << "classification_of_varieties_nauty::handle_one_input_case" << endl;
+	}
+
+
+	other::l1_interfaces::nauty_interface_control *Nauty_control;
+
+
+
+	if (Classifier->f_nauty_control) {
+		Nauty_control = Classifier->Nauty_interface_control;
+	}
+	else {
+		cout << "classification_of_varieties_nauty::handle_one_input_case "
+				"Classifier->f_nauty_control is false, so no nauty_control" << endl;
+		exit(1);
+	}
+
+
+	int f_found_canonical_form;
+	int idx_canonical_form;
+	int idx_equation;
+	int f_found_eqn;
+
+
+	if (f_v) {
+		cout << "classification_of_varieties_nauty::handle_one_input_case "
+				"input_counter = " << input_counter << " / " << Input->nb_objects_to_test
+				<< " before Variety_compute_canonical_form->compute_canonical_form_nauty_new" << endl;
+	}
+	Variety_compute_canonical_form->compute_canonical_form_nauty_new(
+			Nauty_control,
+			f_found_canonical_form,
+			idx_canonical_form,
+			idx_equation,
+			f_found_eqn,
+			verbose_level);
+
+
+	if (f_v) {
+		cout << "classification_of_varieties_nauty::handle_one_input_case "
+				"input_counter = " << input_counter << " / " << Input->nb_objects_to_test
+				<< " after Variety_compute_canonical_form->compute_canonical_form_nauty_new" << endl;
+	}
+
+	Goi[input_counter] = Variety_compute_canonical_form->Variety_stabilizer_compute->Stab_gens_variety->group_order_as_lint();
+
+	if (f_found_canonical_form
+			&& f_found_eqn) {
+
+		F_first_time[input_counter] = false;
+
+	}
+	else if (f_found_canonical_form
+			&& !f_found_eqn) {
+
+		F_first_time[input_counter] = true;
+
+	}
+	else if (!f_found_canonical_form) {
+
+		F_first_time[input_counter] = true;
+
+	}
+	else {
+		cout << "classification_of_varieties_nauty::handle_one_input_case illegal combination" << endl;
+		exit(1);
+	}
+
+	Idx_canonical_form[input_counter] = idx_canonical_form;
+	Idx_equation[input_counter] = idx_equation;
+
+	if (F_first_time[input_counter]) {
+
+
+		Iso_idx[input_counter] = nb_iso;
+
+		int idx, i;
+
+
+		for (i = 0; i < input_counter; i++) {
+			idx = Idx_canonical_form[i];
+			if (idx >= idx_canonical_form) {
+				Idx_canonical_form[i]++;
+			}
+		}
+
+		Orbit_input_idx[nb_iso_orbits] = input_counter;
+		nb_iso_orbits++;
+
+		nb_iso++;
+
+	}
+	else {
+		Iso_idx[input_counter] = Iso_idx[Idx_canonical_form[input_counter]];
+	}
+
+	if (f_v) {
+		cout << "classification_of_varieties_nauty::handle_one_input_case done" << endl;
+	}
+}
 
 void classification_of_varieties_nauty::write_classification_by_nauty_csv(
 		std::string &fname_base,

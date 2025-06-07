@@ -15,7 +15,7 @@ ROW,C1,C2,C3
 1,"\verb'-sort_by_colors' ","   ","Sort the vertices by color classes. "
 1,"\verb'-split' "," input file  ","Split the graph into subgraphs. "
 1,"\verb'-split_by_starters' "," fname\_reps\_csv col\_label  ","Split the graph into subgraphs according to starters listed in the specified column of the given csv file. "
-1,"\verb'-combine_by_starters' "," fname\_reps col\_label  ","Combine the graph from subgraphs according to starters listed in the specified column of the given csv file. "
+1,"\verb'-combine_by_starters' "," fname\_reps col\_label solution\_fname\_mask ","Combine the graph from subgraphs according to starters listed in the specified column of the given csv file. "
 1,"\verb'-split_by_clique' "," label clique  ","Compute the neighborhood graph of the given clique. "
 1,"\verb'-save' ","   ","Save the graph to file in binary format. "
 1,"\verb'-automorphism_group' ","   ","Compute the automorphism group and write a report. See Section~\ref{sec:canonical:form:objects:graphs}. "

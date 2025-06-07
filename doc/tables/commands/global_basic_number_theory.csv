@@ -17,5 +17,5 @@ ROW,C1,C2,C3
 1,"\verb'-eulerfunction_interval' "," n1 n2 "," Compute Euler's totient function $\varphi(n)$ for all n with $n1 \le n \le n2.$ "
 1,"\verb'-jacobi' "," $a$ $p$ "," Computes the Jacobi symbol $\left( \frac{a}{p} \right)$"
 1,"\verb'-Chinese_remainders' "," R M "," Solves a system of congruences with remainders R and moduli M. R and M must be vectors whose labels are given. "
-1,"\verb'-draw_mod_n' "," options "," Draws the integers modulo $n$ on a circle. For possible options, see Table~\ref{tab:draw:mod:n}. "
+1,"\verb'-draw_mod_n' "," option-string options"," Draws the integers modulo $n$ on a circle. For possible options, see Table~\ref{tab:draw:mod:n}. "
 END

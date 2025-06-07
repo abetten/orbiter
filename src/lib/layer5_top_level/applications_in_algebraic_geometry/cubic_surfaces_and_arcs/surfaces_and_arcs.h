@@ -440,6 +440,7 @@ public:
 			surfaces_arc_lifting *Lift,
 			int f, int orbit_idx, long int *Lines27, int *eqn20,
 			int verbose_level);
+	// called from surfaces_arc_lifting_upstep::process_flag_orbit
 	void tally_f2(
 			int verbose_level);
 	void report(
@@ -642,11 +643,14 @@ public:
 			int verbose_level);
 	void compute_stabilizer(
 			surfaces_arc_lifting_definition_node *D,
-			groups::strong_generators *&Aut_gens, int verbose_level);
+			groups::strong_generators *&Aut_gens,
+			int verbose_level);
 	void process_tritangent_plane(
 			surfaces_arc_lifting_definition_node *D,
 			int verbose_level);
 	void make_seventytwo_cases(
+			int verbose_level);
+	void create_seventytwo_cases(
 			int verbose_level);
 
 };
@@ -704,15 +708,20 @@ public:
 			std::string &Control_six_arcs_label,
 		int f_test_nb_Eckardt_points, int nb_E,
 		int verbose_level);
+	void upstep(
+		int verbose_level);
+	// called from surface_domain_high_level::do_classify_surfaces_through_arcs_and_two_lines
 	void downstep(
 			int verbose_level);
 	void downstep_one_arc(
 			int arc_idx,
-			int &cur_flag_orbit, long int *Flag, int verbose_level);
+			int &cur_flag_orbit, long int *Flag,
+			int verbose_level);
 	void report(
 			std::string &Control_six_arcs_label,
 			int verbose_level);
-	void report2(std::ostream &ost,
+	void report2(
+			std::ostream &ost,
 			other::graphics::layered_graph_draw_options *draw_options,
 			int verbose_level);
 	void report_flag_orbits(

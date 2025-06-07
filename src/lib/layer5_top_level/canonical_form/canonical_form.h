@@ -297,12 +297,17 @@ public:
 				other::l1_interfaces::nauty_interface_control *Nauty_control,
 				automorphism_group_of_variety *&Aut_of_variety,
 				int verbose_level);
-	void find_isomorphism(
+	void find_isomorphism_between_set_of_rational_points(
 			variety_stabilizer_compute *C1,
 			variety_stabilizer_compute *C,
 			int *alpha, int *gamma,
 			int verbose_level);
 	// find gamma which maps the points of C1 to the points of C.
+	// computes gamma = alpha * beta^-1
+	// where alpha_inv = canonical labeling of C1
+	// where beta_inv = canonical labeling of C
+	// this function only deals with the set of rational points, not with the equation
+	// called from variety_compute_canonical_form::find_equation_new
 	void compute_group_and_tactical_decomposition(
 			canonical_form::canonical_form_classifier *Classifier,
 			canonical_form::variety_object_with_action *Input_Vo,
@@ -377,6 +382,7 @@ public:
 	variety_compute_canonical_form **Canonical_forms; // [Canonical_form_classifier->Input->nb_objects_to_test]
 
 
+	// ELt is the lifting of gamma:
 	int *Elt; // [Classifier->PA->A->elt_size_in_int]
 	int *eqn2; // [Classifier->Poly_ring->get_nb_monomials()]
 		// used by canonical_form_of_variety::find_equation
@@ -403,6 +409,10 @@ public:
 	void allocate_tables(
 			int verbose_level);
 	void main_loop(
+			int verbose_level);
+	void handle_one_input_case(
+			int input_counter, int &nb_iso,
+			variety_compute_canonical_form *Variety_compute_canonical_form,
 			int verbose_level);
 	void write_classification_by_nauty_csv(
 			std::string &fname_base,
@@ -683,10 +693,11 @@ public:
 
 	int f_export;
 
+	// ToDo: undocumented
 	int f_classify; // not yet implemented
 
-	int f_apply_transformation; // not yet implemented
-	std::string apply_transformation_group_element;
+	int f_apply_transformation_to_self;
+	std::string apply_transformation_to_self_group_element;
 
 	int f_singular_points;
 
@@ -742,6 +753,10 @@ public:
 			std::string &output_fname_base,
 			int f_nauty_control,
 			other::l1_interfaces::nauty_interface_control *Nauty_interface_control,
+			int verbose_level);
+	void do_apply_transformation_to_self(
+			int f_inverse,
+			std::string &transformation_coded,
 			int verbose_level);
 	void do_singular_points(
 			int verbose_level);
@@ -908,7 +923,7 @@ public:
 			int cnt, int po_go, int po_index, int po, int so,
 			geometry::algebraic_geometry::variety_description *VD,
 			int verbose_level);
-	void apply_transformation(
+	void apply_transformation_to_self(
 			int *Elt,
 			actions::action *A,
 			actions::action *A_on_lines,
@@ -927,6 +942,9 @@ public:
 			std::ostream &ost, int verbose_level);
 	void print_summary(
 			std::ostream &ost);
+	void export_col_headings(
+			std::string *&Col_headings, int &nb_cols,
+			int verbose_level);
 	void export_data(
 			std::vector<std::string> &Table, int verbose_level);
 	void do_export(
@@ -981,7 +999,6 @@ public:
 	void compute_canonical_form_of_variety(
 			variety_object_with_action *Variety_object_with_action,
 			other::l1_interfaces::nauty_interface_control *Nauty_control,
-			//int f_save_nauty_input_graphs,
 			int verbose_level);
 	// Computes the canonical labeling of the graph associated with
 	// the set of rational points of the variety.

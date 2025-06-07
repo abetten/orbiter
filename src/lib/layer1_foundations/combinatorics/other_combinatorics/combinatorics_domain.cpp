@@ -2527,6 +2527,29 @@ void combinatorics_domain::Dedekind_numbers(
 }
 
 
+void combinatorics_domain::do_q_binomial(
+		int n, int k, int q,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "combinatorics_domain::do_q_binomial" << endl;
+	}
+
+	algebra::ring_theory::longinteger_object a;
+
+	q_binomial(
+			a,
+			n, k, q, 0 /*verbose_level*/);
+
+	cout << "q_binomial n=" << n << " k=" << k << " q=" << q << " = " << a << endl;
+
+	if (f_v) {
+		cout << "combinatorics_domain::do_q_binomial done" << endl;
+	}
+}
+
 
 void combinatorics_domain::do_read_poset_file(
 		std::string &fname,

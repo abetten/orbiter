@@ -488,27 +488,6 @@ void variety_object::parse_equation_in_algebraic_form(
 
 	FREE_int(coeffs);
 
-#if 0
-	}
-	else {
-
-		if (f_v) {
-			cout << "variety_object::parse_equation_in_algebraic_form "
-					"reading coefficients numerically" << endl;
-		}
-
-		int sz;
-
-		Int_vec_scan(equation_txt, equation, sz);
-
-		if (sz != Ring->get_nb_monomials()) {
-			cout << "variety_object::parse_equation_in_algebraic_form "
-					"the equation does not have the required number of terms" << endl;
-			exit(1);
-		}
-
-	}
-#endif
 
 	if (f_v) {
 		cout << "variety_object::parse_equation_in_algebraic_form done" << endl;
@@ -654,7 +633,15 @@ void variety_object::init_equation_and_points_and_lines_and_labels(
 		cout << "variety_object::init_equation_and_points_and_lines_and_labels" << endl;
 	}
 
+	if (f_v) {
+		cout << "variety_object::init_equation_and_points_and_lines_and_labels "
+				"before init_equation_only" << endl;
+	}
 	init_equation_only(Projective_space, Ring, equation, verbose_level);
+	if (f_v) {
+		cout << "variety_object::init_equation_and_points_and_lines_and_labels "
+				"after init_equation_only" << endl;
+	}
 
 	Point_sets = NEW_OBJECT(other::data_structures::set_of_sets);
 	Point_sets->init_single(
@@ -734,6 +721,8 @@ void variety_object::enumerate_points(
 		}
 	}
 	else {
+
+	}
 #endif
 		if (f_v) {
 			cout << "variety_object::enumerate_points before "
@@ -777,6 +766,10 @@ void variety_object::enumerate_points(
 		cout << "variety_object::enumerate_points done" << endl;
 	}
 }
+
+
+
+
 
 void variety_object::enumerate_lines(
 		int verbose_level)
@@ -836,11 +829,28 @@ void variety_object::enumerate_lines(
 				"has " << nb_lines << " lines" << endl;
 	}
 
+
+	if (f_v) {
+		cout << "variety_object::enumerate_lines "
+				"before set_lines" << endl;
+	}
+
+	set_lines(
+			Lines, nb_lines,
+			verbose_level);
+
+	if (f_v) {
+		cout << "variety_object::enumerate_lines "
+				"after set_lines" << endl;
+	}
+
+#if 0
 	Line_sets = NEW_OBJECT(other::data_structures::set_of_sets);
 
 	Line_sets->init_single(
 			Projective_space->Subspaces->N_lines /* underlying_set_size */,
 			Lines, nb_lines, 0 /* verbose_level */);
+#endif
 
 	FREE_lint(Lines);
 
@@ -849,6 +859,130 @@ void variety_object::enumerate_lines(
 		cout << "variety_object::enumerate_lines done" << endl;
 	}
 }
+
+void variety_object::set_lines(
+		long int *Lines, int nb_lines,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "variety_object::set_lines" << endl;
+	}
+
+	Line_sets = NEW_OBJECT(other::data_structures::set_of_sets);
+
+	Line_sets->init_single(
+			Projective_space->Subspaces->N_lines /* underlying_set_size */,
+			Lines, nb_lines, 0 /* verbose_level */);
+
+
+
+	if (f_v) {
+		cout << "variety_object::set_lines done" << endl;
+	}
+
+}
+
+long int *variety_object::get_points()
+{
+	if (Point_sets == NULL) {
+		cout << "variety_object::get_points Point_sets == NULL" << endl;
+		exit(1);
+	}
+	return Point_sets->Sets[0];
+}
+
+long int variety_object::get_point(
+		int idx)
+{
+	if (Point_sets == NULL) {
+		cout << "variety_object::get_point Point_sets == NULL" << endl;
+		exit(1);
+	}
+	return Point_sets->Sets[0][idx];
+}
+
+void variety_object::set_point(
+		int idx, long int rk)
+{
+	if (Point_sets == NULL) {
+		cout << "variety_object::set_point Point_sets == NULL" << endl;
+		exit(1);
+	}
+	Point_sets->Sets[0][idx] = rk;
+}
+
+long int *variety_object::get_lines()
+{
+	if (Line_sets == NULL) {
+		cout << "variety_object::get_lines Line_sets == NULL" << endl;
+		exit(1);
+	}
+	return Line_sets->Sets[0];
+}
+
+long int variety_object::get_line(
+		int idx)
+{
+	if (Line_sets == NULL) {
+		cout << "variety_object::get_line Line_sets == NULL" << endl;
+		exit(1);
+	}
+	return Line_sets->Sets[0][idx];
+}
+
+void variety_object::set_line(
+		int idx, long int rk)
+{
+	if (Line_sets == NULL) {
+		cout << "variety_object::set_line Line_sets == NULL" << endl;
+		exit(1);
+	}
+	Line_sets->Sets[0][idx] = rk;
+}
+
+
+int variety_object::find_point(
+		long int P, int &idx)
+{
+	other::data_structures::sorting Sorting;
+
+	if (Point_sets == NULL) {
+		cout << "variety_object::find_point Point_sets == NULL" << endl;
+		exit(1);
+	}
+
+	if (Sorting.lint_vec_search(
+			Point_sets->Sets[0], Point_sets->Set_size[0], P,
+			idx, 0 /* verbose_level */)) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+int variety_object::find_line(
+		long int P, int &idx)
+{
+	other::data_structures::sorting Sorting;
+
+	if (Line_sets == NULL) {
+		cout << "variety_object::find_point Line_sets == NULL" << endl;
+		exit(1);
+	}
+
+	if (Sorting.lint_vec_search(
+			Line_sets->Sets[0], Line_sets->Set_size[0], P,
+			idx, 0 /* verbose_level */)) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
 
 void variety_object::print(
 		std::ostream &ost)
@@ -976,6 +1110,17 @@ std::string variety_object::stringify_lines()
 	return s;
 }
 
+std::string variety_object::stringify_equation()
+{
+	string eqn_txt;
+
+	eqn_txt = Int_vec_stringify(
+			eqn,
+			Ring->get_nb_monomials());
+	return eqn_txt;
+}
+
+
 void variety_object::stringify(
 		std::string &s_Eqn1, //std::string &s_Eqn2,
 		std::string &s_nb_Pts,
@@ -997,10 +1142,14 @@ void variety_object::stringify(
 			Point_sets->Sets[0],
 			Point_sets->Set_size[0]);
 
-	s_Bitangents = Lint_vec_stringify(
-			Line_sets->Sets[0],
-			Line_sets->Set_size[0]);
-
+	if (Line_sets) {
+		s_Bitangents = Lint_vec_stringify(
+				Line_sets->Sets[0],
+				Line_sets->Set_size[0]);
+	}
+	else {
+		s_Bitangents = "";
+	}
 }
 
 void variety_object::report_equations(
@@ -1050,6 +1199,7 @@ void variety_object::report_equation2(
 }
 #endif
 
+#if 0
 int variety_object::find_point(
 		long int P, int &idx)
 {
@@ -1064,7 +1214,7 @@ int variety_object::find_point(
 		return false;
 	}
 }
-
+#endif
 
 std::string variety_object::stringify_eqn()
 {

@@ -830,7 +830,7 @@ void any_combinatorial_object::init_packing_from_spread_table(
 	FREE_int(M);
 
 	if (f_v) {
-		cout << "object_with_canonical_form::init_packing_from_spread_table done" << endl;
+		cout << "any_combinatorial_object::init_packing_from_spread_table done" << endl;
 	}
 }
 

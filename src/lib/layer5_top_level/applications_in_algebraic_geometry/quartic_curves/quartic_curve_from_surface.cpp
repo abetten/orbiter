@@ -185,7 +185,7 @@ void quartic_curve_from_surface::init_labels(
 
 
 
-void quartic_curve_from_surface::quartic(
+void quartic_curve_from_surface::create_quartic_curve(
 		int pt_orbit, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -193,7 +193,7 @@ void quartic_curve_from_surface::quartic(
 	int i, a;
 
 	if (f_v) {
-		cout << "quartic_curve_from_surface::quartic" << endl;
+		cout << "quartic_curve_from_surface::create_quartic_curve" << endl;
 	}
 
 
@@ -205,18 +205,18 @@ void quartic_curve_from_surface::quartic(
 	transporter = NEW_int(SOA->Surf_A->A->elt_size_in_int);
 
 	if (f_v) {
-		cout << "quartic_curve_from_surface::quartic "
+		cout << "quartic_curve_from_surface::create_quartic_curve "
 				"before map_surface_to_special_form" << endl;
 	}
 	map_surface_to_special_form(
 			pt_orbit,
 			0 /*verbose_level - 2*/);
 	if (f_v) {
-		cout << "quartic_curve_from_surface::quartic "
+		cout << "quartic_curve_from_surface::create_quartic_curve "
 				"after map_surface_to_special_form" << endl;
 	}
 	if (f_v) {
-		cout << "quartic_curve_from_surface::quartic "
+		cout << "quartic_curve_from_surface::create_quartic_curve "
 				"equation_nice=" << endl;
 		SOA->Surf->PolynomialDomains->Poly3_4->print_equation(
 				cout, equation_nice);
@@ -226,14 +226,14 @@ void quartic_curve_from_surface::quartic(
 
 
 	if (f_v) {
-		cout << "quartic_curve_from_surface::quartic "
+		cout << "quartic_curve_from_surface::create_quartic_curve "
 				"before Surf->split_nice_equation" << endl;
 	}
 	SOA->Surf->PolynomialDomains->split_nice_equation(
 			equation_nice, f1, f2, f3,
 			0 /* verbose_level */);
 	if (f_v) {
-		cout << "quartic_curve_from_surface::quartic "
+		cout << "quartic_curve_from_surface::create_quartic_curve "
 			"after Surf->split_nice_equation" << endl;
 	}
 
@@ -262,7 +262,7 @@ void quartic_curve_from_surface::quartic(
 
 
 	if (f_v) {
-		cout << "quartic_curve_from_surface::quartic "
+		cout << "quartic_curve_from_surface::create_quartic_curve "
 			"before Surf_A->A->Group_element->map_a_set_and_reorder" << endl;
 	}
 	SOA->Surf_A->A->Group_element->map_a_set_and_reorder(
@@ -271,7 +271,7 @@ void quartic_curve_from_surface::quartic(
 			transporter,
 			0 /* verbose_level */);
 	if (f_v) {
-		cout << "quartic_curve_from_surface::quartic "
+		cout << "quartic_curve_from_surface::create_quartic_curve "
 			"after Surf_A->A->map_a_set_and_reorder" << endl;
 	}
 	for (i = 0; i < nb_pts_on_surface; i++) {
@@ -338,7 +338,7 @@ void quartic_curve_from_surface::quartic(
 
 
 	if (f_v) {
-		cout << "quartic_curve_from_surface::quartic before "
+		cout << "quartic_curve_from_surface::create_quartic_curve before "
 				"Surf->assemble_polar_hypersurface" << endl;
 	}
 	SOA->Surf->PolynomialDomains->assemble_polar_hypersurface(
@@ -354,7 +354,7 @@ void quartic_curve_from_surface::quartic(
 
 
 	if (f_v) {
-		cout << "quartic_curve_from_surface::quartic "
+		cout << "quartic_curve_from_surface::create_quartic_curve "
 			"before Surf->Poly2_4->enumerate_points" << endl;
 	}
 
@@ -377,7 +377,7 @@ void quartic_curve_from_surface::quartic(
 
 
 	if (f_v) {
-		cout << "quartic_curve_from_surface::quartic "
+		cout << "quartic_curve_from_surface::create_quartic_curve "
 				"We found " << nb_pts_on_polar_hypersurface
 			<< " points on the polar hypersurface." << endl;
 	}
@@ -437,7 +437,7 @@ void quartic_curve_from_surface::quartic(
 
 
 	if (f_v) {
-		cout << "quartic_curve_from_surface::quartic before "
+		cout << "quartic_curve_from_surface::create_quartic_curve before "
 			"Surf->Poly4_x123->enumerate_points" << endl;
 	}
 
@@ -455,7 +455,7 @@ void quartic_curve_from_surface::quartic(
 
 
 	if (f_v) {
-		cout << "quartic_curve_from_surface::quartic "
+		cout << "quartic_curve_from_surface::create_quartic_curve "
 				"We found " << sz_curve
 				<< " points on the quartic." << endl;
 	}
@@ -468,7 +468,7 @@ void quartic_curve_from_surface::quartic(
 		fname_base = surface_prefix + "_orb" + std::to_string(pt_orbit) + "_quartic";
 
 		if (f_v) {
-			cout << "quartic_curve_from_surface::quartic "
+			cout << "quartic_curve_from_surface::create_quartic_curve "
 				"before GG.create_decomposition_of_projective_plane" << endl;
 		}
 
@@ -479,7 +479,7 @@ void quartic_curve_from_surface::quartic(
 				verbose_level);
 
 		if (f_v) {
-			cout << "quartic_curve_from_surface::quartic "
+			cout << "quartic_curve_from_surface::create_quartic_curve "
 				"after GG.create_decomposition_of_projective_plane" << endl;
 		}
 
@@ -493,7 +493,7 @@ void quartic_curve_from_surface::quartic(
 
 	nb_bitangents = 28;
 	if (f_v) {
-		cout << "quartic_curve_from_surface::quartic "
+		cout << "quartic_curve_from_surface::create_quartic_curve "
 				"before Variety_object->init_equation_and_points_and_lines_and_labels" << endl;
 	}
 	Variety_object->init_equation_and_points_and_lines_and_labels(
@@ -506,13 +506,13 @@ void quartic_curve_from_surface::quartic(
 			label_tex,
 			verbose_level - 2);
 	if (f_v) {
-		cout << "quartic_curve_from_surface::quartic "
+		cout << "quartic_curve_from_surface::create_quartic_curve "
 				"after Variety_object->init_equation_and_points_and_lines_and_labels" << endl;
 	}
 
 
 	if (f_v) {
-		cout << "quartic_curve_from_surface::quartic done" << endl;
+		cout << "quartic_curve_from_surface::create_quartic_curve done" << endl;
 	}
 
 

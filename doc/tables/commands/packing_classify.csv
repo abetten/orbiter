@@ -1,0 +1,8 @@
+ROW,C1,C2,C3
+0,"tab:packing:classify",,
+1,"Classification of Packings",,
+1,"\verb'-report' ","  ","Produce a report."
+1,"\verb'-classify' "," control ","Classify packings using poset classification. Use control for arguments."
+1,"\verb'-make_graph_of_disjoint_spreads' ","  ","Make the graph of disjoint spreads."
+1,"\verb'-export_group_on_spreads' ","  ","Export the group in the action on the spreads."
+END

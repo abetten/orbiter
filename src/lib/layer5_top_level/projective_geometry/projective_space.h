@@ -261,6 +261,9 @@ public:
 	std::string classify_surfaces_with_double_sixes_control_label;
 #endif
 
+	// ToDo undocumented:
+	int f_recognize_surfaces;
+
 	int f_classify_surfaces_through_arcs_and_two_lines;
 
 	int f_test_nb_Eckardt_points;

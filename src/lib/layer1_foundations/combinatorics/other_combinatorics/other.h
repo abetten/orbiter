@@ -234,6 +234,9 @@ public:
 	void Dedekind_numbers(
 			int n_min, int n_max, int q_min, int q_max,
 			int verbose_level);
+	void do_q_binomial(
+			int n, int k, int q,
+			int verbose_level);
 	void do_read_poset_file(
 			std::string &fname,
 			int f_grouping, double x_stretch, int verbose_level);

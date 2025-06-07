@@ -76,6 +76,7 @@ surfaces_arc_lifting_upstep::~surfaces_arc_lifting_upstep()
 
 void surfaces_arc_lifting_upstep::init(
 		surfaces_arc_lifting *Lift, int verbose_level)
+// called from surfaces_arc_lifting::upstep
 {
 	int f_v = (verbose_level >= 1);
 
@@ -110,7 +111,8 @@ void surfaces_arc_lifting_upstep::init(
 
 	Lift->A4->group_order(A4_go);
 
-	Lift->Surfaces->init(Lift->A4, Lift->Surf_A->A2,
+	Lift->Surfaces->init(
+			Lift->A4, Lift->Surf_A->A2,
 			Lift->Flag_orbits->nb_flag_orbits, 27, A4_go,
 			verbose_level);
 
@@ -180,6 +182,7 @@ void surfaces_arc_lifting_upstep::init(
 
 void surfaces_arc_lifting_upstep::process_flag_orbit(
 		int verbose_level)
+// called from surfaces_arc_lifting_upstep::init
 {
 	int f_v = (verbose_level >= 1);
 
@@ -207,7 +210,9 @@ void surfaces_arc_lifting_upstep::process_flag_orbit(
 		cout << "Flag_orbits->pt_representation_sz != pt_representation_sz" << endl;
 		exit(1);
 	}
-	Lint_vec_copy(Lift->Flag_orbits->Pt + f * pt_representation_sz,
+	Lint_vec_copy(
+			Lift->Flag_orbits->get_rep(f),
+			//Lift->Flag_orbits->Pt + f * pt_representation_sz,
 			Flag_representation, pt_representation_sz);
 
 	Lint_vec_copy_to_int(Flag_representation + 13, eqn20, 20);
@@ -219,7 +224,8 @@ void surfaces_arc_lifting_upstep::process_flag_orbit(
 
 	D = NEW_OBJECT(surfaces_arc_lifting_definition_node);
 
-	D->init_with_27_lines(Lift,
+	D->init_with_27_lines(
+			Lift,
 			f, Lift->Surfaces->nb_orbits, Lines, eqn20,
 			verbose_level);
 
@@ -229,17 +235,20 @@ void surfaces_arc_lifting_upstep::process_flag_orbit(
 	groups::strong_generators *Aut_gens;
 
 	if (f_v) {
-		cout << "surfaces_arc_lifting_upstep::process_flag_orbit before compute_stabilizer" << endl;
+		cout << "surfaces_arc_lifting_upstep::process_flag_orbit "
+				"before compute_stabilizer" << endl;
 	}
 	compute_stabilizer(D, Aut_gens, verbose_level);
 	if (f_v) {
-		cout << "surfaces_arc_lifting_upstep::process_flag_orbit after compute_stabilizer" << endl;
+		cout << "surfaces_arc_lifting_upstep::process_flag_orbit "
+				"after compute_stabilizer" << endl;
 	}
 
 
 
 	if (f_v) {
-		cout << "surfaces_arc_lifting_upstep::process_flag_orbit before Surfaces.init" << endl;
+		cout << "surfaces_arc_lifting_upstep::process_flag_orbit "
+				"before Surfaces.init" << endl;
 	}
 	Lift->Surfaces->Orbit[Lift->Flag_orbits->nb_primary_orbits_upper].init(
 				Lift->Surfaces,
@@ -247,13 +256,15 @@ void surfaces_arc_lifting_upstep::process_flag_orbit(
 				f,
 				Aut_gens, Lines, D /* extra_data */, verbose_level);
 	if (f_v) {
-		cout << "surfaces_arc_lifting_upstep::process_flag_orbit after init Aut_gens" << endl;
+		cout << "surfaces_arc_lifting_upstep::process_flag_orbit "
+				"after Surfaces.init Aut_gens" << endl;
 	}
 
 	D->SOA = NEW_OBJECT(cubic_surfaces_in_general::surface_object_with_group);
 
 	if (f_v) {
-		cout << "surfaces_arc_lifting_upstep::process_flag_orbit before D->SOA->init_with_group" << endl;
+		cout << "surfaces_arc_lifting_upstep::process_flag_orbit "
+				"before D->SOA->init_with_group" << endl;
 	}
 
 
@@ -264,7 +275,8 @@ void surfaces_arc_lifting_upstep::process_flag_orbit(
 	label_tex = "arc\\_lifting";
 	{
 
-		D->SOA->init_with_group(Lift->Surf_A,
+		D->SOA->init_with_group(
+				Lift->Surf_A,
 				Lines, 27, eqn20,
 				Aut_gens,
 				label_txt, label_tex,
@@ -282,7 +294,8 @@ void surfaces_arc_lifting_upstep::process_flag_orbit(
 
 
 	if (f_v) {
-		cout << "surfaces_arc_lifting_upstep::process_flag_orbit after D->SOA->init_with_group" << endl;
+		cout << "surfaces_arc_lifting_upstep::process_flag_orbit "
+				"after D->SOA->init_with_group" << endl;
 	}
 
 	Lift->Surfaces->nb_orbits++;
@@ -298,7 +311,8 @@ void surfaces_arc_lifting_upstep::process_flag_orbit(
 
 void surfaces_arc_lifting_upstep::compute_stabilizer(
 		surfaces_arc_lifting_definition_node *D,
-		groups::strong_generators *&Aut_gens, int verbose_level)
+		groups::strong_generators *&Aut_gens,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vvv = (verbose_level >= 3);
@@ -386,7 +400,8 @@ void surfaces_arc_lifting_upstep::compute_stabilizer(
 					<< D->nb_coset_reps << endl;
 		}
 		Aut_gens = NEW_OBJECT(groups::strong_generators);
-		Aut_gens->init_group_extension(D->Flag_stab_gens, D->coset_reps,
+		Aut_gens->init_group_extension(
+				D->Flag_stab_gens, D->coset_reps,
 				D->nb_coset_reps, verbose_level - 2);
 
 		Aut_gens->group_order(ago);
@@ -408,7 +423,8 @@ void surfaces_arc_lifting_upstep::compute_stabilizer(
 		}
 		Group_theory_global.relative_order_vector_of_cosets(
 				Lift->Surf_A->A, D->Flag_stab_gens,
-				D->coset_reps, D->relative_order_table, 0 /*verbose_level*/);
+				D->coset_reps, D->relative_order_table,
+				0 /*verbose_level*/);
 		if (f_v) {
 			cout << "surfaces_arc_lifting_upstep::compute_stabilizer "
 					"after Group_theory_global.relative_order_vector_of_cosets" << endl;
@@ -416,7 +432,8 @@ void surfaces_arc_lifting_upstep::compute_stabilizer(
 
 			other::l1_interfaces::latex_interface L;
 
-			L.print_integer_matrix_with_standard_labels(cout,
+			L.print_integer_matrix_with_standard_labels(
+					cout,
 					D->relative_order_table,
 					D->coset_reps->len, 1,
 					false /* f_tex */);
@@ -428,11 +445,13 @@ void surfaces_arc_lifting_upstep::compute_stabilizer(
 #endif
 
 	if (f_v) {
-		cout << "surfaces_arc_lifting_upstep::compute_stabilizer before D->tally_f2" << endl;
+		cout << "surfaces_arc_lifting_upstep::compute_stabilizer "
+				"before D->tally_f2" << endl;
 	}
 	D->tally_f2(verbose_level);
 	if (f_v) {
-		cout << "surfaces_arc_lifting_upstep::compute_stabilizer after D->tally_f2" << endl;
+		cout << "surfaces_arc_lifting_upstep::compute_stabilizer "
+				"after D->tally_f2" << endl;
 	}
 
 
@@ -481,10 +500,25 @@ void surfaces_arc_lifting_upstep::process_tritangent_plane(
 		Int_vec_print(cout, three_lines_idx, 3);
 		cout << " three_lines=";
 		Lint_vec_print(cout, three_lines, 3);
+		cout << " before make_seventytwo_cases" << endl;
 		cout << endl;
 	}
 
 	make_seventytwo_cases(verbose_level);
+
+	if (f_vv) {
+		cout << "surfaces_arc_lifting_upstep::process_tritangent_plane "
+				"f=" << f << " / " << Lift->Flag_orbits->nb_flag_orbits
+				<< ", upstep "
+				"tritangent_plane_idx=" << tritangent_plane_idx << " / 45 "
+				"three_lines_idx=";
+		Int_vec_print(cout, three_lines_idx, 3);
+		cout << " three_lines=";
+		Lint_vec_print(cout, three_lines, 3);
+		cout << " after make_seventytwo_cases" << endl;
+		cout << endl;
+	}
+
 
 	for (seventytwo_case_idx = 0; seventytwo_case_idx < 72; seventytwo_case_idx++) {
 
@@ -520,7 +554,10 @@ void surfaces_arc_lifting_upstep::process_tritangent_plane(
 				Lift->A4->Group_element->element_print(T->Elt_T4, cout);
 				cout << endl;
 			}
-			Lift->A4->Group_element->element_move(T->Elt_T4, D->coset_reps->ith(D->nb_coset_reps), 0);
+			Lift->A4->Group_element->element_move(
+					T->Elt_T4,
+					D->coset_reps->ith(D->nb_coset_reps),
+					0);
 			D->T[D->nb_coset_reps] = T;
 			D->nb_coset_reps++;
 
@@ -544,7 +581,8 @@ void surfaces_arc_lifting_upstep::process_tritangent_plane(
 					= NEW_int(Lift->A4->elt_size_in_int);
 
 
-				Lift->A4->Group_element->element_invert(T->Elt_T4,
+				Lift->A4->Group_element->element_invert(
+						T->Elt_T4,
 						Lift->Flag_orbits->Flag_orbit_node[f2].fusion_elt, 0);
 
 				f_processed[f2] = true;
@@ -590,11 +628,68 @@ void surfaces_arc_lifting_upstep::make_seventytwo_cases(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surfaces_arc_lifting_upstep::make_seventytwo_cases "
+				"f=" << f << " / " << Lift->Flag_orbits->nb_flag_orbits <<
+				" tritangent_plane_idx=" << tritangent_plane_idx << " / 45 " << endl;
+		cout << "verbose_level = " << verbose_level << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "surfaces_arc_lifting_upstep::make_seventytwo_cases "
+				"f=" << f << " / " << Lift->Flag_orbits->nb_flag_orbits <<
+				" tritangent_plane_idx=" << tritangent_plane_idx << " / 45 "
+						"before create_seventytwo_cases" << endl;
+	}
+	create_seventytwo_cases(verbose_level);
+	if (f_v) {
+		cout << "surfaces_arc_lifting_upstep::make_seventytwo_cases "
+				"f=" << f << " / " << Lift->Flag_orbits->nb_flag_orbits <<
+				" tritangent_plane_idx=" << tritangent_plane_idx << " / 45 "
+						"after create_seventytwo_cases" << endl;
+	}
+
+
+	int c;
+
+	if (f_v) {
+		cout << "surfaces_arc_lifting_upstep::make_seventytwo_cases "
+				"f=" << f << " / " << Lift->Flag_orbits->nb_flag_orbits <<
+				" tritangent_plane_idx=" << tritangent_plane_idx << " / 45 computing the arcs" << endl;
+	}
+	for (c = 0; c < 72; c++) {
+		if (f_v) {
+			cout << "surfaces_arc_lifting_upstep::make_seventytwo_cases "
+					"f=" << f << " / " << Lift->Flag_orbits->nb_flag_orbits <<
+					" tritangent_plane_idx=" << tritangent_plane_idx << " / 45, computing arc " << c << " / 72" << endl;
+		}
+		Seventytwo[c].compute_arc(D->SO, verbose_level);
+	}
+	if (f_v) {
+		cout << "surfaces_arc_lifting_upstep::make_seventytwo_cases "
+				"f=" << f << " / " << Lift->Flag_orbits->nb_flag_orbits <<
+				" tritangent_plane_idx=" << tritangent_plane_idx << " / 45 computing the arcs done" << endl;
+	}
+
+	if (f_v) {
+		cout << "surfaces_arc_lifting_upstep::make_seventytwo_cases "
+				"f=" << f << " / " << Lift->Flag_orbits->nb_flag_orbits <<
+				" tritangent_plane_idx=" << tritangent_plane_idx << " / 45 done" << endl;
+	}
+}
+
+void surfaces_arc_lifting_upstep::create_seventytwo_cases(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
 	int c;
 	int line_idx, m1, m2, m3, line_l1_l2_idx, l1, l2;
 
 	if (f_v) {
-		cout << "surfaces_arc_lifting_upstep::make_seventytwo_cases "
+		cout << "surfaces_arc_lifting_upstep::create_seventytwo_cases "
 				"f=" << f << " / " << Lift->Flag_orbits->nb_flag_orbits <<
 				" tritangent_plane_idx=" << tritangent_plane_idx << " / 45 " << endl;
 		cout << "verbose_level = " << verbose_level << endl;
@@ -656,7 +751,8 @@ void surfaces_arc_lifting_upstep::make_seventytwo_cases(
 				}
 
 
-				Seventytwo[c].init(Lift->Surf, f, tritangent_plane_idx, three_lines_idx, three_lines,
+				Seventytwo[c].init(
+						Lift->Surf, f, tritangent_plane_idx, three_lines_idx, three_lines,
 						line_idx, m1, m2, m3, line_l1_l2_idx, l1, l2);
 				c++;
 				line_l1_l2_idx++;
@@ -665,40 +761,19 @@ void surfaces_arc_lifting_upstep::make_seventytwo_cases(
 		} // l1
 
 		if (line_l1_l2_idx != 24) {
-			cout << "surfaces_arc_lifting_upstep::make_seventytwo_cases line_l1_l2_idx != 24" << endl;
+			cout << "surfaces_arc_lifting_upstep::create_seventytwo_cases line_l1_l2_idx != 24" << endl;
 			exit(1);
 		}
 
 	} // line_idx
 
 	if (c != 72) {
-		cout << "surfaces_arc_lifting_upstep::make_seventytwo_cases c != 72" << endl;
+		cout << "surfaces_arc_lifting_upstep::create_seventytwo_cases c != 72" << endl;
 		exit(1);
 	}
 
 	if (f_v) {
-		cout << "surfaces_arc_lifting_upstep::make_seventytwo_cases "
-				"f=" << f << " / " << Lift->Flag_orbits->nb_flag_orbits <<
-				" tritangent_plane_idx=" << tritangent_plane_idx << " / 45 computing the arcs" << endl;
-	}
-	for (c = 0; c < 72; c++) {
-		if (f_v) {
-			cout << "surfaces_arc_lifting_upstep::make_seventytwo_cases "
-					"f=" << f << " / " << Lift->Flag_orbits->nb_flag_orbits <<
-					" tritangent_plane_idx=" << tritangent_plane_idx << " / 45, computing arc " << c << " / 72" << endl;
-		}
-		Seventytwo[c].compute_arc(D->SO, verbose_level);
-	}
-	if (f_v) {
-		cout << "surfaces_arc_lifting_upstep::make_seventytwo_cases "
-				"f=" << f << " / " << Lift->Flag_orbits->nb_flag_orbits <<
-				" tritangent_plane_idx=" << tritangent_plane_idx << " / 45 computing the arcs done" << endl;
-	}
-
-	if (f_v) {
-		cout << "surfaces_arc_lifting_upstep::make_seventytwo_cases "
-				"f=" << f << " / " << Lift->Flag_orbits->nb_flag_orbits <<
-				" tritangent_plane_idx=" << tritangent_plane_idx << " / 45 done" << endl;
+		cout << "surfaces_arc_lifting_upstep::create_seventytwo_cases done" << endl;
 	}
 }
 

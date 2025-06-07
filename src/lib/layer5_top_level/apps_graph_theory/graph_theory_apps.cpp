@@ -779,6 +779,359 @@ void graph_theory_apps::test_automorphism_property_of_group(
 }
 
 
+void graph_theory_apps::combine_by_starters(
+		combinatorics::graph_theory::colored_graph *CG,
+		std::string &fname_reps,
+		std::string &fname_reps_col_label,
+		std::string &mask_fname_solutions,
+		int verbose_level)
+{
+
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "graph_theory_apps::combine_by_starters" << endl;
+	}
+
+	if (f_v) {
+		cout << "graph_theory_apps::combine_by_starters "
+				"combining by file " << fname_reps
+				<< " column " << fname_reps_col_label
+				<< " solution fname mask = " << mask_fname_solutions
+				<< endl;
+	}
+
+
+	other::orbiter_kernel_system::file_io Fio;
+	other::data_structures::set_of_sets *Reps;
+	//string_tools ST;
+	int c;
+
+
+	Fio.Csv_file_support->read_column_as_set_of_sets(
+			fname_reps,
+			fname_reps_col_label,
+			Reps, verbose_level);
+
+
+	if (f_v) {
+		cout << "graph_theory_apps::combine_by_starters "
+				"We found " << Reps->nb_sets << " cases for splitting" << endl;
+	}
+
+	if (Reps->nb_sets == 0) {
+		cout << "Reps->nb_sets == 0" << endl;
+		exit(1);
+	}
+
+	int starter_size;
+
+	starter_size = Reps->Set_size[0];
+	if (f_v) {
+		cout << "graph_theory_apps::combine_by_starters "
+				"starter_size = " << starter_size << endl;
+	}
+
+	if (f_v) {
+		cout << "graph_theory_apps::combine_by_starters "
+				"starting reading solutions (1st time)" << endl;
+	}
+
+	int nb_sol_total, sz;
+
+	nb_sol_total = 0;
+
+	if (f_v) {
+		cout << "graph_theory_apps::combine_by_starters "
+				"counting solutions, number of cases = " << Reps->nb_sets << endl;
+	}
+
+	for (c = 0; c < Reps->nb_sets; c++) {
+
+		if (f_v) {
+			cout << "graph_theory_apps::combine_by_starters "
+					"combining solutions from case " << c << " / " << Reps->nb_sets << ":" << endl;
+			cout << "starter set = ";
+			Lint_vec_print(cout, Reps->Sets[c], Reps->Set_size[c]);
+			cout << endl;
+		}
+
+		combinatorics::graph_theory::colored_graph *Subgraph;
+		other::data_structures::fancy_set *color_subset;
+		other::data_structures::fancy_set *vertex_subset;
+
+
+		Subgraph = CG->compute_neighborhood_subgraph_based_on_subset(
+				Reps->Sets[c], Reps->Set_size[c],
+				vertex_subset, color_subset,
+				verbose_level - 2);
+
+
+		string fname_sol;
+
+		other::data_structures::string_tools String;
+
+
+		fname_sol = String.printf_d(
+				mask_fname_solutions, c);
+
+		//fname_sol = CG[0]->label + "_case_" + std::to_string(c) + "_sol.csv";
+
+		if (f_v) {
+			cout << "graph_theory_apps::combine_by_starters "
+					"counting solutions, fname_sol = " << fname_sol << endl;
+		}
+
+		//int *M;
+		//int nb_sol, width;
+		int sz1;
+		other::data_structures::set_of_sets *Solutions;
+		int nb_sol, width;
+		std::string col_label;
+
+#if 0
+		Fio.Csv_file_support->int_matrix_read_csv(
+				fname_sol, M,
+				nb_sol, width, verbose_level - 2);
+#endif
+
+		col_label = "Solution";
+
+		Fio.Csv_file_support->read_column_as_set_of_sets(
+				fname_sol, col_label,
+				Solutions,
+				verbose_level - 2);
+
+		nb_sol = Solutions->nb_sets;
+
+		width = Solutions->get_constant_size();
+
+
+		if (f_v) {
+			cout << "graph_theory_apps::combine_by_starters "
+					"combining solutions from case " << c << " / "
+					<< Reps->nb_sets << " with " << nb_sol << " solutions of width " << width << endl;
+			cout << "starter set = ";
+			Lint_vec_print(cout, Reps->Sets[c], Reps->Set_size[c]);
+			cout << endl;
+		}
+
+		nb_sol_total += nb_sol;
+
+		//sz1 = Reps->Set_size[c] + width;
+		sz1 = width;
+
+		if (c == 0) {
+			sz = sz1;
+		}
+		else if (sz1 != sz) {
+			cout << "sz1 != sz" << endl;
+			exit(1);
+		}
+
+		//FREE_int(M);
+		FREE_OBJECT(Solutions);
+		FREE_OBJECT(Subgraph);
+		FREE_OBJECT(color_subset);
+		FREE_OBJECT(vertex_subset);
+
+
+	}
+
+	if (f_v) {
+		cout << "graph_theory_apps::combine_by_starters "
+				"finished reading solutions (1st time)" << endl;
+	}
+
+	if (f_v) {
+		cout << "graph_theory_apps::combine_by_starters "
+				"combining solutions nb_sol_total = " << nb_sol_total << endl;
+		cout << "graph_theory_apps::combine_by_starters "
+				"combining solutions sz = " << sz << endl;
+	}
+
+
+	if (f_v) {
+		cout << "graph_theory_apps::combine_by_starters "
+				"starting reading solutions (2nd time)" << endl;
+	}
+
+
+	int *Sol;
+	int cur;
+
+	Sol = NEW_int(nb_sol_total * sz);
+
+	cur = 0;
+
+	for (c = 0; c < Reps->nb_sets; c++) {
+
+		if (f_v) {
+			cout << "graph_theory_apps::combine_by_starters "
+					"combining solutions from case " << c << " / " << Reps->nb_sets << ":" << endl;
+		}
+
+		combinatorics::graph_theory::colored_graph *Subgraph;
+		other::data_structures::fancy_set *color_subset;
+		other::data_structures::fancy_set *vertex_subset;
+
+
+		Subgraph = CG->compute_neighborhood_subgraph_based_on_subset(
+				Reps->Sets[c], Reps->Set_size[c],
+				vertex_subset, color_subset,
+				verbose_level - 2);
+
+
+		string fname_sol;
+
+
+		other::data_structures::string_tools String;
+
+
+		fname_sol = String.printf_d(
+				mask_fname_solutions, c);
+
+		//fname_sol = CG[0]->label + "_case_" + std::to_string(c) + "_sol.csv";
+
+		if (f_v) {
+			cout << "fname_sol = " << fname_sol << endl;
+		}
+
+		//int *M;
+		//int nb_sol, width;
+		int a;
+		other::data_structures::set_of_sets *Solutions;
+		int nb_sol, width;
+		std::string col_label;
+
+#if 0
+		Fio.Csv_file_support->int_matrix_read_csv(
+				fname_sol, M,
+				nb_sol, width, verbose_level - 2);
+#endif
+
+		col_label = "Solution";
+
+		Fio.Csv_file_support->read_column_as_set_of_sets(
+				fname_sol, col_label,
+				Solutions,
+				verbose_level - 2);
+
+		nb_sol = Solutions->nb_sets;
+
+		width = Solutions->get_constant_size();
+
+
+		if (f_v) {
+			cout << "graph_theory_apps::combine_by_starters "
+					"combining solutions from case " << c << " / " << Reps->nb_sets
+					<< " with " << nb_sol << " solutions of size " << width << endl;
+			cout << "starter set = ";
+			Lint_vec_print(cout, Reps->Sets[c], Reps->Set_size[c]);
+			cout << endl;
+		}
+
+
+#if 0
+		int i, j;
+
+		for (i = 0; i < nb_sol; i++, cur++) {
+			for (j = 0; j < Reps->Set_size[c]; j++) {
+				Sol[cur * sz + j] = Reps->Sets[c][j];
+			}
+			for (j = 0; j < width; j++) {
+				a = Solutions->Sets[i][j]; // M[i * width + j];
+				Sol[cur * sz + Reps->Set_size[c] + j] = a;
+			}
+
+		}
+#else
+		int i, j;
+
+		for (i = 0; i < nb_sol; i++, cur++) {
+			for (j = 0; j < width; j++) {
+				a = Solutions->Sets[i][j]; // M[i * width + j];
+				Sol[cur * sz + j] = a;
+			}
+
+		}
+#endif
+		//FREE_int(M);
+		FREE_OBJECT(Solutions);
+		FREE_OBJECT(Subgraph);
+		FREE_OBJECT(color_subset);
+		FREE_OBJECT(vertex_subset);
+	}
+
+	if (f_v) {
+		cout << "graph_theory_apps::combine_by_starters "
+				"finished reading solutions" << endl;
+	}
+
+
+	if (cur != nb_sol_total) {
+		cout << "graph_theory_apps::combine_by_starters "
+				"cur != nb_sol_total" << endl;
+		cout << "cur = " << cur << endl;
+		cout << "nb_sol_total = " << nb_sol_total << endl;
+		exit(1);
+	}
+
+	string fname_out;
+
+	fname_out = CG->label + "_starter_sz_" + std::to_string(starter_size) + "_combined_sol.csv";
+
+#if 0
+	Fio.Csv_file_support->int_matrix_write_csv(
+			fname_out, Sol,
+			nb_sol_total, sz);
+#endif
+
+	std::string *Table;
+	std::string *Headings;
+	int nb_rows, nb_cols;
+
+
+	nb_rows = nb_sol_total;
+	nb_cols = 2;
+	int i;
+
+	Table = new string [nb_rows * nb_cols];
+	Headings = new string [nb_cols];
+
+	for (i = 0; i < nb_rows; i++) {
+		Table[i * nb_cols + 0] = std::to_string(i);
+		Table[i * nb_cols + 1] = "\"" + Int_vec_stringify(Sol + i * sz, sz) + "\"";
+	}
+
+	Headings[0] = "Row";
+	Headings[1] = "Solution";
+
+
+
+	Fio.Csv_file_support->write_table_of_strings_with_col_headings(
+			fname_out,
+			nb_rows, nb_cols, Table,
+			Headings,
+			verbose_level);
+
+
+	if (f_v) {
+		cout << "graph_theory_apps::combine_by_starters "
+				"Written file " << fname_out << " of size "
+				<< Fio.file_size(fname_out) << endl;
+	}
+
+	FREE_int(Sol);
+	delete [] Table;
+	delete [] Headings;
+
+	if (f_v) {
+		cout << "graph_theory_apps::combine_by_starters done" << endl;
+	}
+
+}
 
 
 

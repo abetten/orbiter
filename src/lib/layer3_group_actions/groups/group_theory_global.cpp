@@ -1602,7 +1602,405 @@ void group_theory_global::representation_on_polynomials(
 
 
 
+sims *group_theory_global::create_sims_for_subgroup_given_by_generator_ranks(
+		actions::action *A,
+		groups::sims *Big_group,
+		long int *generators_by_rank, int nb_gens, long int subgroup_order,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
 
+	if (f_v) {
+		cout << "group_theory_global::create_sims_for_subgroup_given_by_generator_ranks" << endl;
+	}
+
+	data_structures_groups::vector_ge *gen_vec;
+
+	gen_vec = NEW_OBJECT(data_structures_groups::vector_ge);
+
+	gen_vec->init(A, verbose_level);
+	gen_vec->allocate(nb_gens, 0 /* verbose_level */);
+
+	int i;
+
+	for (i = 0; i < nb_gens; i++) {
+		Big_group->element_unrank_lint(generators_by_rank[i], gen_vec->ith(i));
+	}
+
+	long int target_go;
+	groups::sims *subgroup_sims;
+
+	target_go = subgroup_order;
+
+	if (f_v) {
+		cout << "group_theory_global::create_sims_for_subgroup_given_by_generator_ranks "
+				"before Subgroup_lattice->A->create_sims_from_generators_with_target_group_order_lint" << endl;
+	}
+	subgroup_sims = A->create_sims_from_generators_with_target_group_order_lint(
+			gen_vec,
+			target_go,
+			verbose_level - 2);
+	if (f_v) {
+		cout << "group_theory_global::create_sims_for_subgroup_given_by_generator_ranks "
+				"after Subgroup_lattice->A->create_sims_from_generators_with_target_group_order_lint" << endl;
+	}
+
+
+	FREE_OBJECT(gen_vec);
+
+	if (f_v) {
+		cout << "group_theory_global::create_sims_for_subgroup_given_by_generator_ranks done" << endl;
+	}
+
+	return subgroup_sims;
+}
+
+
+groups::strong_generators *group_theory_global::conjugate_strong_generators(
+		groups::strong_generators *Strong_gens_in,
+		int *Elt,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "group_theory_global::conjugate_strong_generators" << endl;
+	}
+
+	// apply the transformation to the set of generators:
+
+	groups::strong_generators *Strong_gens_out;
+
+	Strong_gens_out = NEW_OBJECT(groups::strong_generators);
+	if (f_v) {
+		cout << "group_theory_global::conjugate_strong_generators "
+				"before Strong_gens_out->init_generators_for_the_conjugate_group_avGa" << endl;
+	}
+	Strong_gens_out->init_generators_for_the_conjugate_group_avGa(
+			Strong_gens_in, Elt, verbose_level - 2);
+
+	if (f_v) {
+		cout << "group_theory_global::conjugate_strong_generators "
+				"after Strong_gens_out->init_generators_for_the_conjugate_group_avGa" << endl;
+	}
+
+	if (f_v) {
+		cout << "group_theory_global::conjugate_strong_generators done" << endl;
+	}
+	return Strong_gens_out;
+}
+
+geometry::algebraic_geometry::variety_object *group_theory_global::variety_apply_single_transformation(
+		geometry::algebraic_geometry::variety_object *Variety_object_in,
+		actions::action *A,
+		actions::action *A_on_lines,
+		int f_inverse,
+		int *transformation_coeffs,
+		int f_has_group, groups::strong_generators *Strong_gens_in,
+		groups::strong_generators *&Strong_gens_out,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "group_theory_global::apply_single_transformation" << endl;
+	}
+
+	//actions::action *A;
+	int *Elt1;
+	int *Elt2;
+	int *Elt3;
+
+	//A = PA->A;
+
+	Elt1 = NEW_int(A->elt_size_in_int);
+	Elt2 = NEW_int(A->elt_size_in_int);
+	Elt3 = NEW_int(A->elt_size_in_int);
+
+
+	A->Group_element->make_element(
+			Elt1, transformation_coeffs, verbose_level);
+
+	if (f_inverse) {
+		A->Group_element->element_invert(
+				Elt1, Elt2, 0 /*verbose_level*/);
+	}
+	else {
+		A->Group_element->element_move(
+				Elt1, Elt2, 0 /*verbose_level*/);
+	}
+
+	//A->element_transpose(Elt2, Elt3, 0 /*verbose_level*/);
+
+	A->Group_element->element_invert(
+			Elt2, Elt3, 0 /*verbose_level*/);
+
+	if (f_v) {
+		cout << "group_theory_global::apply_transformations "
+				"applying the transformation given by:" << endl;
+		cout << "$$" << endl;
+		A->Group_element->print_quick(cout, Elt2);
+		cout << endl;
+		cout << "$$" << endl;
+		cout << "group_theory_global::apply_transformations "
+				"The inverse is:" << endl;
+		cout << "$$" << endl;
+		A->Group_element->print_quick(cout, Elt3);
+		cout << endl;
+		cout << "$$" << endl;
+	}
+
+
+	geometry::projective_geometry::projective_space *P;
+
+
+	P = Variety_object_in->Projective_space;
+
+	int *eqn_out;
+	int nb_monomials;
+	int f_semilinear;
+	int d, d2;
+
+	nb_monomials = Variety_object_in->Ring->get_nb_monomials();
+
+	d = A->matrix_group_dimension();
+
+	f_semilinear = A->is_semilinear_matrix_group();
+
+	if (f_v) {
+		cout << "group_theory_global::apply_transformations "
+				"f_semilinear = " << f_semilinear << endl;
+		cout << "group_theory_global::apply_transformations "
+				"d = " << d << endl;
+	}
+
+	d2 = d * d;
+
+	eqn_out = NEW_int(nb_monomials);
+
+	Variety_object_in->Ring->substitute_semilinear(
+			Variety_object_in->eqn /*coeff_in */,
+			eqn_out /*coeff_out*/,
+			f_semilinear,
+			Elt3[d2] /*frob*/,
+			Elt3 /* Mtx_inv*/,
+			verbose_level);
+
+
+	Variety_object_in->Ring->get_F()->Projective_space_basic->PG_element_normalize_from_front(
+			eqn_out, 1, nb_monomials);
+
+	//Int_vec_copy(eqn15, QO->eqn15, 15);
+	if (f_v) {
+		cout << "group_theory_global::apply_transformations "
+				"The equation of the transformed surface is:" << endl;
+		cout << "$$" << endl;
+
+		Variety_object_in->Ring->print_equation_with_line_breaks_tex(
+				cout, eqn_out, 8 /* nb_terms_per_line*/,
+				"\\\\\n" /* const char *new_line_text*/);
+
+		//QCDA->Dom->print_equation_with_line_breaks_tex(cout, nb_monomials);
+		cout << endl;
+		cout << "$$" << endl;
+	}
+
+
+
+
+	if (f_has_group) {
+
+		// apply the transformation to the set of generators:
+
+		groups::group_theory_global Group_theory_global;
+
+		if (f_v) {
+			cout << "group_theory_global::apply_transformations "
+					"before Group_theory_global.conjugate_strong_generators" << endl;
+		}
+		Strong_gens_out = Group_theory_global.conjugate_strong_generators(
+				Strong_gens_in,
+				Elt2,
+				verbose_level - 2);
+		if (f_v) {
+			cout << "group_theory_global::apply_transformations "
+					"after Group_theory_global.conjugate_strong_generators" << endl;
+		}
+
+		//FREE_OBJECT(Sg);
+		//Sg = SG2;
+
+#if 0
+		groups::strong_generators *SG2;
+
+		SG2 = NEW_OBJECT(groups::strong_generators);
+		if (f_v) {
+			cout << "group_theory_global::apply_transformations "
+					"before SG2->init_generators_for_the_conjugate_group_avGa" << endl;
+		}
+		SG2->init_generators_for_the_conjugate_group_avGa(
+				Sg, Elt2, verbose_level);
+
+		if (f_v) {
+			cout << "group_theory_global::apply_transformations "
+					"after SG2->init_generators_for_the_conjugate_group_avGa" << endl;
+		}
+
+		FREE_OBJECT(Sg);
+		Sg = SG2;
+
+		if (f_v) {
+			cout << "group_theory_global::apply_transformations "
+					"A->print_info()" << endl;
+		}
+		Sg->A->print_info();
+#endif
+
+		//QOG->Aut_gens = Sg;
+
+
+		//f_has_nice_gens = false;
+		// ToDo: need to conjugate nice_gens
+	}
+
+	long int *Lines_in;
+	long int *Lines_out;
+	int nb_lines;
+
+
+	if (Variety_object_in->Line_sets) {
+		if (f_v) {
+			cout << "group_theory_global::apply_transformations "
+					"lines = ";
+			Lint_vec_print(cout, Variety_object_in->Line_sets->Sets[0], Variety_object_in->Line_sets->Set_size[0]);
+			cout << endl;
+		}
+
+		nb_lines = Variety_object_in->Line_sets->Set_size[0];
+
+		Lines_in = Variety_object_in->Line_sets->Sets[0];
+
+		Lines_out = NEW_lint(nb_lines);
+
+
+		int i;
+
+		// apply the transformation to the set of bitangents:
+
+
+		for (i = 0; i < 28; i++) {
+			if (f_v) {
+				cout << "line " << i << ":" << endl;
+				P->Subspaces->Grass_lines->print_single_generator_matrix_tex(
+						cout, Lines_in[i]);
+			}
+			Lines_out[i] = A_on_lines->Group_element->element_image_of(
+					Lines_in[i], Elt2, 0 /*verbose_level*/);
+			if (f_v) {
+				cout << "maps to " << endl;
+				P->Subspaces->Grass_lines->print_single_generator_matrix_tex(
+						cout, Lines_out[i]);
+			}
+		}
+	}
+	else {
+		nb_lines = 0;
+		Lines_in = NULL;
+		Lines_out = NULL;
+	}
+
+	// apply the transformation to the set of points:
+
+	long int *Points_in;
+	long int *Points_out;
+	int nb_points;
+
+	if (Variety_object_in->Point_sets) {
+
+		nb_points = Variety_object_in->Point_sets->Set_size[0];
+
+		Points_in = Variety_object_in->Point_sets->Sets[0];
+
+		Points_out = NEW_lint(nb_points);
+
+		int i;
+
+		for (i = 0; i < nb_points; i++) {
+			if (f_v) {
+				cout << "point" << i << " = " << Points_in[i] << endl;
+			}
+			Points_out[i] = A->Group_element->element_image_of(
+					Points_in[i], Elt2, 0 /*verbose_level*/);
+			if (f_v) {
+				cout << "maps to " << Points_out[i] << endl;
+			}
+	#if 0
+			int a;
+
+			a = Surf->Poly3_4->evaluate_at_a_point_by_rank(
+					coeffs_out, QO->Pts[i]);
+			if (a) {
+				cout << "group_theory_global::apply_transformations something is wrong, "
+						"the image point does not lie on the transformed surface" << endl;
+				exit(1);
+			}
+	#endif
+
+		}
+
+		other::data_structures::sorting Sorting;
+
+		Sorting.lint_vec_heapsort(Points_out, nb_points);
+
+
+	}
+	else {
+		Points_in = NULL;
+		Points_out = NULL;
+		nb_points = 0;
+	}
+
+
+	geometry::algebraic_geometry::variety_object *Variety_object_out;
+
+
+	Variety_object_out = NEW_OBJECT(geometry::algebraic_geometry::variety_object);
+
+
+	std::string label_txt;
+	std::string label_tex;
+
+	label_txt = Variety_object_in->label_txt + "_t";
+	label_tex = Variety_object_in->label_tex + "{\\rm \\_t}";
+
+	Variety_object_out->init_equation_and_points_and_lines_and_labels(
+			P,
+			Variety_object_in->Ring,
+			eqn_out,
+			Points_out, nb_points,
+			Lines_out, nb_lines,
+			label_txt,
+			label_tex,
+			verbose_level);
+
+	FREE_int(eqn_out);
+
+	if (nb_points) {
+		FREE_lint(Points_out);
+	}
+	if (nb_lines) {
+		FREE_lint(Lines_out);
+	}
+
+	FREE_int(Elt1);
+	FREE_int(Elt2);
+	FREE_int(Elt3);
+
+	if (f_v) {
+		cout << "group_theory_global::apply_single_transformation done" << endl;
+	}
+	return Variety_object_out;
+}
 
 
 

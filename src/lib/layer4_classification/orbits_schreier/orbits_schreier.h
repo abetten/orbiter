@@ -29,6 +29,17 @@ namespace orbits_schreier {
 
 class orbit_of_equations {
 public:
+
+	// Maintains a sorted array of equations.
+	// The equations are left-normalized.
+	// The equations are stored in an array of size 1 + nb_monomials
+	// The first entry could be used to hold a hash value,
+	// however, this is not implemented as it would make
+	// the list of equations appear to be not sorted.
+	// The root node is not at the beginning.
+	// The root node is at position_of_original_object
+
+
 	actions::action *A;
 	induced_actions::action_on_homogeneous_polynomials *AonHPD;
 	algebra::field_theory::finite_field *F;
@@ -40,10 +51,17 @@ public:
 	int *data_tmp; // [sz]
 
 	int position_of_original_object;
+		// the index of the root node
+		// may be nonzero because the array of equations is changing
+		// new equations are inserted according to the lexicographic order
+
 	int allocation_length;
 	int used_length;
 
 	int **Equations; // [allocation_length][sz]
+		// the equations are left normalized
+		// the array of equations is kept sorted
+
 	int *prev; // [allocation_length]
 	int *label; // [allocation_length]
 
@@ -106,6 +124,12 @@ public:
 			algebra::ring_theory::longinteger_object &go,
 			groups::sims *&Stab, int verbose_level);
 		// this function allocates a sims structure into Stab.
+	void get_transporter_from_a_to_b(
+			int idx_a, int idx_b,
+			int *Elt,
+			int verbose_level);
+	// Elt is a group element which maps the object
+	// at idx_a to the object at idx_b
 	groups::strong_generators *stabilizer_any_point(
 			algebra::ring_theory::longinteger_object &full_group_order,
 			int idx,

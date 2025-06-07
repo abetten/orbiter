@@ -92,6 +92,8 @@ void subgroup::create_sims(
 		cout << "subgroup::create_sims" << endl;
 	}
 
+#if 0
+
 	data_structures_groups::vector_ge *gen_vec;
 
 	gen_vec = NEW_OBJECT(data_structures_groups::vector_ge);
@@ -121,7 +123,31 @@ void subgroup::create_sims(
 		cout << "subgroup::create_sims "
 				"after Subgroup_lattice->A->create_sims_from_generators_with_target_group_order_lint" << endl;
 	}
+#endif
 
+	group_theory_global Group_theory_global;
+	long int *gens_long;
+
+	gens_long = NEW_lint(nb_gens);
+	Int_vec_copy_to_lint(gens, gens_long, nb_gens);
+
+	if (f_v) {
+		cout << "subgroup::create_sims "
+				"before Group_theory_global.create_sims_for_subgroup_given_by_generator_ranks" << endl;
+	}
+
+	Sub = Group_theory_global.create_sims_for_subgroup_given_by_generator_ranks(
+			Subgroup_lattice->A,
+			Subgroup_lattice->Sims,
+			gens_long, nb_gens, group_order /* subgroup_order */,
+			verbose_level);
+
+	if (f_v) {
+		cout << "subgroup::create_sims "
+				"after Group_theory_global.create_sims_for_subgroup_given_by_generator_ranks" << endl;
+	}
+
+	FREE_lint(gens_long);
 
 	if (f_v) {
 		cout << "subgroup::create_sims done" << endl;

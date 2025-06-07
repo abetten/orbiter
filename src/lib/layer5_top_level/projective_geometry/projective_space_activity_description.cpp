@@ -260,6 +260,7 @@ projective_space_activity_description::projective_space_activity_description()
 	//std::string classify_surfaces_with_double_sixes_control_label;
 #endif
 
+	f_recognize_surfaces = false;
 
 	f_classify_surfaces_through_arcs_and_two_lines = false;
 	//std::string classify_surfaces_through_arcs_and_trihedral_pairs_draw_options_label;
@@ -995,6 +996,14 @@ int projective_space_activity_description::read_arguments(
 		}
 #endif
 
+
+		else if (ST.stringcmp(argv[i], "-recognize_surfaces") == 0) {
+			f_recognize_surfaces = true;
+			if (f_v) {
+				cout << "-recognize_surfaces " << endl;
+			}
+		}
+
 		else if (ST.stringcmp(argv[i], "-classify_surfaces_through_arcs_and_two_lines") == 0) {
 			f_classify_surfaces_through_arcs_and_two_lines = true;
 			if (f_v) {
@@ -1486,6 +1495,9 @@ void projective_space_activity_description::print()
 	}
 #endif
 
+	if (f_recognize_surfaces) {
+		cout << "-recognize_surfaces " << endl;
+	}
 
 	if (f_classify_surfaces_through_arcs_and_two_lines) {
 		cout << "-classify_surfaces_through_arcs_and_two_lines " << endl;

@@ -455,6 +455,11 @@ public:
 	void do_study_surface(
 			algebra::field_theory::finite_field *F,
 			int nb, int verbose_level);
+	void do_recognize_surfaces(
+			projective_geometry::projective_space_with_action *PA,
+			std::string &Control_six_arcs_label,
+			int f_test_nb_Eckardt_points, int nb_E,
+			int verbose_level);
 	void do_classify_surfaces_through_arcs_and_two_lines(
 			projective_geometry::projective_space_with_action *PA,
 			std::string &Control_six_arcs_label,

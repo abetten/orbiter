@@ -322,6 +322,7 @@ class interface_algebra {
 
 
 	int f_draw_mod_n;
+	std::string Draw_mod_n_options;
 	other::graphics::draw_mod_n_description *Draw_mod_n_description;
 
 
@@ -576,6 +577,11 @@ class interface_combinatorics {
 	int Dedekind_n_max;
 	int Dedekind_q_min;
 	int Dedekind_q_max;
+
+	int f_q_binomial;
+	int q_binomial_n;
+	int q_binomial_k;
+	int q_binomial_q;
 
 	int f_rank_k_subset;
 	int rank_k_subset_n;

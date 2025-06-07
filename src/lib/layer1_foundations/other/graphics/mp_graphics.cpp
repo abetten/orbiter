@@ -1871,6 +1871,14 @@ void mp_graphics::text(
 	text_tikz(x1, y1, s);
 }
 
+void mp_graphics::circle_with_array(
+		int *Px, int *Py, int idx, int rad)
+{
+
+	circle(Px[idx], Py[idx], rad);
+
+}
+
 void mp_graphics::circle(
 		int x, int y, int rad)
 {
@@ -1903,6 +1911,12 @@ void mp_graphics::circle_text(
 	text(x, y, s);
 	//output_circle_text_mp(x, y, idx, p);
 	//output_circle_text_tikz(x, y, idx, rad, p);
+}
+
+void mp_graphics::circle_text_array(
+		int *Px, int *Py, int idx, int rad, std::string &s)
+{
+	circle_text(Px[idx], Py[idx], rad, s);
 }
 
 #if 0

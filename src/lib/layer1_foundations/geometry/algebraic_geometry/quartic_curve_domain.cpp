@@ -653,7 +653,7 @@ void quartic_curve_domain::create_surface(
 		}
 		for (i = 0; i < 4; i++) {
 			Idx[i] = Bitangents[set[i]];
-			Bitangents4[i] = Q->bitangents28[Idx[i]];
+			Bitangents4[i] = Q->get_line(Idx[i]);
 		}
 
 		for (i = 0; i < 4; i++) {
@@ -668,7 +668,7 @@ void quartic_curve_domain::create_surface(
 
 		}
 		for (i = 0; i < 8; i++) {
-			Points[i] = Q->Pts[pt_idx[i]];
+			Points[i] = Q->get_point(pt_idx[i]);
 		}
 		if (f_v) {
 			cout << "quartic_curve_domain::create_surface "
@@ -735,7 +735,7 @@ void quartic_curve_domain::create_surface(
 		cout << endl;
 	}
 
-	Int_vec_copy(Q->eqn15, M1, 15);
+	Int_vec_copy(Q->Variety_object->eqn, M1, 15);
 	Int_vec_copy(conic_squared_15, M1 + 15, 15);
 	Int_vec_copy(four_lines_15, M1 + 30, 15);
 

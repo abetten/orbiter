@@ -539,146 +539,146 @@ void graphical_output::do_create_points_on_parabola(
 		}
 
 		{
-		double *Pts;
-		int nb_pts;
+			double *Pts;
+			int nb_pts;
 
-		nb_pts = C.Pts.size();
-		Pts = new double[nb_pts * 2];
-		nb = 0;
-		for (i = 0; i < (int) C.Pts.size(); i++) {
-			Pts[nb * 2 + 0] = C.Pts[i].coords[0];
-			Pts[nb * 2 + 1] = C.Pts[i].coords[1];
-			nb++;
-		}
-		orbiter_kernel_system::file_io Fio;
-		string fname;
+			nb_pts = C.Pts.size();
+			Pts = new double[nb_pts * 2];
+			nb = 0;
+			for (i = 0; i < (int) C.Pts.size(); i++) {
+				Pts[nb * 2 + 0] = C.Pts[i].coords[0];
+				Pts[nb * 2 + 1] = C.Pts[i].coords[1];
+				nb++;
+			}
+			orbiter_kernel_system::file_io Fio;
+			string fname;
 
-		fname = "parabola_N" + std::to_string(N) + "_"
-				+ std::to_string(a) + "_"
-				+ std::to_string(b) + "_"
-				+ std::to_string(c) + "_points.csv";
+			fname = "parabola_N" + std::to_string(N) + "_"
+					+ std::to_string(a) + "_"
+					+ std::to_string(b) + "_"
+					+ std::to_string(c) + "_points.csv";
 
-		Fio.Csv_file_support->double_matrix_write_csv(
-				fname, Pts, nb, 2);
+			Fio.Csv_file_support->double_matrix_write_csv(
+					fname, Pts, nb, 2);
 
-		cout << "created curve 1 with " << C.Pts.size() << " many points" << endl;
-		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+			cout << "created curve 1 with " << C.Pts.size() << " many points" << endl;
+			cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 
-		delete [] Pts;
-		}
-
-		{
-		double *Pts;
-		int nb_pts;
-
-		nb_pts = C.Pts.size();
-		Pts = new double[nb_pts * 6];
-		nb = 0;
-		for (i = 0; i < (int) C.Pts.size(); i++) {
-			Pts[nb * 6 + 0] = C.Pts[i].coords[0];
-			Pts[nb * 6 + 1] = C.Pts[i].coords[1];
-			Pts[nb * 6 + 2] = 0.;
-			Pts[nb * 6 + 3] = 0.;
-			Pts[nb * 6 + 4] = 0.;
-			Pts[nb * 6 + 5] = 1.;
-			nb++;
-		}
-		orbiter_kernel_system::file_io Fio;
-
-		string fname;
-		fname = "parabola_N" + std::to_string(N) + "_"
-				+ std::to_string(a) + "_"
-				+ std::to_string(b) + "_"
-				+ std::to_string(c) + "_projection_from_center.csv";
-
-		Fio.Csv_file_support->double_matrix_write_csv(
-				fname, Pts, nb, 6);
-
-		cout << "created family of lines 1 with " << C.Pts.size() << " many lines" << endl;
-		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-
-		delete [] Pts;
+			delete [] Pts;
 		}
 
 		{
-		double *Pts;
-		int nb_pts;
-		double x, y, H, f;
-		double h = 1.;
+			double *Pts;
+			int nb_pts;
 
-		nb_pts = C.Pts.size();
-		Pts = new double[nb_pts * 6];
-		nb = 0;
-		for (i = 0; i < (int) C.Pts.size(); i++) {
-			x = C.Pts[i].coords[0];
-			y = C.Pts[i].coords[1];
-			Pts[nb * 6 + 0] = x;
-			Pts[nb * 6 + 1] = y;
-			Pts[nb * 6 + 2] = 0.;
+			nb_pts = C.Pts.size();
+			Pts = new double[nb_pts * 6];
+			nb = 0;
+			for (i = 0; i < (int) C.Pts.size(); i++) {
+				Pts[nb * 6 + 0] = C.Pts[i].coords[0];
+				Pts[nb * 6 + 1] = C.Pts[i].coords[1];
+				Pts[nb * 6 + 2] = 0.;
+				Pts[nb * 6 + 3] = 0.;
+				Pts[nb * 6 + 4] = 0.;
+				Pts[nb * 6 + 5] = 1.;
+				nb++;
+			}
+			orbiter_kernel_system::file_io Fio;
 
-			H = sqrt(h * h + x * x + y * y);
-			f = h / H;
+			string fname;
+			fname = "parabola_N" + std::to_string(N) + "_"
+					+ std::to_string(a) + "_"
+					+ std::to_string(b) + "_"
+					+ std::to_string(c) + "_projection_from_center.csv";
 
-			Pts[nb * 6 + 3] = x * f;
-			Pts[nb * 6 + 4] = y * f;
-			Pts[nb * 6 + 5] = 1. - f;
-			nb++;
-		}
-		orbiter_kernel_system::file_io Fio;
+			Fio.Csv_file_support->double_matrix_write_csv(
+					fname, Pts, nb, 6);
 
-		string fname;
-		fname = "parabola_N" + std::to_string(N) + "_"
-				+ std::to_string(a) + "_"
-				+ std::to_string(b) + "_"
-				+ std::to_string(c) + "_projection_from_sphere.csv";
+			cout << "created family of lines 1 with " << C.Pts.size() << " many lines" << endl;
+			cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 
-
-		Fio.Csv_file_support->double_matrix_write_csv(
-				fname, Pts, nb, 6);
-
-		cout << "created family of lines 1 with " << C.Pts.size() << " many lines" << endl;
-		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-
-		delete [] Pts;
+			delete [] Pts;
 		}
 
 		{
-		double *Pts;
-		int nb_pts;
-		double x, y, H, f;
-		double h = 1.;
+			double *Pts;
+			int nb_pts;
+			double x, y, H, f;
+			double h = 1.;
 
-		nb_pts = C.Pts.size();
-		Pts = new double[nb_pts * 3];
-		nb = 0;
-		for (i = 0; i < (int) C.Pts.size(); i++) {
-			x = C.Pts[i].coords[0];
-			y = C.Pts[i].coords[1];
+			nb_pts = C.Pts.size();
+			Pts = new double[nb_pts * 6];
+			nb = 0;
+			for (i = 0; i < (int) C.Pts.size(); i++) {
+				x = C.Pts[i].coords[0];
+				y = C.Pts[i].coords[1];
+				Pts[nb * 6 + 0] = x;
+				Pts[nb * 6 + 1] = y;
+				Pts[nb * 6 + 2] = 0.;
 
-			H = sqrt(h * h + x * x + y * y);
-			f = h / H;
+				H = sqrt(h * h + x * x + y * y);
+				f = h / H;
 
-			Pts[nb * 3 + 0] = x * f;
-			Pts[nb * 3 + 1] = y * f;
-			Pts[nb * 3 + 2] = 1. - f;
-			nb++;
+				Pts[nb * 6 + 3] = x * f;
+				Pts[nb * 6 + 4] = y * f;
+				Pts[nb * 6 + 5] = 1. - f;
+				nb++;
+			}
+			orbiter_kernel_system::file_io Fio;
+
+			string fname;
+			fname = "parabola_N" + std::to_string(N) + "_"
+					+ std::to_string(a) + "_"
+					+ std::to_string(b) + "_"
+					+ std::to_string(c) + "_projection_from_sphere.csv";
+
+
+			Fio.Csv_file_support->double_matrix_write_csv(
+					fname, Pts, nb, 6);
+
+			cout << "created family of lines 1 with " << C.Pts.size() << " many lines" << endl;
+			cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+			delete [] Pts;
 		}
-		orbiter_kernel_system::file_io Fio;
 
-		string fname;
-		fname = "parabola_N" + std::to_string(N) + "_"
-				+ std::to_string(a) + "_"
-				+ std::to_string(b) + "_"
-				+ std::to_string(c) + "_points_projected.csv";
+		{
+			double *Pts;
+			int nb_pts;
+			double x, y, H, f;
+			double h = 1.;
+
+			nb_pts = C.Pts.size();
+			Pts = new double[nb_pts * 3];
+			nb = 0;
+			for (i = 0; i < (int) C.Pts.size(); i++) {
+				x = C.Pts[i].coords[0];
+				y = C.Pts[i].coords[1];
+
+				H = sqrt(h * h + x * x + y * y);
+				f = h / H;
+
+				Pts[nb * 3 + 0] = x * f;
+				Pts[nb * 3 + 1] = y * f;
+				Pts[nb * 3 + 2] = 1. - f;
+				nb++;
+			}
+			orbiter_kernel_system::file_io Fio;
+
+			string fname;
+			fname = "parabola_N" + std::to_string(N) + "_"
+					+ std::to_string(a) + "_"
+					+ std::to_string(b) + "_"
+					+ std::to_string(c) + "_points_projected.csv";
 
 
-		Fio.Csv_file_support->double_matrix_write_csv(
-				fname, Pts, nb, 3);
+			Fio.Csv_file_support->double_matrix_write_csv(
+					fname, Pts, nb, 3);
 
-		cout << "created family of lines 1 with " << C.Pts.size() << " many lines" << endl;
-		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+			cout << "created family of lines 1 with " << C.Pts.size() << " many lines" << endl;
+			cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 
-		delete [] Pts;
+			delete [] Pts;
 		}
 
 

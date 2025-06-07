@@ -649,6 +649,24 @@ public:
 			group_constructions::linear_group *LG,
 			algebra::ring_theory::homogeneous_polynomial_domain *HPD,
 			int verbose_level);
+	sims *create_sims_for_subgroup_given_by_generator_ranks(
+			actions::action *A,
+			groups::sims *Big_group,
+			long int *generators_by_rank, int nb_gens, long int subgroup_order,
+			int verbose_level);
+	groups::strong_generators *conjugate_strong_generators(
+			groups::strong_generators *Strong_gens_in,
+			int *Elt,
+			int verbose_level);
+	geometry::algebraic_geometry::variety_object *variety_apply_single_transformation(
+			geometry::algebraic_geometry::variety_object *Variety_object_in,
+			actions::action *A,
+			actions::action *A_on_lines,
+			int f_inverse,
+			int *transformation_coeffs,
+			int f_has_group, groups::strong_generators *Strong_gens_in,
+			groups::strong_generators *&Strong_gens_out,
+			int verbose_level);
 
 
 

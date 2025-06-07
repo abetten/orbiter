@@ -2717,12 +2717,12 @@ void surface_object_with_group::all_quartic_curves(
 
 		if (f_v) {
 			cout << "surface_object_with_group::all_quartic_curves "
-					"before QC->quartic" << endl;
+					"before QC->create_quartic_curve" << endl;
 		}
-		QC->quartic(pt_orbit, verbose_level);
+		QC->create_quartic_curve(pt_orbit, verbose_level);
 		if (f_v) {
 			cout << "surface_object_with_group::all_quartic_curves "
-					"after QC->quartic" << endl;
+					"after QC->create_quartic_curve" << endl;
 		}
 
 		// the quartic curve is now in QC->curve
@@ -2829,12 +2829,12 @@ void surface_object_with_group::export_one_quartic_curve(
 
 	if (f_v) {
 		cout << "surface_object_with_group::export_all_quartic_curves "
-				"before QC->quartic" << endl;
+				"before QC->create_quartic_curve" << endl;
 	}
-	QC->quartic(pt_orbit, verbose_level - 2);
+	QC->create_quartic_curve(pt_orbit, verbose_level - 2);
 	if (f_v) {
 		cout << "surface_object_with_group::export_all_quartic_curves "
-				"after QC->quartic" << endl;
+				"after QC->create_quartic_curve" << endl;
 	}
 
 

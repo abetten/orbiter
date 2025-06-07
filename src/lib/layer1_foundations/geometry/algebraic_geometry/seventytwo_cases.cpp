@@ -162,7 +162,8 @@ void seventytwo_cases::compute_arc(
 		}
 	}
 	if (i == 5) {
-		cout << "seventytwo_cases::compute_arc could not find m1 in transversals[]" << endl;
+		cout << "seventytwo_cases::compute_arc "
+				"could not find m1 in transversals[]" << endl;
 		exit(1);
 	}
 
@@ -182,51 +183,75 @@ void seventytwo_cases::compute_arc(
 
 
 	if (f_v) {
-		cout << "seventytwo_cases::compute_arc before compute_half_double_six" << endl;
+		cout << "seventytwo_cases::compute_arc "
+				"before compute_half_double_six" << endl;
 	}
 	compute_half_double_six(SO, verbose_level);
 	if (f_v) {
-		cout << "seventytwo_cases::compute_arc after compute_half_double_six" << endl;
+		cout << "seventytwo_cases::compute_arc "
+				"after compute_half_double_six" << endl;
 	}
 
 
 
+	long int *Lines;
 
-	P6[0] = SO->Surf->P->Subspaces->intersection_of_two_lines(SO->Variety_object->Line_sets->Sets[0][l1], SO->Variety_object->Line_sets->Sets[0][m1]);
-	P6[1] = SO->Surf->P->Subspaces->intersection_of_two_lines(SO->Variety_object->Line_sets->Sets[0][l2], SO->Variety_object->Line_sets->Sets[0][m1]);
+	Lines = SO->Variety_object->Line_sets->Sets[0];
+
+	P6[0] = SO->Surf->P->Subspaces->intersection_of_two_lines(
+			Lines[l1],
+			Lines[m1]);
+	P6[1] = SO->Surf->P->Subspaces->intersection_of_two_lines(
+			Lines[l2],
+			Lines[m1]);
 	nb_t = 4;
 	nb = 2;
 	for (i = 0; i < nb_t; i++) {
 		f_taken[i] = false;
 	}
+
+	// intersect with m2:
+
 	for (i = 0; i < nb_t; i++) {
 		if (f_taken[i]) {
 			continue;
 		}
 		if (SO->SOP->Adj_ij(transversals4[i], m2)) {
+
 			P6[nb++] = SO->Surf->P->Subspaces->intersection_of_two_lines(
-					SO->Variety_object->Line_sets->Sets[0][transversals4[i]], SO->Variety_object->Line_sets->Sets[0][m2]);
+					Lines[transversals4[i]],
+					Lines[m2]);
+
 			f_taken[i] = true;
 		}
 	}
 	if (nb != 4) {
-		cout << "seventytwo_cases::compute_arc after intersecting with m2, nb != 4" << endl;
+		cout << "seventytwo_cases::compute_arc "
+				"after intersecting with m2, nb != 4" << endl;
 		exit(1);
 	}
+
+	// intersect with m3:
+
 	for (i = 0; i < nb_t; i++) {
 		if (f_taken[i]) {
 			continue;
 		}
 		if (SO->SOP->Adj_ij(transversals4[i], m3)) {
+
 			P6[nb++] = SO->Surf->P->Subspaces->intersection_of_two_lines(
-					SO->Variety_object->Line_sets->Sets[0][transversals4[i]], SO->Variety_object->Line_sets->Sets[0][m3]);
+					Lines[transversals4[i]],
+					Lines[m3]);
+
 			f_taken[i] = true;
 		}
 	}
 	if (nb != 6) {
-		cout << "seventytwo_cases::compute_arc after intersecting with m3, nb != 6" << endl;
+		cout << "seventytwo_cases::compute_arc "
+				"after intersecting with m3, nb != 6" << endl;
 		exit(1);
 	}
+
 	if (f_v) {
 		cout << "seventytwo_cases::compute_arc P6=";
 		Lint_vec_print(cout, P6, 6);
@@ -261,11 +286,13 @@ void seventytwo_cases::compute_partition(
 	}
 	for (i = 0; i < 4; i++) {
 		if (the_partition4[i] < 0) {
-			cout << "seventytwo_cases::compute_partition the_partition4[i] < 0" << endl;
+			cout << "seventytwo_cases::compute_partition "
+					"the_partition4[i] < 0" << endl;
 			exit(1);
 		}
 		if (the_partition4[i] >= 4) {
-			cout << "seventytwo_cases::compute_partition the_partition4[i] >= 4" << endl;
+			cout << "seventytwo_cases::compute_partition "
+					"the_partition4[i] >= 4" << endl;
 			exit(1);
 		}
 	}
@@ -285,12 +312,26 @@ void seventytwo_cases::compute_half_double_six(
 		cout << "seventytwo_cases::compute_half_double_six" << endl;
 	}
 
-	half_double_six[0] = SO->Surf->Schlaefli->Schlaefli_tritangent_planes->third_line_in_tritangent_plane(m1, l1, verbose_level);
-	half_double_six[1] = SO->Surf->Schlaefli->Schlaefli_tritangent_planes->third_line_in_tritangent_plane(m1, l2, verbose_level);
+	schlaefli_tritangent_planes *Schlaefli_tritangent_planes;
+
+
+	Schlaefli_tritangent_planes = SO->Surf->Schlaefli->Schlaefli_tritangent_planes;
+
+	half_double_six[0] =
+			Schlaefli_tritangent_planes->third_line_in_tritangent_plane(
+			m1, l1, verbose_level);
+
+	half_double_six[1] =
+			Schlaefli_tritangent_planes->third_line_in_tritangent_plane(
+			m1, l2, verbose_level);
+
 	for (i = 0; i < 4; i++) {
 		half_double_six[2 + i] = transversals4[i];
 	}
-	half_double_six_index = SO->Surf->Schlaefli->Schlaefli_double_six->find_half_double_six(half_double_six);
+
+	half_double_six_index = SO->Surf->Schlaefli->Schlaefli_double_six->find_half_double_six(
+			half_double_six);
+
 	if (f_v) {
 		cout << "seventytwo_cases::compute_half_double_six done" << endl;
 	}
@@ -421,7 +462,8 @@ void seventytwo_cases::report_Clebsch_map_details(
 		ost << "$";
 		ost << Surf->Schlaefli->Labels->Line_label_tex[H[i]];
 		ost << " = " << SO->Variety_object->Line_sets->Sets[0][H[i]] << " = ";
-		Surf->P->Subspaces->Grass_lines->print_single_generator_matrix_tex(ost, SO->Variety_object->Line_sets->Sets[0][H[i]]);
+		Surf->P->Subspaces->Grass_lines->print_single_generator_matrix_tex(
+				ost, SO->Variety_object->Line_sets->Sets[0][H[i]]);
 		ost << "$\\\\" << endl;
 	}
 
