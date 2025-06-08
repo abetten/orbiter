@@ -443,7 +443,6 @@ void combinatorial_object_activity::perform_activity_combo(
 		}
 
 		projective_geometry::projective_space_with_action *PA;
-		geometry::projective_geometry::projective_space *P;
 
 
 		if (Descr->f_canonical_form_PG_has_PA) {
@@ -453,7 +452,7 @@ void combinatorial_object_activity::perform_activity_combo(
 
 			PA = Get_projective_space(Descr->canonical_form_PG_PG_label);
 		}
-		P = PA->P;
+		//P = PA->P;
 
 		if (f_v) {
 			cout << "combinatorial_object_activity::perform_activity_combo "
@@ -461,12 +460,43 @@ void combinatorial_object_activity::perform_activity_combo(
 		}
 		Combo->do_canonical_form(
 				Descr->Canonical_form_PG_Descr,
-				true /* f_projective_space */, PA, P,
+				true /* f_projective_space */, PA, //P,
 				verbose_level);
 		if (f_v) {
 			cout << "combinatorial_object_activity::perform_activity_combo "
 					"after Combo->do_canonical_form" << endl;
 		}
+
+		string fname_base;
+
+		fname_base = Combo->Classification_of_objects->IS->Descr->label_txt;
+
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_combo "
+					"before Combo->write_canonical_form_data" << endl;
+		}
+		Combo->write_canonical_form_data(
+				fname_base,
+				verbose_level);
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_combo "
+					"after Combo->write_canonical_form_data" << endl;
+		}
+
+
+
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_combo "
+					"before Combo->write_canonical_form_data_non_trivial_group" << endl;
+		}
+		Combo->write_canonical_form_data_non_trivial_group(
+				fname_base,
+				verbose_level);
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_combo "
+					"after Combo->write_canonical_form_data_non_trivial_group" << endl;
+		}
+
 
 	}
 	else if (Descr->f_canonical_form) {
@@ -482,11 +512,59 @@ void combinatorial_object_activity::perform_activity_combo(
 		}
 		Combo->do_canonical_form(
 				Descr->Canonical_form_Descr,
-				false /* f_projective_space */, NULL, NULL,
+				false /* f_projective_space */, NULL, //NULL,
 				verbose_level);
 		if (f_v) {
 			cout << "combinatorial_object_activity::perform_activity_combo "
 					"after Combo->do_canonical_form" << endl;
+		}
+
+		string fname_base;
+
+		fname_base = Combo->Classification_of_objects->IS->Descr->label_txt;
+
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_combo "
+					"before Combo->write_canonical_form_data" << endl;
+		}
+		Combo->write_canonical_form_data(fname_base, verbose_level);
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_combo "
+					"after Combo->write_canonical_form_data" << endl;
+		}
+
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_combo "
+					"before Combo->write_canonical_form_data_non_trivial_group" << endl;
+		}
+		Combo->write_canonical_form_data_non_trivial_group(
+				fname_base,
+				verbose_level);
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_combo "
+					"after Combo->write_canonical_form_data_non_trivial_group" << endl;
+		}
+
+
+	}
+
+	else if (Descr->f_post_processing) {
+
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_combo "
+					"f_post_processing" << endl;
+		}
+
+
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_combo "
+					"before Combo->do_post_processing" << endl;
+		}
+		Combo->do_post_processing(
+				verbose_level);
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_combo "
+					"after Combo->do_post_processing" << endl;
 		}
 
 	}
@@ -499,6 +577,10 @@ void combinatorial_object_activity::perform_activity_combo(
 					<< Descr->get_combo_with_group_idx << endl;
 		}
 
+		if (Combo->Objects_after_classification == NULL) {
+			cout << "please issue -post_processing activity" << endl;
+			exit(1);
+		}
 
 		//combinatorics::canonical_form_classification::any_combinatorial_object *OwCF;
 
@@ -540,6 +622,12 @@ void combinatorial_object_activity::perform_activity_combo(
 			cout << "combinatorial_object_activity::perform_activity_combo "
 					"f_report" << endl;
 		}
+
+		if (Combo->Objects_after_classification == NULL) {
+			cout << "please issue -post_processing activity" << endl;
+			exit(1);
+		}
+
 
 		if (Combo->Objects_after_classification == NULL) {
 			cout << "combinatorial_object_activity::perform_activity_combo "

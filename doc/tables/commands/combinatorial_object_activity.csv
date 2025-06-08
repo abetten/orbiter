@@ -11,6 +11,7 @@ ROW,C1,C2,C3
 1,"\verb'-ideal' "," R  "," Compute the ideal of the set, using the ring R."
 1,"\verb'-canonical_form_PG' "," P options  "," Requires a projective space P. See Tab.~\ref{tab:combi:classification} for options."
 1,"\verb'-canonical_form' ","  options "," Classification by canonical form. See Tab.~\ref{tab:combi:classification} for options. "
+1,"\verb'-post_processing' ","  "," Perform post processing for objects after the canonical form has been computed. "
 1,"\verb'-get_combo_with_group' "," i  "," Returns the i-th combinatorial object and its group."
 1,"\verb'-report' "," options  "," See Tab.~\ref{tab:combi:reporting} for options."
 1,"\verb'-draw_incidence_matrices' "," prefix option "," Draws the incidence matrices, using the given prefix and the given draw incidence options object. "

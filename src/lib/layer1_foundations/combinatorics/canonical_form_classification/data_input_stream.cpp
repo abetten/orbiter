@@ -46,7 +46,17 @@ void data_input_stream::init(
 
 	data_input_stream::Descr = Descr;
 
+	if (f_v) {
+		cout << "data_input_stream::init "
+				"before count_number_of_objects_to_test" << endl;
+	}
+
 	nb_objects_to_test = count_number_of_objects_to_test(verbose_level);
+
+	if (f_v) {
+		cout << "data_input_stream::init "
+				"after count_number_of_objects_to_test" << endl;
+	}
 
 	if (f_v) {
 		cout << "data_input_stream::init "
@@ -818,6 +828,7 @@ int data_input_stream::count_number_of_objects_to_test(
 
 void data_input_stream::read_objects(
 		int verbose_level)
+// called from data_input_stream::init
 // the objects will be stored in Objects,
 // which is an array of pointers to any_combinatorial_object
 {
@@ -854,6 +865,8 @@ void data_input_stream::read_objects(
 			Any_combo->init_point_set_from_string(
 					Descr->Input[input_idx].input_string /*set_text*/,
 					verbose_level);
+
+			Any_combo->input_idx = input_idx;
 
 			Objects.push_back(Any_combo);
 
@@ -1164,6 +1177,7 @@ void data_input_stream::read_objects(
 			}
 
 			other::data_structures::set_of_sets *SoS;
+			other::data_structures::set_of_sets *SoS_index;
 			string column_header;
 
 			column_header = "Solution";
@@ -1178,25 +1192,23 @@ void data_input_stream::read_objects(
 					verbose_level);
 
 
+			column_header = "Row";
 
-
-			//SoS = NEW_OBJECT(data_structures::set_of_sets);
-
-			//int underlying_set_size = 0;
-
-#if 0
 			if (f_v) {
 				cout << "data_input_stream::read_objects "
 						"Reading the file " << Descr->Input[input_idx].input_string << endl;
 			}
-			SoS->init_from_file(
-					underlying_set_size,
-					Descr->Input[input_idx].input_string, verbose_level);
+			Fio.Csv_file_support->read_column_as_set_of_sets(
+					Descr->Input[input_idx].input_string, column_header,
+					SoS_index,
+					verbose_level);
+
+
 			if (f_v) {
-				cout << "Read the file " << Descr->Input[input_idx].input_string
-						<< ", underlying_set_size=" << underlying_set_size << endl;
+				cout << "data_input_stream::read_objects "
+						"Read the file " << Descr->Input[input_idx].input_string
+						<< ", SoS->nb_sets=" << SoS->nb_sets << endl;
 			}
-#endif
 
 			int h;
 
@@ -1220,11 +1232,15 @@ void data_input_stream::read_objects(
 						q,
 						0 /*verbose_level*/);
 
+				Any_combo->input_idx = SoS_index->Sets[h][0];
+
+
 				Objects.push_back(Any_combo);
 			}
 			FREE_lint(Spread_table);
 
 			FREE_OBJECT(SoS);
+			FREE_OBJECT(SoS_index);
 
 		}
 

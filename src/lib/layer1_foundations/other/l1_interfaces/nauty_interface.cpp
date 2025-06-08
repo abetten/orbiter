@@ -508,8 +508,8 @@ static void nauty_interface_fill_nauty_output(
 		l1_interfaces::nauty_output *NO,
 	int verbose_level)
 {
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
+	int f_v = false; //(verbose_level >= 1);
+	int f_vv = false; // (verbose_level >= 2);
 	//Ago = ago;
 	algebra::ring_theory::longinteger_domain Dom;
 	int i; //, j;
@@ -528,7 +528,7 @@ static void nauty_interface_fill_nauty_output(
 		NO->Base_lint[base_length - 1 - i] = base[i];
 		NO->Transversal_length[base_length - 1 - i] = transversal_length[i];
 	}
-	if (true) {
+	if (false) {
 		cout << "nauty_interface_fill_nauty_output transversal_length : ";
 		for (i = base_length - 1; i >= 0; i--) {
 			cout << transversal_length[i];

@@ -99,7 +99,7 @@ class combinatorial_object_activity_description {
 public:
 
 
-	// TABLE/combinatorial_object_activity.tex
+	// TABLE/combinatorial_object_activity.csv
 
 	// options that apply to GOC = geometric_object_create
 
@@ -140,6 +140,8 @@ public:
 	int f_canonical_form;
 	combinatorics::canonical_form_classification::classification_of_objects_description
 		*Canonical_form_Descr;
+
+	int f_post_processing;
 
 	int f_get_combo_with_group;
 	int get_combo_with_group_idx;
@@ -251,6 +253,10 @@ public:
 	// Input:
 	combinatorics::canonical_form_classification::data_input_stream *IS;
 
+	int f_projective_space;
+	projective_geometry::projective_space_with_action *PA;
+
+
 	// Output:
 
 	// layer 1:
@@ -270,9 +276,18 @@ public:
 					*Canonical_form_Descr,
 			int f_projective_space,
 			projective_geometry::projective_space_with_action *PA,
-			geometry::projective_geometry::projective_space *P,
+			//geometry::projective_geometry::projective_space *P,
 			int verbose_level);
 	// called from combinatorial_object_activity::perform_activity_combo
+	void write_canonical_form_data(
+			std::string fname_base,
+			int verbose_level);
+	void write_canonical_form_data_non_trivial_group(
+			std::string fname_base,
+			int verbose_level);
+	void do_post_processing(
+			int verbose_level);
+
 #if 0
 	void do_canonical_form_not_PG(
 			canonical_form_classification::classification_of_objects_description

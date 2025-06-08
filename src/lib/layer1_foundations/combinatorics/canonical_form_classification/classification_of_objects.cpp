@@ -60,31 +60,6 @@ classification_of_objects::~classification_of_objects()
 
 }
 
-std::string classification_of_objects::get_label()
-{
-	if (!IS) {
-		cout << "classification_of_objects::get_label !IS" << endl;
-		exit(1);
-	}
-	if (!IS->Descr->f_label) {
-		cout << "classification_of_objects::get_label !IS->Descr->f_label" << endl;
-		exit(1);
-	}
-	return IS->Descr->label_txt;
-}
-
-std::string classification_of_objects::get_label_tex()
-{
-	if (!IS) {
-		cout << "classification_of_objects::get_label_tex !IS" << endl;
-		exit(1);
-	}
-	if (!IS->Descr->f_label) {
-		cout << "classification_of_objects::get_label_tex !IS->Descr->f_label" << endl;
-		exit(1);
-	}
-	return IS->Descr->label_tex;
-}
 
 void classification_of_objects::perform_classification(
 		classification_of_objects_description *Descr,
@@ -811,6 +786,31 @@ void classification_of_objects::save(
 }
 #endif
 
+std::string classification_of_objects::get_label()
+{
+	if (!IS) {
+		cout << "classification_of_objects::get_label !IS" << endl;
+		exit(1);
+	}
+	if (!IS->Descr->f_label) {
+		cout << "classification_of_objects::get_label !IS->Descr->f_label" << endl;
+		exit(1);
+	}
+	return IS->Descr->label_txt;
+}
+
+std::string classification_of_objects::get_label_tex()
+{
+	if (!IS) {
+		cout << "classification_of_objects::get_label_tex !IS" << endl;
+		exit(1);
+	}
+	if (!IS->Descr->f_label) {
+		cout << "classification_of_objects::get_label_tex !IS->Descr->f_label" << endl;
+		exit(1);
+	}
+	return IS->Descr->label_tex;
+}
 
 
 

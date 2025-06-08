@@ -995,8 +995,9 @@ processnode(int *lab, int *ptn, int level, int numcells)
     nb_processnode++;
     save_state(3, lab, ptn, level, numcells);
 
-    if ((nb_processnode % 1024) == 0) {
-    	printf("processnode nb_processnode = %ld\n", nb_processnode);
+
+    if ((nb_processnode % 10000) == 0) {
+    	printf("nauty.c processnode nb_processnode = %ld\n", nb_processnode);
     }
 
     code = 0;

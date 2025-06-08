@@ -25,6 +25,9 @@ combinatorial_object_stream::combinatorial_object_stream()
 
 	IS = NULL;
 
+	f_projective_space = false;
+	PA = NULL;
+
 	Classification_of_objects = NULL;
 	Objects_after_classification = NULL;
 
@@ -83,7 +86,7 @@ void combinatorial_object_stream::do_canonical_form(
 				*Canonical_form_Descr,
 		int f_projective_space,
 		projective_geometry::projective_space_with_action *PA,
-		geometry::projective_geometry::projective_space *P,
+		//geometry::projective_geometry::projective_space *P,
 		int verbose_level)
 // called from combinatorial_object_activity::perform_activity_combo
 {
@@ -93,7 +96,13 @@ void combinatorial_object_stream::do_canonical_form(
 		cout << "combinatorial_object_stream::do_canonical_form" << endl;
 	}
 
+	geometry::projective_geometry::projective_space *P;
 
+
+	combinatorial_object_stream::f_projective_space = f_projective_space;
+	combinatorial_object_stream::PA = PA;
+
+	P = PA->P;
 
 	Classification_of_objects = NEW_OBJECT(combinatorics::canonical_form_classification::classification_of_objects);
 
@@ -113,25 +122,6 @@ void combinatorial_object_stream::do_canonical_form(
 	}
 
 
-	Objects_after_classification = NEW_OBJECT(canonical_form::objects_after_classification);
-
-	if (!IS->Descr->f_label) {
-		cout << "please use -label <label_txt> <label_tex> "
-				"when defining the input stream for the combinatorial object" << endl;
-		exit(1);
-	}
-	if (f_v) {
-		cout << "combinatorial_object_stream::do_canonical_form "
-				"before Objects_after_classification->init_after_nauty" << endl;
-	}
-	Objects_after_classification->init_after_nauty(
-			Classification_of_objects,
-			f_projective_space, PA,
-			verbose_level);
-	if (f_v) {
-		cout << "combinatorial_object_stream::do_canonical_form "
-				"after Objects_after_classification->init_after_nauty" << endl;
-	}
 
 
 	if (f_v) {
@@ -140,6 +130,308 @@ void combinatorial_object_stream::do_canonical_form(
 
 }
 
+void combinatorial_object_stream::write_canonical_form_data(
+		std::string fname_base,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "combinatorial_object_stream::write_canonical_form_data" << endl;
+	}
+
+	std::string fname;
+
+	fname = fname_base + "_c.csv";
+	//fname = Classification_of_objects->IS->Descr->label_txt + "_canonicized.csv";
+
+	if (f_v) {
+		cout << "combinatorial_object_stream::write_canonical_form_data fname = " << fname << endl;
+	}
+
+	int iso_type;
+
+
+
+	std::string *Headers;
+	std::string *Table;
+
+	int nb_rows, nb_cols;
+
+	nb_rows = Classification_of_objects->Output->nb_orbits;
+	nb_cols = 11;
+	Headers = new std::string[nb_cols];
+	Table = new std::string[nb_rows * nb_cols];
+
+	Headers[0] = "Row";
+	Headers[1] = "object";
+	Headers[2] = "n";
+	Headers[3] = "ago";
+	Headers[4] = "base_length";
+	Headers[5] = "aut_counter";
+	Headers[6] = "base";
+	Headers[7] = "tl";
+	Headers[8] = "aut";
+	Headers[9] = "cl";
+	Headers[10] = "stats";
+
+	for (iso_type = 0; iso_type < Classification_of_objects->Output->nb_orbits; iso_type++) {
+
+		if (f_v) {
+			cout << "combinatorial_object_stream::write_canonical_form_data "
+					"iso_type = " << iso_type << " / " << Classification_of_objects->Output->nb_orbits << endl;
+			cout << "NO=" << endl;
+			//CO->NO_transversal[iso_type]->print();
+		}
+
+		//Classification_of_objects->Output->OWCF[iso_type];
+		//Classification_of_objects->Output->NO[iso_type];
+
+		std::string s_idx;
+
+
+		s_idx = std::to_string(Classification_of_objects->Output->OWCF[iso_type]->input_idx);
+
+		string s1;
+
+
+		s1 = Classification_of_objects->Output->OWCF[iso_type]->stringify(
+				verbose_level);
+
+		// 9 strings:
+		std::string s_n;
+		std::string s_ago;
+		std::string s_base_length;
+		std::string s_aut_counter;
+		std::string s_base;
+		std::string s_tl;
+		std::string s_aut;
+		std::string s_cl;
+		std::string s_stats;
+
+		Classification_of_objects->Output->NO[iso_type]->stringify(
+				s_n, s_ago,
+				s_base_length, s_aut_counter,
+				s_base, s_tl,
+				s_aut, s_cl,
+				s_stats,
+				verbose_level - 2);
+
+
+		Table[iso_type * nb_cols + 0] = "\"" + s_idx + "\"";
+		Table[iso_type * nb_cols + 1] = "\"" + s1 + "\"";
+		Table[iso_type * nb_cols + 2] = "\"" + s_n + "\"";
+		Table[iso_type * nb_cols + 3] = "\"" + s_ago + "\"";
+		Table[iso_type * nb_cols + 4] = "\"" + s_base_length + "\"";
+		Table[iso_type * nb_cols + 5] = "\"" + s_aut_counter + "\"";
+		Table[iso_type * nb_cols + 6] = "\"" + s_base + "\"";
+		Table[iso_type * nb_cols + 7] = "\"" + s_tl + "\"";
+		Table[iso_type * nb_cols + 8] = "\"" + s_aut + "\"";
+		Table[iso_type * nb_cols + 9] = "\"" + s_cl + "\"";
+		Table[iso_type * nb_cols + 10] = "\"" + s_stats + "\"";
+
+
+
+	}
+
+	other::orbiter_kernel_system::file_io Fio;
+
+
+	Fio.Csv_file_support->write_table_of_strings_with_col_headings(
+			fname,
+			nb_rows, nb_cols, Table,
+			Headers,
+			verbose_level - 1);
+
+	if (f_v) {
+		cout << "combinatorial_object_stream::write_canonical_form_data "
+				"Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
+
+	delete [] Headers;
+	delete [] Table;
+
+
+
+	if (f_v) {
+		cout << "combinatorial_object_stream::write_canonical_form_data done" << endl;
+	}
+}
+
+void combinatorial_object_stream::write_canonical_form_data_non_trivial_group(
+		std::string fname_base,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "combinatorial_object_stream::write_canonical_form_data_non_trivial_group" << endl;
+	}
+
+	std::string fname;
+
+	fname = fname_base + "_c_nt.csv";
+	//fname = Classification_of_objects->IS->Descr->label_txt + "_canonicized.csv";
+
+	if (f_v) {
+		cout << "combinatorial_object_stream::write_canonical_form_data_non_trivial_group fname = " << fname << endl;
+	}
+
+	int iso_type;
+
+
+
+	std::string *Headers;
+	std::string *Table;
+
+	int nb_rows, nb_cols;
+	int nb_r;
+
+	nb_rows = Classification_of_objects->Output->nb_orbits;
+	nb_cols = 11;
+	Headers = new std::string[nb_cols];
+	Table = new std::string[nb_rows * nb_cols];
+
+	Headers[0] = "Row";
+	Headers[1] = "object";
+	Headers[2] = "n";
+	Headers[3] = "ago";
+	Headers[4] = "base_length";
+	Headers[5] = "aut_counter";
+	Headers[6] = "base";
+	Headers[7] = "tl";
+	Headers[8] = "aut";
+	Headers[9] = "cl";
+	Headers[10] = "stats";
+
+	nb_r = 0;
+	for (iso_type = 0; iso_type < Classification_of_objects->Output->nb_orbits; iso_type++) {
+
+		if (f_v) {
+			cout << "combinatorial_object_stream::write_canonical_form_data "
+					"iso_type = " << iso_type << " / " << Classification_of_objects->Output->nb_orbits << endl;
+			cout << "NO=" << endl;
+			//CO->NO_transversal[iso_type]->print();
+		}
+
+		//Classification_of_objects->Output->OWCF[iso_type];
+		//Classification_of_objects->Output->NO[iso_type];
+
+		// skip if the automorphism group is trivial:
+
+		if (Classification_of_objects->Output->NO[iso_type]->Ago->is_one()) {
+			continue;
+		}
+
+
+		std::string s_idx;
+
+
+		s_idx = std::to_string(Classification_of_objects->Output->OWCF[iso_type]->input_idx);
+
+		string s1;
+
+
+		s1 = Classification_of_objects->Output->OWCF[iso_type]->stringify(
+				verbose_level);
+
+		// 9 strings:
+		std::string s_n;
+		std::string s_ago;
+		std::string s_base_length;
+		std::string s_aut_counter;
+		std::string s_base;
+		std::string s_tl;
+		std::string s_aut;
+		std::string s_cl;
+		std::string s_stats;
+
+		Classification_of_objects->Output->NO[iso_type]->stringify(
+				s_n, s_ago,
+				s_base_length, s_aut_counter,
+				s_base, s_tl,
+				s_aut, s_cl,
+				s_stats,
+				verbose_level - 2);
+
+
+		Table[nb_r * nb_cols + 0] = "\"" + s_idx + "\"";
+		Table[nb_r * nb_cols + 1] = "\"" + s1 + "\"";
+		Table[nb_r * nb_cols + 2] = "\"" + s_n + "\"";
+		Table[nb_r * nb_cols + 3] = "\"" + s_ago + "\"";
+		Table[nb_r * nb_cols + 4] = "\"" + s_base_length + "\"";
+		Table[nb_r * nb_cols + 5] = "\"" + s_aut_counter + "\"";
+		Table[nb_r * nb_cols + 6] = "\"" + s_base + "\"";
+		Table[nb_r * nb_cols + 7] = "\"" + s_tl + "\"";
+		Table[nb_r * nb_cols + 8] = "\"" + s_aut + "\"";
+		Table[nb_r * nb_cols + 9] = "\"" + s_cl + "\"";
+		Table[nb_r * nb_cols + 10] = "\"" + s_stats + "\"";
+
+		nb_r++;
+
+
+	}
+
+	other::orbiter_kernel_system::file_io Fio;
+
+
+	Fio.Csv_file_support->write_table_of_strings_with_col_headings(
+			fname,
+			nb_r, nb_cols, Table,
+			Headers,
+			verbose_level - 1);
+
+	if (f_v) {
+		cout << "combinatorial_object_stream::write_canonical_form_data_non_trivial_group "
+				"Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
+
+	delete [] Headers;
+	delete [] Table;
+
+
+
+	if (f_v) {
+		cout << "combinatorial_object_stream::write_canonical_form_data_non_trivial_group done" << endl;
+	}
+}
+
+
+void combinatorial_object_stream::do_post_processing(
+		int verbose_level)
+// called from combinatorial_object_activity::perform_activity_combo
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "combinatorial_object_stream::do_post_processing" << endl;
+	}
+
+	Objects_after_classification = NEW_OBJECT(canonical_form::objects_after_classification);
+
+	if (!IS->Descr->f_label) {
+		cout << "please use -label <label_txt> <label_tex> "
+				"when defining the input stream for the combinatorial object" << endl;
+		exit(1);
+	}
+	if (f_v) {
+		cout << "combinatorial_object_stream::do_post_processing "
+				"before Objects_after_classification->init_after_nauty" << endl;
+	}
+	Objects_after_classification->init_after_nauty(
+			Classification_of_objects,
+			f_projective_space, PA,
+			verbose_level);
+	if (f_v) {
+		cout << "combinatorial_object_stream::do_post_processing "
+				"after Objects_after_classification->init_after_nauty" << endl;
+	}
+
+	if (f_v) {
+		cout << "combinatorial_object_stream::do_post_processing done" << endl;
+	}
+
+}
 
 void combinatorial_object_stream::do_test_distinguishing_property(
 		combinatorics::graph_theory::colored_graph *CG,

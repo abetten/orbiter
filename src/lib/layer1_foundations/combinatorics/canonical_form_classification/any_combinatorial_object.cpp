@@ -49,6 +49,7 @@ any_combinatorial_object::any_combinatorial_object()
 	design_k = 0;
 	design_sz = 0;
 	SoS = NULL;
+	original_data = NULL;
 
 	f_extended_incma = false;
 
@@ -71,6 +72,9 @@ any_combinatorial_object::~any_combinatorial_object()
 		FREE_int(partition);
 	}
 #endif
+	if (original_data) {
+		FREE_lint(original_data);
+	}
 	if (SoS) {
 		FREE_OBJECT(SoS);
 	}
@@ -279,6 +283,78 @@ void any_combinatorial_object::print_incidence_matrices(
 
 }
 
+
+std::string any_combinatorial_object::stringify(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "any_combinatorial_object::stringify" << endl;
+	}
+
+	string s;
+
+	if (type == t_PTS) {
+		if (f_v) {
+			cout << "any_combinatorial_object::print_tex t_PTS" << endl;
+		}
+	}
+	else if (type == t_LNS) {
+		if (f_v) {
+			cout << "any_combinatorial_object::print_tex t_LNS" << endl;
+		}
+	}
+	else if (type == t_PNL) {
+		if (f_v) {
+			cout << "any_combinatorial_object::print_tex t_PNL" << endl;
+		}
+	}
+	else if (type == t_PAC) {
+		if (f_v) {
+			cout << "any_combinatorial_object::print_tex t_PAC" << endl;
+		}
+
+		//original_data = NEW_lint(size_of_packing);
+		//Lint_vec_copy(data, original_data, size_of_packing);
+
+		int size_of_packing;
+
+		size_of_packing = SoS->nb_sets;
+
+		s = Lint_vec_stringify(original_data, size_of_packing);
+
+	}
+	else if (type == t_INC) {
+		if (f_v) {
+			cout << "any_combinatorial_object::print_tex t_INC" << endl;
+		}
+	}
+	else if (type == t_LS) {
+		if (f_v) {
+			cout << "any_combinatorial_object::print_tex t_LS" << endl;
+		}
+
+		//int nb_designs = b / design_sz;
+
+		s = Lint_vec_stringify(set, b);
+
+
+
+	}
+	else if (type == t_MMX) {
+		if (f_v) {
+			cout << "any_combinatorial_object::print_tex t_MMX" << endl;
+		}
+
+	}
+
+
+	if (f_v) {
+		cout << "any_combinatorial_object::stringify done" << endl;
+	}
+	return s;
+}
 
 void any_combinatorial_object::print_tex(
 		std::ostream &ost, int verbose_level)
@@ -775,6 +851,9 @@ void any_combinatorial_object::init_packing_from_spread_table(
 	//q = P->q;
 	size_of_spread = q * q + 1;
 	size_of_packing = q * q + q + 1;
+
+	original_data = NEW_lint(size_of_packing);
+	Lint_vec_copy(data, original_data, size_of_packing);
 
 	if (spread_size != size_of_spread) {
 		cout << "any_combinatorial_object::init_packing_from_spread_table "

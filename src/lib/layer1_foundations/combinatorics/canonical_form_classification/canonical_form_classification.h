@@ -74,6 +74,7 @@ public:
 
 		// t_PAC = packing, uses SoS
 		other::data_structures::set_of_sets *SoS;
+		long int *original_data; // [SoS->nb_sets]
 		// SoS is used by t_PAC
 
 		int f_extended_incma;
@@ -104,6 +105,8 @@ public:
 			std::ostream &ost,
 			canonical_form_classification::objects_report_options
 				*Report_options,
+			int verbose_level);
+	std::string stringify(
 			int verbose_level);
 	void print_tex(
 			std::ostream &ost, int verbose_level);
@@ -415,8 +418,6 @@ public:
 
 	classification_of_objects();
 	~classification_of_objects();
-	std::string get_label();
-	std::string get_label_tex();
 	void perform_classification(
 			classification_of_objects_description *Descr,
 			int f_projective_space,
@@ -439,6 +440,8 @@ public:
 		encoded_combinatorial_object *&Enc,
 		int verbose_level);
 	// returns f_found, which is true if the object is already in the list
+	std::string get_label();
+	std::string get_label_tex();
 
 
 };
