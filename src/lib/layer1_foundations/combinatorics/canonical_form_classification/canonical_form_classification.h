@@ -766,6 +766,7 @@ public:
 	int nb_orbits; // number of isomorphism types
 
 	int *Idx_transversal; // [nb_orbits]
+		// Idx_transversal[i] is the input index of the i-th isomorphism class
 
 	long int *Ago_transversal; // [nb_orbits]
 

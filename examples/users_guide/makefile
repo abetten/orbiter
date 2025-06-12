@@ -342,6 +342,10 @@ HERMITIAN_SURFACE_Q9_POINTS="7, 8, 10, 12, 15, 16, 18, 20, 22, 23, 26, 28, 31, 3
 HERMITIAN_SURFACE_Q9_NB_POINTS=280
 
 
+PGL_3_13_CLASS_2A_REP="1, 1, 5, 9, 9, 8, 5, 11, 0"
+
+PGL_3_13_CLASS_2B_REP="1, 1, 11, 1, 6, 12, 7, 10, 5"
+
 
 # Section 5.6 Group theoretic activities based on Magma
 
@@ -7588,6 +7592,18 @@ PGL_2_3_subgroup_lattice_load_and_draw_by_orbits:
 
 
 
+PGL_3_13_2B_RNF:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 13 -end \
+		-define G -linear_group -PGL 3 F -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-rational_normal_form $(PGL_3_13_CLASS_2B_REP) \
+		-end
+
+
+
+
 ###############################################################################
 # Section 5.6: Group Theoretic Activities Based on Magma
 
@@ -12799,6 +12815,10 @@ Hirschfeld_surface_incma_40_40_c:
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \
+			-post_processing \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
 			-report \
 				-export_flag_orbits \
 				-show_incidence_matrices \
@@ -15953,6 +15973,10 @@ Golay24_2A_fix_weight12_c:
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \
+			-post_processing \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
 			-report \
 				-export_flag_orbits \
 				-show_incidence_matrices \
@@ -18144,6 +18168,10 @@ geo_10_3_Desargues_configuration_c:
 				-nauty_control -end \
 			-end \
 		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-post_processing \
+		-end \
 		-assign Object7 -from \
 		-with C -do \
 		-combinatorial_object_activity \
@@ -18240,6 +18268,10 @@ Praeger_45_12_3_design_group:
 				-save_transversal \
 				-nauty_control -end \
 			-end \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-post_processing \
 		-end \
 		-assign Object -from \
 		-with C -do \
@@ -20159,6 +20191,10 @@ LSQ_5_c:
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \
+			-post_processing \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
 			-report \
 				-export_flag_orbits \
 				-show_TDO \
@@ -20434,6 +20470,10 @@ C5_design_classify:
 		-combinatorial_object_activity \
 			-canonical_form \
 			-end \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-post_processing \
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \
@@ -20980,6 +21020,10 @@ Praeger_45_12_3_design_c:
 				-save_transversal \
 				-nauty_control -end \
 			-end \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-post_processing \
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \
@@ -22164,6 +22208,10 @@ PG_3_3_assume_5_packings_classify:
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \
+			-post_processing \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
 			-report \
 				-export_flag_orbits \
 				-show_TDO \
@@ -23275,6 +23323,10 @@ quadrangles_PG_2_2:
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \
+			-post_processing \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
 			-report \
 				-export_flag_orbits \
 				-show_TDO \
@@ -23311,6 +23363,10 @@ Barth_mod_11_singular_pts_c:
 		-end \
 		-define Doinc -draw_incidence_structure_options \
 			-width 40 -width_10 6 \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-post_processing \
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \
@@ -23457,6 +23513,10 @@ EC_canon:
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \
+			-post_processing \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
 			-report \
 				-export_flag_orbits \
 				-show_TDO \
@@ -23514,6 +23574,10 @@ Hirschfeld_q4_c:
 		-end \
 		-define Doinc -draw_incidence_structure_options \
 			-width 60 -width_10 6 \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-post_processing \
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \
@@ -23621,6 +23685,10 @@ Hirschfeld_q4_set_c:
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \
+			-post_processing \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
 			-report \
 				-show_TDO \
 				-show_TDA \
@@ -23662,6 +23730,10 @@ Dickson_sets_stabilizer:
 		-end \
 		-define Doinc -draw_incidence_structure_options \
 			-width 40 -width_10 6 \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-post_processing \
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \
@@ -23716,6 +23788,10 @@ Endrass_7c:
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \
+			-post_processing \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
 			-report \
 			-incidence_draw_options Doinc \
 			-end \
@@ -23750,6 +23826,10 @@ hyperoval_16_canonical_form:
 		-end \
 		-define Doinc -draw_incidence_structure_options \
 			-width 40 -width_10 6 \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-post_processing \
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \
@@ -23802,6 +23882,10 @@ cubic_curves_PG_2_8_canon:
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \
+			-post_processing \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
 			-report \
 				-export_flag_orbits \
 				-show_TDO \
@@ -23841,6 +23925,10 @@ ovoid_q8_canon:
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \
+			-post_processing \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
 			-report \
 				-show_TDO \
 				-show_TDA \
@@ -23875,6 +23963,10 @@ ovoid_ST_q8_canon:
 		-end \
 		-define Doinc -draw_incidence_structure_options \
 			-width 40 -width_10 6 \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-post_processing \
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \
@@ -23942,6 +24034,10 @@ quartic_curve_25_0_0_canonical:
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \
+			-post_processing \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
 			-report \
 				-show_TDO \
 				-show_TDA \
@@ -23974,6 +24070,10 @@ CRC_BCH_Q16_N51_D3_canonical:
 		-end \
 		-define Doinc -draw_incidence_structure_options \
 			-width 40 -width_10 6 \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-post_processing \
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \
@@ -24011,6 +24111,10 @@ Veronese_1_3_q7_c:
 		-end \
 		-define Doinc -draw_incidence_structure_options \
 			-width 40 -width_10 6 \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-post_processing \
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \
@@ -24077,6 +24181,10 @@ geo_7_3_c:
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \
+			-post_processing \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
 			-report \
 				-export_flag_orbits \
 				-show_incidence_matrices \
@@ -24124,6 +24232,10 @@ geo_10_3_c:
 				-save_transversal \
 				-nauty_control -end \
 			-end \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-post_processing \
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \
@@ -24199,6 +24311,10 @@ geo_10_3_c_lex_least:
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \
+			-post_processing \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
 			-report \
 				-export_flag_orbits \
 				-show_incidence_matrices \
@@ -24265,6 +24381,20 @@ geo_15_3_c:
 			-canonical_form \
 			-save_ago \
 			-nauty_control -end \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-post_processing \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-report \
+				-export_flag_orbits \
+				-show_TDO \
+				-show_TDA \
+				-show_incidence_matrices \
+				-incidence_draw_options Doinc \
+			-end \
 		-end
 	$(PDFLATEX) 15_3_classification.tex
 	$(OPEN) 15_3_classification.pdf
@@ -24285,6 +24415,10 @@ TFC_24_3_c:
 		-end \
 		-define Doinc -draw_incidence_structure_options \
 			-width 40 -width_10 6 \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-post_processing \
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \
@@ -24337,6 +24471,10 @@ geo_40_4_g4_c:
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \
+			-post_processing \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
 			-report \
 				-export_flag_orbits \
 				-show_TDO \
@@ -24379,6 +24517,10 @@ geo_17_3_g4_c:
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \
+			-post_processing \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
 			-report \
 				-export_flag_orbits \
 				-show_TDO \
@@ -24408,6 +24550,10 @@ AG_2_3_c: AG_2_3.inc
 		-end \
 		-define Doinc -draw_incidence_structure_options \
 			-width 40 -width_10 6 \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-post_processing \
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \
@@ -24457,6 +24603,10 @@ geo_LSQ6_c:
 				-save_transversal \
 				-nauty_control -end \
 			-end \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-post_processing \
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \
@@ -24541,6 +24691,10 @@ design_27c:
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \
+			-post_processing \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
 			-report \
 				-incidence_draw_options Doinc \
 		-end
@@ -24574,6 +24728,10 @@ design_PG_2_3_canonical:
 				-save_transversal \
 				-nauty_control -end \
 			-end \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-post_processing \
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \
@@ -24621,6 +24779,10 @@ wreath_product_designs_n4_k2_c:
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \
+			-post_processing \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
 			-report \
 				-export_flag_orbits \
 				-show_incidence_matrices \
@@ -24658,6 +24820,10 @@ wreath_product_designs_n8_k6_c:
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \
+			-post_processing \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
 			-report \
 				-export_flag_orbits \
 				-export_group_GAP \
@@ -24689,6 +24855,10 @@ LS_AG_2_3_solutions_classify:
 				-max_TDO_depth 10 \
 				-nauty_control -end \
 			-end \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-post_processing \
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \
@@ -24735,6 +24905,10 @@ neumaier_graphs_16_classify:
 				-max_TDO_depth 10 \
 				-nauty_control -end \
 			-end \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-post_processing \
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \
@@ -25389,6 +25563,10 @@ Paulus_c:
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \
+			-post_processing \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
 			-report \
 				-export_flag_orbits \
 				-show_TDO \
@@ -25445,6 +25623,10 @@ Neumaier_graph_25_c:
 		-end \
 		-define Doinc -draw_incidence_structure_options \
 			-width 20 -width_10 2 -end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-post_processing \
+		-end \
 		-with C -do \
 		-combinatorial_object_activity \
 			-report \
@@ -25531,6 +25713,10 @@ Edge_curve_17_nauty:
 			-end \
 		-define Doinc -draw_incidence_structure_options \
 			-width 40 -width_10 6 \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-post_processing \
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \
@@ -27395,6 +27581,10 @@ stabilizer_of_mmx:
 				-save_transversal \
 				-max_TDO_depth 400 \
 			-end \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-post_processing \
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \

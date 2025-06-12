@@ -1516,10 +1516,8 @@ void csv_file_support::do_csv_file_select_cols_by_label(
 	data_structures::string_tools ST;
 	string fname_out;
 
-	fname_out = fname;
-	ST.chop_off_extension(fname_out);
-	fname_out += fname_append;
-	fname_out += ".csv";
+	fname_out = fname_append;
+	//fname_out += ".csv";
 
 
 	string headings;

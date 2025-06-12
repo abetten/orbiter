@@ -86,7 +86,6 @@ void combinatorial_object_stream::do_canonical_form(
 				*Canonical_form_Descr,
 		int f_projective_space,
 		projective_geometry::projective_space_with_action *PA,
-		//geometry::projective_geometry::projective_space *P,
 		int verbose_level)
 // called from combinatorial_object_activity::perform_activity_combo
 {
@@ -133,6 +132,8 @@ void combinatorial_object_stream::do_canonical_form(
 void combinatorial_object_stream::write_canonical_form_data(
 		std::string fname_base,
 		int verbose_level)
+// creates a csv file containing the result from the canonization as nauty output.
+// The input object is repeated together with the input_idx.
 {
 	int f_v = (verbose_level >= 1);
 
@@ -261,6 +262,9 @@ void combinatorial_object_stream::write_canonical_form_data(
 void combinatorial_object_stream::write_canonical_form_data_non_trivial_group(
 		std::string fname_base,
 		int verbose_level)
+// creates a csv file containing the result from the canonization as nauty output.
+// The input object is repeated together with the input_idx.
+// This function only writes the objects whose automorphism group is non-trivial.
 {
 	int f_v = (verbose_level >= 1);
 
@@ -308,7 +312,7 @@ void combinatorial_object_stream::write_canonical_form_data_non_trivial_group(
 	for (iso_type = 0; iso_type < Classification_of_objects->Output->nb_orbits; iso_type++) {
 
 		if (f_v) {
-			cout << "combinatorial_object_stream::write_canonical_form_data "
+			cout << "combinatorial_object_stream::write_canonical_form_data_non_trivial_group "
 					"iso_type = " << iso_type << " / " << Classification_of_objects->Output->nb_orbits << endl;
 			cout << "NO=" << endl;
 			//CO->NO_transversal[iso_type]->print();
@@ -397,9 +401,11 @@ void combinatorial_object_stream::write_canonical_form_data_non_trivial_group(
 }
 
 
+
 void combinatorial_object_stream::do_post_processing(
 		int verbose_level)
 // called from combinatorial_object_activity::perform_activity_combo
+// creates Objects_after_classification, which is memory intense
 {
 	int f_v = (verbose_level >= 1);
 
@@ -538,7 +544,8 @@ void combinatorial_object_stream::do_covering_type(
 	}
 
 	if (f_v) {
-		cout << "combinatorial_object_stream::do_covering_type IS->Objects.size() = " << IS->Objects.size() << endl;
+		cout << "combinatorial_object_stream::do_covering_type "
+				"IS->Objects.size() = " << IS->Objects.size() << endl;
 
 	}
 
@@ -1317,6 +1324,7 @@ void combinatorial_object_stream::do_activity(
 		user_interface::activity_description *Activity_description,
 		other::orbiter_kernel_system::activity_output *&AO,
 		int verbose_level)
+// front end for graph theoretic activities
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1335,6 +1343,10 @@ void combinatorial_object_stream::do_activity(
 				AO,
 				verbose_level);
 
+	}
+	else {
+		cout << "combinatorial_object_stream::do_activity activity is not recognized" << endl;
+		exit(1);
 	}
 
 	if (f_v) {

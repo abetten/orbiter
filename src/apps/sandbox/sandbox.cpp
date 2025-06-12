@@ -17,6 +17,57 @@ using namespace orbiter;
 int main()
 {
 
+#if 1
+	int i, j;
+	for (i = 0; i < 32; i++) {
+		cout << "split_" << i << ":" << endl;
+		for (j = 0; j < 4096; j++) {
+			if ((j % 32) == i) {
+				cout << "\tmake -f split_4096.mk PG_3_3_packings_canonicize_" << j << "_mod_4096" << endl;
+			}
+		}
+		cout << endl;
+	}
+#endif
+
+
+#if 0
+	string mask;
+
+	mask =
+	"PG_3_3_packings_canonicize_%d_mod_4096:\n\
+	$(ORBITER) -v 2 \\\n\
+		-define C -combinatorial_object \\\n\
+			-label case_%d_mod_4096 \\\n\
+			\"{\\\\rm PG\\_3\\_3\\_packings}\" \\\n\
+			-file_of_packings_through_spread_table \\\n\
+				spread_9_disjoint_starter_sz_2_combined_sol_split_%d_mod_4096.csv \\\n\
+				SPREAD_TABLES_3/spread_9_spreads.csv \\\n\
+				3 \\\n\
+		-end \\\n\
+		-define F -finite_field -q 3 -end \\\n\
+		-define P3 -projective_space -n 3 -field F -v 0 -end \\\n\
+		-with C -do \\\n\
+		-combinatorial_object_activity \\\n\
+			-canonical_form_PG P3 \\\n\
+			-nauty_control -end \\\n\
+			-end \\\n\
+		-end\n";
+
+	char str[10000];
+
+
+	int i;
+	for (i = 0; i < 4096; i++) {
+		snprintf(str, sizeof(str), mask.c_str(), i,i,i,i,i,i);
+
+		cout << endl;
+		cout << str << endl;
+		cout << endl;
+
+	}
+#endif
+
 
 #if 0
 	algebra::field_theory::finite_field_description Descr;

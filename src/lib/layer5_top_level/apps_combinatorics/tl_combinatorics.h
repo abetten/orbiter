@@ -271,29 +271,30 @@ public:
 			combinatorics::canonical_form_classification::data_input_stream_description
 					*Data_input_stream_description,
 			int verbose_level);
+
 	void do_canonical_form(
 			combinatorics::canonical_form_classification::classification_of_objects_description
 					*Canonical_form_Descr,
 			int f_projective_space,
 			projective_geometry::projective_space_with_action *PA,
-			//geometry::projective_geometry::projective_space *P,
 			int verbose_level);
 	// called from combinatorial_object_activity::perform_activity_combo
+	// computes the canonical from of the combinatorial object
 	void write_canonical_form_data(
 			std::string fname_base,
 			int verbose_level);
+	// creates a csv file containing the result from the canonization as nauty output.
+	// The input object is repeated together with the input_idx.
 	void write_canonical_form_data_non_trivial_group(
 			std::string fname_base,
 			int verbose_level);
+	// creates a csv file containing the result from the canonization as nauty output.
+	// The input object is repeated together with the input_idx.
+	// This function only writes the objects whose automorphism group is non-trivial.
 	void do_post_processing(
 			int verbose_level);
+	// creates Objects_after_classification, which is memory intense
 
-#if 0
-	void do_canonical_form_not_PG(
-			canonical_form_classification::classification_of_objects_description
-				*Canonical_form_Descr,
-			int verbose_level);
-#endif
 	void do_test_distinguishing_property(
 			combinatorics::graph_theory::colored_graph *CG,
 			int verbose_level);

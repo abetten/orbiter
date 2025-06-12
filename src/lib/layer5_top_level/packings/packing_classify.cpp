@@ -138,11 +138,17 @@ void packing_classify::init(
 	size_of_packing = q * q + q + 1;
 	nb_lines = Spread_table_with_selection->T->A2->degree;
 
+	int nb_points;
+
+
+	nb_points = Spread_table_with_selection->T->A->degree;
+
 	packing_classify::f_lexorder_test = f_lexorder_test;
 
 	
 	if (f_v) {
 		cout << "packing_classify::init q=" << q << endl;
+		cout << "packing_classify::init nb_points=" << nb_points << endl;
 		cout << "packing_classify::init nb_lines=" << nb_lines << endl;
 		cout << "packing_classify::init spread_size=" << spread_size << endl;
 		cout << "packing_classify::init size_of_packing=" << size_of_packing << endl;
