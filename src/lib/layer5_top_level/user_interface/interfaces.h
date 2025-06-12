@@ -1079,6 +1079,10 @@ class interface_toolkit {
 	std::string mv_a;
 	std::string mv_b;
 
+	int f_cp;
+	std::string cp_a;
+	std::string cp_b;
+
 	int f_system;
 	std::string system_command;
 

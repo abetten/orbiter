@@ -156,6 +156,10 @@ interface_toolkit::interface_toolkit()
 	//std::string mv_a;
 	//std::string mv_b;
 
+	f_cp = false;
+	//std::string cp_a;
+	//std::string cp_b;
+
 	f_system = false;
 	//std::string system_command;
 
@@ -1013,6 +1017,15 @@ void interface_toolkit::read_arguments(
 				<< " " << mv_b << endl;
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-cp") == 0) {
+		f_cp = true;
+		cp_a.assign(argv[++i]);
+		cp_b.assign(argv[++i]);
+		if (f_v) {
+			cout << "-cp " << cp_a
+				<< " " << cp_b << endl;
+		}
+	}
 	else if (ST.stringcmp(argv[i], "-system") == 0) {
 		f_system = true;
 		system_command.assign(argv[++i]);
@@ -1485,6 +1498,10 @@ void interface_toolkit::print()
 	if (f_mv) {
 		cout << "-mv " << mv_a
 				<< " " << mv_b << endl;
+	}
+	if (f_cp) {
+		cout << "-cp " << cp_a
+				<< " " << cp_b << endl;
 	}
 	if (f_loop) {
 		cout << "-loop " << loop_variable
@@ -2088,6 +2105,17 @@ void interface_toolkit::worker(
 		string cmd;
 
 		cmd = "mv " + mv_a + " " + mv_b;
+		cout << "executing " << cmd << endl;
+		system(cmd.c_str());
+	}
+	else if (f_cp) {
+
+		if (f_v) {
+			cout << "interface_toolkit::worker f_cp" << endl;
+		}
+		string cmd;
+
+		cmd = "cp " + cp_a + " " + cp_b;
 		cout << "executing " << cmd << endl;
 		system(cmd.c_str());
 	}
