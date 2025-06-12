@@ -355,6 +355,9 @@ void interface_toolkit::print_help(
 	else if (ST.stringcmp(argv[i], "-mv") == 0) {
 		cout << "-mv <string : from> <string : to> " << endl;
 	}
+	else if (ST.stringcmp(argv[i], "-cp") == 0) {
+		cout << "-cp <string : from> <string : to> " << endl;
+	}
 	else if (ST.stringcmp(argv[i], "-system") == 0) {
 		cout << "-system <string : command> " << endl;
 	}
@@ -515,6 +518,9 @@ int interface_toolkit::recognize_keyword(
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-mv") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-cp") == 0) {
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-system") == 0) {
