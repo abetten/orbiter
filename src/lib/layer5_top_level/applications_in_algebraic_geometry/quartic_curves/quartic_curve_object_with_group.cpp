@@ -165,6 +165,7 @@ void quartic_curve_object_with_group::export_col_headings(
 	Col_headings[14] = "LinesKlein";
 }
 
+
 void quartic_curve_object_with_group::export_data(
 		std::vector<std::string> &Table, int verbose_level)
 {
@@ -178,7 +179,7 @@ void quartic_curve_object_with_group::export_data(
 	algebra::ring_theory::longinteger_object set_stab_go;
 
 
-	QO->Variety_object;
+	//QO->Variety_object;
 
 	Aut_gens->group_order(ago);
 
@@ -255,7 +256,9 @@ void quartic_curve_object_with_group::export_data(
 	d = QO->Variety_object->Ring->degree;
 
 	s_eqn = "\"" + QO->Variety_object->Ring->stringify_equation(QO->Variety_object->eqn) + "\"";
-	s_eqn_vec = "\"" + Int_vec_stringify(QO->Variety_object->eqn, QO->Variety_object->Ring->get_nb_monomials()) + "\"";
+	s_eqn_vec = "\"" + Int_vec_stringify(
+			QO->Variety_object->eqn,
+			QO->Variety_object->Ring->get_nb_monomials()) + "\"";
 
 	Table.push_back(std::to_string(n));
 	Table.push_back(std::to_string(q));

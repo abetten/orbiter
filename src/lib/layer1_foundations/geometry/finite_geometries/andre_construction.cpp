@@ -139,7 +139,8 @@ void andre_construction::init(
 	}
 	
 	if (f_v) {
-		cout << "andre_construction::init creating generator matrices" << endl;
+		cout << "andre_construction::init "
+				"creating generator matrices" << endl;
 	}
 
 	spread_elements_genma = NEW_int(spread_size * k * n);
@@ -155,7 +156,8 @@ void andre_construction::init(
 	non_pivot = NEW_int(spread_size * (n - k));
 
 	if (f_v) {
-		cout << "andre_construction::init computing pivot and non_pivot" << endl;
+		cout << "andre_construction::init "
+				"computing pivot and non_pivot" << endl;
 	}
 
 
@@ -163,8 +165,10 @@ void andre_construction::init(
 		if (f_v) {
 			cout << "andre_construction::init i=" << i << endl;
 		}
-		F->Linear_algebra->Gauss_simple(spread_elements_genma + i * k * n,
-				k, n, pivot + i * k, 0 /*verbose_level*/);
+		F->Linear_algebra->Gauss_simple(
+				spread_elements_genma + i * k * n,
+				k, n, pivot + i * k,
+				0 /*verbose_level*/);
 		Combi.set_complement(pivot + i * k, k, non_pivot + i * (n - k), a, n);
 		if (a != n - k) {
 			cout << "andre_construction::init "
@@ -229,11 +233,16 @@ void andre_construction::report(
 	ost << "The spread: \\\\" << endl;
 
 	if (f_v) {
-		cout << "andre_construction::report before Grass->print_set_tex" << endl;
+		cout << "andre_construction::report "
+				"before Grass->print_set_tex" << endl;
 	}
-	Grass->print_set_tex(ost, spread_elements_numeric, spread_size, verbose_level);
+	Grass->print_set_tex(
+			ost,
+			spread_elements_numeric, spread_size,
+			verbose_level);
 	if (f_v) {
-		cout << "andre_construction::report after Grass->print_set_tex" << endl;
+		cout << "andre_construction::report "
+				"after Grass->print_set_tex" << endl;
 	}
 
 	if (f_v) {

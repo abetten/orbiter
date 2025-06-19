@@ -19,7 +19,7 @@ spread_table_activity::spread_table_activity()
 {
 	Record_birth();
 	Descr = NULL;
-	P = NULL;
+	Spread_table_with_selection = NULL;
 
 }
 
@@ -33,7 +33,7 @@ spread_table_activity::~spread_table_activity()
 
 void spread_table_activity::init(
 		spreads::spread_table_activity_description *Descr,
-		packings::packing_classify *P,
+		spreads::spread_table_with_selection *Spread_table_with_selection,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -43,7 +43,8 @@ void spread_table_activity::init(
 	}
 
 	spread_table_activity::Descr = Descr;
-	spread_table_activity::P = P;
+	spread_table_activity::Spread_table_with_selection = Spread_table_with_selection;
+	//spread_table_activity::P = P;
 
 	if (f_v) {
 		cout << "spread_table_activity::init done" << endl;
@@ -55,64 +56,96 @@ void spread_table_activity::perform_activity(
 {
 	int f_v = (verbose_level >= 1);
 
+	if (f_v) {
+		cout << "spread_table_activity::perform_activity" << endl;
+	}
+
 	if (Descr->f_find_spread) {
-		cout << "f_find_spread" << endl;
+		if (f_v) {
+			cout << "spread_table_activity::perform_activity f_find_spread" << endl;
+		}
 		long int *spread_elts;
 		int sz;
 		int idx;
+		int iso_idx;
 		other::data_structures::sorting Sorting;
 
 
 
 		Lint_vec_scan(Descr->find_spread_text, spread_elts, sz);
 
-		if (sz != P->spread_size) {
+		if (sz != Spread_table_with_selection->spread_size) {
 			cout << "the set does not have the right size" << endl;
 			cout << "sz=" << sz << endl;
-			cout << "P->spread_size=" << P->spread_size << endl;
+			cout << "P->spread_size=" << Spread_table_with_selection->spread_size << endl;
 			exit(1);
 		}
 
 		Sorting.lint_vec_heapsort(spread_elts, sz);
 
-		idx = P->find_spread(spread_elts, verbose_level);
+		//idx = P->find_spread(spread_elts, verbose_level);
+		idx = Spread_table_with_selection->find_spread(spread_elts, verbose_level);
 
 		cout << "The given spread has index " << idx << " in the spread table" << endl;
+
+		iso_idx = Spread_table_with_selection->Spread_tables->spread_iso_type[idx];
+
+		cout << "The spread has isomorphism type " << iso_idx << endl;
 
 
 	}
 	else if (Descr->f_find_spread_and_dualize) {
-		cout << "f_find_spread_and_dualize" << endl;
+
+		if (f_v) {
+			cout << "spread_table_activity::perform_activity f_find_spread_and_dualize" << endl;
+		}
+
 		long int *spread_elts;
 		int sz;
 		int a, b;
+		int a_iso_idx, b_iso_idx;
 		other::data_structures::sorting Sorting;
 
 
 
 		Lint_vec_scan(Descr->find_spread_and_dualize_text, spread_elts, sz);
 
-		if (sz != P->spread_size) {
+		if (sz != Spread_table_with_selection->spread_size) {
 			cout << "the set does not have the right size" << endl;
 			cout << "sz=" << sz << endl;
-			cout << "P->spread_size=" << P->spread_size << endl;
+			cout << "Spread_table_with_selection->spread_size="
+					<< Spread_table_with_selection->spread_size << endl;
 			exit(1);
 		}
 
 		Sorting.lint_vec_heapsort(spread_elts, sz);
 
 
-		a = P->find_spread(spread_elts, verbose_level);
+		a = Spread_table_with_selection->find_spread(spread_elts, verbose_level);
 
 		cout << "The given spread has index " << a << " in the spread table" << endl;
 
-		b = P->Spread_table_with_selection->Spread_tables->dual_spread_idx[a];
+		a_iso_idx = Spread_table_with_selection->Spread_tables->spread_iso_type[a];
+
+		cout << "The spread has isomorphism type " << a_iso_idx << endl;
+
+
+		b = Spread_table_with_selection->Spread_tables->dual_spread_idx[a];
 
 		cout << "The dual spread has index " << b << " in the spread table" << endl;
 
+		b_iso_idx = Spread_table_with_selection->Spread_tables->spread_iso_type[b];
+
+		cout << "The spread has isomorphism type " << b_iso_idx << endl;
+
+
 	}
 	else if (Descr->f_dualize_packing) {
-		cout << "f_dualize_packing" << endl;
+
+		if (f_v) {
+			cout << "spread_table_activity::perform_activity f_dualize_packing" << endl;
+		}
+
 		long int *packing;
 		int sz;
 		long int *dual_packing;
@@ -130,7 +163,7 @@ void spread_table_activity::perform_activity(
 		dual_packing = NEW_lint(sz);
 		for (int i = 0; i < sz; i++) {
 			a = packing[i];
-			b = P->Spread_table_with_selection->Spread_tables->dual_spread_idx[a];
+			b = Spread_table_with_selection->Spread_tables->dual_spread_idx[a];
 			dual_packing[i] = b;
 		}
 
@@ -140,7 +173,10 @@ void spread_table_activity::perform_activity(
 
 	}
 	else if (Descr->f_print_spreads) {
-		cout << "f_print_spread" << endl;
+
+		if (f_v) {
+			cout << "spread_table_activity::perform_activity f_print_spread" << endl;
+		}
 
 		int *idx;
 		int nb;
@@ -153,7 +189,10 @@ void spread_table_activity::perform_activity(
 	}
 
 	else if (Descr->f_export_spreads_to_csv) {
-		cout << "f_export_spreads_to_csv" << endl;
+
+		if (f_v) {
+			cout << "spread_table_activity::perform_activity f_export_spreads_to_csv" << endl;
+		}
 
 		int *idx;
 		int nb;
@@ -166,14 +205,18 @@ void spread_table_activity::perform_activity(
 	}
 
 	else if (Descr->f_find_spreads_containing_two_lines) {
-		cout << "f_find_spreads_containing_two_lines" << endl;
+
+		if (f_v) {
+			cout << "spread_table_activity::perform_activity f_find_spreads_containing_two_lines" << endl;
+		}
 
 		std::vector<int> v;
 		int line1 = Descr->find_spreads_containing_two_lines_line1;
 		int line2 = Descr->find_spreads_containing_two_lines_line2;
 		int i;
 
-		P->Spread_table_with_selection->find_spreads_containing_two_lines(v,
+		Spread_table_with_selection->find_spreads_containing_two_lines(
+					v,
 					line1,
 					line2,
 					verbose_level);
@@ -190,8 +233,13 @@ void spread_table_activity::perform_activity(
 
 	}
 
+#if 0
 	else if (Descr->f_find_spreads_containing_one_line) {
-		cout << "f_find_spreads_containing_one_line" << endl;
+
+		if (f_v) {
+			cout << "spread_table_activity::perform_activity f_find_spreads_containing_one_line" << endl;
+		}
+
 
 		int line1 = Descr->find_spreads_containing_one_line_line_idx;
 		int line2;
@@ -206,7 +254,8 @@ void spread_table_activity::perform_activity(
 			}
 			{
 				std::vector<int> v;
-				P->Spread_table_with_selection->find_spreads_containing_two_lines(v,
+				P->Spread_table_with_selection->find_spreads_containing_two_lines(
+						v,
 						line1,
 						line2,
 						verbose_level);
@@ -221,6 +270,77 @@ void spread_table_activity::perform_activity(
 		cout << endl;
 
 	}
+#endif
+
+	else if (Descr->f_isomorphism_type_of_spreads) {
+
+		if (f_v) {
+			cout << "spread_table_activity::perform_activity f_isomorphism_type_of_spreads" << endl;
+			cout << "isomorphism_type_of_spreads_list" << Descr->isomorphism_type_of_spreads_list << endl;
+		}
+
+		long int *elts;
+		int sz;
+
+
+
+		Lint_vec_scan(Descr->isomorphism_type_of_spreads_list, elts, sz);
+
+		cout << "elts = ";
+		Lint_vec_print(cout, elts, sz);
+		cout << endl;
+
+		if (Spread_table_with_selection == NULL) {
+			cout << "spread_table_activity::perform_activity Spread_table_with_selection == NULL" << endl;
+			exit(1);
+		}
+		if (Spread_table_with_selection->Spread_tables == NULL) {
+			cout << "spread_table_activity::perform_activity Spread_table_with_selection->Spread_tables == NULL" << endl;
+			exit(1);
+		}
+
+		int h;
+
+		int *Iso_type;
+
+
+		Iso_type = NEW_int(sz);
+
+		if (f_v) {
+			cout << "spread_table_activity::perform_activity determining isomorphism types" << endl;
+		}
+
+		for (h = 0; h < sz; h++) {
+			if (f_v) {
+				cout << "spread_table_activity::perform_activity h = " << h << " / " << sz << endl;
+			}
+			Iso_type[h] = Spread_table_with_selection->Spread_tables->spread_iso_type[elts[h]];
+		}
+
+
+		cout << "Iso_type = ";
+		Int_vec_print(cout, Iso_type, sz);
+		cout << endl;
+
+		other::data_structures::tally *C;
+
+		C = NEW_OBJECT(other::data_structures::tally);
+
+		C->init(Iso_type, sz, false, 0);
+
+		cout << "Iso_type distribution:";
+		C->print_bare(false);
+		cout << endl;
+
+
+		FREE_int(Iso_type);
+		FREE_lint(elts);
+
+
+
+	}
+
+
 	if (f_v) {
 		cout << "spread_table_activity::perform_activity" << endl;
 
@@ -231,7 +351,8 @@ void spread_table_activity::perform_activity(
 
 void spread_table_activity::export_spreads_to_csv(
 		std::string &fname,
-		int *spread_idx, int nb, int verbose_level)
+		int *spread_idx, int nb,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -244,18 +365,18 @@ void spread_table_activity::export_spreads_to_csv(
 	int i, j, idx;
 	other::orbiter_kernel_system::file_io Fio;
 
-	T = NEW_lint(nb * P->spread_size);
+	T = NEW_lint(nb * Spread_table_with_selection->spread_size);
 	for (i = 0; i < nb; i++) {
 		long int *spread_elts;
 
 		idx = spread_idx[i];
-		spread_elts = P->Spread_table_with_selection->get_spread(idx);
-		for (j = 0; j < P->spread_size; j++) {
-			T[i * P->spread_size + j] = spread_elts[j];
+		spread_elts = Spread_table_with_selection->get_spread(idx);
+		for (j = 0; j < Spread_table_with_selection->spread_size; j++) {
+			T[i * Spread_table_with_selection->spread_size + j] = spread_elts[j];
 		}
 	}
 	Fio.Csv_file_support->lint_matrix_write_csv(
-			fname, T, nb, P->spread_size);
+			fname, T, nb, Spread_table_with_selection->spread_size);
 	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 
 	if (f_v) {
@@ -264,7 +385,8 @@ void spread_table_activity::export_spreads_to_csv(
 }
 
 void spread_table_activity::report_spreads(
-		int *spread_idx, int nb, int verbose_level)
+		int *spread_idx, int nb,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -342,7 +464,9 @@ void spread_table_activity::report_spreads(
 	}
 }
 
-void spread_table_activity::report_spread2(std::ostream &ost, int spread_idx, int verbose_level)
+void spread_table_activity::report_spread2(
+		std::ostream &ost, int spread_idx,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -353,14 +477,19 @@ void spread_table_activity::report_spread2(std::ostream &ost, int spread_idx, in
 	long int *spread_elts;
 
 
-	spread_elts = P->Spread_table_with_selection->get_spread(spread_idx);
+	spread_elts = Spread_table_with_selection->get_spread(spread_idx);
 
 	ost << "The spread " << spread_idx << " is:\\\\" << endl;
-	Lint_vec_print(ost, spread_elts, P->spread_size);
+	Lint_vec_print(ost, spread_elts, Spread_table_with_selection->spread_size);
 	ost << "\\\\" << endl;
 
-	P->P3->Subspaces->Grass_lines->print_set_tex(
-			ost, spread_elts, P->spread_size, 0 /* verbose_level */);
+	geometry::projective_geometry::projective_space *P;
+
+	P = Spread_table_with_selection->Spread_tables->P;
+
+	P->Subspaces->Grass_lines->print_set_tex(
+			ost, spread_elts, Spread_table_with_selection->spread_size,
+			0 /* verbose_level */);
 
 	if (f_v) {
 		cout << "spread_table_activity::report_spread2 done" << endl;

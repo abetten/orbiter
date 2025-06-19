@@ -2099,9 +2099,9 @@ std::string string_tools::texify(
 	int f_tab_no_triangle = true;
 	//int f_numbers = false;
 
-	int i, len;
+	int i; //, len;
 	char c;
-	len = 0;
+	//len = 0;
 
 	for (i = 0; i < input_string.length(); i++) {
 		c = input_string[i];
@@ -2118,114 +2118,114 @@ std::string string_tools::texify(
 			putchar((char)' ');
 			putchar((char)'\\');
 			putchar((char)' '); */
-			len += 2;
+			//len += 2;
 		}
 	#if 1
 		else if (c == ' ') {
 			output += "\\ ";
 
 
-			len++;
+			//len++;
 		}
 	#else
 		else if (c == ' ') {
 			output += "\\symbol{32}";
-			len++;
+			//len++;
 		}
 	#endif
 		else if (c == '<') {
 			output += "{\\textless}";
-			len++;
+			//len++;
 		}
 		else if (c == '>') {
 			output += "{\\textgreater}";
-			len++;
+			//len++;
 		}
 		else if (c == '|') {
 			output += "{\\textbar}";
-			len++;
+			//len++;
 		}
 		else if (c == '\\') {
 			output += "\\symbol{92}";
-			len++;
+			//len++;
 		}
 		else if (c == '\'') { /* Akut */
 			output += "\\symbol{19}";
-			len++;
+			//len++;
 		}
 		else if (c == ',') {
 			output += "\\symbol{44}";
-			len++;
+			//len++;
 		}
 		else if (c == '!') {
 			output += "\\symbol{33}";
-			len++;
+			//len++;
 		}
 		else if (c == '\"') {
 			output += "\\symbol{34}";
-			len++;
+			//len++;
 		}
 		else if (c == '.') {
 			output += "\\symbol{46}";
-			len++;
+			//len++;
 		}
 		else if (c == '-') {
 			output += "\\symbol{45}";
-			len++;
+			//len++;
 		}
 		else if (c == '#') {
 			output += "\\symbol{35}";
 			/* putchar((char)'\\');
 			putchar((char)'#'); */
-			len++;
+			//len++;
 		}
 		else if (c == '$') {
 			output += "\\symbol{36}";
 			/* putchar((char)'\\');
 			putchar((char)'$'); */
-			len++;
+			//len++;
 		}
 		else if (c == '&') {
 			output += "\\symbol{38}";
 			/* putchar((char)'\\');
 			putchar((char)'&'); */
-			len++;
+			//len++;
 		}
 		else if (c == '~') {
 			output += "\\symbol{126}";
 			/* putchar((char)'\\');
 			putchar((char)'~'); */
-			len++;
+			//len++;
 		}
 		else if (c == '_') {
 			output += "\\_";
 			/* putchar((char)'\\');
 			putchar((char)'_'); */
-			len++;
+			//len++;
 		}
 		else if (c == '^') {
 			output += "\\symbol{94}";
 			/* putchar((char)'\\');
 			putchar((char)'^'); */
-			len++;
+			//len++;
 		}
 		else if (c == '%') {
 			output += "\\symbol{37}";
 			/* putchar((char)'\\');
 			putchar((char)'%'); */
-			len++;
+			//len++;
 		}
 		else if (c == '{') {
 			output += "\\symbol{123}";
 			/* putchar((char)'\\');
 			putchar((char)'{'); */
-			len++;
+			//len++;
 		}
 		else if (c == '}') {
 			output += "\\symbol{125}";
 			/* putchar((char)'\\');
 			putchar((char)'}'); */
-			len++;
+			//len++;
 		}
 #if 0
 		else if (c == '\n') {
@@ -2243,7 +2243,7 @@ std::string string_tools::texify(
 			str[0] = c;
 			str[1] = 0;
 			output += str;
-			len++;
+			//len++;
 		}
 	}
 	return output;

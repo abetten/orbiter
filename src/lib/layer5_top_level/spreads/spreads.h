@@ -34,8 +34,10 @@ public:
 		// of k-subspaces of V(n,q)
 	int f_projective;
 	int f_semilinear;
-	int (*check_function_incremental)(int len, long int *S,
-		void *check_function_incremental_data, int verbose_level);
+	int (*check_function_incremental)(
+			int len, long int *S,
+		void *check_function_incremental_data,
+		int verbose_level);
 	void *check_function_incremental_data;
 
 	//std::string fname_live_points;
@@ -394,11 +396,12 @@ public:
 		int iso_cnt,
 		long int *data, int data_size, int verbose_level);
 	void klein(
-			std::ostream &ost,
-			isomorph::isomorph *Iso,
-		int iso_cnt, groups::sims *Stab, groups::schreier &Orb,
-		long int *data, int data_size, int verbose_level);
-
+			//std::ostream &ost,
+			//isomorph::isomorph *Iso,
+		int iso_cnt, //groups::sims *Stab, groups::schreier &Orb,
+		long int *data, int data_size,
+		other::data_structures::tally *&C,
+		int verbose_level);
 	void report2(
 			isomorph::isomorph &Iso, int verbose_level);
 	void report3(
@@ -501,13 +504,25 @@ public:
 	int degree;
 
 
+	// grassmann object with (n,k) = (2*k, k)
 	geometry::projective_geometry::grassmann *Grass;
 
+
+	// maybe this should become its own class:
+
+	// the actual spread, as vector of ranks of subspaces:
 	long int *set;
 	int sz;
 
+	// the automorphism group, if known:
 	int f_has_group;
 	groups::strong_generators *Sg;
+
+
+	// end
+
+
+	// the Andre construction of the associated translation plane:
 
 	geometry::finite_geometries::andre_construction *Andre;
 
@@ -647,6 +662,9 @@ public:
 	int f_find_spreads_containing_one_line;
 	int find_spreads_containing_one_line_line_idx;
 
+	int f_isomorphism_type_of_spreads;
+	std::string isomorphism_type_of_spreads_list;
+
 
 
 	spread_table_activity_description();
@@ -670,15 +688,18 @@ class spread_table_activity {
 public:
 
 	spread_table_activity_description *Descr;
-	packings::packing_classify *P;
 
+	spreads::spread_table_with_selection *Spread_table_with_selection;
+
+	//packings::packing_classify *P;
+	// why is this here?
 
 
 	spread_table_activity();
 	~spread_table_activity();
 	void init(
 			spreads::spread_table_activity_description *Descr,
-			packings::packing_classify *P,
+			spreads::spread_table_with_selection *Spread_table_with_selection,
 			int verbose_level);
 	void perform_activity(
 			int verbose_level);

@@ -374,9 +374,10 @@ void klein_correspondence::init(
 void klein_correspondence::plane_intersections(
 	long int *lines_in_PG3, int nb_lines,
 	algebra::ring_theory::longinteger_object *&R,
-	long int **&Pts_on_plane,
-	int *&nb_pts_on_plane, 
-	int &nb_planes, 
+	//long int **&Pts_on_plane,
+	//int *&nb_pts_on_plane,
+	//int &nb_planes,
+	other::data_structures::set_of_sets *&Intersections,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -393,11 +394,40 @@ void klein_correspondence::plane_intersections(
 			P3,
 		lines_in_PG3, nb_lines, pts, 0/*verbose_level*/);
 
+
+	long int **Pts_on_plane;
+	long int *nb_pts_on_plane;
+	int nb_planes;
+
+
+	if (f_v) {
+		cout << "klein_correspondence::plane_intersections "
+				"before P5->plane_intersection_type_fast" << endl;
+	}
 	P5->plane_intersection_type_fast(
 			Gr63, pts, nb_lines,
 		R, Pts_on_plane, nb_pts_on_plane, nb_planes, 
 		verbose_level - 3);
+	if (f_v) {
+		cout << "klein_correspondence::plane_intersections "
+				"after P5->plane_intersection_type_fast" << endl;
+	}
 
+
+	Intersections = NEW_OBJECT(other::data_structures::set_of_sets);
+
+	if (f_v) {
+		cout << "klein_correspondence::plane_intersections "
+				"before Intersections->init" << endl;
+	}
+	Intersections->init(
+			0,
+			nb_planes, Pts_on_plane, nb_pts_on_plane,
+			verbose_level);
+	if (f_v) {
+		cout << "klein_correspondence::plane_intersections "
+				"after Intersections->init" << endl;
+	}
 
 	if (f_vv) {
 		cout << "klein_correspondence::plane_intersections: "
@@ -411,6 +441,14 @@ void klein_correspondence::plane_intersections(
 			}
 #endif
 	}
+
+
+	for (i = 0; i < nb_planes; i++) {
+		FREE_lint(Pts_on_plane[i]);
+	}
+	FREE_plint(Pts_on_plane);
+	FREE_lint(nb_pts_on_plane);
+
 	
 	FREE_lint(pts);
 	if (f_v) {

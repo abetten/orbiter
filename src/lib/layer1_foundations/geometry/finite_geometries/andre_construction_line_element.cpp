@@ -145,14 +145,17 @@ int andre_construction_line_element::rank(
 	else {
 		line_rank = 1;
 
-		F->Linear_algebra->Gauss_simple(coordinates,
+		F->Linear_algebra->Gauss_simple(
+				coordinates,
 				k, n, pivots,
 				0 /* verbose_level */);
 		Combi.set_complement(pivots, k, non_pivots, a, n);
 
 		for (i = 0; i < k; i++) {
-			F->Linear_algebra->Gauss_step(coordinates + i * n,
-					coordinates + k * n, n, pivots[i],
+			F->Linear_algebra->Gauss_step(
+					coordinates + i * n,
+					coordinates + k * n, n,
+					pivots[i],
 					0 /* verbose_level */);
 				// afterwards: v2[idx] = 0 and v1,v2
 				// span the same space as before
@@ -167,7 +170,8 @@ int andre_construction_line_element::rank(
 
 		rk = Andre->Grass->rank_lint_here(
 				coordinates, 0 /* verbose_level*/);
-		if (!Sorting.lint_vec_search(Andre->spread_elements_numeric_sorted,
+		if (!Sorting.lint_vec_search(
+				Andre->spread_elements_numeric_sorted,
 				spread_size, rk, idx, 0)) {
 			cout << "andre_construction_line_element::rank cannot "
 					"find the spread element in the sorted list" << endl;
@@ -200,7 +204,8 @@ int andre_construction_line_element::make_affine_point(
 	Gg.AG_element_unrank(q, vec1, 1, k, idx);
 	vec1[k] = 1;
 
-	F->Linear_algebra->mult_vector_from_the_left(vec1, coordinates, vec2, k + 1, n);
+	F->Linear_algebra->mult_vector_from_the_left(
+			vec1, coordinates, vec2, k + 1, n);
 
 	point_rank = spread_size;
 	a = Gg.AG_element_rank(q, vec2, 1, n);

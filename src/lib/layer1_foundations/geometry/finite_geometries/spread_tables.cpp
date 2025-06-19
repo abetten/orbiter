@@ -443,7 +443,8 @@ int spread_tables::files_exist(
 	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
-		cout << "spread_tables::files_exist testing whether file exists: " << fname_spreads << endl;
+		cout << "spread_tables::files_exist "
+				"testing whether file exists: " << fname_spreads << endl;
 	}
 	if (Fio.file_size(fname_spreads) > 0) {
 		return true;
@@ -1011,11 +1012,18 @@ void spread_tables::compute_list_of_lines_from_packing(
 	if (f_v) {
 		cout << "spread_tables::compute_list_of_lines_from_packing" << endl;
 	}
+
 	for (i = 0; i < sz_of_packing; i++) {
+
 		a = packing[i];
-		Lint_vec_copy(spread_table + a * spread_size,
-				list_of_lines + i * spread_size, spread_size);
+
+		Lint_vec_copy(
+				spread_table + a * spread_size,
+				list_of_lines + i * spread_size,
+				spread_size);
+
 	}
+
 	if (f_v) {
 		cout << "spread_tables::compute_list_of_lines_from_packing done" << endl;
 	}

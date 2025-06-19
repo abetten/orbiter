@@ -728,7 +728,7 @@ void forest::draw_tree2(
 	// x = 500000;
 	x = Opt->xin / 2;
 	calc_y_coordinate(y, max_depth + 1, max_depth, Opt->yin);
-	double H; // entropy
+	//double H; // entropy
 
 #if 0
 	int nb_gens;
@@ -740,7 +740,7 @@ void forest::draw_tree2(
 		H = 0.;
 	}
 #endif
-	H = 0;
+	//H = 0;
 
 	string s;
 	s = "N=" + std::to_string(N)

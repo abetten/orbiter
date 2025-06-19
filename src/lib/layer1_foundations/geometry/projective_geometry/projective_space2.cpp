@@ -244,7 +244,7 @@ void projective_space::plane_intersection_invariant(
 	int f_vv = (verbose_level >= 2);
 	algebra::ring_theory::longinteger_object *R;
 	long int **Pts_on_plane;
-	int *nb_pts_on_plane;
+	long int *nb_pts_on_plane;
 	int nb_planes_total;
 	int i, j, a, u, f, l, ii;
 
@@ -268,7 +268,7 @@ void projective_space::plane_intersection_invariant(
 	other::data_structures::tally C;
 	int f_second = false;
 
-	C.init(nb_pts_on_plane, nb_planes_total, f_second, 0);
+	C.init_lint(nb_pts_on_plane, nb_planes_total, f_second, 0);
 	if (f_v) {
 		cout << "projective_space::plane_intersection_invariant "
 				"plane-intersection type: ";
@@ -363,7 +363,7 @@ void projective_space::plane_intersection_invariant(
 		FREE_lint(Pts_on_plane[i]);
 	}
 	FREE_plint(Pts_on_plane);
-	FREE_int(nb_pts_on_plane);
+	FREE_lint(nb_pts_on_plane);
 	FREE_OBJECTS(R);
 	if (f_v) {
 		cout << "projective_space::plane_intersection_invariant done" << endl;
@@ -507,7 +507,7 @@ int projective_space::plane_intersections(
 {
 	int f_v = (verbose_level >= 1);
 	long int **Pts_on_plane;
-	int *nb_pts_on_plane;
+	long int *nb_pts_on_plane;
 	int nb_planes;
 	int i;
 	int ret;
@@ -535,7 +535,7 @@ int projective_space::plane_intersections(
 			cout << "projective_space::plane_intersections "
 					"before Sos.init" << endl;
 		}
-		SoS.init_with_Sz_in_int(
+		SoS.init(
 				set_size, nb_planes,
 				Pts_on_plane, nb_pts_on_plane,
 				verbose_level - 1);
@@ -552,7 +552,7 @@ int projective_space::plane_intersections(
 		FREE_lint(Pts_on_plane[i]);
 	}
 	FREE_plint(Pts_on_plane);
-	FREE_int(nb_pts_on_plane);
+	FREE_lint(nb_pts_on_plane);
 	if (f_v) {
 		cout << "projective_space::plane_intersections done" << endl;
 	}
@@ -564,8 +564,14 @@ void projective_space::plane_intersection_type_fast(
 	grassmann *G,
 	long int *set, int set_size,
 	algebra::ring_theory::longinteger_object *&R,
-	long int **&Pts_on_plane, int *&nb_pts_on_plane, int &len,
+	long int **&Pts_on_plane, long int *&nb_pts_on_plane, int &len,
 	int verbose_level)
+// Given a set "set" of size "set_size",
+// this algorithm finds all planes that intersect the given set in at least 3 points.
+// It loops over all 3-subsets of the given set of points
+// and considers the plane spanned by these points
+// The plane rank is stored in the array R[N], where N is the number of 3-subsets of set_size.
+// The indexing of 3-subsets of an n-set is used (n=set_size).
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -600,7 +606,7 @@ void projective_space::plane_intersection_type_fast(
 	if (!Sorting.test_if_set_with_return_value_lint(
 			set, set_size)) {
 		cout << "projective_space::plane_intersection_type_fast "
-				"the input set if not a set" << endl;
+				"the input set is not a set" << endl;
 		exit(1);
 	}
 	d = Subspaces->n + 1;
@@ -616,7 +622,7 @@ void projective_space::plane_intersection_type_fast(
 	// allocate data that is returned:
 	R = NEW_OBJECTS(algebra::ring_theory::longinteger_object, N);
 	Pts_on_plane = NEW_plint(N);
-	nb_pts_on_plane = NEW_int(N);
+	nb_pts_on_plane = NEW_lint(N);
 
 	// allocate temporary data:
 	Basis = NEW_int(4 * d);
@@ -816,8 +822,9 @@ void projective_space::plane_intersection_type_fast(
 void projective_space::find_planes_which_intersect_in_at_least_s_points(
 	long int *set, int set_size,
 	int s,
-	vector<int> &plane_ranks,
+	vector<long int> &plane_ranks,
 	int verbose_level)
+// unused
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);

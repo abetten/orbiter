@@ -412,6 +412,8 @@ void objects_after_classification::report_all_isomorphism_types(
 	}
 	int iso_idx, j;
 
+	ost << "\\subsubsection*{objects\\_after\\_classification::report\\_all\\_isomorphism\\_types}" << endl;
+
 
 	other::l1_interfaces::latex_interface L;
 
@@ -551,6 +553,9 @@ void objects_after_classification::report_isomorphism_type(
 	int j;
 	other::l1_interfaces::latex_interface L;
 
+	ost << "\\subsubsection*{objects\\_after\\_classification::report\\_isomorphism\\_type}" << endl;
+
+
 	//j = CB->perm[i];
 	//j = CB->Type_rep[i];
 	j = Classification_of_objects->Output->CB->perm[iso_idx];
@@ -637,12 +642,16 @@ void objects_after_classification::report_object_with_properties(
 				"input_idx=" << input_idx << endl;
 	}
 
+	ost << "\\subsubsection*{objects\\_after\\_classification::report\\_object\\_with\\_properties}" << endl;
+
 	//int j;
 
 	//j = CO->CB->perm[i];
 
 
-	report_input_object_only(ost, Report_options, input_idx, verbose_level);
+	report_input_object_only(
+			ost, Report_options, input_idx,
+			verbose_level);
 
 #if 0
 	combinatorics::canonical_form_classification::any_combinatorial_object
@@ -683,7 +692,8 @@ void objects_after_classification::report_object_with_properties(
 			cout << "objects_after_classification::report_object_with_properties "
 					"before OwP[iso_idx].latex_report" << endl;
 		}
-		ost << "\\subsubsection*{objects\\_after\\_classification::report\\_object latex\\_report}" << endl;
+		ost << "\\subsubsection*{objects\\_after\\_classification::report\\_object\\_with\\_properties latex\\_report}" << endl;
+
 		OwP[iso_idx].latex_report(
 				ost,
 				Report_options,

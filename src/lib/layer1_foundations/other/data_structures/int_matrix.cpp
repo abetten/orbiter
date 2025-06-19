@@ -332,7 +332,7 @@ void int_matrix::write_csv(
 	int nb_cols;
 	int nb_rows;
 	int i;
-	int f_latex = false;
+	//int f_latex = false;
 
 	nb_rows = m;
 	nb_cols = 2;
@@ -392,7 +392,7 @@ void int_matrix::write_index_set_csv(
 	int nb_cols;
 	int nb_rows;
 	int i;
-	int f_latex = false;
+	//int f_latex = false;
 	int *index_set;
 	int sz, j;
 
@@ -420,7 +420,7 @@ void int_matrix::write_index_set_csv(
 				"\"" + Int_vec_stringify(index_set, sz) + "\"";
 	}
 
-	std::string Col_headings[2];
+	std::string Col_headings[3];
 
 	Col_headings[0] = "Idx";
 	Col_headings[1] = "Sz";

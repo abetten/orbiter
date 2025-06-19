@@ -509,7 +509,7 @@ static void nauty_interface_fill_nauty_output(
 	int verbose_level)
 {
 	int f_v = false; //(verbose_level >= 1);
-	int f_vv = false; // (verbose_level >= 2);
+	//int f_vv = false; // (verbose_level >= 2);
 	//Ago = ago;
 	algebra::ring_theory::longinteger_domain Dom;
 	int i; //, j;

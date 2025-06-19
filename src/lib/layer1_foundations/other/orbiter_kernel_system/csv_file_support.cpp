@@ -2536,11 +2536,24 @@ void csv_file_support::tally_column(
 	SoS_fibers = T.get_set_partition(verbose_level);
 
 	cout << "fibers:" << endl;
+	cout << "value : frequency : row indices" << endl;
 	for (i = 0; i < SoS_fibers->nb_sets; i++) {
-		cout << i << " : " << SoS_fibers->Set_size[i] << " : ";
+
+
+		int f, value;
+
+		f = T.type_first[i];
+		//l = T.Frequency[i];
+
+		value = T.data[T.sorting_perm_inv[f + 0]];
+
+		cout << value << " : " << SoS_fibers->Set_size[i] << " : ";
 		Lint_vec_print(cout, SoS_fibers->Sets[i], SoS_fibers->Set_size[i]);
 		cout << endl;
 	}
+
+
+
 
 	//cout << "set partition:" << endl;
 	//SoS->print_table();

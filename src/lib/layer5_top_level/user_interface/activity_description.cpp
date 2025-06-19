@@ -2063,14 +2063,16 @@ void activity_description::do_spread_table_activity(
 		exit(1);
 	}
 
-	packings::packing_classify *P;
+	spreads::spread_table_with_selection *Spread_table_with_selection;
 
-	P = (packings::packing_classify *)
+	//packings::packing_classify *P;
+
+	Spread_table_with_selection = (spreads::spread_table_with_selection *)
 			Sym->Orbiter_top_level_session->get_object(Idx[0]);
 	{
 		spreads::spread_table_activity Activity;
 
-		Activity.init(Spread_table_activity_description, P, verbose_level);
+		Activity.init(Spread_table_activity_description, Spread_table_with_selection, verbose_level);
 
 		if (f_v) {
 			cout << "activity_description::do_spread_table_activity "

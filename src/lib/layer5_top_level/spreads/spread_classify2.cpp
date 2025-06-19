@@ -151,9 +151,23 @@ void spread_classify::print_isomorphism_type2(
 	
 
 	if (SD->k == 2) {
+		other::data_structures::tally *C;
+
 		klein(
-				ost, /*file_klein,*/ Iso, iso_cnt,
-				Stab, Orb, data, Iso->size,  verbose_level);
+				//ost, /*file_klein,*/
+				//Iso,
+				iso_cnt,
+				//Stab, Orb,
+				data, Iso->size, C,
+				verbose_level);
+
+		ost << "Plane type of Klein-image is $( ";
+		C->print_bare_tex(ost, false /*f_backwards*/);
+		ost << " )$" << endl << endl;
+		ost << "\\bigskip" << endl << endl;
+
+
+		FREE_OBJECT(C);
 	}
 
 	ost << "The set of " << SD->k - 1 << "-Subspaces in "
@@ -267,9 +281,10 @@ void spread_classify::save_klein_invariants(
 {
 	int f_v = (verbose_level >= 1);
 	algebra::ring_theory::longinteger_object *R;
-	long int **Pts_on_plane;
-	int *nb_pts_on_plane;
-	int nb_planes;
+	//long int **Pts_on_plane;
+	//int *nb_pts_on_plane;
+	//int nb_planes;
+	other::data_structures::set_of_sets *Intersections;
 	int i, j;
 
 	if (f_v) {
@@ -283,29 +298,30 @@ void spread_classify::save_klein_invariants(
 	
 	SD->Klein->plane_intersections(data, data_size,
 		R,
-		Pts_on_plane, 
-		nb_pts_on_plane, 
-		nb_planes, 
+		//Pts_on_plane,
+		//nb_pts_on_plane,
+		//nb_planes,
+		Intersections,
 		verbose_level - 2);
 
 
 	typed_objects::Vector v;
 
 	v.m_l(3);
-	v.m_ii(0, nb_planes);
+	v.m_ii(0, Intersections->nb_sets);
 	v.s_i(1).change_to_vector();
 	v.s_i(2).change_to_vector();
 
-	v.s_i(1).as_vector().m_l(nb_planes);
-	v.s_i(2).as_vector().m_l(nb_planes);
-	for (i = 0; i < nb_planes; i++) {
+	v.s_i(1).as_vector().m_l(Intersections->nb_sets);
+	v.s_i(2).as_vector().m_l(Intersections->nb_sets);
+	for (i = 0; i < Intersections->nb_sets; i++) {
 		v.s_i(1).as_vector().m_ii(i, R[i].as_int());
 		//v.s_i(1).as_vector().s_i(i).change_to_longinteger();
 		//v.s_i(1).as_vector().s_i(i).as_longinteger().allocate(1, R[i].rep());
 		v.s_i(2).as_vector().s_i(i).change_to_vector();
-		v.s_i(2).as_vector().s_i(i).as_vector().m_l(nb_pts_on_plane[i]);
-		for (j = 0; j < nb_pts_on_plane[i]; j++) {
-			v.s_i(2).as_vector().s_i(i).as_vector().m_ii(j, Pts_on_plane[i][j]);
+		v.s_i(2).as_vector().s_i(i).as_vector().m_l(Intersections->Set_size[i] /*nb_pts_on_plane[i]*/);
+		for (j = 0; j < Intersections->Set_size[i]; j++) {
+			v.s_i(2).as_vector().s_i(i).as_vector().m_ii(j, Intersections->Sets[i][j]);
 		}
 	}
 
@@ -315,72 +331,81 @@ void spread_classify::save_klein_invariants(
 	v.save_file(fname);
 
 	delete [] R;
+#if 0
 	for (i = 0; i < nb_planes; i++) {
 		FREE_lint(Pts_on_plane[i]);
 	}
 	FREE_plint(Pts_on_plane);
 	FREE_int(nb_pts_on_plane);
-
+#endif
+	FREE_OBJECT(Intersections);
 	if (f_v) {
 		cout << "spread_classify::klein_invariants done" << endl;
 	}
 }
 
 void spread_classify::klein(
-		std::ostream &ost,
-		isomorph::isomorph *Iso,
-	int iso_cnt, groups::sims *Stab, groups::schreier &Orb,
-	long int *data, int data_size, int verbose_level)
+		//std::ostream &ost,
+		//isomorph::isomorph *Iso,
+	int iso_cnt, //groups::sims *Stab, groups::schreier &Orb,
+	long int *data, int data_size,
+	other::data_structures::tally *&C,
+	int verbose_level)
 // Called from print_isomorphism_type if k == 2
 {
 	int f_v = (verbose_level >= 1);
 	algebra::ring_theory::longinteger_object *R;
-	long int **Pts_on_plane;
-	int *nb_pts_on_plane;
-	int nb_planes;
+	//long int **Pts_on_plane;
+	//int *nb_pts_on_plane;
+	//int nb_planes;
 
+	other::data_structures::set_of_sets *Intersections;
 
 
 	int set_size = data_size;
 	int a, i, j, h;
 	
-	SD->Klein->plane_intersections(data, data_size,
-		R,
-		Pts_on_plane, 
-		nb_pts_on_plane, 
-		nb_planes, 
-		verbose_level);
+	SD->Klein->plane_intersections(
+			data, data_size,
+			R,
+			//Pts_on_plane,
+			//nb_pts_on_plane,
+			//nb_planes,
+			Intersections,
+			verbose_level);
 
-	other::data_structures::tally C;
 	int f_second = false;
 
-	C.init(nb_pts_on_plane, nb_planes, f_second, 0);
+	C = NEW_OBJECT(other::data_structures::tally);
+
+	//C->init(nb_pts_on_plane, nb_planes, f_second, 0);
+	C->init_lint(Intersections->Set_size, Intersections->nb_sets, f_second, 0);
 	if (f_v) {
 		cout << "spread::klein: plane-intersection type: ";
-		C.print(false /*f_backwards*/);
+		C->print(false /*f_backwards*/);
 	}
 	
-	ost << "Plane type of Klein-image is $( ";
-	C.print_bare_tex(ost, false /*f_backwards*/);
-	ost << " )$" << endl << endl;
-	ost << "\\bigskip" << endl << endl;
+	cout << "Plane type of Klein-image is $( ";
+	C->print_bare_tex(cout, false /*f_backwards*/);
+	cout << " )$" << endl << endl;
+	cout << "\\bigskip" << endl << endl;
 
 	int nb_blocks, f, l, m, u, uu, idx;
 	int *Inc;
 	
 	m = 0;
-	for (i = 0; i < C.nb_types; i++) {
-		f = C.type_first[i];
-		l = C.type_len[i];
-		a = C.data_sorted[f];
+	for (i = 0; i < C->nb_types; i++) {
+		f = C->type_first[i];
+		l = C->type_len[i];
+		a = C->data_sorted[f];
 		m = MAXIMUM(a, m);
 	}
 
 	nb_blocks = 0;
-	for (i = 0; i < C.nb_types; i++) {
-		f = C.type_first[i];
-		l = C.type_len[i];
-		a = C.data_sorted[f];
+	for (i = 0; i < C->nb_types; i++) {
+		f = C->type_first[i];
+		l = C->type_len[i];
+		a = C->data_sorted[f];
 		if (a == m) {
 			nb_blocks += l;
 		}
@@ -394,16 +419,17 @@ void spread_classify::klein(
 		Inc[i] = 0;
 	}
 	j = 0;
-	for (h = 0; h < C.nb_types; h++) {
-		f = C.type_first[h];
-		l = C.type_len[h];
-		a = C.data_sorted[f];
+	for (h = 0; h < C->nb_types; h++) {
+		f = C->type_first[h];
+		l = C->type_len[h];
+		a = C->data_sorted[f];
 		if (a == m) {
 			for (u = 0; u < l; u++) {
-				a = C.data_sorted[f + u];
-				idx = C.sorting_perm_inv[f + u];
+				a = C->data_sorted[f + u];
+				idx = C->sorting_perm_inv[f + u];
 				for (uu = 0; uu < a; uu++) {
-					i = Pts_on_plane[idx][uu];
+					//i = Pts_on_plane[idx][uu];
+					i = Intersections->Sets[idx][uu];
 					Inc[i * nb_blocks + j] = 1;
 				}
 				j++;
@@ -518,12 +544,16 @@ void spread_classify::klein(
 	FREE_int(Inc);
 	
 	FREE_OBJECTS(R);
+
+#if 0
 	for (i = 0; i < nb_planes; i++) {
 		FREE_lint(Pts_on_plane[i]);
 	}
 	FREE_plint(Pts_on_plane);
 	FREE_int(nb_pts_on_plane);
+#endif
 
+	FREE_OBJECT(Intersections);
 	if (f_v) {
 		cout << "spread_classify::klein done" << endl;
 	}
@@ -896,7 +926,22 @@ void spread_classify::report3(
 		report_stabilizer(Iso, ost, h /* orbit */, 0 /* verbose_level */);
 
 		if (SD->k == 2) {
-			klein(ost, &Iso, h, Stab, Orb, data, Iso.size,  verbose_level);
+
+			other::data_structures::tally *C;
+
+			if (f_v) {
+				cout << "spread_classify::report3 "
+						"before klein" << endl;
+			}
+			klein(/*ost, &Iso,*/ h, /*Stab, Orb,*/ data, Iso.size,
+					C,
+					verbose_level);
+			if (f_v) {
+				cout << "spread_classify::report3 "
+						"after klein" << endl;
+			}
+
+			FREE_OBJECT(C);
 		}
 
 		ost << "" << endl;
@@ -1098,7 +1143,8 @@ void spread_classify::all_cooperstein_thas_quotients(
 
 void spread_classify::cooperstein_thas_quotients(
 		isomorph::isomorph &Iso,
-		std::ofstream &f, int h, int &cnt, int verbose_level)
+		std::ofstream &f, int h, int &cnt,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -1207,7 +1253,8 @@ void spread_classify::cooperstein_thas_quotients(
 		pivot = Int_vec_find_first_nonzero_entry(vec1, n);
 
 		for (i = 0; i < order + 1; i++) {
-			if (Sorting.lint_vec_search(Pts[i], nb_points, the_point, idx, 0)) {
+			if (Sorting.lint_vec_search(
+					Pts[i], nb_points, the_point, idx, 0)) {
 				break;
 			}
 		}
@@ -1233,7 +1280,8 @@ void spread_classify::cooperstein_thas_quotients(
 			SD->Grass->unrank_lint_here(M, a, 0/*verbose_level - 4*/);
 			Int_vec_copy(vec1, vec2, n);
 			for (j = 0; j < k; j++) {
-				SD->F->Linear_algebra->Gauss_step(vec2, M + j * n, n, pivot,
+				SD->F->Linear_algebra->Gauss_step(
+						vec2, M + j * n, n, pivot,
 						0 /* verbose_level*/);
 					// afterwards: v2[idx] = 0 and
 					// v1,v2 span the same space as before

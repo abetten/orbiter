@@ -41,12 +41,15 @@ spread_create::spread_create()
 
 	Grass = NULL;
 
+	// the actual spread:
 	set = NULL;
 	sz = 0;
 
 	f_has_group = false;
 	Sg = NULL;
 
+
+	// the translation plane:
 	Andre = NULL;
 }
 
@@ -109,13 +112,15 @@ void spread_create::init(
 	G = Get_any_group(Descr->group_label);
 
 	if (!G->f_linear_group) {
-		cout << "spread_create::init the group must be a linear group" << endl;
+		cout << "spread_create::init "
+				"the group must be a linear group" << endl;
 		exit(1);
 	}
 
 	A = G->A_base;
 	if (!A->is_matrix_group()) {
-		cout << "spread_create::init the base group is not a matrix group" << endl;
+		cout << "spread_create::init "
+				"the base group is not a matrix group" << endl;
 		exit(1);
 	}
 	
@@ -131,11 +136,13 @@ void spread_create::init(
 		cout << "spread_create::init q = " << q << endl;
 		cout << "spread_create::init k = " << k << endl;
 		cout << "spread_create::init f_semilinear = " << f_semilinear << endl;
-		cout << "spread_create::init A->matrix_group_dimension() = " << A->matrix_group_dimension() << endl;
+		cout << "spread_create::init "
+				"A->matrix_group_dimension() = " << A->matrix_group_dimension() << endl;
 	}
 
 	if (A->matrix_group_dimension() != 2 * k) {
-		cout << "spread_create::init dimension of the matrix group must be 2 * k" << endl;
+		cout << "spread_create::init "
+				"dimension of the matrix group must be 2 * k" << endl;
 		exit(1);
 	}
 
@@ -182,9 +189,10 @@ void spread_create::init(
 					"before Sg->stabilizer_of_spread_from_catalogue" << endl;
 		}
 
-		Sg->stabilizer_of_spread_from_catalogue(A, 
-			q, k, Descr->iso, 
-			verbose_level);
+		Sg->stabilizer_of_spread_from_catalogue(
+				A,
+				q, k, Descr->iso,
+				verbose_level);
 		if (f_v) {
 			cout << "spread_create::init "
 					"after Sg->stabilizer_of_spread_from_catalogue" << endl;
@@ -192,9 +200,17 @@ void spread_create::init(
 
 		f_has_group = true;
 
-		prefix = "catalogue_q" + std::to_string(q) + "_k" + std::to_string(k) + "_" + std::to_string(Descr->iso);
-		label_txt = "catalogue_q" + std::to_string(q) + "_k" + std::to_string(k) + "_" + std::to_string(Descr->iso);
-		label_tex = "catalogue\\_q" + std::to_string(q) + "\\_k" + std::to_string(k) + "\\_" + std::to_string(Descr->iso);
+		string s_q;
+		string s_k;
+		string s_iso;
+
+		s_q = std::to_string(q);
+		s_k = std::to_string(k);
+		s_iso = std::to_string(Descr->iso);
+
+		prefix = "catalogue_q" + s_q + "_k" + s_k + "_" + s_iso;
+		label_txt = "catalogue_q" + s_q + "_k" + s_k + "_" + s_iso;
+		label_tex = "catalogue\\_q" + s_q + "\\_k" + s_k + "\\_" + s_iso;
 	}
 
 	else if (Descr->f_spread_set) {
@@ -209,7 +225,10 @@ void spread_create::init(
 
 		k2 = Descr->k * Descr->k;
 
-		Get_vector_or_set(Descr->spread_set_data, spread_set_matrices, spread_set_matrices_sz);
+		Get_vector_or_set(
+				Descr->spread_set_data,
+				spread_set_matrices,
+				spread_set_matrices_sz);
 		if (f_v) {
 
 			cout << "spread_create::init spread_set_matrices "
@@ -224,7 +243,8 @@ void spread_create::init(
 					"before Grass->make_spread_from_spread_set" << endl;
 		}
 		Grass->make_spread_from_spread_set(
-				spread_set_matrices, spread_set_matrices_sz / k2,
+				spread_set_matrices,
+				spread_set_matrices_sz / k2,
 				set, sz,
 				verbose_level);
 		if (f_v) {
@@ -264,6 +284,10 @@ void spread_create::init(
 		//Elt3 = NEW_int(G->A_base->elt_size_in_int);
 		image_set = NEW_lint(sz);
 
+
+		// we transform set[] and the group (by means of strong generators Sg)
+
+
 		for (h = 0; h < Descr->transform_text.size(); h++) {
 			if (Descr->transform_f_inv[h]) {
 				cout << "-transform_inv " << Descr->transform_text[h] << endl;
@@ -296,13 +320,16 @@ void spread_create::init(
 				exit(1);
 			}
 
-			G->A_base->Group_element->make_element(Elt1, transformation_coeffs, verbose_level);
+			G->A_base->Group_element->make_element(
+					Elt1, transformation_coeffs, verbose_level);
 
 			if (Descr->transform_f_inv[h]) {
-				G->A_base->Group_element->element_invert(Elt1, Elt2, 0 /*verbose_level*/);
+				G->A_base->Group_element->element_invert(
+						Elt1, Elt2, 0 /*verbose_level*/);
 			}
 			else {
-				G->A_base->Group_element->element_move(Elt1, Elt2, 0 /*verbose_level*/);
+				G->A_base->Group_element->element_move(
+						Elt1, Elt2, 0 /*verbose_level*/);
 			}
 
 			//A->element_transpose(Elt2, Elt3, 0 /*verbose_level*/);
@@ -329,7 +356,8 @@ void spread_create::init(
 			int i;
 
 			for (i = 0; i < sz; i++) {
-				image_set[i] = G_on_subspaces->A->Group_element->element_image_of(set[i], Elt2, verbose_level - 1);
+				image_set[i] = G_on_subspaces->A->Group_element->element_image_of(
+						set[i], Elt2, verbose_level - 1);
 			}
 			Lint_vec_copy(image_set, set, sz);
 
@@ -342,7 +370,8 @@ void spread_create::init(
 					cout << "spread_create::init "
 							"before SG2->init_generators_for_the_conjugate_group_avGa" << endl;
 				}
-				SG2->init_generators_for_the_conjugate_group_avGa(Sg, Elt2, verbose_level);
+				SG2->init_generators_for_the_conjugate_group_avGa(
+						Sg, Elt2, verbose_level);
 
 				if (f_v) {
 					cout << "spread_create::init "
@@ -373,7 +402,8 @@ void spread_create::init(
 	long int *Part = NULL;
 	int s;
 
-	Grass->make_partition(set, sz, Part, s, verbose_level - 1);
+	Grass->make_partition(
+			set, sz, Part, s, verbose_level - 1);
 
 	if (f_v) {
 		cout << "spread_create::init Partition:" << endl;
@@ -384,6 +414,9 @@ void spread_create::init(
 		cout << "spread_create::init the stabilizer is:" << endl;
 		Sg->print_generators_tex(cout);
 	}
+
+
+	// create the associated translation plane:
 
 
 	Andre = NEW_OBJECT(geometry::finite_geometries::andre_construction);
@@ -407,7 +440,8 @@ void spread_create::init(
 
 void spread_create::apply_transformations(
 		std::vector<std::string> transform_coeffs,
-		std::vector<int> f_inverse_transform, int verbose_level)
+		std::vector<int> f_inverse_transform,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

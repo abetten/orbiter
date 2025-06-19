@@ -45,6 +45,9 @@ spread_table_activity_description::spread_table_activity_description()
 	f_find_spreads_containing_one_line = false;
 	find_spreads_containing_one_line_line_idx = 0;
 
+	f_isomorphism_type_of_spreads = -1;
+	//std::string isomorphism_type_of_spreads_list;
+
 }
 
 spread_table_activity_description::~spread_table_activity_description()
@@ -57,61 +60,91 @@ int spread_table_activity_description::read_arguments(
 	int argc, std::string *argv,
 	int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	int i;
 	other::data_structures::string_tools ST;
 
-	cout << "spread_table_activity_description::read_arguments" << endl;
+	if (f_v) {
+		cout << "spread_table_activity_description::read_arguments" << endl;
+	}
 	for (i = 0; i < argc; i++) {
 
-		cout << "spread_table_activity_description::read_arguments, next argument is " << argv[i] << endl;
+		if (f_v) {
+			cout << "spread_table_activity_description::read_arguments, "
+					"next argument is " << argv[i] << endl;
+		}
 
 		if (ST.stringcmp(argv[i], "-find_spread") == 0) {
 			f_find_spread = true;
 			find_spread_text.assign(argv[++i]);
-			cout << "-find_spread " << find_spread_text << endl;
+			if (f_v) {
+				cout << "-find_spread " << find_spread_text << endl;
+			}
 		}
 		else if (ST.stringcmp(argv[i], "-find_spread_and_dualize") == 0) {
 			f_find_spread_and_dualize = true;
 			find_spread_and_dualize_text.assign(argv[++i]);
-			cout << "-find_spread_and_dualize " << find_spread_and_dualize_text << endl;
+			if (f_v) {
+				cout << "-find_spread_and_dualize " << find_spread_and_dualize_text << endl;
+			}
 		}
 		else if (ST.stringcmp(argv[i], "-dualize_packing") == 0) {
 			f_dualize_packing = true;
 			dualize_packing_text.assign(argv[++i]);
-			cout << "-dualize_packing " << dualize_packing_text << endl;
+			if (f_v) {
+				cout << "-dualize_packing " << dualize_packing_text << endl;
+			}
 		}
 		else if (ST.stringcmp(argv[i], "-print_spreads") == 0) {
 			f_print_spreads = true;
 			print_spreads_idx_text.assign(argv[++i]);
-			cout << "-print_spreads " << print_spreads_idx_text << endl;
+			if (f_v) {
+				cout << "-print_spreads " << print_spreads_idx_text << endl;
+			}
 		}
 		else if (ST.stringcmp(argv[i], "-export_spreads_to_csv") == 0) {
 			f_export_spreads_to_csv = true;
 			export_spreads_to_csv_fname.assign(argv[++i]);
 			export_spreads_to_csv_idx_text.assign(argv[++i]);
-			cout << "-export_spreads_to_csv " << export_spreads_to_csv_fname
-					<< " " << export_spreads_to_csv_idx_text << endl;
+			if (f_v) {
+				cout << "-export_spreads_to_csv " << export_spreads_to_csv_fname
+						<< " " << export_spreads_to_csv_idx_text << endl;
+			}
 		}
 		else if (ST.stringcmp(argv[i], "-find_spreads_containing_two_lines") == 0) {
 			f_find_spreads_containing_two_lines = true;
 			find_spreads_containing_two_lines_line1 = ST.strtoi(argv[++i]);
 			find_spreads_containing_two_lines_line2 = ST.strtoi(argv[++i]);
-			cout << "-find_spreads_containing_two_lines "
-					<< " " << find_spreads_containing_two_lines_line1
-					<< " " << find_spreads_containing_two_lines_line2
-					<< endl;
+			if (f_v) {
+				cout << "-find_spreads_containing_two_lines "
+						<< " " << find_spreads_containing_two_lines_line1
+						<< " " << find_spreads_containing_two_lines_line2
+						<< endl;
+			}
 		}
 
 		else if (ST.stringcmp(argv[i], "-find_spreads_containing_one_line") == 0) {
 			f_find_spreads_containing_one_line = true;
 			find_spreads_containing_one_line_line_idx = ST.strtoi(argv[++i]);
-			cout << "-find_spreads_containing_one_line "
-					<< " " << find_spreads_containing_one_line_line_idx
-					<< endl;
+			if (f_v) {
+				cout << "-find_spreads_containing_one_line "
+						<< " " << find_spreads_containing_one_line_line_idx
+						<< endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-isomorphism_type_of_spreads") == 0) {
+			f_isomorphism_type_of_spreads = true;
+			isomorphism_type_of_spreads_list.assign(argv[++i]);
+			if (f_v) {
+				cout << "-isomorphism_type_of_spreads " << isomorphism_type_of_spreads_list
+						<< endl;
+			}
 		}
 
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
-			cout << "-end" << endl;
+			if (f_v) {
+				cout << "-end" << endl;
+			}
 			break;
 		}
 		else {
@@ -119,9 +152,13 @@ int spread_table_activity_description::read_arguments(
 					"unrecognized option " << argv[i] << endl;
 			exit(1);
 		}
-		cout << "spread_table_activity_description::read_arguments looping, i=" << i << endl;
+		if (f_v) {
+			cout << "spread_table_activity_description::read_arguments looping, i=" << i << endl;
+		}
 	} // next i
-	cout << "spread_table_activity_description::read_arguments done" << endl;
+	if (f_v) {
+		cout << "spread_table_activity_description::read_arguments done" << endl;
+	}
 	return i + 1;
 }
 
@@ -155,6 +192,11 @@ void spread_table_activity_description::print()
 				<< " " << find_spreads_containing_one_line_line_idx
 				<< endl;
 	}
+	if (f_isomorphism_type_of_spreads) {
+		cout << "-isomorphism_type_of_spreads " << isomorphism_type_of_spreads_list
+				<< endl;
+	}
+
 }
 
 

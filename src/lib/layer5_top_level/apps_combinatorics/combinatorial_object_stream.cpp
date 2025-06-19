@@ -176,14 +176,18 @@ void combinatorial_object_stream::write_canonical_form_data(
 	Headers[9] = "cl";
 	Headers[10] = "stats";
 
+	int input_idx;
+
 	for (iso_type = 0; iso_type < Classification_of_objects->Output->nb_orbits; iso_type++) {
 
 		if (f_v) {
 			cout << "combinatorial_object_stream::write_canonical_form_data "
 					"iso_type = " << iso_type << " / " << Classification_of_objects->Output->nb_orbits << endl;
-			cout << "NO=" << endl;
+			//cout << "NO=" << endl;
 			//CO->NO_transversal[iso_type]->print();
 		}
+
+		input_idx = Classification_of_objects->Output->Idx_transversal[iso_type];
 
 		//Classification_of_objects->Output->OWCF[iso_type];
 		//Classification_of_objects->Output->NO[iso_type];
@@ -191,12 +195,12 @@ void combinatorial_object_stream::write_canonical_form_data(
 		std::string s_idx;
 
 
-		s_idx = std::to_string(Classification_of_objects->Output->OWCF[iso_type]->input_idx);
+		s_idx = std::to_string(Classification_of_objects->Output->OWCF[input_idx]->input_idx);
 
 		string s1;
 
 
-		s1 = Classification_of_objects->Output->OWCF[iso_type]->stringify(
+		s1 = Classification_of_objects->Output->OWCF[input_idx]->stringify(
 				verbose_level);
 
 		// 9 strings:
@@ -210,7 +214,7 @@ void combinatorial_object_stream::write_canonical_form_data(
 		std::string s_cl;
 		std::string s_stats;
 
-		Classification_of_objects->Output->NO[iso_type]->stringify(
+		Classification_of_objects->Output->NO[input_idx]->stringify(
 				s_n, s_ago,
 				s_base_length, s_aut_counter,
 				s_base, s_tl,
@@ -308,6 +312,8 @@ void combinatorial_object_stream::write_canonical_form_data_non_trivial_group(
 	Headers[9] = "cl";
 	Headers[10] = "stats";
 
+	int input_idx;
+
 	nb_r = 0;
 	for (iso_type = 0; iso_type < Classification_of_objects->Output->nb_orbits; iso_type++) {
 
@@ -327,16 +333,17 @@ void combinatorial_object_stream::write_canonical_form_data_non_trivial_group(
 			continue;
 		}
 
+		input_idx = Classification_of_objects->Output->Idx_transversal[iso_type];
 
 		std::string s_idx;
 
 
-		s_idx = std::to_string(Classification_of_objects->Output->OWCF[iso_type]->input_idx);
+		s_idx = std::to_string(Classification_of_objects->Output->OWCF[input_idx]->input_idx);
 
 		string s1;
 
 
-		s1 = Classification_of_objects->Output->OWCF[iso_type]->stringify(
+		s1 = Classification_of_objects->Output->OWCF[input_idx]->stringify(
 				verbose_level);
 
 		// 9 strings:
@@ -350,7 +357,7 @@ void combinatorial_object_stream::write_canonical_form_data_non_trivial_group(
 		std::string s_cl;
 		std::string s_stats;
 
-		Classification_of_objects->Output->NO[iso_type]->stringify(
+		Classification_of_objects->Output->NO[input_idx]->stringify(
 				s_n, s_ago,
 				s_base_length, s_aut_counter,
 				s_base, s_tl,

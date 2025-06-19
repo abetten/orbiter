@@ -1137,16 +1137,16 @@ void orthogonal_group::make_all_valid_pairs_for_Siegel_Transformations(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	int i, j, Qv, e;
+	//int f_vv = (verbose_level >= 2);
+	//int i, j, Qv, e;
 
 	if (f_v) {
 		cout << "orthogonal_group::make_all_valid_pairs_for_Siegel_Transformations" << endl;
 	}
 
-	int *M;
-	int *v;
-	int *u;
+	//int *M;
+	//int *v;
+	//int *u;
 	long int rk1, rk2, N;
 	int *w1;
 	int *w2;

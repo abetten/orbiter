@@ -325,6 +325,8 @@ void combinatorial_object_with_properties::latex_report(
 
 	//ost << "combinatorial\\_object\\_with\\_properties::latex\\_report \\\\" << endl;
 
+	ost << "\\subsubsection*{combinatorial\\_object\\_with\\_properties::latex\\_report}" << endl;
+
 
 	ost << "\\subsection*{Automorphism Group as Permutation Group}" << endl;
 

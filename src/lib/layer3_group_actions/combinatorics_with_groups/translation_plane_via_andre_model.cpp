@@ -201,7 +201,8 @@ void translation_plane_via_andre_model::init(
 					"before Line->unrank j=" << j << endl;
 		}
 		Line->unrank(j, 0 /*verbose_level*/);
-		Andre->points_on_line(Line,
+		Andre->points_on_line(
+				Line,
 				pts_on_line, 0 /* verbose_level */);
 		if (f_v10) {
 			cout << "translation_plane_via_andre_model::init "
@@ -1024,7 +1025,8 @@ void translation_plane_via_andre_model::p_rank(
 
 	F = NEW_OBJECT(algebra::field_theory::finite_field);
 
-	F->finite_field_init_small_order(p,
+	F->finite_field_init_small_order(
+			p,
 			false /* f_without_tables */,
 			false /* f_compute_related_fields */,
 			0 /*verbose_level*/);
@@ -1038,10 +1040,11 @@ void translation_plane_via_andre_model::p_rank(
 
 	Int_vec_copy(Incma, Mtx, N * N);
 
-	rk = F->Linear_algebra->Gauss_int(Mtx,
-		false /* f_special */, true /* f_complete */, base_cols,
-		false /* f_P */, NULL /*P*/, N, N, N,
-		0 /*verbose_level*/);
+	rk = F->Linear_algebra->Gauss_int(
+			Mtx,
+			false /* f_special */, true /* f_complete */, base_cols,
+			false /* f_P */, NULL /*P*/, N, N, N,
+			0 /*verbose_level*/);
 
 
 	if (f_v) {

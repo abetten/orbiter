@@ -302,9 +302,10 @@ public:
 	void plane_intersections(
 			long int *lines_in_PG3, int nb_lines,
 			algebra::ring_theory::longinteger_object *&R,
-		long int **&Pts_on_plane,
-		int *&nb_pts_on_plane,
-		int &nb_planes,
+		//long int **&Pts_on_plane,
+		//int *&nb_pts_on_plane,
+		//int &nb_planes,
+		other::data_structures::set_of_sets *&Intersections,
 		int verbose_level);
 	long int point_on_quadric_embedded_in_P5(
 			long int pt);
@@ -1170,13 +1171,13 @@ public:
 		grassmann *G,
 		long int *set, int set_size,
 		algebra::ring_theory::longinteger_object *&R,
-		long int **&Pts_on_plane, int *&nb_pts_on_plane, int &len,
+		long int **&Pts_on_plane, long int *&nb_pts_on_plane, int &len,
 		int verbose_level);
 
 	void find_planes_which_intersect_in_at_least_s_points(
 		long int *set, int set_size,
 		int s,
-		std::vector<int> &plane_ranks,
+		std::vector<long int> &plane_ranks,
 		int verbose_level);
 	void line_plane_incidence_matrix_restricted(
 			long int *Lines, int nb_lines,

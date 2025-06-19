@@ -253,12 +253,15 @@ void spread_activity::report2(
 	ost << "The spread: \\\\" << endl;
 
 	if (f_v) {
-		cout << "spread_activity::report2 before Grass->print_set_tex" << endl;
+		cout << "spread_activity::report2 "
+				"before Grass->print_set_tex" << endl;
 	}
 	SD->Grass->print_set_tex(
-			ost, Spread_create->set, Spread_create->sz, verbose_level);
+			ost, Spread_create->set, Spread_create->sz,
+			verbose_level);
 	if (f_v) {
-		cout << "spread_activity::report2 after Grass->print_set_tex" << endl;
+		cout << "spread_activity::report2 "
+				"after Grass->print_set_tex" << endl;
 	}
 
 
@@ -520,7 +523,8 @@ void spread_activity::report2(
 					cout << "spread_activity::report2 "
 							"before P5->plane_intersection_type_basic" << endl;
 				}
-				P5->Subspaces->plane_intersection_type_basic(Pts_in_PG5, l,
+				P5->Subspaces->plane_intersection_type_basic(
+						Pts_in_PG5, l,
 						type, 0 /* verbose_level*/);
 						// type[N_planes]
 

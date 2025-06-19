@@ -753,11 +753,13 @@ public:
 
 	int nb_input; // = Classification_of_objects->IS->Objects.size();
 
+	// all the following are indexed by the input_idx, not by the index in the isomorphism transversal
 
 	long int *Ago; // [nb_input]
 	int *F_reject; // [nb_input]
 	other::l1_interfaces::nauty_output **NO; // [nb_input]
-	any_combinatorial_object **OWCF; // [nb_orbits]
+	any_combinatorial_object **OWCF; // [nb_input]
+		// = IS->Objects[input_idx]
 
 
 
@@ -769,6 +771,8 @@ public:
 		// Idx_transversal[i] is the input index of the i-th isomorphism class
 
 	long int *Ago_transversal; // [nb_orbits]
+		// Ago_transversal[i] is the order of the automorphism group of the i-th isomorphism class
+
 
 	//any_combinatorial_object **OWCF_transversal; // [nb_orbits]
 

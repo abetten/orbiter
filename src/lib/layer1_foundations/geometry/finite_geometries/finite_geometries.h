@@ -451,6 +451,7 @@ public:
 		// for early_test_func
 		// [max_depth * kn],
 		// previously [Nb * n], which was too much
+
 	int *Data2;
 		// for early_test_func
 		// [n * n]

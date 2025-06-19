@@ -1600,6 +1600,12 @@ SPREADS_27_ISO_6="\
 
 
 
+PENTTILA_WILLIAMS_PRINCE_REG_PACKING_0="444,43313,154402,46682,108254,75363,27729,32139,5244,60442,142811,111115,94209,120678,89533,13798,103994,129953,82168,136838,19253,23017,145985,134996,54705,36267,55066,117542,96699,69154,72460"
+
+PENTTILA_WILLIAMS_PRINCE_REG_PACKING_1="616,42728,152655,48576,105431,79607,28634,32817,9799,62356,141176,110085,92557,122136,86312,13975,101942,126869,81478,139352,18028,24325,147284,130370,52074,36843,55602,118454,95973,69642,74036"
+
+
+
 # Section 15.3 Packings
 
 
@@ -21095,6 +21101,7 @@ test_15_1:
 	make create_spread_27_4
 	make create_spread_27_5
 	make create_spread_27_6
+	make PG_3_5_packing_PWP_0_dualize
 
 
 
@@ -21681,6 +21688,17 @@ create_spread_27_6:
 
 
 
+PG_3_5_packing_0_dualize:
+	$(ORBITER_PATH)orbiter.out -v 5 \
+		-define F -finite_field -q 5 -end \
+		-define P -projective_space 3 F -end \
+		-define T -spread_table P 2 "12" "SPREAD_TABLES_5_REG/" \
+		-with T -do \
+			-spread_table_activity \
+			-dualize_packing $(PENTTILA_WILLIAMS_PRINCE_REG_PACKING_0) \
+		-end 
+
+
 
 
 
@@ -21994,6 +22012,9 @@ translation_plane_27_6_orbits:
 		-define Orb -orbits -group A \
 			-on_points \
 		-end
+
+
+
 
 
 

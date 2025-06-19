@@ -184,6 +184,9 @@ void any_combinatorial_object::print_tex_detailed(
 		cout << "any_combinatorial_object::print_tex_detailed" << endl;
 	}
 
+	ost << "\\subsection*{any\\_combinatorial\\_object::print\\_tex\\_detailed}" << endl;
+
+
 	if (f_v) {
 		cout << "any_combinatorial_object::print_tex_detailed "
 				"before print_tex" << endl;
@@ -365,7 +368,7 @@ void any_combinatorial_object::print_tex(
 		cout << "any_combinatorial_object::print_tex" << endl;
 	}
 
-	//ost << "\\subsubsection*{any\\_combinatorial\\_object::print\\_tex}" << endl;
+	ost << "\\subsubsection*{any\\_combinatorial\\_object::print\\_tex}" << endl;
 
 	if (type == t_PTS) {
 		if (f_v) {
@@ -409,6 +412,12 @@ void any_combinatorial_object::print_tex(
 			cout << "any_combinatorial_object::print_tex t_PAC" << endl;
 		}
 		ost << "Packing: \\\\" << endl;
+
+		//long int *original_data; // [SoS->nb_sets]
+
+		Lint_vec_print_fully(ost, original_data, SoS->nb_sets);
+		ost << "\\\\" << endl;
+
 		SoS->print_table_tex(ost);
 		ost << endl;
 	}
