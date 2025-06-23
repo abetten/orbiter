@@ -318,6 +318,20 @@ void homogeneous_polynomial_domain::print_latex(
 			"and of degree " << degree << "\\\\" << endl;
 }
 
+void homogeneous_polynomial_domain::print_monomials(
+		int verbose_level)
+{
+	int i;
+
+	for (i = 0; i < nb_monomials; i++) {
+		cout << setw(3) << i << " : ";
+		Int_vec_print(
+				cout, Monomials + i * nb_variables, nb_variables);
+		cout << endl;
+	}
+
+}
+
 
 int homogeneous_polynomial_domain::get_nb_monomials()
 {
@@ -949,6 +963,7 @@ int homogeneous_polynomial_domain::index_of_monomial(
 	}
 	return idx;
 }
+
 
 void homogeneous_polynomial_domain::affine_evaluation_kernel(
 		int *&Kernel, int &dim_kernel, int verbose_level)
@@ -2644,7 +2659,7 @@ int homogeneous_polynomial_domain::test_potential_algebraic_degree(
 				n, k1, Intersection->M, k2, Ideal->M,
 				Basis_UV,
 				base_cols,
-				verbose_level);
+				0 /*verbose_level*/);
 		if (f_v) {
 			cout << "homogeneous_polynomial_domain::test_potential_algebraic_degree "
 					"after Linear_algebra.extend_basis_of_subspace" << endl;

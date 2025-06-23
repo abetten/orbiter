@@ -1014,10 +1014,45 @@ void any_group::normalizer(
 	H = Subgroup_gens->create_sims(verbose_level);
 
 	if (f_linear_group) {
+		if (f_v) {
+			cout << "any_group::normalizer before LG->initial_strong_gens->create_sims" << endl;
+		}
 		G = LG->initial_strong_gens->create_sims(verbose_level);
+		if (f_v) {
+			cout << "any_group::normalizer after LG->initial_strong_gens->create_sims" << endl;
+		}
+	}
+	else if (f_permutation_group) {
+		if (f_v) {
+			cout << "any_group::normalizer before PGC->A_initial->Strong_gens->create_sims" << endl;
+		}
+		G = PGC->A_initial->Strong_gens->create_sims(verbose_level);
+		if (f_v) {
+			cout << "any_group::normalizer after PGC->A_initial->Strong_gens->create_sims" << endl;
+		}
+	}
+	else if (f_modified_group) {
+		if (f_v) {
+			cout << "any_group::normalizer before MGC->A_modified->Strong_gens->create_sims" << endl;
+		}
+		G = MGC->A_modified->Strong_gens->create_sims(verbose_level);
+		//G = MGC->A_previous->Strong_gens->create_sims(verbose_level);
+		if (f_v) {
+			cout << "any_group::normalizer after MGC->A_modified->Strong_gens->create_sims" << endl;
+		}
+	}
+	else if (f_perm_group_direct) {
+		if (f_v) {
+			cout << "any_group::normalizer before PGC->A_initial->Strong_gens->create_sims" << endl;
+		}
+		G = PGC->A_initial->Strong_gens->create_sims(verbose_level);
+		if (f_v) {
+			cout << "any_group::normalizer after PGC->A_initial->Strong_gens->create_sims" << endl;
+		}
 	}
 	else {
-		G = PGC->A_initial->Strong_gens->create_sims(verbose_level);
+		cout << "any_group::normalizer unknown type of group" << endl;
+		exit(1);
 	}
 
 	//G = LG->initial_strong_gens->create_sims(verbose_level);
@@ -1035,6 +1070,8 @@ void any_group::normalizer(
 	M.normalizer_using_MAGMA(
 			A, fname_magma_prefix,
 			G, H, gens_N, verbose_level);
+
+
 
 	G->group_order(G_order);
 	H->group_order(H_order);

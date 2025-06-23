@@ -53,8 +53,7 @@ group_modification_description::group_modification_description()
 
 	f_projectivity_subgroup = false;
 
-	f_subfield_subgroup = false;
-	subfield_subgroup_index = 0;
+	f_field_reduction = false;
 
 	f_action_on_self_by_right_multiplication = false;
 
@@ -193,11 +192,10 @@ int group_modification_description::read_arguments(
 				cout << "-projectivity_subgroup " << endl;
 			}
 		}
-		else if (ST.stringcmp(argv[i], "-subfield_subgroup") == 0) {
-			f_subfield_subgroup = true;
-			subfield_subgroup_index = ST.strtoi(argv[++i]);
+		else if (ST.stringcmp(argv[i], "-field_reduction") == 0) {
+			f_field_reduction = true;
 			if (f_v) {
-				cout << "-subfield_subgroup " << subfield_subgroup_index << endl;
+				cout << "-field_reduction " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-action_on_self_by_right_multiplication") == 0) {
@@ -375,8 +373,8 @@ void group_modification_description::print()
 	if (f_projectivity_subgroup) {
 		cout << "-projectivity_subgroup " << endl;
 	}
-	if (f_subfield_subgroup) {
-		cout << "-subfield_subgroup " << subfield_subgroup_index << endl;
+	if (f_field_reduction) {
+		cout << "-field_reduction " << endl;
 	}
 	if (f_action_on_self_by_right_multiplication) {
 		cout << "-action_on_self_by_right_multiplication" << endl;

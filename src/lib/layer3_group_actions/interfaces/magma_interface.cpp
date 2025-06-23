@@ -2502,41 +2502,59 @@ void magma_interface::export_matrix_group_with_field_reduction(
 		cout << "magma_interface::export_matrix_group_with_field_reduction" << endl;
 	}
 
-	algebra::basic_algebra::matrix_group *M;
-	int *Elt;
+	//algebra::basic_algebra::matrix_group *M;
+	//int *Elt;
 	int h, i, j;
 
-	M = A->get_matrix_group();
+	//M = A->get_matrix_group();
 
 	algebra::field_theory::finite_field *F;
 
-	F = M->GFq;
+	algebra::field_theory::finite_field *F0; // subfield
 
-	int *B;
+
+	//F = M->GFq;
+
+	int *nice_gens_output;
+	int nb_gens;
+	int sz;
 	int d;
 
-	d = M->n * F->e;
-	B = NEW_int(d * d);
+	actions::action_global Action_global;
+
+	Action_global.linear_group_field_reduction(
+			A,
+			SG->gens,
+			nice_gens_output, nb_gens, d, sz,
+			F, F0,
+			verbose_level);
 
 
+
+	//d = M->n * F->e;
+	//B = NEW_int(d * d);
+
+#if 0
 	if (!F->Finite_field_properties->f_related_fields_have_been_computed) {
 		cout << "magma_interface::export_matrix_group_with_field_reduction "
 				"related fields have not yet been computed" << endl;
 		exit(1);
 	}
+#endif
 
+	//algebra::field_theory::subfield_structure *SubS;
 
-	algebra::field_theory::subfield_structure *SubS;
+	//int a;
 
-	int a;
-
-	SubS = &F->Finite_field_properties->Related_fields->SubS[0];
+	//SubS = &F->Finite_field_properties->Related_fields->SubS[0];
 
 
 	ost << "F:=GF(" << F->p << ");" << endl;
 	ost << "G := GeneralLinearGroup(" << d << ", F);" << endl;
 	ost << "H := sub< G | ";
-	for (h = 0; h < SG->gens->len; h++) {
+	for (h = 0; h < nb_gens; h++) {
+
+#if 0
 		Elt = SG->gens->ith(h);
 
 		int frob;
@@ -2556,8 +2574,14 @@ void magma_interface::export_matrix_group_with_field_reduction(
 			cout << "after lifting:" << endl;
 			Int_matrix_print(B, d, d);
 		}
+#endif
+
+		int *B;
+
+		B = nice_gens_output + h * sz;
 
 		ost << "[";
+		int a;
 		for (i = 0; i < d; i++) {
 			for (j = 0; j < d; j++) {
 				a = B[i * d + j];
@@ -2573,13 +2597,13 @@ void magma_interface::export_matrix_group_with_field_reduction(
 		ost << "]";
 
 
-		if (h < SG->gens->len - 1) {
+		if (h < nb_gens - 1) {
 			ost << ", " << endl;
 		}
 	}
 	ost << " >;" << endl;
 
-	FREE_int(B);
+	FREE_int(nice_gens_output);
 
 	if (f_v) {
 		cout << "magma_interface::export_matrix_group_with_field_reduction done" << endl;

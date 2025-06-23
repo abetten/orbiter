@@ -226,18 +226,18 @@ void modified_group_create::modified_group_init(
 		}
 	}
 
-	else if (Descr->f_subfield_subgroup) {
+	else if (Descr->f_field_reduction) {
 
 		if (f_v) {
 			cout << "modified_group_create::modified_group_init "
-					"before create_subfield_subgroup" << endl;
+					"before create_field_reduction" << endl;
 		}
 
-		create_subfield_subgroup(Descr, verbose_level);
+		create_field_reduction(Descr, verbose_level);
 
 		if (f_v) {
 			cout << "modified_group_create::modified_group_init "
-					"after create_subfield_subgroup" << endl;
+					"after create_field_reduction" << endl;
 		}
 	}
 	else if (Descr->f_action_on_self_by_right_multiplication) {
@@ -1283,20 +1283,18 @@ void modified_group_create::create_projectivity_subgroup(
 
 
 
-void modified_group_create::create_subfield_subgroup(
+void modified_group_create::create_field_reduction(
 		group_modification_description *description,
 		int verbose_level)
-// ToDo
-// output in A_modified but not yet in Strong_gens
-
+// output in A_modified and Strong_gens
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "modified_group_create::create_subfield_subgroup" << endl;
+		cout << "modified_group_create::create_field_reduction" << endl;
 	}
 	if (Descr->from.size() != 1) {
-		cout << "modified_group_create::create_subfield_subgroup "
+		cout << "modified_group_create::create_field_reduction "
 				"need exactly one argument of type -from" << endl;
 		exit(1);
 	}
@@ -1309,77 +1307,191 @@ void modified_group_create::create_subfield_subgroup(
 
 	AG = (groups::any_group *) Get_any_group_opaque(Descr->from[0]);
 
+
 	A_base = AG->A_base;
 	A_previous = AG->A;
 
-	label = AG->label;
-	label_tex = AG->label_tex;
+	label = A_previous->label;
+	label_tex = A_previous->label_tex;
 
 	if (f_v) {
-		cout << "modified_group_create::create_subfield_subgroup "
+		cout << "modified_group_create::create_field_reduction "
 				"A_base=";
 		A_base->print_info();
 		cout << endl;
-		cout << "modified_group_create::create_subfield_subgroup "
+		cout << "modified_group_create::create_field_reduction "
 				"A_previous=";
 		A_previous->print_info();
 		cout << endl;
 	}
 
-	A_modified = A_previous; // ToDo !!
+	//A_modified = A_previous; // ToDo !!
 
 
 
 	f_has_strong_generators = true;
 	if (f_v) {
-		cout << "modified_group_create::create_subfield_subgroup "
+		cout << "modified_group_create::create_field_reduction "
 				"before Strong_gens = AG->Subgroup_gens" << endl;
 	}
 
-	//Strong_gens = NEW_OBJECT(groups::strong_generators);
+	groups::strong_generators *Strong_gens_old;
 
-	// ToDo
+	groups::strong_generators *Strong_gens_mother;
+
+	Strong_gens_old = AG->Subgroup_gens;
+
+	Strong_gens = NEW_OBJECT(groups::strong_generators);
+
+	Strong_gens_mother = NEW_OBJECT(groups::strong_generators);
 
 
-#if 0
+
+
 	{
-		groups::orbits_on_something *Orb;
+
+		int *nice_gens_output;
+		int nb_gens;
+		int sz;
+		int d;
+
+		actions::action_global Action_global;
+		algebra::field_theory::finite_field *F; // large field
+		algebra::field_theory::finite_field *F0; // subfield
 
 		if (f_v) {
-			cout << "modified_group_create::create_subfield_subgroup "
-					"before AG->orbits_on_points" << endl;
+			cout << "modified_group_create::create_field_reduction "
+					"before Action_global.linear_group_field_reduction" << endl;
 		}
 
-		AG->orbits_on_points(Orb, verbose_level);
+		Action_global.linear_group_field_reduction(
+				AG->A,
+				Strong_gens_old->gens,
+				nice_gens_output, nb_gens, d, sz,
+				F, F0,
+				verbose_level);
+
 
 		if (f_v) {
-			cout << "modified_group_create::create_subfield_subgroup "
-					"after AG->orbits_on_points" << endl;
+			cout << "modified_group_create::create_field_reduction "
+					"after Action_global.linear_group_field_reduction" << endl;
 		}
 
-		Orb->stabilizer_any_point(Descr->point_stabilizer_index,
-				Strong_gens, verbose_level);
+		if (f_v) {
+			cout << "modified_group_create::create_field_reduction "
+					"after field reduction:" << endl;
+			Int_matrix_print(nice_gens_output, nb_gens, sz);
+		}
+
+		group_constructions::linear_group_description *Group_descr;
+
+		Group_descr = NEW_OBJECT(group_constructions::linear_group_description);
+
+		Group_descr->f_projective = true;
 
 
-		FREE_OBJECT(Orb);
+		data_structures_groups::vector_ge *nice_gens;
+
+
+		string label1, label1_tex;
+
+		Strong_gens_mother->init_linear_group_from_scratch(
+				A_modified,
+				F0, d,
+				Group_descr,
+				nice_gens,
+				label1,
+				label1_tex,
+				verbose_level);
+
+
+
+
+
+
+		long int go;
+		int q, q0;
+
+		go = Strong_gens_old->group_order_as_lint();
+
+		q = F->q;
+		q0 = F0->q;
+
+		if (f_v) {
+			cout << "modified_group_create::create_field_reduction "
+					<< " go = " << go
+					<< " q = " << F->q
+					<< " q0 = " << F0->q
+					<< endl;
+		}
+
+		algebra::basic_algebra::matrix_group *M;
+
+		M = AG->A->get_matrix_group();
+
+
+		long int target_go;
+
+		target_go = go;
+
+		if (M->f_semilinear) {
+			target_go /= F->e;
+		}
+
+		if (M->f_projective) {
+			target_go *= (q - 1);
+			target_go /= (q0 - 1);
+		}
+
+
+		if (M->f_semilinear) {
+			target_go *= F->e;
+		}
+
+		if (f_v) {
+			cout << "modified_group_create::create_field_reduction "
+					<< " target_go = " << target_go
+					<< endl;
+		}
+
+		std::string ascii_target_go;
+
+		ascii_target_go = std::to_string(target_go);
+
+		if (f_v) {
+			cout << "modified_group_create::create_field_reduction "
+					"ascii_target_go = " << ascii_target_go << endl;
+		}
+
+		Strong_gens->prepare_from_generator_data(
+				A_modified,
+				nice_gens_output,
+				nb_gens,
+				sz,
+				ascii_target_go,
+				verbose_level);
+
+
+
+		FREE_int(nice_gens_output);
 	}
-#endif
+
 
 
 	if (f_v) {
-		cout << "modified_group_create::create_subfield_subgroup "
+		cout << "modified_group_create::create_field_reduction "
 				"action A_modified created: ";
 		A_modified->print_info();
 	}
 
 
-	label += "_SubfieldOfIndex" + std::to_string(Descr->subfield_subgroup_index);
-	label_tex += "{\\rm SubfieldOfIndex " + std::to_string(Descr->subfield_subgroup_index) + "}";
+	label += "_Field_Reduction";
+	label_tex += "{\\rm FieldReduction}";
 
 
 
 	if (f_v) {
-		cout << "modified_group_create::create_subfield_subgroup "
+		cout << "modified_group_create::create_field_reduction "
 				"done" << endl;
 	}
 }

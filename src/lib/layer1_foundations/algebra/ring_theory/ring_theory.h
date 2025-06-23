@@ -172,6 +172,8 @@ public:
 	void print();
 	void print_latex(
 			std::ostream &ost);
+	void print_monomials(
+			int verbose_level);
 	int get_nb_monomials();
 	int get_nb_variables();
 	algebra::field_theory::finite_field *get_F();

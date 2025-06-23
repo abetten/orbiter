@@ -78,7 +78,7 @@ void objects_after_classification::init_after_nauty(
 		if (f_v) {
 			cout << "objects_after_classification::init_after_nauty "
 					"iso_type = " << iso_type << " / " << Classification_of_objects->Output->nb_orbits << endl;
-			cout << "NO=" << endl;
+			//cout << "NO=" << endl;
 			//CO->NO_transversal[iso_type]->print();
 		}
 

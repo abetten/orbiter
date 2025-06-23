@@ -1497,6 +1497,10 @@ void combinatorial_object_stream::do_algebraic_degree(
 				"m = " << m << endl;
 	}
 
+	if (f_v) {
+		cout << "combinatorial_object_stream::do_algebraic_degree "
+				"we will now create the polynomial rings" << endl;
+	}
 
 	HPD = NEW_OBJECTS(algebra::ring_theory::homogeneous_polynomial_domain, m + 1);
 
@@ -1516,6 +1520,13 @@ void combinatorial_object_stream::do_algebraic_degree(
 
 	}
 
+
+	if (f_v) {
+		for (i = 1; i <= m; i++) {
+			cout << "degree " << i << ":" << endl;
+			HPD[i].print_monomials(verbose_level);
+		}
+	}
 
 
 

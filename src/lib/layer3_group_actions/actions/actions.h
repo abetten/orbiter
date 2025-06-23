@@ -499,6 +499,13 @@ public:
 		algebra::field_theory::finite_field *F,
 		data_structures_groups::vector_ge *&nice_gens,
 		int verbose_level);
+	void linear_group_field_reduction(
+			action *A,
+			data_structures_groups::vector_ge *nice_gens_input,
+			int *&nice_gens_output, int &nb_gens, int &d, int &sz,
+			algebra::field_theory::finite_field *&F,
+			algebra::field_theory::finite_field *&F_subfield,
+			int verbose_level);
 	void set_orthogonal_group_type(
 			int f_siegel,
 		int f_reflection, int f_similarity,

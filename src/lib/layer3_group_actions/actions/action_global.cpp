@@ -803,6 +803,94 @@ void action_global::compute_generators_GL_n_q(
 	}
 }
 
+void action_global::linear_group_field_reduction(
+		action *A,
+		data_structures_groups::vector_ge *nice_gens_input,
+		int *&nice_gens_output, int &nb_gens, int &d, int &sz,
+		algebra::field_theory::finite_field *&F,
+		algebra::field_theory::finite_field *&F_subfield,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "action_global::linear_group_field_reduction" << endl;
+	}
+
+	algebra::basic_algebra::matrix_group *M;
+	int *Elt;
+	int h;
+	int f_is_semilinear;
+	//algebra::field_theory::finite_field *F;
+
+
+	M = A->get_matrix_group();
+
+	f_is_semilinear = M->f_semilinear;
+
+
+	F = M->GFq;
+
+
+	nb_gens = nice_gens_input->len;
+
+
+	d = M->n * F->e;
+
+	sz = d * d;
+
+	nice_gens_output = NEW_int(nb_gens * sz);
+
+
+	if (!F->Finite_field_properties->f_related_fields_have_been_computed) {
+		cout << "magma_interface::export_matrix_group_with_field_reduction "
+				"related fields have not yet been computed" << endl;
+		exit(1);
+	}
+
+
+	algebra::field_theory::subfield_structure *SubS;
+
+	//int a;
+
+	SubS = &F->Finite_field_properties->Related_fields->SubS[0];
+
+	F_subfield = &F->Finite_field_properties->Related_fields->Subfield[0];
+
+	for (h = 0; h < nb_gens; h++) {
+		Elt = nice_gens_input->ith(h);
+
+		int frob;
+
+		if (f_is_semilinear) {
+			frob = Elt[M->n * M->n];
+		}
+		else {
+			frob = 0;
+		}
+
+		SubS->lift_matrix_semilinear(
+				Elt /* int *MQ */, frob,
+				M->n, nice_gens_output + h * sz, verbose_level - 2);
+		// input is MQ[m * m] over the field FQ.
+		// output is Mq[n * n] over the field Fq,
+
+		if (f_v) {
+			cout << "generator " << h << " / " << nb_gens << endl;
+			Int_matrix_print(Elt, M->n, M->n);
+			cout << "frob = " << frob << endl;
+			cout << "after lifting:" << endl;
+			Int_matrix_print(nice_gens_output + h * sz, d, d);
+		}
+
+
+	}
+
+	if (f_v) {
+		cout << "action_global::linear_group_field_reduction done" << endl;
+	}
+}
+
 
 
 // callbacks for Schreier Sims:

@@ -226,8 +226,7 @@ public:
 
 	int f_projectivity_subgroup;
 
-	int f_subfield_subgroup;
-	int subfield_subgroup_index;
+	int f_field_reduction;
 
 	int f_action_on_self_by_right_multiplication;
 
@@ -541,7 +540,7 @@ public:
 	void create_projectivity_subgroup(
 			group_modification_description *description,
 			int verbose_level);
-	void create_subfield_subgroup(
+	void create_field_reduction(
 			group_modification_description *description,
 			int verbose_level);
 	void create_action_on_self_by_right_multiplication(
