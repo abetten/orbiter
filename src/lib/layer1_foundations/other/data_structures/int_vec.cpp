@@ -665,6 +665,16 @@ void int_vec::print_dense(
 	ost << ")";
 }
 
+void int_vec::print_dense_bare(
+		std::ostream &ost, int *v, int len)
+{
+	int i;
+
+	for (i = 0; i < len; i++) {
+		ost << v[i];
+	}
+}
+
 
 void int_vec::print_Cpp(
 		std::ostream &ost, int *v, int len)

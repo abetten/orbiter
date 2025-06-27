@@ -16,5 +16,6 @@ ROW,C1,C2,C3
 1,"\verb'-draw_options' "," options "," Drawing options according to Table~\ref{tab:draw:options}."
 1,"\verb'-preferred_choice' "," $n$ $a$ $b$ ","At node $n$, choose $b$ instead of $a$ as orbit representative. This option can be repeated. "
 1,"\verb'-clique_test' "," graph  ","Classify cliques in the given graph. "
+1,"\verb'-test_mindist_nonlinear' "," $d$  ","Search for non-linear codes with minimum distance at least $d$. "
 END
 

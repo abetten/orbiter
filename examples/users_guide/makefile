@@ -3341,8 +3341,8 @@ F_7_tables:
 			-bit_depth 24 \
 			-partition 3 all_one all_one \
 		-end
-	convert GF_q7_table_add_draw.bmp GF_q7_table_add_draw.png
-	convert GF_q7_table_mul_draw.bmp GF_q7_table_mul_draw.png
+	magick GF_q7_table_add_draw.bmp GF_q7_table_add_draw.png
+	magick GF_q7_table_mul_draw.bmp GF_q7_table_mul_draw.png
 
 
 F_13:
@@ -3465,8 +3465,8 @@ F_4_tables:
 			-bit_depth 24 \
 			-partition 3 all_one all_one \
 		-end
-	convert GF_q4_table_add_draw.bmp GF_q4_table_add_draw.png
-	convert GF_q4_table_mul_draw.bmp GF_q4_table_mul_draw.png
+	magick GF_q4_table_add_draw.bmp GF_q4_table_add_draw.png
+	magick GF_q4_table_mul_draw.bmp GF_q4_table_mul_draw.png
 
 
 
@@ -3546,8 +3546,8 @@ F_16_tables:
 			-box_width 40 -bit_depth 24 \
 			-partition 3 all_one all_one \
 		-end
-	convert GF_q16_table_add_draw.bmp GF_q16_table_add_draw.png
-	convert GF_q16_table_mul_draw.bmp GF_q16_table_mul_draw.png
+	magick GF_q16_table_add_draw.bmp GF_q16_table_add_draw.png
+	magick GF_q16_table_mul_draw.bmp GF_q16_table_mul_draw.png
 
 
 
@@ -3598,7 +3598,7 @@ F8_F2_field_reduction:
 			-box_width 40 -bit_depth 24 \
 			-partition 4 "3" "3,3,3,3,3,3,3,3" \
 		-end
-	convert F8_to_F2_draw.bmp F8_to_F2_draw.png
+	magick F8_to_F2_draw.bmp F8_to_F2_draw.png
 	$(OPEN) F8_to_F2_draw.png
 
 
@@ -4361,7 +4361,7 @@ PG_2_2_incidence_matrix:
 				all_one all_one \
 		-end
 	$(OPEN) PG_n2_q2_incidence_matrix_draw.bmp
-	convert PG_n2_q2_incidence_matrix_draw.bmp PG_n2_q2_incidence_matrix_draw.png
+	magick PG_n2_q2_incidence_matrix_draw.bmp PG_n2_q2_incidence_matrix_draw.png
 
 
 PG_2_4_incidence_matrix:
@@ -4380,7 +4380,7 @@ PG_2_4_incidence_matrix:
 				all_one all_one \
 		-end
 	$(OPEN) PG_n2_q4_incidence_matrix_draw.bmp
-	convert PG_n2_q4_incidence_matrix_draw.bmp PG_n2_q4_incidence_matrix_draw.png
+	magick PG_n2_q4_incidence_matrix_draw.bmp PG_n2_q4_incidence_matrix_draw.png
 
 # writes PG_n2_q4_incidence_matrix.csv
 
@@ -4402,7 +4402,7 @@ PG_2_8_incidence_matrix:
 				all_one all_one \
 		-end
 	$(OPEN) PG_n2_q8_incidence_matrix_draw.bmp
-	convert PG_n2_q8_incidence_matrix_draw.bmp PG_n2_q8_incidence_matrix_draw.png
+	magick PG_n2_q8_incidence_matrix_draw.bmp PG_n2_q8_incidence_matrix_draw.png
 
 
 
@@ -4437,7 +4437,7 @@ PG_2_4_incma_cyclic:
 			-partition 3 R C \
 		-end
 	$(OPEN) PG_2_4_singer_incma_cyclic_draw.bmp
-	convert PG_2_4_singer_incma_cyclic_draw.bmp PG_2_4_singer_incma_cyclic_draw.png
+	magick PG_2_4_singer_incma_cyclic_draw.bmp PG_2_4_singer_incma_cyclic_draw.png
 
 
 PG_2_4_incma_singer_sub_3:
@@ -4451,7 +4451,7 @@ PG_2_4_incma_singer_sub_3:
 			-partition 3 R C \
 		-end
 	$(OPEN) PG_2_4_singer_incma_subgroup_index_3_draw.bmp
-	convert PG_2_4_singer_incma_subgroup_index_3_draw.bmp PG_2_4_singer_incma_subgroup_index_3_draw.png
+	magick PG_2_4_singer_incma_subgroup_index_3_draw.bmp PG_2_4_singer_incma_subgroup_index_3_draw.png
 
 PG_2_4_incma_singer_sub_7:
 	$(ORBITER) -v 2 \
@@ -4461,7 +4461,7 @@ PG_2_4_incma_singer_sub_7:
 			-partition 3 3,3,3,3,3,3,3 3,3,3,3,3,3,3 \
 		-end
 	$(OPEN) PG_2_4_singer_incma_subgroup_index_7_draw.bmp
-	convert PG_2_4_singer_incma_subgroup_index_7_draw.bmp PG_2_4_singer_incma_subgroup_index_7_draw.png
+	magick PG_2_4_singer_incma_subgroup_index_7_draw.bmp PG_2_4_singer_incma_subgroup_index_7_draw.png
 
 
 
@@ -4812,7 +4812,7 @@ Cyclic_6_group_table:
 			-partition 3 all_one_r all_one_c \
 		-end
 	$(OPEN) C_6_group_table_draw.bmp
-	convert C_6_group_table_draw.bmp C_6_group_table_draw.png
+	magick C_6_group_table_draw.bmp C_6_group_table_draw.png
 
 
 Symmetric_3:
@@ -5059,7 +5059,7 @@ Group_8_1:
 			-bit_depth 24 \
 			-partition 3 all_one_r all_one_c \
 		-end
-	convert Sym_8_Subgroup_G1_8_group_table_draw.bmp \
+	magick Sym_8_Subgroup_G1_8_group_table_draw.bmp \
 		Sym_8_Subgroup_G1_8_group_table_draw.png
 	$(OPEN) Sym_8_Subgroup_G1_8_group_table_draw.png
 
@@ -5088,7 +5088,7 @@ Group_8_2:
 			-bit_depth 24 \
 			-partition 3 all_one_r all_one_c \
 		-end
-	convert Sym_6_Subgroup_G2_8_group_table_draw.bmp \
+	magick Sym_6_Subgroup_G2_8_group_table_draw.bmp \
 		Sym_6_Subgroup_G2_8_group_table_draw.png
 	$(OPEN) Sym_6_Subgroup_G2_8_group_table_draw.png
 
@@ -5116,7 +5116,7 @@ Group_8_3:
 			-bit_depth 24 \
 			-partition 3 all_one_r all_one_c \
 		-end
-	convert Sym_6_Subgroup_G3_8_group_table_draw.bmp \
+	magick Sym_6_Subgroup_G3_8_group_table_draw.bmp \
 		Sym_6_Subgroup_G3_8_group_table_draw.png
 	$(OPEN) Sym_6_Subgroup_G3_8_group_table_draw.png
 
@@ -5144,7 +5144,7 @@ Group_8_4:
 			-bit_depth 24 \
 			-partition 3 all_one_r all_one_c \
 		-end
-	convert Sym_4_Subgroup_G4_8_group_table_draw.bmp \
+	magick Sym_4_Subgroup_G4_8_group_table_draw.bmp \
 		Sym_4_Subgroup_G4_8_group_table_draw.png
 	$(OPEN) Sym_4_Subgroup_G4_8_group_table_draw.png
 
@@ -5171,7 +5171,7 @@ Group_8_5:
 			-bit_depth 24 \
 			-partition 3 all_one_r all_one_c \
 		-end
-	convert Sym_8_Subgroup_G5_8_group_table_draw.bmp \
+	magick Sym_8_Subgroup_G5_8_group_table_draw.bmp \
 		Sym_8_Subgroup_G5_8_group_table_draw.png
 	$(OPEN) Sym_8_Subgroup_G5_8_group_table_draw.png
 
@@ -5335,6 +5335,10 @@ PGL_3_2:
 PGL_4_2:
 	$(ORBITER) -v 2 \
 		-define G -linear_group -PGL 4 2 -end
+
+
+# order 20160
+
 
 PGL_4_2_with_field:
 	$(ORBITER) -v 2 \
@@ -6378,6 +6382,7 @@ test_5_4:
 	make surface_q13_Eckardt
 	make surface_q13_Eckardt_on_tritangent_planes
 	make Hirschfeld_stab_projectivity_group
+	make Hirschfeld_stab_field_reduction
 	make on_planes
 	make on_planes_restricted
 	make T3_on_tensors
@@ -6495,7 +6500,7 @@ Alternating_5:
 	$(OPEN) Sym_5_EvenSub_report.pdf
 	$(PDFLATEX) Sym_5_EvenSub_group_table_report.tex
 	$(OPEN) Sym_5_EvenSub_group_table_report.pdf
-	convert Sym_5_EvenSub_group_table_draw.bmp Sym_5_EvenSub_group_table_draw.png
+	magick Sym_5_EvenSub_group_table_draw.bmp Sym_5_EvenSub_group_table_draw.png
 	$(OPEN) Sym_5_EvenSub_group_table_draw.png
 
 # group order 60
@@ -6766,6 +6771,25 @@ Hirschfeld_stab_projectivity_group:
 
 
 
+Hirschfeld_stab_field_reduction:
+	$(ORBITER) -v 4 \
+		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define G -linear_group -PGGL 4 4 \
+			-subgroup_by_generators "Hirschfeld_Stab" \
+			51840 6 $(HIRSCHFELD_STAB_GENERATORS) \
+		-end \
+		-define G0 -modified_group -from G \
+			-field_reduction \
+		-end \
+		-with G0 -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end
+	pdflatex PGL_8_2_Field_Reduction_report.tex
+	open PGL_8_2_Field_Reduction_report.pdf
 
 
 
@@ -11018,13 +11042,14 @@ V_3_2_trivial:
 		-define ro \
 			-poset_classification_report_options \
 				-draw_poset -type_ordinary \
+			-draw_options Do \
 		-end \
 		-with Orb -do -orbits_activity \
 			-report \
 			-report_options ro \
 		-end 
-	$(PDFLATEX) PGL_3_2_Identity_3_2_poset.tex
-	$(OPEN) PGL_3_2_Identity_3_2_poset.pdf
+	$(PDFLATEX) V_3_2_trivial_poset.tex
+	$(OPEN) V_3_2_trivial_poset.pdf
 
 
 
@@ -12360,7 +12385,7 @@ surface_4_0_lines_vs_lines:
 		-box_width 32 -bit_depth 24 \
 		-partition 3 27 27 \
 		-end
-	convert PG_3_4_lines_vs_lines_incma_draw.bmp PG_3_4_lines_vs_lines_incma_draw.png
+	magick PG_3_4_lines_vs_lines_incma_draw.bmp PG_3_4_lines_vs_lines_incma_draw.png
 
 
 # PG_3_4_lines_vs_lines_incma.csv
@@ -12379,7 +12404,7 @@ surface_4_0_lines_vs_tritangent_planes:
 		-box_width 32 -bit_depth 24 \
 		-partition 3 27 45 \
 		-end
-	convert PG_3_4_lines_tritplanes_incma_draw.bmp PG_3_4_lines_tritplanes_incma_draw.png
+	magick PG_3_4_lines_tritplanes_incma_draw.bmp PG_3_4_lines_tritplanes_incma_draw.png
 
 
 
@@ -12395,7 +12420,7 @@ surface_4_0_dot_products_columns:
 		-box_width 32 -bit_depth 24 \
 		-partition 3 45 45 \
 		-end
-	convert line_vs_trit_dot_products_columns_draw.bmp \
+	magick line_vs_trit_dot_products_columns_draw.bmp \
 		line_vs_trit_dot_products_columns_draw.png
 
 
@@ -15146,6 +15171,8 @@ SECTION_CODING_THEORY_INTRODUCTION:
 
 test_11_1:
 	make Allen_Gates_noise_1_percent
+	make nonlinear_code_n7_k4
+	make nonlinear_code_n7_d4_classify
 	make Hamming_space_4_2_distance_matrix
 	make Hamming_space_4_2_distance_matrix_draw
 	make Hamming_code_macwilliams
@@ -15163,6 +15190,63 @@ Allen_Gates_noise_1_percent:
 		allen_Gates_1.bmp \
 		1 100 
 	$(OPEN) allen_Gates_1.bmp
+
+
+
+nonlinear_code_long_n7_k4:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define C -code -field F \
+			-nonlinear_code_long 7 4 \
+			"0,1" \
+			"1,2,3" \
+			"0,1,3,4,6" \
+			"2,3,5,6" \
+		-end \
+		-with C -and F -do -coding_theoretic_activity \
+			-export_codewords codewords.csv \
+		-end \
+		-with C -and F -do -coding_theoretic_activity \
+			-all_distances \
+		-end \
+		-with C -and F -do -coding_theoretic_activity \
+			-all_external_distances \
+		-end \
+		-tally_column nonlinear_code_n7_k4_all_external_distances.csv C0
+
+
+nonlinear_code_n7_d4_classify:
+	$(ORBITER) -v 5 \
+		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define Do -draw_options \
+			-radius 200 -embedded \
+		-end \
+		-define Control -poset_classification_control \
+			-problem_label codes_n7_d4 \
+			-depth 10 \
+			-test_mindist_nonlinear 4 \
+			-draw_options Do \
+			-W \
+		-end \
+		-define F -finite_field -q 2 -end \
+		-define G -linear_group -GL 7 F -monomial -end \
+		-define Orb -orbits \
+			-group G \
+			-group_action G \
+			-on_subsets 10 Control \
+		-end \
+		-define ro \
+			-poset_classification_report_options \
+				-draw_poset -type_ordinary \
+				-draw_options Do \
+		-end \
+		-with Orb -do -orbits_activity \
+			-report \
+			-report_options ro \
+		-end \
+
+
+
 
 
 Hamming_space_4_2_distance_matrix:
@@ -15509,7 +15593,7 @@ Hamming_code_words:
 			-input_csv_file Hamming_7_4_word_%i_char_func_7_1.csv \
 			-box_width 25 -bit_depth 8 \
 			-partition 4 16 8 -end \
-			-system "convert Hamming_7_4_word_%i_char_func_7_1_draw.bmp \
+			-system "magick Hamming_7_4_word_%i_char_func_7_1_draw.bmp \
 			-frame 8 Hamming_7_4_word_%i_char_func_7_1_draw.png" \
 		-end_loop i
 
@@ -16525,9 +16609,9 @@ RM_3_draw:
 			-box_width 25 -bit_depth 8 \
 			-partition 4 16 16 \
 		-end
-	convert RM_m3_distance_H_8_16_draw.bmp RM_m3_distance_H_8_16_draw.png
-	convert RM_m3_char_func_8_16_draw.bmp RM_m3_char_func_8_16_draw.png
-	convert RM_m3_idx_8_16_draw.bmp RM_m3_idx_8_16_draw.png
+	magick RM_m3_distance_H_8_16_draw.bmp RM_m3_distance_H_8_16_draw.png
+	magick RM_m3_char_func_8_16_draw.bmp RM_m3_char_func_8_16_draw.png
+	magick RM_m3_idx_8_16_draw.bmp RM_m3_idx_8_16_draw.png
 	$(OPEN) RM_m3_distance_H_8_16_draw.bmp
 
 
@@ -16543,9 +16627,9 @@ RM_3_distance_draw:
 				-partition 5 16 16 \
 			-end \
 		-end_loop L
-	convert RM_m3_distance_H_8_16_value0_draw.bmp RM_m3_distance_H_8_16_value0_draw.png
-	convert RM_m3_distance_H_8_16_value1_draw.bmp RM_m3_distance_H_8_16_value1_draw.png
-	convert RM_m3_distance_H_8_16_value2_draw.bmp RM_m3_distance_H_8_16_value2_draw.png
+	magick RM_m3_distance_H_8_16_value0_draw.bmp RM_m3_distance_H_8_16_value0_draw.png
+	magick RM_m3_distance_H_8_16_value1_draw.bmp RM_m3_distance_H_8_16_value1_draw.png
+	magick RM_m3_distance_H_8_16_value2_draw.bmp RM_m3_distance_H_8_16_value2_draw.png
 
 
 RM_3_algebraic_normal_form:
@@ -16588,7 +16672,7 @@ RM_6_genma_draw:
 			-box_width 25 -bit_depth 8 \
 			-partition 3 7 64 \
 		-end
-	convert RM6_genma_draw.bmp RM6_genma_draw.png
+	magick RM6_genma_draw.bmp RM6_genma_draw.png
 	$(OPEN) RM6_genma_draw.png
 
 
@@ -16599,7 +16683,7 @@ RM_6_codewords_matrix_draw:
 			-box_width 25 -bit_depth 8 \
 			-partition 3 128 64 \
 		-end
-	convert RM6_codewords_draw.bmp RM6_codewords_draw.png
+	magick RM6_codewords_draw.bmp RM6_codewords_draw.png
 	$(OPEN) RM6_codewords_draw.png
 
 
@@ -16613,33 +16697,33 @@ RM_6_codewords_draw:
 				-box_width 25 -bit_depth 8 \
 				-partition 3 8 8 \
 			-end \
-			-system "convert RM6_codewords_ref_%i_draw.bmp -frame 8 %i.png" \
+			-system "magick RM6_codewords_ref_%i_draw.bmp -frame 8 %i.png" \
 		-end_loop i
-	convert 0.png 1.png 2.png 3.png 4.png 5.png \
+	magick 0.png 1.png 2.png 3.png 4.png 5.png \
 		6.png 7.png 8.png 9.png 10.png +append a0
-	convert 11.png 12.png 13.png 14.png 15.png \
+	magick 11.png 12.png 13.png 14.png 15.png \
 		16.png 17.png 18.png 19.png 20.png 21.png +append a1
-	convert 22.png 23.png 24.png 25.png 26.png \
+	magick 22.png 23.png 24.png 25.png 26.png \
 		27.png 28.png 29.png 30.png 31.png 32.png +append a2
-	convert 33.png 34.png 35.png 36.png 37.png \
+	magick 33.png 34.png 35.png 36.png 37.png \
 		38.png 39.png 40.png 41.png 42.png 43.png +append a3
-	convert 44.png 45.png 46.png 47.png 48.png \
+	magick 44.png 45.png 46.png 47.png 48.png \
 		49.png 50.png 51.png 52.png 53.png 54.png +append a4
-	convert 55.png 56.png 57.png 58.png 59.png \
+	magick 55.png 56.png 57.png 58.png 59.png \
 		60.png 61.png 62.png 63.png 64.png 65.png +append a5
-	convert 66.png 67.png 68.png 69.png 70.png \
+	magick 66.png 67.png 68.png 69.png 70.png \
 		71.png 72.png 73.png 74.png 75.png 76.png +append a6
-	convert 77.png 78.png 79.png 80.png 81.png \
+	magick 77.png 78.png 79.png 80.png 81.png \
 		82.png 83.png 84.png 85.png 86.png 87.png +append a7
-	convert 88.png 89.png 90.png 91.png 92.png \
+	magick 88.png 89.png 90.png 91.png 92.png \
 		93.png 94.png 95.png 96.png 97.png 98.png +append a8
-	convert 99.png 100.png 101.png 102.png 103.png \
+	magick 99.png 100.png 101.png 102.png 103.png \
 		104.png 105.png 106.png 107.png 108.png 109.png +append a9
-	convert 110.png 111.png 112.png 113.png 114.png \
+	magick 110.png 111.png 112.png 113.png 114.png \
 		115.png 116.png 117.png 118.png 119.png 120.png +append a10
-	convert 121.png 122.png 123.png 124.png 125.png \
+	magick 121.png 122.png 123.png 124.png 125.png \
 		126.png 127.png 0.png 0.png 0.png 0.png +append a11
-	convert a0 a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 \
+	magick a0 a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 \
 		a11 -append poster_RM_1_6.png
 
 
@@ -21047,7 +21131,7 @@ Praeger_45_12_3_design_c:
 		-secondary_input_csv_file Praeger_object0_INP.csv \
 		-box_width 32 -bit_depth 24 \
 		-end
-	convert \
+	magick \
 		Praeger_object0_INP_flag_orbits_draw.bmp \
 		Praeger_object0_INP_flag_orbits_draw.png
 	open Praeger_object0_INP_flag_orbits_draw.png
@@ -24285,21 +24369,21 @@ geo_10_3_c:
 			-box_width 16 -bit_depth 24 \
 			-end \
 		-end_loop L
-	convert -frame 5 \
+	magick -frame 5 \
 		geo_10_3_object0_TDA_flag_orbits_draw.bmp \
 		geo_10_3_object1_TDA_flag_orbits_draw.bmp \
 		geo_10_3_object2_TDA_flag_orbits_draw.bmp \
 		geo_10_3_object3_TDA_flag_orbits_draw.bmp \
 		geo_10_3_object4_TDA_flag_orbits_draw.bmp \
 		+append a0.png
-	convert -frame 5 \
+	magick -frame 5 \
 		geo_10_3_object5_TDA_flag_orbits_draw.bmp \
 		geo_10_3_object6_TDA_flag_orbits_draw.bmp \
 		geo_10_3_object7_TDA_flag_orbits_draw.bmp \
 		geo_10_3_object8_TDA_flag_orbits_draw.bmp \
 		geo_10_3_object9_TDA_flag_orbits_draw.bmp \
 		+append a1.png
-	convert -frame 5 \
+	magick -frame 5 \
 		a0.png a1.png \
 		-append 10_3.png
 
@@ -24511,7 +24595,7 @@ geo_40_4_g4_c:
 			-secondary_input_csv_file 40_4_g4_object%L_TDA.csv \
 			-box_width 32 -bit_depth 24 \
 			-end \
-			-system "convert \
+			-system "magick \
 				40_4_g4_object%L_TDA_flag_orbits_draw.bmp \
 				40_4_g4_object%L_TDA_flag_orbits_draw.png" \
 		-end_loop L
@@ -24647,7 +24731,7 @@ geo_LSQ6_c:
 			-secondary_input_csv_file LSQ6_object%L_TDA.csv \
 			-box_width 32 -bit_depth 24 \
 			-end \
-			-system "convert \
+			-system "magick \
 				LSQ6_object%L_TDA_flag_orbits_draw.bmp \
 				LSQ6_object%L_TDA_flag_orbits_draw.png" \
 		-end_loop L

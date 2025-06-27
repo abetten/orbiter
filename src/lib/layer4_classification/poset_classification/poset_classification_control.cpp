@@ -26,6 +26,11 @@ static void poset_classification_control_early_test_function_cliques(
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level);
+static void poset_classification_control_early_test_function_mindist_nonlinear(
+		long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
+	void *data, int verbose_level);
 
 
 
@@ -82,6 +87,15 @@ poset_classification_control::poset_classification_control()
 	clique_test_CG = NULL;
 
 
+
+	f_test_mindist_nonlinear = false;
+	mindist_nonlinear = 0;
+	test_mindist_nonlinear_PC = NULL;
+	test_mindist_nonlinear_word1 = NULL;
+	test_mindist_nonlinear_word2 = NULL;
+
+
+
 	f_has_invariant_subset_for_root_node = false;
 	invariant_subset_for_root_node = NULL;
 	invariant_subset_for_root_node_size = 0;
@@ -101,6 +115,13 @@ poset_classification_control::poset_classification_control()
 poset_classification_control::~poset_classification_control()
 {
 	Record_death();
+
+	if (test_mindist_nonlinear_word1) {
+		FREE_int(test_mindist_nonlinear_word1);
+	}
+	if (test_mindist_nonlinear_word2) {
+		FREE_int(test_mindist_nonlinear_word2);
+	}
 
 }
 
@@ -253,7 +274,13 @@ int poset_classification_control::read_arguments(
 				cout << "-clique_test " << clique_test_graph << endl;
 			}
 		}
-
+		else if (ST.stringcmp(argv[i], "-test_mindist_nonlinear") == 0) {
+			f_test_mindist_nonlinear = true;
+			mindist_nonlinear = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-test_mindist_nonlinear " << mindist_nonlinear << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
 				cout << "-end" << endl;
@@ -338,6 +365,9 @@ void poset_classification_control::print()
 	if (f_clique_test) {
 		cout << "-clique_test " << clique_test_graph << endl;
 	}
+	if (f_test_mindist_nonlinear) {
+		cout << "-test_mindist_nonlinear " << mindist_nonlinear << endl;
+	}
 }
 
 
@@ -387,6 +417,57 @@ void poset_classification_control::prepare(
 
 	}
 
+
+	if (f_test_mindist_nonlinear) {
+		if (f_v) {
+			cout << "poset_classification_control::prepare -test_mindist_nonlinear d = " << mindist_nonlinear << endl;
+		}
+
+		int n;
+
+		test_mindist_nonlinear_PC = PC;
+		n = PC->get_A2()->degree;
+
+		test_mindist_nonlinear_word1 = NEW_int(n);
+		test_mindist_nonlinear_word2 = NEW_int(n);
+
+
+#if 0
+		int idx;
+
+		idx = other::orbiter_kernel_system::Orbiter->find_symbol(clique_test_graph);
+
+		if (idx == -1) {
+			cout << "poset_classification_control::prepare -clique_test cannot find symbol " << clique_test_graph << endl;
+			exit(1);
+		}
+
+		clique_test_CG = (combinatorics::graph_theory::colored_graph *) other::orbiter_kernel_system::Orbiter->get_object(idx);
+		if (f_v) {
+			cout << "poset_classification_control::prepare -clique_test "
+					"found a graph with " << clique_test_CG->nb_points << " vertices" << endl;
+			cout << "poset_classification_control::prepare -clique_test "
+					"PC->get_A2()->degree = " << PC->get_A2()->degree << endl;
+		}
+
+		if (PC->get_A2()->degree != clique_test_CG->nb_points) {
+			cout << "poset_classification_control::prepare -clique_test "
+					"found a graph with " << clique_test_CG->nb_points << " vertices" << endl;
+			cout << "poset_classification_control::prepare -clique_test "
+					"PC->get_A2()->degree = " << PC->get_A2()->degree << endl;
+			cout << "poset_classification_control::prepare -clique_test degree of group does not match size of graph" << endl;
+			exit(1);
+		}
+#endif
+
+		PC->get_poset()->add_testing_without_group(
+				poset_classification_control_early_test_function_mindist_nonlinear,
+					this /* void *data */,
+					verbose_level);
+
+	}
+
+
 	if (f_v) {
 		cout << "poset_classification_control::prepare done" << endl;
 	}
@@ -425,6 +506,102 @@ void poset_classification_control::early_test_func_for_clique_search(
 	}
 }
 
+
+
+
+void poset_classification_control::early_test_func_for_mindist_nonlinear(
+	long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "poset_classification_control::early_test_func_for_mindist_nonlinear" << endl;
+	}
+
+
+	int d_min = mindist_nonlinear;
+
+	if (f_v) {
+		cout << "poset_classification_control::early_test_func_for_mindist_nonlinear d_min = " << d_min << endl;
+	}
+
+
+	long int j, a, pt;
+
+	if (f_v) {
+		cout << "colored_graph_cliques::early_test_func_for_clique_search "
+				"checking set ";
+		Lint_vec_print(cout, S, len);
+		cout << endl;
+		cout << "candidate set of size "
+				<< nb_candidates << ":" << endl;
+		Lint_vec_print(cout, candidates, nb_candidates);
+		cout << endl;
+	}
+	if (len == 0) {
+		nb_good_candidates = nb_candidates;
+		Lint_vec_copy(candidates, good_candidates, nb_candidates);
+		return;
+	}
+
+	geometry::other_geometry::geometry_global Gg;
+	combinatorics::coding_theory::coding_theory_domain Code;
+
+
+	int n;
+	algebra::field_theory::finite_field *F;
+	int q;
+	int d;
+
+
+	F = test_mindist_nonlinear_PC->get_A2()->matrix_group_finite_field();
+
+	n = test_mindist_nonlinear_PC->get_A2()->degree;
+	q = F->q;
+	pt = S[len - 1];
+
+	Gg.AG_element_unrank(q, test_mindist_nonlinear_word2, 1, n, pt);
+
+	nb_good_candidates = 0;
+	for (j = 0; j < nb_candidates; j++) {
+		a = candidates[j];
+		Gg.AG_element_unrank(q, test_mindist_nonlinear_word1, 1, n, a);
+
+
+		d = Code.Hamming_distance(
+				test_mindist_nonlinear_word1, test_mindist_nonlinear_word2, n);
+
+		if (d >= d_min) {
+			good_candidates[nb_good_candidates++] = a;
+		}
+	}
+
+
+
+#if 0
+	if (!f_clique_test) {
+		cout << "poset_classification_control::early_test_func_for_mindist_nonlinear !f_clique_test" << endl;
+		exit(1);
+	}
+	if (clique_test_CG == NULL) {
+		cout << "poset_classification_control::early_test_func_for_mindist_nonlinear clique_test_CG == NULL" << endl;
+		exit(1);
+	}
+
+	clique_test_CG->Colored_graph_cliques->early_test_func_for_clique_search(
+			S, len,
+			candidates, nb_candidates,
+			good_candidates, nb_good_candidates,
+			verbose_level);
+#endif
+
+	if (f_v) {
+		cout << "poset_classification_control::early_test_func_for_mindist_nonlinear done" << endl;
+	}
+}
 
 
 void poset_classification_control::init_root_node_invariant_subset(
@@ -498,7 +675,8 @@ static void poset_classification_control_early_test_function_cliques(
 		cout << endl;
 	}
 
-	Control->early_test_func_for_clique_search(S, len,
+	Control->early_test_func_for_clique_search(
+			S, len,
 		candidates, nb_candidates,
 		good_candidates, nb_good_candidates,
 		verbose_level - 2);
@@ -506,6 +684,33 @@ static void poset_classification_control_early_test_function_cliques(
 
 	if (f_v) {
 		cout << "poset_classification_control_early_test_function_cliques done" << endl;
+	}
+}
+
+static void poset_classification_control_early_test_function_mindist_nonlinear(
+		long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
+	void *data, int verbose_level)
+{
+	poset_classification_control *Control = (poset_classification_control *) data;
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "poset_classification_control_early_test_function_mindist_nonlinear for set ";
+		Lint_vec_print(cout, S, len);
+		cout << endl;
+	}
+
+	Control->early_test_func_for_mindist_nonlinear(
+			S, len,
+		candidates, nb_candidates,
+		good_candidates, nb_good_candidates,
+		verbose_level - 2);
+
+
+	if (f_v) {
+		cout << "poset_classification_control_early_test_function_mindist_nonlinear done" << endl;
 	}
 }
 

@@ -375,6 +375,66 @@ void coding_theoretic_activity::perform_activity(
 
 	}
 
+	else if (Descr->f_all_distances) {
+
+		if (f_v) {
+			cout << "coding_theoretic_activity::perform_activity "
+					"f_all_distances" << endl;
+		}
+		if (!f_has_code) {
+			cout << "coding_theoretic_activity::perform_activity "
+					"f_export_codewords needs a code" << endl;
+			exit(1);
+		}
+
+		string fname;
+
+
+		fname = Code->label_txt + "_all_distances.csv";
+
+		if (f_v) {
+			cout << "coding_theoretic_activity::perform_activity "
+					"before Code->all_pairwise_distances" << endl;
+		}
+		Code->all_pairwise_distances(fname, verbose_level);
+		if (f_v) {
+			cout << "coding_theoretic_activity::perform_activity "
+					"after Code->all_pairwise_distances" << endl;
+		}
+
+	}
+
+
+	else if (Descr->f_all_external_distances) {
+
+		if (f_v) {
+			cout << "coding_theoretic_activity::perform_activity "
+					"f_all_external_distances" << endl;
+		}
+		if (!f_has_code) {
+			cout << "coding_theoretic_activity::perform_activity "
+					"f_export_codewords needs a code" << endl;
+			exit(1);
+		}
+
+		string fname;
+
+
+		fname = Code->label_txt + "_all_external_distances.csv";
+
+		if (f_v) {
+			cout << "coding_theoretic_activity::perform_activity "
+					"before Code->all_external_distances" << endl;
+		}
+		Code->all_external_distances(fname, verbose_level);
+		if (f_v) {
+			cout << "coding_theoretic_activity::perform_activity "
+					"after Code->all_external_distances" << endl;
+		}
+
+	}
+
+
 	else if (Descr->f_export_codewords_long) {
 
 		if (f_v) {

@@ -30,6 +30,8 @@ create_code::create_code()
 	f_field = false;
 	F = NULL;
 
+	f_nonlinear = false;
+
 	f_has_generator_matrix = false;
 	genma = NULL;
 
@@ -647,6 +649,156 @@ void create_code::init(
 			cout << "create_code::init f_long_code done" << endl;
 		}
 	}
+	else if (description->f_nonlinear_code) {
+		if (f_v) {
+			cout << "create_code::init f_nonlinear_code" << endl;
+		}
+
+		if (!f_field) {
+			cout << "please use option -field "
+					"to specify the field of linearity" << endl;
+			exit(1);
+		}
+
+
+		long int *v;
+		int sz;
+
+
+		Get_lint_vector_from_label(
+				description->nonlinear_code_generators,
+				v, sz, verbose_level);
+
+		int i;
+		int nb_rows, nb_cols;
+		geometry::other_geometry::geometry_global Gg;
+
+		nb_rows = sz;
+		nb_cols = description->nonlinear_code_n;
+		genma = NEW_int(nb_rows * nb_cols);
+		Int_vec_zero(genma, nb_rows * nb_cols);
+
+		if (f_v) {
+			cout << "create_code::init nb_rows=" << nb_rows
+					<< " nb_cols=" << nb_cols << endl;
+		}
+
+		for (i = 0; i < nb_rows; i++) {
+
+			Gg.AG_element_unrank(F->q, genma + i * nb_cols, 1, nb_cols, v[i]);
+
+			if (f_v) {
+				cout << "create_code::init nonlinear_code row " << i << " v=";
+				Lint_vec_print(cout, v, sz);
+				cout << endl;
+			}
+
+
+		}
+
+		FREE_lint(v);
+
+		if (f_v) {
+			cout << "create_code::init genma:" << endl;
+			Int_matrix_print(genma, nb_rows, nb_cols);
+		}
+
+		f_nonlinear = true;
+		f_has_generator_matrix = true;
+
+		n = nb_cols;
+		k = nb_rows;
+		nmk = 0;
+
+
+		label_txt = "nonlinear_code_n" + std::to_string(n)
+				+ "_k" + std::to_string(k);
+
+		label_tex = "nonlinear\\_code\\_n" + std::to_string(n)
+				+ "\\_k" + std::to_string(k);
+
+
+		if (f_v) {
+			cout << "create_code::init f_nonlinear_code done" << endl;
+		}
+	}
+
+	else if (description->f_nonlinear_code_long) {
+		if (f_v) {
+			cout << "create_code::init f_nonlinear_code_long" << endl;
+		}
+
+		if (!f_field) {
+			cout << "please use option -field "
+					"to specify the field of linearity" << endl;
+			exit(1);
+		}
+
+
+		int i;
+		int nb_rows, nb_cols;
+		geometry::other_geometry::geometry_global Gg;
+
+		nb_rows = description->nonlinear_code_long_generators.size();
+		nb_cols = description->nonlinear_code_long_n;
+		genma = NEW_int(nb_rows * nb_cols);
+		Int_vec_zero(genma, nb_rows * nb_cols);
+
+		if (f_v) {
+			cout << "create_code::init nb_rows=" << nb_rows
+					<< " nb_cols=" << nb_cols << endl;
+		}
+
+		for (i = 0; i < nb_rows; i++) {
+			long int *v;
+			int sz;
+			int h;
+
+
+			Get_lint_vector_from_label(
+					description->nonlinear_code_long_generators[i],
+					v, sz, verbose_level);
+
+			if (f_v) {
+				cout << "create_code::init nonlinear_code_long row " << i << " v=";
+				Lint_vec_print(cout, v, sz);
+				cout << endl;
+			}
+
+			for (h = 0; h < sz; h++) {
+				genma[i * nb_cols + v[h]] = 1;
+			}
+
+			FREE_lint(v);
+
+			//Gg.AG_element_unrank(F->q, genma + i * nb_cols, 1, nb_cols, v[i]);
+		}
+
+		if (f_v) {
+			cout << "create_code::init genma:" << endl;
+			Int_matrix_print(genma, nb_rows, nb_cols);
+		}
+
+		f_nonlinear = true;
+		f_has_generator_matrix = true;
+
+		n = nb_cols;
+		k = nb_rows;
+		nmk = 0;
+
+
+		label_txt = "nonlinear_code_n" + std::to_string(n)
+				+ "_k" + std::to_string(k);
+
+		label_tex = "nonlinear\\_code\\_n" + std::to_string(n)
+				+ "\\_k" + std::to_string(k);
+
+
+		if (f_v) {
+			cout << "create_code::init f_nonlinear_code_long done" << endl;
+		}
+	}
+
 	else if (description->f_ttpA) {
 		if (f_v) {
 			cout << "create_code::init f_ttpA" << endl;
@@ -739,6 +891,7 @@ void create_code::init(
 			cout << "Too big to print." << endl;
 		}
 
+		cout << "f_nonlinear=" << f_nonlinear << endl;
 		cout << "n=" << n << endl;
 		cout << "k=" << k << endl;
 		cout << "d=" << d << endl;
@@ -759,6 +912,11 @@ void create_code::dual_code(int verbose_level)
 
 	if (f_v) {
 		cout << "create_code::dual_code" << endl;
+	}
+
+	if (f_nonlinear) {
+		cout << "create_code::dual_code f_nonlinear is true" << endl;
+		exit(1);
 	}
 
 	int k1, nmk1;
@@ -805,6 +963,11 @@ void create_code::export_magma(
 		cout << "create_code::export_magma n=" << n << " k=" << k << endl;
 	}
 
+	if (f_nonlinear) {
+		cout << "create_code::export_magma f_nonlinear is true" << endl;
+		exit(1);
+	}
+
 	if (!f_has_generator_matrix) {
 		cout << "create_code::export_magma "
 				"generator matrix is not available" << endl;
@@ -843,6 +1006,12 @@ void create_code::create_genma_from_checkma(
 		cout << "create_code::create_genma_from_checkma "
 				"n=" << n << " nmk=" << nmk << endl;
 	}
+
+	if (f_nonlinear) {
+		cout << "create_code::create_genma_from_checkma f_nonlinear is true" << endl;
+		exit(1);
+	}
+
 	int *M;
 	int rk;
 
@@ -899,6 +1068,12 @@ void create_code::create_checkma_from_genma(
 		cout << "create_code::create_checkma_from_genma "
 				"n=" << n << " k=" << k << endl;
 	}
+
+	if (f_nonlinear) {
+		cout << "create_code::create_checkma_from_genma f_nonlinear is true" << endl;
+		exit(1);
+	}
+
 	int *M;
 	int rk;
 
@@ -962,28 +1137,23 @@ void create_code::export_codewords(
 		exit(1);
 	}
 
-	algebra::number_theory::number_theory_domain NT;
-	combinatorics::coding_theory::coding_theory_domain Code;
 	long int *codewords;
+
 	long int N;
 
-	N = NT.i_power_j(2, k);
-
-	codewords = NEW_lint(N);
 
 	if (f_v) {
 		cout << "create_code::export_codewords "
-				"before Code.codewords_affine" << endl;
+				"before make_codewords" << endl;
 	}
-	Code.codewords_affine(F, n, k,
-			genma, // [k * n]
-			codewords, // q^k
+	make_codewords(
+			N,
+			codewords,
 			verbose_level);
 	if (f_v) {
 		cout << "create_code::export_codewords "
-				"after Code.codewords_affine" << endl;
+				"after make_codewords" << endl;
 	}
-
 
 
 	if (f_v) {
@@ -1006,6 +1176,281 @@ void create_code::export_codewords(
 		cout << "create_code::export_codewords done" << endl;
 	}
 
+}
+
+
+void create_code::all_pairwise_distances(
+		std::string &fname, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "create_code::all_pairwise_distances" << endl;
+	}
+
+	if (!f_has_generator_matrix) {
+		cout << "create_code::all_pairwise_distances "
+				"generator matrix is not available" << endl;
+		exit(1);
+	}
+
+	long int *codewords;
+
+	long int N;
+
+
+	if (f_v) {
+		cout << "create_code::all_pairwise_distances "
+				"before make_codewords" << endl;
+	}
+	make_codewords(
+			N,
+			codewords,
+			verbose_level);
+	if (f_v) {
+		cout << "create_code::all_pairwise_distances "
+				"after make_codewords" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "Codewords : ";
+		Lint_vec_print_fully(cout, codewords, N);
+		cout << endl;
+	}
+
+	geometry::other_geometry::geometry_global Gg;
+	combinatorics::coding_theory::coding_theory_domain Code;
+
+	int *Distances;
+	int i, j, d;
+
+	int *word1;
+	int *word2;
+
+	word1 = NEW_int(n);
+	word2 = NEW_int(n);
+	Distances = NEW_int(n * n);
+
+
+	for (i = 0; i < N; i++) {
+
+		Gg.AG_element_unrank(F->q, word1, 1, n, codewords[i]);
+
+		for (j = 0; j < N; j++) {
+
+			Gg.AG_element_unrank(F->q, word2, 1, n, codewords[j]);
+
+			d = Code.Hamming_distance(
+					word1, word2, n);
+
+			Distances[i * N + j] = d;
+		}
+	}
+
+	other::orbiter_kernel_system::file_io Fio;
+
+	Fio.Csv_file_support->int_matrix_write_csv(
+			fname, Distances, N, N);
+
+	if (f_v) {
+		cout << "written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+
+	if (f_v) {
+		cout << "create_code::all_pairwise_distances done" << endl;
+	}
+
+}
+
+
+void create_code::all_external_distances(
+		std::string &fname, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "create_code::all_external_distances" << endl;
+	}
+
+	if (!f_has_generator_matrix) {
+		cout << "create_code::all_external_distances "
+				"generator matrix is not available" << endl;
+		exit(1);
+	}
+
+	long int *codewords;
+
+	long int N;
+
+
+	if (f_v) {
+		cout << "create_code::all_external_distances "
+				"before make_codewords" << endl;
+	}
+	make_codewords(
+			N,
+			codewords,
+			verbose_level);
+	if (f_v) {
+		cout << "create_code::all_external_distances "
+				"after make_codewords" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "Codewords : ";
+		Lint_vec_print_fully(cout, codewords, N);
+		cout << endl;
+	}
+
+
+	combinatorics::other_combinatorics::combinatorics_domain Combinatorics_domain;
+
+	long int *complement;
+	int size_complement;
+	int universal_set_size;
+
+	universal_set_size = 1 << n;
+
+	complement = NEW_lint(universal_set_size);
+
+	Combinatorics_domain.set_complement_lint(
+			codewords, N,
+			complement, size_complement,
+			universal_set_size);
+
+	if (f_v) {
+		cout << "Complement : ";
+		Lint_vec_print_fully(cout, complement, size_complement);
+		cout << endl;
+	}
+
+
+	geometry::other_geometry::geometry_global Gg;
+	combinatorics::coding_theory::coding_theory_domain Code;
+
+	int *Distances;
+	int i, j, d, d_min;
+
+	int *word1;
+	int *word2;
+
+	word1 = NEW_int(n);
+	word2 = NEW_int(n);
+	Distances = NEW_int(size_complement);
+
+
+
+
+	for (j = 0; j < size_complement; j++) {
+
+		Gg.AG_element_unrank(F->q, word2, 1, n, complement[j]);
+
+		d_min = INT_MAX;
+
+		for (i = 0; i < N; i++) {
+
+			Gg.AG_element_unrank(F->q, word1, 1, n, codewords[i]);
+
+
+			d = Code.Hamming_distance(
+				word1, word2, n);
+
+			d_min = MINIMUM(d_min, d);
+
+		}
+		Distances[j] = d_min;
+	}
+
+	other::orbiter_kernel_system::file_io Fio;
+
+	Fio.Csv_file_support->int_matrix_write_csv(
+			fname, Distances, size_complement, 1);
+
+	if (f_v) {
+		cout << "written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+
+	if (f_v) {
+		cout << "create_code::all_external_distances done" << endl;
+	}
+
+}
+
+
+
+
+void create_code::make_codewords(
+		long int &N,
+		long int *&codewords,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "create_code::make_codewords" << endl;
+	}
+
+
+
+	if (f_nonlinear) {
+
+		if (f_v) {
+			cout << "create_code::make_codewords f_nonlinear is true" << endl;
+		}
+
+
+		N = k;
+
+		codewords = NEW_lint(N);
+
+		int h;
+		long int rk;
+		geometry::other_geometry::geometry_global Gg;
+
+		for (h = 0; h < N; h++) {
+
+
+			rk = Gg.AG_element_rank(F->q, genma + h * n, 1, n);
+
+			codewords[h] = rk;
+		}
+
+	}
+	else {
+
+		if (f_v) {
+			cout << "create_code::make_codewords f_nonlinear is false" << endl;
+		}
+
+		algebra::number_theory::number_theory_domain NT;
+		combinatorics::coding_theory::coding_theory_domain Code;
+
+		N = NT.i_power_j(2, k);
+
+		codewords = NEW_lint(N);
+
+		if (f_v) {
+			cout << "create_code::make_codewords "
+					"before Code.codewords_affine" << endl;
+		}
+		Code.codewords_affine(
+				F, n, k,
+				genma, // [k * n]
+				codewords, // q^k
+				verbose_level);
+		if (f_v) {
+			cout << "create_code::make_codewords "
+					"after Code.codewords_affine" << endl;
+		}
+	}
+
+	if (f_v) {
+		cout << "create_code::make_codewords done" << endl;
+	}
 }
 
 void create_code::export_codewords_long(
@@ -1032,7 +1477,8 @@ void create_code::export_codewords_long(
 		cout << "create_code::export_codewords_long "
 				"before Code.codewords_table" << endl;
 	}
-	Code.codewords_table(F, n, k,
+	Code.codewords_table(
+			F, n, k,
 			genma, // [k * n]
 			codewords, // q^k
 			N,
@@ -1078,6 +1524,12 @@ void create_code::export_codewords_by_weight(
 		cout << "create_code::export_codewords_by_weight" << endl;
 	}
 
+	if (f_nonlinear) {
+		cout << "create_code::export_codewords_by_weight f_nonlinear is true" << endl;
+		exit(1);
+	}
+
+
 	if (!f_has_generator_matrix) {
 		cout << "create_code::export_codewords_by_weight "
 				"generator matrix is not available" << endl;
@@ -1093,7 +1545,8 @@ void create_code::export_codewords_by_weight(
 		cout << "create_code::export_codewords_by_weight "
 				"before Code.make_codewords_sorted" << endl;
 	}
-	Code.make_codewords_sorted(F,
+	Code.make_codewords_sorted(
+				F,
 				n, k,
 				genma, // [k * n]
 				codewords, // q^k
@@ -1279,6 +1732,12 @@ void create_code::export_checkma(
 		cout << "create_code::export_checkma" << endl;
 	}
 
+	if (f_nonlinear) {
+		cout << "create_code::export_checkma f_nonlinear is true" << endl;
+		exit(1);
+	}
+
+
 	if (!f_has_check_matrix) {
 		cout << "create_code::export_checkma "
 				"check matrix is not available" << endl;
@@ -1308,6 +1767,11 @@ void create_code::export_checkma_as_projective_set(
 
 	if (f_v) {
 		cout << "create_code::export_checkma_as_projective_set" << endl;
+	}
+
+	if (f_nonlinear) {
+		cout << "create_code::export_checkma_as_projective_set f_nonlinear is true" << endl;
+		exit(1);
 	}
 
 	if (!f_has_check_matrix) {
@@ -1364,6 +1828,11 @@ void create_code::weight_enumerator(
 		cout << "create_code::weight_enumerator" << endl;
 	}
 
+	if (f_nonlinear) {
+		cout << "create_code::weight_enumerator f_nonlinear is true" << endl;
+		exit(1);
+	}
+
 	if (!f_has_generator_matrix) {
 		cout << "create_code::weight_enumerator "
 				"generator matrix is not available" << endl;
@@ -1403,6 +1872,11 @@ void create_code::fixed_code(
 
 	if (f_v) {
 		cout << "create_code::fixed_code n = " << n << endl;
+	}
+
+	if (f_nonlinear) {
+		cout << "create_code::fixed_code f_nonlinear is true" << endl;
+		exit(1);
 	}
 
 
@@ -1511,7 +1985,8 @@ void create_code::make_diagram(
 
 	Diagram->init(
 			label_txt,
-			Words, nb_words, n, verbose_level);
+			Words, nb_words, n,
+			verbose_level);
 
 	if (f_v) {
 		cout << "create_code::code_diagram "
@@ -1549,7 +2024,8 @@ void create_code::polynomial_representation_of_boolean_function(
 		cout << "create_code::code_diagram "
 				"before Codes.make_codewords_sorted" << endl;
 	}
-	Codes.make_codewords_sorted(F,
+	Codes.make_codewords_sorted(
+				F,
 				n, k,
 				genma, // [k * n]
 				Words, // q^k

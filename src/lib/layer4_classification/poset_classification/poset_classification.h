@@ -486,6 +486,13 @@ public:
 	combinatorics::graph_theory::colored_graph *clique_test_CG;
 
 
+	int f_test_mindist_nonlinear;
+	int mindist_nonlinear;
+	poset_classification *test_mindist_nonlinear_PC;
+	int *test_mindist_nonlinear_word1;
+	int *test_mindist_nonlinear_word2;
+
+
 
 
 	int f_has_invariant_subset_for_root_node;
@@ -512,6 +519,11 @@ public:
 	void prepare(
 			poset_classification *PC, int verbose_level);
 	void early_test_func_for_clique_search(
+		long int *S, int len,
+		long int *candidates, int nb_candidates,
+		long int *good_candidates, int &nb_good_candidates,
+		int verbose_level);
+	void early_test_func_for_mindist_nonlinear(
 		long int *S, int len,
 		long int *candidates, int nb_candidates,
 		long int *good_candidates, int &nb_good_candidates,

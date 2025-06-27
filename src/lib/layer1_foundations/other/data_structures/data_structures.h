@@ -941,6 +941,8 @@ public:
 			std::ostream &ost, int *v, int len);
 	void print_dense(
 			std::ostream &ost, int *v, int len);
+	void print_dense_bare(
+			std::ostream &ost, int *v, int len);
 	void print_Cpp(
 			std::ostream &ost, int *v, int len);
 	void print_GAP(

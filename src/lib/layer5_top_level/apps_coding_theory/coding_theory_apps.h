@@ -104,6 +104,10 @@ public:
 	int f_export_codewords;
 	std::string export_codewords_fname;
 
+	int f_all_distances;
+
+	int f_all_external_distances;
+
 	int f_export_codewords_long;
 	std::string export_codewords_long_fname;
 
@@ -344,7 +348,7 @@ public:
 // create_code_description.cpp
 // #############################################################################
 
-//! a description of a code using command line arguments
+//! a description of a linear code using command line arguments
 
 
 class create_code_description {
@@ -366,6 +370,14 @@ public:
 	int f_long_code;
 	int long_code_n;
 	std::vector<std::string> long_code_generators;
+
+	int f_nonlinear_code;
+	int nonlinear_code_n;
+	std::string nonlinear_code_generators;
+
+	int f_nonlinear_code_long;
+	int nonlinear_code_long_n;
+	std::vector<std::string> nonlinear_code_long_generators;
 
 	int f_projective_set;
 	int projective_set_nmk;
@@ -415,7 +427,7 @@ public:
 // #############################################################################
 
 
-//! creates a code from a description with create_code_description
+//! creates a linear code from a description with create_code_description
 
 
 class create_code {
@@ -428,6 +440,8 @@ public:
 
 	int f_field;
 	algebra::field_theory::finite_field *F;
+
+	int f_nonlinear;
 
 	int f_has_generator_matrix;
 	int *genma; // [k * n]
@@ -457,6 +471,14 @@ public:
 			int verbose_level);
 	void export_codewords(
 			std::string &fname, int verbose_level);
+	void all_pairwise_distances(
+			std::string &fname, int verbose_level);
+	void all_external_distances(
+			std::string &fname, int verbose_level);
+	void make_codewords(
+			long int &N,
+			long int *&codewords,
+			int verbose_level);
 	void export_codewords_long(
 			std::string &fname, int verbose_level);
 	void export_codewords_by_weight(

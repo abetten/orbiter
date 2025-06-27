@@ -35,6 +35,15 @@ create_code_description::create_code_description()
 	long_code_n = 0;
 	//long_code_generators;
 
+	f_nonlinear_code = false;
+	nonlinear_code_n = 0;
+	//std::string nonlinear_code_generators;
+
+	f_nonlinear_code_long = false;
+	nonlinear_code_long_n = 0;
+	//std::vector<std::string> nonlinear_code_long_generators;
+
+
 	f_projective_set = false;
 	projective_set_nmk = 0;
 	//std::string projective_set_set;
@@ -127,6 +136,33 @@ int create_code_description::read_arguments(
 				cout << "-long_code " << long_code_n << endl;
 				for (int h = 0; h < n; h++) {
 					cout << " " << long_code_generators[h] << endl;
+				}
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-nonlinear_code") == 0) {
+			f_nonlinear_code = true;
+			nonlinear_code_n = ST.strtoi(argv[++i]);
+			nonlinear_code_generators.assign(argv[++i]);
+			if (f_v) {
+				cout << "-nonlinear_code " << nonlinear_code_n << " " << nonlinear_code_generators << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-nonlinear_code_long") == 0) {
+			f_nonlinear_code_long = true;
+			nonlinear_code_long_n = ST.strtoi(argv[++i]);
+
+			int n, h;
+			n = ST.strtoi(argv[++i]);
+			for (h = 0; h < n; h++) {
+				string s;
+
+				s.assign(argv[++i]);
+				nonlinear_code_long_generators.push_back(s);
+			}
+			if (f_v) {
+				cout << "-nonlinear_code_long " << nonlinear_code_long_n << endl;
+				for (int h = 0; h < n; h++) {
+					cout << " " << nonlinear_code_long_generators[h] << endl;
 				}
 			}
 		}
@@ -243,6 +279,15 @@ void create_code_description::print()
 		cout << "-long_code " << long_code_n << endl;
 		for (int h = 0; h < long_code_n; h++) {
 			cout << " " << long_code_generators[h] << endl;
+		}
+	}
+	if (f_nonlinear_code) {
+		cout << "-nonlinear_code " << nonlinear_code_n << " " << nonlinear_code_generators << endl;
+	}
+	if (f_nonlinear_code_long) {
+		cout << "-nonlinear_code_long " << nonlinear_code_long_n << endl;
+		for (int h = 0; h < nonlinear_code_long_n; h++) {
+			cout << " " << nonlinear_code_long_generators[h] << endl;
 		}
 	}
 	if (f_projective_set) {

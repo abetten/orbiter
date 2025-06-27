@@ -17,7 +17,24 @@ using namespace orbiter;
 int main()
 {
 
-#if 1
+	int i, j;
+	int n = 7;
+	int *v;
+
+	orbiter::layer5_applications::user_interface::orbiter_top_level_session Top_level_session;
+	orbiter::layer5_applications::user_interface::The_Orbiter_top_level_session = &Top_level_session;
+	geometry::other_geometry::geometry_global Gg;
+
+	v = NEW_int(n);
+	for (i = 0; i < 128; i++) {
+		Gg.AG_element_unrank(2, v, 1, n, i);
+		cout << i << " : ";
+		other::orbiter_kernel_system::Orbiter->Int_vec->print_dense_bare(
+				cout, v, n);
+		cout << "\\\\" << endl;
+	}
+
+#if 0
 	int i, j;
 	for (i = 0; i < 32; i++) {
 		cout << "split_" << i << ":" << endl;

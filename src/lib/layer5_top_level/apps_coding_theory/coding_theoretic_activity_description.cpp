@@ -64,6 +64,10 @@ coding_theoretic_activity_description::coding_theoretic_activity_description()
 	f_export_codewords = false;
 	//std::string export_codewords_fname;
 
+	f_all_distances = false;
+
+	f_all_external_distances = false;
+
 	f_export_codewords_long = false;
 	//std::string export_codewords_long_fname;
 
@@ -302,6 +306,23 @@ int coding_theoretic_activity_description::read_arguments(
 					<< endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-all_distances") == 0) {
+			f_all_distances = true;
+			if (f_v) {
+				cout << "-all_distances "
+					<< endl;
+			}
+		}
+
+		else if (ST.stringcmp(argv[i], "-all_external_distances") == 0) {
+			f_all_external_distances = true;
+			if (f_v) {
+				cout << "-all_external_distances "
+					<< endl;
+			}
+		}
+
+
 		else if (ST.stringcmp(argv[i], "-export_codewords_long") == 0) {
 			f_export_codewords_long = true;
 			export_codewords_long_fname.assign(argv[++i]);
@@ -644,6 +665,14 @@ void coding_theoretic_activity_description::print()
 	if (f_export_codewords) {
 		cout << "-export_codewords "
 			<< " " << export_codewords_fname
+			<< endl;
+	}
+	if (f_all_distances) {
+		cout << "-all_distances "
+			<< endl;
+	}
+	if (f_all_external_distances) {
+		cout << "-all_external_distances "
 			<< endl;
 	}
 	if (f_export_codewords_long) {
