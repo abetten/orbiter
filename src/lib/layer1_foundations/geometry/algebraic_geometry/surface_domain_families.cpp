@@ -264,8 +264,18 @@ surface_object *surface_domain::create_surface_general_abcd(
 	std::string label_txt;
 	std::string label_tex;
 
-	label_txt = "F_a" + std::to_string(a) + "_b" + std::to_string(b) + "_c" + std::to_string(d) + "_d" + std::to_string(d);
-	label_tex = "F\\_a" + std::to_string(a) + "\\_b" + std::to_string(b) + "\\_c" + std::to_string(d) + "\\_d" + std::to_string(d);
+	std::string s_a;
+	std::string s_b;
+	std::string s_c;
+	std::string s_d;
+
+	s_a = std::to_string(a);
+	s_b = std::to_string(b);
+	s_c = std::to_string(c);
+	s_d = std::to_string(d);
+
+	label_txt = "F_a" + s_a + "_b" + s_b + "_c" + s_c + "_d" + s_d;
+	label_tex = "F\\_a" + s_a + "\\_b" + s_b + "\\_c" + s_c + "\\_d" + s_d;
 	surface_object *SO;
 
 	SO = NEW_OBJECT(surface_object);
@@ -274,7 +284,8 @@ surface_object *surface_domain::create_surface_general_abcd(
 		cout << "surface_domain::create_surface_general_abcd "
 				"before SO->init_equation" << endl;
 	}
-	SO->init_equation(this, coeff20,
+	SO->init_equation(
+			this, coeff20,
 			label_txt, label_tex,
 			verbose_level);
 	if (f_v) {

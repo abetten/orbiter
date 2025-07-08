@@ -62,6 +62,30 @@ surface_object::~surface_object()
 	}
 }
 
+void surface_object::init_variety_object(
+		surface_domain *Surf,
+		variety_object *Variety_object,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_object::init_variety_object" << endl;
+	}
+
+	surface_object::Surf = Surf;
+	F = Surf->F;
+	q = F->q;
+
+	surface_object::Variety_object = Variety_object;
+	surface_object::label_txt = Variety_object->label_txt;
+	surface_object::label_tex = Variety_object->label_tex;
+
+	if (f_v) {
+		cout << "surface_object::init_variety_object done" << endl;
+	}
+}
+
 void surface_object::init_equation_points_and_lines_only(
 		surface_domain *Surf, int *eqn,
 		std::string &label_txt,
@@ -1932,7 +1956,8 @@ void surface_object::print_nine_lines_latex(
 }
 
 #if 0
-void surface_object::compute_clebsch_maps(int verbose_level)
+void surface_object::compute_clebsch_maps(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j;
@@ -2344,7 +2369,8 @@ void surface_object::print_lines_tex(
 		std::ostream &ost)
 {
 
-	Surf->print_lines_tex(ost,
+	Surf->print_lines_tex(
+			ost,
 			Variety_object->Line_sets->Sets[0],
 			Variety_object->Line_sets->Set_size[0]);
 
@@ -2354,7 +2380,8 @@ void surface_object::print_one_line_tex(
 		std::ostream &ost, int idx)
 {
 
-	Surf->print_one_line_tex(ost,
+	Surf->print_one_line_tex(
+			ost,
 			Variety_object->Line_sets->Sets[0],
 			Variety_object->Line_sets->Set_size[0], idx);
 
@@ -2377,6 +2404,11 @@ void surface_object::print_double_sixes(
 void surface_object::Clebsch_map_up(
 		std::string &fname_base,
 		int line_1_idx, int line_2_idx, int verbose_level)
+// Computes the Clebsch map going up onto the surface.
+// The image point indices are written to file.
+// The domain of the map is PG(3,q).
+// So, each point of PG(3,q) is mapped onto the surface.
+// There is a closed set of points for which the map is undefined.
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2500,6 +2532,7 @@ void surface_object::Clebsch_map_up(
 		// The point is good:
 
 		// Compute the first plane in dual coordinates:
+
 		Int_vec_copy(Line_a, M, 2 * 4);
 		Int_vec_copy(v, M + 2 * 4, 4);
 		F->Linear_algebra->RREF_and_kernel(
@@ -2513,6 +2546,7 @@ void surface_object::Clebsch_map_up(
 		}
 
 		// Compute the second plane in dual coordinates:
+
 		Int_vec_copy(Line_b, M, 2 * 4);
 		Int_vec_copy(v, M + 2 * 4, 4);
 		F->Linear_algebra->RREF_and_kernel(
@@ -2524,6 +2558,9 @@ void surface_object::Clebsch_map_up(
 			Int_vec_print(cout, M + 3 * 4, 4);
 			cout << endl;
 		}
+
+		// Compute the transversal line:
+
 		if (F->Linear_algebra->RREF_and_kernel(
 				4, 2, Dual_planes, 0 /* verbose_level */) != 2) {
 			Image_pts[i] = -1;
@@ -2531,11 +2568,19 @@ void surface_object::Clebsch_map_up(
 		}
 		Int_vec_copy(Dual_planes + 2 * 4, Transversal_line, 8);
 
+		// Compute all points on the transversal line:
+
 		Surf->P->Subspaces->create_points_on_line_with_line_given(
 				Transversal_line, point_list, verbose_level - 2);
 
 		Image_pts[i] = -1;
 
+		// find the points on the transversal line which lie on the surface:
+		// There should be three of these points.
+
+
+
+		// at first, we count the number of such points (it should be three)
 		int cnt;
 
 
@@ -2573,16 +2618,25 @@ void surface_object::Clebsch_map_up(
 				continue;
 			}
 
+			// test if the point lies on line a:
+
 			if (Sorting.lint_vec_search(
 					Line_a_point_list, Surf->P->Subspaces->k,
 					pt, idx_ab, 0 /* verbose_level */)) {
 				f_lies_on_line_a = true;
 			}
+
+			// test if the point lies on line b:
+
 			if (Sorting.lint_vec_search(
 					Line_b_point_list, Surf->P->Subspaces->k,
 					pt, idx_ab, 0 /* verbose_level */)) {
 				f_lies_on_line_b = true;
 			}
+
+			// If the point does not lie one either line a or line b,
+			// then this must be the image point:
+
 			if (!f_lies_on_line_a && !f_lies_on_line_b) {
 				Image_pts[i] = pt;
 				break;
@@ -2988,7 +3042,30 @@ std::string surface_object::stringify_Lines()
 #endif
 }
 
+int surface_object::find_double_point(
+		int line1, int line2, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
 
+	if (f_v) {
+		cout << "surface_object::find_double_point" << endl;
+	}
+	long int pt;
+	int idx;
+
+	pt = Surf->compute_double_point(
+			Variety_object->Line_sets->Sets[0],
+			Variety_object->Line_sets->Set_size[0],
+			line1, line2,
+			verbose_level - 2);
+	if (!find_point(
+			pt, idx)) {
+		cout << "surface_object::find_double_point cannot find point" << endl;
+		exit(1);
+	}
+	return idx;
+
+}
 
 
 }}}}

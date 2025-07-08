@@ -1078,18 +1078,26 @@ void design_create::init(
 		long int *Blocks;
 		int orbit_length;
 
+		poset_classification::poset_classification_global PCG;
+
+		PCG.init(
+				PC,
+				verbose_level);
+
+
+
 		if (f_v) {
 			cout << "design_create::init "
-					"before PC->get_whole_orbit" << endl;
+					"before PCG.get_whole_orbit" << endl;
 		}
 
-		PC->get_whole_orbit(
+		PCG.get_whole_orbit(
 				Design_object->k, local_idx,
 			Blocks, orbit_length, verbose_level - 2);
 
 		if (f_v) {
 			cout << "design_create::init "
-					"after PC->get_whole_orbit" << endl;
+					"after PCG.get_whole_orbit" << endl;
 		}
 
 		if (f_v) {

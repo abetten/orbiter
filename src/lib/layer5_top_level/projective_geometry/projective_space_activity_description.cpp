@@ -258,9 +258,9 @@ projective_space_activity_description::projective_space_activity_description()
 	f_classify_surfaces_with_double_sixes = false;
 	//std::string classify_surfaces_with_double_sixes_label;
 	//std::string classify_surfaces_with_double_sixes_control_label;
-#endif
 
 	f_recognize_surfaces = false;
+#endif
 
 	f_classify_surfaces_through_arcs_and_two_lines = false;
 	//std::string classify_surfaces_through_arcs_and_trihedral_pairs_draw_options_label;
@@ -278,13 +278,14 @@ projective_space_activity_description::projective_space_activity_description()
 	f_control_six_arcs = false;
 	//std::string &Control_six_arcs_label;
 
+#if 0
 	f_six_arcs_not_on_conic = false;
 	f_filter_by_nb_Eckardt_points = false;
 	nb_Eckardt_points = 0;
+#endif
 
-
-	f_classify_arcs = false;
-	Arc_generator_description = NULL;
+	//f_classify_arcs = false;
+	//Arc_generator_description = NULL;
 
 	//f_classify_cubic_curves = false;
 
@@ -994,7 +995,6 @@ int projective_space_activity_description::read_arguments(
 						<< " " << classify_surfaces_with_double_sixes_control_label << endl;
 			}
 		}
-#endif
 
 
 		else if (ST.stringcmp(argv[i], "-recognize_surfaces") == 0) {
@@ -1003,6 +1003,7 @@ int projective_space_activity_description::read_arguments(
 				cout << "-recognize_surfaces " << endl;
 			}
 		}
+#endif
 
 		else if (ST.stringcmp(argv[i], "-classify_surfaces_through_arcs_and_two_lines") == 0) {
 			f_classify_surfaces_through_arcs_and_two_lines = true;
@@ -1069,6 +1070,7 @@ int projective_space_activity_description::read_arguments(
 			}
 		}
 
+#if 0
 		else if (ST.stringcmp(argv[i], "-six_arcs_not_on_conic") == 0) {
 			f_six_arcs_not_on_conic = true;
 			if (f_v) {
@@ -1083,6 +1085,8 @@ int projective_space_activity_description::read_arguments(
 				cout << "-filter_by_nb_Eckardt_points " << nb_Eckardt_points << endl;
 			}
 		}
+#endif
+#if 0
 		else if (ST.stringcmp(argv[i], "-classify_arcs") == 0) {
 			f_classify_arcs = true;
 			Arc_generator_description =
@@ -1102,6 +1106,7 @@ int projective_space_activity_description::read_arguments(
 				}
 			}
 		}
+#endif
 #if 0
 		// cubic curves
 		else if (ST.stringcmp(argv[i], "-classify_cubic_curves") == 0) {
@@ -1493,11 +1498,11 @@ void projective_space_activity_description::print()
 				<< classify_surfaces_with_double_sixes_label
 				<< " " << classify_surfaces_with_double_sixes_control_label << endl;
 	}
-#endif
 
 	if (f_recognize_surfaces) {
 		cout << "-recognize_surfaces " << endl;
 	}
+#endif
 
 	if (f_classify_surfaces_through_arcs_and_two_lines) {
 		cout << "-classify_surfaces_through_arcs_and_two_lines " << endl;
@@ -1520,6 +1525,7 @@ void projective_space_activity_description::print()
 	if (f_control_six_arcs) {
 		cout << "-control_six_arcs " << Control_six_arcs_label << endl;
 	}
+#if 0
 	if (f_six_arcs_not_on_conic) {
 		cout << "-six_arcs_not_on_conic" << endl;
 	}
@@ -1530,7 +1536,6 @@ void projective_space_activity_description::print()
 		cout << "-classify_arcs " << endl;
 		Arc_generator_description->print();
 	}
-#if 0
 	// cubic curves
 	if (f_classify_cubic_curves) {
 		cout << "-classify_cubic_curves" << endl;

@@ -261,8 +261,8 @@ public:
 	std::string classify_surfaces_with_double_sixes_control_label;
 #endif
 
-	// ToDo undocumented:
-	int f_recognize_surfaces;
+	// outdated:
+	//int f_recognize_surfaces;
 
 	int f_classify_surfaces_through_arcs_and_two_lines;
 
@@ -282,13 +282,15 @@ public:
 	int f_control_six_arcs;
 	std::string Control_six_arcs_label;
 
+#if 0
 	int f_six_arcs_not_on_conic;
 	int f_filter_by_nb_Eckardt_points;
 	int nb_Eckardt_points;
+#endif
 
-	int f_classify_arcs;
-	apps_geometry::arc_generator_description
-		*Arc_generator_description;
+	//int f_classify_arcs;
+	//apps_geometry::arc_generator_description
+	//	*Arc_generator_description;
 
 	//int f_classify_cubic_curves;
 
@@ -372,12 +374,12 @@ public:
 			projective_space_with_action *PA,
 			std::string &polarity_36,
 			int verbose_level);
+#if 0
 	void do_classify_arcs(
 			projective_space_with_action *PA,
 			apps_geometry::arc_generator_description
 				*Arc_generator_description,
 			int verbose_level);
-#if 0
 	void do_classify_cubic_curves(
 			projective_space_with_action *PA,
 			apps_geometry::arc_generator_description

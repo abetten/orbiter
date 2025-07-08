@@ -566,7 +566,8 @@ void poset_classification::post_processing(int actual_size, int verbose_level)
 
 void poset_classification::recognize(
 		std::string &set_to_recognize,
-		int h, int nb_to_recognize, int verbose_level)
+		int h, int nb_to_recognize,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

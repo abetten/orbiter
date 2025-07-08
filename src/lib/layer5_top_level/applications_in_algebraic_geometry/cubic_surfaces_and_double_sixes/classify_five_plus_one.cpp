@@ -245,7 +245,8 @@ void classify_five_plus_one::classify_partial_ovoids(
 		cout << "classify_five_plus_one::classify_partial_ovoids "
 				"before Five_plus_one->main" << endl;
 	}
-	Five_plus_one->main(t0,
+	Five_plus_one->main(
+			t0,
 		schreier_depth,
 		f_use_invariant_subset_if_available,
 		f_debug,
@@ -288,8 +289,11 @@ int classify_five_plus_one::line_to_neighbor(
 			line_rk, 0 /* verbose_level*/);
 
 	if (!Sorting.lint_vec_search(
-			Linear_complex->Neighbors, Linear_complex->nb_neighbors, point_rk,
-			idx, 0 /* verbose_level */)) {
+			Linear_complex->Neighbors,
+			Linear_complex->nb_neighbors,
+			point_rk,
+			idx,
+			0 /* verbose_level */)) {
 		cout << "classify_five_plus_one::line_to_neighbor line " << line_rk
 				<< " = point " << point_rk << " not found in Neighbors[]" << endl;
 		exit(1);
@@ -497,24 +501,28 @@ void classify_five_plus_one::report(
 	}
 	//ost << "\\section*{The groups}" << endl;
 	ost << "\\section*{The semilinear group}" << endl;
-	A->report(ost,
+	A->report(
+			ost,
 			A->f_has_sims,
 			A->Sims,
 			A->f_has_strong_generators,
 			A->Strong_gens,
-			draw_options, verbose_level);
+			draw_options,
+			verbose_level);
 	A->latex_all_points(ost);
 
 	if (f_v) {
 		cout << "classify_five_plus_one::report reporting orthogonal group" << endl;
 	}
 	ost << "\\section*{The orthogonal group}" << endl;
-	A2->report(ost,
+	A2->report(
+			ost,
 			A2->f_has_sims,
 			A2->Sims,
 			A2->f_has_strong_generators,
 			A2->Strong_gens,
-			draw_options, verbose_level);
+			draw_options,
+			verbose_level);
 	if (A2->degree < 100) {
 		A2->latex_all_points(ost);
 	}
@@ -523,12 +531,14 @@ void classify_five_plus_one::report(
 		cout << "classify_five_plus_one::report reporting line stabilizer" << endl;
 	}
 	ost << "\\section*{The group stabilizing the fixed line}" << endl;
-	A_on_neighbors->report(ost,
+	A_on_neighbors->report(
+			ost,
 			A_on_neighbors->f_has_sims,
 			A_on_neighbors->Sims,
 			A_on_neighbors->f_has_strong_generators,
 			A_on_neighbors->Strong_gens,
-			draw_options, verbose_level);
+			draw_options,
+			verbose_level);
 	A_on_neighbors->latex_all_points(ost);
 
 	ost << "{\\small\\arraycolsep=2pt" << endl;
@@ -539,7 +549,8 @@ void classify_five_plus_one::report(
 		cout << "classify_five_plus_one::report before Five_plus_one->report" << endl;
 	}
 	ost << "\\section*{The classification of five-plus-ones}" << endl;
-	Five_plus_one->report2(ost, Opt, verbose_level);
+	Five_plus_one->report2(
+			ost, Opt, verbose_level);
 	if (f_v) {
 		cout << "classify_five_plus_one::report after Five_plus_one->report" << endl;
 	}

@@ -11,11 +11,12 @@ MODULES = \
 	orbit_based_testing.o \
 	orbit_tracer.o \
 	poset_classification_activity_description.o \
-	poset_classification_activity_export_source_code.o \
 	poset_classification_activity.o \
 	poset_classification_classify.o \
 	poset_classification_control.o \
 	poset_classification_draw.o \
+	poset_classification_global_export_source_code.o \
+	poset_classification_global.o \
 	poset_classification_init.o \
 	poset_classification_io.o \
 	poset_classification_report_options.o \

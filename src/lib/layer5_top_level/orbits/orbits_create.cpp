@@ -53,6 +53,10 @@ orbits_create::orbits_create()
 	f_has_cubic_surfaces = false;
 	SCW = NULL;
 
+	f_has_arcs = false;
+	Arc_generator_description_for_arcs = NULL;
+	Arc_generator = NULL;
+
 	f_has_semifields = false;
 	Semifields = NULL;
 
@@ -681,6 +685,62 @@ void orbits_create::init(
 
 
 	}
+
+	if (Descr->f_on_arcs) {
+
+
+		if (f_v) {
+			cout << "orbits_create::init f_on_arcs" << endl;
+		}
+		if (f_v) {
+			cout << "orbits_create::init control = " << Descr->on_arcs_control << endl;
+		}
+
+
+		Arc_generator_description_for_arcs = Get_object_of_type_arc_generator_control(
+				Descr->on_arcs_control);
+
+
+		projective_geometry::projective_space_with_action *PA;
+
+		if (!Arc_generator_description_for_arcs->f_projective_space) {
+			cout << "Please use option -projective_space in arc_generator" << endl;
+			exit(1);
+		}
+
+		PA = Get_projective_space(Arc_generator_description_for_arcs->projective_space_label);
+
+
+		Arc_generator = NEW_OBJECT(apps_geometry::arc_generator);
+
+
+		if (f_v) {
+			cout << "orbits_create::init before Arc_generator->init" << endl;
+		}
+		Arc_generator->init(
+				Arc_generator_description_for_arcs,
+				PA,
+				PA->A->Strong_gens,
+				verbose_level);
+		if (f_v) {
+			cout << "orbits_create::init after Arc_generator->init" << endl;
+		}
+
+		if (f_v) {
+			cout << "orbits_create::init before Arc_generator->compute_starter" << endl;
+		}
+		Arc_generator->compute_starter(
+				verbose_level);
+		if (f_v) {
+			cout << "orbits_create::init after Arc_generator->compute_starter" << endl;
+		}
+
+		f_has_arcs = true;
+
+
+
+	}
+
 
 	if (Descr->f_classify_semifields) {
 		if (f_v) {

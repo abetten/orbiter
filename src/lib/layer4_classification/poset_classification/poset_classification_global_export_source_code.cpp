@@ -1,5 +1,5 @@
 /*
- * poset_classification_activity_export_source_code.cpp
+ * poset_classification_global_export_source_code.cpp
  *
  *  Created on: Nov 10, 2019
  *      Author: anton
@@ -20,7 +20,7 @@ namespace poset_classification {
 
 
 
-void poset_classification_activity::generate_source_code(
+void poset_classification_global::generate_source_code(
 		int level, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -36,7 +36,7 @@ void poset_classification_activity::generate_source_code(
 	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
-		cout << "poset_classification_activity::generate_source_code" << endl;
+		cout << "poset_classification_global::generate_source_code" << endl;
 	}
 
 	my_prefix = PC->get_control()->problem_label + "_level_" + std::to_string(level);
@@ -130,7 +130,7 @@ void poset_classification_activity::generate_source_code(
 
 			for (j = 0; j < stab_gens_len[iso_type]; j++) {
 				if (f_vv) {
-					cout << "poset_classification_activity::generate_source_code "
+					cout << "poset_classification_global::generate_source_code "
 							"before extract_strong_generators_in_order "
 							"poset_classification "
 							<< j << " / " << stab_gens_len[iso_type] << endl;
@@ -186,11 +186,11 @@ void poset_classification_activity::generate_source_code(
 	cout << "written file " << fname << " of size "
 			<< Fio.file_size(fname) << endl;
 	if (f_v) {
-		cout << "poset_classification_activity::generate_source_code done" << endl;
+		cout << "poset_classification_global::generate_source_code done" << endl;
 	}
 }
 
-void poset_classification_activity::generate_history(
+void poset_classification_global::generate_history(
 		int level, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -207,7 +207,7 @@ void poset_classification_activity::generate_history(
 	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
-		cout << "poset_classification_activity::generate_history" << endl;
+		cout << "poset_classification_global::generate_history" << endl;
 	}
 
 	my_prefix = PC->get_control()->problem_label + "_history_level_" + std::to_string(level);
@@ -243,7 +243,7 @@ void poset_classification_activity::generate_history(
 
 		for (lvl = 0; lvl <= level; lvl++) {
 
-			cout << "poset_classification_activity::generate_history "
+			cout << "poset_classification_global::generate_history "
 					"lvl = " << lvl << " / " << level << endl;
 			nb_iso = PC->nb_orbits_at_level(lvl);
 
@@ -314,7 +314,7 @@ void poset_classification_activity::generate_history(
 
 				if (f_progress) {
 					if ((iso_type % L100) == 0) {
-						cout << "poset_classification_activity::generate_history "
+						cout << "poset_classification_global::generate_history "
 								"first loop at " << iso_type / L100 << "%" << endl;
 					}
 				}
@@ -360,7 +360,7 @@ void poset_classification_activity::generate_history(
 
 						for (j = 0; j < stab_gens_len[iso_type]; j++) {
 							if (f_vv) {
-								cout << "poset_classification_activity::generate_source_code "
+								cout << "poset_classification_global::generate_history "
 										"before extract_strong_generators_in_order "
 										"poset_classification "
 										<< j << " / " << stab_gens_len[iso_type] << endl;
@@ -375,7 +375,7 @@ void poset_classification_activity::generate_history(
 
 					if (f_progress) {
 						if ((iso_type % L100) == 0) {
-							cout << "poset_classification_activity::generate_history "
+							cout << "poset_classification_global::generate_history "
 									"second loop at " << iso_type / L100 << "%" << endl;
 						}
 					}
@@ -726,7 +726,7 @@ void poset_classification_activity::generate_history(
 	cout << "written file " << fname << " of size "
 			<< Fio.file_size(fname) << endl;
 	if (f_v) {
-		cout << "poset_classification_activity::generate_history done" << endl;
+		cout << "poset_classification_global::generate_history done" << endl;
 	}
 }
 

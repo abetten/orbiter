@@ -65,6 +65,9 @@ public:
 	int Clebsch_map_up_single_point_line_2_idx;
 
 
+	int f_recognize_Fabcd;
+	std::string recognize_Fabcd_classification_of_arcs;
+
 	cubic_surface_activity_description();
 	~cubic_surface_activity_description();
 	int read_arguments(
@@ -95,7 +98,14 @@ public:
 				*Cubic_surface_activity_description,
 			surface_create *SC, int verbose_level);
 	void perform_activity(
+			other::orbiter_kernel_system::activity_output *&AO,
 			int verbose_level);
+	void recognize_Fabcd(
+			std::string &classification_of_arcs_label,
+			int &a, int &b, int &c, int &d,
+			other::orbiter_kernel_system::activity_output *&AO,
+			int verbose_level);
+
 };
 
 
@@ -455,11 +465,13 @@ public:
 	void do_study_surface(
 			algebra::field_theory::finite_field *F,
 			int nb, int verbose_level);
+#if 0
 	void do_recognize_surfaces(
 			projective_geometry::projective_space_with_action *PA,
 			std::string &Control_six_arcs_label,
 			int f_test_nb_Eckardt_points, int nb_E,
 			int verbose_level);
+#endif
 	void do_classify_surfaces_through_arcs_and_two_lines(
 			projective_geometry::projective_space_with_action *PA,
 			std::string &Control_six_arcs_label,

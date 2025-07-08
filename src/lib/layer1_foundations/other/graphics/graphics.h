@@ -601,6 +601,9 @@ public:
 		int argc, std::string *argv,
 		int verbose_level);
 	void print();
+	std::string stringify();
+		// stringifies all options except -embedded
+
 };
 
 

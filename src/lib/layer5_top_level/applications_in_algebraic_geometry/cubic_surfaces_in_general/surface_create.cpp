@@ -1034,9 +1034,11 @@ void surface_create::create_surface_general_abcd(
 	}
 	if (f_v) {
 		cout << "surface_create::create_surface_general_abcd "
-				"before Surf->create_surface_general_abcd a="
-				<< a << " b=" << b << " c="
-				<< c << " d=" << d
+				"before Surf->create_surface_general_abcd "
+				"a=" << a
+				<< " b=" << b
+				<< " c=" << c
+				<< " d=" << d
 				<< endl;
 	}
 

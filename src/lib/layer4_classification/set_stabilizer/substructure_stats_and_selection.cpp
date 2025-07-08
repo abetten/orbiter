@@ -98,19 +98,25 @@ void substructure_stats_and_selection::init(
 	substructure_stats_and_selection::Pts = Pts;
 	substructure_stats_and_selection::nb_pts = nb_pts;
 
+	poset_classification::poset_classification_global PCG;
+
+	PCG.init(
+			SubC->PC,
+			verbose_level);
+
 	if (f_v) {
 		cout << "substructure_stats_and_selection::init "
-				"before PC->trace_all_k_subsets_and_compute_frequencies" << endl;
+				"before PCG.trace_all_k_subsets_and_compute_frequencies" << endl;
 	}
 
-	SubC->PC->trace_all_k_subsets_and_compute_frequencies(
+	PCG.trace_all_k_subsets_and_compute_frequencies(
 			Pts, nb_pts, SubC->substructure_size, nCk,
 			isotype, orbit_frequencies, nb_orbits,
 			0 /*verbose_level*/);
 
 	if (f_v) {
 		cout << "substructure_stats_and_selection::init "
-				"after PC->trace_all_k_subsets_and_compute_frequencies" << endl;
+				"after PCG.trace_all_k_subsets_and_compute_frequencies" << endl;
 	}
 
 

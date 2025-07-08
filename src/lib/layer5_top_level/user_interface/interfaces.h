@@ -180,6 +180,9 @@ public:
 	void do_coding_theoretic_activity(
 			int verbose_level);
 	void do_cubic_surface_activity(
+			int &nb_output,
+			other::orbiter_kernel_system::orbiter_symbol_table_entry *&Output,
+			other::orbiter_kernel_system::activity_output *&AO,
 			int verbose_level);
 	void do_quartic_curve_activity(
 			int verbose_level);

@@ -366,56 +366,7 @@ public:
 	void perform_work(
 			int verbose_level);
 
-	void compute_Kramer_Mesner_matrix(
-			int t, int k,
-			int verbose_level);
-	void Plesken_matrix_up(
-			int depth,
-		int *&P, int &N, int verbose_level);
-	void Plesken_matrix_down(
-			int depth,
-		int *&P, int &N, int verbose_level);
-	void Plesken_submatrix_up(
-			int i, int j,
-		int *&Pij, int &N1, int &N2, int verbose_level);
-	void Plesken_submatrix_down(
-			int i, int j,
-		int *&Pij, int &N1, int &N2, int verbose_level);
-	int count_incidences_up(
-			int lvl1, int po1,
-		int lvl2, int po2, int verbose_level);
-	int count_incidences_down(
-			int lvl1,
-		int po1, int lvl2, int po2, int verbose_level);
-	void Asup_to_Ainf(
-			int t, int k,
-		long int *M_sup, long int *&M_inf,
-		int verbose_level);
-	void test_for_multi_edge_in_classification_graph(
-		int depth, int verbose_level);
-	void Kramer_Mesner_matrix_neighboring(
-			int level, long int *&M,
-			int &nb_rows, int &nb_cols, int verbose_level);
-	void Mtk_via_Mtr_Mrk(
-			int t, int r, int k,
-			long int *Mtr, long int *Mrk, long int *&Mtk,
-			int nb_r1, int nb_c1, int nb_r2, int nb_c2,
-			int &nb_r3, int &nb_c3,
-			int verbose_level);
-	// Computes $M_{tk}$ via a recursion formula:
-	// $M_{tk} = {{k - t} \choose {k - r}} \cdot M_{t,r} \cdot M_{r,k}$.
-	void Mtk_from_MM(
-			long int **pM,
-		int *Nb_rows, int *Nb_cols,
-		int t, int k,
-		long int *&Mtk, int &nb_r, int &nb_c,
-		int verbose_level);
 
-	// poset_classification_activity_export_source_code.cpp:
-	void generate_source_code(
-			int level, int verbose_level);
-	void generate_history(
-			int level, int verbose_level);
 
 
 
@@ -690,14 +641,6 @@ public:
 			int lvl);
 	double level_progress(
 			int lvl);
-	void count_automorphism_group_orders(
-			int lvl, int &nb_agos,
-			algebra::ring_theory::longinteger_object *&agos,
-			int *&multiplicities,
-		int verbose_level);
-	void compute_and_print_automorphism_group_orders(
-			int lvl,
-			std::ostream &ost);
 	void stabilizer_order(
 			int node, algebra::ring_theory::longinteger_object &go);
 	void orbit_length(
@@ -748,47 +691,6 @@ public:
 	long int coset_rank(
 			int depth, int orbit_idx, int *Elt,
 		int verbose_level);
-	void list_all_orbits_at_level(
-			int depth,
-		int f_has_print_function, 
-		void (*print_function)(std::ostream &ost,
-				int len, long int *S, void *data),
-		void *print_function_data, 
-		int f_show_orbit_decomposition, int f_show_stab, 
-		int f_save_stab, int f_show_whole_orbit);
-	void compute_integer_property_of_selected_list_of_orbits(
-		int depth, 
-		int nb_orbits, int *Orbit_idx, 
-		int (*compute_function)(
-				int len, long int *S, void *data),
-		void *compute_function_data,
-		int *&Data);
-	void list_selected_set_of_orbits_at_level(
-			int depth,
-		int nb_orbits, int *Orbit_idx, 
-		int f_has_print_function, 
-		void (*print_function)(std::ostream &ost,
-				int len, long int *S, void *data),
-		void *print_function_data, 
-		int f_show_orbit_decomposition, int f_show_stab, 
-		int f_save_stab, int f_show_whole_orbit);
-	void test_property(
-			int depth,
-		int (*test_property_function)(
-				int len, long int *S, void *data),
-		void *test_property_data, 
-		int &nb, int *&Orbit_idx);
-	void list_whole_orbit(
-			int depth, int orbit_idx,
-		int f_has_print_function, 
-		void (*print_function)(std::ostream &ost,
-				int len, long int *S, void *data),
-		void *print_function_data, 
-		int f_show_orbit_decomposition, int f_show_stab, 
-		int f_save_stab, int f_show_whole_orbit);
-	void get_whole_orbit(
-		int depth, int orbit_idx,
-		long int *&Orbit, int &orbit_length, int verbose_level);
 	void map_to_canonical_k_subset(
 			long int *the_set, int set_size,
 		int subset_size, int subset_rk, 
@@ -804,21 +706,6 @@ public:
 		int local_orbit_no, 
 		groups::strong_generators *&Strong_gens,
 		int verbose_level);
-	void find_interesting_k_subsets(
-			long int *the_set, int n, int k,
-		int *&interesting_sets, int &nb_interesting_sets, 
-		int &orbit_idx, int verbose_level);
-	void classify_k_subsets(
-			long int *the_set, int n, int k,
-			other::data_structures::tally *&C, int verbose_level);
-	void trace_all_k_subsets_and_compute_frequencies(
-			long int *the_set,
-			int n, int k, int &nCk,
-			int *&isotype, int *&orbit_frequencies, int &nb_orbits,
-			int verbose_level);
-	void trace_all_k_subsets(
-			long int *the_set, int n, int k,
-		int &nCk, int *&isotype, int verbose_level);
 	void get_orbit_representatives(
 			int level, int &nb_orbits,
 		long int *&Orbit_reps, int verbose_level);
@@ -1118,10 +1005,11 @@ public:
 			std::string &fname_base, int lvl);
 	void log_current_node(
 			std::ostream &f, int size);
-
+#if 0
 	void make_spreadsheet_of_orbit_reps(
 			other::data_structures::spreadsheet *&Sp,
 		int max_depth);
+#endif
 	void make_spreadsheet_of_level_info(
 			other::data_structures::spreadsheet *&Sp,
 		int max_depth, int verbose_level);
@@ -1181,7 +1069,8 @@ public:
 	void report_orbit(
 			int level, int orbit_at_level,
 			poset_classification_report_options *Opt,
-			std::ostream &ost, int verbose_level);
+			std::ostream &ost,
+			int verbose_level);
 
 	// poset_classification_trace.cpp:
 	int find_isomorphism(
@@ -1240,6 +1129,143 @@ const char *trace_result_as_text(
 int trace_result_is_no_result(
 		trace_result r);
 
+
+
+// #############################################################################
+// poset_classification_global.cpp
+// #############################################################################
+
+//! global functions regarding the poset classification algorithm
+
+
+class poset_classification_global {
+
+public:
+	poset_classification *PC;
+
+	poset_classification_global();
+	~poset_classification_global();
+	void init(
+			poset_classification *PC,
+			int verbose_level);
+	void count_automorphism_group_orders(
+		int lvl, int &nb_agos,
+		algebra::ring_theory::longinteger_object *&agos,
+		int *&multiplicities,
+		int verbose_level);
+	std::string compute_and_stringify_automorphism_group_orders(
+			int lvl,
+			int verbose_level);
+	void find_interesting_k_subsets(
+			long int *the_set, int n, int k,
+		int *&interesting_sets, int &nb_interesting_sets,
+		int &orbit_idx, int verbose_level);
+	void classify_k_subsets(
+			long int *the_set, int n, int k,
+			other::data_structures::tally *&C, int verbose_level);
+	void trace_all_k_subsets_and_compute_frequencies(
+			long int *the_set,
+			int n, int k, int &nCk,
+			int *&isotype, int *&orbit_frequencies, int &nb_orbits,
+			int verbose_level);
+	void trace_all_k_subsets(
+			long int *the_set, int n, int k,
+		int &nCk, int *&isotype, int verbose_level);
+	void list_all_orbits_at_level(
+			int depth,
+		int f_has_print_function,
+		void (*print_function)(std::ostream &ost,
+				int len, long int *S, void *data),
+		void *print_function_data,
+		int f_show_orbit_decomposition, int f_show_stab,
+		int f_save_stab, int f_show_whole_orbit);
+	void compute_integer_property_of_selected_list_of_orbits(
+		int depth,
+		int nb_orbits, int *Orbit_idx,
+		int (*compute_function)(
+				int len, long int *S, void *data),
+		void *compute_function_data,
+		int *&Data);
+	void list_selected_set_of_orbits_at_level(
+			int depth,
+		int nb_orbits, int *Orbit_idx,
+		int f_has_print_function,
+		void (*print_function)(std::ostream &ost,
+				int len, long int *S, void *data),
+		void *print_function_data,
+		int f_show_orbit_decomposition, int f_show_stab,
+		int f_save_stab, int f_show_whole_orbit);
+	void test_property(
+			int depth,
+		int (*test_property_function)(
+				int len, long int *S, void *data),
+		void *test_property_data,
+		int &nb, int *&Orbit_idx);
+	void list_whole_orbit(
+			int depth, int orbit_idx,
+		int f_has_print_function,
+		void (*print_function)(std::ostream &ost,
+				int len, long int *S, void *data),
+		void *print_function_data,
+		int f_show_orbit_decomposition, int f_show_stab,
+		int f_save_stab, int f_show_whole_orbit);
+	void get_whole_orbit(
+		int depth, int orbit_idx,
+		long int *&Orbit, int &orbit_length,
+		int verbose_level);
+	void compute_Kramer_Mesner_matrix(
+			int t, int k,
+			int verbose_level);
+	void Plesken_matrix_up(
+			int depth,
+		int *&P, int &N, int verbose_level);
+	void Plesken_matrix_down(
+			int depth,
+		int *&P, int &N, int verbose_level);
+	void Plesken_submatrix_up(
+			int i, int j,
+		int *&Pij, int &N1, int &N2, int verbose_level);
+	void Plesken_submatrix_down(
+			int i, int j,
+		int *&Pij, int &N1, int &N2, int verbose_level);
+	int count_incidences_up(
+			int lvl1, int po1,
+		int lvl2, int po2, int verbose_level);
+	int count_incidences_down(
+			int lvl1,
+		int po1, int lvl2, int po2, int verbose_level);
+	void Asup_to_Ainf(
+			int t, int k,
+		long int *M_sup, long int *&M_inf,
+		int verbose_level);
+	void test_for_multi_edge_in_classification_graph(
+		int depth, int verbose_level);
+	void Kramer_Mesner_matrix_neighboring(
+			int level, long int *&M,
+			int &nb_rows, int &nb_cols, int verbose_level);
+	void Mtk_via_Mtr_Mrk(
+			int t, int r, int k,
+			long int *Mtr, long int *Mrk, long int *&Mtk,
+			int nb_r1, int nb_c1, int nb_r2, int nb_c2,
+			int &nb_r3, int &nb_c3,
+			int verbose_level);
+	// Computes $M_{tk}$ via a recursion formula:
+	// $M_{tk} = {{k - t} \choose {k - r}} \cdot M_{t,r} \cdot M_{r,k}$.
+	void Mtk_from_MM(
+			long int **pM,
+		int *Nb_rows, int *Nb_cols,
+		int t, int k,
+		long int *&Mtk, int &nb_r, int &nb_c,
+		int verbose_level);
+
+	// poset_classification_global_export_source_code.cpp:
+	void generate_source_code(
+			int level, int verbose_level);
+	void generate_history(
+			int level, int verbose_level);
+
+
+};
 
 
 // #############################################################################
@@ -1458,6 +1484,14 @@ public:
 	void log_nodes_for_treefile(
 			int cur, int depth,
 			std::ostream &f, int f_recurse, int verbose_level);
+	void make_table_of_orbit_reps(
+			std::string *&Headings,
+			std::string *&Table,
+			int &nb_rows, int &nb_cols,
+			int level_min, int level_max,
+			int verbose_level);
+	void save_representatives_up_to_a_given_level_to_csv(
+			int lvl, int verbose_level);
 	void save_representatives_at_level_to_csv(
 			std::string &fname,
 			int lvl, int verbose_level);
@@ -2000,6 +2034,7 @@ public:
 		actions::action *A_factor_space,
 		induced_actions::action_on_factor_space *AF,
 		int lvl, int f_implicit_fusion, int verbose_level);
+
 };
 
 
@@ -2079,6 +2114,7 @@ public:
 			int k, int verbose_level);
 	void invoke_print_function(
 			std::ostream &ost, int sz, long int *set);
+
 };
 
 
@@ -2247,6 +2283,7 @@ public:
 		int lvl, int current_node, 
 		int &final_node, int &final_ex, 
 		int f_tolerant, int verbose_level);
+
 };
 
 

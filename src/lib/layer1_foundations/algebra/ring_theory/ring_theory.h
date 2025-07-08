@@ -169,6 +169,7 @@ public:
 			std::vector<std::string> *variables_txt,
 			std::vector<std::string> *variables_tex,
 			int verbose_level);
+	std::string get_label_txt();
 	void print();
 	void print_latex(
 			std::ostream &ost);

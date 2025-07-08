@@ -1595,6 +1595,10 @@ public:
 			int len, long int *S,
 			int *&System, int &nb_rows,
 			int verbose_level);
+	long int compute_double_point(
+			long int *Lines, int nb_lines,
+			int line1_idx, int line2_idx,
+			int verbose_level);
 	void compute_intersection_points(
 			int *Adj,
 		long int *Lines, int nb_lines,
@@ -1848,6 +1852,10 @@ public:
 
 	smooth_surface_object_properties *SmoothProperties;
 
+		// stuff for tritangent planes like:
+		// Tritangent_plane_rk[45]
+
+
 
 
 	int *Adj_line_intersection_graph;
@@ -1998,6 +2006,10 @@ public:
 
 	surface_object();
 	~surface_object();
+	void init_variety_object(
+			surface_domain *Surf,
+			variety_object *Variety_object,
+			int verbose_level);
 	void init_equation_points_and_lines_only(
 			surface_domain *Surf, int *eqn,
 			std::string &label_txt,
@@ -2053,6 +2065,8 @@ public:
 	std::string stringify_eqn();
 	std::string stringify_Pts();
 	std::string stringify_Lines();
+	int find_double_point(
+			int line1, int line2, int verbose_level);
 
 
 };

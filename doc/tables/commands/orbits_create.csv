@@ -14,6 +14,7 @@ ROW,C1,C2,C3
 1,"\verb'-on_one_polynomial' ","  R equation "," Consider the action of $G$ on polynomials of degree $d$ in $n$ variables. $G$ must be a matrix group. Here, the action must be linear on an $n$-dimensional space. "
 1,"\verb'-on_cubic_curves' ","  options "," Classify cubic curves by means of $(9,3)$-arcs. For valid options, see Tab.~\ref{tab:arcs}. "
 1,"\verb'-on_cubic_surfaces' ","  P control "," Classify cubic surfaces in the projective space P, using the given poset classification control options. "
+1,"\verb'-on_srcs' ","  P control "," Classify arcs in the projective space P, using the given arc classification control options. "
 1,"\verb'-classification_by_canonical_form' ","  description "," See Chapter~\ref{chapter:canonical:forms}. "
 1,"\verb'-override_generators' ","  generators "," Override the generators of the group. "
 END

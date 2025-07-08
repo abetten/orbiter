@@ -499,9 +499,15 @@ void tensor_classify::report(
 				long int *Orbit; // orbit_length * depth
 				int orbit_length;
 
+				poset_classification::poset_classification_global PCG;
+
+				PCG.init(
+						Gen,
+						verbose_level);
+
 				cout << "before get_whole_orbit orbit_idx=" << orbit_idx << endl;
 
-				Gen->get_whole_orbit(
+				PCG.get_whole_orbit(
 						poset_classify_depth, orbit_idx,
 						Orbit, orbit_length, verbose_level);
 

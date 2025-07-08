@@ -551,17 +551,32 @@ void quartic_curve_from_surface::map_surface_to_special_form(
 	int i;
 
 	quartic_curve_from_surface::pt_orbit = pt_orbit;
+
+	// Compute pt_B = (1,0,0,0):
+
 	v[0] = 1;
 	v[1] = 0;
 	v[2] = 0;
 	v[3] = 0;
 	pt_B = SOA->Surf->rank_point(v); // = 0
+
+
+	// compute pt_A,
+	// which is the rank of the point which represents the chosen point orbit.
+	// The point must not lie on any line.
+
 	fst = SOA->Orbits_on_points_not_on_lines->Forest->orbit_first[pt_orbit];
+
 	po_index = SOA->Orbits_on_points_not_on_lines->Forest->orbit_len[pt_orbit];
+
 	i = SOA->Orbits_on_points_not_on_lines->Forest->orbit[fst];
+
 	pt_A = SOA->SO->SOP->Pts_not_on_lines[i];
 
 	SOA->Surf->unrank_point(pt_A_coeff, pt_A);
+
+
+	// Find a transformation which maps pt_A to pt_B:
 
 	if (f_v) {
 		cout << "quartic_curve_from_surface::map_surface_to_special_form "
@@ -580,6 +595,13 @@ void quartic_curve_from_surface::map_surface_to_special_form(
 				transporter, cout);
 	}
 
+
+	// Transform the equation:
+
+	if (f_v) {
+		cout << "quartic_curve_from_surface::map_surface_to_special_form "
+				"before SOA->Surf_A->AonHPD_3_4->compute_image_int_low_level" << endl;
+	}
 	SOA->Surf_A->AonHPD_3_4->compute_image_int_low_level(
 			transporter,
 			SOA->SO->Variety_object->eqn /*int *input*/,
@@ -594,6 +616,9 @@ void quartic_curve_from_surface::map_surface_to_special_form(
 		cout << endl;
 	}
 
+	// compute the gradient of the nice equation:
+	// The gradient is needed in order to compute the special bitangent.
+
 	if (f_v) {
 		cout << "quartic_curve_from_surface::map_surface_to_special_form "
 				"before SOA->Surf->PolynomialDomains->compute_gradient" << endl;
@@ -606,6 +631,7 @@ void quartic_curve_from_surface::map_surface_to_special_form(
 	}
 
 
+	// map the lines to Lines_nice[]:
 
 	if (f_v) {
 		cout << "quartic_curve_from_surface::map_surface_to_special_form "
@@ -623,8 +649,15 @@ void quartic_curve_from_surface::map_surface_to_special_form(
 		}
 
 		Lines_nice[i] = SOA->Surf_A->A2->Group_element->element_image_of(
-				SOA->SO->Variety_object->Line_sets->Sets[0][i], transporter, 0);
+				SOA->SO->Variety_object->Line_sets->Sets[0][i],
+				transporter,
+				0);
 	}
+
+
+	// compute the 28 bitangents.
+	// First, the 27 bitangents arising from the lines of the surface.
+	// Then the bitangent arising from the tangent plane of the point from which we project.
 
 	if (f_v) {
 		cout << "quartic_curve_from_surface::map_surface_to_special_form "
@@ -633,6 +666,7 @@ void quartic_curve_from_surface::map_surface_to_special_form(
 
 	nb_bitangents = nb_lines + 1;
 	Bitangents = NEW_lint(nb_lines + 1);
+
 	for (i = 0; i < nb_lines; i++) {
 
 		if (f_v) {

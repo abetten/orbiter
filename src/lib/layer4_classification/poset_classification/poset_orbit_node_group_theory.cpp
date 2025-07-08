@@ -225,11 +225,13 @@ void poset_orbit_node::init_extension_node_prepare_G(
 
 
 	if (f_v) {
-		cout << "poset_orbit_node::init_extension_node_prepare_G before Op->get_stabilizer" << endl;
+		cout << "poset_orbit_node::init_extension_node_prepare_G "
+				"before Op->get_stabilizer" << endl;
 	}
 	Op->get_stabilizer(PC, G, go_G, 0 /*verbose_level */);
 	if (f_v) {
-		cout << "poset_orbit_node::init_extension_node_prepare_G after Op->get_stabilizer" << endl;
+		cout << "poset_orbit_node::init_extension_node_prepare_G "
+				"after Op->get_stabilizer" << endl;
 	}
 
 #if 0

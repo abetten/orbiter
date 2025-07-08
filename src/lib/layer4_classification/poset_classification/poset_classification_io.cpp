@@ -129,7 +129,22 @@ void poset_classification::print_orbit_numbers(
 	}
 	cout << "total: " << Poo->first_node_at_level(depth + 1) << endl;
 	//gen->print_statistic_on_callbacks();
-	compute_and_print_automorphism_group_orders(depth, cout);
+	//compute_and_print_automorphism_group_orders(depth, cout);
+
+	int verbose_level = 0;
+
+	poset_classification_global PCG;
+
+	PCG.init(
+			this,
+			verbose_level);
+
+	string s_ago;
+
+	s_ago = PCG.compute_and_stringify_automorphism_group_orders(depth, verbose_level - 2);
+
+	cout << s_ago << endl;
+
 }
 
 void poset_classification::print()
@@ -666,7 +681,20 @@ void poset_classification::housekeeping(
 
 
 		//print_statistic_on_callbacks();
-		compute_and_print_automorphism_group_orders(i, cout);
+		int verbose_level = 0;
+
+		poset_classification_global PCG;
+
+		PCG.init(
+				this,
+				verbose_level);
+
+		string s_ago;
+
+		s_ago = PCG.compute_and_stringify_automorphism_group_orders(i, verbose_level - 2);
+
+		cout << s_ago << endl;
+		//compute_and_print_automorphism_group_orders(i, cout);
 		//registry_dump_sorted();
 		//registry_dump_sorted_by_size();
 		//cout << "nb_times_trace=" << nb_times_trace << endl;
@@ -743,7 +771,8 @@ void poset_classification::housekeeping(
 						"before write_level_file_binary" << endl;
 			}
 			write_level_file_binary(
-					i - 1, my_fname_base, 0/*verbose_level*/);
+					i - 1, my_fname_base,
+					0/*verbose_level*/);
 			if (f_v) {
 				cout << "poset_classification_housekeeping "
 						"my_fname_base=" << my_fname_base << endl;
@@ -762,7 +791,8 @@ void poset_classification::housekeeping(
 		Poo->write_lvl_file(
 				problem_label_with_path, i, t0,
 				false /* f_with_strong_generators */,
-				false /* f_long_version */, 0);
+				false /* f_long_version */,
+				0 /* verbose_level */);
 		if (f_v) {
 			cout << "poset_classification_housekeeping "
 					"after write_lvl_file" << endl;
@@ -888,7 +918,19 @@ void poset_classification::housekeeping_no_data_file(
 					<< " orbits" << endl;
 		}
 		cout << "total: " << Poo->first_node_at_level(i + 1) << endl;
-		compute_and_print_automorphism_group_orders(i, cout);
+
+		poset_classification_global PCG;
+
+		PCG.init(
+				this,
+				verbose_level);
+
+		string s_ago;
+
+		s_ago = PCG.compute_and_stringify_automorphism_group_orders(i, verbose_level - 2);
+
+		cout << s_ago << endl;
+
 	}
 
 	if (Control->f_W || (Control->f_w && i == sz)) {
@@ -1074,8 +1116,10 @@ void poset_classification::write_level_file_binary(
 	{
 		ofstream fp(fname, ios::binary);
 
-		Poo->write_level_file_binary2(level, fp,
-				nb_group_elements, verbose_level);
+		Poo->write_level_file_binary2(
+				level, fp,
+				nb_group_elements,
+				verbose_level);
 	}
 	
 	if (f_v) {
@@ -1238,6 +1282,7 @@ void poset_classification::log_current_node(
 
 
 
+#if 0
 void poset_classification::make_spreadsheet_of_orbit_reps(
 		other::data_structures::spreadsheet *&Sp, int max_depth)
 {
@@ -1292,8 +1337,8 @@ void poset_classification::make_spreadsheet_of_orbit_reps(
 				schreier_vector_length = 0;
 			}
 			Text_schreier_vector_length[first + i] = std::to_string(schreier_vector_length);
-			}
 		}
+	}
 	Sp = NEW_OBJECT(other::data_structures::spreadsheet);
 	Sp->init_empty_table(Nb_orbits + 1, 7);
 	Sp->fill_column_with_row_index(0, "Line");
@@ -1319,6 +1364,7 @@ void poset_classification::make_spreadsheet_of_orbit_reps(
 	delete [] Text_schreier_vector_length;
 	
 }
+#endif
 
 void poset_classification::make_spreadsheet_of_level_info(
 		other::data_structures::spreadsheet *&Sp, int max_depth,

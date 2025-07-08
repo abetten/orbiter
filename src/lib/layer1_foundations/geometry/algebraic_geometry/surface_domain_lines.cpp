@@ -352,6 +352,29 @@ void surface_domain::create_system(
 	}
 }
 
+long int surface_domain::compute_double_point(
+		long int *Lines, int nb_lines,
+		int line1_idx, int line2_idx,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_domain::compute_double_point" << endl;
+	}
+	long int a1, a2, pt;
+
+	a1 = Lines[line1_idx];
+	a2 = Lines[line2_idx];
+
+	pt = P->Subspaces->intersection_of_two_lines(a1, a2);
+
+	if (f_v) {
+		cout << "surface_domain::compute_double_point done" << endl;
+	}
+	return pt;
+}
+
 void surface_domain::compute_intersection_points(
 		int *Adj,
 	long int *Lines, int nb_lines,
@@ -359,7 +382,8 @@ void surface_domain::compute_intersection_points(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int j1, j2, a1, a2, pt;
+	int j1, j2;
+	long int a1, a2, pt;
 
 	if (f_v) {
 		cout << "surface_domain::compute_intersection_points" << endl;

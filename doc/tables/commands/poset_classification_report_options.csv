@@ -11,5 +11,5 @@ ROW,C1,C2,C3
 1,"\verb'-type_tree' ","    "," Poset drawing of type spanning tree. "
 1,"\verb'-type_detailed' ","    "," Poset drawing of type detailed. The detailed drawing includes the flag orbits between layers.  "
 1,"\verb'-fname' ","  fname  "," Set the file name. "
-1,"\verb'-draw_options' ","  label  "," Set draw options. label must refer to an object of type \verb'draw_options'"
+1,"\verb'-draw_options' ","  label  "," Set draw options. label must refer to an object of type \verb'draw_options', see Table~\ref{tab:draw:options}. "
 END

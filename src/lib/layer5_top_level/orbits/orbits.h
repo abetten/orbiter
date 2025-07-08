@@ -295,6 +295,11 @@ public:
 	//std::string on_cubic_surfaces_PA;
 	std::string on_cubic_surfaces_classify;
 
+	int f_on_arcs;
+	std::string on_arcs_control;
+
+
+
 	// undocumented:
 	int f_classify_semifields;
 	std::string classify_semifields_PA;
@@ -379,6 +384,12 @@ public:
 
 	int f_has_cubic_surfaces;
 	applications_in_algebraic_geometry::cubic_surfaces_and_double_sixes::surface_classify_wedge *SCW;
+
+	int f_has_arcs;
+	apps_geometry::arc_generator_description
+				*Arc_generator_description_for_arcs;
+	apps_geometry::arc_generator *Arc_generator;
+
 
 	int f_has_semifields;
 	semifields::semifield_classify_with_substructure *Semifields;

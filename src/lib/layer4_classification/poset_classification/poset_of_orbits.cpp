@@ -1517,8 +1517,18 @@ void poset_of_orbits::write_lvl_file(
 		f << "-1 " << len << " "
 				<< first_node_at_level(lvl) << " in ";
 		Os.time_check(f, t0);
-		PC->compute_and_print_automorphism_group_orders(lvl, f);
-		f << endl;
+
+		poset_classification_global PCG;
+
+		PCG.init(
+				PC,
+				verbose_level);
+
+		string s_ago;
+
+		s_ago = PCG.compute_and_stringify_automorphism_group_orders(lvl, verbose_level - 2);
+
+		f << s_ago << endl;
 		f << "# in action " << PC->get_poset()->A->label << endl;
 	}
 	if (f_v) {
@@ -1550,8 +1560,19 @@ void poset_of_orbits::write_lvl(
 		<< " in ";
 	Os.time_check(f, t0);
 	f << endl;
-	PC->compute_and_print_automorphism_group_orders(lvl, f);
-	f << endl;
+
+	poset_classification_global PCG;
+
+	PCG.init(
+			PC,
+			verbose_level);
+
+
+	string s_ago;
+	s_ago = PCG.compute_and_stringify_automorphism_group_orders(lvl, verbose_level - 2);
+	//PCG.compute_and_print_automorphism_group_orders(lvl, f, verbose_level - 2);
+
+	f << s_ago << endl;
 	f << "# in action " << PC->get_poset()->A->label << endl;
 }
 
@@ -1589,47 +1610,260 @@ void poset_of_orbits::log_nodes_for_treefile(
 	}
 }
 
+void poset_of_orbits::make_table_of_orbit_reps(
+		std::string *&Headings,
+		std::string *&Table,
+		int &nb_rows, int &nb_cols,
+		int level_min, int level_max,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "poset_of_orbits::make_table_of_orbit_reps" << endl;
+	}
+	int Nb_orbits, nb_orbits, i, level, first, cur;
+	long int *rep;
+
+	rep = NEW_lint(level_max);
+
+	Nb_orbits = 0;
+	for (level = level_min; level <= level_max; level++) {
+		Nb_orbits += nb_orbits_at_level(level);
+	}
+
+	nb_rows = Nb_orbits;
+	nb_cols = 8;
+
+	Table = new string [nb_rows * nb_cols];
+	Headings = new string [nb_cols];
+
+	Headings[0] = "Line";
+	Headings[1] = "Node";
+	Headings[2] = "Level";
+	Headings[3] = "OrbitIdx";
+	Headings[4] = "OrbitRep";
+	Headings[5] = "StabOrder";
+	Headings[6] = "OrbitLength";
+	Headings[7] = "SV_length";
+
+	cur = 0;
+	for (level = level_min; level <= level_max; level++) {
+
+		first = first_node_at_level(level);
+
+		nb_orbits = nb_orbits_at_level(level);
+
+		for (i = 0; i < nb_orbits; i++, cur++) {
+
+			PC->get_set_by_level(level, i, rep);
+
+			algebra::ring_theory::longinteger_object stab_order, orbit_length;
+
+			PC->get_orbit_length_and_stabilizer_order(
+					i, level,
+				stab_order, orbit_length);
+
+			poset_orbit_node *O;
+			int schreier_vector_length;
+
+			O = get_node_ij(level, i);
+			if (O->has_Schreier_vector()) {
+				schreier_vector_length = O->get_nb_of_live_points();
+			}
+			else {
+				schreier_vector_length = 0;
+			}
+
+
+			Table[cur * nb_cols + 0] = std::to_string(cur);
+			Table[cur * nb_cols + 1] = std::to_string(first + i);
+			Table[cur * nb_cols + 2] = std::to_string(level);
+			Table[cur * nb_cols + 3] = std::to_string(i);
+			Table[cur * nb_cols + 4] = "\"" + Lint_vec_stringify(rep, level) + "\"";
+			Table[cur * nb_cols + 5] = stab_order.stringify();
+			Table[cur * nb_cols + 6] = orbit_length.stringify();
+			Table[cur * nb_cols + 7] = std::to_string(schreier_vector_length);
+
+			//Text_level[first + i] = std::to_string(level);
+
+			//Text_node[first + i] = std::to_string(i);
+
+			//get_set_by_level(level, i, rep);
+			//Lint_vec_print_to_str(Text_orbit_reps[first + i], rep, level);
+
+			//stab_order.print_to_string(Text_stab_order[first + i]);
+
+			//orbit_length.print_to_string(Text_orbit_length[first + i]);
+
+			//Text_schreier_vector_length[first + i] = std::to_string(schreier_vector_length);
+		}
+	}
+
+
+	FREE_lint(rep);
+	if (f_v) {
+		cout << "poset_of_orbits::make_table_of_orbit_reps done" << endl;
+	}
+}
+
+
+void poset_of_orbits::save_representatives_up_to_a_given_level_to_csv(
+		int lvl, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "poset_classification::save_representatives_up_to_a_given_level_to_csv" << endl;
+	}
+
+	//other::data_structures::spreadsheet *Sp;
+	std::string *Headings;
+	std::string *Table;
+	int nb_rows, nb_cols;
+
+	if (f_v) {
+		cout << "poset_classification::save_representatives_up_to_a_given_level_to_csv "
+				"before make_table_of_orbit_reps" << endl;
+	}
+	make_table_of_orbit_reps(
+			Headings,
+			Table,
+			nb_rows, nb_cols,
+			0 /* level_min */, lvl /* level_max */,
+			0 /*verbose_level*/);
+	if (f_v) {
+		cout << "poset_classification::save_representatives_up_to_a_given_level_to_csv "
+				"after make_table_of_orbit_reps" << endl;
+	}
+
+	other::orbiter_kernel_system::file_io Fio;
+	string fname_csv;
+
+	fname_csv = PC->get_problem_label_with_path()
+			+ "_orbits_up_to_level_"
+			+ std::to_string(lvl)
+			+ ".csv";
+
+	Fio.Csv_file_support->write_table_of_strings_with_col_headings(
+			fname_csv,
+			nb_rows, nb_cols, Table,
+			Headings,
+			verbose_level);
+
+	delete [] Table;
+	delete [] Headings;
+
+#if 0
+	PC->make_spreadsheet_of_orbit_reps(
+			Sp, actual_size);
+#endif
+	//Sp->save(fname_csv, verbose_level);
+	//FREE_OBJECT(Sp);
+
+	if (f_v) {
+		cout << "poset_classification::save_representatives_up_to_a_given_level_to_csv done" << endl;
+	}
+}
+
+
 void poset_of_orbits::save_representatives_at_level_to_csv(
 		std::string &fname,
 		int lvl, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i, l;
-	long int *set;
-	long int ago;
 
 	if (f_v) {
 		cout << "poset_classification::save_representatives_at_level_to_csv" << endl;
 	}
+
+	{
+		std::string *Headings;
+		std::string *Table;
+		int nb_rows, nb_cols;
+
+		PC->get_Poo()->make_table_of_orbit_reps(
+				Headings,
+				Table,
+				nb_rows, nb_cols,
+				lvl /* level_min */, lvl /* level_max */,
+				0 /*verbose_level*/);
+
+		other::orbiter_kernel_system::file_io Fio;
+		string fname_csv;
+
+
+		Fio.Csv_file_support->write_table_of_strings_with_col_headings(
+				fname,
+				nb_rows, nb_cols, Table,
+				Headings,
+				verbose_level);
+
+		delete [] Table;
+		delete [] Headings;
+
+		if (f_v) {
+			cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+		}
+
+	}
+#if 0
 	{
 		ofstream ost(fname);
+
+		int i, l;
+		long int *set;
+		//long int ago;
 
 		set = NEW_lint(lvl);
 
 
 		l = PC->nb_orbits_at_level(lvl);
 		//cout << "The " << l << " representatives at level " << lvl << " are:" << endl;
-		ost << "ROW,REP,AGO,OL" << endl;
+		ost << "ROW,SZ,ORBIDX,REP,AGO,OL" << endl;
 		for (i = 0; i < l; i++) {
+
 			get_node_ij(lvl, i)->store_set_to(PC, lvl - 1, set /*gen->S0*/);
 			//Lint_vec_print(cout, set /*gen->S0*/, lvl);
 
+			algebra::ring_theory::longinteger_object ago;
+			algebra::ring_theory::longinteger_object orbit_length;
+
+			get_node_ij(lvl, i)->get_stabilizer_order(
+					PC, ago);
+
+			PC->orbit_length(i, lvl, orbit_length);
+
+
+			string s_rep;
+			string s_ago;
+			string s_ol;
+
+			s_rep = "\"" + Lint_vec_stringify(set, lvl) + "\"";
+
+			s_ago = ago.stringify();
+
+			s_ol = orbit_length.stringify();
+
+
 			ost << i;
-			{
-				string str;
-				ost << ",";
-				str = Lint_vec_stringify(set, lvl);
-				ost << "\"" << str << "\"";
-			}
+			ost << ",";
+			ost << std::to_string(lvl);
+			ost << ",";
+			ost << std::to_string(i);
+			ost << ",";
+			ost << s_rep;
+			ost << ",";
+			ost << s_ago;
+			ost << ",";
+			ost << s_ol;
 
-			ago = get_node_ij(lvl, i)->get_stabilizer_order_lint(PC);
-			ost << "," << ago;
 
-			algebra::ring_theory::longinteger_object len;
+			//ago = get_node_ij(lvl, i)->get_stabilizer_order_lint(PC);
+			//ost << "," << ago;
 
-			PC->orbit_length(i, lvl, len);
 
-			ost << "," << len;
+			//ost << "," << len;
 
 
 			ost << endl;
@@ -1642,10 +1876,7 @@ void poset_of_orbits::save_representatives_at_level_to_csv(
 		FREE_lint(set);
 	}
 	other::orbiter_kernel_system::file_io Fio;
-
-	if (f_v) {
-		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-	}
+#endif
 
 	if (f_v) {
 		cout << "poset_classification::save_representatives_at_level_to_csv done" << endl;

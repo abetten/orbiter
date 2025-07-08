@@ -7,7 +7,6 @@ ROW,C1,C2,C3
 1,"\verb'-trihedra1_control' ","   poset-control ","For \verb'-classify_surfaces_through_' \verb'arcs_and_trihedral_pairs' "
 1,"\verb'-trihedra2_control' "," poset-control   ","For \verb'-classify_surfaces_through_' \verb'arcs_and_trihedral_pairs' "
 1,"\verb'-control_six_arcs' ","  poset-control  ","For \verb'-classify_surfaces_through_' \verb'arcs_and_trihedral_pairs' "
+END
 1,"\verb'-six_arcs_not_on_conic' ","    ","Classify six-arcs not on a conic in a plane.   "
 1,"\verb'-filter_by_nb_Eckardt_points' "," $e$   ","Filter for the number of Eckardt points to be equal to $e$. Used in conjunction with \verb'-six_arcs_not_on_conic'. "
-1,"\verb'-classify_arcs' "," descr  ","Classify arcs. "
-END

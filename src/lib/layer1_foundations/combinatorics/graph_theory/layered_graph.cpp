@@ -413,15 +413,25 @@ void layered_graph::draw_with_options(
 		}
 
 
-		// now draw the vertices:
-		if (f_v) {
-			cout << "layered_graph::draw before draw_vertices" << endl;
+		if (O->f_no_vertices) {
+			if (f_v) {
+				cout << "layered_graph::draw we are not drawing the vertices" << endl;
+			}
+
+
 		}
 
-		draw_vertices(O, &G, verbose_level - 2);
+		else {
+			// now draw the vertices:
+			if (f_v) {
+				cout << "layered_graph::draw before draw_vertices" << endl;
+			}
 
-		if (f_v) {
-			cout << "layered_graph::draw after draw_vertices" << endl;
+			draw_vertices(O, &G, verbose_level - 2);
+
+			if (f_v) {
+				cout << "layered_graph::draw after draw_vertices" << endl;
+			}
 		}
 
 

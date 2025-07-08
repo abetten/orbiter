@@ -896,7 +896,7 @@ void activity_description::worker(
 		if (f_v) {
 			cout << "activity_description::worker f_cubic_surface_activity" << endl;
 		}
-		do_cubic_surface_activity(verbose_level);
+		do_cubic_surface_activity(nb_output, Output, AO, verbose_level);
 
 	}
 	else if (f_quartic_curve_activity) {
@@ -1099,6 +1099,12 @@ void activity_description::worker(
 		}
 
 		FREE_OBJECT(AO);
+	}
+	else {
+		if (f_v) {
+			cout << "activity_description::worker no activity_output" << endl;
+		}
+
 	}
 
 	if (f_v) {
@@ -1632,6 +1638,9 @@ void activity_description::do_coding_theoretic_activity(
 }
 
 void activity_description::do_cubic_surface_activity(
+		int &nb_output,
+		other::orbiter_kernel_system::orbiter_symbol_table_entry *&Output,
+		other::orbiter_kernel_system::activity_output *&AO,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1643,6 +1652,7 @@ void activity_description::do_cubic_surface_activity(
 	}
 
 
+	nb_output = 0;
 
 	int *Idx;
 
@@ -1666,7 +1676,7 @@ void activity_description::do_cubic_surface_activity(
 			cout << "activity_description::do_cubic_surface_activity "
 					"before Activity.perform_activity" << endl;
 		}
-		Activity.perform_activity(verbose_level);
+		Activity.perform_activity(AO, verbose_level);
 		if (f_v) {
 			cout << "activity_description::do_cubic_surface_activity "
 					"after Activity.perform_activity" << endl;

@@ -11,4 +11,5 @@ ROW,C1,C2,C3
 1,"\verb'-action_on_module' "," type basis generators "," "
 1,"\verb'-Clebsch_map_up' "," line1 line2 "," Define the birational Clebsch map from a plane to the surface. The skew lines line1 and line2 are used to define the map. "
 1,"\verb'-Clebsch_map_up_single_point' "," pt line1 line2 "," Map a single point to the surface under the Clebsch map defined by the pair of lines line1 and line2. "
+1,"\verb'-recognize_Fabcd' "," Arc-classification "," Recognize the surface as a member of the $F_{abcd}$ family. Computes the parameters $a,b,c,d$. The parameter Arc-classification must be on object of type orbit, representing the classification of 6-arcs in the associated plane $\PG(2,q)$. "
 END

@@ -1563,11 +1563,6 @@ void orbits_activity::do_Kramer_Mesner_matrix(
 	}
 
 
-
-
-
-
-
 	if (OC->f_has_On_subsets) {
 
 		if (f_v) {
@@ -1575,37 +1570,24 @@ void orbits_activity::do_Kramer_Mesner_matrix(
 					"f_has_On_subsets" << endl;
 		}
 
+		poset_classification::poset_classification_global PCG;
 
-		poset_classification::poset_classification_activity_description Activity_descr;
-		poset_classification::poset_classification_activity Activity;
-
-
-		if (f_v) {
-			cout << "orbits_activity::do_Kramer_Mesner_matrix "
-					"before Activity.init" << endl;
-		}
-		Activity.init(
-				&Activity_descr,
+		PCG.init(
 				OC->On_subsets,
-				Descr->Kramer_Mesner_k /* actual_size */,
 				verbose_level);
-		if (f_v) {
-			cout << "orbits_activity::do_Kramer_Mesner_matrix "
-					"after Activity.init" << endl;
-		}
 
 		if (f_v) {
 			cout << "orbits_activity::do_Kramer_Mesner_matrix "
-					"before Activity.compute_Kramer_Mesner_matrix" << endl;
+					"before PCG.compute_Kramer_Mesner_matrix" << endl;
 		}
-		Activity.compute_Kramer_Mesner_matrix(
+		PCG.compute_Kramer_Mesner_matrix(
 				Descr->Kramer_Mesner_t,
 				Descr->Kramer_Mesner_k,
 				verbose_level);
 
 		if (f_v) {
 			cout << "orbits_activity::do_Kramer_Mesner_matrix "
-					"after Activity.compute_Kramer_Mesner_matrix" << endl;
+					"after PCG.compute_Kramer_Mesner_matrix" << endl;
 		}
 
 	}
@@ -1617,35 +1599,23 @@ void orbits_activity::do_Kramer_Mesner_matrix(
 					"f_has_On_Subspaces" << endl;
 		}
 
-		poset_classification::poset_classification_activity_description Activity_descr;
-		poset_classification::poset_classification_activity Activity;
+		poset_classification::poset_classification_global PCG;
 
-
-		if (f_v) {
-			cout << "orbits_activity::do_Kramer_Mesner_matrix "
-					"before Activity.init" << endl;
-		}
-		Activity.init(
-				&Activity_descr,
+		PCG.init(
 				OC->On_Subspaces->orbits_on_subspaces_PC,
-				Descr->Kramer_Mesner_k /* actual_size */,
 				verbose_level);
-		if (f_v) {
-			cout << "orbits_activity::do_Kramer_Mesner_matrix "
-					"after Activity.init" << endl;
-		}
 
 		if (f_v) {
 			cout << "orbits_activity::do_Kramer_Mesner_matrix "
-					"before Activity.compute_Kramer_Mesner_matrix" << endl;
+					"before PCG.compute_Kramer_Mesner_matrix" << endl;
 		}
-		Activity.compute_Kramer_Mesner_matrix(
+		PCG.compute_Kramer_Mesner_matrix(
 				Descr->Kramer_Mesner_t,
 				Descr->Kramer_Mesner_k,
 				verbose_level);
 		if (f_v) {
 			cout << "orbits_activity::do_Kramer_Mesner_matrix "
-					"after Activity.compute_Kramer_Mesner_matrix" << endl;
+					"after PCG.compute_Kramer_Mesner_matrix" << endl;
 		}
 
 	}

@@ -302,6 +302,15 @@ void homogeneous_polynomial_domain::init_with_or_without_variables(
 	
 }
 
+std::string homogeneous_polynomial_domain::get_label_txt()
+{
+	string s;
+
+	s = "poly_ring_deg" + std::to_string(degree)
+			+ "_vars" + std::to_string(nb_variables);
+	return s;
+}
+
 void homogeneous_polynomial_domain::print()
 {
 	cout << "Polynomial ring over a field of order " << F->q
@@ -3420,6 +3429,20 @@ void homogeneous_polynomial_domain::print_monomial_ordering_latex(
 		ost << "$$" << endl;
 
 		ost << "\\clearpage" << endl;
+		ost << endl;
+		ost << "\\begin{verbatim}" << endl;
+		for (h = 0; h < nb_monomials; h++) {
+
+			string s;
+
+			s = stringify_monomial(h);
+			ost << s;
+			if (h < nb_monomials - 1) {
+				ost << ", ";
+			}
+		}
+		ost << endl;
+		ost << "\\end{verbatim}" << endl;
 	}
 }
 

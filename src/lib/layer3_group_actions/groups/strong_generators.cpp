@@ -2873,7 +2873,15 @@ schreier *strong_generators::orbit_of_one_point_schreier(
 
 	int print_interval = 10000;
 
+	if (f_v) {
+		cout << "strong_generators::orbit_of_one_point_schreier "
+				"before Sch->init" << endl;
+	}
 	Sch->init(A_given, verbose_level - 2);
+	if (f_v) {
+		cout << "strong_generators::orbit_of_one_point_schreier "
+				"after Sch->init" << endl;
+	}
 	//Sch->initialize_tables();
 	Sch->Generators_and_images->init_generators(
 			*gens, verbose_level - 2);
@@ -3921,7 +3929,7 @@ void strong_generators::make_element_which_moves_a_point_from_A_to_B(
 
 	Orb = orbit_of_one_point_schreier(
 			A_given, pt_A,
-			0 /*verbose_level */);
+			verbose_level);
 
 	if (f_v) {
 		cout << "strong_generators::make_element_which_moves_a_point_from_A_to_B "

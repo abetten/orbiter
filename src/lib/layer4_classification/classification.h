@@ -81,6 +81,7 @@ namespace orbiter {
 			class poset_classification_activity;
 			class poset_classification;
 			class poset_classification_control;
+			class poset_classification_global;
 			class poset_classification_report_options;
 			class poset_of_orbits;
 			class poset_orbit_node;

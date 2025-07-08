@@ -85,33 +85,21 @@ void surface_classify_wedge::generate_history(
 		cout << "surface_classify_wedge::generate_history" << endl;
 	}
 
-	poset_classification::poset_classification_activity_description Activity_descr;
-	poset_classification::poset_classification_activity Activity;
+	poset_classification::poset_classification_global PCG;
 
-
-	if (f_v) {
-		cout << "surface_classify_wedge::generate_history "
-				"before Activity.init" << endl;
-	}
-	Activity.init(
-			&Activity_descr,
+	PCG.init(
 			Five_p1->Five_plus_one,
-			5 /* actual_size */,
 			verbose_level);
-	if (f_v) {
-		cout << "surface_classify_wedge::generate_history "
-				"after Activity.init" << endl;
-	}
 
 
 	if (f_v) {
 		cout << "surface_classify_wedge::generate_history "
-				"before Activity.generate_history" << endl;
+				"before PCG.generate_history" << endl;
 	}
-	Activity.generate_history(5, verbose_level - 2);
+	PCG.generate_history(5, verbose_level - 2);
 	if (f_v) {
 		cout << "surface_classify_wedge::generate_history "
-				"after Activity.generate_history" << endl;
+				"after PCG.generate_history" << endl;
 	}
 
 	if (f_v) {

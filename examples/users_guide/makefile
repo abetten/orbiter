@@ -9251,6 +9251,7 @@ SECTION_MULTIVARIATE_POLYNOMIALS:
 
 
 test_6_2:
+	make polynomial_ring_degree3_vars4_q13
 	make parse_homogeneous_polynomial
 	make parse_homogeneous_polynomial_with_parameters
 	make affine_map_F5_0
@@ -9261,6 +9262,29 @@ test_6_2:
 	make permutation_polynomial_F5
 	make conic_variety
 	make ideal_of_conic
+
+
+
+polynomial_ring_degree3_vars4_q13:
+	$(ORBITER) -v 6 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define F -finite_field -q 13 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 4 \
+			-homogeneous_of_degree 3 \
+			-monomial_ordering_partition \
+			-variables "x0,x1,x2,x3" "x_0,x_1,x_2,x_3" \
+		-end \
+		-with R -do \
+			-ring_theoretic_activity \
+			-cheat_sheet \
+		-end
+	$(PDFLATEX) poly_ring_deg3_vars4_cheat_sheet.tex
+	$(OPEN) poly_ring_deg3_vars4_cheat_sheet.pdf
 
 
 
@@ -11942,9 +11966,6 @@ hyperoval_8_classify:
 
 
 
-
-
-
 hyperoval_16_classify:
 	$(ORBITER) -v 4 \
 		-orbiter_path $(ORBITER_EXE_PATH) \
@@ -11954,21 +11975,15 @@ hyperoval_16_classify:
 			-problem_label hyperoval_q16 \
 			-W -depth 18 \
 		-end \
-		-with P -do \
-		-projective_space_activity \
-			-classify_arcs \
-				-control Control \
-				-target_size 18 \
-				-d 2 \
-			-end \
+		-define Arc_control -arc_generator_control \
+			-projective_space P \
+			-control Control \
+			-target_size 18 \
+			-d 2 \
+		-end \
+		-define Orb -orbits \
+			-on_arcs Arc_control \
 		-end
-
-
-	#$(PDFLATEX) hyperoval_q16_poset.tex
-	#$(OPEN) hyperoval_q16_poset.pdf
-
-
-
 
 
 hyperoval_16_1_conic_type:
@@ -12112,21 +12127,17 @@ nc_arcs_16:
 			-problem_label nc_arcs_q16_d2 \
 			-W -depth 6 \
 		-end \
-		-with P -do \
-		-projective_space_activity \
-			-classify_arcs \
-				-control Control \
-				-target_size 6 \
-				-d 2 \
-				-conic_test \
-			-end \
+		-define Arc_control -arc_generator_control \
+			-projective_space P \
+			-control Control \
+			-target_size 6 \
+			-d 2 \
+		-end \
+		-define Orb -orbits \
+			-on_arcs Arc_control \
 		-end
 	#$(PDFLATEX) nc_arcs_q16_d2_poset.tex
 	#$(OPEN) nc_arcs_q16_d2_poset.pdf
-
-
-#User time: 0:00
-
 
 
 five_arcs_q13:
@@ -12136,16 +12147,15 @@ five_arcs_q13:
 		-define Control -poset_classification_control \
 			-problem_label five_arcs_q13 -W -depth 5 \
 		-end \
-		-with P -do \
-		-projective_space_activity \
-			-classify_arcs \
-				-control Control \
-				-target_size 5 \
-				-d 2 \
-			-end \
+		-define Arc_control -arc_generator_control \
+			-projective_space P \
+			-control Control \
+			-target_size 5 \
+			-d 2 \
+		-end \
+		-define Orb -orbits \
+			-on_arcs Arc_control \
 		-end
-	#$(PDFLATEX) five_arcs_q13_poset.tex
-	#$(OPEN) five_arcs_q13_poset.pdf
 
 
 
@@ -12748,6 +12758,7 @@ test_9_3:
 	make surface_F_abcd_Eckardt_q31_by_symbolic_object_report
 	make surface_11_random_report
 	make surface_11_1
+	make surface_8_0_recognize_abcd
 
 
 
@@ -13521,6 +13532,33 @@ surface_11_1:
 	$(PDFLATEX) surface_catalogue_q11_iso1_report.tex
 	$(OPEN) surface_catalogue_q11_iso1_report.pdf
 
+
+surface_8_0_recognize_abcd:
+	$(ORBITER) -v 3 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 -nodes_empty \
+		-end \
+		-define F -finite_field -q 8 -end \
+		-define P3 -projective_space -n 3 -field F -end \
+		-define P2 -projective_space -n 2 -field F -v 0 -end \
+		-define Control -poset_classification_control \
+			-problem_label nc_arcs_q8_d2 \
+			-W -depth 6 \
+		-end \
+		-define Arc_control -arc_generator_control \
+			-projective_space P2 \
+			-control Control \
+			-target_size 6 \
+			-d 2 \
+		-end \
+		-define Orb -orbits \
+			-on_arcs Arc_control \
+		-end \
+		-define S -cubic_surface -space P3 -catalogue 0 -end \
+		-with S -do \
+		-cubic_surface_activity \
+			-recognize_Fabcd Orb \
+		-end
 
 
 ###############################################################################
@@ -15171,7 +15209,8 @@ SECTION_CODING_THEORY_INTRODUCTION:
 
 test_11_1:
 	make Allen_Gates_noise_1_percent
-	make nonlinear_code_n7_k4
+	make nonlinear_code_long_n7_k4
+	make nonlinear_code_n7_d4
 	make nonlinear_code_n7_d4_classify
 	make Hamming_space_4_2_distance_matrix
 	make Hamming_space_4_2_distance_matrix_draw
@@ -15213,6 +15252,22 @@ nonlinear_code_long_n7_k4:
 			-all_external_distances \
 		-end \
 		-tally_column nonlinear_code_n7_k4_all_external_distances.csv C0
+
+
+nonlinear_code_n7_d4:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define C -code -field F \
+			-nonlinear_code 7 \
+			"0,15,51,60,85,90,102,105" \
+		-end \
+		-with C -and F -do -coding_theoretic_activity \
+			-all_distances \
+		-end \
+		-with C -and F -do -coding_theoretic_activity \
+			-all_external_distances \
+		-end \
+		-tally_column nonlinear_code_n7_k8_all_external_distances.csv C0
 
 
 nonlinear_code_n7_d4_classify:

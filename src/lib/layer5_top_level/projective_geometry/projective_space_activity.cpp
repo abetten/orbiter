@@ -1394,7 +1394,6 @@ void projective_space_activity::perform_activity(
 				Descr->classify_surfaces_with_double_sixes_label, Symb, verbose_level);
 
 	}
-#endif
 
 	else if (Descr->f_recognize_surfaces) {
 
@@ -1419,6 +1418,7 @@ void projective_space_activity::perform_activity(
 		}
 
 	}
+#endif
 
 	else if (Descr->f_classify_surfaces_through_arcs_and_two_lines) {
 
@@ -1480,6 +1480,7 @@ void projective_space_activity::perform_activity(
 					"after SH.do_classify_surfaces_through_arcs_and_trihedral_pairs" << endl;
 		}
 	}
+#if 0
 	else if (Descr->f_six_arcs_not_on_conic) {
 		if (!Descr->f_control_six_arcs) {
 			cout << "please use option -control_six_arcs <description> -end" << endl;
@@ -1502,8 +1503,9 @@ void projective_space_activity::perform_activity(
 					"after SH.do_six_arcs" << endl;
 		}
 	}
+#endif
 
-
+#if 0
 	else if (Descr->f_classify_arcs) {
 		projective_space_global G;
 
@@ -1521,7 +1523,6 @@ void projective_space_activity::perform_activity(
 		}
 	}
 
-#if 0
 	else if (Descr->f_classify_cubic_curves) {
 		projective_space_global G;
 

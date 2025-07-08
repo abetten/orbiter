@@ -65,6 +65,9 @@ orbits_create_description::orbits_create_description()
 	f_on_cubic_surfaces = false;
 	//std::string on_cubic_surfaces_classify;
 
+	f_on_arcs = false;
+	//std::string on_arcs_control;
+
 	f_classify_semifields = false;
 	//std::string classify_semifields_PA;
 	//std::string classify_semifields_control;
@@ -203,6 +206,15 @@ int orbits_create_description::read_arguments(
 						<< on_cubic_surfaces_classify << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-on_arcs") == 0) {
+			f_on_arcs = true;
+			on_arcs_control.assign(argv[++i]);
+			if (f_v) {
+				cout << "-on_arcs "
+						<< on_arcs_control << endl;
+			}
+		}
+
 		else if (ST.stringcmp(argv[i], "-classify_semifields") == 0) {
 			f_classify_semifields = true;
 			classify_semifields_PA.assign(argv[++i]);
@@ -350,6 +362,10 @@ void orbits_create_description::print()
 	}
 	if (f_on_cubic_surfaces) {
 		cout << "-on_cubic_surfaces " << on_cubic_surfaces_classify << endl;
+	}
+	if (f_on_arcs) {
+		cout << "-on_arcs "
+				<< on_arcs_control << endl;
 	}
 	if (f_classify_semifields) {
 		cout << "-classify_semifields " << " " << classify_semifields_PA << " " << classify_semifields_control << endl;

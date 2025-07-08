@@ -455,7 +455,7 @@ void projective_space_global::do_lift_skew_hexagon_with_polarity(
 	}
 }
 
-
+#if 0
 void projective_space_global::do_classify_arcs(
 		projective_space_with_action *PA,
 		apps_geometry::arc_generator_description
@@ -562,6 +562,7 @@ void projective_space_global::do_classify_arcs(
 		cout << "projective_space_global::do_classify_arcs done" << endl;
 	}
 }
+#endif
 
 
 #if 0

@@ -928,7 +928,12 @@ void algebra_global::do_cheat_sheet_ring(
 	string title;
 	string extra_praeamble;
 
-	fname = "cheat_sheet_ring.tex";
+
+	string label_ring;
+
+	label_ring = HPD->get_label_txt();
+
+	fname = label_ring + "_cheat_sheet.tex";
 
 	title = "Cheat Sheet Ring";
 

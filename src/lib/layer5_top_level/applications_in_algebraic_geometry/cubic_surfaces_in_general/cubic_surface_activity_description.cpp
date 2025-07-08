@@ -56,6 +56,9 @@ cubic_surface_activity_description::cubic_surface_activity_description()
 	Clebsch_map_up_single_point_line_1_idx = -1;
 	Clebsch_map_up_single_point_line_2_idx = -1;
 
+	f_recognize_Fabcd = false;
+	//std::string recognize_Fabcd_classification_of_arcs;
+
 }
 
 cubic_surface_activity_description::~cubic_surface_activity_description()
@@ -166,6 +169,13 @@ int cubic_surface_activity_description::read_arguments(
 						<< endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-recognize_Fabcd") == 0) {
+			f_recognize_Fabcd = true;
+			recognize_Fabcd_classification_of_arcs.assign(argv[++i]);
+			if (f_v) {
+				cout << "-recognize_Fabcd " << recognize_Fabcd_classification_of_arcs << endl;
+			}
+		}
 
 
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
@@ -234,6 +244,9 @@ void cubic_surface_activity_description::print()
 				<< Clebsch_map_up_single_point_line_1_idx << " "
 				<< Clebsch_map_up_single_point_line_2_idx << " "
 				<< endl;
+	}
+	if (f_recognize_Fabcd) {
+		cout << "-recognize_Fabcd " << recognize_Fabcd_classification_of_arcs << endl;
 	}
 }
 

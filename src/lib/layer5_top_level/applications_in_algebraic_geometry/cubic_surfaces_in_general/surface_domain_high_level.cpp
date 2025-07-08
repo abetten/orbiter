@@ -186,7 +186,7 @@ void surface_domain_high_level::do_study_surface(
 	}
 }
 
-
+#if 0
 void surface_domain_high_level::do_recognize_surfaces(
 		projective_geometry::projective_space_with_action *PA,
 		std::string &Control_six_arcs_label,
@@ -252,6 +252,7 @@ void surface_domain_high_level::do_recognize_surfaces(
 		cout << "surface_domain_high_level::do_recognize_surfaces done" << endl;
 	}
 }
+#endif
 
 
 void surface_domain_high_level::do_classify_surfaces_through_arcs_and_two_lines(
@@ -389,6 +390,7 @@ void surface_domain_high_level::do_classify_surfaces_through_arcs_and_trihedral_
 
 }
 
+#if 0
 void surface_domain_high_level::do_six_arcs(
 		projective_geometry::projective_space_with_action *PA,
 		std::string &Control_six_arcs_label,
@@ -623,7 +625,7 @@ void surface_domain_high_level::do_six_arcs(
 	}
 
 }
-
+#endif
 
 
 void surface_domain_high_level::do_cubic_surface_properties(

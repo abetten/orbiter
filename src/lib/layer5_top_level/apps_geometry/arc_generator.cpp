@@ -258,7 +258,8 @@ void arc_generator::prepare_generator(
 	gen = NEW_OBJECT(poset_classification::poset_classification);
 
 	
-	gen->initialize_and_allocate_root_node(Control, Poset,
+	gen->initialize_and_allocate_root_node(
+			Control, Poset,
 		Descr->target_size,
 		verbose_level - 1);
 

@@ -348,10 +348,12 @@ void poset_classification::draw_tree_low_level(
 		G.header();
 		G.begin_figure(factor_1000);
 
-		draw_tree_low_level1(G,
+		draw_tree_low_level1(
+				G,
 				nb_nodes, coord_xyw, perm, perm_inv,
 			f_draw_points, f_draw_extension_points,
-			f_draw_aut_group_order, rad, 0 /*verbose_level - 1*/);
+			f_draw_aut_group_order, rad,
+			0 /*verbose_level - 1*/);
 
 	
 		//G.draw_boxes_final();
@@ -713,7 +715,8 @@ void poset_classification::draw_poset_full(
 	fname2 = fname_base + "_poset_full_lvl_" + std::to_string(depth);
 
 	LG->draw_with_options(
-			fname2, LG_Draw_options, 0 /* verbose_level */);
+			fname2, LG_Draw_options,
+			0 /* verbose_level */);
 
 	if (f_v) {
 		cout << "poset_classification::draw_poset_full "

@@ -364,6 +364,103 @@ void layered_graph_draw_options::print()
 	}
 }
 
+std::string layered_graph_draw_options::stringify()
+// stringifies all options except -embedded
+{
+	string s;
+
+	if (f_paperheight) {
+		s += " -paperheight " + std::to_string(paperheight);
+	}
+	if (f_paperwidth) {
+		s += " -paperwidth " + std::to_string(paperwidth);
+	}
+	s += " -xin " + std::to_string(xin)
+			+ " -yin " + std::to_string(yin)
+			+ " -xout " + std::to_string(xout)
+			+ " -yout " + std::to_string(yout)
+			+ " -radius " + std::to_string(rad) + " ";
+
+	if (f_spanning_tree) {
+		s += " -spanning_tree ";
+	}
+
+	if (f_circle) {
+		s += " -circle ";
+	}
+	if (f_corners) {
+		s += " -corners ";
+	}
+#if 0
+	if (f_embedded) {
+		s += " -embedded ";
+	}
+#endif
+	if (f_sideways) {
+		s += " -sideways ";
+	}
+	if (f_show_level_info) {
+		s += " -show_level_info ";
+	}
+	if (f_label_edges) {
+		s += " -label_edges ";
+	}
+
+	if (f_x_stretch) {
+		s += " -x_stretch "
+				+ std::to_string(x_stretch) + " ";
+	}
+	if (f_y_stretch) {
+		s += " -y_stretch "
+				+ std::to_string(y_stretch) + " ";
+	}
+
+	if (f_scale) {
+		s += " -scale "
+				+ std::to_string(scale) + " ";
+	}
+
+	if (f_line_width) {
+		s += " -line_width "
+				+ std::to_string(line_width) + " ";
+	}
+	if (f_rotated) {
+		s += " -rotated ";
+	}
+	if (f_nodes) {
+		s += " -nodes ";
+	}
+	if (f_nodes_empty) {
+		s += " -nodes_empty ";
+	}
+	if (f_no_vertices) {
+		s += " -no_vertices ";
+	}
+	if (f_show_colors) {
+		s += " -show_colors ";
+	}
+
+#if 0
+	if (f_select_layers) {
+		cout << "select_layers=" << select_layers << endl;
+	}
+	if (nb_layer_select) {
+		cout << "layer_select=";
+		Int_vec_print(cout, layer_select, nb_layer_select);
+		cout << endl;
+	}
+	if (f_paths_in_between) {
+		cout << "f_paths_in_between" << endl;
+		cout << "layer1=" << layer1 << endl;
+		cout << "node1=" << node1 << endl;
+		cout << "layer2=" << layer2 << endl;
+		cout << "node2=" << node2 << endl;
+	}
+#endif
+
+	return s;
+}
+
 
 
 

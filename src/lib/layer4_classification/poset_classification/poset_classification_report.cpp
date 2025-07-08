@@ -28,7 +28,8 @@ void poset_classification::report(
 	}
 
 	if (f_v) {
-		cout << "poset_classification::report problem_label=" << problem_label << endl;
+		cout << "poset_classification::report "
+				"problem_label=" << problem_label << endl;
 	}
 
 	string fname_report;
@@ -57,7 +58,8 @@ void poset_classification::report(
 		}
 
 
-		get_A2()->report(ost,
+		get_A2()->report(
+				ost,
 				false /* f_sims */, NULL,
 				false /* f_strong_gens */, NULL,
 				Draw_options,
@@ -72,7 +74,8 @@ void poset_classification::report(
 			cout << "poset_classification::report "
 					"before report2" << endl;
 		}
-		report2(ost, Opt, verbose_level);
+		report2(
+				ost, Opt, verbose_level);
 		if (f_v) {
 			cout << "poset_classification::report "
 					"after report2" << endl;
@@ -109,6 +112,11 @@ void poset_classification::report2(
 
 #if 1
 	if (Opt->f_draw_poset) {
+
+
+		if (f_v) {
+			cout << "poset_classification::report2 f_draw_poset" << endl;
+		}
 
 		other::graphics::layered_graph_draw_options *Draw_options;
 
@@ -702,6 +710,9 @@ void poset_classification::report_poset_of_orbits(
 	Draw_options = Get_draw_options(Opt->draw_options_label);
 
 
+	cmd += Draw_options->stringify();
+
+#if 0
 	cmd += " -xin " + std::to_string(Draw_options->xin)
 			+ " -yin " + std::to_string(Draw_options->yin)
 			+ " -xout " + std::to_string(Draw_options->xout)
@@ -720,6 +731,7 @@ void poset_classification::report_poset_of_orbits(
 	if (Draw_options->f_spanning_tree) {
 		cmd += " -spanning_tree ";
 	}
+#endif
 
 	cout << "poset_classification::report_poset_of_orbits "
 			"executing command: " << cmd << endl;
