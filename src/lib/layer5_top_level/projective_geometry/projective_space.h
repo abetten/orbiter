@@ -126,6 +126,7 @@ public:
 	applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create_description
 		*sweep_6_9_lines_surface_description;
 
+#if 0
 	int f_sweep_4_27;
 	std::string sweep_4_27_fname;
 	applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create_description
@@ -135,6 +136,7 @@ public:
 	std::string sweep_4_L9_E4_fname;
 	applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create_description
 		*sweep_4_L9_E4_surface_description;
+#endif
 
 	int f_set_stabilizer;
 	int set_stabilizer_intermediate_set_size;

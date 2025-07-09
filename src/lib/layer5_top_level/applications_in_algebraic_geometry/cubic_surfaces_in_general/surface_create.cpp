@@ -274,15 +274,39 @@ int surface_create::init(
 	}
 	surface_create::Descr = Descr;
 
+	if (f_v) {
+		cout << "surface_create::init getting projective space" << endl;
+	}
+
 	if (Descr->f_space_pointer) {
 		if (f_v) {
 			cout << "surface_create::init setting space_pointer" << endl;
 		}
 		PA = Descr->space_pointer;
 	}
+	else {
+		if (f_v) {
+			cout << "surface_create::init Descr->f_space_pointer = NULL" << endl;
+		}
+		if (Descr->f_space) {
+
+			PA = Get_projective_space(Descr->space_label);
+		}
+		else {
+			cout << "surface_create::init please use -space to select the space" << endl;
+			exit(1);
+
+		}
+	}
 
 	if (PA == NULL) {
 		cout << "surface_create::init PA == NULL" << endl;
+		exit(1);
+	}
+
+	if (PA->n != 3) {
+		cout << "surface_create::init "
+				"we need a 3-dimensional projective space" << endl;
 		exit(1);
 	}
 
@@ -1631,6 +1655,14 @@ void surface_create::create_surface_by_equation(
 
 	if (f_v) {
 		cout << "surface_create::create_surface_by_equation" << endl;
+	}
+	if (f_v) {
+		cout << "surface_create::create_surface_by_equation "
+				"ring_label = " << ring_label << endl;
+		cout << "surface_create::create_surface_by_equation "
+				"equation_parameters = " << equation_parameters << endl;
+		cout << "surface_create::create_surface_by_equation "
+				"equation_parameter_values = " << equation_parameter_values << endl;
 	}
 
 	algebra::ring_theory::ring_theory_global Ring_global;

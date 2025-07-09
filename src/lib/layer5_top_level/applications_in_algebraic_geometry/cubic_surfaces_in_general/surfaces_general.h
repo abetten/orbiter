@@ -749,7 +749,7 @@ public:
 	void print_everything(
 			std::ostream &ost, int verbose_level);
 	void print_summary(
-			std::ostream &ost);
+			std::ostream &ost, int verbose_level);
 	void print_action_on_surface(
 			std::string &label_of_elements,
 			data_structures_groups::vector_ge *Elements,
@@ -955,6 +955,7 @@ public:
 			surface_create_description *Surface_Descr,
 			std::string &sweep_fname,
 			int verbose_level);
+#if 0
 	void sweep_4_27(
 			surface_create_description *Surface_Descr,
 			std::string &sweep_fname,
@@ -963,6 +964,7 @@ public:
 			surface_create_description *Surface_Descr,
 			std::string &sweep_fname,
 			int verbose_level);
+#endif
 
 };
 

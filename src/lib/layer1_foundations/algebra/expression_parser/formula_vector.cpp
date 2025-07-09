@@ -963,6 +963,8 @@ void formula_vector::substitute(
 	int N;
 	N = variables.size();
 	if (f_v) {
+		cout << "formula_vector::substitute "
+				"we found the following parameters:" << endl;
 		int i;
 		for (i = 0; i < N; i++) {
 			cout << setw(3) << i << " : " << variables[i] << endl;

@@ -117,6 +117,7 @@ projective_space_activity_description::projective_space_activity_description()
 	//std::string sweep_6_9_lines_fname;
 	sweep_6_9_lines_surface_description = NULL;
 
+#if 0
 	f_sweep_4_27 = false;
 	//std::string sweep_4_27_fname;
 	sweep_4_27_surface_description = NULL;
@@ -124,7 +125,7 @@ projective_space_activity_description::projective_space_activity_description()
 	f_sweep_4_L9_E4 = false;
 	//std::string sweep_4_L9_E4_fname;
 	sweep_4_L9_E4_surface_description = NULL;
-
+#endif
 
 	f_set_stabilizer = false;
 	set_stabilizer_intermediate_set_size = 0;
@@ -622,7 +623,7 @@ int projective_space_activity_description::read_arguments(
 				sweep_6_9_lines_surface_description->print();
 			}
 		}
-
+#if 0
 		else if (ST.stringcmp(argv[i], "-sweep_4_27") == 0) {
 			f_sweep_4_27 = true;
 			sweep_4_27_fname.assign(argv[++i]);
@@ -666,6 +667,7 @@ int projective_space_activity_description::read_arguments(
 				cout << "-sweep_4_L9_E4 " << sweep_4_L9_E4_fname << endl;
 			}
 		}
+#endif
 
 		else if (ST.stringcmp(argv[i], "-set_stabilizer") == 0) {
 			f_set_stabilizer = true;
@@ -1325,7 +1327,7 @@ void projective_space_activity_description::print()
 		cout << "-sweep_6_9_lines " << sweep_6_9_lines_fname << endl;
 		sweep_6_9_lines_surface_description->print();
 	}
-
+#if 0
 	if (f_sweep_4_27) {
 		cout << "-sweep_4_27 " << sweep_4_27_fname << endl;
 	}
@@ -1333,6 +1335,7 @@ void projective_space_activity_description::print()
 	if (f_sweep_4_L9_E4) {
 		cout << "-sweep_4_L9_E4 " << sweep_4_L9_E4_fname << endl;
 	}
+#endif
 
 
 	if (f_set_stabilizer) {

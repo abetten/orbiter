@@ -1599,7 +1599,9 @@ void formula::latex_tree_split(
 		std::string &label, int split_level, int split_mod,
 		int verbose_level)
 {
-	tree->latex_tree_split(label, split_level, split_mod, verbose_level);
+	tree->latex_tree_split(
+			label, split_level, split_mod,
+			verbose_level);
 }
 
 void formula::collect_variables(
@@ -1733,6 +1735,10 @@ void formula::collect_coefficients_of_equation(
 	if (I->n != nb_vars) {
 		cout << "formula::collect_coefficients_of_equation "
 				"I->n != nb_vars" << endl;
+		cout << "formula::collect_coefficients_of_equation "
+				"I->n = " << I->n << endl;
+		cout << "formula::collect_coefficients_of_equation "
+				"nb_vars = " << nb_vars << endl;
 		exit(1);
 	}
 
@@ -1867,7 +1873,8 @@ void formula::collect_subtrees_by_monomials(
 	variable_to_polynomial_variable = NEW_int(nb_vars);
 	for (i = 0; i < nb_vars; i++) {
 		if (i < tree->managed_variables.size()) {
-			variable_to_polynomial_variable[i] = Poly->variable_index(tree->managed_variables[i]);
+			variable_to_polynomial_variable[i] =
+					Poly->variable_index(tree->managed_variables[i]);
 		}
 		else {
 			variable_to_polynomial_variable[i] = -1;

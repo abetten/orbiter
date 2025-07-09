@@ -198,7 +198,7 @@ void surface_object::init_equation(
 		}
 	}
 	else {
-		cout << "The surface does not have 27 lines. "
+		cout << "surface_object::init_equation The surface does not have 27 lines. "
 				"nb_lines=" << Variety_object->Line_sets->Set_size[0]
 				<< " A double six has not been computed" << endl;
 	}

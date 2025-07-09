@@ -236,11 +236,15 @@ void expression_parser_sajeeb::init_formula(
 		string prefix;
 
 		prefix = "./sajeeb_tree" + std::to_string(stage_counter) + ".tex";
+
+
+#if 0
 		{
 		ofstream ost(prefix);
 
 		dispatcher::visit(PD->ir_tree_root, ir_tree_latex_visitor_simple_tree(ost));
 		}
+#endif
 
 		stage_counter++;
 	}

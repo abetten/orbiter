@@ -3124,7 +3124,7 @@ void surface_object_with_group::print_everything(
 		cout << "surface_object_with_group::print_everything "
 				"before print_summary" << endl;
 	}
-	print_summary(ost);
+	print_summary(ost, verbose_level);
 	if (f_v) {
 		cout << "surface_object_with_group::print_everything "
 				"after print_summary" << endl;
@@ -3402,8 +3402,14 @@ void surface_object_with_group::print_everything(
 
 
 void surface_object_with_group::print_summary(
-		std::ostream &ost)
+		std::ostream &ost, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_object_with_group::print_summary" << endl;
+	}
+
 	ost << "\\subsection*{Summary}" << endl;
 
 	string s_orbits_lines;
@@ -3419,19 +3425,98 @@ void surface_object_with_group::print_summary(
 	string s_orbits_tritangent_planes;
 	string s_orbits_trihedral_pairs;
 
-	Orbits_on_lines->Forest->print_orbit_length_distribution_to_string(s_orbits_lines);
-	Orbits_on_points->Forest->print_orbit_length_distribution_to_string(s_orbits_points);
-	Orbits_on_Eckardt_points->Forest->print_orbit_length_distribution_to_string(s_orbits_Eckardt_points);
-	Orbits_on_Double_points->Forest->print_orbit_length_distribution_to_string(s_orbits_Double_points);
-	Orbits_on_Single_points->Forest->print_orbit_length_distribution_to_string(s_orbits_Single_points);
-	Orbits_on_points_not_on_lines->Forest->print_orbit_length_distribution_to_string(s_orbits_Zero_points);
-	Orbits_on_Hesse_planes->Forest->print_orbit_length_distribution_to_string(s_orbits_Hesse_planes);
-	Orbits_on_axes->Forest->print_orbit_length_distribution_to_string(s_orbits_Axes);
-	Orbits_on_single_sixes->Forest->print_orbit_length_distribution_to_string(s_orbits_single_sixes);
-	Orbits_on_double_sixes->Forest->print_orbit_length_distribution_to_string(s_orbits_double_sixes);
-	Orbits_on_tritangent_planes->Forest->print_orbit_length_distribution_to_string(s_orbits_tritangent_planes);
-	Orbits_on_trihedral_pairs->Forest->print_orbit_length_distribution_to_string(s_orbits_trihedral_pairs);
+	if (f_v) {
+		cout << "surface_object_with_group::print_summary 1" << endl;
+	}
+	if (Orbits_on_lines) {
+		Orbits_on_lines->Forest->print_orbit_length_distribution_to_string(s_orbits_lines);
+	}
+	if (f_v) {
+		cout << "surface_object_with_group::print_summary 2" << endl;
+	}
+	if (Orbits_on_points) {
+		Orbits_on_points->Forest->print_orbit_length_distribution_to_string(s_orbits_points);
+	}
+	if (f_v) {
+		cout << "surface_object_with_group::print_summary 3" << endl;
+	}
+	if (Orbits_on_Eckardt_points) {
+		Orbits_on_Eckardt_points->Forest->print_orbit_length_distribution_to_string(s_orbits_Eckardt_points);
+	}
+	if (f_v) {
+		cout << "surface_object_with_group::print_summary 4" << endl;
+	}
+	if (Orbits_on_Double_points) {
+		Orbits_on_Double_points->Forest->print_orbit_length_distribution_to_string(s_orbits_Double_points);
+	}
+	if (f_v) {
+		cout << "surface_object_with_group::print_summary 5" << endl;
+	}
+	if (Orbits_on_Single_points) {
+		Orbits_on_Single_points->Forest->print_orbit_length_distribution_to_string(s_orbits_Single_points);
+	}
+	if (f_v) {
+		cout << "surface_object_with_group::print_summary 6" << endl;
+	}
+	if (Orbits_on_points_not_on_lines) {
+		Orbits_on_points_not_on_lines->Forest->print_orbit_length_distribution_to_string(s_orbits_Zero_points);
+	}
+	if (f_v) {
+		cout << "surface_object_with_group::print_summary 7" << endl;
+	}
+	if (Orbits_on_Hesse_planes) {
+		Orbits_on_Hesse_planes->Forest->print_orbit_length_distribution_to_string(s_orbits_Hesse_planes);
+	}
+	if (f_v) {
+		cout << "surface_object_with_group::print_summary 8" << endl;
+	}
+	if (Orbits_on_axes) {
+		Orbits_on_axes->Forest->print_orbit_length_distribution_to_string(s_orbits_Axes);
+	}
+	if (f_v) {
+		cout << "surface_object_with_group::print_summary 9" << endl;
+	}
+	if (Orbits_on_single_sixes) {
+		Orbits_on_single_sixes->Forest->print_orbit_length_distribution_to_string(s_orbits_single_sixes);
+	}
+	if (f_v) {
+		cout << "surface_object_with_group::print_summary 10" << endl;
+	}
+	if (Orbits_on_double_sixes) {
+		Orbits_on_double_sixes->Forest->print_orbit_length_distribution_to_string(s_orbits_double_sixes);
+	}
+	if (f_v) {
+		cout << "surface_object_with_group::print_summary 11" << endl;
+	}
+	if (Orbits_on_tritangent_planes) {
+		Orbits_on_tritangent_planes->Forest->print_orbit_length_distribution_to_string(s_orbits_tritangent_planes);
+	}
+	if (f_v) {
+		cout << "surface_object_with_group::print_summary 12" << endl;
+	}
+	if (Orbits_on_trihedral_pairs) {
+		Orbits_on_trihedral_pairs->Forest->print_orbit_length_distribution_to_string(s_orbits_trihedral_pairs);
+	}
+	if (f_v) {
+		cout << "surface_object_with_group::print_summary 13" << endl;
+	}
 
+
+	int nb_lines;
+	int nb_points;
+
+	if (SO->Variety_object->Line_sets) {
+		nb_lines = SO->Variety_object->Line_sets->Set_size[0];
+	}
+	else {
+		nb_lines = -1;
+	}
+	if (SO->Variety_object->Point_sets) {
+		nb_points = SO->Variety_object->Point_sets->Set_size[0];
+	}
+	else {
+		nb_points = -1;
+	}
 
 	ost << "{\\renewcommand{\\arraystretch}{1.5}" << endl;
 	ost << "$$" << endl;
@@ -3440,10 +3525,10 @@ void surface_object_with_group::print_summary(
 	ost << "\\mbox{Object} & \\mbox{Number}  & \\mbox{Orbit type} \\\\";
 	ost << "\\hline" << endl;
 	ost << "\\hline" << endl;
-	ost << "\\mbox{Lines} & " << SO->Variety_object->Line_sets->Set_size[0] << " & " << s_orbits_lines;
+	ost << "\\mbox{Lines} & " << nb_lines << " & " << s_orbits_lines;
 	ost << "\\\\" << endl;
 	ost << "\\hline" << endl;
-	ost << "\\mbox{Points on surface} & " << SO->Variety_object->Point_sets->Set_size[0] << " & " << s_orbits_points;
+	ost << "\\mbox{Points on surface} & " << nb_points << " & " << s_orbits_points;
 	ost << "\\\\" << endl;
 	ost << "\\hline" << endl;
 
@@ -3515,6 +3600,12 @@ void surface_object_with_group::print_summary(
 	Type_lines_on_point->print_bare_tex(ost, true);
 	ost << "$$" << endl;
 #endif
+
+	if (f_v) {
+		cout << "surface_object_with_group::print_summary done" << endl;
+	}
+
+
 }
 
 

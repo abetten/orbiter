@@ -3239,6 +3239,16 @@ void ring_theory_global::parse_equation(
 
 		if (f_v) {
 			cout << "ring_theory_global::parse_equation "
+					"substituting parameter values" << endl;
+			cout << "ring_theory_global::parse_equation "
+					"equation_parameters = " << equation_parameters << endl;
+			cout << "ring_theory_global::parse_equation "
+					"equation_parameter_values = " << equation_parameter_values << endl;
+		}
+
+
+		if (f_v) {
+			cout << "ring_theory_global::parse_equation "
 					"before perform_substitution" << endl;
 		}
 
@@ -3261,6 +3271,11 @@ void ring_theory_global::parse_equation(
 
 	}
 	else {
+
+		if (f_v) {
+			cout << "ring_theory_global::parse_equation "
+					"no parameter values" << endl;
+		}
 
 		Formula_vector_after_sub = SB1->Formula_vector;
 	}

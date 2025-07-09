@@ -580,6 +580,7 @@ void projective_space_activity::perform_activity(
 
 
 	}
+#if 0
 	else if (Descr->f_sweep_4_27) {
 
 		if (f_v) {
@@ -621,6 +622,7 @@ void projective_space_activity::perform_activity(
 		}
 
 	}
+#endif
 
 
 	else if (Descr->f_set_stabilizer) {
