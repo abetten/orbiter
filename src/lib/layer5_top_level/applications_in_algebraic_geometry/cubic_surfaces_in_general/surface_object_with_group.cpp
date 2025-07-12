@@ -567,6 +567,7 @@ void surface_object_with_group::init_surface_object(
 	geometry::algebraic_geometry::surface_object *SO,
 	groups::strong_generators *Aut_gens,
 	int verbose_level)
+// Does not compute tactical decompositions for now
 {
 	int f_v = (verbose_level >= 1);
 
@@ -592,6 +593,7 @@ void surface_object_with_group::init_surface_object(
 				"after compute_projectivity_group" << endl;
 	}
 
+#if 0
 	if (f_v) {
 		cout << "surface_object_with_group::init_surface_object "
 				"before compute_tactical_decompositions" << endl;
@@ -601,7 +603,7 @@ void surface_object_with_group::init_surface_object(
 		cout << "surface_object_with_group::init_surface_object "
 				"after compute_tactical_decompositions" << endl;
 	}
-
+#endif
 
 	if (f_v) {
 		cout << "surface_object_with_group::init_surface_object "
