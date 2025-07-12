@@ -57,22 +57,22 @@ orbiter_top_level_session::~orbiter_top_level_session()
 	}
 	if (Orbiter_session) {
 
-		if (f_v) {
-			cout << "orbiter_top_level_session::~orbiter_top_level_session "
-					"before Orbiter_session->do_statistics" << endl;
-		}
 
-		if (verbose_level >= 10) {
+		if (Orbiter_session->f_show_births_and_deaths_stats /* verbose_level >= 10*/) {
+			if (f_v) {
+				cout << "orbiter_top_level_session::~orbiter_top_level_session "
+						"before Orbiter_session->do_statistics" << endl;
+			}
 			Orbiter_session->do_statistics();
+			if (f_v) {
+				cout << "orbiter_top_level_session::~orbiter_top_level_session "
+						"after Orbiter_session->do_statistics" << endl;
+			}
 		}
 		else {
-			cout << "Need verbose_level >= 10 to do statistics" << endl;
+			//cout << "Need verbose_level >= 10 to do statistics" << endl;
 		}
 
-		if (f_v) {
-			cout << "orbiter_top_level_session::~orbiter_top_level_session "
-					"after Orbiter_session->do_statistics" << endl;
-		}
 
 
 		if (f_v) {

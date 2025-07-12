@@ -640,10 +640,71 @@ void variety_object_with_action::do_report2(
 		ost << "The variety has " << nb_lines << " lines. They are: " << endl;
 		Lint_vec_print_fully(ost, Lines, nb_lines);
 		ost << "\\\\" << endl;
+
+
+
+		int *Adj;
+
+		if (f_v) {
+			cout << "variety_object_with_action::do_report2 "
+					"before line_intersection_graph_for_a_given_set" << endl;
+		}
+		Variety_object->Projective_space->Subspaces->line_intersection_graph_for_a_given_set(
+				Lines, nb_lines,
+				Adj,
+				verbose_level);
+		if (f_v) {
+			cout << "variety_object_with_action::do_report2 "
+					"after line_intersection_graph_for_a_given_set" << endl;
+		}
+
+
+		int i, j, a;
+
+		ost << "Pairwise intersection of lines:" << endl;
+		ost << "$$" << endl;
+		ost << "\\begin{array}{|rr|*{" << nb_lines << "}{r}|}" << endl;
+		ost << "\\hline" << endl;
+		ost << "& ";
+		for (j = 0; j < nb_lines; j++) {
+			ost << "& " << j << endl;
+		}
+		ost << "\\\\" << endl;
+		ost << "& ";
+		for (j = 0; j < nb_lines; j++) {
+			ost << "& " << Lines[j] << endl;
+		}
+		ost << "\\\\" << endl;
+		ost << "\\hline" << endl;
+		for (i = 0; i < nb_lines; i++) {
+			ost << i;
+			ost << " & " << Lines[i];
+			for (j = 0; j < nb_lines; j++) {
+				a = Adj[i * nb_lines + j];
+				ost << " & ";
+				if (i != j) {
+					ost << a;
+				}
+			}
+			ost << "\\\\" << endl;
+		}
+		ost << "\\hline" << endl;
+		ost << "\\end{array}" << endl;
+		ost << "$$" << endl;
+
+
+#if 0
+		Variety_object->Projective_space->Reporting->cheat_sheet_line_intersection(
+				ost, verbose_level);
+
+
+		Variety_object->Projective_space->Reporting->cheat_sheet_lines_on_points(
+			ost, verbose_level);
+#endif
+
 		FREE_int(w);
 
 	}
-
 
 
 
@@ -659,13 +720,15 @@ void variety_object_with_action::do_report2(
 	TDA_label2 = "TDAsetstab";
 
 	if (TD) {
-		TD->report_decomposition_schemes(ost,
+		TD->report_decomposition_schemes(
+				ost,
 				TDO_label1,
 				TDA_label1,
 				verbose_level);
 	}
 	if (TD_set_stabilizer) {
-		TD_set_stabilizer->report_decomposition_schemes(ost,
+		TD_set_stabilizer->report_decomposition_schemes(
+				ost,
 				TDO_label2,
 				TDA_label2,
 				verbose_level);

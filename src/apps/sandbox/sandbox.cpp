@@ -16,7 +16,61 @@ using namespace orbiter;
 
 int main()
 {
+	int List[] = {
+			4,
+			7,
+			8,
+			9,
+			11,
+			13,
+			16,
+			17,
+			19,
+			23,
+			25,
+			27,
+			29,
+			31,
+			32,
+			37,
+			41,
+			43,
+			47,
+			49,
+			53,
+			59,
+			61,
+			64,
+			67,
+			71,
+			73,
+			79,
+			81,
+			83,
+			89,
+			97,
+			101,
+			103,
+			107,
+			109,
+			113,
+			121,
+			127,
+			128};
 
+	int i, q;
+	int nb;
+
+	orbiter::layer5_applications::user_interface::orbiter_top_level_session Top_level_session;
+	orbiter::layer5_applications::user_interface::The_Orbiter_top_level_session = &Top_level_session;
+	combinatorics::knowledge_base::knowledge_base K;
+
+	for (i = 0; i < sizeof(List) / sizeof(int); i++) {
+		q = List[i];
+		nb = K.cubic_surface_nb_reps(q);
+		cout << "NB_CUBIC_SURFACES_Q" << q << "=" << nb << endl;
+	}
+#if 0
 	int i, j;
 	int n = 7;
 	int *v;
@@ -33,6 +87,7 @@ int main()
 				cout, v, n);
 		cout << "\\\\" << endl;
 	}
+#endif
 
 #if 0
 	int i, j;

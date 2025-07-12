@@ -516,6 +516,9 @@ int knowledge_base::cubic_surface_nb_reps(
 	else if (q == 121) {
 		nb = surface_121_nb_reps;
 		}
+	else if (q == 127) {
+		nb = surface_127_nb_reps;
+		}
 	else if (q == 128) {
 		nb = surface_128_nb_reps;
 		}

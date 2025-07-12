@@ -2660,6 +2660,34 @@ void projective_space_subspaces::points_covered_by_lines(
 }
 
 
+void projective_space_subspaces::line_intersection_graph_for_a_given_set(
+		long int *Lines, int nb_lines,
+		int *&Adj,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space_subspaces::line_intersection_graph_for_a_given_set" << endl;
+	}
+
+	Adj = NEW_int(nb_lines * nb_lines);
+
+	int i, j, a;
+
+	for (i = 0; i < nb_lines; i++) {
+		for (j = 0; j < nb_lines; j++) {
+			a = Implementation->line_intersection(Lines[i], Lines[j]);
+			Adj[i * nb_lines + j] = a;
+		}
+	}
+	if (f_v) {
+		cout << "projective_space_subspaces::line_intersection_graph_for_a_given_set done" << endl;
+	}
+
+}
+
+
 }}}}
 
 

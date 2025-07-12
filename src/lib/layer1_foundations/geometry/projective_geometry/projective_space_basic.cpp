@@ -200,7 +200,8 @@ long int projective_space_basic::PG_element_embed(
 }
 
 
-void projective_space_basic::PG_element_unrank_fining(int *v, int len, int a)
+void projective_space_basic::PG_element_unrank_fining(
+		int *v, int len, int a)
 {
 	int b, c;
 
@@ -269,7 +270,8 @@ void projective_space_basic::PG_element_unrank_fining(int *v, int len, int a)
 	}
 }
 
-int projective_space_basic::PG_element_rank_fining(int *v, int len)
+int projective_space_basic::PG_element_rank_fining(
+			int *v, int len)
 {
 	int a;
 

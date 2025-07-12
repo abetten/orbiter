@@ -60,6 +60,22 @@ long int geometry_global::nb_PG_elements_not_in_subspace(
 	return a - b;
 }
 
+int geometry_global::PG_element_modified_is_in_subspace(
+		int n, int m, int *v)
+{
+	int j;
+
+	for (j = m + 1; j < n + 1; j++) {
+		if (v[j]) {
+			return false;
+		}
+	}
+	return true;
+}
+
+
+
+
 long int geometry_global::nb_AG_elements(
 		int n, int q)
 // $q^n$
@@ -202,19 +218,6 @@ void geometry_global::AG_element_unrank_longinteger(
 	}
 }
 
-
-int geometry_global::PG_element_modified_is_in_subspace(
-		int n, int m, int *v)
-{
-	int j;
-
-	for (j = m + 1; j < n + 1; j++) {
-		if (v[j]) {
-			return false;
-		}
-	}
-	return true;
-}
 
 
 

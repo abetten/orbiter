@@ -1026,7 +1026,7 @@ class interface_toolkit {
 
 	int f_csv_file_concatenate_from_mask;
 	int csv_file_concatenate_from_mask_N_min;
-	int csv_file_concatenate_from_mask_N_max;
+	int csv_file_concatenate_from_mask_N_length;
 	std::string csv_file_concatenate_from_mask_mask;
 	std::string csv_file_concatenate_from_mask_fname_out;
 

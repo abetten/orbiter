@@ -1975,7 +1975,7 @@ void csv_file_support::do_csv_file_concatenate(
 
 void csv_file_support::do_csv_file_concatenate_from_mask(
 		std::string &fname_in_mask,
-		int N_min, int N_max,
+		int N_min, int length,
 		std::string &fname_out,
 		int verbose_level)
 {
@@ -1989,7 +1989,7 @@ void csv_file_support::do_csv_file_concatenate_from_mask(
 	long int i;
 	int N;
 
-	N = N_max - N_min + 1;
+	N = length; //N_max - N_min + 1;
 
 	nb_files = N;
 

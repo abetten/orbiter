@@ -494,6 +494,8 @@ public:
 		// $\frac{q^{n+1} - 1}{q-1} = \sum_{i=0}^{n} q^i $
 	long int nb_PG_elements_not_in_subspace(
 			int n, int m, int q);
+	int PG_element_modified_is_in_subspace(
+			int n, int m, int *v);
 	long int nb_AG_elements(
 			int n, int q);
 	long int nb_affine_lines(
@@ -510,8 +512,6 @@ public:
 	void AG_element_unrank_longinteger(
 			int q, int *v, int stride, int len,
 			algebra::ring_theory::longinteger_object &a);
-	int PG_element_modified_is_in_subspace(
-			int n, int m, int *v);
 	int test_if_arc(
 			algebra::field_theory::finite_field *Fq,
 			int *pt_coords, int *set,

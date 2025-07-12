@@ -31,6 +31,11 @@ static void poset_classification_control_early_test_function_mindist_nonlinear(
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level);
+static void poset_classification_control_early_test_function_line_intersection(
+		long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
+	void *data, int verbose_level);
 
 
 
@@ -95,10 +100,18 @@ poset_classification_control::poset_classification_control()
 	test_mindist_nonlinear_word2 = NULL;
 
 
+	f_test_max_line_intersections = false;
+	test_max_line_intersections_bound = 0;
+	//test_max_line_intersections_projective_space_label;
+	test_max_line_intersections_projective_space = NULL;
+	test_max_line_intersections_PC = NULL;
+
+
 
 	f_has_invariant_subset_for_root_node = false;
 	invariant_subset_for_root_node = NULL;
 	invariant_subset_for_root_node_size = 0;
+
 
 
 
@@ -281,6 +294,17 @@ int poset_classification_control::read_arguments(
 				cout << "-test_mindist_nonlinear " << mindist_nonlinear << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-test_max_line_intersections") == 0) {
+			f_test_max_line_intersections = true;
+			test_max_line_intersections_bound = ST.strtoi(argv[++i]);
+			test_max_line_intersections_projective_space_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-test_max_line_intersections "
+						<< test_max_line_intersections_bound
+						<< " " << test_max_line_intersections_projective_space_label << endl;
+			}
+		}
+
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
 				cout << "-end" << endl;
@@ -366,7 +390,12 @@ void poset_classification_control::print()
 		cout << "-clique_test " << clique_test_graph << endl;
 	}
 	if (f_test_mindist_nonlinear) {
-		cout << "-test_mindist_nonlinear " << mindist_nonlinear << endl;
+		cout << "-test_max_line_intersections "
+				<< test_max_line_intersections_bound
+				<< " " << test_max_line_intersections_projective_space_label << endl;
+	}
+	if (f_test_max_line_intersections) {
+		cout << "-test_max_line_intersections " << test_max_line_intersections_bound << endl;
 	}
 }
 
@@ -432,33 +461,6 @@ void poset_classification_control::prepare(
 		test_mindist_nonlinear_word2 = NEW_int(n);
 
 
-#if 0
-		int idx;
-
-		idx = other::orbiter_kernel_system::Orbiter->find_symbol(clique_test_graph);
-
-		if (idx == -1) {
-			cout << "poset_classification_control::prepare -clique_test cannot find symbol " << clique_test_graph << endl;
-			exit(1);
-		}
-
-		clique_test_CG = (combinatorics::graph_theory::colored_graph *) other::orbiter_kernel_system::Orbiter->get_object(idx);
-		if (f_v) {
-			cout << "poset_classification_control::prepare -clique_test "
-					"found a graph with " << clique_test_CG->nb_points << " vertices" << endl;
-			cout << "poset_classification_control::prepare -clique_test "
-					"PC->get_A2()->degree = " << PC->get_A2()->degree << endl;
-		}
-
-		if (PC->get_A2()->degree != clique_test_CG->nb_points) {
-			cout << "poset_classification_control::prepare -clique_test "
-					"found a graph with " << clique_test_CG->nb_points << " vertices" << endl;
-			cout << "poset_classification_control::prepare -clique_test "
-					"PC->get_A2()->degree = " << PC->get_A2()->degree << endl;
-			cout << "poset_classification_control::prepare -clique_test degree of group does not match size of graph" << endl;
-			exit(1);
-		}
-#endif
 
 		PC->get_poset()->add_testing_without_group(
 				poset_classification_control_early_test_function_mindist_nonlinear,
@@ -466,6 +468,36 @@ void poset_classification_control::prepare(
 					verbose_level);
 
 	}
+
+
+	if (f_test_max_line_intersections) {
+		if (f_v) {
+			cout << "poset_classification_control::prepare -f_test_max_line_intersections bound = " << test_max_line_intersections_bound << endl;
+		}
+
+		//int n;
+
+		test_max_line_intersections_PC = PC;
+		test_max_line_intersections_projective_space = Get_projective_space_low_level(test_max_line_intersections_projective_space_label);
+		//n = PC->get_A2()->degree;
+
+
+
+		PC->get_poset()->add_testing_without_group(
+				poset_classification_control_early_test_function_line_intersection,
+					this /* void *data */,
+					verbose_level);
+
+	}
+
+
+
+
+	if (f_test_max_line_intersections) {
+		cout << "-test_max_line_intersections " << test_max_line_intersections_bound << endl;
+	}
+
+
 
 
 	if (f_v) {
@@ -532,7 +564,7 @@ void poset_classification_control::early_test_func_for_mindist_nonlinear(
 	long int j, a, pt;
 
 	if (f_v) {
-		cout << "colored_graph_cliques::early_test_func_for_clique_search "
+		cout << "colored_graph_cliques::early_test_func_for_mindist_nonlinear "
 				"checking set ";
 		Lint_vec_print(cout, S, len);
 		cout << endl;
@@ -580,28 +612,183 @@ void poset_classification_control::early_test_func_for_mindist_nonlinear(
 	}
 
 
-
-#if 0
-	if (!f_clique_test) {
-		cout << "poset_classification_control::early_test_func_for_mindist_nonlinear !f_clique_test" << endl;
-		exit(1);
-	}
-	if (clique_test_CG == NULL) {
-		cout << "poset_classification_control::early_test_func_for_mindist_nonlinear clique_test_CG == NULL" << endl;
-		exit(1);
-	}
-
-	clique_test_CG->Colored_graph_cliques->early_test_func_for_clique_search(
-			S, len,
-			candidates, nb_candidates,
-			good_candidates, nb_good_candidates,
-			verbose_level);
-#endif
-
 	if (f_v) {
 		cout << "poset_classification_control::early_test_func_for_mindist_nonlinear done" << endl;
 	}
 }
+
+
+void poset_classification_control::early_test_func_for_max_line_intersection(
+	long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "poset_classification_control::early_test_func_for_max_line_intersection" << endl;
+	}
+
+
+	geometry::projective_geometry::projective_space *P;
+
+
+	P = test_max_line_intersections_projective_space;
+
+
+	int bound = test_max_line_intersections_bound;
+
+	if (f_v) {
+		cout << "poset_classification_control::early_test_func_for_max_line_intersection bound = " << bound << endl;
+	}
+
+
+	long int j, a, pt;
+
+	if (f_v) {
+		cout << "colored_graph_cliques::early_test_func_for_max_line_intersection "
+				"checking set ";
+		Lint_vec_print(cout, S, len);
+		cout << endl;
+		cout << "candidate set of size "
+				<< nb_candidates << ":" << endl;
+		Lint_vec_print(cout, candidates, nb_candidates);
+		cout << endl;
+	}
+	if (len == 0) {
+		nb_good_candidates = nb_candidates;
+		Lint_vec_copy(candidates, good_candidates, nb_candidates);
+		return;
+	}
+
+
+	int n;
+	algebra::field_theory::finite_field *F;
+	int q;
+
+	other::data_structures::sorting Sorting;
+
+
+	F = test_max_line_intersections_PC->get_A2()->matrix_group_finite_field();
+
+	n = test_max_line_intersections_PC->get_A2()->degree;
+
+
+	q = F->q;
+	pt = S[len - 1];
+
+#if 1
+	//geometry::other_geometry::geometry_global Gg;
+	//combinatorics::coding_theory::coding_theory_domain Code;
+
+
+	//int d;
+
+	//Gg.AG_element_unrank(q, test_mindist_nonlinear_word2, 1, n, pt);
+
+	int nb_cols;
+	int *T;
+	long int *Pts;
+	int nb_T, nb_pts;
+
+	T = NEW_int(n);
+	Pts = NEW_lint(n);
+	nb_cols = len + 1;
+
+	nb_good_candidates = 0;
+	for (j = 0; j < nb_candidates; j++) {
+		a = candidates[j];
+
+		int *Adj;
+
+		S[len] = a;
+		if (f_v) {
+			cout << "poset_classification_control::early_test_func_for_max_line_intersection "
+					"before line_intersection_graph_for_a_given_set" << endl;
+		}
+		P->Subspaces->line_intersection_graph_for_a_given_set(
+				S, len + 1,
+				Adj,
+				verbose_level);
+		if (f_v) {
+			cout << "poset_classification_control::early_test_func_for_max_line_intersection "
+					"after line_intersection_graph_for_a_given_set" << endl;
+		}
+
+		int i, h;
+
+		nb_T = 0;
+		for (i = 0; i < len; i++) {
+			a = Adj[i * nb_cols + len];
+			if (a == -1) {
+				continue;
+			}
+			T[nb_T++] = i;
+		}
+		if (nb_T <= 4) {
+
+			good_candidates[nb_good_candidates++] = candidates[j];
+
+#if 0
+			other::data_structures::tally Tally;
+
+			for (h = 0; h < nb_T; h++) {
+				i = T[h];
+				Pts[h] = Adj[i * nb_cols + len];
+			}
+
+			Tally.init_lint(Pts, nb_T, false, 0 /* verbose_level */);
+
+			if (Tally.nb_types <= 2) {
+
+				for (i = 0; i < Tally.nb_types; i++) {
+					if (Tally.type_len[i] > 2) {
+						break;
+					}
+				}
+				if (i == Tally.nb_types) {
+					good_candidates[nb_good_candidates++] = candidates[j];
+				}
+				else {
+					if (f_v) {
+						cout << "poset_classification_control::early_test_func_for_max_line_intersection skipping candidate " << j << " = " << candidates[j] << " because it intersects one point more than twice." << endl;
+					}
+				}
+
+			}
+			else {
+				if (f_v) {
+					cout << "poset_classification_control::early_test_func_for_max_line_intersection skipping candidate " << j << " = " << candidates[j] << " because it intersects in more than 2 points" << endl;
+				}
+			}
+
+#endif
+
+		}
+		else {
+			if (f_v) {
+				cout << "poset_classification_control::early_test_func_for_max_line_intersection skipping candidate " << j << " = " << candidates[j] << " because it intersects more than 4 lines" << endl;
+			}
+		}
+
+
+		FREE_int(Adj);
+
+
+	}
+	FREE_int(T);
+	FREE_lint(Pts);
+#endif
+
+
+
+	if (f_v) {
+		cout << "poset_classification_control::early_test_func_for_max_line_intersection done" << endl;
+	}
+}
+
+
 
 
 void poset_classification_control::init_root_node_invariant_subset(
@@ -713,6 +900,35 @@ static void poset_classification_control_early_test_function_mindist_nonlinear(
 		cout << "poset_classification_control_early_test_function_mindist_nonlinear done" << endl;
 	}
 }
+
+static void poset_classification_control_early_test_function_line_intersection(
+		long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
+	void *data, int verbose_level)
+{
+	poset_classification_control *Control = (poset_classification_control *) data;
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "poset_classification_control_early_test_function_line_intersection for set ";
+		Lint_vec_print(cout, S, len);
+		cout << endl;
+	}
+
+	Control->early_test_func_for_max_line_intersection(
+			S, len,
+		candidates, nb_candidates,
+		good_candidates, nb_good_candidates,
+		verbose_level - 2);
+
+
+	if (f_v) {
+		cout << "poset_classification_control_early_test_function_line_intersection done" << endl;
+	}
+}
+
+
 
 
 

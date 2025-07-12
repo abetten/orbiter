@@ -1343,6 +1343,7 @@ public:
 	std::map<std::string, int> Births;
 	std::map<std::string, int> Deaths;
 
+	int f_show_births_and_deaths_stats;
 
 	orbiter_session();
 	~orbiter_session();

@@ -105,6 +105,12 @@ orbiter_session::orbiter_session()
 
 	//std::vector<void *> export_import_stack;
 
+	//std::map<std::string, int> Births;
+	//std::map<std::string, int> Deaths;
+
+	f_show_births_and_deaths_stats = false;
+
+
 	cout << "orbiter_session::orbiter_session done" << endl;
 
 }
@@ -177,7 +183,11 @@ void orbiter_session::print_help(
 	else if (ST.stringcmp(argv[i], "-parse_commands_only") == 0) {
 		cout << "-parse_commands_only" << endl;
 	}
+	else if (ST.stringcmp(argv[i], "-show_births_and_deaths_stats") == 0) {
+		cout << "-show_births_and_deaths_stats" << endl;
+	}
 }
+
 
 int orbiter_session::recognize_keyword(
 		int argc,
@@ -216,6 +226,9 @@ int orbiter_session::recognize_keyword(
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-parse_commands_only") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-show_births_and_deaths_stats") == 0) {
 		return true;
 	}
 	return false;
@@ -352,6 +365,14 @@ int orbiter_session::read_arguments(
 				cout << "-parse_commands_only" << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-show_births_and_deaths_stats") == 0) {
+			f_show_births_and_deaths_stats = true;
+			if (f_v) {
+				cout << "-show_births_and_deaths_stats" << endl;
+			}
+		}
+
+
 		else {
 			if (f_v) {
 				cout << "unrecognized command " << argv[i]

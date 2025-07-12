@@ -750,12 +750,14 @@ void classify_trihedral_pairs::identify_three_planes(
 
 		c1 = base_cols2[0];
 		c2 = base_cols2[1];
+
 		a = M1[c1];
 		b = M1[4 + c1];
 		c = M1[8 + c1];
 		d = M1[c2];
 		e = M1[4 + c2];
 		f = M1[8 + c2];
+
 		det = F->add(
 				F->mult(a, e), F->negate(F->mult(b, d)));
 		det_inv = F->inverse(det);
@@ -935,6 +937,7 @@ void classify_trihedral_pairs::downstep(
 				"initializing flag orbits type 2" << endl;
 	}
 	for (i = 0; i < nb_orbits_type2; i++) {
+
 		data_structures_groups::set_and_stabilizer *R;
 		algebra::ring_theory::longinteger_object ol;
 		algebra::ring_theory::longinteger_object go;
@@ -958,8 +961,10 @@ void classify_trihedral_pairs::downstep(
 			R->data /* int *pt_representation */,
 			R->Strong_gens,
 			verbose_level - 2);
+
 		R->Strong_gens = NULL;
 		FREE_OBJECT(R);
+
 		if (f_v) {
 			cout << "flag orbit " << nb_orbits_type1 +  i
 					<< " / " << nb_orbits_ordered_total
@@ -1049,7 +1054,8 @@ void classify_trihedral_pairs::upstep(
 		}
 		identify_three_planes(
 				planes1[0], planes1[1], planes1[2],
-				type, Elt1 /* int *transporter */, 0 /*verbose_level*/);
+				type, Elt1 /* int *transporter */,
+				0 /*verbose_level*/);
 
 		if (f_v) {
 			cout << "We found a transporter:" << endl;
@@ -1093,7 +1099,8 @@ void classify_trihedral_pairs::upstep(
 			}
 		
 			S->add_single_generator(Elt3,
-					2 /* group_index */, verbose_level - 2);
+					2 /* group_index */,
+					verbose_level - 2);
 		}
 		else {
 			if (f_v) {

@@ -770,10 +770,12 @@ void projective_space_reporting::cheat_sheet_lines_on_points(
 
 			for (h = 0; h < nb; h++) {
 				for (j = 0; j < P->Subspaces->k; j++) {
-					v[h * P->Subspaces->r + j] = P->Subspaces->Implementation->lines_on_point(i + h, j);
+					v[h * P->Subspaces->r + j] =
+							P->Subspaces->Implementation->lines_on_point(i + h, j);
 				}
 			}
-			L.print_integer_matrix_with_labels(f,
+			L.print_integer_matrix_with_labels(
+					f,
 					v, nb, P->Subspaces->r,
 				row_labels + i, col_labels, true /* f_tex */);
 			f << "$$" << endl;
@@ -806,7 +808,7 @@ void projective_space_reporting::cheat_sheet_line_intersection(
 	int i, j, a;
 
 
-	f << "intersection of 2 lines:" << endl;
+	f << "Pairwise intersection of lines:" << endl;
 	f << "$$" << endl;
 	f << "\\begin{array}{|r|*{" << P->Subspaces->N_points << "}{r}|}" << endl;
 	f << "\\hline" << endl;

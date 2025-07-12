@@ -1062,6 +1062,10 @@ public:
 			std::vector<long int> &Pts,
 			int verbose_level);
 	// computes Pts as the set of points covered by the lines in Lines[]
+	void line_intersection_graph_for_a_given_set(
+			long int *Lines, int nb_lines,
+			int *&Adj,
+			int verbose_level);
 
 };
 

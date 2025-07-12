@@ -444,6 +444,12 @@ public:
 	int *test_mindist_nonlinear_word2;
 
 
+	// ToDo undocumented:
+	int f_test_max_line_intersections;
+	int test_max_line_intersections_bound;
+	std::string test_max_line_intersections_projective_space_label;
+	geometry::projective_geometry::projective_space *test_max_line_intersections_projective_space;
+	poset_classification *test_max_line_intersections_PC;
 
 
 	int f_has_invariant_subset_for_root_node;
@@ -475,6 +481,11 @@ public:
 		long int *good_candidates, int &nb_good_candidates,
 		int verbose_level);
 	void early_test_func_for_mindist_nonlinear(
+		long int *S, int len,
+		long int *candidates, int nb_candidates,
+		long int *good_candidates, int &nb_good_candidates,
+		int verbose_level);
+	void early_test_func_for_max_line_intersection(
 		long int *S, int len,
 		long int *candidates, int nb_candidates,
 		long int *good_candidates, int &nb_good_candidates,
