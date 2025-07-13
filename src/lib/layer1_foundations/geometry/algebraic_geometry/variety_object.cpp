@@ -590,7 +590,15 @@ void variety_object::init_equation(
 		cout << "variety_object::init_equation" << endl;
 	}
 
+	if (f_v) {
+		cout << "variety_object::init_equation "
+				"before init_equation_only" << endl;
+	}
 	init_equation_only(Projective_space, Ring, equation, verbose_level);
+	if (f_v) {
+		cout << "variety_object::init_equation "
+				"after init_equation_only" << endl;
+	}
 
 #if 0
 	variety_object::Projective_space = Projective_space;

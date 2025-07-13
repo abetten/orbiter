@@ -1717,9 +1717,13 @@ geometry::algebraic_geometry::variety_object *group_theory_global::variety_apply
 	Elt2 = NEW_int(A->elt_size_in_int);
 	Elt3 = NEW_int(A->elt_size_in_int);
 
+	if (f_v) {
+		cout << "group_theory_global::apply_single_transformation "
+				"before making elements" << endl;
+	}
 
 	A->Group_element->make_element(
-			Elt1, transformation_coeffs, verbose_level);
+			Elt1, transformation_coeffs, 0 /*verbose_level*/);
 
 	if (f_inverse) {
 		A->Group_element->element_invert(
@@ -1734,6 +1738,12 @@ geometry::algebraic_geometry::variety_object *group_theory_global::variety_apply
 
 	A->Group_element->element_invert(
 			Elt2, Elt3, 0 /*verbose_level*/);
+
+	if (f_v) {
+		cout << "group_theory_global::apply_single_transformation "
+				"after making elements" << endl;
+	}
+
 
 	if (f_v) {
 		cout << "group_theory_global::apply_transformations "
@@ -1778,6 +1788,10 @@ geometry::algebraic_geometry::variety_object *group_theory_global::variety_apply
 
 	eqn_out = NEW_int(nb_monomials);
 
+	if (f_v) {
+		cout << "group_theory_global::apply_transformations "
+				"before Variety_object_in->Ring->substitute_semilinear" << endl;
+	}
 	Variety_object_in->Ring->substitute_semilinear(
 			Variety_object_in->eqn /*coeff_in */,
 			eqn_out /*coeff_out*/,
@@ -1785,6 +1799,10 @@ geometry::algebraic_geometry::variety_object *group_theory_global::variety_apply
 			Elt3[d2] /*frob*/,
 			Elt3 /* Mtx_inv*/,
 			verbose_level);
+	if (f_v) {
+		cout << "group_theory_global::apply_transformations "
+				"after Variety_object_in->Ring->substitute_semilinear" << endl;
+	}
 
 
 	Variety_object_in->Ring->get_F()->Projective_space_basic->PG_element_normalize_from_front(
@@ -1809,6 +1827,11 @@ geometry::algebraic_geometry::variety_object *group_theory_global::variety_apply
 
 
 	if (f_has_group) {
+
+		if (f_v) {
+			cout << "group_theory_global::apply_transformations "
+					"f_has_group is true" << endl;
+		}
 
 		// apply the transformation to the set of generators:
 
@@ -1862,6 +1885,15 @@ geometry::algebraic_geometry::variety_object *group_theory_global::variety_apply
 		//f_has_nice_gens = false;
 		// ToDo: need to conjugate nice_gens
 	}
+	else {
+
+		if (f_v) {
+			cout << "group_theory_global::apply_transformations "
+					"f_has_group is false" << endl;
+		}
+
+
+	}
 
 	long int *Lines_in;
 	long int *Lines_out;
@@ -1871,10 +1903,15 @@ geometry::algebraic_geometry::variety_object *group_theory_global::variety_apply
 	if (Variety_object_in->Line_sets) {
 		if (f_v) {
 			cout << "group_theory_global::apply_transformations "
+					"applying transformation to lines" << endl;
+		}
+		if (false) {
+			cout << "group_theory_global::apply_transformations "
 					"lines = ";
 			Lint_vec_print(cout, Variety_object_in->Line_sets->Sets[0], Variety_object_in->Line_sets->Set_size[0]);
 			cout << endl;
 		}
+
 
 		nb_lines = Variety_object_in->Line_sets->Set_size[0];
 
@@ -1889,18 +1926,22 @@ geometry::algebraic_geometry::variety_object *group_theory_global::variety_apply
 
 
 		for (i = 0; i < 28; i++) {
-			if (f_v) {
+			if (false) {
 				cout << "line " << i << ":" << endl;
 				P->Subspaces->Grass_lines->print_single_generator_matrix_tex(
 						cout, Lines_in[i]);
 			}
 			Lines_out[i] = A_on_lines->Group_element->element_image_of(
 					Lines_in[i], Elt2, 0 /*verbose_level*/);
-			if (f_v) {
+			if (false) {
 				cout << "maps to " << endl;
 				P->Subspaces->Grass_lines->print_single_generator_matrix_tex(
 						cout, Lines_out[i]);
 			}
+		}
+		if (f_v) {
+			cout << "group_theory_global::apply_transformations "
+					"applying transformation to lines done" << endl;
 		}
 	}
 	else {
@@ -1917,6 +1958,11 @@ geometry::algebraic_geometry::variety_object *group_theory_global::variety_apply
 
 	if (Variety_object_in->Point_sets) {
 
+		if (f_v) {
+			cout << "group_theory_global::apply_transformations "
+					"applying transformation to points" << endl;
+		}
+
 		nb_points = Variety_object_in->Point_sets->Set_size[0];
 
 		Points_in = Variety_object_in->Point_sets->Sets[0];
@@ -1926,12 +1972,12 @@ geometry::algebraic_geometry::variety_object *group_theory_global::variety_apply
 		int i;
 
 		for (i = 0; i < nb_points; i++) {
-			if (f_v) {
+			if (false) {
 				cout << "point" << i << " = " << Points_in[i] << endl;
 			}
 			Points_out[i] = A->Group_element->element_image_of(
 					Points_in[i], Elt2, 0 /*verbose_level*/);
-			if (f_v) {
+			if (false) {
 				cout << "maps to " << Points_out[i] << endl;
 			}
 	#if 0
@@ -1948,10 +1994,19 @@ geometry::algebraic_geometry::variety_object *group_theory_global::variety_apply
 
 		}
 
+		if (f_v) {
+			cout << "group_theory_global::apply_transformations "
+					"before sorting points" << endl;
+		}
+
 		other::data_structures::sorting Sorting;
 
 		Sorting.lint_vec_heapsort(Points_out, nb_points);
 
+		if (f_v) {
+			cout << "group_theory_global::apply_transformations "
+					"applying transformation to points done" << endl;
+		}
 
 	}
 	else {
@@ -1973,6 +2028,11 @@ geometry::algebraic_geometry::variety_object *group_theory_global::variety_apply
 	label_txt = Variety_object_in->label_txt + "_t";
 	label_tex = Variety_object_in->label_tex + "{\\rm \\_t}";
 
+	if (f_v) {
+		cout << "group_theory_global::apply_transformations "
+				"before Variety_object_out->init_equation_and_points_and_lines_and_labels" << endl;
+	}
+
 	Variety_object_out->init_equation_and_points_and_lines_and_labels(
 			P,
 			Variety_object_in->Ring,
@@ -1982,6 +2042,11 @@ geometry::algebraic_geometry::variety_object *group_theory_global::variety_apply
 			label_txt,
 			label_tex,
 			verbose_level);
+
+	if (f_v) {
+		cout << "group_theory_global::apply_transformations "
+				"after Variety_object_out->init_equation_and_points_and_lines_and_labels" << endl;
+	}
 
 	FREE_int(eqn_out);
 

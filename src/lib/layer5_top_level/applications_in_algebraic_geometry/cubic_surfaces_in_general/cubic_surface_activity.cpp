@@ -403,7 +403,11 @@ void cubic_surface_activity::recognize_Fabcd(
 	SOA->Surf_A->A->Strong_gens->make_element_which_moves_a_point_from_A_to_B(
 			SOA->Surf_A->A_on_planes,
 			plane1, plane2, Transporter,
-			verbose_level);
+			0 /*verbose_level*/);
+	if (f_v) {
+		cout << "cubic_surface_activity::recognize_Fabcd "
+			"after make_element_which_moves_a_point_from_A_to_B" << endl;
+	}
 
 	if (f_v) {
 		cout << "cubic_surface_activity::recognize_Fabcd "
@@ -451,6 +455,10 @@ void cubic_surface_activity::recognize_Fabcd(
 
 	groups::strong_generators *Strong_gens_out;
 
+	if (f_v) {
+		cout << "cubic_surface_activity::recognize_Fabcd before "
+				"Group_theory_global.variety_apply_single_transformation" << endl;
+	}
 	Variety_object_transformed =
 			Group_theory_global.variety_apply_single_transformation(
 			SOA->SO->Variety_object,
@@ -461,6 +469,10 @@ void cubic_surface_activity::recognize_Fabcd(
 			f_has_group, NULL /* groups::strong_generators *Strong_gens_in */,
 			Strong_gens_out,
 			verbose_level);
+	if (f_v) {
+		cout << "cubic_surface_activity::recognize_Fabcd after "
+				"Group_theory_global.variety_apply_single_transformation" << endl;
+	}
 
 	//long int *Lines;
 	int nb_lines;
