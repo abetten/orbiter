@@ -75,7 +75,7 @@ void quartic_curve_domain::init(
 		cout << "quartic_curve_domain::init "
 				"before init_polynomial_domains" << endl;
 	}
-	init_polynomial_domains(verbose_level);
+	init_polynomial_domains(verbose_level - 2);
 	if (f_v) {
 		cout << "quartic_curve_domain::init "
 				"after init_polynomial_domains" << endl;
@@ -83,7 +83,15 @@ void quartic_curve_domain::init(
 
 
 	Schlaefli = NEW_OBJECT(algebraic_geometry::schlaefli_labels);
-	Schlaefli->init(verbose_level);
+	if (f_v) {
+		cout << "quartic_curve_domain::init "
+				"before Schlaefli->init" << endl;
+	}
+	Schlaefli->init(0 /*verbose_level*/);
+	if (f_v) {
+		cout << "quartic_curve_domain::init "
+				"after Schlaefli->init" << endl;
+	}
 
 	if (f_v) {
 		cout << "quartic_curve_domain::init done" << endl;
@@ -108,7 +116,7 @@ void quartic_curve_domain::init_polynomial_domains(
 	Poly1_3->init(F,
 			3 /* nb_vars */, 1 /* degree */,
 			t_PART,
-			verbose_level);
+			verbose_level - 2);
 	if (f_v) {
 		cout << "surface_domain::init_polynomial_domains "
 				"after Poly1_3->init" << endl;
@@ -124,7 +132,7 @@ void quartic_curve_domain::init_polynomial_domains(
 	Poly2_3->init(F,
 			3 /* nb_vars */, 2 /* degree */,
 			t_PART,
-			verbose_level);
+			verbose_level - 2);
 	if (f_v) {
 		cout << "surface_domain::init_polynomial_domains "
 				"after Poly2_3->init" << endl;
@@ -140,7 +148,7 @@ void quartic_curve_domain::init_polynomial_domains(
 	Poly3_3->init(F,
 			3 /* nb_vars */, 3 /* degree */,
 			t_PART,
-			verbose_level);
+			verbose_level - 2);
 	if (f_v) {
 		cout << "surface_domain::init_polynomial_domains "
 				"after Poly3_3->init" << endl;
@@ -155,7 +163,7 @@ void quartic_curve_domain::init_polynomial_domains(
 	Poly4_3->init(F,
 			3 /* nb_vars */, 4 /* degree */,
 			t_PART,
-			verbose_level);
+			verbose_level - 2);
 	if (f_v) {
 		cout << "surface_domain::init_polynomial_domains "
 				"after Poly4_3->init" << endl;
@@ -169,7 +177,7 @@ void quartic_curve_domain::init_polynomial_domains(
 	Poly3_4->init(F,
 			4 /* nb_vars */, 3 /* degree */,
 			t_PART,
-			verbose_level);
+			verbose_level - 2);
 	if (f_v) {
 		cout << "surface_domain::init_polynomial_domains "
 				"after Poly3_4->init" << endl;
@@ -184,7 +192,7 @@ void quartic_curve_domain::init_polynomial_domains(
 				"initializing partials" << endl;
 	}
 	for (i = 0; i < 3; i++) {
-		Partials[i].init(Poly4_3, Poly3_3, i, verbose_level);
+		Partials[i].init(Poly4_3, Poly3_3, i, verbose_level - 2);
 	}
 	if (f_v) {
 		cout << "surface_domain::init_polynomial_domains "

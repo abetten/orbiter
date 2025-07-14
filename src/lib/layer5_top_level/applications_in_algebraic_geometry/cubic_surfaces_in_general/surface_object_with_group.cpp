@@ -2769,6 +2769,7 @@ void surface_object_with_group::export_all_quartic_curves(
 
 	if (f_v) {
 		cout << "surface_object_with_group::export_all_quartic_curves" << endl;
+		cout << "surface_object_with_group::export_all_quartic_curves verbose_level=" << verbose_level << endl;
 		cout << "surface_object_with_group::export_all_quartic_curves "
 				"nb_orbits = " << Orbits_on_points_not_on_lines->Forest->nb_orbits << endl;
 	}
@@ -2785,7 +2786,7 @@ void surface_object_with_group::export_all_quartic_curves(
 
 		if (f_vv) {
 			cout << "Quartic curve associated with surface and with orbit counter = " << pt_orbit
-					<< " / " << Orbits_on_points_not_on_lines->Forest->nb_orbits << "}" << endl;
+					<< " / " << Orbits_on_points_not_on_lines->Forest->nb_orbits << endl;
 		}
 
 
@@ -2794,7 +2795,7 @@ void surface_object_with_group::export_all_quartic_curves(
 		export_one_quartic_curve(
 				pt_orbit,
 				v,
-				verbose_level - 3);
+				verbose_level - 1);
 
 
 		int j;
@@ -2826,17 +2827,25 @@ void surface_object_with_group::export_one_quartic_curve(
 
 	QC = NEW_OBJECT(quartic_curves::quartic_curve_from_surface);
 
-	QC->init(this, verbose_level - 2);
-
-
 	if (f_v) {
-		cout << "surface_object_with_group::export_all_quartic_curves "
-				"before QC->create_quartic_curve" << endl;
+		cout << "surface_object_with_group::export_one_quartic_curve "
+				"pt_orbit = " << pt_orbit << " before QC->init" << endl;
 	}
-	QC->create_quartic_curve(pt_orbit, verbose_level - 2);
+	QC->init(this, verbose_level - 1);
+	if (f_v) {
+		cout << "surface_object_with_group::export_one_quartic_curve "
+				"pt_orbit = " << pt_orbit << " after QC->init" << endl;
+	}
+
+
 	if (f_v) {
 		cout << "surface_object_with_group::export_all_quartic_curves "
-				"after QC->create_quartic_curve" << endl;
+				"pt_orbit = " << pt_orbit << " before QC->create_quartic_curve" << endl;
+	}
+	QC->create_quartic_curve(pt_orbit, verbose_level - 1);
+	if (f_v) {
+		cout << "surface_object_with_group::export_all_quartic_curves "
+				"pt_orbit = " << pt_orbit << " after QC->create_quartic_curve" << endl;
 	}
 
 
@@ -2876,7 +2885,7 @@ void surface_object_with_group::export_one_quartic_curve(
 				Surf_A->PA->PA2->QCDA->Dom,
 				QC->curve /* eqn15 */,
 				QC->Bitangents,
-				verbose_level - 3);
+				verbose_level - 1);
 		if (f_v) {
 			cout << "quartic_curve_create::create_quartic_curve_from_cubic_surface "
 					"after QO->init_equation_and_bitangents_and_compute_properties" << endl;
@@ -2916,11 +2925,19 @@ void surface_object_with_group::export_one_quartic_curve(
 
 
 
+		if (f_v) {
+			cout << "quartic_curve_create::create_quartic_curve_from_cubic_surface "
+					"before create_vector_of_strings" << endl;
+		}
 		create_vector_of_strings(
 				QC,
 				QO,
 				v,
-				verbose_level - 3);
+				verbose_level - 1);
+		if (f_v) {
+			cout << "quartic_curve_create::create_quartic_curve_from_cubic_surface "
+					"after create_vector_of_strings" << endl;
+		}
 
 
 		FREE_OBJECT(QO);

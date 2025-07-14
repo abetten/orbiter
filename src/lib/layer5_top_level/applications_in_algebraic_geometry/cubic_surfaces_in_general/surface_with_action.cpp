@@ -1207,59 +1207,6 @@ void surface_with_action::sweep_4_15_lines(
 
 						Properties.push_back(Props);
 
-#if 0
-						int i;
-						for (i = 0; i < SC->SO->Variety_object->Point_sets->Set_size[0]; i++) {
-							Pts.push_back(SC->SO->Variety_object->Point_sets->Sets[0][i]);
-						}
-						Points.push_back(Pts);
-
-
-						ost_csv << Properties.size() - 1;
-						ost_csv << ",";
-
-						{
-							string str;
-
-							str = "\"" + SC->SO->stringify_eqn() + "\"";
-							ost_csv << str;
-						}
-
-						ost_csv << ",";
-
-						{
-							string str;
-
-							str = "\"" + SC->SO->stringify_Pts() + "\"";
-							ost_csv << str;
-						}
-
-
-						ost_csv << ",";
-
-						{
-							int params[4];
-
-							params[0] = alpha;
-							params[1] = beta;
-							params[2] = gamma;
-							params[3] = delta;
-							string str;
-							str = "\"" + Int_vec_stringify(params, 4) + "\"";
-							ost_csv << str;
-						}
-
-						ost_csv << ",";
-
-						ost_csv << SC->SO->Variety_object->Line_sets->Set_size[0];
-						ost_csv << ",";
-
-						ost_csv << SC->SO->SOP->nb_singular_pts;
-						ost_csv << ",";
-
-						ost_csv << -1;
-						ost_csv << endl;
-#endif
 
 
 						FREE_OBJECT(SC);
@@ -1587,10 +1534,6 @@ void surface_with_action::sweep_F_beta_9_lines(
 			nb_rows, nb_cols, Table,
 			Col_headings,
 			verbose_level);
-#if 0
-	Fio.Csv_file_support->lint_matrix_write_csv(
-			fname, T, N, nb_cols);
-#endif
 
 	cout << "Written file " << sweep_fname_csv << " of size "
 			<< Fio.file_size(sweep_fname_csv) << endl;
@@ -1629,7 +1572,7 @@ void surface_with_action::sweep_F_beta_9_lines(
 
 
 
-void surface_with_action::sweep_6_9_lines(
+void surface_with_action::sweep_general(
 		surface_create_description *Surface_Descr,
 		std::string &sweep_fname,
 		int verbose_level)
@@ -1637,14 +1580,14 @@ void surface_with_action::sweep_6_9_lines(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "surface_with_action::sweep_6_9_lines" << endl;
+		cout << "surface_with_action::sweep_general" << endl;
 	}
 
 	algebra::field_theory::finite_field *F;
 
 	F = PA->F;
 	if (f_v) {
-		cout << "surface_with_action::sweep_6_9_lines q = " << F->q << endl;
+		cout << "surface_with_action::sweep_general q = " << F->q << endl;
 	}
 
 	vector<vector<string>> Properties;
@@ -1693,317 +1636,8 @@ void surface_with_action::sweep_6_9_lines(
 		}
 		ost_csv << endl;
 
-		int cnt;
 
-		cnt = 0;
 
-		int a;
-		for (a = 0; a < F->q; a++) {
-
-			if (a == 0) {
-				continue;
-			}
-
-			if (a == 1) {
-				continue;
-			}
-
-			cout << "a=" << a << endl;
-
-			int c;
-			for (c = 0; c < F->q; c++) {
-
-				if (c == 0) {
-					continue;
-				}
-
-				if (c == 1) {
-					continue;
-				}
-
-				cout << "a=" << a << " c=" << c << endl;
-
-				int d;
-				for (d = 0; d < F->q; d++) {
-
-					if (d == 0) {
-						continue;
-					}
-
-					if (d == F->negate(1)) {
-						continue;
-					}
-
-					cout << "a=" << a << " c=" << c << " d=" << d << endl;
-
-
-					int f;
-					for (f = 0; f < F->q; f++) {
-
-						if (f == 0) {
-							continue;
-						}
-
-						cout << "a=" << a << " c=" << c
-								<< " d=" << d << " f=" << f << endl;
-
-						int g;
-						for (g = 0; g < F->q; g++) {
-
-
-							if (g == 0) {
-								continue;
-							}
-							if (g == f) {
-								continue;
-							}
-
-
-							int kappa3;
-
-							// kappa3 = c*f + d*f -d*g - c + f - g
-
-							kappa3 = F->add6(F->mult(c, f),
-									F->mult(d, f), F->negate(F->mult(d, g)), F->negate(c), f, F->negate(g));
-
-							if (kappa3 == 0) {
-								continue;
-							}
-
-
-
-
-							cout << "a=" << a << " c=" << c << " d=" << d
-									<< " f=" << f << " g=" << g << endl;
-
-							int b;
-							for (b = 0; b < F->q; b++) {
-
-
-								if (b == 0) {
-									continue;
-								}
-								if (b == F->negate(1)) {
-									continue;
-								}
-								if (b == d) {
-									continue;
-								}
-
-								int kappa4;
-								// kappa4 = a*g -b*f + b*g - a
-
-								kappa4 = F->add4(F->mult(a, g),
-										F->negate(F->mult(b, f)), F->mult(b, g), F->negate(a));
-
-								if (kappa4 == 0) {
-									continue;
-								}
-
-								int kappa1;
-
-								kappa1 = F->add3(c, d, 1);
-
-								int gamma1;
-								// gamma1 = a*c + a*d + a + b*c = a * kappa1 + b*c
-
-								gamma1 = F->add(F->mult(a, kappa1),
-										F->mult(b, c));
-
-								if (gamma1 == 0) {
-									continue;
-								}
-
-								int kappa2;
-
-								kappa2 = F->add3(F->mult(d, g), c, g);
-
-								int gamma2;
-								// gamma2 = a * kappa2 + b*c*f
-
-								gamma2 = F->add(F->mult(a, kappa2),
-										F->mult3(b, c, f));
-
-								if (gamma2 == 0) {
-									continue;
-								}
-
-								cout << "a=" << a << " c=" << c
-										<< " d=" << d << " f=" << f
-										<< " g=" << g << " b=" << b << endl;
-
-
-
-
-
-
-
-								Surface_Descr->equation_parameters =
-										"a,b,c,d,f,g";
-
-								Surface_Descr->equation_parameter_values =
-										std::to_string(a) + "," +
-										std::to_string(b) + "," +
-										std::to_string(c) + "," +
-										std::to_string(d) + "," +
-										std::to_string(f) + "," +
-										std::to_string(g);
-
-								surface_create *SC;
-								SC = NEW_OBJECT(surface_create);
-
-								if (f_v) {
-									cout << "surface_with_action::sweep_6_9_lines "
-											"before SC->init" << endl;
-								}
-								SC->init(Surface_Descr, verbose_level);
-								if (f_v) {
-									cout << "surface_with_action::sweep_6_9_lines "
-											"after SC->init" << endl;
-								}
-
-
-
-
-								cout << "the number of lines is "
-										<< SC->SO->Variety_object->Line_sets->Set_size[0] << endl;
-
-
-								if (SC->SOG) {
-									if (f_v) {
-										cout << "surface_with_action::sweep_6_9_lines "
-												"before SC->SOG->print_everything" << endl;
-									}
-
-									SC->SOG->print_everything(cout, verbose_level);
-
-									if (f_v) {
-										cout << "surface_with_action::sweep_6_9_lines "
-												"after SC->SOG->print_everything" << endl;
-									}
-								}
-
-
-#if 1
-								// we want exactly 9 lines:
-								if (SC->SO->Variety_object->Line_sets->Set_size[0] != 9) {
-									cout << "the number of lines is "
-											<< SC->SO->Variety_object->Line_sets->Set_size[0] << " skipping" << endl;
-									continue;
-								}
-
-								// we want nonsingular surfaces:
-								if (SC->SO->SOP->nb_singular_pts) {
-									cout << "the number of singular points is "
-											<< SC->SO->SOP->nb_singular_pts << " skipping" << endl;
-									continue;
-								}
-#endif
-
-
-								vector<string> Props;
-								vector<long int> Pts;
-
-								Props.push_back(std::to_string(cnt));
-								Props.push_back("\"" + Surface_Descr->equation_parameter_values + "\"");
-								Props.push_back(std::to_string(SC->SO->Variety_object->Line_sets->Set_size[0]));
-								Props.push_back(std::to_string(SC->SO->Variety_object->Point_sets->Set_size[0]));
-								Props.push_back(std::to_string(SC->SO->SOP->nb_singular_pts));
-								Props.push_back(std::to_string(SC->SO->SOP->nb_Eckardt_points));
-								Props.push_back(std::to_string(SC->SO->SOP->nb_Double_points));
-								Props.push_back(std::to_string(SC->SO->SOP->nb_Single_points));
-								Props.push_back(std::to_string(SC->SO->SOP->nb_pts_not_on_lines));
-								Props.push_back(std::to_string(SC->SO->SOP->nb_Hesse_planes));
-								Props.push_back(std::to_string(SC->SO->SOP->nb_axes));
-								Props.push_back("\"" + SC->SO->stringify_eqn() + "\"");
-								Props.push_back("\"" + SC->SO->stringify_Pts() + "\"");
-
-								cnt++;
-
-								int i;
-
-								ost_csv << cnt << ",";
-
-								for (i = 0; i < Props.size(); i++) {
-
-									ost_csv << Props[i];
-
-									if (i < Props.size() - 1) {
-										ost_csv << ",";
-									}
-
-								}
-								ost_csv << endl;
-
-								Properties.push_back(Props);
-
-
-#if 0
-								int i;
-								for (i = 0; i < SC->SO->Variety_object->Point_sets->Set_size[0]; i++) {
-									Pts.push_back(SC->SO->Variety_object->Point_sets->Sets[0][i]);
-								}
-								Points.push_back(Pts);
-
-
-								ost_csv << Properties.size() - 1;
-								ost_csv << ",";
-
-								{
-									string str;
-
-									str = "\"" + SC->SO->stringify_eqn() + "\"";
-									ost_csv << str;
-								}
-
-								ost_csv << ",";
-
-								{
-									string str;
-									str = "\"" + SC->SO->stringify_Pts() + "\"";
-									ost_csv << str;
-								}
-
-								ost_csv << ",";
-
-								{
-									int params[6];
-
-									params[0] = a;
-									params[1] = b;
-									params[2] = c;
-									params[3] = d;
-									params[4] = f;
-									params[5] = g;
-									string str;
-									str = "\"" + Int_vec_stringify(params, 6) + "\"";
-									ost_csv << str;
-								}
-
-								ost_csv << ",";
-
-								ost_csv << SC->SO->Variety_object->Line_sets->Set_size[0];
-								ost_csv << ",";
-
-								ost_csv << SC->SO->SOP->nb_singular_pts;
-								ost_csv << ",";
-
-								ost_csv << -1;
-								ost_csv << endl;
-
-#endif
-
-								FREE_OBJECT(SC);
-
-							} // b
-						} // g
-					} // f
-
-				} // d
-
-			} // c
-
-		} // a
 		ost_csv << "END" << endl;
 	}
 	other::orbiter_kernel_system::file_io Fio;
@@ -2027,7 +1661,7 @@ void surface_with_action::sweep_6_9_lines(
 	std::string fname;
 
 	fname = Surface_Descr->equation_name_of_formula
-			+ std::to_string(F->q) + "_sweep_6_9_lines.csv";
+			+ std::to_string(F->q) + "_sweep.csv";
 
 	Fio.Csv_file_support->write_table_of_strings_with_col_headings(
 			fname,
@@ -2035,10 +1669,6 @@ void surface_with_action::sweep_6_9_lines(
 			Col_headings,
 			verbose_level);
 
-#if 0
-	Fio.Csv_file_support->lint_matrix_write_csv(
-			fname, T, N, nb_cols);
-#endif
 
 	cout << "Written file " << fname << " of size "
 			<< Fio.file_size(fname) << endl;
@@ -2072,10 +1702,289 @@ void surface_with_action::sweep_6_9_lines(
 	delete [] Col_headings;
 
 	if (f_v) {
-		cout << "surface_with_action::sweep_6_9_lines done" << endl;
+		cout << "surface_with_action::sweep_general done" << endl;
 	}
 }
 
+
+void surface_with_action::sweep_6_9_lines(
+		surface_create_description *Surface_Descr,
+		algebra::field_theory::finite_field *F,
+		std::vector<std::vector<std::string>> &Properties,
+		std::vector<std::vector<long int>> &Points,
+		std::ofstream &ost_csv,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_with_action::sweep_6_9_lines" << endl;
+	}
+
+
+	int cnt;
+
+	cnt = 0;
+
+	int a;
+	for (a = 0; a < F->q; a++) {
+
+		if (a == 0) {
+			continue;
+		}
+
+		if (a == 1) {
+			continue;
+		}
+
+		cout << "a=" << a << endl;
+
+		int c;
+		for (c = 0; c < F->q; c++) {
+
+			if (c == 0) {
+				continue;
+			}
+
+			if (c == 1) {
+				continue;
+			}
+
+			cout << "a=" << a << " c=" << c << endl;
+
+			int d;
+			for (d = 0; d < F->q; d++) {
+
+				if (d == 0) {
+					continue;
+				}
+
+				if (d == F->negate(1)) {
+					continue;
+				}
+
+				cout << "a=" << a << " c=" << c << " d=" << d << endl;
+
+
+				int f;
+				for (f = 0; f < F->q; f++) {
+
+					if (f == 0) {
+						continue;
+					}
+
+					cout << "a=" << a << " c=" << c
+							<< " d=" << d << " f=" << f << endl;
+
+					int g;
+					for (g = 0; g < F->q; g++) {
+
+
+						if (g == 0) {
+							continue;
+						}
+						if (g == f) {
+							continue;
+						}
+
+
+						int kappa3;
+
+						// kappa3 = c*f + d*f -d*g - c + f - g
+
+						kappa3 = F->add6(F->mult(c, f),
+								F->mult(d, f), F->negate(F->mult(d, g)), F->negate(c), f, F->negate(g));
+
+						if (kappa3 == 0) {
+							continue;
+						}
+
+
+
+
+						cout << "a=" << a << " c=" << c << " d=" << d
+								<< " f=" << f << " g=" << g << endl;
+
+						int b;
+						for (b = 0; b < F->q; b++) {
+
+
+							if (b == 0) {
+								continue;
+							}
+							if (b == F->negate(1)) {
+								continue;
+							}
+							if (b == d) {
+								continue;
+							}
+
+							int kappa4;
+							// kappa4 = a*g -b*f + b*g - a
+
+							kappa4 = F->add4(F->mult(a, g),
+									F->negate(F->mult(b, f)), F->mult(b, g), F->negate(a));
+
+							if (kappa4 == 0) {
+								continue;
+							}
+
+							int kappa1;
+
+							kappa1 = F->add3(c, d, 1);
+
+							int gamma1;
+							// gamma1 = a*c + a*d + a + b*c = a * kappa1 + b*c
+
+							gamma1 = F->add(F->mult(a, kappa1),
+									F->mult(b, c));
+
+							if (gamma1 == 0) {
+								continue;
+							}
+
+							int kappa2;
+
+							kappa2 = F->add3(F->mult(d, g), c, g);
+
+							int gamma2;
+							// gamma2 = a * kappa2 + b*c*f
+
+							gamma2 = F->add(F->mult(a, kappa2),
+									F->mult3(b, c, f));
+
+							if (gamma2 == 0) {
+								continue;
+							}
+
+							cout << "a=" << a << " c=" << c
+									<< " d=" << d << " f=" << f
+									<< " g=" << g << " b=" << b << endl;
+
+
+
+
+
+
+
+							Surface_Descr->equation_parameters =
+									"a,b,c,d,f,g";
+
+							Surface_Descr->equation_parameter_values =
+									std::to_string(a) + "," +
+									std::to_string(b) + "," +
+									std::to_string(c) + "," +
+									std::to_string(d) + "," +
+									std::to_string(f) + "," +
+									std::to_string(g);
+
+							surface_create *SC;
+							SC = NEW_OBJECT(surface_create);
+
+							if (f_v) {
+								cout << "surface_with_action::sweep_6_9_lines "
+										"before SC->init" << endl;
+							}
+							SC->init(Surface_Descr, verbose_level);
+							if (f_v) {
+								cout << "surface_with_action::sweep_6_9_lines "
+										"after SC->init" << endl;
+							}
+
+
+
+
+							cout << "the number of lines is "
+									<< SC->SO->Variety_object->Line_sets->Set_size[0] << endl;
+
+
+							if (SC->SOG) {
+								if (f_v) {
+									cout << "surface_with_action::sweep_6_9_lines "
+											"before SC->SOG->print_everything" << endl;
+								}
+
+								SC->SOG->print_everything(cout, verbose_level);
+
+								if (f_v) {
+									cout << "surface_with_action::sweep_6_9_lines "
+											"after SC->SOG->print_everything" << endl;
+								}
+							}
+
+
+#if 1
+							// we want exactly 9 lines:
+							if (SC->SO->Variety_object->Line_sets->Set_size[0] != 9) {
+								cout << "the number of lines is "
+										<< SC->SO->Variety_object->Line_sets->Set_size[0] << " skipping" << endl;
+								continue;
+							}
+
+							// we want nonsingular surfaces:
+							if (SC->SO->SOP->nb_singular_pts) {
+								cout << "the number of singular points is "
+										<< SC->SO->SOP->nb_singular_pts << " skipping" << endl;
+								continue;
+							}
+#endif
+
+
+							vector<string> Props;
+							vector<long int> Pts;
+
+							Props.push_back(std::to_string(cnt));
+							Props.push_back("\"" + Surface_Descr->equation_parameter_values + "\"");
+							Props.push_back(std::to_string(SC->SO->Variety_object->Line_sets->Set_size[0]));
+							Props.push_back(std::to_string(SC->SO->Variety_object->Point_sets->Set_size[0]));
+							Props.push_back(std::to_string(SC->SO->SOP->nb_singular_pts));
+							Props.push_back(std::to_string(SC->SO->SOP->nb_Eckardt_points));
+							Props.push_back(std::to_string(SC->SO->SOP->nb_Double_points));
+							Props.push_back(std::to_string(SC->SO->SOP->nb_Single_points));
+							Props.push_back(std::to_string(SC->SO->SOP->nb_pts_not_on_lines));
+							Props.push_back(std::to_string(SC->SO->SOP->nb_Hesse_planes));
+							Props.push_back(std::to_string(SC->SO->SOP->nb_axes));
+							Props.push_back("\"" + SC->SO->stringify_eqn() + "\"");
+							Props.push_back("\"" + SC->SO->stringify_Pts() + "\"");
+
+							cnt++;
+
+							int i;
+
+							ost_csv << cnt << ",";
+
+							for (i = 0; i < Props.size(); i++) {
+
+								ost_csv << Props[i];
+
+								if (i < Props.size() - 1) {
+									ost_csv << ",";
+								}
+
+							}
+							ost_csv << endl;
+
+							Properties.push_back(Props);
+
+
+
+							FREE_OBJECT(SC);
+
+						} // b
+					} // g
+				} // f
+
+			} // d
+
+		} // c
+
+	} // a
+
+	if (f_v) {
+		cout << "surface_with_action::sweep_6_9_lines done" << endl;
+	}
+
+}
 
 #if 0
 void surface_with_action::sweep_4_27(

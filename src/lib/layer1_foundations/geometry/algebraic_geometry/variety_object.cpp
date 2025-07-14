@@ -651,18 +651,42 @@ void variety_object::init_equation_and_points_and_lines_and_labels(
 				"after init_equation_only" << endl;
 	}
 
+	if (f_v) {
+		cout << "variety_object::init_equation_and_points_and_lines_and_labels "
+				"nb_pts = " << nb_pts << endl;
+	}
+	if (f_v) {
+		cout << "variety_object::init_equation_and_points_and_lines_and_labels "
+				"before Point_sets->init_single" << endl;
+	}
 	Point_sets = NEW_OBJECT(other::data_structures::set_of_sets);
 	Point_sets->init_single(
 			Projective_space->Subspaces->N_points /* underlying_set_size */,
 			Pts, nb_pts, 0 /* verbose_level*/);
+	if (f_v) {
+		cout << "variety_object::init_equation_and_points_and_lines_and_labels "
+				"before Point_sets->init_single" << endl;
+	}
 
 
+	if (f_v) {
+		cout << "variety_object::init_equation_and_points_and_lines_and_labels "
+				"nb_bitangents = " << nb_bitangents << endl;
+	}
 
+	if (f_v) {
+		cout << "variety_object::init_equation_and_points_and_lines_and_labels "
+				"before Line_sets->init_single" << endl;
+	}
 	Line_sets = NEW_OBJECT(other::data_structures::set_of_sets);
 
 	Line_sets->init_single(
 			Projective_space->Subspaces->N_points /* underlying_set_size */,
 			Bitangents, nb_bitangents, 0 /* verbose_level*/);
+	if (f_v) {
+		cout << "variety_object::init_equation_and_points_and_lines_and_labels "
+				"after Line_sets->init_single" << endl;
+	}
 
 	variety_object::label_txt = label_txt;
 	variety_object::label_tex = label_tex;

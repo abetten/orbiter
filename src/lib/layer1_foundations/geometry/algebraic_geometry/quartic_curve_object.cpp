@@ -396,6 +396,12 @@ void quartic_curve_object::init_equation_and_bitangents_and_compute_properties(
 				"after init_equation_and_bitangents" << endl;
 	}
 
+	if (f_v) {
+		cout << "quartic_curve_object::init_equation_and_bitangents_and_compute_properties "
+				"nb_points = " << get_nb_points() << endl;
+		cout << "quartic_curve_object::init_equation_and_bitangents_and_compute_properties "
+				"nb_lines = " << get_nb_lines() << endl;
+	}
 
 	if (f_v) {
 		cout << "quartic_curve_object::init_equation_and_bitangents_and_compute_properties "

@@ -567,15 +567,15 @@ void projective_space_activity::perform_activity(
 
 		if (f_v) {
 			cout << "projective_space_activity::perform_activity "
-					"before Surf_A->sweep_6_9_lines" << endl;
+					"before Surf_A->sweep_general" << endl;
 		}
-		PA->Surf_A->sweep_6_9_lines(
+		PA->Surf_A->sweep_general(
 				Descr->sweep_6_9_lines_surface_description,
 				Descr->sweep_6_9_lines_fname,
 				verbose_level);
 		if (f_v) {
 			cout << "projective_space_activity::perform_activity "
-					"after Surf_A->sweep_6_9_lines" << endl;
+					"after Surf_A->sweep_general" << endl;
 		}
 
 

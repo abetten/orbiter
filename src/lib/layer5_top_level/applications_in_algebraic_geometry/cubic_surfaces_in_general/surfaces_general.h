@@ -951,9 +951,16 @@ public:
 			surface_create_description *Surface_Descr,
 			std::string &sweep_fname,
 			int verbose_level);
-	void sweep_6_9_lines(
+	void sweep_general(
 			surface_create_description *Surface_Descr,
 			std::string &sweep_fname,
+			int verbose_level);
+	void sweep_6_9_lines(
+			surface_create_description *Surface_Descr,
+			algebra::field_theory::finite_field *F,
+			std::vector<std::vector<std::string>> &Properties,
+			std::vector<std::vector<long int>> &Points,
+			std::ofstream &ost_csv,
 			int verbose_level);
 #if 0
 	void sweep_4_27(
