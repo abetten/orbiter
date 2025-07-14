@@ -643,6 +643,17 @@ void variety_object::init_equation_and_points_and_lines_and_labels(
 
 	if (f_v) {
 		cout << "variety_object::init_equation_and_points_and_lines_and_labels "
+				"Projective_space = " << Projective_space->label_txt << endl;
+		cout << "variety_object::init_equation_and_points_and_lines_and_labels "
+				"Ring = " << Ring->get_label_txt() << endl;
+		cout << "variety_object::init_equation_and_points_and_lines_and_labels "
+				"equation = ";
+		Int_vec_print(cout, equation, Ring->get_nb_monomials());
+		cout << endl;
+	}
+
+	if (f_v) {
+		cout << "variety_object::init_equation_and_points_and_lines_and_labels "
 				"before init_equation_only" << endl;
 	}
 	init_equation_only(Projective_space, Ring, equation, verbose_level);
