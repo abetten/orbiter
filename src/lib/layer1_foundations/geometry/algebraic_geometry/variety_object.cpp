@@ -564,11 +564,23 @@ void variety_object::init_equation_only(
 		cout << "variety_object::init_equation_only" << endl;
 	}
 
+	if (f_v) {
+		cout << "variety_object::init_equation_only 1" << endl;
+	}
 	variety_object::Projective_space = Projective_space;
+	if (f_v) {
+		cout << "variety_object::init_equation_only 2" << endl;
+	}
 	variety_object::Ring = Ring;
+	if (f_v) {
+		cout << "variety_object::init_equation_only 3" << endl;
+	}
 
 
 	eqn = NEW_int(Ring->get_nb_monomials());
+	if (f_v) {
+		cout << "variety_object::init_equation_only 4" << endl;
+	}
 	Int_vec_copy(
 			equation, eqn, Ring->get_nb_monomials());
 
