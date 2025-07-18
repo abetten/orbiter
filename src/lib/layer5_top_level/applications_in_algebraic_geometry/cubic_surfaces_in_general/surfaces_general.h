@@ -42,7 +42,7 @@ public:
 
 	int f_export_gap;
 
-	int f_all_quartic_curves;
+	int f_report_all_flag_orbits;
 
 	int f_export_all_quartic_curves;
 
@@ -302,7 +302,7 @@ public:
 			int verbose_level);
 	void test_group(
 			int verbose_level);
-	void all_quartic_curves(
+	void report_all_flag_orbits(
 			int verbose_level);
 	void export_all_quartic_curves(
 			int verbose_level);
@@ -723,12 +723,15 @@ public:
 			cubic_surfaces_and_arcs::six_arcs_not_on_a_conic *Six_arcs,
 			std::string &fname_mask,
 			int verbose_level);
-	void all_quartic_curves(
+	void report_all_flag_orbits(
 			std::string &surface_label_txt,
 			std::string &surface_label_tex,
 			std::ostream &ost,
 			int verbose_level);
 	void export_all_quartic_curves(
+			std::string &fname_curves,
+			int verbose_level);
+	void prepare_data(
 			std::string &headings,
 			std::string *&Table,
 			int &nb_rows, int &nb_cols,
@@ -943,6 +946,7 @@ public:
 			std::ostream &ost);
 	void report_double_triplets_detailed(
 			std::ostream &ost);
+#if 0
 	void sweep_4_15_lines(
 			surface_create_description *Surface_Descr,
 			std::string &sweep_fname,
@@ -951,16 +955,36 @@ public:
 			surface_create_description *Surface_Descr,
 			std::string &sweep_fname,
 			int verbose_level);
+#endif
 	void sweep_general(
 			surface_create_description *Surface_Descr,
-			std::string &sweep_fname,
+			std::string &sweep_options,
 			int verbose_level);
 	void sweep_6_9_lines(
 			surface_create_description *Surface_Descr,
 			algebra::field_theory::finite_field *F,
-			std::vector<std::vector<std::string>> &Properties,
-			std::vector<std::vector<long int>> &Points,
+			std::vector<std::vector<std::string> > &Properties,
 			std::ofstream &ost_csv,
+			int verbose_level);
+	void sweep_9_lines_8(
+			surface_create_description *Surface_Descr,
+			algebra::field_theory::finite_field *F,
+			std::map<std::string, std::string> &options,
+			std::vector<std::vector<std::string> > &Properties,
+			std::ofstream &ost_csv,
+			int verbose_level);
+	void sweep_9_lines_8_b(
+			surface_create_description *Surface_Descr,
+			algebra::field_theory::finite_field *F,
+			std::map<std::string, std::string> &options,
+			std::vector<std::vector<std::string> > &Properties,
+			std::ofstream &ost_csv,
+			int verbose_level);
+	void sweep_collect_properties(
+			int cnt,
+			surface_create_description *Surface_Descr,
+			surface_create *SC,
+			std::vector<std::string> &Props,
 			int verbose_level);
 #if 0
 	void sweep_4_27(

@@ -466,6 +466,50 @@ void surface_classify_wedge::report(
 	}
 
 	if (f_v) {
+		cout << "surface_object_with_group::print_everything "
+				"before latex_table_of_trihedral_pairs" << endl;
+	}
+	Surf->Schlaefli->Schlaefli_trihedral_pairs->latex_table_of_trihedral_pairs(ost);
+	if (f_v) {
+		cout << "surface_object_with_group::print_everything "
+				"after latex_table_of_trihedral_pairs" << endl;
+	}
+
+	if (f_v) {
+		cout << "surface_object_with_group::print_everything "
+				"before latex_tritangent_planes" << endl;
+	}
+	Surf->Schlaefli->Schlaefli_tritangent_planes->latex_tritangent_planes(
+			ost);
+	if (f_v) {
+		cout << "surface_object_with_group::print_everything "
+				"after latex_tritangent_planes" << endl;
+	}
+
+	if (f_v) {
+		cout << "surface_object_with_group::print_everything "
+				"before latex_table_of_double_sixes" << endl;
+	}
+	Surf->Schlaefli->Schlaefli_double_six->latex_table_of_double_sixes(
+			ost);
+	if (f_v) {
+		cout << "surface_object_with_group::print_everything "
+				"after latex_table_of_double_sixes" << endl;
+	}
+
+	if (f_v) {
+		cout << "surface_object_with_group::print_everything "
+				"before latex_table_of_half_double_sixes" << endl;
+	}
+	Surf->Schlaefli->Schlaefli_double_six->latex_table_of_half_double_sixes(
+			ost);
+	if (f_v) {
+		cout << "surface_object_with_group::print_everything "
+				"after latex_table_of_half_double_sixes" << endl;
+	}
+
+
+	if (f_v) {
 		cout << "surface_classify_wedge::report done" << endl;
 	}
 }

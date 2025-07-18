@@ -103,8 +103,10 @@ projective_space_activity_description::projective_space_activity_description()
 
 
 	f_sweep = false;
-	//std::string sweep_fname;
+	//std::string sweep_options;
+	sweep_surface_description = NULL;
 
+#if 0
 	f_sweep_4_15_lines = false;
 	//std::string sweep_4_15_lines_fname;
 	sweep_4_15_lines_surface_description = NULL;
@@ -113,11 +115,7 @@ projective_space_activity_description::projective_space_activity_description()
 	//std::string sweep_F_beta_9_lines_fname;
 	sweep_F_beta_9_lines_surface_description = NULL;
 
-	f_sweep_6_9_lines = false;
-	//std::string sweep_6_9_lines_fname;
-	sweep_6_9_lines_surface_description = NULL;
 
-#if 0
 	f_sweep_4_27 = false;
 	//std::string sweep_4_27_fname;
 	sweep_4_27_surface_description = NULL;
@@ -548,12 +546,28 @@ int projective_space_activity_description::read_arguments(
 
 		else if (ST.stringcmp(argv[i], "-sweep") == 0) {
 			f_sweep = true;
-			sweep_fname.assign(argv[++i]);
+			sweep_options.assign(argv[++i]);
+			sweep_surface_description =
+					NEW_OBJECT(applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create_description);
 			if (f_v) {
-				cout << "-sweep " << sweep_fname << endl;
+				cout << "-sweep" << endl;
+			}
+			i += sweep_surface_description->read_arguments(
+					argc - (i + 1), argv + i + 1,
+					verbose_level);
+			if (f_v) {
+				cout << "done with -sweep" << endl;
+				cout << "i = " << i << endl;
+				cout << "argc = " << argc << endl;
+				if (i < argc) {
+					cout << "next argument is " << argv[i] << endl;
+				}
+				cout << "-sweep " << sweep_options << endl;
+				sweep_surface_description->print();
 			}
 		}
 
+#if 0
 		else if (ST.stringcmp(argv[i], "-sweep_4_15_lines") == 0) {
 			f_sweep_4_15_lines = true;
 			sweep_4_15_lines_fname.assign(argv[++i]);
@@ -600,7 +614,6 @@ int projective_space_activity_description::read_arguments(
 			}
 		}
 
-
 		else if (ST.stringcmp(argv[i], "-sweep_6_9_lines") == 0) {
 			f_sweep_6_9_lines = true;
 			sweep_6_9_lines_fname.assign(argv[++i]);
@@ -623,6 +636,7 @@ int projective_space_activity_description::read_arguments(
 				sweep_6_9_lines_surface_description->print();
 			}
 		}
+#endif
 #if 0
 		else if (ST.stringcmp(argv[i], "-sweep_4_27") == 0) {
 			f_sweep_4_27 = true;
@@ -1308,26 +1322,24 @@ void projective_space_activity_description::print()
 	// TABLES/projective_space_activity_2.tex
 
 
-
 	if (f_sweep) {
-		cout << "-sweep " << sweep_fname << endl;
+		cout << "-sweep " << sweep_options << endl;
+		sweep_surface_description->print();
 	}
 
+#if 0
 	if (f_sweep_4_15_lines) {
 		cout << "-sweep_4_15_lines " << sweep_4_15_lines_fname << endl;
 		sweep_4_15_lines_surface_description->print();
 	}
-
 	if (f_sweep_F_beta_9_lines) {
 		cout << "-sweep_F_beta_9_lines " << sweep_F_beta_9_lines_fname << endl;
 		sweep_F_beta_9_lines_surface_description->print();
 	}
-
 	if (f_sweep_6_9_lines) {
 		cout << "-sweep_6_9_lines " << sweep_6_9_lines_fname << endl;
 		sweep_6_9_lines_surface_description->print();
 	}
-#if 0
 	if (f_sweep_4_27) {
 		cout << "-sweep_4_27 " << sweep_4_27_fname << endl;
 	}

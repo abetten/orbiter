@@ -43,7 +43,7 @@ classification_of_varieties_nauty::classification_of_varieties_nauty()
 	Iso_idx = NULL;
 	Idx_canonical_form = NULL;
 	Idx_equation = NULL;
-	nb_iso_orbits = 0;
+	nb_isomorphism_classes = 0;
 	Orbit_input_idx = NULL;
 
 	Classification_table_nauty = NULL;
@@ -336,7 +336,7 @@ void classification_of_varieties_nauty::allocate_tables(
 	Idx_canonical_form = NEW_int(Input->nb_objects_to_test);
 	Idx_equation = NEW_int(Input->nb_objects_to_test);
 	Orbit_input_idx = NEW_int(Input->nb_objects_to_test);
-	nb_iso_orbits = 0;
+	nb_isomorphism_classes = 0;
 
 
 
@@ -512,8 +512,8 @@ void classification_of_varieties_nauty::handle_one_input_case(
 			}
 		}
 
-		Orbit_input_idx[nb_iso_orbits] = input_counter;
-		nb_iso_orbits++;
+		Orbit_input_idx[nb_isomorphism_classes] = input_counter;
+		nb_isomorphism_classes++;
 
 		nb_iso++;
 
@@ -580,6 +580,8 @@ void classification_of_varieties_nauty::write_classification_by_nauty_csv(
 		cout << "classification_of_varieties_nauty::write_classification_by_nauty_csv done" << endl;
 	}
 }
+
+
 
 std::string classification_of_varieties_nauty::stringify_csv_header_line_nauty(
 		int verbose_level)
@@ -722,7 +724,7 @@ void classification_of_varieties_nauty::report_iso_types(
 	}
 
 
-	nb_orbits = nb_iso_orbits;
+	nb_orbits = nb_isomorphism_classes;
 
 
 	int idx;

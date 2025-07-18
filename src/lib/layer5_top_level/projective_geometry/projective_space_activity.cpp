@@ -513,6 +513,30 @@ void projective_space_activity::perform_activity(
 
 
 
+	else if (Descr->f_sweep) {
+
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"-sweep" << endl;
+		}
+
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"before Surf_A->sweep_general" << endl;
+		}
+		PA->Surf_A->sweep_general(
+				Descr->sweep_surface_description,
+				//Descr->sweep_fname,
+				Descr->sweep_options,
+				verbose_level);
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"after Surf_A->sweep_general" << endl;
+		}
+
+
+	}
+#if 0
 	else if (Descr->f_sweep_4_15_lines) {
 
 		//applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_domain_high_level SH;
@@ -558,28 +582,7 @@ void projective_space_activity::perform_activity(
 		}
 
 	}
-	else if (Descr->f_sweep_6_9_lines) {
-
-		if (f_v) {
-			cout << "projective_space_activity::perform_activity "
-					"-sweep_6_9_lines" << endl;
-		}
-
-		if (f_v) {
-			cout << "projective_space_activity::perform_activity "
-					"before Surf_A->sweep_general" << endl;
-		}
-		PA->Surf_A->sweep_general(
-				Descr->sweep_6_9_lines_surface_description,
-				Descr->sweep_6_9_lines_fname,
-				verbose_level);
-		if (f_v) {
-			cout << "projective_space_activity::perform_activity "
-					"after Surf_A->sweep_general" << endl;
-		}
-
-
-	}
+#endif
 #if 0
 	else if (Descr->f_sweep_4_27) {
 

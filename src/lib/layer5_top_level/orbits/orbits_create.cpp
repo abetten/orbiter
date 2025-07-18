@@ -871,19 +871,18 @@ void orbits_create::init(
 
 		if (f_v) {
 			cout << "orbits_create::init "
-					"before Canonical_form_classifier->init" << endl;
+					"before Canonical_form_classifier->init_objects_from_list_of_csv_files" << endl;
 		}
 		Canonical_form_classifier->init_objects_from_list_of_csv_files(
 				Descr->Canonical_form_classifier_description,
-				verbose_level);
+				verbose_level - 2);
 		if (f_v) {
 			cout << "orbits_create::init "
-					"after Canonical_form_classifier->init" << endl;
+					"after Canonical_form_classifier->init_objects_from_list_of_csv_files" << endl;
 		}
-		if (f_v) {
-			cout << "orbits_create::init "
-					"before Classifier.classify" << endl;
-		}
+
+		// now Input is set
+
 
 		std::string fname_base;
 
@@ -894,10 +893,19 @@ void orbits_create::init(
 			fname_base = "classification_";
 		}
 
+		if (f_v) {
+			cout << "orbits_create::init "
+					"fname_base = " << fname_base << endl;
+		}
+
+		if (f_v) {
+			cout << "orbits_create::init "
+					"before Canonical_form_classifier->classify" << endl;
+		}
 		Canonical_form_classifier->classify(
 				Canonical_form_classifier->Input,
 				fname_base,
-				verbose_level);
+				verbose_level - 2);
 		if (f_v) {
 			cout << "orbits_create::init "
 					"after Classifier.classify" << endl;

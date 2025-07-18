@@ -366,20 +366,24 @@ public:
 	int canonical_labeling_len;
 
 	// output data, nauty specific:
-	int *F_first_time; // [Canonical_form_classifier->Input->nb_objects_to_test]
-	int *Iso_idx; // [Canonical_form_classifier->Input->nb_objects_to_test]
-	int *Idx_canonical_form; // [Canonical_form_classifier->Input->nb_objects_to_test]
-	int *Idx_equation; // [Canonical_form_classifier->Input->nb_objects_to_test]
-	int nb_iso_orbits;
-	int *Orbit_input_idx; // [nb_iso_orbits]
+	// allocated in classify_nauty() -> allocate_tables()
+	int *F_first_time; // [Input->nb_objects_to_test]
+	int *Iso_idx; // [Input->nb_objects_to_test]
+		// it is -1 if we skip this one
+	int *Idx_canonical_form; // [Input->nb_objects_to_test]
+	int *Idx_equation; // [Input->nb_objects_to_test]
 
-	int *Classification_table_nauty; // [Canonical_form_classifier->Input->nb_objects_to_test * 4]
+	// number of isomorphism types:
+	int nb_isomorphism_classes;
+	int *Orbit_input_idx; // [nb_isomorphism_classes]
+
+	int *Classification_table_nauty; // [Input->nb_objects_to_test * 4]
 
 
 
 	// input and output data
 
-	variety_compute_canonical_form **Canonical_forms; // [Canonical_form_classifier->Input->nb_objects_to_test]
+	variety_compute_canonical_form **Canonical_forms; // [Input->nb_objects_to_test]
 
 
 	// ELt is the lifting of gamma:

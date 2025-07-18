@@ -210,7 +210,7 @@ void quartic_curve_from_surface::create_quartic_curve(
 	}
 	map_surface_to_special_form(
 			pt_orbit,
-			0 /*verbose_level - 2*/);
+			verbose_level);
 	if (f_v) {
 		cout << "quartic_curve_from_surface::create_quartic_curve "
 				"after map_surface_to_special_form" << endl;
@@ -231,7 +231,7 @@ void quartic_curve_from_surface::create_quartic_curve(
 	}
 	SOA->Surf->PolynomialDomains->split_nice_equation(
 			equation_nice, f1, f2, f3,
-			0 /* verbose_level */);
+			verbose_level - 2);
 	if (f_v) {
 		cout << "quartic_curve_from_surface::create_quartic_curve "
 			"after Surf->split_nice_equation" << endl;
@@ -269,7 +269,7 @@ void quartic_curve_from_surface::create_quartic_curve(
 			SOA->SO->Variety_object->Point_sets->Sets[0], Pts_on_surface,
 			nb_pts_on_surface,
 			transporter,
-			0 /* verbose_level */);
+			verbose_level - 2);
 	if (f_v) {
 		cout << "quartic_curve_from_surface::create_quartic_curve "
 			"after Surf_A->A->map_a_set_and_reorder" << endl;

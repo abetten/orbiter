@@ -22,6 +22,7 @@ namespace cubic_surfaces_in_general {
 cubic_surface_activity_description::cubic_surface_activity_description()
 {
 	Record_birth();
+
 	f_report = false;
 	//std::string report_draw_options_label;
 
@@ -34,7 +35,7 @@ cubic_surface_activity_description::cubic_surface_activity_description()
 
 	f_export_gap = false;
 
-	f_all_quartic_curves = false;
+	f_report_all_flag_orbits = false;
 
 	f_export_all_quartic_curves = false;
 
@@ -111,10 +112,10 @@ int cubic_surface_activity_description::read_arguments(
 				cout << "-export_gap " << endl;
 			}
 		}
-		else if (ST.stringcmp(argv[i], "-all_quartic_curves") == 0) {
-			f_all_quartic_curves = true;
+		else if (ST.stringcmp(argv[i], "-report_all_flag_orbits") == 0) {
+			f_report_all_flag_orbits = true;
 			if (f_v) {
-				cout << "-all_quartic_curves " << endl;
+				cout << "-report_all_flag_orbits " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-export_all_quartic_curves") == 0) {
@@ -216,8 +217,8 @@ void cubic_surface_activity_description::print()
 	if (f_export_gap) {
 		cout << "-export_gap " << endl;
 	}
-	if (f_all_quartic_curves) {
-		cout << "-all_quartic_curves " << endl;
+	if (f_report_all_flag_orbits) {
+		cout << "-report_all_flag_orbits " << endl;
 	}
 	if (f_export_all_quartic_curves) {
 		cout << "-export_all_quartic_curves " << endl;

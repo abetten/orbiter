@@ -753,7 +753,10 @@ public:
 
 	int nb_input; // = Classification_of_objects->IS->Objects.size();
 
-	// all the following are indexed by the input_idx, not by the index in the isomorphism transversal
+
+	// each of the following is indexed by the input_idx,
+	// not by the index in the isomorphism transversal
+	// all are allocated in init()
 
 	long int *Ago; // [nb_input]
 	int *F_reject; // [nb_input]
@@ -763,15 +766,19 @@ public:
 
 
 
+
 	// the classification:
 
 	int nb_orbits; // number of isomorphism types
+
+	// allocated in after_classification()
 
 	int *Idx_transversal; // [nb_orbits]
 		// Idx_transversal[i] is the input index of the i-th isomorphism class
 
 	long int *Ago_transversal; // [nb_orbits]
-		// Ago_transversal[i] is the order of the automorphism group of the i-th isomorphism class
+		// Ago_transversal[i] is the order of the
+		// automorphism group of the i-th isomorphism class
 
 
 	//any_combinatorial_object **OWCF_transversal; // [nb_orbits]
@@ -779,6 +786,7 @@ public:
 
 
 	other::data_structures::tally *T_Ago;
+	// stats of Ago_transversal, computed in after_classification()
 
 
 	data_input_stream_output();

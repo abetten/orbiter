@@ -843,6 +843,12 @@ HIRSCHFELD_SURFACE_HESSE_PLANES="7,8,11,13,14,16,17,19,28,\
 # Section 9.5 Quartic curves
 
 
+EQUATION_SURFACE_Q29_ISO4_ORB7_F1="11*x1 + 6*x2 + 7*x3"
+
+EQUATION_SURFACE_Q29_ISO4_ORB7_F2="17*x1^2 + 27*x2^2 + 8*x3^2 + 13*x1*x2 + 25*x1*x3 + 20*x2*x3"
+
+EQUATION_SURFACE_Q29_ISO4_ORB7_F3="27*x3^3 + 28*x1^2*x3 + 17*x2^2*x3 + x1*x3^2 + 2*x2*x3^2 + 17*x1*x2*x3"
+
 
 
 # Section 9.6 Classification of quartic curves
@@ -3424,6 +3430,7 @@ test_3_2:
 	make F_8b
 	make F_9
 	make F_16
+	make F_16_calculate
 	make F_16_tables
 	make F_64
 	make nth_roots_63
@@ -3528,6 +3535,13 @@ F_16:
 	$(OPEN) GF_16.pdf
 
 
+F_16_calculate:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 16 -end \
+		-define M -symbolic_object \
+			-field F \
+			-text "2*12" \
+		-end
 
 
 F_16_tables:
@@ -10290,6 +10304,7 @@ test_7_6:
 	make Hirschfeld_q2_group
 	make Hirschfeld_q4_group
 	make Barth_sextic_mod_11
+	make variety_Dickson36_9lines_q4_group
 
 
 
@@ -10466,6 +10481,38 @@ Barth_sextic_mod_11:
 
 
 
+variety_Dickson36_9lines_q4_group:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 4 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 4 \
+			-homogeneous_of_degree 3 \
+			-monomial_ordering_partition \
+			-variables "X0,X1,X2,X3" \
+				"X_0,X_1,X_2,X_3" \
+		-end \
+		-define V -variety \
+			-projective_space P \
+			-ring R \
+			-equation_in_algebraic_form \
+				"X0^3+X1^3+X2^3+X3^3+X0^2*X3+X1^2*X2" \
+			-compute_lines \
+			-label_txt Dickson36 \
+			-label_tex "{\\rm Dickson36}" \
+		-end \
+		-with V -do -variety_activity -compute_group \
+			-nauty_control -save_orbit_of_equations eqn_ -end \
+		-end \
+		-with V -do -variety_activity -compute_set_stabilizer \
+			-nauty_control -save_orbit_of_equations eqn_ -end \
+		-end \
+		-with V -do -variety_activity -singular_points -end \
+		-with V -do -variety_activity -export -end \
+		-with V -do -variety_activity -report -end
+	$(PDFLATEX) variety_Dickson36_report.tex
+	$(OPEN) variety_Dickson36_report.pdf
 
 
 
@@ -12966,7 +13013,7 @@ surface_8_0:
 		-with S -do \
 		-cubic_surface_activity \
 			-report Do \
-			-all_quartic_curves \
+			-report_all_flag_orbits \
 		-end \
 		-with S -do \
 		-cubic_surface_activity \
@@ -13072,7 +13119,7 @@ surface_9_0:
 		-with S -do \
 		-cubic_surface_activity \
 			-report Do \
-			-all_quartic_curves \
+			-report_all_flag_orbits \
 		-end \
 		-with S -do \
 		-cubic_surface_activity \
@@ -13108,7 +13155,7 @@ surface_9_1:
 		-with S -do \
 		-cubic_surface_activity \
 			-report Do \
-			-all_quartic_curves \
+			-report_all_flag_orbits \
 		-end \
 		-with S -do \
 		-cubic_surface_activity \
@@ -13804,6 +13851,10 @@ test_9_5:
 	make surface_9_1_make_quartic_curves
 	make quartic_curves_q13
 	make quartic_curves_q19
+	make quartic_curves_q29_po4_export
+	make quartic_curves_q29_po4_flag_orbits_report
+	make symbolic_equation_of_curve_q29_po4_so7
+	make quartic_curve_29_121
 
 
 quartic_curve_9_0: 
@@ -13865,7 +13916,7 @@ surface_7_0_make_quartic_curves:
 		-with S -do \
 		-cubic_surface_activity \
 			-report Do \
-			-all_quartic_curves \
+			-report_all_flag_orbits \
 		-end
 	#$(PDFLATEX) surface_catalogue_q7_iso0_report.tex
 	#$(OPEN) surface_catalogue_q7_iso0_report.pdf
@@ -13899,7 +13950,7 @@ surface_9_1_make_quartic_curves:
 		-with S -do \
 		-cubic_surface_activity \
 			-report Do \
-			-all_quartic_curves \
+			-report_all_flag_orbits \
 		-end
 	#$(PDFLATEX) surface_catalogue_q9_iso1_report.tex
 	#$(OPEN) surface_catalogue_q9_iso1_report.pdf
@@ -13946,14 +13997,92 @@ quartic_curves_q19:
 
 
 
+quartic_curves_q29_po4_export:
+	$(ORBITER) -v 10 \
+		-define F -finite_field -q 29 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define S_4 -cubic_surface -space P -catalogue 4 -end \
+		-print_symbols \
+		-with S_4 -do \
+		-cubic_surface_activity \
+			-export_all_quartic_curves \
+		-end \
+		-print_symbols
+
+#The equation is of the form $X_0^2f_1(X_1,X_2,X_3) + X_0f_2(X_1,X_2,X_3) + f_3(X_1,X_2,X_3)$, where
+#f1=
+#11*x1 + 6*x2 + 7*x3
+#f2=
+#17*x1^2 + 27*x2^2 + 8*x3^2 + 13*x1*x2 + 25*x1*x3 + 20*x2*x3
+#f3=
+#27*x3^3 + 28*x1^2*x3 + 17*x2^2*x3 + x1*x3^2 + 2*x2*x3^2 + 17*x1*x2*x3
+
+
+quartic_curves_q29_po4_flag_orbits_report:
+	$(ORBITER) -v 10 \
+		-define F -finite_field -q 29 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define S_4 -cubic_surface -space P -catalogue 4 -end \
+		-print_symbols \
+		-with S_4 -do \
+		-cubic_surface_activity \
+			-report_all_flag_orbits \
+		-end \
+		-print_symbols
+	pdflatex surface_catalogue_q29_iso4_quartics.tex
+	open surface_catalogue_q29_iso4_quartics.pdf
+
+
+#User time: 1:52
+
+symbolic_equation_of_curve_q29_po4_so7:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 29 -end \
+		-define f1 -symbolic_object \
+			-field F \
+			-text $(EQUATION_SURFACE_Q29_ISO4_ORB7_F1) \
+		-end \
+		-define f2 -symbolic_object \
+			-field F \
+			-text $(EQUATION_SURFACE_Q29_ISO4_ORB7_F2) \
+		-end \
+		-define f3 -symbolic_object \
+			-field F \
+			-text $(EQUATION_SURFACE_Q29_ISO4_ORB7_F3) \
+		-end \
+		-define curve -symbolic_object \
+			-field F \
+			-text "f2^2-4*f1*f3" \
+		-end \
+		-define curve_x -symbolic_object \
+			-field F \
+			-expand curve \
+		-end
+
+#  0 : (28 * x1 ^ 4) + (7 * x1 ^ 3 * x2) + (24 * x1 ^ 3 * x3) + (14 * x1 ^ 2 * x2 ^ 2) + (26 * x1 ^ 2 * x2 * x3) + (11 * x1 ^ 2 * x3 ^ 2) + (6 * x1 * x2 ^ 3) + (18 * x1 * x2 ^ 2 * x3) + (11 * x1 * x2 * x3 ^ 2) + (25 * x1 * x3 ^ 3) + (4 * x2 ^ 4) + (5 * x2 ^ 3 * x3) + (18 * x2 ^ 2 * x3 ^ 2) + (22 * x2 * x3 ^ 3) + (4 * x3 ^ 4)
+
+
+
+quartic_curve_29_121: 
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 29 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define C -quartic_curve -space P -catalogue 121 -end \
+		-with C -do \
+			-quartic_curve_activity \
+				-report \
+			-end
+	pdflatex quartic_curve_catalogue_q29_iso121_report.tex
+	open quartic_curve_catalogue_q29_iso121_report.pdf
+
 
 
 
 ###############################################################################
-# Section 9.6: Quartic Curve Activities
+# Section 9.6: Classification of Quartic Curve
 
 
-SECTION_QUARTIC_CURVE_ACTIVITIES:
+SECTION_CLASSIFICATION_OF_QUARTIC_CURVE:
 
 
 test_9_6:
@@ -14160,9 +14289,9 @@ quartic_curve_q13_f1_from_variety:
 
 
 ###############################################################################
-# Section 9.7: Interfaces
+# Section 9.7: Interface to GAP
 
-SECTION_CUBIC_SURFACES_INTERFACES:
+SECTION_CUBIC_SURFACES_INTERFACE_TO_GAP:
 
 
 test_9_7:
@@ -21827,7 +21956,7 @@ create_spread_27_6:
 
 
 
-PG_3_5_packing_0_dualize:
+PG_3_5_packing_PWP_0_dualize:
 	$(ORBITER_PATH)orbiter.out -v 5 \
 		-define F -finite_field -q 5 -end \
 		-define P -projective_space 3 F -end \
@@ -23562,7 +23691,7 @@ quartic_curves_q13_classify_nauty:
 		-end_loop L \
 		-print_symbols
 	$(ORBITER) -v 3 \
-		-csv_file_concatenate_from_mask 0 3 \
+		-csv_file_concatenate_from_mask 0 4 \
 			surface_catalogue_q13_iso%ld_quartics.csv \
 			quartics_q13.csv
 	$(ORBITER) -v 3 \

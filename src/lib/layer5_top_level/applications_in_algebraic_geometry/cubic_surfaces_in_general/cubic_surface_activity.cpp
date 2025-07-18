@@ -129,17 +129,17 @@ void cubic_surface_activity::perform_activity(
 	}
 
 
-	if (Descr->f_all_quartic_curves) {
+	if (Descr->f_report_all_flag_orbits) {
 
 
 		if (f_v) {
 			cout << "cubic_surface_activity::perform_activity "
-					"before SC->all_quartic_curves" << endl;
+					"before SC->report_all_flag_orbits" << endl;
 		}
-		SC->all_quartic_curves(verbose_level);
+		SC->report_all_flag_orbits(verbose_level);
 		if (f_v) {
 			cout << "cubic_surface_activity::perform_activity "
-					"after SC->all_quartic_curves" << endl;
+					"after SC->report_all_flag_orbits" << endl;
 		}
 
 	}
@@ -349,7 +349,9 @@ void cubic_surface_activity::recognize_Fabcd(
 
 
 	if (!Classification_of_arcs->f_has_arcs) {
-		cout << "cubic_surface_activity::recognize_Fabcd the orbits object has the wrong kind of orbits. Should have arcs." << endl;
+		cout << "cubic_surface_activity::recognize_Fabcd "
+				"the orbits object has the wrong kind of orbit objects. "
+				"It should have orbits on arcs." << endl;
 		exit(1);
 	}
 
@@ -369,7 +371,8 @@ void cubic_surface_activity::recognize_Fabcd(
 	long int plane1, plane2;
 
 	if (SOA->SO->SOP->SmoothProperties == NULL) {
-		cout << "cubic_surface_activity::recognize_Fabcd SmoothProperties is NULL" << endl;
+		cout << "cubic_surface_activity::recognize_Fabcd "
+				"SmoothProperties is NULL" << endl;
 		exit(1);
 	}
 
@@ -754,7 +757,8 @@ void cubic_surface_activity::recognize_Fabcd(
 	long int canonical_arc[6];
 
 	if (Set_and_stab_canonical->sz != 6) {
-		cout << "cubic_surface_activity::recognize_Fabcd Set_and_stab_canonical->sz != 6" << endl;
+		cout << "cubic_surface_activity::recognize_Fabcd "
+				"Set_and_stab_canonical->sz != 6" << endl;
 		exit(1);
 	}
 
@@ -788,6 +792,7 @@ void cubic_surface_activity::recognize_Fabcd(
 
 	feedback.push_back(s_q);
 	feedback.push_back(SC->SO->label_txt);
+	feedback.push_back(std::to_string(SC->SO->SOP->nb_Eckardt_points));
 	feedback.push_back(s_abcd);
 
 	if (f_v) {
@@ -799,8 +804,8 @@ void cubic_surface_activity::recognize_Fabcd(
 	AO->fname_base = "cubic_surface";
 	AO->Feedback.push_back(feedback);
 	AO->description_txt = SC->SO->label_txt;
-	AO->headings = "q,surface,abcd";
-	AO->nb_cols = 3;
+	AO->headings = "q,surface,nb_E,abcd";
+	AO->nb_cols = 4;
 
 
 

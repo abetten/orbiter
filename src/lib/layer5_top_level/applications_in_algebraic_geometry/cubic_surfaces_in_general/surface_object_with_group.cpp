@@ -534,7 +534,7 @@ void surface_object_with_group::init_with_surface_object(
 	}
 
 
-
+#if 0
 	if (f_v) {
 		cout << "surface_object_with_group::init_with_surface_object "
 				"before compute_tactical_decompositions" << endl;
@@ -544,7 +544,7 @@ void surface_object_with_group::init_with_surface_object(
 		cout << "surface_object_with_group::init_with_surface_object "
 				"after compute_tactical_decompositions" << endl;
 	}
-
+#endif
 
 	if (f_v) {
 		cout << "surface_object_with_group::init_with_surface_object "
@@ -593,7 +593,7 @@ void surface_object_with_group::init_surface_object(
 				"after compute_projectivity_group" << endl;
 	}
 
-#if 0
+#if 1
 	if (f_v) {
 		cout << "surface_object_with_group::init_surface_object "
 				"before compute_tactical_decompositions" << endl;
@@ -2682,18 +2682,20 @@ void surface_object_with_group::investigate_surface_and_write_report2(
 	}
 }
 
-void surface_object_with_group::all_quartic_curves(
+void surface_object_with_group::report_all_flag_orbits(
 		std::string &surface_label_txt,
 		std::string &surface_label_tex,
 		std::ostream &ost,
 		int verbose_level)
+// reports on all quartic curves associated
+// with the orbits on points not on lines
 {
 	int f_v = (verbose_level >= 1);
 
 	int f_TDO = false;
 
 	if (f_v) {
-		cout << "surface_object_with_group::all_quartic_curves "
+		cout << "surface_object_with_group::report_all_flag_orbits "
 				"surface_label_txt=" << surface_label_txt << endl;
 	}
 	int pt_orbit;
@@ -2718,12 +2720,12 @@ void surface_object_with_group::all_quartic_curves(
 
 
 		if (f_v) {
-			cout << "surface_object_with_group::all_quartic_curves "
+			cout << "surface_object_with_group::report_all_flag_orbits "
 					"before QC->create_quartic_curve" << endl;
 		}
 		QC->create_quartic_curve(pt_orbit, verbose_level);
 		if (f_v) {
-			cout << "surface_object_with_group::all_quartic_curves "
+			cout << "surface_object_with_group::report_all_flag_orbits "
 					"after QC->create_quartic_curve" << endl;
 		}
 
@@ -2731,34 +2733,87 @@ void surface_object_with_group::all_quartic_curves(
 		// as a Surf->Poly4_x123
 
 		if (f_v) {
-			cout << "surface_object_with_group::all_quartic_curves "
+			cout << "surface_object_with_group::report_all_flag_orbits "
 					"before QC->compute_stabilizer_with_nauty" << endl;
 		}
 		QC->compute_stabilizer_with_nauty(verbose_level);
 		if (f_v) {
-			cout << "surface_object_with_group::all_quartic_curves "
+			cout << "surface_object_with_group::report_all_flag_orbits "
 					"after QC->compute_stabilizer_with_nauty" << endl;
 		}
 
 
 		if (f_v) {
-			cout << "surface_object_with_group::all_quartic_curves "
+			cout << "surface_object_with_group::report_all_flag_orbits "
 					"before QC->cheat_sheet_quartic_curve" << endl;
 		}
 		QC->cheat_sheet_quartic_curve(ost, f_TDO, verbose_level);
 		if (f_v) {
-			cout << "surface_object_with_group::all_quartic_curves "
+			cout << "surface_object_with_group::report_all_flag_orbits "
 					"after QC->cheat_sheet_quartic_curve" << endl;
 		}
 
 		FREE_OBJECT(QC);
 	}
 	if (f_v) {
-		cout << "surface_object_with_group::all_quartic_curves done" << endl;
+		cout << "surface_object_with_group::report_all_flag_orbits done" << endl;
 	}
 }
 
 void surface_object_with_group::export_all_quartic_curves(
+		std::string &fname_curves,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_object_with_group::export_all_quartic_curves" << endl;
+	}
+
+	std::string headings;
+	std::string *Table;
+	int nb_rows, nb_cols;
+
+	if (f_v) {
+		cout << "surface_create::export_all_quartic_curves "
+				"before prepare_data" << endl;
+	}
+
+	prepare_data(
+			headings,
+			Table,
+			nb_rows, nb_cols,
+			verbose_level - 2);
+
+	if (f_v) {
+		cout << "surface_create::export_all_quartic_curves "
+				"after prepare_data" << endl;
+	}
+
+	other::orbiter_kernel_system::file_io Fio;
+
+
+	Fio.Csv_file_support->write_table_of_strings(
+			fname_curves,
+			nb_rows, nb_cols, Table,
+			headings,
+			verbose_level - 2);
+
+	delete [] Table;
+
+
+
+	if (f_v) {
+		cout << "Written file " << fname_curves << " of size "
+			<< Fio.file_size(fname_curves) << endl;
+	}
+
+	if (f_v) {
+		cout << "surface_object_with_group::export_all_quartic_curves done" << endl;
+	}
+}
+
+void surface_object_with_group::prepare_data(
 		std::string &headings,
 		std::string *&Table,
 		int &nb_rows, int &nb_cols,
@@ -2768,9 +2823,9 @@ void surface_object_with_group::export_all_quartic_curves(
 	int f_vv = (verbose_level >= 2);
 
 	if (f_v) {
-		cout << "surface_object_with_group::export_all_quartic_curves" << endl;
-		cout << "surface_object_with_group::export_all_quartic_curves verbose_level=" << verbose_level << endl;
-		cout << "surface_object_with_group::export_all_quartic_curves "
+		cout << "surface_object_with_group::prepare_data" << endl;
+		cout << "surface_object_with_group::prepare_data verbose_level=" << verbose_level << endl;
+		cout << "surface_object_with_group::prepare_data "
 				"nb_orbits = " << Orbits_on_points_not_on_lines->Forest->nb_orbits << endl;
 	}
 	int pt_orbit;
@@ -2806,7 +2861,7 @@ void surface_object_with_group::export_all_quartic_curves(
 
 	}
 	if (f_v) {
-		cout << "surface_object_with_group::export_all_quartic_curves done" << endl;
+		cout << "surface_object_with_group::prepare_data done" << endl;
 	}
 }
 
@@ -3151,29 +3206,39 @@ void surface_object_with_group::print_everything(
 
 
 
-
-	string label_TDO;
-	string label_TDA;
+	if (TD) {
 
 
-	label_TDO = "TDO";
-	label_TDA = "TDO";
 
-	if (f_v) {
-		cout << "surface_object_with_group::print_everything "
-				"before TD->report_decomposition_schemes" << endl;
+		string label_TDO;
+		string label_TDA;
+
+
+		label_TDO = "TDO";
+		label_TDA = "TDO";
+
+		if (f_v) {
+			cout << "surface_object_with_group::print_everything "
+					"before TD->report_decomposition_schemes" << endl;
+		}
+		TD->report_decomposition_schemes(
+				ost,
+				label_TDO,
+				label_TDA,
+				verbose_level);
+		if (f_v) {
+			cout << "surface_object_with_group::print_everything "
+					"after TD->report_decomposition_schemes" << endl;
+		}
+
 	}
-	TD->report_decomposition_schemes(
-			ost,
-			label_TDO,
-			label_TDA,
-			verbose_level);
-	if (f_v) {
-		cout << "surface_object_with_group::print_everything "
-				"after TD->report_decomposition_schemes" << endl;
+	else {
+		if (f_v) {
+			cout << "surface_object_with_group::print_everything "
+					"TD is not available." << endl;
+		}
+
 	}
-
-
 
 
 	if (f_v) {
@@ -3409,10 +3474,28 @@ void surface_object_with_group::print_everything(
 				"after print_trihedral_pairs_numerically" << endl;
 	}
 
+	if (f_v) {
+		cout << "surface_object_with_group::print_everything "
+				"before report_orbits_on_trihedral_pairs" << endl;
+	}
 	report_orbits_on_trihedral_pairs(
 			ost,
 			verbose_level);
+	if (f_v) {
+		cout << "surface_object_with_group::print_everything "
+				"after report_orbits_on_trihedral_pairs" << endl;
+	}
 
+
+	if (f_v) {
+		cout << "surface_object_with_group::print_everything "
+				"before latex_table_of_trihedral_pairs" << endl;
+	}
+	Surf->Schlaefli->Schlaefli_trihedral_pairs->latex_table_of_trihedral_pairs(ost);
+	if (f_v) {
+		cout << "surface_object_with_group::print_everything "
+				"after latex_table_of_trihedral_pairs" << endl;
+	}
 
 	if (f_v) {
 		cout << "surface_object_with_group::print_everything done" << endl;
@@ -3813,6 +3896,11 @@ void surface_object_with_group::compute_tactical_decompositions(
 	}
 
 
+	if (Surf->F->q > 10) {
+
+		cout << "surface_object_with_group::compute_tactical_decompositions, Surf->F->q > 10, skipping." << endl;
+		return;
+	}
 
 	TD = NEW_OBJECT(apps_combinatorics::variety_with_TDO_and_TDA);
 

@@ -68,6 +68,7 @@ void variety_with_TDO_and_TDA::init_and_compute_tactical_decompositions(
 		geometry::algebraic_geometry::variety_object *Variety_object,
 		groups::strong_generators *Aut_gens,
 		int verbose_level)
+// called from surface_object_with_group::compute_tactical_decompositions
 {
 	int f_v = (verbose_level >= 1);
 

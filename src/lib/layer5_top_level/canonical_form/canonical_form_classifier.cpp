@@ -116,6 +116,7 @@ void canonical_form_classifier::init_objects_from_list_of_csv_files(
 // Prepare the projective space and the ring,
 // Create the action_on_homogeneous_polynomials
 // Prepare the input input_objects_of_type_variety
+// Calls Input->read_objects_from_list_of_csv_files
 {
 	int f_v = (verbose_level >= 1);
 
@@ -418,7 +419,7 @@ void canonical_form_classifier::classify(
 		input_objects_of_type_variety *Input,
 		std::string &fname_base,
 		int verbose_level)
-// initializes Classification_of_varieties_nauty
+// initializes Classification_of_varieties_nauty and performs classification
 {
 	int f_v = (verbose_level >= 1);
 
@@ -446,6 +447,10 @@ void canonical_form_classifier::classify(
 		cout << "canonical_form_classifier::classify "
 				"after Classification_of_varieties_nauty->prepare_for_classification" << endl;
 	}
+
+	// prepares Classification_of_varieties_nauty->Canonical_forms
+	// One Variety_compute_canonical_form object
+	// has been initialized for each of the input objects
 
 
 	if (f_v) {

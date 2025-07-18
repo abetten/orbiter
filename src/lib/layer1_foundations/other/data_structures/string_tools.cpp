@@ -1129,7 +1129,7 @@ void string_tools::parse_comma_separated_list(
 	}
 
 	if (f_v) {
-		cout << "string_tools::parse_value_pairs done" << endl;
+		cout << "string_tools::parse_comma_separated_list done" << endl;
 	}
 
 }
