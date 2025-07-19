@@ -550,7 +550,7 @@ void schreier::compute_all_orbits_on_invariant_subset_lint(
 		cout << "computing orbits on a set of size " << len << endl;
 	}
 
-	int print_interval = 10000;
+	int print_interval = 100000;
 
 	Forest->initialize_tables(verbose_level - 2);
 
@@ -1022,7 +1022,7 @@ void schreier::orbits_on_invariant_subset_fast(
 	}
 
 	int i, p, j;
-	int print_interval = 10000;
+	int print_interval = 100000;
 
 	for (i = 0; i < len; i++) {
 
@@ -1079,7 +1079,7 @@ void schreier::orbits_on_invariant_subset_fast_lint(
 	}
 
 	int i, p, j;
-	int print_interval = 10000;
+	int print_interval = 100000;
 
 	for (i = 0; i < len; i++) {
 
@@ -1124,7 +1124,7 @@ void schreier::orbits_on_invariant_subset(
 	int *&orbit_perm, int *&orbit_perm_inv)
 {
 	int i, j, a, pos;
-	int print_interval = 10000;
+	int print_interval = 100000;
 	
 	compute_all_point_orbits(print_interval, 0);
 
