@@ -144,6 +144,7 @@ private:
 	int *type1; // [degree + 1]
 	int *type2; // [degree + 1]
 
+	geometry::other_geometry::geometry_global *Geometry_global;
 
 public:
 	int q;

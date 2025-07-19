@@ -56,12 +56,14 @@ homogeneous_polynomial_domain::homogeneous_polynomial_domain()
 	type1 = NULL;
 	type2 = NULL;
 
+	Geometry_global = NULL;
+
+
 	q = 0;
 	nb_variables = 0;
 	degree = 0;
-
-
 }
+
 
 homogeneous_polynomial_domain::~homogeneous_polynomial_domain()
 {
@@ -104,6 +106,9 @@ homogeneous_polynomial_domain::~homogeneous_polynomial_domain()
 	}
 	if (type2) {
 		FREE_int(type2);
+	}
+	if (Geometry_global) {
+		FREE_OBJECT(Geometry_global);
 	}
 }
 
@@ -194,6 +199,7 @@ void homogeneous_polynomial_domain::init(
 
 	}
 
+
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::init done" << endl;
 	}
@@ -267,6 +273,7 @@ void homogeneous_polynomial_domain::init_with_or_without_variables(
 	homogeneous_polynomial_domain::degree = degree;
 	homogeneous_polynomial_domain::Monomial_ordering_type = Monomial_ordering_type;
 	
+
 	v = NEW_int(nb_variables);
 	type1 = NEW_int(degree + 1);
 	type2 = NEW_int(degree + 1);
@@ -294,7 +301,9 @@ void homogeneous_polynomial_domain::init_with_or_without_variables(
 
 	my_affine = NEW_int(degree);
 	base_cols = NEW_int(nb_monomials);
-	
+
+	Geometry_global = NEW_OBJECT(geometry::other_geometry::geometry_global);
+
 
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::init_with_or_without_variables done" << endl;
@@ -2055,7 +2064,7 @@ void homogeneous_polynomial_domain::substitute_semilinear(
 	int a, b, c, i, j, idx;
 	int *A;
 	int *V;
-	geometry::other_geometry::geometry_global Gg;
+	//geometry::other_geometry::geometry_global Gg; // slow !!!
 
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::substitute_semilinear" << endl;
@@ -2105,7 +2114,8 @@ void homogeneous_polynomial_domain::substitute_semilinear(
 			}
 			else {
 				A = my_affine;
-				Gg.AG_element_unrank(nb_variables /* q */, my_affine, 1, degree, a);
+				Geometry_global->AG_element_unrank(
+						nb_variables /* q */, my_affine, 1, degree, a);
 					// sequence of length degree over the alphabet  0,...,n-1.
 			}
 			for (j = 0; j < degree; j++) {
