@@ -121,7 +121,7 @@ int knowledge_base::quartic_curves_nb_reps(
 	int nb;
 
 	if (q == 9) {
-		nb = quartic_curves_q9_classified_nb_reps;
+		nb = quartic_curves_q9_nb_reps;
 	}
 	else if (q == 13) {
 		nb = quartic_curves_q13_nb_reps;
@@ -162,9 +162,9 @@ int *knowledge_base::quartic_curves_representative(
 	int *p, nb, sz;
 
 	if (q == 9) {
-		p = quartic_curves_q9_classified_reps;
-		nb = quartic_curves_q9_classified_nb_reps;
-		sz = quartic_curves_q9_classified_size;
+		p = quartic_curves_q9_reps;
+		nb = quartic_curves_q9_nb_reps;
+		sz = quartic_curves_q9_size;
 	}
 	else if (q == 13) {
 		p = quartic_curves_q13_reps;
@@ -233,8 +233,8 @@ long int *knowledge_base::quartic_curves_bitangents(
 	int nb;
 
 	if (q == 9) {
-		p = quartic_curves_q9_classified_Bitangents;
-		nb = quartic_curves_q9_classified_nb_reps;
+		p = quartic_curves_q9_Bitangents;
+		nb = quartic_curves_q9_nb_reps;
 	}
 	else if (q == 13) {
 		p = quartic_curves_q13_Bitangents;
@@ -297,12 +297,12 @@ void knowledge_base::quartic_curves_stab_gens(
 	const char *stab_order;
 
 	if (q == 9) {
-		Reps = quartic_curves_q9_classified_stab_gens;
-		nb = quartic_curves_q9_classified_nb_reps;
-		make_element_size = quartic_curves_q9_classified_make_element_size;
-		f = quartic_curves_q9_classified_stab_gens_fst[i];
-		l = quartic_curves_q9_classified_stab_gens_len[i];
-		stab_order = quartic_curves_q9_classified_stab_order[i];
+		Reps = quartic_curves_q9_stab_gens;
+		nb = quartic_curves_q9_nb_reps;
+		make_element_size = quartic_curves_q9_make_element_size;
+		f = quartic_curves_q9_stab_gens_fst[i];
+		l = quartic_curves_q9_stab_gens_len[i];
+		stab_order = quartic_curves_q9_stab_order[i];
 	}
 	else if (q == 13) {
 		Reps = quartic_curves_q13_stab_gens;
