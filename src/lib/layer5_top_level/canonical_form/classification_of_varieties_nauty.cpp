@@ -854,7 +854,6 @@ void classification_of_varieties_nauty::generate_source_code(
 	if (f_v) {
 		cout << "classification_of_varieties_nauty::generate_source_code" << endl;
 	}
-#if 0
 
 	int f_vv = (verbose_level >= 2);
 	std::string fname;
@@ -871,8 +870,15 @@ void classification_of_varieties_nauty::generate_source_code(
 	fname = fname_base + ".cpp";
 
 
-	nb_orbits = Tally->nb_types;
+	nb_orbits = nb_isomorphism_classes;
 	nb_monomials = Classifier->Ring_with_action->Poly_ring->get_nb_monomials();
+
+	if (f_v) {
+		cout << "classification_of_varieties_nauty::generate_source_code "
+				"nb_orbits = " << nb_orbits << endl;
+		cout << "classification_of_varieties_nauty::generate_source_code "
+				"nb_monomials = " << nb_monomials << endl;
+	}
 
 
 	A = Classifier->Ring_with_action->PA->A;
@@ -880,6 +886,19 @@ void classification_of_varieties_nauty::generate_source_code(
 
 	{
 		ofstream f(fname);
+
+
+		other::orbiter_kernel_system::os_interface Os;
+		string str;
+
+		Os.get_date(str);
+
+		f << "// file: " << fname << endl;
+		f << "// created by Orbiter " << endl;
+		f << "// creation date: " << str << endl << endl;
+		f << "// " << endl;
+
+
 
 		f << "static int " << fname_base << "_nb_reps = "
 				<< nb_orbits << ";" << endl;
@@ -908,33 +927,18 @@ void classification_of_varieties_nauty::generate_source_code(
 
 			int idx;
 
-			idx = Tally->sorting_perm_inv[Tally->type_first[orbit_index]];
+			idx = Orbit_input_idx[orbit_index];
+
+			equation = Input->Vo[idx]->Variety_object->eqn;
+			//equation = Canonical_forms[idx]->canonical_equation;
 
 
-			//canonical_form_substructure *CFS = Variety_table[idx];
-
-
-			if (Variety_table[idx]) {
-				//equation = Classification_of_quartic_curves->Reps + orbit_index * Classification_of_quartic_curves->data_set_sz;
-				equation = Variety_table[idx]->canonical_equation;
-
-				f << "\t";
-				for (i = 0; i < nb_monomials; i++) {
-					f << equation[i];
-					f << ", ";
-				}
-				f << endl;
+			f << "\t";
+			for (i = 0; i < nb_monomials; i++) {
+				f << equation[i];
+				f << ", ";
 			}
-			else {
-				f << "\t";
-				for (i = 0; i < nb_monomials; i++) {
-					f << 0;
-					f << ", ";
-				}
-				f << "// problem" << endl;
-
-			}
-
+			f << endl;
 		}
 		f << "};" << endl;
 
@@ -950,12 +954,13 @@ void classification_of_varieties_nauty::generate_source_code(
 				orbit_index < nb_orbits;
 				orbit_index++) {
 
-			ring_theory::longinteger_object ago;
-
 			int idx;
 
-			idx = Tally->sorting_perm_inv[Tally->type_first[orbit_index]];
+			idx = Orbit_input_idx[orbit_index];
 
+
+
+			algebra::ring_theory::longinteger_object ago;
 
 			ago.create(Goi[idx]);
 
@@ -970,7 +975,7 @@ void classification_of_varieties_nauty::generate_source_code(
 
 
 
-#if 0
+
 		if (f_v) {
 			cout << "classification_of_varieties_nauty::generate_source_code "
 					"preparing Bitangents" << endl;
@@ -991,11 +996,27 @@ void classification_of_varieties_nauty::generate_source_code(
 
 			int idx;
 
-			idx = Tally->sorting_perm_inv[Tally->type_first[orbit_index]];
+			idx = Orbit_input_idx[orbit_index];
 
-			//canonical_form_substructure *CFS = Variety_table[idx];
+			long int *bitangents_orig;
 
+			bitangents_orig = Input->Vo[idx]->Variety_object->Line_sets->Sets[0];
+			if (Input->Vo[idx]->Variety_object->Line_sets->Set_size[0] != 28) {
+				cout << "classification_of_varieties_nauty::generate_source_code Set_size[0] != 28" << endl;
+				cout << "classification_of_varieties_nauty::generate_source_code Set_size[0] = " << Input->Vo[idx]->Variety_object->Point_sets->Set_size[0] << endl;
+				exit(1);
+			}
 
+			int j;
+
+			f << "\t";
+			for (j = 0; j < 28; j++) {
+				f << bitangents_orig[j];
+				f << ", ";
+			}
+			f << endl;
+
+#if 0
 			if (Variety_table[idx]) {
 				long int *bitangents_orig;
 				long int *bitangents_canonical;
@@ -1029,20 +1050,34 @@ void classification_of_varieties_nauty::generate_source_code(
 				f << "// problem" << endl;
 
 			}
+#endif
+
 
 		}
 		f << "};" << endl;
-#endif
+
+		if (f_v) {
+			cout << "classification_of_varieties_nauty::generate_source_code "
+					"preparing make_element_size" << endl;
+		}
 
 		f << "static int " << fname_base << "_make_element_size = "
 				<< A->make_element_size << ";" << endl;
 
+		if (f_v) {
+			cout << "classification_of_varieties_nauty::generate_source_code "
+					"preparing stabilizer" << endl;
+		}
 		{
 			int *stab_gens_first;
 			int *stab_gens_len;
 			int fst;
 
 
+			if (f_v) {
+				cout << "classification_of_varieties_nauty::generate_source_code "
+						"before loop1" << endl;
+			}
 
 			stab_gens_first = NEW_int(nb_orbits);
 			stab_gens_len = NEW_int(nb_orbits);
@@ -1052,16 +1087,25 @@ void classification_of_varieties_nauty::generate_source_code(
 					orbit_index++) {
 
 
-				groups::strong_generators *gens;
+				//groups::strong_generators *gens;
 
 				int idx;
 
-				idx = Tally->sorting_perm_inv[Tally->type_first[orbit_index]];
+				idx = Orbit_input_idx[orbit_index];
+				//idx = Tally->sorting_perm_inv[Tally->type_first[orbit_index]];
 
 				//canonical_form_substructure *CFS = CFS_table[idx];
 				//gens = CFS->Gens_stabilizer_canonical_form;
-				if (Variety_table[idx]) {
-					gens = Variety_table[idx]->gens_stab_of_canonical_equation;
+
+
+				if (true /*Canonical_forms[idx]->Canonical_object->f_has_automorphism_group*/) {
+					groups::strong_generators *gens;
+
+					//gens = Canonical_forms[idx]->Canonical_object->Stab_gens;
+					//groups::strong_generators *gens;
+
+					gens = Canonical_forms[idx]->Variety_stabilizer_compute->Stab_gens_variety;
+
 
 
 					if (gens) {
@@ -1085,6 +1129,10 @@ void classification_of_varieties_nauty::generate_source_code(
 				}
 			}
 
+			if (f_v) {
+				cout << "classification_of_varieties_nauty::generate_source_code "
+						"after loop1" << endl;
+			}
 
 			if (f_v) {
 				cout << "classification_of_varieties_nauty::generate_source_code "
@@ -1142,22 +1190,26 @@ void classification_of_varieties_nauty::generate_source_code(
 					}
 					f << "\t";
 
-					groups::strong_generators *gens;
+					//groups::strong_generators *gens;
 
 					int idx;
 
-					idx = Tally->sorting_perm_inv[Tally->type_first[orbit_index]];
+					idx = Orbit_input_idx[orbit_index];
+					//idx = Tally->sorting_perm_inv[Tally->type_first[orbit_index]];
 
 					//canonical_form_substructure *CFS = CFS_table[idx];
 					//gens = CFS->Gens_stabilizer_canonical_form;
-					if (Variety_table[idx]) {
-						gens = Variety_table[idx]->gens_stab_of_canonical_equation;
+					if (true /*Canonical_forms[idx]->Canonical_object->f_has_automorphism_group*/) {
+						groups::strong_generators *gens;
+
+						//gens = Canonical_forms[idx]->Canonical_object->Stab_gens;
+						gens = Canonical_forms[idx]->Variety_stabilizer_compute->Stab_gens_variety;
 
 
 						if (gens) {
 							A->Group_element->element_print_for_make_element(
 									gens->gens->ith(j), f);
-							f << endl;
+							f << "," << endl;
 						}
 						else {
 							cout << "classification_of_varieties_nauty::generate_source_code "
@@ -1171,17 +1223,23 @@ void classification_of_varieties_nauty::generate_source_code(
 			}
 			f << "};" << endl;
 
+			if (f_v) {
+				cout << "classification_of_varieties_nauty::generate_source_code "
+						"after preparing stab_gens" << endl;
+			}
 
 			FREE_int(stab_gens_first);
 			FREE_int(stab_gens_len);
 		}
 	}
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
-	cout << "written file " << fname << " of size "
+	if (f_v) {
+		cout << "written file " << fname << " of size "
 			<< Fio.file_size(fname.c_str()) << endl;
-#endif
+	}
+
 	if (f_v) {
 		cout << "classification_of_varieties_nauty::generate_source_code done" << endl;
 	}

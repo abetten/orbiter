@@ -353,6 +353,7 @@ public:
 	std::string label_txt;
 	std::string label_tex;
 
+
 	int f_has_Orb;
 	groups::orbits_on_something *Orb;
 

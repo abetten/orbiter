@@ -904,6 +904,54 @@ void orbits_activity::do_export_source_code(
 
 
 	}
+	else if (OC->f_has_cubic_surfaces) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_export_source_code f_has_cubic_surfaces" << endl;
+		}
+
+		//applications_in_algebraic_geometry::cubic_surfaces_and_double_sixes::surface_classify_wedge *SCW;
+
+		if (f_v) {
+			cout << "orbits_activity::do_export_source_code "
+					"before generate_source_code" << endl;
+		}
+		OC->SCW->Surface_repository->generate_source_code(verbose_level);
+		if (f_v) {
+			cout << "orbits_activity::do_export_source_code "
+					"after generate_source_code" << endl;
+		}
+
+	}
+	else if (OC->f_has_arcs) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_export_source_code f_has_arcs" << endl;
+		}
+
+		//apps_geometry::arc_generator_description *Arc_generator_description_for_arcs;
+		//apps_geometry::arc_generator *Arc_generator;
+
+	}
+	else if (OC->f_has_semifields) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_export_source_code f_has_semifields" << endl;
+		}
+
+		//semifields::semifield_classify_with_substructure *Semifields;
+
+	}
+	else if (OC->f_has_boolean_functions) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_export_source_code f_has_boolean_functions" << endl;
+		}
+		//combinatorics::special_functions::boolean_function_domain *BF;
+		//apps_combinatorics::boolean_function_classify *BFC;
+
+
+	}
 	else if (OC->f_has_classification_by_canonical_form) {
 		if (f_v) {
 			cout << "orbits_activity::do_export_source_code "
@@ -932,6 +980,9 @@ void orbits_activity::do_export_source_code(
 				"no suitable data structure found" << endl;
 		exit(1);
 	}
+
+
+
 
 	if (f_v) {
 		cout << "orbits_activity::do_export_source_code done" << endl;
