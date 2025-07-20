@@ -98,10 +98,26 @@ void combinatorial_object_stream::do_canonical_form(
 	geometry::projective_geometry::projective_space *P;
 
 
+	if (f_projective_space) {
+		if (f_v) {
+			cout << "combinatorial_object_stream::do_canonical_form we have a projectve space" << endl;
+			cout << "combinatorial_object_stream::do_canonical_form PA = " << PA->P->label_txt << endl;
+		}
+		P = PA->P;
+	}
+	else {
+		if (f_v) {
+			cout << "combinatorial_object_stream::do_canonical_form no projective space" << endl;
+		}
+		P = NULL;
+	}
 	combinatorial_object_stream::f_projective_space = f_projective_space;
 	combinatorial_object_stream::PA = PA;
 
-	P = PA->P;
+
+	if (f_v) {
+		cout << "combinatorial_object_stream::do_canonical_form allocating Classification_of_objects" << endl;
+	}
 
 	Classification_of_objects = NEW_OBJECT(combinatorics::canonical_form_classification::classification_of_objects);
 
@@ -114,7 +130,7 @@ void combinatorial_object_stream::do_canonical_form(
 			f_projective_space,
 			P,
 			IS,
-			verbose_level);
+			verbose_level - 2);
 	if (f_v) {
 		cout << "combinatorial_object_stream::do_canonical_form "
 				"after Classification_of_objects->perform_classification" << endl;

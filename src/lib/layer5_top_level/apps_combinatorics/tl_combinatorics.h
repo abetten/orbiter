@@ -217,7 +217,7 @@ public:
 
 	combinatorial_object_activity();
 	~combinatorial_object_activity();
-	void init(
+	void init_geometric_object_create(
 			combinatorial_object_activity_description *Descr,
 			geometry::other_geometry::geometric_object_create *GOC,
 			int verbose_level);

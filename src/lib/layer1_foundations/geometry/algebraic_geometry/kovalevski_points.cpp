@@ -589,8 +589,56 @@ void kovalevski_points::print_lines_with_points_on_them(
 
 }
 
+
+
+
+void kovalevski_points::get_incidence_structure(
+		other::data_structures::set_of_sets *&SoS,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "kovalevski_points::get_incidence_structure" << endl;
+	}
+
+	int underlying_set_size = 28;
+	int nb_sets = nb_Kovalevski;
+	long int **Pts;
+	long int *Sz;
+
+	Pts = NEW_plint(nb_sets);
+	Sz = NEW_lint(nb_sets);
+
+
+	int i, j, a, b;
+
+	for (i = 0; i < nb_Kovalevski; i++) {
+		Pts[i] = NEW_lint(4);
+		Sz[i] = 4;
+		a = Kovalevski_point_idx[i];
+		for (j = 0; j < 4; j++) {
+			b = lines_on_points_off->Sets[a][j];
+			Pts[i][j] = b;
+		}
+	}
+
+	SoS = NEW_OBJECT(other::data_structures::set_of_sets);
+
+	SoS->init(underlying_set_size,
+			nb_sets, Pts, Sz,
+			verbose_level);
+
+
+	if (f_v) {
+		cout << "kovalevski_points::get_incidence_structure done" << endl;
+	}
+}
+
+
 void kovalevski_points::print_all_points(
-		std::ostream &ost)
+		std::ostream &ost, int verbose_level)
 {
 	int i, j;
 	int v[3];
@@ -634,6 +682,63 @@ void kovalevski_points::print_all_points(
 
 	FREE_OBJECT(Labels);
 
+
+	other::data_structures::set_of_sets *SoS;
+
+	ost << "The incidence structure induced by the Kovalevski points is: " << endl;
+	ost << "\\\\" << endl;
+	get_incidence_structure(
+			SoS,
+			verbose_level);
+
+	SoS->print_table_tex(ost);
+
+
+	int *Incma;
+	int nb_rows, nb_cols;
+	int h;
+	int *Flags;
+	int nb_flags;
+
+	nb_rows = SoS->underlying_set_size;
+	nb_cols = SoS->nb_sets;
+
+	Incma = NEW_int(nb_rows * nb_cols);
+	Int_vec_zero(Incma, nb_rows * nb_cols);
+	for (j = 0; j < nb_cols; j++) {
+		for (h = 0; h < 4; h++) {
+			i = SoS->Sets[j][h];
+			Incma[i * nb_cols + j] = 1;
+		}
+	}
+	ost << "Incma=\\\\" << endl;
+	for (i = 0; i < nb_rows; i++) {
+		Int_vec_print_fully(ost, Incma + i * nb_cols, nb_cols);
+		ost << "\\\\" << endl;
+	}
+	nb_flags = 0;
+	Flags = NEW_int(nb_cols * 4);
+	for (i = 0; i < nb_rows; i++) {
+		for (j = 0; j < nb_cols; j++) {
+			if (Incma[i * nb_cols + j]) {
+				Flags[nb_flags++] = i * nb_cols + j;
+			}
+		}
+	}
+
+	ost << "Flags=";
+	Int_vec_print_fully(ost, Flags, nb_flags);
+	ost << "\\\\" << endl;
+
+	ost << "nb\\_rows=" << nb_rows << "\\\\" << endl;
+	ost << "nb\\_cols=" << nb_cols << "\\\\" << endl;
+	ost << "nb\\_flags=" << nb_flags << "\\\\" << endl;
+
+
+	FREE_OBJECT(SoS);
+	FREE_int(Flags);
+	FREE_int(Incma);
+
 	ost << "The Kovalevski points by rank are: " << endl;
 	Lint_vec_print_fully(ost, Kovalevski_points, nb_Kovalevski);
 	ost << "\\\\" << endl;
@@ -650,6 +755,9 @@ void kovalevski_points::print_all_points(
 	ost << "\\end{multicols}" << endl;
 	Lint_vec_print_fully(ost, Pts_off, nb_pts_off);
 	ost << "\\\\" << endl;
+
+
+
 
 }
 

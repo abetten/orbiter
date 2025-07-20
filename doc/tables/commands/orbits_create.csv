@@ -17,6 +17,7 @@ ROW,C1,C2,C3
 1,"\verb'-on_srcs' ","  P control "," Classify arcs in the projective space P, using the given arc classification control options. "
 1,"\verb'-classification_by_canonical_form' ","  description "," See Chapter~\ref{chapter:canonical:forms}. "
 1,"\verb'-override_generators' ","  generators "," Override the generators of the group. "
+1,"\verb'-print_interval' ","  n "," Set the print interval for the Schreier orbit algorithm to $n$. "
 END
 1,"\verb'-classify_semifields' ","  P control description "," Classify finite semifields. "
 1,"\verb'-on_boolean_functions' ","  P  "," Classify boolean functions.  "

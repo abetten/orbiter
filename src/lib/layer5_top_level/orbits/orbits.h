@@ -319,7 +319,6 @@ public:
 	int f_override_generators;
 	std::string override_generators_label;
 
-	// ToDo: undocumented
 	int f_print_interval;
 	int print_interval;
 
@@ -645,6 +644,7 @@ public:
 	void init(
 			group_constructions::linear_group *LG,
 			algebra::ring_theory::homogeneous_polynomial_domain *HPD,
+			int print_interval,
 			int verbose_level);
 	void orbit_of_one_polynomial(
 			group_constructions::linear_group *LG,

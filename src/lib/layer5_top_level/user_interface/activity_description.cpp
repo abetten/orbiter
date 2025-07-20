@@ -1828,6 +1828,11 @@ void activity_description::do_combinatorial_object_activity(
 
 	t = Sym->Orbiter_top_level_session->get_object_type(Idx[0]);
 	if (t == layer1_foundations::other::orbiter_kernel_system::symbol_table_object_type::t_geometric_object) {
+		if (f_v) {
+			cout << "activity_description::do_combinatorial_object_activity "
+					"the object is of type t_geometric_object" << endl;
+		}
+
 		geometry::other_geometry::geometric_object_create *GOC;
 
 		GOC = (geometry::other_geometry::geometric_object_create *)
@@ -1835,7 +1840,17 @@ void activity_description::do_combinatorial_object_activity(
 		{
 			apps_combinatorics::combinatorial_object_activity Activity;
 
-			Activity.init(Combinatorial_object_activity_description, GOC, verbose_level);
+			if (f_v) {
+				cout << "activity_description::do_combinatorial_object_activity "
+						"before Activity.init_geometric_object_create" << endl;
+			}
+			Activity.init_geometric_object_create(
+					Combinatorial_object_activity_description, GOC,
+					verbose_level);
+			if (f_v) {
+				cout << "activity_description::do_combinatorial_object_activity "
+						"after Activity.init_geometric_object_create" << endl;
+			}
 
 
 			if (f_v) {
@@ -1856,6 +1871,10 @@ void activity_description::do_combinatorial_object_activity(
 		}
 	}
 	else if (t == layer1_foundations::other::orbiter_kernel_system::symbol_table_object_type::t_combinatorial_object) {
+		if (f_v) {
+			cout << "activity_description::do_combinatorial_object_activity "
+					"the object is of type t_combinatorial_object" << endl;
+		}
 		apps_combinatorics::combinatorial_object_stream *Combo;
 
 		Combo = (apps_combinatorics::combinatorial_object_stream *)
@@ -1863,7 +1882,17 @@ void activity_description::do_combinatorial_object_activity(
 		{
 			apps_combinatorics::combinatorial_object_activity Activity;
 
-			Activity.init_combo(Combinatorial_object_activity_description, Combo, verbose_level);
+			if (f_v) {
+				cout << "activity_description::do_combinatorial_object_activity "
+						"before Activity.init_combo" << endl;
+			}
+			Activity.init_combo(
+					Combinatorial_object_activity_description, Combo,
+					verbose_level);
+			if (f_v) {
+				cout << "activity_description::do_combinatorial_object_activity "
+						"after Activity.init_combo" << endl;
+			}
 
 
 			if (f_v) {
@@ -2420,7 +2449,8 @@ void activity_description::do_design_activity(
 			cout << "activity_description::do_design_activity "
 					"before Activity.perform_activity" << endl;
 		}
-		Activity.perform_activity(Design_activity_description, Design_object, verbose_level);
+		Activity.perform_activity(
+				Design_activity_description, Design_object, verbose_level);
 		if (f_v) {
 			cout << "activity_description::do_design_activity "
 					"after Activity.perform_activity" << endl;

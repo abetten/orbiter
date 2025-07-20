@@ -285,6 +285,39 @@ void vector_builder::init(
 		}
 
 	}
+	else if (Descr->f_flags) {
+		if (f_v) {
+			cout << "vector_builder::init -flags" << endl;
+		}
+		int *flags;
+		int sz;
+		int nb_rows, nb_cols;
+		int i;
+		int c;
+
+		Int_vec_scan(Descr->flags_text, flags, sz);
+
+		nb_rows = Descr->flags_nb_rows;
+		nb_cols = Descr->flags_nb_cols;
+		len = nb_rows * nb_cols;
+		v = NEW_lint(len);
+		Lint_vec_zero(v, len);
+		for (i = 0; i < sz; i++) {
+			c = flags[i];
+			v[c] = 1;
+		}
+		FREE_int(flags);
+
+		f_has_k = true;
+		k = Descr->flags_nb_rows;
+
+		if (f_v) {
+			cout << "vector_builder::init found a vector of length " << len << endl;
+		}
+
+	}
+
+
 	else if (Descr->f_concatenate) {
 
 		int i, j;
@@ -556,7 +589,7 @@ void vector_builder::init(
 		if (f_has_k) {
 			cout << "also seen as matrix of size "
 					<< k << " x " << len / k << endl;
-			if (k > 20 || (len / k) > 20) {
+			if (k > 30 || (len / k) > 30) {
 				cout << "too large to print" << endl;
 			}
 			else {

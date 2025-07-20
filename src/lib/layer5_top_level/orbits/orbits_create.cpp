@@ -414,6 +414,7 @@ void orbits_create::init(
 		On_polynomials->init(
 				Group->LG,
 				HPD,
+				Descr->print_interval,
 				verbose_level);
 
 		if (f_v) {

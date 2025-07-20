@@ -253,7 +253,7 @@ void quartic_curve_object_properties::report_properties_simple(
 		cout << "quartic_curve_object_properties::report_properties_simple "
 				"before print_points" << endl;
 	}
-	print_points(ost);
+	print_points(ost, verbose_level);
 	if (f_v) {
 		cout << "quartic_curve_object_properties::report_properties_simple "
 				"after print_points" << endl;
@@ -444,20 +444,20 @@ void quartic_curve_object_properties::print_general(
 
 
 void quartic_curve_object_properties::print_points(
-		std::ostream &ost)
+		std::ostream &ost, int verbose_level)
 {
 	ost << "\\subsection*{All points on the curve}" << endl;
 
 	cout << "quartic_curve_object_properties::print_points "
 			"before print_all_points" << endl;
-	print_all_points(ost);
+	print_all_points(ost, verbose_level);
 
 }
 
 
 
 void quartic_curve_object_properties::print_all_points(
-		std::ostream &ost)
+		std::ostream &ost, int verbose_level)
 {
 	//latex_interface L;
 	//int i;
@@ -491,7 +491,7 @@ void quartic_curve_object_properties::print_all_points(
 
 
 		if (Kovalevski) {
-			Kovalevski->print_all_points(ost);
+			Kovalevski->print_all_points(ost, verbose_level);
 		}
 
 

@@ -12,6 +12,7 @@ ROW,C1,C2,C3
 1,"\verb'-load_csv_no_border' "," file "," Read the data from the given file, assuming that there are no headers. "
 1,"\verb'-load_csv_data_column' "," file $c$ "," Read the data from column $c$ in the given csv-file. "
 1,"\verb'-sparse' "," data "," Provide data in sparse form, i.e. as pairs value and position. "
+1,"\verb'-flags' "," nb\_rows nb\_cols flags "," Specify an incidence matrix by size and by flags. "
 1,"\verb'-concatenate' "," list "," Concatenate the given vectors. List is a comma separated list of vectors that have been created before. "
 1,"\verb'-loop' "," $s$ $u$ $d$ "," Create vector entries of the form $s + id<u,$ $i \in \bbZ.$  The upper bound $u$ itself will not be part of the sequence. "
 1,"\verb'-index_of_support' "," vec "," Create the index set of support of the vector vec. This is the set of all $i$ such that vec[i] is nonzero. "

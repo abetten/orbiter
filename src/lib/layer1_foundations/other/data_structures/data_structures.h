@@ -2814,6 +2814,12 @@ public:
 	int sparse_len;
 	std::string sparse_pairs;
 
+	// ToDo undocumented
+	int f_flags;
+	int flags_nb_rows;
+	int flags_nb_cols;
+	std::string flags_text;
+
 	int f_concatenate;
 	std::string concatenate_list;
 

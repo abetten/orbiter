@@ -40,7 +40,7 @@ combinatorial_object_activity::~combinatorial_object_activity()
 }
 
 
-void combinatorial_object_activity::init(
+void combinatorial_object_activity::init_geometric_object_create(
 		combinatorial_object_activity_description *Descr,
 		geometry::other_geometry::geometric_object_create *GOC,
 		int verbose_level)
@@ -48,7 +48,7 @@ void combinatorial_object_activity::init(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "combinatorial_object_activity::init" << endl;
+		cout << "combinatorial_object_activity::init_geometric_object_create" << endl;
 	}
 
 	combinatorial_object_activity::Descr = Descr;
@@ -56,7 +56,7 @@ void combinatorial_object_activity::init(
 	combinatorial_object_activity::GOC = GOC;
 
 	if (f_v) {
-		cout << "combinatorial_object_activity::init done" << endl;
+		cout << "combinatorial_object_activity::init_geometric_object_create done" << endl;
 	}
 }
 
@@ -70,7 +70,7 @@ void combinatorial_object_activity::init_combo(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "combinatorial_object_activity::init_input_stream" << endl;
+		cout << "combinatorial_object_activity::init_combo" << endl;
 	}
 
 	combinatorial_object_activity::Descr = Descr;
@@ -79,7 +79,7 @@ void combinatorial_object_activity::init_combo(
 
 
 	if (f_v) {
-		cout << "combinatorial_object_activity::init_input_stream done" << endl;
+		cout << "combinatorial_object_activity::init_combo done" << endl;
 	}
 }
 
@@ -431,7 +431,10 @@ void combinatorial_object_activity::perform_activity_combo(
 		cout << "combinatorial_object_activity::perform_activity_combo" << endl;
 		cout << "combinatorial_object_activity::perform_activity_combo "
 				"verbose_level=" << verbose_level << endl;
+		cout << "combinatorial_object_activity::perform_activity_combo "
+				"f_has_combo=" << f_has_combo << endl;
 	}
+
 
 	if (Descr->f_canonical_form_PG) {
 

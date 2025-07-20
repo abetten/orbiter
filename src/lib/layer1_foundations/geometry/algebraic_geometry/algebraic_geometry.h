@@ -518,8 +518,6 @@ public:
 
 
 	int nb_Kovalevski;
-	//int nb_Kovalevski_on;
-	//int nb_Kovalevski_off;
 	int *Kovalevski_point_idx;
 	long int *Kovalevski_points;
 
@@ -557,8 +555,11 @@ public:
 			std::ostream &ost);
 	void print_lines_with_points_on_them(
 			std::ostream &ost);
+	void get_incidence_structure(
+			other::data_structures::set_of_sets *&SoS,
+			int verbose_level);
 	void print_all_points(
-			std::ostream &ost);
+			std::ostream &ost, int verbose_level);
 	void report_bitangent_line_type(
 			std::ostream &ost);
 	void print_lines_and_points_of_contact(
@@ -726,9 +727,9 @@ public:
 	void print_general(
 			std::ostream &ost);
 	void print_points(
-			std::ostream &ost);
+			std::ostream &ost, int verbose_level);
 	void print_all_points(
-			std::ostream &ost);
+			std::ostream &ost, int verbose_level);
 	void print_bitangents(
 			std::ostream &ost);
 	void compute_gradient(
@@ -753,7 +754,6 @@ class quartic_curve_object {
 
 public:
 
-	// ToDo: why does this not use a variety_object ?
 
 	quartic_curve_domain *Dom; // we may not have it
 

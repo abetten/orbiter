@@ -59,6 +59,11 @@ vector_builder_description::vector_builder_description()
 	sparse_len = 0;
 	//std::string sparse_pairs;
 
+	f_flags = false;
+	flags_nb_rows = 0;
+	flags_nb_cols = 0;
+	//std::string flags_text;
+
 	f_concatenate = false;
 	//std::string concatenate_list;
 
@@ -191,6 +196,17 @@ int vector_builder_description::read_arguments(
 				cout << "-sparse " << sparse_len << " " << sparse_pairs << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-flags") == 0) {
+			f_flags = true;
+			flags_nb_rows = ST.strtoi(argv[++i]);
+			flags_nb_cols = ST.strtoi(argv[++i]);
+			flags_text.assign(argv[++i]);
+			if (f_v) {
+				cout << "-flags " << flags_nb_rows << " "
+						<< flags_nb_cols << " " << flags_text << endl;
+			}
+		}
+
 		else if (ST.stringcmp(argv[i], "-concatenate") == 0) {
 			f_concatenate = true;
 			concatenate_list.assign(argv[++i]);
@@ -284,6 +300,10 @@ void vector_builder_description::print()
 	}
 	if (f_sparse) {
 		cout << "-sparse " << sparse_len << " " << sparse_pairs << endl;
+	}
+	if (f_flags) {
+		cout << "-flags " << flags_nb_rows << " "
+				<< flags_nb_cols << " " << flags_text << endl;
 	}
 	if (f_concatenate) {
 		cout << "-concatenate " << concatenate_list << endl;

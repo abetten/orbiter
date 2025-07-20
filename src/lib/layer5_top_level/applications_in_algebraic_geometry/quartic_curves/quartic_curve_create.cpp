@@ -1918,7 +1918,7 @@ void quartic_curve_create::report(
 		cout << "quartic_curve_create::report "
 				"before QO->QP->print_points" << endl;
 	}
-	QO->QP->print_points(ost);
+	QO->QP->print_points(ost, verbose_level);
 	if (f_v) {
 		cout << "quartic_curve_create::report "
 				"after QO->QP->print_points" << endl;
