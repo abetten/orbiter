@@ -1922,10 +1922,10 @@ geometry::algebraic_geometry::variety_object *group_theory_global::variety_apply
 
 		int i;
 
-		// apply the transformation to the set of bitangents:
+		// apply the transformation to the set of lines:
 
 
-		for (i = 0; i < 28; i++) {
+		for (i = 0; i < nb_lines; i++) {
 			if (false) {
 				cout << "line " << i << ":" << endl;
 				P->Subspaces->Grass_lines->print_single_generator_matrix_tex(
@@ -1973,11 +1973,26 @@ geometry::algebraic_geometry::variety_object *group_theory_global::variety_apply
 
 		Points_in = Variety_object_in->Point_sets->Sets[0];
 
-		Points_out = NEW_lint(nb_points);
+		if (f_v) {
+			cout << "group_theory_global::apply_transformations "
+					"before NEW_lint" << endl;
+		}
+
+ 		Points_out = NEW_lint(nb_points);
+
+		if (f_v) {
+			cout << "group_theory_global::apply_transformations "
+					"after NEW_lint" << endl;
+		}
+
 
 		int i;
 
 		for (i = 0; i < nb_points; i++) {
+			if (f_v) {
+				cout << "group_theory_global::apply_transformations "
+						"point" << i << endl;
+			}
 			if (f_v) {
 				cout << "group_theory_global::apply_transformations "
 						"point" << i << " = " << Points_in[i] << endl;
