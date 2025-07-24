@@ -1965,6 +1965,12 @@ geometry::algebraic_geometry::variety_object *group_theory_global::variety_apply
 
 		nb_points = Variety_object_in->Point_sets->Set_size[0];
 
+		if (f_v) {
+			cout << "group_theory_global::apply_transformations "
+					"nb_points = " << nb_points << endl;
+		}
+
+
 		Points_in = Variety_object_in->Point_sets->Sets[0];
 
 		Points_out = NEW_lint(nb_points);
@@ -1972,13 +1978,15 @@ geometry::algebraic_geometry::variety_object *group_theory_global::variety_apply
 		int i;
 
 		for (i = 0; i < nb_points; i++) {
-			if (false) {
-				cout << "point" << i << " = " << Points_in[i] << endl;
+			if (f_v) {
+				cout << "group_theory_global::apply_transformations "
+						"point" << i << " = " << Points_in[i] << endl;
 			}
 			Points_out[i] = A->Group_element->element_image_of(
 					Points_in[i], Elt2, 0 /*verbose_level*/);
-			if (false) {
-				cout << "maps to " << Points_out[i] << endl;
+			if (f_v) {
+				cout << "group_theory_global::apply_transformations "
+						"maps to " << Points_out[i] << endl;
 			}
 	#if 0
 			int a;

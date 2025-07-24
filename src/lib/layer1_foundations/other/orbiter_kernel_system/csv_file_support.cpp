@@ -1903,6 +1903,8 @@ void csv_file_support::do_csv_file_concatenate(
 
 			if (Nb_c[i] != Nb_c[0]) {
 				cout << "The number of columns is not constant, cannot merge" << endl;
+				cout << "problem in file " << fname_in[0] << " with " << Nb_c[0] << " columns" << endl;
+				cout << "problem in file " << fname_in[i] << " with " << Nb_c[i] << " columns" << endl;
 				exit(1);
 			}
 		}
@@ -2028,13 +2030,14 @@ void csv_file_support::do_csv_file_concatenate_from_mask(
 		int cnt = 0;
 		int f_enclose_in_parentheses = false;
 
-		ost << "Line,PO,";
+		ost << "Row,PO,SO,";
 		S[0].print_table_row(0, f_enclose_in_parentheses, ost);
 		for (i = 0; i < nb_files; i++) {
 			//S[i].print_table(ost, false);
 			for (j = 1; j < S[i].nb_rows; j++) {
 				ost << cnt << ",";
 				ost << i << ",";
+				ost << j << ",";
 				S[i].print_table_row(j, f_enclose_in_parentheses, ost);
 				cnt++;
 			}
