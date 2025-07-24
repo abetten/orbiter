@@ -2232,6 +2232,8 @@ public:
 class variety_description {
 public:
 
+	// variety.csv
+
 	int f_label_txt;
 	std::string label_txt;
 
@@ -2262,6 +2264,9 @@ public:
 
 	int f_equation_by_coefficients;
 	std::string equation_by_coefficients_text;
+
+	int f_equation_by_rank;
+	std::string equation_by_rank_text;
 
 	// unused:
 	int f_second_equation_in_algebraic_form;
@@ -2363,6 +2368,10 @@ public:
 #endif
 	void parse_equation_by_coefficients(
 			std::string &equation_txt,
+			int *&equation,
+			int verbose_level);
+	void parse_equation_by_rank(
+			std::string &rank_txt,
 			int *&equation,
 			int verbose_level);
 	void parse_equation_in_algebraic_form(

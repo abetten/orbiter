@@ -160,6 +160,23 @@ void variety_object::init(
 					"after parse_equation_by_coefficients" << endl;
 		}
 	}
+	else if (Descr->f_equation_by_rank) {
+		if (f_v) {
+			cout << "variety_object::init "
+					"before parse_equation_by_rank" << endl;
+			cout << "variety_object::init "
+					"equation_by_rank = " << Descr->equation_by_rank_text << endl;
+		}
+		parse_equation_by_rank(
+				Descr->equation_by_rank_text,
+				eqn,
+				verbose_level - 2);
+		if (f_v) {
+			cout << "variety_object::init "
+					"after parse_equation_by_coefficients" << endl;
+		}
+	}
+
 	else {
 		cout << "variety_object::init please specify an equation" << endl;
 		exit(1);
@@ -439,6 +456,48 @@ void variety_object::parse_equation_by_coefficients(
 		cout << "variety_object::parse_equation_by_coefficients done" << endl;
 	}
 }
+
+void variety_object::parse_equation_by_rank(
+		std::string &rank_txt,
+		int *&equation,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "variety_object::parse_equation_by_rank" << endl;
+	}
+	if (f_v) {
+		cout << "variety_object::parse_equation_by_rank "
+				"rank_txt = " << rank_txt << endl;
+	}
+
+	long int *equation_rk;
+
+	int sz;
+
+	Lint_vec_scan(rank_txt, equation_rk, sz);
+
+	if (sz != 1) {
+		cout << "variety_object::parse_equation_by_rank sz != 1" << endl;
+		exit(1);
+	}
+
+
+	equation = NEW_int(Ring->get_nb_monomials());
+
+	Ring->unrank_coeff_vector(
+			equation, equation_rk[0]);
+
+	FREE_lint(equation_rk);
+
+	if (f_v) {
+		cout << "variety_object::parse_equation_by_rank done" << endl;
+	}
+}
+
+
+
 
 
 void variety_object::parse_equation_in_algebraic_form(

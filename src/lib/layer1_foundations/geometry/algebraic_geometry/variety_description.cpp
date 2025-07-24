@@ -58,6 +58,10 @@ variety_description::variety_description()
 	f_equation_by_coefficients = false;
 	//std::string equation_by_coefficients_text;
 
+	f_equation_by_rank = false;
+	//std::string equation_by_rank_text;
+
+
 	// unused:
 	f_second_equation_in_algebraic_form = false;
 	//std::string second_equation_in_algebraic_form_text;
@@ -154,6 +158,14 @@ int variety_description::read_arguments(
 				cout << "-equation_by_coefficients " << equation_by_coefficients_text << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-equation_by_rank") == 0) {
+			f_equation_by_rank = true;
+			equation_by_rank_text.assign(argv[++i]);
+			if (f_v) {
+				cout << "-equation_by_rank " << equation_by_rank_text << endl;
+			}
+		}
+
 		else if (ST.stringcmp(argv[i], "-second_equation_in_algebraic_form") == 0) {
 			f_second_equation_in_algebraic_form = true;
 			second_equation_in_algebraic_form_text.assign(argv[++i]);
@@ -254,6 +266,9 @@ void variety_description::print()
 	}
 	if (f_equation_by_coefficients) {
 		cout << "-equation_by_coefficients " << equation_by_coefficients_text << endl;
+	}
+	if (f_equation_by_rank) {
+		cout << "-equation_by_rank " << equation_by_rank_text << endl;
 	}
 	if (f_second_equation_in_algebraic_form) {
 		cout << "-second_equation_in_algebraic_form " << second_equation_in_algebraic_form_text << endl;
