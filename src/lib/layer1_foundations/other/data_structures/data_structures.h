@@ -2328,6 +2328,10 @@ public:
 	void parse_value_pairs(
 			std::map<std::string, std::string> &symbol_table,
 			std::string &evaluate_text, int verbose_level);
+	void parse_value_pairs_with_separator(
+			std::map<std::string, std::string> &symbol_table,
+			std::string &separator,
+			std::string &evaluate_text, int verbose_level);
 	void parse_comma_separated_values(
 			std::vector<std::string> &symbol_table,
 			std::string &evaluate_text, int verbose_level);

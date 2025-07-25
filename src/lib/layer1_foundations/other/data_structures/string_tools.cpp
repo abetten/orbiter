@@ -1327,6 +1327,56 @@ void string_tools::parse_value_pairs(
 
 }
 
+void string_tools::parse_value_pairs_with_separator(
+		std::map<std::string, std::string> &symbol_table,
+		std::string &separator,
+		std::string &evaluate_text, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "string_tools::parse_value_pairs" << endl;
+	}
+
+	std::vector<std::string> values;
+
+	parse_comma_separated_list(
+			evaluate_text, values,
+			0 /*verbose_level*/);
+
+
+	int i;
+	std::size_t found;
+
+	for (i = 0; i < values.size(); i++) {
+
+		found = values[i].find(separator);
+		if (found == std::string::npos) {
+			cout << "did not find '=' in variable assignment" << endl;
+			exit(1);
+		}
+		std::string symb = values[i].substr(0, found);
+		std::string val = values[i].substr(found + separator.length(), values[i].length() - found - 1);
+
+
+
+		if (f_v) {
+			cout << "adding symbol " << symb << " = " << val << endl;
+		}
+
+		symbol_table[symb] = val;
+
+
+	}
+
+
+	if (f_v) {
+		cout << "string_tools::parse_value_pairs done" << endl;
+	}
+
+}
+
+
 
 void string_tools::parse_comma_separated_values(
 		std::vector<std::string> &symbol_table,

@@ -1182,6 +1182,12 @@ class interface_toolkit {
 	std::string make_set_of_sets_new_col_label;
 	std::string make_set_of_sets_list;
 
+	int f_copy_and_edit;
+	std::string copy_and_edit_input_file;
+	std::string copy_and_edit_output_mask;
+	std::string copy_and_edit_parameter_values;
+	std::string copy_and_edit_search_and_replace;
+
 
 public:
 

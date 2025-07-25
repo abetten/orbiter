@@ -254,6 +254,12 @@ interface_toolkit::interface_toolkit()
 	//std::string make_set_of_sets_new_col_label;
 	//std::string make_set_of_sets_list;
 
+	f_copy_and_edit = false;
+	//std::string copy_and_edit_input_file;
+	//std::string copy_and_edit_output_mask;
+	//std::string copy_and_edit_parameter_values;
+	//std::string copy_and_edit_search_and_replace;
+
 }
 
 
@@ -423,6 +429,9 @@ void interface_toolkit::print_help(
 	else if (ST.stringcmp(argv[i], "-make_set_of_sets") == 0) {
 		cout << "-make_set_of_sets <string : fname_in> <string : new_col_label> <string : labels>" << endl;
 	}
+	else if (ST.stringcmp(argv[i], "-copy_and_edit") == 0) {
+		cout << "-copy_and_edit <string : fname_in> <string : fname_out_mask> <string : parameter_values> <string : search_and_replace_patterns>" << endl;
+	}
 
 }
 
@@ -589,6 +598,9 @@ int interface_toolkit::recognize_keyword(
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-make_set_of_sets") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-copy_and_edit") == 0) {
 		return true;
 	}
 	return false;
@@ -1343,6 +1355,22 @@ void interface_toolkit::read_arguments(
 					<< make_set_of_sets_list<< endl;
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-copy_and_edit") == 0) {
+		f_copy_and_edit = true;
+		copy_and_edit_input_file.assign(argv[++i]);
+		copy_and_edit_output_mask.assign(argv[++i]);
+		copy_and_edit_parameter_values.assign(argv[++i]);
+		copy_and_edit_search_and_replace.assign(argv[++i]);
+		if (f_v) {
+			cout << "-copy_and_edit "
+					<< copy_and_edit_input_file << " "
+					<< copy_and_edit_output_mask << " "
+					<< copy_and_edit_parameter_values << " "
+					<< copy_and_edit_search_and_replace << " "
+					<< endl;
+		}
+	}
+
 
 
 
@@ -2872,6 +2900,56 @@ void interface_toolkit::worker(
 
 	}
 
+	else if (f_copy_and_edit) {
+
+		if (f_v) {
+			cout << "interface_toolkit::worker f_copy_and_edit "
+					" fname_in = " << copy_and_edit_input_file << endl;
+			cout << "interface_toolkit::worker "
+					" copy_and_edit_output_mask = " << copy_and_edit_output_mask << endl;
+			cout << "interface_toolkit::worker "
+					" copy_and_edit_parameter_values = " << copy_and_edit_parameter_values << endl;
+			cout << "interface_toolkit::worker "
+					" copy_and_edit_search_and_replace = " << copy_and_edit_search_and_replace << endl;
+
+		}
+
+		int *parameter_values;
+		int nb_parameter_values;
+
+		Int_vec_scan(copy_and_edit_parameter_values, parameter_values, nb_parameter_values);
+
+
+
+		other::data_structures::string_tools ST;
+		//std::vector<std::string> list;
+		std::map<std::string, std::string> symbol_table;
+		string separator;
+
+		separator = "--->";
+
+		ST.parse_value_pairs_with_separator(
+				symbol_table,
+				separator,
+				copy_and_edit_search_and_replace, verbose_level);
+
+#if 0
+		ST.parse_comma_separated_list(
+				copy_and_edit_parameter_values, list,
+				verbose_level);
+#endif
+
+		other::orbiter_kernel_system::file_io Fio;
+
+		Fio.file_edit(
+				copy_and_edit_input_file,
+				copy_and_edit_output_mask,
+				parameter_values,
+				nb_parameter_values,
+				symbol_table,
+				verbose_level);
+
+	}
 
 
 	if (f_v) {

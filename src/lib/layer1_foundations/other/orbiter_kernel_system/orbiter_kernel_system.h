@@ -646,6 +646,13 @@ public:
 			int f_tail, std::string &tail,
 			std::vector<std::string> &text,
 			int verbose_level);
+	void file_edit(
+			std::string &fname_in,
+			std::string &fname_out_mask,
+			int *parameter_values,
+			int nb_parameter_values,
+			std::map<std::string, std::string> &symbol_table,
+			int verbose_level);
 
 
 

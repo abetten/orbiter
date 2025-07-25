@@ -3740,6 +3740,133 @@ void file_io::extract_from_makefile(
 }
 
 
+void file_io::file_edit(
+		std::string &fname_in,
+		std::string &fname_out_mask,
+		int *parameter_values,
+		int nb_parameter_values,
+		std::map<std::string, std::string> &symbol_table,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+
+	data_structures::string_tools ST;
+
+
+	if (f_v) {
+		cout << "file_io::file_edit "
+				"reading file " << fname_in << endl;
+		cout << "verbose_level = " << verbose_level << endl;
+	}
+
+	std::vector<std::vector<std::string> > substitute;
+
+	std::map<std::string, std::string>::iterator it = symbol_table.begin();
+
+
+	while (it != symbol_table.end()) {
+
+		string label;
+		string val;
+
+		label = it->first;
+		val = it->second;
+
+		if (f_v) {
+			cout << "file_io::file_edit pattern=" << label << " -> " << val << endl;
+		}
+		vector<string> pair;
+
+		pair.push_back(label);
+		pair.push_back(val);
+
+		substitute.push_back(pair);
+
+
+		++it;
+	}
+
+
+	int i;
+
+	for (i = 0; i < nb_parameter_values; i++) {
+
+
+		string fname_out;
+
+		//snprintf(fname, sizeof(fname), fname_in_mask.c_str(), missing_idx[h]);
+
+		fname_out = ST.printf_dd(fname_out_mask, parameter_values[i], parameter_values[i]);
+
+		ofstream ost(fname_out);
+
+		ifstream f(fname_in);
+
+		int line_number;
+
+		line_number = 0;
+		while (true) {
+
+			if (f.eof()) {
+				break;
+			}
+			{
+				string S;
+				getline(f, S);
+
+
+				if (f_vv) {
+					cout << "line " << line_number << " read: " << S << endl;
+				}
+
+				int j;
+
+				for (j = 0; j < substitute.size(); j++) {
+
+
+					std::size_t pos = 0;
+
+					while (true) {
+
+						pos = S.find(substitute[j][0], pos);
+
+						if (pos != std::string::npos) {
+
+							string S2;
+
+							S2 = ST.printf_d(substitute[j][1], parameter_values[i]);
+
+							std::cout << "pattern matching " << substitute[j][0] << " ---> " << S2 << endl;
+
+							S.replace(pos, substitute[j][0].length(), S2);
+							pos += S2.length();
+
+						}
+						else {
+							break;
+						}
+					}
+
+				}
+
+				ost << S << endl;
+
+			}
+			line_number++;
+		} // while
+
+	} // next i
+
+
+
+	if (f_v) {
+		cout << "file_io::file_edit done" << endl;
+	}
+}
+
+
+
 
 void file_io::count_solutions_in_list_of_files(
 		int nb_files, std::string *fname,
