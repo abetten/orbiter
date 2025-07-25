@@ -346,9 +346,16 @@ void quartic_curve_object_properties::print_equation(
 	ost << "\\end{array}" << endl;
 	ost << "$$" << endl;
 
+
 	ost << "$$" << endl;
 	Int_vec_print(ost, eqn15, 15);
 	ost << "$$" << endl;
+
+
+	QO->Variety_object->print_equation_verbatim(
+			eqn15,
+			ost);
+
 
 #if 0
 	long int rk;
@@ -356,6 +363,10 @@ void quartic_curve_object_properties::print_equation(
 	QO->F->PG_element_rank_modified_lint(QO->eqn15, 1, 15, rk);
 	ost << "The point rank of the equation over GF$(" << QO->F->q << ")$ is " << rk << "\\\\" << endl;
 #endif
+
+
+
+
 
 	//ost << "Number of points on the surface " << SO->nb_pts << "\\\\" << endl;
 

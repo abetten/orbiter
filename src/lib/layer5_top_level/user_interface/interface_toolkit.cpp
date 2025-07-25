@@ -111,6 +111,11 @@ interface_toolkit::interface_toolkit()
 	//std::string csv_file_extract_column_to_txt_fname;
 	//std::string csv_file_extract_column_to_txt_col_label;
 
+	f_csv_file_filter = false;
+	//std::string csv_file_filter_fname
+	//std::string csv_file_filter_col;
+	//std::string csv_file_filter_value;
+
 	f_csv_file_latex = false;
 	f_produce_latex_header = false;
 	//std::vector<std::string> csv_file_latex_fname;
@@ -324,6 +329,9 @@ void interface_toolkit::print_help(
 	else if (ST.stringcmp(argv[i], "-csv_file_extract_column_to_txt") == 0) {
 		cout << "-csv_file_extract_column_to_txt <string : csv_fname> <string : col_label>" << endl;
 	}
+	else if (ST.stringcmp(argv[i], "-csv_file_filter") == 0) {
+		cout << "-csv_file_filter <string : csv_fname> <string : col_label> <string : filter_value>" << endl;
+	}
 	else if (ST.stringcmp(argv[i], "-csv_file_latex") == 0) {
 		cout << "-cvs_file_latex <int : f_produce_header> <string : file_name>" << endl;
 	}
@@ -487,6 +495,9 @@ int interface_toolkit::recognize_keyword(
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-csv_file_extract_column_to_txt") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-csv_file_filter") == 0) {
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-csv_file_latex") == 0) {
@@ -858,7 +869,19 @@ void interface_toolkit::read_arguments(
 					<< " " << csv_file_extract_column_to_txt_col_label << endl;
 		}
 	}
-
+	else if (ST.stringcmp(argv[i], "-csv_file_filter") == 0) {
+		f_csv_file_filter = true;
+		csv_file_filter_fname.assign(argv[++i]);
+		csv_file_filter_col.assign(argv[++i]);
+		csv_file_filter_value.assign(argv[++i]);
+		if (f_v) {
+			cout << "-csv_file_filter "
+					<< csv_file_filter_fname
+					<< " " << csv_file_filter_col
+					<< " " << csv_file_filter_value
+					<< endl;
+		}
+	}
 	else if (ST.stringcmp(argv[i], "-csv_file_latex") == 0) {
 		f_csv_file_latex = true;
 		f_produce_latex_header = ST.strtoi(argv[++i]);
@@ -1443,6 +1466,13 @@ void interface_toolkit::print()
 				<< csv_file_extract_column_to_txt_fname
 				<< " " << csv_file_extract_column_to_txt_col_label << endl;
 	}
+	if (f_csv_file_filter) {
+		cout << "-csv_file_filter "
+				<< csv_file_filter_fname
+				<< " " << csv_file_filter_col
+				<< " " << csv_file_filter_value
+				<< endl;
+	}
 	if (f_csv_file_latex) {
 		cout << "-csv_file_latex "
 				<< f_produce_latex_header
@@ -1922,6 +1952,21 @@ void interface_toolkit::worker(
 		Fio.Csv_file_support->do_csv_file_extract_column_to_txt(
 				csv_file_extract_column_to_txt_fname,
 				csv_file_extract_column_to_txt_col_label,
+				verbose_level);
+
+	}
+	else if (f_csv_file_filter) {
+
+		if (f_v) {
+			cout << "interface_toolkit::worker "
+					"f_csv_file_filter" << endl;
+		}
+		other::orbiter_kernel_system::file_io Fio;
+
+		Fio.Csv_file_support->do_csv_file_filter(
+				csv_file_filter_fname,
+				csv_file_filter_col,
+				csv_file_filter_value,
 				verbose_level);
 
 	}

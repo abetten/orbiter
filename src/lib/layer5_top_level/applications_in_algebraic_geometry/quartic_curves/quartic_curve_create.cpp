@@ -1895,6 +1895,8 @@ void quartic_curve_create::report(
 	QO->QP->print_equation(ost);
 
 
+
+
 	if (f_v) {
 		cout << "quartic_curve_create::report "
 				"before print_general" << endl;

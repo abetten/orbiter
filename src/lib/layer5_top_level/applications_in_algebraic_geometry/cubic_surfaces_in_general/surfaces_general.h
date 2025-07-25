@@ -743,6 +743,7 @@ public:
 	void create_heading(
 			std::string &heading, int &nb_cols);
 	void create_vector_of_strings(
+			int pt_orbit,
 			quartic_curves::quartic_curve_from_surface *QC,
 			geometry::algebraic_geometry::quartic_curve_object *QO,
 			std::vector<std::string> &v,

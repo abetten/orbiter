@@ -238,6 +238,10 @@ public:
 	void do_csv_file_extract_column_to_txt(
 			std::string &csv_fname, std::string &col_label,
 			int verbose_level);
+	void do_csv_file_filter(
+			std::string &csv_fname,
+			std::string &col_label, std::string &filter_value,
+			int verbose_level);
 	void do_csv_file_sort_each_row(
 			std::string &csv_fname, int verbose_level);
 	void do_csv_file_join(

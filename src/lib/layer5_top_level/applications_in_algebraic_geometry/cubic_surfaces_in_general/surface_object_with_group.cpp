@@ -495,6 +495,7 @@ void surface_object_with_group::init_with_surface_object(
 		int f_has_nice_gens,
 		data_structures_groups::vector_ge *nice_gens,
 		int verbose_level)
+// ToDo: Aut_gens and nice_gens will become part of the object. This is not good.
 {
 	int f_v = (verbose_level >= 1);
 
@@ -503,10 +504,40 @@ void surface_object_with_group::init_with_surface_object(
 	}
 
 	surface_object_with_group::Surf_A = Surf_A;
+
+
+	if (f_has_nice_gens) {
+		if (f_v) {
+			cout << "surface_object_with_group::init_with_surface_object "
+					"before nice_gens->copy" << endl;
+		}
+		nice_gens->copy(
+				surface_object_with_group::nice_gens, verbose_level);
+		if (f_v) {
+			cout << "surface_object_with_group::init_with_surface_object "
+					"after nice_gens->copy" << endl;
+		}
+
+	}
+	else {
+		nice_gens = NULL;
+	}
 	surface_object_with_group::f_has_nice_gens = f_has_nice_gens;
-	surface_object_with_group::nice_gens = nice_gens;
+
+	//surface_object_with_group::nice_gens = nice_gens;
+
 	surface_object_with_group::SO = SO;
-	surface_object_with_group::Aut_gens = Aut_gens;
+
+	if (f_v) {
+		cout << "surface_object_with_group::init_with_surface_object "
+				"before Aut_gens->create_copy" << endl;
+	}
+	surface_object_with_group::Aut_gens = Aut_gens->create_copy(verbose_level);
+	if (f_v) {
+		cout << "surface_object_with_group::init_with_surface_object "
+				"after Aut_gens->create_copy" << endl;
+	}
+
 	Surf = Surf_A->Surf;
 
 	if (f_v) {
@@ -522,6 +553,15 @@ void surface_object_with_group::init_with_surface_object(
 		cout << "surface_object_with_group::init_with_surface_object "
 				"testing Aut_gens done" << endl;
 	}
+
+	if (f_v) {
+		cout << "surface_object_with_group::init_with_surface_object "
+				"group order = ";
+		algebra::ring_theory::longinteger_object go;
+		Aut_gens->group_order(go);
+		cout << go << endl;
+	}
+
 
 	if (f_v) {
 		cout << "surface_object_with_group::init_with_surface_object "
@@ -2985,6 +3025,7 @@ void surface_object_with_group::export_one_quartic_curve(
 					"before create_vector_of_strings" << endl;
 		}
 		create_vector_of_strings(
+				pt_orbit,
 				QC,
 				QO,
 				v,
@@ -3015,13 +3056,14 @@ void surface_object_with_group::export_one_quartic_curve(
 void surface_object_with_group::create_heading(
 		std::string &heading, int &nb_cols)
 {
-	heading = "SEQN,SEQNALG,orbit,PT,PTCOEFF,PO_GO,PO_INDEX,curve,CURVEALG,"
+	heading = "Q,SO,SEQN,SEQNALG,orbit,PT,PTCOEFF,PO_GO,PO_INDEX,curve,CURVEALG,"
 			"nb_pts_on_curve,pts_on_curve,bitangents,NB_E,NB_DOUBLE,NB_SINGLE,NB_ZERO,NB_K,Kovalevski_pts,go";
-	nb_cols = 19;
+	nb_cols = 21;
 
 }
 
 void surface_object_with_group::create_vector_of_strings(
+		int pt_orbit,
 		quartic_curves::quartic_curve_from_surface *QC,
 		geometry::algebraic_geometry::quartic_curve_object *QO,
 		std::vector<std::string> &v,
@@ -3033,7 +3075,7 @@ void surface_object_with_group::create_vector_of_strings(
 		cout << "surface_object_with_group::create_vector_of_strings" << endl;
 	}
 
-	int nb_cols = 19;
+	int nb_cols = 21;
 
 	std::string s_eqn_surface;
 	std::string s_eqn_surface_algebraic;
@@ -3069,30 +3111,32 @@ void surface_object_with_group::create_vector_of_strings(
 
 	v.resize(nb_cols);
 
-	if (nb_cols != 19) {
-		cout << "surface_object_with_group::create_vector_of_strings nb_cols != 19" << endl;
+	if (nb_cols != 21) {
+		cout << "surface_object_with_group::create_vector_of_strings nb_cols != 21" << endl;
 		exit(1);
 	}
 
-	v[0] = "\"" + s_eqn_surface + "\"";
-	v[1] = "\"" + s_eqn_surface_algebraic + "\"";
-	v[2] = std::to_string(QC->pt_orbit);
-	v[3] = std::to_string(QC->pt_A);
-	v[4] = "\"" + pt_coeff + "\"";
-	v[5] = ago.stringify();
-	v[6] = std::to_string(QC->po_index);
-	v[7] = "\"" + s_eqn + "\"";
-	v[8] = "\"" + s_eqn_algebraic + "\"";
-	v[9] = "\"" + s_nb_Pts + "\"";
-	v[10] = "\"" + s_Pts + "\"";
-	v[11] = "\"" + s_Lines + "\"";
-	v[12] = std::to_string(SO->SOP->nb_Eckardt_points);
-	v[13] = std::to_string(SO->SOP->nb_Double_points);
-	v[14] = std::to_string(SO->SOP->nb_Single_points);
-	v[15] = std::to_string(SO->SOP->nb_pts_not_on_lines);
-	v[16] = std::to_string(QO->QP->Kovalevski->nb_Kovalevski);
-	v[17] =  "\"" + s_Kovalevski + "\"";
-	v[18] = std::to_string(-1);
+	v[0] = std::to_string(Surf->F->q);
+	v[1] = std::to_string(pt_orbit);
+	v[2] = "\"" + s_eqn_surface + "\"";
+	v[3] = "\"" + s_eqn_surface_algebraic + "\"";
+	v[4] = std::to_string(QC->pt_orbit);
+	v[5] = std::to_string(QC->pt_A);
+	v[6] = "\"" + pt_coeff + "\"";
+	v[7] = ago.stringify();
+	v[8] = std::to_string(QC->po_index);
+	v[9] = "\"" + s_eqn + "\"";
+	v[10] = "\"" + s_eqn_algebraic + "\"";
+	v[11] = "\"" + s_nb_Pts + "\"";
+	v[12] = "\"" + s_Pts + "\"";
+	v[13] = "\"" + s_Lines + "\"";
+	v[14] = std::to_string(SO->SOP->nb_Eckardt_points);
+	v[15] = std::to_string(SO->SOP->nb_Double_points);
+	v[16] = std::to_string(SO->SOP->nb_Single_points);
+	v[17] = std::to_string(SO->SOP->nb_pts_not_on_lines);
+	v[18] = std::to_string(QO->QP->Kovalevski->nb_Kovalevski);
+	v[19] =  "\"" + s_Kovalevski + "\"";
+	v[20] = std::to_string(-1);
 
 	if (f_v) {
 		cout << "surface_object_with_group::create_vector_of_strings done" << endl;

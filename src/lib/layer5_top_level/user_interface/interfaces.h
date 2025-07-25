@@ -1034,6 +1034,10 @@ class interface_toolkit {
 	std::string csv_file_extract_column_to_txt_fname;
 	std::string csv_file_extract_column_to_txt_col_label;
 
+	int f_csv_file_filter;
+	std::string csv_file_filter_fname;
+	std::string csv_file_filter_col;
+	std::string csv_file_filter_value;
 
 	int f_csv_file_latex;
 	int f_produce_latex_header;

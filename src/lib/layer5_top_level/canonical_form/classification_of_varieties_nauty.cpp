@@ -594,7 +594,7 @@ std::string classification_of_varieties_nauty::stringify_csv_header_line_nauty(
 
 	std::string header;
 
-	header = "ROW,CNT,PO,SO,PO_GO,PO_INDEX,Iso_idx,F_Fst,Idx_canonical,Idx_eqn,Eqn,Eqn2,nb_pts_on_curve,pts_on_curve,Bitangents";
+	header = "ROW,Q,FO,PO,SO,Iso_idx,F_Fst,Idx_canonical,Idx_eqn,Eqn,Eqn2,nb_pts_on_curve,pts_on_curve,Bitangents";
 
 #if 1
 	if (Classifier->has_description()) {

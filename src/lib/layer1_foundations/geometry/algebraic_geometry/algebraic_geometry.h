@@ -2438,6 +2438,9 @@ public:
 			std::ostream &ost, int *coeffs);
 	void print_equation(
 			std::ostream &ost);
+	void print_equation_verbatim(
+			int *coeffs,
+			std::ostream &ost);
 	std::string stringify_points();
 	std::string stringify_lines();
 	std::string stringify_equation();

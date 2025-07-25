@@ -353,6 +353,15 @@ int surface_create::init(
 				"after create_surface_from_description" << endl;
 	}
 
+	if (f_v) {
+		cout << "surface_create::init "
+				"f_has_group = " << f_has_group << endl;
+		cout << "surface_create::init "
+				"group order = ";
+		algebra::ring_theory::longinteger_object go;
+		Sg->group_order(go);
+		cout << go << endl;
+	}
 
 	if (f_v) {
 		cout << "surface_create::init done" << endl;
@@ -751,6 +760,13 @@ int surface_create::create_surface_from_description(
 
 	if (f_v) {
 		if (f_has_group) {
+			cout << "surface_create::create_surface_from_description "
+					"f_has_group = " << f_has_group << endl;
+			cout << "surface_create::create_surface_from_description "
+					"group order = ";
+			algebra::ring_theory::longinteger_object go;
+			Sg->group_order(go);
+			cout << go << endl;
 			cout << "surface_create::create_surface_from_description "
 					"the stabilizer is:" << endl;
 			Sg->print_generators_tex(cout);
@@ -1260,6 +1276,16 @@ void surface_create::create_surface_from_catalogue(
 	if (f_v) {
 		cout << "surface_create::create_surface_from_catalogue "
 				"after Sg->stabilizer_of_cubic_surface_from_catalogue" << endl;
+	}
+
+	if (f_v) {
+		cout << "surface_create::create_surface_from_catalogue "
+				"f_has_group = " << f_has_group << endl;
+		cout << "surface_create::create_surface_from_catalogue "
+				"group order = ";
+		algebra::ring_theory::longinteger_object go;
+		Sg->group_order(go);
+		cout << go << endl;
 	}
 
 

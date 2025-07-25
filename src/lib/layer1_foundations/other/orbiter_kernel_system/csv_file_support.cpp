@@ -1701,6 +1701,78 @@ void csv_file_support::do_csv_file_extract_column_to_txt(
 
 
 
+void csv_file_support::do_csv_file_filter(
+		std::string &csv_fname,
+		std::string &col_label, std::string &filter_value,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "csv_file_support::do_csv_file_filter" << endl;
+		cout << "csv_file_support::do_csv_file_filter col_label=" << col_label << endl;
+		cout << "csv_file_support::do_csv_file_filter filter_value=" << filter_value << endl;
+	}
+	string fname;
+	data_structures::string_tools ST;
+
+	data_structures::spreadsheet *S;
+	int identifier_column;
+
+	S = NEW_OBJECT(data_structures::spreadsheet);
+
+	S->read_spreadsheet(csv_fname, 0 /*verbose_level*/);
+	cout << "Table " << csv_fname << " has been read" << endl;
+
+
+	identifier_column = S->find_column(col_label);
+
+
+	fname = csv_fname;
+	ST.replace_extension_with(fname, "_");
+	fname += "f_" + col_label + "_" + filter_value + ".csv";
+
+
+
+
+	{
+		ofstream ost(fname);
+
+		int i, j;
+
+
+		ost << "ROW,ROWORIG,";
+
+		S->print_table_row(0, false, ost);
+
+
+		j = 0;
+		for (i = 0; i < S->nb_rows - 1; i++) {
+			string entry;
+
+			S->get_string(entry, i + 1, identifier_column);
+
+			if (entry == filter_value) {
+				ost << j << ",";
+				ost << i << ",";
+				S->print_table_row(i + 1, false, ost);
+				j++;
+			}
+		}
+		ost << "END" << endl;
+	}
+	if (f_v) {
+		cout << "Written file " << fname
+				<< " of size " << Fio->file_size(fname) << endl;
+	}
+
+	if (f_v) {
+		cout << "csv_file_support::do_csv_file_filter done" << endl;
+	}
+}
+
+
+
 void csv_file_support::do_csv_file_sort_each_row(
 		std::string &csv_fname, int verbose_level)
 {
@@ -2030,14 +2102,14 @@ void csv_file_support::do_csv_file_concatenate_from_mask(
 		int cnt = 0;
 		int f_enclose_in_parentheses = false;
 
-		ost << "Row,PO,SO,";
+		ost << "Row,PO,IDX,";
 		S[0].print_table_row(0, f_enclose_in_parentheses, ost);
 		for (i = 0; i < nb_files; i++) {
 			//S[i].print_table(ost, false);
 			for (j = 1; j < S[i].nb_rows; j++) {
 				ost << cnt << ",";
 				ost << i << ",";
-				ost << j << ",";
+				ost << j - 1 << ",";
 				S[i].print_table_row(j, f_enclose_in_parentheses, ost);
 				cnt++;
 			}

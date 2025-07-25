@@ -2705,7 +2705,8 @@ int homogeneous_polynomial_domain::test_potential_algebraic_degree(
 			cout << "homogeneous_polynomial_domain::test_potential_algebraic_degree eqn=";
 			Int_vec_print(cout, eqn, n);
 			cout << endl;
-			cout << "homogeneous_polynomial_domain::test_potential_algebraic_degree n = " << n << endl;
+			cout << "homogeneous_polynomial_domain::test_potential_algebraic_degree "
+					"n = " << n << endl;
 		}
 
 		Int_vec_copy(eqn, eqn2, n);
@@ -2716,7 +2717,8 @@ int homogeneous_polynomial_domain::test_potential_algebraic_degree(
 
 			col = base_cols[i];
 			if (f_v) {
-				cout << "homogeneous_polynomial_domain::test_potential_algebraic_degree i=" << i << ", cleaning column " << col << endl;
+				cout << "homogeneous_polynomial_domain::test_potential_algebraic_degree "
+						"i=" << i << ", cleaning column " << col << endl;
 			}
 
 			a = eqn2[col];

@@ -811,13 +811,16 @@ void variety_compute_canonical_form::prepare_csv_entry_one_line_nauty_new(
 	if (f_v) {
 		cout << "variety_compute_canonical_form::prepare_csv_entry_one_line_nauty_new" << endl;
 	}
+	//header = "ROW,Q,FO,PO,SO,Iso_idx,F_Fst,Idx_canonical,Idx_eqn,Eqn,Eqn2,nb_pts_on_curve,pts_on_curve,Bitangents";
 
 
-	v.push_back(std::to_string(Vo->cnt));
-	v.push_back(std::to_string(Vo->po));
-	v.push_back(std::to_string(Vo->so));
-	v.push_back(std::to_string(Vo->po_go));
-	v.push_back(std::to_string(Vo->po_index));
+	//v.push_back(std::to_string(Vo->cnt)); // ROW
+	v.push_back(std::to_string(Vo->PA->P->Subspaces->F->q)); // Q
+	v.push_back(std::to_string(Vo->cnt)); // FO
+	v.push_back(std::to_string(Vo->po)); // PO
+	v.push_back(std::to_string(Vo->so)); // SO
+	//v.push_back(std::to_string(Vo->po_go));
+	//v.push_back(std::to_string(Vo->po_index));
 	if (false /* Canonical_form_classifier->Input->skip_this_one(i) */) {
 		if (f_v) {
 			cout << "variety_compute_canonical_form::prepare_csv_entry_one_line_nauty_new "

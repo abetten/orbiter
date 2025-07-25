@@ -5,6 +5,7 @@ ROW,C1,C2,C3
 1,"\verb'-csv_file_concatenate' "," fname-out n f1 f2 ... fn ","Join the n csv files f1, f2, ..., fn. The output is written to fname-out. "
 1,"\verb'-csv_file_concatenate_from_mask' "," f N fname-mask fname-out ","Join csv files. The input files arise from fname-mask with all values $i=f,f+1,\ldots,f+N-1.$ The output is written to fname-out. "
 1,"\verb'-csv_file_extract_column_to_txt' "," fname  col-label "," "
+1,"\verb'-csv_file_filter' "," fname  col-label value "," Extracts those rows whole entry in the given column matches the given value. "
 1,"\verb'-csv_file_latex' "," header fname   ","Produces a latex table from the given csv-file. The binary variable header determines whether a header is produced. "
 1,"\verb'-draw_matrix' "," descr ","Produce a bitmap graphic, see Table~\ref{tab:bitmap}. "
 1,"\verb'-reformat' "," fname-in fname-out nb-cols ","Reformat the data from fname-in in nb-cols columns. Write the output to fname-out. "

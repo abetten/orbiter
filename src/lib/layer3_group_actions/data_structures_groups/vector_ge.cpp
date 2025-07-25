@@ -76,7 +76,13 @@ void vector_ge::copy(
 	}
 
 	vector_copy = NEW_OBJECT(vector_ge);
+	if (f_v) {
+		cout << "vector_ge::copy before vector_copy->null" << endl;
+	}
 	vector_copy->null();
+	if (f_v) {
+		cout << "vector_ge::copy before vector_copy->init" << endl;
+	}
 	vector_copy->init(A, verbose_level);
 	if (f_v) {
 		cout << "vector_ge::copy before vector_copy->allocate" << endl;

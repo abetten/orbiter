@@ -1179,11 +1179,15 @@ void variety_object::print_equation(
 	ost << "\\\\" << endl;
 
 
+	print_equation_verbatim(coeffs, ost);
+
+#if 0
 	ost << "\\begin{verbatim}" << endl;
 
 	Ring->print_equation_relaxed(ost, coeffs);
 	ost << endl;
 	ost << "\\end{verbatim}" << endl;
+#endif
 
 
 	FREE_int(coeffs);
@@ -1191,6 +1195,16 @@ void variety_object::print_equation(
 	//ost << "Number of points on the surface " << SO->nb_pts << "\\\\" << endl;
 
 
+}
+
+void variety_object::print_equation_verbatim(
+		int *coeffs,
+		std::ostream &ost)
+{
+	ost << "\\begin{verbatim}" << endl;
+	Ring->print_equation_relaxed(ost, coeffs);
+	ost << endl;
+	ost << "\\end{verbatim}" << endl;
 }
 
 std::string variety_object::stringify_points()
