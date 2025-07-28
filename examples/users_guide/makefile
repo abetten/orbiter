@@ -10144,6 +10144,9 @@ test_7_5:
 	make Hirschfeld_q2
 	make quartic_curve_q13_f1_apply_transformation
 	make quartic_curve_q13_f0_apply_transformation
+	make cubic_eqn_q3_0
+	
+
 
 
 
@@ -10288,6 +10291,33 @@ quartic_curve_q13_f0_apply_transformation:
 			-apply_transformation eqn trans \
 		-end 
 
+
+
+cubic_eqn_q3_0:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 3 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 4 \
+			-homogeneous_of_degree 3 \
+			-monomial_ordering_partition \
+			-variables "X0,X1,X2,X3" "X_0,X_1,X_2,X_3" \
+		-end \
+		-define V -variety \
+			-projective_space P \
+			-ring R \
+			-equation_by_rank \
+				0 \
+			-compute_lines \
+			-label_txt eqn_q3_0 \
+			-label_tex "{\\rm eqn\_q3\_0}" \
+		-end \
+		-with V -do -variety_activity -compute_group -nauty_control -save_orbit_of_equations eqn_ -end -end \
+		-with V -do -variety_activity -singular_points -end \
+		-with V -do -variety_activity -report -end
+	pdflatex variety_eqn_q3_0_report.tex
+	open variety_eqn_q3_0_report.pdf
 
 
 
@@ -10781,6 +10811,7 @@ orbits_on_conics_q13:
 			-variables "X,Y,Z" "X,Y,Z" \
 		-end \
 		-define Orb -orbits -group G \
+			-print_interval 1000000 \
 			-on_polynomials R \
 		-end
 	#$(PDFLATEX) poly_orbits_d2_n2_q13.tex
@@ -10799,6 +10830,7 @@ orbits_cubic_curves_q2:
 			-variables "X,Y,Z" "X,Y,Z" \
 		-end \
 		-define Orb -orbits -group G \
+			-print_interval 1000000 \
 			-on_polynomials R \
 		-end
 	#$(PDFLATEX) poly_orbits_d3_n3_q2.tex
@@ -10821,6 +10853,7 @@ orbits_cubic_curves_q2_with_draw_tree:
 			-variables "X,Y,Z" "X,Y,Z" \
 		-end \
 		-define Orb -orbits -group G \
+			-print_interval 1000000 \
 			-on_polynomials R \
 		-end \
 		-with Orb -do -orbits_activity \
@@ -10849,6 +10882,7 @@ poly_orbits_d3_n3_q2.csv:
 			-variables "X,Y,Z,W" "X,Y,Z,W" \
 		-end \
 		-define Orb -orbits -group G \
+			-print_interval 1000000 \
 			-on_polynomials R \
 		-end \
 		-with Orb -do -orbits_activity \
@@ -12274,6 +12308,7 @@ poly_orbits_q4:
 			-end \
 		-define G -linear_group -PGGL 3 F -end \
 		-define Orb -orbits -group G \
+			-print_interval 1000000 \
 			-on_polynomials R \
 		-end \
 		-define ro \
@@ -13845,6 +13880,7 @@ SECTION_QUARTIC_CURVES_CREATION:
 
 test_9_5:
 	make quartic_curve_9_0
+	make quartic_curve_9_0_report
 	make quartic_curve_edge_q9
 	make surface_7_0_make_quartic_curves
 	make quartic_curves_q7
@@ -13866,6 +13902,21 @@ quartic_curve_9_0:
 
 
 # the coefficient 1 is actually 4 mod 3:
+
+
+
+quartic_curve_9_0_report: 
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 9 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define C -quartic_curve -space P -catalogue 0 -end \
+		-with C -do \
+			-quartic_curve_activity \
+				-report \
+			-end
+	$(PDFLATEX) quartic_curve_catalogue_9_iso0_report.tex
+	$(OPEN) quartic_curve_catalogue_9_iso0_report.pdf
+
 
 
 quartic_curve_edge_q9:
@@ -13918,8 +13969,8 @@ surface_7_0_make_quartic_curves:
 			-report Do \
 			-report_all_flag_orbits \
 		-end
-	#$(PDFLATEX) surface_catalogue_q7_iso0_report.tex
-	#$(OPEN) surface_catalogue_q7_iso0_report.pdf
+	$(PDFLATEX) surface_catalogue_q7_iso0_report.tex
+	$(OPEN) surface_catalogue_q7_iso0_report.pdf
 
 
 quartic_curves_q7:
@@ -24163,7 +24214,7 @@ cubic_curves_PG_2_8_canon:
 			-canonical_form_PG P \
 				-save_ago \
 				-max_TDO_depth 10 \
-				-nauty_control -end \
+				-nauty_control -show_canonical_form  -end \
 			-end \
 		-end \
 		-define Doinc -draw_incidence_structure_options \
@@ -24206,7 +24257,7 @@ ovoid_q8_canon:
 			-canonical_form_PG P \
 				-save_ago \
 				-max_TDO_depth 4 \
-				-nauty_control -end \
+				-nauty_control -show_canonical_form  -end \
 			-end \
 		-end \
 		-define Doinc -draw_incidence_structure_options \
@@ -24315,7 +24366,7 @@ quartic_curve_25_0_0_canonical:
 			-canonical_form_PG P \
 				-save_ago \
 				-max_TDO_depth 4 \
-				-nauty_control -end \
+				-nauty_control -show_canonical_form -end \
 			-end \
 		-end \
 		-define Doinc -draw_incidence_structure_options \
@@ -24465,7 +24516,7 @@ geo_7_3_c:
 			-canonical_form \
 				-save_ago \
 				-save_transversal \
-				-nauty_control -end \
+				-nauty_control -show_canonical_form -end \
 			-end \
 		-end \
 		-with C -do \
@@ -26463,8 +26514,17 @@ schreier_tree_graphical_output:
 			-embedded \
 		-end \
 		-define G -linear_group -PGL 4 2 -end \
-		-define Orb -orbits -group G \
-			-on_polynomials 3 \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 4 \
+			-homogeneous_of_degree 3 \
+			-monomial_ordering_partition \
+			-variables "X,Y,Z,W" "X,Y,Z,W" \
+		-end \
+		-define Orb -orbits \
+			-group G \
+			-print_interval 1000000 \
+			-on_polynomials R \
 		-end \
 		-with Orb -do -orbits_activity \
 			-export_something "orbit" 6 \

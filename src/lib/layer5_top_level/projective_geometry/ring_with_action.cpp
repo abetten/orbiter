@@ -143,7 +143,7 @@ void ring_with_action::apply(
 				"before substitute_semilinear" << endl;
 	}
 
-	int d, frobenius;
+	int d, frobenius, frobenius_inv;
 	int *Mtx; // [d * d + 1]
 
 
@@ -151,11 +151,18 @@ void ring_with_action::apply(
 	Mtx = Elt;
 	frobenius = Mtx[d * d];
 
+	if (frobenius) {
+		frobenius_inv = Poly_ring->get_F()->e - frobenius;
+	}
+	else {
+		frobenius_inv = frobenius;
+	}
+
 	Poly_ring->substitute_semilinear(
 			eqn_in,
 			eqn_out,
 			PA->A->is_semilinear_matrix_group(),
-			frobenius, Mtx,
+			frobenius_inv, Mtx,
 			0/*verbose_level*/);
 
 	if (f_v) {
@@ -181,6 +188,7 @@ void ring_with_action::nauty_interface(
 
 	if (f_v) {
 		cout << "ring_with_action::nauty_interface" << endl;
+		cout << "ring_with_action::nauty_interface verbose_level = " << verbose_level << endl;
 	}
 
 	if (Variety_object_with_action->f_has_nauty_output) {
@@ -200,7 +208,7 @@ void ring_with_action::nauty_interface(
 				Set_stab,
 				Canonical_form,
 				NO,
-				verbose_level);
+				verbose_level - 2);
 
 		if (f_v) {
 			cout << "ring_with_action::nauty_interface "
@@ -224,7 +232,7 @@ void ring_with_action::nauty_interface(
 				Set_stab,
 				Canonical_form,
 				NO,
-				verbose_level);
+				verbose_level - 2);
 
 		if (f_v) {
 			cout << "ring_with_action::nauty_interface "
@@ -326,7 +334,7 @@ void ring_with_action::nauty_interface_from_scratch(
 			Set_stab,
 			Canonical_form,
 			NO,
-			verbose_level);
+			verbose_level - 2);
 
 	if (f_v) {
 		cout << "ring_with_action::nauty_interface_from_scratch "

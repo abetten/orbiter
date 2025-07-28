@@ -29,6 +29,8 @@ namespace knowledge_base {
 
 
 #include "DATA/quartic_curves/quartic_curves_q9.cpp"
+#include "DATA/quartic_curves/quartic_curves_q11.cpp"
+// q=11 added on July 26, 2025
 #include "DATA/quartic_curves/quartic_curves_q13.cpp"
 #include "DATA/quartic_curves/quartic_curves_q17.cpp"
 #include "DATA/quartic_curves/quartic_curves_q19.cpp"
@@ -37,6 +39,10 @@ namespace knowledge_base {
 #include "DATA/quartic_curves/quartic_curves_q27.cpp"
 #include "DATA/quartic_curves/quartic_curves_q29.cpp"
 #include "DATA/quartic_curves/quartic_curves_q31.cpp"
+#include "DATA/quartic_curves/quartic_curves_q37.cpp"
+// q=37 added on July 26, 2025
+#include "DATA/quartic_curves/quartic_curves_q41.cpp"
+// q=41 added on July 27, 2025
 
 #include "DATA/data_hyperovals.cpp"
 
@@ -123,6 +129,9 @@ int knowledge_base::quartic_curves_nb_reps(
 	if (q == 9) {
 		nb = quartic_curves_q9_nb_reps;
 	}
+	else if (q == 11) {
+		nb = quartic_curves_q11_nb_reps;
+	}
 	else if (q == 13) {
 		nb = quartic_curves_q13_nb_reps;
 	}
@@ -147,6 +156,12 @@ int knowledge_base::quartic_curves_nb_reps(
 	else if (q == 31) {
 		nb = quartic_curves_q31_nb_reps;
 	}
+	else if (q == 37) {
+		nb = quartic_curves_q37_nb_reps;
+	}
+	else if (q == 41) {
+		nb = quartic_curves_q41_nb_reps;
+	}
 	else {
 		cout << "knowledge_base::quartic_curves_nb_reps q=" << q
 				<< " I don't have information for this case" << endl;
@@ -165,6 +180,11 @@ int *knowledge_base::quartic_curves_representative(
 		p = quartic_curves_q9_reps;
 		nb = quartic_curves_q9_nb_reps;
 		sz = quartic_curves_q9_size;
+	}
+	else if (q == 11) {
+		p = quartic_curves_q11_reps;
+		nb = quartic_curves_q11_nb_reps;
+		sz = quartic_curves_q11_size;
 	}
 	else if (q == 13) {
 		p = quartic_curves_q13_reps;
@@ -206,6 +226,16 @@ int *knowledge_base::quartic_curves_representative(
 		nb = quartic_curves_q31_nb_reps;
 		sz = quartic_curves_q31_size;
 	}
+	else if (q == 37) {
+		p = quartic_curves_q37_reps;
+		nb = quartic_curves_q37_nb_reps;
+		sz = quartic_curves_q37_size;
+	}
+	else if (q == 41) {
+		p = quartic_curves_q41_reps;
+		nb = quartic_curves_q41_nb_reps;
+		sz = quartic_curves_q41_size;
+	}
 	else {
 		cout << "knowledge_base::quartic_curves_representative q=" << q
 				<< " I don't have information for this case" << endl;
@@ -235,6 +265,10 @@ long int *knowledge_base::quartic_curves_bitangents(
 	if (q == 9) {
 		p = quartic_curves_q9_Bitangents;
 		nb = quartic_curves_q9_nb_reps;
+	}
+	else if (q == 11) {
+		p = quartic_curves_q11_Bitangents;
+		nb = quartic_curves_q11_nb_reps;
 	}
 	else if (q == 13) {
 		p = quartic_curves_q13_Bitangents;
@@ -267,6 +301,14 @@ long int *knowledge_base::quartic_curves_bitangents(
 	else if (q == 31) {
 		p = quartic_curves_q31_Bitangents;
 		nb = quartic_curves_q31_nb_reps;
+	}
+	else if (q == 37) {
+		p = quartic_curves_q37_Bitangents;
+		nb = quartic_curves_q37_nb_reps;
+	}
+	else if (q == 41) {
+		p = quartic_curves_q41_Bitangents;
+		nb = quartic_curves_q41_nb_reps;
 	}
 	else {
 		cout << "knowledge_base::quartic_curves_bitangents q=" << q
@@ -303,6 +345,14 @@ void knowledge_base::quartic_curves_stab_gens(
 		f = quartic_curves_q9_stab_gens_fst[i];
 		l = quartic_curves_q9_stab_gens_len[i];
 		stab_order = quartic_curves_q9_stab_order[i];
+	}
+	else if (q == 11) {
+		Reps = quartic_curves_q11_stab_gens;
+		nb = quartic_curves_q11_nb_reps;
+		make_element_size = quartic_curves_q11_make_element_size;
+		f = quartic_curves_q11_stab_gens_fst[i];
+		l = quartic_curves_q11_stab_gens_len[i];
+		stab_order = quartic_curves_q11_stab_order[i];
 	}
 	else if (q == 13) {
 		Reps = quartic_curves_q13_stab_gens;
@@ -367,6 +417,22 @@ void knowledge_base::quartic_curves_stab_gens(
 		f = quartic_curves_q31_stab_gens_fst[i];
 		l = quartic_curves_q31_stab_gens_len[i];
 		stab_order = quartic_curves_q31_stab_order[i];
+	}
+	else if (q == 37) {
+		Reps = quartic_curves_q37_stab_gens;
+		nb = quartic_curves_q37_nb_reps;
+		make_element_size = quartic_curves_q37_make_element_size;
+		f = quartic_curves_q37_stab_gens_fst[i];
+		l = quartic_curves_q37_stab_gens_len[i];
+		stab_order = quartic_curves_q37_stab_order[i];
+	}
+	else if (q == 41) {
+		Reps = quartic_curves_q41_stab_gens;
+		nb = quartic_curves_q41_nb_reps;
+		make_element_size = quartic_curves_q41_make_element_size;
+		f = quartic_curves_q41_stab_gens_fst[i];
+		l = quartic_curves_q41_stab_gens_len[i];
+		stab_order = quartic_curves_q41_stab_order[i];
 	}
 	else {
 		cout << "knowledge_base::quartic_curves_stab_gens q=" << q

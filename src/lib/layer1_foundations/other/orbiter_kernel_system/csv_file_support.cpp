@@ -1741,7 +1741,7 @@ void csv_file_support::do_csv_file_filter(
 		int i, j;
 
 
-		ost << "ROW,ROWORIG,";
+		ost << "ROW,ISO,ROWORIG,";
 
 		S->print_table_row(0, false, ost);
 
@@ -1753,6 +1753,7 @@ void csv_file_support::do_csv_file_filter(
 			S->get_string(entry, i + 1, identifier_column);
 
 			if (entry == filter_value) {
+				ost << j << ",";
 				ost << j << ",";
 				ost << i << ",";
 				S->print_table_row(i + 1, false, ost);
@@ -2611,20 +2612,125 @@ void csv_file_support::tally_column(
 	SoS_fibers = T.get_set_partition(verbose_level);
 
 	cout << "fibers:" << endl;
-	cout << "value : frequency : row indices" << endl;
+	cout << "type : value : frequency : row indices" << endl;
 	for (i = 0; i < SoS_fibers->nb_sets; i++) {
 
 
-		int f, value;
+		int f; //, value;
 
 		f = T.type_first[i];
 		//l = T.Frequency[i];
 
-		value = T.data[T.sorting_perm_inv[f + 0]];
+		//value = T.data[T.sorting_perm_inv[f + 0]];
 
-		cout << value << " : " << SoS_fibers->Set_size[i] << " : ";
+		cout << i << " : ";
+		Int_vec_print(cout, Data + T.sorting_perm_inv[f + 0] * n, n);
+		cout << " : " << SoS_fibers->Set_size[i] << " : ";
 		Lint_vec_print(cout, SoS_fibers->Sets[i], SoS_fibers->Set_size[i]);
 		cout << endl;
+	}
+
+	int nb_rows;
+	int nb_cols;
+	string *Table;
+
+	nb_rows = SoS_fibers->nb_sets;
+	nb_cols = 4;
+
+	Table = new std::string [nb_rows * nb_cols];
+	for (i = 0; i < SoS_fibers->nb_sets; i++) {
+
+		int f;
+
+		f = T.type_first[i];
+
+		Table[i * nb_cols + 0] = std::to_string(i);
+		Table[i * nb_cols + 1] = "\"" + Int_vec_stringify(Data + T.sorting_perm_inv[f + 0] * n, n) + "\"";
+		Table[i * nb_cols + 2] = std::to_string(SoS_fibers->Set_size[i]);
+		Table[i * nb_cols + 3] = "\"" + Lint_vec_stringify(SoS_fibers->Sets[i], SoS_fibers->Set_size[i]) + "\"";
+	}
+
+
+	if (n == 1) {
+		string s;
+
+		int nb;
+
+
+		nb = 0;
+		for (i = 0; i < SoS_fibers->nb_sets; i++) {
+
+			int f;
+			f = T.type_first[i];
+
+			nb += SoS_fibers->Set_size[i];
+			s += "\\frac{" + std::to_string(SoS_fibers->Set_size[i]) + "}{" + std::to_string(Data[T.sorting_perm_inv[f + 0]]) + "}";
+			if (i < SoS_fibers->nb_sets - 1) {
+				s += " + ";
+			}
+		}
+
+		cout << "statistic: " << nb << " objects " << s << endl;
+
+	}
+
+
+	if (n == 1) {
+		string s;
+
+		int nb;
+
+
+		nb = 0;
+		for (i = 0; i < SoS_fibers->nb_sets; i++) {
+
+			int f;
+			f = T.type_first[i];
+
+			nb += SoS_fibers->Set_size[i];
+			s += std::to_string(SoS_fibers->Set_size[i]) + "/" + std::to_string(Data[T.sorting_perm_inv[f + 0]]);
+			if (i < SoS_fibers->nb_sets - 1) {
+				s += " + ";
+			}
+		}
+
+		cout << "fractions: " << nb << " objects " << s << endl;
+
+	}
+
+
+	std::string Col_headings[4];
+
+	Col_headings[0] = "IDX";
+	Col_headings[1] = "TYPE";
+	Col_headings[2] = "NB";
+	Col_headings[3] = "POSITIONS";
+
+	string fname_tally;
+
+	fname_tally = fname;
+
+
+	other::data_structures::string_tools String;
+
+	String.chop_off_extension(
+			fname_tally);
+
+	fname_tally += "_tally.csv";
+
+
+	Fio.Csv_file_support->write_table_of_strings_with_col_headings(
+			fname_tally,
+			nb_rows, nb_cols, Table,
+			Col_headings,
+			verbose_level);
+
+	delete [] Table;
+
+	if (f_v) {
+		cout << "csv_file_support::tally_column "
+				"written file " << fname_tally << " of size "
+				<< Fio.file_size(fname_tally) << endl;
 	}
 
 
@@ -3055,6 +3161,76 @@ int csv_file_support::read_column_and_count_nb_sets(
 	}
 
 	return nb_sets;
+}
+
+void csv_file_support::join_columns(
+		std::string &fname,
+		std::string &col1_label, std::string &col2_label,
+		data_structures::set_of_sets *&SoS,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "csv_file_support::join_columns "
+				"reading file " << fname << endl;
+	}
+
+	data_structures::set_of_sets *SoS1;
+	data_structures::set_of_sets *SoS2;
+	int underlying_set_size;
+
+
+	read_column_as_set_of_sets(
+			fname, col1_label,
+			SoS1,
+			verbose_level);
+	read_column_as_set_of_sets(
+			fname, col2_label,
+			SoS2,
+			verbose_level);
+
+	int nb_sets;
+
+	nb_sets = SoS1->nb_sets;
+
+	underlying_set_size = MAXIMUM(SoS1->underlying_set_size, SoS2->underlying_set_size);
+	if (SoS1->nb_sets != SoS2->nb_sets) {
+		cout << "csv_file_support::join_columns SoS1->nb_sets != SoS2->nb_sets" << endl;
+		exit(1);
+	}
+
+	if (!SoS1->has_constant_size_property()) {
+		cout << "csv_file_support::join_columns !SoS1->has_constant_size_property()" << endl;
+		exit(1);
+	}
+	if (!SoS2->has_constant_size_property()) {
+		cout << "csv_file_support::join_columns !SoS2->has_constant_size_property()" << endl;
+		exit(1);
+	}
+
+	int sz1, sz2, sz;
+	sz1 = SoS1->get_constant_size();
+	sz2 = SoS2->get_constant_size();
+	sz = sz1 + sz2;
+
+	SoS = NEW_OBJECT(data_structures::set_of_sets);
+	SoS->init_basic_constant_size(underlying_set_size, SoS1->nb_sets, sz, verbose_level - 2);
+
+	int i;
+
+	for (i = 0; i < nb_sets; i++) {
+		Lint_vec_copy(SoS1->Sets[i], SoS->Sets[i], sz1);
+		Lint_vec_copy(SoS2->Sets[i], SoS->Sets[i] + sz1, sz2);
+	}
+
+	FREE_OBJECT(SoS1);
+	FREE_OBJECT(SoS2);
+
+
+	if (f_v) {
+		cout << "csv_file_support::join_columns done" << endl;
+	}
 }
 
 

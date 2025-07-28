@@ -1010,6 +1010,9 @@ public:
 	// Computes the orbit of the equation under the stabilizer of the set.
 	void orbit_of_equation_under_set_stabilizer(
 			int verbose_level);
+	void save_table_of_equations(
+			std::string &fname,
+			int verbose_level);
 	void report(
 			std::ostream &ost);
 

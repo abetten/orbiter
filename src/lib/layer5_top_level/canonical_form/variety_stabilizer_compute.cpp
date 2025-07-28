@@ -107,10 +107,14 @@ void variety_stabilizer_compute::compute_canonical_form_of_variety(
 			Set_stab,
 			Canonical_form,
 			NO,
-			verbose_level);
+			verbose_level - 2);
 	if (f_v) {
 		cout << "variety_stabilizer_compute::compute_canonical_form_of_variety "
 				"after Ring_with_action->nauty_interface" << endl;
+		cout << "variety_stabilizer_compute::compute_canonical_form_of_variety "
+				"Canonical_form = ";
+		Canonical_form->print();
+		cout << endl;
 	}
 
 
@@ -147,7 +151,7 @@ void variety_stabilizer_compute::compute_canonical_form_of_variety(
 		cout << "variety_stabilizer_compute::compute_canonical_form_of_variety "
 				"before orbit_of_equation_under_set_stabilizer" << endl;
 	}
-	orbit_of_equation_under_set_stabilizer(verbose_level - 1);
+	orbit_of_equation_under_set_stabilizer(verbose_level - 2);
 	if (f_v) {
 		cout << "variety_stabilizer_compute::compute_canonical_form_of_variety "
 				"after orbit_of_equation_under_set_stabilizer" << endl;
@@ -244,6 +248,52 @@ void variety_stabilizer_compute::orbit_of_equation_under_set_stabilizer(
 	if (f_v) {
 		cout << "variety_stabilizer_compute::orbit_of_equation_under_set_stabilizer done" << endl;
 	}
+}
+
+void variety_stabilizer_compute::save_table_of_equations(
+		std::string &fname,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "variety_stabilizer_compute::save_table_of_equations" << endl;
+	}
+	std::string *Table;
+	std::string *Headings;
+	int nb_rows, nb_cols;
+
+	Orb->get_table(
+			Table, Headings,
+			nb_rows, nb_cols,
+			verbose_level);
+
+	//string fname;
+
+	//fname = Nauty_control->save_orbit_of_equations_prefix + fname_case_out + ".csv";
+
+	other::orbiter_kernel_system::file_io Fio;
+
+	Fio.Csv_file_support->write_table_of_strings_with_col_headings(
+			fname,
+			nb_rows, nb_cols,
+			Table, Headings,
+			verbose_level - 2);
+
+	delete [] Table;
+	delete [] Headings;
+
+	if (f_v) {
+		cout << "variety_stabilizer_compute::save_table_of_equations "
+				"Written file " << fname
+				<< " of size " << Fio.file_size(fname) << endl;
+	}
+
+	if (f_v) {
+		cout << "variety_stabilizer_compute::save_table_of_equations done" << endl;
+	}
+
 }
 
 void variety_stabilizer_compute::report(

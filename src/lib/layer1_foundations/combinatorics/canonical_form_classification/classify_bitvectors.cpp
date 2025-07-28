@@ -131,6 +131,74 @@ int classify_bitvectors::search(
 	return ret;
 }
 
+
+
+void classify_bitvectors::canonical_form_search_and_add_if_new(
+		other::data_structures::bitvector *Canonical_form,
+		void *extra_data, int &f_found, int &idx,
+		int verbose_level)
+// if f_found is true: idx is where the canonical form was found.
+// if f_found is false: idx is where the new canonical form was added.
+{
+	int f_v = (verbose_level >= 1);
+	other::data_structures::sorting Sorting;
+
+	if (f_v) {
+		cout << "classify_bitvectors::canonical_form_search_and_add_if_new" << endl;
+		cout << "classify_bitvectors::canonical_form_search_and_add_if_new verbose_level=" << verbose_level << endl;
+		cout << "classify_bitvectors::canonical_form_search_and_add_if_new rep_len=" << rep_len << endl;
+	}
+
+	if (n >= N) {
+		cout << "classify_bitvectors::canonical_form_search_and_add_if_new n >= N" << endl;
+		cout << "n=" << n << endl;
+		cout << "N=" << N << endl;
+		exit(1);
+	}
+
+	if (Canonical_form->get_allocated_length() != rep_len) {
+		cout << "classify_bitvectors::canonical_form_search_and_add_if_new Canonical_form->allocated_length != rep_len" << endl;
+		cout << "classify_bitvectors::canonical_form_search_and_add_if_new Canonical_form->allocated_length = " << Canonical_form->get_allocated_length() << endl;
+		cout << "classify_bitvectors::canonical_form_search_and_add_if_new rep_len = " << rep_len << endl;
+		exit(1);
+	}
+	if (Sorting.vec_search(
+			(void **) Type_data,
+			compare_func_for_bitvectors, (void *) this,
+			nb_types, Canonical_form->get_data(), idx,
+			0 /*verbose_level - 2*/)) {
+		if (f_v) {
+			cout << "classify_bitvectors::canonical_form_search_and_add_if_new vec_search "
+					"returns true, idx=" << idx << endl;
+		}
+		type_of[n] = idx;
+		Type_mult[idx]++;
+		f_found = true;
+	}
+	else {
+		if (f_v) {
+			cout << "classify_bitvectors::canonical_form_search_and_add_if_new vec_search "
+					"returns false, new bitvector, before add_at_idx" << endl;
+		}
+		add_at_idx(
+				Canonical_form->get_data(), extra_data, idx,
+				0/*verbose_level*/);
+		if (f_v) {
+			cout << "classify_bitvectors::canonical_form_search_and_add_if_new vec_search "
+					"after add_at_idx" << endl;
+		}
+		f_found = false;
+	}
+	n++;
+
+
+	if (f_v) {
+		cout << "classify_bitvectors::canonical_form_search_and_add_if_new done, nb_types="
+				<< nb_types << endl;
+	}
+}
+
+
 void classify_bitvectors::search_and_add_if_new(
 		uchar *data,
 		void *extra_data, int &f_found, int &idx,
@@ -142,6 +210,8 @@ void classify_bitvectors::search_and_add_if_new(
 	other::data_structures::sorting Sorting;
 	
 	if (f_v) {
+		cout << "classify_bitvectors::search_and_add_if_new" << endl;
+		cout << "classify_bitvectors::search_and_add_if_new verbose_level=" << verbose_level << endl;
 		cout << "classify_bitvectors::search_and_add_if_new rep_len=" << rep_len << endl;
 	}
 

@@ -733,6 +733,11 @@ public:
 	void points_on_projective_triangle(
 			long int *&set, int &set_size,
 		long int *three_points, int verbose_level);
+	void dualize_lines_to_points(
+		int nb_lines,
+		long int *line_ranks,
+		long int *point_ranks,
+		int verbose_level);
 	long int dual_rank_of_line_in_plane(
 		long int line_rank, int verbose_level);
 	long int line_rank_using_dual_coordinates_in_plane(

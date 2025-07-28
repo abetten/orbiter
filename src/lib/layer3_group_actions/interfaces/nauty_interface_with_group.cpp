@@ -167,6 +167,7 @@ void nauty_interface_with_group::set_stabilizer_in_projective_space_using_nauty(
 
 	if (f_v) {
 		cout << "nauty_interface_with_group::set_stabilizer_in_projective_space_using_nauty" << endl;
+		cout << "nauty_interface_with_group::set_stabilizer_in_projective_space_using_nauty verbose_level = " << verbose_level << endl;
 	}
 
 
@@ -193,7 +194,7 @@ void nauty_interface_with_group::set_stabilizer_in_projective_space_using_nauty(
 
 	Combo->encoding_size(
 				nb_rows, nb_cols,
-				verbose_level);
+				verbose_level - 2);
 	if (f_v) {
 		cout << "nauty_interface_with_group::set_stabilizer_in_projective_space_using_nauty "
 				"nb_rows = " << nb_rows << endl;
@@ -209,7 +210,7 @@ void nauty_interface_with_group::set_stabilizer_in_projective_space_using_nauty(
 			nb_rows + nb_cols,
 			0,
 			nb_rows + nb_cols,
-			verbose_level);
+			verbose_level - 2);
 
 
 	if (f_v) {

@@ -457,6 +457,7 @@ public:
 	int f_partition;
 	std::string partition_text;
 
+	int f_show_canonical_form;
 
 
 	nauty_interface_control();

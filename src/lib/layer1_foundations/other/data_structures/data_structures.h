@@ -381,6 +381,7 @@ public:
 	void load(
 			std::ifstream &fp);
 	uint32_t compute_hash();
+	void print_bitwise();
 	void print();
 
 };

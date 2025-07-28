@@ -1,3 +1,8 @@
+// file: quartic_curves_q29.cpp
+// created by Orbiter 
+// creation date: Fri Jul 25 16:18:40 +03 2025
+
+// 
 static int quartic_curves_q29_nb_reps = 175;
 static int quartic_curves_q29_size = 15;
 // the equations:

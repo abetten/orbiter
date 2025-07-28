@@ -1189,6 +1189,13 @@ class interface_toolkit {
 	std::string copy_and_edit_search_and_replace;
 
 
+	// ToDo: undocumented
+	int f_join_columns;
+	std::string join_columns_file_in;
+	std::string join_columns_file_out;
+	std::string join_columns_column1;
+	std::string join_columns_column2;
+
 public:
 
 

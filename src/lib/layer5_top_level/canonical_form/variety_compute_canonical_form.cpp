@@ -131,6 +131,11 @@ void variety_compute_canonical_form::compute_canonical_form_nauty_new(
 		cout << "variety_compute_canonical_form::compute_canonical_form_nauty_new "
 				"verbose_level=" << verbose_level << endl;
 	}
+	if (f_v) {
+		cout << "variety_compute_canonical_form::compute_canonical_form_nauty_new "
+				"input_counter = " << counter << " / " << Classification_of_varieties_nauty->Input->nb_objects_to_test << endl;
+	}
+
 
 	if (f_v) {
 		cout << "variety_compute_canonical_form::compute_canonical_form_nauty_new "
@@ -143,13 +148,15 @@ void variety_compute_canonical_form::compute_canonical_form_nauty_new(
 			idx_canonical_form,
 			idx_equation,
 			f_found_eqn,
-			verbose_level);
+			verbose_level - 1);
 
 	if (f_v) {
 		cout << "variety_compute_canonical_form::compute_canonical_form_nauty_new "
 				"after classify_using_nauty_new" << endl;
 	}
 	if (f_v) {
+		cout << "variety_compute_canonical_form::compute_canonical_form_nauty_new "
+				"input_counter = " << counter << " / " << Classification_of_varieties_nauty->Input->nb_objects_to_test << endl;
 		cout << "variety_compute_canonical_form::compute_canonical_form_nauty_new "
 				"f_found_canonical_form=" << f_found_canonical_form << endl;
 		cout << "variety_compute_canonical_form::compute_canonical_form_nauty_new "
@@ -199,13 +206,17 @@ void variety_compute_canonical_form::classify_using_nauty_new(
 				"before Variety_stabilizer_compute->init" << endl;
 	}
 	Variety_stabilizer_compute->init(
-			Ring_with_action, verbose_level - 2);
+			Ring_with_action, verbose_level - 6);
 	if (f_v) {
 		cout << "variety_compute_canonical_form::classify_using_nauty_new "
 				"after Variety_stabilizer_compute->init" << endl;
 	}
 
 
+	if (f_v) {
+		cout << "variety_compute_canonical_form::classify_using_nauty_new "
+				"input_counter = " << counter << " / " << Classification_of_varieties_nauty->Input->nb_objects_to_test << endl;
+	}
 	if (f_v) {
 		cout << "variety_compute_canonical_form::classify_using_nauty_new "
 				"before Variety_stabilizer_compute->compute_canonical_form_of_variety" << endl;
@@ -253,35 +264,13 @@ void variety_compute_canonical_form::classify_using_nauty_new(
 					"f_save_orbit_of_equations" << endl;
 		}
 
-		std::string *Table;
-		std::string *Headings;
-		int nb_rows, nb_cols;
-
-		Variety_stabilizer_compute->Orb->get_table(
-				Table, Headings,
-				nb_rows, nb_cols,
-				verbose_level);
-
 		string fname;
 
 		fname = Nauty_control->save_orbit_of_equations_prefix + fname_case_out + ".csv";
 
-		other::orbiter_kernel_system::file_io Fio;
-
-		Fio.Csv_file_support->write_table_of_strings_with_col_headings(
+		Variety_stabilizer_compute->save_table_of_equations(
 				fname,
-				nb_rows, nb_cols,
-				Table, Headings,
-				verbose_level - 2);
-
-		delete [] Table;
-		delete [] Headings;
-
-		if (f_v) {
-			cout << "variety_compute_canonical_form::classify_using_nauty_new "
-					"Written file " << fname
-					<< " of size " << Fio.file_size(fname) << endl;
-		}
+				verbose_level);
 
 		if (f_v) {
 			cout << "variety_compute_canonical_form::classify_using_nauty_new "
@@ -341,17 +330,21 @@ void variety_compute_canonical_form::classify_using_nauty_new(
 
 	if (f_v) {
 		cout << "variety_compute_canonical_form::classify_using_nauty_new "
-				"before CB->search_and_add_if_new" << endl;
+				"before CB->canonical_form_search_and_add_if_new" << endl;
 	}
-	Canonical_form_classifier->Classification_of_varieties_nauty->CB->search_and_add_if_new(
-			Variety_stabilizer_compute->Canonical_form->get_data(),
+	Canonical_form_classifier->Classification_of_varieties_nauty->CB->canonical_form_search_and_add_if_new(
+			Variety_stabilizer_compute->Canonical_form,
 			Variety_stabilizer_compute /* void *extra_data */,
 			f_found_canonical_form,
 			idx_canonical_form,
-			verbose_level - 2);
+			verbose_level);
 	if (f_v) {
 		cout << "variety_compute_canonical_form::classify_using_nauty_new "
-				"after CB->search_and_add_if_new" << endl;
+				"after CB->canonical_form_search_and_add_if_new" << endl;
+		cout << "variety_compute_canonical_form::classify_using_nauty_new "
+				"CB->nb_types = "
+				<< Canonical_form_classifier->Classification_of_varieties_nauty->CB->nb_types << endl;
+
 	}
 	// if f_found is true: idx_canonical_form is where the canonical form was found.
 	// if f_found is false: idx_canonical_form is where the new canonical form was added.
@@ -650,7 +643,7 @@ int variety_compute_canonical_form::find_equation_new(
 	if (!C1->Orb->search_equation(
 			Canonical_form_classifier->Classification_of_varieties_nauty->eqn2 /*new_object */,
 			idx2,
-			true)) {
+			verbose_level - 1)) {
 		// need to map points and bitangents under gamma:
 		if (f_v) {
 			cout << "variety_compute_canonical_form::find_equation_new "

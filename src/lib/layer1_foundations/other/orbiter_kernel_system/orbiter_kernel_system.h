@@ -311,6 +311,11 @@ public:
 	int read_column_and_count_nb_sets(
 			std::string &fname, std::string &col_label,
 			int verbose_level);
+	void join_columns(
+			std::string &fname,
+			std::string &col1_label, std::string &col2_label,
+			data_structures::set_of_sets *&SoS,
+			int verbose_level);
 	void read_column_as_set_of_sets(
 			std::string &fname, std::string &col_label,
 			data_structures::set_of_sets *&SoS,

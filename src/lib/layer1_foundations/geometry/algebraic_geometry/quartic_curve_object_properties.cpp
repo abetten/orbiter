@@ -41,6 +41,9 @@ quartic_curve_object_properties::quartic_curve_object_properties()
 	tangent_line_rank_dual = NULL;
 
 
+	dual_of_bitangents = NULL;
+	Kernel = NULL;
+
 }
 
 quartic_curve_object_properties::~quartic_curve_object_properties()
@@ -61,6 +64,12 @@ quartic_curve_object_properties::~quartic_curve_object_properties()
 	}
 	if (tangent_line_rank_dual) {
 		FREE_lint(tangent_line_rank_dual);
+	}
+	if (dual_of_bitangents) {
+		FREE_lint(dual_of_bitangents);
+	}
+	if (Kernel) {
+		FREE_OBJECT(Kernel);
 	}
 }
 
@@ -95,6 +104,49 @@ void quartic_curve_object_properties::init(
 		}
 	}
 
+
+	if (QO->f_has_bitangents) {
+
+		dual_of_bitangents = NEW_lint(28);
+
+		if (QO->get_nb_lines() != 28) {
+			cout << "quartic_curve_object_properties::init QO->get_nb_lines() != 28" << endl;
+			exit(1);
+		}
+
+		if (f_v) {
+			cout << "quartic_curve_object_properties::init "
+					"before dualize_lines_to_points" << endl;
+		}
+
+		QO->Dom->P->Plane->dualize_lines_to_points(
+			QO->get_nb_lines(),
+			QO->get_lines(),
+			dual_of_bitangents,
+			verbose_level);
+
+		if (f_v) {
+			cout << "quartic_curve_object_properties::init "
+					"after dualize_lines_to_points" << endl;
+		}
+
+		int rk;
+
+		if (f_v) {
+			cout << "quartic_curve_object_properties::init "
+					"before vanishing_ideal" << endl;
+		}
+		QO->Dom->Poly4_3->vanishing_ideal(
+				dual_of_bitangents, 28 /*nb_pts*/,
+				rk,
+				Kernel,
+				verbose_level - 1);
+		if (f_v) {
+			cout << "quartic_curve_object_properties::init "
+					"after vanishing_ideal" << endl;
+		}
+
+	}
 
 	if (f_v) {
 		cout << "quartic_curve_object_properties::init "
@@ -463,9 +515,42 @@ void quartic_curve_object_properties::print_points(
 			"before print_all_points" << endl;
 	print_all_points(ost, verbose_level);
 
+	if (dual_of_bitangents) {
+		ost << "\\subsection*{Duals of Bitangents}" << endl;
+		print_dual_of_bitangents(ost, verbose_level);
+
+		//r = QO->Dom->Poly4_3->get_nb_monomials() - rk;
+
+		int h, r;
+		r = Kernel->m;
+
+		ost << "Dimension of the vanishing ideal is " << r << "\\\\" << endl;
+		ost << "\\begin{verbatim}" << endl;
+		for (h = 0; h < r; h++) {
+			QO->Dom->Poly4_3->print_equation_relaxed(ost, Kernel->M + h * Kernel->n);
+			ost << endl;
+
+		}
+		ost << "\\end{verbatim}" << endl;
+
+	}
+
 }
 
+void quartic_curve_object_properties::print_dual_of_bitangents(
+		std::ostream &ost, int verbose_level)
+{
+	int i;
+	int v[3];
 
+	ost << "dual of bitangents:\\\\" << endl;
+	for (i = 0; i < 28; i++) {
+		QO->Dom->unrank_point(v, dual_of_bitangents[i]);
+		ost << i << " : $P_{" << dual_of_bitangents[i] << "}=";
+		Int_vec_print_fully(ost, v, 3);
+		ost << "$\\\\" << endl;
+	}
+}
 
 void quartic_curve_object_properties::print_all_points(
 		std::ostream &ost, int verbose_level)

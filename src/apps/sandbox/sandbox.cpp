@@ -16,6 +16,103 @@ using namespace orbiter;
 
 int main()
 {
+
+	int verbose_level = 2;
+	orbiter::layer5_applications::user_interface::orbiter_top_level_session Top_level_session;
+	orbiter::layer5_applications::user_interface::The_Orbiter_top_level_session = &Top_level_session;
+
+	other::orbiter_kernel_system::file_io Fio;
+	std::string fname;
+	std::string col_label;
+
+	other::data_structures::set_of_sets *SoS;
+
+	fname = "qc_select_EK_tally.csv";
+	col_label = "TYPE";
+
+
+	Fio.Csv_file_support->read_column_as_set_of_sets(
+			fname, col_label,
+			SoS,
+			verbose_level);
+	int nb_E[] = {18,10,9,6,4,3,2,1,0};
+	int nb_K[] = {63,21,15,9,7,5,3,1,0};
+	int nb_E_sz = sizeof(nb_E) / sizeof(int);
+	int nb_K_sz = sizeof(nb_K) / sizeof(int);
+	int *T;
+	int h;
+	int a, b;
+	int idx1, idx2;
+	other::data_structures::sorting Sorting;
+
+	T = NEW_int(nb_E_sz * nb_K_sz);
+	Int_vec_zero(T, nb_E_sz * nb_K_sz);
+	for (h = 0; h < SoS->nb_sets; h++) {
+		if (SoS->Set_size[h] != 2) {
+			cout << "SoS->Set_size[h] != 2" << endl;
+			exit(1);
+		}
+		a = SoS->Sets[h][0];
+		b = SoS->Sets[h][1];
+
+
+		if (!Sorting.int_vec_search_linear(
+				nb_E, nb_E_sz, a, idx1)) {
+			cout << "cannot find number of Eckardt points, a=" << a << endl;
+			exit(1);
+		}
+		if (!Sorting.int_vec_search_linear(
+				nb_K, nb_K_sz, b, idx2)) {
+			cout << "cannot find number of Kovalevski points, b=" << b << endl;
+			exit(1);
+		}
+		T[idx1 * nb_K_sz + idx2] = 1;
+	}
+	string *Table;
+	int nb_rows = nb_E_sz + 1;
+	int nb_cols = nb_K_sz + 1;
+	int i, j;
+
+	Table = new string[nb_rows * nb_cols];
+
+	for (i = 0; i < nb_E_sz; i++) {
+		Table[(i + 1) * nb_cols + 0] = std::to_string(nb_E[i]);
+	}
+	for (j = 0; j < nb_K_sz; j++) {
+		Table[0 * nb_cols + 1 + j] = std::to_string(nb_K[j]);
+	}
+	for (i = 0; i < nb_E_sz; i++) {
+		for (j = 0; j < nb_K_sz; j++) {
+			Table[(i + 1) * nb_cols + 1 + j] = std::to_string(T[i * nb_K_sz + j]);
+		}
+	}
+
+	std::string *Col_headings;
+
+	Col_headings = new string[nb_cols];
+
+	Col_headings[0] = "E";
+	for (j = 0; j < nb_K_sz; j++) {
+		Col_headings[1 + j] = "K" + std::to_string(nb_K[j]);
+
+	}
+
+	string fname_out;
+
+
+	fname_out = "qc_select_EK_tally_table.csv";
+
+
+	Fio.Csv_file_support->write_table_of_strings_with_col_headings(
+			fname_out,
+			nb_rows, nb_cols, Table,
+			Col_headings,
+			verbose_level);
+
+	delete [] Table;
+
+
+#if 0
 	int List[] = {
 			4,
 			7,
@@ -70,6 +167,7 @@ int main()
 		nb = K.cubic_surface_nb_reps(q);
 		cout << "NB_CUBIC_SURFACES_Q" << q << "=" << nb << endl;
 	}
+#endif
 #if 0
 	int i, j;
 	int n = 7;

@@ -33,6 +33,8 @@ nauty_interface_control::nauty_interface_control()
 	f_partition = false;
 	//std::string partition_text;
 
+	f_show_canonical_form = false;
+
 }
 
 nauty_interface_control::~nauty_interface_control()
@@ -99,6 +101,14 @@ int nauty_interface_control::parse_arguments(
 				cout << "-partition " << partition_text << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-show_canonical_form") == 0) {
+			f_show_canonical_form = true;
+			if (f_v) {
+				cout << "-show_canonical_form" << endl;
+			}
+		}
+
+
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
 				cout << "-end" << endl;
@@ -126,6 +136,9 @@ void nauty_interface_control::print()
 	}
 	if (f_partition) {
 		cout << "-partition " << partition_text << endl;
+	}
+	if (f_show_canonical_form) {
+		cout << "-show_canonical_form" << endl;
 	}
 }
 

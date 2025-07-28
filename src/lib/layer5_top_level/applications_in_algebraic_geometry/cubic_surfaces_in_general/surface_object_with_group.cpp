@@ -4153,7 +4153,7 @@ void surface_object_with_group::report_orbits_on_Zero_points(
 
 	SoS_Orbits_on_points_not_on_lines = Orbits_on_points_not_on_lines->Forest->get_set_of_sets(verbose_level);
 
-	ost << "\\subsection*{Orbits on Single Points}" << endl;
+	ost << "\\subsection*{Orbits on Zero Points}" << endl;
 
 	if (SoS_Orbits_on_points_not_on_lines->nb_sets == 0) {
 		ost << "There are no orbits on points not on lines.\\\\" << endl;

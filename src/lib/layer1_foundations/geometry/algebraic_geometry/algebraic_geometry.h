@@ -708,6 +708,10 @@ public:
 	long int *tangent_line_rank_dual; // [nb_non_singular_pts]
 
 
+	long int *dual_of_bitangents;
+	other::data_structures::int_matrix *Kernel;
+	// (nb_monomials - rank) x nb_monomials
+
 
 	quartic_curve_object_properties();
 	~quartic_curve_object_properties();
@@ -727,6 +731,8 @@ public:
 	void print_general(
 			std::ostream &ost);
 	void print_points(
+			std::ostream &ost, int verbose_level);
+	void print_dual_of_bitangents(
 			std::ostream &ost, int verbose_level);
 	void print_all_points(
 			std::ostream &ost, int verbose_level);

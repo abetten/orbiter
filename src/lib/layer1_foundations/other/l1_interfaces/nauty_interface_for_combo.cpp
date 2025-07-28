@@ -230,8 +230,13 @@ void nauty_interface_for_combo::run_nauty_for_combo(
 					"after Enc->compute_canonical_form" << endl;
 		}
 
-	}
+		if (Nauty_control->f_show_canonical_form) {
 
+			cout << "nauty_interface_for_combo::run_nauty_for_combo "
+					"canonical form: ";
+			Canonical_form->print();
+		}
+	}
 
 	if (f_v) {
 		cout << "nauty_interface_for_combo::run_nauty_for_combo done" << endl;
@@ -266,7 +271,7 @@ void nauty_interface_for_combo::run_nauty_for_combo_basic(
 
 	if (f_v) {
 		cout << "nauty_interface_for_combo::run_nauty_for_combo_basic "
-				"before run_nauty_for_OwCF" << endl;
+				"before run_nauty_for_combo" << endl;
 	}
 	run_nauty_for_combo(
 			Any_combo,

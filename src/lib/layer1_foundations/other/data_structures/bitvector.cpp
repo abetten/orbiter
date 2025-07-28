@@ -151,7 +151,7 @@ uint32_t bitvector::compute_hash()
 	return h;
 }
 
-void bitvector::print()
+void bitvector::print_bitwise()
 {
 	long int i;
 	int a;
@@ -162,6 +162,36 @@ void bitvector::print()
 	}
 	cout << endl;
 }
+
+void bitvector::print()
+{
+	long int i;
+	//int a;
+
+	uint32_t h;
+
+	h = compute_hash();
+	cout << "hash = " << setw(5) << (int) h << " : allocated_length=" << allocated_length << " : ";
+	if (allocated_length < 50) {
+		for (i = 0; i < allocated_length; i++) {
+			cout << (int) data[i];
+			if (i < allocated_length - 1) {
+				cout << ", ";
+			}
+		}
+	}
+	else {
+		cout << "too long to print";
+	}
+#if 0
+	for (i = 0; i < length; i++) {
+		a = s_i(i);
+		cout << a;
+	}
+#endif
+	cout << endl;
+}
+
 
 }}}}
 

@@ -260,6 +260,12 @@ interface_toolkit::interface_toolkit()
 	//std::string copy_and_edit_parameter_values;
 	//std::string copy_and_edit_search_and_replace;
 
+	f_join_columns = false;
+	//std::string join_columns_file_in;
+	//std::string join_columns_file_out;
+	//std::string join_columns_column1;
+	//std::string join_columns_column2;
+
 }
 
 
@@ -432,6 +438,9 @@ void interface_toolkit::print_help(
 	else if (ST.stringcmp(argv[i], "-copy_and_edit") == 0) {
 		cout << "-copy_and_edit <string : fname_in> <string : fname_out_mask> <string : parameter_values> <string : search_and_replace_patterns>" << endl;
 	}
+	else if (ST.stringcmp(argv[i], "-join_columns") == 0) {
+		cout << "-join_columns <string : fname_in> <string : fname_out> <string : col1> <string : col2>" << endl;
+	}
 
 }
 
@@ -601,6 +610,9 @@ int interface_toolkit::recognize_keyword(
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-copy_and_edit") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-join_columns") == 0) {
 		return true;
 	}
 	return false;
@@ -1370,7 +1382,21 @@ void interface_toolkit::read_arguments(
 					<< endl;
 		}
 	}
-
+	else if (ST.stringcmp(argv[i], "-join_columns") == 0) {
+		f_join_columns = true;
+		join_columns_file_in.assign(argv[++i]);
+		join_columns_file_out.assign(argv[++i]);
+		join_columns_column1.assign(argv[++i]);
+		join_columns_column2.assign(argv[++i]);
+		if (f_v) {
+			cout << "-join_columns "
+					<< join_columns_file_in << " "
+					<< join_columns_file_out << " "
+					<< join_columns_column1 << " "
+					<< join_columns_column2 << " "
+					<< endl;
+		}
+	}
 
 
 
@@ -1678,6 +1704,14 @@ void interface_toolkit::print()
 				<< make_set_of_sets_fname_in << " "
 				<< make_set_of_sets_new_col_label << " "
 				<< make_set_of_sets_list<< endl;
+	}
+	if (f_join_columns) {
+		cout << "-join_columns "
+				<< join_columns_file_in << " "
+				<< join_columns_file_out << " "
+				<< join_columns_column1 << " "
+				<< join_columns_column2 << " "
+				<< endl;
 	}
 }
 
@@ -2948,6 +2982,41 @@ void interface_toolkit::worker(
 				nb_parameter_values,
 				symbol_table,
 				verbose_level);
+
+	}
+	else if (f_join_columns) {
+		if (f_v) {
+			cout << "interface_toolkit::worker join_columns "
+					" file_in = " << join_columns_file_in << endl;
+			cout << "interface_toolkit::worker join_columns "
+					" file_out = " << join_columns_file_out << endl;
+			cout << "interface_toolkit::worker "
+					" column1 = " << join_columns_column1 << endl;
+			cout << "interface_toolkit::worker "
+					" column2 = " << join_columns_column2 << endl;
+
+		}
+
+
+		other::orbiter_kernel_system::file_io Fio;
+		other::data_structures::set_of_sets *SoS;
+
+		Fio.Csv_file_support->join_columns(
+				join_columns_file_in,
+				join_columns_column1, join_columns_column2,
+				SoS,
+				verbose_level);
+
+		cout << "interface_toolkit::worker after join_columns: data =" << endl;
+		SoS->print_table();
+
+		SoS->set_of_sets::save_csv(
+				join_columns_file_out,
+				verbose_level);
+
+		cout << "Written file " << join_columns_file_out << " of size "
+				<< Fio.file_size(join_columns_file_out) << endl;
+
 
 	}
 

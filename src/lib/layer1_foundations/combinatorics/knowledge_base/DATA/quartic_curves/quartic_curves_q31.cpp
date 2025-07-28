@@ -1,6 +1,6 @@
 // file: quartic_curves_q31.cpp
 // created by Orbiter 
-// creation date: Sat Jul 19 04:49:21 MDT 2025
+// creation date: Fri Jul 25 09:38:51 MDT 2025
 
 // 
 static int quartic_curves_q31_nb_reps = 270;

@@ -1118,7 +1118,7 @@ int orbit_of_equations::search_equation(
 	int *data;
 
 	if (f_v) {
-		cout << "orbit_of_equations::search_data" << endl;
+		cout << "orbit_of_equations::search_equation" << endl;
 	}
 	if (f_v) {
 		cout << "The equation is:";
@@ -1139,20 +1139,20 @@ int orbit_of_equations::search_equation(
 			used_length, data, idx,
 			0 /* verbose_level */)) {
 		if (f_v) {
-			cout << "orbit_of_equations::search_data "
+			cout << "orbit_of_equations::search_equation "
 					"we found the equation at " << idx << endl;
 		}
 		ret = true;
 	}
 	else {
 		if (f_v) {
-			cout << "orbit_of_equations::search_data "
+			cout << "orbit_of_equations::search_equation "
 					"we did not find the equation" << endl;
 		}
 		ret = false;
 	}
 	if (f_v) {
-		cout << "orbit_of_equations::search_data done" << endl;
+		cout << "orbit_of_equations::search_equation done" << endl;
 	}
 	FREE_int(data);
 	return ret;

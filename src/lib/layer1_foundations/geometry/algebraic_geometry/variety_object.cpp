@@ -1118,12 +1118,12 @@ void variety_object::print(
 #endif
 
 	if (Point_sets) {
-		ost << "pts=";
+		ost << "nb_pts = " << Point_sets->Set_size[0] << " pts=";
 		Lint_vec_print_fully(ost, Point_sets->Sets[0], Point_sets->Set_size[0]);
 		ost << endl;
 	}
 	if (Line_sets) {
-		ost << "Lines=";
+		ost << "nb_lines = " << Line_sets->Set_size[0] << " Lines=";
 		Lint_vec_print(ost, Line_sets->Sets[0], Line_sets->Set_size[0]);
 		ost << endl;
 	}

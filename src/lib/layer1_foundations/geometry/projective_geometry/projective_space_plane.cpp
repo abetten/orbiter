@@ -1844,6 +1844,31 @@ void projective_space_plane::points_on_projective_triangle(
 	}
 }
 
+void projective_space_plane::dualize_lines_to_points(
+	int nb_lines,
+	long int *line_ranks,
+	long int *point_ranks,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space_plane::dualize_lines_to_points" << endl;
+	}
+
+	int i;
+
+	for (i = 0; i < nb_lines; i++) {
+		point_ranks[i] = dual_rank_of_line_in_plane(
+				line_ranks[i], 0 /* verbose_level */);
+	}
+
+	if (f_v) {
+		cout << "projective_space_plane::dualize_lines_to_points done" << endl;
+	}
+}
+
+
 long int projective_space_plane::dual_rank_of_line_in_plane(
 	long int line_rank, int verbose_level)
 {
