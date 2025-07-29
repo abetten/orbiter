@@ -192,9 +192,6 @@ void variety_compute_canonical_form::classify_using_nauty_new(
 	algebra::ring_theory::longinteger_object go;
 
 
-	int *alpha; // [Canonical_form_classifier->Output->canonical_labeling_len]
-	int *gamma; // [Canonical_form_classifier->Output->canonical_labeling_len]
-
 
 
 
@@ -228,7 +225,10 @@ void variety_compute_canonical_form::classify_using_nauty_new(
 	// Computes the canonical labeling of the Levi graph associated with
 	// the set of rational points of the variety.
 	// Computes the stabilizer of the set of rational points of the variety.
-	// Computes the orbit of the equation under the stabilizer of the set.
+	// Computes the orbit of the original equation under the stabilizer of the set.
+	// The orbit is stored as a sorted table of equations.
+	// The original equation is stored at position position_of_original_object
+	// The canonical equation is stored at position 0
 	if (f_v) {
 		cout << "variety_compute_canonical_form::classify_using_nauty_new "
 				"after Variety_stabilizer_compute->compute_canonical_form_of_variety" << endl;
@@ -315,8 +315,7 @@ void variety_compute_canonical_form::classify_using_nauty_new(
 				"canonical_labeling_len == 0, error" << endl;
 		exit(1);
 	}
-	alpha = NEW_int(Canonical_form_classifier->Classification_of_varieties_nauty->canonical_labeling_len);
-	gamma = NEW_int(Canonical_form_classifier->Classification_of_varieties_nauty->canonical_labeling_len);
+
 
 
 	if (Canonical_form_classifier->Classification_of_varieties_nauty->CB->n == 0) {
@@ -350,6 +349,8 @@ void variety_compute_canonical_form::classify_using_nauty_new(
 	// if f_found is false: idx_canonical_form is where the new canonical form was added.
 
 
+
+
 	if (f_found_canonical_form) {
 		if (f_v) {
 			cout << "variety_compute_canonical_form::classify_using_nauty_new "
@@ -362,8 +363,14 @@ void variety_compute_canonical_form::classify_using_nauty_new(
 		}
 
 
+#if 0
+		int *alpha; // [Canonical_form_classifier->Output->canonical_labeling_len]
+		int *gamma; // [Canonical_form_classifier->Output->canonical_labeling_len]
 
 
+		alpha = NEW_int(Canonical_form_classifier->Classification_of_varieties_nauty->canonical_labeling_len);
+		gamma = NEW_int(Canonical_form_classifier->Classification_of_varieties_nauty->canonical_labeling_len);
+#endif
 		if (f_v) {
 			cout << "variety_compute_canonical_form::classify_using_nauty_new "
 					"before handle_repeated_canonical_form_of_set_new" << endl;
@@ -371,7 +378,7 @@ void variety_compute_canonical_form::classify_using_nauty_new(
 		handle_repeated_canonical_form_of_set_new(
 				idx_canonical_form,
 				Variety_stabilizer_compute,
-				alpha, gamma,
+				//alpha, gamma,
 				idx_canonical_form,
 				idx_equation,
 				f_found_eqn,
@@ -380,6 +387,9 @@ void variety_compute_canonical_form::classify_using_nauty_new(
 			cout << "variety_compute_canonical_form::classify_using_nauty_new "
 					"after handle_repeated_canonical_form_of_set_new" << endl;
 		}
+
+		//FREE_int(alpha);
+		//FREE_int(gamma);
 
 
 	} // if f_found_canonical_form
@@ -390,7 +400,7 @@ void variety_compute_canonical_form::classify_using_nauty_new(
 					"cnt = " << Vo->cnt
 					<< " po = " << Vo->po
 					<< " so = " << Vo->so
-					<< " The canonical form is new" << endl;
+					<< " The canonical form is new and has been added" << endl;
 		}
 
 		// The canonical form has already been added,
@@ -403,9 +413,6 @@ void variety_compute_canonical_form::classify_using_nauty_new(
 		}
 	}
 
-	FREE_int(alpha);
-	FREE_int(gamma);
-
 
 	if (f_v) {
 		cout << "variety_compute_canonical_form::classify_using_nauty_new done" << endl;
@@ -417,7 +424,7 @@ void variety_compute_canonical_form::classify_using_nauty_new(
 void variety_compute_canonical_form::handle_repeated_canonical_form_of_set_new(
 		int idx,
 		variety_stabilizer_compute *C,
-		int *alpha, int *gamma,
+		//int *alpha, int *gamma,
 		int &idx_canonical_form,
 		int &idx_equation,
 		int &f_found_eqn,
@@ -430,6 +437,15 @@ void variety_compute_canonical_form::handle_repeated_canonical_form_of_set_new(
 		cout << "variety_compute_canonical_form::handle_repeated_canonical_form_of_set_new "
 				"verbose_level=" << verbose_level << endl;
 	}
+
+	int *alpha; // [Canonical_form_classifier->Output->canonical_labeling_len]
+	int *gamma; // [Canonical_form_classifier->Output->canonical_labeling_len]
+
+
+	alpha = NEW_int(Canonical_form_classifier->Classification_of_varieties_nauty->canonical_labeling_len);
+	gamma = NEW_int(Canonical_form_classifier->Classification_of_varieties_nauty->canonical_labeling_len);
+
+
 
 	idx_equation = -1;
 	f_found_eqn = false;
@@ -481,10 +497,12 @@ void variety_compute_canonical_form::handle_repeated_canonical_form_of_set_new(
 			cout << "variety_compute_canonical_form::handle_repeated_canonical_form_of_set_new "
 					"after find_equation_new" << endl;
 			if (f_found_eqn) {
-				cout << "We found the equation" << endl;
+				cout << "variety_compute_canonical_form::handle_repeated_canonical_form_of_set_new "
+						"We found the equation" << endl;
 			}
 			else {
-				cout << "We did not find the equation" << endl;
+				cout << "variety_compute_canonical_form::handle_repeated_canonical_form_of_set_new "
+						"We did not find the equation" << endl;
 			}
 		}
 
@@ -494,6 +512,10 @@ void variety_compute_canonical_form::handle_repeated_canonical_form_of_set_new(
 
 
 	}
+
+	FREE_int(alpha);
+	FREE_int(gamma);
+
 
 
 	if (f_found_eqn) {
@@ -535,13 +557,16 @@ void variety_compute_canonical_form::handle_repeated_canonical_form_of_set_new(
 
 
 int variety_compute_canonical_form::find_equation_new(
-		variety_stabilizer_compute *C,
+		variety_stabilizer_compute *B,
 		int *alpha, int *gamma,
-		int idx1, int &found_at,
+		int idx_rational_point_set, int &found_at,
 		int verbose_level)
 // gets the variety_stabilizer_compute object from
 // Canonical_form_classifier->Output->CB->Type_extra_data[idx1]
 // called from variety_compute_canonical_form::handle_repeated_canonical_form_of_set_new
+// Computes Elt, which maps A to B, where A is the set of rational points
+// whose canonical form is stored in CB at idx1
+// Vo->Variety_object->eqn is the equation defining the set B
 {
 	int f_v = (verbose_level >= 1);
 
@@ -552,9 +577,9 @@ int variety_compute_canonical_form::find_equation_new(
 
 
 
-	variety_stabilizer_compute *C1;
-	C1 = (variety_stabilizer_compute *)
-			Canonical_form_classifier->Classification_of_varieties_nauty->CB->Type_extra_data[idx1];
+	variety_stabilizer_compute *A;
+	A = (variety_stabilizer_compute *)
+			Canonical_form_classifier->Classification_of_varieties_nauty->CB->Type_extra_data[idx_rational_point_set];
 
 
 	canonical_form_global Canonical_form_global;
@@ -564,20 +589,20 @@ int variety_compute_canonical_form::find_equation_new(
 				"before Canonical_form_global.find_isomorphism_between_set_of_rational_points" << endl;
 	}
 	Canonical_form_global.find_isomorphism_between_set_of_rational_points(
-			C1,
-			C,
+			A,
+			B,
 			alpha, gamma,
 			verbose_level - 2);
-	// find gamma which maps the points of C1 to the points of C.
+	// find gamma which maps the points A to the points B.
 	if (f_v) {
 		cout << "variety_compute_canonical_form::find_equation_new "
 				"after Canonical_form_global.find_isomorphism_between_set_of_rational_points" << endl;
 	}
 
 
-	// gamma maps C1 to C.
+	// gamma maps A to B.
 	// So, in the contragredient action,
-	// it maps the equation of C to an equation in the orbit of the equation C1,
+	// gamma maps the equation of B to an equation in the orbit of the equation A,
 	// which is what we want.
 
 
@@ -587,7 +612,7 @@ int variety_compute_canonical_form::find_equation_new(
 	}
 	Ring_with_action->lift_mapping(
 			gamma,
-			Canonical_form_classifier->Classification_of_varieties_nauty->Elt,
+			Canonical_form_classifier->Classification_of_varieties_nauty->Elt_gamma,
 			verbose_level - 2);
 	if (f_v) {
 		cout << "variety_compute_canonical_form::find_equation_new "
@@ -595,9 +620,9 @@ int variety_compute_canonical_form::find_equation_new(
 	}
 
 	if (f_v) {
-		cout << "The isomorphism from C to C1 is given by:" << endl;
+		cout << "The isomorphism from B to A is given by:" << endl;
 		Ring_with_action->PA->A->Group_element->element_print(
-				Canonical_form_classifier->Classification_of_varieties_nauty->Elt, cout);
+				Canonical_form_classifier->Classification_of_varieties_nauty->Elt_gamma, cout);
 	}
 
 
@@ -607,9 +632,11 @@ int variety_compute_canonical_form::find_equation_new(
 				"before Ring_with_action->apply" << endl;
 	}
 	Ring_with_action->apply(
-			Canonical_form_classifier->Classification_of_varieties_nauty->Elt,
-			Vo->Variety_object->eqn /* int *eqn_in */,
-			Canonical_form_classifier->Classification_of_varieties_nauty->eqn2 /* int *eqn_out */,
+			Canonical_form_classifier->Classification_of_varieties_nauty->Elt_gamma,
+			Vo->Variety_object->eqn
+				/* int *eqn_in, the equation defining the set B */,
+			Canonical_form_classifier->Classification_of_varieties_nauty->eqn2
+				/* int *eqn_out image of B under gamma */,
 			verbose_level - 2);
 	if (f_v) {
 		cout << "variety_compute_canonical_form::find_equation_new "
@@ -619,8 +646,8 @@ int variety_compute_canonical_form::find_equation_new(
 
 	//FREE_int(Mtx);
 
-	// now, eqn2 is the image of the curve C
-	// and belongs to the orbit of equations associated with C1.
+	// now, eqn2 is the image of the curve B (under gamma)
+	// and belongs to the orbit of equations associated with A.
 
 	Ring_with_action->PA->F->Projective_space_basic->PG_element_normalize_from_front(
 			Canonical_form_classifier->Classification_of_varieties_nauty->eqn2, 1,
@@ -637,38 +664,44 @@ int variety_compute_canonical_form::find_equation_new(
 
 	int f_found = false;
 
+	int idx_equation;
 
-	int idx2;
-
-	if (!C1->Orb->search_equation(
-			Canonical_form_classifier->Classification_of_varieties_nauty->eqn2 /*new_object */,
-			idx2,
+	if (!A->Orb->search_equation(
+			Canonical_form_classifier->Classification_of_varieties_nauty->eqn2 /*image of the curve B */,
+			idx_equation,
 			verbose_level - 1)) {
 		// need to map points and bitangents under gamma:
 		if (f_v) {
 			cout << "variety_compute_canonical_form::find_equation_new "
 					"we found the canonical form but we did not find "
-					"the equation at idx1=" << idx1 << endl;
+					"the equation at idx_rational_point_set=" << idx_rational_point_set << endl;
 		}
-
+		f_found = false;
+		found_at = -1;
 	}
 	else {
 		if (f_v) {
 			cout << "variety_compute_canonical_form::find_equation_new "
-					"After C1->Orb->search_equation, cnt = " << Vo->cnt
+					"After A->Orb->search_equation, cnt = " << Vo->cnt
 					<< " po = " << Vo->po
 					<< " so = " << Vo->so
 					<< " We found the canonical form and the equation "
-							"at idx2 " << idx2 << ", idx1=" << idx1 << endl;
+							"at idx_equation " << idx_equation << ", idx_rational_point_set=" << idx_rational_point_set << endl;
 		}
 		f_found = true;
-		found_at = idx2;
+		found_at = idx_equation;
 
-#if 0
-		void orbit_of_equations::get_transporter_from_a_to_b(
-				int idx_a, int idx_b,
-				int *Elt,
-				int verbose_level)
+#if 1
+		A->Orb->get_transporter_from_a_to_b(
+				idx_equation /* idx_a */, A->Orb->position_of_original_object /* idx_b */,
+				Canonical_form_classifier->Classification_of_varieties_nauty->Elt_delta,
+				verbose_level);
+
+		Canonical_form_classifier->Ring_with_action->PA->A->Group_element->mult(
+				Canonical_form_classifier->Classification_of_varieties_nauty->Elt_gamma,
+				Canonical_form_classifier->Classification_of_varieties_nauty->Elt_delta,
+				Canonical_form_classifier->Classification_of_varieties_nauty->Elt_phi);
+
 #endif
 
 	}

@@ -135,10 +135,10 @@ int classify_bitvectors::search(
 
 void classify_bitvectors::canonical_form_search_and_add_if_new(
 		other::data_structures::bitvector *Canonical_form,
-		void *extra_data, int &f_found, int &idx,
+		void *extra_data, int &f_found, int &idx_of_canonical_form,
 		int verbose_level)
-// if f_found is true: idx is where the canonical form was found.
-// if f_found is false: idx is where the new canonical form was added.
+// if f_found is true: idx_of_canonical_form is where the canonical form was found.
+// if f_found is false: idx_of_canonical_form is where the new canonical form was added.
 {
 	int f_v = (verbose_level >= 1);
 	other::data_structures::sorting Sorting;
@@ -165,14 +165,14 @@ void classify_bitvectors::canonical_form_search_and_add_if_new(
 	if (Sorting.vec_search(
 			(void **) Type_data,
 			compare_func_for_bitvectors, (void *) this,
-			nb_types, Canonical_form->get_data(), idx,
+			nb_types, Canonical_form->get_data(), idx_of_canonical_form,
 			0 /*verbose_level - 2*/)) {
 		if (f_v) {
 			cout << "classify_bitvectors::canonical_form_search_and_add_if_new vec_search "
-					"returns true, idx=" << idx << endl;
+					"returns true, idx_of_canonical_form=" << idx_of_canonical_form << endl;
 		}
-		type_of[n] = idx;
-		Type_mult[idx]++;
+		type_of[n] = idx_of_canonical_form;
+		Type_mult[idx_of_canonical_form]++;
 		f_found = true;
 	}
 	else {
@@ -181,7 +181,7 @@ void classify_bitvectors::canonical_form_search_and_add_if_new(
 					"returns false, new bitvector, before add_at_idx" << endl;
 		}
 		add_at_idx(
-				Canonical_form->get_data(), extra_data, idx,
+				Canonical_form->get_data(), extra_data, idx_of_canonical_form,
 				0/*verbose_level*/);
 		if (f_v) {
 			cout << "classify_bitvectors::canonical_form_search_and_add_if_new vec_search "

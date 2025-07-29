@@ -788,7 +788,7 @@ public:
 			char *str);
 	void print_type(
 			std::ostream &ost);
-	int size_of();
+	int size_total();
 	void print(
 			int line);
 	void print_csv(

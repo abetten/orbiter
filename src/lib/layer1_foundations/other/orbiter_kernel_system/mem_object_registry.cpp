@@ -212,7 +212,7 @@ void mem_object_registry::dump()
 
 	sz = 0;
 	for (i = 0; i < nb_entries_used; i++) {
-		s = entries[i].size_of();
+		s = entries[i].size_total();
 		sz += s;
 	}
 
@@ -240,11 +240,11 @@ void mem_object_registry::dump_to_csv_file(
 
 		//cout << "memory registry:" << endl;
 
-		fp << "Line,Pointer,Timestamp,Type,N,Sizeof,"
+		fp << "Line,Pointer,Timestamp,Type,N,Sizeof,SizeTotal,"
 				"ExtraTypeInfo,File,LineInFile" << endl;
 		sz = 0;
 		for (i = 0; i < nb_entries_used; i++) {
-			s = entries[i].size_of();
+			s = entries[i].size_total();
 			sz += s;
 		}
 
@@ -1073,7 +1073,7 @@ void mem_object_registry::sort_by_location_and_get_frequency(
 
 		sz = 0;
 		for (j = 0; j < l; j++) {
-			s = entries[f + j].size_of();
+			s = entries[f + j].size_total();
 			sz += s;
 		}
 
@@ -1176,8 +1176,8 @@ static int registry_key_pair_compare_by_size(
 
 	K1 = (mem_object_registry_entry *) K1v;
 	K2 = (mem_object_registry_entry *) K2v;
-	s1 = K1->size_of();
-	s2 = K2->size_of();
+	s1 = K1->size_total();
+	s2 = K2->size_total();
 	c = s2 - s1;
 	return c;
 }

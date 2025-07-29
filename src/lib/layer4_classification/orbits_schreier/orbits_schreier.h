@@ -135,7 +135,7 @@ public:
 			int idx,
 		int verbose_level);
 	int search_equation(
-			int *eqn, int &idx, int verbose_level);
+			int *eqn, int &idx_equation, int verbose_level);
 	int search_data(
 			int *data, int &idx, int verbose_level);
 	void save_csv(

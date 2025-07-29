@@ -52,7 +52,9 @@ classification_of_varieties_nauty::classification_of_varieties_nauty()
 	// canonical forms
 	Canonical_forms = NULL;
 
-	Elt = NULL;
+	Elt_gamma = NULL;
+	Elt_delta = NULL;
+	Elt_phi = NULL;
 	eqn2 = NULL;
 	Goi = NULL;
 
@@ -81,6 +83,15 @@ classification_of_varieties_nauty::~classification_of_varieties_nauty()
 
 	if (Classification_table_nauty) {
 		FREE_int(Classification_table_nauty);
+	}
+	if (Elt_gamma) {
+		FREE_int(Elt_gamma);
+	}
+	if (Elt_delta) {
+		FREE_int(Elt_delta);
+	}
+	if (Elt_phi) {
+		FREE_int(Elt_phi);
 	}
 
 }
@@ -117,7 +128,9 @@ void classification_of_varieties_nauty::prepare_for_classification(
 	}
 
 
-	Elt = NEW_int(Classifier->Ring_with_action->PA->A->elt_size_in_int);
+	Elt_gamma = NEW_int(Classifier->Ring_with_action->PA->A->elt_size_in_int);
+	Elt_delta = NEW_int(Classifier->Ring_with_action->PA->A->elt_size_in_int);
+	Elt_phi = NEW_int(Classifier->Ring_with_action->PA->A->elt_size_in_int);
 	eqn2 = NEW_int(Classifier->Ring_with_action->Poly_ring->get_nb_monomials());
 	Goi = NEW_lint(Input->nb_objects_to_test);
 

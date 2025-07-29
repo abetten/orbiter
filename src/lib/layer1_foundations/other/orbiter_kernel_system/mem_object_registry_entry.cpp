@@ -140,10 +140,10 @@ void mem_object_registry_entry::print_type(
 }
 
 
-int mem_object_registry_entry::size_of()
+int mem_object_registry_entry::size_total()
 {
 	if (object_type == POINTER_TYPE_INVALID) {
-		cout << "mem_object_registry_entry::size_of invalid entry" << endl;
+		cout << "mem_object_registry_entry::size_total invalid entry" << endl;
 		exit(1);
 		}
 	else if (object_type == POINTER_TYPE_int) {
@@ -183,7 +183,7 @@ int mem_object_registry_entry::size_of()
 		return object_n * object_size_of;
 		}
 	else {
-		cout << "mem_object_registry_entry::size_of "
+		cout << "mem_object_registry_entry::size_total "
 				"unknown object type " << object_type << endl;
 		exit(1);
 		}
@@ -203,6 +203,7 @@ void mem_object_registry_entry::print(
 	cout << " : "
 		<< object_n << " : "
 		<< object_size_of << " : "
+		<< object_n * object_size_of << " : "
 		<< extra_type_info << " : "
 		<< source_file << " : "
 		<< source_line << endl;
@@ -224,9 +225,11 @@ void mem_object_registry_entry::print_csv(
 	ost << ","
 		<< object_n << ","
 		<< object_size_of << ","
+		<< object_n * object_size_of << ","
 		<< extra_type_info << ","
 		<< source_file << ","
-		<< source_line << endl;
+		<< source_line
+		<< endl;
 
 }
 

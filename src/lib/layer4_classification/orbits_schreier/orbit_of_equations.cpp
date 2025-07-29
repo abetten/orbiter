@@ -725,7 +725,7 @@ void orbit_of_equations::get_canonical_form(
 		int *transporter_to_canonical_form,
 		groups::strong_generators
 			*&gens_stab_of_canonical_equation,
-			algebra::ring_theory::longinteger_object
+		algebra::ring_theory::longinteger_object
 			&full_group_order,
 		int verbose_level)
 
@@ -1108,7 +1108,7 @@ groups::strong_generators *orbit_of_equations::stabilizer_any_point(
 
 
 int orbit_of_equations::search_equation(
-		int *eqn, int &idx, int verbose_level)
+		int *eqn, int &idx_equation, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	other::data_structures::sorting Sorting;
@@ -1136,11 +1136,11 @@ int orbit_of_equations::search_equation(
 			(void **)Equations,
 			orbit_of_equations_compare_func,
 			p,
-			used_length, data, idx,
+			used_length, data, idx_equation,
 			0 /* verbose_level */)) {
 		if (f_v) {
 			cout << "orbit_of_equations::search_equation "
-					"we found the equation at " << idx << endl;
+					"we found the equation at idx_equation = " << idx_equation << endl;
 		}
 		ret = true;
 	}

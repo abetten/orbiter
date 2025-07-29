@@ -298,14 +298,14 @@ public:
 				automorphism_group_of_variety *&Aut_of_variety,
 				int verbose_level);
 	void find_isomorphism_between_set_of_rational_points(
-			variety_stabilizer_compute *C1,
-			variety_stabilizer_compute *C,
+			variety_stabilizer_compute *A,
+			variety_stabilizer_compute *B,
 			int *alpha, int *gamma,
 			int verbose_level);
-	// find gamma which maps the points of C1 to the points of C.
+	// find gamma which maps the point set A to the point set B.
 	// computes gamma = alpha * beta^-1
-	// where alpha_inv = canonical labeling of C1
-	// where beta_inv = canonical labeling of C
+	// where alpha_inv = canonical labeling of the combinatorial object encoding A
+	// where beta_inv = canonical labeling of the combinatorial object encoding B
 	// this function only deals with the set of rational points, not with the equation
 	// called from variety_compute_canonical_form::find_equation_new
 	void compute_group_and_tactical_decomposition(
@@ -386,8 +386,11 @@ public:
 	variety_compute_canonical_form **Canonical_forms; // [Input->nb_objects_to_test]
 
 
-	// ELt is the lifting of gamma:
-	int *Elt; // [Classifier->PA->A->elt_size_in_int]
+	// Elt_gamma is the lifting of gamma:
+	int *Elt_gamma; // [Classifier->PA->A->elt_size_in_int]
+	int *Elt_delta; // [Classifier->PA->A->elt_size_in_int]
+	int *Elt_phi; // [Classifier->PA->A->elt_size_in_int]
+	// ELt_phi is the isomorphism to the equation in the classification
 	int *eqn2; // [Classifier->Poly_ring->get_nb_monomials()]
 		// used by canonical_form_of_variety::find_equation
 	long int *Goi; // [Input->nb_objects_to_test]
@@ -852,15 +855,15 @@ public:
 	void handle_repeated_canonical_form_of_set_new(
 			int idx,
 			variety_stabilizer_compute *C,
-			int *alpha, int *gamma,
+			//int *alpha, int *gamma,
 			int &idx_canonical_form,
 			int &idx_equation,
 			int &f_found_eqn,
 			int verbose_level);
 	int find_equation_new(
-			variety_stabilizer_compute *C,
+			variety_stabilizer_compute *B,
 			int *alpha, int *gamma,
-			int idx1, int &found_at,
+			int idx_rational_point_set, int &found_at,
 			int verbose_level);
 	// gets the canonical_form_nauty object from
 	// Canonical_form_classifier->Output->CB->Type_extra_data[idx1]

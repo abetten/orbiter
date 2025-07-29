@@ -257,12 +257,35 @@ void orbiter_top_level_session::handle_everything(
 						"before global_mem_object_registry.dump" << endl;
 			}
 
+
+			if (f_v) {
+				cout << "orbiter_top_level_session::handle_everything memory_debug "
+						"before global_mem_object_registry->dump" << endl;
+			}
+			other::orbiter_kernel_system::Orbiter->global_mem_object_registry->dump();
+			if (f_v) {
+				cout << "orbiter_top_level_session::handle_everything memory_debug "
+						"after global_mem_object_registry->dump" << endl;
+			}
+
 			string fname;
 
-			fname = "orbiter_memory_dump.cvs";
+			fname = "orbiter_memory_dump.csv";
 
-			other::orbiter_kernel_system::Orbiter->global_mem_object_registry->dump();
+			if (f_v) {
+				cout << "orbiter_top_level_session::handle_everything memory_debug "
+						"before global_mem_object_registry->dump_to_csv_file" << endl;
+			}
 			other::orbiter_kernel_system::Orbiter->global_mem_object_registry->dump_to_csv_file(fname);
+			if (f_v) {
+				cout << "orbiter_top_level_session::handle_everything memory_debug "
+						"after global_mem_object_registry->dump_to_csv_file" << endl;
+			}
+
+			if (f_v) {
+				cout << "orbiter_top_level_session::handle_everything memory_debug "
+						"before global_mem_object_registry->sort_by_location_and_get_frequency" << endl;
+			}
 			other::orbiter_kernel_system::Orbiter->global_mem_object_registry->sort_by_location_and_get_frequency(verbose_level);
 			if (f_v) {
 				cout << "orbiter_top_level_session::handle_everything memory_debug "

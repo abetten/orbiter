@@ -79,14 +79,14 @@ void canonical_form_global::compute_stabilizer_of_quartic_curve(
 }
 
 void canonical_form_global::find_isomorphism_between_set_of_rational_points(
-		variety_stabilizer_compute *C1,
-		variety_stabilizer_compute *C,
+		variety_stabilizer_compute *A,
+		variety_stabilizer_compute *B,
 		int *alpha, int *gamma,
 		int verbose_level)
-// find gamma which maps the points of C1 to the points of C.
+// find gamma which maps the points of A to the points of B.
 // computes gamma = alpha * beta^-1
-// where alpha_inv = canonical labeling of C1
-// where beta_inv = canonical labeling of C
+// where alpha_inv = canonical labeling of A
+// where beta_inv = canonical labeling of B
 // this function only deals with the set of rational points, not with the equation
 // called from variety_compute_canonical_form::find_equation_new
 {
@@ -104,9 +104,9 @@ void canonical_form_global::find_isomorphism_between_set_of_rational_points(
 
 	int canonical_labeling_len;
 
-	canonical_labeling_len = C1->NO->N;
+	canonical_labeling_len = A->NO->N;
 
-	alpha_inv = C1->NO->canonical_labeling;
+	alpha_inv = A->NO->canonical_labeling;
 	if (f_v) {
 		cout << "canonical_form_global::find_isomorphism_between_set_of_rational_points "
 				"alpha_inv = " << endl;
@@ -116,7 +116,7 @@ void canonical_form_global::find_isomorphism_between_set_of_rational_points(
 		cout << endl;
 	}
 
-	beta_inv = C->NO->canonical_labeling;
+	beta_inv = B->NO->canonical_labeling;
 	if (f_v) {
 		cout << "canonical_form_global::find_isomorphism_between_set_of_rational_points "
 				"beta_inv = " << endl;
@@ -128,12 +128,12 @@ void canonical_form_global::find_isomorphism_between_set_of_rational_points(
 	}
 
 	// compute gamma = alpha * beta^-1 (left to right multiplication),
-	// which maps the points on curve C1 to the points on curve C
+	// which maps the points A to the points B
 
 
 	if (f_v) {
 		cout << "canonical_form_global::find_isomorphism_between_set_of_rational_points "
-				"computing alpha" << endl;
+				"computing alpha = alpha_inv^-1" << endl;
 	}
 	for (i = 0; i < canonical_labeling_len; i++) {
 		j = alpha_inv[i];
@@ -142,7 +142,7 @@ void canonical_form_global::find_isomorphism_between_set_of_rational_points(
 
 	if (f_v) {
 		cout << "canonical_form_global::find_isomorphism_between_set_of_rational_points "
-				"computing gamma" << endl;
+				"computing gamma = alpha * beta^-1" << endl;
 	}
 	// gamma = alpha * beta^-1
 	for (i = 0; i < canonical_labeling_len; i++) {

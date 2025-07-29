@@ -518,10 +518,10 @@ public:
 			uchar *data, int &idx, int verbose_level);
 	void canonical_form_search_and_add_if_new(
 			other::data_structures::bitvector *Canonical_form,
-			void *extra_data, int &f_found, int &idx,
+			void *extra_data, int &f_found, int &idx_of_canonical_form,
 			int verbose_level);
-	// if f_found is true: idx is where the canonical form was found.
-	// if f_found is false: idx is where the new canonical form was added.
+	// if f_found is true: idx_of_canonical_form is where the canonical form was found.
+	// if f_found is false: idx_of_canonical_form is where the new canonical form was added.
 	void search_and_add_if_new(
 			uchar *data,
 			void *extra_data, int &f_found, int &idx,
