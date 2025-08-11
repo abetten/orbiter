@@ -607,6 +607,11 @@ public:
 			std::string &input_text,
 			std::string &input_group_element,
 			int verbose_level);
+	void apply_to_set(
+			action *A,
+			std::string &input_text,
+			std::string &input_group_element,
+			int verbose_level);
 	void multiply_based_on_text(
 			action *A,
 			std::string &data_A,

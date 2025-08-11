@@ -468,6 +468,28 @@ void group_theoretic_activity::perform_activity(
 					"after AG->A->apply_based_on_text" << endl;
 		}
 	}
+	else if (Descr->f_apply_to_set) {
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"f_apply_to_set" << endl;
+		}
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before AG->A->apply_based_on_text" << endl;
+		}
+
+		actions::action_global AcGl;
+
+		AcGl.apply_to_set(
+				AG->A,
+				Descr->apply_to_set_input,
+				Descr->apply_to_set_element, verbose_level);
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after AG->A->apply_based_on_text" << endl;
+		}
+	}
 
 	else if (Descr->f_element_processing) {
 		if (f_v) {

@@ -508,6 +508,14 @@ INVERSE_SPARSE="1,31,1,25,1,22,1,21,1,15,\
 EDGE_CURVE_EQUATION_ALGEBRAIC="X^4 -Y^4 -Z^4 +2*f^2*Y^2*Z^2 +4*f*X^2*Y*Z"
 
 
+
+QC_Q27_FO159_COEFFS="15,6,12,2,4,23,24,20,15,0,4,3,0,0,23"
+
+QC_Q27_FO388_COEFFS="1,25,11,12,16,8,13,25,0,14,2,2,19,19,2"
+
+QC_Q27_FO388_TRANS="19,4,0,0,26,19,10,10,11,1"
+
+
 # Section 7.1 The Grassmannian
 
 # Section 7.2 The Klein Quadric and the Pluecker Map
@@ -9276,6 +9284,7 @@ test_6_2:
 	make permutation_polynomial_F5
 	make conic_variety
 	make ideal_of_conic
+	make quartic_curve_q27_fo338_apply_transformation
 
 
 
@@ -9548,6 +9557,33 @@ ideal_of_conic:
 
 
 
+
+quartic_curve_q27_fo338_apply_transformation:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 27 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 3 \
+			-homogeneous_of_degree 4 \
+			-monomial_ordering_partition \
+			-variables "X0,X1,X2" "X_0,X_1,X_2" \
+		-end \
+		-define eqn -vector -dense \
+			$(QC_Q27_FO388_COEFFS) \
+			-end \
+		-define trans_coeffs -vector -dense \
+			$(QC_Q27_FO388_TRANS) \
+			-end \
+		-define G -linear_group -PGGL 3 F -end \
+		-define trans -vector_ge \
+			-action G \
+			-vector_data trans_coeffs \
+		-end \
+		-with R -do \
+			-ring_theoretic_activity \
+			-apply_transformation P eqn trans \
+		-end 
 
 
 
@@ -10288,7 +10324,7 @@ quartic_curve_q13_f0_apply_transformation:
 		-end \
 		-with R -do \
 			-ring_theoretic_activity \
-			-apply_transformation eqn trans \
+			-apply_transformation P eqn trans \
 		-end 
 
 
@@ -10335,6 +10371,7 @@ test_7_6:
 	make Hirschfeld_q4_group
 	make Barth_sextic_mod_11
 	make variety_Dickson36_9lines_q4_group
+	make quartic_curve_q27_fo159_fo338_test_isomorphism
 
 
 
@@ -10543,6 +10580,38 @@ variety_Dickson36_9lines_q4_group:
 		-with V -do -variety_activity -report -end
 	$(PDFLATEX) variety_Dickson36_report.tex
 	$(OPEN) variety_Dickson36_report.pdf
+
+
+
+quartic_curve_q27_fo159_fo338_test_isomorphism:
+	$(ORBITER) -v 12 \
+		-define F -finite_field -q 27 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 3 \
+			-homogeneous_of_degree 4 \
+			-monomial_ordering_partition \
+			-variables "X0,X1,X2" "X_0,X_1,X_2" \
+		-end \
+		-define V159 -variety \
+			-label_txt curve_q27_fo159 \
+			-label_tex curve\_q27\_fo159 \
+			-projective_space P \
+			-ring R \
+			-equation_by_coefficients $(QC_Q27_FO159_COEFFS) \
+		-end \
+		-define V388 -variety \
+			-label_txt curve_q27_fo388 \
+			-label_tex curve\_q27\_fo388 \
+			-projective_space P \
+			-ring R \
+			-equation_by_coefficients $(QC_Q27_FO388_COEFFS) \
+		-end \
+		-with V159 -and V388 -do -variety_activity \
+			-test_isomorphism \
+			-nauty_control -end \
+		-end
 
 
 
@@ -23624,6 +23693,8 @@ test_17_2:
 	make quadrangles_PG_2_2
 	make Barth_mod_11_singular_pts_c
 	make quartic_curves_q13_classify_nauty
+	make quartic_curves_q13_filter_isomorphism_reps
+	make quartic_curves_q13_tally_ago
 	make Klein_cubic_threefold_q3
 	make EC_canon
 	make Hirschfeld_q4_c
@@ -23727,26 +23798,8 @@ Barth_mod_11_singular_pts_c:
 
 
 quartic_curves_q13_classify_nauty:
-	$(ORBITER) -v 3 \
-		-define F -finite_field -q 13 -end \
-		-define P -projective_space -n 3 -field F -end \
-		-loop L 0 $(NB_CUBIC_SURFACES_Q13) 1 \
-			-define S_%L -cubic_surface -space P -catalogue %L -end \
-		-end_loop L \
-		-print_symbols \
-		-loop L 0 $(NB_CUBIC_SURFACES_Q13) 1 \
-			-with S_%L -do \
-			-cubic_surface_activity \
-				-export_all_quartic_curves \
-			-end \
-		-end_loop L \
-		-print_symbols
-	$(ORBITER) -v 3 \
-		-csv_file_concatenate_from_mask 0 4 \
-			surface_catalogue_q13_iso%ld_quartics.csv \
-			quartics_q13.csv
-	$(ORBITER) -v 3 \
-		-define F -finite_field -q 13 -end \
+	$(ORBITER) -v 5 \
+		-define F -finite_field -q $(Q) -end \
 		-define P -projective_space -n 2 -field F -v 0 -end \
 		-define R -polynomial_ring \
 			-field F \
@@ -23755,14 +23808,16 @@ quartic_curves_q13_classify_nauty:
 			-monomial_ordering_partition \
 			-variables "y0,y1,y2" "y_0,y_1,y_2" \
 		-end \
-		-define O -orbits -classification_by_canonical_form \
+		-define Orb -orbits -classification_by_canonical_form \
 			-space P \
 			-ring R \
-			-input_fname_mask quartics_q13.csv \
+			-input_fname_mask quartics_q$(Q).csv \
 			-nb_files 1 \
-			-output_fname quartic_curves_q13 \
+			-output_fname quartic_curves_q$(Q) \
 			-label_po "PO" \
 			-label_so "orbit" \
+			-carry_through "PO_GO" \
+			-carry_through "PO_INDEX" \
 			-carry_through "SEQN" \
 			-carry_through "SEQNALG" \
 			-carry_through "PT" \
@@ -23779,21 +23834,30 @@ quartic_curves_q13_classify_nauty:
 			-carry_through "NB_DOUBLE" \
 			-carry_through "NB_SINGLE" \
 			-carry_through "NB_ZERO" \
-			-nauty_control \
-				-save_orbit_of_equations equations_ \
-			-end \
+			-nauty_control -end \
 			-end \
 		-end \
-		-define ro \
-			-poset_classification_report_options \
-				-fname quartic_curves_q13 \
+		-with Orb -do \
+			-orbits_activity \
+			-export_source_code \
 		-end \
-		-with O -do -orbits_activity \
-			-report \
-			-report_options ro \
-		-end
-	$(PDFLATEX) quartic_curves_q13_orbits.tex
-	$(OPEN) quartic_curves_q13_orbits.pdf
+		-print_symbols
+	#$(PDFLATEX) quartic_curves_q13_orbits.tex
+	#$(OPEN) quartic_curves_q13_orbits.pdf
+
+
+quartic_curves_q13_filter_isomorphism_reps:
+	$(ORBITER) -v 3 \
+		-csv_file_filter \
+			quartic_curves_q13_classified.csv \
+			"F_Fst" \
+			"1" 
+	mv quartic_curves_q13_classified_f_F_Fst_1.csv quartic_curves_q13_iso.csv
+
+quartic_curves_q13_tally_ago:
+	$(ORBITER) -v 3 \
+		-tally_column \
+		quartic_curves_q13_iso.csv ago
 
 
 

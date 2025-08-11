@@ -149,7 +149,8 @@ void canonical_form_classifier::init_objects_from_list_of_csv_files(
 
 	}
 	if (f_v) {
-		cout << "canonical_form_classifier::init_objects_from_list_of_csv_files after copying carry_through" << endl;
+		cout << "canonical_form_classifier::init_objects_from_list_of_csv_files "
+				"after copying carry_through" << endl;
 	}
 
 
@@ -168,7 +169,8 @@ void canonical_form_classifier::init_objects_from_list_of_csv_files(
 	}
 	else {
 		if (f_v) {
-			cout << "canonical_form_classifier::init_objects_from_list_of_csv_files nauty_control:" << endl;
+			cout << "canonical_form_classifier::init_objects_from_list_of_csv_files "
+					"nauty_control:" << endl;
 			Descr->Nauty_interface_control->print();
 		}
 	}

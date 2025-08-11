@@ -25,6 +25,8 @@ variety_activity_description::variety_activity_description()
 
 	f_compute_group = false;
 
+	f_test_isomorphism = false;
+
 	f_compute_set_stabilizer = false;
 
 	f_nauty_control = false;
@@ -70,6 +72,12 @@ int variety_activity_description::read_arguments(
 			f_compute_group = true;
 			if (f_v) {
 				cout << "-compute_group " << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-test_isomorphism") == 0) {
+			f_test_isomorphism = true;
+			if (f_v) {
+				cout << "-test_isomorphism " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-compute_set_stabilizer") == 0) {
@@ -161,6 +169,9 @@ void variety_activity_description::print()
 {
 	if (f_compute_group) {
 		cout << "-compute_group " << endl;
+	}
+	if (f_test_isomorphism) {
+		cout << "-test_isomorphism " << endl;
 	}
 	if (f_compute_set_stabilizer) {
 		cout << "-compute_set_stabilizer " << endl;

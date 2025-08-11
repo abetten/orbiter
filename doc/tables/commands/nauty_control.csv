@@ -5,4 +5,5 @@ ROW,C1,C2,C3
 1,"\verb'-save_orbit_of_equations' "," prefix "," Save the orbit of equations (only for objects of type variety). The file name will be constructed from the given prefix and the name of the combinatorial object. "
 1,"\verb'-partition' "," part "," Compute the canonical form with respect to the stabilizer of the partition. "
 1,"\verb'-show_canonical_form' "," "," Show the canonical form during classification. "
+1,"\verb'-redice_memory_footprint' "," k"," Reduce the memory footprint (for $k=1$). "
 END

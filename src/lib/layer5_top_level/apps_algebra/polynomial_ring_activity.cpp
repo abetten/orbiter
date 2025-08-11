@@ -170,6 +170,38 @@ void polynomial_ring_activity::perform_activity(
 		}
 
 
+		projective_geometry::projective_space_with_action *PA;
+
+		algebra::ring_theory::homogeneous_polynomial_domain *Poly_ring;
+
+
+
+		if (f_v) {
+			cout << "polynomial_ring_activity::perform_activity "
+					"before Get_projective_space" << endl;
+		}
+		PA = Get_projective_space(
+						Descr->apply_transformation_space_label);
+
+
+		projective_geometry::ring_with_action *Ring_with_action;
+
+		Ring_with_action = NEW_OBJECT(projective_geometry::ring_with_action);
+
+
+		if (f_v) {
+			cout << "polynomial_ring_activity::perform_activity "
+					"before Ring_with_action->ring_with_action_init" << endl;
+		}
+		Ring_with_action->ring_with_action_init(
+				PA,
+				HPD,
+				verbose_level);
+		if (f_v) {
+			cout << "polynomial_ring_activity::perform_activity "
+					"after Ring_with_action->ring_with_action_init" << endl;
+		}
+
 
 		int *Eqn_in;
 		int *Eqn_out;
@@ -203,10 +235,10 @@ void polynomial_ring_activity::perform_activity(
 			cout << endl;
 		}
 
-		int *Elt_inv;
+		//int *Elt_inv;
 
 
-		Elt_inv = NEW_int(A->elt_size_in_int);
+		//Elt_inv = NEW_int(A->elt_size_in_int);
 		Eqn_out = NEW_int(HPD->get_nb_monomials());
 
 
@@ -224,6 +256,8 @@ void polynomial_ring_activity::perform_activity(
 				A->Group_element->element_print_quick(V->ith(i), cout);
 			}
 
+
+#if 0
 			if (f_v) {
 				cout << "polynomial_ring_activity::perform_activity "
 						"before element_invert" << endl;
@@ -234,17 +268,31 @@ void polynomial_ring_activity::perform_activity(
 				cout << "polynomial_ring_activity::perform_activity "
 						"after element_invert" << endl;
 			}
+#endif
+
+
+#if 0
+			// ToDo this should be semilinear
 
 			if (f_v) {
 				cout << "polynomial_ring_activity::perform_activity "
 						"before substitute_linear" << endl;
 			}
-			HPD->substitute_linear(Eqn_in /* coeff_in */, Eqn_out /* coeff_out */,
-					Elt_inv /* Mtx_inv */, 0/*verbose_level*/);
+			HPD->substitute_linear(
+					Eqn_in /* coeff_in */, Eqn_out /* coeff_out */,
+					Elt_inv /* Mtx_inv */,
+					0/*verbose_level*/);
 			if (f_v) {
 				cout << "polynomial_ring_activity::perform_activity "
 						"after substitute_linear" << endl;
 			}
+#else
+			Ring_with_action->apply(
+					V->ith(i),
+					Eqn_in /* int *eqn_in */,
+					Eqn_out /* int *eqn_out */,
+					verbose_level - 2);
+#endif
 
 			HPD->get_F()->Projective_space_basic->PG_element_normalize_from_front(
 					Eqn_out, 1, HPD->get_nb_monomials());
@@ -287,7 +335,8 @@ void polynomial_ring_activity::perform_activity(
 			Int_matrix_print(Diagonal_part, V->len, HPD->nb_variables);
 		}
 
-		FREE_int(Elt_inv);
+		FREE_OBJECT(Ring_with_action);
+		//FREE_int(Elt_inv);
 		FREE_int(Eqn_out);
 
 

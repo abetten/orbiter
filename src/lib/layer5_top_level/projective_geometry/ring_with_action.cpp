@@ -27,6 +27,8 @@ ring_with_action::ring_with_action()
 	Poly_ring = NULL;
 
 	AonHPD = NULL;
+
+	Elt_inv = NULL;
 }
 
 
@@ -35,6 +37,9 @@ ring_with_action::~ring_with_action()
 	Record_death();
 	if (AonHPD) {
 		FREE_OBJECT(AonHPD);
+	}
+	if (Elt_inv) {
+		FREE_int(Elt_inv);
 	}
 }
 
@@ -66,6 +71,8 @@ void ring_with_action::ring_with_action_init(
 		cout << "ring_with_action::ring_with_action_init "
 				"after AonHPD->init" << endl;
 	}
+
+	Elt_inv = NEW_int(PA->A->elt_size_in_int);
 
 
 	if (f_v) {
@@ -134,6 +141,7 @@ void ring_with_action::apply(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 
 	if (f_v) {
 		cout << "ring_with_action::apply" << endl;
@@ -143,13 +151,27 @@ void ring_with_action::apply(
 				"before substitute_semilinear" << endl;
 	}
 
+	if (f_v) {
+		cout << "ring_with_action::apply "
+				"before PA->A->Group_element->element_invert" << endl;
+	}
+
+	PA->A->Group_element->element_invert(Elt, Elt_inv, 0);
+	if (f_v) {
+		cout << "ring_with_action::apply "
+				"after PA->A->Group_element->element_invert" << endl;
+	}
+
+
 	int d, frobenius, frobenius_inv;
 	int *Mtx; // [d * d + 1]
 
 
 	d = PA->P->Subspaces->n + 1;
-	Mtx = Elt;
-	frobenius = Mtx[d * d];
+	//Mtx = Elt;
+	Mtx = Elt_inv;
+	//frobenius = Mtx[d * d];
+	frobenius = Elt_inv[d * d];
 
 	if (frobenius) {
 		frobenius_inv = Poly_ring->get_F()->e - frobenius;
@@ -163,12 +185,37 @@ void ring_with_action::apply(
 			eqn_out,
 			PA->A->is_semilinear_matrix_group(),
 			frobenius_inv, Mtx,
-			0/*verbose_level*/);
+			1 /*verbose_level*/);
 
 	if (f_v) {
 		cout << "ring_with_action::apply "
 				"after substitute_semilinear" << endl;
 	}
+
+	if (f_vv) {
+		cout << "ring_with_action::apply "
+				"input:" << endl;
+		Int_vec_print(cout, eqn_in, Poly_ring->get_nb_monomials());
+		cout << endl;
+		cout << "ring_with_action::apply "
+				"output:" << endl;
+		Int_vec_print(cout, eqn_out, Poly_ring->get_nb_monomials());
+		cout << endl;
+		cout << "ring_with_action::apply "
+				"Elt=" << endl;
+		PA->A->Group_element->element_print(Elt, cout);
+		cout << endl;
+		cout << "ring_with_action::apply "
+				"Elt_inv=" << endl;
+		PA->A->Group_element->element_print(Elt_inv, cout);
+		cout << endl;
+		cout << "ring_with_action::apply "
+				"Mtx:" << endl;
+		Int_matrix_print(Mtx, d, d);
+		cout << endl;
+		cout << "ring_with_action::apply frobenius_inv=" << frobenius_inv << endl;
+	}
+
 
 	if (f_v) {
 		cout << "ring_with_action::apply done" << endl;

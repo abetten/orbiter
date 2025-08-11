@@ -626,6 +626,11 @@ public:
 	std::string apply_input;
 	std::string apply_element;
 
+	// ToDo: undocumented
+	int f_apply_to_set;
+	std::string apply_to_set_input;
+	std::string apply_to_set_element;
+
 	// ToDo: this should become a vector_ge_activity
 	int f_element_processing;
 	element_processing_description *element_processing_descr;

@@ -2361,6 +2361,8 @@ public:
 	void init(
 			variety_description *Descr,
 			int verbose_level);
+	// Does not perform the transformations.
+	// Called from variety_object_with_action::create_variety
 	int get_nb_points();
 	int get_nb_lines();
 #if 0

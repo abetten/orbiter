@@ -93,6 +93,29 @@ void variety_activity::perform_activity(
 					"after do_compute_group" << endl;
 		}
 	}
+	if (Descr->f_test_isomorphism) {
+
+		if (f_v) {
+			cout << "variety_activity::perform_activity "
+					"-test_isomorphism" << endl;
+		}
+
+		if (f_v) {
+			cout << "variety_activity::perform_activity "
+					"before do_test_isomorphism" << endl;
+		}
+
+		do_test_isomorphism(
+				Descr->f_output_fname_base,
+				Descr->output_fname_base,
+				Descr->f_nauty_control,
+				Descr->Nauty_interface_control,
+				verbose_level);
+		if (f_v) {
+			cout << "variety_activity::perform_activity "
+					"after do_test_isomorphism" << endl;
+		}
+	}
 	if (Descr->f_compute_set_stabilizer) {
 
 		if (f_v) {
@@ -278,6 +301,90 @@ void variety_activity::do_compute_group(
 
 	if (f_v) {
 		cout << "variety_activity::do_compute_group done" << endl;
+	}
+}
+
+
+void variety_activity::do_test_isomorphism(
+		int f_has_output_fname_base,
+		std::string &output_fname_base,
+		int f_nauty_control,
+		other::l1_interfaces::nauty_interface_control *Nauty_interface_control,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "variety_activity::do_test_isomorphism" << endl;
+	}
+	if (f_v) {
+		cout << "variety_activity::do_test_isomorphism "
+				"nb_input_Vo = " << nb_input_Vo << endl;
+	}
+
+	if (nb_input_Vo != 2) {
+		cout << "variety_activity::do_test_isomorphism "
+				"nb_input_Vo != 2" << endl;
+		exit(1);
+	}
+
+	std::string fname_base;
+
+	if (f_has_output_fname_base) {
+		fname_base = output_fname_base;
+	}
+	else {
+		fname_base = "Iso_" + Input_Vo[0]->Variety_object->label_txt + "_and_" + Input_Vo[1]->Variety_object->label_txt;
+	}
+
+	canonical_form::canonical_form_classifier *Classifier;
+
+	Classifier = NEW_OBJECT(canonical_form::canonical_form_classifier);
+
+
+	if (f_v) {
+		cout << "variety_activity::do_test_isomorphism "
+				"before Classifier->init_direct" << endl;
+	}
+
+	Classifier->init_direct(
+			nb_input_Vo,
+			Input_Vo,
+			fname_base,
+			f_nauty_control,
+			Nauty_interface_control,
+			verbose_level);
+
+	if (f_v) {
+		cout << "variety_activity::do_test_isomorphism "
+				"after Classifier->init_direct" << endl;
+	}
+
+
+
+	canonical_form::canonical_form_global Canonical_form_global;
+
+	canonical_form::classification_of_varieties_nauty *Classification_of_varieties_nauty;
+
+
+	if (f_v) {
+		cout << "variety_activity::do_test_isomorphism "
+				"before Canonical_form_global.compute_isomorphism" << endl;
+	}
+	Canonical_form_global.compute_isomorphism(
+			Classifier,
+			Classification_of_varieties_nauty,
+			verbose_level);
+	if (f_v) {
+		cout << "variety_activity::do_test_isomorphism "
+				"after Canonical_form_global.compute_isomorphism" << endl;
+	}
+
+
+	FREE_OBJECT(Classifier);
+
+	if (f_v) {
+		cout << "variety_activity::do_test_isomorphism done" << endl;
 	}
 }
 

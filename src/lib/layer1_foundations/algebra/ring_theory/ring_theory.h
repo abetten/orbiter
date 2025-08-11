@@ -124,13 +124,18 @@ private:
 		// is recorded as 0,0,1,3
 	int nb_affine; // nb_variables^degree
 
-	// Affine could get too big:
+	// Affine could get too big,
+	// so it may or may not be allocated
 	int *Affine; // [nb_affine * degree]
+		// AG(degree, nb_variables)
+		// = set of vectors of length degree
+		// with entries in Z mod nb_variables
 		// the affine elements are used for foiling
 		// when doing a linear substitution
 	int *v; // [nb_variables]
 
-	// Affine_to_monomial could get too big:
+	// Affine_to_monomial could get too big,
+	// so it may or may not be allocated
 	int *Affine_to_monomial; // [nb_affine]
 		// for each vector in the affine space,
 		// record the monomial associated with it.
@@ -913,6 +918,7 @@ public:
 	std::string ideal_point_set_label;
 
 	int f_apply_transformation;
+	std::string apply_transformation_space_label;
 	std::string apply_transformation_Eqn_in_label;
 	std::string apply_transformation_vector_ge_label;
 

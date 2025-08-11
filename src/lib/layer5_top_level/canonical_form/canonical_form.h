@@ -313,6 +313,11 @@ public:
 			canonical_form::variety_object_with_action *Input_Vo,
 			canonical_form::classification_of_varieties_nauty *&Classification_of_varieties_nauty,
 			int verbose_level);
+	void compute_isomorphism(
+			canonical_form::canonical_form_classifier *Classifier,
+			//canonical_form::variety_object_with_action *Input_Vo,
+			canonical_form::classification_of_varieties_nauty *&Classification_of_varieties_nauty,
+			int verbose_level);
 	void compute_set_stabilizer_and_tactical_decomposition(
 			canonical_form::canonical_form_classifier *Classifier,
 			canonical_form::variety_object_with_action *Input_Vo,
@@ -377,23 +382,30 @@ public:
 	int nb_isomorphism_classes;
 	int *Orbit_input_idx; // [nb_isomorphism_classes]
 
-	int *Classification_table_nauty; // [Input->nb_objects_to_test * 4]
+	//int *Classification_table_nauty; // [Input->nb_objects_to_test * 4]
 
 
 
 	// input and output data
 
+private:
 	variety_compute_canonical_form **Canonical_forms; // [Input->nb_objects_to_test]
+	std::vector<std::string> Lines;
+
+public:
+	long int *Goi; // [Input->nb_objects_to_test]
+	int **Phi; // [Input->nb_objects_to_test][A->make_element_size]
 
 
+	// auxiliary data:
 	// Elt_gamma is the lifting of gamma:
 	int *Elt_gamma; // [Classifier->PA->A->elt_size_in_int]
+	int *Elt_gamma_inv; // [Classifier->PA->A->elt_size_in_int]
 	int *Elt_delta; // [Classifier->PA->A->elt_size_in_int]
 	int *Elt_phi; // [Classifier->PA->A->elt_size_in_int]
-	// ELt_phi is the isomorphism to the equation in the classification
+	// Elt_phi is the isomorphism to the equation in the classification
 	int *eqn2; // [Classifier->Poly_ring->get_nb_monomials()]
 		// used by canonical_form_of_variety::find_equation
-	long int *Goi; // [Input->nb_objects_to_test]
 
 
 
@@ -407,10 +419,11 @@ public:
 	void compute_classification(
 			std::string &fname_base,
 			int verbose_level);
+	variety_compute_canonical_form *get_canonical_form_i(
+			int i);
 	void prepare_input(
 			int verbose_level);
-	// initializes the entries of Variety_table[nb_inputs]
-	// given the data in Vo[]
+	// initializes the entries of Canonical_forms[nb_inputs]
 	void classify_nauty(
 			int verbose_level);
 	void allocate_tables(
@@ -420,6 +433,9 @@ public:
 	void handle_one_input_case(
 			int input_counter, int &nb_iso,
 			variety_compute_canonical_form *Variety_compute_canonical_form,
+			int verbose_level);
+	std::string stringify_result(
+			int input_counter,
 			int verbose_level);
 	void write_classification_by_nauty_csv(
 			std::string &fname_base,
@@ -689,6 +705,8 @@ public:
 
 	int f_compute_group;
 
+	int f_test_isomorphism;
+
 	int f_compute_set_stabilizer;
 
 
@@ -755,6 +773,12 @@ public:
 			int f_nauty_control,
 			other::l1_interfaces::nauty_interface_control *Nauty_interface_control,
 			int verbose_level);
+	void do_test_isomorphism(
+			int f_has_output_fname_base,
+			std::string &output_fname_base,
+			int f_nauty_control,
+			other::l1_interfaces::nauty_interface_control *Nauty_interface_control,
+			int verbose_level);
 	void do_compute_set_stabilizer(
 			int f_has_output_fname_base,
 			std::string &output_fname_base,
@@ -778,7 +802,7 @@ public:
 
 
 
-//! to compute the canonical form of a variety, relies on class variety_stabilizer_compute
+//! computing the canonical form of one variety, using the canonical form of the set of rational points, relying on class variety_stabilizer_compute
 
 class variety_compute_canonical_form {
 
@@ -813,11 +837,10 @@ public:
 	variety_object_with_action *Vo;
 
 
-	// substructure output:
-	long int *canonical_pts;
+	//long int *canonical_pts; // unused
 	int *canonical_equation;
-	int *transporter_to_canonical_form;
-	groups::strong_generators *gens_stab_of_canonical_equation;
+	int *transporter_to_canonical_form; // used in compute_canonical_object
+	groups::strong_generators *gens_stab_of_canonical_equation; // used in classify_using_nauty_new
 
 	// nauty output:
 	variety_stabilizer_compute *Variety_stabilizer_compute;
@@ -855,7 +878,6 @@ public:
 	void handle_repeated_canonical_form_of_set_new(
 			int idx,
 			variety_stabilizer_compute *C,
-			//int *alpha, int *gamma,
 			int &idx_canonical_form,
 			int &idx_equation,
 			int &f_found_eqn,
@@ -867,10 +889,11 @@ public:
 			int verbose_level);
 	// gets the canonical_form_nauty object from
 	// Canonical_form_classifier->Output->CB->Type_extra_data[idx1]
-	void add_object_and_compute_canonical_equation_new(
-			variety_stabilizer_compute *C,
+	void add_canonical_object(
+			variety_stabilizer_compute *extra_data,
 			int idx, int verbose_level);
-	// adds the canonical form at position idx, using Classification_of_varieties_nauty
+	// adds the canonical form at position idx,
+	// using Classification_of_varieties_nauty
 	void compute_canonical_object(
 			int verbose_level);
 	std::string stringify_csv_entry_one_line_nauty(
@@ -928,6 +951,9 @@ public:
 	void create_variety(
 			projective_geometry::projective_space_with_action *PA,
 			int cnt, int po_go, int po_index, int po, int so,
+			geometry::algebraic_geometry::variety_description *VD,
+			int verbose_level);
+	void apply_transformations_if_necessary(
 			geometry::algebraic_geometry::variety_description *VD,
 			int verbose_level);
 	void apply_transformation_to_self(

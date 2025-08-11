@@ -4,7 +4,7 @@ ROW,C1,C2,C3
 1,"\verb'-cheat_sheet' ","  "," Create a report about the polynomial ring. "
 1,"\verb'-export_partials' ","  "," Export the matrix associated with the partial derivatives. "
 1,"\verb'-ideal' "," label\_txt label\_tex label\_set "," Compute the ideal of the given set of points. "
-1,"\verb'-apply_transformation' "," eqn elt "," Apply the transformation given by the group element to the given equation. "
+1,"\verb'-apply_transformation' "," P eqn elt "," Apply the transformation given by the group element to the given equation. P is the underlying projective space. "
 1,"\verb'-set_variable_names' "," txt tex "," Choose new variable names in text and tex format. "
 1,"\verb'-print_equation' "," equation "," Print the given equation. "
 1,"\verb'-parse_equation_wo_parameters' "," label\_txt label\_tex eqn\_algebraic "," Parse an equation given in algebraic form. "

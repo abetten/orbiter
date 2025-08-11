@@ -119,6 +119,113 @@ void variety_object_with_action::create_variety(
 				"after Variety_object->init" << endl;
 	}
 
+#if 0
+	int i;
+
+	for (i = 0; i < VD->transformations.size(); i++) {
+		if (f_v) {
+			cout << "variety_object_with_action::create_variety "
+					"transformation " << i << " / " << VD->transformations.size() << endl;
+		}
+
+		int *data;
+		int *Elt;
+		int sz;
+
+		Elt = NEW_int(PA->A->elt_size_in_int);
+
+
+		Int_vec_scan(VD->transformations[i], data, sz);
+		PA->A->Group_element->make_element(Elt, data, 0 /* verbose_level */);
+
+
+
+		if (VD->transformation_inverse[i]) {
+
+			if (f_v) {
+				cout << "variety_object_with_action::create_variety "
+						"-transform_inverse " << VD->transformations[i] << endl;
+			}
+			int *Elt1;
+
+			Elt1 = NEW_int(PA->A->elt_size_in_int);
+			PA->A->Group_element->element_invert(Elt, Elt1, 0 /* verbose_level */);
+			PA->A->Group_element->element_move(Elt1, Elt, 0 /* verbose_level */);
+			FREE_int(Elt1);
+		}
+		else {
+			if (f_v) {
+				cout << "variety_object_with_action::create_variety "
+						"-transform " << VD->transformations[i] << endl;
+			}
+
+		}
+
+
+		if (f_v) {
+			cout << "variety_object_with_action::create_variety "
+					"before apply_transformation_to_self" << endl;
+		}
+
+		apply_transformation_to_self(
+				Elt,
+				PA->A,
+				PA->A_on_lines,
+				verbose_level - 2);
+
+		if (f_v) {
+			cout << "variety_object_with_action::create_variety "
+					"after apply_transformation_to_self" << endl;
+		}
+
+		FREE_int(data);
+
+	}
+#else
+	if (f_v) {
+		cout << "variety_object_with_action::create_variety "
+				"before apply_transformations_if_necessary" << endl;
+	}
+	apply_transformations_if_necessary(VD, verbose_level - 2);
+	if (f_v) {
+		cout << "variety_object_with_action::create_variety "
+				"after apply_transformations_if_necessary" << endl;
+	}
+#endif
+
+	if (f_v) {
+		cout << "variety_object_with_action::create_variety "
+				"before compute_tactical_decompositions" << endl;
+	}
+	compute_tactical_decompositions(
+			verbose_level - 2);
+	if (f_v) {
+		cout << "variety_object_with_action::create_variety "
+				"after compute_tactical_decompositions" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "variety_object_with_action::create_variety before print" << endl;
+		print(cout);
+		cout << "variety_object_with_action::create_variety after print" << endl;
+	}
+
+	if (f_v) {
+		cout << "variety_object_with_action::create_variety done" << endl;
+	}
+}
+
+void variety_object_with_action::apply_transformations_if_necessary(
+		geometry::algebraic_geometry::variety_description *VD,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "variety_object_with_action::apply_transformations_if_necessary" << endl;
+	}
+
 	int i;
 
 	for (i = 0; i < VD->transformations.size(); i++) {
@@ -182,29 +289,7 @@ void variety_object_with_action::create_variety(
 	}
 
 
-	if (f_v) {
-		cout << "variety_object_with_action::create_variety "
-				"before compute_tactical_decompositions" << endl;
-	}
-	compute_tactical_decompositions(
-			verbose_level - 2);
-	if (f_v) {
-		cout << "variety_object_with_action::create_variety "
-				"after compute_tactical_decompositions" << endl;
-	}
-
-
-	if (f_v) {
-		cout << "variety_object_with_action::create_variety before print" << endl;
-		print(cout);
-		cout << "variety_object_with_action::create_variety after print" << endl;
-	}
-
-	if (f_v) {
-		cout << "variety_object_with_action::create_variety done" << endl;
-	}
 }
-
 void variety_object_with_action::apply_transformation_to_self(
 		int *Elt,
 		actions::action *A,

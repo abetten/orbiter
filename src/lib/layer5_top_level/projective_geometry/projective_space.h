@@ -581,6 +581,9 @@ public:
 	induced_actions::action_on_homogeneous_polynomials *AonHPD;
 
 
+	int *Elt_inv;
+
+
 	ring_with_action();
 	~ring_with_action();
 	void ring_with_action_init(

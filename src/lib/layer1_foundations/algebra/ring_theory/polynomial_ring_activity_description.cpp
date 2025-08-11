@@ -39,6 +39,7 @@ polynomial_ring_activity_description::polynomial_ring_activity_description()
 	//std::string ideal_point_set_label;
 
 	f_apply_transformation = false;
+	//std::string apply_transformation_space_label;
 	//std::string apply_transformation_Eqn_in_label;
 	//std::string apply_transformation_vector_ge_label;
 
@@ -117,11 +118,13 @@ int polynomial_ring_activity_description::read_arguments(
 		}
 		else if (ST.stringcmp(argv[i], "-apply_transformation") == 0) {
 			f_apply_transformation = true;
+			apply_transformation_space_label.assign(argv[++i]);
 			apply_transformation_Eqn_in_label.assign(argv[++i]);
 			apply_transformation_vector_ge_label.assign(argv[++i]);
 
 			if (f_v) {
 				cout << "-apply_transformation "
+						<< apply_transformation_space_label << " "
 						<< apply_transformation_Eqn_in_label << " "
 						<< apply_transformation_vector_ge_label << " "
 						<< endl;
@@ -229,6 +232,7 @@ void polynomial_ring_activity_description::print()
 	}
 	if (f_apply_transformation) {
 		cout << "-apply_transformation "
+				<< apply_transformation_space_label << " "
 				<< apply_transformation_Eqn_in_label << " "
 				<< apply_transformation_vector_ge_label << " "
 				<< endl;

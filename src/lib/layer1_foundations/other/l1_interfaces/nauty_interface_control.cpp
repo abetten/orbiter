@@ -35,6 +35,9 @@ nauty_interface_control::nauty_interface_control()
 
 	f_show_canonical_form = false;
 
+	f_memory_footprint_reduction = false;
+	memory_footprint_reduction = 0;
+
 }
 
 nauty_interface_control::~nauty_interface_control()
@@ -107,7 +110,13 @@ int nauty_interface_control::parse_arguments(
 				cout << "-show_canonical_form" << endl;
 			}
 		}
-
+		else if (ST.stringcmp(argv[i], "-memory_footprint_reduction") == 0) {
+			f_memory_footprint_reduction = true;
+			memory_footprint_reduction = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-memory_footprint_reduction" << memory_footprint_reduction << endl;
+			}
+		}
 
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
@@ -139,6 +148,9 @@ void nauty_interface_control::print()
 	}
 	if (f_show_canonical_form) {
 		cout << "-show_canonical_form" << endl;
+	}
+	if (f_memory_footprint_reduction) {
+		cout << "-memory_footprint_reduction" << memory_footprint_reduction << endl;
 	}
 }
 

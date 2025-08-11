@@ -65,6 +65,8 @@ variety_object::~variety_object()
 void variety_object::init(
 		variety_description *Descr,
 		int verbose_level)
+// Does not perform the transformations.
+// Called from variety_object_with_action::create_variety
 {
 	int f_v = (verbose_level >= 1);
 

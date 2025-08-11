@@ -575,7 +575,7 @@ void homogeneous_polynomial_domain::make_monomials(
 		cout << "homogeneous_polynomial_domain::make_monomials "
 				"before D->solve_all_betten" << endl;
 	}
-	D->solve_all_betten(verbose_level - 1);
+	D->solve_all_betten(0 /* verbose_level - 1*/);
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::make_monomials "
 				"after D->solve_all_betten" << endl;
@@ -588,7 +588,7 @@ void homogeneous_polynomial_domain::make_monomials(
 
 	int nb_sol;
 
-	D->get_solutions(Monomials, nb_sol, verbose_level - 1);
+	D->get_solutions(Monomials, nb_sol, 0 /*verbose_level - 1*/);
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::make_monomials "
 				"There are " << nb_sol << " monomials." << endl;
@@ -2042,16 +2042,17 @@ void homogeneous_polynomial_domain::substitute_linear(
 
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::substitute_linear" << endl;
-		}
+	}
 
 	substitute_semilinear(
 			coeff_in, coeff_out,
-		false /* f_semilinear */, 0 /* frob_power */,
+			false /* f_semilinear */, 0 /* frob_power */,
 		Mtx_inv, verbose_level);
+
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::substitute_linear "
 				"done" << endl;
-		}
+	}
 }
 
 void homogeneous_polynomial_domain::substitute_semilinear(
@@ -2059,8 +2060,10 @@ void homogeneous_polynomial_domain::substitute_semilinear(
 	int f_semilinear, int frob_power, int *Mtx_inv,
 	int verbose_level)
 // applies frob_power field automorphisms and then performs substitution
+// Linear substitution of the columns of the matrix Mtx_inv
 {
 	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	int a, b, c, i, j, idx;
 	int *A;
 	int *V;
@@ -2162,16 +2165,24 @@ void homogeneous_polynomial_domain::substitute_semilinear(
 			coeff3[j] = F->add(coeff2[j], coeff3[j]);
 		}
 	}
-#if 0
-	cout << "homogeneous_polynomial_domain::substitute_semilinear "
-			"input:" << endl;
-	int_vec_print(cout, coeff_in, nb_monomials);
-	cout << endl;
-	cout << "homogeneous_polynomial_domain::substitute_semilinear "
-			"output:" << endl;
-	int_vec_print(cout, coeff3, nb_monomials);
-	cout << endl;
-#endif
+
+	if (f_vv) {
+		cout << "homogeneous_polynomial_domain::substitute_semilinear "
+				"input:" << endl;
+		Int_vec_print(cout, coeff_in, nb_monomials);
+		cout << endl;
+		cout << "homogeneous_polynomial_domain::substitute_semilinear "
+				"output:" << endl;
+		Int_vec_print(cout, coeff3, nb_monomials);
+		cout << endl;
+
+		cout << "homogeneous_polynomial_domain::substitute_semilinear "
+				"Mtx_inv:" << endl;
+		Int_matrix_print(Mtx_inv, nb_variables, nb_variables);
+		cout << endl;
+		cout << "homogeneous_polynomial_domain::substitute_semilinear frob_power=" << frob_power << endl;
+}
+
 
 
 
@@ -2182,6 +2193,7 @@ void homogeneous_polynomial_domain::substitute_semilinear(
 		cout << "homogeneous_polynomial_domain::substitute_semilinear "
 				"done" << endl;
 	}
+
 }
 
 void homogeneous_polynomial_domain::substitute_line(
@@ -2197,7 +2209,7 @@ void homogeneous_polynomial_domain::substitute_line(
 	int *Mtx;
 	int my_nb_affine, wt;
 	algebra::number_theory::number_theory_domain NT;
-	geometry::other_geometry::geometry_global Gg;
+	//geometry::other_geometry::geometry_global Gg;
 
 
 	if (f_v) {
@@ -2249,7 +2261,7 @@ void homogeneous_polynomial_domain::substitute_line(
 		for (rk = 0; rk < my_nb_affine; rk++) {
 
 			A = my_affine;
-			Gg.AG_element_unrank(
+			Geometry_global->AG_element_unrank(
 					2 /* q */, my_affine, 1, degree, rk);
 					// sequence of length degree over the alphabet  0,1.
 

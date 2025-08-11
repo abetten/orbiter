@@ -2885,6 +2885,199 @@ void action_global::apply_based_on_text(
 
 
 
+void action_global::apply_to_set(
+		action *A,
+		std::string &input_text,
+		std::string &input_group_element,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "action_global::apply_to_set" << endl;
+	}
+	if (f_v) {
+		cout << "applying" << endl;
+		cout << "input = " << input_text << endl;
+		cout << "group element = " << input_group_element << endl;
+	}
+	long int *v;
+	long int *w;
+	long int *z;
+	int i, sz;
+
+	int *Elt2;
+
+	Elt2 = NEW_int(A->elt_size_in_int);
+
+	Get_lint_vector_from_label(
+			input_text,
+			v, sz,
+			verbose_level);
+
+	//Lint_vec_scan(input_text, v, sz);
+	if (f_v) {
+		cout << "v=" << endl;
+		Lint_vec_print(cout, v, sz);
+		cout << endl;
+	}
+
+	w = NEW_lint(sz);
+	z = NEW_lint(sz);
+
+	A->Group_element->make_element_from_string(
+			Elt2, input_group_element, verbose_level);
+	if (f_v) {
+		cout << "B=" << endl;
+		A->Group_element->element_print_quick(Elt2, cout);
+	}
+
+	for (i = 0; i < sz; i++) {
+		w[i] = A->Group_element->element_image_of(
+				v[i], Elt2, verbose_level - 1);
+	}
+
+	if (f_v) {
+
+	}
+
+	for (i = 0; i < sz; i++) {
+		z[i] = w[i];
+	}
+
+	other::data_structures::sorting Sorting;
+
+	Sorting.lint_vec_heapsort(
+			z, sz);
+
+
+
+	{
+
+
+
+		string fname;
+		string author;
+		string title;
+		string extra_praeamble;
+
+
+		fname = A->label + "_apply.tex";
+
+		title = "Application of Group Element in $" + A->label_tex + " $";
+
+
+
+		{
+			ofstream ost(fname);
+			other::l1_interfaces::latex_interface L;
+
+			L.head(ost,
+					false /* f_book*/,
+					true /* f_title */,
+					title, author,
+					false /* f_toc */,
+					false /* f_landscape */,
+					true /* f_12pt */,
+					true /* f_enlarged_page */,
+					true /* f_pagenumbers */,
+					extra_praeamble /* extra_praeamble */);
+
+
+			ost << "$$" << endl;
+			A->Group_element->element_print_latex(Elt2, ost);
+			ost << "$$" << endl;
+
+			A->Group_element->element_print_for_make_element(Elt2, ost);
+			ost << "\\\\" << endl;
+
+			ost << "maps: \\\\" << endl;
+
+			for (i = 0; i < sz; i++) {
+				ost << "$" << v[i] << " \\mapsto " << w[i] << "$\\\\" << endl;
+			}
+
+			if (A->f_is_linear) {
+
+				algebra::basic_algebra::matrix_group *Matrix_group = A->G.matrix_grp;
+
+				int *v1;
+				int *v2;
+				long int a, b;
+
+				v1 = NEW_int(Matrix_group->n);
+				v2 = NEW_int(Matrix_group->n);
+				for (i = 0; i < sz; i++) {
+					ost << "mapping $" << v[i] << " \\mapsto " << w[i] <<  "$ : ";
+
+					a = v[i];
+
+					Matrix_group->GFq->Projective_space_basic->PG_element_unrank_modified_lint(
+							v1, 1, Matrix_group->n, a);
+
+					Matrix_group->Element->action_from_the_right_all_types(
+							v1, Elt2, v2, 0 /*verbose_level - 1*/);
+
+					Matrix_group->GFq->Projective_space_basic->PG_element_rank_modified_lint(
+							v2, 1, Matrix_group->n, b);
+
+					ost << "where $" << v[i] << " = ";
+					Int_vec_print(ost, v1, Matrix_group->n);
+					ost << " \\mapsto ";
+					ost << w[i] << " = ";
+					Int_vec_print(ost, v2, Matrix_group->n);
+					ost << "$\\\\" << endl;
+
+					if (b != w[i]) {
+						cout << "b != w[i], stop" << endl;
+						exit(1);
+					}
+				}
+			}
+
+
+			ost << "input set: \\\\" << endl;
+			Lint_vec_print(ost, v, sz);
+			ost << "\\\\" << endl;
+
+
+
+			ost << "image set: \\\\" << endl;
+			Lint_vec_print(ost, w, sz);
+			ost << "\\\\" << endl;
+
+			ost << "image set sorted: \\\\" << endl;
+			Lint_vec_print(ost, z, sz);
+			ost << "\\\\" << endl;
+
+
+			L.foot(ost);
+
+		}
+		other::orbiter_kernel_system::file_io Fio;
+
+		if (f_v) {
+			cout << "written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+		}
+	}
+
+
+	FREE_int(Elt2);
+
+	FREE_lint(v);
+	FREE_lint(w);
+
+
+	if (f_v) {
+		cout << "action_global::apply_to_set" << endl;
+	}
+}
+
+
+
+
+
 void action_global::multiply_based_on_text(
 		action *A,
 		std::string &data_A,

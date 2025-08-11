@@ -225,7 +225,8 @@ void canonical_form_global::compute_group_and_tactical_decomposition(
 	Input_Vo[0].Stab_gens = NEW_OBJECT(groups::strong_generators);
 
 	Input_Vo[0].Stab_gens->init_copy(
-			Classification_of_varieties_nauty->Canonical_forms[0]->Variety_stabilizer_compute->Stab_gens_variety,
+			Classification_of_varieties_nauty->get_canonical_form_i(0)->Variety_stabilizer_compute->Stab_gens_variety,
+			//Classification_of_varieties_nauty->Canonical_forms[0]->Variety_stabilizer_compute->Stab_gens_variety,
 			verbose_level - 2);
 	if (f_v) {
 		cout << "canonical_form_global::compute_group_and_tactical_decomposition "
@@ -248,6 +249,84 @@ void canonical_form_global::compute_group_and_tactical_decomposition(
 
 	if (f_v) {
 		cout << "canonical_form_global::compute_group_and_tactical_decomposition done" << endl;
+	}
+
+}
+
+void canonical_form_global::compute_isomorphism(
+		canonical_form::canonical_form_classifier *Classifier,
+		canonical_form::classification_of_varieties_nauty *&Classification_of_varieties_nauty,
+		int verbose_level)
+// called from
+// modified_group_create::do_stabilizer_of_variety
+// variety_activity::do_compute_group
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "canonical_form_global::compute_isomorphism" << endl;
+	}
+
+	//canonical_form::classification_of_varieties_nauty *Classification_of_varieties_nauty;
+
+	Classification_of_varieties_nauty = NEW_OBJECT(canonical_form::classification_of_varieties_nauty);
+
+
+
+	Classifier->Classification_of_varieties_nauty = Classification_of_varieties_nauty;
+
+	//Classifier->Output_nauty = Nauty;
+
+
+	if (f_v) {
+		cout << "canonical_form_global::compute_isomorphism "
+				"before Classification_of_varieties_nauty->prepare_for_classification" << endl;
+	}
+	Classification_of_varieties_nauty->prepare_for_classification(
+			Classifier->Input,
+			Classifier,
+			verbose_level);
+	if (f_v) {
+		cout << "canonical_form_global::compute_isomorphism "
+				"after Classification_of_varieties_nauty->prepare_for_classification" << endl;
+	}
+
+	if (f_v) {
+		cout << "canonical_form_global::compute_isomorphism "
+				"before Classification_of_varieties_nauty->classify_nauty" << endl;
+	}
+	Classification_of_varieties_nauty->classify_nauty(verbose_level);
+	if (f_v) {
+		cout << "canonical_form_global::compute_isomorphism "
+				"after Classification_of_varieties_nauty->classify_nauty" << endl;
+	}
+
+
+
+
+#if 0
+	if (f_v) {
+		cout << "canonical_form_global::compute_isomorphism "
+				"before copying stabilizer generators" << endl;
+	}
+	Input_Vo[0].f_has_automorphism_group = true;
+	Input_Vo[0].Stab_gens = NEW_OBJECT(groups::strong_generators);
+
+	Input_Vo[0].Stab_gens->init_copy(
+			Classification_of_varieties_nauty->Canonical_forms[0]->Variety_stabilizer_compute->Stab_gens_variety,
+			verbose_level - 2);
+	if (f_v) {
+		cout << "canonical_form_global::compute_isomorphism "
+				"after copying stabilizer generators" << endl;
+	}
+#endif
+
+
+
+	//FREE_OBJECT(Classifier);
+
+	if (f_v) {
+		cout << "canonical_form_global::compute_isomorphism done" << endl;
 	}
 
 }
@@ -320,7 +399,8 @@ void canonical_form_global::compute_set_stabilizer_and_tactical_decomposition(
 
 
 	Input_Vo[0].Set_stab_gens->init_copy(
-			Classification_of_varieties_nauty->Canonical_forms[0]->Variety_stabilizer_compute->Set_stab,
+			Classification_of_varieties_nauty->get_canonical_form_i(0)->Variety_stabilizer_compute->Set_stab,
+			//Classification_of_varieties_nauty->Canonical_forms[0]->Variety_stabilizer_compute->Set_stab,
 			verbose_level - 2);
 	if (f_v) {
 		cout << "canonical_form_global::compute_set_stabilizer_and_tactical_decomposition "

@@ -62,6 +62,11 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	//std::string apply_input;
 	//std::string apply_element;
 
+	f_apply_to_set = false;
+	//std::string apply_to_set_input;
+	//std::string apply_to_set_element;
+
+
 	f_element_processing = false;
 	element_processing_descr = NULL;
 
@@ -454,6 +459,14 @@ int group_theoretic_activity_description::read_arguments(
 			apply_element.assign(argv[++i]);
 			if (f_v) {
 				cout << "-apply " << apply_input << " " << apply_element << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-apply_to_set") == 0) {
+			f_apply_to_set = true;
+			apply_to_set_input.assign(argv[++i]);
+			apply_to_set_element.assign(argv[++i]);
+			if (f_v) {
+				cout << "-apply_to_set " << apply_to_set_input << " " << apply_to_set_element << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-element_processing") == 0) {
@@ -1210,6 +1223,9 @@ void group_theoretic_activity_description::print()
 	}
 	if (f_apply) {
 		cout << "-apply " << apply_input << " " << apply_element << endl;
+	}
+	if (f_apply_to_set) {
+		cout << "-apply_to_set " << apply_to_set_input << " " << apply_to_set_element << endl;
 	}
 	if (f_element_processing) {
 		cout << "-element_processing " << endl;
