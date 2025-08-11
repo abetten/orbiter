@@ -185,7 +185,7 @@ void ring_with_action::apply(
 			eqn_out,
 			PA->A->is_semilinear_matrix_group(),
 			frobenius_inv, Mtx,
-			1 /*verbose_level*/);
+			0 /*verbose_level*/);
 
 	if (f_v) {
 		cout << "ring_with_action::apply "
