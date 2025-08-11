@@ -339,15 +339,14 @@ void action_on_homogeneous_polynomials::compute_image_int_low_level(
 	A->Group_element->element_invert(Elt, Elt1, 0);
 
 
-	// ToDo verbose_level
 
 
 	if (f_semilinear) {
 		HPD->substitute_semilinear(input, output,
-				f_semilinear, Elt[n * n], Elt1, 2 /* verbose_level */);
+				f_semilinear, Elt[n * n], Elt1, 0 /* verbose_level */);
 	}
 	else {
-		HPD->substitute_linear(input, output, Elt1, 2 /* verbose_level */);
+		HPD->substitute_linear(input, output, Elt1, 0 /* verbose_level */);
 	}
 
 	if (f_vv) {
