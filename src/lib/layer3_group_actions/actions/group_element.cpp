@@ -115,6 +115,7 @@ void group_element::allocate_element_data()
 	eltrk1 = eltrk2 = eltrk3 = NULL;
 	elt_mult_apply = NULL;
 	elt1 = NULL;
+
 	Elt1 = NEW_int(A->elt_size_in_int);
 	Elt2 = NEW_int(A->elt_size_in_int);
 	Elt3 = NEW_int(A->elt_size_in_int);
@@ -128,6 +129,8 @@ void group_element::allocate_element_data()
 	element_rw_memory_object = NEW_char(A->coded_elt_size_in_char);
 
 }
+
+
 
 int group_element::image_of(
 		void *elt, int a)

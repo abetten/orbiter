@@ -484,7 +484,8 @@ void classification_of_varieties_nauty::main_loop(
 
 					if (f_v) {
 						cout << "classification_of_varieties_nauty::main_loop "
-								"memory_footprint_reduction freeing one object" << endl;
+								"memory_footprint_reduction freeing one object, "
+								"nb_times_memory_footprint_reduction = " << nb_times_memory_footprint_reduction << endl;
 					}
 
 					nb_times_memory_footprint_reduction++;

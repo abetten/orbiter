@@ -181,7 +181,8 @@ void set_of_sets::init_with_Sz_in_int(
 
 void set_of_sets::init_basic(
 		int underlying_set_size,
-		int nb_sets, long int *Sz, int verbose_level)
+		int nb_sets, long int *Sz,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;

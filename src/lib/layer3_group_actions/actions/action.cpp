@@ -316,10 +316,6 @@ void action::freeself()
 	}
 	
 
-	if (Known_groups) {
-		FREE_OBJECT(Known_groups);
-	}
-
 
 	
 	if (f_has_strong_generators) {
@@ -382,9 +378,25 @@ void action::freeself()
 		}
 	}
 
+	if (Known_groups) {
+		FREE_OBJECT(Known_groups);
+		Known_groups = NULL;
+	}
+
+	if (Induced_action) {
+		FREE_OBJECT(Induced_action);
+		Induced_action = NULL;
+	}
+
+	if (Group_element) {
+		FREE_OBJECT(Group_element);
+		Group_element = NULL;
+	}
+
 	if (ptr) {
 		FREE_OBJECT(ptr);
 	}
+
 
 	if (f_v) {
 		cout << "action::freeself "
