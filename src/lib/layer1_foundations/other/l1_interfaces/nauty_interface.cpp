@@ -523,6 +523,11 @@ static void nauty_interface_fill_nauty_output(
 
 	NO->Base_length = base_length;
 
+	// allocate Base, Base_lint, Transversal_length
+	NO->Base = NEW_int(base_length);
+	NO->Base_lint = NEW_lint(base_length);
+	NO->Transversal_length = NEW_int(base_length);
+
 	for (i = base_length - 1; i >= 0; i--) {
 		NO->Base[base_length - 1 - i] = base[i];
 		NO->Base_lint[base_length - 1 - i] = base[i];
@@ -539,6 +544,8 @@ static void nauty_interface_fill_nauty_output(
 		cout << endl;
 	}
 
+	// allocate Aut:
+	NO->Aut = NEW_int(aut_counter * n);
 	Int_vec_copy(aut, NO->Aut, aut_counter * n);
 
 	Int_vec_copy(lab, NO->canonical_labeling, n);

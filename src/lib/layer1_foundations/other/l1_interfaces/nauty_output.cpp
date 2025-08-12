@@ -86,10 +86,12 @@ void nauty_output::nauty_output_allocate(
 	nauty_output::invariant_set_start = invariant_set_start;
 	nauty_output::invariant_set_size = invariant_set_size;
 
-	Aut = NEW_int(N * N);
-	Base = NEW_int(N);
-	Base_lint = NEW_lint(N);
-	Transversal_length = NEW_int(N);
+	// the following four will be allocated in nauty_interface_fill_nauty_output:
+	//Aut = NEW_int(N * N);
+	//Base = NEW_int(N);
+	//Base_lint = NEW_lint(N);
+	//Transversal_length = NEW_int(N);
+
 	Ago = NEW_OBJECT(algebra::ring_theory::longinteger_object);
 	canonical_labeling = NEW_int(N);
 
