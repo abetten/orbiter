@@ -482,13 +482,6 @@ void classification_of_varieties_nauty::main_loop(
 				if (Classifier->Nauty_interface_control->f_reduce_memory_footprint) {
 
 
-					if (f_v) {
-						cout << "classification_of_varieties_nauty::main_loop "
-								"memory_footprint_reduction freeing one object, "
-								"nb_times_memory_footprint_reduction = " << nb_times_memory_footprint_reduction << endl;
-					}
-
-					nb_times_memory_footprint_reduction++;
 
 
 					string line;
@@ -499,6 +492,15 @@ void classification_of_varieties_nauty::main_loop(
 					Lines.push_back(line);
 
 					if (!F_first_time[input_counter]) {
+
+						if (f_v) {
+							cout << "classification_of_varieties_nauty::main_loop "
+									"memory_footprint_reduction freeing one object, "
+									"nb_times_memory_footprint_reduction = " << nb_times_memory_footprint_reduction << endl;
+						}
+
+						nb_times_memory_footprint_reduction++;
+
 						FREE_OBJECT(Canonical_forms[input_counter]);
 						Canonical_forms[input_counter] = NULL;
 					}
