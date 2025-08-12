@@ -459,8 +459,8 @@ public:
 
 	int f_show_canonical_form;
 
-	int f_memory_footprint_reduction;
-	int memory_footprint_reduction;
+	int f_reduce_memory_footprint;
+	int reduce_memory_footprint_level;
 
 
 	nauty_interface_control();

@@ -172,7 +172,7 @@ void polynomial_ring_activity::perform_activity(
 
 		projective_geometry::projective_space_with_action *PA;
 
-		algebra::ring_theory::homogeneous_polynomial_domain *Poly_ring;
+		//algebra::ring_theory::homogeneous_polynomial_domain *Poly_ring;
 
 
 

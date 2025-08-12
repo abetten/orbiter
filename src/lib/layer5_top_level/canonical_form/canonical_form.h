@@ -390,6 +390,8 @@ public:
 
 private:
 	variety_compute_canonical_form **Canonical_forms; // [Input->nb_objects_to_test]
+	// allocated in prepare_input
+
 	std::vector<std::string> Lines;
 
 public:
@@ -398,6 +400,7 @@ public:
 
 
 	// auxiliary data:
+	int nb_times_memory_footprint_reduction;
 	// Elt_gamma is the lifting of gamma:
 	int *Elt_gamma; // [Classifier->PA->A->elt_size_in_int]
 	int *Elt_gamma_inv; // [Classifier->PA->A->elt_size_in_int]
@@ -1001,9 +1004,13 @@ class variety_stabilizer_compute {
 public:
 
 
+	// inherited objects:
 	projective_geometry::ring_with_action *Ring_with_action;
 
 	variety_object_with_action *Variety_object_with_action;
+
+
+	// proprietary objects:
 
 	int nb_rows, nb_cols;
 	other::data_structures::bitvector *Canonical_form;

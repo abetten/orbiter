@@ -52,17 +52,20 @@ variety_compute_canonical_form::variety_compute_canonical_form()
 variety_compute_canonical_form::~variety_compute_canonical_form()
 {
 	Record_death();
+#if 0
+	if (canonical_pts) {
+		FREE_lint(canonical_pts);
+	}
+#endif
 	if (canonical_equation) {
 		FREE_int(canonical_equation);
 	}
 	if (transporter_to_canonical_form) {
 		FREE_int(transporter_to_canonical_form);
 	}
-#if 0
-	if (canonical_pts) {
-		FREE_lint(canonical_pts);
+	if (gens_stab_of_canonical_equation) {
+		FREE_OBJECT(gens_stab_of_canonical_equation);
 	}
-#endif
 	if (Variety_stabilizer_compute) {
 		FREE_OBJECT(Variety_stabilizer_compute);
 	}
@@ -183,6 +186,7 @@ void variety_compute_canonical_form::classify_using_nauty_new(
 		int &idx_equation,
 		int &f_found_eqn,
 		int verbose_level)
+// allocates Variety_stabilizer_compute
 {
 	int f_v = (verbose_level >= 1);
 
@@ -412,7 +416,8 @@ void variety_compute_canonical_form::classify_using_nauty_new(
 		idx_equation = Variety_stabilizer_compute->Orb->position_of_original_object;
 		if (f_v) {
 			cout << "variety_compute_canonical_form::classify_using_nauty_new "
-					"idx_equation = Variety_stabilizer_compute->Orb->position_of_original_object = " << idx_equation << endl;
+					"idx_equation = Variety_stabilizer_compute->Orb->position_of_original_object = "
+					<< idx_equation << endl;
 		}
 	}
 

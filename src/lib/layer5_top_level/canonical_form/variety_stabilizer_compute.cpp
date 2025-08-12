@@ -43,6 +43,10 @@ variety_stabilizer_compute::variety_stabilizer_compute()
 variety_stabilizer_compute::~variety_stabilizer_compute()
 {
 	Record_death();
+
+	if (Canonical_form) {
+		FREE_OBJECT(Canonical_form);
+	}
 	if (NO) {
 		FREE_OBJECT(NO);
 	}

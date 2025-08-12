@@ -56,7 +56,9 @@ classification_of_varieties_nauty::classification_of_varieties_nauty()
 	Goi = NULL;
 	Phi = NULL;
 
+
 	// auxiliary data:
+	nb_times_memory_footprint_reduction = 0;
 	Elt_gamma = NULL;
 	Elt_gamma_inv = NULL;
 	Elt_delta = NULL;
@@ -229,6 +231,12 @@ void classification_of_varieties_nauty::compute_classification(
 
 	if (f_v) {
 		cout << "classification_of_varieties_nauty::compute_classification "
+				"nb_times_memory_footprint_reduction = " << nb_times_memory_footprint_reduction << endl;
+	}
+
+
+	if (f_v) {
+		cout << "classification_of_varieties_nauty::compute_classification "
 				"before write_classification_by_nauty_csv" << endl;
 	}
 	write_classification_by_nauty_csv(
@@ -237,6 +245,11 @@ void classification_of_varieties_nauty::compute_classification(
 	if (f_v) {
 		cout << "classification_of_varieties_nauty::compute_classification "
 				"after write_classification_by_nauty_csv" << endl;
+	}
+
+	if (f_v) {
+		cout << "classification_of_varieties_nauty::compute_classification "
+				"nb_times_memory_footprint_reduction = " << nb_times_memory_footprint_reduction << endl;
 	}
 
 
@@ -466,7 +479,17 @@ void classification_of_varieties_nauty::main_loop(
 
 
 			if (Classifier->f_nauty_control) {
-				if (Classifier->Nauty_interface_control->memory_footprint_reduction) {
+				if (Classifier->Nauty_interface_control->f_reduce_memory_footprint) {
+
+
+					if (f_v) {
+						cout << "classification_of_varieties_nauty::main_loop "
+								"memory_footprint_reduction freeing one object" << endl;
+					}
+
+					nb_times_memory_footprint_reduction++;
+
+
 					string line;
 
 					line = stringify_result(
@@ -569,7 +592,8 @@ void classification_of_varieties_nauty::handle_one_input_case(
 		if (f_v) {
 			cout << "classification_of_varieties_nauty::handle_one_input_case "
 					"input_counter = " << input_counter << " / " << Input->nb_objects_to_test
-					<< " is isomorphic to canonical form " << idx_canonical_form << " and equation " << idx_equation << endl;
+					<< " is isomorphic to canonical form " << idx_canonical_form
+					<< " and equation " << idx_equation << endl;
 			cout << "classification_of_varieties_nauty::handle_one_input_case an isomorphism is given by phi=" << endl;
 
 			A->Group_element->element_print(
@@ -705,7 +729,7 @@ void classification_of_varieties_nauty::write_classification_by_nauty_csv(
 							"input_counter=" << input_counter << " / " << Input->nb_objects_to_test << endl;
 				}
 
-				if (Classifier->f_nauty_control && Classifier->Nauty_interface_control->memory_footprint_reduction) {
+				if (Classifier->f_nauty_control && Classifier->Nauty_interface_control->f_reduce_memory_footprint) {
 					ost << Lines[cnt++] << endl;
 				}
 
