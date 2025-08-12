@@ -1044,6 +1044,7 @@ public:
 	// the set of rational points of the variety.
 	// Computes the stabilizer of the set of rational points of the variety.
 	// Computes the orbit of the equation under the stabilizer of the set.
+	// Allocates the NO object
 	void orbit_of_equation_under_set_stabilizer(
 			int verbose_level);
 	void save_table_of_equations(

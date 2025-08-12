@@ -83,6 +83,7 @@ void variety_stabilizer_compute::compute_canonical_form_of_variety(
 // the set of rational points of the curve.
 // Computes the stabilizer of the set of rational points of the curve.
 // Computes the orbit of the equation under the stabilizer of the set.
+// Allocates the NO object
 {
 	int f_v = (verbose_level >= 1);
 

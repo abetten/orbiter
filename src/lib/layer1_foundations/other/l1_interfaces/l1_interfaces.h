@@ -500,16 +500,19 @@ public:
 			combinatorics::canonical_form_classification::encoded_combinatorial_object *&Enc,
 			int verbose_level);
 	// called from
-	// object_with_canonical_form::run_nauty_basic
-	// object_with_canonical_form::canonical_labeling
+	// nauty_interface_for_OwCF::run_nauty_basic
 	// classification_of_objects::process_object
 	// nauty_interface_with_group::set_stabilizer_of_object
 	// classify_using_canonical_forms::find_object
+	// allocates the NO object
 	void run_nauty_for_combo_basic(
 			combinatorics::canonical_form_classification::any_combinatorial_object *Any_combo,
 			other::l1_interfaces::nauty_interface_control *Nauty_control,
 			l1_interfaces::nauty_output *&NO,
 			int verbose_level);
+	// called from
+	// classify_using_canonical_forms::orderly_test
+	// allocates the NO object
 
 };
 

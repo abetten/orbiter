@@ -205,13 +205,15 @@ void nauty_interface_with_group::set_stabilizer_in_projective_space_using_nauty(
 
 	combinatorics::canonical_form_classification::encoded_combinatorial_object *Enc;
 
+#if 0
+	// not needed, since set_stabilizer_of_object allocates the NO object
 	NO = NEW_OBJECT(other::l1_interfaces::nauty_output);
 	NO->nauty_output_allocate(
 			nb_rows + nb_cols,
 			0,
 			nb_rows + nb_cols,
 			verbose_level - 2);
-
+#endif
 
 	if (f_v) {
 		cout << "nauty_interface_with_group::set_stabilizer_in_projective_space_using_nauty "
@@ -284,6 +286,7 @@ groups::strong_generators *nauty_interface_with_group::set_stabilizer_of_object(
 // nauty_interface_with_group::set_stabilizer_in_projective_space_using_nauty
 // layer5_applications::canonical_form::automorphism_group_of_variety::init_and_compute
 // layer5_applications::canonical_form::combinatorial_object_in_projective_space_with_action::report
+// Allocates the NO object
 {
 	int f_v = (verbose_level >= 1);
 

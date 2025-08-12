@@ -536,6 +536,12 @@ public:
 		other::l1_interfaces::nauty_output *&NO,
 		combinatorics::canonical_form_classification::encoded_combinatorial_object *&Enc,
 		int verbose_level);
+	// called from:
+	// nauty_interface_with_group::set_stabilizer_in_projective_space_using_precomputed_nauty_data
+	// nauty_interface_with_group::set_stabilizer_in_projective_space_using_nauty
+	// layer5_applications::canonical_form::automorphism_group_of_variety::init_and_compute
+	// layer5_applications::canonical_form::combinatorial_object_in_projective_space_with_action::report
+	// Allocates the NO object
 
 };
 

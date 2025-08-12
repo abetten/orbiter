@@ -45,6 +45,7 @@ void nauty_interface_for_combo::run_nauty_for_combo(
 // classification_of_objects::process_object
 // nauty_interface_with_group::set_stabilizer_of_object
 // classify_using_canonical_forms::find_object
+// allocates the NO object
 {
 	int f_v = (verbose_level >= 1);
 
@@ -252,6 +253,7 @@ void nauty_interface_for_combo::run_nauty_for_combo_basic(
 		int verbose_level)
 // called from
 // classify_using_canonical_forms::orderly_test
+// allocates the NO object
 {
 	int f_v = (verbose_level >= 1);
 
