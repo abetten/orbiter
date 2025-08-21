@@ -442,6 +442,8 @@ void surface_create_by_arc_lifting::report(
 			+ "_iso_" + std::to_string(SCA->nb_surfaces) + "_%d";
 
 
+	int max_nb_elements_printed = 15;
+
 	if (f_v) {
 		cout << "surface_create_by_arc_lifting::report "
 			"before SOA->print_orbits_of_automorphism_group" << endl;
@@ -450,6 +452,7 @@ void surface_create_by_arc_lifting::report(
 			ost,
 		true /* f_print_orbits */,
 		fname_mask, Opt,
+		max_nb_elements_printed,
 		verbose_level - 1);
 	if (f_v) {
 		cout << "surface_create_by_arc_lifting::report "

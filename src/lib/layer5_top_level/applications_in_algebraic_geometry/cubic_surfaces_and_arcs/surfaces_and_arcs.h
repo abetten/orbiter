@@ -727,7 +727,9 @@ public:
 	void report_flag_orbits(
 			std::ostream &ost, int verbose_level);
 	void report_flag_orbits_in_detail(
-			std::ostream &ost, int verbose_level);
+			std::ostream &ost,
+			int max_nb_elements_printed,
+			int verbose_level);
 	void report_surfaces_in_detail(
 			std::ostream &ost, int verbose_level);
 };

@@ -3134,6 +3134,7 @@ void surface_create::do_report2(
 
 		int f_print_orbits = false;
 		std::string fname_mask;
+		int max_nb_elements_printed = 15;
 
 
 
@@ -3147,6 +3148,7 @@ void surface_create::do_report2(
 				ost,
 				f_print_orbits, fname_mask,
 				Draw_options,
+				max_nb_elements_printed,
 				verbose_level);
 		if (f_v) {
 			cout << "surface_create::do_report2 "

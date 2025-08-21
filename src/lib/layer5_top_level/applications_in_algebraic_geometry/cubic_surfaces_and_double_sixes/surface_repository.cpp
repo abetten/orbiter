@@ -644,6 +644,10 @@ void surface_repository::generate_source_code(
 void surface_repository::report_surface(
 		std::ostream &ost,
 		int orbit_index,
+		int f_print_orbits, std::string &fname_mask,
+		other::graphics::layered_graph_draw_options *draw_options,
+		int max_nb_elements_printed,
+		//poset_classification::poset_classification_report_options *Opt,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -738,9 +742,21 @@ void surface_repository::report_surface(
 	}
 #endif
 
+
+
+	SOA[orbit_index]->cheat_sheet(
+			ost,
+			f_print_orbits, fname_mask,
+			draw_options,
+			max_nb_elements_printed,
+			verbose_level);
+
+
+#if 0
 	geometry::algebraic_geometry::surface_object *SO;
 
 	SO = SOA[orbit_index]->SO;
+
 
 	algebra::ring_theory::longinteger_object ago;
 	SaS[orbit_index]->Strong_gens->group_order(ago);
@@ -876,6 +892,7 @@ void surface_repository::report_surface(
 				"after FREE_OBJECT(SO) "
 				"orbit_index = " << orbit_index << endl;
 	}
+#endif
 #endif
 
 	if (f_v) {

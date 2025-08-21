@@ -22,6 +22,7 @@ orbits_activity_description::orbits_activity_description()
 	Record_birth();
 
 	f_report = false;
+	//std::string report_options;
 
 	f_export_something = false;
 	//std::string export_something_what;
@@ -84,8 +85,9 @@ int orbits_activity_description::read_arguments(
 
 		if (ST.stringcmp(argv[i], "-report") == 0) {
 			f_report = true;
+			report_options.assign(argv[++i]);
 			if (f_v) {
-				cout << "-report" << endl;
+				cout << "-report " << report_options << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-export_trees") == 0) {
@@ -208,7 +210,7 @@ int orbits_activity_description::read_arguments(
 void orbits_activity_description::print()
 {
 	if (f_report) {
-		cout << "-report" << endl;
+		cout << "-report " << report_options << endl;
 	}
 	if (f_export_trees) {
 		cout << "-export_trees" << endl;

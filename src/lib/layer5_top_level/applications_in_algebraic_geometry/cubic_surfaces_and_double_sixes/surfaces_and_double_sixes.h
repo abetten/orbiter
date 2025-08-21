@@ -29,8 +29,9 @@ public:
 	// TABLES/classification_of_cubic_surfaces_with_double_sixes_activity.tex
 
 	int f_report;
-	poset_classification::poset_classification_report_options
-		*report_options;
+	std::string report_options;
+	//poset_classification::poset_classification_report_options
+	//	*report_options;
 
 	int f_stats;
 	std::string stats_prefix;
@@ -89,8 +90,9 @@ public:
 	void perform_activity(
 			int verbose_level);
 	void report(
-			poset_classification::poset_classification_report_options
-				*report_options,
+			std::string &options,
+			//poset_classification::poset_classification_report_options
+			//	*report_options,
 			int verbose_level);
 	void do_write_source_code(
 			int verbose_level);
@@ -437,18 +439,19 @@ public:
 	void read_double_sixes(
 			int verbose_level);
 	void create_report(
-			int f_with_stabilizers,
-			poset_classification::poset_classification_report_options *Opt,
+			std::string &options,
 			int verbose_level);
 	void report(
 			std::ostream &ost,
-			int f_with_stabilizers,
-			other::graphics::layered_graph_draw_options *draw_options,
-			poset_classification::poset_classification_report_options *Opt,
+			std::string &options,
 			int verbose_level);
 	void latex_surfaces(
 			std::ostream &ost,
-			int f_with_stabilizers, int verbose_level);
+			int f_print_orbits, std::string &fname_mask,
+			other::graphics::layered_graph_draw_options *draw_options,
+			poset_classification::poset_classification_report_options *Opt,
+			int max_nb_elements_printed,
+			int verbose_level);
 	void create_report_double_sixes(
 			int verbose_level);
 
@@ -527,7 +530,11 @@ public:
 			int verbose_level);
 	void report_surface(
 			std::ostream &ost,
-			int orbit_index, int verbose_level);
+			int orbit_index,
+			int f_print_orbits, std::string &fname_mask,
+			other::graphics::layered_graph_draw_options *draw_options,
+			int max_nb_elements_printed,
+			int verbose_level);
 
 
 };

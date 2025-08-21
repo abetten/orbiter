@@ -69,7 +69,7 @@ void orbits_activity::perform_activity(
 		if (f_v) {
 			cout << "orbits_activity::perform_activity before do_report" << endl;
 		}
-		do_report(verbose_level);
+		do_report(Descr->report_options, verbose_level);
 		if (f_v) {
 			cout << "orbits_activity::perform_activity after do_report" << endl;
 		}
@@ -221,6 +221,7 @@ void orbits_activity::perform_activity(
 }
 
 void orbits_activity::do_report(
+		std::string &options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -413,25 +414,13 @@ void orbits_activity::do_report(
 			cout << "orbits_activity::do_report f_has_cubic_surfaces" << endl;
 		}
 
-		poset_classification::poset_classification_report_options *report_options;
-
-		if (!Descr->f_report_options) {
-			cout << "orbits_activity::do_report please use -report_options" << endl;
-			exit(1);
-		}
-		report_options = Get_poset_classification_report_options(Descr->report_options_label);
-
-
-		int f_with_stabilizers = true;
-
 		if (f_v) {
 			cout << "orbits_activity::do_report "
 					"before OC->SCW->create_report" << endl;
 			cout << "OC->SCW->Surf->n = " << OC->SCW->Surf->n << endl;
 		}
 		OC->SCW->create_report(
-				f_with_stabilizers,
-				report_options,
+				options,
 				verbose_level - 1);
 		if (f_v) {
 			cout << "orbits_activity::do_report "

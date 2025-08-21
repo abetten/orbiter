@@ -1,7 +1,7 @@
 ROW,C1,C2,C3
 0,"tab:orbits:activities",,
 1,"Orbit Based Activities",,
-1,"\verb'-report' "," "," Create a report on the orbits. "
+1,"\verb'-report' "," options "," Create a report on the orbits. "
 1,"\verb'-export_something' "," type data ","Export orbit data of the given type. "
 1,"\verb'-export_trees' "," ","Create drawings of the Schreier trees. "
 1,"\verb'-export_source_code' "," ","Create a cpp file for the orbit representatives. "

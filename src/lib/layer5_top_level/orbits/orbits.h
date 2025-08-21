@@ -127,6 +127,7 @@ public:
 	// TABLES/orbits_activity.tex
 
 	int f_report;
+	std::string report_options;
 
 	int f_export_something;
 	std::string export_something_what;
@@ -206,6 +207,7 @@ public:
 	void perform_activity(
 			int verbose_level);
 	void do_report(
+			std::string &options,
 			int verbose_level);
 	void do_export(
 			int verbose_level);

@@ -616,6 +616,7 @@ public:
 			std::ostream &ost,
 			int f_print_orbits, std::string &fname_mask,
 			other::graphics::layered_graph_draw_options *Opt,
+			int max_nb_elements_printed,
 			int verbose_level);
 	void init_equation(
 			surface_with_action *Surf_A, int *eqn,
@@ -685,10 +686,12 @@ public:
 	void print_elements_on_lines(
 			std::ostream &ost,
 			groups::strong_generators *Aut_gens,
+			int max_nb_elements_printed,
 			int verbose_level);
 	void print_elements_on_tritangent_planes(
 			std::ostream &ost,
 			groups::strong_generators *Aut_gens,
+			int max_nb_elements_printed,
 			int verbose_level);
 	void print_automorphism_group(
 			std::ostream &ost,
@@ -697,11 +700,13 @@ public:
 		std::ostream &ost,
 		int f_print_orbits, std::string &fname_mask,
 		other::graphics::layered_graph_draw_options *Opt,
+		int max_nb_elements_printed,
 		int verbose_level);
 	void print_orbits_on_schlaefli_related_things(
 		std::ostream &ost,
 		int f_print_orbits, std::string &fname_mask,
 		other::graphics::layered_graph_draw_options *Opt,
+		int max_nb_elements_printed,
 		int verbose_level);
 	void cheat_sheet_basic(
 			std::ostream &ost, int verbose_level);
@@ -711,9 +716,12 @@ public:
 			std::string &col_heading,
 			int verbose_level);
 	void print_automorphism_group_generators(
-			std::ostream &ost, int verbose_level);
+			std::ostream &ost,
+			int max_nb_elements_printed,
+			int verbose_level);
 	void print_projectivity_group(
 			std::ostream &ost,
+			int max_nb_elements_printed,
 			int verbose_level);
 	void print_sylow_groups_of_projectivity_group(
 			std::ostream &ost,

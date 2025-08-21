@@ -285,8 +285,7 @@ void surface_classify_wedge::read_double_sixes(
 
 
 void surface_classify_wedge::create_report(
-		int f_with_stabilizers,
-		poset_classification::poset_classification_report_options *Opt,
+		std::string &options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -302,15 +301,6 @@ void surface_classify_wedge::create_report(
 	author = "Orbiter";
 
 	fname = "Surfaces_q" + std::to_string(q) + ".tex";
-
-	other::graphics::layered_graph_draw_options *Draw_options;
-
-	if (!Opt->f_draw_options) {
-		cout << "for a report of the surfaces, please use -draw_options" << endl;
-		exit(1);
-	}
-
-	Draw_options = Get_draw_options(Opt->draw_options_label);
 
 
 
@@ -334,7 +324,7 @@ void surface_classify_wedge::create_report(
 		if (f_v) {
 			cout << "surface_classify_wedge::create_report before report" << endl;
 		}
-		report(fp, f_with_stabilizers, Draw_options, Opt, verbose_level - 1);
+		report(fp, options, verbose_level - 1);
 		if (f_v) {
 			cout << "surface_classify_wedge::create_report after report" << endl;
 		}
@@ -348,9 +338,7 @@ void surface_classify_wedge::create_report(
 
 void surface_classify_wedge::report(
 		std::ostream &ost,
-		int f_with_stabilizers,
-		other::graphics::layered_graph_draw_options *draw_options,
-		poset_classification::poset_classification_report_options *Opt,
+		std::string &options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -358,6 +346,211 @@ void surface_classify_wedge::report(
 	if (f_v) {
 		cout << "surface_classify_wedge::report" << endl;
 	}
+
+
+
+	std::map<std::string, std::string> symbol_table;
+
+	other::data_structures::string_tools ST;
+
+	int f_5plus1 = false;
+	int f_double_six = false;
+	int f_flag_orbits = false;
+	int f_show_group = false;
+	//int f_show_stabilizers = false;
+	int f_show_orbits = false;
+	int max_nb_elements_printed = 0;
+	poset_classification::poset_classification_report_options *Opt = NULL;
+	std::string fname_mask;
+
+
+	if (options.length()) {
+
+		ST.parse_value_pairs(symbol_table,
+				options, verbose_level - 1);
+
+		if (f_v) {
+			cout << "surface_classify_wedge::report parsing option pairs" << endl;
+		}
+
+
+
+		{
+			std::map<std::string, std::string>::iterator it = symbol_table.begin();
+
+
+			// Iterate through the map and print the elements
+			while (it != symbol_table.end()) {
+				string label;
+				string val;
+
+				label = it->first;
+				val = it->second;
+				if (f_v) {
+					cout << "surface_classify_wedge::report key = " << label << " value = " << val << endl;
+				}
+				//std::cout << "Key: " << it->first << ", Value: " << it->second << std::endl;
+				//assignment.insert(std::make_pair(label, a));
+				if (label == "5plus1") {
+					if (val == "on") {
+						f_5plus1 = true;
+						if (f_v) {
+							cout << "surface_classify_wedge::report f_5plus1 = true" << endl;
+						}
+					}
+					else if (val == "off" /*ST.stringcmp(val, "on") == 0*/) {
+						f_5plus1 = false;
+						if (f_v) {
+							cout << "surface_classify_wedge::report f_5plus1 = false" << endl;
+						}
+					}
+					else {
+						cout << "surface_classify_wedge::report unknown value of option "
+								<< label << " value " << val << endl;
+						exit(1);
+					}
+				}
+				else if (label == "double_sixes") {
+					if (val == "on") {
+						f_double_six = true;
+						if (f_v) {
+							cout << "surface_classify_wedge::report f_double_six = true" << endl;
+						}
+					}
+					else if (val == "off") {
+						f_double_six = false;
+						if (f_v) {
+							cout << "surface_classify_wedge::report f_double_six = false" << endl;
+						}
+					}
+					else {
+						cout << "surface_classify_wedge::report unknown value of option "
+								<< label << " value " << val << endl;
+						exit(1);
+					}
+				}
+				else if (label == "flag_orbits") {
+					if (val == "on") {
+						f_flag_orbits = true;
+						if (f_v) {
+							cout << "surface_classify_wedge::report f_flag_orbits = true" << endl;
+						}
+					}
+					else if (val == "off") {
+						f_flag_orbits = false;
+						if (f_v) {
+							cout << "surface_classify_wedge::report f_flag_orbits = false" << endl;
+						}
+					}
+					else {
+						cout << "surface_classify_wedge::report unknown value of option "
+								<< label << " value " << val << endl;
+						exit(1);
+					}
+				}
+				else if (label == "show_group") {
+					if (val == "on") {
+						f_show_group = true;
+						if (f_v) {
+							cout << "surface_classify_wedge::report f_show_group = true" << endl;
+						}
+					}
+					else if (val == "off") {
+						f_show_group = false;
+						if (f_v) {
+							cout << "surface_classify_wedge::report f_show_group = false" << endl;
+						}
+					}
+					else {
+						cout << "surface_classify_wedge::report unknown value of option "
+								<< label << " value " << val << endl;
+						exit(1);
+					}
+				}
+				else if (label == "report_options") {
+
+					Opt = Get_poset_classification_report_options(val);
+
+				}
+				else if (label == "fname_mask") {
+
+					fname_mask = val;
+
+				}
+				else if (label == "max_nb_elements_printed") {
+
+					max_nb_elements_printed = std::stoi(val);
+
+				}
+#if 0
+				else if (label == "show_stabilizers") {
+					if (val == "on") {
+						f_show_stabilizers = true;
+						if (f_v) {
+							cout << "surface_classify_wedge::report f_show_stabilizers = true" << endl;
+						}
+					}
+					else if (val == "off") {
+						f_show_stabilizers = false;
+						if (f_v) {
+							cout << "surface_classify_wedge::report f_show_stabilizers = false" << endl;
+						}
+					}
+					else {
+						cout << "surface_classify_wedge::report unknown value of option "
+								<< label << " value " << val << endl;
+						exit(1);
+					}
+				}
+#endif
+				else if (label == "show_orbits") {
+					if (val == "on") {
+						f_show_orbits = true;
+						if (f_v) {
+							cout << "surface_classify_wedge::report f_show_orbits = true" << endl;
+						}
+					}
+					else if (val == "off") {
+						f_show_orbits = false;
+						if (f_v) {
+							cout << "surface_classify_wedge::report f_show_orbits = false" << endl;
+						}
+					}
+					else {
+						cout << "surface_classify_wedge::report unknown value of option "
+								<< label << " value " << val << endl;
+						exit(1);
+					}
+				}
+				else {
+					cout << "surface_classify_wedge::report unknown option "
+							<< label << " with value " << val << endl;
+					exit(1);
+				}
+
+				++it;
+			}
+		}
+	}
+
+	if (!Opt) {
+		cout << "please use report_options=ro" << endl;
+		exit(1);
+	}
+
+	if (!Opt->f_draw_options) {
+		cout << "for a report of the surfaces, please use -draw_options" << endl;
+		exit(1);
+	}
+
+	other::graphics::layered_graph_draw_options *Draw_options;
+
+	Draw_options = Get_draw_options(Opt->draw_options_label);
+
+
+
+
+
 	other::l1_interfaces::latex_interface L;
 
 
@@ -369,74 +562,81 @@ void surface_classify_wedge::report(
 	LG->F->cheat_sheet(ost, verbose_level);
 #endif
 
-	if (f_v) {
-		cout << "surface_classify_wedge::report "
-				"before Five_p1->report" << endl;
-	}
-	Five_p1->report(ost, draw_options, Opt, verbose_level);
-	if (f_v) {
-		cout << "surface_classify_wedge::report "
-				"after Five_p1->report" << endl;
+
+	if (f_5plus1) {
+		if (f_v) {
+			cout << "surface_classify_wedge::report "
+					"before Five_p1->report" << endl;
+		}
+		Five_p1->report(ost, Draw_options, Opt, verbose_level);
+		if (f_v) {
+			cout << "surface_classify_wedge::report "
+					"after Five_p1->report" << endl;
+		}
+		if (f_v) {
+			cout << "surface_classify_wedge::report "
+					"before Classify_double_sixes->print_five_plus_ones" << endl;
+		}
+		Classify_double_sixes->print_five_plus_ones(ost);
+		if (f_v) {
+			cout << "surface_classify_wedge::report "
+					"after Classify_double_sixes->print_five_plus_ones" << endl;
+		}
 	}
 
-	if (f_v) {
-		cout << "surface_classify_wedge::report "
-				"before Classify_double_sixes->print_five_plus_ones" << endl;
-	}
-	Classify_double_sixes->print_five_plus_ones(ost);
-	if (f_v) {
-		cout << "surface_classify_wedge::report "
-				"after Classify_double_sixes->print_five_plus_ones" << endl;
-	}
+	if (f_double_six) {
+		if (f_v) {
+			cout << "surface_classify_wedge::report "
+					"before Classify_double_sixes->Flag_orbits->print_latex" << endl;
+		}
 
+		{
+			string title;
 
-	if (f_v) {
-		cout << "surface_classify_wedge::report "
-				"before Classify_double_sixes->Flag_orbits->print_latex" << endl;
-	}
+			title.assign("Flag orbits for double sixes");
 
-	{
-		string title;
+			Classify_double_sixes->Flag_orbits->print_latex(ost, title, true);
+		}
+		if (f_v) {
+			cout << "surface_classify_wedge::report "
+					"after Classify_double_sixes->Flag_orbits->print_latex" << endl;
+		}
+		if (f_v) {
+			cout << "surface_classify_wedge::report "
+					"before Classify_double_sixes->Double_sixes->print_latex" << endl;
+		}
+		{
+			string title;
 
-		title.assign("Flag orbits for double sixes");
-
-		Classify_double_sixes->Flag_orbits->print_latex(ost, title, true);
-	}
-	if (f_v) {
-		cout << "surface_classify_wedge::report "
-				"after Classify_double_sixes->Flag_orbits->print_latex" << endl;
-	}
-
-	if (f_v) {
-		cout << "surface_classify_wedge::report "
-				"before Classify_double_sixes->Double_sixes->print_latex" << endl;
-	}
-	{
-		string title;
-
-		title.assign("Double Sixes");
-		Classify_double_sixes->Double_sixes->print_latex(ost, title, true,
-				false, NULL, NULL);
-	}
-	if (f_v) {
-		cout << "surface_classify_wedge::report "
-				"after Classify_double_sixes->Double_sixes->print_latex" << endl;
+			title.assign("Double Sixes");
+			Classify_double_sixes->Double_sixes->print_latex(ost, title, true,
+					false, NULL, NULL);
+		}
+		if (f_v) {
+			cout << "surface_classify_wedge::report "
+					"after Classify_double_sixes->Double_sixes->print_latex" << endl;
+		}
 	}
 
-	if (f_v) {
-		cout << "surface_classify_wedge::report "
-				"before Flag_orbits->print_latex" << endl;
-	}
-	{
-		string title;
 
-		title.assign("Flag orbits for cubic surfaces");
+	if (f_flag_orbits) {
 
-		Flag_orbits->print_latex(ost, title, true);
-	}
-	if (f_v) {
-		cout << "surface_classify_wedge::report "
-				"after Flag_orbits->print_latex" << endl;
+
+		if (f_v) {
+			cout << "surface_classify_wedge::report "
+					"before Flag_orbits->print_latex" << endl;
+		}
+		{
+			string title;
+
+			title.assign("Flag orbits for cubic surfaces");
+
+			Flag_orbits->print_latex(ost, title, true);
+		}
+		if (f_v) {
+			cout << "surface_classify_wedge::report "
+					"after Flag_orbits->print_latex" << endl;
+		}
 	}
 
 	if (f_v) {
@@ -446,8 +646,9 @@ void surface_classify_wedge::report(
 	{
 		string title;
 
-		title = "Surfaces";
-		Surfaces->print_latex(ost, title, true,
+		title = "Surfaces: Summary";
+		Surfaces->print_latex(
+				ost, title, true,
 				false, NULL, NULL);
 	}
 	if (f_v) {
@@ -455,11 +656,35 @@ void surface_classify_wedge::report(
 				"after Surfaces->print_latex" << endl;
 	}
 
+
+
+	if (f_show_group) {
+
+		ost << "\\subsection*{The Group $\\PGGL(4," << q << ")$}" << endl;
+
+		{
+			algebra::ring_theory::longinteger_object go;
+			A->Strong_gens->group_order(go);
+
+			ost << "The order of the group is ";
+			go.print_not_scientific(ost);
+			ost << "\\\\" << endl;
+
+			ost << "\\bigskip" << endl;
+		}
+	}
+
+
+
 	if (f_v) {
 		cout << "surface_classify_wedge::report "
 				"before latex_surfaces" << endl;
 	}
-	latex_surfaces(ost, f_with_stabilizers, verbose_level);
+
+	latex_surfaces(
+			ost, f_show_orbits, fname_mask, Draw_options, Opt, max_nb_elements_printed,
+			verbose_level);
+
 	if (f_v) {
 		cout << "surface_classify_wedge::report "
 				"after latex_surfaces" << endl;
@@ -516,7 +741,11 @@ void surface_classify_wedge::report(
 
 void surface_classify_wedge::latex_surfaces(
 		std::ostream &ost,
-		int f_with_stabilizers, int verbose_level)
+		int f_print_orbits, std::string &fname_mask,
+		other::graphics::layered_graph_draw_options *draw_options,
+		poset_classification::poset_classification_report_options *Opt,
+		int max_nb_elements_printed,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	string title;
@@ -527,18 +756,6 @@ void surface_classify_wedge::latex_surfaces(
 	title = "Cubic Surfaces with 27 Lines in $\\PG(3," + std::to_string(q) + ")$";
 
 
-	ost << "\\subsection*{The Group $\\PGGL(4," << q << ")$}" << endl;
-
-	{
-		algebra::ring_theory::longinteger_object go;
-		A->Strong_gens->group_order(go);
-
-		ost << "The order of the group is ";
-		go.print_not_scientific(ost);
-		ost << "\\\\" << endl;
-
-		ost << "\\bigskip" << endl;
-	}
 
 #if 0
 	Classify_double_sixes->print_five_plus_ones(ost);
@@ -547,6 +764,7 @@ void surface_classify_wedge::latex_surfaces(
 	Classify_double_sixes->Double_sixes->print_latex(ost, title_ds);
 #endif
 
+#if 0
 	if (f_v) {
 		cout << "surface_classify_wedge::latex_surfaces "
 				"before Surfaces->print_latex" << endl;
@@ -558,7 +776,7 @@ void surface_classify_wedge::latex_surfaces(
 		cout << "surface_classify_wedge::latex_surfaces "
 				"after Surfaces->print_latex" << endl;
 	}
-
+#endif
 
 #if 1
 	int orbit_index;
@@ -573,7 +791,13 @@ void surface_classify_wedge::latex_surfaces(
 					"before report_surface, "
 					"orbit_index = " << orbit_index << endl;
 		}
-		Surface_repository->report_surface(ost, orbit_index, verbose_level);
+		Surface_repository->report_surface(
+				ost,
+				orbit_index,
+				f_print_orbits, fname_mask,
+				draw_options,
+				max_nb_elements_printed,
+				verbose_level);
 		if (f_v) {
 			cout << "surface_classify_wedge::latex_surfaces "
 					"after report_surface" << endl;

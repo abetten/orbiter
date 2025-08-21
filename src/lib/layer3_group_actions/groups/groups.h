@@ -1977,11 +1977,14 @@ public:
 	void print_elements_with_given_action(
 			std::ostream &ost, actions::action *A2);
 	void print_elements_latex_ost(
+			int max_nb_elements_printed,
 			std::ostream &ost);
 	void print_elements_latex_ost_with_point_labels(
 			actions::action *A,
 			std::ostream &ost,
-			std::string *Point_labels, void *data);
+			std::string *Point_labels,
+			int max_nb_elements_printed,
+			void *data);
 	void create_group_table(
 			int *&Table, long int &go,
 		int verbose_level);

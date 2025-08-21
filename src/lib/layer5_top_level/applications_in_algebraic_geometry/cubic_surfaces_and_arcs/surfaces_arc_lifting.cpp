@@ -1008,7 +1008,10 @@ void surfaces_arc_lifting::report2(
 
 	ost << "\\section{Flag Orbits in Detail}" << endl << endl;
 
-	report_flag_orbits_in_detail(ost, verbose_level);
+
+	int max_nb_elements_printed = 15;
+
+	report_flag_orbits_in_detail(ost, max_nb_elements_printed, verbose_level);
 
 
 	ost << "\\section{Six-Arcs in Detail}" << endl << endl;
@@ -1109,7 +1112,9 @@ void surfaces_arc_lifting::report_flag_orbits(
 }
 
 void surfaces_arc_lifting::report_flag_orbits_in_detail(
-		std::ostream &ost, int verbose_level)
+		std::ostream &ost,
+		int max_nb_elements_printed,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	combinatorics::other_combinatorics::combinatorics_domain Combi;
@@ -1291,7 +1296,7 @@ void surfaces_arc_lifting::report_flag_orbits_in_detail(
 				ost << "The elements of the group of order "
 						<< SG->group_order_as_lint()
 						<< " are:\\\\" << endl;
-				Flag_orbits->Flag_orbit_node[f].gens->print_elements_latex_ost(ost);
+				Flag_orbits->Flag_orbit_node[f].gens->print_elements_latex_ost(max_nb_elements_printed, ost);
 			}
 		}
 		else {

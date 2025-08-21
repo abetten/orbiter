@@ -191,6 +191,7 @@ void surface_object_with_group::cheat_sheet(
 		std::ostream &ost,
 		int f_print_orbits, std::string &fname_mask,
 		other::graphics::layered_graph_draw_options *Opt,
+		int max_nb_elements_printed,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -240,7 +241,7 @@ void surface_object_with_group::cheat_sheet(
 				"after print_everything" << endl;
 	}
 
-	print_automorphism_group_generators(ost, verbose_level);
+	print_automorphism_group_generators(ost, max_nb_elements_printed, verbose_level);
 
 
 
@@ -276,7 +277,7 @@ void surface_object_with_group::cheat_sheet(
 	}
 	print_orbits_of_automorphism_group(
 			ost, f_print_orbits,
-			fname_mask, Opt, verbose_level - 1);
+			fname_mask, Opt, max_nb_elements_printed, verbose_level - 1);
 	if (f_v) {
 		cout << "surface_object_with_group::cheat_sheet "
 				"after print_orbits_of_automorphism_group" << endl;
@@ -289,7 +290,7 @@ void surface_object_with_group::cheat_sheet(
 			"the Automorphism Group}" << endl;
 
 
-	Aut_gens->print_elements_latex_ost(ost);
+	Aut_gens->print_elements_latex_ost(max_nb_elements_printed, ost);
 
 	ost << "\\clearpage\\subsection*{The Group Table}" << endl;
 	long int go;
@@ -2174,6 +2175,7 @@ void surface_object_with_group::print_generators_on_lines(
 void surface_object_with_group::print_elements_on_lines(
 		std::ostream &ost,
 		groups::strong_generators *Aut_gens,
+		int max_nb_elements_printed,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2186,6 +2188,7 @@ void surface_object_with_group::print_elements_on_lines(
 			A_on_the_lines,
 			ost,
 			Surf->Schlaefli->Labels->Line_label_tex,
+			max_nb_elements_printed,
 			Surf);
 
 }
@@ -2193,6 +2196,7 @@ void surface_object_with_group::print_elements_on_lines(
 void surface_object_with_group::print_elements_on_tritangent_planes(
 		std::ostream &ost,
 		groups::strong_generators *Aut_gens,
+		int max_nb_elements_printed,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2205,6 +2209,7 @@ void surface_object_with_group::print_elements_on_tritangent_planes(
 			A_on_tritangent_planes,
 			ost,
 			Surf->Schlaefli->Labels->Tritangent_plane_label_tex,
+			max_nb_elements_printed,
 			Surf);
 
 }
@@ -2252,6 +2257,7 @@ void surface_object_with_group::print_orbits_of_automorphism_group(
 	std::ostream &ost,
 	int f_print_orbits, std::string &fname_mask,
 	other::graphics::layered_graph_draw_options *Opt,
+	int max_nb_elements_printed,
 	int verbose_level)
 // called from surface_object_with_group::cheat_sheet
 {
@@ -2340,11 +2346,13 @@ void surface_object_with_group::print_orbits_of_automorphism_group(
 		print_elements_on_lines(
 				ost,
 				gens_stab,
+				max_nb_elements_printed,
 				verbose_level);
 
 		print_elements_on_tritangent_planes(
 				ost,
 				gens_stab,
+				max_nb_elements_printed,
 				verbose_level);
 
 		FREE_OBJECT(gens_stab);
@@ -2377,6 +2385,7 @@ void surface_object_with_group::print_orbits_of_automorphism_group(
 		print_orbits_on_schlaefli_related_things(ost,
 				f_print_orbits, fname_mask,
 				Opt,
+				max_nb_elements_printed,
 				verbose_level);
 		if (f_v) {
 			cout << "surface_object_with_group::print_orbits_of_automorphism_group "
@@ -2396,6 +2405,7 @@ void surface_object_with_group::print_orbits_on_schlaefli_related_things(
 	std::ostream &ost,
 	int f_print_orbits, std::string &fname_mask,
 	other::graphics::layered_graph_draw_options *Opt,
+	int max_nb_elements_printed,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2452,11 +2462,13 @@ void surface_object_with_group::print_orbits_on_schlaefli_related_things(
 		print_elements_on_lines(
 				ost,
 				gens_stab,
+				max_nb_elements_printed,
 				verbose_level);
 
 		print_elements_on_tritangent_planes(
 				ost,
 				gens_stab,
+				max_nb_elements_printed,
 				verbose_level);
 
 		FREE_OBJECT(gens_stab);
@@ -2827,6 +2839,7 @@ void surface_object_with_group::cheat_sheet_group_elements(
 
 void surface_object_with_group::print_automorphism_group_generators(
 		std::ostream &ost,
+		int max_nb_elements_printed,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2873,7 +2886,7 @@ void surface_object_with_group::print_automorphism_group_generators(
 					"before print_projectivity_group" << endl;
 		}
 
-		print_projectivity_group(ost, verbose_level - 2);
+		print_projectivity_group(ost, max_nb_elements_printed, verbose_level - 2);
 
 		if (f_v) {
 			cout << "surface_object_with_group::print_automorphism_group_generators "
@@ -2903,6 +2916,7 @@ void surface_object_with_group::print_automorphism_group_generators(
 
 void surface_object_with_group::print_projectivity_group(
 		std::ostream &ost,
+		int max_nb_elements_printed,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2942,6 +2956,7 @@ void surface_object_with_group::print_projectivity_group(
 	print_elements_on_lines(
 			ost,
 			projectivity_group_gens,
+			max_nb_elements_printed,
 			verbose_level);
 #endif
 
@@ -3134,11 +3149,15 @@ void surface_object_with_group::investigate_surface_and_write_report2(
 	ost << "\\section{The Cubic Surface " << SC->SO->label_tex
 			<< " over $\\mathbb F_{" << SC->F->q << "}$}" << endl;
 
+
+	int max_nb_elements_printed = 15;
+
 	cheat_sheet(
 			ost,
 		true /* f_print_orbits */,
 		fname_mask,
 		Opt,
+		max_nb_elements_printed,
 		verbose_level);
 	if (f_v) {
 		cout << "surface_object_with_group::investigate_surface_and_write_report2 "

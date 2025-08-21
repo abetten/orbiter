@@ -10770,7 +10770,7 @@ orbits_PGL_4_2_on_points_export_trees:
 				-draw_options Do \
 		-end \
 		-with Orb -do -orbits_activity \
-			-report \
+			-report "" \
 			-report_options ro \
 		-end \
 		-with Orb -do -orbits_activity \
@@ -11040,7 +11040,7 @@ T4r1_orbits_4:
 				-draw_poset -type_ordinary \
 		-end \
 		-with Orb -do -orbits_activity \
-			-report \
+			-report "" \
 			-report_options ro \
 		-end 
 	$(PDFLATEX) T4r1_poset.tex
@@ -11103,7 +11103,7 @@ poset_of_4subsets:
 			-draw_options Do \
 		-end \
 		-with Orb -do -orbits_activity \
-			-report \
+			-report "" \
 			-report_options ro \
 		-end \
 	$(PDFLATEX) poset_4_poset.tex
@@ -11143,7 +11143,7 @@ poset_of_5subsets:
 			-draw_options Do \
 		-end \
 		-with Orb -do -orbits_activity \
-			-report \
+			-report "" \
 			-report_options ro \
 		-end 
 	$(PDFLATEX) poset_5_poset.tex
@@ -11188,7 +11188,7 @@ Symmetric_4_on_pairs_poset:
 			-draw_options Do \
 		-end \
 		-with Orb -do -orbits_activity \
-			-report \
+			-report "" \
 			-report_options ro \
 		-end 
 	$(PDFLATEX) Sym4_on2_poset.tex
@@ -11218,7 +11218,7 @@ V_3_2_trivial:
 			-draw_options Do \
 		-end \
 		-with Orb -do -orbits_activity \
-			-report \
+			-report "" \
 			-report_options ro \
 		-end 
 	$(PDFLATEX) V_3_2_trivial_poset.tex
@@ -11246,7 +11246,7 @@ V_4_2_trivial:
 				-draw_poset -type_ordinary \
 		-end \
 		-with Orb -do -orbits_activity \
-			-report \
+			-report "" \
 			-report_options ro \
 		-end 
 
@@ -11301,7 +11301,7 @@ PG_2_2_subsets:
 				-draw_options Do \
 		-end \
 		-with Orb -do -orbits_activity \
-			-report \
+			-report "" \
 			-report_options ro \
 		-end \
 		-with G -do \
@@ -11347,7 +11347,7 @@ PG_3_2_subsets:
 				-draw_options Do \
 		-end \
 		-with Orb -do -orbits_activity \
-			-report \
+			-report "" \
 			-report_options ro \
 		-end 
 	$(PDFLATEX) PGL_4_2_poset.tex
@@ -11376,7 +11376,7 @@ PGL_3_2_singer:
 				-draw_options Do \
 		-end \
 		-with Orb -do -orbits_activity \
-			-report \
+			-report "" \
 			-report_options ro \
 		-end 
 	$(PDFLATEX) PGL_3_2_singer_1_poset.tex
@@ -11409,7 +11409,7 @@ PGL_3_2_on_lines:
 				-draw_options Do \
 		-end \
 		-with Orb -do -orbits_activity \
-			-report \
+			-report "" \
 			-report_options ro \
 		-end 
 	$(PDFLATEX) PGL_3_2_lines_poset.tex
@@ -11439,7 +11439,7 @@ PGL_2_5_on_subsets:
 				-draw_options Do \
 		-end \
 		-with Orb -do -orbits_activity \
-			-report \
+			-report "" \
 			-report_options ro \
 		-end 
 	$(PDFLATEX) PGL_2_5_poset.tex
@@ -11467,7 +11467,7 @@ PGL_2_7_on_subsets:
 				-draw_options Do \
 		-end \
 		-with Orb -do -orbits_activity \
-			-report \
+			-report "" \
 			-report_options ro \
 		-end 
 	$(PDFLATEX) PGL_2_7_poset.tex
@@ -11495,7 +11495,7 @@ PGGL_2_8_on_subsets:
 				-draw_options Do \
 		-end \
 		-with Orb -do -orbits_activity \
-			-report \
+			-report "" \
 			-report_options ro \
 		-end 
 	$(PDFLATEX) PGGL_2_8_poset.tex
@@ -11524,7 +11524,7 @@ PGGL_2_9_on_subsets:
 				-draw_options Do \
 		-end \
 		-with Orb -do -orbits_activity \
-			-report \
+			-report "" \
 			-report_options ro \
 		-end 
 	$(PDFLATEX) PGGL_2_9_poset.tex
@@ -11553,7 +11553,7 @@ PGL_2_11_on_subsets:
 				-draw_options Do \
 		-end \
 		-with Orb -do -orbits_activity \
-			-report \
+			-report "" \
 			-report_options ro \
 		-end 
 	$(PDFLATEX) PGL_2_11_poset.tex
@@ -11583,7 +11583,7 @@ PGGL_2_16_on_subsets:
 				-draw_options Do \
 		-end \
 		-with Orb -do -orbits_activity \
-			-report \
+			-report "" \
 			-report_options ro \
 		-end 
 	$(PDFLATEX) PGGL_2_16_poset.tex
@@ -11612,7 +11612,7 @@ PGGL_2_32_on_subsets:
 				-draw_options Do \
 		-end \
 		-with Orb -do -orbits_activity \
-			-report \
+			-report "" \
 			-report_options ro \
 		-end 
 	$(PDFLATEX) PGGL_2_32_poset.tex
@@ -11641,7 +11641,7 @@ PG_3_4_subsets:
 				-draw_options Do \
 		-end \
 		-with Orb -do -orbits_activity \
-			-report \
+			-report "" \
 			-report_options ro \
 		-end 
 	$(PDFLATEX) PGGL_4_4_poset.tex
@@ -11669,7 +11669,7 @@ PGGL_2_9_orbits:
 				-draw_options Do \
 		-end \
 		-with Orb -do -orbits_activity \
-			-report \
+			-report "" \
 			-report_options ro \
 		-end 
 	$(PDFLATEX) PGGL_2_9_poset.tex
@@ -11702,7 +11702,7 @@ PGO_5_2_on_subsets:
 				-draw_options Do \
 		-end \
 		-with Orb -do -orbits_activity \
-			-report \
+			-report "" \
 			-report_options ro \
 		-end 
 	$(PDFLATEX) PGO_5_2_poset.tex
@@ -11779,7 +11779,7 @@ subspaces_Op_4_2:
 			-draw_options Do \
 		-end \
 		-with Orb -do -orbits_activity \
-			-report \
+			-report "" \
 			-report_options ro \
 		-end 
 	$(PDFLATEX) Op_4_2_poset.tex
@@ -11812,7 +11812,7 @@ PGL_4_2_on_subspaces:
 			-draw_options Do \
 		-end \
 		-with Orb -do -orbits_activity \
-			-report \
+			-report "" \
 			-report_options ro \
 		-end 
 	$(PDFLATEX) PGL_4_2_poset.tex
@@ -11843,7 +11843,7 @@ PGL_4_2_singer_on_subspaces:
 			-draw_options Do \
 		-end \
 		-with Orb -do -orbits_activity \
-			-report \
+			-report "" \
 			-report_options ro \
 		-end 
 	$(PDFLATEX) PGL_4_2_singer_poset.tex
@@ -11874,7 +11874,7 @@ PGL_8_2_singer_on_subspaces:
 			-draw_options Do \
 		-end \
 		-with Orb -do -orbits_activity \
-			-report \
+			-report "" \
 			-report_options ro \
 		-end 
 	#$(PDFLATEX) PGL_8_2_singer_poset.tex
@@ -11960,7 +11960,7 @@ Op_8_2_orbits_on_subspaces:
 			-draw_options Do \
 		-end \
 		-with Orb -do -orbits_activity \
-			-report \
+			-report "" \
 			-report_options ro \
 		-end 
 	$(PDFLATEX) Op_8_2_poset.tex
@@ -12385,7 +12385,7 @@ poly_orbits_q4:
 				-draw_options Do \
 		-end \
 		-with Orb -do -orbits_activity \
-			-report \
+			-report "" \
 			-report_options ro \
 		-end \
 		-with Orb -do -orbits_activity \
@@ -13754,8 +13754,7 @@ surface_classify_q4:
 			-draw_options Do \
 		-end \
 		-with Orb -do -orbits_activity \
-			-report \
-			-report_options ro \
+			-report "5plus1=off,double_sixes=off,flag_orbits=off,show_group=off,report_options=ro" \
 		-end \
 		-with Orb -do \
 			-orbits_activity \
@@ -13824,8 +13823,7 @@ surface_classify_q7:
 			-on_cubic_surfaces Classify \
 		-end \
 		-with Orb -do -orbits_activity \
-			-report \
-			-report_options ro \
+			-report "5plus1=off,double_sixes=off,flag_orbits=off,show_group=off,report_options=ro,max_nb_elements_printed=10" \
 		-end \
 		-with Orb -do \
 			-orbits_activity \
@@ -13868,8 +13866,7 @@ Family_general_F31_25_5_5_25_recognize:
 			-on_cubic_surfaces Classify \
 		-end \
 		-with Orb -do -orbits_activity \
-			-report \
-			-report_options ro \
+			-report "5plus1=off,double_sixes=off,flag_orbits=off,show_group=off,report_options=ro" \
 		-end \
 		-with Orb -do \
 			-orbits_activity \
@@ -15629,7 +15626,7 @@ nonlinear_code_n7_d4_classify:
 				-draw_options Do \
 		-end \
 		-with Orb -do -orbits_activity \
-			-report \
+			-report "" \
 			-report_options ro \
 		-end \
 
@@ -19835,7 +19832,7 @@ Higman_Sims_graph:
 			-draw_options Do \
 		-end \
 		-with Orb -do -orbits_activity \
-			-report \
+			-report "" \
 			-report_options ro \
 		-end \
 		-define D -design -orbit_on_sets \
@@ -20735,7 +20732,7 @@ KM_cyclic_7:
 				-draw_poset -type_ordinary \
 		-end \
 		-with Orb -do -orbits_activity \
-			-report \
+			-report "" \
 			-report_options ro \
 		-end 
 	$(ORBITER) -v 4 \
@@ -20776,7 +20773,7 @@ KM_PGGL_2_32:
 				-draw_poset -type_ordinary \
 		-end \
 		-with Orb -do -orbits_activity \
-			-report \
+			-report "" \
 			-report_options ro \
 		-end 
 	$(ORBITER) -v 2 -draw_matrix \
@@ -20828,7 +20825,7 @@ KM_PSL_3_5:
 				-draw_poset -type_ordinary \
 		-end \
 		-with Orb -do -orbits_activity \
-			-report \
+			-report "" \
 			-report_options ro \
 		-end 
 	$(ORBITER) -v 2 -draw_matrix \
@@ -21027,7 +21024,7 @@ Witt_design_on_22_points:
 				-draw_poset -type_ordinary \
 		-end \
 		-with Orb -do -orbits_activity \
-			-report \
+			-report "" \
 			-report_options ro \
 		-end \
 		-define D -design -orbit_on_sets \

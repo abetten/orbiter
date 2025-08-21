@@ -2200,6 +2200,7 @@ void strong_generators::print_elements_with_given_action(
 }
 
 void strong_generators::print_elements_latex_ost(
+		int max_nb_elements_printed,
 		std::ostream &ost)
 {
 	long int i, order, m;
@@ -2213,7 +2214,7 @@ void strong_generators::print_elements_latex_ost(
 	ost << "Group elements for a group of order " << go << " tl=";
 	Int_vec_print(ost, tl, A->base_len());
 	ost << "\\\\" << endl;
-	m = MINIMUM(go.as_int(), 100);
+	m = MINIMUM(go.as_int(), max_nb_elements_printed);
 	if (m < go.as_int()) {
 		ost << "We will only list the first " << m
 				<< " elements:\\\\" << endl;
@@ -2234,7 +2235,9 @@ void strong_generators::print_elements_latex_ost(
 void strong_generators::print_elements_latex_ost_with_point_labels(
 		actions::action *A_given,
 		std::ostream &ost,
-		std::string *Point_labels, void *data)
+		std::string *Point_labels,
+		int max_nb_elements_printed,
+		void *data)
 {
 	long int i, order, m;
 	algebra::ring_theory::longinteger_object go;
@@ -2253,7 +2256,7 @@ void strong_generators::print_elements_latex_ost_with_point_labels(
 	ost << "Group elements for a group of order " << go << " tl=";
 	Int_vec_print(ost, tl, A->base_len());
 	ost << "\\\\" << endl;
-	m = MINIMUM(go.as_int(), 1500);
+	m = MINIMUM(go.as_int(), max_nb_elements_printed);
 	if (m < go.as_int()) {
 		ost << "We will only list the first " << m
 				<< " elements:\\\\" << endl;

@@ -23,7 +23,8 @@ classification_of_cubic_surfaces_with_double_sixes_activity_description::classif
 {
 	Record_birth();
 	f_report = false;
-	report_options = NULL;
+	std::string report_options;
+	//report_options = NULL;
 
 	f_stats = false;
 	//std::string stats_prefix;
@@ -72,6 +73,8 @@ int classification_of_cubic_surfaces_with_double_sixes_activity_description::rea
 
 		if (ST.stringcmp(argv[i], "-report") == 0) {
 			f_report = true;
+			report_options.assign(argv[++i]);
+#if 0
 			report_options = NEW_OBJECT(poset_classification::poset_classification_report_options);
 			if (f_v) {
 				cout << "-report " << endl;
@@ -87,9 +90,9 @@ int classification_of_cubic_surfaces_with_double_sixes_activity_description::rea
 					cout << "next argument is " << argv[i] << endl;
 				}
 			}
-
+#endif
 			if (f_v) {
-				cout << "-report" << endl;
+				cout << "-report " << report_options << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-stats") == 0) {
@@ -179,9 +182,7 @@ int classification_of_cubic_surfaces_with_double_sixes_activity_description::rea
 void classification_of_cubic_surfaces_with_double_sixes_activity_description::print()
 {
 	if (f_report) {
-		cout << "-report ";
-		report_options->print();
-		cout << endl;
+		cout << "-report " << report_options << endl;
 	}
 	if (f_stats) {
 		cout << "-stats " << stats_prefix << endl;

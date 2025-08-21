@@ -176,8 +176,9 @@ void classification_of_cubic_surfaces_with_double_sixes_activity::perform_activi
 
 
 void classification_of_cubic_surfaces_with_double_sixes_activity::report(
-		poset_classification::poset_classification_report_options
-			*report_options,
+		std::string &options,
+		//poset_classification::poset_classification_report_options
+		//	*report_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -187,8 +188,8 @@ void classification_of_cubic_surfaces_with_double_sixes_activity::report(
 	}
 
 
-
-	int f_with_stabilizers = true;
+	//poset_classification::poset_classification_report_options *report_options = NULL;
+	//int f_with_stabilizers = true;
 
 	if (f_v) {
 		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::report "
@@ -196,8 +197,9 @@ void classification_of_cubic_surfaces_with_double_sixes_activity::report(
 		cout << "SCW->Surf->n = " << SCW->Surf->n << endl;
 	}
 	SCW->create_report(
-			f_with_stabilizers,
-			report_options,
+			options,
+			//f_with_stabilizers,
+			//report_options,
 			verbose_level - 1);
 	if (f_v) {
 		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::report "
