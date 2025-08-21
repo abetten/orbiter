@@ -563,9 +563,9 @@ void classification_of_varieties_nauty::handle_one_input_case(
 	if (f_v) {
 		cout << "classification_of_varieties_nauty::handle_one_input_case "
 				"input_counter = " << input_counter << " / " << Input->nb_objects_to_test
-				<< " before Variety_compute_canonical_form->compute_canonical_form_nauty_new" << endl;
+				<< " before Variety_compute_canonical_form->compute_canonical_form_nauty" << endl;
 	}
-	Variety_compute_canonical_form->compute_canonical_form_nauty_new(
+	Variety_compute_canonical_form->compute_canonical_form_nauty(
 			Nauty_control,
 			f_found_canonical_form,
 			idx_canonical_form,
@@ -577,7 +577,7 @@ void classification_of_varieties_nauty::handle_one_input_case(
 	if (f_v) {
 		cout << "classification_of_varieties_nauty::handle_one_input_case "
 				"input_counter = " << input_counter << " / " << Input->nb_objects_to_test
-				<< " after Variety_compute_canonical_form->compute_canonical_form_nauty_new" << endl;
+				<< " after Variety_compute_canonical_form->compute_canonical_form_nauty" << endl;
 	}
 
 	Goi[input_counter] = Variety_compute_canonical_form->Variety_stabilizer_compute->Stab_gens_variety->group_order_as_lint();
@@ -677,7 +677,7 @@ std::string classification_of_varieties_nauty::stringify_result(
 	string s;
 	string line;
 
-	line = Canonical_forms[input_counter]->stringify_csv_entry_one_line_nauty_new(
+	line = Canonical_forms[input_counter]->stringify_csv_entry_one_line_nauty(
 			input_counter, verbose_level);
 
 	s = std::to_string(input_counter) + "," + line;
@@ -740,7 +740,7 @@ void classification_of_varieties_nauty::write_classification_by_nauty_csv(
 
 					string line;
 
-					line = Canonical_forms[input_counter]->stringify_csv_entry_one_line_nauty_new(
+					line = Canonical_forms[input_counter]->stringify_csv_entry_one_line_nauty(
 							input_counter, verbose_level);
 
 					ost << input_counter << "," << line << endl;

@@ -36,8 +36,10 @@ cubic_surface_activity_description::cubic_surface_activity_description()
 	f_export_gap = false;
 
 	f_report_all_flag_orbits = false;
+	//std::string report_all_flag_orbits_classification_of_arcs;
 
 	f_export_all_quartic_curves = false;
+	//std::string export_all_quartic_curves_classification_of_arcs;
 
 	f_export_something_with_group_element = false;
 	//std::string export_something_with_group_element_what;
@@ -114,14 +116,16 @@ int cubic_surface_activity_description::read_arguments(
 		}
 		else if (ST.stringcmp(argv[i], "-report_all_flag_orbits") == 0) {
 			f_report_all_flag_orbits = true;
+			report_all_flag_orbits_classification_of_arcs.assign(argv[++i]);
 			if (f_v) {
-				cout << "-report_all_flag_orbits " << endl;
+				cout << "-report_all_flag_orbits " << report_all_flag_orbits_classification_of_arcs << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-export_all_quartic_curves") == 0) {
 			f_export_all_quartic_curves = true;
+			export_all_quartic_curves_classification_of_arcs.assign(argv[++i]);
 			if (f_v) {
-				cout << "-export_all_quartic_curves " << endl;
+				cout << "-export_all_quartic_curves " << export_all_quartic_curves_classification_of_arcs << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-export_something_with_group_element") == 0) {
@@ -218,10 +222,10 @@ void cubic_surface_activity_description::print()
 		cout << "-export_gap " << endl;
 	}
 	if (f_report_all_flag_orbits) {
-		cout << "-report_all_flag_orbits " << endl;
+		cout << "-report_all_flag_orbits " << report_all_flag_orbits_classification_of_arcs << endl;
 	}
 	if (f_export_all_quartic_curves) {
-		cout << "-export_all_quartic_curves " << endl;
+		cout << "-export_all_quartic_curves " << export_all_quartic_curves_classification_of_arcs << endl;
 	}
 	if (f_export_something_with_group_element) {
 		cout << "-export_something_with_group_element "

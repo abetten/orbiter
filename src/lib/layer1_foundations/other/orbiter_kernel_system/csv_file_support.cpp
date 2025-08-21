@@ -2716,7 +2716,7 @@ void csv_file_support::tally_column(
 	String.chop_off_extension(
 			fname_tally);
 
-	fname_tally += "_tally.csv";
+	fname_tally += "_tally_" + column + ".csv";
 
 
 	Fio.Csv_file_support->write_table_of_strings_with_col_headings(

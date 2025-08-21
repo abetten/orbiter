@@ -377,6 +377,9 @@ public:
 		// under the stabilizer of the cubic surface
 	int pt_A_coeff[4];
 
+	int abcdef[6];
+
+
 	int equation_nice[20];
 		// equation of the surface after transformation
 		// which maps point A to point B.
@@ -445,6 +448,9 @@ public:
 			std::string &label, std::string &label_tex,
 			int verbose_level);
 	void create_quartic_curve(
+			orbits::orbits_create *Classification_of_arcs,
+			int pt_orbit, int verbose_level);
+	void compute_point_A(
 			int pt_orbit, int verbose_level);
 	void map_surface_to_special_form(
 			int pt_orbit,

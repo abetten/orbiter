@@ -36,6 +36,9 @@ quartic_curve_from_surface::quartic_curve_from_surface()
 	pt_A = pt_B = 0;
 	po_index = 0;
 
+	//int pt_A_coeff[4];
+	//int abcdef[6];
+
 	// int equation_nice[20];
 	gradient = NULL;
 
@@ -182,15 +185,72 @@ void quartic_curve_from_surface::init_labels(
 		cout << "quartic_curve_from_surface::init_labels done" << endl;
 	}
 }
+#if 0
+void cubic_surface_activity::recognize_Fabcd(
+		std::string &classification_of_arcs_label,
+		int &a, int &b, int &c, int &d,
+		other::orbiter_kernel_system::activity_output *&AO,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "cubic_surface_activity::recognize_Fabcd" << endl;
+	}
+
+	orbits::orbits_create *Classification_of_arcs;
+
+	Classification_of_arcs = Get_orbits(
+			classification_of_arcs_label);
+
+
+	if (!Classification_of_arcs->f_has_arcs) {
+		cout << "cubic_surface_activity::recognize_Fabcd "
+				"the orbits object has the wrong kind of orbit objects. "
+				"It should have orbits on arcs." << endl;
+		exit(1);
+	}
+
+
+	if (SC->SOG == NULL) {
+		cout << "cubic_surface_activity::recognize_Fabcd SC->SOG == NULL" << endl;
+		exit(1);
+	}
+
+
+	cubic_surfaces_in_general::surface_object_with_group *SOA;
+
+	SOA = SC->SOG;
+
+	int e, f;
+
+	if (f_v) {
+		cout << "cubic_surface_activity::recognize_Fabcd "
+				"before SOA->recognize_Fabcd" << endl;
+	}
+	SOA->recognize_Fabcd(
+			false /* f_extra_point */, -1 /* extra_point_rk */,
+			Classification_of_arcs,
+			a, b, c, d, e, f,
+			//other::orbiter_kernel_system::activity_output *&AO,
+			verbose_level);
+	if (f_v) {
+		cout << "cubic_surface_activity::recognize_Fabcd "
+				"after SOA->recognize_Fabcd" << endl;
+	}
+
+
+}
+#endif
 
 
 
 void quartic_curve_from_surface::create_quartic_curve(
+		orbits::orbits_create *Classification_of_arcs,
 		int pt_orbit, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	other::data_structures::sorting Sorting;
-	int i, a;
 
 	if (f_v) {
 		cout << "quartic_curve_from_surface::create_quartic_curve" << endl;
@@ -199,6 +259,60 @@ void quartic_curve_from_surface::create_quartic_curve(
 
 	if (SOA->Orbits_on_points_not_on_lines->Forest->nb_orbits == 0) {
 		return;
+	}
+
+
+
+	if (Classification_of_arcs) {
+		if (f_v) {
+			cout << "quartic_curve_from_surface::create_quartic_curve "
+					"before compute_point_A" << endl;
+		}
+		compute_point_A(
+				pt_orbit, verbose_level);
+		if (f_v) {
+			cout << "quartic_curve_from_surface::create_quartic_curve "
+					"after compute_point_A" << endl;
+		}
+
+		int a, b, c, d, e, f;
+
+		if (f_v) {
+			cout << "quartic_curve_from_surface::create_quartic_curve "
+					"before SOA->recognize_Fabcd" << endl;
+		}
+		SOA->recognize_Fabcd(
+				true /* f_extra_point */, pt_A /* extra_point_rk */,
+				Classification_of_arcs,
+				a, b, c, d, e, f,
+				verbose_level);
+		if (f_v) {
+			cout << "quartic_curve_from_surface::create_quartic_curve "
+					"after SOA->recognize_Fabcd" << endl;
+		}
+
+
+		abcdef[0] = a;
+		abcdef[1] = b;
+		abcdef[2] = c;
+		abcdef[3] = d;
+		abcdef[4] = e;
+		abcdef[6] = f;
+
+
+		if (f_v) {
+			cout << "quartic_curve_from_surface::create_quartic_curve "
+					"abcdef = ";
+			Int_vec_print(cout, abcdef, 6);
+			cout << endl;
+		}
+	}
+	else {
+		if (f_v) {
+			cout << "quartic_curve_from_surface::create_quartic_curve "
+					"Classification_of_arcs is NULL, so we don't compute abcdef" << endl;
+		}
+
 	}
 
 
@@ -274,7 +388,7 @@ void quartic_curve_from_surface::create_quartic_curve(
 		cout << "quartic_curve_from_surface::create_quartic_curve "
 			"after Surf_A->A->map_a_set_and_reorder" << endl;
 	}
-	for (i = 0; i < nb_pts_on_surface; i++) {
+	for (int i = 0; i < nb_pts_on_surface; i++) {
 		SOA->Surf->unrank_point(v, Pts_on_surface[i]);
 		if (SOA->Surf->PolynomialDomains->Poly3_4->evaluate_at_a_point(
 				equation_nice, v)) {
@@ -284,11 +398,14 @@ void quartic_curve_from_surface::create_quartic_curve(
 		}
 	}
 
-	for (i = 0; i < nb_pts_on_surface; i++) {
 
-		a = SOA->Surf->PolynomialDomains->Poly3_4->evaluate_at_a_point_by_rank(
+	for (int i = 0; i < nb_pts_on_surface; i++) {
+
+		int value;
+
+		value = SOA->Surf->PolynomialDomains->Poly3_4->evaluate_at_a_point_by_rank(
 				equation_nice, Pts_on_surface[i]);
-		if (a) {
+		if (value) {
 			cout << "error, the transformed point " << i
 					<< " does not lie on the transformed surface" << endl;
 			exit(1);
@@ -519,6 +636,38 @@ void quartic_curve_from_surface::create_quartic_curve(
 }
 
 
+void quartic_curve_from_surface::compute_point_A(
+		int pt_orbit, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "quartic_curve_from_surface::compute_point_A" << endl;
+		cout << "pt_orbit=" << pt_orbit << endl;
+	}
+
+	int fst;
+	int i;
+
+	// compute pt_A,
+	// which is the rank of the point which represents the chosen point orbit.
+	// The point must not lie on any line.
+
+	fst = SOA->Orbits_on_points_not_on_lines->Forest->orbit_first[pt_orbit];
+
+	po_index = SOA->Orbits_on_points_not_on_lines->Forest->orbit_len[pt_orbit];
+
+	i = SOA->Orbits_on_points_not_on_lines->Forest->orbit[fst];
+
+	pt_A = SOA->SO->SOP->Pts_not_on_lines[i];
+
+	SOA->Surf->unrank_point(pt_A_coeff, pt_A);
+
+	if (f_v) {
+		cout << "quartic_curve_from_surface::compute_point_A done" << endl;
+	}
+}
+
 void quartic_curve_from_surface::map_surface_to_special_form(
 		int pt_orbit,
 	int verbose_level)
@@ -565,6 +714,20 @@ void quartic_curve_from_surface::map_surface_to_special_form(
 	// which is the rank of the point which represents the chosen point orbit.
 	// The point must not lie on any line.
 
+
+	if (f_v) {
+		cout << "quartic_curve_from_surface::map_surface_to_special_form "
+				"before compute_point_A" << endl;
+	}
+	compute_point_A(
+			pt_orbit, verbose_level);
+	if (f_v) {
+		cout << "quartic_curve_from_surface::map_surface_to_special_form "
+				"after compute_point_A" << endl;
+	}
+
+
+#if 0
 	fst = SOA->Orbits_on_points_not_on_lines->Forest->orbit_first[pt_orbit];
 
 	po_index = SOA->Orbits_on_points_not_on_lines->Forest->orbit_len[pt_orbit];
@@ -574,6 +737,7 @@ void quartic_curve_from_surface::map_surface_to_special_form(
 	pt_A = SOA->SO->SOP->Pts_not_on_lines[i];
 
 	SOA->Surf->unrank_point(pt_A_coeff, pt_A);
+#endif
 
 
 	// Find a transformation which maps pt_A to pt_B:

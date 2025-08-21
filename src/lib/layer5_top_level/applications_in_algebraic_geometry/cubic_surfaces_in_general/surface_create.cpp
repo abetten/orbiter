@@ -356,11 +356,14 @@ int surface_create::init(
 	if (f_v) {
 		cout << "surface_create::init "
 				"f_has_group = " << f_has_group << endl;
-		cout << "surface_create::init "
-				"group order = ";
-		algebra::ring_theory::longinteger_object go;
-		Sg->group_order(go);
-		cout << go << endl;
+
+		if (f_has_group) {
+			cout << "surface_create::init "
+					"group order = ";
+			algebra::ring_theory::longinteger_object go;
+			Sg->group_order(go);
+			cout << go << endl;
+		}
 	}
 
 	if (f_v) {
@@ -3347,6 +3350,7 @@ void surface_create::test_group(
 }
 
 void surface_create::report_all_flag_orbits(
+		std::string &classification_of_arcs_label,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3361,6 +3365,18 @@ void surface_create::report_all_flag_orbits(
 		exit(1);
 	}
 
+	orbits::orbits_create *Classification_of_arcs;
+
+	Classification_of_arcs = Get_orbits(
+			classification_of_arcs_label);
+
+
+	if (!Classification_of_arcs->f_has_arcs) {
+		cout << "surface_create::report_all_flag_orbits "
+				"the orbits object has the wrong kind of orbit objects. "
+				"It should have orbits on arcs." << endl;
+		exit(1);
+	}
 
 	string surface_prefix;
 	string fname_tex;
@@ -3403,6 +3419,7 @@ void surface_create::report_all_flag_orbits(
 		}
 		SOG->report_all_flag_orbits(
 				SO->label_txt, SO->label_tex, ost,
+				Classification_of_arcs,
 				verbose_level);
 		if (f_v) {
 			cout << "surface_create::report_all_flag_orbits "
@@ -3423,18 +3440,33 @@ void surface_create::report_all_flag_orbits(
 }
 
 void surface_create::export_all_quartic_curves(
+		std::string &classification_of_arcs_label,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "surface_create::export_all_quartic_curves" << endl;
+		cout << "surface_create::export_all_quartic_curves classification_of_arcs_label = " << classification_of_arcs_label << endl;
 	}
 
 	if (!f_has_group) {
 		cout << "surface_create::export_all_quartic_curves "
 				"The automorphism group "
 				"of the surface is missing" << endl;
+		exit(1);
+	}
+
+	orbits::orbits_create *Classification_of_arcs;
+
+	Classification_of_arcs = Get_orbits(
+			classification_of_arcs_label);
+
+
+	if (!Classification_of_arcs->f_has_arcs) {
+		cout << "surface_create::export_all_quartic_curves "
+				"the orbits object has the wrong kind of orbit objects. "
+				"It should have orbits on arcs." << endl;
 		exit(1);
 	}
 
@@ -3460,6 +3492,7 @@ void surface_create::export_all_quartic_curves(
 
 	SOG->export_all_quartic_curves(
 			fname_curves,
+			Classification_of_arcs,
 			verbose_level);
 
 	if (f_v) {

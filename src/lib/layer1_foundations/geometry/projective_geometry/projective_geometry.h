@@ -609,9 +609,9 @@ public:
 	int point_of_intersection_of_a_line_and_a_line_in_three_space(
 		long int line1,
 		long int line2, int verbose_level);
-	int point_of_intersection_of_a_line_and_a_plane_in_three_space(
+	long int point_of_intersection_of_a_line_and_a_plane_in_three_space(
 		long int line,
-		int plane, int verbose_level);
+		long int plane, int verbose_level);
 	long int line_of_intersection_of_two_planes_in_three_space(
 		long int plane1, long int plane2, int verbose_level);
 	long int transversal_to_two_skew_lines_through_a_point(

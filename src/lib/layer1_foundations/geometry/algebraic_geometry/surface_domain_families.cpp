@@ -255,7 +255,7 @@ surface_object *surface_domain::create_surface_general_abcd(
 		cout << "surface_domain::create_surface_general_abcd "
 				"before create_equation_general_abcd" << endl;
 	}
-	create_equation_general_abcd(a, b, c, d, coeff20, verbose_level);
+	create_equation_general_abcd(a, b, c, d, coeff20, verbose_level - 2);
 	if (f_v) {
 		cout << "surface_domain::create_surface_general_abcd "
 				"after create_equation_general_abcd" << endl;
@@ -287,7 +287,7 @@ surface_object *surface_domain::create_surface_general_abcd(
 	SO->init_equation(
 			this, coeff20,
 			label_txt, label_tex,
-			verbose_level);
+			verbose_level - 2);
 	if (f_v) {
 		cout << "surface_domain::create_surface_general_abcd "
 				"after SO->init_equation" << endl;

@@ -43,8 +43,10 @@ public:
 	int f_export_gap;
 
 	int f_report_all_flag_orbits;
+	std::string report_all_flag_orbits_classification_of_arcs;
 
 	int f_export_all_quartic_curves;
+	std::string export_all_quartic_curves_classification_of_arcs;
 
 	int f_export_something_with_group_element;
 	std::string export_something_with_group_element_what;
@@ -303,8 +305,10 @@ public:
 	void test_group(
 			int verbose_level);
 	void report_all_flag_orbits(
+			std::string &classification_of_arcs_label,
 			int verbose_level);
 	void export_all_quartic_curves(
+			std::string &classification_of_arcs_label,
 			int verbose_level);
 
 };
@@ -643,6 +647,11 @@ public:
 			int verbose_level);
 	void compute_projectivity_group(
 			int verbose_level);
+	void recognize_Fabcd(
+			int f_extra_point, int point_rk,
+			orbits::orbits_create *Classification_of_arcs,
+			int &a, int &b, int &c, int &d, int &e, int &f,
+			int verbose_level);
 	void compute_orbits_of_automorphism_group(
 			int verbose_level);
 	void init_orbits_on_points(
@@ -727,16 +736,20 @@ public:
 			std::string &surface_label_txt,
 			std::string &surface_label_tex,
 			std::ostream &ost,
+			orbits::orbits_create *Classification_of_arcs,
 			int verbose_level);
 	void export_all_quartic_curves(
 			std::string &fname_curves,
+			orbits::orbits_create *Classification_of_arcs,
 			int verbose_level);
 	void prepare_data(
+			orbits::orbits_create *Classification_of_arcs,
 			std::string &headings,
 			std::string *&Table,
 			int &nb_rows, int &nb_cols,
 			int verbose_level);
 	void export_one_quartic_curve(
+			orbits::orbits_create *Classification_of_arcs,
 			int pt_orbit,
 			std::vector<std::string> &v,
 			int verbose_level);
@@ -931,6 +944,9 @@ public:
 			projective_geometry::projective_space_with_action *PA,
 			int f_recoordinatize,
 			int verbose_level);
+	long int map_a_point(
+			int *Elt,
+			long int pt_rk, int verbose_level);
 	void complete_skew_hexagon(
 		long int *skew_hexagon,
 		std::vector<std::vector<long int> > &Double_sixes,

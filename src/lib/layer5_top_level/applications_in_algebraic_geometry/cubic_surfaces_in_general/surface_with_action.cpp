@@ -228,6 +228,28 @@ void surface_with_action::init(
 	}
 }
 
+long int surface_with_action::map_a_point(
+		int *Elt,
+		long int pt_rk, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_with_action::map_a_point" << endl;
+	}
+	long int image_pt;
+
+	image_pt = A->Group_element->image_of(Elt, pt_rk);
+
+	if (f_v) {
+		cout << "surface_with_action::map_a_point point " << pt_rk << " -> " << image_pt << endl;
+	}
+
+	if (f_v) {
+		cout << "surface_with_action::map_a_point done" << endl;
+	}
+	return image_pt;
+}
 
 void surface_with_action::complete_skew_hexagon(
 	long int *skew_hexagon,

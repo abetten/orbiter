@@ -864,28 +864,29 @@ public:
 			int counter,
 			variety_object_with_action *Vo,
 			int verbose_level);
-	void compute_canonical_form_nauty_new(
+	void compute_canonical_form_nauty(
 			other::l1_interfaces::nauty_interface_control *Nauty_control,
 			int &f_found_canonical_form,
 			int &idx_canonical_form,
 			int &idx_equation,
 			int &f_found_eqn,
 			int verbose_level);
-	void classify_using_nauty_new(
+	void classify_using_set_of_rational_points(
 			other::l1_interfaces::nauty_interface_control *Nauty_control,
 			int &f_found_canonical_form,
 			int &idx_canonical_form,
 			int &idx_equation,
 			int &f_found_eqn,
 			int verbose_level);
-	void handle_repeated_canonical_form_of_set_new(
+	void handle_repeated_canonical_form_of_set(
 			int idx,
 			variety_stabilizer_compute *C,
 			int &idx_canonical_form,
 			int &idx_equation,
 			int &f_found_eqn,
 			int verbose_level);
-	int find_equation_new(
+	// called from variety_compute_canonical_form::classify_using_set_of_rational_points
+	int find_equation(
 			variety_stabilizer_compute *B,
 			int *alpha, int *gamma,
 			int idx_rational_point_set, int &found_at,
@@ -901,9 +902,7 @@ public:
 			int verbose_level);
 	std::string stringify_csv_entry_one_line_nauty(
 			int i, int verbose_level);
-	std::string stringify_csv_entry_one_line_nauty_new(
-			int i, int verbose_level);
-	void prepare_csv_entry_one_line_nauty_new(
+	void prepare_csv_entry_one_line_nauty(
 			std::vector<std::string> &v, int i, int verbose_level);
 };
 

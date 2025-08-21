@@ -42,8 +42,8 @@ MAGMA_PATH=""
 MAGMA_EXE=$(MAGMA_PATH)magma
 #MAGMA_EXE=echo
 
-OPEN=open
-#OPEN=echo
+#OPEN=open
+OPEN=echo
 
 
 PDFLATEX=pdflatex
@@ -1704,7 +1704,6 @@ KLEIN_CUBIC_THREEFOLD_EQN="X0^2*X1 + X1^2*X2 + X2^2*X3 + X3^2*X4 + X4^2*X0"
 BARTH_SEXTIC_MOD_11_SINGULAR_POINTS="0, 1, 2, 4, 39, 44, 61, 63, 64, 66, 94, 96, 97, 99, 116, 121, 135, 144, 145, 171, 174, 226, 229, 244, 255, 275, 365, 374, 424, 425, 457, 458, 540, 573, 620, 625, 674, 681, 685, 692, 764, 767, 841, 844, 885, 888, 962, 965, 983, 988, 1037, 1044, 1048, 1055, 1145, 1178, 1271, 1272, 1304, 1305, 1343, 1355, 1364, 1454, 1463"
 
 
-NB_CUBIC_SURFACES_Q13=4
 
 
 HIRSCHFELD_SURFACE_EQUATION_ALGEBRAIC_FORM="X0^2*X3 + X1^2*X2 + X1*X2^2 + X0*X3^2"
@@ -6810,8 +6809,8 @@ Hirschfeld_stab_field_reduction:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex PGL_8_2_Field_Reduction_report.tex
-	open PGL_8_2_Field_Reduction_report.pdf
+	$(PDFLATEX) PGL_8_2_Field_Reduction_report.tex
+	$(OPEN) PGL_8_2_Field_Reduction_report.pdf
 
 
 
@@ -10092,8 +10091,8 @@ Op_6_2_Siegel_transformation_expand_class_2C:
 			-conjugacy_class_of "Siegel" \
 			$(SIEGEL_TRANSFORM_UV_2C) \
 		-end
-	#pdflatex PGOp_6_2_Siegel_elements.tex
-	#open PGOp_6_2_Siegel_elements.pdf
+	#$(PDFLATEX) PGOp_6_2_Siegel_elements.tex
+	#$(OPEN) PGOp_6_2_Siegel_elements.pdf
 
 #PGOp_6_2_class_of_Siegel.csv
 # class size 210, so 2C
@@ -10352,8 +10351,8 @@ cubic_eqn_q3_0:
 		-with V -do -variety_activity -compute_group -nauty_control -save_orbit_of_equations eqn_ -end -end \
 		-with V -do -variety_activity -singular_points -end \
 		-with V -do -variety_activity -report -end
-	pdflatex variety_eqn_q3_0_report.tex
-	open variety_eqn_q3_0_report.pdf
+	$(PDFLATEX) variety_eqn_q3_0_report.tex
+	$(OPEN) variety_eqn_q3_0_report.pdf
 
 
 
@@ -12679,7 +12678,7 @@ surface_4_0:
 
 
 Family_general_F7:
-	$(ORBITER) -v 3 \
+	$(ORBITER) -v 10 \
 		-define F -finite_field -q 7 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
 		-define S7_abcd_2_3_3_4 -cubic_surface \
@@ -12826,8 +12825,8 @@ Dickson1_group:
 		-end \
 		-with V -do -variety_activity -singular_points -end \
 		-with V -do -variety_activity -report -end
-	pdflatex variety_Dickson_1_report.tex
-	open variety_Dickson_1_report.pdf
+	$(PDFLATEX) variety_Dickson_1_report.tex
+	$(OPEN) variety_Dickson_1_report.pdf
 
 
 
@@ -12856,8 +12855,8 @@ Dickson2_group:
 		-end \
 		-with V -do -variety_activity -singular_points -end \
 		-with V -do -variety_activity -report -end
-	pdflatex variety_Dickson_2_report.tex
-	open variety_Dickson_2_report.pdf
+	$(PDFLATEX) variety_Dickson_2_report.tex
+	$(OPEN) variety_Dickson_2_report.pdf
 
 
 
@@ -14032,11 +14031,25 @@ surface_7_0_make_quartic_curves:
 		-end \
 		-define F -finite_field -q 7 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define P2 -projective_space -n 2 -field F -v 0 -end \
+		-define Control -poset_classification_control \
+			-problem_label nc_arcs_q7 \
+			-W -depth 6 \
+		-end \
+		-define Arc_control -arc_generator_control \
+			-projective_space P2 \
+			-control Control \
+			-target_size 6 \
+			-d 2 \
+		-end \
+		-define Orb -orbits \
+			-on_arcs Arc_control \
+		-end \
 		-define S -cubic_surface -space P -catalogue 0 -end \
 		-with S -do \
 		-cubic_surface_activity \
 			-report Do \
-			-report_all_flag_orbits \
+			-report_all_flag_orbits Orb \
 		-end
 	$(PDFLATEX) surface_catalogue_q7_iso0_report.tex
 	$(OPEN) surface_catalogue_q7_iso0_report.pdf
@@ -14046,6 +14059,20 @@ quartic_curves_q7:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 7 -end \
 		-define P -projective_space -n 3 -field F -end \
+		-define P2 -projective_space -n 2 -field F -v 0 -end \
+		-define Control -poset_classification_control \
+			-problem_label nc_arcs_q7 \
+			-W -depth 6 \
+		-end \
+		-define Arc_control -arc_generator_control \
+			-projective_space P2 \
+			-control Control \
+			-target_size 6 \
+			-d 2 \
+		-end \
+		-define Orb -orbits \
+			-on_arcs Arc_control \
+		-end \
 		-loop L 0 $(NB_CUBIC_SURFACES_Q7) 1 \
 			-define S_%L -cubic_surface -space P -catalogue %L -end \
 		-end_loop L \
@@ -14053,7 +14080,7 @@ quartic_curves_q7:
 		-loop L 0 $(NB_CUBIC_SURFACES_Q7) 1 \
 			-with S_%L -do \
 			-cubic_surface_activity \
-				-export_all_quartic_curves \
+				-export_all_quartic_curves Orb \
 			-end \
 		-end_loop L \
 		-print_symbols
@@ -14066,11 +14093,25 @@ surface_9_1_make_quartic_curves:
 		-end \
 		-define F -finite_field -q 9 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define P2 -projective_space -n 2 -field F -v 0 -end \
+		-define Control -poset_classification_control \
+			-problem_label nc_arcs_q9 \
+			-W -depth 6 \
+		-end \
+		-define Arc_control -arc_generator_control \
+			-projective_space P2 \
+			-control Control \
+			-target_size 6 \
+			-d 2 \
+		-end \
+		-define Orb -orbits \
+			-on_arcs Arc_control \
+		-end \
 		-define S -cubic_surface -space P -catalogue 1 -end \
 		-with S -do \
 		-cubic_surface_activity \
 			-report Do \
-			-report_all_flag_orbits \
+			-report_all_flag_orbits Orb \
 		-end
 	#$(PDFLATEX) surface_catalogue_q9_iso1_report.tex
 	#$(OPEN) surface_catalogue_q9_iso1_report.pdf
@@ -14082,6 +14123,20 @@ quartic_curves_q13:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 13 -end \
 		-define P -projective_space -n 3 -field F -end \
+		-define P2 -projective_space -n 2 -field F -v 0 -end \
+		-define Control -poset_classification_control \
+			-problem_label nc_arcs_q13 \
+			-W -depth 6 \
+		-end \
+		-define Arc_control -arc_generator_control \
+			-projective_space P2 \
+			-control Control \
+			-target_size 6 \
+			-d 2 \
+		-end \
+		-define Orb -orbits \
+			-on_arcs Arc_control \
+		-end \
 		-loop L 0 $(NB_CUBIC_SURFACES_Q13) 1 \
 			-define S_%L -cubic_surface -space P -catalogue %L -end \
 		-end_loop L \
@@ -14089,7 +14144,7 @@ quartic_curves_q13:
 		-loop L 0 $(NB_CUBIC_SURFACES_Q13) 1 \
 			-with S_%L -do \
 			-cubic_surface_activity \
-				-export_all_quartic_curves \
+				-export_all_quartic_curves Orb \
 			-end \
 		-end_loop L \
 		-print_symbols
@@ -14103,6 +14158,20 @@ quartic_curves_q19:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 19 -end \
 		-define P -projective_space -n 3 -field F -end \
+		-define P2 -projective_space -n 2 -field F -v 0 -end \
+		-define Control -poset_classification_control \
+			-problem_label nc_arcs_q19 \
+			-W -depth 6 \
+		-end \
+		-define Arc_control -arc_generator_control \
+			-projective_space P2 \
+			-control Control \
+			-target_size 6 \
+			-d 2 \
+		-end \
+		-define Orb -orbits \
+			-on_arcs Arc_control \
+		-end \
 		-loop L 0 $(NB_CUBIC_SURFACES_Q19) 1 \
 			-define S_%L -cubic_surface -space P -catalogue %L -end \
 		-end_loop L \
@@ -14110,7 +14179,7 @@ quartic_curves_q19:
 		-loop L 0 $(NB_CUBIC_SURFACES_Q19) 1 \
 			-with S_%L -do \
 			-cubic_surface_activity \
-				-export_all_quartic_curves \
+				-export_all_quartic_curves Orb \
 			-end \
 		-end_loop L \
 		-print_symbols
@@ -14121,11 +14190,25 @@ quartic_curves_q29_po4_export:
 	$(ORBITER) -v 10 \
 		-define F -finite_field -q 29 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define P2 -projective_space -n 2 -field F -v 0 -end \
+		-define Control -poset_classification_control \
+			-problem_label nc_arcs_q29 \
+			-W -depth 6 \
+		-end \
+		-define Arc_control -arc_generator_control \
+			-projective_space P2 \
+			-control Control \
+			-target_size 6 \
+			-d 2 \
+		-end \
+		-define Orb -orbits \
+			-on_arcs Arc_control \
+		-end \
 		-define S_4 -cubic_surface -space P -catalogue 4 -end \
 		-print_symbols \
 		-with S_4 -do \
 		-cubic_surface_activity \
-			-export_all_quartic_curves \
+			-export_all_quartic_curves Orb \
 		-end \
 		-print_symbols
 
@@ -14142,15 +14225,29 @@ quartic_curves_q29_po4_flag_orbits_report:
 	$(ORBITER) -v 10 \
 		-define F -finite_field -q 29 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define P2 -projective_space -n 2 -field F -v 0 -end \
+		-define Control -poset_classification_control \
+			-problem_label nc_arcs_q29 \
+			-W -depth 6 \
+		-end \
+		-define Arc_control -arc_generator_control \
+			-projective_space P2 \
+			-control Control \
+			-target_size 6 \
+			-d 2 \
+		-end \
+		-define Orb -orbits \
+			-on_arcs Arc_control \
+		-end \
 		-define S_4 -cubic_surface -space P -catalogue 4 -end \
 		-print_symbols \
 		-with S_4 -do \
 		-cubic_surface_activity \
-			-report_all_flag_orbits \
+			-report_all_flag_orbits Orb \
 		-end \
 		-print_symbols
-	pdflatex surface_catalogue_q29_iso4_quartics.tex
-	open surface_catalogue_q29_iso4_quartics.pdf
+	$(PDFLATEX) surface_catalogue_q29_iso4_quartics.tex
+	$(OPEN) surface_catalogue_q29_iso4_quartics.pdf
 
 
 #User time: 1:52
@@ -14192,8 +14289,8 @@ quartic_curve_29_121:
 			-quartic_curve_activity \
 				-report \
 			-end
-	pdflatex quartic_curve_catalogue_q29_iso121_report.tex
-	open quartic_curve_catalogue_q29_iso121_report.pdf
+	$(PDFLATEX) quartic_curve_catalogue_q29_iso121_report.tex
+	$(OPEN) quartic_curve_catalogue_q29_iso121_report.pdf
 
 
 
@@ -14206,7 +14303,6 @@ SECTION_CLASSIFICATION_OF_QUARTIC_CURVE:
 
 
 test_9_6:
-	make quartic_curve_9_0_report
 	make quartic_curve_13_0_report
 	make PG_2_13_rank_lines
 	make PG_2_13_orbits_on_lines
@@ -14220,20 +14316,6 @@ test_9_6:
 
 
 
-
-
-
-quartic_curve_9_0_report: 
-	$(ORBITER) -v 3 \
-		-define F -finite_field -q 9 -end \
-		-define P -projective_space -n 2 -field F -v 0 -end \
-		-define C -quartic_curve -space P -catalogue 0 -end \
-		-with C -do \
-			-quartic_curve_activity \
-				-report \
-			-end
-	$(PDFLATEX) quartic_curve_catalogue_q9_iso0_report.tex
-	$(OPEN) quartic_curve_catalogue_q9_iso0_report.pdf
 
 
 
@@ -14284,7 +14366,9 @@ PG_2_13_orbits_on_lines:
 		-define G_on_lines -modified_group -from G \
 			-on_k_subspaces 2 \
 		-end \
-		-define Orb -orbits -group G_on_lines \
+		-define Orb -orbits \
+			-group G \
+			-group_action G_on_lines \
 			-on_subsets 4 Control \
 		-end \
 		-with Orb -do -orbits_activity \
@@ -21438,7 +21522,7 @@ Praeger_45_12_3_design_c:
 	magick \
 		Praeger_object0_INP_flag_orbits_draw.bmp \
 		Praeger_object0_INP_flag_orbits_draw.png
-	open Praeger_object0_INP_flag_orbits_draw.png
+	$(OPEN) Praeger_object0_INP_flag_orbits_draw.png
 
 # ago = 19440
 

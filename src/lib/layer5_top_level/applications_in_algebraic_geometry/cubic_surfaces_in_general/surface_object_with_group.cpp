@@ -742,6 +742,611 @@ void surface_object_with_group::compute_projectivity_group(
 	}
 }
 
+void surface_object_with_group::recognize_Fabcd(
+		int f_extra_point, int point_rk,
+		orbits::orbits_create *Classification_of_arcs,
+		int &a, int &b, int &c, int &d, int &e, int &f,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_object_with_group::recognize_Fabcd" << endl;
+	}
+	if (f_extra_point) {
+		if (f_v) {
+			cout << "surface_object_with_group::recognize_Fabcd extra_point = " << point_rk << endl;
+		}
+	}
+	else {
+		if (f_v) {
+			cout << "surface_object_with_group::recognize_Fabcd no extra point" << endl;
+		}
+	}
+
+
+	if (!Classification_of_arcs->f_has_arcs) {
+		cout << "surface_object_with_group::recognize_Fabcd "
+				"the orbits object has the wrong kind of orbit objects. "
+				"It should have orbits on arcs." << endl;
+		exit(1);
+	}
+
+	// Find a transformation which maps pt_A to pt_B:
+
+	long int plane1, plane2;
+
+	if (SO->SOP->SmoothProperties == NULL) {
+		cout << "surface_object_with_group::recognize_Fabcd "
+				"SmoothProperties is NULL" << endl;
+		exit(1);
+	}
+
+	plane1 = SO->SOP->SmoothProperties->Tritangent_plane_rk[30];
+	// \pi_{12,34,56}
+
+	plane2 = 0;
+
+	if (f_v) {
+		cout << "surface_object_with_group::recognize_Fabcd "
+			"plane1 = " << plane1 << " plane2=" << plane2 << endl;
+	}
+
+	//int *transporter;
+	int *Transporter;
+	// the transformation that maps
+	// the plane \pi_{12,34,56} to X_3 = 0
+
+	int *equation_nice;
+
+	//transporter = NEW_int(17);
+	equation_nice = NEW_int(20);
+
+	if (f_v) {
+		cout << "surface_object_with_group::recognize_Fabcd "
+			"before make_element_which_moves_a_point_from_A_to_B" << endl;
+	}
+
+	Transporter = NEW_int(Surf_A->A->elt_size_in_int);
+
+	Surf_A->A->Strong_gens->make_element_which_moves_a_point_from_A_to_B(
+			Surf_A->A_on_planes,
+			plane1, plane2, Transporter,
+			0 /*verbose_level*/);
+	if (f_v) {
+		cout << "surface_object_with_group::recognize_Fabcd "
+			"after make_element_which_moves_a_point_from_A_to_B" << endl;
+	}
+
+	if (f_v) {
+		cout << "surface_object_with_group::recognize_Fabcd "
+				"transporter element=" << endl;
+		Surf_A->A->Group_element->element_print_quick(
+				Transporter, cout);
+	}
+
+	//SOA->Surf_A->A->Group_element->make_element(Transporter, transporter, 0 /* verbose_level */);
+
+	long int extra_point_image = -1;
+
+
+	if (f_extra_point) {
+		if (f_v) {
+			cout << "surface_object_with_group::recognize_Fabcd "
+				"before Surf_A->map_a_point" << endl;
+		}
+		extra_point_image = Surf_A->map_a_point(
+				Transporter,
+				point_rk, 0 /* verbose_level */);
+		if (f_v) {
+			cout << "surface_object_with_group::recognize_Fabcd "
+				"after Surf_A->map_a_point" << endl;
+		}
+		if (f_v) {
+			cout << "surface_object_with_group::recognize_Fabcd "
+					"extra point " << point_rk << " -> " << extra_point_image << endl;
+		}
+	}
+
+	// Transform the equation:
+
+	if (f_v) {
+		cout << "surface_object_with_group::recognize_Fabcd "
+				"before Surf_A->AonHPD_3_4->compute_image_int_low_level" << endl;
+	}
+	Surf_A->AonHPD_3_4->compute_image_int_low_level(
+			Transporter,
+			SO->Variety_object->eqn /*int *input*/,
+			equation_nice /* int *output */,
+			0 /*verbose_level*/);
+
+	if (f_v) {
+		cout << "surface_object_with_group::recognize_Fabcd "
+			"equation_nice=" << endl;
+		Surf->PolynomialDomains->Poly3_4->print_equation(
+				cout, equation_nice);
+		cout << endl;
+		cout << "surface_object_with_group::recognize_Fabcd "
+			"equation_nice=" << endl;
+		Int_vec_print(cout, equation_nice, 20);
+		cout << endl;
+		if (f_extra_point) {
+			cout << "surface_object_with_group::recognize_Fabcd "
+					"extra point " << point_rk << " -> " << extra_point_image << endl;
+		}
+	}
+
+	int f_inverse = false;
+	int *transformation_coeffs;
+	int f_has_group = false;
+
+	transformation_coeffs = Transporter;
+
+	geometry::algebraic_geometry::variety_object *Variety_object_transformed;
+
+	groups::group_theory_global Group_theory_global;
+
+	groups::strong_generators *Strong_gens_out = NULL;
+
+	if (f_v) {
+		cout << "surface_object_with_group::recognize_Fabcd before "
+				"Group_theory_global.variety_apply_single_transformation" << endl;
+	}
+	Variety_object_transformed =
+			Group_theory_global.variety_apply_single_transformation(
+					SO->Variety_object,
+					Surf_A->A,
+					Surf_A->A2 /* A_on_lines */,
+					f_inverse,
+					transformation_coeffs,
+					f_has_group, NULL /* groups::strong_generators *Strong_gens_in */,
+					Strong_gens_out,
+					verbose_level - 1);
+	if (f_v) {
+		cout << "surface_object_with_group::recognize_Fabcd after "
+				"Group_theory_global.variety_apply_single_transformation" << endl;
+	}
+
+	//long int *Lines;
+	int nb_lines;
+
+	//Lines = Variety_object_transformed->Line_sets->Sets[0];
+	nb_lines = Variety_object_transformed->Line_sets->Set_size[0];
+
+	if (nb_lines != 27) {
+		cout << "surface_object_with_group::recognize_Fabcd nb_lines != 27" << endl;
+		exit(1);
+	}
+
+	int c12, c34, c56;
+	int b1, b2, a3, a4, a5, a6;
+
+	int p1, p2, p3, p4, p5, p6;
+
+
+	c12 = Surf->Schlaefli->line_cij(0, 1);
+
+	c34 = Surf->Schlaefli->line_cij(2, 3);
+
+	c56 = Surf->Schlaefli->line_cij(4, 5);
+
+
+	if (f_v) {
+		cout << "surface_object_with_group::recognize_Fabcd c12,c34,c56="
+				<< c12 << ","
+				<< c34 << ","
+				<< c56 << endl;
+	}
+
+
+	if (f_v) {
+		cout << "surface_object_with_group::recognize_Fabcd finding b1" << endl;
+	}
+	b1 = Surf->Schlaefli->line_bi(0);
+	if (f_v) {
+		cout << "surface_object_with_group::recognize_Fabcd finding b2" << endl;
+	}
+	b2 = Surf->Schlaefli->line_bi(1);
+	if (f_v) {
+		cout << "surface_object_with_group::recognize_Fabcd finding b3" << endl;
+	}
+	a3 = Surf->Schlaefli->line_ai(2);
+	if (f_v) {
+		cout << "surface_object_with_group::recognize_Fabcd finding b4" << endl;
+	}
+	a4 = Surf->Schlaefli->line_ai(3);
+	if (f_v) {
+		cout << "surface_object_with_group::recognize_Fabcd finding b5" << endl;
+	}
+	a5 = Surf->Schlaefli->line_ai(4);
+	if (f_v) {
+		cout << "surface_object_with_group::recognize_Fabcd finding b6" << endl;
+	}
+	a6 = Surf->Schlaefli->line_ai(5);
+
+	if (f_v) {
+		cout << "surface_object_with_group::recognize_Fabcd b1,b2,a3,a4,a5,a6="
+				<< b1 << ","
+				<< b2 << ","
+				<< a3 << ","
+				<< a4 << ","
+				<< a5 << ","
+				<< a6 << endl;
+	}
+
+	//long int extra_point_image = -1;
+
+
+	long int p7 = -1;
+
+	if (f_extra_point) {
+		long int line_rk;
+		long int *Lines;
+
+		Lines = Variety_object_transformed->Line_sets->Sets[0];
+
+		line_rk = Surf_A->PA->P->Solid->transversal_to_two_skew_lines_through_a_point(
+				Lines[b1], Lines[b2], extra_point_image, 0 /*verbose_level*/);
+
+		p7 = Surf_A->PA->P->Solid->point_of_intersection_of_a_line_and_a_plane_in_three_space(
+				line_rk, plane2, 0 /* verbose_level */);
+
+	}
+
+
+
+	// need a new surface object with the transformed lines
+
+	geometry::algebraic_geometry::surface_object *SO_trans;
+
+	SO_trans = NEW_OBJECT(geometry::algebraic_geometry::surface_object);
+
+	if (f_v) {
+		cout << "surface_object_with_group::recognize_Fabcd "
+				"before SO_trans->init_variety_object" << endl;
+	}
+	SO_trans->init_variety_object(
+			Surf,
+			Variety_object_transformed,
+			verbose_level - 1);
+	if (f_v) {
+		cout << "surface_object_with_group::recognize_Fabcd "
+				"after SO_trans->init_variety_object" << endl;
+	}
+
+	if (f_v) {
+		cout << "c12=" << endl;
+		SO_trans->print_one_line_tex(
+				cout, c12);
+	}
+	if (f_v) {
+		cout << "c34=" << endl;
+		SO_trans->print_one_line_tex(
+				cout, c34);
+	}
+	if (f_v) {
+		cout << "c56=" << endl;
+		SO_trans->print_one_line_tex(
+				cout, c56);
+	}
+
+
+	if (f_v) {
+		cout << "surface_object_with_group::recognize_Fabcd finding p1" << endl;
+	}
+	p1 = SO_trans->find_double_point(
+			c12, b1, 0 /* verbose_level */);
+	if (f_v) {
+		cout << "surface_object_with_group::recognize_Fabcd finding p2" << endl;
+	}
+	p2 = SO_trans->find_double_point(
+			c12, b2, 0 /* verbose_level */);
+	if (f_v) {
+		cout << "surface_object_with_group::recognize_Fabcd finding p3" << endl;
+	}
+	p3 = SO_trans->find_double_point(
+			c34, a3, 0 /* verbose_level */);
+	if (f_v) {
+		cout << "surface_object_with_group::recognize_Fabcd finding p4" << endl;
+	}
+	p4 = SO_trans->find_double_point(
+			c34, a4, 0 /* verbose_level */);
+	if (f_v) {
+		cout << "surface_object_with_group::recognize_Fabcd finding p5" << endl;
+	}
+	p5 = SO_trans->find_double_point(
+			c56, a5, 0 /* verbose_level */);
+	if (f_v) {
+		cout << "surface_object_with_group::recognize_Fabcd finding p6" << endl;
+	}
+	p6 = SO_trans->find_double_point(
+			c56, a6, 0 /* verbose_level */);
+
+	if (f_v) {
+		if (f_extra_point) {
+			cout << "surface_object_with_group::recognize_Fabcd p1,p2,p3,p4,p5,p6,p7="
+					<< p1 << ","
+					<< p2 << ","
+					<< p3 << ","
+					<< p4 << ","
+					<< p5 << ","
+					<< p6 << ","
+					<< p7 << endl;
+
+		}
+		else {
+			cout << "surface_object_with_group::recognize_Fabcd p1,p2,p3,p4,p5,p6="
+					<< p1 << ","
+					<< p2 << ","
+					<< p3 << ","
+					<< p4 << ","
+					<< p5 << ","
+					<< p6 << endl;
+		}
+	}
+
+	long int *Points;
+	geometry::projective_geometry::projective_space *P2;
+
+	P2 = Surf_A->PA->PA2->P;
+	Points = SO_trans->Variety_object->Point_sets->Sets[0];
+	int v[4];
+	long int q1, q2, q3, q4, q5, q6, q7;
+	long int arc6[6];
+
+	Surf->unrank_point(v, Points[p1]);
+	if (f_v) {
+		cout << "surface_object_with_group::recognize_Fabcd p1=";
+		Int_vec_print(cout, v, 4);
+		cout << endl;
+	}
+	q1 = P2->rank_point(v);
+	Surf->unrank_point(v, Points[p2]);
+	if (f_v) {
+		cout << "surface_object_with_group::recognize_Fabcd p2=";
+		Int_vec_print(cout, v, 4);
+		cout << endl;
+	}
+	q2 = P2->rank_point(v);
+	Surf->unrank_point(v, Points[p3]);
+	if (f_v) {
+		cout << "surface_object_with_group::recognize_Fabcd p3=";
+		Int_vec_print(cout, v, 4);
+		cout << endl;
+	}
+	q3 = P2->rank_point(v);
+	Surf->unrank_point(v, Points[p4]);
+	if (f_v) {
+		cout << "surface_object_with_group::recognize_Fabcd p4=";
+		Int_vec_print(cout, v, 4);
+		cout << endl;
+	}
+	q4 = P2->rank_point(v);
+	Surf->unrank_point(v, Points[p5]);
+	if (f_v) {
+		cout << "surface_object_with_group::recognize_Fabcd p5=";
+		Int_vec_print(cout, v, 4);
+		cout << endl;
+	}
+	q5 = P2->rank_point(v);
+	Surf->unrank_point(v, Points[p6]);
+	if (f_v) {
+		cout << "surface_object_with_group::recognize_Fabcd p6=";
+		Int_vec_print(cout, v, 4);
+		cout << endl;
+	}
+	q6 = P2->rank_point(v);
+
+
+	if (f_extra_point) {
+		Surf->unrank_point(v, p7);
+		if (f_v) {
+			cout << "surface_object_with_group::recognize_Fabcd p7=";
+			Int_vec_print(cout, v, 4);
+			cout << endl;
+		}
+		q7 = P2->rank_point(v);
+	}
+	else {
+		q7 = -1;
+	}
+
+	arc6[0] = q1;
+	arc6[1] = q2;
+	arc6[2] = q3;
+	arc6[3] = q4;
+	arc6[4] = q5;
+	arc6[5] = q6;
+	if (f_v) {
+		cout << "surface_object_with_group::recognize_Fabcd arc6[]=";
+		Lint_vec_print(cout, arc6, 6);
+		cout << endl;
+	}
+
+	int v1[3];
+	int v2[3];
+	int v3[3];
+	int v4[3];
+	int v5[3];
+	int v6[3];
+	int v7[3];
+
+	P2->unrank_point(v1, arc6[0]);
+	P2->unrank_point(v2, arc6[1]);
+	P2->unrank_point(v3, arc6[2]);
+	P2->unrank_point(v4, arc6[3]);
+	P2->unrank_point(v5, arc6[4]);
+	P2->unrank_point(v6, arc6[5]);
+	if (f_v) {
+		cout << "surface_object_with_group::recognize_Fabcd v1[]=";
+		Int_vec_print(cout, v1, 3);
+		cout << endl;
+		cout << "surface_object_with_group::recognize_Fabcd v2[]=";
+		Int_vec_print(cout, v2, 3);
+		cout << endl;
+		cout << "surface_object_with_group::recognize_Fabcd v3[]=";
+		Int_vec_print(cout, v3, 3);
+		cout << endl;
+		cout << "surface_object_with_group::recognize_Fabcd v4[]=";
+		Int_vec_print(cout, v4, 3);
+		cout << endl;
+		cout << "surface_object_with_group::recognize_Fabcd v5[]=";
+		Int_vec_print(cout, v5, 3);
+		cout << endl;
+		cout << "surface_object_with_group::recognize_Fabcd v6[]=";
+		Int_vec_print(cout, v6, 3);
+		cout << endl;
+	}
+
+
+	apps_geometry::arc_generator *Arc_generator;
+
+	Arc_generator = Classification_of_arcs->Arc_generator;
+
+	int *Transporter2;
+	int orbit_at_level;
+	data_structures_groups::set_and_stabilizer
+					*Set_and_stab_original;
+	data_structures_groups::set_and_stabilizer
+					*Set_and_stab_canonical;
+
+	Transporter2 = NEW_int(Surf_A->A->elt_size_in_int);
+	Set_and_stab_original = NEW_OBJECT(data_structures_groups::set_and_stabilizer);
+	Set_and_stab_canonical = NEW_OBJECT(data_structures_groups::set_and_stabilizer);
+
+	if (f_v) {
+		cout << "surface_object_with_group::recognize_Fabcd "
+				"before Arc_generator->gen->identify_and_get_stabilizer" << endl;
+	}
+	Arc_generator->gen->identify_and_get_stabilizer(
+			arc6, 6, Transporter2,
+			orbit_at_level,
+			Set_and_stab_original,
+			Set_and_stab_canonical,
+			verbose_level - 3);
+	if (f_v) {
+		cout << "surface_object_with_group::recognize_Fabcd "
+				"after Arc_generator->gen->identify_and_get_stabilizer" << endl;
+	}
+
+
+	long int canonical_arc[7];
+
+	if (Set_and_stab_canonical->sz != 6) {
+		cout << "surface_object_with_group::recognize_Fabcd "
+				"Set_and_stab_canonical->sz != 6" << endl;
+		exit(1);
+	}
+
+	Lint_vec_copy(Set_and_stab_canonical->data, canonical_arc, 6);
+
+	P2->unrank_point(v5, canonical_arc[4]);
+	P2->unrank_point(v6, canonical_arc[5]);
+
+	if (f_extra_point) {
+		if (f_v) {
+			cout << "surface_object_with_group::recognize_Fabcd "
+					"before Surf_A->PA->PA2->A->Group_element->image_of" << endl;
+		}
+		canonical_arc[6] = Surf_A->PA->PA2->A->Group_element->image_of(Transporter2, q7);
+		if (f_v) {
+			cout << "surface_object_with_group::recognize_Fabcd "
+					"after Surf_A->PA->PA2->A->Group_element->image_of" << endl;
+			cout << "surface_object_with_group::recognize_Fabcd "
+					"canonical_arc[6] = " << canonical_arc[6] << endl;
+		}
+		P2->unrank_point(v7, canonical_arc[6]);
+
+	}
+
+
+	if (v5[2] != 1) {
+		cout << "surface_object_with_group::recognize_Fabcd v5[2] != 1" << endl;
+		exit(1);
+	}
+	a = v5[0];
+	b = v5[1];
+
+	if (f_v) {
+		cout << "surface_object_with_group::recognize_Fabcd "
+				"a,b=" << a << "," << b << endl;
+	}
+
+	if (v6[2] != 1) {
+		cout << "surface_object_with_group::recognize_Fabcd v6[2] != 1" << endl;
+		exit(1);
+	}
+	c = v6[0];
+	d = v6[1];
+
+	if (f_v) {
+		cout << "surface_object_with_group::recognize_Fabcd "
+				"c,d=" << c << "," << d << endl;
+	}
+
+	if (f_extra_point) {
+		if (v7[2] != 1) {
+			cout << "surface_object_with_group::recognize_Fabcd v7[2] != 1" << endl;
+			exit(1);
+		}
+		e = v7[0];
+		f = v7[1];
+		if (f_v) {
+			cout << "surface_object_with_group::recognize_Fabcd "
+					"e,f=" << e << "," << f << endl;
+		}
+
+	}
+
+
+
+	if (f_v) {
+		cout << "surface_object_with_group::recognize_Fabcd "
+				"before FREE_int(Transporter)" << endl;
+	}
+	FREE_int(Transporter);
+	if (f_v) {
+		cout << "surface_object_with_group::recognize_Fabcd "
+				"before FREE_int(equation_nice)" << endl;
+	}
+	FREE_int(equation_nice);
+
+	if (Strong_gens_out) {
+		if (f_v) {
+			cout << "surface_object_with_group::recognize_Fabcd "
+					"before FREE_OBJECT(Strong_gens_out)" << endl;
+		}
+		FREE_OBJECT(Strong_gens_out);
+	}
+
+	if (f_v) {
+		cout << "surface_object_with_group::recognize_Fabcd "
+				"before FREE_OBJECT(SO_trans)" << endl;
+	}
+	FREE_OBJECT(SO_trans);
+	if (f_v) {
+		cout << "surface_object_with_group::recognize_Fabcd "
+				"before FREE_int(Transporter2)" << endl;
+	}
+	FREE_int(Transporter2);
+	if (f_v) {
+		cout << "surface_object_with_group::recognize_Fabcd "
+				"before FREE_OBJECT(Set_and_stab_original)" << endl;
+	}
+	FREE_OBJECT(Set_and_stab_original);
+	if (f_v) {
+		cout << "surface_object_with_group::recognize_Fabcd "
+				"before FREE_OBJECT(Set_and_stab_canonical)" << endl;
+	}
+	FREE_OBJECT(Set_and_stab_canonical);
+
+
+	if (f_v) {
+		cout << "surface_object_with_group::recognize_Fabcd done" << endl;
+	}
+}
+
+
 void surface_object_with_group::compute_orbits_of_automorphism_group(
 		int verbose_level)
 {
@@ -2726,6 +3331,7 @@ void surface_object_with_group::report_all_flag_orbits(
 		std::string &surface_label_txt,
 		std::string &surface_label_tex,
 		std::ostream &ost,
+		orbits::orbits_create *Classification_of_arcs,
 		int verbose_level)
 // reports on all quartic curves associated
 // with the orbits on points not on lines
@@ -2763,7 +3369,7 @@ void surface_object_with_group::report_all_flag_orbits(
 			cout << "surface_object_with_group::report_all_flag_orbits "
 					"before QC->create_quartic_curve" << endl;
 		}
-		QC->create_quartic_curve(pt_orbit, verbose_level);
+		QC->create_quartic_curve(Classification_of_arcs, pt_orbit, verbose_level);
 		if (f_v) {
 			cout << "surface_object_with_group::report_all_flag_orbits "
 					"after QC->create_quartic_curve" << endl;
@@ -2802,6 +3408,7 @@ void surface_object_with_group::report_all_flag_orbits(
 
 void surface_object_with_group::export_all_quartic_curves(
 		std::string &fname_curves,
+		orbits::orbits_create *Classification_of_arcs,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2820,6 +3427,7 @@ void surface_object_with_group::export_all_quartic_curves(
 	}
 
 	prepare_data(
+			Classification_of_arcs,
 			headings,
 			Table,
 			nb_rows, nb_cols,
@@ -2854,6 +3462,7 @@ void surface_object_with_group::export_all_quartic_curves(
 }
 
 void surface_object_with_group::prepare_data(
+		orbits::orbits_create *Classification_of_arcs,
 		std::string &headings,
 		std::string *&Table,
 		int &nb_rows, int &nb_cols,
@@ -2888,6 +3497,7 @@ void surface_object_with_group::prepare_data(
 		std::vector<std::string> v;
 
 		export_one_quartic_curve(
+				Classification_of_arcs,
 				pt_orbit,
 				v,
 				verbose_level - 1);
@@ -2907,6 +3517,7 @@ void surface_object_with_group::prepare_data(
 
 
 void surface_object_with_group::export_one_quartic_curve(
+		orbits::orbits_create *Classification_of_arcs,
 		int pt_orbit,
 		std::vector<std::string> &v,
 		int verbose_level)
@@ -2937,7 +3548,7 @@ void surface_object_with_group::export_one_quartic_curve(
 		cout << "surface_object_with_group::export_all_quartic_curves "
 				"pt_orbit = " << pt_orbit << " before QC->create_quartic_curve" << endl;
 	}
-	QC->create_quartic_curve(pt_orbit, verbose_level - 1);
+	QC->create_quartic_curve(Classification_of_arcs, pt_orbit, verbose_level - 1);
 	if (f_v) {
 		cout << "surface_object_with_group::export_all_quartic_curves "
 				"pt_orbit = " << pt_orbit << " after QC->create_quartic_curve" << endl;
@@ -3056,9 +3667,9 @@ void surface_object_with_group::export_one_quartic_curve(
 void surface_object_with_group::create_heading(
 		std::string &heading, int &nb_cols)
 {
-	heading = "Q,SO,SEQN,SEQNALG,orbit,PT,PTCOEFF,PO_GO,PO_INDEX,curve,CURVEALG,"
+	heading = "Q,SO,SEQN,SEQNALG,orbit,PT,PTCOEFF,abcdef,PO_GO,PO_INDEX,curve,CURVEALG,"
 			"nb_pts_on_curve,pts_on_curve,bitangents,NB_E,NB_DOUBLE,NB_SINGLE,NB_ZERO,NB_K,Kovalevski_pts,go";
-	nb_cols = 21;
+	nb_cols = 22;
 
 }
 
@@ -3075,11 +3686,12 @@ void surface_object_with_group::create_vector_of_strings(
 		cout << "surface_object_with_group::create_vector_of_strings" << endl;
 	}
 
-	int nb_cols = 21;
+	int nb_cols = 22;
 
 	std::string s_eqn_surface;
 	std::string s_eqn_surface_algebraic;
-	std::string pt_coeff;
+	std::string s_pt_coeff;
+	std::string s_abcdef;
 
 	s_eqn_surface = Surf->PolynomialDomains->Poly3_4->stringify(SO->Variety_object->eqn);
 
@@ -3087,7 +3699,8 @@ void surface_object_with_group::create_vector_of_strings(
 			SO->Variety_object->eqn);
 
 
-	pt_coeff = Int_vec_stringify(QC->pt_A_coeff, 4);
+	s_pt_coeff = Int_vec_stringify(QC->pt_A_coeff, 4);
+	s_abcdef = Int_vec_stringify(QC->abcdef, 6);
 
 	std::string s_eqn, s_eqn_algebraic, s_nb_Pts, s_Pts, s_Lines, s_Kovalevski;
 
@@ -3111,32 +3724,28 @@ void surface_object_with_group::create_vector_of_strings(
 
 	v.resize(nb_cols);
 
-	if (nb_cols != 21) {
-		cout << "surface_object_with_group::create_vector_of_strings nb_cols != 21" << endl;
-		exit(1);
-	}
-
 	v[0] = std::to_string(Surf->F->q);
 	v[1] = std::to_string(pt_orbit);
 	v[2] = "\"" + s_eqn_surface + "\"";
 	v[3] = "\"" + s_eqn_surface_algebraic + "\"";
 	v[4] = std::to_string(QC->pt_orbit);
 	v[5] = std::to_string(QC->pt_A);
-	v[6] = "\"" + pt_coeff + "\"";
-	v[7] = ago.stringify();
-	v[8] = std::to_string(QC->po_index);
-	v[9] = "\"" + s_eqn + "\"";
-	v[10] = "\"" + s_eqn_algebraic + "\"";
-	v[11] = "\"" + s_nb_Pts + "\"";
-	v[12] = "\"" + s_Pts + "\"";
-	v[13] = "\"" + s_Lines + "\"";
-	v[14] = std::to_string(SO->SOP->nb_Eckardt_points);
-	v[15] = std::to_string(SO->SOP->nb_Double_points);
-	v[16] = std::to_string(SO->SOP->nb_Single_points);
-	v[17] = std::to_string(SO->SOP->nb_pts_not_on_lines);
-	v[18] = std::to_string(QO->QP->Kovalevski->nb_Kovalevski);
-	v[19] =  "\"" + s_Kovalevski + "\"";
-	v[20] = std::to_string(-1);
+	v[6] = "\"" + s_pt_coeff + "\"";
+	v[7] = "\"" + s_abcdef + "\"";
+	v[8] = ago.stringify();
+	v[9] = std::to_string(QC->po_index);
+	v[10] = "\"" + s_eqn + "\"";
+	v[11] = "\"" + s_eqn_algebraic + "\"";
+	v[12] = "\"" + s_nb_Pts + "\"";
+	v[13] = "\"" + s_Pts + "\"";
+	v[14] = "\"" + s_Lines + "\"";
+	v[15] = std::to_string(SO->SOP->nb_Eckardt_points);
+	v[16] = std::to_string(SO->SOP->nb_Double_points);
+	v[17] = std::to_string(SO->SOP->nb_Single_points);
+	v[18] = std::to_string(SO->SOP->nb_pts_not_on_lines);
+	v[19] = std::to_string(QO->QP->Kovalevski->nb_Kovalevski);
+	v[20] =  "\"" + s_Kovalevski + "\"";
+	v[21] = std::to_string(-1);
 
 	if (f_v) {
 		cout << "surface_object_with_group::create_vector_of_strings done" << endl;

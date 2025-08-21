@@ -281,14 +281,15 @@ int projective_space_of_dimension_three::point_of_intersection_of_a_line_and_a_l
 	return a;
 }
 
-int projective_space_of_dimension_three::point_of_intersection_of_a_line_and_a_plane_in_three_space(
-	long int line, int plane, int verbose_level)
+long int projective_space_of_dimension_three::point_of_intersection_of_a_line_and_a_plane_in_three_space(
+	long int line, long int plane, int verbose_level)
 // requires n = 3
 {
 	int f_v = (verbose_level >= 1);
 	int Basis1[4 * 4];
 	int Basis2[4 * 4];
-	int rk, a;
+	int rk;
+	long int a;
 	int M[16];
 
 	if (f_v) {

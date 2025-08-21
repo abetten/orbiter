@@ -1164,8 +1164,11 @@ void quartic_curve_create::create_quartic_curve_from_cubic_surface(
 		cout << "quartic_curve_create::create_quartic_curve_from_cubic_surface "
 				"before QC_from_surface->create_quartic_curve" << endl;
 	}
+
 	QC_from_surface->create_quartic_curve(
-			pt_orbit_idx, verbose_level);
+			NULL /* Classification_of_arcs */,
+			pt_orbit_idx,
+			verbose_level);
 
 	if (f_v) {
 		cout << "quartic_curve_create::create_quartic_curve_from_cubic_surface "
