@@ -390,7 +390,7 @@ void spreadsheet::read_spreadsheet(
 		cout << "spreadsheet::read_spreadsheet read file with "
 				<< nb_tokens << " tokens" << endl;
 
-		if (f_vv) {
+		if (false) {
 			for (i = 0; i < nb_tokens; i++) {
 				cout << setw(6) << i << " : '" << tokens[i] << "'" << endl;
 			}

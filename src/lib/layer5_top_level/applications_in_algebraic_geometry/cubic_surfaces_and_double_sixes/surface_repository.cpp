@@ -647,7 +647,6 @@ void surface_repository::report_surface(
 		int f_print_orbits, std::string &fname_mask,
 		other::graphics::layered_graph_draw_options *draw_options,
 		int max_nb_elements_printed,
-		//poset_classification::poset_classification_report_options *Opt,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

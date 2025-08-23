@@ -2,7 +2,8 @@ ROW,C1,C2,C3
 0,"tab:symbolic:objects:activity",,
 1,"Activities for Symbolic Objects",,
 1,"\verb'-export' ","  "," Export the symbolic object. "
-1,"\verb'-print' "," F "," Print the symbolic object, assuming that coefficients are from the finite field F. "
+1,"\verb'-print' ","  "," Print the symbolic object. "
+1,"\verb'-latex' ","  "," Print the symbolic object in latex format. "
 1,"\verb'-evaluate_affine' "," "," Computes the evaluation vector of the symbolic object. The evaluation vector is indexed by all affine points coordinatized by the variables. The entry is the value of the formula when the coordinates of the affine point are substituted. "
 1,"\verb'-collect_monomials_binary' "," "," Collects the monomials, and records the subscripts of terms which appear. This is made for polynomials over GF(2). A csv file is written. The function assumes that the formula is expanded, i.e., a sum of monomials. "
 END

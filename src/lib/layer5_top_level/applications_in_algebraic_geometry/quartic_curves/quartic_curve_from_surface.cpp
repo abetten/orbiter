@@ -269,10 +269,12 @@ void quartic_curve_from_surface::create_quartic_curve(
 					"before compute_point_A" << endl;
 		}
 		compute_point_A(
-				pt_orbit, verbose_level);
+				pt_orbit, verbose_level - 3);
 		if (f_v) {
 			cout << "quartic_curve_from_surface::create_quartic_curve "
 					"after compute_point_A" << endl;
+			cout << "quartic_curve_from_surface::create_quartic_curve "
+					"pt_A = " << pt_A << endl;
 		}
 
 		int a, b, c, d, e, f;
@@ -662,6 +664,11 @@ void quartic_curve_from_surface::compute_point_A(
 	pt_A = SOA->SO->SOP->Pts_not_on_lines[i];
 
 	SOA->Surf->unrank_point(pt_A_coeff, pt_A);
+
+	if (f_v) {
+		cout << "quartic_curve_from_surface::compute_point_A" << endl;
+		cout << "pt_A=" << pt_A << endl;
+	}
 
 	if (f_v) {
 		cout << "quartic_curve_from_surface::compute_point_A done" << endl;

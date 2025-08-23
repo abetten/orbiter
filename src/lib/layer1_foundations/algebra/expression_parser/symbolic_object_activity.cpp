@@ -61,7 +61,41 @@ void symbolic_object_activity::perform_activity(
 	}
 
 
-	if (Descr->f_evaluate_affine) {
+	if (Descr->f_print) {
+
+		if (f_v) {
+			cout << "symbolic_object_activity::perform_activity f_print" << endl;
+		}
+
+		if (f_v) {
+			cout << "symbolic_object_activity::perform_activity "
+					"before print" << endl;
+		}
+		print(verbose_level);
+		if (f_v) {
+			cout << "symbolic_object_activity::perform_activity "
+					"after print" << endl;
+		}
+
+	}
+	else if (Descr->f_latex) {
+
+		if (f_v) {
+			cout << "symbolic_object_activity::perform_activity f_latex" << endl;
+		}
+
+		if (f_v) {
+			cout << "symbolic_object_activity::perform_activity "
+					"before latex" << endl;
+		}
+		latex(verbose_level);
+		if (f_v) {
+			cout << "symbolic_object_activity::perform_activity "
+					"after latex" << endl;
+		}
+
+	}
+	else if (Descr->f_evaluate_affine) {
 		if (f_v) {
 			cout << "symbolic_object_activity::perform_activity f_evaluate_affine" << endl;
 		}
@@ -186,6 +220,70 @@ void symbolic_object_activity::perform_activity(
 	}
 
 }
+
+void symbolic_object_activity::print(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "symbolic_object_activity::print" << endl;
+	}
+
+
+	expression_parser::formula_vector *Vec;
+
+	Vec = f->Formula_vector;
+
+	int i;
+
+	for (i = 0; i < Vec->len; i++) {
+		cout << i << " : ";
+		Vec->V[i].print(cout);
+		cout << endl;
+	}
+
+	if (f_v) {
+		cout << "symbolic_object_activity::print done" << endl;
+	}
+}
+
+void symbolic_object_activity::latex(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "symbolic_object_activity::latex" << endl;
+	}
+
+	int f_latex = true;
+
+	expression_parser::formula_vector *Vec;
+
+	Vec = f->Formula_vector;
+
+	int i;
+
+	for (i = 0; i < Vec->len; i++) {
+		cout << i << " : ";
+
+		string s;
+
+
+		s = Vec->V[i].string_representation(
+				f_latex, 0 /* verbose_level*/);
+
+		cout << s;
+		cout << endl;
+	}
+
+	if (f_v) {
+		cout << "symbolic_object_activity::latex done" << endl;
+	}
+}
+
+
 
 void symbolic_object_activity::evaluate_affine(
 		int verbose_level)

@@ -1211,70 +1211,6 @@ int linear_algebra_global::reverse_engineer_semilinear_map(
 
 
 
-#if 0
-	// we will use a system of size d x (d + 1):
-
-	// coefficient matrix:
-	// the first d columns of system are the rows of Mtx.
-	// the RHS is v2, the image of the all one vector.
-	// The RHS is stored in column d of system.
-
-	for (i = 0; i < d; i++) {
-		for (j = 0; j < d; j++) {
-			system[i * (d + 1) + j] = Mtx[j * d + i];
-		}
-	}
-	// RHS:
-	for (i = 0; i < d; i++) {
-		system[i * (d + 1) + d] = v2[i];
-	}
-	if (f_vv) {
-		cout << "linear_algebra_global::reverse_engineer_semilinear_map "
-				"linear system:" << endl;
-		Int_vec_print_integer_matrix_width(
-				cout, system,
-				d, d + 1, d + 1, F->log10_of_q);
-		cout << endl;
-	}
-	rk = F->Linear_algebra->Gauss_simple(
-			system, d, d + 1, base_cols,
-			verbose_level - 4);
-	if (rk != d) {
-		cout << "linear_algebra_global::reverse_engineer_semilinear_map "
-				"rk != d, fatal" << endl;
-		exit(1);
-	}
-	if (f_vv) {
-		cout << "linear_algebra_global::reverse_engineer_semilinear_map "
-				"after Gauss_simple:" << endl;
-		Int_vec_print_integer_matrix_width(
-				cout, system,
-				d, d + 1, d + 1, F->log10_of_q);
-		cout << endl;
-	}
-
-	// multiply the i-th row of Mtx
-	// by the i-th element in the RHS of system.
-
-	// Is is done so that the image
-	// of the all-one vector is the all-one vector
-	// with respect to the new basis.
-
-	// we will use a system of size d x (d + 1):
-
-	for (i = 0; i < d; i++) {
-		c = system[i * (d + 1) + d];
-		if (c == 0) {
-			cout << "linear_algebra_global::reverse_engineer_semilinear_map "
-					"the input matrix does not have full rank" << endl;
-			exit(1);
-		}
-		// multiply row i by c:
-		for (j = 0; j < d; j++) {
-			Mtx[i * d + j] = F->mult(c, Mtx[i * d + j]);
-		}
-	}
-#endif
 
 	if (f_vv) {
 		cout << "linear_algebra_global::reverse_engineer_semilinear_map "
@@ -1439,6 +1375,7 @@ int linear_algebra_global::reverse_engineer_semilinear_map(
 
 void linear_algebra_global::create_frame(
 		int *&frame, int n, int verbose_level)
+// frames becomes the (n+1) x n matrix whose rows are the standard frame for PG(n-1,q)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1470,6 +1407,10 @@ void linear_algebra_global::adjust_scalars_in_frame(
 		algebra::field_theory::finite_field *F,
 		int d, int *Image_of_basis_in_rows, int *image_of_all_one,
 		int verbose_level)
+// called from linear_algebra_global::reverse_engineer_semilinear_map
+// Image_of_basis_in_rows[d * d] is the image vectors
+// of the standard basis of the vector space (in the rows)
+// image_of_all_one[d] is the image of the all-one-vector
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -1527,10 +1468,10 @@ void linear_algebra_global::adjust_scalars_in_frame(
 		cout << endl;
 	}
 
-	// multiply the i-th row of Mtx
+	// multiply the i-th row of Image_of_basis_in_rows
 	// by the i-th element in the RHS of system.
 
-	// Is is done so that the image
+	// This is done so that the image
 	// of the all-one vector is the all-one vector
 	// with respect to the new basis.
 

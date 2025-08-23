@@ -773,7 +773,7 @@ void surface_object_with_group::recognize_Fabcd(
 		exit(1);
 	}
 
-	// Find a transformation which maps pt_A to pt_B:
+	// Find a transformation which maps plane1 to plane2:
 
 	long int plane1, plane2;
 
@@ -786,7 +786,7 @@ void surface_object_with_group::recognize_Fabcd(
 	plane1 = SO->SOP->SmoothProperties->Tritangent_plane_rk[30];
 	// \pi_{12,34,56}
 
-	plane2 = 0;
+	plane2 = 0; // the plane X_3 = 0 has orbit number 0
 
 	if (f_v) {
 		cout << "surface_object_with_group::recognize_Fabcd "
@@ -981,16 +981,46 @@ void surface_object_with_group::recognize_Fabcd(
 	long int p7 = -1;
 
 	if (f_extra_point) {
+		if (f_v) {
+			cout << "surface_object_with_group::recognize_Fabcd "
+					"applying Clebsch map to extra_point_image" << endl;
+			cout << "surface_object_with_group::recognize_Fabcd "
+					"extra_point_image = " << extra_point_image << endl;
+		}
+
 		long int line_rk;
 		long int *Lines;
 
 		Lines = Variety_object_transformed->Line_sets->Sets[0];
 
+		if (f_v) {
+			cout << "surface_object_with_group::recognize_Fabcd "
+					"before transversal_to_two_skew_lines_through_a_point" << endl;
+		}
 		line_rk = Surf_A->PA->P->Solid->transversal_to_two_skew_lines_through_a_point(
 				Lines[b1], Lines[b2], extra_point_image, 0 /*verbose_level*/);
+		if (f_v) {
+			cout << "surface_object_with_group::recognize_Fabcd "
+					"after transversal_to_two_skew_lines_through_a_point" << endl;
+			cout << "surface_object_with_group::recognize_Fabcd "
+					"line_rk = " << line_rk << endl;
+			Surf->print_a_line_tex(
+					cout,
+					line_rk);
+		}
 
+		if (f_v) {
+			cout << "surface_object_with_group::recognize_Fabcd "
+					"before point_of_intersection_of_a_line_and_a_plane_in_three_space" << endl;
+		}
 		p7 = Surf_A->PA->P->Solid->point_of_intersection_of_a_line_and_a_plane_in_three_space(
 				line_rk, plane2, 0 /* verbose_level */);
+		if (f_v) {
+			cout << "surface_object_with_group::recognize_Fabcd "
+					"after point_of_intersection_of_a_line_and_a_plane_in_three_space" << endl;
+			cout << "surface_object_with_group::recognize_Fabcd "
+					"p7 = " << p7 << endl;
+		}
 
 	}
 

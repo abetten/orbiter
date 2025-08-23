@@ -1727,6 +1727,9 @@ public:
 	void print_one_line_tex(
 			std::ostream &ost,
 			long int *Lines, int nb_lines, int idx);
+	void print_a_line_tex(
+			std::ostream &ost,
+			long int line_rk);
 
 
 	// surface_domain_families.cpp:

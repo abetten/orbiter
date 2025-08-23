@@ -3449,7 +3449,8 @@ void surface_create::export_all_quartic_curves(
 
 	if (f_v) {
 		cout << "surface_create::export_all_quartic_curves" << endl;
-		cout << "surface_create::export_all_quartic_curves classification_of_arcs_label = " << classification_of_arcs_label << endl;
+		cout << "surface_create::export_all_quartic_curves "
+				"classification_of_arcs_label = " << classification_of_arcs_label << endl;
 	}
 
 	if (!f_has_group) {

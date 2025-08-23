@@ -466,6 +466,78 @@ void surface_domain::print_one_line_tex(
 	ost << "$$" << endl;
 }
 
+void surface_domain::print_a_line_tex(
+		std::ostream &ost,
+		long int line_rk)
+{
+	other::l1_interfaces::latex_interface L;
+	int vv[6];
+	int Basis1[8];
+	int Basis2[8];
+
+
+	Gr->unrank_lint_here(
+			Basis1, line_rk, 0 /*verbose_level*/);
+
+	Int_vec_copy(Basis1, Basis2, 8);
+
+	Gr->F->Linear_algebra->Gauss_easy_from_the_back(
+			Basis2, 2, 4);
+
+
+	//Gr->unrank_lint(Lines[idx], 0 /*verbose_level*/);
+
+
+	ost << "$$" << endl;
+	ost << "L_{" << line_rk << "}";
+
+	ost << " = " << endl;
+	//print_integer_matrix_width(cout,
+	// Gr->M, k, n, n, F->log10_of_q + 1);
+
+#if 1
+	Gr->latex_matrix(ost, Basis1);
+
+	ost << " = ";
+	Gr->latex_matrix(ost, Basis2);
+
+
+	//print_integer_matrix_tex(ost, Gr->M, 2, 4);
+	//ost << "\\right]_{" << Lines[i] << "}" << endl;
+
+
+	ost << "_{" << line_rk << "}" << endl;
+#endif
+
+#if 0
+	ost << "=" << endl;
+	ost << "\\left[" << endl;
+	L.print_integer_matrix_tex(ost, Basis1, 2, 4);
+	ost << "\\right]";
+	//ost << "_{" << Lines[idx] << "}";
+	ost << endl;
+#endif
+
+	int v6[6];
+
+	Gr->Pluecker_coordinates(line_rk, v6, 0 /* verbose_level */);
+
+	Int_vec_copy(v6, vv, 6); // mistake found by Alice Hui
+
+	long int klein_rk;
+	klein_rk = O->Orthogonal_indexing->Qplus_rank(
+			vv, 1, 5, 0 /* verbose_level*/);
+
+	ost << "={\\rm\\bf Pl}(" << v6[0] << "," << v6[1] << ","
+			<< v6[2] << "," << v6[3] << "," << v6[4]
+			<< "," << v6[5] << " ";
+	ost << ")";
+	ost << "_{" << klein_rk << "}";
+	ost << endl;
+	ost << "$$" << endl;
+}
+
+
 
 
 

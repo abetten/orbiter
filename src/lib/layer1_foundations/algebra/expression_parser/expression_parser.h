@@ -366,6 +366,7 @@ public:
 	int f_print;
 	//std::string print_over_Fq_field_label;
 
+	int f_latex;
 
 	int f_evaluate_affine;
 
@@ -412,6 +413,10 @@ public:
 			symbolic_object_builder *f,
 			int verbose_level);
 	void perform_activity(
+			int verbose_level);
+	void print(
+			int verbose_level);
+	void latex(
 			int verbose_level);
 	void evaluate_affine(
 			int verbose_level);

@@ -32,6 +32,8 @@ symbolic_object_activity_description::symbolic_object_activity_description()
 
 	f_print = false;
 
+	f_latex = false;
+
 	f_evaluate_affine = false;
 
 	f_collect_monomials_binary = false;
@@ -83,8 +85,13 @@ int symbolic_object_activity_description::read_arguments(
 		else if (ST.stringcmp(argv[i], "-print") == 0) {
 			f_print = true;
 			if (f_v) {
-				cout << "-print "
-						<< endl;
+				cout << "-print " << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-latex") == 0) {
+			f_latex = true;
+			if (f_v) {
+				cout << "-latex " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-evaluate_affine") == 0) {
@@ -146,6 +153,9 @@ void symbolic_object_activity_description::print()
 	}
 	if (f_print) {
 		cout << "-print " << endl;
+	}
+	if (f_latex) {
+		cout << "-latex " << endl;
 	}
 	if (f_evaluate_affine) {
 		cout << "-evaluate_affine " << endl;

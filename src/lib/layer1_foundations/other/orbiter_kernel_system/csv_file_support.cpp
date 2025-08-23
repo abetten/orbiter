@@ -1721,7 +1721,14 @@ void csv_file_support::do_csv_file_filter(
 
 	S = NEW_OBJECT(data_structures::spreadsheet);
 
-	S->read_spreadsheet(csv_fname, 0 /*verbose_level*/);
+	if (f_v) {
+		cout << "csv_file_support::do_csv_file_filter before S->read_spreadsheet" << endl;
+		cout << "csv_file_support::do_csv_file_filter csv_fname = " << csv_fname << endl;
+	}
+	S->read_spreadsheet(csv_fname, verbose_level - 2);
+	if (f_v) {
+		cout << "csv_file_support::do_csv_file_filter after S->read_spreadsheet" << endl;
+	}
 	cout << "Table " << csv_fname << " has been read" << endl;
 
 

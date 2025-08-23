@@ -483,7 +483,7 @@ public:
 // #############################################################################
 
 
-//! interface to nauty, assuming object_with_canonical_form is present
+//! nauty interface for combinatorial objects
 
 
 
