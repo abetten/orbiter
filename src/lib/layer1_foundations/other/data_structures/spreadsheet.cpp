@@ -367,7 +367,7 @@ void spreadsheet::read_spreadsheet(
 		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = false; //(verbose_level >= 2);
+	//int f_vv = false; //(verbose_level >= 2);
 	int i;
 	orbiter_kernel_system::file_io Fio;
 
@@ -948,9 +948,13 @@ void spreadsheet::tokenize(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
+
+#if 0
 	char *buf;
 	const char *p_buf;
 	char *str;
+#endif
+
 	int sz;
 	int line_cnt, i; //, r;
 	orbiter_kernel_system::file_io Fio;
@@ -966,6 +970,7 @@ void spreadsheet::tokenize(
 		cout << "spreadsheet::tokenize file size " << sz << endl;
 	}
 
+#if 0
 	buf = NEW_char(sz + 1);
 	if (f_v) {
 		cout << "spreadsheet::tokenize after NEW_char 1" << endl;
@@ -975,6 +980,15 @@ void spreadsheet::tokenize(
 	if (f_v) {
 		cout << "spreadsheet::tokenize after NEW_char 2" << endl;
 	}
+#endif
+
+	// ToDo: please get rid of all: char *buf; fp.getline(buf, sz, '\n');
+	// and replace by: string s; getline(f, s);
+
+	if (f_v) {
+		cout << "spreadsheet::tokenize reading file, pass 1 (of 2)" << endl;
+	}
+
 
 	{
 		string_tools ST;
@@ -982,6 +996,9 @@ void spreadsheet::tokenize(
 		i = 0;
 		line_cnt = 0;
 		while (true) {
+
+
+
 			line_cnt++;
 			if (fp.eof()) {
 				if (f_vv) {
@@ -989,6 +1006,22 @@ void spreadsheet::tokenize(
 				}
 				break;
 			}
+
+			string s;
+
+			std::getline(fp, s);
+
+			int len;
+
+			len = s.length();
+
+			char *str;
+			const char *p_buf;
+
+			str = NEW_char(len + 1);
+			strcpy(str, s.c_str());
+
+#if 0
 			if (f_vv) {
 				cout << "before fp.getline" << endl;
 			}
@@ -999,8 +1032,10 @@ void spreadsheet::tokenize(
 			if (strlen(buf) == 0) {
 				break;
 			}
-			p_buf = buf;
-			if (strncmp(buf, "END", 3) == 0) {
+#endif
+
+			p_buf = str;
+			if (strncmp(str, "END", 3) == 0) {
 				break;
 			}
 
@@ -1041,15 +1076,25 @@ void spreadsheet::tokenize(
 	#endif
 				i++;
 			}
+
+			FREE_char(str);
+
 			i++; // End of line
 		}
 	}
 
 
 	nb_tokens = i;
+	if (f_v) {
+		cout << "spreadsheet::tokenize nb_tokens = " << nb_tokens << endl;
+	}
 
 
 		//f_vv = true;
+
+	if (f_v) {
+		cout << "spreadsheet::tokenize reading file, pass 2 (of 2)" << endl;
+	}
 
 
 	tokens = NEW_pchar(nb_tokens);
@@ -1061,9 +1106,31 @@ void spreadsheet::tokenize(
 			if (fp.eof()) {
 				break;
 			}
+
+
+			string s;
+
+			std::getline(fp, s);
+
+			int len;
+
+			len = s.length();
+
+			char *str;
+			const char *p_buf;
+
+			str = NEW_char(len + 1);
+			strcpy(str, s.c_str());
+
+
+#if 0
 			fp.getline(buf, sz, '\n');
-			p_buf = buf;
-			if (strncmp(buf, "END", 3) == 0) {
+
+#endif
+
+
+			p_buf = str;
+			if (strncmp(str, "END", 3) == 0) {
 				break;
 			}
 			if (f_vv) {
@@ -1120,10 +1187,13 @@ void spreadsheet::tokenize(
 			i++;
 		#endif
 
+			FREE_char(str);
+
+
 		}
 	}
-	FREE_char(buf);
-	FREE_char(str);
+	//FREE_char(buf);
+	//FREE_char(str);
 }
 
 void spreadsheet::remove_quotes(

@@ -114,6 +114,11 @@ public:
 class csv_file_support {
 public:
 
+	// ToDo: please get rid of all: char *buf; fp.getline(buf, sz, '\n');
+	// and replace by: string s; getline(f, s);
+
+
+
 	file_io *Fio;
 
 	csv_file_support();
@@ -425,6 +430,9 @@ class file_io {
 public:
 
 	csv_file_support *Csv_file_support;
+
+	// ToDo: please get rid of all: char *buf; fp.getline(buf, sz, '\n');
+	// and replace by: string s; getline(f, s);
 
 
 	file_io();
