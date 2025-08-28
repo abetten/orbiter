@@ -37,7 +37,7 @@ void syntax_tree_node::print_subtree_to_vector(
 
 		}
 		//ost << "is terminal" << std::endl;
-		T->print_to_vector(rep, verbose_level);
+		T->print_to_vector(rep, this, verbose_level);
 		if (f_has_exponent) {
 			string s;
 			if (f_latex) {
@@ -76,7 +76,7 @@ void syntax_tree_node::print_subtree_to_vector(
 
 			int f_need_parens;
 
-			if (Nodes[i]->f_terminal) {
+			if (Nodes[i]->f_terminal || Nodes[i]->type == operation_type_mult) {
 				f_need_parens = false;
 			}
 			else {

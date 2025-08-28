@@ -223,6 +223,72 @@ void surface_object::init_equation(
 }
 
 
+void surface_object::init_equation_with_27_lines(
+		surface_domain *Surf, int *eqn,
+		long int *Lines27,
+		std::string &label_txt,
+		std::string &label_tex,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_object::init_equation_with_27_lines" << endl;
+	}
+
+	if (f_v) {
+		cout << "surface_object::init_equation_with_27_lines "
+				"before init_equation_points_and_lines_only" << endl;
+	}
+	init_equation_points_and_lines_only(
+			Surf, eqn, label_txt, label_tex,
+			verbose_level);
+	if (f_v) {
+		cout << "surface_object::init_equation_with_27_lines "
+				"after init_equation_points_and_lines_only" << endl;
+	}
+
+
+	if (Variety_object->Line_sets->Set_size[0] != 27) {
+		cout << "surface_object::init_equation_with_27_lines "
+				"the number of lines that we found is not 27" << endl;
+	}
+
+	other::data_structures::sorting Sorting;
+	int cmp;
+
+	cmp = Sorting.compare_sets_lint(
+			Variety_object->Line_sets->Sets[0], Lines27, 27, 27);
+	if (cmp) {
+		cout << "surface_object::init_equation_with_27_lines the given set of lines disagrees with the set of lines that have been found" << endl;
+		exit(1);
+	}
+
+	Lint_vec_copy(Lines27, Variety_object->Line_sets->Sets[0], 27);
+
+
+
+	if (f_v) {
+		cout << "surface_object::init_equation_with_27_lines before "
+				"compute_properties" << endl;
+	}
+	compute_properties(0/*verbose_level - 2*/);
+	if (f_v) {
+		cout << "surface_object::init_equation_with_27_lines after "
+				"compute_properties" << endl;
+	}
+
+
+
+
+
+
+	if (f_v) {
+		cout << "surface_object::init_equation_with_27_lines done" << endl;
+	}
+}
+
+
 
 void surface_object::enumerate_points(
 		int verbose_level)

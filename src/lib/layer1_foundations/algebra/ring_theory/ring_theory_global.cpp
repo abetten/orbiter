@@ -3899,6 +3899,8 @@ void ring_theory_global::make_table_of_monomials(
 		cout << "ring_theory_global::make_table_of_monomials "
 				"the number of objects must match the number "
 				"of monomials in the polynomial ring." << endl;
+		cout << "Object->Formula_vector->len = " << Object->Formula_vector->len << endl;
+		cout << "nb_monomials=" << Poly->get_nb_monomials() << endl;
 		exit(1);
 	}
 
@@ -3945,10 +3947,146 @@ void ring_theory_global::make_table_of_monomials(
 				"written file " << fname << " of size " << Fio.file_size(fname) << endl;
 	}
 
+
+
+
 	if (f_v) {
 		cout << "ring_theory_global::make_table_of_monomials done" << endl;
 	}
 }
+
+std::string ring_theory_global::stringify_expression(
+		ring_theory::homogeneous_polynomial_domain *Poly,
+		std::string &name_of_formula,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "ring_theory_global::stringify_expression" << endl;
+	}
+
+
+	algebra::expression_parser::symbolic_object_builder *Object;
+
+	Object = Get_symbol(name_of_formula);
+
+	string s;
+	string s_monomial;
+	string s_coeff;
+	int f_first = true;
+
+	int i;
+	int nb_monomials;
+
+	nb_monomials = Poly->get_nb_monomials();
+
+	if (Object->Formula_vector->len != nb_monomials) {
+		cout << "ring_theory_global::stringify_expression "
+				"Object->Formula_vector->len != nb_monomials, using default printer instead" << endl;
+		for (i = 0; i < Object->Formula_vector->len; i++) {
+			s_coeff =
+					Object->Formula_vector->V[i].string_representation_formula(
+							false /*f_latex*/, 0 /*verbose_level*/);
+			if (s_coeff.length()) {
+
+				if (!f_first) {
+					s += ", \n";
+				}
+				s += s_coeff;
+				f_first = false;
+			}
+		}
+		return s;
+	}
+	for (i = 0; i < Object->Formula_vector->len; i++) {
+		s_monomial =
+				Poly->get_monomial_symbols(i);
+		s_coeff =
+				Object->Formula_vector->V[i].string_representation_formula(
+						false /*f_latex*/, 0 /*verbose_level*/);
+		if (s_coeff.length()) {
+
+			if (!f_first) {
+				s += " + ";
+			}
+			s += "(" + s_coeff + ") * " + s_monomial;
+			f_first = false;
+		}
+	}
+
+	if (f_v) {
+		cout << "ring_theory_global::stringify_expression done" << endl;
+	}
+	return s;
+}
+
+std::string ring_theory_global::stringify_expression_latex(
+		ring_theory::homogeneous_polynomial_domain *Poly,
+		std::string &name_of_formula,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "ring_theory_global::stringify_expression_latex" << endl;
+	}
+
+
+	algebra::expression_parser::symbolic_object_builder *Object;
+
+	Object = Get_symbol(name_of_formula);
+
+	string s;
+	string s_monomial;
+	string s_coeff;
+	int f_first = true;
+
+	int i;
+	int nb_monomials;
+
+	nb_monomials = Poly->get_nb_monomials();
+
+	if (Object->Formula_vector->len != nb_monomials) {
+		cout << "ring_theory_global::stringify_expression_latex "
+				"Object->Formula_vector->len != nb_monomials, using default printer instead" << endl;
+		for (i = 0; i < Object->Formula_vector->len; i++) {
+			s_coeff =
+					Object->Formula_vector->V[i].string_representation_formula(
+							false /*f_latex*/, 0 /*verbose_level*/);
+			if (s_coeff.length()) {
+
+				if (!f_first) {
+					s += ", \n";
+				}
+				s += s_coeff;
+				f_first = false;
+			}
+		}
+		return s;
+	}
+	for (i = 0; i < Object->Formula_vector->len; i++) {
+		s_monomial =
+				Poly->get_monomial_symbols(i);
+		s_coeff =
+				Object->Formula_vector->V[i].string_representation_formula(
+						true /*f_latex*/, 0 /*verbose_level*/);
+		if (s_coeff.length()) {
+
+			if (!f_first) {
+				s += " + ";
+			}
+			s += "(" + s_coeff + ")  " + s_monomial;
+			f_first = false;
+		}
+	}
+
+	if (f_v) {
+		cout << "ring_theory_global::stringify_expression_latex done" << endl;
+	}
+	return s;
+}
+
 
 
 void ring_theory_global::do_export_partials(

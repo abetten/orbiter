@@ -22,6 +22,8 @@ namespace algebra {
 namespace ring_theory {
 
 
+// used as -ring_theoretic_activity
+
 
 polynomial_ring_activity_description::polynomial_ring_activity_description()
 {

@@ -1736,6 +1736,22 @@ public:
 	void create_equation_general_abcd(
 			int a, int b, int c, int d,
 			int *coeff, int verbose_level);
+	void create_coefficients_for_general_abcd(
+			int a, int b, int c, int d,
+			int &c002,
+			int &c012,
+			int &c013,
+			int &c022,
+			int &c023,
+			int &c112,
+			int &c113,
+			int &c122,
+			int &c133,
+			int &c123,
+			int verbose_level);
+	void create_lines_for_general_abcd(
+			int a, int b, int c, int d,
+			long int *Lines27, int verbose_level);
 	void create_equation_Cayley_klmn(
 			int k, int l, int m, int n,
 			int *coeff, int verbose_level);
@@ -2029,6 +2045,12 @@ public:
 			std::string &label_txt,
 			std::string &label_tex,
 			int verbose_level);
+	void init_equation_with_27_lines(
+			surface_domain *Surf, int *eqn,
+			long int *Lines27,
+			std::string &label_txt,
+			std::string &label_tex,
+		int verbose_level);
 	void enumerate_points(
 			int verbose_level);
 	void enumerate_points_and_lines(

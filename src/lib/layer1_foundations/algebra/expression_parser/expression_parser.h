@@ -712,7 +712,7 @@ public:
 	syntax_tree_node_terminal();
 	~syntax_tree_node_terminal();
 	void print_to_vector(
-			std::vector<std::string> &rep, int verbose_level);
+			std::vector<std::string> &rep, syntax_tree_node *N, int verbose_level);
 	void print(
 			std::ostream &ost);
 	void print_easy(

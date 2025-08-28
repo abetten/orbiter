@@ -1085,6 +1085,10 @@ public:
 class polynomial_ring_activity {
 public:
 
+
+	// used as -ring_theoretic_activity
+
+
 	algebra::ring_theory::polynomial_ring_activity_description *Descr;
 
 	algebra::ring_theory::homogeneous_polynomial_domain *HPD;

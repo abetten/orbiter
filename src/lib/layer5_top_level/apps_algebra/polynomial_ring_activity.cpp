@@ -16,6 +16,8 @@ namespace layer5_applications {
 namespace apps_algebra {
 
 
+// used as -ring_theoretic_activity
+
 
 polynomial_ring_activity::polynomial_ring_activity()
 {
@@ -364,6 +366,7 @@ void polynomial_ring_activity::perform_activity(
 					<< endl;
 		}
 
+#if 0
 		int *eqn;
 		int sz;
 
@@ -374,6 +377,49 @@ void polynomial_ring_activity::perform_activity(
 
 		HPD->print_equation_tex(cout, eqn);
 		cout << endl;
+#endif
+
+		string s1, s2;
+
+
+		algebra::ring_theory::ring_theory_global RT;
+
+		if (f_v) {
+			cout << "polynomial_ring_activity::perform_activity "
+					"before RT.stringify_expression"
+					<< endl;
+		}
+		s1 = RT.stringify_expression(
+				HPD,
+				Descr->print_equation_input,
+				verbose_level);
+		if (f_v) {
+			cout << "polynomial_ring_activity::perform_activity "
+					"after RT.stringify_expression"
+					<< endl;
+		}
+
+		if (f_v) {
+			cout << "polynomial_ring_activity::perform_activity "
+					"before RT.stringify_expression_latex"
+					<< endl;
+		}
+		s2 = RT.stringify_expression_latex(
+				HPD,
+				Descr->print_equation_input,
+				verbose_level);
+		if (f_v) {
+			cout << "polynomial_ring_activity::perform_activity "
+					"after RT.stringify_expression_latex"
+					<< endl;
+		}
+
+		cout << "in algebraic form:" << endl;
+		cout << s1 << endl;
+
+		cout << "in latex form:" << endl;
+		cout << s2 << endl;
+
 	}
 
 	else if (Descr->f_parse_equation_wo_parameters) {

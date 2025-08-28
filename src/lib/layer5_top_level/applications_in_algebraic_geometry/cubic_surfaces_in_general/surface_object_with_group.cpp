@@ -1123,7 +1123,7 @@ void surface_object_with_group::recognize_Fabcd(
 	Points = SO_trans->Variety_object->Point_sets->Sets[0];
 	int v[4];
 	long int q1, q2, q3, q4, q5, q6, q7;
-	long int arc6[6];
+	long int arc6[7];
 
 	Surf->unrank_point(v, Points[p1]);
 	if (f_v) {
@@ -1188,9 +1188,19 @@ void surface_object_with_group::recognize_Fabcd(
 	arc6[3] = q4;
 	arc6[4] = q5;
 	arc6[5] = q6;
+
+	int arc_sz;
+
+	if (f_extra_point) {
+		arc6[6] = q7;
+		arc_sz = 7;
+	}
+	else {
+		arc_sz = 6;
+	}
 	if (f_v) {
 		cout << "surface_object_with_group::recognize_Fabcd arc6[]=";
-		Lint_vec_print(cout, arc6, 6);
+		Lint_vec_print(cout, arc6, arc_sz);
 		cout << endl;
 	}
 
@@ -1200,7 +1210,7 @@ void surface_object_with_group::recognize_Fabcd(
 	int v4[3];
 	int v5[3];
 	int v6[3];
-	int v7[3];
+	//int v7[3];
 
 	P2->unrank_point(v1, arc6[0]);
 	P2->unrank_point(v2, arc6[1]);
@@ -1230,18 +1240,76 @@ void surface_object_with_group::recognize_Fabcd(
 	}
 
 
+
+
+	algebra::linear_algebra::linear_algebra_global LA;
+
+	int Mtx[10];
+	int image_of_all_one[3];
+	//int orbit_at_level;
+
+	Int_vec_copy(v1, Mtx, 3);
+	Int_vec_copy(v2, Mtx + 3, 3);
+	Int_vec_copy(v3, Mtx + 6, 3);
+
+	Int_vec_copy(v4, image_of_all_one, 3);
+
+
+	if (f_v) {
+		cout << "surface_object_with_group::recognize_Fabcd "
+				"before LA.adjust_scalars_in_frame" << endl;
+	}
+	LA.adjust_scalars_in_frame(
+			Surf->F,
+			3 /*d*/, Mtx /* Image_of_basis_in_rows */,
+			image_of_all_one,
+			verbose_level - 1);
+	if (f_v) {
+		cout << "surface_object_with_group::recognize_Fabcd "
+				"after LA.adjust_scalars_in_frame" << endl;
+	}
+
+	int *Transporter2;
+	int *Transporter2_inv;
+	Transporter2 = NEW_int(Surf_A->PA->PA2->A->elt_size_in_int);
+	Transporter2_inv = NEW_int(Surf_A->PA->PA2->A->elt_size_in_int);
+	Mtx[9] = 0;
+	Surf_A->PA->PA2->A->Group_element->make_element(
+			Transporter2_inv, Mtx, 0 /*verbose_level - 2*/);
+	Surf_A->PA->PA2->A->Group_element->element_invert(
+			Transporter2_inv, Transporter2, 0 /*verbose_level - 2*/);
+	if (f_v) {
+		cout << "surface_object_with_group::recognize_Fabcd "
+				"Transporter2:" << endl;
+		Surf_A->PA->PA2->A->Group_element->element_print(Transporter2, cout);
+	}
+
+	int i;
+	long int canonical_arc[7];
+
+	for (i = 0; i < arc_sz; i++) {
+		canonical_arc[i] = Surf_A->PA->PA2->A->Group_element->image_of(Transporter2, arc6[i]);
+	}
+
+
+	if (f_v) {
+		cout << "surface_object_with_group::recognize_Fabcd canonical_arc[]=";
+		Lint_vec_print(cout, canonical_arc, arc_sz);
+		cout << endl;
+	}
+
+
+
+#if 0
 	apps_geometry::arc_generator *Arc_generator;
 
 	Arc_generator = Classification_of_arcs->Arc_generator;
 
-	int *Transporter2;
-	int orbit_at_level;
 	data_structures_groups::set_and_stabilizer
 					*Set_and_stab_original;
 	data_structures_groups::set_and_stabilizer
 					*Set_and_stab_canonical;
 
-	Transporter2 = NEW_int(Surf_A->A->elt_size_in_int);
 	Set_and_stab_original = NEW_OBJECT(data_structures_groups::set_and_stabilizer);
 	Set_and_stab_canonical = NEW_OBJECT(data_structures_groups::set_and_stabilizer);
 
@@ -1270,7 +1338,6 @@ void surface_object_with_group::recognize_Fabcd(
 	}
 
 	Lint_vec_copy(Set_and_stab_canonical->data, canonical_arc, 6);
-
 	P2->unrank_point(v5, canonical_arc[4]);
 	P2->unrank_point(v6, canonical_arc[5]);
 
@@ -1289,26 +1356,71 @@ void surface_object_with_group::recognize_Fabcd(
 		P2->unrank_point(v7, canonical_arc[6]);
 
 	}
+#endif
+
+	int w1[3];
+	int w2[3];
+	int w3[3];
+	int w4[3];
+	int w5[3];
+	int w6[3];
+	int w7[3];
+
+	P2->unrank_point(w1, canonical_arc[0]);
+	P2->unrank_point(w2, canonical_arc[1]);
+	P2->unrank_point(w3, canonical_arc[2]);
+	P2->unrank_point(w4, canonical_arc[3]);
+	P2->unrank_point(w5, canonical_arc[4]);
+	P2->unrank_point(w6, canonical_arc[5]);
+	if (f_extra_point) {
+		P2->unrank_point(w7, canonical_arc[6]);
+	}
+
+	if (f_v) {
+		cout << "surface_object_with_group::recognize_Fabcd w1[]=";
+		Int_vec_print(cout, w1, 3);
+		cout << endl;
+		cout << "surface_object_with_group::recognize_Fabcd w2[]=";
+		Int_vec_print(cout, w2, 3);
+		cout << endl;
+		cout << "surface_object_with_group::recognize_Fabcd w3[]=";
+		Int_vec_print(cout, w3, 3);
+		cout << endl;
+		cout << "surface_object_with_group::recognize_Fabcd w4[]=";
+		Int_vec_print(cout, w4, 3);
+		cout << endl;
+		cout << "surface_object_with_group::recognize_Fabcd w5[]=";
+		Int_vec_print(cout, w5, 3);
+		cout << endl;
+		cout << "surface_object_with_group::recognize_Fabcd w6[]=";
+		Int_vec_print(cout, w6, 3);
+		cout << endl;
+		if (f_extra_point) {
+			cout << "surface_object_with_group::recognize_Fabcd w7[]=";
+			Int_vec_print(cout, w7, 3);
+			cout << endl;
+		}
+	}
 
 
-	if (v5[2] != 1) {
-		cout << "surface_object_with_group::recognize_Fabcd v5[2] != 1" << endl;
+	if (w5[2] != 1) {
+		cout << "surface_object_with_group::recognize_Fabcd w5[2] != 1" << endl;
 		exit(1);
 	}
-	a = v5[0];
-	b = v5[1];
+	a = w5[0];
+	b = w5[1];
 
 	if (f_v) {
 		cout << "surface_object_with_group::recognize_Fabcd "
 				"a,b=" << a << "," << b << endl;
 	}
 
-	if (v6[2] != 1) {
-		cout << "surface_object_with_group::recognize_Fabcd v6[2] != 1" << endl;
+	if (w6[2] != 1) {
+		cout << "surface_object_with_group::recognize_Fabcd w6[2] != 1" << endl;
 		exit(1);
 	}
-	c = v6[0];
-	d = v6[1];
+	c = w6[0];
+	d = w6[1];
 
 	if (f_v) {
 		cout << "surface_object_with_group::recognize_Fabcd "
@@ -1316,12 +1428,12 @@ void surface_object_with_group::recognize_Fabcd(
 	}
 
 	if (f_extra_point) {
-		if (v7[2] != 1) {
-			cout << "surface_object_with_group::recognize_Fabcd v7[2] != 1" << endl;
+		if (w7[2] != 1) {
+			cout << "surface_object_with_group::recognize_Fabcd w7[2] != 1" << endl;
 			exit(1);
 		}
-		e = v7[0];
-		f = v7[1];
+		e = w7[0];
+		f = w7[1];
 		if (f_v) {
 			cout << "surface_object_with_group::recognize_Fabcd "
 					"e,f=" << e << "," << f << endl;
@@ -1360,6 +1472,8 @@ void surface_object_with_group::recognize_Fabcd(
 				"before FREE_int(Transporter2)" << endl;
 	}
 	FREE_int(Transporter2);
+	FREE_int(Transporter2_inv);
+#if 0
 	if (f_v) {
 		cout << "surface_object_with_group::recognize_Fabcd "
 				"before FREE_OBJECT(Set_and_stab_original)" << endl;
@@ -1370,7 +1484,7 @@ void surface_object_with_group::recognize_Fabcd(
 				"before FREE_OBJECT(Set_and_stab_canonical)" << endl;
 	}
 	FREE_OBJECT(Set_and_stab_canonical);
-
+#endif
 
 	if (f_v) {
 		cout << "surface_object_with_group::recognize_Fabcd done" << endl;

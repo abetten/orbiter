@@ -299,7 +299,7 @@ void quartic_curve_from_surface::create_quartic_curve(
 		abcdef[2] = c;
 		abcdef[3] = d;
 		abcdef[4] = e;
-		abcdef[6] = f;
+		abcdef[5] = f;
 
 
 		if (f_v) {
@@ -687,7 +687,7 @@ void quartic_curve_from_surface::map_surface_to_special_form(
 // nb_lines = SOA->SO->nb_lines
 {
 	int f_v = (verbose_level >= 1);
-	int fst;
+	//int fst;
 
 	if (f_v) {
 		cout << "quartic_curve_from_surface::map_surface_to_special_form" << endl;

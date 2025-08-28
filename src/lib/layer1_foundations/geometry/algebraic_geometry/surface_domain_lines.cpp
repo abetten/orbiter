@@ -1901,8 +1901,14 @@ void surface_domain::create_remaining_fifteen_lines(
 						"creating line c_ij where i=" << i
 						<< " j=" << j << ":" << endl;
 			}
-			fifteen_lines[h++] = compute_cij(
+			fifteen_lines[h] = compute_cij(
 					double_six, i, j, verbose_level);
+			if (f_v) {
+				cout << "surface_domain::create_remaining_fifteen_lines "
+						"creating line c_ij where i=" << i
+						<< " j=" << j << ": h=" << h << " fifteen_lines[h]=" << fifteen_lines[h] << endl;
+			}
+			h++;
 		}
 	}
 	if (f_v) {

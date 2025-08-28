@@ -905,6 +905,9 @@ class polynomial_ring_activity_description {
 public:
 
 
+	// used as -ring_theoretic_activity
+
+
 	// TABLES/polynomial_ring_activity.tex
 
 
@@ -943,6 +946,7 @@ public:
 
 	int f_table_of_monomials_write_csv;
 	std::string table_of_monomials_write_csv_label;
+
 
 
 	polynomial_ring_activity_description();
@@ -1191,6 +1195,14 @@ public:
 			int &nb_agos, ring_theory::longinteger_object *&agos,
 			int *&multiplicities);
 	void make_table_of_monomials(
+			ring_theory::homogeneous_polynomial_domain *Poly,
+			std::string &name_of_formula,
+			int verbose_level);
+	std::string stringify_expression(
+			ring_theory::homogeneous_polynomial_domain *Poly,
+			std::string &name_of_formula,
+			int verbose_level);
+	std::string stringify_expression_latex(
 			ring_theory::homogeneous_polynomial_domain *Poly,
 			std::string &name_of_formula,
 			int verbose_level);

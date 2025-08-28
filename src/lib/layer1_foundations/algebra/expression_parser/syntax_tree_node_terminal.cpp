@@ -43,7 +43,7 @@ syntax_tree_node_terminal::~syntax_tree_node_terminal()
 }
 
 void syntax_tree_node_terminal::print_to_vector(
-		std::vector<std::string> &rep, int verbose_level)
+		std::vector<std::string> &rep, syntax_tree_node *N, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -53,7 +53,22 @@ void syntax_tree_node_terminal::print_to_vector(
 	string s;
 
 	if (f_int) {
-		s = std::to_string(value_int);
+		int q, a, b;
+
+		q = N->Tree->Fq->q;
+		a = value_int;
+		if (N->Tree->Fq->e == 1)  {
+			if (a > q / 2) {
+				b = a - q;
+			}
+			else {
+				b = a;
+			}
+		}
+		else {
+			b = a;
+		}
+		s = std::to_string(b);
 	}
 	else if (f_double) {
 		s = std::to_string(value_double);

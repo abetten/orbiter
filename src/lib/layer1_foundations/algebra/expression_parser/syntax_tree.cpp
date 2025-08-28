@@ -283,10 +283,14 @@ void syntax_tree::print_to_vector(
 		cout << "syntax_tree::print_to_vector "
 				"rep.size()=" << rep.size() << endl;
 	}
+
+#if 0
 	if (rep.size() == 0) {
 		cout << "syntax_tree::print_to_vector rep.size() == 0, adding a zero" << endl;
 		rep.push_back(std::to_string(0));
 	}
+#endif
+
 }
 
 void syntax_tree::count_nodes(

@@ -31,6 +31,73 @@ void surface_domain::create_equation_general_abcd(
 	}
 
 
+
+	Int_vec_zero(coeff, PolynomialDomains->nb_monomials);
+
+	int c002;
+	int c012;
+	int c013;
+	int c022;
+	int c023;
+	int c112;
+	int c113;
+	int c122;
+	int c133;
+	int c123;
+
+	create_coefficients_for_general_abcd(
+			a, b, c, d,
+			c002,
+			c012,
+			c013,
+			c022,
+			c023,
+			c112,
+			c113,
+			c122,
+			c133,
+			c123,
+			verbose_level);
+
+	coeff[5] = c002;
+	coeff[16] = c012;
+	coeff[17] = c013;
+	coeff[10] = c022;
+	coeff[18] = c023;
+	coeff[8] = c112;
+	coeff[9] = c113;
+	coeff[11] = c122;
+	coeff[14] = c133;
+	coeff[19] = c123;
+
+
+
+	if (f_v) {
+		cout << "surface_domain::create_equation_general_abcd done" << endl;
+	}
+}
+
+void surface_domain::create_coefficients_for_general_abcd(
+		int a, int b, int c, int d,
+		int &c002,
+		int &c012,
+		int &c013,
+		int &c022,
+		int &c023,
+		int &c112,
+		int &c113,
+		int &c122,
+		int &c133,
+		int &c123,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "surface_domain::create_coefficients_for_general_abcd" << endl;
+	}
+
 	int m1 = F->negate(1);
 	int two = F->add(1, 1);
 	int four = F->add(two, two);
@@ -91,24 +158,603 @@ void surface_domain::create_equation_general_abcd(
 
 	int E = F->add(E_plus, F->negate(E_minus));
 
-	Int_vec_zero(coeff, PolynomialDomains->nb_monomials);
+	c002 = F->mult3(m1, A, bmd);
+	c012 = F->mult(A, F->add4(a, b, F->negate(c), F->negate(d)));
+	c013 = F->mult(B, bmd);
+	c022 = F->mult3(m1, A, admcb);
+	c023 = F->mult3(m1, C, bmd);
+	c112 = c113 = F->mult3(m1, amc, A);
+	c122 = F->mult(A, admcb);
+	c133 = F->mult4(c, a, D, bmd);
+	c123 = E;
+	if (f_v) {
+		cout << "surface_domain::create_coefficients_for_general_abcd c002=" << c002 << endl;
+		cout << "surface_domain::create_coefficients_for_general_abcd c012=" << c012 << endl;
+		cout << "surface_domain::create_coefficients_for_general_abcd c013=" << c013 << endl;
+		cout << "surface_domain::create_coefficients_for_general_abcd c022=" << c022 << endl;
+		cout << "surface_domain::create_coefficients_for_general_abcd c023=" << c023 << endl;
+		cout << "surface_domain::create_coefficients_for_general_abcd c112=" << c112 << endl;
+		cout << "surface_domain::create_coefficients_for_general_abcd c113=" << c113 << endl;
+		cout << "surface_domain::create_coefficients_for_general_abcd c122=" << c122 << endl;
+		cout << "surface_domain::create_coefficients_for_general_abcd c133=" << c133 << endl;
+		cout << "surface_domain::create_coefficients_for_general_abcd c123=" << c123 << endl;
+	}
 
-	coeff[5] = F->mult3(m1, A, bmd);
-	coeff[16] = F->mult(A, F->add4(a, b, F->negate(c), F->negate(d)));
-	coeff[17] = F->mult(B, bmd);
-	coeff[10] = F->mult3(m1, A, admcb);
-	coeff[18] = F->mult3(m1, C, bmd);
-	coeff[8] = coeff[9] = F->mult3(m1, amc, A);
-	coeff[11] = F->mult(A, admcb);
-	coeff[14] = F->mult4(c, a, D, bmd);
-	coeff[19] = E;
+
+	if (f_v) {
+		cout << "surface_domain::create_coefficients_for_general_abcd done" << endl;
+	}
+}
+
+void surface_domain::create_lines_for_general_abcd(
+		int a, int b, int c, int d,
+		long int *Lines27, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "surface_domain::create_lines_for_general_abcd" << endl;
+		cout << "surface_domain::create_lines_for_general_abcd a = " << a << endl;
+		cout << "surface_domain::create_lines_for_general_abcd b = " << b << endl;
+		cout << "surface_domain::create_lines_for_general_abcd c = " << c << endl;
+		cout << "surface_domain::create_lines_for_general_abcd d = " << d << endl;
+	}
+
+	int m1 = F->negate(1);
+	int s1 = F->add(a, m1);
+	int s2 = F->add(b, m1);
+	int s3 = F->add(c, m1);
+	int s4 = F->add(d, m1);
+	if (f_v) {
+		cout << "surface_domain::create_lines_for_general_abcd "
+				"before s5" << endl;
+	}
+	int s5 = F->add(a, F->negate(b));
+	int s6 = F->add(a, F->negate(c));
+	int s7 = F->add(b, F->negate(d));
+	int s8 = F->add(c, F->negate(d));
+	int ab = F->mult(a, b);
+	int ad = F->mult(a, d);
+	int bc = F->mult(b, c);
+	int cd = F->mult(c, d);
+	if (f_v) {
+		cout << "surface_domain::create_lines_for_general_abcd "
+				"before abc" << endl;
+	}
+	int abc = F->mult3(a, b, c);
+	int abd = F->mult3(a, b, d);
+	int acd = F->mult3(a, c, d);
+	int bcd = F->mult3(b, c, d);
+	if (f_v) {
+		cout << "surface_domain::create_lines_for_general_abcd "
+				"before delta" << endl;
+	}
+	int delta = F->add(ad, F->negate(bc));
+	int epsilon = F->add5(abc, F->negate(abd), F->negate(acd), bcd, delta);
+	int gamma = F->add5(delta, F->negate(a), b, c, F->negate(d));
+
+
+	int lambda = F->add3(F->mult3(b, b, s8), F->negate(F->mult3(d, d, s5)), delta);
+	// !!! mistake fixed A. Betten 8/24/2025
+	// it was s7, but it should be s5
+
+	//int mu = F->add3(F->negate(abd), bcd, delta);
+	if (f_v) {
+		cout << "surface_domain::create_lines_for_general_abcd "
+				"before nu" << endl;
+	}
+	int nu = F->add(F->mult3(a, c, s7), F->negate(F->mult3(b, d, s6)));
+	//int eta = F->add6(F->negate(F->mult(a, acd)), F->mult(abc, c), F->mult(a, ad), F->negate(abd), F->negate(F->mult(bc, c)), bcd);
+	int zeta = F->mult3(s1, s3, s7);
+	if (f_v) {
+		cout << "surface_domain::create_lines_for_general_abcd "
+				"before xi" << endl;
+	}
+	int xi = F->add5(F->mult3(a, a, c), F->negate(F->mult(a, ad)), F->negate(F->mult3(a, c, c)), F->mult3(b, c, c), delta);
+	int theta = F->add6(abc, F->negate(acd), F->negate(ab), cd, a, F->negate(c));
+
+
+	int c002;
+	int c012;
+	int c013;
+	int c022;
+	int c023;
+	int c112;
+	int c113;
+	int c122;
+	int c133;
+	int c123;
+
+	if (f_v) {
+		cout << "surface_domain::create_lines_for_general_abcd "
+				"before create_coefficients_for_general_abcd" << endl;
+	}
+
+	create_coefficients_for_general_abcd(
+			a, b, c, d,
+			c002,
+			c012,
+			c013,
+			c022,
+			c023,
+			c112,
+			c113,
+			c122,
+			c133,
+			c123,
+			verbose_level);
+
+	if (f_v) {
+		cout << "surface_domain::create_lines_for_general_abcd "
+				"after create_coefficients_for_general_abcd" << endl;
+	}
+
+
+
+
+	int a1[8];
+	int a2[8];
+	int a3[8];
+	int a4[8];
+	int a5[8];
+	int a6[8];
+
+	if (f_v) {
+		cout << "surface_domain::create_lines_for_general_abcd "
+				"computing a1" << endl;
+	}
+
+	a1[0] = F->mult3(s6, lambda, F->inverse(F->mult(s7, epsilon)));
+	a1[1] = 1;
+	a1[2] = 0;
+	a1[3] = 0;
+	a1[4] = F->negate(F->mult5(s6, b, d, gamma, F->inverse(F->mult(s7, epsilon))));
+	a1[5] = 0;
+	a1[6] = m1;
+	a1[7] = 1;
+
+	if (f_v) {
+		cout << "surface_domain::create_lines_for_general_abcd "
+				"computing a2" << endl;
+	}
+
+	if (xi == 0) {
+		a2[0] = 1;
+		a2[1] = 0;
+		a2[2] = 0;
+		a2[3] = 0;
+		a2[4] = 0;
+		a2[5] = c133;
+		a2[6] = 0;
+		a2[7] = F->negate(c112);
+	}
+	else {
+		a2[0] = F->mult3(s6, epsilon, F->inverse(F->mult(xi, s7)));
+		a2[1] = 1;
+		a2[2] = 0;
+		a2[3] = 0;
+		a2[4] = F->negate(F->mult4(a, c, gamma, F->inverse(xi)));
+		a2[5] = 0;
+		a2[6] = 0;
+		a2[7] = 1;
+	}
+
+
+	if (f_v) {
+		cout << "surface_domain::create_lines_for_general_abcd "
+				"computing a3" << endl;
+	}
+
+	a3[0] = 0;
+	a3[1] = 0;
+	a3[2] = 1;
+	a3[3] = 0;
+	a3[4] = 0;
+	a3[5] = 0;
+	a3[6] = 0;
+	a3[7] = 1;
+
+
+	if (f_v) {
+		cout << "surface_domain::create_lines_for_general_abcd "
+				"computing a4" << endl;
+	}
+
+	a4[0] = 1;
+	a4[1] = 1;
+	a4[2] = 1;
+	a4[3] = 0;
+	a4[4] = 1;
+	a4[5] = 0;
+	a4[6] = 0;
+	a4[7] = 1;
+
+
+	if (f_v) {
+		cout << "surface_domain::create_lines_for_general_abcd "
+				"computing a5" << endl;
+	}
+
+	a5[0] = a;
+	a5[1] = b;
+	a5[2] = 1;
+	a5[3] = 0;
+	a5[4] = a;
+	a5[5] = 0;
+	a5[6] = 0;
+	a5[7] = 1;
+
+
+	if (f_v) {
+		cout << "surface_domain::create_lines_for_general_abcd "
+				"computing a6" << endl;
+	}
+
+	a6[0] = c;
+	a6[1] = d;
+	a6[2] = 1;
+	a6[3] = 0;
+	a6[4] = c;
+	a6[5] = 0;
+	a6[6] = 0;
+	a6[7] = 1;
+
+
+	int b1[8];
+	int b2[8];
+	int b3[8];
+	int b4[8];
+	int b5[8];
+	int b6[8];
+
+	if (f_v) {
+		cout << "surface_domain::create_lines_for_general_abcd "
+				"computing b1" << endl;
+	}
+
+	b1[0] = 1;
+	b1[1] = 0;
+	b1[2] = 0;
+	b1[3] = 0;
+	b1[4] = 0;
+	b1[5] = 0;
+	b1[6] = 0;
+	b1[7] = 1;
+
+	if (f_v) {
+		cout << "surface_domain::create_lines_for_general_abcd "
+				"computing b2" << endl;
+	}
+
+	b2[0] = 0;
+	b2[1] = 1;
+	b2[2] = 0;
+	b2[3] = 0;
+	b2[4] = 0;
+	b2[5] = 0;
+	b2[6] = m1;
+	b2[7] = 1;
+
+	int gamma_inv = F->inverse(gamma);
+	int delta_inv = F->inverse(delta);
+
+	if (f_v) {
+		cout << "surface_domain::create_lines_for_general_abcd "
+				"computing b3" << endl;
+	}
+
+	b3[0] = F->negate(F->mult(theta, gamma_inv));
+	b3[1] = F->negate(F->mult(zeta, gamma_inv));
+	b3[2] = 0;
+	b3[3] = 1;
+	b3[4] = F->negate(F->mult(epsilon, gamma_inv));
+	b3[5] = F->negate(F->mult(epsilon, gamma_inv));
+	b3[6] = 1;
+	b3[7] = 0;
+
+	if (f_v) {
+		cout << "surface_domain::create_lines_for_general_abcd "
+				"computing b4" << endl;
+	}
+
+	b4[0] = F->negate(F->mult(nu, delta_inv));
+	b4[1] = F->negate(F->mult(nu, delta_inv));
+	b4[2] = 1;
+	b4[3] = 0;
+	b4[4] = F->negate(F->mult4(a, c, s7, delta_inv));
+	b4[5] = F->negate(F->mult4(a, c, s7, delta_inv));
+	b4[6] = 0;
+	b4[7] = 1;
+
+	if (f_v) {
+		cout << "surface_domain::create_lines_for_general_abcd "
+				"computing b5" << endl;
+	}
+
+	b5[0] = F->mult3(s4, delta, F->inverse(F->mult(s8, s7)));
+	b5[1] = F->mult3(s3, delta, F->inverse(F->mult(s8, s6)));
+	b5[2] = 1;
+	b5[3] = 0;
+	b5[4] = F->negate(F->mult3(c, s4, F->inverse(s8)));
+	b5[5] = F->negate(F->mult4(c, s3, s7, F->inverse(F->mult(s8, s6))));
+	b5[6] = 0;
+	b5[7] = 1;
+
+	if (f_v) {
+		cout << "surface_domain::create_lines_for_general_abcd "
+				"computing b6" << endl;
+	}
+
+	b6[0] = F->mult3(s2, delta, F->inverse(F->mult(s5, s7)));
+	b6[1] = F->mult3(s1, delta, F->inverse(F->mult(s6, s5)));
+	b6[2] = 1;
+	b6[3] = 0;
+	b6[4] = F->negate(F->mult3(s2, a, F->inverse(s5)));
+	b6[5] = F->negate(F->mult4(s7, s1, a, F->inverse(F->mult(s6, s5))));
+	b6[6] = 0;
+	b6[7] = 1;
+
+	if (f_v) {
+		cout << "surface_domain::create_lines_for_general_abcd "
+				"a1=";
+		Int_vec_print(cout, a1, 8);
+		cout << endl;
+		cout << "surface_domain::create_lines_for_general_abcd "
+				"a2=";
+		Int_vec_print(cout, a2, 8);
+		cout << endl;
+		cout << "surface_domain::create_lines_for_general_abcd "
+				"a3=";
+		Int_vec_print(cout, a3, 8);
+		cout << endl;
+		cout << "surface_domain::create_lines_for_general_abcd "
+				"a4=";
+		Int_vec_print(cout, a4, 8);
+		cout << endl;
+		cout << "surface_domain::create_lines_for_general_abcd "
+				"a5=";
+		Int_vec_print(cout, a5, 8);
+		cout << endl;
+		cout << "surface_domain::create_lines_for_general_abcd "
+				"a6=";
+		Int_vec_print(cout, a6, 8);
+		cout << endl;
+	}
+
+	if (f_v) {
+		cout << "surface_domain::create_lines_for_general_abcd "
+				"b1=";
+		Int_vec_print(cout, b1, 8);
+		cout << endl;
+		cout << "surface_domain::create_lines_for_general_abcd "
+				"b2=";
+		Int_vec_print(cout, b2, 8);
+		cout << endl;
+		cout << "surface_domain::create_lines_for_general_abcd "
+				"b3=";
+		Int_vec_print(cout, b3, 8);
+		cout << endl;
+		cout << "surface_domain::create_lines_for_general_abcd "
+				"b4=";
+		Int_vec_print(cout, b4, 8);
+		cout << endl;
+		cout << "surface_domain::create_lines_for_general_abcd "
+				"b5=";
+		Int_vec_print(cout, b5, 8);
+		cout << endl;
+		cout << "surface_domain::create_lines_for_general_abcd "
+				"b6=";
+		Int_vec_print(cout, b6, 8);
+		cout << endl;
+	}
+
+
+	if (f_v) {
+		cout << "surface_domain::create_lines_for_general_abcd "
+				"computing Double_six" << endl;
+	}
+
+	long int Double_six[12];
+	int Basis[8];
+
+	if (f_v) {
+		cout << "surface_domain::create_lines_for_general_abcd "
+				"computing Double_six[0]" << endl;
+	}
+	Double_six[0] = Gr->rank_lint_here(a1, 0 /* verbose_level */);
+	if (f_v) {
+		cout << "surface_domain::create_lines_for_general_abcd "
+				"computing a1 = Double_six[0]=" << Double_six[0] << endl;
+	}
+	Gr->unrank_lint_here(Basis, Double_six[0], 0 /* verbose_level */);
+	if (f_v) {
+		Int_matrix_print(Basis, 2, 4);
+	}
 
 
 
 	if (f_v) {
-		cout << "surface_domain::create_equation_general_abcd done" << endl;
+		cout << "surface_domain::create_lines_for_general_abcd "
+				"computing Double_six[1]" << endl;
+	}
+	Double_six[1] = Gr->rank_lint_here(a2, 0 /* verbose_level */);
+	if (f_v) {
+		cout << "surface_domain::create_lines_for_general_abcd "
+				"computing a2 = Double_six[1]=" << Double_six[1] << endl;
+	}
+	Gr->unrank_lint_here(Basis, Double_six[1], 0 /* verbose_level */);
+	if (f_v) {
+		Int_matrix_print(Basis, 2, 4);
+	}
+
+	if (f_v) {
+		cout << "surface_domain::create_lines_for_general_abcd "
+				"computing Double_six[2]" << endl;
+	}
+	Double_six[2] = Gr->rank_lint_here(a3, 0 /* verbose_level */);
+	if (f_v) {
+		cout << "surface_domain::create_lines_for_general_abcd "
+				"computing a3 = Double_six[2]=" << Double_six[2] << endl;
+	}
+	Gr->unrank_lint_here(Basis, Double_six[2], 0 /* verbose_level */);
+	if (f_v) {
+		Int_matrix_print(Basis, 2, 4);
+	}
+
+
+	if (f_v) {
+		cout << "surface_domain::create_lines_for_general_abcd "
+				"computing Double_six[3]" << endl;
+	}
+	Double_six[3] = Gr->rank_lint_here(a4, 0 /* verbose_level */);
+	if (f_v) {
+		cout << "surface_domain::create_lines_for_general_abcd "
+				"computing a4 = Double_six[3]=" << Double_six[3] << endl;
+	}
+	Gr->unrank_lint_here(Basis, Double_six[3], 0 /* verbose_level */);
+	if (f_v) {
+		Int_matrix_print(Basis, 2, 4);
+	}
+
+	if (f_v) {
+		cout << "surface_domain::create_lines_for_general_abcd "
+				"computing Double_six[4]" << endl;
+	}
+	Double_six[4] = Gr->rank_lint_here(a5, 0 /* verbose_level */);
+	if (f_v) {
+		cout << "surface_domain::create_lines_for_general_abcd "
+				"computing a5 = Double_six[4]=" << Double_six[4] << endl;
+	}
+	Gr->unrank_lint_here(Basis, Double_six[4], 0 /* verbose_level */);
+	if (f_v) {
+		Int_matrix_print(Basis, 2, 4);
+	}
+
+	if (f_v) {
+		cout << "surface_domain::create_lines_for_general_abcd "
+				"computing Double_six[5]" << endl;
+	}
+	Double_six[5] = Gr->rank_lint_here(a6, 0 /* verbose_level */);
+	if (f_v) {
+		cout << "surface_domain::create_lines_for_general_abcd "
+				"computing a6 = Double_six[5]=" << Double_six[5] << endl;
+	}
+	Gr->unrank_lint_here(Basis, Double_six[5], 0 /* verbose_level */);
+	if (f_v) {
+		Int_matrix_print(Basis, 2, 4);
+	}
+
+	if (f_v) {
+		cout << "surface_domain::create_lines_for_general_abcd "
+				"computing Double_six[6]" << endl;
+	}
+	Double_six[6] = Gr->rank_lint_here(b1, 0 /* verbose_level */);
+	if (f_v) {
+		cout << "surface_domain::create_lines_for_general_abcd "
+				"computing b1 = Double_six[6]=" << Double_six[6] << endl;
+	}
+	Gr->unrank_lint_here(Basis, Double_six[6], 0 /* verbose_level */);
+	if (f_v) {
+		Int_matrix_print(Basis, 2, 4);
+	}
+
+
+	if (f_v) {
+		cout << "surface_domain::create_lines_for_general_abcd "
+				"computing Double_six[7]" << endl;
+	}
+	Double_six[7] = Gr->rank_lint_here(b2, 0 /* verbose_level */);
+	if (f_v) {
+		cout << "surface_domain::create_lines_for_general_abcd "
+				"computing b2 = Double_six[7]=" << Double_six[7] << endl;
+	}
+	Gr->unrank_lint_here(Basis, Double_six[7], 0 /* verbose_level */);
+	if (f_v) {
+		Int_matrix_print(Basis, 2, 4);
+	}
+
+	if (f_v) {
+		cout << "surface_domain::create_lines_for_general_abcd "
+				"computing Double_six[8]" << endl;
+	}
+	Double_six[8] = Gr->rank_lint_here(b3, 0 /* verbose_level */);
+	if (f_v) {
+		cout << "surface_domain::create_lines_for_general_abcd "
+				"computing b3 = Double_six[8]=" << Double_six[8] << endl;
+	}
+	Gr->unrank_lint_here(Basis, Double_six[8], 0 /* verbose_level */);
+	if (f_v) {
+		Int_matrix_print(Basis, 2, 4);
+	}
+
+	if (f_v) {
+		cout << "surface_domain::create_lines_for_general_abcd "
+				"computing Double_six[9]" << endl;
+	}
+	Double_six[9] = Gr->rank_lint_here(b4, 0 /* verbose_level */);
+	if (f_v) {
+		cout << "surface_domain::create_lines_for_general_abcd "
+				"computing b4 = Double_six[9]=" << Double_six[9] << endl;
+	}
+	Gr->unrank_lint_here(Basis, Double_six[9], 0 /* verbose_level */);
+	if (f_v) {
+		Int_matrix_print(Basis, 2, 4);
+	}
+
+	if (f_v) {
+		cout << "surface_domain::create_lines_for_general_abcd "
+				"computing Double_six[10]" << endl;
+	}
+	Double_six[10] = Gr->rank_lint_here(b5, 0 /* verbose_level */);
+	if (f_v) {
+		cout << "surface_domain::create_lines_for_general_abcd "
+				"computing b5 = Double_six[10]=" << Double_six[10] << endl;
+	}
+	Gr->unrank_lint_here(Basis, Double_six[10], 0 /* verbose_level */);
+	if (f_v) {
+		Int_matrix_print(Basis, 2, 4);
+	}
+
+	if (f_v) {
+		cout << "surface_domain::create_lines_for_general_abcd "
+				"computing Double_six[11]" << endl;
+	}
+	Double_six[11] = Gr->rank_lint_here(b6, 0 /* verbose_level */);
+	if (f_v) {
+		cout << "surface_domain::create_lines_for_general_abcd "
+				"computing b6 = Double_six[11]=" << Double_six[11] << endl;
+	}
+	Gr->unrank_lint_here(Basis, Double_six[11], 0 /* verbose_level */);
+	if (f_v) {
+		Int_matrix_print(Basis, 2, 4);
+	}
+
+
+
+	Lint_vec_copy(Double_six, Lines27, 12);
+
+
+	if (f_v) {
+		cout << "surface_domain::create_lines_for_general_abcd "
+				"before create_remaining_fifteen_lines" << endl;
+	}
+	create_remaining_fifteen_lines(
+			Double_six, Lines27 + 12,
+			verbose_level);
+	if (f_v) {
+		cout << "surface_domain::create_lines_for_general_abcd "
+				"after create_remaining_fifteen_lines" << endl;
+	}
+
+
+
+
+	if (f_v) {
+		cout << "surface_domain::create_lines_for_general_abcd done" << endl;
 	}
 }
+
 
 void surface_domain::create_equation_Cayley_klmn(
 		int k, int l, int m, int n,
@@ -261,6 +907,24 @@ surface_object *surface_domain::create_surface_general_abcd(
 				"after create_equation_general_abcd" << endl;
 	}
 
+#if 1
+	long int Lines27[27];
+
+	if (f_v) {
+		cout << "surface_domain::create_surface_general_abcd "
+				"before create_lines_for_general_abcd" << endl;
+	}
+	create_lines_for_general_abcd(
+			a, b, c, d,
+			Lines27, verbose_level);
+	if (f_v) {
+		cout << "surface_domain::create_surface_general_abcd "
+				"after create_lines_for_general_abcd" << endl;
+	}
+
+#endif
+
+
 	std::string label_txt;
 	std::string label_tex;
 
@@ -284,10 +948,18 @@ surface_object *surface_domain::create_surface_general_abcd(
 		cout << "surface_domain::create_surface_general_abcd "
 				"before SO->init_equation" << endl;
 	}
+#if 0
 	SO->init_equation(
 			this, coeff20,
 			label_txt, label_tex,
 			verbose_level - 2);
+#else
+	SO->init_equation_with_27_lines(
+			this, coeff20,
+			Lines27,
+			label_txt, label_tex,
+			verbose_level - 2);
+#endif
 	if (f_v) {
 		cout << "surface_domain::create_surface_general_abcd "
 				"after SO->init_equation" << endl;
