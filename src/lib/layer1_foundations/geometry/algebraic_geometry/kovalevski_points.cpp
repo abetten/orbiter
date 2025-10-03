@@ -33,23 +33,30 @@ kovalevski_points::kovalevski_points()
 
 	Bitangent_line_type = NULL;
 	//line_type_distribution[3];
+
 	lines_on_point = NULL;
 	Point_type = NULL;
+
 	f_fullness_has_been_established = false;
 	f_is_full = false;
 
 
 	nb_Kovalevski = 0;
-	//nb_Kovalevski_on = 0;
-	//nb_Kovalevski_off = 0;
 	Kovalevski_point_idx = NULL;
 	Kovalevski_points = NULL;
+	Kovalevski_points_sorted = NULL;
+
 	Pts_off = NULL;
 	nb_pts_off = 0;
+
 	pts_off_on_lines = NULL;
 	f_is_on_line2 = NULL;
+
 	lines_on_points_off = NULL;
 	Point_off_type = NULL;
+
+	Incidence_structure_by_flags = NULL;
+
 }
 
 kovalevski_points::~kovalevski_points()
@@ -86,6 +93,9 @@ kovalevski_points::~kovalevski_points()
 	if (Kovalevski_points) {
 		FREE_lint(Kovalevski_points);
 	}
+	if (Kovalevski_points_sorted) {
+		FREE_lint(Kovalevski_points_sorted);
+	}
 	if (Pts_off) {
 		FREE_lint(Pts_off);
 	}
@@ -100,6 +110,9 @@ kovalevski_points::~kovalevski_points()
 	}
 	if (Point_off_type) {
 		FREE_OBJECT(Point_off_type);
+	}
+	if (Incidence_structure_by_flags) {
+		FREE_OBJECT(Incidence_structure_by_flags);
 	}
 }
 
@@ -132,6 +145,7 @@ void kovalevski_points::compute_Kovalevski_points(
 				"!QO->f_has_bitangents" << endl;
 		exit(1);
 	}
+
 	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 
@@ -176,7 +190,8 @@ void kovalevski_points::compute_Kovalevski_points(
 	}
 
 
-	pts_on_lines->dualize(lines_on_point, 0 /* verbose_level */);
+	pts_on_lines->dualize(
+			lines_on_point, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "kovalevski_points::compute_Kovalevski_points "
 				"lines_on_point:" << endl;
@@ -264,7 +279,8 @@ void kovalevski_points::compute_Kovalevski_points(
 	Point_off_type = NEW_OBJECT(other::data_structures::tally);
 	Point_off_type->init_lint(
 			lines_on_points_off->Set_size,
-			lines_on_points_off->nb_sets, false, 0);
+			lines_on_points_off->nb_sets,
+			false, 0);
 	if (f_v) {
 		cout << "kovalevski_points::compute_Kovalevski_points "
 				"type of lines_on_point off:" << endl;
@@ -303,6 +319,30 @@ void kovalevski_points::compute_Kovalevski_points(
 		Kovalevski_point_idx[j] = K[j];
 		Kovalevski_points[j] = Pts_off[K[j]];
 	}
+	Kovalevski_points_sorted = NEW_lint(nb_Kovalevski);
+	Lint_vec_copy(Kovalevski_points, Kovalevski_points_sorted, nb_Kovalevski);
+
+	other::data_structures::sorting Sorting;
+
+	Sorting.lint_vec_heapsort(
+			Kovalevski_points_sorted, nb_Kovalevski);
+
+
+	if (f_v) {
+		cout << "kovalevski_points::compute_Kovalevski_points "
+				"before get_incidence_structure_by_flags" << endl;
+	}
+
+	get_incidence_structure_by_flags(
+			Incidence_structure_by_flags,
+			verbose_level);
+
+	if (f_v) {
+		cout << "kovalevski_points::compute_Kovalevski_points "
+				"after get_incidence_structure_by_flags" << endl;
+	}
+
+
 
 	if (f_v) {
 		cout << "kovalevski_points::compute_Kovalevski_points done" << endl;
@@ -311,6 +351,8 @@ void kovalevski_points::compute_Kovalevski_points(
 
 void kovalevski_points::compute_points_on_lines(
 		int verbose_level)
+// computes points on lines (which is the points of contact of each line)
+// and contact multiplicity
 {
 	int f_v = (verbose_level >= 1);
 	long int *Pts;
@@ -410,6 +452,11 @@ void kovalevski_points::compute_points_on_lines_worker(
 		other::data_structures::set_of_sets *&pts_on_lines,
 		int *&f_is_on_line,
 		int verbose_level)
+// compute pts_on_lines and f_is_on_line[nb_points].
+// The sets are the index sets
+// of the lines containing a given point
+// f_is_on_line[j] is true if there is a line in the given set of lines
+// containing the j-th point of the given set of points.
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, r;
@@ -426,8 +473,10 @@ void kovalevski_points::compute_points_on_lines_worker(
 
 	pts_on_lines = NEW_OBJECT(other::data_structures::set_of_sets);
 
-	pts_on_lines->init_basic_constant_size(nb_points,
-		nb_lines, QO->Dom->F->q + 1, 0 /* verbose_level */);
+	pts_on_lines->init_basic_constant_size(
+			nb_points,
+			nb_lines, QO->Dom->F->q + 1,
+			0 /* verbose_level */);
 
 	pt_coords = NEW_int(nb_points * 3);
 	for (i = 0; i < nb_points; i++) {
@@ -436,8 +485,14 @@ void kovalevski_points::compute_points_on_lines_worker(
 
 	Lint_vec_zero(pts_on_lines->Set_size, nb_lines);
 	for (i = 0; i < nb_lines; i++) {
+
+		// determine the points of contact of the i-th line:
+
 		l = Lines[i];
 		QO->Dom->P->unrank_line(Basis, l);
+
+		// test if the j-th point is in the span of the basis of the i-th line:
+
 		for (j = 0; j < nb_points; j++) {
 			Int_vec_copy(Basis, Mtx, 6);
 			Int_vec_copy(pt_coords + j * 3, Mtx + 6, 3);
@@ -462,6 +517,7 @@ void kovalevski_points::compute_contact_multiplicity(
 		other::data_structures::set_of_sets *Pts_on_lines,
 		int verbose_level)
 // Pts_on_lines are the points of contact with the quartic curve for each line.
+// Pts_on_lines is pts_on_lines
 {
 	int f_v = (verbose_level >= 1);
 
@@ -482,9 +538,12 @@ void kovalevski_points::compute_contact_multiplicity(
 
 		Contact_multiplicity[i] = NEW_int(Pts_on_lines->Set_size[i]);
 
-		QO->Dom->P->Subspaces->Grass_lines->unrank_lint(Lines[i], 0 /*verbose_level*/);
+		QO->Dom->P->Subspaces->Grass_lines->unrank_lint(
+				Lines[i],
+				0 /*verbose_level*/);
 
 		for (j = 0; j < Pts_on_lines->Set_size[i]; j++) {
+
 			a = Pts_on_lines->Sets[i][j];
 
 			// unrank the point of the line to w[]:
@@ -591,10 +650,97 @@ void kovalevski_points::print_lines_with_points_on_them(
 
 
 
+void kovalevski_points::get_incidence_structure_by_flags(
+		combinatorics::design_theory::incidence_structure_by_flags *&Incidence_structure_by_flags,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "kovalevski_points::get_incidence_structure_by_flags" << endl;
+	}
+
+	other::data_structures::set_of_sets *SoS;
+
+	get_incidence_structure(
+			SoS,
+			verbose_level);
+
+	//SoS->print_table_tex(ost);
+
+
+	int *Incma;
+	int h;
+
+	int *Flags;
+	int nb_flags;
+	int nb_rows;
+	int nb_cols;
+
+
+	nb_rows = SoS->underlying_set_size;
+	nb_cols = SoS->nb_sets;
+
+
+	int i, j;
+
+	Incma = NEW_int(nb_rows * nb_cols);
+	Int_vec_zero(Incma, nb_rows * nb_cols);
+	for (j = 0; j < nb_cols; j++) {
+		for (h = 0; h < 4; h++) {
+			i = SoS->Sets[j][h];
+			Incma[i * nb_cols + j] = 1;
+		}
+	}
+
+	nb_flags = 0;
+	Flags = NEW_int(nb_cols * 4);
+	for (i = 0; i < nb_rows; i++) {
+		for (j = 0; j < nb_cols; j++) {
+			if (Incma[i * nb_cols + j]) {
+				Flags[nb_flags++] = i * nb_cols + j;
+			}
+		}
+	}
+
+	if (f_v) {
+		cout << "Flags=";
+		Int_vec_print_fully(cout, Flags, nb_flags);
+		cout << endl;
+
+		cout << "nb_rows=" << nb_rows << endl;
+		cout << "nb_cols=" << nb_cols << endl;
+		cout << "nb_flags=" << nb_flags << endl;
+	}
+
+	FREE_OBJECT(SoS);
+	FREE_int(Incma);
+
+
+	Incidence_structure_by_flags = NEW_OBJECT(combinatorics::design_theory::incidence_structure_by_flags);
+
+
+	Incidence_structure_by_flags->init(
+			Flags, nb_flags, nb_rows, nb_cols,
+			verbose_level);
+
+	FREE_int(Flags);
+
+	if (f_v) {
+		cout << "Incidence_structure_by_flags:" << endl;
+		Incidence_structure_by_flags->print();
+	}
+
+	if (f_v) {
+		cout << "kovalevski_points::get_incidence_structure_by_flags done" << endl;
+	}
+}
 
 void kovalevski_points::get_incidence_structure(
 		other::data_structures::set_of_sets *&SoS,
 		int verbose_level)
+// Turns lines_on_points_off into set of sets indexed by Kovalevski points
 {
 	int f_v = (verbose_level >= 1);
 
@@ -636,6 +782,17 @@ void kovalevski_points::get_incidence_structure(
 	}
 }
 
+
+std::string kovalevski_points::export_flags(
+		int verbose_level)
+{
+	string s;
+
+	s = Int_vec_stringify(
+			Incidence_structure_by_flags->flags,
+			Incidence_structure_by_flags->nb_flags);
+	return s;
+}
 
 void kovalevski_points::print_all_points(
 		std::ostream &ost, int verbose_level)
@@ -683,10 +840,20 @@ void kovalevski_points::print_all_points(
 	FREE_OBJECT(Labels);
 
 
-	other::data_structures::set_of_sets *SoS;
 
 	ost << "The incidence structure induced by the Kovalevski points is: " << endl;
 	ost << "\\\\" << endl;
+
+
+	Incidence_structure_by_flags->print_latex(ost);
+
+	Incidence_structure_by_flags->print_incma_latex(ost);
+
+
+
+#if 0
+	other::data_structures::set_of_sets *SoS;
+
 	get_incidence_structure(
 			SoS,
 			verbose_level);
@@ -738,9 +905,11 @@ void kovalevski_points::print_all_points(
 	FREE_OBJECT(SoS);
 	FREE_int(Flags);
 	FREE_int(Incma);
+#endif
 
-	ost << "The Kovalevski points by rank are: " << endl;
-	Lint_vec_print_fully(ost, Kovalevski_points, nb_Kovalevski);
+
+	ost << "The Kovalevski points sorted by rank are: " << endl;
+	Lint_vec_print_fully(ost, Kovalevski_points_sorted, nb_Kovalevski);
 	ost << "\\\\" << endl;
 
 	ost << "The points off the curve are: \\\\" << endl;
@@ -751,7 +920,7 @@ void kovalevski_points::print_all_points(
 		ost << i << " : $P_{" << Pts_off[i] << "}=";
 		Int_vec_print_fully(ost, v, 3);
 		ost << "$\\\\" << endl;
-		}
+	}
 	ost << "\\end{multicols}" << endl;
 	Lint_vec_print_fully(ost, Pts_off, nb_pts_off);
 	ost << "\\\\" << endl;

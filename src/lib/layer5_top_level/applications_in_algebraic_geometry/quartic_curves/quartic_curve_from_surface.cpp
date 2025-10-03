@@ -42,11 +42,18 @@ quartic_curve_from_surface::quartic_curve_from_surface()
 	// int equation_nice[20];
 	gradient = NULL;
 
+	tangent_plane_rank = 0;
+
 	Lines_nice = NULL;
 	nb_lines = 0;
 
 	Bitangents = NULL;
 	nb_bitangents = 0;
+
+	Eckardt_points_nice = NULL;
+	f_Eckardt_point_in_tangent_plane = NULL;
+	nb_Eckardt = 0;
+	nb_ET = 0;
 
 	f1 = f2 = f3 = NULL;
 
@@ -92,6 +99,13 @@ quartic_curve_from_surface::~quartic_curve_from_surface()
 	if (Bitangents) {
 		FREE_lint(Bitangents);
 	}
+	if (Eckardt_points_nice) {
+		FREE_lint(Eckardt_points_nice);
+	}
+	if (f_Eckardt_point_in_tangent_plane) {
+		FREE_int(f_Eckardt_point_in_tangent_plane);
+	}
+
 	if (f1) {
 		FREE_int(f1);
 	}
@@ -825,6 +839,25 @@ void quartic_curve_from_surface::map_surface_to_special_form(
 				0);
 	}
 
+	// map the Eckardt points to Eckardt_points_nice[]:
+
+	nb_Eckardt = SOA->SO->SOP->nb_Eckardt_points;
+
+	Eckardt_points_nice = NEW_lint(nb_Eckardt);
+	for (i = 0; i < nb_Eckardt; i++) {
+		Eckardt_points_nice[i] = SOA->Surf_A->A->Group_element->element_image_of(
+				SOA->SO->SOP->Eckardt_points[i],
+				transporter,
+				0);
+	}
+
+	if (f_v) {
+		cout << "quartic_curve_from_surface::map_surface_to_special_form "
+				"Eckardt_points_nice=";
+		Lint_vec_print(cout, Eckardt_points_nice, nb_Eckardt);
+		cout << endl;
+	}
+
 
 	// compute the 28 bitangents.
 	// First, the 27 bitangents arising from the lines of the surface.
@@ -893,6 +926,7 @@ void quartic_curve_from_surface::map_surface_to_special_form(
 			SOA->SO->Surf->PolynomialDomains->compute_special_bitangent(
 			SOA->Surf_A->PA->PA2->P /* P2 */,
 			gradient,
+			tangent_plane_rank,
 			verbose_level);
 
 	if (f_v) {
@@ -900,6 +934,10 @@ void quartic_curve_from_surface::map_surface_to_special_form(
 				"after SOA->SO->Surf->PolynomialDomains->compute_special_bitangent" << endl;
 	}
 
+	if (f_v) {
+		cout << "quartic_curve_from_surface::map_surface_to_special_form "
+				"tangent_plane_rank = " << tangent_plane_rank << endl;
+	}
 
 	if (f_v) {
 		cout << "quartic_curve_from_surface::map_surface_to_special_form "
@@ -914,6 +952,23 @@ void quartic_curve_from_surface::map_surface_to_special_form(
 		cout << endl;
 	}
 
+	f_Eckardt_point_in_tangent_plane = NEW_int(nb_Eckardt);
+
+	for (i = 0; i < nb_Eckardt; i++) {
+		f_Eckardt_point_in_tangent_plane[i] =
+				SOA->Surf_A->PA->P->Solid->is_incident_point_plane(
+				Eckardt_points_nice[i], tangent_plane_rank, verbose_level);
+	}
+
+	nb_ET = 0;
+	for (i = 0; i < nb_Eckardt; i++) {
+		if (f_Eckardt_point_in_tangent_plane[i]) {
+			nb_ET++;
+		}
+	}
+	if (f_v) {
+		cout << "quartic_curve_from_surface::map_surface_to_special_form nb_ET = " << nb_ET << endl;
+	}
 
 
 	if (f_v) {
@@ -945,7 +1000,6 @@ void quartic_curve_from_surface::compute_stabilizer_with_nauty(
 	Canon.compute_stabilizer_of_quartic_curve(
 			this,
 			&Nauty_control,
-			//f_save_nauty_input_graphs,
 			Aut_of_variety,
 			verbose_level);
 	if (f_v) {

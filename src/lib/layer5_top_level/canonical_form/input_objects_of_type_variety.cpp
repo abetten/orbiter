@@ -432,6 +432,7 @@ void input_objects_of_type_variety::read_all_varieties_from_spreadsheet(
 		int nb_carry_through,
 		int file_cnt, int &counter,
 		int verbose_level)
+// increases counter
 {
 	int f_v = (verbose_level >= 1);
 

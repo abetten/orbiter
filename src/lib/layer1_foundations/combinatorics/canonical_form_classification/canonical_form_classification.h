@@ -662,6 +662,9 @@ public:
 	void init_file_of_incidence_geometries(
 			std::string &a,
 				int v, int b, int f);
+	void init_file_of_incidence_geometries_csv(
+			std::string &file, std::string &column,
+				int v, int b, int f);
 	void init_file_of_incidence_geometries_by_row_ranks(
 			std::string &a,
 				int v, int b, int r);

@@ -1408,7 +1408,7 @@ void projective_space_subspaces::find_lines_by_intersection_number(
 
 	line_intersection_type(
 		set, set_size, type,
-		0 /*verbose_level */);
+		verbose_level - 5);
 
 	for (i = 0; i < N_lines; i++) {
 		if (type[i] == intersection_number) {

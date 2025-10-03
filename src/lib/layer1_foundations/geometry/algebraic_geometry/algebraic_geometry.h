@@ -520,16 +520,23 @@ public:
 	int nb_Kovalevski;
 	int *Kovalevski_point_idx;
 	long int *Kovalevski_points;
+	long int *Kovalevski_points_sorted;
 
 	long int *Pts_off;
 	int nb_pts_off;
 
 	other::data_structures::set_of_sets *pts_off_on_lines;
-	int *f_is_on_line2; // [QO->nb_pts]
+	int *f_is_on_line2; // [nb_pts_off]
+		// f_is_on_line2[j] is true if the j-th point
+		// off the curve is on any of the bitangents
 
 	other::data_structures::set_of_sets *lines_on_points_off;
+		// index of bitangents passing through a given point
+		// (not necessarily a Kovalevski point)
+
 	other::data_structures::tally *Point_off_type;
 
+	combinatorics::design_theory::incidence_structure_by_flags *Incidence_structure_by_flags;
 
 	kovalevski_points();
 	~kovalevski_points();
@@ -555,8 +562,13 @@ public:
 			std::ostream &ost);
 	void print_lines_with_points_on_them(
 			std::ostream &ost);
+	void get_incidence_structure_by_flags(
+			combinatorics::design_theory::incidence_structure_by_flags *&Incidence_structure_by_flags,
+			int verbose_level);
 	void get_incidence_structure(
 			other::data_structures::set_of_sets *&SoS,
+			int verbose_level);
+	std::string export_flags(
 			int verbose_level);
 	void print_all_points(
 			std::ostream &ost, int verbose_level);
@@ -2230,6 +2242,7 @@ public:
 	long int compute_special_bitangent(
 			geometry::projective_geometry::projective_space *P2,
 			int *gradient,
+			long int &plane_rk,
 			int verbose_level);
 	void print_clebsch_P(
 			std::ostream &ost);

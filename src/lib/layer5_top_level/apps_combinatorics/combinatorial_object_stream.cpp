@@ -511,7 +511,8 @@ void combinatorial_object_stream::do_test_distinguishing_property(
 
 		combinatorics::canonical_form_classification::any_combinatorial_object *OwCF;
 
-		OwCF = (combinatorics::canonical_form_classification::any_combinatorial_object *) IS->Objects[input_idx];
+		OwCF = (combinatorics::canonical_form_classification::any_combinatorial_object *)
+				IS->Objects[input_idx];
 
 		OwCF->print_brief(cout);
 
@@ -538,7 +539,8 @@ void combinatorial_object_stream::do_covering_type(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "combinatorial_object_stream::do_covering_type verbose_level = " << verbose_level << endl;
+		cout << "combinatorial_object_stream::do_covering_type "
+				"verbose_level = " << verbose_level << endl;
 		cout << "combinatorial_object_stream::do_covering_type "
 				"subset_sz = " << subset_sz << endl;
 		cout << "combinatorial_object_stream::do_covering_type "

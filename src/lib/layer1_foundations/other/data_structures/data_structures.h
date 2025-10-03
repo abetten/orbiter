@@ -2150,6 +2150,14 @@ public:
 			int *f_column_select,
 			int f_enclose_in_parentheses,
 			int nb_lines_per_table);
+	void print_table_with_row_subset_lint(
+			long int *Rows, int nb_rows, std::string &fname_out,
+			int f_add_local_counter,
+			int verbose_level);
+	void print_table_with_row_subset(
+			int *Rows, int nb_rows, std::string &fname_out,
+			int f_add_local_counter,
+			int verbose_level);
 	void print_table_row(
 			int row, int f_enclose_in_parentheses,
 			std::ostream &ost);

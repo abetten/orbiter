@@ -521,6 +521,56 @@ int data_input_stream::count_number_of_objects_to_test(
 				exit(1);
 			}
 		}
+
+		else if (Descr->Input[input_idx].input_type == t_data_input_stream_file_of_incidence_geometries_csv) {
+        	if (f_v) {
+				cout << "input incidence geometries from file "
+						<< Descr->Input[input_idx].input_string << " : " << Descr->Input[input_idx].input_string2 << endl;
+			}
+
+            string fname;
+            string col_label;
+
+            fname = Descr->Input[input_idx].input_string;
+            col_label = Descr->Input[input_idx].input_string2;
+
+            if (f_v) {
+            	cout << "orbiter file, fname=" << fname << endl;
+            }
+
+            other::data_structures::string_tools ST;
+            other::orbiter_kernel_system::file_io Fio;
+
+            if (Fio.file_size(fname) <= 0) {
+                cout << "The file " << fname << " does not exist" << endl;
+                exit(1);
+            }
+
+            //data_structures::string_tools ST;
+
+	        other::data_structures::set_of_sets *SoS;
+            int nb_sol;
+
+
+            Fio.Csv_file_support->read_column_as_set_of_sets(
+                    fname, col_label,
+                    SoS,
+                    0 /*verbose_level - 2*/);
+
+            nb_sol = SoS->nb_sets;
+            if (f_v) {
+            	cout << "objects from file " << fname <<
+                		" the file contains " << nb_sol << " sets" << endl;
+            }
+            nb_objects_to_test += nb_sol;
+            FREE_OBJECT(SoS);
+        }
+
+
+
+
+
+
 		else if (Descr->Input[input_idx].input_type == t_data_input_stream_file_of_incidence_geometries_by_row_ranks) {
 			if (f_v) {
 				cout << "input incidence geometries by row ranks from file "
@@ -1016,6 +1066,72 @@ void data_input_stream::read_objects(
 
 			}
 		}
+
+
+		else if (Descr->Input[input_idx].input_type == t_data_input_stream_file_of_incidence_geometries_csv) {
+			if (f_v) {
+				cout << "input incidence geometries from file "
+						<< Descr->Input[input_idx].input_string << ":" << Descr->Input[input_idx].input_string2 << endl;
+			}
+
+			string fname;
+			string col_label;
+
+			fname = Descr->Input[input_idx].input_string;
+			col_label = Descr->Input[input_idx].input_string2;
+
+			other::data_structures::string_tools ST;
+            other::orbiter_kernel_system::file_io Fio;
+
+            if (Fio.file_size(fname) <= 0) {
+                cout << "The file " << fname << " does not exist" << endl;
+                exit(1);
+            }
+
+            //data_structures::string_tools ST;
+
+	        other::data_structures::set_of_sets *SoS;
+            int nb_sol;
+
+
+            Fio.Csv_file_support->read_column_as_set_of_sets(
+                    fname, col_label,
+                    SoS,
+                    0 /*verbose_level - 2*/);
+
+            nb_sol = SoS->nb_sets;
+            if (f_v) {
+            	cout << "objects from file " << fname <<
+                		" the file contains " << nb_sol << " sets" << endl;
+            }
+
+            int h;
+
+			for (h = 0; h < SoS->nb_sets; h++) {
+				any_combinatorial_object *Any_combo;
+				int v, b, f;
+
+
+				Any_combo = NEW_OBJECT(any_combinatorial_object);
+
+				v = Descr->Input[input_idx].input_data1;
+				b = Descr->Input[input_idx].input_data2;
+				f = Descr->Input[input_idx].input_data3;
+				Any_combo->init_incidence_geometry(
+						SoS->Sets[h],
+						f,
+						v,
+						b,
+						f /*nb_flags*/,
+						verbose_level);
+
+				Objects.push_back(Any_combo);
+
+			}
+            FREE_OBJECT(SoS);
+		}
+
+
 		else if (Descr->Input[input_idx].input_type == t_data_input_stream_file_of_incidence_geometries_by_row_ranks) {
 			if (f_v) {
 				cout << "input incidence geometries from file "

@@ -115,6 +115,15 @@ void data_input_stream_description_element::print()
 				<< " " << input_data3
 				<< endl;
 	}
+	else if (input_type == t_data_input_stream_file_of_incidence_geometries_csv) {
+		cout << "-file_of_incidence_geometries_csv "
+				<< input_string
+				<< " " << input_string2
+				<< " " << input_data1
+				<< " " << input_data2
+				<< " " << input_data3
+				<< endl;
+	}
 	else if (input_type == t_data_input_stream_file_of_incidence_geometries_by_row_ranks) {
 		cout << "-file_of_incidence_geometries_by_row_ranks " << input_string
 				<< " " << input_data1
@@ -345,6 +354,20 @@ void data_input_stream_description_element::init_file_of_incidence_geometries(
 	input_type = t_data_input_stream_file_of_incidence_geometries;
 
 	input_string.assign(a);
+	input_data1 = v;
+	input_data2 = b;
+	input_data3 = f;
+
+}
+
+void data_input_stream_description_element::init_file_of_incidence_geometries_csv(
+		std::string &file, std::string &column,
+			int v, int b, int f)
+{
+	input_type = t_data_input_stream_file_of_incidence_geometries_csv;
+
+	input_string.assign(file);
+	input_string2.assign(column);
 	input_data1 = v;
 	input_data2 = b;
 	input_data3 = f;

@@ -313,6 +313,30 @@ int data_input_stream_description::read_arguments(
 
 			nb_inputs++;
 		}
+		else if (ST.stringcmp(argv[i], "-file_of_incidence_geometries_csv") == 0) {
+
+			data_input_stream_description_element E;
+			std::string fname;
+			std::string column;
+			int v, b, f;
+
+			fname.assign(argv[++i]);
+			column.assign(argv[++i]);
+			v = ST.strtoi(argv[++i]);
+			b = ST.strtoi(argv[++i]);
+			f = ST.strtoi(argv[++i]);
+
+			E.init_file_of_incidence_geometries_csv(fname, column, v, b, f);
+			Input.push_back(E);
+
+			if (f_v) {
+				E.print();
+			}
+
+			nb_inputs++;
+		}
+
+
 		else if (ST.stringcmp(argv[i],
 				"-file_of_incidence_geometries_by_row_ranks") == 0) {
 

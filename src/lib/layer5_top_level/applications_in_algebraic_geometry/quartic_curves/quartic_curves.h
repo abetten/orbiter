@@ -51,6 +51,7 @@ public:
 	int extract_specific_orbit_on_kovalevski_points_by_length_length;
 	int extract_specific_orbit_on_kovalevski_points_by_length_index;
 
+	int f_get_Kovalevski_configuration;
 
 	quartic_curve_activity_description();
 	~quartic_curve_activity_description();
@@ -83,6 +84,7 @@ public:
 				*Quartic_curve_activity_description,
 			quartic_curve_create *QC, int verbose_level);
 	void perform_activity(
+			other::orbiter_kernel_system::activity_output *&AO,
 			int verbose_level);
 
 };
@@ -385,15 +387,22 @@ public:
 		// which maps point A to point B.
 	int *gradient; // [4 * Poly2_4->get_nb_monomials()]
 
+	long int tangent_plane_rank; // rank of tangent plane after transformation
+
 	long int *Lines_nice; // surface lines after transformation
 	int nb_lines;
 
 	long int *Bitangents;
 	int nb_bitangents; // = nb_lines + 1
 
+	long int *Eckardt_points_nice; // Eckardt points after transformation
+	int *f_Eckardt_point_in_tangent_plane;
+	int nb_Eckardt;
+	int nb_ET;
 
 	// computed by split_nice_equation starting
 	// from the equation of the cubic surface:
+	// X0^2*f1 + X0 * f2 + f3 = 0
 	int *f1; // [Poly1->get_nb_monomials()]
 		// terms involving X0^2, with X0^2 removed (linear)
 	int *f2; // [Poly2->get_nb_monomials()]

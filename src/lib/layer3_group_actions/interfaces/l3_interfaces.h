@@ -49,7 +49,7 @@ public:
 	// normalizer_generators_perms[nb_classes][class_normalizer_number_of_generators[i] * A->degree]
 
 
-	groups::conjugacy_class_of_elements **Conjugacy_class;
+	groups::conjugacy_class_of_elements **Conjugacy_class; // [nb_classes]
 
 	conjugacy_classes_and_normalizers();
 	~conjugacy_classes_and_normalizers();

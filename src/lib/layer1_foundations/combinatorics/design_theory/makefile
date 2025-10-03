@@ -8,7 +8,8 @@ LFLAGS = -lm
 
 MODULES = \
 		design_object.o \
-		design_theory_global.o
+		design_theory_global.o \
+		incidence_structure_by_flags.o 
 
 
 all : $(MODULES)

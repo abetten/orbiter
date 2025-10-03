@@ -705,6 +705,7 @@ void objects_after_classification::report_object_with_properties(
 	}
 
 
+	ost << "\\subsubsection*{objects\\_after\\_classification::report\\_object\\_with\\_properties done}" << endl;
 
 }
 

@@ -258,6 +258,7 @@ void action_global::reverse_engineer_linear_group_from_permutation_group(
 // called from
 // combinatorial_object_with_properties::lift_generators_to_matrix_group
 // combinatorial_object_with_properties::init_object_in_projective_space
+// Output: SG, A_perm
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);

@@ -65,6 +65,8 @@ void conjugacy_class_of_elements::init(
 		int idx,
 		groups::sims *group_G,
 		int verbose_level)
+// build gens and N_gens from the data computed by Magma
+// Everything is in the permutation representation chosen by Orbiter
 {
 	int f_v = (verbose_level >= 1);
 
@@ -297,7 +299,8 @@ void conjugacy_class_of_elements::single_class_data(
 	data.push_back(s);
 
 	if (f_v) {
-		cout << "conjugacy_class_of_elements::single_class_data before centralizer_order.stringify" << endl;
+		cout << "conjugacy_class_of_elements::single_class_data "
+				"before centralizer_order.stringify" << endl;
 	}
 
 	s = centralizer_order.stringify();
@@ -320,7 +323,8 @@ void conjugacy_class_of_elements::single_class_data(
 	options = "";
 
 	if (f_v) {
-		cout << "conjugacy_class_of_elements::single_class_data before element_stringify" << endl;
+		cout << "conjugacy_class_of_elements::single_class_data "
+				"before element_stringify" << endl;
 	}
 
 	s = "$" + Class_data->A->Group_element->element_stringify(Elt, options) + "$";
@@ -328,7 +332,8 @@ void conjugacy_class_of_elements::single_class_data(
 
 
 	if (f_v) {
-		cout << "conjugacy_class_of_elements::single_class_data after element_stringify" << endl;
+		cout << "conjugacy_class_of_elements::single_class_data "
+				"after element_stringify" << endl;
 	}
 #endif
 

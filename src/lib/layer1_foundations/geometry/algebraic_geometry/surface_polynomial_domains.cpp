@@ -1455,6 +1455,7 @@ long int surface_polynomial_domains::compute_tangent_plane(
 long int surface_polynomial_domains::compute_special_bitangent(
 		geometry::projective_geometry::projective_space *P2,
 		int *gradient,
+		long int &plane_rk,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1470,7 +1471,7 @@ long int surface_polynomial_domains::compute_special_bitangent(
 	v[2] = 0;
 	v[3] = 0;
 
-	long int plane_rk;
+	//long int plane_rk;
 	long int special_bitangent_rk;
 
 	if (f_v) {

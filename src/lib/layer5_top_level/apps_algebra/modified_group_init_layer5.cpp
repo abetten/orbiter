@@ -511,10 +511,10 @@ void modified_group_init_layer5::modified_group_create_stabilizer_of_variety(
 
 	if (f_v) {
 		cout << "modified_group_init_layer5::modified_group_create_stabilizer_of_variety "
-				"before Classifier->init_direct" << endl;
+				"before Classifier->init_variety_object_with_action_directly" << endl;
 	}
 
-	Classifier->init_direct(
+	Classifier->init_variety_object_with_action_directly(
 			1 /*nb_input_Vo*/,
 			Input,
 			fname_base,
@@ -524,7 +524,7 @@ void modified_group_init_layer5::modified_group_create_stabilizer_of_variety(
 
 	if (f_v) {
 		cout << "modified_group_init_layer5::modified_group_create_stabilizer_of_variety "
-				"after Classifier->init_direct" << endl;
+				"after Classifier->init_variety_object_with_action_directly" << endl;
 	}
 
 	canonical_form::canonical_form_classifier_description *Descr1;
@@ -532,8 +532,6 @@ void modified_group_init_layer5::modified_group_create_stabilizer_of_variety(
 	Descr1 = NEW_OBJECT(canonical_form::canonical_form_classifier_description);
 
 
-
-	//Descr1->f_save_nauty_input_graphs = true;
 
 	Classifier->set_description(Descr1);
 
@@ -656,6 +654,214 @@ void modified_group_init_layer5::modified_group_create_stabilizer_of_variety(
 		cout << "modified_group_init_layer5::modified_group_create_stabilizer_of_variety done" << endl;
 	}
 }
+
+
+
+
+
+void modified_group_init_layer5::modified_group_compute_isomorphism_of_varieties(
+		group_constructions::modified_group_create *Modified_group_create,
+		group_constructions::group_modification_description *Descr,
+		std::string &variety1_label,
+		std::string &variety2_label,
+		int verbose_level)
+// needs canonical_form::canonical_form_classifier, hence level 5
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "modified_group_init_layer5::modified_group_compute_isomorphism_of_varieties" << endl;
+	}
+
+	canonical_form::variety_object_with_action *Input_Variety1;
+	canonical_form::variety_object_with_action *Input_Variety2;
+
+	Input_Variety1 = Get_variety(variety1_label);
+
+	if (f_v) {
+		cout << "modified_group_init_layer5::modified_group_compute_isomorphism_of_varieties "
+				"Input_Variety1 = " << Input_Variety1->Variety_object->label_txt << endl;
+	}
+
+	Input_Variety2 = Get_variety(variety2_label);
+
+	if (f_v) {
+		cout << "modified_group_init_layer5::modified_group_compute_isomorphism_of_varieties "
+				"Input_Variety2 = " << Input_Variety2->Variety_object->label_txt << endl;
+	}
+
+	std::string fname_base;
+
+	fname_base = Input_Variety1->Variety_object->label_txt + "_c";
+
+
+	canonical_form::canonical_form_classifier *Classifier;
+
+	Classifier = NEW_OBJECT(canonical_form::canonical_form_classifier);
+
+
+	if (!Descr->f_nauty_control) {
+		cout << "modified_group_init_layer5::modified_group_compute_isomorphism_of_varieties "
+				"Please use -nauty_control" << endl;
+		exit(1);
+	}
+
+
+	canonical_form::variety_object_with_action **Input;
+	int nb_input_Vo = 2;
+
+
+	Input = (canonical_form::variety_object_with_action **) NEW_pvoid(2);
+	Input[0] = Input_Variety1;
+	Input[1] = Input_Variety2;
+
+	if (f_v) {
+		cout << "modified_group_init_layer5::modified_group_compute_isomorphism_of_varieties "
+				"before Classifier->init_variety_object_with_action_directly" << endl;
+	}
+
+	Classifier->init_variety_object_with_action_directly(
+			nb_input_Vo,
+			Input,
+			fname_base,
+			Descr->f_nauty_control,
+			Descr->Nauty_interface_control,
+			verbose_level);
+
+	if (f_v) {
+		cout << "modified_group_init_layer5::modified_group_compute_isomorphism_of_varieties "
+				"after Classifier->init_variety_object_with_action_directly" << endl;
+	}
+
+	canonical_form::canonical_form_classifier_description *Descr1;
+
+	Descr1 = NEW_OBJECT(canonical_form::canonical_form_classifier_description);
+
+
+
+	Classifier->set_description(Descr1);
+
+
+
+	canonical_form::canonical_form_global Canonical_form_global;
+	canonical_form::classification_of_varieties_nauty *Classification_of_varieties_nauty;
+
+	if (f_v) {
+		cout << "modified_group_init_layer5::modified_group_compute_isomorphism_of_varieties "
+				"before Canonical_form_global.compute_group_and_tactical_decomposition" << endl;
+	}
+	Canonical_form_global.compute_group_and_tactical_decomposition(
+			Classifier,
+			Input_Variety1,
+			Classification_of_varieties_nauty,
+			verbose_level);
+	if (f_v) {
+		cout << "modified_group_init_layer5::modified_group_compute_isomorphism_of_varieties "
+				"after Canonical_form_global.compute_group_and_tactical_decomposition" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "modified_group_init_layer5::modified_group_compute_isomorphism_of_varieties "
+				"before FREE_OBJECT(Classification_of_varieties_nauty)" << endl;
+	}
+
+	//FREE_OBJECT(Classification_of_varieties_nauty);
+	// Classification_of_varieties_nauty is freed in FREE_OBJECT(Classifier);
+
+	if (f_v) {
+		cout << "modified_group_init_layer5::modified_group_compute_isomorphism_of_varieties "
+				"after FREE_OBJECT(Classification_of_varieties_nauty)" << endl;
+	}
+
+	if (f_v) {
+		cout << "modified_group_init_layer5::modified_group_compute_isomorphism_of_varieties "
+				"before FREE_OBJECT(Descr1)" << endl;
+	}
+	FREE_OBJECT(Descr1);
+	if (f_v) {
+		cout << "modified_group_init_layer5::modified_group_compute_isomorphism_of_varieties "
+				"after FREE_OBJECT(Descr1)" << endl;
+	}
+	if (f_v) {
+		cout << "modified_group_init_layer5::modified_group_compute_isomorphism_of_varieties "
+				"before FREE_OBJECT(Classifier)" << endl;
+	}
+	FREE_OBJECT(Classifier);
+	if (f_v) {
+		cout << "modified_group_init_layer5::modified_group_compute_isomorphism_of_varieties "
+				"after FREE_OBJECT(Classifier)" << endl;
+	}
+
+
+	//Input_Vo[0].Stab_gens;
+
+
+	Modified_group_create->A_base = Input_Variety1->PA->A;
+	Modified_group_create->A_previous = Input_Variety1->PA->A;
+
+
+
+
+
+	Modified_group_create->label = Input_Variety1->PA->A->label + "_stab_of_" + Input_Variety1->Variety_object->label_txt;
+	Modified_group_create->label_tex = Input_Variety1->PA->A->label_tex + "{\\rm \\_stab\\_of\\_}" + Input_Variety1->Variety_object->label_tex;
+	if (f_v) {
+		cout << "algebra_global_with_action::do_stabilizer_of_variety "
+				"label = " << Modified_group_create->label << endl;
+		cout << "algebra_global_with_action::do_stabilizer_of_variety "
+				"label_tex = " << Modified_group_create->label_tex << endl;
+	}
+
+	if (f_v) {
+		cout << "modified_group_init_layer5::modified_group_compute_isomorphism_of_varieties "
+				"A_base=";
+		Modified_group_create->A_base->print_info();
+		cout << endl;
+		cout << "modified_group_init_layer5::modified_group_compute_isomorphism_of_varieties "
+				"A_previous=";
+		Modified_group_create->A_previous->print_info();
+		cout << endl;
+	}
+
+	Modified_group_create->f_has_strong_generators = true;
+
+	groups::strong_generators *Strong_gens_temp;
+	Strong_gens_temp = Input_Variety1->Stab_gens->create_copy(verbose_level - 4);
+
+	actions::action_global Action_global;
+
+	Modified_group_create->A_modified = Action_global.init_subgroup_from_strong_generators(
+			Modified_group_create->A_base,
+			Strong_gens_temp,
+			verbose_level - 1);
+
+	Modified_group_create->A_modified->label = Modified_group_create->label;
+	Modified_group_create->A_modified->label_tex = Modified_group_create->label_tex;
+
+	if (f_v) {
+		cout << "modified_group_init_layer5::modified_group_compute_isomorphism_of_varieties "
+				"A_modified->label = " << Modified_group_create->A_modified->label << endl;
+		cout << "modified_group_init_layer5::modified_group_compute_isomorphism_of_varieties "
+				"A_modified->label_tex = " << Modified_group_create->A_modified->label_tex << endl;
+	}
+
+
+	// Strong_gens should be in the new action.
+
+	Modified_group_create->f_has_strong_generators = true;
+	Modified_group_create->Strong_gens = Modified_group_create->A_modified->Strong_gens->create_copy(verbose_level - 4);
+	//Strong_gens = AG->class_data->Conjugacy_class[orbit_index]->gens->create_copy(verbose_level - 4);
+
+
+	FREE_pvoid((void **) Input);
+
+	if (f_v) {
+		cout << "modified_group_init_layer5::modified_group_compute_isomorphism_of_varieties done" << endl;
+	}
+}
+
+
 
 
 

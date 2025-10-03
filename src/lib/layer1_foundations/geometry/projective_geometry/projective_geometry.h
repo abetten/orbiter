@@ -647,6 +647,8 @@ public:
 	// the arguments are almost the same, except that transversal_line is missing.
 	long int map_point(
 			long int point, int *transform16, int verbose_level);
+	int is_incident_point_plane(
+			long int pt, long int plane_rk, int verbose_level);
 
 
 

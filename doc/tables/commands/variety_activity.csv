@@ -2,10 +2,11 @@ ROW,C1,C2,C3
 0,"tab:variety:activities",,
 1,"Variety Activities",,
 1,"\verb'-compute_group' ","  "," Compute the group of the variety (i.e., the stabilizer of the equation). "
+1,"\verb'-test_isomorphism' ","  "," Test if two varieties are isomorphic. If yes, compute an isomorphism from the second to the first. "
 1,"\verb'-compute_set_stabilizer' ","  "," Compute the set stabilizer of the variety. This group contains the stabilizer of the equation as a subgroup. "
 1,"\verb'-nauty_control' ","  options "," Nauty options, see Table~\ref{tab:nauty:control}.  "
 1,"\verb'-report' ","  "," Produce a report of the variety. "
-1,"\verb'-export' ","  "," Export data about th variety to a csv file. "
+1,"\verb'-export' ","  "," Export data about the variety to a csv file. "
 1,"\verb'-apply_transformation_to_self' "," M "," Apply the given transformation to the variety. M must be a coded semilinear map. "
 1,"\verb'-singular_points' ","  "," Compute the singular points of the variety. "
 1,"\verb'-output_fname_base' "," fname "," Set output filename base. "

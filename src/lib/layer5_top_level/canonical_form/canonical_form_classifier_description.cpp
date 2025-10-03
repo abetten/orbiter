@@ -258,44 +258,12 @@ int canonical_form_classifier_description::read_arguments(
 		//other::l1_interfaces::nauty_interface_control *Nauty_interface_control;
 
 
-#if 0
-		else if (ST.stringcmp(argv[i], "-algorithm_nauty") == 0) {
-			f_algorithm_nauty = true;
-			if (f_v) {
-				cout << "-algorithm_nauty" << endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-save_nauty_input_graphs") == 0) {
-			f_save_nauty_input_graphs = true;
-			save_nauty_input_graphs_prefix.assign(argv[++i]);
-			if (f_v) {
-				cout << "-save_nauty_input_graphs " << save_nauty_input_graphs_prefix << endl;
-			}
-		}
-#endif
-#if 0
-		else if (ST.stringcmp(argv[i], "-algorithm_substructure") == 0) {
-			f_algorithm_substructure = true;
-			if (f_v) {
-				cout << "-algorithm_substructure" << endl;
-			}
-		}
-#endif
 		else if (ST.stringcmp(argv[i], "-has_nauty_output") == 0) {
 			f_has_nauty_output = true;
 			if (f_v) {
 				cout << "-has_nauty_output" << endl;
 			}
 		}
-#if 0
-		else if (ST.stringcmp(argv[i], "-substructure_size") == 0) {
-			f_substructure_size = true;
-			substructure_size = ST.strtoi(argv[++i]);
-			if (f_v) {
-				cout << "-substructure_size" << endl;
-			}
-		}
-#endif
 		else if (ST.stringcmp(argv[i], "-skip") == 0) {
 			f_skip = true;
 			skip_vector_label.assign(argv[++i]);
@@ -378,27 +346,9 @@ void canonical_form_classifier_description::print()
 		cout << "-nauty_control " << endl;
 		Nauty_interface_control->print();
 	}
-#if 0
-	if (f_algorithm_nauty) {
-		cout << "-algorithm_nauty" << endl;
-	}
-	if (f_save_nauty_input_graphs) {
-		cout << "-save_nauty_input_graphs " << save_nauty_input_graphs_prefix << endl;
-	}
-#endif
-#if 0
-	if (f_algorithm_substructure) {
-		cout << "-algorithm_substructure" << endl;
-	}
-#endif
 	if (f_has_nauty_output) {
 		cout << "-has_nauty_output" << endl;
 	}
-#if 0
-	if (f_substructure_size) {
-		cout << "-substructure_size" << endl;
-	}
-#endif
 	if (f_skip) {
 		cout << "-skip " << skip_vector_label << endl;
 	}

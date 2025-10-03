@@ -268,6 +268,7 @@ int classify_bitvectors::compare_at(
 void classify_bitvectors::add_at_idx(
 		uchar *data,
 		void *extra_data, int idx, int verbose_level)
+// stores extra_data in Type_extra_data[idx]
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -282,11 +283,14 @@ void classify_bitvectors::add_at_idx(
 		Type_rep[i] = Type_rep[i - 1];
 		Type_mult[i] = Type_mult[i - 1];
 	}
+
 	Type_data[idx] = NEW_uchar(rep_len);
 	for (i = 0; i < rep_len; i++) {
 		Type_data[idx][i] = data[i];
 	}
+
 	Type_extra_data[idx] = extra_data;
+
 	Type_rep[idx] = n;
 	Type_mult[idx] = 1;
 	nb_types++;

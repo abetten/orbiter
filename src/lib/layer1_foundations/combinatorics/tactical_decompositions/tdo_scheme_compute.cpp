@@ -223,7 +223,7 @@ void tdo_scheme_compute::print_schemes(
 		cout << "tdo_scheme_compute::print_schemes" << endl;
 	}
 
-	//ost << "\\subsection*{tdo\\_scheme\\_compute::print\\_schemes}" << endl;
+	ost << "\\subsection*{tdo\\_scheme\\_compute::print\\_schemes}" << endl;
 
 	if (f_v) {
 		cout << "tdo_scheme_compute::print_schemes "
@@ -255,6 +255,8 @@ void tdo_scheme_compute::print_schemes(
 
 	Decomp->Scheme->RC->print_classes_of_decomposition_tex(ost);
 #endif
+
+	ost << "\\subsection*{tdo\\_scheme\\_compute::print\\_schemes done}" << endl;
 
 	if (f_v) {
 		cout << "tdo_scheme_compute::print_schemes done" << endl;

@@ -97,6 +97,7 @@ ORBITER_MODULES= \
 		layer1_foundations/combinatorics/cryptography/cryptography_domain.o \
 		layer1_foundations/combinatorics/design_theory/design_object.o \
 		layer1_foundations/combinatorics/design_theory/design_theory_global.o \
+		layer1_foundations/combinatorics/design_theory/incidence_structure_by_flags.o \
 		layer1_foundations/combinatorics/geometry_builder/cperm.o \
 		layer1_foundations/combinatorics/geometry_builder/decomposition_with_fuse.o \
 		layer1_foundations/combinatorics/geometry_builder/gen_geo_conf.o \

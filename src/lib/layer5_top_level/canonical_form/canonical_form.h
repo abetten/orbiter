@@ -167,17 +167,11 @@ public:
 
 	std::vector<std::string> carry_through;
 
-	//int f_algorithm_nauty;
 
 	// for nauty_control:
 	int f_nauty_control;
 	other::l1_interfaces::nauty_interface_control *Nauty_interface_control;
 
-
-	//int f_save_nauty_input_graphs;
-	//std::string save_nauty_input_graphs_prefix;
-
-	//int f_algorithm_substructure;
 
 	int f_has_nauty_output;
 
@@ -252,7 +246,7 @@ public:
 	void init_objects_from_list_of_csv_files(
 			canonical_form_classifier_description *Descr,
 			int verbose_level);
-	void init_direct(
+	void init_variety_object_with_action_directly(
 			int nb_input_Vo,
 			canonical_form::variety_object_with_action **Input_Vo,
 			std::string &fname_base_out,
@@ -419,9 +413,17 @@ public:
 			input_objects_of_type_variety *Input,
 			canonical_form_classifier *Classifier,
 			int verbose_level);
+	// called from
+	// canonical_form_classifier::classify
+	// canonical_form_global::compute_group_and_tactical_decomposition
+	// allocates objects and calls prepare_input
 	void compute_classification(
+			int verbose_level);
+	// calls classify_nauty
+	void write_classification_csv(
 			std::string &fname_base,
 			int verbose_level);
+	// calls write_classification_by_nauty_csv
 	variety_compute_canonical_form *get_canonical_form_i(
 			int i);
 	void prepare_input(
@@ -479,8 +481,14 @@ public:
 
 	int f_projective_space;
 	projective_geometry::projective_space_with_action *PA;
+
+
+	// proprietary:
+
 	groups::strong_generators *SG;
 		// only used if f_projective_space
+		// computed by lift_generators_to_matrix_group
+		// and by init_object_in_projective_space
 
 	actions::action *A_perm;
 
@@ -502,6 +510,7 @@ public:
 			int verbose_level);
 	void lift_generators_to_matrix_group(
 			int verbose_level);
+#if 0
 	void init_object_in_projective_space(
 			combinatorics::canonical_form_classification::any_combinatorial_object *Any_Combo,
 			other::l1_interfaces::nauty_output *NO,
@@ -509,6 +518,7 @@ public:
 			std::string &label,
 			std::string &label_tex,
 			int verbose_level);
+#endif
 	void latex_report_wrapper(
 			std::string label,
 			combinatorics::canonical_form_classification::objects_report_options
@@ -596,6 +606,7 @@ public:
 			int nb_carry_through,
 			int file_cnt, int &counter,
 			int verbose_level);
+	// increases counter
 	void find_columns(
 			other::data_structures::spreadsheet *S,
 			int verbose_level);
@@ -836,7 +847,7 @@ public:
 	std::string fname_case_out;
 
 	// input:
-	int counter;
+	int input_counter;
 	variety_object_with_action *Vo;
 
 
@@ -861,7 +872,7 @@ public:
 			projective_geometry::ring_with_action *Ring_with_action,
 			classification_of_varieties_nauty *Classification_of_varieties_nauty,
 			std::string &fname_case_out,
-			int counter,
+			int input_counter,
 			variety_object_with_action *Vo,
 			int verbose_level);
 	void compute_canonical_form_nauty(
@@ -925,7 +936,7 @@ public:
 
 	projective_geometry::projective_space_with_action *PA;
 
-	int cnt;
+	int cnt; // this is input_index
 	int po_go;
 	int po_index;
 	int po;
@@ -965,6 +976,7 @@ public:
 			int verbose_level);
 	void compute_tactical_decompositions(
 			int verbose_level);
+	// computes the tactical decomposition TD if f_has_automorphism_group is true
 	void compute_tactical_decompositions_wrt_set_stabilizer(
 			int verbose_level);
 	void print(

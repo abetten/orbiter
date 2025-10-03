@@ -767,6 +767,7 @@ void group_theoretic_activity::perform_activity(
 					"after AG->element_rank" << endl;
 		}
 	}
+
 	else if (Descr->f_element_unrank) {
 
 		if (f_v) {
@@ -784,6 +785,7 @@ void group_theoretic_activity::perform_activity(
 					"after AG->element_unrank" << endl;
 		}
 	}
+
 	else if (Descr->f_find_singer_cycle) {
 
 		if (f_v) {

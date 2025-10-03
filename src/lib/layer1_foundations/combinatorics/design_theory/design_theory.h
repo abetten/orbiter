@@ -159,6 +159,38 @@ public:
 };
 
 
+
+// #############################################################################
+// incidence_structure_by_flags.cpp:
+// #############################################################################
+
+//! representation of an incidence structure
+
+
+class incidence_structure_by_flags {
+public:
+
+
+	int *flags;
+	int nb_flags;
+	int nb_rows;
+	int nb_cols;
+
+
+	incidence_structure_by_flags();
+	~incidence_structure_by_flags();
+	void init(
+			int *flags, int nb_flags, int nb_rows, int nb_cols,
+			int verbose_level);
+	void print();
+	void print_latex(
+			std::ostream &ost);
+	void print_incma_latex(
+			std::ostream &ost);
+
+};
+
+
 }}}}
 
 

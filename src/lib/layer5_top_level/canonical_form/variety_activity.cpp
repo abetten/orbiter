@@ -259,10 +259,10 @@ void variety_activity::do_compute_group(
 
 	if (f_v) {
 		cout << "variety_activity::do_compute_group "
-				"before Classifier->init_direct" << endl;
+				"before Classifier->init_variety_object_with_action_directly" << endl;
 	}
 
-	Classifier->init_direct(
+	Classifier->init_variety_object_with_action_directly(
 			nb_input_Vo,
 			Input_Vo,
 			fname_base,
@@ -272,7 +272,7 @@ void variety_activity::do_compute_group(
 
 	if (f_v) {
 		cout << "variety_activity::do_compute_group "
-				"after Classifier->init_direct" << endl;
+				"after Classifier->init_variety_object_with_action_directly" << endl;
 	}
 
 
@@ -344,10 +344,10 @@ void variety_activity::do_test_isomorphism(
 
 	if (f_v) {
 		cout << "variety_activity::do_test_isomorphism "
-				"before Classifier->init_direct" << endl;
+				"before Classifier->init_variety_object_with_action_directly" << endl;
 	}
 
-	Classifier->init_direct(
+	Classifier->init_variety_object_with_action_directly(
 			nb_input_Vo,
 			Input_Vo,
 			fname_base,
@@ -357,7 +357,7 @@ void variety_activity::do_test_isomorphism(
 
 	if (f_v) {
 		cout << "variety_activity::do_test_isomorphism "
-				"after Classifier->init_direct" << endl;
+				"after Classifier->init_variety_object_with_action_directly" << endl;
 	}
 
 
@@ -429,10 +429,10 @@ void variety_activity::do_compute_set_stabilizer(
 
 	if (f_v) {
 		cout << "variety_activity::do_compute_set_stabilizer "
-				"before Classifier->init_direct" << endl;
+				"before Classifier->init_variety_object_with_action_directly" << endl;
 	}
 
-	Classifier->init_direct(
+	Classifier->init_variety_object_with_action_directly(
 			nb_input_Vo,
 			Input_Vo,
 			fname_base,
@@ -442,7 +442,7 @@ void variety_activity::do_compute_set_stabilizer(
 
 	if (f_v) {
 		cout << "variety_activity::do_compute_set_stabilizer "
-				"after Classifier->init_direct" << endl;
+				"after Classifier->init_variety_object_with_action_directly" << endl;
 	}
 
 

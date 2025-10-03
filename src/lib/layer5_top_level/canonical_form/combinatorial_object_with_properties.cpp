@@ -23,6 +23,7 @@ combinatorial_object_with_properties::combinatorial_object_with_properties()
 	Any_Combo = NULL;
 
 	//std::string label;
+	//std::string label_tex;
 
 	NO = NULL;
 
@@ -63,12 +64,14 @@ void combinatorial_object_with_properties::init(
 		std::string &label,
 		std::string &label_tex,
 		int verbose_level)
-// called from objects_after_classification::init_after_nauty
+// called from objects_after_classification::init_after_nauty,
+// which is callecd from combinatorial_object_stream::do_post_processing
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "combinatorial_object_with_properties::init" << endl;
+		cout << "combinatorial_object_with_properties::init max_TDO_depth = " << max_TDO_depth << endl;
 	}
 
 	combinatorial_object_with_properties::Any_Combo = Any_Combo;
@@ -198,6 +201,7 @@ void combinatorial_object_with_properties::lift_generators_to_matrix_group(
 	}
 }
 
+#if 0
 void combinatorial_object_with_properties::init_object_in_projective_space(
 		combinatorics::canonical_form_classification::any_combinatorial_object *Any_Combo,
 		other::l1_interfaces::nauty_output *NO,
@@ -245,6 +249,7 @@ void combinatorial_object_with_properties::init_object_in_projective_space(
 	}
 
 }
+#endif
 
 void combinatorial_object_with_properties::latex_report_wrapper(
 		std::string label,
@@ -821,6 +826,7 @@ void combinatorial_object_with_properties::latex_report(
 				verbose_level);
 	}
 
+	ost << "\\subsubsection*{combinatorial\\_object\\_with\\_properties::latex\\_report done}" << endl;
 
 	if (f_v) {
 		cout << "combinatorial_object_with_properties::latex_report done" << endl;

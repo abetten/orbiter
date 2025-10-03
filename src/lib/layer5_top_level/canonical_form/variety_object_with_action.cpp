@@ -72,6 +72,7 @@ void variety_object_with_action::create_variety(
 		int cnt, int po_go, int po_index, int po, int so,
 		geometry::algebraic_geometry::variety_description *VD,
 		int verbose_level)
+// computes the tactical decomposition as well
 {
 	int f_v = (verbose_level >= 1);
 
@@ -399,6 +400,7 @@ void variety_object_with_action::apply_transformation_to_self(
 
 void variety_object_with_action::compute_tactical_decompositions(
 		int verbose_level)
+// computes the tactical decomposition TD if f_has_automorphism_group is true
 {
 	int f_v = (verbose_level >= 1);
 

@@ -32,7 +32,7 @@ variety_compute_canonical_form::variety_compute_canonical_form()
 
 	//std::string fname_case_out;
 
-	counter = 0;
+	input_counter = -1;
 	Vo = NULL;
 
 	//canonical_pts = NULL;
@@ -83,7 +83,7 @@ void variety_compute_canonical_form::init(
 		projective_geometry::ring_with_action *Ring_with_action,
 		classification_of_varieties_nauty *Classification_of_varieties_nauty,
 		std::string &fname_case_out,
-		int counter,
+		int input_counter,
 		variety_object_with_action *Vo,
 		int verbose_level)
 {
@@ -91,7 +91,7 @@ void variety_compute_canonical_form::init(
 
 	if (f_v) {
 		cout << "variety_compute_canonical_form::init "
-				" counter=" << counter
+				" input_counter=" << input_counter
 				<< " verbose_level=" << verbose_level
 				<< endl;
 	}
@@ -100,8 +100,10 @@ void variety_compute_canonical_form::init(
 	variety_compute_canonical_form::Ring_with_action = Ring_with_action;
 	variety_compute_canonical_form::Classification_of_varieties_nauty = Classification_of_varieties_nauty;
 	variety_compute_canonical_form::fname_case_out.assign(fname_case_out);
-	variety_compute_canonical_form::counter = counter;
+	variety_compute_canonical_form::input_counter = input_counter;
 	variety_compute_canonical_form::Vo = Vo;
+
+	Vo->cnt = input_counter;
 
 	canonical_equation =
 			NEW_int(Ring_with_action->Poly_ring->get_nb_monomials());
@@ -135,10 +137,12 @@ void variety_compute_canonical_form::compute_canonical_form_nauty(
 	if (f_v) {
 		cout << "variety_compute_canonical_form::compute_canonical_form_nauty "
 				"verbose_level=" << verbose_level << endl;
+		cout << "variety_compute_canonical_form::compute_canonical_form_nauty "
+				"input_counter=" << input_counter << endl;
 	}
 	if (f_v) {
 		cout << "variety_compute_canonical_form::compute_canonical_form_nauty "
-				"input_counter = " << counter << " / " << Classification_of_varieties_nauty->Input->nb_objects_to_test << endl;
+				"input_counter = " << input_counter << " / " << Classification_of_varieties_nauty->Input->nb_objects_to_test << endl;
 	}
 
 
@@ -161,7 +165,7 @@ void variety_compute_canonical_form::compute_canonical_form_nauty(
 	}
 	if (f_v) {
 		cout << "variety_compute_canonical_form::compute_canonical_form_nauty "
-				"input_counter = " << counter << " / " << Classification_of_varieties_nauty->Input->nb_objects_to_test << endl;
+				"input_counter = " << input_counter << " / " << Classification_of_varieties_nauty->Input->nb_objects_to_test << endl;
 		cout << "variety_compute_canonical_form::compute_canonical_form_nauty "
 				"f_found_canonical_form=" << f_found_canonical_form << endl;
 		cout << "variety_compute_canonical_form::compute_canonical_form_nauty "
@@ -218,7 +222,7 @@ void variety_compute_canonical_form::classify_using_set_of_rational_points(
 
 	if (f_v) {
 		cout << "variety_compute_canonical_form::classify_using_set_of_rational_points "
-				"input_counter = " << counter << " / "
+				"input_counter = " << input_counter << " / "
 				<< Classification_of_varieties_nauty->Input->nb_objects_to_test << endl;
 	}
 	if (f_v) {
@@ -871,8 +875,8 @@ void variety_compute_canonical_form::prepare_csv_entry_one_line_nauty(
 	if (f_v) {
 		cout << "variety_compute_canonical_form::prepare_csv_entry_one_line_nauty" << endl;
 	}
-	//header = "ROW,Q,FO,PO,SO,Iso_idx,F_Fst,Idx_canonical,Idx_eqn,Eqn,Eqn2,nb_pts_on_curve,pts_on_curve,Bitangents";
 
+	//header = "ROW,Q,FO,PO,SO,Iso_idx,PO_GO,PO_INDEX,AGO_INDEX,AGO,F_Fst,Idx_canonical,Idx_eqn,Eqn,Eqn2,nb_pts_on_curve,pts_on_curve,Bitangents";
 
 	//v.push_back(std::to_string(Vo->cnt)); // ROW
 	v.push_back(std::to_string(Vo->PA->P->Subspaces->F->q)); // Q
@@ -881,24 +885,35 @@ void variety_compute_canonical_form::prepare_csv_entry_one_line_nauty(
 	v.push_back(std::to_string(Vo->so)); // SO
 	//v.push_back(std::to_string(Vo->po_go));
 	//v.push_back(std::to_string(Vo->po_index));
-	if (false /* Canonical_form_classifier->Input->skip_this_one(i) */) {
-		if (f_v) {
-			cout << "variety_compute_canonical_form::prepare_csv_entry_one_line_nauty "
-					"case input_counter = " << i << " was skipped" << endl;
-		}
-		v.push_back(std::to_string(-1));
-		v.push_back(std::to_string(-1));
-		v.push_back(std::to_string(-1));
-		v.push_back(std::to_string(-1));
+	v.push_back(std::to_string(Classification_of_varieties_nauty->Iso_idx[i]));
 
-	}
-	else {
-		v.push_back(std::to_string(Classification_of_varieties_nauty->Iso_idx[i]));
-		v.push_back(std::to_string(Classification_of_varieties_nauty->F_first_time[i]));
-		v.push_back(std::to_string(Classification_of_varieties_nauty->Idx_canonical_form[i]));
-		v.push_back(std::to_string(Classification_of_varieties_nauty->Idx_equation[i]));
-		//v.push_back(std::to_string(Canonical_form_classifier->Output->Tally->rep_idx[i]));
-	}
+
+	//PO_GO,PO_INDEX,Flag_stab,AGO_INDEX,AGO
+	v.push_back(std::to_string(Vo->po_go));
+	v.push_back(std::to_string(Vo->po_index));
+
+
+	algebra::ring_theory::longinteger_object ago;
+	long int flag_stab_order;
+	long int ago_index;
+
+	flag_stab_order = Vo->po_go / Vo->po_index;
+
+	v.push_back(std::to_string(flag_stab_order));
+
+	Variety_stabilizer_compute->Stab_gens_variety->group_order(ago);
+
+	ago_index = ago.as_lint() / flag_stab_order;
+
+	v.push_back(std::to_string(ago_index));
+
+	v.push_back("\"" + Variety_stabilizer_compute->Stab_gens_variety->group_order_stringify() + "\"");
+
+
+
+	v.push_back(std::to_string(Classification_of_varieties_nauty->F_first_time[i]));
+	v.push_back(std::to_string(Classification_of_varieties_nauty->Idx_canonical_form[i]));
+	v.push_back(std::to_string(Classification_of_varieties_nauty->Idx_equation[i]));
 
 
 
@@ -958,6 +973,8 @@ void variety_compute_canonical_form::prepare_csv_entry_one_line_nauty(
 		}
 	}
 
+
+#if 0
 	if (false /* Canonical_form_classifier->Input->skip_this_one(i)*/) {
 		if (f_v) {
 			cout << "variety_compute_canonical_form::prepare_csv_entry_one_line_nauty "
@@ -978,6 +995,7 @@ void variety_compute_canonical_form::prepare_csv_entry_one_line_nauty(
 
 	}
 	else {
+#endif
 
 		int l;
 		std::vector<std::string> NO_stringified;
@@ -1005,10 +1023,9 @@ void variety_compute_canonical_form::prepare_csv_entry_one_line_nauty(
 			s_phi = "N/A";
 		}
 		v.push_back(s_phi);
-		v.push_back("\"" + Variety_stabilizer_compute->Stab_gens_variety->group_order_stringify() + "\"");
 
 
-	}
+	//}
 
 
 	if (f_v) {

@@ -51,6 +51,7 @@ void quartic_curve_activity::init(
 }
 
 void quartic_curve_activity::perform_activity(
+		other::orbiter_kernel_system::activity_output *&AO,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -267,6 +268,55 @@ void quartic_curve_activity::perform_activity(
 			//cout << endl;
 
 		}
+	}
+	if (Descr->f_get_Kovalevski_configuration) {
+
+		if (f_v) {
+			cout << "quartic_curve_activity::perform_activity "
+					"f_get_Kovalevski_configuration " << endl;
+		}
+
+		if (QC->QOG == NULL) {
+			cout << "quartic_curve_activity::perform_activity QC->QOG == NULL" << endl;
+			exit(1);
+		}
+		if (QC->QO->QP->Kovalevski == NULL) {
+			cout << "quartic_curve_activity::perform_activity QC->QO->QP->Kovalevski == NULL" << endl;
+			exit(1);
+		}
+
+		std::string s;
+
+		s = "\"" + QC->QO->QP->Kovalevski->export_flags(
+				verbose_level) + "\"";
+
+		std::vector<std::string> feedback;
+		string s_q;
+		string s_abcd;
+
+		s_q = std::to_string(QC->q);
+
+		feedback.push_back(s_q);
+		feedback.push_back(std::to_string(QC->QO->QP->Kovalevski->Incidence_structure_by_flags->nb_rows));
+		feedback.push_back(std::to_string(QC->QO->QP->Kovalevski->Incidence_structure_by_flags->nb_cols));
+		feedback.push_back(std::to_string(QC->QO->QP->Kovalevski->Incidence_structure_by_flags->nb_flags));
+		feedback.push_back(s);
+
+		if (f_v) {
+			cout << "cubic_surface_activity::recognize_Fabcd allocating activity_output" << endl;
+		}
+		AO = NEW_OBJECT(other::orbiter_kernel_system::activity_output);
+
+
+		AO->fname_base = "quartic_curve";
+		AO->Feedback.push_back(feedback);
+		AO->description_txt = QC->label_txt;
+		AO->headings = "q,nbr,nbc,nbf,flags";
+		AO->nb_cols = 5;
+
+
+
+
 	}
 
 

@@ -985,6 +985,12 @@ public:
 			group_constructions::group_modification_description *Descr,
 			std::string &variety_label,
 			int verbose_level);
+	void modified_group_compute_isomorphism_of_varieties(
+			group_constructions::modified_group_create *Modified_group_create,
+			group_constructions::group_modification_description *Descr,
+			std::string &variety1_label,
+			std::string &variety2_label,
+			int verbose_level);
 	void create_subgroup_by_generators(
 			group_constructions::modified_group_create *Modified_group_create,
 			group_constructions::group_modification_description *Descr,

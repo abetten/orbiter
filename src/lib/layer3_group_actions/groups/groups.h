@@ -284,9 +284,14 @@ class conjugacy_class_of_elements {
 
 public:
 
-	interfaces::conjugacy_classes_and_normalizers *Class_data;
+	// inherited data:
+	interfaces::conjugacy_classes_and_normalizers *Class_data; // back pointer
+
 	int idx;
 	groups::sims *group_G; // the full group
+
+
+	// proprietary data:
 
 	groups::strong_generators *gens;
 		// strong generators for the cyclic group

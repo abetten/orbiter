@@ -1286,6 +1286,64 @@ long int projective_space_of_dimension_three::map_point(
 }
 
 
+int projective_space_of_dimension_three::is_incident_point_plane(
+		long int pt, long int plane_rk, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space_of_dimension_three::is_incident_point_plane" << endl;
+	}
+
+	long int rk;
+	int Mtx[16];
+	int Mtx2[16];
+	int v[4];
+
+	Projective_space->Subspaces->Grass_hyperplanes->unrank_lint(plane_rk, 0/*verbose_level - 4*/);
+
+	if (f_v) {
+		cout << "projective_space_subspaces::is_incident_point_plane "
+				"plane=" << endl;
+		Int_matrix_print(Projective_space->Subspaces->Grass_hyperplanes->M, 3, 4);
+	}
+	Int_vec_copy(Projective_space->Subspaces->Grass_hyperplanes->M, Mtx, 3 * 4);
+	Projective_space->Subspaces->F->Projective_space_basic->PG_element_unrank_modified(
+			Mtx + 3 * 4, 1, 4, pt);
+	if (f_v) {
+		cout << "point:" << endl;
+		Int_vec_print(cout, Mtx + 3 * 4, 4);
+		cout << endl;
+	}
+
+	rk = Projective_space->Subspaces->F->Linear_algebra->rank_of_rectangular_matrix_memory_given(
+			Mtx,
+			4, 4, Mtx2, v /* base_cols */,
+			false /* f_complete */,
+			0 /*verbose_level*/);
+	if (f_v) {
+		cout << "projective_space_subspaces::is_incident_point_plane rk = " << rk << endl;
+	}
+
+	int ret;
+
+	if (rk == 3) {
+		ret = true;
+	}
+	else {
+		ret = false;
+	}
+	if (f_v) {
+		cout << "projective_space_of_dimension_three::is_incident_point_plane ret = " << ret << endl;
+	}
+	if (f_v) {
+		cout << "projective_space_of_dimension_three::is_incident_point_plane done" << endl;
+	}
+	return ret;
+}
+
+
+
 }}}}
 
 

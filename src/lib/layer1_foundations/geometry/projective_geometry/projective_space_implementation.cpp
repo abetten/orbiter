@@ -592,6 +592,7 @@ void projective_space_implementation::line_intersection_type(
 	// type[N_lines]
 {
 	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "projective_space_implementation::line_intersection_type" << endl;
@@ -607,6 +608,21 @@ void projective_space_implementation::line_intersection_type(
 		for (j = 0; j < P->Subspaces->r; j++) {
 			b = Lines_on_point[a * P->Subspaces->r + j];
 			type[b]++;
+		}
+	}
+
+	if (f_vv) {
+		for (b = 0; b < P->Subspaces->N_lines; b++) {
+			cout << "line " << b << " contains " << type[b] << " points: ";
+			for (i = 0; i < set_size; i++) {
+				a = set[i];
+				for (j = 0; j < P->Subspaces->r; j++) {
+					if (Lines_on_point[a * P->Subspaces->r + j] == b) {
+						cout << a << " ";
+					}
+				}
+			}
+			cout << endl;
 		}
 	}
 

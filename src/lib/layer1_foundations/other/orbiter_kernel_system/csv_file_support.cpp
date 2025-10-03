@@ -1142,6 +1142,12 @@ void csv_file_support::do_csv_file_select_rows_worker(
 	ST.chop_off_extension(fname_out);
 	fname_out += "_select.csv";
 
+	int f_add_local_counter = true;
+
+	S.print_table_with_row_subset(
+			Rows, nb_rows, fname_out, f_add_local_counter, verbose_level);
+
+#if 0
 	{
 		ofstream ost(fname_out);
 		//ost << "Row,";
@@ -1152,8 +1158,10 @@ void csv_file_support::do_csv_file_select_rows_worker(
 		}
 		ost << "END" << endl;
 	}
-	cout << "Written file " << fname_out
-			<< " of size " << Fio->file_size(fname_out) << endl;
+#endif
+
+	//cout << "Written file " << fname_out
+	//		<< " of size " << Fio->file_size(fname_out) << endl;
 #endif
 
 	FREE_int(Rows0);
@@ -2110,11 +2118,12 @@ void csv_file_support::do_csv_file_concatenate_from_mask(
 		int cnt = 0;
 		int f_enclose_in_parentheses = false;
 
-		ost << "Row,PO,IDX,";
+		ost << "Row,Case,File,Line,";
 		S[0].print_table_row(0, f_enclose_in_parentheses, ost);
 		for (i = 0; i < nb_files; i++) {
 			//S[i].print_table(ost, false);
 			for (j = 1; j < S[i].nb_rows; j++) {
+				ost << cnt << ",";
 				ost << cnt << ",";
 				ost << i << ",";
 				ost << j - 1 << ",";
@@ -2635,6 +2644,43 @@ void csv_file_support::tally_column(
 		cout << " : " << SoS_fibers->Set_size[i] << " : ";
 		Lint_vec_print(cout, SoS_fibers->Sets[i], SoS_fibers->Set_size[i]);
 		cout << endl;
+	}
+
+
+	{
+
+		int f_add_local_counter = true;
+
+
+		data_structures::spreadsheet S;
+
+		S.read_spreadsheet(fname, 0/*verbose_level - 1*/);
+
+		for (i = 0; i < SoS_fibers->nb_sets; i++) {
+
+			int f, value;
+
+			f = T.type_first[i];
+			value = Data[T.sorting_perm_inv[f + 0] * n + 0];
+
+			string fname_out;
+
+			other::data_structures::string_tools String;
+
+			fname_out = fname;
+
+			String.chop_off_extension(
+					fname_out);
+
+
+			fname_out += "_" + column + std::to_string(value) + ".csv";
+
+			S.print_table_with_row_subset_lint(
+					SoS_fibers->Sets[i], SoS_fibers->Set_size[i], fname_out,
+					f_add_local_counter,
+					verbose_level);
+		}
+
 	}
 
 	int nb_rows;

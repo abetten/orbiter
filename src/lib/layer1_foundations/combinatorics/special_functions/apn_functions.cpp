@@ -95,9 +95,12 @@ void apn_functions::search_APN(
 			Solutions,
 			A_matrix, B_matrix, Count_ab, nb_times_ab,
 			verbose_level);
-	cout << "apn_functions::search_APN recursion finished" << endl;
-	cout << "delta = " << delta << endl;
-	cout << "nb_times = " << nb_times << endl;
+	if (f_v) {
+		cout << "apn_functions::search_APN recursion finished" << endl;
+		cout << "delta = " << delta << endl;
+		cout << "nb_times = " << nb_times << endl;
+	}
+
 
 	string fname;
 	other::orbiter_kernel_system::file_io Fio;
@@ -106,7 +109,9 @@ void apn_functions::search_APN(
 
 	Fio.Csv_file_support->vector_matrix_write_csv(
 			fname, Solutions);
-	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	if (f_v) {
+		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
 
 	FREE_int(A_matrix);
 	FREE_int(B_matrix);
@@ -236,18 +241,22 @@ int apn_functions::search_APN_perform_checks(
 		cout << "apn_functions::search_APN_perform_checks" << endl;
 	}
 	for (i = 0; i < depth; i++) {
+
 		if (!perform_single_check(
 				f, depth, i, delta_max,
 				A_matrix, B_matrix, Count_ab,
 				verbose_level)) {
+
 			for (j = i - 1; j >= 0; j--) {
 				undo_single_check(
 								f, depth, j, delta_max,
 								A_matrix, B_matrix, Count_ab,
 								verbose_level);
 			}
+
 			return false;
 		}
+
 	}
 	return true;
 }
@@ -265,10 +274,12 @@ void apn_functions::search_APN_undo_checks(
 		cout << "apn_functions::search_APN_undo_checks" << endl;
 	}
 	for (i = depth - 1; i >= 0; i--) {
+
 		undo_single_check(
 						f, depth, i, delta_max,
 						A_matrix, B_matrix, Count_ab,
 						verbose_level);
+
 	}
 }
 
@@ -282,23 +293,29 @@ int apn_functions::perform_single_check(
 	int a1, b1, a2, b2;
 
 	q = F->q;
+
 	a1 = A_matrix[i * q + depth];
 	b1 = F->add(f[depth], F->negate(f[i]));
+
 	if (Count_ab[a1 * q + b1] == delta_max) {
 		return false;
 	}
+
 	B_matrix[i * q + depth] = b1;
 	Count_ab[a1 * q + b1]++;
 
 	a2 = A_matrix[depth * q + i];
 	b2 = F->add(f[i], F->negate(f[depth]));
+
 	if (Count_ab[a2 * q + b2] == delta_max) {
 		Count_ab[a1 * q + b1]--;
 		B_matrix[i * q + depth] = 0;
 		return false;
 	}
+
 	B_matrix[depth * q + i] = b2;
 	Count_ab[a2 * q + b2]++;
+
 	return true;
 }
 
@@ -311,22 +328,28 @@ void apn_functions::undo_single_check(
 	int a1, b1, a2, b2;
 
 	q = F->q;
+
 	a1 = A_matrix[i * q + depth];
 	b1 = F->add(f[depth], F->negate(f[i]));
+
 	if (Count_ab[a1 * q + b1] == 0) {
 		cout << "apn_functions::undo_single_check "
 				"Count_ab[a1 * q + b1] == 0" << endl;
 		exit(1);
 	}
+
 	B_matrix[i * q + depth] = b1;
 	Count_ab[a1 * q + b1]--;
+
 	a2 = A_matrix[depth * q + i];
 	b2 = F->add(f[i], F->negate(f[depth]));
+
 	if (Count_ab[a2 * q + b2] == 0) {
 		cout << "apn_functions::undo_single_check "
 				"Count_ab[a2 * q + b2] == 0" << endl;
 		exit(1);
 	}
+
 	B_matrix[depth * q + i] = b2;
 	Count_ab[a2 * q + b2]--;
 }
@@ -359,6 +382,7 @@ void apn_functions::search_APN_old(
 			tmp_qxq,
 			verbose_level);
 	cout << "nb_times = " << nb_times << endl;
+	cout << "delta_min = " << delta_min << endl;
 	FREE_int(f);
 
 	string fname;
@@ -388,8 +412,12 @@ void apn_functions::search_APN_recursion_old(
 	if (depth == F->q) {
 		int delta;
 
-		delta = differential_uniformity(f, nb_times_ab, 0 /* verbose_level */);
+		delta = differential_uniformity(
+				f, nb_times_ab,
+				0 /* verbose_level */);
+
 		if (delta < delta_min) {
+
 			delta_min = delta;
 			nb_times = 1;
 
@@ -405,8 +433,11 @@ void apn_functions::search_APN_recursion_old(
 
 			Int_vec_print(cout, f, F->q);
 			cout << " delta = " << delta << " nb_times=" << nb_times << endl;
+
 		}
+
 		else if (delta == delta_min) {
+
 			nb_times++;
 			int f_do_it;
 
@@ -434,7 +465,9 @@ void apn_functions::search_APN_recursion_old(
 				Int_vec_print(cout, f, F->q);
 				cout << " delta = " << delta << " nb_times=" << nb_times << endl;
 			}
+
 		}
+
 		return;
 	}
 
@@ -462,7 +495,9 @@ void apn_functions::search_APN_recursion_old(
 
 int apn_functions::differential_uniformity(
 		int *f, int *nb_times_ab, int verbose_level)
-// f[q]
+// f[q] is a function from Fq to Fq.
+// nb_times_ab[a,b] = number of x in Fq s.t. f(x+a)+f(x) = b, where a neq 0
+// delta is the max of all nb_times_ab[a,b], a neq 0.
 {
 	int f_v = (verbose_level >= 1);
 	int q;
@@ -472,7 +507,9 @@ int apn_functions::differential_uniformity(
 		cout << "apn_functions::differential_uniformity" << endl;
 	}
 	q = F->q;
+
 	Int_vec_zero(nb_times_ab, q * q);
+
 	for (x = 0; x < q; x++) {
 		fx = f[x];
 		mfx = F->negate(fx);

@@ -185,6 +185,9 @@ public:
 			other::orbiter_kernel_system::activity_output *&AO,
 			int verbose_level);
 	void do_quartic_curve_activity(
+			int &nb_output,
+			other::orbiter_kernel_system::orbiter_symbol_table_entry *&Output,
+			other::orbiter_kernel_system::activity_output *&AO,
 			int verbose_level);
 	void do_blt_set_activity(
 			int verbose_level);
@@ -1195,6 +1198,10 @@ class interface_toolkit {
 	std::string join_columns_file_out;
 	std::string join_columns_column1;
 	std::string join_columns_column2;
+
+	// ToDo: undocumented
+	int f_decomposition_matrix;
+	std::string decomposition_matrix_fname;
 
 public:
 

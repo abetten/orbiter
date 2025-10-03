@@ -574,7 +574,14 @@ void group_element::element_print_latex_with_extras(
 {
 	int n, ord;
 
-	n = count_fixed_points(elt, 0);
+	std::vector<long int> fixed_points;
+
+	compute_fixed_points(
+			elt,
+			fixed_points, 0 /*verbose_level*/);
+
+	n = fixed_points.size();
+	//n = count_fixed_points(elt, 0);
 
 	ord = element_order(elt);
 
@@ -582,6 +589,10 @@ void group_element::element_print_latex_with_extras(
 	element_print_latex(elt, ost);
 	ost << "$$" << endl << "of order $" << ord << "$ and with "
 			<< n << " fixed points." << endl;
+	ost << "The fixed points are: ";
+	Lint_vec_stl_print_fully(ost, fixed_points);
+	ost << endl;
+	ost << "The degree of the action is " << A->degree << endl;
 }
 
 

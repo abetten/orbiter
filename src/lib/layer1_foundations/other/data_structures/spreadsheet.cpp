@@ -544,6 +544,83 @@ void spreadsheet::print_table_latex(
 	}
 }
 
+void spreadsheet::print_table_with_row_subset_lint(
+		long int *Rows, int nb_rows, std::string &fname_out,
+		int f_add_local_counter,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "spreadsheet::print_table_with_row_subset_lint" << endl;
+	}
+
+
+	orbiter_kernel_system::file_io Fio;
+	int i;
+
+	ofstream ost(fname_out);
+
+	ost << "Row,";
+	if (f_add_local_counter) {
+		ost << "Local,";
+	}
+
+	print_table_row(0, false, ost);
+	for (i = 0; i < nb_rows; i++) {
+		ost << i << ",";
+		if (f_add_local_counter) {
+			ost << i << ",";
+		}
+		print_table_row(Rows[i] + 1, false, ost);
+	}
+	ost << "END" << endl;
+
+	if (f_v) {
+		cout << "spreadsheet::print_table_with_row_subset_lint "
+				"Written file " << fname_out
+			<< " of size " << Fio.file_size(fname_out) << endl;
+	}
+}
+
+void spreadsheet::print_table_with_row_subset(
+		int *Rows, int nb_rows, std::string &fname_out,
+		int f_add_local_counter,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "spreadsheet::print_table_with_row_subset" << endl;
+	}
+
+
+	long int *Rows_lint;
+	int i;
+
+	Rows_lint = NEW_lint(nb_rows);
+	for (i = 0; i < nb_rows; i++) {
+		Rows_lint[i] = Rows[i];
+	}
+
+
+	print_table_with_row_subset_lint(
+			Rows_lint, nb_rows, fname_out,
+			f_add_local_counter,
+			verbose_level);
+
+	FREE_lint(Rows_lint);
+
+	orbiter_kernel_system::file_io Fio;
+
+	if (f_v) {
+		cout << "spreadsheet::print_table_with_row_subset "
+				"Written file " << fname_out
+			<< " of size " << Fio.file_size(fname_out) << endl;
+	}
+}
+
+
 void spreadsheet::print_table_row(
 		int row,
 		int f_enclose_in_parentheses, std::ostream &ost)
@@ -949,12 +1026,6 @@ void spreadsheet::tokenize(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 
-#if 0
-	char *buf;
-	const char *p_buf;
-	char *str;
-#endif
-
 	int sz;
 	int line_cnt, i; //, r;
 	orbiter_kernel_system::file_io Fio;
@@ -969,18 +1040,6 @@ void spreadsheet::tokenize(
 	if (f_v) {
 		cout << "spreadsheet::tokenize file size " << sz << endl;
 	}
-
-#if 0
-	buf = NEW_char(sz + 1);
-	if (f_v) {
-		cout << "spreadsheet::tokenize after NEW_char 1" << endl;
-	}
-
-	str = NEW_char(sz + 1);
-	if (f_v) {
-		cout << "spreadsheet::tokenize after NEW_char 2" << endl;
-	}
-#endif
 
 	// ToDo: please get rid of all: char *buf; fp.getline(buf, sz, '\n');
 	// and replace by: string s; getline(f, s);
@@ -1021,46 +1080,17 @@ void spreadsheet::tokenize(
 			str = NEW_char(len + 1);
 			strcpy(str, s.c_str());
 
-#if 0
-			if (f_vv) {
-				cout << "before fp.getline" << endl;
-			}
-			fp.getline(buf, sz, '\n');
-			if (f_vv) {
-				cout << "Line read :'" << buf << "'" << endl;
-			}
-			if (strlen(buf) == 0) {
-				break;
-			}
-#endif
 
 			p_buf = str;
 			if (strncmp(str, "END", 3) == 0) {
 				break;
 			}
 
-	#if 0
-			// delete negative characters:
-			int len = strlen(buf);
-			for (i = 0, j = 0; i < len; i++) {
-				if ((int) buf[i] >= 0) {
-					buf[j++] = buf[i];
-					}
-				else {
-					cout << "spreadsheet::tokenize skipping "
-							"negative character" << endl;
-					}
-				}
-			buf[j] = 0;
-	#endif
 
-			//i = 0;
 			while (true) {
 				if (*p_buf == 0) {
 					break;
 				}
-				//s_scan_token(&p_buf, str);
-				//s_scan_token(&p_buf, str);
 				if (!ST.s_scan_token_comma_separated(&p_buf, str, verbose_level - 1)) {
 					break;
 				}
@@ -1069,11 +1099,6 @@ void spreadsheet::tokenize(
 					cout << "Line " << line_cnt << ", token " << setw(6) << i << " is '"
 							<< str << "'" << endl;
 				}
-	#if 0
-				if (strcmp(str, ",") == 0) {
-					continue;
-				}
-	#endif
 				i++;
 			}
 
@@ -1123,11 +1148,6 @@ void spreadsheet::tokenize(
 			strcpy(str, s.c_str());
 
 
-#if 0
-			fp.getline(buf, sz, '\n');
-
-#endif
-
 
 			p_buf = str;
 			if (strncmp(str, "END", 3) == 0) {
@@ -1137,36 +1157,14 @@ void spreadsheet::tokenize(
 				cout << "read line '" << p_buf << "'" << " i=" << i << endl;
 			}
 
-		#if 0
-			// delete negative characters:
-			int len = strlen(buf);
-			for (i = 0, j = 0; i < len; i++) {
-				if ((int) buf[i] >= 0) {
-					buf[j++] = buf[i];
-				}
-				else {
-					cout << "spreadsheet::tokenize skipping "
-							"negative character" << endl;
-				}
-			}
-			buf[j] = 0;
-		#endif
 
-			//i = 0;
 			while (true) {
 				if (*p_buf == 0) {
 					break;
 				}
-				//s_scan_token(&p_buf, str);
-				//s_scan_token(&p_buf, str);
 				if (!ST.s_scan_token_comma_separated(&p_buf, str, verbose_level - 1)) {
 					break;
 				}
-		#if 0
-				if (strcmp(str, ",") == 0) {
-					continue;
-				}
-		#endif
 				tokens[i] = NEW_char(strlen(str) + 1);
 				strcpy(tokens[i], str);
 				if (f_vv) {
@@ -1192,8 +1190,6 @@ void spreadsheet::tokenize(
 
 		}
 	}
-	//FREE_char(buf);
-	//FREE_char(str);
 }
 
 void spreadsheet::remove_quotes(
@@ -1377,40 +1373,16 @@ std::string spreadsheet::get_entry_ij(
 void spreadsheet::get_string(
 		std::string &str, int i, int j)
 {
-	int t; // l
-	//char *str;
-	//char *s;
+	int t;
 	
 	t = Table[i * nb_cols + j];
-	//cout << "t=" << t << endl;
 	if (t == -1) {
 		str.assign("");
-		//s = NEW_char(1);
-		//strcpy(s, "");
-		}
+	}
 	else {
-		//str = NEW_char(strlen(tokens[t]) + 1);
-		//l = strlen(tokens[t]);
 		str.assign(tokens[t]);
-#if 0
-		if (l >= 2 && tokens[t][0] == '"' && tokens[t][l - 1] == '"') {
-			tokens[t][l - 1] = 0;
-			str.assign(tokens[t] + 1);
 
-			//strcpy(str, tokens[t] + 1);
-			//str[strlen(str) - 1] = 0;
-			}
-		else {
-			str.assign(tokens[t]);
-			//strcpy(str, tokens[t]);
-			}
-#endif
-
-		//s = NEW_char(strlen(str) + 1);
-		//strcpy(s, str);
-		//FREE_char(str);
-		}
-	//return s;
+	}
 }
 
 long int spreadsheet::get_lint(
@@ -1446,7 +1418,6 @@ void spreadsheet::join_with(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_v3 = (verbose_level >= 3);
-	//int by1, by2;
 	int j1, j2, t1, t2;
 	int i1, i2;
 	char *label2;
@@ -1458,13 +1429,11 @@ void spreadsheet::join_with(
 	if (f_v) {
 		cout << "spreadsheet::join_with" << endl;
 		cout << "verbose_level=" << verbose_level << endl;
-		}
-	//by1 = find_by_column(join_by);
-	//by2 = S2->find_by_column(join_by);
+	}
 
 	if (f_vv) {
 		cout << "by1=" << by1 << " by2=" << by2 << endl;
-		}
+	}
 
 
 
@@ -1473,58 +1442,58 @@ void spreadsheet::join_with(
 		t2 = S2->Table[i2 * S2->nb_cols + by2];
 		if (t2 == -1) {
 			continue;
-			}
+		}
 		T2 = S2->tokens[t2];
 		if (strlen(T2) == 0) {
 			continue;
-			}
+		}
 		for (i1 = 1; i1 < nb_rows; i1++) {
 			if (Table[i1 * nb_cols + by1] == -1) {
 				continue;
-				}
+			}
 			//cout << "i1=" << i1 << " label="
 			//<< tokens[Table[i1 * nb_cols + by1]] << endl;
 			if (ST.strcmp_with_or_without(
 					tokens[Table[i1 * nb_cols + by1]], T2) == 0) {
 				break;
-				}
 			}
+		}
 		if (i1 == nb_rows) {
 			cout << "adding a row corresponding to " << T2 << endl;
 			reallocate_table_add_row();
 			add_token(T2);
 			Table[i1 * nb_cols + by1] = nb_tokens - 1;
-			}
 		}
+	}
 
 
 	for (j2 = 0; j2 < S2->nb_cols; j2++) {
 		if (f_vv) {
 			cout << "j2=" << j2 << endl;
-			}
+		}
 		if (j2 == by2) {
 			continue;
-			}
+		}
 		t2 = S2->Table[j2];
 		if (t2 == -1) {
 			continue;
-			}
+		}
 		if (f_vv) {
 			cout << "joining column " << S2->tokens[t2] << endl;
-			}
+		}
 
 		for (j1 = 0; j1 < nb_cols; j1++) {
 			if (j1 == by1) {
 				continue;
-				}
+			}
 			t1 = Table[j1];
 			if (t1 == -1) {
 				continue;
-				}
+			}
 			if (ST.strcmp_with_or_without(tokens[t1], S2->tokens[t2]) == 0) {
 				break;
-				}
 			}
+		}
 		if (j1 == nb_cols) {
 			// reallocate Table
 			cout << "reallocating table" << endl;
@@ -1534,43 +1503,43 @@ void spreadsheet::join_with(
 			Table[0 * nb_cols + j1] = nb_tokens - 1;
 			cout << "added token " << S2->tokens[t2]
 				<< " as a column heading" << endl;
- 			}
+ 		}
 		t1 = Table[j1];
 
 		if (f_vv) {
 			cout << "joining columns " << tokens[t1] << " and "
 					<< S2->tokens[t2] << endl;
-			}
+		}
 		
 		for (i2 = 1; i2 < S2->nb_rows; i2++) {
 			if (f_v3) {
 				cout << "i2=" << i2 << endl;
-				}
+			}
 			tt2 = S2->Table[i2 * S2->nb_cols + j2];
 			if (f_v3) {
 				cout << "tt2=" << tt2 << endl;
-				}
+			}
 			if (tt2 == -1) {
 				continue;
-				}
+			}
 			if (S2->Table[i2 * S2->nb_cols + by2] == -1) {
 				continue;
-				}
+			}
 			label2 = S2->tokens[S2->Table[i2 * S2->nb_cols + by2]];
 			if (f_v3) {
 				cout << "label2='" << label2 << "'" << endl;
-				}
+			}
 			for (i1 = 1; i1 < nb_rows; i1++) {
 				if (Table[i1 * nb_cols + by1] == -1) {
 					continue;
-					}
+				}
 				//cout << "i1=" << i1 << " label="
 				//<< tokens[Table[i1 * nb_cols + by1]] << endl;
 				if (ST.strcmp_with_or_without(
 						tokens[Table[i1 * nb_cols + by1]], label2) == 0) {
 					break;
-					}
 				}
+			}
 			if (i1 == nb_rows) {
 				cout << "entry " << label2 << " not found in "
 						"first table" << endl;
@@ -1579,11 +1548,11 @@ void spreadsheet::join_with(
 				//Table[i1 * nb_cols + by1] =
 				//S2->Table[i2 * S2->nb_cols + by2];
 				//exit(1);
-				}
+			}
 			else {
 				cout << "label2 " << label2 << " found in row "
 						<< i1 << " in first table" << endl;
-				}
+			}
 			tt1 = Table[i1 * nb_cols + j1];
 			f_need_to_add = true;
 			if (tt1 >= 0) {
@@ -1591,37 +1560,37 @@ void spreadsheet::join_with(
 					cout << "i1=" << i1 << " i2=" << i2 << " we have "
 							<< tokens[tt1] << " vs "
 							<< S2->tokens[tt2] << endl;
-					}
+				}
 				if (ST.strcmp_with_or_without(tokens[tt1],
 						S2->tokens[tt2]) == 0) {
 					f_need_to_add = false;
-					}
 				}
+			}
 			if (f_v3) {
 				cout << "f_need_to_add=" << f_need_to_add << endl;
-				}
+			}
 			if (f_need_to_add) {
 				if (f_v3) {
 					cout << "adding token " << S2->tokens[tt2] << endl;
-					}
+				}
 				add_token(S2->tokens[tt2]);
 				Table[i1 * nb_cols + j1] = nb_tokens - 1;
 				if (f_v3) {
 					cout << "added token " << S2->tokens[tt2]
 						<< " check: " << tokens[Table[i1 * nb_cols + j1]]
 						<< endl;
-					}
 				}
+			}
 			else {
 				if (f_v3) {
 					cout << "no need to add" << endl;
-					}
 				}
-			} // next i2
-		}
+			}
+		} // next i2
+	}
 	if (f_v) {
 		cout << "spreadsheet::join_with done" << endl;
-		}
+	}
 }
 
 void spreadsheet::patch_with(
@@ -1651,34 +1620,34 @@ void spreadsheet::patch_with(
 		t3 = S2->Table[i2 * S2->nb_cols + 3];
 		if (t0 == -1) {
 			continue;
-			}
+		}
 		what = S2->tokens[t0];
 		if (strlen(what) == 0) {
 			continue;
-			}
+		}
 		if (strcmp(what, "-1") == 0) {
 			break;
-			}
+		}
 		who = S2->tokens[t1];
 		if (strlen(who) == 0) {
 			continue;
-			}
+		}
 		patch_value = S2->tokens[t3];
 
 		for (i1 = 1; i1 < nb_rows; i1++) {
 			if (Table[i1 * nb_cols + by1] == -1) {
 				continue;
-				}
+			}
 			//cout << "i1=" << i1 << " label="
 			//<< tokens[Table[i1 * nb_cols + by1]] << endl;
 			if (strcmp(tokens[Table[i1 * nb_cols + by1]], who) == 0) {
 				break;
-				}
 			}
+		}
 		if (i1 == nb_rows) {
 			cout << "spreadsheet::patch_with Did not find " << who
 					<< " in first table" << endl;
-			}
+		}
 		else {
 			what_idx = find_by_column(what);
 			add_token(patch_value);
@@ -1686,8 +1655,8 @@ void spreadsheet::patch_with(
 			cout << "patch " << nb_patch << " applied, " << who
 					<< " now has " << patch_value << " in " << what << endl;
 			nb_patch++;
-			}
 		}
+	}
 	cout << "spreadsheet::patch_with applied " << nb_patch
 			<< " patches" << endl;
 

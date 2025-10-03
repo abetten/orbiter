@@ -154,14 +154,6 @@ void canonical_form_classifier::init_objects_from_list_of_csv_files(
 	}
 
 
-#if 0
-	if (!Descr->f_algorithm_nauty /*&& !Descr->f_algorithm_substructure*/) {
-		cout << "canonical_form_classifier::init_objects_from_list_of_csv_files "
-				"please select an algorithm to use" << endl;
-		exit(1);
-	}
-#endif
-
 	if (!Descr->f_nauty_control) {
 		cout << "canonical_form_classifier::init_objects_from_list_of_csv_files "
 				"please use -nauty_control <options> -end" << endl;
@@ -229,7 +221,7 @@ void canonical_form_classifier::init_objects_from_list_of_csv_files(
 }
 
 
-void canonical_form_classifier::init_direct(
+void canonical_form_classifier::init_variety_object_with_action_directly(
 		int nb_input_Vo,
 		canonical_form::variety_object_with_action **Input_Vo,
 		std::string &fname_base_out,
@@ -239,14 +231,16 @@ void canonical_form_classifier::init_direct(
 // Prepare the projective space and the ring,
 // Create the action_on_homogeneous_polynomials
 // called from
+// modified_group_init_layer5::modified_group_create_stabilizer_of_variety
 // variety_activity::do_compute_group
+// variety_activity::do_compute_set_stabilizer
 //
 {
 	int f_v = (verbose_level >= 1);
 
 
 	if (f_v) {
-		cout << "canonical_form_classifier::init_direct" << endl;
+		cout << "canonical_form_classifier::init_variety_object_with_action_directly" << endl;
 	}
 
 	canonical_form_classifier::f_nauty_control = f_nauty_control;
@@ -260,22 +254,22 @@ void canonical_form_classifier::init_direct(
 
 
 	if (f_v) {
-		cout << "canonical_form_classifier::init_direct "
+		cout << "canonical_form_classifier::init_variety_object_with_action_directly "
 				"before getting PA" << endl;
 	}
 	projective_geometry::projective_space_with_action *PA = Input_Vo[0]->PA;
 	if (f_v) {
-		cout << "canonical_form_classifier::init_direct "
+		cout << "canonical_form_classifier::init_variety_object_with_action_directly "
 				"after getting PA" << endl;
 	}
 
 	if (f_v) {
-		cout << "canonical_form_classifier::init_direct "
+		cout << "canonical_form_classifier::init_variety_object_with_action_directly "
 				"before getting Poly_ring" << endl;
 	}
 	algebra::ring_theory::homogeneous_polynomial_domain *Poly_ring = Input_Vo[0]->Variety_object->Ring;
 	if (f_v) {
-		cout << "canonical_form_classifier::init_direct "
+		cout << "canonical_form_classifier::init_variety_object_with_action_directly "
 				"after getting Poly_ring" << endl;
 	}
 
@@ -283,12 +277,13 @@ void canonical_form_classifier::init_direct(
 	Ring_with_action = NEW_OBJECT(projective_geometry::ring_with_action);
 
 	if (f_v) {
-		cout << "canonical_form_classifier::init_direct "
+		cout << "canonical_form_classifier::init_variety_object_with_action_directly "
 				"before Ring_with_action->ring_with_action_init" << endl;
 	}
-	Ring_with_action->ring_with_action_init(PA, Poly_ring, verbose_level);
+	Ring_with_action->ring_with_action_init(
+			PA, Poly_ring, verbose_level);
 	if (f_v) {
-		cout << "canonical_form_classifier::init_direct "
+		cout << "canonical_form_classifier::init_variety_object_with_action_directly "
 				"after Ring_with_action->ring_with_action_init" << endl;
 	}
 
@@ -296,7 +291,7 @@ void canonical_form_classifier::init_direct(
 
 
 	if (f_v) {
-		cout << "canonical_form_classifier::init_direct "
+		cout << "canonical_form_classifier::init_variety_object_with_action_directly "
 				"before Input->init_direct" << endl;
 	}
 	Input->init_direct(
@@ -305,19 +300,19 @@ void canonical_form_classifier::init_direct(
 			fname_base_out,
 			verbose_level);
 	if (f_v) {
-		cout << "canonical_form_classifier::init_direct "
+		cout << "canonical_form_classifier::init_variety_object_with_action_directly "
 				"after Input->init_direct" << endl;
 	}
 
 
 #if 0
 	if (f_v) {
-		cout << "canonical_form_classifier::init_direct "
+		cout << "canonical_form_classifier::init_variety_object_with_action_directly "
 				"before create_action_on_polynomials" << endl;
 	}
 	create_action_on_polynomials(verbose_level - 3);
 	if (f_v) {
-		cout << "canonical_form_classifier::init_direct "
+		cout << "canonical_form_classifier::init_variety_object_with_action_directly "
 				"after create_action_on_polynomials" << endl;
 	}
 #endif
@@ -327,7 +322,7 @@ void canonical_form_classifier::init_direct(
 
 
 	if (f_v) {
-		cout << "canonical_form_classifier::init_direct done" << endl;
+		cout << "canonical_form_classifier::init_variety_object_with_action_directly done" << endl;
 	}
 }
 
@@ -421,6 +416,7 @@ void canonical_form_classifier::classify(
 		input_objects_of_type_variety *Input,
 		std::string &fname_base,
 		int verbose_level)
+// called from orbits_create::init
 // initializes Classification_of_varieties_nauty and performs classification
 {
 	int f_v = (verbose_level >= 1);
@@ -460,12 +456,31 @@ void canonical_form_classifier::classify(
 				"before Classification_of_varieties_nauty->compute_classification" << endl;
 	}
 	Classification_of_varieties_nauty->compute_classification(
-			fname_base,
 			verbose_level);
 	if (f_v) {
 		cout << "canonical_form_classifier::classify "
 				"after Classification_of_varieties_nauty->compute_classification" << endl;
 	}
+
+
+	if (f_v) {
+		cout << "canonical_form_classifier::classify "
+				"before Classification_of_varieties_nauty->write_classification_csv" << endl;
+	}
+	Classification_of_varieties_nauty->write_classification_csv(
+			fname_base,
+			verbose_level);
+	if (f_v) {
+		cout << "canonical_form_classifier::classify "
+				"after Classification_of_varieties_nauty->write_classification_csv" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "canonical_form_classifier::classify "
+				"nb_times_memory_footprint_reduction = " << Classification_of_varieties_nauty->nb_times_memory_footprint_reduction << endl;
+	}
+
 
 
 	if (f_v) {

@@ -114,8 +114,6 @@ public:
 class csv_file_support {
 public:
 
-	// ToDo: please get rid of all: char *buf; fp.getline(buf, sz, '\n');
-	// and replace by: string s; getline(f, s);
 
 
 

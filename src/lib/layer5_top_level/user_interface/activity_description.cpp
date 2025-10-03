@@ -904,7 +904,7 @@ void activity_description::worker(
 		if (f_v) {
 			cout << "activity_description::worker f_quartic_curve_activity" << endl;
 		}
-		do_quartic_curve_activity(verbose_level);
+		do_quartic_curve_activity(nb_output, Output, AO, verbose_level);
 
 	}
 	else if (f_blt_set_activity) {
@@ -1694,6 +1694,9 @@ void activity_description::do_cubic_surface_activity(
 
 
 void activity_description::do_quartic_curve_activity(
+		int &nb_output,
+		other::orbiter_kernel_system::orbiter_symbol_table_entry *&Output,
+		other::orbiter_kernel_system::activity_output *&AO,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1704,6 +1707,7 @@ void activity_description::do_quartic_curve_activity(
 		Sym->print_with();
 	}
 
+	nb_output = 0;
 
 
 	int *Idx;
@@ -1728,7 +1732,7 @@ void activity_description::do_quartic_curve_activity(
 			cout << "activity_description::do_quartic_curve_activity "
 					"before Activity.perform_activity" << endl;
 		}
-		Activity.perform_activity(verbose_level);
+		Activity.perform_activity(AO, verbose_level);
 		if (f_v) {
 			cout << "activity_description::do_quartic_curve_activity "
 					"after Activity.perform_activity" << endl;
