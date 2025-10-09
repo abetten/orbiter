@@ -1027,6 +1027,730 @@ void quartic_curve_domain::create_quartic_curve_by_coefficient_vector(
 
 }
 
+void quartic_curve_domain::create_quartic_curve_by_normal_form(
+	int *abcdef,
+	int *coeffs15,
+	long int *Lines_rk,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_domain::create_quartic_curve_by_normal_form" << endl;
+	}
+
+	int i;
+	int a, b, c, d, e, f;
+	int ma, mb, mc, md, me, mf;
+	int m1, two, four, mtwo, mfour;
+	int s1, s2, s3, s4, s5, s6, s7, s8;
+	int delta, epsilon, gamma, lambda, mu, nu, eta, zeta, xi, theta, psi, omega;
+
+	a = abcdef[0];
+	b = abcdef[1];
+	c = abcdef[2];
+	d = abcdef[3];
+	e = abcdef[4];
+	f = abcdef[5];
+	ma = F->negate(a);
+	mb = F->negate(b);
+	mc = F->negate(c);
+	md = F->negate(d);
+	me = F->negate(e);
+	mf = F->negate(f);
+
+	m1 = F->negate(1);
+	two = F->add(1, 1);
+	four = F->add(two, two);
+	mtwo = F->negate(two);
+	mfour = F->negate(four);
+	s1 = F->add(a, m1);
+	s2 = F->add(b, m1);
+	s3 = F->add(c, m1);
+	s4 = F->add(d, m1);
+	s5 = F->add(a, mb);
+	s6 = F->add(a, mc);
+	s7 = F->add(b, md);
+	s8 = F->add(c, md);
+
+	delta = F->add(F->mult(a, d), F->negate(F->mult(b, c)));
+	epsilon = F->add5(
+			F->mult3(a, b, c),
+			F->mult3(ma, b, d),
+			F->mult3(ma, c, d),
+			F->mult3(b, c, d),
+			delta);
+	gamma = F->add5(delta, ma, b, c, md);
+	lambda = F->add3(F->mult3(b, b, s8), F->mult3(md, d, s5), delta);
+	mu = F->add3(F->mult3(ma, b, d), F->mult3(b, c, d), delta);
+	nu = F->add(F->mult3(a, c, s7), F->mult3(mb, d, s6));
+	eta = F->add6(
+			F->mult4(ma, a, c, d),
+			F->mult4(a, b, c, c),
+			F->mult3(a, a, d),
+			F->mult3(ma, b, d),
+			F->mult3(mb, c, c),
+			F->mult3(b, c, d)
+			);
+	zeta = F->mult3(s1, s3, s7);
+	xi = F->add5(
+			F->mult3(a, a, c),
+			F->mult3(ma, a, d),
+			F->mult3(ma, c, c),
+			F->mult3(b, c, c),
+			delta
+			);
+	theta = F->add6(
+			F->mult3(a, b, c),
+			F->mult3(ma, c, d),
+			F->mult(ma, b),
+			F->mult(c, d),
+			a,
+			mc
+			);
+	int psi17[17];
+	psi17[0] = F->mult6(two, a, a, b, c, d);
+	psi17[1] = F->mult5(ma, a, b, d, d);
+	psi17[2] = F->mult6(mtwo, a, a, c, d, d);
+	psi17[3] = F->mult6(mtwo, a, b, b, c, c);
+	psi17[4] = F->mult5(a, b, b, c, d);
+	psi17[5] = F->mult6(two, a, b, c, c, d);
+	psi17[6] = F->mult5(a, b, c, d, d);
+	psi17[7] = F->mult5(mb, b, c, c, d);
+	psi17[8] = F->mult4(ma, a, b, c);
+	psi17[9] = F->mult4(a, a, c, d);
+	psi17[10] = F->mult4(a, a, d, d);
+	psi17[11] = F->mult4(a, b, b, c);
+	psi17[12] = F->mult4(a, b, c, c);
+	psi17[13] = F->mult5(mfour, a, b, c, d);
+	psi17[14] = F->mult4(ma, c, c, d);
+	psi17[15] = F->mult4(a, c, d, d);
+	psi17[16] = F->mult4(b, b, c, c);
+
+	psi = 0;
+	for (i = 0; i < 17; i++) {
+		psi = F->add(psi, psi17[i]);
+	}
+	omega = F->add4(a, b, mc, md);
+
+	int y0, y1, y2;
+	int y0012;
+	int y0022;
+	int y0112;
+	int y0122;
+	int y0222;
+	int y1122;
+	int y1222;
+
+	y0 = e;
+	y1 = f;
+	y2 = 1;
+	y0012 = F->mult4(y0, y0, y1, y2);
+	y0022 = F->mult4(y0, y0, y2, y2);
+	y0112 = F->mult4(y0, y1, y1, y2);
+	y0122 = F->mult4(y0, y1, y2, y2);
+	y0222 = F->mult4(y0, y2, y2, y2);
+	y1122 = F->mult4(y1, y1, y2, y2);
+	y1222 = F->mult4(y1, y2, y2, y2);
+
+	int P0[4], p0;
+
+	P0[0] = F->mult5(b, d, s6, gamma, y0022);
+	P0[1] = F->mult4(m1, s6,
+			F->add6(F->mult3(a, d, d),
+					F->mult3(mb, b, c),
+					F->mult3(b, b, d),
+					F->mult3(mb, d, d),
+					F->mult(ma, d),
+					F->mult(b, c)),
+			y0012);
+	P0[2] = F->mult4(m1, s6, epsilon, y0112);
+	P0[3] = F->mult3(s6,
+			F->add6(
+					F->mult4(ma, b, d, d),
+					F->mult4(b, b, c, d),
+					F->mult3(a, b, c),
+					F->mult3(ma, c, d),
+					F->mult3(a, d, d),
+					F->mult3(mb, b, c)
+					),
+			y0122);
+	p0 = 0;
+	for (i = 0; i < 4; i++) {
+		p0 = F->add(p0, P0[i]);
+	}
+
+	int P1[4], p1;
+
+	P1[0] = F->mult5(ma, c, s7, gamma, y1122);
+	P1[1] = F->mult3(s7, epsilon, y0012);
+	P1[2] = F->mult4(m1, s7, xi, y0112);
+	P1[3] = F->mult4(m1, s7, eta, y0122);
+	p1 = 0;
+	for (i = 0; i < 4; i++) {
+		p1 = F->add(p1, P1[i]);
+	}
+
+	int P2[4], p2;
+
+	P2[0] = F->mult4(m1, s7, eta, y0222);
+	P2[1] = F->mult6(m1, a, c, s7, gamma, y1222);
+	P2[2] = F->mult3(s7, epsilon, y0022);
+	P2[3] = F->mult4(m1, s7, xi, y0122);
+	p2 = 0;
+	for (i = 0; i < 4; i++) {
+		p2 = F->add(p2, P2[i]);
+	}
+
+	int P3[5], p3;
+
+	P3[0] = F->mult4(m1, epsilon, delta, y0222);
+	P3[1] = F->mult3(epsilon, delta, y1222);
+	P3[2] = F->mult4(m1, s7, epsilon, y0022);
+	P3[3] = F->mult4(m1, s6, epsilon, y1122);
+	P3[4] = F->mult3(epsilon, omega, y0122);
+	p3 = 0;
+	for (i = 0; i < 5; i++) {
+		p3 = F->add(p3, P3[i]);
+	}
+
+	int p00, p01, p02, p03;
+	int p11, p12, p13;
+	int p22, p23;
+	int p33;
+
+	p00 = F->mult(p0, p0);
+	p01 = F->mult(p0, p1);
+	p02 = F->mult(p0, p2);
+	p03 = F->mult(p0, p3);
+
+	p11 = F->mult(p1, p1);
+	p12 = F->mult(p1, p2);
+	p13 = F->mult(p1, p3);
+
+	p22 = F->mult(p2, p2);
+	p23 = F->mult(p2, p3);
+
+	p33 = F->mult(p3, p3);
+
+	int Lambda1[7], lambda1;
+
+	Lambda1[0] = F->mult3(epsilon, omega, p02);
+	Lambda1[1] = F->mult3(xi, s7, p03);
+	Lambda1[2] = F->mult4(mtwo, s6, epsilon, p12);
+	Lambda1[3] = F->mult4(mtwo, s6, epsilon, p13);
+	Lambda1[4] = F->mult3(delta, epsilon, p22);
+	Lambda1[5] = F->mult(psi, p23);
+	Lambda1[6] = F->mult5(c, a, gamma, s7, p33);
+	lambda1 = 0;
+	for (i = 0; i < 7; i++) {
+		lambda1 = F->add(lambda1, Lambda1[i]);
+	}
+
+
+	int Lambda2[7], lambda2;
+
+	Lambda2[0] = F->mult4(m1, epsilon, s7, p00);
+	Lambda2[1] = F->mult3(epsilon, omega, p01);
+	Lambda2[2] = F->mult4(mtwo, delta, epsilon, p02);
+	Lambda2[3] = F->mult3(eta, s7, p03);
+	Lambda2[4] = F->mult4(m1, s6, epsilon, p11);
+	Lambda2[5] = F->mult4(two, delta, epsilon, p12);
+	Lambda2[6] = F->mult(psi, p13);
+	lambda2 = 0;
+	for (i = 0; i < 7; i++) {
+		lambda2 = F->add(lambda2, Lambda2[i]);
+	}
+
+
+	int Lambda3[5], lambda3;
+
+	Lambda3[0] = F->mult3(xi, s7, p01);
+	Lambda3[1] = F->mult3(eta, s7, p02);
+	Lambda3[2] = F->mult4(m1, s6, epsilon, p11);
+	Lambda3[3] = F->mult(psi, p12);
+	Lambda3[4] = F->mult6(two, c, a, gamma, s7, p13);
+	lambda3 = 0;
+	for (i = 0; i < 5; i++) {
+		lambda3 = F->add(lambda3, Lambda3[i]);
+	}
+
+	int mu112, mu113, mu122, mu123, mu133;
+
+	mu112 = F->mult3(m1, s6, epsilon);
+	mu113 = F->mult3(m1, s6, epsilon);
+	mu122 = F->mult(delta, epsilon);
+	mu123 = psi;
+	mu133 = F->mult4(c, a, gamma, s7);
+
+	int nu11, nu22, nu33, nu12, nu13, nu23;
+
+	nu11 = F->mult4(m1, s6, epsilon, F->add(p2, p3));
+	nu22 = F->mult3(delta, epsilon, F->add(p1, F->negate(p0)));
+	nu33 = F->mult5(c, a, gamma, s7, p1);
+	nu12 = F->add4(
+			F->mult3(epsilon, omega, p0),
+			F->mult4(mtwo, s6, epsilon, p1),
+			F->mult4(two, delta, epsilon, p2),
+			F->mult(psi, p3)
+			);
+	nu13 = F->add4(
+			F->mult3(xi, s7, p0),
+			F->mult4(mtwo, s6, epsilon, p1),
+			F->mult(psi, p2),
+			F->mult6(two, c, a, gamma, s7, p3)
+			);
+	nu23 = F->add(
+			F->mult3(eta, s7, p0),
+			F->mult(psi, p1)
+			);
+
+	int c1111, c1112, c1113, c1122, c1123, c1133, c1222, c1223, c1233, c1333, c2222, c2223, c2233, c2333, c3333;
+
+	c1111 = c1112 = c1113 = c1122 = c1123 = c1133 = c1222 = c1223 = c1233 = c1333 = c2222 = c2223 = c2233 = c2333 = c3333 = 0;
+
+	c1112 = F->add(c1112, F->mult3(mfour, lambda1, mu112));
+
+	c1113 = F->add(c1113, F->mult3(mfour, lambda1, mu113));
+
+	c1122 = F->add(c1122, F->mult3(mfour, lambda2, mu112));
+	c1122 = F->add(c1122, F->mult3(mfour, lambda1, mu122));
+
+	c1123 = F->add(c1123, F->mult3(mfour, lambda3, mu112));
+	c1123 = F->add(c1123, F->mult3(mfour, lambda2, mu113));
+	c1123 = F->add(c1123, F->mult3(mfour, lambda1, mu123));
+
+	c1133 = F->add(c1133, F->mult3(mfour, lambda3, mu113));
+	c1133 = F->add(c1133, F->mult3(mfour, lambda1, mu133));
+
+	c1222 = F->add(c1222, F->mult3(mfour, lambda2, mu122));
+
+	c1223 = F->add(c1223, F->mult3(mfour, lambda3, mu122));
+	c1223 = F->add(c1223, F->mult3(mfour, lambda2, mu123));
+
+	c1233 = F->add(c1233, F->mult3(mfour, lambda3, mu123));
+	c1233 = F->add(c1233, F->mult3(mfour, lambda2, mu133));
+
+	c1333 = F->add(c1333, F->mult3(mfour, lambda3, mu133));
+
+
+	c1111 = F->add(c1111, F->mult(nu11, nu11));
+
+	c1112 = F->add(c1112, F->mult3(two, nu11, nu12));
+
+	c1113 = F->add(c1113, F->mult3(two, nu11, nu13));
+
+	c1122 = F->add(c1122, F->mult3(two, nu11, nu22));
+	c1122 = F->add(c1122, F->mult(nu12, nu12));
+
+	c1123 = F->add(c1123, F->mult3(two, nu11, nu23));
+	c1123 = F->add(c1123, F->mult3(two, nu12, nu13));
+
+	c1133 = F->add(c1133, F->mult3(two, nu11, nu33));
+	c1133 = F->add(c1133, F->mult(nu13, nu13));
+
+	c1222 = F->add(c1222, F->mult3(two, nu12, nu22));
+
+	c1223 = F->add(c1223, F->mult3(two, nu12, nu23));
+	c1223 = F->add(c1223, F->mult3(two, nu13, nu22));
+
+	c1233 = F->add(c1233, F->mult3(two, nu12, nu33));
+	c1233 = F->add(c1233, F->mult3(two, nu13, nu23));
+
+	c1333 = F->add(c1333, F->mult3(two, nu13, nu33));
+
+	c2222 = F->add(c2222, F->mult(nu22, nu22));
+
+	c2223 = F->add(c2223, F->mult3(two, nu22, nu23));
+
+	c2233 = F->add(c2233, F->mult3(two, nu22, nu33));
+	c2233 = F->add(c2233, F->mult(nu23, nu23));
+
+	c2333 = F->add(c2333, F->mult3(two, nu23, nu33));
+
+	c3333 = F->add(c3333, F->mult(nu33, nu33));
+
+
+	//int coeffs15[15];
+
+	coeffs15[0] = c1111;
+	coeffs15[3] = c1112;
+	coeffs15[4] = c1113;
+	coeffs15[9] = c1122;
+	coeffs15[12] = c1123;
+	coeffs15[10] = c1133;
+	coeffs15[5] = c1222;
+	coeffs15[13] = c1223;
+	coeffs15[14] = c1233;
+	coeffs15[7] = c1333;
+	coeffs15[1] = c2222;
+	coeffs15[6] = c2223;
+	coeffs15[11] = c2233;
+	coeffs15[8] = c2333;
+	coeffs15[2] = c3333;
+
+	if (f_v) {
+		cout << "surface_domain::create_quartic_curve_by_normal_form "
+				"abcdef = ";
+		Int_vec_print(cout, abcdef, 6);
+		cout << endl;
+	}
+
+
+	if (f_v) {
+		int P[4];
+
+		P[0] = p0;
+		P[1] = p1;
+		P[2] = p2;
+		P[3] = p3;
+		cout << "surface_domain::create_quartic_curve_by_normal_form "
+				"p0,p1,p2,p3 = ";
+		Int_vec_print(cout, P, 4);
+		cout << endl;
+	}
+
+
+	if (f_v) {
+		cout << "surface_domain::create_quartic_curve_by_normal_form "
+				"coeffs15 = ";
+		Int_vec_print(cout, coeffs15, 15);
+		cout << endl;
+	}
+
+
+	int a1[6];
+	int a2[6];
+	int a3[6];
+	int a4[6];
+	int a5[6];
+	int a6[6];
+
+	int b1[6];
+	int b2[6];
+	int b3[6];
+	int b4[6];
+	int b5[6];
+	int b6[6];
+
+	int c12[6];
+	int c13[6];
+	int c14[6];
+	int c15[6];
+	int c16[6];
+	int c23[6];
+	int c24[6];
+	int c25[6];
+	int c26[6];
+	int c34[6];
+	int c35[6];
+	int c36[6];
+	int c45[6];
+	int c46[6];
+	int c56[6];
+
+	int t[6];
+
+	int *Lines[28];
+	//long int Lines_rk[28];
+
+	Lines[0] = a1;
+	Lines[1] = a2;
+	Lines[2] = a3;
+	Lines[3] = a4;
+	Lines[4] = a5;
+	Lines[5] = a6;
+	Lines[6] = b1;
+	Lines[7] = b2;
+	Lines[8] = b3;
+	Lines[9] = b4;
+	Lines[10] = b5;
+	Lines[11] = b6;
+	Lines[12] = c12;
+	Lines[13] = c13;
+	Lines[14] = c14;
+	Lines[15] = c15;
+	Lines[16] = c16;
+	Lines[17] = c23;
+	Lines[18] = c24;
+	Lines[19] = c25;
+	Lines[20] = c26;
+	Lines[21] = c34;
+	Lines[22] = c35;
+	Lines[23] = c36;
+	Lines[24] = c45;
+	Lines[25] = c46;
+	Lines[26] = c56;
+	Lines[27] = t;
+
+	a1[0] = F->add(F->mult3(s7, epsilon, p0), F->negate(F->mult3(s6, lambda, p1)));
+	a1[1] = F->negate(F->mult3(s6, lambda, p2));
+	a1[2] = F->negate(F->mult3(s6, lambda, p3));
+	a1[3] = F->mult5(s6, b, d, gamma, p1);
+	a1[4] = F->add(F->mult5(s6, b, d, gamma, p2), F->negate(F->mult3(s7, epsilon, p0)));
+	a1[5] = F->add(F->mult5(s6, b, d, gamma, p3), F->mult3(s7, epsilon, p0));
+
+	if (xi == 0) {
+		a2[0] = p1;
+		a2[1] = p2;
+		a2[2] = p3;
+		a2[3] = F->mult5(s7, a, c, gamma, p0);
+		a2[4] = 0;
+		a2[5] = F->mult3(s6, epsilon, p0);
+	}
+	else {
+		a2[0] = F->add(F->mult3(s7, xi, p0), F->negate(F->mult3(s6, epsilon, p1)));
+		a2[1] = F->negate(F->mult3(s6, epsilon, p2));
+		a2[2] = F->negate(F->mult3(s6, epsilon, p3));
+		a2[3] = F->mult4(a, c, gamma, p1);
+		a2[4] = F->mult4(a, c, gamma, p2);
+		a2[5] = F->add(F->mult4(a, c, gamma, p3), F->mult(xi, p0));
+	}
+
+	a3[0] = 0;
+	a3[1] = p0;
+	a3[2] = 0;
+	a3[3] = 0;
+	a3[4] = 0;
+	a3[5] = p0;
+
+	a4[0] = F->add(p0, F->negate(p1));
+	a4[1] = F->add(p0, F->negate(p2));
+	a4[2] = F->negate(p3);
+	a4[3] = F->negate(p1);
+	a4[4] = F->negate(p2);
+	a4[5] = F->add(p0, F->negate(p3));
+
+	a5[0] = F->add(F->mult(b, p0), F->negate(F->mult(a, p1)));
+	a5[1] = F->add(F->mult(1, p0), F->negate(F->mult(a, p2)));
+	a5[2] = F->negate(F->mult(a, p3));
+	a5[3] = F->negate(F->mult(a, p1));
+	a5[4] = F->negate(F->mult(a, p2));
+	a5[5] = F->add(F->mult(1, p0), F->negate(F->mult(a, p3)));
+
+	a6[0] = F->add(F->mult(d, p0), F->negate(F->mult(c, p1)));
+	a6[1] = F->add(F->mult(1, p0), F->negate(F->mult(c, p2)));
+	a6[2] = F->negate(F->mult(c, p3));
+	a6[3] = F->negate(F->mult(c, p1));
+	a6[4] = F->negate(F->mult(c, p2));
+	a6[5] = F->add(F->mult(1, p0), F->negate(F->mult(c, p3)));
+
+	b1[0] = p1;
+	b1[1] = p2;
+	b1[2] = p3;
+	b1[3] = 0;
+	b1[4] = 0;
+	b1[5] = p0;
+
+	b2[0] = p0;
+	b2[1] = 0;
+	b2[2] = 0;
+	b2[3] = 0;
+	b2[4] = F->negate(p0);
+	b2[5] = p0;
+
+	b3[0] = F->add(F->mult(theta, p1), F->negate(F->mult(zeta, p0)));
+	b3[1] = F->mult(theta, p2);
+	b3[2] = F->add(F->mult(theta, p3), F->mult(gamma, p0));
+	b3[3] = F->add(F->mult(epsilon, p1), F->negate(F->mult(epsilon, p0)));
+	b3[4] = F->add(F->mult(epsilon, p2), F->mult(gamma, p0));
+	b3[5] = F->mult(epsilon, p3);
+
+	b4[0] = F->add(F->mult(nu, p1), F->negate(F->mult(nu, p0)));
+	b4[1] = F->add(F->mult(nu, p2), F->mult(delta, p0));
+	b4[2] = F->mult(nu, p3);
+	b4[3] = F->mult4(a, c, s7, F->add(p1, F->negate(p0)));
+	b4[4] = F->mult4(a, c, s7, p2);
+	b4[5] = F->add(F->mult4(a, c, s7, p3), F->mult(delta, p0));
+
+	b5[0] = F->add(F->mult4(s3, s7, delta, p0), F->negate(F->mult4(s4, s6, delta, p1)));
+	b5[1] = F->add(F->mult4(s6, s7, s8, p0), F->negate(F->mult4(s4, s6, delta, p2)));
+	b5[2] = F->negate(F->mult4(s4, s6, delta, p3));
+	b5[3] = F->add(F->mult4(c, s4, s6, p1), F->negate(F->mult4(c, s3, s7, p0)));
+	b5[4] = F->mult4(c, s4, s6, p2);
+	b5[5] = F->add(F->mult4(c, s4, s6, p3), F->mult3(s6, s8, p0));
+
+	b6[0] = F->add(F->mult4(s1, s7, delta, p0), F->negate(F->mult4(s2, s6, delta, p1)));
+	b6[1] = F->add(F->mult4(s5, s6, s7, p0), F->negate(F->mult4(s2, s6, delta, p2)));
+	b6[2] = F->negate(F->mult4(s2, s6, delta, p3));
+	b6[3] = F->add(F->mult4(a, s2, s6, p1), F->negate(F->mult4(a, s1, s7, p0)));
+	b6[4] = F->mult4(a, s2, s6, p2);
+	b6[5] = F->add(F->mult4(a, s2, s6, p3), F->mult3(s5, s6, p0));
+
+
+	c12[0] = p1;
+	c12[1] = p2;
+	c12[2] = p3;
+	c12[3] = p0;
+	c12[4] = 0;
+	c12[5] = 0;
+
+	c13[0] = F->mult(eta, p1);
+	c13[1] = F->mult(eta, p2);
+	c13[2] = F->add(F->mult(epsilon, p0), F->mult(eta, p3));
+	c13[3] = F->mult(delta, p1);
+	c13[4] = F->add(F->mult(delta, p2), F->mult(s7, p0));
+	c13[5] = F->mult(delta, p3);
+
+	c14[0] = F->mult4(a, c, gamma, p1);
+	c14[1] = F->mult4(a, c, gamma, p2);
+	c14[2] = F->add(F->mult4(a, c, gamma, p3), F->mult(epsilon, p0));
+	c14[3] = F->add(F->mult(F->add(delta, F->negate(s6)), p1), F->mult(s7, p0));
+	c14[4] = F->add(F->mult(F->add(delta, F->negate(s6)), p2), F->mult(s7, p0));
+	c14[5] = F->mult(F->add(delta, F->negate(s6)), p3);
+
+	c15[0] = F->mult4(c, b, gamma, p1);
+	c15[1] = F->mult4(c, b, gamma, p2);
+	c15[2] = F->add(F->mult4(c, b, gamma, p3), F->mult(epsilon, p0));
+	c15[3] = F->mult(b, F->add(p0, F->negate(p1)));
+	c15[4] = F->add(p0, F->negate(F->add(b, p2)));
+	c15[5] = F->mult3(m1, b, p3);
+
+	c16[0] = F->mult4(a, d, gamma, p1);
+	c16[1] = F->mult4(a, d, gamma, p2);
+	c16[2] = F->add(F->mult4(a, d, gamma, p3), F->mult(epsilon, p0));
+	c16[3] = F->mult(d, F->add(p0, F->negate(p1)));
+	c16[4] = F->add(p0, F->negate(F->add(d, p2)));
+	c16[5] = F->mult3(m1, d, p3);
+
+	c23[0] = F->mult5(s7, a, c, gamma, p0);
+	c23[1] = 0;
+	c23[2] = F->mult3(epsilon, s6, p0);
+	c23[3] = F->mult(delta, p0);
+	c23[4] = F->mult(s6, p0);
+	c23[5] = 0;
+
+	c24[0] = F->add(F->mult3(delta, zeta, p0), F->mult4(m1, epsilon, s6, p1));
+	c24[1] = F->mult4(m1, epsilon, s6, p2);
+	c24[2] = F->add(F->mult3(epsilon, s6, p0), F->mult4(m1, epsilon, s6, p3));
+	c24[3] = F->add(F->mult(F->add(delta, s7), p0), F->mult3(m1, s6, p1));
+	c24[4] = F->mult(s6, F->add(p0, F->negate(p2)));
+	c24[5] = F->mult3(m1, s6, p3);
+
+	c25[0] = F->mult(a, F->add(p0, F->negate(p1)));
+	c25[1] = F->add(p0, F->mult3(m1, a, p2));
+	c25[2] = F->mult3(m1, a, p3);
+	c25[3] = F->add(F->mult5(s1, s7, s8, a, p0), F->mult4(m1, a, epsilon, p1));
+	c25[4] = F->mult4(m1, a, epsilon, p2);
+	c25[5] = F->add(F->mult(epsilon, p0), F->mult4(m1, a, epsilon, p3));
+
+	c26[0] = F->mult(c, F->add(p0, F->negate(p1)));
+	c26[1] = F->add(p0, F->mult3(m1, c, p2));
+	c26[2] = F->mult3(m1, c, p3);
+	c26[3] = F->add(F->mult5(s3, s5, s7, c, p0), F->mult4(m1, c, epsilon, p1));
+	c26[4] = F->mult4(m1, c, epsilon, p2);
+	c26[5] = F->add(F->mult(epsilon, p0), F->mult4(m1, c, epsilon, p3));
+
+	c34[0] = 0;
+	c34[1] = p0;
+	c34[2] = 0;
+	c34[3] = F->add(p1, F->negate(p1));
+	c34[4] = F->add(p0, F->negate(p2));
+	c34[5] = F->negate(p3);
+
+	c35[0] = 0;
+	c35[1] = F->mult5(m1, s3, s7, a, p0);
+	c35[2] = F->mult(epsilon, p0);
+	c35[3] = F->add(F->mult3(s5, s7, p0), F->mult4(m1, s4, s6, p1));
+	c35[4] = F->mult4(m1, s4, s6, p2);
+	c35[5] = F->mult4(m1, s4, s6, p3);
+
+	c36[0] = 0;
+	c36[1] = F->mult5(m1, s1, s7, c, p0);
+	c36[2] = F->mult(epsilon, p0);
+	c36[3] = F->add(F->mult3(s1, s7, p0), F->mult4(m1, s2, s6, p1));
+	c36[4] = F->mult4(m1, s2, s6, p2);
+	c36[5] = F->mult4(m1, s2, s6, p3);
+
+	c45[0] = F->mult5(m1, s5, s6, d, p1);
+	c45[1] = F->add(F->mult5(m1, s1, s7, c, p0), F->mult5(m1, s5, s6, d, p2));
+	c45[2] = F->add(F->mult(epsilon, p0), F->mult5(m1, s5, s6, d, p3));
+	c45[3] = F->add(F->mult3(s7, c, p0), F->mult4(m1, s6, d, p1));
+	c45[4] = F->mult4(m1, s6, d, p2);
+	c45[5] = F->mult4(m1, s6, d, p3);
+
+	c46[0] = F->mult5(m1, s6, s8, b, p1);
+	c46[1] = F->add(F->mult5(m1, s3, s7, a, p0), F->mult5(m1, s6, s8, b, p2));
+	c46[2] = F->add(F->mult(epsilon, p0), F->mult5(m1, s6, s8, b, p3));
+	c46[3] = F->add(F->mult3(s7, a, p0), F->mult4(m1, s6, b, p1));
+	c46[4] = F->mult4(m1, s6, b, p2);
+	c46[5] = F->mult4(m1, s6, b, p3);
+
+	c56[0] = F->add(F->mult(b, p0), F->mult3(m1, a, p1));
+	c56[1] = F->add(p0, F->mult3(m1, a, p2));
+	c56[2] = F->mult3(m1, a, p3);
+	c56[3] = F->add(F->mult(d, p0), F->mult3(m1, c, p1));
+	c56[4] = F->add(p0, F->mult3(m1, c, p2));
+	c56[5] = F->mult3(m1, c, p3);
+
+	if (lambda1) {
+		t[0] = lambda2;
+		t[1] = F->negate(lambda1);
+		t[2] = 0;
+		t[3] = lambda3;
+		t[4] = 0;
+		t[5] = F->negate(lambda1);
+	}
+	else if (lambda2) {
+		t[0] = m1;
+		t[1] = 0;
+		t[2] = 0;
+		t[3] = 0;
+		t[4] = lambda3;
+		t[5] = F->negate(lambda2);
+
+	}
+	else {
+		t[0] = 1;
+		t[1] = 0;
+		t[2] = 0;
+		t[3] = 0;
+		t[4] = 1;
+		t[5] = 0;
+
+	}
+
+	for (i = 0; i < 28; i++) {
+		Lines_rk[i] = P->Subspaces->Grass_lines->rank_lint_here(
+				Lines[i], 0 /*verbose_level*/);
+	}
+
+
+#if 0
+	QO = NEW_OBJECT(algebraic_geometry::quartic_curve_object);
+
+	if (f_v) {
+		cout << "surface_domain::create_quartic_curve_by_normal_form "
+				"before SO->init_equation" << endl;
+	}
+	QO->init_equation_but_no_bitangents(
+			this,
+			coeffs15,
+			verbose_level);
+	if (f_v) {
+		cout << "surface_domain::create_quartic_curve_by_normal_form "
+				"after SO->init_equation" << endl;
+	}
+
+
+
+
+	if (f_v) {
+		cout << "surface_domain::create_quartic_curve_by_normal_form "
+				"before compute_properties" << endl;
+	}
+	QO->compute_properties(verbose_level - 2);
+	if (f_v) {
+		cout << "surface_domain::create_quartic_curve_by_normal_form "
+				"after compute_properties" << endl;
+	}
+
+#endif
+
+	if (f_v) {
+		cout << "surface_domain::create_quartic_curve_by_normal_form done" << endl;
+	}
+}
 
 }}}}
 

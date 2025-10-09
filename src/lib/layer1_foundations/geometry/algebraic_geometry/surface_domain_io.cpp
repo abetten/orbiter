@@ -53,6 +53,33 @@ void surface_domain::print_equation_with_line_breaks_tex(
 	ost << "$$}" << endl;
 }
 
+void surface_domain::print_gradient_tex(
+		std::ostream &ost, int *gradient)
+{
+	int i;
+	int nb_mon;
+
+	nb_mon = PolynomialDomains->Poly2_4->get_nb_monomials();
+
+	ost << "{\\renewcommand{\\arraystretch}{1.5}" << endl;
+	ost << "$$" << endl;
+	ost << "\\begin{array}{c}" << endl;
+
+	for (i = 0; i < 4; i++) {
+		PolynomialDomains->Poly2_4->print_equation_tex(ost, gradient + i * nb_mon);
+		ost << "\\\\" << endl;
+
+#if 0
+		PolynomialDomains->Poly2_4->print_equation_with_line_breaks_tex(
+				ost, gradient + i * nb_mon, 5 /* nb_terms_per_line*/,
+				"\\\\\n" /* const char *new_line_text*/);
+#endif
+	}
+	//ost << "=0" << endl;
+	ost << "\\end{array}" << endl;
+	ost << "$$}" << endl;
+}
+
 void surface_domain::print_equation_tex_lint(
 		std::ostream &ost, long int *coeffs)
 {

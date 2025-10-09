@@ -130,6 +130,9 @@ public:
 	int f_by_coefficients;
 	std::string coefficients_text;
 
+	// ToDo undocumented:
+	int f_by_normal_form;
+	std::string by_normal_form_text;
 
 	int f_by_equation;
 	std::string equation_name_of_formula;
@@ -243,6 +246,9 @@ public:
 			int verbose_level);
 	void create_quartic_curve_by_coefficients(
 			std::string &coefficients_text,
+			int verbose_level);
+	void create_quartic_curve_by_normal_form(
+			std::string &by_normal_form_text,
 			int verbose_level);
 	void create_quartic_curve_by_coefficient_vector(
 			int *eqn15,

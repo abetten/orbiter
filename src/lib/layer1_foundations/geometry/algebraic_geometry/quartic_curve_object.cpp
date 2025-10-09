@@ -253,23 +253,7 @@ void quartic_curve_object::init_equation_but_no_bitangents(
 
 	f_has_bitangents = false;
 
-	// geometry::algebraic_geometry::variety_object *Variety_object;
 
-	//f_has_bitangents = false;
-	//Int_vec_copy(eqn15, quartic_curve_object::eqn15, 15);
-
-
-#if 0
-	if (f_v) {
-		cout << "quartic_curve_object::init_equation_but_no_bitangents "
-				"before enumerate_points" << endl;
-	}
-	enumerate_points(Dom->Poly4_3, verbose_level - 1);
-	if (f_v) {
-		cout << "quartic_curve_object::init_equation_but_no_bitangents "
-				"after enumerate_points" << endl;
-	}
-#else
 	if (f_v) {
 		cout << "quartic_curve_object::init_equation_but_no_bitangents "
 				"before enumerate_points" << endl;
@@ -279,7 +263,6 @@ void quartic_curve_object::init_equation_but_no_bitangents(
 		cout << "quartic_curve_object::init_equation_but_no_bitangents "
 				"after enumerate_points" << endl;
 	}
-#endif
 
 
 	if (f_v) {
@@ -297,6 +280,8 @@ void quartic_curve_object::init_equation_but_no_bitangents(
 		cout << "quartic_curve_object::init_equation_but_no_bitangents done" << endl;
 	}
 }
+
+
 
 void quartic_curve_object::init_equation_and_bitangents(
 		quartic_curve_domain *Dom,
@@ -376,7 +361,8 @@ void quartic_curve_object::init_equation_and_bitangents(
 
 void quartic_curve_object::init_equation_and_bitangents_and_compute_properties(
 		quartic_curve_domain *Dom,
-		int *eqn15, long int *bitangents28,
+		int *eqn15,
+		long int *bitangents28,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -390,7 +376,8 @@ void quartic_curve_object::init_equation_and_bitangents_and_compute_properties(
 				"before init_equation_and_bitangents" << endl;
 	}
 	init_equation_and_bitangents(
-			Dom, eqn15, bitangents28, verbose_level);
+			Dom, eqn15, bitangents28,
+			verbose_level);
 	if (f_v) {
 		cout << "quartic_curve_object::init_equation_and_bitangents_and_compute_properties "
 				"after init_equation_and_bitangents" << endl;

@@ -260,7 +260,8 @@ void surface_object::init_equation_with_27_lines(
 	cmp = Sorting.compare_sets_lint(
 			Variety_object->Line_sets->Sets[0], Lines27, 27, 27);
 	if (cmp) {
-		cout << "surface_object::init_equation_with_27_lines the given set of lines disagrees with the set of lines that have been found" << endl;
+		cout << "surface_object::init_equation_with_27_lines "
+				"the given set of lines disagrees with the set of lines that have been found" << endl;
 		exit(1);
 	}
 

@@ -7,6 +7,7 @@ ROW,C1,C2,C3
 1,"\verb'-label_for_summary' "," label "," Override the ascii label of the curve, to be used in summary commands. "
 1,"\verb'-catalogue' "," OCN "," Create the quartic curve from the Orbiter catalogue with the given Orbiter catalogue number."
 1,"\verb'-by_coefficients' "," coeffs "," Create a quartic curve given the coefficients of the equation. "
+1,"\verb'-by_normal_form' "," abcdef "," Create a quartic curve in the 6-parameter normal form. "
 1,"\verb'-by_equation' "," eqn "," Create a quartic curve from an equation. "
 1,"\verb'-by_symbolic_object' "," R equation "," Create a quartic curve from an equation using the polynomial ring $R$. The equation is given as a symbolic object. "
 1,"\verb'-from_cubic_surface' "," $S$ $i$ "," Create the quartic curve from $i$th orbit of the automorphism group of the surface $S$ on points not on lines ($i$ is zero based). "

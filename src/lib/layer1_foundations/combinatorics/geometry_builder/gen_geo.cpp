@@ -313,7 +313,8 @@ void gen_geo::generate_all(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 3);
+	int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
 
 	if (f_v) {
 		cout << "gen_geo::generate_all, verbose_level = " << verbose_level << endl;
@@ -324,7 +325,7 @@ void gen_geo::generate_all(
 	//int s_nb_i_vbar, s_nb_i_hbar;
 	iso_type *it0, *it1;
 
-	if (f_v) {
+	if (f_vv) {
 		if (GB->Descr->f_lambda) {
 			cout << "lambda = " << GB->Descr->lambda << endl;
 		}
@@ -333,7 +334,7 @@ void gen_geo::generate_all(
 
 	setup_output_files(verbose_level - 1);
 
-	if (f_v) {
+	if (f_vv) {
 		cout << "gen_geo::generate_all before it0 = ..." << endl;
 	}
 
@@ -366,14 +367,15 @@ void gen_geo::generate_all(
 	}
 
 
+
 	while (true) {
 
 
 		inc->gl_nb_GEN++;
-		if (f_v) {
+		if (f_vv) {
 			cout << "gen_geo::generate_all nb_GEN=" << inc->gl_nb_GEN << endl;
 		}
-		if (f_vv) {
+		if (f_vvv) {
 			print(cout, inc->Encoding->v, inc->Encoding->v);
 			//cout << "pairs:" << endl;
 			//inc->print_pairs(inc->Encoding->v);
@@ -404,7 +406,7 @@ void gen_geo::generate_all(
 			inc->nb_i_hbar = 1;
 		}
 #endif
-		if (f_v) {
+		if (f_vv) {
 			cout << "gen_geo::generate_all before it0->add_geometry" << endl;
 		}
 
@@ -413,7 +415,7 @@ void gen_geo::generate_all(
 				f_already_there,
 				verbose_level - 2);
 
-		if (f_v) {
+		if (f_vv) {
 			cout << "gen_geo::generate_all it0->add_geometry, "
 					"f_already_there=" << f_already_there << endl;
 		}
@@ -428,10 +430,25 @@ void gen_geo::generate_all(
 			cout << "gen_geo::generate_all after isot_add for it0" << endl;
 		}
 
-		if (f_vv && it0->Canonical_forms->B.size() % 1 == 0) {
+		if (f_vvv && it0->Canonical_forms->B.size() % 1 == 0) {
 			cout << it0->Canonical_forms->B.size() << endl;
 			print(cout, inc->Encoding->v, inc->Encoding->v);
 		}
+
+
+
+		if (((1L << 10) - 1 & inc->gl_nb_GEN) == 0) {
+			cout << "gen_geo::generate_all v=" << it0->v << " nb_GEN = " << inc->gl_nb_GEN << endl;
+
+			//iso_type *it;
+			int V = GB->V;
+
+			//it = gg->inc->iso_type_at_line[V - 1];
+
+			it0->gg->print(cout, V, it0->v);
+			//cout << "iso_type::add_geometry after gg->print" << endl;
+		}
+
 
 #if 0
 		if (forget_ivhbar_in_last_isot) {

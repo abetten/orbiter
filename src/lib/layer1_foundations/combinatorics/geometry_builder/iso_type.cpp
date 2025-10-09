@@ -116,7 +116,7 @@ void iso_type::add_geometry(
 
 	}
 
-
+#if 0
 	static long int count = 0;
 
 	if (((1L << 18) - 1 & count) == 0) {
@@ -127,11 +127,11 @@ void iso_type::add_geometry(
 
 		//it = gg->inc->iso_type_at_line[V - 1];
 
-		gg->print(cout, V, v);
-		cout << "iso_type::add_geometry after gg->print" << endl;
+		//gg->print(cout, V, v);
+		//cout << "iso_type::add_geometry after gg->print" << endl;
 	}
-
 	count++;
+#endif
 
 	int f_new_object;
 

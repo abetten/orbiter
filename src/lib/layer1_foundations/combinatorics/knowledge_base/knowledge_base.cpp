@@ -28,7 +28,10 @@ namespace knowledge_base {
 
 
 
-#include "DATA/quartic_curves/quartic_curves_q9.cpp"
+//#include "DATA/quartic_curves/quartic_curves_q9.cpp"
+#include "DATA/quartic_curves/quartic_curves_q9_clean.cpp"
+// q=9 clean added on October 6, 2025
+
 #include "DATA/quartic_curves/quartic_curves_q11.cpp"
 // q=11 added on July 26, 2025
 #include "DATA/quartic_curves/quartic_curves_q13.cpp"

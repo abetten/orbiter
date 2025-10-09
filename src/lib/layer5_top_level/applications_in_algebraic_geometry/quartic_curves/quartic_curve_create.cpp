@@ -289,6 +289,27 @@ void quartic_curve_create::create_quartic_curve_from_description(
 
 	}
 
+	else if (Descr->f_by_normal_form) {
+
+		if (f_v) {
+			cout << "quartic_curve_create::create_quartic_curve_from_description "
+					"f_by_normal_form " << Descr->by_normal_form_text << endl;
+		}
+
+		if (f_v) {
+			cout << "quartic_curve_create::create_quartic_curve_from_description "
+					"before create_quartic_curve_by_normal_form" << endl;
+		}
+		create_quartic_curve_by_normal_form(
+				Descr->by_normal_form_text,
+				verbose_level);
+		if (f_v) {
+			cout << "quartic_curve_create::create_quartic_curve_from_description "
+					"after create_quartic_curve_by_normal_form" << endl;
+		}
+
+	}
+
 	else if (Descr->f_catalogue) {
 
 		if (f_v) {
@@ -605,37 +626,6 @@ void quartic_curve_create::create_quartic_curve_by_coefficients(
 	int i;
 
 	Int_vec_scan(coefficients_text, coeff_list, nb_coeff_list);
-#if 0
-	if (ODD(nb_coeff_list)) {
-		cout << "quartic_curve_create::create_quartic_curve_by_coefficients "
-				"number of terms given must be even" << endl;
-		exit(1);
-	}
-	Int_vec_zero(coeffs15, 15);
-	nb_terms = nb_coeff_list >> 1;
-	for (i = 0; i < nb_terms; i++) {
-		a = coeff_list[2 * i + 0];
-		b = coeff_list[2 * i + 1];
-		if (a < 0 || a >= q) {
-			if (F->e == 1) {
-				number_theory_domain NT;
-
-				a = NT.mod(a, F->q);
-			}
-			else {
-				cout << "quartic_curve_create::create_quartic_curve_by_coefficients "
-						"coefficient out of range" << endl;
-				exit(1);
-			}
-		}
-		if (b < 0 || b >= 15) {
-			cout << "quartic_curve_create::create_quartic_curve_by_coefficients "
-					"variable index out of range" << endl;
-			exit(1);
-		}
-		coeffs15[b] = a;
-	}
-#else
 	if (nb_coeff_list != 15) {
 		cout << "quartic_curve_create::create_quartic_curve_by_coefficients "
 				"number of terms must be 15" << endl;
@@ -644,7 +634,6 @@ void quartic_curve_create::create_quartic_curve_by_coefficients(
 	for (i = 0; i < nb_coeff_list; i++) {
 		coeffs15[i] = coeff_list[i];
 	}
-#endif
 	FREE_int(coeff_list);
 
 
@@ -654,7 +643,8 @@ void quartic_curve_create::create_quartic_curve_by_coefficients(
 		cout << "quartic_curve_create::create_quartic_curve_by_coefficient_vector "
 				"before QO->init_equation_but_no_bitangents" << endl;
 	}
-	QO->init_equation_but_no_bitangents(QCDA->Dom,
+	QO->init_equation_but_no_bitangents(
+			QCDA->Dom,
 			coeffs15,
 			verbose_level);
 	if (f_v) {
@@ -674,6 +664,114 @@ void quartic_curve_create::create_quartic_curve_by_coefficients(
 
 	if (f_v) {
 		cout << "quartic_curve_create::create_quartic_curve_by_coefficients done" << endl;
+	}
+
+}
+
+void quartic_curve_create::create_quartic_curve_by_normal_form(
+		std::string &by_normal_form_text,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "quartic_curve_create::create_quartic_curve_by_normal_form" << endl;
+	}
+
+	if (f_v) {
+		cout << "quartic_curve_create::create_quartic_curve_by_normal_form "
+				"surface is given by coefficients" << endl;
+	}
+
+	int abcdef[6];
+	int *abcdef_list, len;
+	int i;
+
+	Int_vec_scan(by_normal_form_text, abcdef_list, len);
+	if (len != 6) {
+		cout << "quartic_curve_create::create_quartic_curve_by_normal_form "
+				"number of terms must be 6" << endl;
+		exit(1);
+	}
+	for (i = 0; i < len; i++) {
+		abcdef[i] = abcdef_list[i];
+	}
+	FREE_int(abcdef_list);
+
+	int coeffs15[15];
+	long int Lines28[28];
+
+	if (f_v) {
+		cout << "quartic_curve_create::create_quartic_curve_by_normal_form "
+				"before QCDA->Dom->create_quartic_curve_by_normal_form" << endl;
+	}
+	QCDA->Dom->create_quartic_curve_by_normal_form(
+		abcdef,
+		coeffs15,
+		Lines28,
+		verbose_level - 2);
+	if (f_v) {
+		cout << "quartic_curve_create::create_quartic_curve_by_normal_form "
+				"after QCDA->Dom->create_quartic_curve_by_normal_form" << endl;
+	}
+
+	if (f_v) {
+		cout << "quartic_curve_create::create_quartic_curve_by_normal_form "
+				"coeffs15 = ";
+		Int_vec_print(cout, coeffs15, 15);
+		cout << endl;
+	}
+	if (f_v) {
+		cout << "quartic_curve_create::create_quartic_curve_by_normal_form "
+				"Lines28 = ";
+		Lint_vec_print(cout, Lines28, 28);
+		cout << endl;
+	}
+
+
+	QO = NEW_OBJECT(geometry::algebraic_geometry::quartic_curve_object);
+
+
+#if 0
+	if (f_v) {
+		cout << "quartic_curve_create::create_quartic_curve_by_normal_form "
+				"before QO->init_equation_but_no_bitangents" << endl;
+	}
+	QO->init_equation_but_no_bitangents(
+			QCDA->Dom,
+			coeffs15,
+			verbose_level);
+
+	if (f_v) {
+		cout << "quartic_curve_create::create_quartic_curve_by_normal_form "
+				"after QO->init_equation_but_no_bitangents" << endl;
+	}
+#endif
+
+	if (f_v) {
+		cout << "quartic_curve_create::create_quartic_curve_by_normal_form "
+				"before QO->init_equation_and_bitangents" << endl;
+	}
+	QO->init_equation_and_bitangents(
+			QCDA->Dom,
+			coeffs15,
+			Lines28,
+			verbose_level);
+	if (f_v) {
+		cout << "quartic_curve_create::create_quartic_curve_by_normal_form "
+				"after QO->init_equation_and_bitangents" << endl;
+	}
+
+
+
+
+	prefix = "by_normal_form_q" + std::to_string(F->q);
+	label_txt = "by_normal_form_q" + std::to_string(F->q);
+	label_tex = "by\\_normal\\_form\\_q" + std::to_string(F->q);
+
+
+	if (f_v) {
+		cout << "quartic_curve_create::create_quartic_curve_by_normal_form done" << endl;
 	}
 
 }

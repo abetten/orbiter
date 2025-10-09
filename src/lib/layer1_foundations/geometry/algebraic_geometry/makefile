@@ -16,6 +16,7 @@ MODULES = \
 	eckardt_point_info.o \
 	eckardt_point.o \
 	kovalevski_points.o \
+	normal_form.o \
 	quartic_curve_domain.o \
 	quartic_curve_object_properties.o \
 	quartic_curve_object.o \

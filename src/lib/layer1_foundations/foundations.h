@@ -568,6 +568,7 @@ namespace geometry {
 		class eckardt_point_info;
 		class eckardt_point;
 		class kovalevski_points;
+		class normal_form;
 		class quartic_curve_domain;
 		class quartic_curve_object_properties;
 		class quartic_curve_object;

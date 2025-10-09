@@ -518,24 +518,32 @@ void surface_object_properties::compute_properties(
 	if (f_v) {
 		cout << "computing Double points:" << endl;
 	}
-	Type_lines_on_point->get_class_by_value(Double_points_index,
-		nb_Double_points, 2 /* value */, 0 /* verbose_level */);
+	Type_lines_on_point->get_class_by_value(
+			Double_points_index,
+		nb_Double_points, 2 /* value */,
+		0 /* verbose_level */);
+
 	Sorting.int_vec_heapsort(Double_points_index, nb_Double_points);
+
 	if (f_v) {
 		cout << "computing Double points done, we found "
 				<< nb_Double_points << " Double points" << endl;
 	}
+
 	if (f_vvv) {
 		cout << "Double_points_index=";
 		Int_vec_print(cout, Double_points_index, nb_Double_points);
 		cout << endl;
 	}
+
 	Double_points = NEW_lint(nb_Double_points);
+
 	Int_vec_apply_lint(
 			Double_points_index,
 			SO->Variety_object->Point_sets->Sets[0],
 		Double_points,
 		nb_Double_points);
+
 	if (f_v) {
 		cout << "computing Double points done, we found "
 				<< nb_Double_points << " Double points" << endl;
@@ -550,27 +558,35 @@ void surface_object_properties::compute_properties(
 	if (f_v) {
 		cout << "computing Single points:" << endl;
 	}
+
 	Type_lines_on_point->get_class_by_value(Single_points_index,
 		nb_Single_points, 1 /* value */, 0 /* verbose_level */);
+
 	Sorting.int_vec_heapsort(Single_points_index, nb_Single_points);
+
 	if (f_v) {
 		cout << "computing Single points done, we found "
 				<< nb_Single_points << " Single points" << endl;
 	}
+
 	if (f_vvv) {
 		cout << "Single_points_index=";
 		Int_vec_print(cout, Single_points_index, nb_Single_points);
 		cout << endl;
 	}
+
 	Single_points = NEW_lint(nb_Single_points);
+
 	Int_vec_apply_lint(
 			Single_points_index,
 			SO->Variety_object->Point_sets->Sets[0],
 			Single_points, nb_Single_points);
+
 	if (f_v) {
 		cout << "computing Single points done, we found "
 				<< nb_Single_points << " Single points" << endl;
 	}
+
 	if (f_vvv) {
 		cout << "Single_points=";
 		Lint_vec_print(cout, Single_points, nb_Single_points);
@@ -594,7 +610,8 @@ void surface_object_properties::compute_properties(
 			a = pts_on_lines->Sets[i][j];
 			b = SO->Variety_object->Point_sets->Sets[0][a];
 
-			if (Sorting.lint_vec_search(Pts_not_on_lines,
+			if (Sorting.lint_vec_search(
+					Pts_not_on_lines,
 				nb_pts_not_on_lines, b, idx, 0)) {
 				for (h = idx + 1; h < nb_pts_not_on_lines; h++) {
 					Pts_not_on_lines[h - 1] = Pts_not_on_lines[h];
@@ -1848,9 +1865,22 @@ void surface_object_properties::print_equation(
 	ost << endl;
 	ost << "\\end{verbatim}" << endl;
 
+	print_gradient(ost);
 
 	//ost << "Number of points on the surface " << SO->nb_pts << "\\\\" << endl;
 
+
+}
+
+void surface_object_properties::print_gradient(
+		std::ostream &ost)
+{
+	//ost << "\\subsection*{The gradient}" << endl;
+	ost << "surface\\_object\\_properties::print\\_gradient\\\\ ";
+	ost << "The gradient is :" << endl;
+
+	SO->Surf->print_gradient_tex(
+			ost, gradient);
 
 }
 

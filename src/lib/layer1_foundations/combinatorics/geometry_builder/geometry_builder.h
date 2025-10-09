@@ -650,7 +650,7 @@ public:
 
 
 
-	int gl_nb_GEN;
+	long int gl_nb_GEN;
 
 	iso_type **iso_type_at_line; // [gg->GB->V]
 	iso_type *iso_type_no_vhbars;

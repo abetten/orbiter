@@ -39,8 +39,13 @@ quartic_curve_create_description::quartic_curve_create_description()
 
 	f_catalogue = false;
 	iso = 0;
+
 	f_by_coefficients = false;
-	//coefficients_text = NULL;
+	//std::string coefficients_text;
+
+
+	f_by_normal_form = false;
+	//std::string by_normal_form_text;
 
 
 	f_by_equation = false;
@@ -132,6 +137,13 @@ int quartic_curve_create_description::read_arguments(
 			coefficients_text.assign(argv[++i]);
 			if (f_v) {
 				cout << "-by_coefficients " << coefficients_text << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-by_normal_form") == 0) {
+			f_by_normal_form = true;
+			by_normal_form_text.assign(argv[++i]);
+			if (f_v) {
+				cout << "-by_normal_form " << by_normal_form_text << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-by_equation") == 0) {
@@ -268,6 +280,9 @@ void quartic_curve_create_description::print()
 	}
 	if (f_by_coefficients) {
 		cout << "-by_coefficients " << coefficients_text << endl;
+	}
+	if (f_by_normal_form) {
+		cout << "-by_normal_form " << by_normal_form_text << endl;
 	}
 	if (f_by_equation) {
 		cout << "-by_equation "

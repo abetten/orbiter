@@ -581,6 +581,106 @@ public:
 };
 
 
+// #############################################################################
+// normal_form.cpp
+// #############################################################################
+
+//! normal form for cubic surfaces and quartic curves
+
+
+
+
+class normal_form {
+
+public:
+
+	// inherited:
+
+	algebra::field_theory::finite_field *F;
+
+	//geometry::projective_geometry::grassmann *Gr; // Gr42
+
+	// proprietary:
+
+	int a;
+	int b;
+	int c;
+	int d;
+
+	int m1;
+	int two;
+	int four;
+
+	int s1;
+	int s2;
+	int s3;
+	int s4;
+	int s5;
+	int s6;
+	int s7;
+	int s8;
+	int ab;
+	int ad;
+	int bc;
+	int cd;
+	int abc;
+	int abd;
+	int acd;
+	int bcd;
+	int delta;
+	int epsilon;
+	int gamma;
+	int lambda;
+	int nu;
+	int zeta;
+	int xi;
+	int theta;
+
+
+	int c002;
+	int c012;
+	int c013;
+	int c022;
+	int c023;
+	int c112;
+	int c113;
+	int c122;
+	int c133;
+	int c123;
+
+	int a1[8];
+	int a2[8];
+	int a3[8];
+	int a4[8];
+	int a5[8];
+	int a6[8];
+
+	int b1[8];
+	int b2[8];
+	int b3[8];
+	int b4[8];
+	int b5[8];
+	int b6[8];
+
+	long int Double_six[12];
+
+
+	normal_form();
+	~normal_form();
+	void init(
+			algebra::field_theory::finite_field *F,
+			//geometry::projective_geometry::grassmann *Gr,
+			int a, int b, int c, int d,
+			int verbose_level);
+	void init_constants(
+			int verbose_level);
+	void create_coefficients_for_cubic_surface(
+			int verbose_level);
+	void create_lines_of_cubic_surface(
+			int verbose_level);
+
+};
+
 
 
 // #############################################################################
@@ -687,6 +787,11 @@ public:
 			std::string &label_tex,
 			quartic_curve_object *&QO,
 			int verbose_level);
+	void create_quartic_curve_by_normal_form(
+		int *abcdef,
+		int *coeffs15,
+		long int *Lines_rk,
+		int verbose_level);
 
 };
 
@@ -1715,6 +1820,8 @@ public:
 			std::ostream &ost, int *coeffs);
 	void print_equation_with_line_breaks_tex(
 			std::ostream &ost, int *coeffs);
+	void print_gradient_tex(
+			std::ostream &ost, int *gradient);
 	void print_equation_tex_lint(
 			std::ostream &ost, long int *coeffs);
 	void latex_double_six(
@@ -1958,6 +2065,8 @@ public:
 	void print_lines_with_points_on_them(
 			std::ostream &ost);
 	void print_equation(
+			std::ostream &ost);
+	void print_gradient(
 			std::ostream &ost);
 	void print_summary(
 			std::ostream &ost);
