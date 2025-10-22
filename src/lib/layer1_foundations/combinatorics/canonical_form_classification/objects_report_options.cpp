@@ -36,6 +36,7 @@ objects_report_options::objects_report_options()
 
 	f_export_group_orbiter = false;
 	f_export_group_GAP = false;
+	f_export_group_magma = false;
 
 	f_lex_least = false;
 	//std::string lex_least_geometry_builder;
@@ -141,6 +142,12 @@ int objects_report_options::read_arguments(
 				cout << "-export_group_GAP" << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-export_group_magma") == 0) {
+			f_export_group_magma = true;
+			if (f_v) {
+				cout << "-export_group_magma" << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-dont_export_group") == 0) {
 			f_export_group_orbiter = false;
 			f_export_group_GAP = false;
@@ -213,6 +220,9 @@ void objects_report_options::print()
 	}
 	if (f_export_group_GAP) {
 		cout << "-export_group_GAP " << endl;
+	}
+	if (f_export_group_magma) {
+		cout << "-export_group_magma " << endl;
 	}
 	if (f_lex_least) {
 		cout << "-lex_least " << lex_least_geometry_builder << endl;

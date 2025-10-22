@@ -471,7 +471,7 @@ static void wreath_product_group_element_code_for_make_element(
 
 	cout << "wreath_product_group_element_code_for_make_element "
 			"not yet implemented" << endl;
-	exit(1);
+	//exit(1);
 #if 0
 	//cout << "wreath_product_group_element_code_for_make_element "
 	//"calling GL_print_for_make_element" << endl;

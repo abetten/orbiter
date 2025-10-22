@@ -671,6 +671,44 @@ void vector_ge_activity::perform_activity(
 
 	}
 
+	else if (Descr->f_filter_subfield) {
+
+		if (f_v) {
+			cout << "vector_ge_activity::perform_activity "
+					"f_filter_subfield, subfield_index = " << Descr->subfield_index << endl;
+		}
+
+		data_structures_groups::vector_ge *result;
+
+		if (f_v) {
+			cout << "vector_ge_activity::perform_activity "
+					"before vec[0]->filter_subfield_elements" << endl;
+		}
+
+		vec[0]->filter_subfield_elements(
+				Descr->subfield_index, result, verbose_level);
+
+		if (f_v) {
+			cout << "vector_ge_activity::perform_activity "
+					"after vec[0]->filter_subfield_elements, result->len = " << result->len << endl;
+		}
+
+		nb_output = 1;
+		Output = NEW_OBJECTS(other::orbiter_kernel_system::orbiter_symbol_table_entry, nb_output);
+
+		string output_label;
+
+		output_label = "result";
+
+		apps_algebra::vector_ge_builder *VB;
+
+		VB = NEW_OBJECT(apps_algebra::vector_ge_builder);
+
+		VB->V = result;
+
+		Output->init_vector_ge(output_label, VB, verbose_level);
+
+	}
 
 
 

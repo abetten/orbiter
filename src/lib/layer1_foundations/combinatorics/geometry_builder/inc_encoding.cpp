@@ -297,7 +297,7 @@ void inc_encoding::print_partitioned_override_theX(
 
 			if (It) {
 				ost << gg->Geometric_backtrack_search->Row_stabilizer_orbit_idx[i]
-					<< " / " << It->Canonical_forms->B.size();
+					<< " / " << It->Canonical_forms->Bitvector_array.size();
 			}
 		}
 		else {

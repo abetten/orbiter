@@ -471,10 +471,10 @@ static void perm_group_element_print(
 	group_constructions::permutation_representation_domain &G = *A.G.perm_grp;
 	int *Elt = (int *) elt;
 
-	//cout << "perm_group_element_print" << endl;
+	cout << "perm_group_element_print" << endl;
 	G.print(Elt, ost);
 	//ost << endl;
-	//cout << "perm_group_element_print done" << endl;
+	cout << "perm_group_element_print done" << endl;
 	//G.print_with_action(&A, Elt, ost);
 }
 

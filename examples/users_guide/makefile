@@ -46,8 +46,8 @@ MAGMA_EXE=$(MAGMA_PATH)magma
 OPEN=echo
 
 
-PDFLATEX=pdflatex
-#PDFLATEX=echo
+#PDFLATEX=pdflatex
+PDFLATEX=echo
 
 ###############################################################################
 # End of configuration part
@@ -317,7 +317,7 @@ PGOp_6_2_GENS="\
 1,0,0,0,0,0,0,1,0,1,0,0,1,0,1,0,0,1,0,0,0,1,0,0,0,0,0,1,1,0,0,0,0,0,0,1, \
 0,1,0,1,1,0,0,0,1,0,0,0,0,1,0,0,0,0,1,0,1,0,1,0,0,0,0,0,1,0,0,1,1,0,0,1, \
 0,0,1,1,1,1,1,0,1,0,0,0,0,1,1,1,1,1,1,1,1,1,0,0,0,1,0,1,0,1,0,1,0,1,1,0, \
-0,0,0,0,1,0,1,0,1,1,1,1,1,0,1,0,1,0,1,0,0,1,1,0,1,0,0,0,0,0,1,1,1,1,1,0,"
+0,0,0,0,1,0,1,0,1,1,1,1,1,0,1,0,1,0,1,0,0,1,1,0,1,0,0,0,0,0,1,1,1,1,1,0"
 
 
 
@@ -572,6 +572,24 @@ QUARTIC_CURVE_Q13_FLAG_0_TRANS="0,6,8,6,8,10,3,12,1"
 
 
 BARTH_EQUATION_GENERAL="4*(PHI^2*X^2-Y^2)*(PHI^2*Y^2-Z^2)*(PHI^2*Z^2-X^2)-(1+2*PHI)*(X^2+Y^2+Z^2-W^2)^2*W^2"
+
+
+QC_Q9_COEFFS="0, 1, 0, 0, 6, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0"
+
+QC_Q9_ORBITER_CATALOGUE_0_AF="X0^4 + X1^4 + X2^4 + X0^3*X1 + 5*X0^3*X2 + X0*X1^3 + 7*X1^3*X2 + 7*X0*X2^3 + 5*X1*X2^3"
+
+
+QC_Q9_HERMITIAN_COEFFS="1,1,1,0,0,0,0,0,0,0,0,0,0,0,0"
+
+QUARTIC_CURVE_Q9_CLEAN="X2^4+6*X1^3*X3+4*X1*X3^3"
+
+
+QC_Q9_CLEAN_EQUATION="0,1,0,0,6,0,0,4,0,0,0,0,0,0,0"
+
+QC_Q9_CLEAN_LINES="85, 48, 73, 78, 16, 55, 44, 87, 74, 76, 57, 13, 90, 51, 18, 27, 22, 14, 52, 21, 25, 60, 81, 46, 43, 82, 30, 0"
+
+
+QC_Q9_TRANSFORM_CLEAN_TO_HERMITIAN="5,8,6,8,1,6,0,3,6,1"
 
 
 
@@ -857,6 +875,11 @@ EQUATION_SURFACE_Q29_ISO4_ORB7_F2="17*x1^2 + 27*x2^2 + 8*x3^2 + 13*x1*x2 + 25*x1
 
 EQUATION_SURFACE_Q29_ISO4_ORB7_F3="27*x3^3 + 28*x1^2*x3 + 17*x2^2*x3 + x1*x3^2 + 2*x2*x3^2 + 17*x1*x2*x3"
 
+#QC_Q9_CLEAN_EQUATION="0,1,0,0,6,0,0,4,0,0,0,0,0,0,0"
+
+#QC_Q9_CLEAN_LINES="85, 48, 73, 78, 16, 55, 44, 87, 74, 76, 57, 13, 90, 51, 18, 27, 22, 14, 52, 21, 25, 60, 81, 46, 43, 82, 30, 0"
+
+
 
 
 # Section 9.6 Classification of quartic curves
@@ -1034,9 +1057,9 @@ GOLAY_24_CODE_AUT_GENS="\
 0,1,1,1,0,0,1,0,0,1,1,1,1,1,0,0,0,1,1,1,0,1,0,1,1,1,0,0,1,1,0,1,1,0,1,0,0,0,0,1,1,1,1,1,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,1,0,1,0,1,1,1,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,1,1,0,0,1,1,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0"
 
 
-M24_ELEMENT_2A="0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,1,1,1,0,0,0,1,0,1,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,1,1,0,0,1,0,0,1,1,1,1,1,1,1,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,"
+M24_ELEMENT_2A="0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,1,1,1,0,0,0,1,0,1,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,1,1,0,0,1,0,0,1,1,1,1,1,1,1,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0"
 
-M24_ELEMENT_2B="0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,1,1,0,1,1,1,0,1,1,0,0,1,1,0,1,1,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,1,1,1,0,0,1,1,0,1,1,0,1,1,1,0,0,0,1,0,1,1,0,0,0,0,1,0,0,0,0,0,0,0,"
+M24_ELEMENT_2B="0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,1,1,0,1,1,1,0,1,1,0,0,1,1,0,1,1,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,1,1,1,0,0,1,1,0,1,1,0,1,1,1,0,0,0,1,0,1,1,0,0,0,0,1,0,0,0,0,0,0,0"
 
 
 # 2A:
@@ -3255,7 +3278,6 @@ test_3:
 	make test_3_2
 	make test_3_3
 	make test_3_4
-	make test_3_5
 
 
 
@@ -6262,8 +6284,8 @@ SP_6_2_point_stab_subgroup:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	$(PDFLATEX) PGL_6_2_Sp_6_2_Stab0_report.tex
-	$(OPEN) PGL_6_2_Sp_6_2_Stab0_report.pdf
+	$(PDFLATEX) PSp_6_2_Stab0_report.tex
+	$(OPEN) PSp_6_2_Stab0_report.pdf
 
 
 # group of order 23040
@@ -6394,7 +6416,7 @@ test_5_4:
 	make Symmetric_4_on_pairs
 	make Alternating_5
 	make Alternating_5_derived
-	make direct_product_AGL
+	#make direct_product_AGL
 	make PGLstar_3_2
 	make PGLstar_3_2_restrict
 	make PGGLstar_3_4
@@ -6415,13 +6437,13 @@ test_5_4:
 	make PGL_5_3_wedge
 	make PGL_4_2_wd
 	make PGL_5_3_wd
-	make PGL_4_2_wd_reverse
+	#make PGL_4_2_wd_reverse
 	make M24_perm_group
-	make M22_bar
+	#make M22_bar
 	make curve_q13_f0_clean2_variety_make_group
 	make conic_group_q5
 	make group_of_Hirschfeld_surface_q4
-	make Higman_Sims_on_176_points
+	#make Higman_Sims_on_176_points
 	make group_U_4_3
 
 
@@ -6566,6 +6588,8 @@ direct_product_AGL:
 		-end
 	$(PDFLATEX) product_AGL_1_3_AGL_1_7_report.tex
 	$(OPEN) product_AGL_1_3_AGL_1_7_report.pdf
+
+#error: direct_product_group_element_code_for_make_element not yet implemented
 
 
 PGLstar_3_2:
@@ -6723,7 +6747,7 @@ arc_0_1_2_3_43_113_tritangent_planes.csv \
 			-on_points \
 		-end \
 		-with Orb -do -orbits_activity \
-			-report \
+			-report Do \
 		-end \
 		-with Orb -do -orbits_activity \
 			-draw_tree 0 Do \
@@ -7023,6 +7047,8 @@ PGL_4_2_wd_reverse:
 		-group_theoretic_activity \
 			-reverse_isomorphism_exterior_square \
 		-end
+
+#linear_algebra::invert_matrix matrix is not invertible, the rank is 3
 
 
 M24_perm_group:
@@ -8184,6 +8210,7 @@ test_5_8:
 	make Higman_Sims_subgroup_176a
 	make Higman_Sims_subgroup_176b
 	make Butler12_PSP_6_2_conjugate
+	make Hirschfeld_surface_get_subfield_subgroup
 
 
 U_3_3:
@@ -8220,7 +8247,6 @@ PGL_2_3_group_table:
 		-with G -do \
 		-group_theoretic_activity \
 			-report Do \
-			-report_group_table \
 		-end
 	$(PDFLATEX) PGL_2_3_report.tex
 	$(OPEN) PGL_2_3_report.pdf
@@ -8447,8 +8473,67 @@ Butler12_PSP_6_2_conjugate:
 
 
 
+Hirschfeld_surface_get_subfield_subgroup:
+	$(ORBITER) -v 6 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define F -finite_field -q 4 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 4 \
+			-homogeneous_of_degree 3 \
+			-monomial_ordering_partition \
+			-variables "X0,X1,X2,X3" "X_0,X_1,X_2,X_3" \
+		-end \
+		-define V -variety \
+			-projective_space P \
+			-ring R \
+			-equation_in_algebraic_form \
+				$(HIRSCHFELD_SURFACE_EQUATION_ALGEBRAIC_FORM) \
+			-label_txt Hirschfeld_4 \
+			-label_tex "{\\rm Hirschfeld\_4}" \
+		-end \
+		-with V -do -variety_activity \
+			-compute_group \
+			-nauty_control -save_orbit_of_equations eqn_ -end \
+		-end \
+		-define G -modified_group \
+			-stabilizer_of_variety V \
+			-nauty_control -end \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end \
+		-assign elements -from \
+		-with G -do \
+		-group_theoretic_activity \
+			-elements \
+		-end \
+		-assign elements2 -from \
+		-with elements -do \
+		-vector_ge_activity \
+			-filter_subfield 2 \
+		-end \
+		-with elements2 -do \
+		-vector_ge_activity \
+			-report \
+		-end \
+		-with elements2 -do \
+		-vector_ge_activity \
+			-report_elements_coded \
+		-end \
+		-print_symbols
+	pdflatex PGGL_4_4_stab_of_Hirschfeld_4_elements2_elements.tex
+	open PGGL_4_4_stab_of_Hirschfeld_4_elements2_elements.pdf
+
+
+
+
 ###############################################################################
-# \: Group Theory, activities for vectors of group elements
+# Section 5.9: Group Theory, activities for vectors of group elements
 
 
 SECTION_GROUP_THEORY_ACTIVITIES_FOR_VECTORS:
@@ -8460,7 +8545,7 @@ test_5_9:
 	make Sym_6_generators
 	make Sym_6_elements
 	make GL_2_3_RNF_elements
-	make PGL_4_2_orthogonal_reflections_report_vector_ge
+	#make PGL_4_2_orthogonal_reflections_report_vector_ge
 
 
 PGGL_2_4_classes_reps:
@@ -10371,6 +10456,9 @@ test_7_6:
 	make Barth_sextic_mod_11
 	make variety_Dickson36_9lines_q4_group
 	make quartic_curve_q27_fo159_fo338_test_isomorphism
+	make quartic_curve_q9_hermitian_fo0_test_isomorphism
+	make quartic_curve_q9_hermitian_and_OCN0_test_isomorphism
+	make quartic_curve_q9_Hermitian_transform
 
 
 
@@ -10614,6 +10702,122 @@ quartic_curve_q27_fo159_fo338_test_isomorphism:
 
 
 
+
+
+
+quartic_curve_q9_hermitian_fo0_test_isomorphism:
+	$(ORBITER) -v 12 \
+		-define F -finite_field -q 9 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 3 \
+			-homogeneous_of_degree 4 \
+			-monomial_ordering_partition \
+			-variables "X0,X1,X2" "X_0,X_1,X_2" \
+		-end \
+		-define V0 -variety \
+			-label_txt curve_q9_fo0 \
+			-label_tex curve\_q9\_fo0 \
+			-projective_space P \
+			-ring R \
+			-equation_by_coefficients $(QC_Q9_COEFFS) \
+		-end \
+		-define VH -variety \
+			-label_txt curve_q9_Hermitian \
+			-label_tex curve\_q9\_Hermitian \
+			-projective_space P \
+			-ring R \
+			-equation_by_coefficients $(QC_Q9_HERMITIAN_COEFFS) \
+		-end \
+		-with VH -and V0 -do -variety_activity \
+			-test_isomorphism \
+			-nauty_control -end \
+		-end
+
+
+
+# 28 points
+# group order = 12096
+
+
+#classification_of_varieties_nauty::handle_one_input_case input_counter = 1 / 2 is isomorphic to canonical form 0 and equation 0
+#classification_of_varieties_nauty::handle_one_input_case an isomorphism is given by phi=
+#5 8 6 
+#8 1 6 
+#0 3 6 
+#, 1
+
+#=
+#1 6 4 
+#6 7 4 
+#0 8 4 
+
+
+
+quartic_curve_q9_hermitian_and_OCN0_test_isomorphism:
+	$(ORBITER) -v 12 \
+		-define F -finite_field -q 9 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 3 \
+			-homogeneous_of_degree 4 \
+			-monomial_ordering_partition \
+			-variables "X0,X1,X2" "X_0,X_1,X_2" \
+		-end \
+		-define VH -variety \
+			-label_txt curve_q9_Hermitian \
+			-label_tex curve\_q9\_Hermitian \
+			-projective_space P \
+			-ring R \
+			-equation_by_coefficients $(QC_Q9_HERMITIAN_COEFFS) \
+		-end \
+		-define V2 -variety \
+			-projective_space P \
+			-ring R \
+			-equation_in_algebraic_form \
+				$(QC_Q9_ORBITER_CATALOGUE_0_AF) \
+			-label_txt QC_Q9_0 \
+			-label_tex "{\\rm QC\_Q9\_0}" \
+		-end \
+		-with VH -and V2 -do -variety_activity \
+			-test_isomorphism \
+			-nauty_control -end \
+		-end
+
+
+# phi = 
+#1 4 7 
+#8 2 5 
+#0 0 1 
+
+
+
+
+
+quartic_curve_q9_Hermitian_transform:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 9 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 3 \
+			-homogeneous_of_degree 4 \
+			-monomial_ordering_partition \
+			-variables "X1,X2,X3" "X_1,X_2,X_3" \
+		-end \
+		-define V -variety \
+			-projective_space P \
+			-ring R \
+			-equation_in_algebraic_form $(QUARTIC_CURVE_Q9_CLEAN) \
+			-bitangents $(QC_Q9_CLEAN_LINES) \
+			-transform $(QC_Q9_TRANSFORM_CLEAN_TO_HERMITIAN) \
+			-label_txt qc_q9 \
+			-label_tex "{\\rm qc\_q9}" \
+		-end
+
+
 ###############################################################################
 # Section 7.7 Mappings between Projective Spaces
 
@@ -10742,7 +10946,7 @@ orbits_PGL_4_2_on_points_draw_tree:
 			-on_points \
 		-end \
 		-with Orb -do -orbits_activity \
-			-report \
+			-report Do \
 		-end \
 		-with Orb -do -orbits_activity \
 			-export_something "orbit" 0 \
@@ -10818,7 +11022,7 @@ T3r1_orbits:
 			-on_points \
 		-end \
 		-with Orb -do -orbits_activity \
-			-report \
+			-report Do \
 		-end \
 		-with Orb -do -orbits_activity \
 			-draw_tree 0 Do \
@@ -11032,7 +11236,9 @@ T4r1_orbits_4:
 		-end \
 		-define G -linear_group -GL_d_q_wr_Sym_n 2 2 4 \
 			-on_rank_one_tensors -end \
-		-define Orb -orbits -group G \
+		-define Orb -orbits \
+			-group G \
+			-group_action G \
 			-on_subsets 4 Control \
 		-end \
 		-define ro \
@@ -11046,7 +11252,7 @@ T4r1_orbits_4:
 	$(PDFLATEX) T4r1_poset.tex
 	$(OPEN) T4r1_poset.pdf
 
-
+# error!
 
 
 
@@ -11060,7 +11266,7 @@ PGGL_7_8_orbits:
 			-on_points \
 		-end
 
-# 0:42
+# 0:34
 
 
 
@@ -11105,7 +11311,7 @@ poset_of_4subsets:
 		-with Orb -do -orbits_activity \
 			-report "" \
 			-report_options ro \
-		-end \
+		-end
 	$(PDFLATEX) poset_4_poset.tex
 	$(OPEN) poset_4_poset.pdf
 
@@ -11235,7 +11441,6 @@ V_4_2_trivial:
 		-define Control -poset_classification_control \
 			-problem_label V_4_2_trivial \
 			-W -depth 3 \
-			-draw_options Do \
 		-end \
 		-define G -linear_group -PGL 4 2 -identity_group -end \
 		-define Orb -orbits -group G \
@@ -11244,6 +11449,7 @@ V_4_2_trivial:
 		-define ro \
 			-poset_classification_report_options \
 				-draw_poset -type_ordinary \
+			-draw_options Do \
 		-end \
 		-with Orb -do -orbits_activity \
 			-report "" \
@@ -12349,8 +12555,14 @@ cubic_curves_PG_2_4:
 		-define Orb -orbits \
 			-on_cubic_curves Arc_control \
 		-end \
+		-define ro \
+			-poset_classification_report_options \
+				-draw_poset -type_ordinary \
+			-draw_options Do \
+		-end \
 		-with Orb -do -orbits_activity \
-			-report \
+			-report "" \
+			-report_options ro \
 		-end
 		-with Orb -do -orbits_activity \
 			-draw_tree 0 Do \
@@ -12364,7 +12576,8 @@ cubic_curves_PG_2_4:
 
 poly_orbits_q4:
 	$(ORBITER) -v 4 \
-		-define Do -draw_options -yout 500000 -radius 15 -nodes_empty \
+		-define Do -draw_options \
+			-yout 500000 -radius 15 -nodes_empty \
 			-line_width 0.5 -y_stretch 0.25 -embedded -end \
 		-define F -finite_field -q 4 -print_numerically -end \
 		-define R -polynomial_ring \
@@ -12420,14 +12633,22 @@ cubic_curves_PG_2_9:
 		-define Orb -orbits \
 			-on_cubic_curves Arc_control \
 		-end \
+		-define ro \
+			-poset_classification_report_options \
+				-draw_poset -type_ordinary \
+				-draw_options Do \
+		-end \
 		-with Orb -do -orbits_activity \
-			-report \
+			-report "" \
+			-report_options ro \
 		-end
 		-with Orb -do -orbits_activity \
 			-draw_tree 0 Do \
 		-end
 	#$(PDFLATEX) cc_9_poset_lvl_9.tex
 	#$(OPEN) cc_9_poset_lvl_9.pdf
+
+#cubic_curve::compute_inflexion_points rank of line spanned by v and w is not two
 
 
 # too big to latex:
@@ -13015,12 +13236,13 @@ Hirschfeld_surface_incma_40_40_c:
 				-export_flag_orbits \
 				-show_incidence_matrices \
 				-export_group_GAP \
+				-export_group_magma \
 				-incidence_draw_options Doinc \
 			-end \
 		-end
 	$(ORBITER) -v 2 -draw_matrix \
-		-input_csv_file H_incma_40_40_object0_TDA_flag_orbits.csv \
-		-secondary_input_csv_file H_incma_40_40_object0_TDA.csv \
+		-input_csv_file H_incma_40_40_object_0_TDA_flag_orbits.csv \
+		-secondary_input_csv_file H_incma_40_40_object_0_TDA.csv \
 		-box_width 32 -bit_depth 24 \
 		-end
 	$(PDFLATEX) H_incma_40_40_classification.tex
@@ -13112,16 +13334,33 @@ surface_8_0:
 		-end \
 		-define F -finite_field -q 8 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define P2 -projective_space -n 2 -field F -v 0 -end \
 		-define S -cubic_surface -space P -catalogue 0 -end \
+		-define Control -poset_classification_control \
+			-problem_label nc_arcs_q8 \
+			-W -depth 6 \
+		-end \
+		-define Arc_control -arc_generator_control \
+			-projective_space P2 \
+			-control Control \
+			-target_size 6 \
+			-d 2 \
+		-end \
+		-define Orb -orbits \
+			-on_arcs Arc_control \
+		-end \
 		-with S -do \
 		-cubic_surface_activity \
 			-report Do \
-			-report_all_flag_orbits \
+		-end \
+		-with S -do \
+		-cubic_surface_activity \
+			-report_all_flag_orbits Orb \
 		-end \
 		-with S -do \
 		-cubic_surface_activity \
 			-export_something "lines" \
-		-end \
+		-end
 
 
 # slow:
@@ -13218,11 +13457,28 @@ surface_9_0:
 		-end \
 		-define F -finite_field -q 9 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define P2 -projective_space -n 2 -field F -v 0 -end \
 		-define S -cubic_surface -space P -catalogue 0 -end \
+		-define Control -poset_classification_control \
+			-problem_label nc_arcs_q9 \
+			-W -depth 6 \
+		-end \
+		-define Arc_control -arc_generator_control \
+			-projective_space P2 \
+			-control Control \
+			-target_size 6 \
+			-d 2 \
+		-end \
+		-define Orb -orbits \
+			-on_arcs Arc_control \
+		-end \
 		-with S -do \
 		-cubic_surface_activity \
 			-report Do \
-			-report_all_flag_orbits \
+		-end \
+		-with S -do \
+		-cubic_surface_activity \
+			-report_all_flag_orbits Orb \
 		-end \
 		-with S -do \
 		-cubic_surface_activity \
@@ -13254,11 +13510,28 @@ surface_9_1:
 		-end \
 		-define F -finite_field -q 9 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define P2 -projective_space -n 2 -field F -v 0 -end \
 		-define S -cubic_surface -space P -catalogue 1 -end \
+		-define Control -poset_classification_control \
+			-problem_label nc_arcs_q9 \
+			-W -depth 6 \
+		-end \
+		-define Arc_control -arc_generator_control \
+			-projective_space P2 \
+			-control Control \
+			-target_size 6 \
+			-d 2 \
+		-end \
+		-define Orb -orbits \
+			-on_arcs Arc_control \
+		-end \
 		-with S -do \
 		-cubic_surface_activity \
 			-report Do \
-			-report_all_flag_orbits \
+		-end \
+		-with S -do \
+		-cubic_surface_activity \
+			-report_all_flag_orbits Orb \
 		-end \
 		-with S -do \
 		-cubic_surface_activity \
@@ -13790,6 +14063,8 @@ surface_classify_q4_arc_lifting_two_lines:
 	$(OPEN) surfaces_arc_lifting_4.pdf
 
 
+# error!
+
 
 surface_classify_q7:
 	$(ORBITER) -v 5 \
@@ -13806,13 +14081,13 @@ surface_classify_q7:
 			-problem_label "surf_q7" \
 			-draw_options Do \
 		-end \
-		-define Do -draw_options \
+		-define Do2 -draw_options \
 			-radius 200 -line_width 0.3 -nodes_empty \
 		-end \
 		-define ro \
 			-poset_classification_report_options \
 				-draw_poset -type_aux \
-			-draw_options Do \
+			-draw_options Do2 \
 		-end \
 		-define Classify -classify_cubic_surfaces \
 			-use_double_sixes \
@@ -13836,6 +14111,8 @@ surface_classify_q7:
 	$(PDFLATEX) Surfaces_q7.tex 
 	$(OPEN) Surfaces_q7.pdf
 
+
+# error
 
 
 
@@ -13865,6 +14142,14 @@ Family_general_F31_25_5_5_25_recognize:
 		-define Orb -orbits \
 			-on_cubic_surfaces Classify \
 		-end \
+		-define Do2 -draw_options \
+			-radius 200 -line_width 0.3 -nodes_empty \
+		-end \
+		-define ro \
+			-poset_classification_report_options \
+				-draw_poset -type_aux \
+			-draw_options Do2 \
+		-end \
 		-with Orb -do -orbits_activity \
 			-report "5plus1=off,double_sixes=off,flag_orbits=off,show_group=off,report_options=ro" \
 		-end \
@@ -13883,7 +14168,7 @@ Family_general_F31_25_5_5_25_recognize:
 
 surface_F_abcd_identify_q9:
 	$(ORBITER) -v 3 \
-		-define F -finite_field -q 11 -end \
+		-define F -finite_field -q 9 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
 		-define Control -poset_classification_control -W \
 			-problem_label "surf_q9" \
@@ -13946,10 +14231,12 @@ SECTION_QUARTIC_CURVES_CREATION:
 test_9_5:
 	make quartic_curve_9_0
 	make quartic_curve_9_0_report
+	make quartic_curve_9_0_normal_form_report
 	make quartic_curve_edge_q9
 	make surface_7_0_make_quartic_curves
 	make quartic_curves_q7
 	make surface_9_1_make_quartic_curves
+	make quartic_curve_q9_1_clean2
 	make quartic_curves_q13
 	make quartic_curves_q19
 	make quartic_curves_q29_po4_export
@@ -13979,8 +14266,23 @@ quartic_curve_9_0_report:
 			-quartic_curve_activity \
 				-report \
 			-end
-	$(PDFLATEX) quartic_curve_catalogue_9_iso0_report.tex
-	$(OPEN) quartic_curve_catalogue_9_iso0_report.pdf
+	$(PDFLATEX) quartic_curve_catalogue_q9_iso0_report.tex
+	$(OPEN) quartic_curve_catalogue_q9_iso0_report.pdf
+
+
+
+quartic_curve_9_0_normal_form_report:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 9 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define C -quartic_curve -space P -by_normal_form "6,3,4,6,2,5" -end \
+		-with C -do \
+			-quartic_curve_activity \
+				-report \
+			-end \
+		-print_symbols
+	$(PDFLATEX) quartic_curve_by_normal_form_q9_report.tex
+	$(OPEN) quartic_curve_by_normal_form_q9_report.pdf
 
 
 
@@ -14113,6 +14415,32 @@ surface_9_1_make_quartic_curves:
 	#$(PDFLATEX) surface_catalogue_q9_iso1_report.tex
 	#$(OPEN) surface_catalogue_q9_iso1_report.pdf
 
+
+
+quartic_curve_q9_1_clean2:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 9 -print_as_exponentials -end \
+		-define P2 -projective_space -n 2 -field F -end \
+		-define P3 -projective_space -n 3 -field F -end \
+		-define S9_1 -cubic_surface -space P3 -catalogue 1 \
+			-select_double_six "c12,c23,a4,c13,a5,a6,b3,b1,c56,b2,c46,c45" \
+			-transform_inverse "6,4,6,1, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0" \
+			-transform_inverse "1,0,0,0, 0,1,0,5, 0,0,1,1, 0,0,0,1, 0" \
+			-transform "1,0,0,0, 0,0,1,0, 1,1,5,0, 0,0,0,1, 0" \
+			-transform "1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,8,1, 0" \
+			-end \
+		-with S9_1 -do \
+		-cubic_surface_activity \
+			-report \
+		-end \
+		-define C -quartic_curve -space P2 -from_cubic_surface S9_1 0 -end \
+		-with C -do \
+			-quartic_curve_activity \
+				-report \
+			-end
+	pdflatex surface_catalogue_q9_iso1_report.tex
+	pdflatex quartic_curve_surface_catalogue_q9_iso1_pt_orb_0_report.tex
+	open quartic_curve_surface_catalogue_q9_iso1_pt_orb_0_report.pdf
 
 
 
@@ -16437,13 +16765,14 @@ Golay24_2A_fix_weight12_c:
 			-width 60 -width_10 6 -end \
 		-define C -combinatorial_object \
 			-label Golay24_2A_fix_weight12 Golay24\_2A\_fix\_weight12 \
-			-file_of_incidence_geometries blocks_v24_k12_inc.txt 24 112 1344 \
+			-file_of_incidence_geometries blocks_v24_flags.txt 24 112 1344 \
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \
 			-canonical_form \
 				-save_ago \
 				-save_transversal \
+				-nauty_control -end \
 			-end \
 		-end \
 		-with C -do \
@@ -16453,9 +16782,13 @@ Golay24_2A_fix_weight12_c:
 		-with C -do \
 		-combinatorial_object_activity \
 			-report \
-				-export_flag_orbits \
-				-show_incidence_matrices \
-				-export_group_GAP \
+					-export_flag_orbits \
+					-show_incidence_matrices \
+					-show_TDO \
+					-show_TDA \
+					-export_group_GAP \
+					-dont_show_incidence_matrices \
+					-incidence_draw_options Doinc \
 			-end \
 		-end
 	$(PDFLATEX) Golay24_2A_fix_weight12_classification.tex
@@ -16468,7 +16801,7 @@ Golay24_2A_fix_weight12_graph_24:
 	$(ORBITER) -v 3 \
 		-define Gamma -graph \
 			-load_adjacency_matrix_from_csv_and_select_value \
-			blocks_v24_k12_AAt.csv 24 \
+			blocks_v24_AAt.csv 24 \
 		-end \
 		-with Gamma -do \
 			-graph_theoretic_activity -automorphism_group \
@@ -17048,7 +17381,7 @@ RM_6:
 		-end \
 		-with C -and F -do -coding_theoretic_activity \
 			-export_codewords_long RM6_codewords.csv \
-		-end \
+		-end
 
 RM_6_genma_draw:
 	$(ORBITER) -v 2 \
@@ -17113,6 +17446,7 @@ RM_6_codewords_draw:
 
 
 
+# -csv_file_select_rows adds extra stuff, which destroys the file format
 
 
 ###############################################################################
@@ -24918,11 +25252,11 @@ TFC_24_3_c:
 	$(PDFLATEX) 24_3_TFC_classification.tex
 	$(OPEN) 24_3_TFC_classification.pdf
 	$(ORBITER) -v 2 -draw_matrix \
-		-input_csv_file 24_3_TFC_object2_TDA_flag_orbits.csv \
-		-secondary_input_csv_file 24_3_TFC_object2_TDA.csv \
+		-input_csv_file 24_3_TFC_object_2_TDA_flag_orbits.csv \
+		-secondary_input_csv_file 24_3_TFC_object_2_TDA.csv \
 		-box_width 40 -bit_depth 24 \
 		-end
-	$(OPEN) 24_3_TFC_object2_TDA_flag_orbits_draw.bmp
+	$(OPEN) 24_3_TFC_object_2_TDA_flag_orbits_draw.bmp
 
 
 geo_40_4_g4_c:

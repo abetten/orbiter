@@ -342,6 +342,7 @@ public:
 
 	int f_export_group_orbiter;
 	int f_export_group_GAP;
+	int f_export_group_magma;
 
 	int f_lex_least;
 	std::string lex_least_geometry_builder;
@@ -564,7 +565,7 @@ public:
 	int nb_input_objects;
 
 
-	std::vector<other::data_structures::bitvector *> B;
+	std::vector<other::data_structures::bitvector *> Bitvector_array;
 	std::vector<void *> Objects;
 	std::vector<long int> Ago;
 	std::vector<int> input_index;
@@ -572,7 +573,7 @@ public:
 	std::multimap<uint32_t, int> Hashing;
 		// we store the pair (hash, idx)
 		// where hash is the hash value of the set and idx is the
-		// index in the table Sets where the set is stored.
+		// index in the table Bitvector_array where the set is stored.
 		//
 		// we use a multimap because the hash values are not unique
 		// it happens that two sets have the same hash value.
@@ -595,7 +596,7 @@ public:
 			other::l1_interfaces::nauty_output *&NO,
 			other::data_structures::bitvector *&Canonical_form,
 			int verbose_level);
-		// if f_found is true, B[idx] agrees with the given object
+		// if f_found is true, Bitvector_array[idx] agrees with the given object
 	void add_object(
 			any_combinatorial_object *OwCF,
 			other::l1_interfaces::nauty_interface_control *Nauty_control,

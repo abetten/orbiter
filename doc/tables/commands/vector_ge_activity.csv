@@ -14,4 +14,5 @@ ROW,C1,C2,C3
 1,"\verb'-rational_canonical_form' ","  "," Computes the rational normal form of each element. Returns a vector containing all rational normal forms and a second vector containing all transformation matrices. "
 1,"\verb'-products_of_pairs' ","  "," Computes a matrix whose entry $a_{ij}$ is the order of the product of element $i$ with element $j$. "
 1,"\verb'-apply_isomorphism_wedge_product_4to6' ","  "," For each vector element, compute the matrix for the induced action on the wedge product. The result will be written to csv file. "
+1,"\verb'-filter_subfield' "," q "," Produces a new vector whose elements are the elements in that belong to the subfield (and -- for semilinear groups -- whose associated field automorphism is trivial). "
 END

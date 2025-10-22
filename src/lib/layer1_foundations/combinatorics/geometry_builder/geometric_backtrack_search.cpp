@@ -229,7 +229,7 @@ int geometric_backtrack_search::RowFirstSplit(
 	i1 = C->i0 + m;
 	it = gg->inc->iso_type_at_line[i1];
 	if (it && it->f_split) {
-		if ((it->Canonical_forms->B.size() % it->split_modulo) != it->split_remainder) {
+		if ((it->Canonical_forms->Bitvector_array.size() % it->split_modulo) != it->split_remainder) {
 			return false;
 		}
 	}
@@ -259,7 +259,7 @@ int geometric_backtrack_search::RowNextSplit(
 	i1 = C->i0 + m;
 	it = gg->inc->iso_type_at_line[i1];
 	if (it && it->f_split) {
-		if ((it->Canonical_forms->B.size() % it->split_modulo) != it->split_remainder) {
+		if ((it->Canonical_forms->Bitvector_array.size() % it->split_modulo) != it->split_remainder) {
 			return false;
 		}
 	}
@@ -553,7 +553,7 @@ int geometric_backtrack_search::RowFirstLexLeast(
 		while (true) {
 			if (J >= gg->GB->b_len) {
 				if (f_v) {
-					cout << "geometric_backtrack_search::RowFirstLexLeast" << endl;
+					cout << "geometric_backtrack_search::RowFirstLexLeast before gg->print" << endl;
 					gg->print(cout, i1 + 1, gg->inc->Encoding->v);
 				}
 				return true;
@@ -669,10 +669,10 @@ int geometric_backtrack_search::RowFirstOrderly(
 	if (f_v) {
 		cout << "geometric_backtrack_search::RowFirstOrderly "
 				"I=" << I << " m=" << m << " i1=" << i1
-				<< " number of possible rows: " << It->Canonical_forms->B.size() << endl;
+				<< " number of possible rows: " << It->Canonical_forms->Bitvector_array.size() << endl;
 	}
 
-	if (It->Canonical_forms->B.size()) {
+	if (It->Canonical_forms->Bitvector_array.size()) {
 
 		place_row(I, m, 0 /* idx */, verbose_level);
 
@@ -692,6 +692,9 @@ int geometric_backtrack_search::RowFirstOrderly(
 
 void geometric_backtrack_search::place_row(
 		int I, int m, int idx, int verbose_level)
+// called from RowFirstOrderly, RowNextOrderly
+// retrieves combinatorial object from iso_type data structure at position idx.
+// Then calls TryToPlace and, if successful, gg->Test_semicanonical->markers_update
 {
 	int f_v = (verbose_level >= 1);
 
@@ -785,7 +788,7 @@ int geometric_backtrack_search::RowNextOrderly(
 	It = Row_stabilizer_orbits[i1];
 
 
-	if (Row_stabilizer_orbit_idx[i1] == It->Canonical_forms->B.size() - 1) {
+	if (Row_stabilizer_orbit_idx[i1] == It->Canonical_forms->Bitvector_array.size() - 1) {
 
 		FREE_OBJECT(Row_stabilizer_orbits[i1]);
 		Row_stabilizer_orbits[i1] = NULL;

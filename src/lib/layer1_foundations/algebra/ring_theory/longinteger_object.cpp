@@ -71,6 +71,8 @@ void longinteger_object::create(
 		sgn = false;
 	}
 	if (i == 0) {
+		//cout << "longinteger_object::create possible memory leak" << endl;
+		// no, the table of binomial coefficients allocates a lot of longinteger_objects
 		r = NEW_char(1);
 		r[0] = 0;
 		l = 1;

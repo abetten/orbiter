@@ -944,6 +944,32 @@ void linear_algebra::scalar_multiply_vector_in_place(
 	}
 }
 
+void linear_algebra::left_normalize_vector_in_place(
+		int *A, int m)
+{
+	int i;
+
+	for (i = 0; i < m; i++) {
+		if (A[i]) {
+			break;
+		}
+	}
+	if (i == m) {
+		cout << "linear_algebra::left_normalize_vector_in_place the zero vector is not allowed" << endl;
+		exit(1);
+	}
+
+	int c, cv;
+
+	c = A[i];
+	cv = F->inverse(c);
+
+	for (i = 0; i < m; i++) {
+		A[i] = F->mult(cv, A[i]);
+	}
+}
+
+
 void linear_algebra::vector_frobenius_power_in_place(
 		int *A, int m, int f)
 {

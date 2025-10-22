@@ -1129,6 +1129,13 @@ void matrix_group_element::GL_code_for_make_element(
 		}
 	}
 	else {
+#if 1
+		if (Matrix_group->f_projective) {
+			Matrix_group->GFq->Linear_algebra->left_normalize_vector_in_place(
+					data, Matrix_group->n * Matrix_group->n);
+		}
+#endif
+
 		if (Matrix_group->f_semilinear) {
 			data[Matrix_group->offset_frobenius] = Elt[Matrix_group->offset_frobenius];
 		}
@@ -1876,7 +1883,63 @@ long int matrix_group_element::rank_point(
 	return rk;
 }
 
+int matrix_group_element::test_if_in_subfield(
+		int *v,
+		algebra::field_theory::subfield_structure *SubS,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
 
+	if (f_v) {
+		cout << "matrix_group_element::test_if_in_subfield" << endl;
+	}
+
+	int i, a;
+	int *Elt;
+	int ret = true;
+	int n;
+
+	n = Matrix_group->n;
+
+	if (Matrix_group->f_projective) {
+		int *w;
+
+		w = NEW_int(n * n);
+		Int_vec_copy(v, w, n * n);
+
+		Matrix_group->GFq->Linear_algebra->left_normalize_vector_in_place(
+					w, n * n);
+
+		for (i = 0; i < n * n; i++) {
+			a = w[i];
+			if (SubS->Fq_element[a] == -1) {
+				ret = false;
+				break;
+			}
+		}
+
+#if 1
+		if (Matrix_group->f_semilinear) {
+			a = v[n * n];
+			if (a) {
+				ret = false;
+			}
+		}
+#endif
+
+		FREE_int(w);
+	}
+	else {
+		cout << "matrix_group_element::test_if_in_subfield "
+				"not yet implemented for this type of group" << endl;
+		exit(1);
+	}
+
+	if (f_v) {
+		cout << "matrix_group_element::test_if_in_subfield done" << endl;
+	}
+	return ret;
+}
 
 
 

@@ -345,6 +345,8 @@ public:
 			int *A, int m);
 	void scalar_multiply_vector_in_place(
 			int c, int *A, int m);
+	void left_normalize_vector_in_place(
+			int *A, int m);
 	void vector_frobenius_power_in_place(
 			int *A, int m, int f);
 	int dot_product(

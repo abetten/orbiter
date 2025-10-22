@@ -1606,6 +1606,10 @@ public:
 		int *Elt);
 	std::string stringify_base_images(
 			int *Elt, int verbose_level);
+	int test_if_in_subfield(
+			void *elt,
+			algebra::field_theory::subfield_structure *SubS,
+			int verbose_level);
 
 
 };

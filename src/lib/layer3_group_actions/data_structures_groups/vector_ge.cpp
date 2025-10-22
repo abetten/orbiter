@@ -235,6 +235,7 @@ void vector_ge::init_from_data(
 
 	if (f_v) {
 		cout << "vector_ge::init_from_data" << endl;
+		cout << "elt_size = " << elt_size << endl;
 	}
 
 	if (elt_size != A->make_element_size) {
@@ -257,11 +258,10 @@ void vector_ge::init_from_data(
 					"data      " << i << ": ";
 			Int_vec_print(cout, data + i * elt_size, elt_size);
 			cout << endl;
-			A->Group_element->element_print_quick(Elt, cout);
 		}
 
 		A->Group_element->make_element(
-				Elt, data + i * elt_size, 0 /*verbose_level - 2*/);
+				Elt, data + i * elt_size, verbose_level - 2);
 		if (f_v) {
 			cout << "vector_ge::init_from_data "
 					"generator " << i << ": " << endl;
@@ -518,9 +518,25 @@ void vector_ge::report_elements(
 				//std::cout << "Key: " << it->first << ", Value: " << it->second << std::endl;
 				//assignment.insert(std::make_pair(label, a));
 				if (label == "dense" /*ST.stringcmp(label, "dense") == 0*/) {
-					f_dense = true;
+					if (val == "on" /*ST.stringcmp(val, "on") == 0*/) {
+						f_dense = true;
+						if (f_v) {
+							cout << "vector_ge::report_elements f_permutation = true" << endl;
+						}
+					}
+					else if (val == "off" /*ST.stringcmp(val, "on") == 0*/) {
+						f_dense = false;
+						if (f_v) {
+							cout << "vector_ge::report_elements f_permutation = true" << endl;
+						}
+					}
+					else {
+						cout << "vector_ge::report_elements unknown value of option "
+								<< label << " value " << val << endl;
+						exit(1);
+					}
 					if (f_v) {
-						cout << "vector_ge::report_elements f_dense = true" << endl;
+						cout << "vector_ge::report_elements f_dense = " << f_dense << endl;
 					}
 				}
 				else if (label == "permutation" /*ST.stringcmp(label, "permutation") == 0*/) {
@@ -634,6 +650,9 @@ void vector_ge::report_elements(
 			ost << "$\\\\" << endl;
 
 			int i;
+			int *Data;
+
+			Data = NEW_int(A->make_element_size);
 
 			for (i = 0; i < len; i++) {
 
@@ -652,7 +671,8 @@ void vector_ge::report_elements(
 				A1->Group_element->element_print_latex(Elt, ost);
 				ost << "$$" << endl;
 
-				Int_vec_print_bare_fully(ost, Elt, A->make_element_size);
+				A1->Group_element->code_for_make_element(Data, Elt);
+				Int_vec_print_bare_fully(ost, Data, A->make_element_size);
 				ost << "\\\\" << endl;
 
 				if (f_permutation) {
@@ -689,6 +709,8 @@ void vector_ge::report_elements(
 
 
 			FREE_int(Order);
+			FREE_int(Data);
+
 		}
 
 		L.foot(ost);
@@ -756,6 +778,16 @@ void vector_ge::report_elements_coded(
 					ost, Elt);
 			ost << "\\\\" << endl;
 		}
+		ost << "\\begin{verbatim}" << endl;
+		for (i = 0; i < len; i++) {
+
+			Elt = ith(i);
+
+			A1->Group_element->print_for_make_element(
+					ost, Elt);
+			ost << ",\\" << endl;
+		}
+		ost << "\\end{verbatim}" << endl;
 
 
 
@@ -2303,6 +2335,140 @@ void vector_ge::rational_normal_form(
 		cout << "vector_ge::rational_normal_form done" << endl;
 	}
 }
+
+
+void vector_ge::filter_subfield_elements(
+		int subfield_index, vector_ge *&result, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+
+	if (f_v) {
+		cout << "vector_ge::filter_subfield_elements" << endl;
+	}
+
+
+	algebra::basic_algebra::matrix_group *M;
+
+	M = A->get_matrix_group();
+
+	algebra::field_theory::finite_field *F;
+
+	F = M->GFq;
+
+	if (f_v) {
+		cout << "vector_ge::filter_subfield_elements q=" << F->q << endl;
+		cout << "vector_ge::filter_subfield_elements subfield_index=" << subfield_index << endl;
+	}
+
+
+	int d;
+	int e;
+
+	e = F->e;
+	d = M->n * F->e;
+
+	if (f_v) {
+		cout << "vector_ge::filter_subfield_elements d=" << d << endl;
+		cout << "vector_ge::filter_subfield_elements e=" << e << endl;
+	}
+
+	if (e % subfield_index) {
+		cout << "vector_ge::filter_subfield_elements "
+				"subfield_index must divide field degree" << endl;
+		exit(1);
+	}
+
+	if (!F->Finite_field_properties->f_related_fields_have_been_computed) {
+		cout << "vector_ge::filter_subfield_elements "
+				"related fields have not yet been computed" << endl;
+		exit(1);
+	}
+
+	int order_of_subfield;
+
+	algebra::number_theory::number_theory_domain NT;
+
+	int e1;
+	int idx;
+
+	e1 = e / subfield_index;
+
+	order_of_subfield = NT.i_power_j(F->p, e1);
+	if (f_v) {
+		cout << "vector_ge::filter_subfield_elements "
+				"e1=" << e1 << endl;
+		cout << "vector_ge::filter_subfield_elements "
+				"order_of_subfield=" << order_of_subfield << endl;
+	}
+
+	idx = F->Finite_field_properties->Related_fields->position_of_subfield(
+			order_of_subfield);
+	if (f_v) {
+		cout << "vector_ge::filter_subfield_elements idx=" << idx << endl;
+	}
+
+	//algebra::field_theory::finite_field *Subfield = F->Related_fields->Subfield + idx; // [nb_subfields]
+
+	algebra::field_theory::subfield_structure *SubS =
+			F->Finite_field_properties->Related_fields->SubS + idx; // [nb_subfields]
+
+
+
+	result = NEW_OBJECT(vector_ge);
+	result->init(
+			A, 0 /* verbose_level*/);
+	result->allocate(
+			len, 0 /* verbose_level*/);
+	int i, new_length;
+
+
+	new_length = 0;
+	for (i = 0; i < len; i++) {
+
+		if (f_vv) {
+			cout << "vector_ge::filter_subfield_elements i=" << i << endl;
+			A->Group_element->element_print(ith(i), cout);
+		}
+
+		if (A->Group_element->test_if_in_subfield(
+				ith(i),
+				SubS,
+				verbose_level - 2)) {
+			A->Group_element->element_move(ith(i), result->ith(new_length), 0 /* verbose_level */);
+			new_length++;
+			if (f_vv) {
+				cout << "vector_ge::filter_subfield_elements belongs to the subfield, new_length=" << new_length << endl;
+			}
+		}
+		if (f_vv) {
+			cout << "vector_ge::filter_subfield_elements does not belong to the subfield" << endl;
+		}
+
+#if 0
+		else {
+			A->Group_element->element_one(result->ith(i), 0 /* verbose_level */);
+
+		}
+#endif
+
+	}
+	if (f_v) {
+		cout << "vector_ge::filter_subfield_elements new_length=" << new_length << endl;
+	}
+
+	result->reallocate(
+				new_length, 0 /* verbose_level */);
+
+
+	if (f_v) {
+		cout << "vector_ge::filter_subfield_elements done" << endl;
+	}
+}
+
+
+
+
 
 
 }}}

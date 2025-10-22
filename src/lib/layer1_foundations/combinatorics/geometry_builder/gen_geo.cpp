@@ -249,7 +249,7 @@ void gen_geo::main2(
 
 	it = inc->iso_type_at_line[V - 1];
 
-	if (it->Canonical_forms->B.size()) {
+	if (it->Canonical_forms->Bitvector_array.size()) {
 
 		if (GB->Descr->f_output_to_blocks_latex_file) {
 			string fname;
@@ -357,8 +357,12 @@ void gen_geo::generate_all(
 		goto l_exit;
 	}
 
+	if (f_v) {
+		cout << "gen_geo::generate_all before Geometric_backtrack_search->First" << endl;
+	}
+
 	inc->gl_nb_GEN = 0;
-	if (!Geometric_backtrack_search->First(0 /*verbose_level - 5*/)) {
+	if (!Geometric_backtrack_search->First(verbose_level - 5)) {
 		//ret = true;
 
 		cout << "gen_geo::generate_all Geometric_backtrack_search->First "
@@ -366,6 +370,9 @@ void gen_geo::generate_all(
 		goto l_exit;
 	}
 
+	if (f_v) {
+		cout << "gen_geo::generate_all after Geometric_backtrack_search->First" << endl;
+	}
 
 
 	while (true) {
@@ -430,8 +437,8 @@ void gen_geo::generate_all(
 			cout << "gen_geo::generate_all after isot_add for it0" << endl;
 		}
 
-		if (f_vvv && it0->Canonical_forms->B.size() % 1 == 0) {
-			cout << it0->Canonical_forms->B.size() << endl;
+		if (f_vvv && it0->Canonical_forms->Bitvector_array.size() % 1 == 0) {
+			cout << it0->Canonical_forms->Bitvector_array.size() << endl;
 			print(cout, inc->Encoding->v, inc->Encoding->v);
 		}
 
@@ -484,6 +491,10 @@ void gen_geo::generate_all(
 		}
 #endif
 
+		if (f_v) {
+			cout << "gen_geo::generate_all before Geometric_backtrack_search->Next" << endl;
+		}
+
 		if (!Geometric_backtrack_search->Next(0 /*verbose_level - 5*/)) {
 			if (f_v) {
 				cout << "gen_geo::generate_all Geometric_backtrack_search->Next "
@@ -491,6 +502,11 @@ void gen_geo::generate_all(
 			}
 			break;
 		}
+
+		if (f_v) {
+			cout << "gen_geo::generate_all before Geometric_backtrack_search->Next" << endl;
+		}
+
 	}
 
 

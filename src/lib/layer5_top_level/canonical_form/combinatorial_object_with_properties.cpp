@@ -462,6 +462,43 @@ void combinatorial_object_with_properties::latex_report(
 	}
 
 
+	if (Report_options->f_export_group_magma) {
+
+		if (f_v) {
+			cout << "combinatorial_object_with_properties::latex_report "
+					"f_export_group_magma" << endl;
+		}
+
+		std::string fname;
+
+
+		fname = label + "_aut.magma";
+
+
+		interfaces::magma_interface Magma;
+
+		if (f_v) {
+			cout << "combinatorial_object_with_properties::latex_report "
+					"before Magma.export_group" << endl;
+		}
+
+		{
+			ofstream ost(fname);
+
+			Magma.export_group(
+				A_perm,
+				A_perm->Strong_gens,
+				ost,
+				verbose_level);
+		}
+
+		if (f_v) {
+			cout << "object_with_properties::latex_report "
+					"after Magma.export_group" << endl;
+		}
+	}
+
+
 
 #if 1
 	groups::schreier *Sch;

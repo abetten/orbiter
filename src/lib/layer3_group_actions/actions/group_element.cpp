@@ -2933,6 +2933,41 @@ std::string group_element::stringify_base_images(
 	return s;
 }
 
+int group_element::test_if_in_subfield(
+		void *elt,
+		algebra::field_theory::subfield_structure *SubS,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "group_element::test_if_in_subfield "
+				"in action " << A->label << endl;
+	}
+	if (!A->is_semilinear_matrix_group()) {
+		cout << "group_element::test_if_in_subfield "
+				"not a matrix group" << endl;
+		exit(1);
+	}
+	algebra::basic_algebra::matrix_group *M;
+
+	M = A->get_matrix_group();
+	int *Elt;
+	int ret;
+
+	Elt = (int *) elt;
+	ret = M->Element->test_if_in_subfield(
+			Elt,
+			SubS,
+			verbose_level);
+
+
+	if (f_v) {
+		cout << "group_element::test_if_in_subfield done" << endl;
+	}
+	return ret;
+}
+
 
 
 }}}

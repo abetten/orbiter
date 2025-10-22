@@ -110,7 +110,9 @@ void classify_using_canonical_forms::find_object(
 		other::l1_interfaces::nauty_output *&NO,
 		other::data_structures::bitvector *&Canonical_form,
 		int verbose_level)
-// if f_found is true, B[idx] agrees with the given object
+// computes the canonical form of the combinatorial object.
+// Then performs a search for the combinatorial form based on the hash value and the hash table
+// if f_found is true, Bitvector_array[idx] agrees with the given object
 {
 	int f_v = (verbose_level >= 1);
 
@@ -123,7 +125,6 @@ void classify_using_canonical_forms::find_object(
 
 
 	encoded_combinatorial_object *Enc;
-	//int f_save_nauty_input_graphs = false;
 
 	if (f_v) {
 		cout << "classify_using_canonical_forms::find_object "
@@ -133,7 +134,6 @@ void classify_using_canonical_forms::find_object(
 			OwCF,
 			true /* f_compute_canonical_form */,
 			Nauty_control,
-			//f_save_nauty_input_graphs,
 			Canonical_form,
 			NO,
 			Enc,
@@ -155,13 +155,21 @@ void classify_using_canonical_forms::find_object(
 
 	itr1 = Hashing.lower_bound(h);
 	itr2 = Hashing.upper_bound(h);
+
 	f_found = false;
+
+	// we loop over all hash values which are equal to h
+	// and try to find the canonical form in the corresponding Bitvector_array
+
 	for (itr = itr1; itr != itr2; ++itr) {
-    	idx = itr->second;
+
+		idx = itr->second;
+
     	c = sorting.uchar_vec_compare(
     			Canonical_form->get_data(),
-    			B[idx]->get_data(),
+				Bitvector_array[idx]->get_data(),
 				Canonical_form->get_allocated_length());
+
 		if (c == 0) {
 			if (f_v) {
 				cout << "classify_using_canonical_forms::find_object "
@@ -171,6 +179,7 @@ void classify_using_canonical_forms::find_object(
 			break;
 		}
     }
+
 	if (f_v) {
 		cout << "classify_using_canonical_forms::find_object done" << endl;
 	}
@@ -180,6 +189,13 @@ void classify_using_canonical_forms::add_object(
 		any_combinatorial_object *OwCF,
 		other::l1_interfaces::nauty_interface_control *Nauty_control,
 		int &f_new_object, int verbose_level)
+// calls find_object, which computes the canonical form
+// and tries to find it in the table.
+// if not found, the canonical form will be added to the table
+// and the object will be added to the vector Objects.
+// OwCF will either be destroyed (in case the object is a duplicate)
+// or stored in the Objects vector.
+// The counter nb_input_objects will be incremented in any case.
 {
 	int f_v = (verbose_level >= 1);
 
@@ -190,43 +206,6 @@ void classify_using_canonical_forms::add_object(
 	other::l1_interfaces::nauty_output *NO;
 	other::data_structures::bitvector *Canonical_form;
 
-#if 0
-	if (f_v) {
-		cout << "classify_using_canonical_forms::add_object "
-				"before OwCF->run_nauty" << endl;
-	}
-	OwCF->run_nauty(
-			true /* f_compute_canonical_form */, Canonical_form,
-			NO,
-			verbose_level);
-	if (f_v) {
-		cout << "classify_using_canonical_forms::add_object "
-				"after OwCF->run_nauty" << endl;
-	}
-
-	uint32_t h;
-	int f_found, c;
-	sorting sorting;
-
-	h = Canonical_form->compute_hash();
-
-	map<uint32_t, int>::iterator itr, itr1, itr2;
-
-	itr1 = Hashing.lower_bound(h);
-	itr2 = Hashing.upper_bound(h);
-	f_found = false;
-	for (itr = itr1; itr != itr2; ++itr) {
-    	idx = itr->second;
-    	c = sorting.uchar_vec_compare(
-    			Canonical_form->get_data(),
-    			B[idx]->get_data(),
-				Canonical_form->get_allocated_length());
-		if (c == 0) {
-			f_found = true;
-			break;
-		}
-    }
-#else
 
 	int f_found;
 	int idx;
@@ -239,22 +218,33 @@ void classify_using_canonical_forms::add_object(
 			Canonical_form,
 			verbose_level);
 
-#endif
 
 	uint32_t h;
 
 	h = Canonical_form->compute_hash();
 
 	if (!f_found) {
+
+		// we append a new object to the table.
+		// we save the any_combinatorial_object with it.
+
 		f_new_object = true;
-		idx = B.size();
-		B.push_back(Canonical_form);
+		idx = Bitvector_array.size();
+		Bitvector_array.push_back(Canonical_form);
+
+		// store the combinatorial object in the vector Objects:
 		Objects.push_back(OwCF);
+
 		Ago.push_back(NO->Ago->as_lint());
 		Hashing.insert(pair<uint32_t, int>(h, idx));
 		input_index.push_back(nb_input_objects);
+
 	}
 	else {
+
+		// since the object has been found,
+		// we will delete the object and the canonical form:
+
 		f_new_object = false;
 		FREE_OBJECT(Canonical_form);
 		FREE_OBJECT(OwCF);

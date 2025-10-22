@@ -287,7 +287,7 @@ void iso_type::print_geos(
 		int h;
 		long int nb_geo;
 
-		nb_geo = Canonical_forms->B.size();
+		nb_geo = Canonical_forms->Bitvector_array.size();
 
 		cout << v << " " << gg->inc->Encoding->b << " " << sum_R << endl;
 		for (h = 0; h < nb_geo; h++) {
@@ -310,7 +310,7 @@ void iso_type::print_geos(
 
 
 		}
-		cout << -1 << " " << Canonical_forms->B.size() << endl;
+		cout << -1 << " " << Canonical_forms->Bitvector_array.size() << endl;
 
 		other::data_structures::tally T;
 		long int *Ago;
@@ -343,7 +343,7 @@ void iso_type::write_inc_file(
 		int h;
 		long int nb_geo;
 
-		nb_geo = Canonical_forms->B.size();
+		nb_geo = Canonical_forms->Bitvector_array.size();
 
 		ost << v << " " << gg->inc->Encoding->b << " " << sum_R << endl;
 		for (h = 0; h < nb_geo; h++) {
@@ -357,7 +357,7 @@ void iso_type::write_inc_file(
 
 			ost << endl;
 		}
-		ost << -1 << " " << Canonical_forms->B.size() << endl;
+		ost << -1 << " " << Canonical_forms->Bitvector_array.size() << endl;
 
 		other::data_structures::tally T;
 		long int *Ago;
@@ -389,11 +389,11 @@ void iso_type::write_sage_file(
 		int h;
 		long int nb_geo;
 
-		nb_geo = Canonical_forms->B.size();
+		nb_geo = Canonical_forms->Bitvector_array.size();
 
 		ost << "# Orbiter output file " << endl;
 		ost << "# Geometries with " << v << " points and " << gg->inc->Encoding->b << " blocks and " << sum_R << " flags" << endl;
-		ost << "# Number of geometries = " << Canonical_forms->B.size() << endl;
+		ost << "# Number of geometries = " << Canonical_forms->Bitvector_array.size() << endl;
 		ost << "# Distribution of automorphism group orders: ";
 		other::data_structures::tally T;
 		long int *Ago;
@@ -460,7 +460,7 @@ void iso_type::write_blocks_file(
 
 
 
-		nb_geo = Canonical_forms->B.size();
+		nb_geo = Canonical_forms->Bitvector_array.size();
 
 
 		if (nb_geo) {
@@ -485,7 +485,7 @@ void iso_type::write_blocks_file(
 				ost << endl;
 			}
 		}
-		ost << -1 << " " << Canonical_forms->B.size() << endl;
+		ost << -1 << " " << Canonical_forms->Bitvector_array.size() << endl;
 
 		other::data_structures::tally T;
 		long int *Ago;
@@ -519,7 +519,7 @@ void iso_type::write_blocks_file_long(
 
 
 
-		nb_geo = Canonical_forms->B.size();
+		nb_geo = Canonical_forms->Bitvector_array.size();
 
 
 		if (nb_geo) {
@@ -579,7 +579,7 @@ void iso_type::write_blocks_file_long(
 
 			}
 		}
-		ost << -1 << " " << Canonical_forms->B.size() << endl;
+		ost << -1 << " " << Canonical_forms->Bitvector_array.size() << endl;
 
 		other::data_structures::tally T;
 		long int *Ago;
@@ -614,7 +614,7 @@ void iso_type::print_status(
 		std::ostream &ost, int f_with_flags)
 {
 #if 1
-	ost << setw(7) << Canonical_forms->B.size();
+	ost << setw(7) << Canonical_forms->Bitvector_array.size();
 
 #else
 

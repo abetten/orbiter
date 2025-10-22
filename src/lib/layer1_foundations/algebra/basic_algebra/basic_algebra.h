@@ -763,6 +763,10 @@ public:
 			long int rk, int *v, int verbose_level);
 	long int rank_point(
 			int *v, int verbose_level);
+	int test_if_in_subfield(
+			int *v,
+			algebra::field_theory::subfield_structure *SubS,
+			int verbose_level);
 
 };
 

@@ -57,6 +57,9 @@ vector_ge_activity_description::vector_ge_activity_description()
 
 	f_apply_isomorphism_wedge_product_4to6 = false;
 
+	f_filter_subfield = false;
+	subfield_index = 1;
+
 }
 
 
@@ -167,8 +170,13 @@ int vector_ge_activity_description::read_arguments(
 				cout << "-apply_isomorphism_wedge_product_4to6 " << endl;
 			}
 		}
-
-
+		else if (ST.stringcmp(argv[i], "-filter_subfield") == 0) {
+			f_filter_subfield = true;
+			subfield_index = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-filter_subfield " << subfield_index << endl;
+			}
+		}
 
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
@@ -232,6 +240,9 @@ void vector_ge_activity_description::print()
 	}
 	if (f_apply_isomorphism_wedge_product_4to6) {
 		cout << "-apply_isomorphism_wedge_product_4to6 " << endl;
+	}
+	if (f_filter_subfield) {
+		cout << "-filter_subfield " << subfield_index << endl;
 	}
 
 }

@@ -359,6 +359,8 @@ public:
 			int I, int m, int verbose_level);
 	void place_row(
 			int I, int m, int idx, int verbose_level);
+		// retrieves combinatorial object from iso_type data structure at position idx.
+		// Then calls TryToPlace and, if successful, gg->Test_semicanonical->markers_update
 	int RowNextOrderly(
 			int I, int m, int verbose_level);
 	void RowClear(

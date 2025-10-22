@@ -6,8 +6,9 @@ ROW,C1,C2,C3
 1,"\verb'-show_TDO' ","   "," Compute the TDO for the report. "
 1,"\verb'-show_TDA' ","   "," Compute the TDA for the report. "
 1,"\verb'-export_labels' ","   ","  "
-1,"\verb'-export_group_orbiter' ","   ","  "
-1,"\verb'-export_group_GAP' ","   ","  "
+1,"\verb'-export_group_orbiter' ","   "," Export the automorphism group in Orbiter format.  "
+1,"\verb'-export_group_GAP' ","   "," Export the automorphism group in GAP format. "
+1,"\verb'-export_group_magma' ","   "," Export the automorphism group in Magma format. "
 1,"\verb'-lex_least' ","  geo "," Show lex-least orbit representatives. Here, geo is a geometry builder object. "
 1,"\verb'-canonical_forms' ","   "," Report the canonical forms of each input object. "
 END

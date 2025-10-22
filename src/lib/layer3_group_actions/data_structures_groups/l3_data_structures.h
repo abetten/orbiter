@@ -844,6 +844,8 @@ public:
 			vector_ge *&Rational_normal_forms,
 			vector_ge *&Base_changes,
 			int verbose_level);
+	void filter_subfield_elements(
+			int subfield_index, vector_ge *&result, int verbose_level);
 
 };
 

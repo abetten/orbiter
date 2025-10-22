@@ -1480,7 +1480,7 @@ void create_code::export_codewords_long(
 	Code.codewords_table(
 			F, n, k,
 			genma, // [k * n]
-			codewords, // q^k
+			codewords, // [q^k * n] where N = q^k
 			N,
 			verbose_level);
 	if (f_v) {
@@ -1549,7 +1549,7 @@ void create_code::export_codewords_by_weight(
 				F,
 				n, k,
 				genma, // [k * n]
-				codewords, // q^k
+				codewords, // [q^k * n] where N = q^k
 				N,
 				verbose_level);
 	if (f_v) {

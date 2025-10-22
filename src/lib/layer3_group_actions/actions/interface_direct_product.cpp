@@ -434,7 +434,7 @@ static void direct_product_group_element_code_for_make_element(
 {
 	cout << "direct_product_group_element_code_for_make_element "
 			"not yet implemented" << endl;
-	exit(1);
+	//exit(1);
 }
 
 #if 0
@@ -562,7 +562,9 @@ static std::string direct_product_group_stringify_point(
 {
 	cout << "direct_product_group_stringify_point "
 			"not yet implemented" << endl;
-	exit(1);
+	//exit(1)
+	string s;
+	return s;
 }
 
 

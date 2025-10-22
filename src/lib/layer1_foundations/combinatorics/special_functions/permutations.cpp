@@ -370,7 +370,9 @@ void permutations::perm_print_offset(
 				break;
 			}
 			if (have_seen[next]) {
+				cout << "perm_print_offset n=" << n << " offset=" << offset << endl;
 				cout << "perm_print_offset have_seen[next]" << endl;
+				cout << "l=" << l << endl;
 				cout << "first=" << first << endl;
 				cout << "len=" << len << endl;
 				cout << "l1=" << l1 << endl;

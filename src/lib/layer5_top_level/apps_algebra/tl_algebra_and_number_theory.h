@@ -1230,6 +1230,10 @@ public:
 
 	int f_apply_isomorphism_wedge_product_4to6;
 
+	// ToDo not yet documented
+	int f_filter_subfield;
+	int subfield_index;
+
 
 	vector_ge_activity_description();
 	~vector_ge_activity_description();
