@@ -340,6 +340,7 @@ namespace algebra {
 	//! ring theory, including polynomial rings and longinteger arithmetic.
 
 	namespace ring_theory {
+
 		// ring_theory:
 		class finite_ring;
 		class homogeneous_polynomial_domain;
@@ -422,9 +423,9 @@ namespace combinatorics {
 
 	namespace design_theory {
 
-	class design_object;
-	class design_theory_global;
-	class incidence_structure_by_flags;
+		class design_object;
+		class design_theory_global;
+		class incidence_structure_by_flags;
 
 	}
 
@@ -856,6 +857,7 @@ namespace other {
 		// orbiter_kernel_system::orbiter_symbol_table_entry::print
 
 
+		class action_pointer_stats;
 		class activity_output;
 		class create_file_description;
 		class csv_file_support;
@@ -933,6 +935,8 @@ namespace other {
 #define FREE_OBJECT(p) {other::orbiter_kernel_system::Orbiter->global_mem_object_registry->free_OBJECT(p, __FILE__, __LINE__); delete p;}
 #define FREE_OBJECTS(p) {other::orbiter_kernel_system::Orbiter->global_mem_object_registry->free_OBJECTS(p, __FILE__, __LINE__); delete [] p;}
 #else
+
+#if 0
 #define NEW_int(n) new int[n]
 #define NEW_int_with_tracking(n, file, line) new int[n]
 #define NEW_pint(n) new pint[n]
@@ -961,6 +965,38 @@ namespace other {
 #define FREE_pvoid(p) delete [] p
 #define FREE_OBJECT(p) delete p
 #define FREE_OBJECTS(p) delete [] p
+#endif
+
+#define NEW_int(n) { new int[n]; other::orbiter_kernel_system::Orbiter->Action_pointer_stats->mem_nb_new++;}
+#define NEW_int_with_tracking(n, file, line) { new int[n]; other::orbiter_kernel_system::Orbiter->Action_pointer_stats->mem_nb_new++;}
+#define NEW_pint(n) { new pint[n]; other::orbiter_kernel_system::Orbiter->Action_pointer_stats->mem_nb_new++;}
+#define NEW_lint(n) { new long int[n]; other::orbiter_kernel_system::Orbiter->Action_pointer_stats->mem_nb_new++;}
+#define NEW_lint(n) { new (long int *)[n]; other::orbiter_kernel_system::Orbiter->Action_pointer_stats->mem_nb_new++;}
+#define NEW_ppint(n) { new ppint[n]; other::orbiter_kernel_system::Orbiter->Action_pointer_stats->mem_nb_new++;}
+#define NEW_pplint(n) { new pplint[n]; other::orbiter_kernel_system::Orbiter->Action_pointer_stats->mem_nb_new++;}
+#define NEW_char(n) { new char[n]; other::orbiter_kernel_system::Orbiter->Action_pointer_stats->mem_nb_new++;}
+#define NEW_char_with_tracking(n, file, line) { new char[n]; other::orbiter_kernel_system::Orbiter->Action_pointer_stats->mem_nb_new++;}
+#define NEW_uchar(n) { new uchar[n]; other::orbiter_kernel_system::Orbiter->Action_pointer_stats->mem_nb_new++;}
+#define NEW_pchar(n) { new pchar[n]; other::orbiter_kernel_system::Orbiter->Action_pointer_stats->mem_nb_new++;}
+#define NEW_puchar(n) { new puchar[n]; other::orbiter_kernel_system::Orbiter->Action_pointer_stats->mem_nb_new++;}
+#define NEW_pvoid(n) { new pvoid[n]; other::orbiter_kernel_system::Orbiter->Action_pointer_stats->mem_nb_new++;}
+#define NEW_OBJECT(type) { new type; other::orbiter_kernel_system::Orbiter->Action_pointer_stats->mem_nb_new++;}
+#define NEW_OBJECTS(type, n) { new type[n]; other::orbiter_kernel_system::Orbiter->Action_pointer_stats->mem_nb_new++;}
+#define FREE_int(p) { delete [] p; other::orbiter_kernel_system::Orbiter->Action_pointer_stats->mem_nb_free++;}
+#define FREE_pint(p) { delete [] p; other::orbiter_kernel_system::Orbiter->Action_pointer_stats->mem_nb_free++;}
+#define FREE_lint(p) { delete [] p; other::orbiter_kernel_system::Orbiter->Action_pointer_stats->mem_nb_free++;}
+#define FREE_plint(p) { delete [] p; other::orbiter_kernel_system::Orbiter->Action_pointer_stats->mem_nb_free++;}
+#define FREE_ppint(p) { delete [] p; other::orbiter_kernel_system::Orbiter->Action_pointer_stats->mem_nb_free++;}
+#define FREE_pplint(p) { delete [] p; other::orbiter_kernel_system::Orbiter->Action_pointer_stats->mem_nb_free++;}
+#define FREE_char(p) { delete [] p; other::orbiter_kernel_system::Orbiter->Action_pointer_stats->mem_nb_free++;}
+#define FREE_uchar(p) { delete [] p; other::orbiter_kernel_system::Orbiter->Action_pointer_stats->mem_nb_free++;}
+#define FREE_pchar(p) { delete [] p; other::orbiter_kernel_system::Orbiter->Action_pointer_stats->mem_nb_free++;}
+#define FREE_puchar(p) { delete [] p; other::orbiter_kernel_system::Orbiter->Action_pointer_stats->mem_nb_free++;}
+#define FREE_pvoid(p) { delete [] p; other::orbiter_kernel_system::Orbiter->Action_pointer_stats->mem_nb_free++;}
+#define FREE_OBJECT(p) { delete p; other::orbiter_kernel_system::Orbiter->Action_pointer_stats->mem_nb_free++;}
+#define FREE_OBJECTS(p) { delete [] p; other::orbiter_kernel_system::Orbiter->Action_pointer_stats->mem_nb_free++;}
+
+
 #endif
 
 

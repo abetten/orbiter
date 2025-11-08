@@ -327,10 +327,6 @@ void design_tables::extract_solutions_by_index(
 	delete [] Col_headings;
 	delete [] Table;
 
-#if 0
-	Fio.Csv_file_support->lint_matrix_write_csv(
-			output_fname_csv, Sol, nb_sol, N);
-#endif
 
 	if (f_v) {
 		cout << "design_tables::extract_solutions_by_index "

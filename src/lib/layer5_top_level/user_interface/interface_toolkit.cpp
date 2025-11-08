@@ -268,6 +268,10 @@ interface_toolkit::interface_toolkit()
 
 	f_decomposition_matrix = false;
 	//std::string decomposition_matrix_fname;
+
+	f_stats = false;
+	//std::string stats_fname_base;
+
 }
 
 
@@ -446,6 +450,9 @@ void interface_toolkit::print_help(
 	else if (ST.stringcmp(argv[i], "-decomposition_matrix") == 0) {
 		cout << "-decomposition_matrix <string : fname>" << endl;
 	}
+	else if (ST.stringcmp(argv[i], "-stats") == 0) {
+		cout << "-stats <string : fname_base>" << endl;
+	}
 
 }
 
@@ -621,6 +628,9 @@ int interface_toolkit::recognize_keyword(
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-decomposition_matrix") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-stats") == 0) {
 		return true;
 	}
 	return false;
@@ -1414,7 +1424,15 @@ void interface_toolkit::read_arguments(
 					<< endl;
 		}
 	}
-
+	else if (ST.stringcmp(argv[i], "-stats") == 0) {
+		f_stats = true;
+		stats_fname_base.assign(argv[++i]);
+		if (f_v) {
+			cout << "-stats "
+					<< stats_fname_base << " "
+					<< endl;
+		}
+	}
 
 
 	if (f_v) {
@@ -1735,7 +1753,13 @@ void interface_toolkit::print()
 				<< decomposition_matrix_fname << " "
 				<< endl;
 	}
+	if (f_stats) {
+		cout << "-stats "
+				<< stats_fname_base << " "
+				<< endl;
+	}
 }
+
 
 void interface_toolkit::worker(
 		int verbose_level)
@@ -3145,6 +3169,28 @@ void interface_toolkit::worker(
 
 		cout << "Written file " << fname_out << " of size " << Fio.file_size(fname_out) << endl;
 
+
+	}
+	else if (f_stats) {
+		if (f_v) {
+			cout << "interface_toolkit::worker -stats "
+					" fname_base = " << stats_fname_base << endl;
+		}
+
+
+		if (f_v) {
+			cout << "interface_toolkit::worker "
+					"before save_stats" << endl;
+		}
+
+		other::orbiter_kernel_system::Orbiter->Action_pointer_stats->save_stats(
+				stats_fname_base,
+				verbose_level - 1);
+
+		if (f_v) {
+			cout << "interface_toolkit::worker "
+					"after save_stats" << endl;
+		}
 
 	}
 

@@ -377,7 +377,7 @@ void quartic_curve_object::init_equation_and_bitangents_and_compute_properties(
 	}
 	init_equation_and_bitangents(
 			Dom, eqn15, bitangents28,
-			verbose_level);
+			verbose_level - 2);
 	if (f_v) {
 		cout << "quartic_curve_object::init_equation_and_bitangents_and_compute_properties "
 				"after init_equation_and_bitangents" << endl;
@@ -394,7 +394,7 @@ void quartic_curve_object::init_equation_and_bitangents_and_compute_properties(
 		cout << "quartic_curve_object::init_equation_and_bitangents_and_compute_properties "
 				"before compute_properties" << endl;
 	}
-	compute_properties(verbose_level);
+	compute_properties(verbose_level - 2);
 	if (f_v) {
 		cout << "quartic_curve_object::init_equation_and_bitangents_and_compute_properties "
 				"after compute_properties" << endl;

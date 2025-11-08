@@ -662,7 +662,8 @@ void any_combinatorial_object::init_line_set_from_string(
 
 	type = t_LNS;
 
-	Lint_vec_scan(set_text, set, sz);
+	//Lint_vec_scan(set_text, set, sz);
+	Get_lint_vector_from_label(set_text, set, sz, verbose_level);
 
 	if (f_v) {
 		cout << "any_combinatorial_object::init_line_set_from_string done" << endl;

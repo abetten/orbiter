@@ -833,10 +833,10 @@ int upstep_work::upstep_for_sets(
 					<< verbose_level << endl;
 		}
 		
-		int nb_times_image_of_called0 = gen->get_A()->ptr->nb_times_image_of_called;
-		int nb_times_mult_called0 = gen->get_A()->ptr->nb_times_mult_called;
-		int nb_times_invert_called0 = gen->get_A()->ptr->nb_times_invert_called;
-		int nb_times_retrieve_called0 = gen->get_A()->ptr->nb_times_retrieve_called;
+		int nb_times_image_of_called0 = gen->get_A()->ptr->Action_pointer_stats->nb_times_image_of_called;
+		int nb_times_mult_called0 = gen->get_A()->ptr->Action_pointer_stats->nb_times_mult_called;
+		int nb_times_invert_called0 = gen->get_A()->ptr->Action_pointer_stats->nb_times_invert_called;
+		int nb_times_retrieve_called0 = gen->get_A()->ptr->Action_pointer_stats->nb_times_retrieve_called;
 		
 		r = recognize(final_node, 
 				final_ex, 
@@ -857,13 +857,13 @@ int upstep_work::upstep_for_sets(
 		coset_table[nb_cosets_processed].node = final_node;
 		coset_table[nb_cosets_processed].ex = final_ex;
 		coset_table[nb_cosets_processed].nb_times_image_of_called = 
-			gen->get_A()->ptr->nb_times_image_of_called - nb_times_image_of_called0;
+			gen->get_A()->ptr->Action_pointer_stats->nb_times_image_of_called - nb_times_image_of_called0;
 		coset_table[nb_cosets_processed].nb_times_mult_called = 
-			gen->get_A()->ptr->nb_times_mult_called - nb_times_mult_called0;
+			gen->get_A()->ptr->Action_pointer_stats->nb_times_mult_called - nb_times_mult_called0;
 		coset_table[nb_cosets_processed].nb_times_invert_called = 
-			gen->get_A()->ptr->nb_times_invert_called - nb_times_invert_called0;
+			gen->get_A()->ptr->Action_pointer_stats->nb_times_invert_called - nb_times_invert_called0;
 		coset_table[nb_cosets_processed].nb_times_retrieve_called = 
-			gen->get_A()->ptr->nb_times_retrieve_called - nb_times_retrieve_called0;
+			gen->get_A()->ptr->Action_pointer_stats->nb_times_retrieve_called - nb_times_retrieve_called0;
 		nb_cosets_processed++;
 
 		if (f_vvv) {

@@ -2017,6 +2017,9 @@ public:
 	int f_draw_options;
 	std::string draw_options_label;
 
+	int f_line_width;
+	int line_width;
+
 	tree_draw_options();
 	~tree_draw_options();
 	int read_arguments(

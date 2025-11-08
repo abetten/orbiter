@@ -1203,6 +1203,10 @@ class interface_toolkit {
 	int f_decomposition_matrix;
 	std::string decomposition_matrix_fname;
 
+	int f_stats;
+	std::string stats_fname_base;
+
+
 public:
 
 

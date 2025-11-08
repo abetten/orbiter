@@ -1255,7 +1255,7 @@ void surface_classify_wedge::identify_Bes(
 }
 
 void surface_classify_wedge::stats(
-		std::string &stats_prefix)
+		std::string &stats_prefix, int verbose_level)
 {
 	string prefix1;
 	string prefix2;
@@ -1264,9 +1264,9 @@ void surface_classify_wedge::stats(
 	prefix1 = stats_prefix + "_A1";
 	prefix2 = stats_prefix + "_A2";
 	prefix3 = stats_prefix + "_A3";
-	A->ptr->save_stats(prefix1);
-	A2->ptr->save_stats(prefix2);
-	Five_p1->A_on_neighbors->ptr->save_stats(prefix3);
+	A->ptr->Action_pointer_stats->save_stats(prefix1, verbose_level - 1);
+	A2->ptr->Action_pointer_stats->save_stats(prefix2, verbose_level - 1);
+	Five_p1->A_on_neighbors->ptr->Action_pointer_stats->save_stats(prefix3, verbose_level - 1);
 }
 
 

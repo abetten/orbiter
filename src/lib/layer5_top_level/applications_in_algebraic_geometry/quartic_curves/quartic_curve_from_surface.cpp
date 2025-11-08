@@ -768,10 +768,36 @@ void quartic_curve_from_surface::map_surface_to_special_form(
 			"pt_A = " << pt_A << " pt_B=" << pt_B << endl;
 	}
 
+#if 0
+	if (f_v) {
+		cout << "quartic_curve_from_surface::map_surface_to_special_form "
+			"before make_element_which_moves_a_point_from_A_to_B" << endl;
+	}
 	SOA->Surf_A->A->Strong_gens->make_element_which_moves_a_point_from_A_to_B(
 			SOA->Surf_A->A,
 			pt_A, pt_B, transporter,
 			0 /*verbose_level*/);
+	if (f_v) {
+		cout << "quartic_curve_from_surface::map_surface_to_special_form "
+			"after make_element_which_moves_a_point_from_A_to_B" << endl;
+	}
+
+#else
+
+	if (f_v) {
+		cout << "quartic_curve_from_surface::map_surface_to_special_form "
+			"before make_transformation_pt_A_to_1000" << endl;
+	}
+	make_transformation_pt_A_to_1000(
+			SOA->Surf_A->A,
+			pt_A_coeff, transporter,
+			verbose_level);
+	if (f_v) {
+		cout << "quartic_curve_from_surface::map_surface_to_special_form "
+			"after make_transformation_pt_A_to_1000" << endl;
+	}
+#endif
+
 
 	if (f_v) {
 		cout << "quartic_curve_from_surface::map_surface_to_special_form "
@@ -779,6 +805,8 @@ void quartic_curve_from_surface::map_surface_to_special_form(
 		SOA->Surf_A->A->Group_element->element_print_quick(
 				transporter, cout);
 	}
+
+
 
 
 	// Transform the equation:
@@ -976,6 +1004,41 @@ void quartic_curve_from_surface::map_surface_to_special_form(
 	}
 }
 
+
+void quartic_curve_from_surface::make_transformation_pt_A_to_1000(
+		actions::action *A_given,
+		int *pt_A_coeff, int *Elt,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "quartic_curve_from_surface::make_transformation_pt_A_to_1000" << endl;
+	}
+
+	int data[17];
+	int *Elt1;
+
+	Elt1 = NEW_int(A_given->elt_size_in_int);
+
+	Int_vec_zero(data, 16);
+	data[0] = pt_A_coeff[0];
+	data[1] = pt_A_coeff[1];
+	data[2] = pt_A_coeff[2];
+	data[3] = pt_A_coeff[3];
+	data[5] = 1;
+	data[10] = 1;
+	data[15] = 1;
+	data[16] = 0; // in case we are semilinear
+	A_given->Group_element->make_element(Elt1, data, verbose_level - 1);
+
+	A_given->Group_element->element_invert(Elt1, Elt, verbose_level - 1);
+
+	FREE_int(Elt1);
+	if (f_v) {
+		cout << "quartic_curve_from_surface::make_transformation_pt_A_to_1000 done" << endl;
+	}
+}
 
 void quartic_curve_from_surface::compute_stabilizer_with_nauty(
 		int verbose_level)

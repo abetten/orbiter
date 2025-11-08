@@ -248,12 +248,13 @@ static TLS_ATTR permnode *gens;
 *****************************************************************************/
 
 /* Abdullah 2019 */
-int *aut;
+int *aut; // [n * n];
 int aut_counter;
-int *base;
+int *base; // [n * n];
 int base_length;
 long int ago;
-int *transversal_length;
+int *transversal_length; // [n * n];
+int *search_path; //[n]
 /* Abdullah 2019 */
 /* Anton 2021 */
 long int nb_firstpathnode;
@@ -582,6 +583,7 @@ static void save_state(int type, int *lab, int *ptn, int level, int numcells)
 	if (fp_nauty == NULL) {
 		return;
 	}
+#if 0
     fprintf(fp_nauty, "%d,%d,%d,%d,%d", nb_firstpathnode + nb_othernode + nb_processnode + nb_firstterminal, type, n, level, numcells);
     for (int i = 0; i < n; i++) {
     	fprintf(fp_nauty, ",%d", lab[i]);
@@ -590,6 +592,15 @@ static void save_state(int type, int *lab, int *ptn, int level, int numcells)
     	fprintf(fp_nauty, ",%d", ptn[i]);
     }
     fprintf(fp_nauty, "\n");
+#endif
+
+	fprintf(fp_nauty, "%d ", level);
+    for (int i = 1; i <= level; i++) {
+    	fprintf(fp_nauty, " %d", search_path[i]);
+    }
+	fprintf(fp_nauty, " %d", 3); // node color = green
+    fprintf(fp_nauty, "\n");
+
 
 }
 
@@ -598,6 +609,7 @@ static void save_state_4(int *lab, int level)
 	if (fp_nauty == NULL) {
 		return;
 	}
+#if 0
     fprintf(fp_nauty, "%d,%d,%d,%d,%d",
     		nb_firstpathnode + nb_othernode + nb_processnode + nb_firstterminal,
 			4, n, level, n);
@@ -608,7 +620,14 @@ static void save_state_4(int *lab, int level)
     	fprintf(fp_nauty, ",%d", 0);
     }
     fprintf(fp_nauty, "\n");
+#endif
 
+	fprintf(fp_nauty, "%d ", level);
+    for (int i = 1; i <= level; i++) {
+    	fprintf(fp_nauty, " %d", search_path[i]);
+    }
+	fprintf(fp_nauty, " %d", 3); // node color = green
+    fprintf(fp_nauty, "\n");
 }
 
 
@@ -627,6 +646,7 @@ firstpathnode(int *lab, int *ptn, int level, int numcells)
     tcnode *tcnode_this;
 
     nb_firstpathnode++;
+    search_path[level] = stats->numnodes;
     save_state(1, lab, ptn, level, numcells);
 
     tcnode_this = tcnode_parent->next;
@@ -753,6 +773,7 @@ firstpathnode(int *lab, int *ptn, int level, int numcells)
 	/*printf("nauty firstpathnode base[%d]=%d\n", base_length, tv1);*/
 	base[base_length] = tv1;
 	transversal_length[base_length] = index;
+	//search_path[base_length] = stats->numnodes;
 	base_length++;
 	ago = stats->grpsize1;
 	/* Done Abdullah 2019 */
@@ -790,7 +811,6 @@ othernode(int *lab, int *ptn, int level, int numcells)
     tcnode *tcnode_this;
 
     nb_othernode++;
-    save_state(2, lab, ptn, level, numcells);
 
     tcnode_this = tcnode_parent->next;
     if (tcnode_this == NULL)
@@ -814,6 +834,8 @@ othernode(int *lab, int *ptn, int level, int numcells)
 #endif
 
     ++stats->numnodes;
+    search_path[level] = stats->numnodes;
+    save_state(2, lab, ptn, level, numcells);
 
     /* refine partition : */
     doref(g,lab,ptn,level,&numcells,&qinvar,workperm,active,
@@ -931,6 +953,7 @@ firstterminal(int *lab, int level)
     int i;
 
     nb_firstterminal++;
+    search_path[level] = stats->numnodes;
     save_state_4(lab, level);
 
 
@@ -993,7 +1016,8 @@ processnode(int *lab, int *ptn, int level, int numcells)
     int sr;
 
     nb_processnode++;
-    save_state(3, lab, ptn, level, numcells);
+    search_path[level] = stats->numnodes;
+    //save_state(3, lab, ptn, level, numcells);
 
 
     if ((nb_processnode % 10000) == 0) {

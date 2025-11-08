@@ -268,11 +268,11 @@ void poset_classification::init_internal(
 		cout << "poset_classification::init_internal after Control->prepare" << endl;
 	}
 
-	nb_times_image_of_called0 = Poset->A->ptr->nb_times_image_of_called;
-	nb_times_mult_called0 = Poset->A->ptr->nb_times_mult_called;
-	nb_times_invert_called0 = Poset->A->ptr->nb_times_invert_called;
-	nb_times_retrieve_called0 = Poset->A->ptr->nb_times_retrieve_called;
-	nb_times_store_called0 = Poset->A->ptr->nb_times_store_called;
+	nb_times_image_of_called0 = Poset->A->ptr->Action_pointer_stats->nb_times_image_of_called;
+	nb_times_mult_called0 = Poset->A->ptr->Action_pointer_stats->nb_times_mult_called;
+	nb_times_invert_called0 = Poset->A->ptr->Action_pointer_stats->nb_times_invert_called;
+	nb_times_retrieve_called0 = Poset->A->ptr->Action_pointer_stats->nb_times_retrieve_called;
+	nb_times_store_called0 = Poset->A->ptr->Action_pointer_stats->nb_times_store_called;
 
 
 #if 0

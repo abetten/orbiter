@@ -38,6 +38,9 @@ nauty_interface_control::nauty_interface_control()
 	f_reduce_memory_footprint = false;
 	reduce_memory_footprint_level = 0;
 
+	f_nauty_log = false;
+	nauty_log_fname = NULL;
+
 }
 
 nauty_interface_control::~nauty_interface_control()
@@ -117,6 +120,22 @@ int nauty_interface_control::parse_arguments(
 				cout << "-reduce_memory_footprint" << reduce_memory_footprint_level << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-nauty_log") == 0) {
+			f_nauty_log = true;
+
+			string s;
+			int len;
+
+			s.assign(argv[++i]);
+			len = s.length();
+			nauty_log_fname = NEW_char(len + 1);
+			strcpy(nauty_log_fname, s.c_str());
+
+			if (f_v) {
+				cout << "-nauty_log " << nauty_log_fname << endl;
+			}
+		}
+
 
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
@@ -151,6 +170,9 @@ void nauty_interface_control::print()
 	}
 	if (f_reduce_memory_footprint) {
 		cout << "-memory_footprint_reduction" << reduce_memory_footprint_level << endl;
+	}
+	if (f_nauty_log) {
+		cout << "-nauty_log " << nauty_log_fname << endl;
 	}
 }
 

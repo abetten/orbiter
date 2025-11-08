@@ -700,6 +700,7 @@ void surfaces_arc_lifting::downstep_one_arc(
 					Surf->P,
 					P0, P1, line1, line2,
 					verbose_level - 2);
+
 			if (f_v) {
 				cout << "surfaces_arc_lifting::downstep_one_arc "
 						"after find_two_lines_for_arc_lifting "

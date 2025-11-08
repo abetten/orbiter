@@ -55,8 +55,8 @@ finite_field::finite_field()
 
 	//f_print_as_exponentials = true;
 
-	nb_times_mult = 0;
-	nb_times_add = 0;
+	//nb_times_mult = 0;
+	//nb_times_add = 0;
 
 	Io = NULL;
 	Linear_algebra = NULL;
@@ -67,6 +67,8 @@ finite_field::finite_field()
 	//Related_fields = NULL;
 
 	Finite_field_properties = NULL;
+
+	Action_pointer_stats = other::orbiter_kernel_system::Orbiter->Action_pointer_stats;
 
 }
 
@@ -621,7 +623,8 @@ void finite_field::init_override_polynomial(
 		cout << "finite_field::init_override_polynomial "
 				"before init_override_polynomial_small_order" << endl;
 	}
-	init_override_polynomial_small_order(q,
+	init_override_polynomial_small_order(
+			q,
 			poly,
 			f_without_tables,
 			f_compute_related_fields,
@@ -1395,7 +1398,8 @@ int finite_field::mult_verbose(
 	if (f_v) {
 		cout << "finite_field_by_tables::mult_verbose" << endl;
 	}
-	nb_times_mult++;
+	Action_pointer_stats->ff_nb_mult++;
+	//nb_times_mult++;
 	//cout << "finite_field::mult_verbose i=" << i << " j=" << j << endl;
 	if (i < 0 || i >= q) {
 		cout << "finite_field_by_tables::mult_verbose "
@@ -1577,7 +1581,8 @@ int finite_field::add(
 	int f_v = (verbose_level >= 1);
 	int c;
 
-	nb_times_add++;
+	Action_pointer_stats->ff_nb_add++;
+	//nb_times_add++;
 	if (f_has_table) {
 		if (f_v) {
 			cout << "finite_field_by_tables::add with table" << endl;
@@ -1683,6 +1688,7 @@ int finite_field::negate(
 		cout << "finite_field::negate i = " << i << endl;
 		exit(1);
 	}
+	Action_pointer_stats->ff_nb_negate++;
 	if (f_has_table) {
 		if (f_v) {
 			cout << "finite_field_by_tables::negate with table" << endl;
@@ -1708,6 +1714,7 @@ int finite_field::inverse(
 	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
 
+	Action_pointer_stats->ff_nb_inverse++;
 	if (f_has_table) {
 		if (f_v) {
 			cout << "finite_field_by_tables::inverse with table" << endl;
@@ -1747,6 +1754,8 @@ int finite_field::power_verbose(
 		cout << "finite_field::power_verbose "
 				"a=" << a << " n=" << n << endl;
 	}
+
+	Action_pointer_stats->ff_nb_power++;
 	if (n < 0) {
 		if (f_v) {
 			cout << "finite_field::power_verbose "
@@ -1813,6 +1822,7 @@ int finite_field::frobenius_power(
 		cout << "finite_field::frobenius_power !f_has_table" << endl;
 		exit(1);
 	}
+	Action_pointer_stats->ff_nb_frobenius_power++;
 	a = T->frobenius_power(a, frob_power);
 	return a;
 }
@@ -1826,6 +1836,7 @@ int finite_field::absolute_trace(
 		cout << "finite_field::absolute_trace !f_has_table" << endl;
 		exit(1);
 	}
+	Action_pointer_stats->ff_nb_absolute_trace++;
 	for (j = 0; j < e; j++) {
 		//ii = power(ii, p);
 		//cout << "absolute_trace() ii = " << ii << " -> ";
@@ -1856,6 +1867,7 @@ int finite_field::absolute_norm(
 		cout << "finite_field::absolute_norm !f_has_table" << endl;
 		exit(1);
 	}
+	Action_pointer_stats->ff_nb_absolute_norm++;
 	for (j = 0; j < e; j++) {
 		//ii = power(ii, p);
 		//cout << "absolute_trace ii = " << ii << " -> ";
@@ -1877,6 +1889,7 @@ int finite_field::alpha_power(
 		cout << "finite_field::alpha_power !f_has_table" << endl;
 		exit(1);
 	}
+	Action_pointer_stats->ff_nb_alpha_power++;
 	return T->alpha_power(i);
 }
 
@@ -1887,6 +1900,7 @@ int finite_field::log_alpha(
 		cout << "finite_field::log_alpha !f_has_table" << endl;
 		exit(1);
 	}
+	Action_pointer_stats->ff_nb_log_alpha++;
 	return T->log_alpha(i);
 }
 
@@ -2100,13 +2114,14 @@ void finite_field::abc2xy(
 
 int finite_field::nb_times_mult_called()
 {
-	return nb_times_mult;
+	return Action_pointer_stats->ff_nb_mult;
 }
 
 int finite_field::nb_times_add_called()
 {
-	return nb_times_add;
+	return Action_pointer_stats->ff_nb_add;
 }
+
 
 void finite_field::compute_nth_roots(
 		int *&Nth_roots, int n, int verbose_level)

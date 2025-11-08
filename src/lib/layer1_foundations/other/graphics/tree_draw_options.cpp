@@ -40,6 +40,9 @@ tree_draw_options::tree_draw_options()
 	f_draw_options = false;
 	//std::string draw_options_label;
 
+	f_line_width = false;
+	line_width = 100;
+
 }
 
 
@@ -92,6 +95,13 @@ int tree_draw_options::read_arguments(
 				cout << "-draw_options " << draw_options_label << " " << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-line_width") == 0) {
+			f_line_width = true;
+			line_width = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-line_width " << line_width << " " << endl;
+			}
+		}
 
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
@@ -124,6 +134,9 @@ void tree_draw_options::print()
 	}
 	if (f_draw_options) {
 		cout << "-draw_options " << draw_options_label << " " << endl;
+	}
+	if (f_line_width) {
+		cout << "-line_width " << line_width << " " << endl;
 	}
 }
 

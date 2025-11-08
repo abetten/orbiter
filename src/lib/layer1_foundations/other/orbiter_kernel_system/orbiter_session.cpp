@@ -43,7 +43,7 @@ orbiter_session::orbiter_session()
 
 	global_mem_object_registry = new mem_object_registry;
 
-
+	Action_pointer_stats = new action_pointer_stats;
 
 	verbose_level = 0;
 
@@ -584,7 +584,7 @@ void orbiter_session::get_lint_vector_from_label(
 	if (isalpha(label[0])) {
 		if (f_v) {
 			cout << "orbiter_session::get_lint_vector_from_label "
-					"searching label " << label << endl;
+					"searching for object with label " << label << endl;
 		}
 		int idx;
 
@@ -592,6 +592,10 @@ void orbiter_session::get_lint_vector_from_label(
 
 		if (Orbiter->get_object_type(idx) == t_vector) {
 
+			if (f_v) {
+				cout << "orbiter_session::get_lint_vector_from_label "
+						"found a vector object with label " << label << endl;
+			}
 			vector_builder *VB;
 
 			VB = (vector_builder *) Orbiter->get_object(idx);
@@ -602,6 +606,10 @@ void orbiter_session::get_lint_vector_from_label(
 		}
 		else if (Orbiter->get_object_type(idx) == t_set) {
 
+			if (f_v) {
+				cout << "orbiter_session::get_lint_vector_from_label "
+						"found a set object with label " << label << endl;
+			}
 			set_builder *SB;
 
 			SB = (set_builder *) Orbiter->get_object(idx);
@@ -609,6 +617,11 @@ void orbiter_session::get_lint_vector_from_label(
 			sz = SB->sz;
 			v = NEW_lint(sz);
 			Lint_vec_copy(SB->set, v, sz);
+		}
+		else {
+			cout << "orbiter_session::get_lint_vector_from_label "
+					"did not find object with label " << label << endl;
+			exit(1);
 		}
 	}
 	else {
@@ -620,7 +633,8 @@ void orbiter_session::get_lint_vector_from_label(
 		Lint_vec_scan(label, v, sz);
 	}
 	if (f_v) {
-		cout << "orbiter_session::get_lint_vector_from_label found a vector of size " << sz << endl;
+		cout << "orbiter_session::get_lint_vector_from_label "
+				"found a vector of size " << sz << endl;
 	}
 
 	if (f_v) {

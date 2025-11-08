@@ -1150,7 +1150,7 @@ void sims::report(
 	ost << "sims::report\\\\" << endl;
 
 
-	report_subgroup_chain(ost);
+	report_subgroup_chain_table(ost);
 
 
 	int orbit_idx;
@@ -1206,7 +1206,7 @@ void sims::report(
 	}
 }
 
-void sims::report_subgroup_chain(
+void sims::report_subgroup_chain_table(
 		std::ostream &ost)
 {
 	ost << "$$" << endl;
@@ -1223,11 +1223,17 @@ void sims::report_subgroup_chain(
 		algebra::ring_theory::longinteger_object go;
 
 		subgroup_order_verbose(go, i, false /*verbose_level*/);
+
 		ost << i << " & " << get_orbit(i, 0) << " & " << get_orbit_length(i) << " & ";
 		go.print_not_scientific(ost);
 		ost << "\\\\" << endl;
 		ost << "\\hline" << endl;
 	}
+
+	ost << my_base_len << " &  &  & 1 \\\\" << endl;
+
+	ost << "\\hline" << endl;
+
 	ost << "\\end{array}" << endl;
 	ost << "$$" << endl;
 

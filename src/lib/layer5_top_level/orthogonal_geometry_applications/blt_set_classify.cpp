@@ -321,7 +321,8 @@ void blt_set_classify::do_poset_classification_activity(
 
 
 #if 0
-void blt_set_classify::init_group(int f_semilinear, int verbose_level)
+void blt_set_classify::init_group(
+		int f_semilinear, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -471,7 +472,9 @@ void blt_set_classify::create_graphs(
 
 	fname = Blt_set_domain->prefix + "_lvl_" + std::to_string(starter_size);
 
-	str = "_" + std::to_string(starter_size) + "_" + std::to_string(orbit_at_level_r) + "_" + std::to_string(orbit_at_level_m);
+	str = "_" + std::to_string(starter_size) + "_"
+			+ std::to_string(orbit_at_level_r) + "_"
+			+ std::to_string(orbit_at_level_m);
 
 	fname_list_of_cases = Blt_set_domain->prefix + "_list_of_cases" + str + ".csv";
 
@@ -650,7 +653,9 @@ void blt_set_classify::create_graphs_list_of_cases(
 	fname = Blt_set_domain->prefix + "_lvl_" + std::to_string(starter_size);
 
 
-	fname_list_of_cases = Blt_set_domain->prefix + "_list_of_cases_" + case_label + "_lvl_" + std::to_string(starter_size);
+	fname_list_of_cases = Blt_set_domain->prefix
+			+ "_list_of_cases_" + case_label
+			+ "_lvl_" + std::to_string(starter_size);
 
 
 	nb_orbits = Fio.count_number_of_orbits_in_file(fname, 0);

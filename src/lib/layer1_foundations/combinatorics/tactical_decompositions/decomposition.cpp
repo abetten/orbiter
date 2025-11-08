@@ -125,7 +125,7 @@ void decomposition::init_decomposition_of_projective_space(
 		long int *points, int nb_points,
 		long int *lines, int nb_lines,
 		int verbose_level)
-// nb_lines can be zero
+// nb_points or nb_lines can be zero
 {
 	int f_v = (verbose_level >= 1);
 
@@ -143,18 +143,29 @@ void decomposition::init_decomposition_of_projective_space(
 			Inc,
 			verbose_level);
 
-	if (f_v) {
-		cout << "geometry_global::init_decomposition_of_projective_space "
-				"before Stack->split_cell_front_or_back_lint" << endl;
+	if (nb_points) {
+
+		if (f_v) {
+			cout << "geometry_global::init_decomposition_of_projective_space "
+					"before Stack->split_cell_front_or_back_lint" << endl;
+		}
+
+		Stack->split_cell_front_or_back_lint(
+				points, nb_points, true /* f_front*/,
+				verbose_level);
+
+		if (f_v) {
+			cout << "geometry_global::init_decomposition_of_projective_space "
+					"after Stack->split_cell_front_or_back_lint" << endl;
+		}
 	}
+	else {
 
-	Stack->split_cell_front_or_back_lint(
-			points, nb_points, true /* f_front*/,
-			verbose_level);
+		if (f_v) {
+			cout << "geometry_global::init_decomposition_of_projective_space "
+					"the point set is empty" << endl;
+		}
 
-	if (f_v) {
-		cout << "geometry_global::init_decomposition_of_projective_space "
-				"after Stack->split_cell_front_or_back_lint" << endl;
 	}
 
 
@@ -172,6 +183,14 @@ void decomposition::init_decomposition_of_projective_space(
 			cout << "geometry_global::init_decomposition_of_projective_space "
 					"after Stack->split_line_cell_front_or_back_lint" << endl;
 		}
+	}
+	else {
+
+		if (f_v) {
+			cout << "geometry_global::init_decomposition_of_projective_space "
+					"the line set is empty" << endl;
+		}
+
 	}
 
 	if (f_v) {

@@ -707,8 +707,8 @@ private:
 	std::string symbol_for_print;
 
 
-	int nb_times_mult;
-	int nb_times_add;
+	//int nb_times_mult;
+	//int nb_times_add;
 
 public:
 
@@ -752,6 +752,7 @@ public:
 
 	finite_field_properties *Finite_field_properties;
 
+	other::orbiter_kernel_system::action_pointer_stats *Action_pointer_stats;
 
 	finite_field();
 	~finite_field();
@@ -910,8 +911,10 @@ public:
 		// given a, b, c, determine x and y such that
 		// c = a * x^2 + b * y^2
 		// such elements x and y exist for any choice of a, b, c.
+
 	int nb_times_mult_called();
 	int nb_times_add_called();
+
 	void compute_nth_roots(
 			int *&Nth_roots, int n, int verbose_level);
 	int primitive_element();

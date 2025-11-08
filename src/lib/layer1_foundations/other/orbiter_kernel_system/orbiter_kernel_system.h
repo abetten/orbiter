@@ -20,6 +20,56 @@ namespace layer1_foundations {
 namespace other {
 namespace orbiter_kernel_system {
 
+
+// #############################################################################
+// action_pointer_stats.cpp
+// #############################################################################
+
+
+//! interface to the implementation functions for group actions
+
+class action_pointer_stats {
+
+public:
+
+	/** counters for how often a function has been called */
+	long int nb_times_image_of_called;
+	long int nb_times_image_of_low_level_called;
+	long int nb_times_unpack_called;
+	long int nb_times_pack_called;
+	long int nb_times_retrieve_called;
+	long int nb_times_store_called;
+	long int nb_times_mult_called;
+	long int nb_times_invert_called;
+
+	long int ff_nb_add;
+	long int ff_nb_mult;
+	long int ff_nb_negate;
+	long int ff_nb_inverse;
+	long int ff_nb_power;
+	long int ff_nb_frobenius_power;
+	long int ff_nb_absolute_trace;
+	long int ff_nb_absolute_norm;
+	long int ff_nb_alpha_power;
+	long int ff_nb_log_alpha;
+
+	long int mem_nb_new;
+	long int mem_nb_free;
+
+
+
+	action_pointer_stats();
+	~action_pointer_stats();
+	void reset_counters();
+	void save_stats(
+			std::string &fname_base, int verbose_level);
+
+
+
+};
+
+
+
 // #############################################################################
 // activity_output.cpp
 // #############################################################################
@@ -1366,6 +1416,8 @@ public:
 	std::map<std::string, int> Deaths;
 
 	int f_show_births_and_deaths_stats;
+
+	orbiter_kernel_system::action_pointer_stats *Action_pointer_stats;
 
 	orbiter_session();
 	~orbiter_session();

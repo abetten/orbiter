@@ -160,6 +160,7 @@ public:
 			long int *points, int nb_points,
 			long int *lines, int nb_lines,
 			int verbose_level);
+	// nb_points or nb_lines can be zero
 	void init_incidence_matrix(
 			int m, int n, int *M,
 		int verbose_level);
@@ -585,25 +586,39 @@ class tdo_refinement_description {
 
 	int f_lambda3;
 	int lambda3, block_size;
+
 	int f_scale;
 	int scaling;
+
 	int f_range;
 	int range_first, range_len;
+
 	int f_select;
 	std::string select_label;
+
 	int f_omit1;
 	int omit1;
+
 	int f_omit2;
 	int omit2;
+
 	int f_D1_upper_bound_x0;
 	int D1_upper_bound_x0;
+
 	int f_reverse;
+
 	int f_reverse_inverse;
+
 	int f_use_packing_numbers;
+
 	int f_dual_is_linear_space;
+
 	int f_do_the_geometric_test;
+
 	int f_once;
+
 	int f_use_mckay_solver;
+
 	int f_input_file;
 	std::string fname_in;
 

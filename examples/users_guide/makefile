@@ -594,6 +594,13 @@ QC_Q9_TRANSFORM_CLEAN_TO_HERMITIAN="5,8,6,8,1,6,0,3,6,1"
 
 
 
+QUARTIC_Q9_EQUATION="x1 ^ 4 + 4 * x1 ^ 3 * x2 + 8 * x1 ^ 3 * x3 + 6 * x1 * x2 ^ 3 + 3 * x1 * x3 ^ 3 + x2 ^ 4 + 6 * x2 ^ 3 * x3 + 4 * x2 * x3 ^ 3 + 2 * x3 ^ 4"
+
+QUARTIC_Q9_NF_COEFFICIENTS = " 1, 1, 2, 4, 8, 6, 6, 3, 4, 0, 0, 0, 0, 0, 0 "
+
+
+QC_Q9_UNITAL_COEFFICIENTS="1,1,1,0,0,0,0,0,0,0,0,0,0,0,0"
+
 
 
 # Section 7.7 Mappings between Projective Spaces
@@ -7143,7 +7150,7 @@ curve_q13_f0_clean2_variety_make_group:
 		-end \
 		-define G -modified_group \
 			-stabilizer_of_variety V \
-			-nauty_control -end \
+			-nauty_control -nauty_log "quartic_curve_q13_f0_nauty_log.txt" -end \
 		-end \
 		-with G -do \
 		-group_theoretic_activity \
@@ -7151,8 +7158,19 @@ curve_q13_f0_clean2_variety_make_group:
 		-end
 	$(PDFLATEX) PGL_3_13_stab_of_curve_q13_f0_clean2_report.tex
 	$(OPEN) PGL_3_13_stab_of_curve_q13_f0_clean2_report.pdf
+	$(ORBITER) -v 2 \
+		-define Do -draw_options -embedded -radius 150 \
+			-nodes_empty \
+			-scale 0.5 -line_width 0.3 -end \
+		-tree_draw \
+			-file quartic_curve_q13_f0_nauty_log.txt \
+			-draw_options Do \
+		-end
+	pdflatex quartic_curve_q13_f0_nauty_log_draw.tex
+	open quartic_curve_q13_f0_nauty_log_draw.pdf
 
 
+#quartic_curve_q13_f0_nauty_log.txt
 
 conic_group_q5:
 	$(ORBITER) -v 6 \
@@ -7176,7 +7194,7 @@ conic_group_q5:
 			-label_tex "{\\rm conic\_q5}" \
 		-end \
 		-define G -modified_group \
-			-stabilizer_of_variety V -nauty_control -end \
+			-stabilizer_of_variety V -nauty_control -nauty_log "conic_q5_nauty_log.txt" -end \
 		-end \
 		-with G -do \
 		-group_theoretic_activity \
@@ -7208,7 +7226,7 @@ group_of_Hirschfeld_surface_q4:
 			-label_tex "{\\rm Hirschfeld\_surface\_q4}" \
 		-end \
 		-define G -modified_group \
-			-stabilizer_of_variety V -nauty_control -end \
+			-stabilizer_of_variety V -nauty_control -nauty_log "Hirschfeld_q4_nauty_log.txt" -end \
 		-end \
 		-with G -do \
 		-group_theoretic_activity \
@@ -7277,7 +7295,7 @@ group_U_4_3:
 			-label_tex "{\\rm hermitian\\_surface\\_q3}" \
 		-end \
 		-define G -modified_group \
-			-stabilizer_of_variety V -nauty_control -end \
+			-stabilizer_of_variety V -nauty_control -nauty_log "U_4_3_nauty_log.txt" -end \
 		-end \
 		-with G -do \
 		-group_theoretic_activity \
@@ -10455,6 +10473,7 @@ test_7_6:
 	make Hirschfeld_q4_group
 	make Barth_sextic_mod_11
 	make variety_Dickson36_9lines_q4_group
+	make quartic_curve_test_isomorphism
 	make quartic_curve_q27_fo159_fo338_test_isomorphism
 	make quartic_curve_q9_hermitian_fo0_test_isomorphism
 	make quartic_curve_q9_hermitian_and_OCN0_test_isomorphism
@@ -10508,7 +10527,7 @@ Op_6_2_group:
 			-label_tex "{\\rm Op\_6\_2}" \
 		-end \
 		-with V -do -variety_activity -compute_group \
-			-nauty_control -save_orbit_of_equations eqn_ -end \
+			-nauty_control -save_orbit_of_equations eqn_ -nauty_log "Op6_2_nauty_log.txt" -end \
 		-end \
 		-with V -do -variety_activity -compute_set_stabilizer \
 			-nauty_control -save_orbit_of_equations eqn_ -end \
@@ -10518,8 +10537,19 @@ Op_6_2_group:
 		-with V -do -variety_activity -report -end
 	$(PDFLATEX) variety_Op_6_2_report.tex
 	$(OPEN) variety_Op_6_2_report.pdf
+	$(ORBITER) -v 2 \
+		-define Do -draw_options -embedded -radius 150 \
+			-nodes_empty \
+			-scale 0.5 -line_width 0.3 -end \
+		-tree_draw \
+			-file Op6_2_nauty_log.txt \
+			-draw_options Do \
+		-end
+	pdflatex Op6_2_nauty_log_draw.tex
+	open Op6_2_nauty_log_draw.pdf
 
 
+#Op6_2_nauty_log.txt
 
 
 curve_q13_f0_clean2_variety_compute_group:
@@ -10669,6 +10699,57 @@ variety_Dickson36_9lines_q4_group:
 	$(OPEN) variety_Dickson36_report.pdf
 
 
+quartic_curve_test_isomorphism:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 9 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 3 \
+			-homogeneous_of_degree 4 \
+			-monomial_ordering_partition \
+			-variables "X0,X1,X2" "X_0,X_1,X_2" \
+		-end \
+		-define V1 -variety \
+			-label_txt curve_q9 \
+			-label_tex curve\_q9 \
+			-projective_space P \
+			-ring R \
+			-equation_by_coefficients $(QC_Q9_UNITAL_COEFFICIENTS) \
+		-end \
+		-define V2 -variety \
+			-label_txt curve_q9_nf \
+			-label_tex curve\_q9\_nf \
+			-projective_space P \
+			-ring R \
+			-equation_by_coefficients $(QUARTIC_Q9_NF_COEFFICIENTS) \
+		-end \
+		-with V2 -and V1 -do -variety_activity \
+			-test_isomorphism \
+			-nauty_control -nauty_log "nauty_log.txt" -end \
+		-end \
+		-stats "iso_q9"
+	$(ORBITER) -v 2 \
+		-define Do -draw_options -embedded -radius 150 \
+			-nodes_empty \
+			-scale 0.5 -line_width 1.3 \
+			-xin 10000 \
+			-yin 10000 \
+			-xout 1000000 \
+			-yout  500000 \
+		-end \
+		-tree_draw \
+			-file nauty_log.txt \
+			-line_width 100 \
+			-draw_options Do \
+		-end
+	pdflatex nauty_log_draw.tex
+	open nauty_log_draw.pdf
+
+# from V1 to V2
+#classification_of_varieties_nauty::handle_one_input_case an isomorphism is given by phi=1,5,5,5,3,8,5,0,2,0
+#nauty_log.txt
+
 
 quartic_curve_q27_fo159_fo338_test_isomorphism:
 	$(ORBITER) -v 12 \
@@ -10697,11 +10778,21 @@ quartic_curve_q27_fo159_fo338_test_isomorphism:
 		-end \
 		-with V159 -and V388 -do -variety_activity \
 			-test_isomorphism \
-			-nauty_control -end \
+			-nauty_control -nauty_log "quartic_curve_q27_nauty_log.txt" -end \
 		-end
+	$(ORBITER) -v 2 \
+		-define Do -draw_options -embedded -radius 150 \
+			-nodes_empty \
+			-scale 0.5 -line_width 0.3 -end \
+		-tree_draw \
+			-file quartic_curve_q27_nauty_log.txt \
+			-draw_options Do \
+		-end
+	pdflatex quartic_curve_q27_nauty_log_draw.tex
+	open quartic_curve_q27_nauty_log_draw.pdf
 
 
-
+#quartic_curve_q27_nauty_log.txt
 
 
 
@@ -10732,7 +10823,7 @@ quartic_curve_q9_hermitian_fo0_test_isomorphism:
 		-end \
 		-with VH -and V0 -do -variety_activity \
 			-test_isomorphism \
-			-nauty_control -end \
+			-nauty_control -nauty_log "quartic_curve_q9_nauty_log.txt" -end \
 		-end
 
 
@@ -10783,7 +10874,7 @@ quartic_curve_q9_hermitian_and_OCN0_test_isomorphism:
 		-end \
 		-with VH -and V2 -do -variety_activity \
 			-test_isomorphism \
-			-nauty_control -end \
+			-nauty_control -nauty_log "quartic_curve_q9_nauty_log.txt" -end \
 		-end
 
 
@@ -11158,7 +11249,7 @@ poly_orbits_d3_n3_q2.csv:
 			-on_polynomials R \
 		-end \
 		-with Orb -do -orbits_activity \
-			-report \
+			-report Do \
 		-end \
 		-with Orb -do -orbits_activity \
 			-draw_tree 6 Do \
@@ -11171,11 +11262,12 @@ poly_orbits_d3_n3_q2.csv:
 
 poly_orbits_d3_n3_q2_get_ranks:
 	$(ORBITER) -v 4 \
-		-define cols -vector -dense 0 -end \
-		-csv_file_select_cols poly_orbits_d3_n3_q2.csv "_reps" cols
+		-csv_file_select_cols poly_orbits_d3_n3_q2.csv "_reps" Rep
 	#$(PDFLATEX) poly_orbits_d3_n3_q2.tex
 	#$(OPEN) poly_orbits_d3_n3_q2.pdf
 
+
+#poly_orbits_d3_n3_q2_reps.csv
 
 
 T4_orbits:
@@ -13038,7 +13130,7 @@ Dickson1_group:
 		-end \
 		-with V -do -variety_activity \
 			-compute_group \
-			-nauty_control -save_orbit_of_equations eqn_ -end \
+			-nauty_control -nauty_log "Dickson1_nauty_log.txt" -save_orbit_of_equations eqn_ -end \
 		-end \
 		-with V -do -variety_activity \
 			-compute_set_stabilizer \
@@ -13072,7 +13164,7 @@ Dickson2_group:
 		-end \
 		-with V -do -variety_activity \
 			-compute_group \
-			-nauty_control -save_orbit_of_equations eqn_ -end \
+			-nauty_control -nauty_log "Dickson2_nauty_log.txt" -save_orbit_of_equations eqn_ -end \
 		-end \
 		-with V -do -variety_activity -singular_points -end \
 		-with V -do -variety_activity -report -end
@@ -14112,7 +14204,7 @@ surface_classify_q7:
 	$(OPEN) Surfaces_q7.pdf
 
 
-# error
+
 
 
 
@@ -16772,7 +16864,7 @@ Golay24_2A_fix_weight12_c:
 			-canonical_form \
 				-save_ago \
 				-save_transversal \
-				-nauty_control -end \
+				-nauty_control -nauty_log "Golay24_2A_fix_nauty_log.txt" -end \
 			-end \
 		-end \
 		-with C -do \
@@ -16793,6 +16885,21 @@ Golay24_2A_fix_weight12_c:
 		-end
 	$(PDFLATEX) Golay24_2A_fix_weight12_classification.tex
 	$(OPEN) Golay24_2A_fix_weight12_classification.pdf
+	$(ORBITER) -v 2 \
+		-define Do -draw_options -embedded -radius 150 \
+			-nodes_empty \
+			-scale 0.5 -line_width 0.3 -end \
+		-tree_draw \
+			-file Golay24_2A_fix_nauty_log.txt \
+			-draw_options Do \
+		-end
+	pdflatex Golay24_2A_fix_nauty_log_draw.tex
+	open Golay24_2A_fix_nauty_log_draw.pdf
+
+
+
+
+#Golay24_2A_fix_nauty_log.txt
 
 
 # stabilizer of order 2752512
@@ -18974,7 +19081,7 @@ geo_10_3_Desargues_configuration_c:
 				-save_ago \
 				-save_transversal \
 				-max_TDO_depth 10 \
-				-nauty_control -end \
+				-nauty_control -nauty_log "10_3_nauty_log.txt"  -end \
 			-end \
 		-end \
 		-with C -do \
@@ -19075,7 +19182,7 @@ Praeger_45_12_3_design_group:
 			-canonical_form \
 				-save_ago \
 				-save_transversal \
-				-nauty_control -end \
+				-nauty_control -nauty_log "praeger_design_nauty_log.txt" -end \
 			-end \
 		-end \
 		-with C -do \
@@ -20995,7 +21102,7 @@ LSQ_5_c:
 			-canonical_form \
 				-save_ago \
 				-max_TDO_depth 4 \
-				-nauty_control -end \
+				-nauty_control -nauty_log "LSQ5_nauty_log.txt" -end \
 			-end \
 		-end \
 		-with C -do \
@@ -21827,7 +21934,7 @@ Praeger_45_12_3_design_c:
 			-canonical_form \
 				-save_ago \
 				-save_transversal \
-				-nauty_control -end \
+				-nauty_control -nauty_log "praeger_design_nauty_log.txt" -end \
 			-end \
 		-end \
 		-with C -do \
@@ -21854,6 +21961,16 @@ Praeger_45_12_3_design_c:
 		Praeger_object0_INP_flag_orbits_draw.bmp \
 		Praeger_object0_INP_flag_orbits_draw.png
 	$(OPEN) Praeger_object0_INP_flag_orbits_draw.png
+	$(ORBITER) -v 2 \
+		-define Do -draw_options -embedded -radius 150 \
+			-nodes_empty \
+			-scale 0.5 -line_width 0.3 -end \
+		-tree_draw \
+			-file praeger_design_nauty_log.txt \
+			-draw_options Do \
+		-end
+	$(PDFLATEX) praeger_design_nauty_log_draw.tex
+	$(OPEN) praeger_design_nauty_log_draw.pdf
 
 # ago = 19440
 
@@ -23024,7 +23141,7 @@ PG_3_3_assume_5_packings_classify:
 		-with C -do \
 		-combinatorial_object_activity \
 			-canonical_form_PG P3 \
-			-nauty_control -end \
+			-nauty_control -nauty_log "PG_3_3_packings_5_nauty_log.txt" -end \
 			-end \
 		-end \
 		-define Doinc -draw_incidence_structure_options \
@@ -23252,12 +23369,20 @@ BLT_67_4_export_gap:
 
 BLT_9_deep_search:
 	$(ORBITER) -v 2 \
+		-define Do -draw_options \
+			-xin 400000 \
+			-xout 3000000 \
+			-yout 3000000 \
+			-y_stretch 0.5 \
+		-end \
 		-define F -finite_field -q 9 -end \
 		-define O -orthogonal_space 0 5 F -end \
 		-define C -BLT_set_classifier \
 			-orthogonal_space O -starter_size 10 \
 		-end \
-		-define Activity -poset_classification_activity -report -end -end \
+		-define Activity -poset_classification_activity \
+			-report -draw_options Do -end \
+		-end \
 		-define Activity_export -poset_classification_activity \
 			-export_level_to_cpp 10 -end \
 		-with C -do -BLT_set_classify_activity \
@@ -24141,7 +24266,7 @@ quadrangles_PG_2_2:
 		-with C -do \
 		-combinatorial_object_activity \
 			-canonical_form_PG P \
-			-nauty_control -end \
+			-nauty_control -nauty_log "quadrangles_PG_2_2_nauty_log.txt" -end \
 			-end \
 		-end \
 		-define Doinc -draw_incidence_structure_options \
@@ -24184,7 +24309,7 @@ Barth_mod_11_singular_pts_c:
 			-canonical_form_PG P \
 				-save_ago \
 				-max_TDO_depth 4 \
-				-nauty_control -end \
+				-nauty_control -nauty_log "Barth_mod_11_nauty_log.txt" -end \
 			-end \
 		-end \
 		-define Doinc -draw_incidence_structure_options \
@@ -24295,15 +24420,25 @@ Klein_cubic_threefold_q3:
 			-label_txt Klein3_q3 \
 			-label_tex Klein3\_q3 \
 		-end \
-		-with V -do -variety_activity -compute_group -nauty_control -end -end \
+		-with V -do -variety_activity -compute_group -nauty_control -nauty_log "Klein_cubic_threefold_nauty_log.txt" -end -end \
 		-with V -do -variety_activity -singular_points -end \
 		-with V -do -variety_activity -report -end
 	$(PDFLATEX) variety_Klein3_q3_report.tex
 	$(OPEN) variety_Klein3_q3_report.pdf
+	$(ORBITER) -v 2 \
+		-define Do -draw_options -embedded -radius 150 \
+			-nodes_empty \
+			-scale 0.5 -line_width 0.3 -end \
+		-tree_draw \
+			-file Klein_cubic_threefold_nauty_log.txt \
+			-draw_options Do \
+		-end
+	pdflatex Klein_cubic_threefold_nauty_log_draw.tex
+	open Klein_cubic_threefold_nauty_log_draw.pdf
 
 # 1 singular point
 #stabilizer_of_set_of_rational_points::orbit_of_equation_under_set_stabilizer found an orbit of length 1
-
+#Klein_cubic_threefold_nauty_log.txt
 
 
 
@@ -24324,7 +24459,7 @@ EC_canon:
 				-save_ago \
 				-save_transversal \
 				-max_TDO_depth 400 \
-				-nauty_control -end \
+				-nauty_control -nauty_log "EC_nauty_log.txt" -end \
 			-end \
 		-end \
 		-define Doinc -draw_incidence_structure_options \
@@ -24387,6 +24522,7 @@ Hirschfeld_q4_c:
 				-save_ago \
 				-max_TDO_depth 10 \
 				-nauty_control \
+					-nauty_log "Hirschfeld_q4_nauty_log.txt" \
 					-save_nauty_input_graphs Hirschfeld_q4 \
 				-end \
 			-end \
@@ -24412,9 +24548,19 @@ Hirschfeld_q4_c:
 		-end
 	$(PDFLATEX) Hirschfeld_surface_q4_classification.tex
 	$(OPEN) Hirschfeld_surface_q4_classification.pdf
+	$(ORBITER) -v 2 \
+		-define Do -draw_options -embedded -radius 150 \
+			-nodes_empty \
+			-scale 0.5 -line_width 0.3 -end \
+		-tree_draw \
+			-file Hirschfeld_q4_nauty_log.txt \
+			-draw_options Do \
+		-end
+	pdflatex Hirschfeld_q4_nauty_log_draw.tex
+	open Hirschfeld_q4_nauty_log_draw.pdf
 
 
-
+#Hirschfeld_q4_nauty_log.txt
 # group order is 51840
 
 
@@ -24496,7 +24642,7 @@ Hirschfeld_q4_set_c:
 			-canonical_form_PG P \
 				-save_ago \
 				-max_TDO_depth 4 \
-				-nauty_control -end \
+				-nauty_control -nauty_log "Hirschfeld_q4_set_nauty_log.txt" -end \
 			-end \
 		-end \
 		-define Doinc -draw_incidence_structure_options \
@@ -24544,7 +24690,7 @@ Dickson_sets_stabilizer:
 			-canonical_form_PG P \
 				-save_ago \
 				-max_TDO_depth 4 \
-				-nauty_control -end \
+				-nauty_control -nauty_log "Dickson_sets_nauty_log.txt" -end \
 			-end \
 		-end \
 		-define Doinc -draw_incidence_structure_options \
@@ -24599,7 +24745,7 @@ Endrass_7c:
 			-canonical_form_PG P \
 				-save_ago \
 				-max_TDO_depth 4 \
-				-nauty_control -end \
+				-nauty_control -nauty_log "Endrass_nauty_log.txt" -end \
 			-end \
 		-end \
 		-define Doinc -draw_incidence_structure_options \
@@ -24640,7 +24786,7 @@ hyperoval_16_canonical_form:
 				-save_ago \
 				-save_transversal \
 				-max_TDO_depth 10 \
-				-nauty_control -end \
+				-nauty_control -nauty_log "hyperoval_16_nauty_log.txt" -end \
 			-end \
 		-end \
 		-define Doinc -draw_incidence_structure_options \
@@ -24664,20 +24810,30 @@ hyperoval_16_canonical_form:
 	$(PDFLATEX) hyperoval_q16_classification.tex
 	$(OPEN) hyperoval_q16_classification.pdf
 	$(ORBITER) -v 2 -draw_matrix \
-		-input_csv_file hyperoval_q16_object0_TDA_flag_orbits.csv \
-		-secondary_input_csv_file hyperoval_q16_object0_TDA.csv \
+		-input_csv_file hyperoval_q16_object_0_TDA_flag_orbits.csv \
+		-secondary_input_csv_file hyperoval_q16_object_0_TDA.csv \
 		-box_width 4 -bit_depth 24 \
 		-end
-	$(OPEN) hyperoval_q16_object0_TDA_flag_orbits_draw.bmp
+	$(OPEN) hyperoval_q16_object_0_TDA_flag_orbits_draw.bmp
 	$(ORBITER) -v 2 -draw_matrix \
-		-input_csv_file hyperoval_q16_object1_TDA_flag_orbits.csv \
-		-secondary_input_csv_file hyperoval_q16_object1_TDA.csv \
+		-input_csv_file hyperoval_q16_object_1_TDA_flag_orbits.csv \
+		-secondary_input_csv_file hyperoval_q16_object_1_TDA.csv \
 		-box_width 4 -bit_depth 24 \
 		-end
-	$(OPEN) hyperoval_q16_object1_TDA_flag_orbits_draw.bmp
+	$(OPEN) hyperoval_q16_object_1_TDA_flag_orbits_draw.bmp
+	$(ORBITER) -v 2 \
+		-define Do -draw_options -embedded -radius 150 \
+			-nodes_empty \
+			-scale 0.5 -line_width 0.3 -end \
+		-tree_draw \
+			-file hyperoval_16_nauty_log.txt \
+			-draw_options Do \
+		-end
+	pdflatex hyperoval_16_nauty_log_draw.tex
+	open hyperoval_16_nauty_log_draw.pdf
 
 
-
+#hyperoval_16_nauty_log.txt
 
 
 cubic_curves_PG_2_8_canon:
@@ -24693,7 +24849,7 @@ cubic_curves_PG_2_8_canon:
 			-canonical_form_PG P \
 				-save_ago \
 				-max_TDO_depth 10 \
-				-nauty_control -show_canonical_form  -end \
+				-nauty_control -nauty_log "cubic_curves_q8_nauty_log.txt" -show_canonical_form  -end \
 			-end \
 		-end \
 		-define Doinc -draw_incidence_structure_options \
@@ -24736,7 +24892,7 @@ ovoid_q8_canon:
 			-canonical_form_PG P \
 				-save_ago \
 				-max_TDO_depth 4 \
-				-nauty_control -show_canonical_form  -end \
+				-nauty_control -nauty_log "ovoid_q8_nauty_log.txt" -show_canonical_form  -end \
 			-end \
 		-end \
 		-define Doinc -draw_incidence_structure_options \
@@ -24777,7 +24933,7 @@ ovoid_ST_q8_canon:
 			-canonical_form_PG P \
 				-save_ago \
 				-max_TDO_depth 4 \
-				-nauty_control -end \
+				-nauty_control -nauty_log "ovoid_ST_nauty_log.txt" -end \
 			-end \
 		-end \
 		-define Doinc -draw_incidence_structure_options \
@@ -24845,7 +25001,7 @@ quartic_curve_25_0_0_canonical:
 			-canonical_form_PG P \
 				-save_ago \
 				-max_TDO_depth 4 \
-				-nauty_control -show_canonical_form -end \
+				-nauty_control -nauty_log "quartic_curve_q25_0_nauty_log.txt" -show_canonical_form -end \
 			-end \
 		-end \
 		-define Doinc -draw_incidence_structure_options \
@@ -24869,6 +25025,8 @@ quartic_curve_25_0_0_canonical:
 	#$(OPEN) quartic_25_0_0_classification.pdf
 
 #User time: 0:1
+#quartic_curve_q25_0_nauty_log.txt
+
 
 
 CRC_BCH_Q16_N51_D3_canonical: 
@@ -24884,7 +25042,7 @@ CRC_BCH_Q16_N51_D3_canonical:
 			-canonical_form_PG P \
 				-save_ago \
 				-max_TDO_depth 4 \
-				-nauty_control -end \
+				-nauty_control -nauty_log "CRC_BCH_nauty_log.txt" -end \
 			-end \
 		-end \
 		-define Doinc -draw_incidence_structure_options \
@@ -24925,7 +25083,7 @@ Veronese_1_3_q7_c:
 			-canonical_form_PG P \
 				-save_ago \
 				-max_TDO_depth 4 \
-				-nauty_control -end \
+				-nauty_control -nauty_log "Veronese_1_3_q7_nauty_log.txt" -end \
 			-end \
 		-end \
 		-define Doinc -draw_incidence_structure_options \
@@ -24995,7 +25153,7 @@ geo_7_3_c:
 			-canonical_form \
 				-save_ago \
 				-save_transversal \
-				-nauty_control -show_canonical_form -end \
+				-nauty_control -nauty_log "geo_7_3_nauty_log.txt" -show_canonical_form -end \
 			-end \
 		-end \
 		-with C -do \
@@ -25049,7 +25207,7 @@ geo_10_3_c:
 			-canonical_form \
 				-save_ago \
 				-save_transversal \
-				-nauty_control -end \
+				-nauty_control -nauty_log "geo_10_3_nauty_log.txt" -end \
 			-end \
 		-end \
 		-with C -do \
@@ -25125,7 +25283,7 @@ geo_10_3_c_lex_least:
 			-canonical_form \
 				-save_ago \
 				-save_transversal \
-				-nauty_control -end \
+				-nauty_control -nauty_log "geo_10_3_nauty_log.txt" -end \
 			-end \
 		-end \
 		-with C -do \
@@ -25180,7 +25338,7 @@ geo_14_3_c:
 			-canonical_form \
 				-save_ago \
 				-save_transversal \
-				-nauty_control -end \
+				-nauty_control -nauty_log "geo_14_3_nauty_log.txt" -end \
 			-end \
 		-end
 
@@ -25229,7 +25387,7 @@ TFC_24_3_c:
 		-combinatorial_object_activity \
 			-canonical_form \
 			-save_ago \
-			-nauty_control -end \
+			-nauty_control -nauty_log "TFC_24_3_nauty_log.txt" -end \
 			-end \
 		-end \
 		-define Doinc -draw_incidence_structure_options \
@@ -25257,6 +25415,16 @@ TFC_24_3_c:
 		-box_width 40 -bit_depth 24 \
 		-end
 	$(OPEN) 24_3_TFC_object_2_TDA_flag_orbits_draw.bmp
+	$(ORBITER) -v 2 \
+		-define Do -draw_options -embedded -radius 150 \
+			-nodes_empty \
+			-scale 0.5 -line_width 0.3 -end \
+		-tree_draw \
+			-file TFC_24_3_nauty_log.txt \
+			-draw_options Do \
+		-end
+	pdflatex TFC_24_3_nauty_log_draw.tex
+	open TFC_24_3_nauty_log_draw.pdf
 
 
 geo_40_4_g4_c:
@@ -25285,7 +25453,7 @@ geo_40_4_g4_c:
 		-combinatorial_object_activity \
 			-canonical_form \
 				-save_ago \
-				-nauty_control -end \
+				-nauty_control -nauty_log "geo_40_4_g4_nauty_log.txt" -end \
 			-end \
 		-end \
 		-with C -do \
@@ -25305,16 +25473,30 @@ geo_40_4_g4_c:
 	$(ORBITER) -v 2 \
 		-loop L 0 2 1 \
 			-draw_matrix \
-			-input_csv_file 40_4_g4_object%L_TDA_flag_orbits.csv \
-			-secondary_input_csv_file 40_4_g4_object%L_TDA.csv \
+			-input_csv_file 40_4_g4_object_%L_TDA_flag_orbits.csv \
+			-secondary_input_csv_file 40_4_g4_object_%L_TDA.csv \
 			-box_width 32 -bit_depth 24 \
 			-end \
 			-system "magick \
-				40_4_g4_object%L_TDA_flag_orbits_draw.bmp \
-				40_4_g4_object%L_TDA_flag_orbits_draw.png" \
+				40_4_g4_object_%L_TDA_flag_orbits_draw.bmp \
+				40_4_g4_object_%L_TDA_flag_orbits_draw.png" \
 		-end_loop L
 	$(PDFLATEX) 40_4_g4_classification.tex
 	$(OPEN) 40_4_g4_classification.pdf
+	$(ORBITER) -v 2 \
+		-define Do -draw_options -embedded -radius 150 \
+			-nodes_empty \
+			-scale 0.5 -line_width 0.3 -end \
+		-tree_draw \
+			-file geo_40_4_g4_nauty_log.txt \
+			-draw_options Do \
+		-end
+	pdflatex geo_40_4_g4_nauty_log_draw.tex
+	open geo_40_4_g4_nauty_log_draw.pdf
+
+
+#geo_40_4_g4_nauty_log.txt
+
 
 geo_17_3_g4_c:
 	$(ORBITER) -v 2 \
@@ -25328,7 +25510,7 @@ geo_17_3_g4_c:
 		-combinatorial_object_activity \
 			-canonical_form \
 				-save_ago \
-				-nauty_control -end \
+				-nauty_control -nauty_log "geo_17_3_g4_nauty_log.txt" -end \
 			-end \
 		-end \
 		-define Doinc -draw_incidence_structure_options \
@@ -25364,7 +25546,7 @@ AG_2_3_c: AG_2_3.inc
 			-canonical_form \
 				-save_ago \
 				-max_TDO_depth 10 \
-				-nauty_control -end \
+				-nauty_control -nauty_log "AG_2_3_nauty_log.txt" -end \
 			-end \
 		-end \
 		-define Doinc -draw_incidence_structure_options \
@@ -25420,7 +25602,7 @@ geo_LSQ6_c:
 			-canonical_form \
 				-save_ago \
 				-save_transversal \
-				-nauty_control -end \
+				-nauty_control -nauty_log "LSQ6_nauty_log.txt" -end \
 			-end \
 		-end \
 		-with C -do \
@@ -25722,7 +25904,7 @@ neumaier_graphs_16_classify:
 				-save_ago \
 				-save_transversal \
 				-max_TDO_depth 10 \
-				-nauty_control -end \
+				-nauty_control -nauty_log "neumaier_graphs_16_nauty_log.txt" -end \
 			-end \
 		-end \
 		-with C -do \
@@ -25840,7 +26022,7 @@ RM_3_1_group:
 				"RM_3_1" genma \
 				-save_ago \
 				-save_classification "RM_3_1" \
-				-nauty_control -end \
+				-nauty_control -nauty_log "RM_3_1_nauty_log.txt" -end \
 			-end \
 		-end
 	$(PDFLATEX) RM_3_1_classification.tex
@@ -25895,7 +26077,7 @@ RM_4_1_group:
 				"RM_4_1" genma \
 				-save_ago \
 				-save_classification "RM_4_1" \
-				-nauty_control -end \
+				-nauty_control -nauty_log "RM_4_1_nauty_log.txt" -end \
 			-end \
 		-end
 	$(PDFLATEX) RM_4_1_classification.tex
@@ -25930,7 +26112,7 @@ RS_6_4_7_group:
 				"RS_6" genma \
 				-save_ago \
 				-save_classification "RS_6" \
-				-nauty_control -end \
+				-nauty_control -nauty_log "RS_6_4_7_nauty_log.txt" -end \
 			-end \
 		-end
 
@@ -26437,7 +26619,7 @@ Neumaier_graph_25_c:
 				-save_ago \
 				-save_transversal \
 				-max_TDO_depth 10 \
-				-nauty_control -end \
+				-nauty_control -nauty_log "Neumaier_graph_25_nauty_log.txt" -end \
 			-end \
 		-end \
 		-define Doinc -draw_incidence_structure_options \
@@ -26527,7 +26709,7 @@ Edge_curve_17_nauty:
 				-save_ago \
 				-save_transversal \
 				-max_TDO_depth 10 \
-				-nauty_control -end \
+				-nauty_control -nauty_log "Edge_curve_q17_nauty_log.txt" -end \
 				-end \
 			-end \
 		-define Doinc -draw_incidence_structure_options \
@@ -26556,9 +26738,19 @@ Edge_curve_17_nauty:
 		-box_width 4 -bit_depth 24 \
 		-end
 	$(OPEN) Edge_curve_q17_object0_TDA_flag_orbits_draw.bmp
+	$(ORBITER) -v 2 \
+		-define Do -draw_options -embedded -radius 150 \
+			-nodes_empty \
+			-scale 0.5 -line_width 0.3 -end \
+		-tree_draw \
+			-file Edge_curve_q17_nauty_log.txt \
+			-draw_options Do \
+		-end
+	pdflatex Edge_curve_q17_nauty_log_draw.tex
+	open Edge_curve_q17_nauty_log_draw.pdf
 
 # 9 backtrack nodes total
-
+#Edge_curve_q17_nauty_log.txt
 
 # aut = 24
 # User time: 0.04 of a second, dt=4 tps = 100

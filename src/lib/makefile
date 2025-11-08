@@ -323,6 +323,7 @@ ORBITER_MODULES= \
 		layer1_foundations/other/l1_interfaces/povray_interface.o \
 		layer1_foundations/other/l1_interfaces/pugixml_interface.o \
 		layer1_foundations/other/l1_interfaces/pugixml.o \
+		layer1_foundations/other/orbiter_kernel_system/action_pointer_stats.o \
 		layer1_foundations/other/orbiter_kernel_system/activity_output.o \
 		layer1_foundations/other/orbiter_kernel_system/create_file_description.o \
 		layer1_foundations/other/orbiter_kernel_system/csv_file_support.o \

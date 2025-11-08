@@ -452,10 +452,12 @@ public:
 	~nauty_interface_for_graphs();
 	actions::action *create_automorphism_group_of_colored_graph_object(
 			combinatorics::graph_theory::colored_graph *CG,
+			other::l1_interfaces::nauty_interface_control *Nauty_control,
 			int verbose_level);
 	actions::action *create_automorphism_group_and_canonical_labeling_of_colored_graph_object(
 			combinatorics::graph_theory::colored_graph *CG,
 			int *labeling,
+			other::l1_interfaces::nauty_interface_control *Nauty_control,
 			int verbose_level);
 	actions::action *create_automorphism_group_and_canonical_labeling_of_colored_graph(
 		int n,
@@ -464,13 +466,16 @@ public:
 		int *Adj,
 		int *vertex_colors,
 		int *labeling,
+		other::l1_interfaces::nauty_interface_control *Nauty_control,
 		int verbose_level);
 	actions::action *create_automorphism_group_of_colored_graph_ignoring_colors(
 			combinatorics::graph_theory::colored_graph *CG,
+			other::l1_interfaces::nauty_interface_control *Nauty_control,
 			int verbose_level);
 	actions::action *create_automorphism_group_of_graph_bitvec(
 		int n,
 		other::data_structures::bitvector *Bitvec,
+		other::l1_interfaces::nauty_interface_control *Nauty_control,
 		int verbose_level);
 	actions::action *create_automorphism_group_of_graph_with_partition_and_labeling(
 		int n,
@@ -479,13 +484,16 @@ public:
 		int *Adj,
 		int nb_parts, int *parts,
 		int *labeling,
+		other::l1_interfaces::nauty_interface_control *Nauty_control,
 		int verbose_level);
 	actions::action *create_automorphism_group_of_graph(
 			int *Adj,
 		int n,
+		other::l1_interfaces::nauty_interface_control *Nauty_control,
 		int verbose_level);
 	actions::action *create_automorphism_group_and_canonical_labeling_of_graph(
 		int *Adj, int n, int *labeling,
+		other::l1_interfaces::nauty_interface_control *Nauty_control,
 		int verbose_level);
 	// labeling[n]
 

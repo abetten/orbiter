@@ -48,13 +48,16 @@ void graph_theory_apps::automorphism_group(
 
 	interfaces::nauty_interface_for_graphs Nauty;
 	actions::action *Aut;
+	other::l1_interfaces::nauty_interface_control Nauty_control;
 
 	if (f_v) {
 		cout << "graph_theory_apps::automorphism_group "
 				"before Nauty.create_automorphism_group_of_colored_graph_object" << endl;
 	}
 	Aut = Nauty.create_automorphism_group_of_colored_graph_object(
-			CG, verbose_level);
+			CG,
+			&Nauty_control,
+			verbose_level);
 	if (f_v) {
 		cout << "graph_theory_apps::automorphism_group "
 				"after Nauty.create_automorphism_group_of_colored_graph_object" << endl;
@@ -140,13 +143,16 @@ void graph_theory_apps::automorphism_group_bw(
 
 	interfaces::nauty_interface_for_graphs Nauty;
 	actions::action *Aut;
+	other::l1_interfaces::nauty_interface_control Nauty_control;
 
 	if (f_v) {
 		cout << "graph_theory_apps::automorphism_group_bw "
 				"before Nauty.create_automorphism_group_of_colored_graph_ignoring_colors" << endl;
 	}
 	Aut = Nauty.create_automorphism_group_of_colored_graph_ignoring_colors(
-			CG, verbose_level);
+			CG,
+			&Nauty_control,
+			verbose_level);
 	if (f_v) {
 		cout << "graph_theory_apps::automorphism_group_bw "
 				"after Nauty.create_automorphism_group_of_colored_graph_ignoring_colors" << endl;

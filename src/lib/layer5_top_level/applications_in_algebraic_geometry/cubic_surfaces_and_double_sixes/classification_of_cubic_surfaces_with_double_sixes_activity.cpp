@@ -70,7 +70,7 @@ void classification_of_cubic_surfaces_with_double_sixes_activity::perform_activi
 			cout << "classification_of_cubic_surfaces_with_double_sixes_activity::perform_activity "
 					"-stats" << endl;
 		}
-		SCW->stats(Descr->stats_prefix);
+		SCW->stats(Descr->stats_prefix, verbose_level - 1);
 	}
 	else if (Descr->f_identify_Eckardt) {
 		if (f_v) {

@@ -1207,6 +1207,7 @@ extern void nauty(graph*,int*,int*,set*,int*,optionblk*,
 				  extern int *base;
 				  extern int base_length;
 				  extern int *transversal_length;
+				  extern int *search_path; // Anton 2025
 				  extern long int ago;
 				  extern void store_perm(permutation*,int);
 				  /* Done Abdullah 2019 */

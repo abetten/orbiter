@@ -981,11 +981,11 @@ void quartic_curve_domain::create_quartic_curve_by_coefficient_vector(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "surface_domain::create_quartic_curve_by_coefficient_vector" << endl;
+		cout << "quartic_curve_domain::create_quartic_curve_by_coefficient_vector" << endl;
 	}
 
 	if (f_v) {
-		cout << "surface_domain::create_quartic_curve_by_coefficient_vector "
+		cout << "quartic_curve_domain::create_quartic_curve_by_coefficient_vector "
 				"surface is given by the coefficients" << endl;
 	}
 
@@ -994,7 +994,7 @@ void quartic_curve_domain::create_quartic_curve_by_coefficient_vector(
 	QO = NEW_OBJECT(algebraic_geometry::quartic_curve_object);
 
 	if (f_v) {
-		cout << "surface_domain::create_quartic_curve_by_coefficient_vector "
+		cout << "quartic_curve_domain::create_quartic_curve_by_coefficient_vector "
 				"before SO->init_equation" << endl;
 	}
 	QO->init_equation_but_no_bitangents(
@@ -1002,7 +1002,7 @@ void quartic_curve_domain::create_quartic_curve_by_coefficient_vector(
 			coeffs15,
 			verbose_level);
 	if (f_v) {
-		cout << "surface_domain::create_quartic_curve_by_coefficient_vector "
+		cout << "quartic_curve_domain::create_quartic_curve_by_coefficient_vector "
 				"after SO->init_equation" << endl;
 	}
 
@@ -1010,19 +1010,19 @@ void quartic_curve_domain::create_quartic_curve_by_coefficient_vector(
 
 
 	if (f_v) {
-		cout << "surface_domain::create_quartic_curve_by_coefficient_vector "
+		cout << "quartic_curve_domain::create_quartic_curve_by_coefficient_vector "
 				"before compute_properties" << endl;
 	}
 	QO->compute_properties(verbose_level - 2);
 	if (f_v) {
-		cout << "surface_domain::create_quartic_curve_by_coefficient_vector "
+		cout << "quartic_curve_domain::create_quartic_curve_by_coefficient_vector "
 				"after compute_properties" << endl;
 	}
 
 
 
 	if (f_v) {
-		cout << "surface_domain::create_quartic_curve_by_coefficient_vector done" << endl;
+		cout << "quartic_curve_domain::create_quartic_curve_by_coefficient_vector done" << endl;
 	}
 
 }
@@ -1036,7 +1036,7 @@ void quartic_curve_domain::create_quartic_curve_by_normal_form(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "surface_domain::create_quartic_curve_by_normal_form" << endl;
+		cout << "quartic_curve_domain::create_quartic_curve_by_normal_form" << endl;
 	}
 
 	int i;
@@ -1212,6 +1212,19 @@ void quartic_curve_domain::create_quartic_curve_by_normal_form(
 	p3 = 0;
 	for (i = 0; i < 5; i++) {
 		p3 = F->add(p3, P3[i]);
+	}
+
+	if (f_v) {
+		int P[4];
+
+		P[0] = p0;
+		P[1] = p1;
+		P[2] = p2;
+		P[3] = p3;
+		cout << "quartic_curve_domain::create_quartic_curve_by_normal_form "
+				"p0,p1,p2,p3 = ";
+		Int_vec_print(cout, P, 4);
+		cout << endl;
 	}
 
 	int p00, p01, p02, p03;
@@ -1390,7 +1403,7 @@ void quartic_curve_domain::create_quartic_curve_by_normal_form(
 	coeffs15[2] = c3333;
 
 	if (f_v) {
-		cout << "surface_domain::create_quartic_curve_by_normal_form "
+		cout << "quartic_curve_domain::create_quartic_curve_by_normal_form "
 				"abcdef = ";
 		Int_vec_print(cout, abcdef, 6);
 		cout << endl;
@@ -1404,7 +1417,7 @@ void quartic_curve_domain::create_quartic_curve_by_normal_form(
 		P[1] = p1;
 		P[2] = p2;
 		P[3] = p3;
-		cout << "surface_domain::create_quartic_curve_by_normal_form "
+		cout << "quartic_curve_domain::create_quartic_curve_by_normal_form "
 				"p0,p1,p2,p3 = ";
 		Int_vec_print(cout, P, 4);
 		cout << endl;
@@ -1412,7 +1425,7 @@ void quartic_curve_domain::create_quartic_curve_by_normal_form(
 
 
 	if (f_v) {
-		cout << "surface_domain::create_quartic_curve_by_normal_form "
+		cout << "quartic_curve_domain::create_quartic_curve_by_normal_form "
 				"coeffs15 = ";
 		Int_vec_print(cout, coeffs15, 15);
 		cout << endl;
@@ -1585,9 +1598,9 @@ void quartic_curve_domain::create_quartic_curve_by_normal_form(
 	c12[4] = 0;
 	c12[5] = 0;
 
-	c13[0] = F->mult(eta, p1);
-	c13[1] = F->mult(eta, p2);
-	c13[2] = F->add(F->mult(epsilon, p0), F->mult(eta, p3));
+	c13[0] = F->negate(F->mult(eta, p1));
+	c13[1] = F->negate(F->mult(eta, p2));
+	c13[2] = F->add(F->mult(epsilon, p0), F->negate(F->mult(eta, p3)));
 	c13[3] = F->mult(delta, p1);
 	c13[4] = F->add(F->mult(delta, p2), F->mult(s7, p0));
 	c13[5] = F->mult(delta, p3);
@@ -1603,14 +1616,14 @@ void quartic_curve_domain::create_quartic_curve_by_normal_form(
 	c15[1] = F->mult4(c, b, gamma, p2);
 	c15[2] = F->add(F->mult4(c, b, gamma, p3), F->mult(epsilon, p0));
 	c15[3] = F->mult(b, F->add(p0, F->negate(p1)));
-	c15[4] = F->add(p0, F->negate(F->add(b, p2)));
+	c15[4] = F->add(p0, F->negate(F->mult(b, p2))); // found an error 10/31/2025, the last mult was add
 	c15[5] = F->mult3(m1, b, p3);
 
 	c16[0] = F->mult4(a, d, gamma, p1);
 	c16[1] = F->mult4(a, d, gamma, p2);
 	c16[2] = F->add(F->mult4(a, d, gamma, p3), F->mult(epsilon, p0));
 	c16[3] = F->mult(d, F->add(p0, F->negate(p1)));
-	c16[4] = F->add(p0, F->negate(F->add(d, p2)));
+	c16[4] = F->add(p0, F->negate(F->mult(d, p2))); // found an error 10/31/2025, the last mult was add
 	c16[5] = F->mult3(m1, d, p3);
 
 	c23[0] = F->mult5(s7, a, c, gamma, p0);
@@ -1644,14 +1657,14 @@ void quartic_curve_domain::create_quartic_curve_by_normal_form(
 	c34[0] = 0;
 	c34[1] = p0;
 	c34[2] = 0;
-	c34[3] = F->add(p1, F->negate(p1));
+	c34[3] = F->add(p0, F->negate(p1)); // found mistake
 	c34[4] = F->add(p0, F->negate(p2));
 	c34[5] = F->negate(p3);
 
 	c35[0] = 0;
 	c35[1] = F->mult5(m1, s3, s7, a, p0);
 	c35[2] = F->mult(epsilon, p0);
-	c35[3] = F->add(F->mult3(s5, s7, p0), F->mult4(m1, s4, s6, p1));
+	c35[3] = F->add(F->mult3(s3, s7, p0), F->mult4(m1, s4, s6, p1)); // here was a mistake
 	c35[4] = F->mult4(m1, s4, s6, p2);
 	c35[5] = F->mult4(m1, s4, s6, p3);
 
@@ -1714,6 +1727,158 @@ void quartic_curve_domain::create_quartic_curve_by_normal_form(
 		Lines_rk[i] = P->Subspaces->Grass_lines->rank_lint_here(
 				Lines[i], 0 /*verbose_level*/);
 	}
+
+
+	//int delta, epsilon, gamma, lambda, mu, nu, eta, zeta, xi, theta, psi, omega;
+
+
+	int nb_cols = 51;
+	int nb_rows = 1;
+
+	string fname_base;
+	string *Table;
+
+	fname_base = "qc_q" + std::to_string(F->q) + "_abcd_"
+			+ std::to_string(a) + "_"
+			+ std::to_string(b) + "_"
+			+ std::to_string(c) + "_"
+			+ std::to_string(d);
+
+	Table = new string [nb_rows * nb_cols];
+	Table[0] = fname_base;
+	Table[1] = std::to_string(a);
+	Table[2] = std::to_string(b);
+	Table[3] = std::to_string(c);
+	Table[4] = std::to_string(d);
+	Table[5] = std::to_string(delta);
+	Table[6] = std::to_string(epsilon);
+	Table[7] = std::to_string(gamma);
+	Table[8] = std::to_string(lambda);
+	Table[9] = std::to_string(mu);
+	Table[10] = std::to_string(nu);
+	Table[11] = std::to_string(eta);
+	Table[12] = std::to_string(zeta);
+	Table[13] = std::to_string(xi);
+	Table[14] = std::to_string(theta);
+	Table[15] = std::to_string(psi);
+	Table[16] = std::to_string(omega);
+	Table[17] = std::to_string(p0);
+	Table[18] = std::to_string(p1);
+	Table[19] = std::to_string(p2);
+	Table[20] = std::to_string(p3);
+	Table[21] = std::to_string(lambda1);
+	Table[22] = std::to_string(lambda2);
+	Table[23] = std::to_string(lambda3);
+	Table[24] = "\"" + Int_vec_stringify(a1, 6) + "\"";
+	Table[25] = "\"" + Int_vec_stringify(a2, 6) + "\"";
+	Table[26] = "\"" + Int_vec_stringify(a3, 6) + "\"";
+	Table[27] = "\"" + Int_vec_stringify(a4, 6) + "\"";
+	Table[28] = "\"" + Int_vec_stringify(a5, 6) + "\"";
+	Table[29] = "\"" + Int_vec_stringify(a6, 6) + "\"";
+	Table[30] = "\"" + Int_vec_stringify(b1, 6) + "\"";
+	Table[31] = "\"" + Int_vec_stringify(b2, 6) + "\"";
+	Table[32] = "\"" + Int_vec_stringify(b3, 6) + "\"";
+	Table[33] = "\"" + Int_vec_stringify(b4, 6) + "\"";
+	Table[34] = "\"" + Int_vec_stringify(b5, 6) + "\"";
+	Table[35] = "\"" + Int_vec_stringify(b6, 6) + "\"";
+	Table[36] = "\"" + Int_vec_stringify(c12, 6) + "\"";
+	Table[37] = "\"" + Int_vec_stringify(c13, 6) + "\"";
+	Table[38] = "\"" + Int_vec_stringify(c14, 6) + "\"";
+	Table[39] = "\"" + Int_vec_stringify(c15, 6) + "\"";
+	Table[40] = "\"" + Int_vec_stringify(c16, 6) + "\"";
+	Table[41] = "\"" + Int_vec_stringify(c23, 6) + "\"";
+	Table[42] = "\"" + Int_vec_stringify(c24, 6) + "\"";
+	Table[43] = "\"" + Int_vec_stringify(c25, 6) + "\"";
+	Table[44] = "\"" + Int_vec_stringify(c26, 6) + "\"";
+	Table[45] = "\"" + Int_vec_stringify(c34, 6) + "\"";
+	Table[46] = "\"" + Int_vec_stringify(c35, 6) + "\"";
+	Table[47] = "\"" + Int_vec_stringify(c36, 6) + "\"";
+	Table[48] = "\"" + Int_vec_stringify(c45, 6) + "\"";
+	Table[49] = "\"" + Int_vec_stringify(c46, 6) + "\"";
+	Table[50] = "\"" + Int_vec_stringify(c56, 6) + "\"";
+
+
+	other::orbiter_kernel_system::file_io Fio;
+
+
+	std::string fname_params;
+
+	fname_params = fname_base + "_params.csv";
+
+	std::string *Col_headings;
+
+	Col_headings = new string [nb_cols];
+
+	Col_headings[0] = "label";
+	Col_headings[1] = "a";
+	Col_headings[2] = "b";
+	Col_headings[3] = "c";
+	Col_headings[4] = "d";
+	Col_headings[5] = "delta";
+	Col_headings[6] = "epsilon";
+	Col_headings[7] = "gamma";
+	Col_headings[8] = "lambda";
+	Col_headings[9] = "mu";
+	Col_headings[10] = "nu";
+	Col_headings[11] = "eta";
+	Col_headings[12] = "zeta";
+	Col_headings[13] = "xi";
+	Col_headings[14] = "theta";
+	Col_headings[15] = "psi";
+	Col_headings[16] = "omega";
+	Col_headings[17] = "p0";
+	Col_headings[18] = "p1";
+	Col_headings[19] = "p2";
+	Col_headings[20] = "p3";
+	Col_headings[21] = "lambda1";
+	Col_headings[22] = "lambda2";
+	Col_headings[23] = "lambda3";
+	Col_headings[24] = "a1";
+	Col_headings[25] = "a2";
+	Col_headings[26] = "a3";
+	Col_headings[27] = "a4";
+	Col_headings[28] = "a5";
+	Col_headings[29] = "a6";
+	Col_headings[30] = "b1";
+	Col_headings[31] = "b2";
+	Col_headings[32] = "b3";
+	Col_headings[33] = "b4";
+	Col_headings[34] = "b5";
+	Col_headings[35] = "b6";
+	Col_headings[36] = "c12";
+	Col_headings[37] = "c13";
+	Col_headings[38] = "c14";
+	Col_headings[39] = "c15";
+	Col_headings[40] = "c16";
+	Col_headings[41] = "c23";
+	Col_headings[42] = "c24";
+	Col_headings[43] = "c25";
+	Col_headings[44] = "c26";
+	Col_headings[45] = "c34";
+	Col_headings[46] = "c35";
+	Col_headings[47] = "c36";
+	Col_headings[48] = "c45";
+	Col_headings[49] = "c46";
+	Col_headings[50] = "c56";
+
+
+	if (f_v) {
+		cout << "algebra_global_with_action::split_by_classes "
+				"writing file " << fname_params << endl;
+	}
+
+	Fio.Csv_file_support->write_table_of_strings_with_col_headings(
+			fname_params,
+			nb_rows, nb_cols, Table,
+			Col_headings,
+			verbose_level);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::split_by_classes "
+				"written file " << fname_params << " of size "
+				<< Fio.file_size(fname_params) << endl;
+	}
+
 
 
 #if 0

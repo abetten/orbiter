@@ -306,15 +306,22 @@ void tree::draw(
 #endif
 
 
-		G.sl_thickness(30); // 100 is normal
 
+		if (Tree_draw_options->f_line_width) {
+			if (f_v) {
+				cout << "tree::draw line_width " << Tree_draw_options->line_width << " " << endl;
+			}
+			G.sl_thickness(Tree_draw_options->line_width); // 100 is normal
+		}
+		else {
+			G.sl_thickness(30); // 100 is normal
+		}
 
 
 		leaf_count = 0;
 
 		//int f_circletext = true;
 		//int f_i = true;
-
 
 		if (f_v) {
 			cout << "tree::draw before root->draw_edges" << endl;
@@ -334,7 +341,8 @@ void tree::draw(
 		if (f_v) {
 			cout << "tree::draw before root->draw_vertices" << endl;
 		}
-		root->draw_vertices(G, Tree_draw_options, Opt,
+		root->draw_vertices(
+				G, Tree_draw_options, Opt,
 				false, 0, 0,
 				max_depth,
 				this, verbose_level);

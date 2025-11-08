@@ -470,6 +470,10 @@ public:
 	void map_surface_to_special_form(
 			int pt_orbit,
 			int verbose_level);
+	void make_transformation_pt_A_to_1000(
+			actions::action *A_given,
+			int *pt_A_coeff, int *Elt,
+			int verbose_level);
 	void compute_stabilizer_with_nauty(
 			int verbose_level);
 	void cheat_sheet_quartic_curve(

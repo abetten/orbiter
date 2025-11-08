@@ -36,6 +36,7 @@ nauty_interface_for_graphs::~nauty_interface_for_graphs()
 
 actions::action *nauty_interface_for_graphs::create_automorphism_group_of_colored_graph_object(
 		combinatorics::graph_theory::colored_graph *CG,
+		other::l1_interfaces::nauty_interface_control *Nauty_control,
 		int verbose_level)
 // called from
 // graph_theory_apps::automorphism_group
@@ -56,6 +57,7 @@ actions::action *nauty_interface_for_graphs::create_automorphism_group_of_colore
 		true /* f_bitvec */, CG->Bitvec, NULL /* int  *Adj */,
 		CG->point_color,
 		labeling,
+		Nauty_control,
 		verbose_level);
 
 	FREE_int(labeling);
@@ -69,6 +71,7 @@ actions::action *nauty_interface_for_graphs::create_automorphism_group_of_colore
 actions::action *nauty_interface_for_graphs::create_automorphism_group_and_canonical_labeling_of_colored_graph_object(
 		combinatorics::graph_theory::colored_graph *CG,
 		int *labeling,
+		other::l1_interfaces::nauty_interface_control *Nauty_control,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -84,6 +87,7 @@ actions::action *nauty_interface_for_graphs::create_automorphism_group_and_canon
 		true /* f_bitvec */, CG->Bitvec, NULL /* int  *Adj */,
 		CG->point_color,
 		labeling,
+		Nauty_control,
 		verbose_level);
 
 	if (f_v) {
@@ -100,6 +104,7 @@ actions::action *nauty_interface_for_graphs::create_automorphism_group_and_canon
 	int *Adj,
 	int *vertex_colors,
 	int *labeling,
+	other::l1_interfaces::nauty_interface_control *Nauty_control,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -208,7 +213,9 @@ actions::action *nauty_interface_for_graphs::create_automorphism_group_and_canon
 	}
 	A = create_automorphism_group_of_graph_with_partition_and_labeling(
 			n1, true, Adj1, NULL,
-			nb_parts, parts, labeling, verbose_level);
+			nb_parts, parts, labeling,
+			Nauty_control,
+			verbose_level);
 	if (f_v) {
 		cout << "nauty_interface_for_graphs::create_automorphism_group_and_canonical_labeling_of_colored_graph "
 				"after create_automorphism_group_of_graph_with_partition_and_labeling" << endl;
@@ -225,6 +232,7 @@ actions::action *nauty_interface_for_graphs::create_automorphism_group_and_canon
 
 actions::action *nauty_interface_for_graphs::create_automorphism_group_of_colored_graph_ignoring_colors(
 		combinatorics::graph_theory::colored_graph *CG,
+		other::l1_interfaces::nauty_interface_control *Nauty_control,
 		int verbose_level)
 // called from
 // graph_theory_apps::automorphism_group
@@ -245,6 +253,7 @@ actions::action *nauty_interface_for_graphs::create_automorphism_group_of_colore
 	A = create_automorphism_group_of_graph_bitvec(
 		CG->nb_points,
 		CG->Bitvec,
+		Nauty_control,
 		verbose_level);
 
 	if (f_v) {
@@ -263,6 +272,7 @@ actions::action *nauty_interface_for_graphs::create_automorphism_group_of_colore
 actions::action *nauty_interface_for_graphs::create_automorphism_group_of_graph_bitvec(
 	int n,
 	other::data_structures::bitvector *Bitvec,
+	other::l1_interfaces::nauty_interface_control *Nauty_control,
 	int verbose_level)
 // called from
 // hadamard_classify::init
@@ -281,6 +291,7 @@ actions::action *nauty_interface_for_graphs::create_automorphism_group_of_graph_
 	A = create_automorphism_group_of_graph_with_partition_and_labeling(
 			n, true, Bitvec, NULL,
 			1, parts, labeling,
+			Nauty_control,
 			verbose_level);
 	if (f_v) {
 		cout << "nauty_interface_for_graphs::create_automorphism_group_of_graph_bitvec done" << endl;
@@ -296,6 +307,7 @@ actions::action *nauty_interface_for_graphs::create_automorphism_group_of_graph_
 	int *Adj,
 	int nb_parts, int *parts,
 	int *labeling,
+	other::l1_interfaces::nauty_interface_control *Nauty_control,
 	int verbose_level)
 // labeling[n]
 {
@@ -352,6 +364,7 @@ actions::action *nauty_interface_for_graphs::create_automorphism_group_of_graph_
 		Nau.nauty_interface_graph_bitvec(
 				n, Bitvec,
 			partitions,
+			Nauty_control->f_nauty_log, Nauty_control->nauty_log_fname,
 			NO,
 			verbose_level);
 	}
@@ -359,6 +372,7 @@ actions::action *nauty_interface_for_graphs::create_automorphism_group_of_graph_
 		Nau.nauty_interface_graph_int(
 				n, Adj,
 			partitions,
+			Nauty_control->f_nauty_log, Nauty_control->nauty_log_fname,
 			NO,
 			verbose_level);
 	}
@@ -434,7 +448,9 @@ actions::action *nauty_interface_for_graphs::create_automorphism_group_of_graph_
 
 
 actions::action *nauty_interface_for_graphs::create_automorphism_group_of_graph(
-		int *Adj, int n, int verbose_level)
+		int *Adj, int n,
+		other::l1_interfaces::nauty_interface_control *Nauty_control,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -457,7 +473,8 @@ actions::action *nauty_interface_for_graphs::create_automorphism_group_of_graph(
 				"before NO->nauty_output_allocate" << endl;
 	}
 
-	NO->nauty_output_allocate(n,
+	NO->nauty_output_allocate(
+			n,
 			0,
 			n,
 			verbose_level - 2);
@@ -475,8 +492,10 @@ actions::action *nauty_interface_for_graphs::create_automorphism_group_of_graph(
 		cout << "nauty_interface_for_graphs::create_automorphism_group_of_graph "
 				"before Nau.nauty_interface_graph_int" << endl;
 	}
-	Nau.nauty_interface_graph_int(n, Adj,
+	Nau.nauty_interface_graph_int(
+			n, Adj,
 		partition,
+		Nauty_control->f_nauty_log, Nauty_control->nauty_log_fname,
 		NO,
 		verbose_level);
 	if (f_v) {
@@ -518,6 +537,7 @@ actions::action *nauty_interface_for_graphs::create_automorphism_group_of_graph(
 
 actions::action *nauty_interface_for_graphs::create_automorphism_group_and_canonical_labeling_of_graph(
 		int *Adj, int n, int *labeling,
+		other::l1_interfaces::nauty_interface_control *Nauty_control,
 		int verbose_level)
 // labeling[n]
 {
@@ -569,8 +589,10 @@ actions::action *nauty_interface_for_graphs::create_automorphism_group_and_canon
 		cout << "nauty_interface_for_graphs::create_automorphism_group_and_canonical_labeling_of_graph "
 				"before Nau.nauty_interface_graph_int" << endl;
 	}
-	Nau.nauty_interface_graph_int(n, Adj,
+	Nau.nauty_interface_graph_int(
+			n, Adj,
 		partition,
+		Nauty_control->f_nauty_log, Nauty_control->nauty_log_fname,
 		NO,
 		verbose_level);
 	if (f_v) {

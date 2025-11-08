@@ -1776,7 +1776,7 @@ public:
 			std::string &prefix,
 			other::graphics::layered_graph_draw_options *LG_Draw_options,
 			int verbose_level);
-	void report_subgroup_chain(
+	void report_subgroup_chain_table(
 			std::ostream &ost);
 	void report_basic_orbit(
 			std::ostream &ost,

@@ -494,7 +494,7 @@ public:
 	void identify_Bes(
 		int *Iso_type, int *Nb_lines, int verbose_level);
 	void stats(
-			std::string &stats_prefix);
+			std::string &stats_prefix, int verbose_level);
 
 };
 

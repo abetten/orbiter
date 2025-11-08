@@ -462,6 +462,9 @@ public:
 	int f_reduce_memory_footprint;
 	int reduce_memory_footprint_level;
 
+	int f_nauty_log;
+	char *nauty_log_fname;
+
 
 	nauty_interface_control();
 	~nauty_interface_control();
@@ -534,15 +537,18 @@ public:
 			int v,
 			data_structures::bitvector *Bitvec,
 		int *partition,
+		int f_nauty_log, char *nauty_log_fname,
 		l1_interfaces::nauty_output *NO,
 		int verbose_level);
 	void nauty_interface_graph_int(
 			int v, int *Adj,
 		int *partition,
+		int f_nauty_log, char *nauty_log_fname,
 		l1_interfaces::nauty_output *NO,
 		int verbose_level);
 	void Levi_graph(
 			combinatorics::canonical_form_classification::encoded_combinatorial_object *Enc,
+			int f_nauty_log, char *nauty_log_fname,
 		l1_interfaces::nauty_output *NO,
 		int verbose_level);
 

@@ -181,6 +181,7 @@ void nauty_interface_for_combo::run_nauty_for_combo(
 
 	Nau.Levi_graph(
 		Enc,
+		Nauty_control->f_nauty_log, Nauty_control->nauty_log_fname,
 		NO,
 		verbose_level);
 

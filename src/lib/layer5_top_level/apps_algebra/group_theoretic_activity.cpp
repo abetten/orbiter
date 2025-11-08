@@ -1531,7 +1531,9 @@ void group_theoretic_activity::perform_activity(
 					"f_stats" << endl;
 		}
 
-		AG->A->ptr->save_stats(Descr->stats_fname_base);
+		AG->A->ptr->Action_pointer_stats->save_stats(
+				Descr->stats_fname_base,
+				verbose_level - 1);
 
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "

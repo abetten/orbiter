@@ -291,10 +291,12 @@ void hadamard_classify::init(
 	}
 
 	interfaces::nauty_interface_for_graphs Nauty;
+	other::l1_interfaces::nauty_interface_control Nauty_control;
 
 
 	A = Nauty.create_automorphism_group_of_graph_bitvec(
 		CG->nb_points, Bitvec,
+		&Nauty_control,
 		verbose_level);
 
 	algebra::ring_theory::longinteger_object go;

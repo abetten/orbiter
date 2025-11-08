@@ -964,6 +964,8 @@ void callback_choose_random_generator_orthogonal(
 	// for use in action_init.cpp
 
 
+
+
 // #############################################################################
 // action_pointer_table.cpp
 // #############################################################################
@@ -1051,6 +1053,10 @@ public:
 			action &A, long int rk, int verbose_level);
 
 	/** counters for how often a function has been called */
+
+	other::orbiter_kernel_system::action_pointer_stats *Action_pointer_stats;
+
+#if 0
 	int nb_times_image_of_called;
 	int nb_times_image_of_low_level_called;
 	int nb_times_unpack_called;
@@ -1059,12 +1065,10 @@ public:
 	int nb_times_store_called;
 	int nb_times_mult_called;
 	int nb_times_invert_called;
+#endif
 
 	action_pointer_table();
 	~action_pointer_table();
-	void reset_counters();
-	void save_stats(
-			std::string &fname_base);
 	void null_function_pointers();
 	void copy_from_but_reset_counters(
 			action_pointer_table *T);
@@ -1076,6 +1080,7 @@ public:
 	void init_function_pointers_permutation_representation_group();
 	void init_function_pointers_induced_action();
 };
+
 
 
 
@@ -1239,16 +1244,6 @@ public:
 			int *Perms, int degree,
 			int verbose_level);
 
-#if 0
-	/** Create a group from generators */
-	void init_group_from_strong_generators(
-			data_structures_groups::vector_ge *gens,
-			groups::sims *K,
-		int given_base_length, int *given_base,
-		int verbose_level);
-	// calls sims::build_up_group_from_generators
-#endif
-
 	void create_orthogonal_group(
 			action *subaction,
 		int f_has_target_group_order,
@@ -1293,8 +1288,8 @@ public:
 	void null_element_data();
 	void allocate_element_data();
 
-	int image_of(
-			void *elt, int a);
+	long int image_of(
+			void *elt, long int a);
 	void image_of_low_level(
 			void *elt,
 			int *input, int *output, int verbose_level);

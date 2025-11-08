@@ -1291,6 +1291,10 @@ void csv_file_support::do_csv_file_select_cols(
 	Cols = NEW_lint(nb_cols);
 
 	for (j = 0; j < nb_cols; j++) {
+		if (f_v) {
+			cout << "csv_file_support::do_csv_file_select_cols "
+					"searching for column " << headings_in[j] << endl;
+		}
 		Cols[j] = S.find_column(headings_in[j]);
 	}
 

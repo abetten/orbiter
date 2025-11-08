@@ -2478,7 +2478,7 @@ void strong_generators::orbits_on_set_with_given_action_after_restriction(
 	}
 	Ar = A_given->Induced_action->restricted_action(
 			Set, set_sz, label_of_set, label_of_set_tex,
-			verbose_level);
+			verbose_level - 2);
 	if (f_v) {
 		cout << "strong_generators::orbits_on_set_with_given_action_after_restriction "
 				"after A_given->Induced_action->restricted_action" << endl;
@@ -2499,7 +2499,7 @@ void strong_generators::orbits_on_set_with_given_action_after_restriction(
 			false /* f_load_save */,
 			prefix,
 			print_interval,
-			verbose_level - 1);
+			verbose_level - 2);
 	if (f_v) {
 		cout << "strong_generators::orbits_on_set_with_given_action_after_restriction "
 				"after Orb->init" << endl;

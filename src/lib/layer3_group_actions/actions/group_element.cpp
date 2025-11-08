@@ -132,10 +132,10 @@ void group_element::allocate_element_data()
 
 
 
-int group_element::image_of(
-		void *elt, int a)
+long int group_element::image_of(
+		void *elt, long int a)
 {
-	A->ptr->nb_times_image_of_called++;
+	A->ptr->Action_pointer_stats->nb_times_image_of_called++;
 	return (*A->ptr->ptr_element_image_of)(*A, a, elt, 0);
 }
 
@@ -144,7 +144,7 @@ void group_element::image_of_low_level(
 		int *input, int *output,
 		int verbose_level)
 {
-	A->ptr->nb_times_image_of_low_level_called++;
+	A->ptr->Action_pointer_stats->nb_times_image_of_low_level_called++;
 	(*A->ptr->ptr_element_image_of_low_level)(
 			*A,
 			input, output, elt, verbose_level);
@@ -178,35 +178,35 @@ int group_element::is_one(
 void group_element::unpack(
 		void *elt, void *Elt)
 {
-	A->ptr->nb_times_unpack_called++;
+	A->ptr->Action_pointer_stats->nb_times_unpack_called++;
 	(*A->ptr->ptr_element_unpack)(*A, elt, Elt, 0);
 }
 
 void group_element::pack(
 		void *Elt, void *elt)
 {
-	A->ptr->nb_times_pack_called++;
+	A->ptr->Action_pointer_stats->nb_times_pack_called++;
 	(*A->ptr->ptr_element_pack)(*A, Elt, elt, 0);
 }
 
 void group_element::retrieve(
 		void *elt, int hdl)
 {
-	A->ptr->nb_times_retrieve_called++;
+	A->ptr->Action_pointer_stats->nb_times_retrieve_called++;
 	(*A->ptr->ptr_element_retrieve)(*A, hdl, elt, 0);
 }
 
 int group_element::store(
 		void *elt)
 {
-	A->ptr->nb_times_store_called++;
+	A->ptr->Action_pointer_stats->nb_times_store_called++;
 	return (*A->ptr->ptr_element_store)(*A, elt, 0);
 }
 
 void group_element::mult(
 		void *a, void *b, void *ab)
 {
-	A->ptr->nb_times_mult_called++;
+	A->ptr->Action_pointer_stats->nb_times_mult_called++;
 	(*A->ptr->ptr_element_mult)(*A, a, b, ab, 0);
 }
 
@@ -229,7 +229,7 @@ void group_element::mult_apply_from_the_left(
 void group_element::invert(
 		void *a, void *av)
 {
-	A->ptr->nb_times_invert_called++;
+	A->ptr->Action_pointer_stats->nb_times_invert_called++;
 	(*A->ptr->ptr_element_invert)(*A, a, av, 0);
 }
 
@@ -385,7 +385,7 @@ long int group_element::element_image_of(
 				"using ptr table " << A->ptr->label << endl;
 		cout << "group_element::element_image_of "
 				"A->ptr->nb_times_image_of_called = "
-				<< A->ptr->nb_times_image_of_called << endl;
+				<< A->ptr->Action_pointer_stats->nb_times_image_of_called << endl;
 	}
 
 	if (A->ptr == NULL) {
@@ -393,7 +393,7 @@ long int group_element::element_image_of(
 		exit(1);
 	}
 
-	A->ptr->nb_times_image_of_called++;
+	A->ptr->Action_pointer_stats->nb_times_image_of_called++;
 	return (*A->ptr->ptr_element_image_of)(*A, a, elt, verbose_level);
 }
 
@@ -406,7 +406,7 @@ void group_element::element_image_of_low_level(
 				"A->ptr is NULL" << endl;
 		exit(1);
 	}
-	A->ptr->nb_times_image_of_low_level_called++;
+	A->ptr->Action_pointer_stats->nb_times_image_of_low_level_called++;
 	(*A->ptr->ptr_element_image_of_low_level)(
 			*A,
 			input, output, elt, verbose_level);
@@ -478,42 +478,42 @@ int group_element::element_is_one(
 void group_element::element_unpack(
 		void *elt, void *Elt, int verbose_level)
 {
-	A->ptr->nb_times_unpack_called++;
+	A->ptr->Action_pointer_stats->nb_times_unpack_called++;
 	(*A->ptr->ptr_element_unpack)(*A, elt, Elt, verbose_level);
 }
 
 void group_element::element_pack(
 		void *Elt, void *elt, int verbose_level)
 {
-	A->ptr->nb_times_pack_called++;
+	A->ptr->Action_pointer_stats->nb_times_pack_called++;
 	(*A->ptr->ptr_element_pack)(*A, Elt, elt, verbose_level);
 }
 
 void group_element::element_retrieve(
 		int hdl, void *elt, int verbose_level)
 {
-	A->ptr->nb_times_retrieve_called++;
+	A->ptr->Action_pointer_stats->nb_times_retrieve_called++;
 	(*A->ptr->ptr_element_retrieve)(*A, hdl, elt, verbose_level);
 }
 
 int group_element::element_store(
 		void *elt, int verbose_level)
 {
-	A->ptr->nb_times_store_called++;
+	A->ptr->Action_pointer_stats->nb_times_store_called++;
 	return (*A->ptr->ptr_element_store)(*A, elt, verbose_level);
 }
 
 void group_element::element_mult(
 		void *a, void *b, void *ab, int verbose_level)
 {
-	A->ptr->nb_times_mult_called++;
+	A->ptr->Action_pointer_stats->nb_times_mult_called++;
 	(*A->ptr->ptr_element_mult)(*A, a, b, ab, verbose_level);
 }
 
 void group_element::element_invert(
 		void *a, void *av, int verbose_level)
 {
-	A->ptr->nb_times_invert_called++;
+	A->ptr->Action_pointer_stats->nb_times_invert_called++;
 	(*A->ptr->ptr_element_invert)(*A, a, av, verbose_level);
 }
 

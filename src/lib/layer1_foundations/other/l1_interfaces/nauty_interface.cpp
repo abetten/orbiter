@@ -66,8 +66,9 @@ using namespace std;
 typedef unsigned char uchar;
 
 static void nauty_interface_allocate_data(
-		int n);
-static void nauty_interface_free_data();
+		int n, int f_nauty_log, char *nauty_log_fname);
+static void nauty_interface_free_data(
+		int f_nauty_log, char *nauty_log_fname);
 static void nauty_interface_fill_nauty_output(
 		int n,
 		l1_interfaces::nauty_output *NO,
@@ -94,6 +95,7 @@ void nauty_interface::nauty_interface_graph_bitvec(
 		int v,
 		data_structures::bitvector *Bitvec,
 		int *partition,
+		int f_nauty_log, char *nauty_log_fname,
 		l1_interfaces::nauty_output *NO,
 		int verbose_level)
 {
@@ -114,7 +116,7 @@ void nauty_interface::nauty_interface_graph_bitvec(
 	// 		options.writemarkers = true;
 
 	n = v;
-	nauty_interface_allocate_data(n);
+	nauty_interface_allocate_data(n, f_nauty_log, nauty_log_fname);
 
 	m = (n + WORDSIZE - 1) / WORDSIZE;
 	if (n >= MAXN) {
@@ -193,7 +195,7 @@ void nauty_interface::nauty_interface_graph_bitvec(
 
 
 #endif
-	nauty_interface_free_data();
+	nauty_interface_free_data(f_nauty_log, nauty_log_fname);
 	if (f_v) {
 		cout << "nauty_interface::nauty_interface_graph_bitvec done" << endl;
 	}
@@ -212,6 +214,7 @@ void nauty_interface::nauty_interface_graph_bitvec(
 void nauty_interface::nauty_interface_graph_int(
 		int v, int *Adj,
 	int *partition,
+	int f_nauty_log, char *nauty_log_fname,
 	l1_interfaces::nauty_output *NO,
 	int verbose_level)
 // called from:
@@ -236,7 +239,7 @@ void nauty_interface::nauty_interface_graph_int(
 // 		options.writemarkers = true;
 
 	n = v;
-	nauty_interface_allocate_data(n);
+	nauty_interface_allocate_data(n, f_nauty_log, nauty_log_fname);
 
 	m = (n + WORDSIZE - 1) / WORDSIZE;
 		// m is the number of words needed to encode one row of the adjacency matrix
@@ -303,7 +306,7 @@ void nauty_interface::nauty_interface_graph_int(
 
 
 #endif
-	nauty_interface_free_data();
+	nauty_interface_free_data(f_nauty_log, nauty_log_fname);
 
 
 	delete [] g;
@@ -322,6 +325,7 @@ void nauty_interface::nauty_interface_graph_int(
 
 void nauty_interface::Levi_graph(
 		combinatorics::canonical_form_classification::encoded_combinatorial_object *Enc,
+		int f_nauty_log, char *nauty_log_fname,
 		l1_interfaces::nauty_output *NO,
 	int verbose_level)
 // this is called only from
@@ -355,7 +359,7 @@ void nauty_interface::Levi_graph(
 				"before nauty_interface_allocate_data" << endl;
 	}
 
-	nauty_interface_allocate_data(n);
+	nauty_interface_allocate_data(n, f_nauty_log, nauty_log_fname);
 
 	if (f_vv) {
 		cout << "nauty_interface::Levi_graph "
@@ -452,7 +456,7 @@ void nauty_interface::Levi_graph(
 
 
 #endif
-	nauty_interface_free_data();
+	nauty_interface_free_data(f_nauty_log, nauty_log_fname);
 #endif
 
 	delete [] g;
@@ -469,12 +473,13 @@ void nauty_interface::Levi_graph(
 
 #if 1
 static void nauty_interface_allocate_data(
-		int n)
+		int n, int f_nauty_log, char *nauty_log_fname)
 {
 #if HAS_NAUTY
 	aut = new int[n * n];
 	base = new int[n * n];
 	transversal_length = new int[n * n];
+	search_path = new int[n];
 
 	aut_counter = 0;
 	base_length = 0;
@@ -483,6 +488,14 @@ static void nauty_interface_allocate_data(
 	nb_processnode = 0;
 	nb_firstterminal = 0;
 
+
+	if (f_nauty_log) {
+		fp_nauty = fopen(nauty_log_fname, "w");
+	}
+	else {
+		fp_nauty = NULL;
+	}
+#if 0
 #if 1
 	fp_nauty = NULL;
 #else
@@ -490,14 +503,17 @@ static void nauty_interface_allocate_data(
 #endif
 
 #endif
+#endif
 }
 
-static void nauty_interface_free_data()
+static void nauty_interface_free_data(
+		int f_nauty_log, char *nauty_log_fname)
 {
 #if HAS_NAUTY
 	delete [] base;
 	delete [] aut;
 	delete [] transversal_length;
+	delete [] search_path;
 #endif
 }
 #endif
