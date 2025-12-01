@@ -486,6 +486,46 @@ public:
 
 
 // #############################################################################
+// gradient_domain.cpp
+// #############################################################################
+
+//! to compute the gradient of an equation
+
+
+
+
+class gradient_domain {
+
+public:
+
+	// inherited:
+	algebra::ring_theory::homogeneous_polynomial_domain *Poly;
+	algebra::ring_theory::homogeneous_polynomial_domain *Poly_small;
+
+	// The two polynomial rings must have the same number of variables.
+	// The smaller one must have degree one less than the degree of the original one.
+
+	int nb_variables;
+
+	// proprietary:
+	algebra::ring_theory::partial_derivative *Partials; // [4] from Poly3_4 to Poly2_4
+
+	gradient_domain();
+	~gradient_domain();
+	void init(
+			algebra::ring_theory::homogeneous_polynomial_domain *Poly,
+			algebra::ring_theory::homogeneous_polynomial_domain *Poly_small,
+			int verbose_level);
+	void compute_gradient(
+			int *equation_in, int *&gradient, int verbose_level);
+	// input: equation_in
+	// output: gradient[nb_variables * Poly->get_nb_monomials()]
+
+};
+
+
+
+// #############################################################################
 // kovalevski_points.cpp
 // #############################################################################
 
@@ -498,6 +538,7 @@ class kovalevski_points {
 
 public:
 
+	// inherited:
 	quartic_curve_object *QO;
 
 	other::data_structures::set_of_sets *pts_on_lines;
@@ -2618,6 +2659,8 @@ public:
 		int *line_idx, int verbose_level);
 	void find_real_lines(
 			std::vector<long int> &The_Lines,
+			int verbose_level);
+	void compute_singular_points(
 			int verbose_level);
 
 

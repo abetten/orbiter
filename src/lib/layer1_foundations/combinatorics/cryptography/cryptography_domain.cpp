@@ -2119,7 +2119,7 @@ void cryptography_domain::NTRU_encrypt(
 		FX.mult_mod(R, H, C, M, verbose_level);
 		int d;
 
-		d = FX.degree(C);
+		d = FX.recalculate_degree(C);
 
 		for (i = 0; i <= d; i++) {
 			FX.s_i(C, i) = Fq->mult(p, FX.s_i(C, i));
@@ -2138,7 +2138,7 @@ void cryptography_domain::NTRU_encrypt(
 		FX.print_object(D, cout);
 		cout << endl;
 
-		cout << "deg D(X) = " << FX.degree(D) << endl;
+		cout << "deg D(X) = " << FX.recalculate_degree(D) << endl;
 	}
 
 

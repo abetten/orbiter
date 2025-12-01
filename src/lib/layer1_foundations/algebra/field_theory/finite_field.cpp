@@ -732,6 +732,8 @@ void finite_field::init_override_polynomial_small_order(
 
 		my_poly_vec = NEW_int(e + 1);
 
+		alpha = p; // added A. Betten 11/19/2025
+
 		GG.AG_element_unrank(p, my_poly_vec, 1, e + 1, my_poly_lint);
 
 	}
@@ -924,22 +926,6 @@ int finite_field::has_quadratic_subfield()
 		return false;
 	}
 #endif
-}
-
-int finite_field::belongs_to_quadratic_subfield(
-		int a)
-{
-	if ((e % 2) != 0) {
-		cout << "finite_field::belongs_to_quadratic_subfield "
-				"does not have a quadratic subfield" << endl;
-		exit(1);
-	}
-	if (!f_has_table) {
-		cout << "finite_field::belongs_to_quadratic_subfield "
-				"!f_has_table" << endl;
-		exit(1);
-	}
-	return T->belongs_to_quadratic_subfield(a);
 }
 
 long int finite_field::compute_subfield_polynomial(
@@ -1416,6 +1402,7 @@ int finite_field::mult_verbose(
 			cout << "finite_field_by_tables::mult_verbose "
 					"with table" << endl;
 		}
+		Action_pointer_stats->ff_nb_mult_by_table++;
 		c = T->mult_verbose(i, j, verbose_level);
 	}
 	else {
@@ -1428,6 +1415,7 @@ int finite_field::mult_verbose(
 			cout << "finite_field_by_tables::mult_verbose "
 					"before Iwo->mult" << endl;
 		}
+		Action_pointer_stats->ff_nb_mult_long++;
 		c = Iwo->mult(i, j, verbose_level);
 	}
 	return c;
@@ -1587,6 +1575,7 @@ int finite_field::add(
 		if (f_v) {
 			cout << "finite_field_by_tables::add with table" << endl;
 		}
+		Action_pointer_stats->ff_nb_add_by_table++;
 		c = T->add(i, j);
 	}
 	else {
@@ -1595,6 +1584,7 @@ int finite_field::add(
 					"!f_has_table && Iwo == NULL" << endl;
 			exit(1);
 		}
+		Action_pointer_stats->ff_nb_add_long++;
 		c = Iwo->add(i, j, verbose_level);
 	}
 
@@ -1710,6 +1700,10 @@ int finite_field::negate(
 int finite_field::inverse(
 		int i)
 {
+
+	return inverse_v(i, 0 /* verbose_level */);
+
+#if 0
 	int c;
 	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
@@ -1730,7 +1724,42 @@ int finite_field::inverse(
 		c = Iwo->inverse(i, verbose_level);
 	}
 	return c;
+#endif
 }
+
+int finite_field::inverse_v(
+		int i, int verbose_level)
+{
+	int c;
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "finite_field_by_tables::inverse_v" << endl;
+	}
+	Action_pointer_stats->ff_nb_inverse++;
+	if (f_has_table) {
+		if (f_v) {
+			cout << "finite_field_by_tables::inverse_v with table" << endl;
+		}
+		Action_pointer_stats->ff_nb_inverse_by_table++;
+		c = T->inverse(i);
+	}
+	else {
+		if (Iwo == NULL) {
+			cout << "finite_field_by_tables::inverse_v "
+					"!f_has_table && Iwo == NULL" << endl;
+			exit(1);
+		}
+		Action_pointer_stats->ff_nb_inverse_long++;
+		c = Iwo->inverse(i, verbose_level - 1);
+	}
+	if (f_v) {
+		cout << "finite_field_by_tables::inverse_v done" << endl;
+	}
+	return c;
+}
+
+
 
 int finite_field::power(
 		int a, int n)
@@ -1799,7 +1828,7 @@ void finite_field::frobenius_power_vec(
 	int h;
 
 	for (h = 0; h < len; h++) {
-		v[h] = frobenius_power(v[h], frob_power);
+		v[h] = frobenius_power(v[h], frob_power, 0 /* verbose_level */);
 	}
 }
 
@@ -1810,21 +1839,35 @@ void finite_field::frobenius_power_vec_to_vec(
 	int h;
 
 	for (h = 0; h < len; h++) {
-		v_out[h] = frobenius_power(v_in[h], frob_power);
+		v_out[h] = frobenius_power(v_in[h], frob_power, 0 /* verbose_level */);
 	}
 }
 
 int finite_field::frobenius_power(
-		int a, int frob_power)
-// computes a^{p^i}
+		int a, int frob_power, int verbose_level)
+// computes a^{p^frob_power}
 {
-	if (!f_has_table) {
+	int b;
+
+	Action_pointer_stats->ff_nb_frobenius_power++;
+
+	b = 0;
+	if (f_has_table) {
+		b = T->frobenius_power(a, frob_power);
+	}
+	else {
+#if 0
 		cout << "finite_field::frobenius_power !f_has_table" << endl;
 		exit(1);
+#endif
+		if (Iwo == NULL) {
+			cout << "finite_field_by_tables::frobenius_power "
+					"!f_has_table && Iwo == NULL" << endl;
+			exit(1);
+		}
+		b = Iwo->frobenius_power(a, frob_power, 0 /*verbose_level*/);
 	}
-	Action_pointer_stats->ff_nb_frobenius_power++;
-	a = T->frobenius_power(a, frob_power);
-	return a;
+	return b;
 }
 
 int finite_field::absolute_trace(
@@ -1885,23 +1928,41 @@ int finite_field::absolute_norm(
 int finite_field::alpha_power(
 		int i)
 {
-	if (!f_has_table) {
-		cout << "finite_field::alpha_power !f_has_table" << endl;
-		exit(1);
+	int result;
+
+	if (f_has_table) {
+		Action_pointer_stats->ff_nb_alpha_power++;
+		result = T->alpha_power(i);
 	}
-	Action_pointer_stats->ff_nb_alpha_power++;
-	return T->alpha_power(i);
+	else {
+		if (Iwo == NULL) {
+			cout << "finite_field_by_tables::negate "
+					"!f_has_table && Iwo == NULL" << endl;
+			exit(1);
+		}
+		result = Iwo->alpha_power(i, 0 /*verbose_level*/);
+	}
+	return result;
 }
 
 int finite_field::log_alpha(
 		int i)
 {
-	if (!f_has_table) {
-		cout << "finite_field::log_alpha !f_has_table" << endl;
-		exit(1);
+	int result;
+	if (f_has_table) {
+		Action_pointer_stats->ff_nb_log_alpha++;
+		result = T->log_alpha(i);
 	}
-	Action_pointer_stats->ff_nb_log_alpha++;
-	return T->log_alpha(i);
+	else {
+		if (Iwo == NULL) {
+			cout << "finite_field_by_tables::log_alpha "
+					"!f_has_table && Iwo == NULL" << endl;
+			exit(1);
+		}
+		result = Iwo->log_alpha(i, 0 /*verbose_level*/);
+
+	}
+	return result;
 }
 
 int finite_field::multiplicative_order(
@@ -1932,7 +1993,7 @@ void finite_field::all_square_roots(
 			// we are in characteristic two
 
 			nb_roots = 1;
-			roots2[0] = frobenius_power(a, e - 1 /* frob_power */);
+			roots2[0] = frobenius_power(a, e - 1 /* frob_power */, 0 /* verbose_level */);
 		}
 		else {
 			// we are in characteristic odd
@@ -1999,7 +2060,7 @@ int finite_field::N2(
 				"quadratic subfield" << endl;
 		exit(1);
 	}
-	b = frobenius_power(a, r);
+	b = frobenius_power(a, r, 0 /* verbose_level */);
 	c = mult(a, b);
 	return c;
 }
@@ -2016,9 +2077,9 @@ int finite_field::N3(
 				"cubic subfield" << endl;
 		exit(1);
 	}
-	b = frobenius_power(a, r);
+	b = frobenius_power(a, r, 0 /* verbose_level */);
 	c = mult(a, b);
-	b = frobenius_power(b, r);
+	b = frobenius_power(b, r, 0 /* verbose_level */);
 	c = mult(c, b);
 	return c;
 }
@@ -2036,7 +2097,7 @@ int finite_field::T2(
 				"quadratic subfield q = " << q << " e = " << e << endl;
 		exit(1);
 	}
-	b = frobenius_power(a, r);
+	b = frobenius_power(a, r, 0 /* verbose_level */);
 	c = add(a, b);
 	return c;
 }
@@ -2053,9 +2114,9 @@ int finite_field::T3(
 				"cubic subfield" << endl;
 		exit(1);
 	}
-	b = frobenius_power(a, r);
+	b = frobenius_power(a, r, 0 /* verbose_level */);
 	c = add(a, b);
-	b = frobenius_power(b, r);
+	b = frobenius_power(b, r, 0 /* verbose_level */);
 	c = add(c, b);
 	return c;
 }
@@ -2072,7 +2133,7 @@ int finite_field::bar(
 				"quadratic subfield" << endl;
 		exit(1);
 	}
-	b = frobenius_power(a, r);
+	b = frobenius_power(a, r, 0 /* verbose_level */);
 	return b;
 }
 
@@ -2163,6 +2224,33 @@ int finite_field::primitive_element()
 		return NT.primitive_root(p, false);
 	}
 	return p;
+}
+
+int finite_field::belongs_to_quadratic_subfield(
+		int a)
+{
+	if ((e % 2) != 0) {
+		cout << "finite_field::belongs_to_quadratic_subfield "
+				"does not have a quadratic subfield" << endl;
+		exit(1);
+	}
+
+
+	int result;
+	if (f_has_table) {
+		Action_pointer_stats->ff_nb_log_alpha++;
+		result = T->belongs_to_quadratic_subfield(a);
+	}
+	else {
+		if (Iwo == NULL) {
+			cout << "finite_field_by_tables::belongs_to_quadratic_subfield "
+					"!f_has_table && Iwo == NULL" << endl;
+			exit(1);
+		}
+		result = Iwo->belongs_to_quadratic_subfield(a, 0 /*verbose_level*/);
+
+	}
+	return result;
 }
 
 

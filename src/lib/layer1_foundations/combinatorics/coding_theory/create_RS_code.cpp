@@ -102,7 +102,7 @@ void create_RS_code::init(
 	}
 
 
-	degree = FX->degree(*P);
+	degree = FX->recalculate_degree(*P);
 	generator_polynomial = NEW_int(degree + 1);
 	for (i = 0; i <= degree; i++) {
 		generator_polynomial[i] = FX->s_i(*P, i);

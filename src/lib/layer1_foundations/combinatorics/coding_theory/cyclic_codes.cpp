@@ -1064,7 +1064,7 @@ void cyclic_codes::generator_matrix_cyclic_code(
 			v[i] = M[i * n + j];
 		}
 		F->Projective_space_basic->PG_element_rank_modified_lint(
-				v, 1, k, rk);
+				v, 1, k, rk, 0 /* verbose_level */);
 		Rk[j] = rk;
 	}
 

@@ -33,9 +33,15 @@ action_pointer_stats::action_pointer_stats()
 	nb_times_invert_called = 0;
 
 	ff_nb_add = 0;
+	ff_nb_add_by_table = 0;
+	ff_nb_add_long = 0;
 	ff_nb_mult = 0;
+	ff_nb_mult_by_table = 0;
+	ff_nb_mult_long = 0;
 	ff_nb_negate = 0;
 	ff_nb_inverse = 0;
+	ff_nb_inverse_by_table = 0;
+	ff_nb_inverse_long = 0;
 	ff_nb_power = 0;
 	ff_nb_frobenius_power = 0;
 	ff_nb_absolute_trace = 0;
@@ -79,9 +85,15 @@ void action_pointer_stats::reset_counters()
 	nb_times_invert_called = 0;
 
 	ff_nb_add = 0;
+	ff_nb_add_by_table = 0;
+	ff_nb_add_long = 0;
 	ff_nb_mult = 0;
+	ff_nb_mult_by_table = 0;
+	ff_nb_mult_long = 0;
 	ff_nb_negate = 0;
 	ff_nb_inverse = 0;
+	ff_nb_inverse_by_table = 0;
+	ff_nb_inverse_long = 0;
 	ff_nb_power = 0;
 	ff_nb_frobenius_power = 0;
 	ff_nb_absolute_trace = 0;
@@ -104,7 +116,7 @@ void action_pointer_stats::save_stats(
 		cout << "action_pointer_stats::save_stats fname_base = " << fname_base << endl;
 	}
 
-	int nb_cols = 21;
+	int nb_cols = 27;
 	int nb_rows = 1;
 
 	string *Table;
@@ -120,40 +132,26 @@ void action_pointer_stats::save_stats(
 	Table[7] = std::to_string(nb_times_mult_called);
 	Table[8] = std::to_string(nb_times_invert_called);
 	Table[9] = std::to_string(ff_nb_add);
-	Table[10] = std::to_string(ff_nb_mult);
-	Table[11] = std::to_string(ff_nb_negate);
-	Table[12] = std::to_string(ff_nb_inverse);
-	Table[13] = std::to_string(ff_nb_power);
-	Table[14] = std::to_string(ff_nb_frobenius_power);
-	Table[15] = std::to_string(ff_nb_absolute_trace);
-	Table[16] = std::to_string(ff_nb_absolute_norm);
-	Table[17] = std::to_string(ff_nb_alpha_power);
-	Table[18] = std::to_string(ff_nb_log_alpha);
-	Table[19] = std::to_string(mem_nb_new);
-	Table[20] = std::to_string(mem_nb_free);
+	Table[10] = std::to_string(ff_nb_add_by_table);
+	Table[11] = std::to_string(ff_nb_add_long);
+	Table[12] = std::to_string(ff_nb_mult);
+	Table[13] = std::to_string(ff_nb_mult_by_table);
+	Table[14] = std::to_string(ff_nb_mult_long);
+	Table[15] = std::to_string(ff_nb_negate);
+	Table[16] = std::to_string(ff_nb_inverse);
+	Table[17] = std::to_string(ff_nb_inverse_by_table);
+	Table[18] = std::to_string(ff_nb_inverse_long);
+	Table[19] = std::to_string(ff_nb_power);
+	Table[20] = std::to_string(ff_nb_frobenius_power);
+	Table[21] = std::to_string(ff_nb_absolute_trace);
+	Table[22] = std::to_string(ff_nb_absolute_norm);
+	Table[23] = std::to_string(ff_nb_alpha_power);
+	Table[24] = std::to_string(ff_nb_log_alpha);
+	Table[25] = std::to_string(mem_nb_new);
+	Table[26] = std::to_string(mem_nb_free);
 
 
 	other::orbiter_kernel_system::file_io Fio;
-
-#if 0
-	long int stats[8];
-
-	stats[0] = nb_times_image_of_called;
-	stats[1] = nb_times_image_of_low_level_called;
-	stats[2] = nb_times_unpack_called;
-	stats[3] = nb_times_pack_called;
-	stats[4] = nb_times_retrieve_called;
-	stats[5] = nb_times_store_called;
-	stats[6] = nb_times_mult_called;
-	stats[7] = nb_times_invert_called;
-
-	string fname;
-
-	fname = fname_base + "_stats.csv";
-
-	Fio.Csv_file_support->lint_matrix_write_csv(
-			fname, stats, 1, 8);
-#endif
 
 	std::string fname_stats;
 
@@ -173,17 +171,23 @@ void action_pointer_stats::save_stats(
 	Col_headings[7] = "mult";
 	Col_headings[8] = "invert";
 	Col_headings[9] = "ff_add";
-	Col_headings[10] = "ff_mult";
-	Col_headings[11] = "ff_negate";
-	Col_headings[12] = "ff_inverse";
-	Col_headings[13] = "ff_power";
-	Col_headings[14] = "ff_frobenius_power";
-	Col_headings[15] = "ff_absolute_trace";
-	Col_headings[16] = "ff_absolute_norm";
-	Col_headings[17] = "ff_alpha_power";
-	Col_headings[18] = "ff_log_alpha";
-	Col_headings[19] = "men_nb_new";
-	Col_headings[20] = "men_nb_free";
+	Col_headings[10] = "ff_add_by_table";
+	Col_headings[11] = "ff_add_long";
+	Col_headings[12] = "ff_mult";
+	Col_headings[13] = "ff_mult_by_table";
+	Col_headings[14] = "ff_mult_long";
+	Col_headings[15] = "ff_negate";
+	Col_headings[16] = "ff_inverse";
+	Col_headings[17] = "ff_inverse_by_table";
+	Col_headings[18] = "ff_inverse_long";
+	Col_headings[19] = "ff_power";
+	Col_headings[20] = "ff_frobenius_power";
+	Col_headings[21] = "ff_absolute_trace";
+	Col_headings[22] = "ff_absolute_norm";
+	Col_headings[23] = "ff_alpha_power";
+	Col_headings[24] = "ff_log_alpha";
+	Col_headings[25] = "men_nb_new";
+	Col_headings[26] = "men_nb_free";
 
 
 

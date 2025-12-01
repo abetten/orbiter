@@ -18,6 +18,332 @@ int main()
 {
 
 	int verbose_level = 2;
+	int f_v = (verbose_level >= 1);
+
+	orbiter::layer5_applications::user_interface::orbiter_top_level_session Top_level_session;
+	orbiter::layer5_applications::user_interface::The_Orbiter_top_level_session = &Top_level_session;
+
+	algebra::field_theory::finite_field *F0, *F1;
+
+	F0 = NEW_OBJECT(algebra::field_theory::finite_field);
+	F1 = NEW_OBJECT(algebra::field_theory::finite_field);
+
+	//int q = 16; int e = 4;
+	int q = 27; int e = 3;
+	int f_without_tables = false;
+	int f_compute_related_fields = true;
+
+	F0->finite_field_init_small_order(
+			q,
+			false /*f_without_tables*/, f_compute_related_fields,
+			verbose_level);
+
+	F1->finite_field_init_small_order(
+			q,
+			true /*f_without_tables*/, f_compute_related_fields,
+			verbose_level);
+
+
+	int i, j, k1, k2;
+
+	cout << "checking addition..." << endl;
+	for (i = 0; i < q; i++) {
+		for (j = 0; j < q; j++) {
+			k1 = F0->add(i, j);
+			k2 = F1->add(i, j);
+			if (k1 != k2) {
+				cout << "error in i+j=k, i=" << i << " j=" << j << " k1=" << k1 << " k2=" << k2 << endl;
+				exit(1);
+			}
+		}
+	}
+
+	cout << "checking multiplication..." << endl;
+	for (i = 0; i < q; i++) {
+		for (j = 0; j < q; j++) {
+			k1 = F0->mult(i, j);
+			k2 = F1->mult(i, j);
+			if (k1 != k2) {
+				cout << "error in i*j=k, i=" << i << " j=" << j << " k1=" << k1 << " k2=" << k2 << endl;
+				exit(1);
+			}
+		}
+	}
+
+	cout << "checking inverse..." << endl;
+	for (i = 1; i < q; i++) {
+		k1 = F0->inverse(i);
+		k2 = F1->inverse_v(i, 0);
+		if (k1 != k2) {
+			cout << "error in i^-1=k, i=" << i << " k1=" << k1 << " k2=" << k2 << endl;
+			exit(1);
+		}
+	}
+
+	cout << "checking alpha_power..." << endl;
+	for (i = 1; i < q; i++) {
+		k1 = F0->alpha_power(i);
+		k2 = F1->alpha_power(i);
+		if (k1 != k2) {
+			cout << "error in alpha^i=k, i=" << i << " k1=" << k1 << " k2=" << k2 << endl;
+			exit(1);
+		}
+	}
+
+	cout << "checking frob_power..." << endl;
+	for (i = 0; i < q; i++) {
+		for (j = 0; j < e; j++) {
+			k1 = F0->frobenius_power(i, j, 0 /* verbose_level */);
+			k2 = F1->frobenius_power(i, j, 0 /* verbose_level */);
+			if (k1 != k2) {
+				cout << "error in frobenius_power(i,j)=k, i=" << i << " j=" << j << " k1=" << k1 << " k2=" << k2 << endl;
+				exit(1);
+			}
+		}
+	}
+
+#if 0
+
+	// compute quartics in characteristic 2 by brute force:
+
+	int verbose_level = 2;
+	int f_v = (verbose_level >= 1);
+
+	orbiter::layer5_applications::user_interface::orbiter_top_level_session Top_level_session;
+	orbiter::layer5_applications::user_interface::The_Orbiter_top_level_session = &Top_level_session;
+
+	algebra::field_theory::finite_field *F;
+
+	F = NEW_OBJECT(algebra::field_theory::finite_field);
+
+	int q = 4;
+	int f_without_tables = false;
+	int f_compute_related_fields = true;
+
+	F->finite_field_init_small_order(
+			q,
+			f_without_tables, f_compute_related_fields,
+			verbose_level);
+
+
+	layer5_applications::projective_geometry::projective_space_with_action *PA;
+
+	PA = NEW_OBJECT(layer5_applications::projective_geometry::projective_space_with_action);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_projective_space "
+				"before PA->init_from_description" << endl;
+	}
+
+	int n = 2;
+	int f_semilinear = true;
+
+	PA->init(
+			F,
+			n, f_semilinear,
+			true /* f_init_incidence_structure */,
+			verbose_level);
+
+
+	algebra::ring_theory::homogeneous_polynomial_domain *HPD;
+
+	HPD = NEW_OBJECT(algebra::ring_theory::homogeneous_polynomial_domain);
+	if (f_v) {
+		cout << "symbol_definition::definition_of_polynomial_ring "
+				"before HPD->init" << endl;
+	}
+
+	int number_of_variables = n + 1;
+	int homogeneous_of_degree = 4;
+	monomial_ordering_type Monomial_ordering_type = t_PART;
+
+	HPD->init_with_or_without_variables(
+			F,
+			number_of_variables,
+			homogeneous_of_degree,
+			Monomial_ordering_type,
+			false, NULL, NULL,
+			verbose_level);
+
+
+	other::orbiter_kernel_system::file_io Fio;
+	std::string fname_base;
+	std::string fname;
+	std::string col_label;
+
+	other::data_structures::set_of_sets *SoS;
+	other::data_structures::set_of_sets *SoS_stab_order;
+	other::data_structures::set_of_sets *SoS_orbit_length;
+
+	fname_base = "poly_orbits_d4_n2_q4";
+	fname = fname_base + ".csv";
+	col_label = "Rep";
+
+
+	Fio.Csv_file_support->read_column_as_set_of_sets(
+			fname, col_label,
+			SoS,
+			verbose_level);
+
+
+	cout << "number of orbits: " << SoS->nb_sets << endl;
+
+	col_label = "StabOrder";
+
+	Fio.Csv_file_support->read_column_as_set_of_sets(
+			fname, col_label,
+			SoS_stab_order,
+			verbose_level);
+
+	col_label = "OrbitLength";
+
+	Fio.Csv_file_support->read_column_as_set_of_sets(
+			fname, col_label,
+			SoS_orbit_length,
+			verbose_level);
+
+
+
+	int nb_rows;
+	int nb_cols;
+
+	string *Table;
+	string *Table_ns;
+
+	nb_rows = SoS->nb_sets;
+	nb_cols = 6;
+
+	Table = new string [nb_rows * nb_cols];
+	Table_ns = new string [nb_rows * nb_cols];
+
+
+	int cnt_ns = 0;
+	int cnt = 0;
+	int po_go = 0;
+	int po_index = 0;
+	int po = 0;
+	int so = 0;
+
+	geometry::algebraic_geometry::variety_description *Variety_description;
+
+
+	Variety_description = NEW_OBJECT(geometry::algebraic_geometry::variety_description);
+
+	cnt_ns = 0;
+	for (cnt = 0; cnt < SoS->nb_sets; cnt++) {
+
+		layer5_applications::canonical_form::variety_object_with_action *Variety;
+
+		Variety = NEW_OBJECT(layer5_applications::canonical_form::variety_object_with_action);
+
+
+		Variety_description->f_projective_space_pointer = true;
+		Variety_description->Projective_space_pointer = PA->P;
+
+		Variety_description->f_ring_pointer = true;
+		Variety_description->Ring_pointer = HPD;
+
+		Variety_description->f_equation_by_rank = true;
+		Variety_description->equation_by_rank_text = std::to_string(SoS->Sets[cnt][0]);
+
+		if (f_v) {
+			cout << "symbol_definition::definition_of_variety "
+					"before Variety->create_variety" << endl;
+		}
+		Variety->create_variety(
+				PA, cnt, po_go, po_index, po, so, Variety_description,
+				verbose_level);
+
+		int nb_s;
+
+		Variety->Variety_object->compute_singular_points(
+					verbose_level - 2);
+
+		if (Variety->Variety_object->f_has_singular_points) {
+
+
+			nb_s = Variety->Variety_object->Singular_points.size();
+
+		}
+		else {
+			nb_s = -1;
+		}
+
+		Table[cnt * nb_cols + 0] = std::to_string(cnt);
+		Table[cnt * nb_cols + 1] = std::to_string(SoS->Sets[cnt][0]);
+		Table[cnt * nb_cols + 2] = std::to_string(SoS_stab_order->Sets[cnt][0]);
+		Table[cnt * nb_cols + 3] = std::to_string(SoS_orbit_length->Sets[cnt][0]);
+		Table[cnt * nb_cols + 4] = std::to_string(Variety->Variety_object->get_nb_points());
+		Table[cnt * nb_cols + 5] = std::to_string(nb_s);
+
+
+		if (nb_s == 0) {
+
+			Table_ns[cnt_ns * nb_cols + 0] = std::to_string(cnt);
+			Table_ns[cnt_ns * nb_cols + 1] = std::to_string(SoS->Sets[cnt][0]);
+			Table_ns[cnt_ns * nb_cols + 2] = std::to_string(SoS_stab_order->Sets[cnt][0]);
+			Table_ns[cnt_ns * nb_cols + 3] = std::to_string(SoS_orbit_length->Sets[cnt][0]);
+			Table_ns[cnt_ns * nb_cols + 4] = std::to_string(Variety->Variety_object->get_nb_points());
+			Table_ns[cnt_ns * nb_cols + 5] = std::to_string(nb_s);
+			cnt_ns++;
+
+		}
+
+		cout << "cnt = " << cnt << " nb_s = " << nb_s << endl;
+
+	}
+
+
+	std::string fname_out;
+
+	fname_out = fname_base + "_properties.csv";
+
+	std::string *Col_headings;
+
+	Col_headings = new string [nb_cols];
+
+	Col_headings[0] = "idx";
+	Col_headings[1] = "rep";
+	Col_headings[2] = "stab";
+	Col_headings[3] = "orbitlength";
+	Col_headings[4] = "nbpts";
+	Col_headings[5] = "nbsingular";
+
+
+	Fio.Csv_file_support->write_table_of_strings_with_col_headings(
+			fname_out,
+			nb_rows, nb_cols, Table,
+			Col_headings,
+			verbose_level);
+
+	if (f_v) {
+		cout << "sandbox "
+				"written file " << fname_out << " of size "
+				<< Fio.file_size(fname_out) << endl;
+	}
+
+	fname_out = fname_base + "_ns.csv";
+
+	Fio.Csv_file_support->write_table_of_strings_with_col_headings(
+			fname_out,
+			cnt_ns, nb_cols, Table_ns,
+			Col_headings,
+			verbose_level);
+
+	if (f_v) {
+		cout << "sandbox "
+				"written file " << fname_out << " of size "
+				<< Fio.file_size(fname_out) << endl;
+	}
+
+	delete [] Col_headings;
+	delete [] Table;
+#endif
+
+
+
+
+#if 0
 	orbiter::layer5_applications::user_interface::orbiter_top_level_session Top_level_session;
 	orbiter::layer5_applications::user_interface::The_Orbiter_top_level_session = &Top_level_session;
 
@@ -110,6 +436,7 @@ int main()
 			verbose_level);
 
 	delete [] Table;
+#endif
 
 
 #if 0

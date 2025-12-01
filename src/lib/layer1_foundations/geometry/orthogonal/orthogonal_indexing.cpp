@@ -379,7 +379,7 @@ long int orthogonal_indexing::Qminus_rank(
 		}
 	}
 	F->Projective_space_basic->PG_element_normalize(
-			v, stride, k + 1);
+			v, stride, k + 1, 0 /* verbose_level */);
 	x1 = v[2 * n * stride];
 	x2 = v[(2 * n + 1) * stride];
 	if (x1 == 0 && x2 == 0) {
@@ -1046,7 +1046,7 @@ void orthogonal_indexing::Sbar_rank(
 		cout << "orthogonal_indexing::Sbar_rank" << endl;
 	}
 	F->Projective_space_basic->PG_element_normalize(
-			v, stride, 2 * n);
+			v, stride, 2 * n, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "orthogonal_indexing::Sbar_rank: ";
 		if (stride == 1) {

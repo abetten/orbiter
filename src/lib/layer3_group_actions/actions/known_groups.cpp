@@ -758,7 +758,7 @@ void known_groups::init_matrix_group_strong_generators_builtin(
 				n, F,
 			M->f_semilinear,
 			data, size, nb_gens,
-			0 /*verbose_level - 1*/);
+			verbose_level - 1);
 		if (f_v) {
 			cout << "known_groups::init_matrix_group_strong_generators_builtin "
 					"after GGD.strong_generators_for_projective_linear_group" << endl;
@@ -806,6 +806,10 @@ void known_groups::init_matrix_group_strong_generators_builtin(
 		exit(1);
 	}
 
+	if (f_v) {
+		cout << "known_groups::init_matrix_group_strong_generators_builtin strong generators are:" << endl;
+		Int_matrix_print(data, nb_gens, size);
+	}
 
 	A->f_has_strong_generators = true;
 	A->Strong_gens = NEW_OBJECT(groups::strong_generators);

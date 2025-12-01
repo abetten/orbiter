@@ -547,7 +547,7 @@ void surface_study::study_group(
 	Int_matrix_print(Group_elts, group_order, elt_sz);
 	for (i = 0; i < group_order; i++) {
 		F->Projective_space_basic->PG_element_normalize(
-				Group_elts + i * elt_sz, 1, elt_sz);
+				Group_elts + i * elt_sz, 1, elt_sz, 0 /* verbose_level */);
 		}
 	cout << "group elements:" << endl;
 	for (i = 0; i < group_order; i++) {
@@ -558,7 +558,7 @@ void surface_study::study_group(
 	cout << "Group_elts normalized from the back:" << endl;
 	for (i = 0; i < group_order; i++) {
 		F->Projective_space_basic->PG_element_normalize(
-				Group_elts + i * elt_sz, 1, elt_sz);
+				Group_elts + i * elt_sz, 1, elt_sz, 0 /* verbose_level */);
 		cout << "element " << i << " / " << group_order << ":" << endl;
 		Int_matrix_print(Group_elts + i * elt_sz, 4, 4);
 		}

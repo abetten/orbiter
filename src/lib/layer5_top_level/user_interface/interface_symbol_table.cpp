@@ -312,9 +312,15 @@ void interface_symbol_table::worker(
 		cout << "interface_symbol_table::worker" << endl;
 	}
 	if (f_define) {
+		if (f_v) {
+			cout << "interface_symbol_table::worker f_define" << endl;
+		}
 		Symbol_definition->perform_definition(verbose_level);
 	}
 	else if (f_print_symbols) {
+		if (f_v) {
+			cout << "interface_symbol_table::worker f_print_symbols" << endl;
+		}
 		Orbiter_top_level_session->print_symbol_table();
 	}
 	else if (f_activity) {

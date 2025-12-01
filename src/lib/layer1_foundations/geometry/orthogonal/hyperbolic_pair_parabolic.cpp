@@ -3415,7 +3415,7 @@ void hyperbolic_pair::parabolic_point_normalize(
 	}
 	else {
 		F->Projective_space_basic->PG_element_normalize(
-				v, stride, n);
+				v, stride, n, 0 /* verbose_level */);
 	}
 }
 
@@ -3472,7 +3472,7 @@ void hyperbolic_pair::parabolic_point_properties(
 	else {
 		f_start_with_one = false;
 		F->Projective_space_basic->PG_element_normalize(
-				v + 1, stride, n - 1);
+				v + 1, stride, n - 1, 0 /* verbose_level */);
 		if (f_v) {
 			cout << "hyperbolic_pair::parabolic_point_properties "
 					"after normalization: ";

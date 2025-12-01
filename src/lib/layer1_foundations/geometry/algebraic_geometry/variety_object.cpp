@@ -1472,7 +1472,34 @@ void variety_object::find_real_lines(
 	}
 }
 
+void variety_object::compute_singular_points(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
 
+	if (f_v) {
+		cout << "variety_object::compute_singular_points" << endl;
+	}
+	if (f_v) {
+		cout << "variety_object::compute_singular_points "
+				"before Poly_ring->compute_singular_points_projectively" << endl;
+	}
+	Ring->compute_singular_points_projectively(
+			Projective_space,
+			eqn,
+			Singular_points,
+			verbose_level);
+	if (f_v) {
+		cout << "variety_object::compute_singular_points "
+				"after Poly_ring->compute_singular_points_projectively" << endl;
+	}
+
+	f_has_singular_points = true;
+
+	if (f_v) {
+		cout << "variety_object::compute_singular_points done" << endl;
+	}
+}
 
 
 

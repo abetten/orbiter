@@ -1129,18 +1129,20 @@ void group_generators_domain::diagonal_orbit_perm(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = false; //(verbose_level >= 1);
-	int *v = NEW_int(n + 1);
-	geometry::other_geometry::geometry_global Gg;
-	long int l, ll;
-	long int a, b, c;
-	long int i, j;
 
 	if (f_v) {
 		cout << "group_generators_domain::diagonal_orbit_perm" << endl;
 	}
+	geometry::other_geometry::geometry_global Gg;
+	long int l, ll;
+	long int a, b, c;
+	long int i, j;
+	int *v;
+
 	l = Gg.nb_PG_elements(n - 1, F->q);
 	ll = Gg.nb_AG_elements(n - 1, F->q - 1);
 
+	v = NEW_int(n + 1);
 	//cout << "l = " << l << endl;
 	for (i = 0; i < l; i++) {
 		orbit[i] = i;
@@ -1158,7 +1160,13 @@ void group_generators_domain::diagonal_orbit_perm(
 				cout << v[j] << " ";
 			}
 		}
-		F->Projective_space_basic->PG_element_rank_modified_lint(v, 1, n, a);
+		if (f_v) {
+			cout << "group_generators_domain::diagonal_orbit_perm before PG_element_rank_modified_lint i=" << i << " v=";
+			Int_vec_print(cout, v, n);
+			cout << endl;
+		}
+		F->Projective_space_basic->PG_element_rank_modified_lint(
+				v, 1, n, a, verbose_level - 2);
 		if (f_vv) {
 			cout << " : " << a << endl;
 		}
@@ -1223,7 +1231,7 @@ void group_generators_domain::frobenius_orbit_perm(
 				cout << v[j] << " ";
 			}
 		}
-		F->Projective_space_basic->PG_element_rank_modified_lint(v, 1, n, a);
+		F->Projective_space_basic->PG_element_rank_modified_lint(v, 1, n, a, verbose_level - 2);
 		if (f_vv) {
 			cout << " : " << a << endl;
 		}
@@ -1233,7 +1241,7 @@ void group_generators_domain::frobenius_orbit_perm(
 		orbit[b] = c;
 		orbit_inv[a] = i;
 		orbit_inv[c] = b;
-		F->Projective_space_basic->PG_element_apply_frobenius(n, v, 1);
+		F->Projective_space_basic->PG_element_apply_frobenius(n, v, 1, verbose_level - 2);
 	}
 	FREE_int(v);
 	if (f_v) {
@@ -1250,7 +1258,7 @@ void group_generators_domain::projective_matrix_group_base_and_orbits(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = false; //(verbose_level >= 2);
+	int f_vv = (verbose_level >= 2);
 	int i;
 	geometry::other_geometry::geometry_global Gg;
 
@@ -1317,7 +1325,7 @@ void group_generators_domain::projective_matrix_group_base_and_orbits(
 			cout << "finite_field::projective_matrix_group_base_and_orbits "
 					"before diagonal_orbit_perm" << endl;
 		}
-		diagonal_orbit_perm(n, F, orbit[i], orbit_inv[i], 0);
+		diagonal_orbit_perm(n, F, orbit[i], orbit_inv[i], 0 /* verbose_level - 2*/);
 
 		if (f_vv) {
 			cout << "projective_matrix_group_base_and_orbits "
@@ -1344,7 +1352,7 @@ void group_generators_domain::projective_matrix_group_base_and_orbits(
 					"before frobenius_orbit_perm" << endl;
 		}
 		frobenius_orbit_perm(n, F,
-				orbit[i], orbit_inv[i], verbose_level - 2);
+				orbit[i], orbit_inv[i], 0 /*verbose_level - 2*/);
 
 		if (f_vv) {
 			cout << "group_generators_domain::projective_matrix_group_base_and_orbits "
@@ -1591,6 +1599,10 @@ void group_generators_domain::strong_generators_for_projective_linear_group(
 		F->Linear_algebra->identity_matrix(M, n);
 		M[n * n] = 1;
 		Int_vec_copy(M, data + cur * size, size);
+		if (f_v) {
+			cout << "group_generators_domain::strong_generators_for_projective_linear_group generator " << cur << endl;
+			Int_matrix_print(data + cur * n * n, 1, n * n);
+		}
 		cur++;
 	}
 
@@ -1608,6 +1620,10 @@ void group_generators_domain::strong_generators_for_projective_linear_group(
 				M[n * n] = 0;
 			}
 			Int_vec_copy(M, data + cur * size, size);
+			if (f_v) {
+				cout << "group_generators_domain::strong_generators_for_projective_linear_group generator " << cur << endl;
+				Int_matrix_print(data + cur * n * n, 1, n * n);
+			}
 			cur++;
 		}
 	}
@@ -1625,6 +1641,10 @@ void group_generators_domain::strong_generators_for_projective_linear_group(
 				M[n * n] = 0;
 			}
 			Int_vec_copy(M, data + cur * size, size);
+			if (f_v) {
+				cout << "group_generators_domain::strong_generators_for_projective_linear_group generator " << cur << endl;
+				Int_matrix_print(data + cur * n * n, 1, n * n);
+			}
 			cur++;
 		}
 	}
@@ -1643,6 +1663,10 @@ void group_generators_domain::strong_generators_for_projective_linear_group(
 			M[n * n] = 0;
 		}
 		Int_vec_copy(M, data + cur * size, size);
+		if (f_v) {
+			cout << "group_generators_domain::strong_generators_for_projective_linear_group generator " << cur << endl;
+			Int_matrix_print(data + cur * n * n, 1, n * n);
+		}
 		cur++;
 	}
 
@@ -1650,6 +1674,11 @@ void group_generators_domain::strong_generators_for_projective_linear_group(
 		cout << "group_generators_domain::strong_generators_for_projective_linear_group "
 				"cur != nb_gens" << endl;
 		exit(1);
+	}
+
+	if (f_v) {
+		cout << "group_generators_domain::strong_generators_for_projective_linear_group strong generators are:" << endl;
+		Int_matrix_print(data, cur, size);
 	}
 
 	FREE_int(M);
@@ -1774,6 +1803,12 @@ void group_generators_domain::strong_generators_for_affine_linear_group(
 				"cur != nb_gens" << endl;
 		exit(1);
 	}
+
+	if (f_v) {
+		cout << "group_generators_domain::strong_generators_for_affine_linear_group strong generators are:" << endl;
+		Int_matrix_print(data, cur, size);
+	}
+
 	if (f_v) {
 		cout << "group_generators_domain::strong_generators_for_affine_linear_group done" << endl;
 	}
@@ -1817,6 +1852,10 @@ void group_generators_domain::strong_generators_for_general_linear_group(
 		Int_vec_zero(data + cur * size, size);
 		F->Linear_algebra->identity_matrix(data + cur * size, n);
 		data[cur * size + n * n] = 1;
+		if (f_v) {
+			cout << "group_generators_domain::strong_generators_for_general_linear_group generator " << cur << endl;
+			Int_matrix_print(data + cur * n * n, 1, n * n);
+		}
 		cur++;
 	}
 
@@ -1833,6 +1872,10 @@ void group_generators_domain::strong_generators_for_general_linear_group(
 			data[cur * size + (n - 1) * n + h] = NT.i_power_j(F->p, u);
 			if (f_semilinear) {
 				data[cur * size + n * n] = 0;
+			}
+			if (f_v) {
+				cout << "group_generators_domain::strong_generators_for_general_linear_group generator " << cur << endl;
+				Int_matrix_print(data + cur * n * n, 1, n * n);
 			}
 			cur++;
 		} // next u
@@ -1852,6 +1895,10 @@ void group_generators_domain::strong_generators_for_general_linear_group(
 		if (f_semilinear) {
 			data[cur * size + n * n] = 0;
 		}
+		if (f_v) {
+			cout << "group_generators_domain::strong_generators_for_general_linear_group generator " << cur << endl;
+			Int_matrix_print(data + cur * n * n, 1, n * n);
+		}
 		cur++;
 	} // if
 
@@ -1870,9 +1917,17 @@ void group_generators_domain::strong_generators_for_general_linear_group(
 		if (f_semilinear) {
 			data[cur * size + n * n] = 0;
 		}
+		if (f_v) {
+			cout << "group_generators_domain::strong_generators_for_general_linear_group generator " << cur << endl;
+			Int_matrix_print(data + cur * n * n, 1, n * n);
+		}
 		cur++;
 	} // next h
 
+	if (f_v) {
+		cout << "group_generators_domain::strong_generators_for_general_linear_group strong generators are:" << endl;
+		Int_matrix_print(data, cur, size);
+	}
 
 	if (cur != nb_gens) {
 		cout << "group_generators_domain::strong_generators_for_general_linear_group "
@@ -2541,7 +2596,7 @@ void group_generators_domain::affine_frobenius(
 	for (i = 0; i < l; i++) {
 		Gg.AG_element_unrank(F->q, v, 1, l, i);
 		for (u = 0; u < n; u++) {
-			v[u] = F->frobenius_power(v[u], k);
+			v[u] = F->frobenius_power(v[u], k, verbose_level - 1);
 		}
 		j = Gg.AG_element_rank(F->q, v, 1, l);
 		perm[i] = j;

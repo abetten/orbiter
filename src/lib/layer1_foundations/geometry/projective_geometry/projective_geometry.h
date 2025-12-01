@@ -316,7 +316,8 @@ public:
 	long int point_on_quadric_to_line(
 			long int point_rk, int verbose_level);
 	void Pluecker_to_line(
-			int *v6, int *basis_line, int verbose_level);
+			int *v6, int *basis_line,
+			int verbose_level);
 	// in:
 	// v6[0] = p12, v6[1] = p34, v6[2] = p13,
 	// v6[3] = -p24 = p42, v6[4] = p14, v6[5] = p23.
@@ -326,6 +327,7 @@ public:
 			int *v6, int verbose_level);
 	void exterior_square_to_line(
 			int *v, int *basis_line,
+			int f_ordering_lex,
 			int verbose_level);
 	// in:
 	// v[0] = p12, v[1] = p13, v[2] = p14,
@@ -449,11 +451,11 @@ public:
 	void init(
 			algebra::field_theory::finite_field *F, int verbose_level);
 	void PG_element_apply_frobenius(
-			int n, int *v, int f);
+			int n, int *v, int f, int verbose_level);
 	int test_if_vectors_are_projectively_equal(
 			int *v1, int *v2, int len);
 	void PG_element_normalize(
-			int *v, int stride, int len);
+			int *v, int stride, int len, int verbose_level);
 	// last non-zero element made one
 	void PG_element_normalize_from_front(
 			int *v, int stride, int len);
@@ -478,7 +480,7 @@ public:
 	void PG_element_unrank_modified(
 			int *v, int stride, int len, long int a);
 	void PG_element_rank_modified_lint(
-			int *v, int stride, int len, long int &a);
+			int *v, int stride, int len, long int &a, int verbose_level);
 	void PG_elements_unrank_lint(
 			int *M, int k, int n, long int *rank_vec);
 	void PG_elements_rank_lint(

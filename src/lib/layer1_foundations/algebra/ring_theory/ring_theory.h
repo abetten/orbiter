@@ -1330,7 +1330,9 @@ public:
 			unipoly_object p);
 	void rank_longinteger(
 			unipoly_object p, longinteger_object &rank);
-	int degree(
+	int get_degree(
+			unipoly_object p);
+	int recalculate_degree(
 			unipoly_object p);
 	void print_object_latex(
 			unipoly_object p, std::ostream &ost);
@@ -1373,6 +1375,8 @@ public:
 			unipoly_object a);
 	void make_monic(
 			unipoly_object &a);
+	void scalar_multiply(
+			unipoly_object a, int c);
 	void add(
 			unipoly_object a,
 			unipoly_object b,

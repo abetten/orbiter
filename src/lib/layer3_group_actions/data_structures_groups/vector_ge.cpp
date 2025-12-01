@@ -1842,12 +1842,18 @@ void vector_ge::print_generators_gap(
 				cout << "vector_ge::print_generators_gap "
 						"i=" << i << " / " << len << endl;
 			}
+			if (f_v) {
+				cout << "vector_ge::print_generators_gap "
+						"Elt = ";
+				Int_vec_print(cout, ith(i), A->elt_size_in_int);
+				cout << endl;
+			}
 			A->Group_element->element_print_as_permutation_with_offset(
 					ith(i), ost,
 					1 /*offset*/,
 					true /* f_do_it_anyway_even_for_big_degree */,
 					false /* f_print_cycles_of_length_one */,
-					0 /* verbose_level*/);
+					verbose_level - 1);
 			if (i < len - 1) {
 				ost << ", " << endl;
 			}

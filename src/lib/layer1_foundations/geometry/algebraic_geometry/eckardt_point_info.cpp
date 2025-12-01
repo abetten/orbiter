@@ -413,7 +413,7 @@ void eckardt_point_info::print_bisecants(
 
 		P2->Subspaces->Grass_lines->unrank_lint_here_and_compute_perp(Mtx, a,
 			0 /*verbose_level */);
-		P2->Subspaces->F->Projective_space_basic->PG_element_normalize(Mtx + 6, 1, 3);
+		P2->Subspaces->F->Projective_space_basic->PG_element_normalize(Mtx + 6, 1, 3, 0 /* verbose_level */);
 
 		ost << " & ";
 		Poly1->print_equation(ost, Mtx + 6); // ToDo

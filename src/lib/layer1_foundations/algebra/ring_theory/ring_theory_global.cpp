@@ -193,12 +193,12 @@ void ring_theory_global::write_code_for_division(
 		if (f_v) {
 			cout << "ring_theory_global::write_code_for_division" << endl;
 		}
-		if (da != FX.degree(poly_A)) {
+		if (da != FX.recalculate_degree(poly_A)) {
 			cout << "ring_theory_global::write_code_for_division "
 					"da != FX.degree(poly_A)" << endl;
 			exit(1);
 		}
-		if (db != FX.degree(poly_B)) {
+		if (db != FX.recalculate_degree(poly_B)) {
 			cout << "ring_theory_global::write_code_for_division "
 					"db != FX.degree(poly_B)" << endl;
 			exit(1);
@@ -557,10 +557,10 @@ void ring_theory_global::extended_gcd_for_polynomials(
 		FX.print_object(G, cout);
 		cout << endl;
 
-		cout << "deg G(X) = " << FX.degree(G) << endl;
+		cout << "deg G(X) = " << FX.recalculate_degree(G) << endl;
 	}
 
-	if (FX.degree(G) == 0) {
+	if (FX.recalculate_degree(G) == 0) {
 		int c, cv, d;
 
 		c = FX.s_i(G, 0);
@@ -574,17 +574,17 @@ void ring_theory_global::extended_gcd_for_polynomials(
 				cout << "cv=" << cv << endl;
 			}
 
-			d = FX.degree(U);
+			d = FX.recalculate_degree(U);
 			for (i = 0; i <= d; i++) {
 				FX.s_i(U, i) = F->mult(cv, FX.s_i(U, i));
 			}
 
-			d = FX.degree(V);
+			d = FX.recalculate_degree(V);
 			for (i = 0; i <= d; i++) {
 				FX.s_i(V, i) = F->mult(cv, FX.s_i(V, i));
 			}
 
-			d = FX.degree(G);
+			d = FX.recalculate_degree(G);
 			for (i = 0; i <= d; i++) {
 				FX.s_i(G, i) = F->mult(cv, FX.s_i(G, i));
 			}
@@ -719,7 +719,7 @@ void ring_theory_global::polynomial_mult_mod(
 		FX.print_object(C, cout);
 		cout << endl;
 
-		cout << "deg C(X) = " << FX.degree(C) << endl;
+		cout << "deg C(X) = " << FX.recalculate_degree(C) << endl;
 	}
 
 	if (f_v) {
@@ -824,7 +824,7 @@ void ring_theory_global::polynomial_power_mod(
 		FX.print_object(A, cout);
 		cout << endl;
 
-		cout << "deg A(X) = " << FX.degree(A) << endl;
+		cout << "deg A(X) = " << FX.recalculate_degree(A) << endl;
 	}
 
 	if (f_v) {
@@ -945,7 +945,7 @@ void ring_theory_global::sift_polynomials(
 		int *exponents;
 
 
-		f = D.degree(p);
+		f = D.recalculate_degree(p);
 		Q.create(F->q);
 		m1.create(-1);
 		ZZ.power_int(Q, f);
@@ -2275,7 +2275,7 @@ int ring_theory_global::count_all_irreducible_polynomials_of_degree_d(
 			FX.print_object(minpol, cout);
 			cout << endl;
 		}
-		if (FX.degree(minpol) != d) {
+		if (FX.recalculate_degree(minpol) != d) {
 			cout << "ring_theory_global::count_all_irreducible_polynomials_of_degree_d "
 					"The polynomial does not have degree d"
 					<< endl;

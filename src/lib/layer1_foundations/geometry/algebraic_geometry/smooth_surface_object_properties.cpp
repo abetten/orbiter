@@ -662,7 +662,7 @@ void smooth_surface_object_properties::make_equation_in_trihedral_form(
 	Int_vec_copy(eqn_G, eqn_G2, 20);
 	SO->F->Linear_algebra->scalar_multiply_vector_in_place(lambda, eqn_G2, 20);
 	SO->F->Linear_algebra->add_vector(eqn_F, eqn_G2, equation, 20);
-	SO->F->Projective_space_basic->PG_element_normalize(equation, 1, 20);
+	SO->F->Projective_space_basic->PG_element_normalize(equation, 1, 20, 0 /* verbose_level */);
 
 
 
@@ -821,7 +821,7 @@ void smooth_surface_object_properties::latex_trihedral_pair(
 				Mtx, plane_rk,
 			0 /*verbose_level */);
 		SO->F->Projective_space_basic->PG_element_normalize(
-				Mtx + 12, 1, 4);
+				Mtx + 12, 1, 4, 0 /* verbose_level */);
 		ost << "V\\big(";
 		SO->Surf->PolynomialDomains->Poly1_4->print_equation(
 				ost, Mtx + 12);
@@ -852,7 +852,7 @@ void smooth_surface_object_properties::latex_trihedral_pair(
 				Mtx, plane_rk,
 			0 /*verbose_level */);
 		SO->F->Projective_space_basic->PG_element_normalize(
-				Mtx + 12, 1, 4);
+				Mtx + 12, 1, 4, 0 /* verbose_level */);
 		SO->Surf->PolynomialDomains->Poly1_4->print_equation(
 				ost, Mtx + 12);
 		ost << "\\big)=" << plane_rk << "}\\\\" << endl;
@@ -942,7 +942,7 @@ void smooth_surface_object_properties::print_single_tritangent_plane(
 			Mtx, plane_rk,
 		0 /*verbose_level */);
 	SO->F->Projective_space_basic->PG_element_normalize(
-			Mtx + 12, 1, 4);
+			Mtx + 12, 1, 4, 0 /* verbose_level */);
 	ost << "$$" << endl;
 
 

@@ -1,7 +1,7 @@
 ROW,C1,C2,C3
 0,"tab:cubic:surface:activities",,
 1,"Cubic Surface Activities",,
-1,"\verb'-report' "," options "," Produce a latex report about the cubic surface. This function considerss the given options for drawing. "
+1,"\verb'-report' "," options "," Produce a latex report about the cubic surface. This function considers the given options for drawing. "
 1,"\verb'-report_group_elements' "," csv-file heading "," Report properties of elements of the automorphism group. The group elements must be given in make-element-form in a column in a csv-file. "
 1,"\verb'-export_something' "," type "," Exports data about the surface to a file. The type of data to be exported must be specified according to Table~\ref{tab:cubic:surface:export}. "
 1,"\verb'-export_gap' ","  "," Export a cubic surface to GAP. See Section~\ref{sec:cubicsurfaces:interface}. "

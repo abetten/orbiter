@@ -176,7 +176,7 @@ void finite_field_io::print_tables()
 		else {
 			l = -1;
 		}
-		b = F->frobenius_power(i, 1);
+		b = F->frobenius_power(i, 1, 0 /* verbose_level */);
 		c = F->alpha_power(i);
 		cout << setw(4) << i << " : "
 			<< setw(4) << a << " : "
@@ -1604,7 +1604,7 @@ void finite_field_io::cheat_sheet_main_table(
 
 			// additional columns for extension fields:
 			if (F->e > 1) {
-				f << " &" << F->frobenius_power(i, 1);
+				f << " &" << F->frobenius_power(i, 1, 0 /* verbose_level */);
 				f << " &" << F->absolute_trace(i);
 				f << " &" << F->absolute_norm(i);
 			}

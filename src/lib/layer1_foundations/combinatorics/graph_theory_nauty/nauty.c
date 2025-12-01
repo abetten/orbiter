@@ -270,6 +270,7 @@ void
 nauty(graph *g_arg, int *lab, int *ptn, set *active_arg,
       int *orbits_arg, optionblk *options, statsblk *stats_arg,
       set *ws_arg, int worksize, int m_arg, int n_arg, graph *canong_arg)
+// calls firstpathnode0
 {
     int i;
     int numcells;

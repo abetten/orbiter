@@ -105,10 +105,13 @@ void geometry_builder::init_description(
 	}
 
 
+	V = Int_vec_sum(v, v_len);
+#if 0
 	V = 0;
 	for (i = 0; i < v_len; i++) {
 		V += v[i];
 	}
+#endif
 
 	if (f_v) {
 		cout << "V=" << V << endl;
@@ -138,10 +141,13 @@ void geometry_builder::init_description(
 		exit(1);
 	}
 	Int_vec_scan(Descr->B_text, b, b_len);
+	B = Int_vec_sum(b, b_len);
+#if 0
 	B = 0;
 	for (i = 0; i < b_len; i++) {
 		B += b[i];
 	}
+#endif
 	if (f_v) {
 		cout << "b_len=" << b_len << endl;
 		cout << "b=";
@@ -175,10 +181,13 @@ void geometry_builder::init_description(
 
 		int f;
 
+		f = Int_vec_sum(fuse, fuse_len);
+#if 0
 		f = 0;
 		for (i = 0; i < fuse_len; i++) {
 			f += fuse[i];
 		}
+#endif
 		if (f != v_len) {
 			cout << "the sum of the fuse values must equal the number of rows of the TDO" << endl;
 			cout << "f=" << f << endl;
@@ -341,28 +350,40 @@ void geometry_builder::compute_VBR(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i, j, row, h;
+	int i, row, h;
 
 	if (f_v) {
 		cout << "geometry_builder::compute_VBR v_len = " << v_len << " b_len = " << b_len << endl;
 	}
+	B = Int_vec_sum(b, b_len);
+#if 0
 	B = 0;
 	for (j = 0; j < b_len; j++) {
 		B += b[j];
 	}
+#endif
+	V = Int_vec_sum(v, v_len);
+#if 0
 	V = 0;
 	for (i = 0; i < v_len; i++) {
 		V += v[i];
 	}
+#endif
+
+	int row_sum;
 
 	R = NEW_int(V);
 	row = 0;
 	for (i = 0; i < v_len; i++) {
+		row_sum = Int_vec_sum(TDO + i * b_len, b_len);
 		for (h = 0; h < v[i]; h++, row++) {
+			R[row] = row_sum;
+#if 0
 			R[row] = 0;
 			for (j = 0; j < b_len; j++) {
 				R[row] += TDO[i * b_len + j];
 			}
+#endif
 		}
 	}
 

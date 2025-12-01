@@ -3020,7 +3020,7 @@ void action_global::apply_to_set(
 							v1, Elt2, v2, 0 /*verbose_level - 1*/);
 
 					Matrix_group->GFq->Projective_space_basic->PG_element_rank_modified_lint(
-							v2, 1, Matrix_group->n, b);
+							v2, 1, Matrix_group->n, b, 0 /* verbose_level */);
 
 					ost << "where $" << v[i] << " = ";
 					Int_vec_print(ost, v1, Matrix_group->n);

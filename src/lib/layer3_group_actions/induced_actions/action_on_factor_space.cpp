@@ -1014,7 +1014,7 @@ long int action_on_factor_space::rank_in_small_space(
 	long int rk;
 
 	VS->F->Projective_space_basic->PG_element_rank_modified_lint(
-			v, 1, factor_space_len, rk);
+			v, 1, factor_space_len, rk, 0 /* verbose_level */);
 	return rk;
 }
 

@@ -48,12 +48,22 @@ void projective_space_basic::init(
 
 void projective_space_basic::PG_element_apply_frobenius(
 		int n,
-		int *v, int f)
+		int *v, int f, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space_basic::PG_element_apply_frobenius" << endl;
+	}
+
 	int i;
 
 	for (i = 0; i < n; i++) {
-		v[i] = F->frobenius_power(v[i], f);
+		v[i] = F->frobenius_power(v[i], f, 0 /* verbose_level */);
+	}
+
+	if (f_v) {
+		cout << "projective_space_basic::PG_element_apply_frobenius done" << endl;
 	}
 }
 
@@ -80,8 +90,8 @@ int projective_space_basic::test_if_vectors_are_projectively_equal(
 
 	Int_vec_copy(v1, w1, len);
 	Int_vec_copy(v2, w2, len);
-	PG_element_normalize(w1, 1, len);
-	PG_element_normalize(w2, 1, len);
+	PG_element_normalize(w1, 1, len, 0 /* verbose_level */);
+	PG_element_normalize(w2, 1, len, 0 /* verbose_level */);
 
 #if 0
 	cout << "projective_space_basic::test_if_vectors_are_projectively_equal:" << endl;
@@ -106,27 +116,48 @@ finish:
 }
 
 void projective_space_basic::PG_element_normalize(
-		int *v, int stride, int len)
+		int *v, int stride, int len, int verbose_level)
 // last non-zero element made one
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space_basic::PG_element_normalize" << endl;
+		if (stride == 1) {
+			cout << "projective_space_basic::PG_element_normalize input=";
+			Int_vec_print(cout, v, len);
+			cout << endl;
+		}
+	}
+
 	int i, j, a;
 
 	for (i = len - 1; i >= 0; i--) {
 		a = v[i * stride];
 		if (a) {
 			if (a == 1) {
-				return;
+				break;
 			}
-			a = F->inverse(a);
+			a = F->inverse_v(a, verbose_level - 1);
 			v[i * stride] = 1;
 			for (j = i - 1; j >= 0; j--) {
 				v[j * stride] = F->mult(v[j * stride], a);
 			}
-			return;
+			break;
 		}
 	}
-	cout << "projective_space_basic::PG_element_normalize zero vector" << endl;
-	exit(1);
+	if (a < 0) {
+		cout << "projective_space_basic::PG_element_normalize zero vector" << endl;
+		exit(1);
+	}
+	if (f_v) {
+		if (stride == 1) {
+			cout << "projective_space_basic::PG_element_normalize output=";
+			Int_vec_print(cout, v, len);
+			cout << endl;
+		}
+		cout << "projective_space_basic::PG_element_normalize done" << endl;
+	}
 }
 
 void projective_space_basic::PG_element_normalize_from_front(
@@ -195,7 +226,7 @@ long int projective_space_basic::PG_element_embed(
 	long int a;
 	PG_element_unrank_modified_lint(v, 1, old_length, rk);
 	Int_vec_zero(v + old_length, new_length - old_length);
-	PG_element_rank_modified_lint(v, 1, new_length, a);
+	PG_element_rank_modified_lint(v, 1, new_length, a, 0 /* verbose_level */);
 	return a;
 }
 
@@ -391,7 +422,7 @@ void projective_space_basic::PG_element_rank_modified(
 		}
 		cout << endl;
 	}
-	PG_element_normalize(v, stride, len);
+	PG_element_normalize(v, stride, len, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "the vector after normalization is ";
 		for (i = 0; i < len; i++) {
@@ -570,11 +601,15 @@ void projective_space_basic::PG_element_unrank_modified(
 }
 
 void projective_space_basic::PG_element_rank_modified_lint(
-		int *v, int stride, int len, long int &a)
+		int *v, int stride, int len, long int &a, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space_basic::PG_element_rank_modified_lint" << endl;
+	}
 	int i, j;
 	long int q_power_j, b, sqj;
-	int f_v = false;
 
 	if (len <= 0) {
 		cout << "projective_space_basic::PG_element_rank_modified_lint "
@@ -588,7 +623,7 @@ void projective_space_basic::PG_element_rank_modified_lint(
 		}
 		cout << endl;
 	}
-	PG_element_normalize(v, stride, len);
+	PG_element_normalize(v, stride, len, verbose_level - 2);
 	if (f_v) {
 		cout << "the vector after normalization is ";
 		for (i = 0; i < len; i++) {
@@ -689,6 +724,9 @@ void projective_space_basic::PG_element_rank_modified_lint(
 
 	a += b;
 	a += len;
+	if (f_v) {
+		cout << "projective_space_basic::PG_element_rank_modified_lint done" << endl;
+	}
 }
 
 void projective_space_basic::PG_elements_unrank_lint(
@@ -707,7 +745,7 @@ void projective_space_basic::PG_elements_rank_lint(
 	int i;
 
 	for (i = 0; i < k; i++) {
-		PG_element_rank_modified_lint(M + i * n, 1, n, rank_vec[i]);
+		PG_element_rank_modified_lint(M + i * n, 1, n, rank_vec[i], 0 /* verbose_level */);
 	}
 }
 
@@ -803,7 +841,7 @@ void projective_space_basic::PG_element_rank_modified_not_in_subspace(
 	}
 	s -= (m + 1);
 
-	PG_element_rank_modified_lint(v, stride, len, a);
+	PG_element_rank_modified_lint(v, stride, len, a, 0 /* verbose_level */);
 	if (a > len + s) {
 		a -= s;
 	}
@@ -843,7 +881,7 @@ long int projective_space_basic::projective_point_rank(
 {
 	long int rk;
 
-	PG_element_rank_modified_lint(v, 1 /* stride */, n + 1, rk);
+	PG_element_rank_modified_lint(v, 1 /* stride */, n + 1, rk, 0 /* verbose_level */);
 	return rk;
 }
 
@@ -884,7 +922,7 @@ void projective_space_basic::all_PG_elements_in_subspace(
 			Int_vec_print(cout, word, n);
 			cout << endl;
 		}
-		PG_element_rank_modified_lint(word, 1, n, a);
+		PG_element_rank_modified_lint(word, 1, n, a, 0 /* verbose_level */);
 		if (f_vv) {
 			cout << "which has rank " << a << endl;
 		}

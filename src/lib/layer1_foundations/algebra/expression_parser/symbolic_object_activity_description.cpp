@@ -32,6 +32,10 @@ symbolic_object_activity_description::symbolic_object_activity_description()
 
 	f_print = false;
 
+	f_as_vector = false;
+
+	f_homogenize = false;
+
 	f_latex = false;
 
 	f_evaluate_affine = false;
@@ -86,6 +90,18 @@ int symbolic_object_activity_description::read_arguments(
 			f_print = true;
 			if (f_v) {
 				cout << "-print " << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-as_vector") == 0) {
+			f_as_vector = true;
+			if (f_v) {
+				cout << "-as_vector " << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-homogenize") == 0) {
+			f_homogenize = true;
+			if (f_v) {
+				cout << "-homogenize " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-latex") == 0) {
@@ -153,6 +169,12 @@ void symbolic_object_activity_description::print()
 	}
 	if (f_print) {
 		cout << "-print " << endl;
+	}
+	if (f_as_vector) {
+		cout << "-as_vector " << endl;
+	}
+	if (f_homogenize) {
+		cout << "-homogenize " << endl;
 	}
 	if (f_latex) {
 		cout << "-latex " << endl;

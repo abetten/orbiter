@@ -110,7 +110,7 @@ long int action_by_representation::compute_image_int(
 		}
 
 	F->Projective_space_basic->PG_element_rank_modified_lint(
-			v2, 1, dimension, b);
+			v2, 1, dimension, b, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "action_by_representation::compute_image_int "
 				"done " << a << "->" << b << endl;
@@ -175,7 +175,7 @@ void action_by_representation::compute_image_int_low_level(
 	if (M->f_semilinear) {
 		f = Elt[n * n];
 		for (i = 0; i < dimension; i++) {
-			xA[i] = F->frobenius_power(xA[i], f);
+			xA[i] = F->frobenius_power(xA[i], f, 0 /* verbose_level */);
 			}
 		if (f_vv) {
 			cout << "after " << f << " field automorphisms: xA=";
@@ -202,7 +202,7 @@ long int action_by_representation::rank_point(
 	long int a;
 
 	F->Projective_space_basic->PG_element_rank_modified_lint(
-			v, 1, dimension, a);
+			v, 1, dimension, a, 0 /* verbose_level */);
 	return a;
 }
 

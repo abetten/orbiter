@@ -296,7 +296,8 @@ void iso_type::print_geos(
 
 			combinatorics::canonical_form_classification::any_combinatorial_object *OwCF;
 
-			OwCF = (combinatorics::canonical_form_classification::any_combinatorial_object *) Canonical_forms->Objects[h];
+			OwCF = (combinatorics::canonical_form_classification::any_combinatorial_object *)
+					Canonical_forms->Objects[h];
 
 
 			gg->inc->print_inc(cout, v, OwCF->set);

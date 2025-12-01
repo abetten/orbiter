@@ -435,7 +435,7 @@ int clebsch_map::compute_Clebsch_map_down_worker(
 			continue;
 		}
 		F->Projective_space_basic->PG_element_normalize(
-				Dual_planes + 12, 1, 4);
+				Dual_planes + 12, 1, 4, 0 /* verbose_level */);
 		if (f_vv) {
 			cout << "clebsch_map::compute_Clebsch_map_down_worker "
 					"intersection point normalized: ";

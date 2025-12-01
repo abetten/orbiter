@@ -449,7 +449,7 @@ void action_on_forms::associated_set_in_plane(
 		v[1] = y;
 		v[2] = 1;
 		F->Projective_space_basic->PG_element_rank_modified_lint(
-				v, 1, 3, a);
+				v, 1, 3, a, 0 /* verbose_level */);
 		Rk[x] = a;
 	}
 	if (f_v) {

@@ -171,6 +171,7 @@ void finite_field_properties::setup_related_fields(
 			cout << "finite_field_properties::setup_related_fields q=" << F->q
 				<< " not computing related fields" << endl;
 		}
+		f_related_fields_have_been_computed = false;
 
 	}
 

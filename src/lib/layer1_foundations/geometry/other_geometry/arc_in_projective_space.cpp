@@ -108,7 +108,7 @@ void arc_in_projective_space::create_arc_1_BCKM(
 		}
 		else {
 			v[0] = P->Subspaces->F->frobenius_power(
-					i, frob_power);
+					i, frob_power, 0 /* verbose_level */);
 			v[1] = i;
 			v[2] = 1;
 		}
@@ -902,7 +902,7 @@ void arc_in_projective_space::create_translation_hyperoval(
 	}
 
 	for (i = 0; i < P->Subspaces->q; i++) {
-		v[0] = P->Subspaces->F->frobenius_power(i, exponent);
+		v[0] = P->Subspaces->F->frobenius_power(i, exponent, 0 /* verbose_level */);
 		v[1] = i;
 		v[2] = 1;
 		the_arc[i] = P->rank_point(v);

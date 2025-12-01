@@ -339,6 +339,18 @@ void int_vec::init5(
 	v[4] = a4;
 }
 
+long int int_vec::sum(
+		int *v, int len)
+{
+	int i, s;
+
+	s = 0;
+	for (i = 0; i < len; i++) {
+		s += v[i];
+	}
+	return s;
+}
+
 int int_vec::minimum(
 		int *v, int len)
 {

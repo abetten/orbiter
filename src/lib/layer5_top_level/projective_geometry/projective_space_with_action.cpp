@@ -97,10 +97,19 @@ void projective_space_with_action::init_from_description(
 
 	if (Descr->f_field_label) {
 
+		if (f_v) {
+			cout << "projective_space_with_action::init_from_description "
+					"looking for finite field object given by label" << endl;
+		}
+
 		F = Get_finite_field(
 				Descr->field_label);
 	}
 	else if (Descr->f_field_pointer) {
+		if (f_v) {
+			cout << "projective_space_with_action::init_from_description "
+					"finite field given by pointer" << endl;
+		}
 		F = Descr->F;
 	}
 	else if (Descr->f_q) {

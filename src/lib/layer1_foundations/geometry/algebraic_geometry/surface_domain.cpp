@@ -477,7 +477,7 @@ long int surface_domain::line_to_wedge(
 	O->Hyperbolic_pair->unrank_point(w2, 1, a, 0 /* verbose_level*/);
 	klein_to_wedge(w2, v2);
 	F->Projective_space_basic->PG_element_rank_modified_lint(
-			v2, 1, 6 /*wedge_dimension*/, b);
+			v2, 1, 6 /*wedge_dimension*/, b, 0 /* verbose_level */);
 	//b = AW->rank_point(v);
 	return b;
 }
@@ -512,7 +512,7 @@ long int surface_domain::klein_to_wedge(
 			w2, 1, klein_rk, 0 /* verbose_level*/);
 	klein_to_wedge(w2, v2);
 	F->Projective_space_basic->PG_element_rank_modified_lint(
-			v2, 1, 6 /*wedge_dimension*/, b);
+			v2, 1, 6 /*wedge_dimension*/, b, 0 /* verbose_level */);
 	//b = AW->rank_point(v);
 	return b;
 }

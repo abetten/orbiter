@@ -148,7 +148,7 @@ long int vector_space::rank_point(
 	}
 	else {
 		F->Projective_space_basic->PG_element_rank_modified_lint(
-				v, 1, dimension, rk);
+				v, 1, dimension, rk, 0 /* verbose_level */);
 	}
 	return rk;
 }
@@ -305,7 +305,7 @@ static long int vector_space_rank_point_callback(
 	long int rk;
 
 	VS->F->Projective_space_basic->PG_element_rank_modified_lint(
-			v, 1, VS->dimension, rk);
+			v, 1, VS->dimension, rk, 0 /* verbose_level */);
 	return rk;
 
 }

@@ -97,6 +97,14 @@ void projective_space_implementation::init(
 
 	N_points = P->Subspaces->N_points;
 	N_lines = P->Subspaces->N_lines;
+
+
+	if (f_v) {
+		cout << "projective_space_implementation::init N_points = " << N_points << endl;
+		cout << "projective_space_implementation::init N_lines = " << N_lines << endl;
+	}
+
+
 	k = P->Subspaces->k;
 	r = P->Subspaces->r;
 	n = P->Subspaces->n;
@@ -167,13 +175,13 @@ void projective_space_implementation::init(
 
 
 
-	if ((long int) N_points < MAX_NB_POINTS_FOR_LINE_THROUGH_TWO_POINTS_TABLE) {
+	if (N_points < MAX_NB_POINTS_FOR_LINE_THROUGH_TWO_POINTS_TABLE) {
 
 		if (f_v) {
 			cout << "projective_space_implementation::init "
 					"allocating Line_through_two_points" << endl;
 		}
-		Line_through_two_points = NEW_int((long int) N_points * (long int) N_points);
+		Line_through_two_points = NEW_int(N_points * N_points);
 	}
 	else {
 		if (f_v) {
@@ -184,14 +192,14 @@ void projective_space_implementation::init(
 		Line_through_two_points = NULL;
 	}
 
-	if ((long int) N_lines < MAX_NB_POINTS_FOR_LINE_INTERSECTION_TABLE) {
+	if (N_lines < MAX_NB_POINTS_FOR_LINE_INTERSECTION_TABLE) {
 		if (f_v) {
 			cout << "projective_space_implementation::init "
-					"allocating Line_intersection" << endl;
+					"allocating Line_intersection, N_lines=" << N_lines << endl;
 		}
-		Line_intersection = NEW_int((long int) N_lines * (long int) N_lines);
-		Int_vec_zero(Line_through_two_points, (long int) N_points * (long int) N_points);
-		for (i = 0; i < (long int) N_lines * (long int) N_lines; i++) {
+		Line_intersection = NEW_int(N_lines * N_lines);
+		Int_vec_zero(Line_intersection, N_lines * N_lines);
+		for (i = 0; i < N_lines * N_lines; i++) {
 			Line_intersection[i] = -1;
 		}
 	}

@@ -125,7 +125,7 @@ void create_BCH_code::init(
 	}
 
 
-	degree = Nth->FX->degree(*P);
+	degree = Nth->FX->recalculate_degree(*P);
 	generator_polynomial = NEW_int(degree + 1);
 	for (i = 0; i <= degree; i++) {
 		generator_polynomial[i] = Nth->FX->s_i(*P, i);

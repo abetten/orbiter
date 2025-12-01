@@ -197,7 +197,7 @@ long int action_by_subfield_structure::compute_image_int(
 		}
 
 	Fq->Projective_space_basic->PG_element_rank_modified_lint(
-			v2, 1, m, b);
+			v2, 1, m, b, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "action_by_subfield_structure::compute_image_int "
 				"done " << a << "->" << b << endl;

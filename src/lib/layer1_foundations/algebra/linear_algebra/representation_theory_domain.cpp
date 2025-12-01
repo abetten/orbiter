@@ -264,7 +264,7 @@ void representation_theory_domain::representing_matrix9_U(
 	tq = 2 * q;
 	tq1 = tq + 1;
 	//tq2 = tq + 2;
-	beta_q = F->frobenius_power(beta, r);
+	beta_q = F->frobenius_power(beta, r, 0 /* verbose_level */);
 	delta = inverse(add(beta, negate(beta_q)));
 	gamma = mult(delta, beta);
 
@@ -634,7 +634,7 @@ void representation_theory_domain::representing_matrix9b(
 	}
 	//q = i_power_j(p, r);
 	minus_one = negate(1);
-	beta_q = F->frobenius_power(beta, r);
+	beta_q = F->frobenius_power(beta, r, 0 /* verbose_level */);
 	delta = add(beta_q, beta);
 	//gamma = mult(delta, beta);
 	//betagamma = mult(beta, gamma);

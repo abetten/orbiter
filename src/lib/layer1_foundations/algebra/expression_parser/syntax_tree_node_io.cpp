@@ -149,14 +149,19 @@ void syntax_tree_node::print_subtree_to_vector(
 void syntax_tree_node::print_subtree(
 		std::ostream &ost)
 {
+	int f_v = false;
 
-	ost << "Node " << idx << ": ";
+	if (f_v) {
+		ost << "Node " << idx << ": ";
+	}
 
 	if (f_terminal) {
-		ost << "is terminal" << std::endl;
+		if (f_v) {
+			ost << "is terminal" << std::endl;
+		}
 		T->print(ost);
 		if (f_has_exponent) {
-			cout << " ^ " << exponent << endl;
+			ost << " ^ " << exponent << endl;
 		}
 
 	}
@@ -167,7 +172,7 @@ void syntax_tree_node::print_subtree(
 
 
 		if (f_has_exponent) {
-			cout << "(" << endl;
+			ost << "(" << endl;
 		}
 
 
@@ -176,14 +181,18 @@ void syntax_tree_node::print_subtree(
 					<< " is node " << Nodes[i]->idx << std::endl;
 			//Nodes[i]->print(ost);
 		}
-		ost << "detailed list:" << std::endl;
+		if (f_v) {
+			ost << "detailed list:" << std::endl;
+		}
 		for (i = 0; i < nb_nodes; i++) {
-			ost << "Node " << idx << ", descendant " << i
+			if (f_v) {
+				ost << "Node " << idx << ", descendant " << i
 					<< " is node " << Nodes[i]->idx << std::endl;
+			}
 			Nodes[i]->print_subtree(ost);
 		}
 		if (f_has_exponent) {
-			cout << " ) ^ " << exponent << endl;
+			ost << " ) ^ " << exponent << endl;
 		}
 	}
 

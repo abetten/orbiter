@@ -332,7 +332,7 @@ long int matrix_group_element::GL_image_of_PG_element(
 			v1, Elt, v2, verbose_level - 1);
 
 	Matrix_group->GFq->Projective_space_basic->PG_element_rank_modified_lint(
-			v2, 1, Matrix_group->n, b);
+			v2, 1, Matrix_group->n, b, 0 /* verbose_level */);
 
 	if (f_v) {
 		cout << "matrix_group_element::GL_image_of_PG_element done" << endl;
@@ -471,7 +471,7 @@ void matrix_group_element::substitute_surface_equation(
 					0 /*verbose_level*/);
 
 		Matrix_group->GFq->Projective_space_basic->PG_element_normalize(
-				coeff_out, 1, 20);
+				coeff_out, 1, 20, 0 /* verbose_level */);
 	}
 	else {
 		Surf->substitute_semilinear(
@@ -483,7 +483,7 @@ void matrix_group_element::substitute_surface_equation(
 					0 /*verbose_level*/);
 
 		Matrix_group->GFq->Projective_space_basic->PG_element_normalize(
-				coeff_out, 1, 20);
+				coeff_out, 1, 20, 0 /* verbose_level */);
 
 	}
 	if (f_v) {
@@ -1239,7 +1239,7 @@ void matrix_group_element::GL_print_latex(
 
 		//GFq->PG_element_normalize_from_front(D, 1, n * n);
 		Matrix_group->GFq->Projective_space_basic->PG_element_normalize(
-				D, 1, Matrix_group->n * Matrix_group->n);
+				D, 1, Matrix_group->n * Matrix_group->n, 0 /* verbose_level */);
 	}
 
 	Matrix_group->GFq->Io->print_matrix_latex(
@@ -1277,7 +1277,7 @@ std::string matrix_group_element::GL_stringify(
 
 		//GFq->PG_element_normalize_from_front(D, 1, n * n);
 		Matrix_group->GFq->Projective_space_basic->PG_element_normalize(
-				D, 1, Matrix_group->n * Matrix_group->n);
+				D, 1, Matrix_group->n * Matrix_group->n, 0 /* verbose_level */);
 	}
 
 	s += Matrix_group->GFq->Io->stringify_matrix_latex(
@@ -1868,7 +1868,7 @@ long int matrix_group_element::rank_point(
 
 	if (Matrix_group->f_projective) {
 		Matrix_group->GFq->Projective_space_basic->PG_element_rank_modified_lint(
-				v, 1 /* stride */, Matrix_group->n, rk);
+				v, 1 /* stride */, Matrix_group->n, rk, 0 /* verbose_level */);
 	}
 	else if (Matrix_group->f_affine) {
 		rk = Gg.AG_element_rank(Matrix_group->GFq->q, v, 1, Matrix_group->n);
@@ -1895,7 +1895,7 @@ int matrix_group_element::test_if_in_subfield(
 	}
 
 	int i, a;
-	int *Elt;
+	//int *Elt;
 	int ret = true;
 	int n;
 

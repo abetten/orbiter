@@ -953,7 +953,7 @@ int hermitian::Sbar_rank(
 		}
 
 		F->Projective_space_basic->PG_element_normalize(
-				v, 1, len);
+				v, 1, len, 0 /* verbose_level */);
 		rk = cnt_Sbar[len - 1];
 
 		val = evaluate_hermitian_form(v, len - 1); 
@@ -1093,7 +1093,7 @@ void hermitian::report_points(
 	for (rk = 0; rk < nb_pts; rk++) {
 		unrank_point(v, rk);
 		F->Projective_space_basic->PG_element_rank_modified_lint(
-				v, 1, k, rk_in_PG[rk]);
+				v, 1, k, rk_in_PG[rk], 0 /* verbose_level */);
 		ost << "$P_{" << rk << "} = ";
 		Int_vec_print(ost, v, k);
 		ost << "=" << rk_in_PG[rk] << "$\\\\" << endl;

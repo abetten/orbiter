@@ -1855,7 +1855,7 @@ void surface_object_properties::print_equation(
 	long int rk;
 
 	SO->F->Projective_space_basic->PG_element_rank_modified_lint(
-			SO->Variety_object->eqn, 1, 20, rk);
+			SO->Variety_object->eqn, 1, 20, rk, 0 /* verbose_level */);
 
 	ost << "The point rank of the equation over "
 			"GF$(" << SO->F->q << ")$ is " << rk << "\\\\" << endl;
@@ -1954,7 +1954,7 @@ void surface_object_properties::print_affine_points_in_source_code(
 	for (i = 0; i < nb_points; i++) {
 		SO->Surf->unrank_point(v, SO->Variety_object->Point_sets->Sets[0][i]);
 		SO->Surf->F->Projective_space_basic->PG_element_normalize(
-				v, 1, 4);
+				v, 1, 4, 0 /* verbose_level */);
 		if (v[3]) {
 			ost << "\t";
 			for (j = 0; j < 4; j++) {

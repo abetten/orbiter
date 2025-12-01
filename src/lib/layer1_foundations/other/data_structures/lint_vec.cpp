@@ -142,6 +142,18 @@ void lint_vec::complement(
 }
 
 
+long int lint_vec::sum(
+		long int *v, int len)
+{
+	int i, s;
+
+	s = 0;
+	for (i = 0; i < len; i++) {
+		s += v[i];
+	}
+	return s;
+}
+
 
 long int lint_vec::minimum(
 		long int *v, int len)

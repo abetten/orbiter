@@ -342,7 +342,7 @@ void mapping::evaluate_regular_map(
 
 		if (!Int_vec_is_zero(w, len)) {
 			P->Subspaces->F->Projective_space_basic->PG_element_rank_modified_lint(
-					w, 1 /* stride */, len, j);
+					w, 1 /* stride */, len, j, 0 /* verbose_level */);
 		}
 		else {
 			j = -1;

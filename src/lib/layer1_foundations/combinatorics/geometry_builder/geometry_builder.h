@@ -485,7 +485,7 @@ public:
 	int fuse_len;
 
 	// the structure constants (# of incidences in a row)
-	int *TDO;
+	int *TDO; // [v_len * b_len]
 	int TDO_len;
 
 
@@ -495,7 +495,7 @@ public:
 		// = sum(i= 0; i < b_len; i++) b[i]
 	int *V_partition; // [V + 1]
 
-	int *R; // [V]
+	int *R; // [V], the row sum in each row
 
 
 	int f_transpose_it;
@@ -646,9 +646,9 @@ public:
 
 	int **pairs;
 		//[gg->GB->V][];
-		// pairs[i][i1]
-		// is the number of blocks containing {i1,i}
-		// where 0 \le i1 < i.
+		// pairs[i][j]
+		// is the number of blocks containing {j,i}
+		// where 0 \le j < i.
 
 
 
@@ -699,6 +699,9 @@ public:
 			int v, long int *theInc);
 	int is_block_tactical(
 			int v, long int *theInc);
+	void create_incma_from_flags(
+			int v, int *Incma,
+			long int *Flags);
 	void geo_to_inc(
 			int v, int *theGEO, long int *theInc, int nb_flags);
 	void inc_to_geo(

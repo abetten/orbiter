@@ -747,7 +747,6 @@ void group_element::element_print_as_permutation_with_offset(
 	int f_print_cycles_of_length_one, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	//int f_vv = false; //(verbose_level >= 2);
 	int *perm;
 	int f_cycle_length = false;
 	int f_max_cycle_length = false;
@@ -778,6 +777,12 @@ void group_element::element_print_as_permutation_with_offset(
 	if (f_v) {
 		cout << "group_element::element_print_as_permutation_with_offset "
 				"after compute_permutation" << endl;
+	}
+
+	if (f_v) {
+		cout << "group_element::element_print_as_permutation_with_offset perm=";
+		Int_vec_print(cout, perm, A->degree);
+		cout << endl;
 	}
 
 	//perm_print(ost, perm, degree);

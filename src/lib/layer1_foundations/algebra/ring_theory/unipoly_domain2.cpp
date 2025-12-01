@@ -277,8 +277,8 @@ void unipoly_domain::division_with_remainder_from_file_with_report(
 	int da, db;
 	int i;
 
-	da = degree(a);
-	db = degree(b);
+	da = recalculate_degree(a);
+	db = recalculate_degree(b);
 
 	ost << "\\begin{verbatim}" << endl;
 	Algo.print_repeated_character(ost, ' ', db + 1 + 3);
@@ -345,7 +345,7 @@ void unipoly_domain::division_with_remainder_from_file_all_k_bit_error_patterns(
 	int i, h;
 
 	da = aa[0]; //degree(a);
-	db = degree(b);
+	db = recalculate_degree(b);
 
 	n = da + 1;
 	N = Combi.int_n_choose_k(n, k);
@@ -469,8 +469,8 @@ void unipoly_domain::division_with_remainder_based_on_tables_with_report(
 	int da, db;
 	int i;
 
-	da = degree(a);
-	db = degree(b);
+	da = recalculate_degree(a);
+	db = recalculate_degree(b);
 
 
 	if (f_report) {
@@ -487,27 +487,27 @@ void unipoly_domain::division_with_remainder_based_on_tables_with_report(
 	division_with_remainder_with_report(a, b, q, r, f_report, ost, verbose_level);
 
 
-	if (degree(r) >= degree(b)) {
+	if (recalculate_degree(r) >= recalculate_degree(b)) {
 		cout << "unipoly_domain::division_with_remainder_based_on_tables_with_report "
 				"degree(r) >= degree(b)" << endl;
-		cout << "degree(b) = " << degree(b) << endl;
-		cout << "degree(r) = " << degree(r) << endl;
-		for (i = 0; i < degree(r); i++) {
+		cout << "degree(b) = " << recalculate_degree(b) << endl;
+		cout << "degree(r) = " << recalculate_degree(r) << endl;
+		for (i = 0; i < recalculate_degree(r); i++) {
 			cout << i << " : " << s_i(r, i) << endl;
 		}
 		exit(1);
 	}
-	len_q = degree(q) + 1;
-	len_r = degree(r) + 1;
+	len_q = recalculate_degree(q) + 1;
+	len_r = recalculate_degree(r) + 1;
 	coeff_q = NEW_int(len_q);
-	coeff_r = NEW_int(degree(b));
+	coeff_r = NEW_int(recalculate_degree(b));
 	for (i = 0; i < len_q; i++) {
 		coeff_q[i] = s_i(q, i);
 	}
 	for (i = 0; i < len_r; i++) {
 		coeff_r[i] = s_i(r, i);
 	}
-	for (; i < degree(b); i++) {
+	for (; i < recalculate_degree(b); i++) {
 		coeff_r[i] = 0;
 	}
 
@@ -557,8 +557,8 @@ void unipoly_domain::division_with_remainder_numerically_with_report(
 	int da, db;
 	int i;
 
-	da = degree(a);
-	db = degree(b);
+	da = recalculate_degree(a);
+	db = recalculate_degree(b);
 
 	ost << "\\begin{verbatim}" << endl;
 	Algo.print_repeated_character(ost, ' ', db + 1 + 3);
@@ -608,8 +608,8 @@ void unipoly_domain::division_with_remainder_with_report(
 
 	int da, db;
 
-	da = degree(a);
-	db = degree(b);
+	da = recalculate_degree(a);
+	db = recalculate_degree(b);
 
 	if (f_factorring) {
 		cout << "unipoly_domain::division_with_remainder_with_report "

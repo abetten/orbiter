@@ -2494,7 +2494,7 @@ long int homogeneous_polynomial_domain::rank_point(
 
 	//rk = P->rank_point(v);
 	F->Projective_space_basic->PG_element_rank_modified_lint(
-			v, 1, nb_variables, rk);
+			v, 1, nb_variables, rk, 0 /* verbose_level */);
 	return rk;
 }
 
@@ -2511,7 +2511,7 @@ long int homogeneous_polynomial_domain::rank_coeff_vector(
 	long int rk;
 
 	F->Projective_space_basic->PG_element_rank_modified_lint(
-			v, 1, nb_monomials, rk);
+			v, 1, nb_monomials, rk, 0 /* verbose_level */);
 	return rk;
 }
 

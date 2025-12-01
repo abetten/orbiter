@@ -961,7 +961,7 @@ void surface_classify_wedge::derived_arcs(
 						w, 1, K1[1 + i], 0 /* verbose_level*/);
 				Int_vec_copy(w + 3, v, 3);
 				F->Projective_space_basic->PG_element_rank_modified_lint(
-						v, 1, 3, Arc[2 + i]);
+						v, 1, 3, Arc[2 + i], 0 /* verbose_level */);
 			}
 			if (f_v) {
 				cout << "surface_classify_wedge::derived_arcs "

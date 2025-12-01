@@ -104,9 +104,12 @@ void incidence::init(
 
 
 	K = NEW_int(gg->GB->B);
+	Int_vec_zero(K, gg->GB->B);
+#if 0
 	for (j = 0; j < gg->GB->B; j++) {
 		K[j] = 0;
 	}
+#endif
 
 	theY = NEW_pint(gg->GB->B);
 	for (j = 0; j < gg->GB->B; j++) {
@@ -145,7 +148,7 @@ void incidence::init_pairs(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i1, i2;
+	int i1;
 
 	if (f_v) {
 		cout << "incidence::init_pairs" << endl;
@@ -155,9 +158,12 @@ void incidence::init_pairs(
 
 	for (i1 = 1; i1 <= gg->GB->V; i1++) {
 		pairs[i1] = NEW_int(i1 - 1);
+		Int_vec_zero(pairs[i1], i1 - 1);
+#if 0
 		for (i2 = 0; i2 < i1 - 1; i2++) {
 			pairs[i1][i2] = 0;
 		}
+#endif
 	}
 	if (f_v) {
 		cout << "incidence::init_pairs done" << endl;
@@ -408,7 +414,7 @@ void incidence::print_blocks(
 void incidence::compute_blocks(
 		long int *&Blocks, int *&K, int v, long int *theInc)
 {
-	int i, j, s, b, h;
+	int i, j, b, h;
 	long int a;
 	int *Incma;
 	combinatorics::other_combinatorics::combinatorics_domain Combi;
@@ -418,15 +424,26 @@ void incidence::compute_blocks(
 	Incma = NEW_int(v * b);
 
 	K = NEW_int(b);
+	Int_vec_zero(K, b);
+#if 0
 	for (i = 0; i < b; i++) {
 		K[i] = 0;
 	}
+#endif
 
 	Blocks = NEW_lint(b * v);
+	Int_vec_zero(Incma, v * b);
+
+#if 0
 	for (i = 0; i < v * b; i++) {
 		Incma[i] = 0;
 	}
+#endif
 
+	create_incma_from_flags(
+			v, Incma,
+			theInc);
+#if 0
 	s = 0;
 	for (i = 0; i < v; i++) {
 		for (j = 0; j < Encoding->R[i]; j++, s++) {
@@ -434,6 +451,8 @@ void incidence::compute_blocks(
 			Incma[a] = 1;
 		}
 	}
+#endif
+
 	for (j = 0; j < b; j++) {
 		h = 0;
 		for (i = 0; i < v; i++) {
@@ -450,7 +469,7 @@ void incidence::compute_blocks(
 void incidence::compute_blocks_ranked(
 		long int *&Blocks, int v, long int *theInc)
 {
-	int i, j, s, b, k, h;
+	int i, j, b, k, h;
 	long int a;
 	int *Incma;
 	int *block;
@@ -460,10 +479,18 @@ void incidence::compute_blocks_ranked(
 	Incma = NEW_int(v * b);
 	block = NEW_int(v);
 	Blocks = NEW_lint(b);
+
+	Int_vec_zero(Incma, v * b);
+#if 0
 	for (i = 0; i < v * b; i++) {
 		Incma[i] = 0;
 	}
+#endif
 
+	create_incma_from_flags(
+			v, Incma,
+			theInc);
+#if 0
 	s = 0;
 	for (i = 0; i < v; i++) {
 		for (j = 0; j < Encoding->R[i]; j++, s++) {
@@ -471,6 +498,8 @@ void incidence::compute_blocks_ranked(
 			Incma[a] = 1;
 		}
 	}
+#endif
+
 	for (j = 0; j < b; j++) {
 		for (i = 0; i < v; i++) {
 			block[i] = 0;
@@ -499,7 +528,7 @@ void incidence::compute_blocks_ranked(
 int incidence::compute_k(
 		int v, long int *theInc)
 {
-	int i, j, s, b, k, h;
+	int i, j, b, k, h;
 	long int a;
 	int *Incma;
 	int *block;
@@ -508,10 +537,19 @@ int incidence::compute_k(
 	b = Encoding->b;
 	Incma = NEW_int(v * b);
 	block = NEW_int(v);
+
+	Int_vec_zero(Incma, v * b);
+#if 0
 	for (i = 0; i < v * b; i++) {
 		Incma[i] = 0;
 	}
+#endif
 
+	create_incma_from_flags(
+			v, Incma,
+			theInc);
+
+#if 0
 	s = 0;
 	for (i = 0; i < v; i++) {
 		for (j = 0; j < Encoding->R[i]; j++, s++) {
@@ -519,6 +557,8 @@ int incidence::compute_k(
 			Incma[a] = 1;
 		}
 	}
+#endif
+
 	for (j = 0; j < b; j++) {
 		h = 0;
 		for (i = 0; i < v; i++) {
@@ -544,7 +584,7 @@ int incidence::compute_k(
 int incidence::is_block_tactical(
 		int v, long int *theInc)
 {
-	int i, j, s, b, k, h, ret;
+	int i, j, b, k, h, ret;
 	long int a;
 	int *Incma;
 	int *block;
@@ -553,11 +593,20 @@ int incidence::is_block_tactical(
 	b = Encoding->b;
 	Incma = NEW_int(v * b);
 	block = NEW_int(v);
+
+	Int_vec_zero(Incma, v * b);
+#if 0
 	for (i = 0; i < v * b; i++) {
 		Incma[i] = 0;
 	}
+#endif
 
 	ret = true;
+
+	create_incma_from_flags(
+			v, Incma,
+			theInc);
+#if 0
 	s = 0;
 	for (i = 0; i < v; i++) {
 		for (j = 0; j < Encoding->R[i]; j++, s++) {
@@ -565,6 +614,8 @@ int incidence::is_block_tactical(
 			Incma[a] = 1;
 		}
 	}
+#endif
+
 	for (j = 0; j < b; j++) {
 		h = 0;
 		for (i = 0; i < v; i++) {
@@ -585,6 +636,22 @@ int incidence::is_block_tactical(
 	FREE_int(block);
 	FREE_int(Incma);
 	return ret;
+}
+
+void incidence::create_incma_from_flags(
+		int v, int *Incma,
+		long int *Flags)
+{
+	int s, i, j, a;
+
+	s = 0;
+	for (i = 0; i < v; i++) {
+		for (j = 0; j < Encoding->R[i]; j++, s++) {
+			a = Flags[s];
+			Incma[a] = 1;
+		}
+	}
+
 }
 
 

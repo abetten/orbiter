@@ -430,7 +430,7 @@ long int wreath_product::rank_point(
 	a = nb_factors + nb_factors * M->degree;
 	F->Projective_space_basic->PG_element_rank_modified_lint(
 			v, 1,
-			dimension_of_tensor_action, b);
+			dimension_of_tensor_action, b, 0 /* verbose_level */);
 	a += b;
 	return a;
 }
@@ -522,7 +522,7 @@ long int wreath_product::element_image_of(
 			}
 			F->Projective_space_basic->PG_element_rank_modified_lint(
 					w, 1,
-					dimension_of_tensor_action, c);
+					dimension_of_tensor_action, c, 0 /* verbose_level */);
 			if (f_v) {
 				cout << "wreath_product::element_image_of "
 						"we are in tensor product component " << f
@@ -1500,7 +1500,7 @@ long int wreath_product::tensor_PG_rank(
 	long int b;
 
 	F->Projective_space_basic->PG_element_rank_modified_lint(
-			tensor, 1, dimension_of_tensor_action, b);
+			tensor, 1, dimension_of_tensor_action, b, 0 /* verbose_level */);
 	return b;
 }
 
@@ -1518,7 +1518,7 @@ long int wreath_product::affine_rank_to_PG_rank(
 
 	tensor_affine_unrank(u, affine_rk);
 	F->Projective_space_basic->PG_element_rank_modified_lint(
-			u, 1, dimension_of_tensor_action, b);
+			u, 1, dimension_of_tensor_action, b, 0 /* verbose_level */);
 	return b;
 }
 

@@ -546,7 +546,7 @@ int finite_ring::PHG_element_rank(
 	}
 	r1 = Gg.AG_element_rank(get_e(), w, 1, len - 1);
 	get_Fp()->Projective_space_basic->PG_element_rank_modified_lint(
-			v, stride, len, r2);
+			v, stride, len, r2, 0 /* verbose_level */);
 
 	N = Gg.nb_PG_elements(len - 1, get_p());
 	rk = r1 * N + r2;

@@ -555,7 +555,7 @@ void subfield_structure::lift_matrix_semilinear(
 			for (u = 0; u < s; u++) {
 				b = Basis[u];
 				c = FQ->mult(b, a);
-				c = FQ->frobenius_power(c, frob); // apply the Frobenius
+				c = FQ->frobenius_power(c, frob, 0 /* verbose_level */); // apply the Frobenius
 				for (v = 0; v < s; v++) {
 					d = components[c * s + v];
 					Mq[(I + u) * n + J + v] = d;
@@ -725,9 +725,9 @@ void subfield_structure::Adelaide_hyperoval(
 		exit(1);
 	}
 	bk = FQ->power(b, k);
-	bq = FQ->frobenius_power(b, e);
+	bq = FQ->frobenius_power(b, e, 0 /* verbose_level */);
 	tr_b = FQ->add(b, bq);
-	tr_bk = FQ->add(bk, FQ->frobenius_power(bk, e));
+	tr_bk = FQ->add(bk, FQ->frobenius_power(bk, e, 0 /* verbose_level */));
 	tr_b_down = Fq_element[tr_b];
 	if (tr_b_down == -1) {
 		cout << "subfield_structure::Adelaide_hyperoval "
@@ -749,7 +749,7 @@ void subfield_structure::Adelaide_hyperoval(
 	Int_vec_zero(Mtx, N * 3);
 	for (t = 0; t < q; t++) {
 
-		sqrt_t = Fq->frobenius_power(t, e - 1);
+		sqrt_t = Fq->frobenius_power(t, e - 1, 0 /* verbose_level */);
 		if (Fq->mult(sqrt_t, sqrt_t) != t) {
 			cout << "subfield_structure::Adelaide_hyperoval "
 					"Fq->mult(sqrt_t, sqrt_t) != t" << endl;
@@ -759,7 +759,7 @@ void subfield_structure::Adelaide_hyperoval(
 
 		t_lift = FQ_embedding[t];
 		a = FQ->power(FQ->add(FQ->mult(b, t_lift), bq), k);
-		tr_a = FQ->add(a, FQ->frobenius_power(a, e));
+		tr_a = FQ->add(a, FQ->frobenius_power(a, e, 0 /* verbose_level */));
 		tr_a_down = Fq_element[tr_a];
 		if (tr_a_down == -1) {
 			cout << "subfield_structure::Adelaide_hyperoval "

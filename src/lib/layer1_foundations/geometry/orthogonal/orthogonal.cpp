@@ -1149,7 +1149,7 @@ void orthogonal::normalize_point(
 {
 	if (Quadratic_form->epsilon == 1) {
 		F->Projective_space_basic->PG_element_normalize(
-				v, stride, Quadratic_form->n);
+				v, stride, Quadratic_form->n, 0 /* verbose_level */);
 	}
 	else if (Quadratic_form->epsilon == 0) {
 		Hyperbolic_pair->parabolic_point_normalize(
@@ -1584,7 +1584,7 @@ void orthogonal::intersection_with_subspace(
 				w, 1 /* stride */);
 		if (val == 0) {
 			F->Projective_space_basic->PG_element_rank_modified_lint(
-					w, 1, Quadratic_form->n, a);
+					w, 1, Quadratic_form->n, a, 0 /* verbose_level */);
 			the_points[nb_points++] = a;
 		}
 	}

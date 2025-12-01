@@ -176,6 +176,7 @@ ORBITER_MODULES= \
 		layer1_foundations/geometry/algebraic_geometry/del_pezzo_surface_of_degree_two_object.o \
 		layer1_foundations/geometry/algebraic_geometry/eckardt_point_info.o \
 		layer1_foundations/geometry/algebraic_geometry/eckardt_point.o \
+		layer1_foundations/geometry/algebraic_geometry/gradient_domain.o \
 		layer1_foundations/geometry/algebraic_geometry/kovalevski_points.o \
 		layer1_foundations/geometry/algebraic_geometry/normal_form.o \
 		layer1_foundations/geometry/algebraic_geometry/quartic_curve_domain.o \

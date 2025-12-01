@@ -900,6 +900,8 @@ public:
 	// computes the complement of v[k] in the set {0,...,n-1} to w[n - k]
 	void init5(
 			int *v, int a0, int a1, int a2, int a3, int a4);
+	long int sum(
+			int *v, int len);
 	int minimum(
 			int *v, int len);
 	int maximum(
@@ -1116,6 +1118,8 @@ public:
 			long int *from, int *to, long int len);
 	void complement(
 			long int *v, long int *w, int n, int k);
+	long int sum(
+			long int *v, int len);
 	long int minimum(
 			long int *v, int len);
 	long int maximum(

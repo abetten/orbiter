@@ -561,7 +561,7 @@ void trihedral_pair_with_action::loop_over_trihedral_pairs(
 
 
 			AL->F->Projective_space_basic->PG_element_normalize(
-					coeff_out, 1, 20);
+					coeff_out, 1, 20, 0 /* verbose_level */);
 
 			if (f_v) {
 				cout << "trihedral_pair_with_action::loop_over_trihedral_pairs "

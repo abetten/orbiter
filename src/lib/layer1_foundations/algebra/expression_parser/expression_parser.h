@@ -233,6 +233,8 @@ public:
 	std::string string_representation_Sajeeb();
 	std::string string_representation_formula(
 			int f_latex, int verbose_level);
+	void print_to_vector(
+			std::vector<std::string> &rep, int f_latex, int verbose_level);
 	void print(
 			std::ostream &ost);
 	void init_empty_plus_node(
@@ -366,6 +368,10 @@ public:
 	int f_print;
 	//std::string print_over_Fq_field_label;
 
+	int f_as_vector;
+
+	int f_homogenize;
+
 	int f_latex;
 
 	int f_evaluate_affine;
@@ -415,6 +421,12 @@ public:
 	void perform_activity(
 			int verbose_level);
 	void print(
+			int verbose_level);
+	void as_vector(
+			int *&v, int &len,
+			int verbose_level);
+	void stringify(
+			std::vector<std::string> &String_rep,
 			int verbose_level);
 	void latex(
 			int verbose_level);

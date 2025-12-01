@@ -1663,7 +1663,7 @@ void coding_theory_domain::do_weight_enumerator(
 		}
 		for (i = 0; i < rk; i++) {
 			F->Projective_space_basic->PG_element_normalize(
-					A + i * n, 1, n);
+					A + i * n, 1, n, 0 /* verbose_level */);
 		}
 
 		if (f_v) {

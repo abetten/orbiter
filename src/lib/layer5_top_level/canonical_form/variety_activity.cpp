@@ -578,6 +578,19 @@ void variety_activity::do_singular_points(
 		cout << "variety_activity::do_singular_points" << endl;
 	}
 
+
+	if (f_v) {
+		cout << "variety_activity::do_compute_group "
+				"before Input_Vo[0]->Variety_object->compute_singular_points" << endl;
+	}
+	Input_Vo[0]->Variety_object->compute_singular_points(
+			verbose_level - 2);
+	if (f_v) {
+		cout << "variety_activity::do_compute_group "
+				"after Input_Vo[0]->Variety_object->compute_singular_points" << endl;
+	}
+
+#if 0
 	geometry::projective_geometry::projective_space *P;
 
 
@@ -609,6 +622,7 @@ void variety_activity::do_singular_points(
 	}
 
 	Input_Vo[0]->Variety_object->f_has_singular_points = true;
+#endif
 
 	if (f_v) {
 		cout << "variety_activity::do_compute_group "

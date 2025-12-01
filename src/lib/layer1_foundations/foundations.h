@@ -568,6 +568,7 @@ namespace geometry {
 		class del_pezzo_surface_of_degree_two_object;
 		class eckardt_point_info;
 		class eckardt_point;
+		class gradient_domain;
 		class kovalevski_points;
 		class normal_form;
 		class quartic_curve_domain;
@@ -1082,6 +1083,9 @@ namespace other {
 #define Int_vec_complement_to(A, B, C, D) other::orbiter_kernel_system::Orbiter->Int_vec->complement(A, B, C, D)
 
 #define Lint_vec_complement_to(A, B, C, D) other::orbiter_kernel_system::Orbiter->Lint_vec->complement(A, B, C, D)
+
+#define Int_vec_sum(v, len) other::orbiter_kernel_system::Orbiter->Int_vec->sum(v, len)
+#define Lint_vec_sum(v, len) other::orbiter_kernel_system::Orbiter->Lint_vec->sum(v, len)
 
 #define Int_vec_maximum(v, len) other::orbiter_kernel_system::Orbiter->Int_vec->maximum(v, len)
 #define Lint_vec_maximum(v, len) other::orbiter_kernel_system::Orbiter->Lint_vec->maximum(v, len)

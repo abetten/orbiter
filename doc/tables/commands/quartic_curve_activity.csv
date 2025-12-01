@@ -8,4 +8,5 @@ ROW,C1,C2,C3
 1,"\verb'-extract_orbit_on_bitangents_' \verb'by_length' "," $l$ "," Extract the bitangents in the unique orbit of length $l$. If there is no orbit of length $l$, or if there are multiple orbits of length $l$, an error is raised. "
 1,"\verb'-extract_specific_orbit_on_' \verb'bitangents_by_length' "," $l$ $i$ "," Extract the $i$th orbit on bitangents of length $l$. "
 1,"\verb'-extract_specific_orbit_on_' \verb'kovalevski_points_by_length' "," $l$ $i$ "," Extract the $i$th orbit on Kovalevski points of length $l$. "
+1,"\verb'-get_Kovalevski_configuration'  ","  "," Extract the incidence structure between Kovalevski points and bitangents. "
 END

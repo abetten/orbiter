@@ -1129,7 +1129,7 @@ void geometric_object_create::create_elliptic_curve(
 	}
 	for (i = 0; i < nb_pts; i++) {
 		P->Subspaces->F->Projective_space_basic->PG_element_rank_modified_lint(
-				E->T + i * d, 1, d, a);
+				E->T + i * d, 1, d, a, 0 /* verbose_level */);
 		Pts[i] = a;
 		if (f_v) {
 			cout << setw(4) << i << " : ";
@@ -1405,9 +1405,9 @@ void geometric_object_create::create_unital_XXq_YZq_ZYq_brute_force(
 		X = v[0];
 		Y = v[1];
 		Z = v[2];
-		Xq = P->Subspaces->F->frobenius_power(X, e);
-		Yq = P->Subspaces->F->frobenius_power(Y, e);
-		Zq = P->Subspaces->F->frobenius_power(Z, e);
+		Xq = P->Subspaces->F->frobenius_power(X, e, 0 /* verbose_level */);
+		Yq = P->Subspaces->F->frobenius_power(Y, e, 0 /* verbose_level */);
+		Zq = P->Subspaces->F->frobenius_power(Z, e, 0 /* verbose_level */);
 		a = P->Subspaces->F->add3(
 				P->Subspaces->F->mult(X, Xq),
 				P->Subspaces->F->mult(Y, Zq),

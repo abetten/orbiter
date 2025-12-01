@@ -362,7 +362,7 @@ void projective_space_subspaces::init_incidence_structure(
 		cout << "projective_space_subspaces::init_incidence_structure "
 				"before projective_space_implementation->init" << endl;
 	}
-	Implementation->init(P, 0 /*verbose_level*/);
+	Implementation->init(P, verbose_level - 2);
 	if (f_v) {
 		cout << "projective_space_subspaces::init_incidence_structure "
 				"after projective_space_implementation->init" << endl;
@@ -376,7 +376,7 @@ void projective_space_subspaces::init_incidence_structure(
 						"before init_polarity" << endl;
 			}
 
-			init_polarity(verbose_level);
+			init_polarity(verbose_level - 2);
 
 
 			if (f_v) {
@@ -1206,7 +1206,7 @@ long int projective_space_subspaces::rank_point(
 	}
 
 	F->Projective_space_basic->PG_element_rank_modified_lint(
-			v, 1, n + 1, b);
+			v, 1, n + 1, b, 0 /* verbose_level */);
 
 	if (f_v) {
 		cout << "projective_space_subspaces::rank_point: v=";
@@ -1630,7 +1630,7 @@ void projective_space_subspaces::line_intersection_type_through_hyperplane(
 		Pts1[i * d + d - 1] = 0;
 
 		F->Projective_space_basic->PG_element_rank_modified_lint(
-				Pts1 + i * d, 1, n + 1, i1);
+				Pts1 + i * d, 1, n + 1, i1, 0 /* verbose_level */);
 
 		// i1 is the rank of the hyperplane point
 		// inside the larger space:

@@ -183,7 +183,7 @@ void finite_field_implementation_wo_tables::init_extension_field(
 
 	int i;
 
-	factor_polynomial_degree = Fq->degree(m);
+	factor_polynomial_degree = Fq->recalculate_degree(m);
 
 	if (f_v) {
 		cout << "finite_field_implementation_wo_tables::init_extension_field "
@@ -314,22 +314,50 @@ int finite_field_implementation_wo_tables::inverse(
 			Fq->print_object(a, cout);
 			cout << endl;
 			cout << "finite_field_implementation_wo_tables::inverse "
-					"before Fq->extended_gcd" << endl;
+					"before FX->extended_gcd" << endl;
 		}
 
-		Fq->extended_gcd(m, a, u, v, g, verbose_level);
+		FX->extended_gcd(m, a, u, v, g, verbose_level - 2); // used to be Fq->extended_gcd
+
+		int deg;
+
+		deg = FX->get_degree(g);
+
+		if (deg != 0) {
+			cout << "finite_field_implementation_wo_tables::inverse degree of g is not 0" << endl;
+			exit(1);
+		}
+
+		int leading;
+
+		leading = FX->s_i(g, 0);
+
+		if (leading == 0) {
+			cout << "finite_field_implementation_wo_tables::inverse leading is 0" << endl;
+			exit(1);
+		}
+
+		if (leading != 1) {
+			int c;
+			c = FX->get_F()->inverse(leading); // use the prime field here
+			FX->scalar_multiply(u, c);
+			FX->scalar_multiply(v, c);
+			FX->scalar_multiply(g, c);
+		}
+
+
 
 		if (f_v) {
 			cout << "finite_field_implementation_wo_tables::inverse "
-					"after Fq->extended_gcd" << endl;
+					"after FX->extended_gcd" << endl;
 		}
 
 		k = Fq->rank(v);
 		if (f_v) {
-			cout << "v=" << endl;
+			cout << "finite_field_implementation_wo_tables::inverse v=" << endl;
 			Fq->print_object(v, cout);
 			cout << endl;
-			cout << "i=" << i << ", k=" << k << endl;
+			cout << "finite_field_implementation_wo_tables::inverse i=" << i << ", k=" << k << endl;
 		}
 
 		Fq->delete_object(a);
@@ -437,6 +465,171 @@ int finite_field_implementation_wo_tables::add(
 	return k;
 }
 
+int finite_field_implementation_wo_tables::raise_to_the_power(
+	int a, int n, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "finite_field_implementation_wo_tables::raise_to_the_power" << endl;
+	}
+	int result = 1;
+	int b = a;
+
+	if (n < 0) {
+		cout << "finite_field_implementation_wo_tables::raise_to_the_power n < 0" << endl;
+		exit(1);
+	}
+
+	while (n) {
+		if (n % 2) {
+			result = mult(result, b, 0 /* verbose_level */);
+		}
+		n >>= 1;
+		if (n == 0) {
+			break;
+		}
+		b = mult(b, b, 0 /* verbose_level */);
+	}
+	if (f_v) {
+		cout << "finite_field_implementation_wo_tables::raise_to_the_power done" << endl;
+	}
+	return result;
+}
+
+
+
+int finite_field_implementation_wo_tables::alpha_power(
+		int n, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "finite_field_implementation_wo_tables::alpha_power" << endl;
+	}
+	int result = 1;
+	int b = F->p;
+
+	result = raise_to_the_power(b, n, verbose_level);
+
+	if (f_v) {
+		cout << "finite_field_implementation_wo_tables::alpha_power done" << endl;
+	}
+	return result;
+}
+
+int finite_field_implementation_wo_tables::frobenius_power(
+		int a, int frob_power, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "finite_field_implementation_wo_tables::frobenius_power" << endl;
+	}
+
+	int result = 1;
+
+	if (a == 0) {
+		result = 0;
+	}
+	else {
+		int b = a;
+		int n;
+		number_theory::number_theory_domain NT;
+
+		n = NT.i_power_j(F->p, frob_power);
+		if (n < 0) {
+			cout << "finite_field_implementation_wo_tables::frobenius_power n < 0" << endl;
+			exit(1);
+		}
+
+		while (n) {
+			if (n % 2) {
+				result = mult(result, b, 0 /* verbose_level */);
+			}
+			n >>= 1;
+			if (n == 0) {
+				break;
+			}
+			b = mult(b, b, 0 /* verbose_level */);
+		}
+
+		//result = b;
+
+	}
+	if (f_v) {
+		cout << "finite_field_implementation_wo_tables::frobenius_power done" << endl;
+	}
+	return result;
+}
+
+int finite_field_implementation_wo_tables::log_alpha(
+		int a, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "finite_field_implementation_wo_tables::log_alpha" << endl;
+	}
+	int result = 1;
+	if (a == 0) {
+		cout << "finite_field_implementation_wo_tables::log_alpha a == 0" << endl;
+		exit(1);
+	}
+
+	int i;
+	int b = F->alpha;
+
+	result = 1;
+
+	for (i = 0; i < F->q - 1; i++, result++) {
+		if (b == a) {
+			break;
+		}
+		b = mult(b, F->alpha, 0 /* verbose_level */);
+	}
+
+	if (f_v) {
+		cout << "finite_field_implementation_wo_tables::log_alpha done" << endl;
+	}
+	return result;
+}
+
+int finite_field_implementation_wo_tables::belongs_to_quadratic_subfield(
+		int a, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "finite_field_implementation_wo_tables::belongs_to_quadratic_subfield" << endl;
+	}
+	int result;
+
+	if (a == 0) {
+		result = true;
+	}
+	else {
+		int q0, q0m1, b;
+
+		number_theory::number_theory_domain NT;
+
+		q0 = NT.i_power_j(F->p, F->e >> 1);
+		q0m1 = q0 - 1;
+		b = raise_to_the_power(a, q0m1, verbose_level);
+		if (b == 1) {
+			result = true;
+		}
+		else {
+			result = false;
+		}
+	}
+
+	if (f_v) {
+		cout << "finite_field_implementation_wo_tables::belongs_to_quadratic_subfield done" << endl;
+	}
+	return result;
+
+}
 
 
 }}}}

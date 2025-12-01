@@ -566,9 +566,20 @@ public:
 
 
 	std::vector<other::data_structures::bitvector *> Bitvector_array;
+
+		// the canonical forms in the order that they are encountered
+
+
 	std::vector<void *> Objects;
+
+	// the objects in the order that they are encountered
+	// the objects are of type any_combinatorial_object
+
 	std::vector<long int> Ago;
+	// the ago in the order that they are encountered
+
 	std::vector<int> input_index;
+	// the index in the input of the first time that the canonical form was encountered
 
 	std::multimap<uint32_t, int> Hashing;
 		// we store the pair (hash, idx)

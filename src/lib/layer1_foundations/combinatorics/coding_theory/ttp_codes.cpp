@@ -1673,7 +1673,7 @@ void ttp_codes::is_cyclic(
 	//finite_field FQQ;
 	int subgroup_index, deg_h, n_index;
 
-	deg_h = FqX.degree(quo);
+	deg_h = FqX.recalculate_degree(quo);
 	FqX.create_object_of_degree(h, deg_h);
 	for (i = 0; i <= deg_h; i++) {
 		a = FqX.s_i(quo, i);

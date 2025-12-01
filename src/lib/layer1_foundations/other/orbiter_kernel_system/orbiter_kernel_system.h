@@ -43,9 +43,15 @@ public:
 	long int nb_times_invert_called;
 
 	long int ff_nb_add;
+	long int ff_nb_add_by_table;
+	long int ff_nb_add_long;
 	long int ff_nb_mult;
+	long int ff_nb_mult_by_table;
+	long int ff_nb_mult_long;
 	long int ff_nb_negate;
 	long int ff_nb_inverse;
+	long int ff_nb_inverse_by_table;
+	long int ff_nb_inverse_long;
 	long int ff_nb_power;
 	long int ff_nb_frobenius_power;
 	long int ff_nb_absolute_trace;

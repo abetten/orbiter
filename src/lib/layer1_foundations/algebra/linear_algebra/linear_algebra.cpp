@@ -976,7 +976,7 @@ void linear_algebra::vector_frobenius_power_in_place(
 	int i;
 
 	for (i = 0; i < m; i++) {
-		A[i] = F->frobenius_power(A[i], f);
+		A[i] = F->frobenius_power(A[i], f, 0 /* verbose_level */);
 	}
 }
 

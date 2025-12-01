@@ -210,7 +210,7 @@ long int spread_domain::rank_point(
 	long int a;
 
 	F->Projective_space_basic->PG_element_rank_modified_lint(
-			v, 1, n, a);
+			v, 1, n, a, 0 /* verbose_level */);
 	return a;
 }
 
@@ -1529,7 +1529,7 @@ void spread_domain::make_spread_from_q_clan(
 				}
 				a_t = t;
 				b_t = 0;
-				c_t = F->mult(minus_nonsquare, F->frobenius_power(t, 1));
+				c_t = F->mult(minus_nonsquare, F->frobenius_power(t, 1, 0 /* verbose_level */));
 			}
 			else if (type_of_spread == SPREAD_OF_TYPE_KANTOR2) {
 				if (EVEN(q)) {
@@ -1737,7 +1737,7 @@ void spread_domain::HMO(
 			tmp1 = Ge[x * q + y];
 			tmp2 = Fq2->negate(Fq2->mult(He[x * q + y], omega));
 			f = Fq2->add(tmp1, tmp2);
-			z = Fq2->frobenius_power(alpha, Fq2->e / 2);
+			z = Fq2->frobenius_power(alpha, Fq2->e / 2, 0 /* verbose_level */);
 			GG[alpha * q2 + beta] = f;
 			HH[alpha * q2 + beta] = z;
 		}

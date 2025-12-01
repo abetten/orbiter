@@ -393,7 +393,7 @@ void table_of_irreducible_polynomials::factorize_polynomial(
 	Int_vec_zero(Mult, nb_irred);
 	for (i = 0; i < nb_irred; i++) {
 
-		d_poly = U.degree(Poly);
+		d_poly = U.recalculate_degree(Poly);
 		d = Degree[i];
 
 		if (f_vv) {

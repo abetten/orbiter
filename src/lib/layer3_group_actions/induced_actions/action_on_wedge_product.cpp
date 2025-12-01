@@ -95,7 +95,7 @@ long int action_on_wedge_product::rank_point(
 	long int rk;
 
 	F->Projective_space_basic->PG_element_rank_modified_lint(
-			v, 1, wedge_dimension, rk);
+			v, 1, wedge_dimension, rk, 0 /* verbose_level */);
 	return rk;
 }
 
@@ -129,7 +129,7 @@ long int action_on_wedge_product::compute_image_int(
 
 	//AG_element_rank(q, wedge_v2, 1, wedge_dimension, b);
 	F->Projective_space_basic->PG_element_rank_modified_lint(
-			wedge_v2, 1, wedge_dimension, b);
+			wedge_v2, 1, wedge_dimension, b, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "action_on_wedge_product::compute_image_int "
 				"done " << a << "->" << b << endl;

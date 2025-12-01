@@ -442,12 +442,13 @@ private:
 	ring_theory::unipoly_domain *FX;
 
 	ring_theory::unipoly_object m;
+		// created using FX
 
-	int factor_polynomial_degree;
-	int *factor_polynomial_coefficients_negated;
+	int factor_polynomial_degree; // degree of m
+	int *factor_polynomial_coefficients_negated; // the coefficients of m negated.
 
 
-	ring_theory::unipoly_domain *Fq;
+	ring_theory::unipoly_domain *Fq; // factor-ring FX modulo m
 
 	ring_theory::unipoly_object Alpha;
 
@@ -467,6 +468,16 @@ public:
 			int i, int verbose_level);
 	int add(
 			int i, int j, int verbose_level);
+	int raise_to_the_power(
+		int a, int n, int verbose_level);
+	int alpha_power(
+			int n, int verbose_level);
+	int frobenius_power(
+			int a, int frob_power, int verbose_level);
+	int log_alpha(
+			int a, int verbose_level);
+	int belongs_to_quadratic_subfield(
+			int a, int verbose_level);
 
 };
 
@@ -739,7 +750,7 @@ public:
 	int q;
 	int p, e; // q = p^e
 
-	int alpha; // primitive element
+	int alpha; // primitive element = p
 	int log10_of_q; // needed for printing purposes
 	//int f_print_as_exponentials;
 
@@ -795,8 +806,6 @@ public:
 	std::string &get_symbol_for_print();
 	finite_field_implementation_by_tables *get_T();
 	int has_quadratic_subfield();
-	int belongs_to_quadratic_subfield(
-			int a);
 	long int compute_subfield_polynomial(
 			int order_subfield,
 			int verbose_level);
@@ -865,6 +874,8 @@ public:
 			int i);
 	int inverse(
 			int i);
+	int inverse_v(
+			int i, int verbose_level);
 	int power(
 			int a, int n);
 	int power_verbose(
@@ -876,7 +887,7 @@ public:
 			int *v_in, int *v_out,
 			int len, int frob_power);
 	int frobenius_power(
-			int a, int frob_power);
+			int a, int frob_power, int verbose_level);
 		// computes a^{p^frob_power}
 	int absolute_trace(
 			int i);
@@ -918,6 +929,8 @@ public:
 	void compute_nth_roots(
 			int *&Nth_roots, int n, int verbose_level);
 	int primitive_element();
+	int belongs_to_quadratic_subfield(
+			int a);
 
 
 

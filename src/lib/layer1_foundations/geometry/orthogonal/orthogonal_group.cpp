@@ -729,7 +729,7 @@ void orthogonal_group::create_random_semisimilarity(
 			k = (O->F->p - 1) >> 1;
 			a = O->F->primitive_element();
 			b = O->F->power(a, k);
-			c = O->F->frobenius_power(b, O->F->e - 1);
+			c = O->F->frobenius_power(b, O->F->e - 1, 0 /* verbose_level */);
 			Mtx[d * d - 1] = c;
 			Mtx[d * d] = 1;
 			cout << "orthogonal_group::create_random_semisimilarity "

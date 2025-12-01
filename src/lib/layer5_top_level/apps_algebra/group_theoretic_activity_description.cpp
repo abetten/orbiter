@@ -336,6 +336,7 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 
 	// TABLES/group_theoretic_activity_5.tex
 
+	// magma:
 	f_subgroup_lattice_magma = false;
 
 	f_find_overgroup = false;

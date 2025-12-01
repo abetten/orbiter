@@ -66,8 +66,11 @@ variety_description::variety_description()
 	f_second_equation_in_algebraic_form = false;
 	//std::string second_equation_in_algebraic_form_text;
 
+	// unused:
 	f_second_equation_by_coefficients = false;
 	//std::string second_equation_by_coefficients_text;
+
+
 
 	f_points = false;
 	//std::string points_txt;

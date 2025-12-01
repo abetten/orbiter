@@ -288,7 +288,7 @@ void arc_basic::Subiaco_oval(
 		t2 = F->mult(t, t);
 		t3 = F->mult(t2, t);
 		t4 = F->mult(t2, t2);
-		sqrt_t = F->frobenius_power(t, F->e - 1);
+		sqrt_t = F->frobenius_power(t, F->e - 1, 0 /* verbose_level */);
 		if (F->mult(sqrt_t, sqrt_t) != t) {
 			cout << "arc_basic::Subiaco_oval "
 					"mult(sqrt_t, sqrt_t) != t" << endl;
@@ -387,7 +387,7 @@ void arc_basic::Subiaco_hyperoval(
 		t2 = F->mult(t, t);
 		t3 = F->mult(t2, t);
 		t4 = F->mult(t2, t2);
-		sqrt_t = F->frobenius_power(t, F->e - 1);
+		sqrt_t = F->frobenius_power(t, F->e - 1, 0 /* verbose_level */);
 		if (F->mult(sqrt_t, sqrt_t) != t) {
 			cout << "arc_basic::Subiaco_hyperoval "
 					"mult(sqrt_t, sqrt_t) != t" << endl;

@@ -752,7 +752,7 @@ void surface_domain_high_level::do_cubic_surface_properties(
 #endif
 
 		SC->F->Projective_space_basic->PG_element_normalize(
-				SC->SO->Variety_object->eqn, 1, 20);
+				SC->SO->Variety_object->eqn, 1, 20, 0 /* verbose_level */);
 
 		if (f_v) {
 			cout << "surface_domain_high_level::do_cubic_surface_properties "

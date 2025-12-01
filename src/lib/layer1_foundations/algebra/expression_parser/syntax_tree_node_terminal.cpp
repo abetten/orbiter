@@ -91,18 +91,25 @@ void syntax_tree_node_terminal::print_to_vector(
 void syntax_tree_node_terminal::print(
 		std::ostream &ost)
 {
-	ost << "terminal node, ";
-	if (f_int) {
-		ost << "int=" << value_int << std::endl;
-	}
-	else if (f_double) {
-		ost << "double=" << value_double << std::endl;
-	}
-	else if (f_text) {
-		ost << "text=" << value_text << std::endl;
+	int f_v = false;
+
+	if (!f_v) {
+		print_easy(ost);
 	}
 	else {
-		cout << "syntax_tree_node_terminal::print unknown type" << endl;
+		ost << "terminal node, ";
+		if (f_int) {
+			ost << "int=" << value_int << std::endl;
+		}
+		else if (f_double) {
+			ost << "double=" << value_double << std::endl;
+		}
+		else if (f_text) {
+			ost << "text=" << value_text << std::endl;
+		}
+		else {
+			cout << "syntax_tree_node_terminal::print unknown type" << endl;
+		}
 	}
 }
 

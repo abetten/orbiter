@@ -522,7 +522,7 @@ void web_of_cubic_curves::create_web_and_equations_based_on_four_tritangent_plan
 					Tritangent_plane_equations + h * 4, 4);
 
 			Surf->F->Projective_space_basic->PG_element_normalize(
-					Tritangent_plane_equations + h * 4, 1, 4);
+					Tritangent_plane_equations + h * 4, 1, 4, 0 /* verbose_level */);
 
 		}
 		if (f_v) {

@@ -333,6 +333,26 @@ std::string formula::string_representation_formula(
 	return s;
 }
 
+void formula::print_to_vector(
+		std::vector<std::string> &rep, int f_latex, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "formula::string_representation_formula" << endl;
+	}
+
+	if (f_v) {
+		cout << "formula::print_to_vector "
+				"before tree->print_to_vector" << endl;
+	}
+	tree->print_to_vector(
+			rep, f_latex, 0 /*verbose_level*/);
+	if (f_v) {
+		cout << "formula::print_to_vector "
+				"after tree->print_to_vector" << endl;
+	}
+}
 
 void formula::print(
 		std::ostream &ost)

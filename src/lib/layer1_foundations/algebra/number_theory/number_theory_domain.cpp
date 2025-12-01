@@ -3136,7 +3136,7 @@ void number_theory_domain::elliptic_curve_points(
 				}
 			}
 			else {
-				y = F->frobenius_power(r, F->e - 1);
+				y = F->frobenius_power(r, F->e - 1, 0 /* verbose_level */);
 				if (f_v) {
 					cout << nb << " : (" << x << "," << y << ",1)" << endl;
 				}
@@ -3184,7 +3184,7 @@ void number_theory_domain::elliptic_curve_points(
 			}
 			else {
 				// even characteristic
-				y = F->frobenius_power(r, F->e - 1);
+				y = F->frobenius_power(r, F->e - 1, 0 /* verbose_level */);
 				T[n * 3 + 0] = x;
 				T[n * 3 + 1] = y;
 				T[n * 3 + 2] = 1;
@@ -3479,9 +3479,9 @@ int number_theory_domain::elliptic_curve_addition(
 	P2->unrank_point(p1, p1_rk);
 	P2->unrank_point(p2, p2_rk);
 	P2->Subspaces->F->Projective_space_basic->PG_element_normalize(
-			p1, 1, 3);
+			p1, 1, 3, 0 /* verbose_level */);
 	P2->Subspaces->F->Projective_space_basic->PG_element_normalize(
-			p2, 1, 3);
+			p2, 1, 3, 0 /* verbose_level */);
 
 	x1 = p1[0];
 	y1 = p1[1];

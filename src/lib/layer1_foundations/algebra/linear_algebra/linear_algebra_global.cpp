@@ -761,7 +761,7 @@ void linear_algebra_global::do_RREF(
 	Col = NEW_lint(n);
 	for (i = 0; i < rk; i++) {
 		F->Projective_space_basic->PG_element_rank_modified_lint(
-				B + i * n, 1, n, Row[i]);
+				B + i * n, 1, n, Row[i], 0 /* verbose_level */);
 	}
 	Int_vec_copy(A, B, rk * n);
 	for (j = 0; j < n; j++) {
@@ -772,7 +772,7 @@ void linear_algebra_global::do_RREF(
 		}
 		if (i < rk) {
 			F->Projective_space_basic->PG_element_rank_modified_lint(
-					B + j, n, rk, Col[j]);
+					B + j, n, rk, Col[j], 0 /* verbose_level */);
 		}
 		else {
 			Col[j] = -1;
@@ -1132,7 +1132,7 @@ int linear_algebra_global::reverse_engineer_semilinear_map(
 
 		Int_vec_copy(v1, v1_save, d);
 		F->Projective_space_basic->PG_element_rank_modified_lint(
-				v1, 1, n + 1, i);
+				v1, 1, n + 1, i, 0 /* verbose_level */);
 		//rank_point(v1);
 			// Now, the value of i should be equal to e.
 		//j = element_image_of(i, Elt, 0);
@@ -1174,7 +1174,7 @@ int linear_algebra_global::reverse_engineer_semilinear_map(
 	//i = rank_point(v1);
 
 	F->Projective_space_basic->PG_element_rank_modified_lint(
-			v1, 1, n + 1, i);
+			v1, 1, n + 1, i, 0 /* verbose_level */);
 
 	//j = element_image_of(i, Elt, 0);
 	j = Elt[i];
@@ -1248,7 +1248,7 @@ int linear_algebra_global::reverse_engineer_semilinear_map(
 		//i = rank_point(v1);
 
 		F->Projective_space_basic->PG_element_rank_modified_lint(
-				v1, 1, n + 1, i);
+				v1, 1, n + 1, i, 0 /* verbose_level */);
 
 		//j = element_image_of(i, Elt, 0);
 		j = Elt[i];
@@ -1333,7 +1333,7 @@ int linear_algebra_global::reverse_engineer_semilinear_map(
 			cout << "frobenius_inv = " << frobenius_inv << endl;
 		}
 		for (hh = 0; hh < d * d; hh++) {
-			Mtx[hh] = F->frobenius_power(Mtx[hh], frobenius_inv);
+			Mtx[hh] = F->frobenius_power(Mtx[hh], frobenius_inv, 0 /* verbose_level */);
 		}
 
 

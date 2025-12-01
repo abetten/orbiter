@@ -700,9 +700,9 @@ int projective_space_plane::determine_hermitian_form_in_plane(
 		x = coords[i * 3 + 0];
 		y = coords[i * 3 + 1];
 		z = coords[i * 3 + 2];
-		xq = P->Subspaces->F->frobenius_power(x, little_e);
-		yq = P->Subspaces->F->frobenius_power(y, little_e);
-		zq = P->Subspaces->F->frobenius_power(z, little_e);
+		xq = P->Subspaces->F->frobenius_power(x, little_e, 0 /* verbose_level */);
+		yq = P->Subspaces->F->frobenius_power(y, little_e, 0 /* verbose_level */);
+		zq = P->Subspaces->F->frobenius_power(z, little_e, 0 /* verbose_level */);
 		system[i * 9 + 0] = P->Subspaces->F->mult(x, xq);
 		system[i * 9 + 1] = P->Subspaces->F->mult(y, yq);
 		system[i * 9 + 2] = P->Subspaces->F->mult(z, zq);
@@ -879,7 +879,7 @@ void projective_space_plane::conic_type_randomized(
 
 
 		P->Subspaces->F->Projective_space_basic->PG_element_normalize(
-				six_coeffs, 1, 6);
+				six_coeffs, 1, 6, 0 /* verbose_level */);
 		Gg.AG_element_rank_longinteger(P->Subspaces->F->q, six_coeffs, 1, 6, conic_rk);
 		if (false /* f_vv */) {
 			cout << rk << "-th subset ";
@@ -1486,7 +1486,7 @@ void projective_space_plane::conic_type(
 
 
 		P->Subspaces->F->Projective_space_basic->PG_element_normalize(
-				six_coeffs, 1, 6);
+				six_coeffs, 1, 6, 0 /* verbose_level */);
 		Gg.AG_element_rank_longinteger(P->Subspaces->F->q, six_coeffs, 1, 6, conic_rk);
 		if (false /* f_vv */) {
 			cout << rk << "-th subset ";

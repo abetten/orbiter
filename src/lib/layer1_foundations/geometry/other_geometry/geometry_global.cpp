@@ -1302,7 +1302,7 @@ void geometry_global::do_rank_points_in_PG(
 
 	for (i = 0; i < m; i++) {
 		F->Projective_space_basic->PG_element_rank_modified_lint(
-				v + i * n, 1, n, a);
+				v + i * n, 1, n, a, 0 /* verbose_level */);
 
 		Int_vec_print(cout, v + i * n, n);
 		cout << " : " << a << endl;
@@ -2195,7 +2195,7 @@ void geometry_global::find_lines_which_are_contained(
 			// rank the test point and see
 			// if it belongs to the surface:
 			P->Subspaces->F->Projective_space_basic->PG_element_rank_modified_lint(
-					M2 + 2 * d, 1, d, b);
+					M2 + 2 * d, 1, d, b, 0 /* verbose_level */);
 			if (!Sorting.lint_vec_search(set1, sz1, b, idx, 0)) {
 				break;
 			}
@@ -2291,7 +2291,7 @@ void geometry_global::find_lines_which_are_contained(
 				}
 				// row 2 of M2 contains the coordinates of the point P3:
 				P->Subspaces->F->Projective_space_basic->PG_element_rank_modified_lint(
-						M2 + 2 * d, 1, d, b);
+						M2 + 2 * d, 1, d, b, 0 /* verbose_level */);
 				if (!Sorting.lint_vec_search(set2, sz2, b, idx, 0)) {
 					break;
 				}
@@ -3004,7 +3004,7 @@ void geometry_global::do_points_on_lines_in_PG(
 			// rank the test point and see
 			// if it belongs to the surface:
 			P->Subspaces->F->Projective_space_basic->PG_element_rank_modified_lint(
-					w, 1, d, Pts[i * (q + 1) + a]);
+					w, 1, d, Pts[i * (q + 1) + a], 0 /* verbose_level */);
 
 
 		}
@@ -3072,7 +3072,7 @@ void geometry_global::do_cone_over(
 	v[d - 1] = 1;
 	//b = P2->rank_point(v);
 	F->Projective_space_basic->PG_element_rank_modified_lint(
-			v, 1, n + 2, b);
+			v, 1, n + 2, b, 0 /* verbose_level */);
 	set_out[cnt++] = b;
 
 
@@ -3092,7 +3092,7 @@ void geometry_global::do_cone_over(
 
 			//b = P2->rank_point(v);
 			F->Projective_space_basic->PG_element_rank_modified_lint(
-					v, 1, n + 2, b);
+					v, 1, n + 2, b, 0 /* verbose_level */);
 
 			set_out[cnt++] = b;
 		}
@@ -3678,7 +3678,7 @@ void geometry_global::create_segre_variety(
 					0 /* verbose_level */);
 
 			//rk3 = P3->rank_point(v3);
-			F->Projective_space_basic->PG_element_rank_modified_lint(v3, 1, d, rk3);
+			F->Projective_space_basic->PG_element_rank_modified_lint(v3, 1, d, rk3, 0 /* verbose_level */);
 
 			Pts[nb_pts++] = rk3;
 
@@ -3967,7 +3967,7 @@ void geometry_global::do_embed_orthogonal(
 
 		//b = P->rank_point(v);
 		F->Projective_space_basic->PG_element_rank_modified_lint(
-				v, 1, n + 1, b);
+				v, 1, n + 1, b, 0 /* verbose_level */);
 		set_out[h] = b;
 	}
 
@@ -4007,7 +4007,7 @@ void geometry_global::do_embed_points(
 		v[d - 1] = 0;
 
 		F->Projective_space_basic->PG_element_rank_modified_lint(
-				v, 1, n + 2, b);
+				v, 1, n + 2, b, 0 /* verbose_level */);
 
 		set_out[h] = b;
 	}

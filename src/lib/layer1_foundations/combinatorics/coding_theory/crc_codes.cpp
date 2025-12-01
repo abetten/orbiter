@@ -2219,7 +2219,7 @@ void crc_codes::CRC_encode_text(
 
 	int degree;
 
-	degree = Nth->FX->degree(CRC_poly);
+	degree = Nth->FX->recalculate_degree(CRC_poly);
 	if (f_v) {
 		cout << "crc_codes::CRC_encode_text "
 				"degree=" << degree << endl;

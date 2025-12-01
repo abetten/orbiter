@@ -15,6 +15,7 @@ MODULES = \
 	del_pezzo_surface_of_degree_two_object.o \
 	eckardt_point_info.o \
 	eckardt_point.o \
+	gradient_domain.o \
 	kovalevski_points.o \
 	normal_form.o \
 	quartic_curve_domain.o \

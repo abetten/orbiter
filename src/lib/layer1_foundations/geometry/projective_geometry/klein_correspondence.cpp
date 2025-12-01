@@ -593,7 +593,8 @@ long int klein_correspondence::point_on_quadric_to_line(
 }
 
 void klein_correspondence::Pluecker_to_line(
-		int *v6, int *basis_line, int verbose_level)
+		int *v6, int *basis_line,
+		int verbose_level)
 
 // in:
 // v6[0] = p12, v6[1] = p34, v6[2] = p13,
@@ -624,13 +625,18 @@ void klein_correspondence::Pluecker_to_line(
 	v[4] = p24;
 	v[5] = p34;
 
+	int f_ordering_lex = true;
+
+
 	if (f_v) {
 		cout << "klein_correspondence::Pluecker_to_line "
 				"before exterior_square_to_line" << endl;
 	}
 	exterior_square_to_line(
 			v,
-			basis_line, verbose_level);
+			basis_line,
+			f_ordering_lex,
+			verbose_level);
 	if (f_v) {
 		cout << "klein_correspondence::Pluecker_to_line "
 				"before exterior_square_to_line" << endl;
@@ -669,7 +675,9 @@ long int klein_correspondence::Pluecker_to_line_rk(
 
 void klein_correspondence::exterior_square_to_line(
 		int *v, int *basis_line,
+		int f_ordering_lex,
 		int verbose_level)
+// called from klein_correspondence::reverse_isomorphism
 // in:
 // v[0] = p12, v[1] = p13, v[2] = p14,
 // v[3] = p23, v[4] = p24, v[5] = p25,
@@ -686,23 +694,30 @@ void klein_correspondence::exterior_square_to_line(
 		cout << "klein_correspondence::exterior_square_to_line" << endl;
 	}
 
-#if 1
-	// ToDo this was if 0 and the other branch was one. Why?
+	// ToDo this was off and the other branch was one. Why?
 
-	p12 = v[0];
-	p13 = v[1];
-	p14 = v[2];
-	p23 = v[3];
-	p24 = v[4];
-	p34 = v[5];
-#else
-	p12 = v[0];
-	p34 = v[1];
-	p13 = v[2];
-	p24 = F->negate(v[3]);
-	p14 = v[4];
-	p23 = v[5];
-#endif
+	if (f_ordering_lex) {
+		// use this for lexicographic ordering
+		// of the basis elements of the wedge product
+		p12 = v[0];
+		p13 = v[1];
+		p14 = v[2];
+		p23 = v[3];
+		p24 = v[4];
+		p34 = v[5];
+	}
+	else {
+
+		// use this if the wedge product should match the (standard) quadratic form
+		// x_0*x_1 + x_2*x_3 + x_4*x_5 = 0
+		p12 = v[0];
+		p34 = v[1];
+		p13 = v[2];
+		p24 = F->negate(v[3]);
+		p14 = v[4];
+		p23 = v[5];
+	}
+
 	if (f_v) {
 		cout << "klein_correspondence::exterior_square_to_line"
 				<< " p12 = " << p12
@@ -1111,17 +1126,21 @@ void klein_correspondence::reverse_isomorphism(
 	exterior_square_to_line(A6 + 2 * 6, Z, 0 /* verbose_level*/);
 	exterior_square_to_line(A6 + 3 * 6, Z + 8, 0 /* verbose_level*/);
 #else
+
+	int f_ordering_lex = false;
+
+
 	// 12,34:
-	exterior_square_to_line(A6, X, 0 /* verbose_level*/);
-	exterior_square_to_line(A6 + 1 * 6, X + 8, 0 /* verbose_level*/);
+	exterior_square_to_line(A6, X, f_ordering_lex, 0 /* verbose_level*/);
+	exterior_square_to_line(A6 + 1 * 6, X + 8, f_ordering_lex, 0 /* verbose_level*/);
 
 	// 13,24
-	exterior_square_to_line(A6 + 2 * 6, Y, 0 /* verbose_level*/);
-	exterior_square_to_line(A6 + 3 * 6, Y + 8, 0 /* verbose_level*/);
+	exterior_square_to_line(A6 + 2 * 6, Y, f_ordering_lex, 0 /* verbose_level*/);
+	exterior_square_to_line(A6 + 3 * 6, Y + 8, f_ordering_lex, 0 /* verbose_level*/);
 
 	// 14,23
-	exterior_square_to_line(A6 + 4 * 6, Z, 0 /* verbose_level*/);
-	exterior_square_to_line(A6 + 5 * 6, Z + 8, 0 /* verbose_level*/);
+	exterior_square_to_line(A6 + 4 * 6, Z, f_ordering_lex, 0 /* verbose_level*/);
+	exterior_square_to_line(A6 + 5 * 6, Z + 8, f_ordering_lex, 0 /* verbose_level*/);
 #endif
 
 	if (f_v) {

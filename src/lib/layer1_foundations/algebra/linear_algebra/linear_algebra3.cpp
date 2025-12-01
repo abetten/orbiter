@@ -290,7 +290,7 @@ void linear_algebra::find_secant_points_wrt_x0x3mx1x2(
 				cout << "linear_algebra::find_secant_points_wrt_x0x3mx1x2 "
 						"cav=" << cav << endl;
 			}
-			r = F->frobenius_power(cav, F->e - 1);
+			r = F->frobenius_power(cav, F->e - 1, 0 /* verbose_level */);
 			if (f_v) {
 				cout << "linear_algebra::find_secant_points_wrt_x0x3mx1x2 "
 						"r=" << r << endl;

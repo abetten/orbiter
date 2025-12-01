@@ -78,6 +78,117 @@ void symbolic_object_activity::perform_activity(
 		}
 
 	}
+	else if (Descr->f_as_vector) {
+
+		if (f_v) {
+			cout << "symbolic_object_activity::perform_activity f_as_vector" << endl;
+		}
+
+		int *v;
+		int len;
+
+		if (f_v) {
+			cout << "symbolic_object_activity::perform_activity "
+					"before as_vector" << endl;
+		}
+		as_vector(
+				v, len,
+				verbose_level);
+		if (f_v) {
+			cout << "symbolic_object_activity::perform_activity "
+					"after as_vector" << endl;
+		}
+
+		cout << "vector of length " << len << " : ";
+		Int_vec_print(cout, v, len);
+		cout << endl;
+
+		FREE_int(v);
+
+	}
+	else if (Descr->f_homogenize) {
+
+		if (f_v) {
+			cout << "symbolic_object_activity::perform_activity f_homogenize" << endl;
+		}
+
+		int *v;
+		int len;
+
+		if (f_v) {
+			cout << "symbolic_object_activity::perform_activity "
+					"before as_vector" << endl;
+		}
+		as_vector(
+				v, len,
+				verbose_level);
+		if (f_v) {
+			cout << "symbolic_object_activity::perform_activity "
+					"after as_vector" << endl;
+		}
+
+		cout << "vector of length " << len << " : ";
+		Int_vec_print(cout, v, len);
+		cout << endl;
+
+		int i, j;
+		int f_first = true;
+
+		cout << "homogenized: ";
+		for (i = 0; i < len; i++) {
+
+			string coeff;
+
+
+			if (v[i] == 0) {
+				continue;
+			}
+			else if (v[i] == 1) {
+				coeff = "";
+			}
+			else {
+				coeff = std::to_string(v[i]) + "*";
+			}
+
+			string exp1;
+			string exp2;
+
+			if (i == 1) {
+				exp1 = "";
+			}
+			else {
+				exp1 = "^" + std::to_string(i);
+			}
+			if (len - 1 - i == 1) {
+				exp2 = "";
+			}
+			else {
+				exp2 = "^" + std::to_string(len - 1 - i);
+			}
+
+			if (f_first) {
+				f_first = false;
+			}
+			else {
+				cout << " + ";
+			}
+
+			cout << coeff;
+			if (i == 0) {
+				cout << "Y" << exp2;
+			}
+			else if (i == len - 1) {
+				cout << "X" << exp1;
+			}
+			else {
+				cout << "X" << exp1 << "*Y" << exp2;
+			}
+		}
+		cout << endl;
+
+		FREE_int(v);
+
+	}
 	else if (Descr->f_latex) {
 
 		if (f_v) {
@@ -235,11 +346,32 @@ void symbolic_object_activity::print(
 
 	Vec = f->Formula_vector;
 
-	int i;
+	int i, j;
+	int f_latex = false;
 
 	for (i = 0; i < Vec->len; i++) {
 		cout << i << " : ";
-		Vec->V[i].print(cout);
+
+		std::vector<std::string> rep;
+		string s;
+
+		Vec->V[i].print_to_vector(
+				rep, f_latex, 0 /*verbose_level */);
+
+		if (rep.size() == 0) {
+			string zero;
+
+			zero = "0";
+			rep.push_back(zero);
+		}
+
+		for (j = 0; j < rep.size(); j++) {
+			s += rep[j];
+		}
+
+		cout << s;
+
+		//Vec->V[i].print(cout);
 		cout << endl;
 	}
 
@@ -247,6 +379,97 @@ void symbolic_object_activity::print(
 		cout << "symbolic_object_activity::print done" << endl;
 	}
 }
+
+
+void symbolic_object_activity::as_vector(
+		int *&v, int &len,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "symbolic_object_activity::as_vector" << endl;
+	}
+
+	std::vector<std::string> String_rep;
+
+	stringify(
+			String_rep,
+			0 /* verbose_level */);
+
+	len = String_rep.size();
+
+	int i;
+
+	v = NEW_int(len);
+
+	for (i = 0; i < len; i++) {
+
+		v[i] = std::stoi(String_rep[i]);
+
+	}
+
+
+	if (f_v) {
+		cout << "symbolic_object_activity::as_vector done" << endl;
+	}
+}
+
+
+
+
+void symbolic_object_activity::stringify(
+		std::vector<std::string> &String_rep,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "symbolic_object_activity::stringify" << endl;
+	}
+
+	expression_parser::formula_vector *Vec;
+
+	Vec = f->Formula_vector;
+
+	int i, j;
+	int f_latex = false;
+
+	for (i = 0; i < Vec->len; i++) {
+		//cout << i << " : ";
+
+		std::vector<std::string> rep;
+		string s;
+
+		Vec->V[i].print_to_vector(
+				rep, f_latex, 0 /*verbose_level */);
+
+		if (rep.size() == 0) {
+			string zero;
+
+			zero = "0";
+			rep.push_back(zero);
+		}
+
+		for (j = 0; j < rep.size(); j++) {
+			s += rep[j];
+		}
+
+		String_rep.push_back(s);
+
+		//cout << s;
+
+		//Vec->V[i].print(cout);
+		//cout << endl;
+	}
+
+	if (f_v) {
+		cout << "symbolic_object_activity::stringify done" << endl;
+	}
+}
+
+
+
 
 void symbolic_object_activity::latex(
 		int verbose_level)

@@ -507,7 +507,7 @@ void algebraic_geometry_global::evaluate_regular_map(
 
 		if (!Int_vec_is_zero(w, len)) {
 			P->Subspaces->F->Projective_space_basic->PG_element_rank_modified_lint(
-					w, 1 /* stride */, len, j);
+					w, 1 /* stride */, len, j, 0 /* verbose_level */);
 		}
 		else {
 			j = -1;
@@ -1504,13 +1504,13 @@ void algebraic_geometry_global::hyperplane_lifting_with_two_lines_fixed(
 	}
 
 	P->Subspaces->F->Projective_space_basic->PG_element_normalize(
-			Line1, 1, 4);
+			Line1, 1, 4, 0 /* verbose_level */);
 	P->Subspaces->F->Projective_space_basic->PG_element_normalize(
-			Line2, 1, 4);
+			Line2, 1, 4, 0 /* verbose_level */);
 	P->Subspaces->F->Projective_space_basic->PG_element_normalize(
-			Line1 + 4, 1, 4);
+			Line1 + 4, 1, 4, 0 /* verbose_level */);
 	P->Subspaces->F->Projective_space_basic->PG_element_normalize(
-			Line2 + 4, 1, 4);
+			Line2 + 4, 1, 4, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "algebraic_geometry_global::hyperplane_lifting_with_two_lines_fixed "
 				"P1 = first point on Line1:" << endl;
@@ -1557,9 +1557,9 @@ void algebraic_geometry_global::hyperplane_lifting_with_two_lines_fixed(
 		Int_matrix_print(P2A, 1, 3);
 	}
 	P->Subspaces->F->Projective_space_basic->PG_element_normalize(
-			P1A, 1, 3);
+			P1A, 1, 3, 0 /* verbose_level */);
 	P->Subspaces->F->Projective_space_basic->PG_element_normalize(
-			P2A, 1, 3);
+			P2A, 1, 3, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "algebraic_geometry_global::hyperplane_lifting_with_two_lines_fixed "
 				"normalized P1 * A = " << endl;
@@ -1802,10 +1802,10 @@ void algebraic_geometry_global::hyperplane_lifting_with_two_lines_moved(
 		Int_matrix_print(Line2_from, 2, 4);
 	}
 
-	P->Subspaces->F->Projective_space_basic->PG_element_normalize(Line1_from, 1, 4);
-	P->Subspaces->F->Projective_space_basic->PG_element_normalize(Line2_from, 1, 4);
-	P->Subspaces->F->Projective_space_basic->PG_element_normalize(Line1_from + 4, 1, 4);
-	P->Subspaces->F->Projective_space_basic->PG_element_normalize(Line2_from + 4, 1, 4);
+	P->Subspaces->F->Projective_space_basic->PG_element_normalize(Line1_from, 1, 4, 0 /* verbose_level */);
+	P->Subspaces->F->Projective_space_basic->PG_element_normalize(Line2_from, 1, 4, 0 /* verbose_level */);
+	P->Subspaces->F->Projective_space_basic->PG_element_normalize(Line1_from + 4, 1, 4, 0 /* verbose_level */);
+	P->Subspaces->F->Projective_space_basic->PG_element_normalize(Line2_from + 4, 1, 4, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "algebraic_geometry_global::hyperplane_lifting_with_two_lines_moved "
 				"P1 = first point on Line1_from:" << endl;
@@ -1857,10 +1857,10 @@ void algebraic_geometry_global::hyperplane_lifting_with_two_lines_moved(
 		Int_matrix_print(Line2_to, 2, 4);
 	}
 
-	P->Subspaces->F->Projective_space_basic->PG_element_normalize(Line1_to, 1, 4);
-	P->Subspaces->F->Projective_space_basic->PG_element_normalize(Line2_to, 1, 4);
-	P->Subspaces->F->Projective_space_basic->PG_element_normalize(Line1_to + 4, 1, 4);
-	P->Subspaces->F->Projective_space_basic->PG_element_normalize(Line2_to + 4, 1, 4);
+	P->Subspaces->F->Projective_space_basic->PG_element_normalize(Line1_to, 1, 4, 0 /* verbose_level */);
+	P->Subspaces->F->Projective_space_basic->PG_element_normalize(Line2_to, 1, 4, 0 /* verbose_level */);
+	P->Subspaces->F->Projective_space_basic->PG_element_normalize(Line1_to + 4, 1, 4, 0 /* verbose_level */);
+	P->Subspaces->F->Projective_space_basic->PG_element_normalize(Line2_to + 4, 1, 4, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "algebraic_geometry_global::hyperplane_lifting_with_two_lines_moved "
 				"P1 = first point on Line1_to:" << endl;

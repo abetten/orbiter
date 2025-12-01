@@ -141,7 +141,7 @@ void bitmatrix::rank_PG_elements_in_columns(
 		//int_vec_print(cout, v, m);
 		//cout << endl;
 		F->Projective_space_basic->PG_element_rank_modified_lint(
-				v, 1, m, b);
+				v, 1, m, b, 0 /* verbose_level */);
 		PG_ranks[j] = (unsigned int) b;
 	}
 	FREE_int(v);

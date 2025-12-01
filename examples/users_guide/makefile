@@ -596,7 +596,7 @@ QC_Q9_TRANSFORM_CLEAN_TO_HERMITIAN="5,8,6,8,1,6,0,3,6,1"
 
 QUARTIC_Q9_EQUATION="x1 ^ 4 + 4 * x1 ^ 3 * x2 + 8 * x1 ^ 3 * x3 + 6 * x1 * x2 ^ 3 + 3 * x1 * x3 ^ 3 + x2 ^ 4 + 6 * x2 ^ 3 * x3 + 4 * x2 * x3 ^ 3 + 2 * x3 ^ 4"
 
-QUARTIC_Q9_NF_COEFFICIENTS = " 1, 1, 2, 4, 8, 6, 6, 3, 4, 0, 0, 0, 0, 0, 0 "
+QUARTIC_Q9_NF_COEFFICIENTS=" 1, 1, 2, 4, 8, 6, 6, 3, 4, 0, 0, 0, 0, 0, 0 "
 
 
 QC_Q9_UNITAL_COEFFICIENTS="1,1,1,0,0,0,0,0,0,0,0,0,0,0,0"
@@ -2494,6 +2494,14 @@ symbolic_CRC32:
 			-field F \
 			-text $(CRC32_ETHERNET_POLY) \
 		-end \
+		-define coeffs -symbolic_object \
+			-field F \
+			-collect M X \
+		-end \
+		-with coeffs -do -symbolic_object_activity \
+			-print \
+		-end
+
 
 
 symbolic_CRC_alfa:
@@ -3471,6 +3479,7 @@ test_3_2:
 	make F_64
 	make nth_roots_63
 	make F8_F2_field_reduction
+	make F_125
 	make F_4096
 	#make F_4489
 	#make F_2_power_24
@@ -3650,6 +3659,16 @@ F8_F2_field_reduction:
 		-end
 	magick F8_to_F2_draw.bmp F8_to_F2_draw.png
 	$(OPEN) F8_to_F2_draw.png
+
+
+F_125:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 125 -end \
+		-with F -do -finite_field_activity \
+			-cheat_sheet_GF \
+		-end
+	$(PDFLATEX) GF_125.tex
+	$(OPEN) GF_125.pdf
 
 
 F_4096:
@@ -4393,6 +4412,7 @@ PG_2_16:
 	$(PDFLATEX) PG_2_16.tex 
 	$(OPEN) PG_2_16.pdf
 
+#magma_interface::export_matrix_group_with_field_reduction related fields have not yet been computed
 
 
 PG_2_2_incidence_matrix:
@@ -8563,7 +8583,7 @@ test_5_9:
 	make Sym_6_generators
 	make Sym_6_elements
 	make GL_2_3_RNF_elements
-	#make PGL_4_2_orthogonal_reflections_report_vector_ge
+	make PGL_4_2_orthogonal_reflections_report_vector_ge
 
 
 PGGL_2_4_classes_reps:
@@ -8735,7 +8755,7 @@ PGL_4_2_orthogonal_reflections_report_vector_ge:
 		-end \
 		-with RNF -do \
 		-vector_ge_activity \
-			-report_with_options "dense=1" \
+			-report_with_options "dense=on" \
 		-end \
 		-print_symbols
 	$(PDFLATEX) PGL_4_2_reflections_elements.tex
@@ -10451,7 +10471,9 @@ cubic_eqn_q3_0:
 			-label_txt eqn_q3_0 \
 			-label_tex "{\\rm eqn\_q3\_0}" \
 		-end \
-		-with V -do -variety_activity -compute_group -nauty_control -save_orbit_of_equations eqn_ -end -end \
+		-with V -do -variety_activity -compute_group \
+			-nauty_control -save_orbit_of_equations eqn_ -end \
+		-end \
 		-with V -do -variety_activity -singular_points -end \
 		-with V -do -variety_activity -report -end
 	$(PDFLATEX) variety_eqn_q3_0_report.tex
@@ -11336,6 +11358,7 @@ T4r1_orbits_4:
 		-define ro \
 			-poset_classification_report_options \
 				-draw_poset -type_ordinary \
+				-draw_options Do \
 		-end \
 		-with Orb -do -orbits_activity \
 			-report "" \
@@ -12369,26 +12392,30 @@ PGL_3_27:
 
 
 
+
 hyperoval_4_classify:
 	$(ORBITER) -v 4 \
+		-orbiter_path $(ORBITER_EXE_PATH) \
 		-define F -finite_field -q 4 -end \
 		-define P -projective_space -n 2 -field F -v 0 -end \
 		-define Control -poset_classification_control \
 			-problem_label hyperoval_q4 \
 			-W -depth 6 \
 		-end \
-		-with P -do \
-		-projective_space_activity \
-			-classify_arcs \
-				-control Control \
-				-target_size 6 \
-				-d 2 \
-			-end \
+		-define Arc_control -arc_generator_control \
+			-projective_space P \
+			-control Control \
+			-target_size 6 \
+			-d 2 \
+		-end \
+		-define Orb -orbits \
+			-on_arcs Arc_control \
 		-end
-	#$(PDFLATEX) hyperoval_q4_poset.tex
-	#$(OPEN) hyperoval_q4_poset.pdf
 
-
+#hyperoval_q4_reps_lvl_6.csv:
+#Row,Line,Node,Level,OrbitIdx,OrbitRep,StabOrder,OrbitLength,SV_length
+#0,0,6,6,0,"0,1,2,3,16,19",720,168,0
+#END
 
 
 hyperoval_8_classify:
@@ -12400,16 +12427,15 @@ hyperoval_8_classify:
 			-problem_label hyperoval_q8 \
 			-W -depth 10 \
 		-end \
-		-with P -do \
-		-projective_space_activity \
-			-classify_arcs \
-				-control Control \
-				-target_size 10 \
-				-d 2 \
-			-end \
+		-define Arc_control -arc_generator_control \
+			-projective_space P \
+			-control Control \
+			-target_size 10 \
+			-d 2 \
+		-end \
+		-define Orb -orbits \
+			-on_arcs Arc_control \
 		-end
-	#$(PDFLATEX) hyperoval_q8_poset.tex
-	#$(OPEN) hyperoval_q8_poset.pdf
 
 
 

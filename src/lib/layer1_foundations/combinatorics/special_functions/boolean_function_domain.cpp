@@ -178,7 +178,7 @@ void boolean_function_domain::init(
 		Gg.AG_element_unrank(2, v1, 1, n, i);
 		v1[n] = 1;
 		Fq->Projective_space_basic->PG_element_rank_modified_lint(
-				v1, 1, n + 1, a);
+				v1, 1, n + 1, a, 0 /* verbose_level */);
 		affine_points[i] = a;
 	}
 	if (false) {

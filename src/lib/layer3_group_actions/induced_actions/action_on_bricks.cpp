@@ -139,9 +139,9 @@ long int action_on_bricks::compute_image_linear_action(
 		exit(1);
 		}
 	B->F->Projective_space_basic->PG_element_normalize(
-			vv, 1, 3);
+			vv, 1, 3, 0 /* verbose_level */);
 	B->F->Projective_space_basic->PG_element_normalize(
-			ww, 1, 3);
+			ww, 1, 3, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "action_on_bricks::compute_image after normalize vv=";
 		Int_vec_print(cout, vv, 3);

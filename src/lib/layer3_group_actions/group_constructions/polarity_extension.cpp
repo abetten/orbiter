@@ -584,7 +584,7 @@ void polarity_extension::compute_images_rho_A_rho(
 		}
 
 		M->GFq->Projective_space_basic->PG_element_rank_modified_lint(
-				Mtx + i * M->n, 1, M->n, a);
+				Mtx + i * M->n, 1, M->n, a, 0 /* verbose_level */);
 
 		b = Polarity->Point_to_hyperplane[a];
 

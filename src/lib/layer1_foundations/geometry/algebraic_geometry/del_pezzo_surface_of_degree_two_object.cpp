@@ -261,7 +261,7 @@ void del_pezzo_surface_of_degree_two_object::print_equation(
 	long int rk;
 
 	Dom->F->Projective_space_basic->PG_element_rank_modified_lint(
-			Coefficient_vector, 1, 15, rk);
+			Coefficient_vector, 1, 15, rk, 0 /* verbose_level */);
 	ost << "The point rank of the equation over GF$("
 			<< Dom->F->q << ")$ is " << rk << "\\\\" << endl;
 

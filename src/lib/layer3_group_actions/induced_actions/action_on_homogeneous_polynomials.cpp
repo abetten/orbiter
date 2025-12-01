@@ -125,7 +125,7 @@ void action_on_homogeneous_polynomials::init_invariant_set_of_equations(
 	for (i = 0; i < nb_equations; i++) {
 		F->Projective_space_basic->PG_element_normalize(
 				action_on_homogeneous_polynomials::Equations + i * dimension,
-				1, dimension);
+				1, dimension, 0 /* verbose_level */);
 	}
 	degree = nb_equations;
 
@@ -229,7 +229,7 @@ long int action_on_homogeneous_polynomials::compute_image_int(
 
 	if (f_invariant_set) {
 		F->Projective_space_basic->PG_element_normalize(
-				v2, 1, dimension);
+				v2, 1, dimension, 0 /* verbose_level */);
 
 #if 0
 		// ToDo: get rid of linear search!

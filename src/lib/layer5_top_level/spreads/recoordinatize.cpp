@@ -488,7 +488,7 @@ void recoordinatize::compute_live_points_low_level(
 				}
 			}
 			Fq->Projective_space_basic->PG_element_normalize(
-					Elt1, 1, Three_skew_subspaces->k * Three_skew_subspaces->k);
+					Elt1, 1, Three_skew_subspaces->k * Three_skew_subspaces->k, 0 /* verbose_level */);
 
 			if (f_vv && (cnt % cnt_mod) == 0 && cnt) {
 				cout << "recoordinatize::compute_live_points_low_level "

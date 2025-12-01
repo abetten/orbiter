@@ -239,7 +239,7 @@ static long int orbits_on_subspaces_rank_point_func(
 	gen = OoS->orbits_on_subspaces_PC;
 	gen->get_VS()->F->Projective_space_basic->PG_element_rank_modified_lint(
 			v, 1,
-			gen->get_VS()->dimension, rk);
+			gen->get_VS()->dimension, rk, 0 /* verbose_level */);
 	return rk;
 }
 
