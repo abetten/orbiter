@@ -1193,7 +1193,7 @@ int spread_table_with_selection::is_adjacent(
 		}
 	}
 	else {
-		if (Spread_tables->test_if_spreads_are_disjoint(i, j)) {
+		if (Spread_tables->test_if_spreads_are_line_disjoint(i, j)) {
 			return true;
 		}
 		else {
@@ -1201,7 +1201,7 @@ int spread_table_with_selection::is_adjacent(
 		}
 	}
 #else
-	if (Spread_tables->test_if_spreads_are_disjoint(i, j)) {
+	if (Spread_tables->test_if_spreads_are_line_disjoint(i, j)) {
 		return true;
 	}
 	else {

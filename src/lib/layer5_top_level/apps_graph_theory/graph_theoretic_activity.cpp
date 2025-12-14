@@ -1031,6 +1031,27 @@ void graph_theoretic_activity::perform_activity(
 
 
 	}
+	else if (Descr->f_eigenvalue_report) {
+
+		if (f_v) {
+			cout << "graph_theoretic_activity::perform_activity "
+					"f_properties" << endl;
+		}
+
+		combinatorics::graph_theory::graph_theory_domain GT;
+
+		if (f_v) {
+			cout << "graph_theoretic_activity::perform_activity "
+					"before GT.eigenvalue_report" << endl;
+		}
+		GT.eigenvalue_report(CG[0], verbose_level);
+		if (f_v) {
+			cout << "graph_theoretic_activity::perform_activity "
+					"after GT.eigenvalue_report" << endl;
+		}
+
+
+	}
 	else if (Descr->f_draw) {
 
 		if (f_v) {

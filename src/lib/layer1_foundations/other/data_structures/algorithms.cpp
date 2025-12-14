@@ -255,6 +255,62 @@ void algorithms::print_pointer_hex(
 	}
 }
 
+std::string algorithms::stringify_data_hex(
+		unsigned char *data, int len)
+{
+	int i, a, low, high;
+	string s, s1;
+	char c1, c2, c[3];
+
+	s = "0x";
+	for (i = 0; i < len; i++) {
+		a = (int)data[i];
+		low = a % 16;
+		high = a / 16;
+		c1 = hex_digit(high);
+		c2 = hex_digit(low);
+		c[0] = c1;
+		c[1] = c2;
+		c[2] = 0;
+		//cout << "algorithms::stringify_data_hex a=" << a << " low=" << low << " high=" << high << " c=" << c << endl;
+		s1 = c;
+		//cout << "algorithms::stringify_data_hex a=" << a << " low=" << low << " high=" << high << " c=" << c << " s1=" << s1 << endl;
+		s += s1;
+	}
+	//cout << "algorithms::stringify_data_hex s=" << s << endl;
+	return s;
+}
+
+
+std::string algorithms::stringify_data_hex_top_down(
+		unsigned char *data, int len)
+{
+	int i, a, low, high;
+	string s, s1;
+	char c1, c2, c[3];
+
+	s = "0x";
+	for (i = len - 1; i >= 0; i--) {
+		a = (int)data[i];
+		low = a % 16;
+		high = a / 16;
+		c1 = hex_digit(high);
+		c2 = hex_digit(low);
+		c[0] = c1;
+		c[1] = c2;
+		c[2] = 0;
+		//cout << "algorithms::stringify_data_hex a=" << a << " low=" << low << " high=" << high << " c=" << c << endl;
+		s1 = c;
+		//cout << "algorithms::stringify_data_hex a=" << a << " low=" << low << " high=" << high << " c=" << c << " s1=" << s1 << endl;
+		s += s1;
+	}
+	//cout << "algorithms::stringify_data_hex s=" << s << endl;
+	return s;
+}
+
+
+
+
 void algorithms::print_uint32_hex(
 		std::ostream &ost, uint32_t val)
 {
@@ -367,6 +423,24 @@ void algorithms::print_hex_digit(
 		cout << "algorithms::print_hex_digit illegal digit " << digit << endl;
 		exit(1);
 	}
+}
+
+char algorithms::hex_digit(
+		int digit)
+{
+	char c;
+
+	if (digit < 10) {
+		c = (char)('0' + digit);
+	}
+	else if (digit < 16) {
+		c = (char)('a' + (digit - 10));
+	}
+	else {
+		cout << "algorithms::hex_digit illegal digit " << digit << endl;
+		exit(1);
+	}
+	return c;
 }
 
 void algorithms::print_bits(

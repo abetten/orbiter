@@ -49,7 +49,10 @@ geometry_builder_description::geometry_builder_description()
 	f_orderly = false;
 	f_special_test_not_orderly = false;
 
+	f_has_test_lines = false;
 	//std::vector<std::string> test_lines;
+
+	f_has_test2_lines = false;
 	//std::vector<std::string> test2_lines;
 
 
@@ -67,6 +70,8 @@ geometry_builder_description::geometry_builder_description()
 	f_output_to_sage_file = false;
 	f_output_to_blocks_file = false;
 	f_output_to_blocks_latex_file = false;
+
+	f_save_canonical_forms = false;
 
 
 }
@@ -167,6 +172,7 @@ int geometry_builder_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-test") == 0) {
+			f_has_test_lines = true;
 			string lines;
 			lines.assign(argv[++i]);
 			test_lines.push_back(lines);
@@ -175,6 +181,7 @@ int geometry_builder_description::read_arguments(
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-test2") == 0) {
+			f_has_test2_lines = true;
 			string lines;
 			lines.assign(argv[++i]);
 			test2_lines.push_back(lines);
@@ -231,10 +238,17 @@ int geometry_builder_description::read_arguments(
 				cout << "-output_to_blocks_latex_file " << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-save_canonical_forms") == 0) {
+			f_save_canonical_forms = true;
+			if (f_v) {
+				cout << "-save_canonical_forms " << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			break;
 		}
+
 		else {
 			cout << "geometry_builder_description::read_arguments "
 					"unrecognized option " << argv[i] << endl;
@@ -285,14 +299,14 @@ void geometry_builder_description::print()
 	if (f_special_test_not_orderly) {
 		cout << "-special_test_not_orderly " << endl;
 	}
-	if (test_lines.size()) {
+	if (f_has_test_lines) {
 		int i;
 
 		for (i = 0; i < test_lines.size(); i++) {
 			cout << "-test " << test_lines[i] << " " << endl;
 		}
 	}
-	if (test2_lines.size()) {
+	if (f_has_test2_lines) {
 		int i;
 
 		for (i = 0; i < test2_lines.size(); i++) {
@@ -323,6 +337,9 @@ void geometry_builder_description::print()
 	}
 	if (f_output_to_blocks_latex_file) {
 		cout << "-output_to_blocks_latex_file " << endl;
+	}
+	if (f_save_canonical_forms) {
+		cout << "-save_canonical_forms " << endl;
 	}
 }
 

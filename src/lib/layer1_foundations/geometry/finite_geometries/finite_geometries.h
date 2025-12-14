@@ -533,10 +533,10 @@ public:
 	std::string fname_dual_line_idx;
 	std::string fname_self_dual_lines;
 	std::string fname_spreads;
-	std::string fname_isomorphism_type_of_spreads;
-	std::string fname_dual_spread;
+	//std::string fname_isomorphism_type_of_spreads;
+	//std::string fname_dual_spread;
 	std::string fname_self_dual_spreads;
-	std::string fname_schreier_table;
+	//std::string fname_schreier_table;
 
 	int *dual_line_idx; // [nb_lines]
 	int *self_dual_lines; // [nb_self_dual_lines]
@@ -559,6 +559,7 @@ public:
 			int nb_iso_types_of_spreads,
 			std::string &path_to_spread_tables,
 			int verbose_level);
+	// For spreads in PG(3,q)
 	void create_file_names(
 			int verbose_level);
 	void init_spread_table(
@@ -598,7 +599,7 @@ public:
 	void compute_adjacency_matrix(
 			other::data_structures::bitvector *&Bitvec,
 			int verbose_level);
-	int test_if_spreads_are_disjoint(
+	int test_if_spreads_are_line_disjoint(
 			int a, int b);
 	void compute_dual_spreads(
 			long int **Sets,
@@ -610,8 +611,12 @@ public:
 			long int *set1, int sz1,
 			long int *set2, int sz2,
 			int verbose_level);
+	// tests if two sets of spreads (for instance, partial packings)
+	// are pairwise line-disjoint
 	int test_if_set_of_spreads_is_line_disjoint(
 			long int *set, int len);
+	// tests if a set of spreads is a partial packing,
+	// i.e. if the spreads are pairwise line-disjoint
 	int test_if_set_of_spreads_is_line_disjoint_and_complain_if_not(
 			long int *set, int len);
 	void make_exact_cover_problem(

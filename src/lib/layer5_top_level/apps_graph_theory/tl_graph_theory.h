@@ -640,6 +640,7 @@ public:
 
 	int f_properties;
 	int f_eigenvalues;
+	int f_eigenvalue_report;
 
 	int f_draw;
 	std::string draw_options;

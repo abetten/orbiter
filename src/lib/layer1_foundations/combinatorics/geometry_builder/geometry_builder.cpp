@@ -106,12 +106,6 @@ void geometry_builder::init_description(
 
 
 	V = Int_vec_sum(v, v_len);
-#if 0
-	V = 0;
-	for (i = 0; i < v_len; i++) {
-		V += v[i];
-	}
-#endif
 
 	if (f_v) {
 		cout << "V=" << V << endl;
@@ -142,12 +136,6 @@ void geometry_builder::init_description(
 	}
 	Int_vec_scan(Descr->B_text, b, b_len);
 	B = Int_vec_sum(b, b_len);
-#if 0
-	B = 0;
-	for (i = 0; i < b_len; i++) {
-		B += b[i];
-	}
-#endif
 	if (f_v) {
 		cout << "b_len=" << b_len << endl;
 		cout << "b=";
@@ -182,12 +170,6 @@ void geometry_builder::init_description(
 		int f;
 
 		f = Int_vec_sum(fuse, fuse_len);
-#if 0
-		f = 0;
-		for (i = 0; i < fuse_len; i++) {
-			f += fuse[i];
-		}
-#endif
 		if (f != v_len) {
 			cout << "the sum of the fuse values must equal the number of rows of the TDO" << endl;
 			cout << "f=" << f << endl;
@@ -239,7 +221,8 @@ void geometry_builder::init_description(
 
 
 		if (f_v) {
-			cout << "geometry_builder::init_description inc_file_name = " << gg->inc_file_name << endl;
+			cout << "geometry_builder::init_description "
+					"inc_file_name = " << gg->inc_file_name << endl;
 		}
 	}
 
@@ -271,55 +254,63 @@ void geometry_builder::init_description(
 		cout << "geometry_builder::init_description reading test_lines" << endl;
 	}
 
-	for (i = 0; i < Descr->test_lines.size(); i++) {
-		int *lines;
-		int lines_len;
-		int a, j;
+	if (Descr->f_has_test_lines) {
+		for (i = 0; i < Descr->test_lines.size(); i++) {
+			int *lines;
+			int len;
+			int a, j;
 
-		//cout << "-test " << Descr->test_lines[i] << " " << Descr->test_flags[i] << endl;
+			//cout << "-test " << Descr->test_lines[i] << " " << Descr->test_flags[i] << endl;
 
-		Get_int_vector_from_label(Descr->test_lines[i], lines, lines_len, 0 /* verbose_level*/);
-		//Orbiter->Int_vec.scan(Descr->test_lines[i], lines, lines_len);
+			Get_int_vector_from_label(Descr->test_lines[i], lines, len, 0 /* verbose_level*/);
 
-		for (j = 0; j < lines_len; j++) {
-			a = lines[j];
-			s_type[a] = 1;
+			for (j = 0; j < len; j++) {
+				a = lines[j];
+				s_type[a] = 1;
+			}
 		}
 	}
-
 
 	if (f_v) {
 		cout << "geometry_builder::init_description reading test2_lines" << endl;
 	}
 
-	for (i = 0; i < Descr->test2_lines.size(); i++) {
-		int *lines;
-		int lines_len;
-		//int j; // a
+	if (Descr->f_has_test2_lines) {
+		for (i = 0; i < Descr->test2_lines.size(); i++) {
+			int *lines;
+			int len;
+			int a, j;
 
-		//cout << "-test " << Descr->test_lines[i] << " " << Descr->test_flags[i] << endl;
-		Int_vec_scan(Descr->test2_lines[i], lines, lines_len);
-		//flags = true_false_string_numeric(Descr->test_flags[i].c_str());
-#if 0
-		for (j = 0; j < lines_len; j++) {
-			a = lines[j];
+			//cout << "-test " << Descr->test_lines[i] << " " << Descr->test_flags[i] << endl;
+
+			Get_int_vector_from_label(Descr->test2_lines[i], lines, len, 0 /* verbose_level*/);
+
+			for (j = 0; j < len; j++) {
+				a = lines[j];
+				s_type[a] = 2;
+			}
 		}
-#endif
 	}
+
+
+
 
 	if (f_v) {
 		cout << "geometry_builder::init_description installing tests" << endl;
 	}
 
 	for (i = 1; i <= V; i++) {
-		if (f_v) {
-			cout << "geometry_builder::init_description installing test on line " << i << endl;
-		}
 
 		if (s_type[i] == 1) {
+			if (f_v) {
+				cout << "geometry_builder::init_description installing test of type 1 on line " << i << endl;
+			}
 			isot(i, verbose_level);
 		}
 		else if (s_type[i] == 2) {
+			if (f_v) {
+				cout << "geometry_builder::init_description installing test of type 2 on line " << i << endl;
+			}
 			isot2(i, verbose_level);
 		}
 
@@ -356,19 +347,7 @@ void geometry_builder::compute_VBR(
 		cout << "geometry_builder::compute_VBR v_len = " << v_len << " b_len = " << b_len << endl;
 	}
 	B = Int_vec_sum(b, b_len);
-#if 0
-	B = 0;
-	for (j = 0; j < b_len; j++) {
-		B += b[j];
-	}
-#endif
 	V = Int_vec_sum(v, v_len);
-#if 0
-	V = 0;
-	for (i = 0; i < v_len; i++) {
-		V += v[i];
-	}
-#endif
 
 	int row_sum;
 
@@ -378,12 +357,6 @@ void geometry_builder::compute_VBR(
 		row_sum = Int_vec_sum(TDO + i * b_len, b_len);
 		for (h = 0; h < v[i]; h++, row++) {
 			R[row] = row_sum;
-#if 0
-			R[row] = 0;
-			for (j = 0; j < b_len; j++) {
-				R[row] += TDO[i * b_len + j];
-			}
-#endif
 		}
 	}
 

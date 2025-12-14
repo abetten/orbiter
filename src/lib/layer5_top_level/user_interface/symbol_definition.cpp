@@ -4256,7 +4256,7 @@ void symbol_definition::do_geometry_builder(
 
 	GB->init_description(Geometry_builder_description, verbose_level);
 
-	GB->gg->main2(verbose_level);
+	GB->gg->generate_geometries_and_process(verbose_level);
 
 
 	other::orbiter_kernel_system::orbiter_symbol_table_entry *Symb;

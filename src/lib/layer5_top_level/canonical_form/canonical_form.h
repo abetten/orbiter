@@ -98,7 +98,6 @@ public:
 			long int *Pts_on_object,
 			int nb_pts,
 			other::l1_interfaces::nauty_interface_control *Nauty_control,
-			//int f_save_nauty_input_graphs,
 			int verbose_level);
 
 };

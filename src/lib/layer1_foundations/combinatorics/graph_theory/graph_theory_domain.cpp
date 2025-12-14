@@ -1944,8 +1944,20 @@ void graph_theory_domain::eigenvalues(
 	double *L;
 	int i;
 
+	if (f_v) {
+		cout << "graph_theory_domain::eigenvalues before CG->eigenvalues" << endl;
+	}
 	CG->eigenvalues(E, verbose_level - 2);
+	if (f_v) {
+		cout << "graph_theory_domain::eigenvalues after CG->eigenvalues" << endl;
+	}
+	if (f_v) {
+		cout << "graph_theory_domain::eigenvalues before CG->Laplace_eigenvalues" << endl;
+	}
 	CG->Laplace_eigenvalues(L, verbose_level - 2);
+	if (f_v) {
+		cout << "graph_theory_domain::eigenvalues after CG->Laplace_eigenvalues" << endl;
+	}
 
 	cout << "The eigenvalues are:" << endl;
 	for (i = 0; i < CG->nb_points; i++) {
@@ -1974,8 +1986,8 @@ void graph_theory_domain::eigenvalues(
 	Col_headings = new string[nb_cols];
 
 	Col_headings[0] = "i";
-	Col_headings[1] = "Ei";
-	Col_headings[2] = "Li";
+	Col_headings[1] = "lambda_i";
+	Col_headings[2] = "theta_i";
 	for (i = 0; i < CG->nb_points; i++) {
 		Table[3 * i + 0] = std::to_string(i);
 		Table[3 * i + 1] = std::to_string(E[CG->nb_points - 1 - i]);
@@ -2083,6 +2095,131 @@ void graph_theory_domain::eigenvalues(
 
 }
 
+void graph_theory_domain::eigenvalue_report(
+		combinatorics::graph_theory::colored_graph *CG,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "graph_theory_domain::eigenvalue_report" << endl;
+	}
+	double *E;
+	double *L;
+	int i;
+
+	if (f_v) {
+		cout << "graph_theory_domain::eigenvalue_report before CG->eigenvalues" << endl;
+	}
+	CG->eigenvalues(E, verbose_level - 2);
+	if (f_v) {
+		cout << "graph_theory_domain::eigenvalue_report after CG->eigenvalues" << endl;
+	}
+	if (f_v) {
+		cout << "graph_theory_domain::eigenvalue_report before CG->Laplace_eigenvalues" << endl;
+	}
+	CG->Laplace_eigenvalues(L, verbose_level - 2);
+	if (f_v) {
+		cout << "graph_theory_domain::eigenvalue_report after CG->Laplace_eigenvalues" << endl;
+	}
+
+	cout << "The eigenvalues are:" << endl;
+	for (i = 0; i < CG->nb_points; i++) {
+		cout << i << " : " << E[i] << endl;
+	}
+
+	double energy = 0;
+	for (i = 0; i < CG->nb_points; i++) {
+		energy += ABS(E[i]);
+	}
+	cout << "The energy is " << energy << endl;
+
+	cout << "The Laplace eigenvalues are:" << endl;
+	for (i = 0; i < CG->nb_points; i++) {
+		cout << i << " : " << L[i] << endl;
+	}
+
+
+#if 1
+
+	{
+		string fname;
+
+		string title, author, extra_praeamble;
+
+		title = "Eigenvalues of graph"; //\\verb'" + CG->label_tex + "'";
+
+		fname = CG->label + "_eigenvalues.tex";
+
+		{
+			ofstream ost(fname);
+			other::l1_interfaces::latex_interface Li;
+
+			Li.head(ost,
+					false /* f_book*/,
+					true /* f_title */,
+					title, author,
+					false /* f_toc */,
+					false /* f_landscape */,
+					true /* f_12pt */,
+					true /* f_enlarged_page */,
+					true /* f_pagenumbers */,
+					extra_praeamble /* extra_praeamble */);
+
+
+			if (f_v) {
+				cout << "graph_theory_domain::eigenvalue_report before report" << endl;
+			}
+			//report(ost, verbose_level);
+
+			ost << "$$" << endl;
+			ost << "\\begin{array}{|r|r|}" << endl;
+			ost << "\\hline" << endl;
+			ost << " i  & \\lambda_i  \\\\" << endl;
+			ost << "\\hline" << endl;
+			ost << "\\hline" << endl;
+			for (i = 0; i < CG->nb_points; i++) {
+				ost << i;
+				ost << " & ";
+				ost << E[CG->nb_points - 1 - i];
+				//ost << " & ";
+				//ost << L[CG->nb_points - 1 - i];
+				ost << "\\\\" << endl;
+				ost << "\\hline" << endl;
+			}
+			ost << "\\end{array}" << endl;
+			ost << "$$" << endl;
+
+			ost << "The energy is " << energy << "\\\\" << endl;
+			ost << "Eigenvalues: $\\lambda_i$\\\\" << endl;
+			ost << "Laplace eigenvalues: $\\theta_i$\\\\" << endl;
+
+			if (f_v) {
+				cout << "graph_theory_domain::eigenvalue_report after report" << endl;
+			}
+
+
+			Li.foot(ost);
+
+		}
+		other::orbiter_kernel_system::file_io Fio;
+
+		cout << "graph_theory_domain::eigenvalue_report "
+				"written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+#endif
+
+
+
+
+	delete [] E;
+
+	if (f_v) {
+		cout << "graph_theory_domain::eigenvalue_report done" << endl;
+	}
+
+}
 
 
 }}}}

@@ -1134,7 +1134,7 @@ void interface_combinatorics::worker(
 
 		GB->init_description(Geometry_builder_description, verbose_level);
 
-		GB->gg->main2(verbose_level);
+		GB->gg->generate_geometries_and_process(verbose_level);
 
 		FREE_OBJECT(GB);
 	}

@@ -183,23 +183,23 @@ void gen_geo::print_pairs(
 	}
 }
 
-void gen_geo::main2(
+void gen_geo::generate_geometries_and_process(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "gen_geo::main2, verbose_level = " << verbose_level << endl;
+		cout << "gen_geo::generate_geometries_and_process, verbose_level = " << verbose_level << endl;
 	}
 	int V;
 
 
 	if (f_v) {
-		cout << "gen_geo::main2 before generate_all" << endl;
+		cout << "gen_geo::generate_geometries_and_process before generate_all" << endl;
 	}
 	generate_all(verbose_level - 1);
 	if (f_v) {
-		cout << "gen_geo::main2 after generate_all" << endl;
+		cout << "gen_geo::generate_geometries_and_process after generate_all" << endl;
 	}
 
 
@@ -209,10 +209,23 @@ void gen_geo::main2(
 
 	it = inc->iso_type_at_line[V - 1];
 
+
+	if (GB->Descr->f_save_canonical_forms) {
+
+		if (f_v) {
+			cout << "gen_geo::generate_geometries_and_process f_save_canonical_forms" << endl;
+		}
+
+		int f_identify_duals_if_possible = true;
+
+		it->save_to_csv(inc_file_name, f_identify_duals_if_possible, verbose_level);
+
+	}
+
 	if (GB->Descr->f_output_to_inc_file) {
 
 		if (f_v) {
-			cout << "gen_geo::main2 f_output_to_inc_file" << endl;
+			cout << "gen_geo::generate_geometries_and_process f_output_to_inc_file" << endl;
 		}
 
 		string fname;
@@ -220,23 +233,24 @@ void gen_geo::main2(
 		fname = inc_file_name + ".inc";
 
 		if (f_v) {
-			cout << "gen_geo::main2 before it->write_inc_file" << endl;
+			cout << "gen_geo::generate_geometries_and_process before it->write_inc_file" << endl;
 		}
 
 		it->write_inc_file(fname, verbose_level);
 
 		if (f_v) {
-			cout << "gen_geo::main2 after it->write_inc_file" << endl;
+			cout << "gen_geo::generate_geometries_and_process after it->write_inc_file" << endl;
 		}
 
 		other::orbiter_kernel_system::file_io Fio;
 
-		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+		cout << "gen_geo::generate_geometries_and_process "
+				"Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 	}
 
 	if (GB->Descr->f_output_to_sage_file) {
 
-		cout << "gen_geo::main2 f_output_to_sage_file" << endl;
+		cout << "gen_geo::generate_geometries_and_process f_output_to_sage_file" << endl;
 		string fname;
 
 		fname = inc_file_name + ".sage";
@@ -244,7 +258,8 @@ void gen_geo::main2(
 
 		other::orbiter_kernel_system::file_io Fio;
 
-		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+		cout << "gen_geo::generate_geometries_and_process "
+				"Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 	}
 
 	it = inc->iso_type_at_line[V - 1];
@@ -259,7 +274,8 @@ void gen_geo::main2(
 
 			other::orbiter_kernel_system::file_io Fio;
 
-			cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+			cout << "gen_geo::generate_geometries_and_process "
+					"Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 
 		}
 
@@ -277,7 +293,8 @@ void gen_geo::main2(
 
 				other::orbiter_kernel_system::file_io Fio;
 
-				cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+				cout << "gen_geo::generate_geometries_and_process "
+						"Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 			}
 		}
 	}
@@ -304,7 +321,7 @@ void gen_geo::main2(
 
 
 	if (f_v) {
-		cout << "gen_geo::main2 done" << endl;
+		cout << "gen_geo::generate_geometries_and_process done" << endl;
 	}
 
 }
@@ -417,7 +434,8 @@ void gen_geo::generate_all(
 			cout << "gen_geo::generate_all before it0->add_geometry" << endl;
 		}
 
-		it0->add_geometry(inc->Encoding,
+		it0->add_geometry(
+				inc->Encoding,
 				false /* f_partition_fixing_last */,
 				f_already_there,
 				verbose_level - 2);

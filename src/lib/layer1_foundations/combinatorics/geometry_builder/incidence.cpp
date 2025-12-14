@@ -105,11 +105,6 @@ void incidence::init(
 
 	K = NEW_int(gg->GB->B);
 	Int_vec_zero(K, gg->GB->B);
-#if 0
-	for (j = 0; j < gg->GB->B; j++) {
-		K[j] = 0;
-	}
-#endif
 
 	theY = NEW_pint(gg->GB->B);
 	for (j = 0; j < gg->GB->B; j++) {
@@ -159,11 +154,6 @@ void incidence::init_pairs(
 	for (i1 = 1; i1 <= gg->GB->V; i1++) {
 		pairs[i1] = NEW_int(i1 - 1);
 		Int_vec_zero(pairs[i1], i1 - 1);
-#if 0
-		for (i2 = 0; i2 < i1 - 1; i2++) {
-			pairs[i1][i2] = 0;
-		}
-#endif
 	}
 	if (f_v) {
 		cout << "incidence::init_pairs done" << endl;
@@ -425,33 +415,13 @@ void incidence::compute_blocks(
 
 	K = NEW_int(b);
 	Int_vec_zero(K, b);
-#if 0
-	for (i = 0; i < b; i++) {
-		K[i] = 0;
-	}
-#endif
 
 	Blocks = NEW_lint(b * v);
 	Int_vec_zero(Incma, v * b);
 
-#if 0
-	for (i = 0; i < v * b; i++) {
-		Incma[i] = 0;
-	}
-#endif
-
 	create_incma_from_flags(
 			v, Incma,
 			theInc);
-#if 0
-	s = 0;
-	for (i = 0; i < v; i++) {
-		for (j = 0; j < Encoding->R[i]; j++, s++) {
-			a = theInc[s];
-			Incma[a] = 1;
-		}
-	}
-#endif
 
 	for (j = 0; j < b; j++) {
 		h = 0;
@@ -481,24 +451,10 @@ void incidence::compute_blocks_ranked(
 	Blocks = NEW_lint(b);
 
 	Int_vec_zero(Incma, v * b);
-#if 0
-	for (i = 0; i < v * b; i++) {
-		Incma[i] = 0;
-	}
-#endif
 
 	create_incma_from_flags(
 			v, Incma,
 			theInc);
-#if 0
-	s = 0;
-	for (i = 0; i < v; i++) {
-		for (j = 0; j < Encoding->R[i]; j++, s++) {
-			a = theInc[s];
-			Incma[a] = 1;
-		}
-	}
-#endif
 
 	for (j = 0; j < b; j++) {
 		for (i = 0; i < v; i++) {
@@ -539,25 +495,10 @@ int incidence::compute_k(
 	block = NEW_int(v);
 
 	Int_vec_zero(Incma, v * b);
-#if 0
-	for (i = 0; i < v * b; i++) {
-		Incma[i] = 0;
-	}
-#endif
 
 	create_incma_from_flags(
 			v, Incma,
 			theInc);
-
-#if 0
-	s = 0;
-	for (i = 0; i < v; i++) {
-		for (j = 0; j < Encoding->R[i]; j++, s++) {
-			a = theInc[s];
-			Incma[a] = 1;
-		}
-	}
-#endif
 
 	for (j = 0; j < b; j++) {
 		h = 0;
@@ -595,26 +536,12 @@ int incidence::is_block_tactical(
 	block = NEW_int(v);
 
 	Int_vec_zero(Incma, v * b);
-#if 0
-	for (i = 0; i < v * b; i++) {
-		Incma[i] = 0;
-	}
-#endif
 
 	ret = true;
 
 	create_incma_from_flags(
 			v, Incma,
 			theInc);
-#if 0
-	s = 0;
-	for (i = 0; i < v; i++) {
-		for (j = 0; j < Encoding->R[i]; j++, s++) {
-			a = theInc[s];
-			Incma[a] = 1;
-		}
-	}
-#endif
 
 	for (j = 0; j < b; j++) {
 		h = 0;

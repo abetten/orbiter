@@ -823,13 +823,14 @@ void colored_graph::init_from_bitvector(
 	for (i = 0; i < nb_points; i++) {
 		points[i] = i;
 	}
-	point_color = NEW_int(nb_points * nb_colors_per_vertex);
 
-	if (colors) {
+	if (nb_colors) {
+		point_color = NEW_int(nb_points * nb_colors_per_vertex);
 		Int_vec_copy(colors, point_color, nb_points * nb_colors_per_vertex);
 	}
 	else {
-		Int_vec_zero(point_color, nb_points * nb_colors_per_vertex);
+		point_color = NULL;
+		//Int_vec_zero(point_color, nb_points * nb_colors_per_vertex);
 	}
 	
 	colored_graph::f_ownership_of_bitvec = f_ownership_of_bitvec;
@@ -1262,9 +1263,18 @@ void colored_graph::draw_on_circle_2(
 		G.circle(Px[i], Py[i], rad2);
 #endif
 
+		int c;
+
+		if (nb_colors) {
+			c = point_color[i];
+			// to start with red, use 2 + point_color[i];
+		}
+		else {
+			c = 1;
+		}
 		// draw solid:
 		G.sf_interior(1);
-		G.sf_color(2 + point_color[i]);
+		G.sf_color(c);
 		//G.sf_color(0);
 		G.circle(Px[i], Py[i], rad2);
 

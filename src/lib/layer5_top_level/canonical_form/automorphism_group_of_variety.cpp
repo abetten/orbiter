@@ -91,7 +91,6 @@ void automorphism_group_of_variety::init_and_compute(
 		long int *Pts_on_object,
 		int nb_pts,
 		other::l1_interfaces::nauty_interface_control *Nauty_control,
-		//int f_save_nauty_input_graphs,
 		int verbose_level)
 // called from:
 // canonical_form_global::compute_stabilizer_of_quartic_curve
@@ -189,7 +188,6 @@ void automorphism_group_of_variety::init_and_compute(
 		PA->A,
 		f_compute_canonical_form,
 		Nauty_control,
-		//f_save_nauty_input_graphs,
 		Canonical_form,
 		NO,
 		Enc,

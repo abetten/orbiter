@@ -977,7 +977,8 @@ void projective_space_subspaces::incma_for_type_ij(
 					<< " not yet implemented" << endl;
 				exit(1);
 			}
-			rk = F->Linear_algebra->rank_of_rectangular_matrix_memory_given(Basis,
+			rk = F->Linear_algebra->rank_of_rectangular_matrix_memory_given(
+					Basis,
 					row_type + col_type, d, Basis2, base_cols,
 					false /* f_complete */,
 					0 /*verbose_level*/);
@@ -1554,8 +1555,13 @@ void projective_space_subspaces::line_intersection_type_through_hyperplane(
 	int *M2;
 	int *Pts1;
 	int *Pts2;
+
+	// set1 is the set of point in the hyperplane
 	long int *set1;
+
+	// set2 contains the points in the affine space which complements the hyperplane
 	long int *set2;
+
 	int *cnt1;
 	int sz1, sz2;
 	int *f_taken;
@@ -1945,7 +1951,8 @@ void projective_space_subspaces::line_intersection_type_collected(
 			Int_vec_copy(Pts + h * d, M + 2 * d, d);
 
 			// test if the point lies on the line:
-			if (F->Linear_algebra->rank_of_rectangular_matrix(M,
+			if (F->Linear_algebra->rank_of_rectangular_matrix(
+					M,
 					3, d, 0 /*verbose_level*/) == 2) {
 
 				// yes, increment the counter
@@ -2043,6 +2050,84 @@ void projective_space_subspaces::find_k_secant_lines(
 		secant_lines[nb_secant_lines++] = i;
 	}
 	FREE_int(type);
+}
+
+void projective_space_subspaces::export_lines_to_csv(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space_subspaces::export_lines_to_csv" << endl;
+	}
+
+	int nb_rows = N_lines;
+	int nb_cols = 2;
+	string *Table;
+
+	other::data_structures::sorting Sorting;
+
+
+	int i;
+
+	Table = new string[nb_rows * nb_cols];
+	for (i = 0; i < nb_rows; i++) {
+		Table[i * nb_cols + 0] = std::to_string(i);
+
+		long int *the_points;
+		int nb_pts;
+
+		points_on_line(i, the_points, nb_pts, verbose_level - 3);
+
+
+		if (nb_pts != k) {
+			cout << "projective_space_subspaces::export_lines_to_csv nb_pts != k" << endl;
+			exit(1);
+		}
+
+		Sorting.lint_vec_heapsort(the_points, nb_pts);
+
+		Table[i * nb_cols + 1] = "\"" + Lint_vec_stringify(the_points, k) + "\"";
+
+		FREE_lint(the_points);
+	}
+
+
+
+	other::orbiter_kernel_system::file_io Fio;
+
+	string output_fname_csv;
+
+
+	output_fname_csv = "PG_n" + std::to_string(n) + "_q" + std::to_string(q) + "_lines.csv";
+
+	std::string *Col_headings;
+
+	Col_headings = new string[2];
+
+	Col_headings[0] = "index";
+	Col_headings[1] = "line";
+
+	Fio.Csv_file_support->write_table_of_strings_with_col_headings(
+			output_fname_csv,
+			nb_rows, nb_cols, Table,
+			Col_headings,
+			verbose_level);
+
+	delete [] Col_headings;
+	delete [] Table;
+
+
+	if (f_v) {
+		cout << "projective_space_subspaces::export_lines_to_csv "
+				"Written file "
+				<< output_fname_csv << " of size "
+				<< Fio.file_size(output_fname_csv) << endl;
+	}
+
+	if (f_v) {
+		cout << "projective_space_subspaces::export_lines_to_csv done" << endl;
+	}
 }
 
 void projective_space_subspaces::export_incidence_matrix_to_csv(

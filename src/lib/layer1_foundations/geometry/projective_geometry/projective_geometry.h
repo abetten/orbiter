@@ -1027,6 +1027,8 @@ public:
 		long int *secant_lines, int &nb_secant_lines,
 		int verbose_level);
 
+	void export_lines_to_csv(
+			int verbose_level);
 	void export_incidence_matrix_to_csv(
 			int verbose_level);
 	void export_restricted_incidence_matrix_to_csv(

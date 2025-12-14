@@ -160,6 +160,30 @@ void iso_type::add_geometry(
 	}
 }
 
+int iso_type::identify_object(
+		canonical_form_classification::any_combinatorial_object *Any_combo,
+		other::l1_interfaces::nauty_interface_control *Nauty_control,
+		int &object_idx, uint32_t &hash,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout<< "iso_type::identify_object" << endl;
+	}
+
+	int f_found;
+
+	f_found = Canonical_forms->identify_object(
+			Any_combo,
+			Nauty_control,
+			object_idx, hash, verbose_level);
+
+	if (f_v) {
+		cout<< "iso_type::identify_object done" << endl;
+	}
+	return f_found;
+}
 
 void iso_type::find_and_add_geo(
 	int *theY,
@@ -353,7 +377,8 @@ void iso_type::write_inc_file(
 
 			combinatorics::canonical_form_classification::any_combinatorial_object *OwCF;
 
-			OwCF = (combinatorics::canonical_form_classification::any_combinatorial_object *) Canonical_forms->Objects[h];
+			OwCF = (combinatorics::canonical_form_classification::any_combinatorial_object *)
+					Canonical_forms->Objects[h];
 			gg->inc->print_inc(ost, v, OwCF->set);
 
 			ost << endl;
@@ -416,7 +441,8 @@ void iso_type::write_sage_file(
 
 			combinatorics::canonical_form_classification::any_combinatorial_object *OwCF;
 
-			OwCF = (combinatorics::canonical_form_classification::any_combinatorial_object *) Canonical_forms->Objects[h];
+			OwCF = (combinatorics::canonical_form_classification::any_combinatorial_object *)
+					Canonical_forms->Objects[h];
 			gg->inc->print_sage(ost, v, OwCF->set);
 			if (h < nb_geo - 1) {
 				ost << ", " << endl;
@@ -467,7 +493,8 @@ void iso_type::write_blocks_file(
 		if (nb_geo) {
 			combinatorics::canonical_form_classification::any_combinatorial_object *OwCF;
 
-			OwCF = (combinatorics::canonical_form_classification::any_combinatorial_object *) Canonical_forms->Objects[0];
+			OwCF = (combinatorics::canonical_form_classification::any_combinatorial_object *)
+					Canonical_forms->Objects[0];
 
 			k = gg->inc->compute_k(v, OwCF->set);
 
@@ -480,7 +507,8 @@ void iso_type::write_blocks_file(
 				//inc->print_geo(ost, v, theGEO1[h]);
 
 
-				OwCF = (combinatorics::canonical_form_classification::any_combinatorial_object *) Canonical_forms->Objects[h];
+				OwCF = (combinatorics::canonical_form_classification::any_combinatorial_object *)
+						Canonical_forms->Objects[h];
 				gg->inc->print_blocks(ost, v, OwCF->set);
 
 				ost << endl;
@@ -539,7 +567,8 @@ void iso_type::write_blocks_file_long(
 
 				combinatorics::canonical_form_classification::any_combinatorial_object *OwCF;
 
-				OwCF = (combinatorics::canonical_form_classification::any_combinatorial_object *) Canonical_forms->Objects[h];
+				OwCF = (combinatorics::canonical_form_classification::any_combinatorial_object *)
+						Canonical_forms->Objects[h];
 
 				theInc = OwCF->set;
 
@@ -663,6 +692,25 @@ void iso_type::print_geometry(
 	cout << "end geo" << endl;
 }
 
+
+void iso_type::save_to_csv(
+		std::string &fname_base,
+		int f_identify_duals_if_possible,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "iso_type::save_to_csv" << endl;
+	}
+	Canonical_forms->save_to_csv(
+			fname_base,
+			f_identify_duals_if_possible, Nauty_control,
+			verbose_level - 2);
+	if (f_v) {
+		cout << "iso_type::save_to_csv done" << endl;
+	}
+}
 
 
 

@@ -332,6 +332,8 @@ std::string any_combinatorial_object::stringify(
 		if (f_v) {
 			cout << "any_combinatorial_object::print_tex t_INC" << endl;
 		}
+		s = Lint_vec_stringify(set, sz);
+
 	}
 	else if (type == t_LS) {
 		if (f_v) {
@@ -358,6 +360,167 @@ std::string any_combinatorial_object::stringify(
 	}
 	return s;
 }
+
+
+int any_combinatorial_object::can_dualize(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "any_combinatorial_object::can_dualize" << endl;
+	}
+
+	int f_can_dualize = false;
+
+
+	if (type == t_PTS) {
+		if (f_v) {
+			cout << "any_combinatorial_object::can_dualize t_PTS" << endl;
+		}
+	}
+	else if (type == t_LNS) {
+		if (f_v) {
+			cout << "any_combinatorial_object::can_dualize t_LNS" << endl;
+		}
+	}
+	else if (type == t_PNL) {
+		if (f_v) {
+			cout << "any_combinatorial_object::can_dualize t_PNL" << endl;
+		}
+	}
+	else if (type == t_PAC) {
+		if (f_v) {
+			cout << "any_combinatorial_object::can_dualize t_PAC" << endl;
+		}
+
+
+	}
+	else if (type == t_INC) {
+		if (f_v) {
+			cout << "any_combinatorial_object::can_dualize t_INC" << endl;
+		}
+
+		if (v == b) {
+			f_can_dualize = true;
+		}
+
+	}
+	else if (type == t_LS) {
+		if (f_v) {
+			cout << "any_combinatorial_object::can_dualize t_LS" << endl;
+		}
+
+	}
+	else if (type == t_MMX) {
+		if (f_v) {
+			cout << "any_combinatorial_object::can_dualize t_MMX" << endl;
+		}
+
+	}
+
+	return f_can_dualize;
+}
+
+
+void any_combinatorial_object::dualize(
+		any_combinatorial_object *&Any_combo,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "any_combinatorial_object::dualize" << endl;
+	}
+
+
+	Any_combo = NULL;
+
+	if (type == t_PTS) {
+		cout << "any_combinatorial_object::dualize t_PTS, cannot dualize" << endl;
+		exit(1);
+	}
+	else if (type == t_LNS) {
+		cout << "any_combinatorial_object::dualize t_LNS, cannot dualize" << endl;
+		exit(1);
+	}
+	else if (type == t_PNL) {
+		cout << "any_combinatorial_object::dualize t_PNL, cannot dualize" << endl;
+		exit(1);
+	}
+	else if (type == t_PAC) {
+		cout << "any_combinatorial_object::dualize t_PAC, cannot dualize" << endl;
+		exit(1);
+	}
+	else if (type == t_INC) {
+		if (f_v) {
+			cout << "any_combinatorial_object::dualize t_INC" << endl;
+		}
+
+		if (v != b) {
+			cout << "any_combinatorial_object::dualize t_INC, cannot dualize" << endl;
+			exit(1);
+		}
+
+		int *incma_t;
+		long int *dual_set;
+		int i, j, h, a, sz2;
+		incma_t = NEW_int(b * v);
+		Int_vec_zero(incma_t, b * v);
+		for (h = 0; h < sz; h++) {
+			a = set[h];
+			i = a / b;
+			j = a % b;
+			incma_t[j * v + i] = 1;
+		}
+		if (f_v) {
+			cout << "any_combinatorial_object::dualize incma_t:" << endl;
+			Int_matrix_print(incma_t, v, b);
+		}
+
+		dual_set = NEW_lint(sz);
+		sz2 = 0;
+		for (i = 0; i < b; i++) {
+			for (j = 0; j < v; j++) {
+				if (incma_t[i * v + j]) {
+					dual_set[sz2++] = i * v + j;
+				}
+			}
+		}
+		if (f_v) {
+			cout << "any_combinatorial_object::dualize dual_set:" << endl;
+			Lint_vec_print(cout, dual_set, sz2);
+			cout << endl;
+		}
+		if (sz2 != sz) {
+			cout << "any_combinatorial_object::dualize sz2 != sz" << endl;
+			exit(1);
+		}
+
+		Any_combo = NEW_OBJECT(any_combinatorial_object);
+
+		Any_combo->init_incidence_geometry(
+				dual_set, sz2,
+				b /*  v */, v /* b */, sz2 /* nb_flags */,
+				verbose_level - 2);
+
+		FREE_int(incma_t);
+		FREE_lint(dual_set);
+
+	}
+	else if (type == t_LS) {
+		cout << "any_combinatorial_object::dualize t_LS, cannot dualize" << endl;
+		exit(1);
+	}
+	else if (type == t_MMX) {
+		cout << "any_combinatorial_object::dualize t_MMX, cannot dualize" << endl;
+		exit(1);
+	}
+
+}
+
+
+
 
 void any_combinatorial_object::print_tex(
 		std::ostream &ost, int verbose_level)

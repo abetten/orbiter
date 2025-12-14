@@ -905,6 +905,9 @@ public:
 	void eigenvalues(
 			combinatorics::graph_theory::colored_graph *CG,
 			int verbose_level);
+	void eigenvalue_report(
+			combinatorics::graph_theory::colored_graph *CG,
+			int verbose_level);
 
 };
 

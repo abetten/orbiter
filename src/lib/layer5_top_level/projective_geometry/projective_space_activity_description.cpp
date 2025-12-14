@@ -31,6 +31,7 @@ projective_space_activity_description::projective_space_activity_description()
 	f_print_points = false;
 	//std::string print_points_label;
 
+	f_export_lines = false;
 	f_export_point_line_incidence_matrix = false;
 
 	f_export_restricted_point_line_incidence_matrix = false;
@@ -340,6 +341,12 @@ int projective_space_activity_description::read_arguments(
 			}
 		}
 
+		else if (ST.stringcmp(argv[i], "-export_lines") == 0) {
+			f_export_lines = true;
+			if (f_v) {
+				cout << "-export_lines " << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-export_point_line_incidence_matrix") == 0) {
 			f_export_point_line_incidence_matrix = true;
 			if (f_v) {
@@ -1229,6 +1236,9 @@ void projective_space_activity_description::print()
 	if (f_print_points) {
 		cout << "-print_points " << print_points_label << endl;
 	}
+	if (f_export_lines) {
+		cout << "-export_lines " << endl;
+	}
 	if (f_export_point_line_incidence_matrix) {
 		cout << "-export_point_line_incidence_matrix " << endl;
 	}
@@ -1326,29 +1336,6 @@ void projective_space_activity_description::print()
 		cout << "-sweep " << sweep_options << endl;
 		sweep_surface_description->print();
 	}
-
-#if 0
-	if (f_sweep_4_15_lines) {
-		cout << "-sweep_4_15_lines " << sweep_4_15_lines_fname << endl;
-		sweep_4_15_lines_surface_description->print();
-	}
-	if (f_sweep_F_beta_9_lines) {
-		cout << "-sweep_F_beta_9_lines " << sweep_F_beta_9_lines_fname << endl;
-		sweep_F_beta_9_lines_surface_description->print();
-	}
-	if (f_sweep_6_9_lines) {
-		cout << "-sweep_6_9_lines " << sweep_6_9_lines_fname << endl;
-		sweep_6_9_lines_surface_description->print();
-	}
-	if (f_sweep_4_27) {
-		cout << "-sweep_4_27 " << sweep_4_27_fname << endl;
-	}
-
-	if (f_sweep_4_L9_E4) {
-		cout << "-sweep_4_L9_E4 " << sweep_4_L9_E4_fname << endl;
-	}
-#endif
-
 
 	if (f_set_stabilizer) {
 		cout << "-set_stabilizer "

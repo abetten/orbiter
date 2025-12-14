@@ -270,7 +270,6 @@ void nauty_interface_for_combo::run_nauty_for_combo_basic(
 
 	combinatorics::canonical_form_classification::encoded_combinatorial_object *Enc;
 
-	//int f_save_nauty_input_graphs = false;
 
 	if (f_v) {
 		cout << "nauty_interface_for_combo::run_nauty_for_combo_basic "

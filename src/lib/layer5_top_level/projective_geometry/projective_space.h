@@ -38,6 +38,7 @@ public:
 	std::string print_points_label;
 
 
+	int f_export_lines;
 	int f_export_point_line_incidence_matrix;
 
 	int f_export_restricted_point_line_incidence_matrix;
@@ -109,34 +110,9 @@ public:
 
 
 	int f_sweep;
-	//std::string sweep_fname;
 	std::string sweep_options;
 	applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create_description
 		*sweep_surface_description;
-
-#if 0
-	int f_sweep_4_15_lines;
-	std::string sweep_4_15_lines_fname;
-	applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create_description
-		*sweep_4_15_lines_surface_description;
-
-	int f_sweep_F_beta_9_lines;
-	std::string sweep_F_beta_9_lines_fname;
-	applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create_description
-		*sweep_F_beta_9_lines_surface_description;
-#endif
-
-#if 0
-	int f_sweep_4_27;
-	std::string sweep_4_27_fname;
-	applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create_description
-		*sweep_4_27_surface_description;
-
-	int f_sweep_4_L9_E4;
-	std::string sweep_4_L9_E4_fname;
-	applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create_description
-		*sweep_4_L9_E4_surface_description;
-#endif
 
 	int f_set_stabilizer;
 	int set_stabilizer_intermediate_set_size;
@@ -257,14 +233,6 @@ public:
 
 	// classification stuff:
 
-#if 0
-	int f_classify_surfaces_with_double_sixes;
-	std::string classify_surfaces_with_double_sixes_label;
-	std::string classify_surfaces_with_double_sixes_control_label;
-#endif
-
-	// outdated:
-	//int f_recognize_surfaces;
 
 	int f_classify_surfaces_through_arcs_and_two_lines;
 

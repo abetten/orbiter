@@ -21,6 +21,7 @@ ROW,C1,C2,C3
 1,"\verb'-automorphism_group' ","   ","Compute the automorphism group and write a report. See Section~\ref{sec:canonical:form:objects:graphs}. "
 1,"\verb'-automorphism_group_colored_graph' ","   ","Compute the automorphism group of a vertex colored graph and write a report. See Section~\ref{sec:canonical:form:objects:graphs}. "
 1,"\verb'-properties' ","   ","Compute properties of the graph. "
-1,"\verb'-eigenvalues' ","   ","Compute the eigenvalues of the graph. "
+1,"\verb'-eigenvalues' ","   ","Compute the eigenvalues of the graph (regular and Laplace) and write to a csv file. "
+1,"\verb'-eigenvalue_report' ","   ","Compute the eigenvalues of the graph (regular and Laplace) and produce a latex report. "
 1,"\verb'-draw' "," options  ","Draw the graph. Uses a draw options object as in Table~\ref{tab:draw:options} for drawing. "
 END

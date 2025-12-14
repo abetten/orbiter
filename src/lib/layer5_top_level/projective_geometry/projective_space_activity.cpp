@@ -86,6 +86,19 @@ void projective_space_activity::perform_activity(
 
 	}
 
+	else if (Descr->f_export_lines) {
+
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"before PA->P->export_lines_to_csv" << endl;
+		}
+		PA->P->Subspaces->export_lines_to_csv(verbose_level);
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"after PA->P->export_lines_to_csv" << endl;
+		}
+	}
+
 	else if (Descr->f_export_point_line_incidence_matrix) {
 
 		if (f_v) {
@@ -536,97 +549,6 @@ void projective_space_activity::perform_activity(
 
 
 	}
-#if 0
-	else if (Descr->f_sweep_4_15_lines) {
-
-		//applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_domain_high_level SH;
-
-		if (f_v) {
-			cout << "projective_space_activity::perform_activity "
-					"-sweep_4_15_lines" << endl;
-		}
-
-
-		if (f_v) {
-			cout << "projective_space_activity::perform_activity "
-					"before Surf_A->sweep_4_15_lines" << endl;
-		}
-		PA->Surf_A->sweep_4_15_lines(
-				Descr->sweep_4_15_lines_surface_description,
-				Descr->sweep_4_15_lines_fname,
-				verbose_level);
-		if (f_v) {
-			cout << "projective_space_activity::perform_activity "
-					"after Surf_A->sweep_4_15_lines" << endl;
-		}
-
-	}
-	else if (Descr->f_sweep_F_beta_9_lines) {
-		if (f_v) {
-			cout << "projective_space_activity::perform_activity "
-					"-sweep_F_beta_9_lines" << endl;
-		}
-
-
-		if (f_v) {
-			cout << "projective_space_activity::perform_activity "
-					"before Surf_A->sweep_F_beta_9_lines" << endl;
-		}
-		PA->Surf_A->sweep_F_beta_9_lines(
-				Descr->sweep_F_beta_9_lines_surface_description,
-				Descr->sweep_F_beta_9_lines_fname,
-				verbose_level);
-		if (f_v) {
-			cout << "projective_space_activity::perform_activity "
-					"after Surf_A->sweep_F_beta_9_lines" << endl;
-		}
-
-	}
-#endif
-#if 0
-	else if (Descr->f_sweep_4_27) {
-
-		if (f_v) {
-			cout << "projective_space_activity::perform_activity "
-					"-sweep_4_27" << endl;
-		}
-		if (f_v) {
-			cout << "projective_space_activity::perform_activity "
-					"before Surf_A->sweep_4" << endl;
-		}
-		PA->Surf_A->sweep_4_27(
-				Descr->sweep_4_27_surface_description,
-				Descr->sweep_4_27_fname,
-					verbose_level);
-		if (f_v) {
-			cout << "projective_space_activity::perform_activity "
-					"after Surf_A->sweep_4" << endl;
-		}
-
-	}
-
-	else if (Descr->f_sweep_4_L9_E4) {
-
-		if (f_v) {
-			cout << "projective_space_activity::perform_activity "
-					"-sweep_4_L9_E4" << endl;
-		}
-		if (f_v) {
-			cout << "projective_space_activity::perform_activity "
-					"before Surf_A->sweep_4" << endl;
-		}
-		PA->Surf_A->sweep_4_L9_E4(
-				Descr->sweep_4_L9_E4_surface_description,
-				Descr->sweep_4_L9_E4_fname,
-					verbose_level);
-		if (f_v) {
-			cout << "projective_space_activity::perform_activity "
-					"after Surf_A->sweep_4" << endl;
-		}
-
-	}
-#endif
-
 
 	else if (Descr->f_set_stabilizer) {
 
@@ -1335,7 +1257,8 @@ void projective_space_activity::perform_activity(
 		long int *Pts;
 		int nb_pts;
 
-		Get_lint_vector_from_label(Descr->polynomial_representation_set_label, Pts, nb_pts, 0 /* verbose_level */);
+		Get_lint_vector_from_label(Descr->polynomial_representation_set_label,
+				Pts, nb_pts, 0 /* verbose_level */);
 
 		combinatorics::special_functions::special_functions_domain Special_functions_domain;
 
@@ -1372,58 +1295,6 @@ void projective_space_activity::perform_activity(
 
 	// classification stuff:
 
-#if 0
-	else if (Descr->f_classify_surfaces_with_double_sixes) {
-
-		applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_domain_high_level SH;
-		applications_in_algebraic_geometry::cubic_surfaces_and_double_sixes::surface_classify_wedge *SCW;
-
-
-		SH.classify_surfaces_with_double_sixes(
-				PA,
-				Descr->classify_surfaces_with_double_sixes_control_label,
-				SCW,
-				verbose_level);
-
-		other::orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
-
-		Symb = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
-
-		Symb->init_classification_of_cubic_surfaces_with_double_sixes(
-				Descr->classify_surfaces_with_double_sixes_label, SCW, verbose_level);
-		if (f_v) {
-			cout << "before Orbiter->add_symbol_table_entry "
-					<< Descr->classify_surfaces_with_double_sixes_label << endl;
-		}
-		other::orbiter_kernel_system::Orbiter->add_symbol_table_entry(
-				Descr->classify_surfaces_with_double_sixes_label, Symb, verbose_level);
-
-	}
-
-	else if (Descr->f_recognize_surfaces) {
-
-		if (!Descr->f_control_six_arcs) {
-			cout << "please use option -control_six_arcs <description> -end" << endl;
-			exit(1);
-		}
-		applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_domain_high_level SH;
-
-		if (f_v) {
-			cout << "projective_space_activity::perform_activity "
-					"before SH.do_recognize_surfaces" << endl;
-		}
-		SH.do_recognize_surfaces(
-				PA,
-				Descr->Control_six_arcs_label,
-				Descr->f_test_nb_Eckardt_points, Descr->nb_E,
-				verbose_level);
-		if (f_v) {
-			cout << "projective_space_activity::perform_activity "
-					"after SH.do_recognize_surfaces" << endl;
-		}
-
-	}
-#endif
 
 	else if (Descr->f_classify_surfaces_through_arcs_and_two_lines) {
 

@@ -59,6 +59,10 @@ public:
 			long int & x, long int & y);
 	void print_pointer_hex(
 			std::ostream &ost, void *p);
+	std::string stringify_data_hex(
+			unsigned char *data, int len);
+	std::string stringify_data_hex_top_down(
+			unsigned char *data, int len);
 	void print_uint32_hex(
 			std::ostream &ost, uint32_t val);
 	void print_hex(
@@ -69,6 +73,8 @@ public:
 			std::ostream &ost, uint32_t val);
 	void print_hex_digit(
 			std::ostream &ost, int digit);
+	char hex_digit(
+			int digit);
 	void print_bits(
 			std::ostream &ost, char *data, int data_size);
 	unsigned long int make_bitword(

@@ -14,9 +14,56 @@ using namespace std;
 using namespace orbiter;
 
 
+void make_table_of_strings(
+		std::string *&Col_headings,
+		std::string *&Table, int &nb_rows, int &nb_cols,
+		int verbose_level);
+
+
 int main()
 {
 
+
+	int verbose_level = 2;
+	int f_v = (verbose_level >= 1);
+
+	orbiter::layer5_applications::user_interface::orbiter_top_level_session Top_level_session;
+	orbiter::layer5_applications::user_interface::The_Orbiter_top_level_session = &Top_level_session;
+
+
+	std::string *Col_headings;
+	std::string *Table;
+	int nb_rows, nb_cols;
+
+
+	string fname_base = "test";
+
+	make_table_of_strings(Col_headings,
+			Table, nb_rows, nb_cols, verbose_level - 2);
+
+	std::string fname_out;
+
+	fname_out = fname_base + "_hex.csv";
+
+	other::orbiter_kernel_system::file_io Fio;
+
+	Fio.Csv_file_support->write_table_of_strings_with_col_headings(
+			fname_out,
+			nb_rows, nb_cols, Table,
+			Col_headings,
+			verbose_level);
+
+	if (f_v) {
+		cout << "classify_using_canonical_forms::save_to_csv "
+				"written file " << fname_out << " of size "
+				<< Fio.file_size(fname_out) << endl;
+	}
+
+	delete [] Table;
+	delete [] Col_headings;
+
+
+#if 0
 	int verbose_level = 2;
 	int f_v = (verbose_level >= 1);
 
@@ -101,6 +148,8 @@ int main()
 			}
 		}
 	}
+#endif
+
 
 #if 0
 
@@ -809,4 +858,52 @@ int main()
 
 #endif
 }
+
+
+void make_table_of_strings(
+		std::string *&Col_headings,
+		std::string *&Table, int &nb_rows, int &nb_cols,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "make_table_of_strings" << endl;
+	}
+	int i;
+	int cnt = 256;
+	unsigned char c;
+
+	layer1_foundations::other::data_structures::algorithms Algorithms;
+
+	nb_rows = cnt;
+	nb_cols = 2;
+
+	Table = new string [nb_rows * nb_cols];
+	Col_headings = new string [nb_cols];
+
+	for (i = 0; i < cnt; i++) {
+
+		c = i;
+
+		string str;
+
+		str = Algorithms.stringify_data_hex(
+				(unsigned char *) &c, 1);
+
+
+		Table[i * nb_cols + 0] = std::to_string(i);
+		Table[i * nb_cols + 1] = str;
+
+	}
+
+	Col_headings[0] = "line";
+	Col_headings[1] = "hex";
+
+
+	if (f_v) {
+		cout << "make_table_of_strings done" << endl;
+	}
+}
+
 

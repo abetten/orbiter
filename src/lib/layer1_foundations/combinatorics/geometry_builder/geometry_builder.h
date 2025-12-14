@@ -272,7 +272,7 @@ public:
 			int verbose_level);
 	void print_pairs(
 			int line);
-	void main2(
+	void generate_geometries_and_process(
 			int verbose_level);
 	void generate_all(
 			int verbose_level);
@@ -319,10 +319,14 @@ class geometric_backtrack_search {
 
 public:
 
+	// inherited:
 	gen_geo *gg;
 
-	iso_type **Row_stabilizer_orbits;
-	int *Row_stabilizer_orbit_idx;
+	// proprietary:
+
+	// only for orderly generation:
+	iso_type **Row_stabilizer_orbits; // [gg->GB->V]
+	int *Row_stabilizer_orbit_idx; // [gg->GB->V]
 
 	geometric_backtrack_search();
 	~geometric_backtrack_search();
@@ -424,9 +428,11 @@ public:
 	int f_orderly;
 	int f_special_test_not_orderly;
 
+	int f_has_test_lines;
 	std::vector<std::string> test_lines;
 
 	// undocumented:
+	int f_has_test2_lines;
 	std::vector<std::string> test2_lines;
 
 	int f_split;
@@ -443,6 +449,8 @@ public:
 	int f_output_to_sage_file;
 	int f_output_to_blocks_file;
 	int f_output_to_blocks_latex_file;
+
+	int f_save_canonical_forms;
 
 	geometry_builder_description();
 	~geometry_builder_description();
@@ -762,6 +770,11 @@ public:
 		int f_partition_fixing_last,
 		int &f_already_there,
 		int verbose_level);
+	int identify_object(
+			canonical_form_classification::any_combinatorial_object *Any_combo,
+			other::l1_interfaces::nauty_interface_control *Nauty_control,
+			int &object_idx, uint32_t &hash,
+			int verbose_level);
 	void find_and_add_geo(
 		int *theY,
 		int f_partition_fixing_last,
@@ -787,6 +800,10 @@ public:
 			std::ostream &ost);
 	void print_geometry(
 			inc_encoding *Encoding, int v, incidence *inc);
+	void save_to_csv(
+			std::string &fname_base,
+			int f_identify_duals_if_possible,
+			int verbose_level);
 
 };
 

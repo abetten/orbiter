@@ -183,11 +183,6 @@ void classification_of_objects_description::print()
 		cout << "-nauty_control " << endl;
 		Nauty_control->print();
 	}
-#if 0
-	if (f_save_nauty_input_graphs) {
-		cout << "-save_nauty_input_graphs " << endl;
-	}
-#endif
 }
 
 

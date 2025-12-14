@@ -719,7 +719,8 @@ void geometric_backtrack_search::place_row(
 	combinatorics::canonical_form_classification::any_combinatorial_object *OwCF;
 	int J, r, j, n, j0;
 
-	OwCF = (combinatorics::canonical_form_classification::any_combinatorial_object *) It->Canonical_forms->Objects[idx];
+	OwCF = (combinatorics::canonical_form_classification::any_combinatorial_object *)
+			It->Canonical_forms->Objects[idx];
 
 
 	r = 0;

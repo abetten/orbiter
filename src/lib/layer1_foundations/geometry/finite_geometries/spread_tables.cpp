@@ -41,10 +41,7 @@ spread_tables::spread_tables()
 	//std::string fname_dual_line_idx;
 	//std::string fname_self_dual_lines;
 	//std::string fname_spreads;
-	//std::string fname_isomorphism_type_of_spreads;
-	//std::string fname_dual_spread;
 	//std::string fname_self_dual_spreads;
-	//std::string fname_schreier_table;
 
 
 	dual_line_idx = NULL;
@@ -99,6 +96,7 @@ void spread_tables::init(
 		int nb_iso_types_of_spreads,
 		std::string &path_to_spread_tables,
 		int verbose_level)
+// For spreads in PG(3,q)
 {
 	int f_v = (verbose_level >= 1);
 	algebra::number_theory::number_theory_domain NT;
@@ -171,15 +169,15 @@ void spread_tables::create_file_names(
 
 	fname_self_dual_lines = prefix + "_self_dual_line_idx.csv";
 
-	fname_spreads = prefix + "_spreads.csv";
+	fname_spreads = prefix + "_table.csv";
 
-	fname_isomorphism_type_of_spreads = prefix + "_spreads_iso.csv";
+	//fname_isomorphism_type_of_spreads = prefix + "_spreads_iso.csv";
 
-	fname_dual_spread = prefix + "_dual_spread_idx.csv";
+	//fname_dual_spread = prefix + "_dual_spread_idx.csv";
 
 	fname_self_dual_spreads = prefix + "_self_dual_spreads.csv";
 
-	fname_schreier_table = prefix + "_schreier_table.csv";
+	//fname_schreier_table = prefix + "_schreier_table.csv";
 
 }
 
@@ -458,12 +456,122 @@ void spread_tables::save(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "spread_tables::save" << endl;
 	}
+	other::orbiter_kernel_system::file_io Fio;
 
+
+	int nb_rows = nb_spreads;
+	int nb_cols = 8;
+	string *Table;
+
+	other::data_structures::sorting Sorting;
+
+
+	int i, j;
+
+	Table = new string[nb_rows * nb_cols];
+
+	if (!schreier_table) {
+		cout << "spread_tables::save no schreier table" << endl;
+		exit(1);
+	}
+
+	long int *spread_rep;
+	long int *spread_rep_dual;
+	long int *intersection;
+	long int a, b;
+	int sz;
+
+
+	spread_rep = NEW_lint(spread_size);
+	spread_rep_dual = NEW_lint(spread_size);
+	intersection = NEW_lint(spread_size);
+
+	for (i = 0; i < nb_rows; i++) {
+
+		Table[i * nb_cols + 0] = std::to_string(i);
+
+
+		Lint_vec_copy(spread_table + i * spread_size, spread_rep, spread_size);
+
+		for (j = 0; j < spread_size; j++) {
+			a = spread_rep[j];
+			b = dual_line_idx[a];
+			spread_rep_dual[j] = b;
+		}
+		Table[i * nb_cols + 1] = "\"" + Lint_vec_stringify(spread_rep, spread_size) + "\"";
+		Table[i * nb_cols + 2] = "\"" + Lint_vec_stringify(spread_rep_dual, spread_size) + "\"";
+
+		Sorting.lint_vec_heapsort(spread_rep, spread_size);
+		Sorting.lint_vec_heapsort(spread_rep_dual, spread_size);
+
+		Sorting.lint_vec_intersect_sorted_vectors(
+				spread_rep, spread_size,
+				spread_rep_dual, spread_size, intersection, sz);
+
+		Table[i * nb_cols + 3] = std::to_string(sz);
+
+
+		Table[i * nb_cols + 4] = std::to_string(spread_iso_type[i]);
+		Table[i * nb_cols + 5] = std::to_string(dual_spread_idx[i]);
+		int f_self_dual;
+		if (dual_spread_idx[i] == i) {
+			f_self_dual = true;
+		}
+		else {
+			f_self_dual = false;
+		}
+		Table[i * nb_cols + 6] = std::to_string(f_self_dual);
+		Table[i * nb_cols + 7] = "\"" + Int_vec_stringify(schreier_table + i * 4, 4) + "\"";
+
+	}
+
+
+	FREE_lint(spread_rep);
+	FREE_lint(spread_rep_dual);
+	FREE_lint(intersection);
+
+
+
+	//other::orbiter_kernel_system::file_io Fio;
+
+
+	std::string *Col_headings;
+
+	Col_headings = new string[8];
+
+	Col_headings[0] = "Index";
+	Col_headings[1] = "SpreadRep";
+	Col_headings[2] = "SpreadRepDual";
+	Col_headings[3] = "Overlap";
+	Col_headings[4] = "IsoType";
+	Col_headings[5] = "DualSpreadIndex";
+	Col_headings[6] = "IsSelfDual";
+	Col_headings[7] = "Schreier";
+
+	Fio.Csv_file_support->write_table_of_strings_with_col_headings(
+			fname_spreads,
+			nb_rows, nb_cols, Table,
+			Col_headings,
+			verbose_level);
+
+	delete [] Col_headings;
+	delete [] Table;
+
+
+	if (f_v) {
+		cout << "projective_space_subspaces::export_lines_to_csv "
+				"Written file "
+				<< fname_spreads << " of size "
+				<< Fio.file_size(fname_spreads) << endl;
+	}
+
+
+
+#if 0
 	if (f_v) {
 		cout << "spread_tables::save "
 				"writing file " << fname_spreads << endl;
@@ -494,7 +602,6 @@ void spread_tables::save(
 				"written file " << fname_isomorphism_type_of_spreads
 				<< endl;
 	}
-
 	if (f_v) {
 		cout << "spread_tables::save, "
 				"writing file " << fname_dual_spread
@@ -516,6 +623,10 @@ void spread_tables::save(
 				"writing file " << fname_self_dual_spreads
 				<< endl;
 	}
+#endif
+
+	string label;
+
 	label.assign("self_dual_spreads");
 	Fio.Csv_file_support->lint_vec_write_csv(
 			self_dual_spreads, nb_self_dual_spreads,
@@ -528,7 +639,7 @@ void spread_tables::save(
 	}
 
 
-
+#if 0
 	if (schreier_table) {
 		if (f_v) {
 			cout << "spread_tables::save "
@@ -545,7 +656,7 @@ void spread_tables::save(
 	else {
 		cout << "spread_tables::save no schreier table" << endl;
 	}
-
+#endif
 
 	if (f_v) {
 		cout << "spread_tables::save done" << endl;
@@ -556,13 +667,115 @@ void spread_tables::load(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int a, b;
+	//int a, b;
 	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "spread_tables::load" << endl;
 	}
 
+
+	if (f_v) {
+		cout << "spread_tables::load "
+				"reading file " << fname_spreads << endl;
+	}
+
+	//other::orbiter_kernel_system::file_io Fio;
+
+	std::string *Col_label;
+	std::string *Table;
+	int m, n;
+
+
+	Fio.Csv_file_support->read_table_of_strings_and_drop_quotes(
+			fname_spreads, Col_label,
+			Table, m, n,
+			verbose_level);
+
+	nb_spreads = m;
+
+	if (f_v) {
+		cout << "spread_tables::load nb_spreads = " << nb_spreads << endl;
+	}
+
+	spread_table = NEW_lint(nb_spreads * spread_size);
+
+
+	int i;
+
+
+	if (f_v) {
+		cout << "spread_tables::load "
+				"parsing spreads" << endl;
+	}
+
+	for (i = 0; i < nb_spreads; i++) {
+
+		long int *v;
+		int len;
+		Lint_vec_scan(Table[i * n + 1], v, len);
+
+		if (len != spread_size) {
+			cout << "spread_tables::load len != spread_size" << endl;
+			exit(1);
+		}
+
+		Lint_vec_copy(v, spread_table + i * spread_size, spread_size);
+
+		FREE_lint(v);
+	}
+
+
+	if (f_v) {
+		cout << "spread_tables::load "
+				"parsing ismorphism types" << endl;
+	}
+
+	spread_iso_type = NEW_int(nb_spreads);
+
+	for (i = 0; i < nb_spreads; i++) {
+
+		spread_iso_type[i] = std::stoi(Table[i * n + 4]);
+	}
+
+	if (f_v) {
+		cout << "spread_tables::load "
+				"parsing dual spread index" << endl;
+	}
+
+	dual_spread_idx = NEW_lint(nb_spreads);
+
+	for (i = 0; i < nb_spreads; i++) {
+
+		dual_spread_idx[i] = std::stol(Table[i * n + 5]);
+	}
+
+
+
+	if (f_v) {
+		cout << "spread_tables::load "
+				"parsing Schreier table" << endl;
+	}
+
+	schreier_table = NEW_int(nb_spreads * 4);
+
+	for (i = 0; i < nb_spreads; i++) {
+
+		int *v;
+		int len;
+		Int_vec_scan(Table[i * n + 7], v, len);
+
+		if (len != 4) {
+			cout << "spread_tables::load len != 4" << endl;
+			exit(1);
+		}
+
+		Int_vec_copy(v, schreier_table + i * 4, 4);
+
+		FREE_int(v);
+	}
+
+#if 0
 	if (f_v) {
 		cout << "spread_tables::load "
 				"reading file " << fname_spreads << endl;
@@ -618,12 +831,14 @@ void spread_tables::load(
 				"read file " << fname_dual_spread
 				<< endl;
 	}
+#endif
 
 	if (f_v) {
 		cout << "spread_tables::load, "
 				"reading file " << fname_self_dual_spreads
 				<< endl;
 	}
+	int b;
 	Fio.Csv_file_support->lint_matrix_read_csv(
 			fname_self_dual_spreads,
 			self_dual_spreads, nb_self_dual_spreads, b,
@@ -634,7 +849,7 @@ void spread_tables::load(
 				<< endl;
 	}
 
-
+#if 0
 	if (Fio.file_size(fname_schreier_table) > 0) {
 		if (f_v) {
 			cout << "spread_tables::load, "
@@ -663,6 +878,7 @@ void spread_tables::load(
 		cout << "spread_tables::load no schreier tables" << endl;
 		exit(1);
 	}
+#endif
 
 
 	if (f_v) {
@@ -694,7 +910,7 @@ void spread_tables::compute_adjacency_matrix(
 		for (j = i + 1; j < nb_spreads; j++) {
 
 
-			if (test_if_spreads_are_disjoint(i, j)) {
+			if (test_if_spreads_are_line_disjoint(i, j)) {
 				Bitvec->m_i(k, 1);
 				//cnt++;
 			}
@@ -753,8 +969,9 @@ void spread_tables::compute_adjacency_matrix(
 	}
 }
 
-int spread_tables::test_if_spreads_are_disjoint(
+int spread_tables::test_if_spreads_are_line_disjoint(
 		int a, int b)
+// tests of spreads are line-disjoint
 {
 	long int *p, *q;
 	other::data_structures::sorting Sorting;
@@ -861,6 +1078,8 @@ int spread_tables::test_if_pair_of_sets_are_adjacent(
 		long int *set1, int sz1,
 		long int *set2, int sz2,
 		int verbose_level)
+// tests if two sets of spreads (for instance, partial packings)
+// are pairwise line-disjoint
 {
 	int f_v = false; // (verbose_level >= 1);
 	long int s1, s2;
@@ -873,7 +1092,7 @@ int spread_tables::test_if_pair_of_sets_are_adjacent(
 		s1 = set1[i];
 		for (j = 0; j < sz2; j++) {
 			s2 = set2[j];
-			if (!test_if_spreads_are_disjoint(s1, s2)) {
+			if (!test_if_spreads_are_line_disjoint(s1, s2)) {
 				return false;
 			}
 		}
@@ -883,6 +1102,8 @@ int spread_tables::test_if_pair_of_sets_are_adjacent(
 
 int spread_tables::test_if_set_of_spreads_is_line_disjoint(
 		long int *set, int len)
+// tests if a set of spreads is a partial packing,
+// i.e. if the spreads are pairwise line-disjoint
 {
 	int i, j, ret;
 	long int a, b;
@@ -891,7 +1112,7 @@ int spread_tables::test_if_set_of_spreads_is_line_disjoint(
 		a = set[i];
 		for (j = i + 1; j < len; j++) {
 			b = set[j];
-			if (!test_if_spreads_are_disjoint(a, b)) {
+			if (!test_if_spreads_are_line_disjoint(a, b)) {
 				break;
 			}
 		}
@@ -921,7 +1142,7 @@ int spread_tables::test_if_set_of_spreads_is_line_disjoint_and_complain_if_not(
 		a = set[i];
 		for (j = i + 1; j < len; j++) {
 			b = set[j];
-			if (!test_if_spreads_are_disjoint(a, b)) {
+			if (!test_if_spreads_are_line_disjoint(a, b)) {
 				cout << "elements i=" << i << " j=" << j
 						<< " corresponding to spreads " << a << " and " << b
 						<< " are not line disjoint" << endl;

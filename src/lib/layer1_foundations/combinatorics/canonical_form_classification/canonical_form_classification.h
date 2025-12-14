@@ -108,6 +108,11 @@ public:
 			int verbose_level);
 	std::string stringify(
 			int verbose_level);
+	int can_dualize(
+			int verbose_level);
+	void dualize(
+			any_combinatorial_object *&Any_combo,
+			int verbose_level);
 	void print_tex(
 			std::ostream &ost, int verbose_level);
 	void get_packing_as_set_system(
@@ -568,6 +573,9 @@ public:
 	std::vector<other::data_structures::bitvector *> Bitvector_array;
 
 		// the canonical forms in the order that they are encountered
+		// the canonical form is encoded as a bitvector
+		// so two canonical forms can be compared and
+		// we we can compute a hash value of any canonical form
 
 
 	std::vector<void *> Objects;
@@ -584,10 +592,10 @@ public:
 	std::multimap<uint32_t, int> Hashing;
 		// we store the pair (hash, idx)
 		// where hash is the hash value of the set and idx is the
-		// index in the table Bitvector_array where the set is stored.
+		// index in the table Bitvector_array where the object is stored.
 		//
-		// we use a multimap because the hash values are not unique
-		// it happens that two sets have the same hash value.
+		// we use a multimap because the hash values are not unique.
+		// two objects may have the same hash value.
 		// map cannot handle that.
 
 
@@ -600,6 +608,18 @@ public:
 			any_combinatorial_object *OwCF,
 			other::l1_interfaces::nauty_interface_control *Nauty_control,
 			int &f_accept, int verbose_level);
+	void save_to_csv(
+			std::string &fname_base,
+			int f_identify_duals_if_possible,
+			other::l1_interfaces::nauty_interface_control *Nauty_control,
+			int verbose_level);
+	void make_table_of_strings(
+			std::string *&Col_headings,
+			std::string *&Table, int &nb_rows, int &nb_cols,
+			int f_identify_duals_if_possible,
+			other::l1_interfaces::nauty_interface_control *Nauty_control,
+			int verbose_level);
+	// assumes that the Objects are of type any_combinatorial_object
 	void find_object(
 			any_combinatorial_object *OwCF,
 			other::l1_interfaces::nauty_interface_control *Nauty_control,
@@ -613,6 +633,11 @@ public:
 			other::l1_interfaces::nauty_interface_control *Nauty_control,
 			int &f_new_object,
 			int verbose_level);
+	int identify_object(
+			any_combinatorial_object *Any_combo,
+			other::l1_interfaces::nauty_interface_control *Nauty_control,
+			int &object_idx, uint32_t &hash, int verbose_level);
+	// Does not destroy Any_combo
 
 };
 

@@ -103,6 +103,201 @@ void classify_using_canonical_forms::orderly_test(
 	}
 }
 
+void classify_using_canonical_forms::save_to_csv(
+		std::string &fname_base,
+		int f_identify_duals_if_possible,
+		other::l1_interfaces::nauty_interface_control *Nauty_control,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "classify_using_canonical_forms::save_to_csv" << endl;
+	}
+
+	std::string *Col_headings;
+	std::string *Table;
+	int nb_rows, nb_cols;
+
+
+	make_table_of_strings(
+			Col_headings,
+			Table, nb_rows, nb_cols,
+			f_identify_duals_if_possible, Nauty_control,
+			verbose_level - 2);
+
+	std::string fname_out;
+
+	fname_out = fname_base + "_canonical_forms.csv";
+
+	other::orbiter_kernel_system::file_io Fio;
+
+	Fio.Csv_file_support->write_table_of_strings_with_col_headings(
+			fname_out,
+			nb_rows, nb_cols, Table,
+			Col_headings,
+			verbose_level);
+
+	if (f_v) {
+		cout << "classify_using_canonical_forms::save_to_csv "
+				"written file " << fname_out << " of size "
+				<< Fio.file_size(fname_out) << endl;
+	}
+
+	delete [] Table;
+	delete [] Col_headings;
+
+	if (f_v) {
+		cout << "classify_using_canonical_forms::save_to_csv done" << endl;
+	}
+
+}
+
+void classify_using_canonical_forms::make_table_of_strings(
+		std::string *&Col_headings,
+		std::string *&Table, int &nb_rows, int &nb_cols,
+		int f_identify_duals_if_possible,
+		other::l1_interfaces::nauty_interface_control *Nauty_control,
+		int verbose_level)
+// assumes that the Objects are of type any_combinatorial_object
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "classify_using_canonical_forms::make_table_of_strings" << endl;
+	}
+	int cnt;
+
+	cnt = 0;
+	for (std::multimap<uint32_t, int>::const_iterator it = Hashing.begin(); it != Hashing.end(); ++it) {
+		cnt++;
+		//      std::cout << it->first << " = " << it->second << "; ";
+	}
+
+	layer1_foundations::other::data_structures::algorithms Algorithms;
+
+	nb_rows = cnt;
+	nb_cols = 10;
+
+	Table = new string [nb_rows * nb_cols];
+	Col_headings = new string [nb_cols];
+
+	cnt = 0;
+	for (std::multimap<uint32_t, int>::const_iterator it = Hashing.begin(); it != Hashing.end(); ++it) {
+		//      std::cout << it->first << " = " << it->second << "; ";
+
+		uint32_t h;
+		int idx;
+
+		h = it->first;
+		idx = it->second;
+
+		string hash;
+
+		string canonical_form;
+
+		hash = Algorithms.stringify_data_hex_top_down(
+				(unsigned char *) &h, sizeof(uint32_t));
+
+
+
+		other::data_structures::bitvector *bv;
+
+		bv = Bitvector_array[idx];
+
+		canonical_form = Algorithms.stringify_data_hex(
+				(unsigned char *) bv->get_data(), bv->get_allocated_length());
+
+
+		Table[cnt * nb_cols + 0] = std::to_string(cnt);
+		Table[cnt * nb_cols + 1] = hash;
+		Table[cnt * nb_cols + 2] = std::to_string(idx);
+		Table[cnt * nb_cols + 3] = canonical_form;
+
+		string s;
+		any_combinatorial_object *Any_combo;
+
+		Any_combo = (any_combinatorial_object *) Objects[idx];
+		s = Any_combo->stringify(0 /*verbose_level*/);
+		Table[cnt * nb_cols + 4] = "\"" + s + "\"";
+
+		Table[cnt * nb_cols + 5] = std::to_string(Ago[idx]);
+		Table[cnt * nb_cols + 6] = std::to_string(input_index[idx]);
+
+
+		if (f_identify_duals_if_possible) {
+			if (Any_combo->can_dualize(verbose_level - 2)) {
+				any_combinatorial_object *Any_combo_dualized;
+
+				if (f_v) {
+					cout << "classify_using_canonical_forms::make_table_of_strings before Any_combo->dualize" << endl;
+				}
+				Any_combo->dualize(Any_combo_dualized, verbose_level);
+				if (f_v) {
+					cout << "classify_using_canonical_forms::make_table_of_strings after Any_combo->dualize" << endl;
+				}
+				if (f_v) {
+					cout << "classify_using_canonical_forms::make_table_of_strings Any_combo_dualized=" << endl;
+					Any_combo_dualized->print();
+				}
+
+				int object_idx;
+				uint32_t hash;
+
+				int f_found;
+
+				if (f_v) {
+					cout << "classify_using_canonical_forms::make_table_of_strings before identify_object" << endl;
+				}
+				f_found = identify_object(
+						Any_combo_dualized,
+						Nauty_control,
+						object_idx, hash,
+						verbose_level);
+				if (f_v) {
+					cout << "classify_using_canonical_forms::make_table_of_strings after identify_object" << endl;
+				}
+				if (!f_found) {
+					object_idx = -1;
+					cout << "classify_using_canonical_forms::make_table_of_strings we did not find the dual object" << endl;
+				}
+				Table[cnt * nb_cols + 7] = std::to_string(object_idx);
+
+				int f_is_self_dual = false;
+
+				if (object_idx == idx) {
+					f_is_self_dual = true;
+				}
+				Table[cnt * nb_cols + 8] = std::to_string(f_is_self_dual);
+				Table[cnt * nb_cols + 9] = std::to_string(hash);
+
+				FREE_OBJECT(Any_combo_dualized);
+
+			}
+
+		}
+
+		cnt++;
+
+	}
+
+	Col_headings[0] = "Line";
+	Col_headings[1] = "Hash";
+	Col_headings[2] = "IsoIdx";
+	Col_headings[3] = "CanonicalForm";
+	Col_headings[4] = "Object";
+	Col_headings[5] = "Ago";
+	Col_headings[6] = "InputIdx";
+	Col_headings[7] = "DualIdx";
+	Col_headings[8] = "IsSelfDual";
+	Col_headings[9] = "DualHash";
+
+
+	if (f_v) {
+		cout << "classify_using_canonical_forms::make_table_of_strings done" << endl;
+	}
+}
+
 void classify_using_canonical_forms::find_object(
 		any_combinatorial_object *OwCF,
 		other::l1_interfaces::nauty_interface_control *Nauty_control,
@@ -259,6 +454,67 @@ void classify_using_canonical_forms::add_object(
 
 
 }
+
+
+int classify_using_canonical_forms::identify_object(
+		any_combinatorial_object *Any_combo,
+		other::l1_interfaces::nauty_interface_control *Nauty_control,
+		int &object_idx, uint32_t &hash, int verbose_level)
+// Does not destroy Any_combo
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "classify_using_canonical_forms::identify_object" << endl;
+	}
+
+	other::l1_interfaces::nauty_output *NO;
+	other::data_structures::bitvector *Canonical_form;
+
+
+	int f_found;
+
+	find_object(
+			Any_combo,
+			Nauty_control,
+			f_found, object_idx,
+			NO,
+			Canonical_form,
+			verbose_level);
+
+
+
+	hash = Canonical_form->compute_hash();
+
+	if (!f_found) {
+
+
+		if (f_v) {
+			cout << "classify_using_canonical_forms::identify_object "
+					"we could not find the object" << endl;
+		}
+
+	}
+	else {
+
+		if (f_v) {
+			cout << "classify_using_canonical_forms::identify_object "
+					"the object has been found at idx = " << object_idx << " hash = " << hash << endl;
+		}
+		FREE_OBJECT(Canonical_form);
+	}
+
+	FREE_OBJECT(NO);
+	nb_input_objects++;
+
+	if (f_v) {
+		cout << "classify_using_canonical_forms::identify_object done" << endl;
+	}
+
+	return f_found;
+}
+
+
 
 
 }}}}
