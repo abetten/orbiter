@@ -1070,13 +1070,13 @@ void linear_set_classify::do_classify_secondary(
 
 	if (f_v) {
 		cout << "linear_set_classify::do_classify_secondary "
-				"calling generator_main" << endl;
+				"calling poset_classification_main" << endl;
 		cout << "A=";
 		Gen2->get_A()->print_info();
 		cout << "A2=";
 		Gen2->get_A2()->print_info();
 	}
-	Gen2->main(t0,
+	Gen2->poset_classification_main(t0,
 		secondary_schreier_depth,
 		f_use_invariant_subset_if_available,
 		f_debug,
@@ -1086,7 +1086,7 @@ void linear_set_classify::do_classify_secondary(
 
 	if (f_v) {
 		cout << "linear_set_classify::do_classify_secondary "
-				"done with generator_main" << endl;
+				"done with poset_classification_main" << endl;
 	}
 	nb_orbits = Gen2->nb_orbits_at_level(secondary_depth);
 	if (f_v) {
@@ -1485,13 +1485,13 @@ void linear_set_classify::do_compute_stabilizer(
 
 	if (f_v) {
 		cout << "linear_set_classify::do_compute_stabilizer "
-				"calling generator_main" << endl;
+				"calling poset_classification_main" << endl;
 		cout << "A=";
 		Gen_stab->get_A()->print_info();
 		cout << "A2=";
 		Gen_stab->get_A2()->print_info();
 	}
-	Gen_stab->main(t0,
+	Gen_stab->poset_classification_main(t0,
 			level,
 		f_use_invariant_subset_if_available,
 		f_debug,
@@ -1501,7 +1501,7 @@ void linear_set_classify::do_compute_stabilizer(
 
 	if (f_v) {
 		cout << "linear_set_classify::do_compute_stabilizer "
-				"done with generator_main" << endl;
+				"done with poset_classification_main" << endl;
 	}
 	nb_orbits = Gen_stab->nb_orbits_at_level(level);
 	if (f_v) {

@@ -38,7 +38,7 @@ objects_after_classification::~objects_after_classification()
 }
 
 
-void objects_after_classification::init_after_nauty(
+void objects_after_classification::create_objects_with_property(
 		combinatorics::canonical_form_classification::classification_of_objects *Classification_of_objects,
 		int f_projective_space,
 		projective_geometry::projective_space_with_action *PA,
@@ -47,7 +47,7 @@ void objects_after_classification::init_after_nauty(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "objects_after_classification::init_after_nauty" << endl;
+		cout << "objects_after_classification::create_objects_with_property" << endl;
 	}
 
 	objects_after_classification::Classification_of_objects = Classification_of_objects;
@@ -55,14 +55,14 @@ void objects_after_classification::init_after_nauty(
 	objects_after_classification::PA = PA;
 
 	if (!Classification_of_objects->IS) {
-		cout << "objects_after_classification::init_after_nauty "
+		cout << "objects_after_classification::create_objects_with_property "
 				"no input stream" << endl;
 		exit(1);
 	}
 
 
 	if (!Classification_of_objects->IS->Descr->f_label) {
-		cout << "objects_after_classification::init_after_nauty "
+		cout << "objects_after_classification::create_objects_with_property "
 				"input stream does not have a label" << endl;
 		exit(1);
 	}
@@ -76,7 +76,7 @@ void objects_after_classification::init_after_nauty(
 	for (iso_type = 0; iso_type < Classification_of_objects->Output->nb_orbits; iso_type++) {
 
 		if (f_v) {
-			cout << "objects_after_classification::init_after_nauty "
+			cout << "objects_after_classification::create_objects_with_property "
 					"iso_type = " << iso_type << " / " << Classification_of_objects->Output->nb_orbits << endl;
 			//cout << "NO=" << endl;
 			//CO->NO_transversal[iso_type]->print();
@@ -95,7 +95,7 @@ void objects_after_classification::init_after_nauty(
 
 
 		if (f_v) {
-			cout << "objects_after_classification::init_after_nauty "
+			cout << "objects_after_classification::create_objects_with_property "
 					"before OwP[iso_type].init" << endl;
 		}
 		OwP[iso_type].init(
@@ -107,7 +107,7 @@ void objects_after_classification::init_after_nauty(
 				label_tex,
 				verbose_level);
 		if (f_v) {
-			cout << "objects_after_classification::init_after_nauty "
+			cout << "objects_after_classification::create_objects_with_property "
 					"after OwP[iso_type].init" << endl;
 		}
 
@@ -115,7 +115,7 @@ void objects_after_classification::init_after_nauty(
 	}
 
 	if (f_v) {
-		cout << "objects_after_classification::init_after_nauty done" << endl;
+		cout << "objects_after_classification::create_objects_with_property done" << endl;
 	}
 }
 

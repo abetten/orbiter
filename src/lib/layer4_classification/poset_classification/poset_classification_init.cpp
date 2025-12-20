@@ -202,9 +202,18 @@ void poset_classification::init_internal(
 	}
 	
 	Schreier_vector_handler = NEW_OBJECT(data_structures_groups::schreier_vector_handler);
-	Schreier_vector_handler->init(Poset->A, Poset->A2,
+	if (f_v) {
+		cout << "poset_classification::init_internal "
+				"before Schreier_vector_handler->init" << endl;
+	}
+	Schreier_vector_handler->init(
+			Poset->A, Poset->A2,
 			true /* f_allow_failure */,
-			verbose_level);
+			verbose_level - 2);
+	if (f_v) {
+		cout << "poset_classification::init_internal "
+				"after Schreier_vector_handler->init" << endl;
+	}
 	
 	if (f_v) {
 		cout << "poset_classification::init_internal sz = " << sz << endl;
@@ -220,11 +229,12 @@ void poset_classification::init_internal(
 	}
 
 
+#if 0
 	if (f_vv) {
 		cout << "poset_classification::init_internal "
 				"allocating Elt_memory" << endl;
 	}
-
+#endif
 
 #if 0
 	if (sz == 0) {
@@ -254,7 +264,10 @@ void poset_classification::init_internal(
 		cout << "poset_classification::init_internal "
 				"before Poo->init" << endl;
 	}
-	Poo->init(this, nb_poset_orbit_nodes, sz, max_set_size, t0, verbose_level);
+	Poo->init(
+			this,
+			nb_poset_orbit_nodes, sz, max_set_size, t0,
+			verbose_level);
 	if (f_vv) {
 		cout << "poset_classification::init_internal "
 				"after Poo->init" << endl;

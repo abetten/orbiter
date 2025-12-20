@@ -151,15 +151,17 @@ void arc_orbits_on_pairs::init(
 	int t0 = Os.os_ticks();
 
 	if (f_v) {
-		cout << "arc_orbits_on_pairs::init before Orbits_on_pairs->main" << endl;
+		cout << "arc_orbits_on_pairs::init "
+				"before Orbits_on_pairs->poset_classification_main" << endl;
 	}
 	//Orbits_on_pairs->depth = 2;
-	Orbits_on_pairs->main(t0, 2 /*schreier_depth */,
+	Orbits_on_pairs->poset_classification_main(t0, 2 /*schreier_depth */,
 				true /* f_use_invariant_subset_if_available */,
 				false /* f_debug*/,
 				verbose_level);
 	if (f_v) {
-		cout << "arc_orbits_on_pairs::init after Orbits_on_pairs->main" << endl;
+		cout << "arc_orbits_on_pairs::init "
+				"after Orbits_on_pairs->poset_classification_main" << endl;
 	}
 
 	nb_orbits_on_pairs = Orbits_on_pairs->nb_orbits_at_level(2);

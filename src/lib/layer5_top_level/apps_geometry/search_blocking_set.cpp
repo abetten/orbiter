@@ -56,52 +56,52 @@ search_blocking_set::~search_blocking_set()
 	
 	if (Line_intersections) {
 		FREE_OBJECTS(Line_intersections);
-		}
+	}
 	if (Control) {
 		FREE_OBJECT(Control);
-		}
+	}
 	if (Poset) {
 		FREE_OBJECT(Poset);
-		}
+	}
 	if (gen) {
 		FREE_OBJECT(gen);
-		}
+	}
 	if (blocking_set) {
 		FREE_lint(blocking_set);
-		}
+	}
 	if (sz) {
 		FREE_int(sz);
-		}
+	}
 	if (active_set) {
 		FREE_OBJECT(active_set);
-		}
+	}
 	if (sz_active_set) {
 		FREE_int(sz_active_set);
-		}
+	}
 	if (search_candidates) {
 		for (i = 0; i < max_search_depth; i++) {
 			if (search_candidates[i]) {
 				FREE_int(search_candidates[i]);
 				search_candidates[i] = NULL;
-				}
 			}
-		FREE_pint(search_candidates);
 		}
+		FREE_pint(search_candidates);
+	}
 	if (search_nb_candidates) {
 		FREE_int(search_nb_candidates);
-		}
+	}
 	if (search_cur) {
 		FREE_int(search_cur);
-		}
+	}
 	if (save_sz) {
 		for (i = 0; i < max_search_depth; i++) {
 			if (save_sz[i]) {
 				FREE_int(save_sz[i]);
 				save_sz[i] = NULL;
-				}
 			}
-		FREE_pint(save_sz);
 		}
+		FREE_pint(save_sz);
+	}
 }
 
 void search_blocking_set::init(
@@ -114,14 +114,14 @@ void search_blocking_set::init(
 	
 	if (f_v) {
 		cout << "search_blocking_set::init" << endl;
-		}
+	}
 	search_blocking_set::Inc = Inc;
 	search_blocking_set::A = A;
 
 	Line_intersections = NEW_OBJECTS(other::data_structures::fancy_set, Inc->nb_cols);
 	for (j = 0; j < Inc->nb_cols; j++) {
 		Line_intersections[j].init(Inc->nb_rows, 0);
-		}
+	}
 
 	blocking_set = NEW_lint(Inc->nb_rows);
 	sz = NEW_int(Inc->nb_cols);
@@ -143,18 +143,18 @@ void search_blocking_set::find_partial_blocking_sets(
 
 	if (f_v) {
 		cout << "search_blocking_set::find_partial_blocking_sets" << endl;
-		}
+	}
 	
 	
 	
 	if (f_v) {
 		cout << "find_blocking_sets calling gen->init" << endl;
-		}
+	}
 
 	if (!A->f_has_strong_generators) {
 		cout << "find_partial_blocking_sets !A->f_has_strong_generators" << endl;
 		exit(1);
-		}
+	}
 	Control = NEW_OBJECT(poset_classification::poset_classification_control);
 	Control->f_depth = true;
 	Control->depth = Inc->nb_rows;
@@ -194,17 +194,18 @@ void search_blocking_set::find_partial_blocking_sets(
 	
 	
 	if (f_v) {
-		cout << "find_partial_blocking_sets: calling generator_main" << endl;
-		}
-	gen->main(t0, 
+		cout << "find_partial_blocking_sets "
+				"before poset_classification_main" << endl;
+	}
+	gen->poset_classification_main(t0,
 		schreier_depth, 
 		f_use_invariant_subset_if_available, 
 		f_debug, 
 		verbose_level - 1);
 	
 	if (f_v) {
-		cout << "find_partial_blocking_sets: done with generator_main" << endl;
-		}
+		cout << "find_partial_blocking_sets after poset_classification_main" << endl;
+	}
 }
 
 int search_blocking_set::test_level(
@@ -215,16 +216,16 @@ int search_blocking_set::test_level(
 	int nb_orbits, f, h;
 	
 	if (f_v) {
-		cout << "search_blocking_set::test_level: testing all partial "
+		cout << "search_blocking_set::test_level testing all partial "
 				"blocking sets at level " << depth << endl;
-		}
+	}
 	f = gen->first_node_at_level(depth);
 	nb_orbits = gen->nb_orbits_at_level(depth);
 	if (f_v) {
-		cout << "search_blocking_set::test_level: we found " << nb_orbits
+		cout << "search_blocking_set::test_level we found " << nb_orbits
 				<< " orbits on partial blocking sets "
 				"of size " << depth << endl;
-		}
+	}
 	f_OK = false;
 	for (h = 0; h < nb_orbits; h++) {
 		gen->get_node(f + h)->store_set_to(gen, depth - 1, blocking_set);
@@ -233,7 +234,7 @@ int search_blocking_set::test_level(
 			cout << "testing set " << h << " / " << nb_orbits << " : ";
 			Lint_vec_print(cout, blocking_set, depth);
 			cout << endl;
-			}
+		}
 		
 		blocking_set_len = depth;
 
@@ -242,18 +243,18 @@ int search_blocking_set::test_level(
 		if (f_OK) {
 			if (f_v) {
 				cout << "found blocking set" << endl;
-				}
-			break;
 			}
+			break;
+		}
 		else {
 			if (f_v) {
 				cout << endl;
-				}
 			}
 		}
+	}
 	if (f_OK) {
 		return true;
-		}
+	}
 	return false;
 }
 
@@ -273,21 +274,21 @@ int search_blocking_set::test_blocking_set(
 				"checking set of points ";
 		Lint_vec_print(cout, S, len);
 		cout << endl;
-		}
+	}
 
 	for (j = 0; j < Inc->nb_cols; j++) {
 		Line_intersections[j].k = 0;
-		}
+	}
 	for (h = 0; h < len; h++) {
 		i = S[h];
 		for (a = 0; a < Inc->nb_lines_on_point[i]; a++) {
 			j = Inc->lines_on_point[i * Inc->max_r + a];
 			Line_intersections[j].add_element(i);
-			}
 		}
+	}
 	for (j = 0; j < Inc->nb_cols; j++) {
 		sz[j] = Line_intersections[j].k;
-		}
+	}
 
 	if (f_v) {
 		other::data_structures::tally C;
@@ -296,7 +297,7 @@ int search_blocking_set::test_blocking_set(
 
 		cout << "the line type is:";
 		C.print(false /*f_backwards*/);
-		}
+	}
 	
 	for (j = 0; j < Inc->nb_cols; j++) {
 		a = Line_intersections[j].k;
@@ -304,35 +305,35 @@ int search_blocking_set::test_blocking_set(
 			f_OK = false;
 			if (f_v) {
 				cout << "not OK, line " << j << " is disjoint" << endl;
-				}
-			break;
 			}
+			break;
+		}
 		if (a >= Inc->nb_points_on_line[j]) {
 			f_OK = false;
 			if (f_v) {
 				cout << "not OK, line " << j
 						<< " is completely contained" << endl;
-				}
-			goto done;
 			}
+			goto done;
 		}
+	}
 	for (h = 0; h < len; h++) {
 		i = S[h];
 		for (a = 0; a < Inc->nb_lines_on_point[i]; a++) {
 			j = Inc->lines_on_point[i * Inc->max_r + a];
 			if (Line_intersections[j].k == 1) {
 				break;
-				}
 			}
+		}
 		if (a == Inc->nb_lines_on_point[i]) {
 			f_OK = false;
 			if (f_v) {
 				cout << "not OK, point S[" << h << "]=" << i
 						<< " is not on a 1-line" << endl;
-				}
-			goto done;
 			}
+			goto done;
 		}
+	}
 done:
 	return f_OK;
 }
@@ -349,11 +350,11 @@ int search_blocking_set::test_blocking_set_upper_bound_only(
 				"set of points ";
 		Lint_vec_print(cout, S, len);
 		cout << endl;
-		}
+	}
 
 	for (j = 0; j < Inc->nb_cols; j++) {
 		Line_intersections[j].k = 0;
-		}
+	}
 	for (h = 0; h < len; h++) {
 		i = S[h];
 		//cout << "adding line pencil of point " << i << " of size "
@@ -362,11 +363,11 @@ int search_blocking_set::test_blocking_set_upper_bound_only(
 			j = Inc->lines_on_point[i * Inc->max_r + a];
 			//cout << "adding point " << i << " to line " << j << endl;
 			Line_intersections[j].add_element(i);
-			}
 		}
+	}
 	for (j = 0; j < Inc->nb_cols; j++) {
 		sz[j] = Line_intersections[j].k;
-		}
+	}
 
 	if (f_v) {
 		other::data_structures::tally C;
@@ -375,7 +376,7 @@ int search_blocking_set::test_blocking_set_upper_bound_only(
 
 		cout << "the line type is:";
 		C.print(false /*f_backwards*/);
-		}
+	}
 	
 	for (j = 0; j < Inc->nb_cols; j++) {
 		a = Line_intersections[j].k;
@@ -384,27 +385,27 @@ int search_blocking_set::test_blocking_set_upper_bound_only(
 			if (f_v) {
 				cout << "not OK, line " << j
 						<< " is completely contained" << endl;
-				}
-			goto done;
 			}
+			goto done;
 		}
+	}
 	for (h = 0; h < len; h++) {
 		i = S[h];
 		for (a = 0; a < Inc->nb_lines_on_point[i]; a++) {
 			j = Inc->lines_on_point[i * Inc->max_r + a];
 			if (Line_intersections[j].k == 1) {
 				break;
-				}
 			}
+		}
 		if (a == Inc->nb_lines_on_point[i]) {
 			f_OK = false;
 			if (f_v) {
 				cout << "not OK, point S[" << h << "]=" << i
 						<< " is not on a 1-line" << endl;
-				}
-			goto done;
 			}
+			goto done;
 		}
+	}
 done:
 	return f_OK;
 }
@@ -422,7 +423,7 @@ void search_blocking_set::search_for_blocking_set(
 				"input_no=" << input_no << " testing all partial "
 						"blocking sets at level " << level << endl;
 		cout << "f_all=" << f_all << endl;
-		}
+	}
 
 	max_search_depth = Inc->nb_rows - level;
 	search_candidates = NEW_pint(max_search_depth);
@@ -432,17 +433,17 @@ void search_blocking_set::search_for_blocking_set(
 	for (i = 0; i < max_search_depth; i++) {
 		search_candidates[i] = NEW_int(Inc->nb_rows);
 		save_sz[i] = NEW_int(Inc->nb_cols);
-		}
+	}
 
 
 	nb_solutions = 0;
 	
 	if (f_all) {
 		f_find_only_one = false;
-		}
+	}
 	else {
 		f_find_only_one = true;
-		}
+	}
 
 	f = gen->first_node_at_level(level);
 	nb_orbits = gen->nb_orbits_at_level(level);
@@ -450,7 +451,7 @@ void search_blocking_set::search_for_blocking_set(
 		cout << "search_blocking_set::search_for_blocking_set: "
 				"we found " << nb_orbits << " orbits on partial "
 				"blocking sets of size" << level << endl;
-		}
+	}
 	for (h = 0; h < nb_orbits; h++) {
 		gen->get_node(f + h)->store_set_to(gen, level - 1, blocking_set);
 		
@@ -459,27 +460,27 @@ void search_blocking_set::search_for_blocking_set(
 					<< " testing set " << h << " / " << nb_orbits << " : ";
 			Lint_vec_print(cout, blocking_set, level);
 			cout << endl;
-			}
+		}
 		
 		blocking_set_len = level;
 
 		if (level) {
 			b = blocking_set[level - 1];
-			}
+		}
 		else {
 			b = -1;
-			}
+		}
 		for (i = b + 1; i < Inc->nb_rows; i++) {
 			active_set->add_element(i);
-			}
+		}
 		sz_active_set[0] = active_set->k;
 		if (f_v) {
 			cout << "sz_active_set[0]=" << sz_active_set[0] << endl;
-			}
+		}
 		
 		for (j = 0; j < Inc->nb_cols; j++) {
 			Line_intersections[j].k = 0;
-			}
+		}
 		for (u = 0; u < level; u++) {
 			i = blocking_set[u];
 			//cout << "adding line pencil of point " << i << " of size "
@@ -488,8 +489,8 @@ void search_blocking_set::search_for_blocking_set(
 				j = Inc->lines_on_point[i * Inc->max_r + a];
 				//cout << "adding point " << i << " to line " << j << endl;
 				Line_intersections[j].add_element(i);
-				}
 			}
+		}
 
 
 		recursive_search_for_blocking_set(input_no,
@@ -499,19 +500,19 @@ void search_blocking_set::search_for_blocking_set(
 			cout << "input_no " << input_no << " level " << level
 					<< " testing set " << h << " / " << nb_orbits << " : ";
 			cout << " done" << endl;
-			}
+		}
 
 
 		if (f_find_only_one && nb_solutions) {
 			break;
-			}
 		}
+	}
 
 
 	if (f_v) {
 		cout << "search_blocking_set::search_for_blocking_set done, "
 				"we found " << nb_solutions << " solutions" << endl;
-		}
+	}
 }
 
 int search_blocking_set::recursive_search_for_blocking_set(
@@ -528,20 +529,20 @@ int search_blocking_set::recursive_search_for_blocking_set(
 				<<  " sz_active_set = " << active_set->k << endl;
 		Lint_vec_print(cout, blocking_set, starter_level + level);
 		cout << endl;
-		}
+	}
 	if (f_blocking_set_size_desired) {
 		if (starter_level + level > blocking_set_size_desired) {
 			if (f_v) {
 				cout << "we backtrack since we reached the "
 						"desired size" << endl;
-				}
-			return true;
 			}
+			return true;
 		}
+	}
 
 	for (j = 0; j < Inc->nb_cols; j++) {
 		sz[j] = Line_intersections[j].k;
-		}
+	}
 	other::data_structures::tally C;
 
 	C.init(sz, Inc->nb_cols, false, 0);
@@ -549,17 +550,17 @@ int search_blocking_set::recursive_search_for_blocking_set(
 	if (f_v) {
 		cout << "the current line type is:";
 		C.print(false /*f_backwards*/);
-		}
+	}
 	for (j = 0; j < Inc->nb_cols; j++) {
 		if (sz[j] == Inc->nb_points_on_line[j]) {
 			// backtrack, since one line is contained in the blocking set
 			if (f_v) {
 				cout << "we backtrack since line " << j
 						<< " is contained in the blocking set" << endl;
-				}
-			return true;
 			}
+			return true;
 		}
+	}
 
 	t0_first = C.type_first[0];
 	t0_len = C.type_len[0];
@@ -575,7 +576,7 @@ int search_blocking_set::recursive_search_for_blocking_set(
 		for (i = 0; i < level; i++) {
 			cout << i << ":" << search_cur[i] << "/"
 					<< search_nb_candidates[i] << " ";
-			}
+		}
 		cout << endl;
 
 
@@ -584,38 +585,38 @@ int search_blocking_set::recursive_search_for_blocking_set(
 		sol.resize(starter_level + level);
 		for (j = 0; j < starter_level + level; j++) {
 			sol[j] = (int) blocking_set[j];
-			}
+		}
 		solutions.push_back(sol);
 
 		nb_solutions++;
 		
 		if (f_find_only_one) {
 			return false;
-			}
+		}
 		else {
 			return true;
-			}
 		}
+	}
 	else {
 		if (f_v) {
 			cout << "there are " << t0_len << " 0-lines" << endl;
-			}
 		}
+	}
 	line_idx = C.sorting_perm_inv[t0_first];
 	if (f_v) {
 		cout << "line_idx=" << line_idx << endl;
-		}
+	}
 	if (Line_intersections[line_idx].k != 0) {
 		cout << "Line_intersections[line_idx].k != 0" << endl;
 		exit(1);
-		}
+	}
 	j = 0;
 	for (i = 0; i < Inc->nb_points_on_line[line_idx]; i++) {
 		a = Inc->points_on_line[line_idx * Inc->max_k + i];
 		if (active_set->is_contained(a)) {
 			search_candidates[level][j++] = a;
-			}
 		}
+	}
 	search_nb_candidates[level] = j;
 	
 	for (search_cur[level] = 0;
@@ -634,7 +635,7 @@ int search_blocking_set::recursive_search_for_blocking_set(
 			j = Inc->lines_on_point[a * Inc->max_r + b];
 			//cout << "adding point " << i << " to line " << j << endl;
 			Line_intersections[j].add_element(a);
-			}
+		}
 
 		active_set->delete_element(a);
 		sz_active_set[level + 1] = active_set->k;
@@ -642,15 +643,15 @@ int search_blocking_set::recursive_search_for_blocking_set(
 		if (!recursive_search_for_blocking_set(input_no,
 				starter_level, level + 1, verbose_level)) {
 			return false;
-			}
+		}
 		else {
 			active_set->k = sz_active_set[level + 1];
-			}
+		}
 
 		
 		restore_line_intersection_size(level);
 		
-		}
+	}
 	return true;
 }
 
@@ -661,7 +662,7 @@ void search_blocking_set::save_line_intersection_size(
 
 	for (j = 0; j < Inc->nb_cols; j++) {
 		save_sz[level][j] = Line_intersections[j].k;
-		}
+	}
 }
 
 void search_blocking_set::restore_line_intersection_size(
@@ -671,7 +672,7 @@ void search_blocking_set::restore_line_intersection_size(
 
 	for (j = 0; j < Inc->nb_cols; j++) {
 		Line_intersections[j].k = save_sz[level][j];
-		}
+	}
 }
 
 
@@ -688,11 +689,11 @@ int callback_check_partial_blocking_set(
 		cout << "check_partial_blocking_set: checking set of points ";
 		print_set(cout, len, S);
 		cout << endl;
-		}
+	}
 
 	if (len && S[len - 1] >= SBS->Inc->nb_rows) {
 		return false;
-		}
+	}
 
 	//cout << "before SBS->test_blocking_set_upper_bound_only" << endl;
 	f_OK = SBS->test_blocking_set_upper_bound_only(len, S, verbose_level);
@@ -702,12 +703,12 @@ int callback_check_partial_blocking_set(
 	if (f_OK) {
 		if (f_v) {
 			cout << "OK" << endl;
-			}
-		return true;
 		}
+		return true;
+	}
 	else {
 		return false;
-		}
+	}
 }
 #endif
 

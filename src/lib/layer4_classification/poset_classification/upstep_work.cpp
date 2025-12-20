@@ -494,6 +494,12 @@ int upstep_work::init_extension_node(
 		cout << "upstep_work::init_extension_node "
 				"after O_cur->init_extension_node_prepare_G" << endl;
 	}
+	if (f_v) {
+		gen->print_level_extension_info(size - 1, prev, prev_ex);
+		Lint_vec_set_print(cout, gen->get_S(), size);
+		cout << "upstep_work::init_extension_node "
+				"after O_cur->init_extension_node_prepare_G go_G = " << go_G << endl;
+	}
 
 	
 
@@ -526,7 +532,8 @@ int upstep_work::init_extension_node(
 				"before O_cur->init_extension_node_prepare_H" << endl;
 	}
 	
-	O_cur->init_extension_node_prepare_H(gen, 
+	O_cur->init_extension_node_prepare_H(
+			gen,
 		prev, prev_ex, size, 
 		*G, go_G,
 		*H, go_H, 
@@ -618,8 +625,10 @@ int upstep_work::init_extension_node(
 		//print_coset_table(coset_table, nb_cosets_processed);
 	}
 
-	gen->get_Poo()->change_extension_type(size - 1, prev, prev_ex,
-			EXTENSION_TYPE_EXTENSION, 0/* verbose_level*/);
+	gen->get_Poo()->change_extension_type(
+			size - 1, prev, prev_ex,
+			EXTENSION_TYPE_EXTENSION,
+			0/* verbose_level*/);
 
 
 	if (f_vv) {
@@ -651,7 +660,20 @@ int upstep_work::init_extension_node(
 	}
 #endif
 
-	O_cur->store_strong_generators(gen, Strong_gens);
+	if (f_v) {
+		gen->print_level_extension_info(size - 1, prev, prev_ex);
+		Lint_vec_set_print(cout, gen->get_S(), size);
+		cout << "upstep_work::init_extension_node "
+				"before O_cur->store_strong_generators" << endl;
+	}
+	O_cur->store_strong_generators(gen, Strong_gens, verbose_level);
+	if (f_v) {
+		gen->print_level_extension_info(size - 1, prev, prev_ex);
+		Lint_vec_set_print(cout, gen->get_S(), size);
+		cout << "upstep_work::init_extension_node "
+				"after O_cur->store_strong_generators" << endl;
+	}
+
 	FREE_OBJECT(Strong_gens);
 	
 
@@ -741,7 +763,7 @@ int upstep_work::upstep_for_sets(
 		print_level_extension_info();
 		cout << "computing orbit of point " << pt << endl;
 	}
-	up_orbit.compute_point_orbit(size - 1 /*pt*/, print_interval, 0);
+	up_orbit.compute_point_orbit(size - 1 /*pt*/, print_interval, 0 /* verbose_level */);
 		// the orbits of the group H
 		// up_orbit will be extended as soon 
 		// as new automorphisms are found

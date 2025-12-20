@@ -1270,24 +1270,38 @@ void data_input_stream::read_objects(
 			q = Descr->Input[input_idx].input_data1;
 
 			other::orbiter_kernel_system::file_io Fio;
+
+			string fname_spread_table;
+
 			long int *Spread_table;
 			int nb_spreads;
 			int spread_size;
 
+			fname_spread_table = Descr->Input[input_idx].input_string2;
 			if (f_v) {
 				cout << "data_input_stream::read_objects "
 						"Reading spread table from file "
-					<< Descr->Input[input_idx].input_string2 << endl;
+					<< fname_spread_table << endl;
 			}
 
+			int col_idx = 2;
+
+			Fio.Csv_file_support->lint_matrix_read_csv_data_column(
+					fname_spread_table,
+					Spread_table, nb_spreads, spread_size, col_idx, verbose_level);
+
+#if 0
+
 			Fio.Csv_file_support->lint_matrix_read_csv(
-					Descr->Input[input_idx].input_string2,
+					fname_spread_table,
 					Spread_table, nb_spreads, spread_size,
 					0 /* verbose_level */);
+#endif
+
 
 			if (f_v) {
 				cout << "Reading spread table from file "
-						<< Descr->Input[input_idx].input_string2 << " done" << endl;
+						<< fname_spread_table << " done" << endl;
 				cout << "The spread table contains " << nb_spreads
 						<< " spreads" << endl;
 			}

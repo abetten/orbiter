@@ -227,9 +227,9 @@ void choose_points_or_lines::compute_orbits(
 	
 	if (f_vv) {
 		cout << "choose_points_or_lines::compute_orbits "
-				<< label << " calling generator_main" << endl;
+				<< label << " calling poset_classification_main" << endl;
 	}
-	gen->main(
+	gen->poset_classification_main(
 			t0,
 		Control->depth,
 		f_use_invariant_subset_if_available, 
@@ -240,7 +240,7 @@ void choose_points_or_lines::compute_orbits(
 	
 	if (f_vv) {
 		cout << "choose_points_or_lines::compute_orbits "
-				<< label << " done with generator_main" << endl;
+				<< label << " done with poset_classification_main" << endl;
 	}
 	nb_orbits = gen->nb_orbits_at_level(nb_points_or_lines);
 

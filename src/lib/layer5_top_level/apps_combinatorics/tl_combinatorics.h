@@ -279,7 +279,8 @@ public:
 			projective_geometry::projective_space_with_action *PA,
 			int verbose_level);
 	// called from combinatorial_object_activity::perform_activity_combo
-	// computes the canonical from of the combinatorial object
+	// performs classification-by-canonical-form for all input objects that are selected
+	// allocates Classification_of_objects
 	void write_canonical_form_data(
 			std::string fname_base,
 			int verbose_level);

@@ -617,6 +617,12 @@ public:
 	int f_print;
 	int f_sort_by_colors;
 
+	int f_A_powers;
+	int f_A_powers_max;
+
+	int f_distance_from;
+	int distance_from_vertex;
+
 	int f_split;
 	std::string split_input_fname;
 	std::string split_by_file;

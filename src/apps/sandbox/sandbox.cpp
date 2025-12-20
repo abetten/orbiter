@@ -54,7 +54,7 @@ int main()
 			verbose_level);
 
 	if (f_v) {
-		cout << "classify_using_canonical_forms::save_to_csv "
+		cout << "main "
 				"written file " << fname_out << " of size "
 				<< Fio.file_size(fname_out) << endl;
 	}

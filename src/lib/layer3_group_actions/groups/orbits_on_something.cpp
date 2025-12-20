@@ -1338,7 +1338,8 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 	long int *orbit2;
 	int l1, l2;
 	int t0, t1, dt;
-	int *point_color;
+	int *point_color = NULL;
+	int nb_colors_per_vertex;
 	other::orbiter_kernel_system::os_interface Os;
 
 	type_idx = get_orbit_type_index(orbit_length);
@@ -1356,6 +1357,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 
 	if (f_has_colors) {
 		point_color = NEW_int(nb_points * orbit_length);
+		nb_colors_per_vertex = orbit_length;
 		for (i = 0; i < nb_points; i++) {
 			a = Classify_orbits_by_length->Set_partition->Sets[type_idx][i];
 			Sch->Forest->get_orbit(a, orbit1, l1, 0 /* verbose_level*/);
@@ -1371,6 +1373,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 	}
 	else {
 		point_color = NULL;
+		nb_colors_per_vertex = 0;
 	}
 
 	L = ((long int) nb_points * (long int) (nb_points - 1)) >> 1;
@@ -1457,13 +1460,21 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 
 	CG = NEW_OBJECT(combinatorics::graph_theory::colored_graph);
 
+	if (f_v) {
+		cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length "
+				"before CG->init_with_point_labels" << endl;
+	}
 	CG->init_with_point_labels(
-			nb_points, number_colors, orbit_length,
+			nb_points, number_colors, nb_colors_per_vertex,
 		point_color,
 		Bitvec, true /* f_ownership_of_bitvec */,
 		Classify_orbits_by_length->Set_partition->Sets[type_idx] /* point_labels */,
 		fname, fname,
-		verbose_level - 2);
+		verbose_level);
+	if (f_v) {
+		cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length "
+				"after CG->init_with_point_labels" << endl;
+	}
 
 		// the adjacency becomes part of the colored_graph object
 
@@ -1724,16 +1735,24 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_or
 
 	CG = NEW_OBJECT(combinatorics::graph_theory::colored_graph);
 
+	if (f_v) {
+		cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_orbits_classified "
+				"before CG->init_with_point_labels" << endl;
+	}
 	CG->init_with_point_labels(
 			nb_points,
-			1 /*nb_colors*/,
-			1 /* nb_colors_per_vertex */,
+			0 /*nb_colors*/,
+			0 /* nb_colors_per_vertex */,
 			NULL /*point_color*/,
 			Bitvec, true /* f_ownership_of_bitvec */,
 			my_orbits_classified->Sets[type_idx],
 			fname, fname,
 			verbose_level - 2);
 			// the adjacency becomes part of the colored_graph object
+	if (f_v) {
+		cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_orbits_classified "
+				"after CG->init_with_point_labels" << endl;
+	}
 
 	if (f_has_user_data) {
 		long int *my_user_data;

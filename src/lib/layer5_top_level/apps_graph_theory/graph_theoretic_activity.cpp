@@ -180,7 +180,13 @@ void graph_theoretic_activity::feedback_headings(
 		}
 
 	}
+	else if (Descr->f_A_powers) {
+		if (f_v) {
+			cout << "graph_theoretic_activity::feedback_headings "
+					"f_A_powers max = " << Descr->f_A_powers_max << endl;
+		}
 
+	}
 	else if (Descr->f_split) {
 		if (f_v) {
 			cout << "splitting by file " << Descr->split_by_file << endl;
@@ -358,6 +364,13 @@ void graph_theoretic_activity::get_label(
 		if (f_v) {
 			cout << "graph_theoretic_activity::get_label "
 					"f_sort_by_colors" << endl;
+		}
+
+	}
+	else if (Descr->f_A_powers) {
+		if (f_v) {
+			cout << "graph_theoretic_activity::get_label "
+					"f_A_powers max = " << Descr->f_A_powers_max << endl;
 		}
 
 	}
@@ -765,6 +778,108 @@ void graph_theoretic_activity::perform_activity(
 		FREE_OBJECT(CG2);
 
 	}
+	else if (Descr->f_A_powers) {
+		if (f_v) {
+			cout << "graph_theoretic_activity::perform_activity "
+					"f_A_powers max = " << Descr->f_A_powers_max << endl;
+		}
+
+		int *M;
+
+
+		CG[0]->powers_of_adjacency_matrix(
+				Descr->f_A_powers_max,
+				M,
+				verbose_level);
+
+		// M will be of size (k_max + 1) * N where N = nb_points * nb_points
+
+		other::orbiter_kernel_system::file_io Fio;
+		string fname2;
+
+		fname2.assign(CG[0]->label);
+		ST.replace_extension_with(fname2, "_powers.csv");
+
+		int nb_rows, nb_cols;
+
+		nb_rows = Descr->f_A_powers_max + 1;
+		nb_cols = CG[0]->nb_points * CG[0]->nb_points;
+		Fio.Csv_file_support->int_matrix_write_csv(
+				fname2, M, nb_rows, nb_cols);
+
+		if (f_v) {
+			cout << "graph_theoretic_activity::perform_activity "
+					"Written file " << fname2 << " of size "
+					<< Fio.file_size(fname2) << endl;
+		}
+
+		other::orbiter_kernel_system::numerics Num;
+		double *A;
+		int i;
+
+		A = new double [nb_rows * nb_cols];
+		for (i = 0; i < nb_rows * nb_cols; i++) {
+			A[i] = M[i];
+		}
+
+		int *base_cols;
+		int f_complete = false;
+		int rk;
+
+		base_cols = NEW_int(nb_cols);
+
+		if (f_v) {
+			cout << "graph_theoretic_activity::perform_activity "
+					"before Gauss_elimination" << endl;
+		}
+		rk = Num.Gauss_elimination(
+				A, nb_rows, nb_cols,
+				base_cols, f_complete,
+				verbose_level);
+		if (f_v) {
+			cout << "graph_theoretic_activity::perform_activity "
+					"after Gauss_elimination, rk = " << rk << endl;
+			//Num.print_system(A, nb_rows, nb_cols);
+		}
+
+
+	}
+	else if (Descr->f_distance_from) {
+		if (f_v) {
+			cout << "graph_theoretic_activity::perform_activity "
+					"f_distance_from vertex = " << Descr->distance_from_vertex << endl;
+		}
+
+		int *D;
+
+
+		CG[0]->distance_from_vertex(
+				Descr->distance_from_vertex,
+				D,
+				verbose_level);
+
+		other::orbiter_kernel_system::file_io Fio;
+		string fname2;
+
+		fname2.assign(CG[0]->label);
+		ST.replace_extension_with(fname2, "_distance_from.csv");
+
+		int nb_rows, nb_cols;
+
+		nb_rows = CG[0]->nb_points;
+		nb_cols = 1;
+		Fio.Csv_file_support->int_matrix_write_csv(
+				fname2, D, nb_rows, nb_cols);
+
+		if (f_v) {
+			cout << "graph_theoretic_activity::perform_activity "
+					"Written file " << fname2 << " of size "
+					<< Fio.file_size(fname2) << endl;
+		}
+
+
+	}
+
 
 	else if (Descr->f_split) {
 		if (f_v) {

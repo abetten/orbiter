@@ -339,7 +339,10 @@ void packing_classify::compute(
 		cout << "packing_classify::compute" << endl;
 	}
 
-	gen->main(
+	if (f_v) {
+		cout << "packing_classify::compute before poset_classification_main" << endl;
+	}
+	gen->poset_classification_main(
 			t0,
 		schreier_depth, 
 		f_use_invariant_subset_if_available, 
@@ -349,7 +352,7 @@ void packing_classify::compute(
 	int length;
 	
 	if (f_v) {
-		cout << "packing_classify::compute done with generator_main" << endl;
+		cout << "packing_classify::compute after poset_classification_main" << endl;
 	}
 	length = gen->nb_orbits_at_level(search_depth);
 	if (f_v) {

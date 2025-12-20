@@ -243,9 +243,9 @@ void classify_five_plus_one::classify_partial_ovoids(
 	}
 	if (f_v) {
 		cout << "classify_five_plus_one::classify_partial_ovoids "
-				"before Five_plus_one->main" << endl;
+				"before Five_plus_one->poset_classification_main" << endl;
 	}
-	Five_plus_one->main(
+	Five_plus_one->poset_classification_main(
 			t0,
 		schreier_depth,
 		f_use_invariant_subset_if_available,
@@ -253,7 +253,7 @@ void classify_five_plus_one::classify_partial_ovoids(
 		verbose_level - 2);
 	if (f_v) {
 		cout << "classify_five_plus_one::classify_partial_ovoids "
-				"after Five_plus_one->main" << endl;
+				"after Five_plus_one->poset_classification_main" << endl;
 	}
 
 #if 0

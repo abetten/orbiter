@@ -375,8 +375,7 @@ public:
 
 
 
-//! classification of combinatorial objects using a graph-theoretic approach
-
+//! classification of combinatorial objects using a graph-theoretic approach; uses the slow class classify_bitvectors; used in combinatorial_object_stream, objects_after_classification
 
 
 class classification_of_objects {
@@ -457,10 +456,12 @@ public:
 // classify_bitvectors.cpp
 // #############################################################################
 
-//! classification of 0/1 matrices using canonical forms
+//! classification of 0/1 matrices using canonical forms; slow because it does not use a hash table; used in classification_of_objects / data_input_stream_output, classification_of_varieties_nauty
+
 
 class classify_bitvectors {
 public:
+
 
 	int nb_types;
 		// the number of isomorphism types
@@ -482,6 +483,7 @@ public:
 		// Type_rep[i] is the index of the candidate which
 		// has been chosen as representative
 		// for the i-th isomorphism type
+		// This corresponds to input_index in classify_using_canonical_forms
 
 	int *Type_mult;  // [nb_types]
 
@@ -541,6 +543,7 @@ public:
 			void *extra_data, int idx, int verbose_level);
 	void finalize(
 			int verbose_level);
+	// Computes C_type_of and perm
 	void print_reps();
 	void print_canonical_forms();
 	void save(
@@ -561,7 +564,7 @@ public:
 // classify_using_canonical_forms.cpp
 // #############################################################################
 
-//! classification of objects using canonical forms
+//! classification of objects using canonical forms and a hash table, used by iso_type
 
 class classify_using_canonical_forms {
 public:
@@ -570,33 +573,40 @@ public:
 	int nb_input_objects;
 
 
+	// the orbit transversal:
+
+
 	std::vector<other::data_structures::bitvector *> Bitvector_array;
 
-		// the canonical forms in the order that they are encountered
-		// the canonical form is encoded as a bitvector
+		// The canonical forms of the isomorphism types
+		// in the order that they are encountered.
+		// The canonical form is encoded as a bitvector,
 		// so two canonical forms can be compared and
-		// we we can compute a hash value of any canonical form
+		// we can compute a hash value of a canonical form
 
 
 	std::vector<void *> Objects;
 
-	// the objects in the order that they are encountered
-	// the objects are of type any_combinatorial_object
+	// The objects representing distinct isomorphism classes
+	// in the order that they are encountered.
+	// The objects are of type any_combinatorial_object
 
 	std::vector<long int> Ago;
-	// the ago in the order that they are encountered
+	// The ago in the order that they are encountered
 
 	std::vector<int> input_index;
-	// the index in the input of the first time that the canonical form was encountered
+	// The index in the input of the first time
+	// that the isomorphism type was encountered
+
 
 	std::multimap<uint32_t, int> Hashing;
-		// we store the pair (hash, idx)
+		// We store the pair (hash, idx)
 		// where hash is the hash value of the set and idx is the
 		// index in the table Bitvector_array where the object is stored.
 		//
-		// we use a multimap because the hash values are not unique.
+		// We use a multimap because the hash values are not unique.
 		// two objects may have the same hash value.
-		// map cannot handle that.
+		// Map cannot handle that.
 
 
 	//std::vector<void *> Input_objects;

@@ -361,13 +361,15 @@ public:
 	// nauty stuff:
 
 	combinatorics::canonical_form_classification::classify_bitvectors *CB;
+		// CB->CB->Type_extra_data is of type (variety_stabilizer_compute *)
+
 	int canonical_labeling_len;
 
 	// output data, nauty specific:
 	// allocated in classify_nauty() -> allocate_tables()
 	int *F_first_time; // [Input->nb_objects_to_test]
 	int *Iso_idx; // [Input->nb_objects_to_test]
-		// it is -1 if we skip this one
+		// it is -1 if this object is skipped
 	int *Idx_canonical_form; // [Input->nb_objects_to_test]
 	int *Idx_equation; // [Input->nb_objects_to_test]
 
@@ -386,6 +388,10 @@ private:
 	// allocated in prepare_input
 
 	std::vector<std::string> Lines;
+		// If Nauty_interface_control->f_reduce_memory_footprint is true:
+		// The data obtained from stringify_result
+		// This is so that Canonical_forms[input_counter]
+		// can be deleted if the object is from a repeated isomorphism class
 
 public:
 	long int *Goi; // [Input->nb_objects_to_test]
@@ -398,8 +404,11 @@ public:
 	int *Elt_gamma; // [Classifier->PA->A->elt_size_in_int]
 	int *Elt_gamma_inv; // [Classifier->PA->A->elt_size_in_int]
 	int *Elt_delta; // [Classifier->PA->A->elt_size_in_int]
+	// delta is the transporter from idx_equation to A->Orb->position_of_original_object
+
 	int *Elt_phi; // [Classifier->PA->A->elt_size_in_int]
 	// Elt_phi is the isomorphism to the equation in the classification
+	// = gamma_inv * delta
 	int *eqn2; // [Classifier->Poly_ring->get_nb_monomials()]
 		// used by canonical_form_of_variety::find_equation
 
@@ -485,7 +494,7 @@ public:
 	// proprietary:
 
 	groups::strong_generators *SG;
-		// only used if f_projective_space
+		// used only if f_projective_space is true
 		// computed by lift_generators_to_matrix_group
 		// and by init_object_in_projective_space
 
@@ -527,6 +536,71 @@ public:
 			std::ostream &ost,
 			combinatorics::canonical_form_classification::objects_report_options
 				*Report_options,
+			int verbose_level);
+	void report_group(
+			std::ostream &ost,
+			combinatorics::canonical_form_classification::objects_report_options
+				*Report_options,
+			int verbose_level);
+	void report_projective_space(
+			std::ostream &ost,
+			combinatorics::canonical_form_classification::objects_report_options
+				*Report_options,
+			int verbose_level);
+	void export_group_orbiter(
+			std::ostream &ost,
+			combinatorics::canonical_form_classification::objects_report_options
+				*Report_options,
+			int verbose_level);
+	void export_group_gap(
+			std::ostream &ost,
+			combinatorics::canonical_form_classification::objects_report_options
+				*Report_options,
+			int verbose_level);
+	void export_group_magma(
+			std::ostream &ost,
+			combinatorics::canonical_form_classification::objects_report_options
+				*Report_options,
+			int verbose_level);
+	void export_flag_orbits(
+			std::ostream &ost,
+			combinatorics::canonical_form_classification::objects_report_options
+				*Report_options,
+			int verbose_level);
+	void show_TDO(
+			std::ostream &ost,
+			combinatorics::canonical_form_classification::objects_report_options
+				*Report_options,
+			int verbose_level);
+	void show_TDA(
+			std::ostream &ost,
+			combinatorics::canonical_form_classification::objects_report_options
+				*Report_options,
+			int verbose_level);
+	void print_lexleast(
+			std::ostream &ost,
+			combinatorics::canonical_form_classification::objects_report_options
+				*Report_options,
+			int verbose_level);
+	void show_labels(
+			std::ostream &ost,
+			combinatorics::canonical_form_classification::objects_report_options
+				*Report_options,
+			groups::schreier *Sch,
+			int verbose_level);
+	void canonical_labeling(
+			std::ostream &ost,
+			combinatorics::canonical_form_classification::objects_report_options
+				*Report_options,
+			combinatorics::canonical_form_classification::encoded_combinatorial_object *Enc,
+			int verbose_level);
+	void show_incidence_matrices(
+			std::ostream &ost,
+			combinatorics::canonical_form_classification::objects_report_options
+				*Report_options,
+				groups::schreier *Sch,
+			combinatorics::canonical_form_classification::encoded_combinatorial_object *Enc,
+			int canonical_orbit,
 			int verbose_level);
 	void compute_TDO(
 			int max_TDO_depth, int verbose_level);
@@ -645,7 +719,7 @@ public:
 
 	objects_after_classification();
 	~objects_after_classification();
-	void init_after_nauty(
+	void create_objects_with_property(
 			combinatorics::canonical_form_classification::classification_of_objects *Classification_of_objects,
 			int f_projective_space,
 			projective_geometry::projective_space_with_action *PA,

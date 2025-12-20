@@ -141,7 +141,7 @@ void orbits_on_pairs::compute_orbits_on_pairs(
 
 	if (f_v) {
 		cout << "orbits_on_pairs::compute_orbits_on_pairs "
-				"before Pairs->main" << endl;
+				"before Pairs->poset_classification_main" << endl;
 		cout << "A=";
 		A->print_info();
 		cout << "A0=";
@@ -155,7 +155,8 @@ void orbits_on_pairs::compute_orbits_on_pairs(
 	Control->depth = 2;
 
 	//Pairs->depth = 2;
-	Poset_classification->main(t0,
+	Poset_classification->poset_classification_main(
+			t0,
 		2 /* schreier_depth */,
 		f_use_invariant_subset_if_available,
 		f_debug,
@@ -163,7 +164,7 @@ void orbits_on_pairs::compute_orbits_on_pairs(
 
 	if (f_v) {
 		cout << "orbits_on_pairs::compute_orbits_on_pairs "
-				"after Poset_classification->main" << endl;
+				"after Poset_classification->poset_classification_main" << endl;
 	}
 
 

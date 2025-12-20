@@ -299,15 +299,15 @@ void hall_system_classify::init(
 
 	if (f_v) {
 		cout << "hall_system_classify::init_generator "
-				"before PC->main" << endl;
+				"before PC->poset_classification_main" << endl;
 	}
-	depth_completed = PC->main(t0, schreier_depth,
+	depth_completed = PC->poset_classification_main(t0, schreier_depth,
 		f_use_invariant_subset_if_available,
 		f_debug,
 		verbose_level);
 	if (f_v) {
 		cout << "hall_system_classify::init_generator "
-				"after PC->main" << endl;
+				"after PC->poset_classification_main" << endl;
 	}
 	cout << "hall_system_classify returns "
 			"depth_completed=" << depth_completed << endl;

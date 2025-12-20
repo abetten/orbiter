@@ -141,8 +141,14 @@ void poset_orbit_node::init_root_node(
 		cout << "poset_orbit_node::init_root_node "
 				"storing strong generators "
 				"for a group of order " << go << endl;
+		cout << "poset_orbit_node::init_root_node "
+				"stored in group " << gen->get_poset()->Strong_gens->A->label << endl;
+		cout << "poset_orbit_node::init_root_node "
+				"in group " << gen->get_poset()->A->label << endl;
+		cout << "poset_orbit_node::init_root_node "
+				"in action " << gen->get_poset()->A2->label << endl;
 	}
-	store_strong_generators(gen, gen->get_poset()->Strong_gens);
+	store_strong_generators(gen, gen->get_poset()->Strong_gens, verbose_level);
 		// stores the strong generators into
 		// the poset_orbit_node structure,
 		// copies transversal_length into tl

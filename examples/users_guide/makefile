@@ -1657,7 +1657,7 @@ PENTTILA_WILLIAMS_PRINCE_REG_PACKING_1="616,42728,152655,48576,105431,79607,2863
 
 PGL_4_3_CLASS_5A_REP="2,2,2,0,1,1,1,2,2,1,0,0,1,0,1,2"
 
-PGL_4_3_CLASS_5A_N_GENS="1,0,0,0,2,0,1,1,2,1,2,1,1,1,0,0, 1,1,1,0,2,2,2,1,1,2,0,0,2,0,2,1, 1,1,1,2,2,2,0,1,0,2,2,0,1,2,2,1,"
+PGL_4_3_CLASS_5A_N_GENS="1,0,0,0,2,0,1,1,2,1,2,1,1,1,0,0, 1,1,1,0,2,2,2,1,1,2,0,0,2,0,2,1, 1,1,1,2,2,2,0,1,0,2,2,0,1,2,2,1"
 
 
 # nice generators, from Michael Epstein:
@@ -3669,6 +3669,8 @@ F_125:
 		-end
 	$(PDFLATEX) GF_125.tex
 	$(OPEN) GF_125.pdf
+
+
 
 
 F_4096:
@@ -7039,7 +7041,7 @@ PGL_5_3_wedge:
 
 
 PGL_4_2_wd:
-	$(ORBITER) -v 3 \
+	$(ORBITER) -v 3 \ 
 		-define Do -draw_options \
 			-radius 200 -line_width 0.3 \
 		-end \
@@ -7047,7 +7049,8 @@ PGL_4_2_wd:
 		-with G -do \
 		-group_theoretic_activity \
 			-report Do \
-		-end
+		-end \
+		-print_symbols
 	$(PDFLATEX) PGL_6_2_Wedge_4_2_detached_report.tex
 	$(OPEN) PGL_6_2_Wedge_4_2_detached_report.pdf
 
@@ -11570,6 +11573,8 @@ V_4_2_trivial:
 			-report "" \
 			-report_options ro \
 		-end 
+	$(PDFLATEX) V_4_2_trivial_poset.tex
+	$(OPEN) V_4_2_trivial_poset.pdf
 
 
 
@@ -18848,6 +18853,8 @@ test_12_2:
 	#make PG_3_5_assume_31_read
 	#make LS_AG_2_3_read
 	make geo_7_3_read
+	make geo_20_3_g4
+	make geo_20_3_g4_read
 	make geo_pasch_read
 	make geo_pasch_given
 	make neumaier_graphs_16
@@ -18918,6 +18925,37 @@ geo_7_3_read:
 				7_3.inc 7 7 21 \
 		-end
 
+
+
+geo_20_3_g4:
+	$(ORBITER) -v 2 \
+		-define Test_lines -set -loop 1 21 1 -end \
+		-define Geo -geometry_builder \
+			-V 20 -B 20 -TDO 3 \
+			-fuse 1 \
+			-fname_GEO 20_3_g4 \
+			-output_to_inc_file \
+			-girth 4 \
+			-special_test_not_orderly \
+			-test Test_lines \
+			-save_canonical_forms \
+		-end
+
+#User time: 0:27
+#-1 162
+#240, 16, 12^3, 10^4, 6^4, 4, 3, 2^49, 1^98
+
+#20_3_g4_canonical_forms.csv
+
+geo_20_3_g4_read:
+	$(ORBITER) -v 10 \
+		-define Doinc -draw_incidence_structure_options \
+			-width 60 -width_10 6 -end \
+		-define C -combinatorial_object \
+			-label geo_20_3_g4 geo\_20\_3\_g4 \
+			-file_of_incidence_geometries_csv \
+				20_3_g4_canonical_forms.csv Object 20 20 60 \
+		-end
 
 
 
@@ -19384,6 +19422,7 @@ geo_pasch:
 			-fname_GEO pasch \
 			-output_to_inc_file \
 			-test Test_lines \
+			-save_canonical_forms \
 		-end
 
 
@@ -19521,6 +19560,7 @@ geo_10_3:
 			-output_to_sage_file \
 			-output_to_blocks_file \
 			-test Test_lines \
+			-save_canonical_forms \
 		-end
 
 
@@ -19652,6 +19692,7 @@ geo_13_3:
 			-fuse 1 -fname_GEO 13_3 \
 			-output_to_inc_file \
 			-test Test_lines \
+			-save_canonical_forms \
 		-end
 
 # 2036 geos, 96, 39, 13, 12^4, 8^3, 6^16, 4^30, 3^20, 2^190, 1^1770
@@ -20026,6 +20067,7 @@ SECTION_CREATING_GRAPHS:
 
 
 test_13_1:
+	make Cycle_graph_5
 	make Cycle_graph_13
 	make make_triangle_graph
 	make Chain_232
@@ -20054,11 +20096,23 @@ test_13_1:
 	make Higman_Sims_graph
 
 
+Cycle_graph_5:
+	$(ORBITER) -v 2 \
+		-define Gamma -graph \
+			-cycle 5 \
+		-end \
+		-with Gamma -do \
+			-graph_theoretic_activity -export_csv \
+		-end
+
 
 Cycle_graph_13:
 	$(ORBITER) -v 2 \
 		-define Gamma -graph \
 			-cycle 13 \
+		-end \
+		-with Gamma -do \
+			-graph_theoretic_activity -export_csv \
 		-end
 
 
@@ -20089,6 +20143,9 @@ Paley_13_graph:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 13 -end \
 		-define Gamma -graph -Paley F -end \
+		-with Gamma -do \
+			-graph_theoretic_activity -export_csv \
+		-end
 
 
 Paley_13_graph_complement:
@@ -20368,6 +20425,7 @@ test_13_2:
 	make Neumaier_16_test_SRG_property
 	make Paulus_1_aut
 	make Paulus_15_aut
+	make PG_3_2_packing_make_group_and_test
 
 
 triangle_graph_properties:
@@ -20405,7 +20463,9 @@ Cycle_9_eigenvalues:
 			-cycle 9 \
 		-end \
 		-with Gamma -do \
-		-graph_theoretic_activity -eigenvalues -end
+		-graph_theoretic_activity -eigenvalues -end \
+		-with Gamma -do \
+		-graph_theoretic_activity -eigenvalue_report -end
 	$(PDFLATEX) Cycle_9_eigenvalues.tex
 	$(OPEN) Cycle_9_eigenvalues.pdf
 
@@ -20430,10 +20490,13 @@ Paley_13_eigenvalues:
 		-define F -finite_field -q 13 -end \
 		-define Gamma -graph -Paley F -end \
 		-with Gamma -do \
-		-graph_theoretic_activity -eigenvalues -end
+		-graph_theoretic_activity -eigenvalues -end \
+		-with Gamma -do \
+		-graph_theoretic_activity -eigenvalue_report -end
 	$(PDFLATEX) Paley_13_eigenvalues.tex
 	$(OPEN) Paley_13_eigenvalues.pdf
 
+#Paley_13_eigenvalues.csv
 
 tritangent_planes_graph_eigenvalues:
 	$(ORBITER) -v 2 \
@@ -20441,7 +20504,9 @@ tritangent_planes_graph_eigenvalues:
 			-graph -tritangent_planes_disjointness_graph \
 		-end \
 		-with Gamma -do \
-		-graph_theoretic_activity -eigenvalues -end
+		-graph_theoretic_activity -eigenvalues -end \
+		-with Gamma -do \
+		-graph_theoretic_activity -eigenvalue_report -end
 
 
 
@@ -20510,6 +20575,8 @@ Cayley_Sym4_star_eigenvalues_and_draw:
 		-end \
 		-with Gamma -do \
 		-graph_theoretic_activity -eigenvalues -end \
+		-with Gamma -do \
+		-graph_theoretic_activity -eigenvalue_report -end \
 		-with Gamma -do \
 		-graph_theoretic_activity -draw Do -end
 	$(PDFLATEX) Cayley_graph_Sym_4_draw.tex
@@ -20641,6 +20708,10 @@ Chain_232_eigen:
 		-with Gamma -do \
 			-graph_theoretic_activity \
 			-eigenvalues \
+		-end \
+		-with Gamma -do \
+			-graph_theoretic_activity \
+			-eigenvalue_report \
 		-end
 	$(PDFLATEX) chain_graph_eigenvalues.tex
 	$(OPEN) chain_graph_eigenvalues.pdf
@@ -20778,6 +20849,53 @@ Paulus_15_aut:
 	$(OPEN) P25_15_report.pdf
 
 # ago = 600
+
+
+PG_3_2_packing_make_group_and_test:
+	- mkdir SPREAD_TABLES_2
+	$(ORBITER) -v 5 \
+		-define Control -poset_classification_control \
+			-problem_label spreads_PG_3_2 \
+			-W \
+		-end \
+		-define F -finite_field -q 2 -end \
+		-define P3 -projective_space -n 3 -field F -v 0 -end \
+		-define P5 -projective_space -n 5 -field F -v 0 -end \
+		-define T -spread_table P3 2 "0" "SPREAD_TABLES_2/" Control
+		-define PC -packing_classify P3 P5 T \
+		-with PC -do -packing_classify_activity \
+			-make_graph_of_disjoint_spreads \
+		-end
+	cp SPREAD_TABLES_2/spread_4_disjoint.graph .
+	$(ORBITER) -v 5 \
+		-define Control -poset_classification_control \
+			-problem_label packings_PG_3_2 \
+			-W \
+		-end \
+		-define F -finite_field -q 2 -end \
+		-define P3 -projective_space -n 3 -field F -v 0 -end \
+		-define P5 -projective_space -n 5 -field F -v 0 -end \
+		-define T -spread_table P3 2 "0" "SPREAD_TABLES_2/" Control \
+		-define PC -packing_classify P3 P5 T \
+		-with PC -do -packing_classify_activity \
+			-export_group_on_spreads \
+		-end \
+		-define G -modified_group \
+			-import \
+		-end \
+		-define Orb -orbits -group G \
+			-on_points \
+		-end \
+		-define Gamma -graph \
+			-load \
+			spread_4_disjoint.graph \
+		-end \
+		-with Gamma -do \
+			-graph_theoretic_activity \
+			-test_automorphism_property_of_group G \
+		-end \
+
+
 
 
 
@@ -22057,7 +22175,10 @@ create_spread_9a:
 		-define G -linear_group -PGL 4 F -end \
 		-define S -spread -kernel_field F \
 			-group G -k 2 -catalogue 0 \
-			-end
+			-end \
+		-with S -do -spread_activity \
+			-report \
+		-end
 
 # desarguesian spread, ago = 5760
 
@@ -22067,7 +22188,10 @@ create_spread_9b:
 		-define G -linear_group -PGL 4 F -end \
 		-define S -spread -kernel_field F \
 			-group G -k 2 -catalogue 1 \
-			-end
+			-end \
+		-with S -do -spread_activity \
+			-report \
+		-end
 
 
 # Hall spread, ago = 1920
@@ -22079,7 +22203,10 @@ create_spread_25_7:
 		-define G -linear_group -PGL 4 F -end \
 		-define S -spread -kernel_field F \
 			-group G -k 2 -catalogue 7 \
-			-end
+			-end \
+		-with S -do -spread_activity \
+			-report \
+		-end
 
 
 
@@ -22692,8 +22819,11 @@ create_translation_plane_9b:
 		-define Orb -orbits -group A \
 			-on_points \
 		-end \
+		-define Do -draw_options -embedded -sideways -radius 50 \
+			-scale 0.5 -line_width 0.3 \
+		-end \
 		-with Orb -do -orbits_activity \
-			-report \
+			-report Do \
 		-end \
 		-with Orb -do -orbits_activity \
 			-stabilizer 92 \
@@ -22989,7 +23119,7 @@ test_15_3:
 
 
 PG_3_3_spread_table:
-	mkdir SPREAD_TABLES_3
+	- mkdir SPREAD_TABLES_3
 	$(ORBITER) -v 5 \
 		-define Control -poset_classification_control \
 			-problem_label spreads_PG_3_3 \
@@ -23020,6 +23150,7 @@ spread_table_PG_3_5_regular:
 # 12 is the index of the regular spread in the classification of spreads
 # 12/9/2020: 34 sec on Mac
 # time: 0:19  1/11/2024 on Mac
+# User time: 1:17  12/20/2025 on Mac
 # 155000 spreads
 
 
@@ -23040,8 +23171,8 @@ PGL_4_3_classes:
 		-group_theoretic_activity \
 			-classes \
 		-end
-	$(PDFLATEX) PGL_4_3_classes_out.tex
-	$(OPEN) PGL_4_3_classes_out.pdf
+	$(PDFLATEX) PGL_4_3_report_classes_of_elements.tex
+	$(OPEN) PGL_4_3_report_classes_of_elements.pdf
 
 
 
@@ -23159,7 +23290,7 @@ PG_3_3_assume_5_packings_classify:
 			"{\\rm PG\_3\_3\_assuming\_5}" \
 			-file_of_packings_through_spread_table \
 				H5_packings.csv \
-				SPREAD_TABLES_3/spread_9_spreads.csv \
+				SPREAD_TABLES_3/spread_9_table.csv \
 				3 \
 		-end \
 		-define F -finite_field -q 3 -end \
@@ -23190,6 +23321,9 @@ PG_3_3_assume_5_packings_classify:
 	$(PDFLATEX) PG_3_3_assuming_5_classification.tex
 	$(OPEN) PG_3_3_assuming_5_classification.pdf
 
+
+
+# 7 isomorphism types
 
 
 
@@ -26546,6 +26680,10 @@ PGO_5_2_graph_group:
 		-with Gamma -do \
 		-graph_theoretic_activity \
 			-eigenvalues \
+		-end \
+		-with Gamma -do \
+		-graph_theoretic_activity \
+			-eigenvalue_report \
 		-end
 	$(PDFLATEX) collinearity_graph_eigenvalues.tex
 	$(OPEN) collinearity_graph_eigenvalues.pdf
@@ -26618,6 +26756,10 @@ Neumaier_graph_25_c:
 		-with Gamma -do \
 		-graph_theoretic_activity \
 			-eigenvalues \
+		-end \
+		-with Gamma -do \
+		-graph_theoretic_activity \
+			-eigenvalue_report \
 		-end \
 		-with Gamma -do \
 		-graph_theoretic_activity \

@@ -167,13 +167,13 @@ void orbits_on_subspaces::init(
 
 	if (f_v) {
 		cout << "orbits_on_subspaces::init "
-				"calling generator_main" << endl;
+				"before poset_classification_main" << endl;
 		cout << "A=";
 		orbits_on_subspaces_PC->get_A()->print_info();
 		cout << "A2=";
 		orbits_on_subspaces_PC->get_A2()->print_info();
 	}
-	orbits_on_subspaces_PC->main(t0,
+	orbits_on_subspaces_PC->poset_classification_main(t0,
 		schreier_depth,
 		f_use_invariant_subset_if_available,
 		f_debug,
@@ -182,7 +182,7 @@ void orbits_on_subspaces::init(
 
 	if (f_v) {
 		cout << "orbits_on_subspaces::init "
-				"done with generator_main" << endl;
+				"after poset_classification_main" << endl;
 	}
 	nb_orbits = orbits_on_subspaces_PC->nb_orbits_at_level(Control->depth);
 	if (f_v) {
@@ -198,8 +198,8 @@ void orbits_on_subspaces::init(
 				"before Orbits.orbits_on_poset_post_processing" << endl;
 	}
 	Orbits.orbits_on_poset_post_processing(
-			Group,
-			Group,
+			Group->A_base,
+			Group->A,
 			orbits_on_subspaces_PC, Control->depth,
 			verbose_level);
 	if (f_v) {

@@ -1761,8 +1761,8 @@ void create_graph::make_orbital_graph(
 	}
 	// ToDo:
 	Orbits.orbits_on_subsets(
-			AG,
-			AG,
+			AG->A_base,
+			AG->A,
 			AG->Subgroup_gens,
 			Control,
 			PC, 2,

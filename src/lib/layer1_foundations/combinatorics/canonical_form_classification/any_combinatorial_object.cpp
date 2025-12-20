@@ -1031,6 +1031,12 @@ void any_combinatorial_object::init_packing_from_spread_table(
 	if (spread_size != size_of_spread) {
 		cout << "any_combinatorial_object::init_packing_from_spread_table "
 				"spread_size != size_of_spread" << endl;
+		cout << "any_combinatorial_object::init_packing_from_spread_table "
+				"spread_size = " << spread_size << endl;
+		cout << "any_combinatorial_object::init_packing_from_spread_table "
+				"size_of_spread = " << size_of_spread << endl;
+		cout << "any_combinatorial_object::init_packing_from_spread_table "
+				"q = " << q << endl;
 		exit(1);
 	}
 

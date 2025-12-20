@@ -838,8 +838,8 @@ void design_activity::do_pair_orbits_on_blocks(
 	}
 	// ToDo:
 	Orbits_global.orbits_on_subsets(
-			AG,
-			AG,
+			AG->A_base,
+			AG->A,
 			AG->Subgroup_gens,
 			Control,
 			PC,

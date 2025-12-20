@@ -305,6 +305,7 @@ void classify_bitvectors::add_at_idx(
 
 void classify_bitvectors::finalize(
 		int verbose_level)
+// Computes C_type_of and perm
 {
 	int f_v = (verbose_level >= 1);
 	other::data_structures::sorting Sorting;

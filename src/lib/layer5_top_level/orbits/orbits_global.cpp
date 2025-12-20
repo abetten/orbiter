@@ -551,7 +551,7 @@ void orbits_global::orbit_of(
 			*AG->Subgroup_gens->gens /* *strong_generators */,
 			verbose_level - 2);
 	//Sch->initialize_tables();
-	Sch->compute_point_orbit(point_idx, print_interval, verbose_level);
+	Sch->compute_point_orbit(point_idx, print_interval, 0 /*verbose_level*/);
 
 	int orbit_idx = 0;
 
@@ -743,8 +743,8 @@ void orbits_global::orbits_on_points_from_generators(
 
 
 void orbits_global::orbits_on_subsets(
-		groups::any_group *AG_base,
-		groups::any_group *AG_action,
+		actions::action *A_base,
+		actions::action *A_action,
 		groups::strong_generators *Subgroup_gens,
 		poset_classification::poset_classification_control *Control,
 		poset_classification::poset_classification *&PC,
@@ -768,17 +768,17 @@ void orbits_global::orbits_on_subsets(
 	}
 	if (f_v) {
 		cout << "orbits_global::orbits_on_subsets "
-				"label=" << AG_action->label << endl;
+				"label=" << A_action->label << endl;
 	}
 	if (f_v) {
 		cout << "orbits_global::orbits_on_subsets "
-				"AG_base=" << endl;
-		AG_base->A->print_info();
+				"A_base=" << endl;
+		A_base->print_info();
 	}
 	if (f_v) {
 		cout << "orbits_global::orbits_on_subsets "
-				"AG_action=" << endl;
-		AG_action->A->print_info();
+				"A_action=" << endl;
+		A_action->print_info();
 	}
 	if (f_v) {
 		cout << "orbits_global::orbits_on_subsets "
@@ -797,7 +797,7 @@ void orbits_global::orbits_on_subsets(
 				"before Poset->init_subset_lattice" << endl;
 	}
 	Poset->init_subset_lattice(
-			AG_base->A, AG_action->A,
+			A_base, A_action,
 			Subgroup_gens,
 			verbose_level);
 
@@ -819,7 +819,7 @@ void orbits_global::orbits_on_subsets(
 				"before orbits_on_poset_post_processing" << endl;
 	}
 	orbits_on_poset_post_processing(
-			AG_base, AG_action,
+			A_base, A_action,
 			PC, subset_size,
 			verbose_level);
 	if (f_v) {
@@ -882,8 +882,8 @@ void orbits_global::orbits_of_one_subset(
 
 
 void orbits_global::orbits_on_poset_post_processing(
-		groups::any_group *AG_base,
-		groups::any_group *AG_action,
+		actions::action *A_base,
+		actions::action *A_action,
 		poset_classification::poset_classification *PC,
 		int depth,
 		int verbose_level)
@@ -1400,10 +1400,11 @@ void orbits_global::linear_codes_with_bounded_minimum_distance(
 
 	if (f_v) {
 		cout << "orbits_global::linear_codes_with_bounded_minimum_distance "
-				"before PC->main" << endl;
+				"before PC->poset_classification_main" << endl;
 	}
 
-	depth = PC->main(t0,
+	depth = PC->poset_classification_main(
+			t0,
 			target_depth /*schreier_depth*/,
 		true /*f_use_invariant_subset_if_available*/,
 		false /*f_debug */,
@@ -1411,7 +1412,7 @@ void orbits_global::linear_codes_with_bounded_minimum_distance(
 
 	if (f_v) {
 		cout << "orbits_global::linear_codes_with_bounded_minimum_distance "
-				"after PC->main" << endl;
+				"after PC->poset_classification_main" << endl;
 	}
 
 	if (f_v) {

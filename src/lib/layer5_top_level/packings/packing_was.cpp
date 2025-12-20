@@ -1308,7 +1308,7 @@ void packing_was::create_graph_and_save_to_file(
 		orbit_length,
 		type_idx,
 		f_has_user_data, user_data, user_data_size,
-		false /* f_has_colors */, 1 /* nb_colors */, NULL /* color_table */,
+		false /* f_has_colors */, 0 /* nb_colors */, NULL /* color_table */,
 		packing_was_set_of_reduced_spreads_adjacency_test_function,
 		this /* void *test_function_data */,
 		verbose_level - 3);

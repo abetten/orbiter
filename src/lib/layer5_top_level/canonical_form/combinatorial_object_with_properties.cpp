@@ -64,8 +64,8 @@ void combinatorial_object_with_properties::init(
 		std::string &label,
 		std::string &label_tex,
 		int verbose_level)
-// called from objects_after_classification::init_after_nauty,
-// which is callecd from combinatorial_object_stream::do_post_processing
+// called from objects_after_classification::create_objects_with_property,
+// which is called from combinatorial_object_stream::do_post_processing
 {
 	int f_v = (verbose_level >= 1);
 
@@ -186,7 +186,7 @@ void combinatorial_object_with_properties::lift_generators_to_matrix_group(
 			SG,
 			A_perm,
 			NO,
-			verbose_level);
+			verbose_level - 2);
 
 	if (f_v) {
 		cout << "combinatorial_object_with_properties::lift_generators_to_matrix_group "
@@ -333,58 +333,11 @@ void combinatorial_object_with_properties::latex_report(
 	ost << "\\subsubsection*{combinatorial\\_object\\_with\\_properties::latex\\_report}" << endl;
 
 
-	ost << "\\subsection*{Automorphism Group as Permutation Group}" << endl;
-
-	{
-		algebra::ring_theory::longinteger_object go;
-
-		A_perm->Strong_gens->group_order(go);
-
-		ost << "Automorphism group has order: " << go << "\\\\" << endl;
-	}
-
-	ost << "Generators for the automorphism group: \\\\" << endl;
-	if (A_perm->degree < 100) {
-		A_perm->Strong_gens->print_generators_in_latex_individually(ost, verbose_level - 1);
-
-		ost << "\\begin{verbatim}" << endl;
-		A_perm->Strong_gens->print_generators_gap(ost, verbose_level - 1);
-		ost << "\\end{verbatim}" << endl;
-
-	}
-	else {
-		ost << "permutation degree is too large to print. \\\\" << endl;
-
-	}
+	report_group(ost, Report_options, verbose_level - 2);
 
 	if (f_projective_space) {
-
-		//ost << "combinatorial\\_object\\_with\\_properties::latex\\_report \\\\" << endl;
-
-		ost << "\\subsection*{Automorphism Group in Projective Space}" << endl;
-
-		{
-			algebra::ring_theory::longinteger_object go;
-
-			SG->group_order(go);
-
-			ost << "Automorphism group has order: " << go << "\\\\" << endl;
-		}
-
-
-		ost << "Generators for the automorphism group as matrix group: \\\\" << endl;
-
-		if (f_v) {
-			cout << "combinatorial_object_with_properties::latex_report "
-					"before SG->print_generators_in_latex_individually" << endl;
-		}
-		SG->print_generators_in_latex_individually(ost, verbose_level - 1);
-		if (f_v) {
-			cout << "combinatorial_object_with_properties::latex_report "
-					"after SG->print_generators_in_latex_individually" << endl;
-		}
+		report_projective_space(ost, Report_options, verbose_level - 2);
 	}
-
 	if (f_v) {
 		cout << "combinatorial_object_with_properties::latex_report "
 				"before Any_Combo->print_tex_detailed" << endl;
@@ -392,7 +345,7 @@ void combinatorial_object_with_properties::latex_report(
 	Any_Combo->print_tex_detailed(
 			ost,
 			Report_options,
-			verbose_level);
+			verbose_level - 2);
 	if (f_v) {
 		cout << "combinatorial_object_with_properties::latex_report "
 				"after Any_Combo->print_tex_detailed" << endl;
@@ -401,103 +354,19 @@ void combinatorial_object_with_properties::latex_report(
 
 	if (Report_options->f_export_group_orbiter) {
 
-		if (f_v) {
-			cout << "combinatorial_object_with_properties::latex_report "
-					"f_export_group_orbiter" << endl;
-		}
-
-		std::string fname;
-		std::string label_txt;
-		std::string label_tex;
-
-
-		fname = label + "_aut.makefile";
-		label_txt = label + "_aut";
-		label_tex = label + "\\_aut";
-
-		if (f_v) {
-			cout << "combinatorial_object_with_properties::latex_report "
-					"before A_perm->Strong_gens->export_to_orbiter_as_bsgs" << endl;
-		}
-		A_perm->Strong_gens->export_to_orbiter_as_bsgs(
-				A_perm,
-				fname, label, label_tex,
-				verbose_level);
-		if (f_v) {
-			cout << "combinatorial_object_with_properties::latex_report "
-					"after A_perm->Strong_gens->export_to_orbiter_as_bsgs" << endl;
-		}
+		export_group_orbiter(ost, Report_options, verbose_level - 2);
 	}
 
 	if (Report_options->f_export_group_GAP) {
 
-		if (f_v) {
-			cout << "combinatorial_object_with_properties::latex_report "
-					"f_export_group_GAP" << endl;
-		}
-
-		std::string fname;
-
-
-		fname = label + "_aut.gap";
-
-
-		interfaces::l3_interface_gap GAP;
-
-		if (f_v) {
-			cout << "combinatorial_object_with_properties::latex_report "
-					"before GAP.export_permutation_group_to_GAP" << endl;
-		}
-
-		GAP.export_permutation_group_to_GAP(
-				fname,
-				A_perm,
-				A_perm->Strong_gens,
-				verbose_level);
-
-		if (f_v) {
-			cout << "object_with_properties::latex_report "
-					"after GAP.export_permutation_group_to_GAP" << endl;
-		}
+		export_group_gap(ost, Report_options, verbose_level - 2);
 	}
 
 
 	if (Report_options->f_export_group_magma) {
 
-		if (f_v) {
-			cout << "combinatorial_object_with_properties::latex_report "
-					"f_export_group_magma" << endl;
-		}
-
-		std::string fname;
-
-
-		fname = label + "_aut.magma";
-
-
-		interfaces::magma_interface Magma;
-
-		if (f_v) {
-			cout << "combinatorial_object_with_properties::latex_report "
-					"before Magma.export_group" << endl;
-		}
-
-		{
-			ofstream ost(fname);
-
-			Magma.export_group(
-				A_perm,
-				A_perm->Strong_gens,
-				ost,
-				verbose_level);
-		}
-
-		if (f_v) {
-			cout << "object_with_properties::latex_report "
-					"after Magma.export_group" << endl;
-		}
+		export_group_magma(ost, Report_options, verbose_level - 2);
 	}
-
 
 
 #if 1
@@ -522,256 +391,69 @@ void combinatorial_object_with_properties::latex_report(
 
 	if (Report_options->f_export_flag_orbits) {
 
-		if (f_v) {
-			cout << "combinatorial_object_with_properties::latex_report "
-					"f_export_flag_orbits" << endl;
-		}
-		//ost << "combinatorial\\_object\\_with\\_properties::latex\\_report \\\\" << endl;
-
-		ost << "\\subsection*{Flag Orbits}" << endl;
-
-		if (f_v) {
-			cout << "combinatorial_object_with_properties::latex_report "
-					"before GA_on_CO->export_INP_with_flag_orbits" << endl;
-		}
-		GA_on_CO->export_INP_with_flag_orbits(
-				ost,
-				verbose_level);
-		if (f_v) {
-			cout << "combinatorial_object_with_properties::latex_report "
-					"after GA_on_CO->export_INP_with_flag_orbits" << endl;
-		}
-
-		if (f_v) {
-			cout << "combinatorial_object_with_properties::latex_report "
-					"before GA_on_CO->export_TDA_with_flag_orbits" << endl;
-		}
-		GA_on_CO->export_TDA_with_flag_orbits(
-				ost,
-				verbose_level);
-		if (f_v) {
-			cout << "combinatorial_object_with_properties::latex_report "
-					"after GA_on_CO->export_TDA_with_flag_orbits" << endl;
-		}
-		if (f_v) {
-			cout << "combinatorial_object_with_properties::latex_report "
-					"f_export_flag_orbits done" << endl;
-		}
+		export_flag_orbits(ost, Report_options, verbose_level - 2);
 	}
 
 	if (Report_options->f_show_TDO) {
 
-		if (f_v) {
-			cout << "combinatorial_object_with_properties::latex_report "
-					"f_show_TDO" << endl;
-		}
-		//ost << "combinatorial\\_object\\_with\\_properties::latex\\_report \\\\" << endl;
-		ost << "\\subsection*{TDO}" << endl;
-
-		ost << "Decomposition by combinatorial refinement (TDO):\\\\" << endl;
-
-		if (f_has_TDO) {
-			if (f_v) {
-				cout << "combinatorial_object_with_properties::latex_report "
-						"before TDO->print_schemes" << endl;
-			}
-			TDO->print_schemes(ost, Report_options, verbose_level);
-			if (f_v) {
-				cout << "combinatorial_object_with_properties::latex_report "
-						"after TDO->print_schemes" << endl;
-			}
-		}
-		else {
-			cout << "combinatorial_object_with_properties::print_TDO "
-					"TDO has not yet been computed" << endl;
-		}
-		if (f_v) {
-			cout << "combinatorial_object_with_properties::latex_report "
-					"f_show_TDO done" << endl;
-		}
+		show_TDO(ost, Report_options, verbose_level - 2);
 	}
 
 	if (Report_options->f_show_TDA) {
 
-		if (f_v) {
-			cout << "combinatorial_object_with_properties::latex_report "
-					"f_show_TDA" << endl;
-		}
-		//ost << "combinatorial\\_object\\_with\\_properties::latex\\_report \\\\" << endl;
-		ost << "\\subsection*{TDA}" << endl;
-
-		{
-			algebra::ring_theory::longinteger_object go;
-
-			A_perm->Strong_gens->group_order(go);
-
-			ost << "Automorphism group has order: " << go << "\\\\" << endl;
-		}
-
-		ost << "Decomposition by automorphism group:\\\\" << endl;
-
-		if (f_v) {
-			cout << "combinatorial_object_with_properties::latex_report "
-					"before GA_on_CO->print_schemes" << endl;
-		}
-		GA_on_CO->print_schemes(ost, Report_options, verbose_level);
-		if (f_v) {
-			cout << "combinatorial_object_with_properties::latex_report "
-					"after GA_on_CO->print_schemes" << endl;
-		}
-
-		if (f_v) {
-			cout << "combinatorial_object_with_properties::latex_report "
-					"f_show_TDA done" << endl;
-		}
+		show_TDA(ost, Report_options, verbose_level - 2);
 
 
 	}
 	if (Report_options->f_export_labels) {
 
-		//ost << "combinatorial\\_object\\_with\\_properties::latex\\_report \\\\" << endl;
-		ost << "\\subsection*{Labels}" << endl;
+		show_labels(ost,
+				Report_options,
+				Sch,
+				verbose_level - 2);
 
+	}
+	{
 		combinatorics::canonical_form_classification::encoded_combinatorial_object *Enc;
-
-		Any_Combo->encode_incma(Enc, verbose_level);
-
-		//latex_TDA(ost, Enc, verbose_level);
-		//ost << "\\\\" << endl;
-
-		int *point_labels;
-		int *block_labels;
-
-		Enc->compute_labels(
-				Sch->Forest->nb_orbits,
-				Sch->Forest->orbit_first,
-				Sch->Forest->orbit_len,
-				Sch->Forest->orbit,
-				point_labels, block_labels,
-				verbose_level);
-
-		other::orbiter_kernel_system::file_io Fio;
-
-		string fname;
-
-		fname = "point_labels.csv";
-		Fio.Csv_file_support->int_matrix_write_csv(
-				fname, point_labels, Enc->nb_rows, 1);
-
-		cout << "combinatorial_object_with_properties::latex_report "
-				"Written file " << fname << " of size "
-				<< Fio.file_size(fname) << endl;
-
-		fname = "block_labels.csv";
-		Fio.Csv_file_support->int_matrix_write_csv(
-				fname, block_labels, Enc->nb_cols, 1);
-
-		cout << "combinatorial_object_with_properties::latex_report "
-				"Written file " << fname << " of size "
-				<< Fio.file_size(fname) << endl;
-
-		FREE_int(point_labels);
-		FREE_int(block_labels);
-
-		FREE_OBJECT(Enc);
-	}
-
-	//ost << "combinatorial\\_object\\_with\\_properties::latex\\_report \\\\" << endl;
-	ost << "\\subsection*{Canonical labeling}" << endl;
-
-	ost << "Canonical labeling:\\\\" << endl;
-	combinatorics::canonical_form_classification::encoded_combinatorial_object *Enc;
-	combinatorics::canonical_form_classification::encoded_combinatorial_object *Enc2;
-
-	if (f_v) {
-		cout << "combinatorial_object_with_properties::latex_report "
-				"before Any_Combo->encode_incma" << endl;
-	}
-	Any_Combo->encode_incma(Enc, verbose_level);
-	if (f_v) {
-		cout << "combinatorial_object_with_properties::latex_report "
-				"after Any_Combo->encode_incma" << endl;
-	}
-
-
-	Enc2 = NEW_OBJECT(combinatorics::canonical_form_classification::encoded_combinatorial_object);
-
-	Enc2->init_canonical_form(Enc, NO, verbose_level);
-
-
-
-	int canonical_row;
-	int canonical_orbit;
-
-	canonical_row = NO->canonical_labeling[Enc->nb_rows - 1];
-
-	canonical_orbit = Sch->Forest->orbit_number(canonical_row);
-
-	ost << "canonical row = " << canonical_row << "\\\\" << endl;
-	ost << "canonical orbit number = " << canonical_orbit << "\\\\" << endl;
-
-	Enc2->latex_set_system_by_rows_and_columns(ost, verbose_level);
-
-	FREE_OBJECT(Enc2);
-
-	if (Report_options->f_show_incidence_matrices) {
-
-		//ost << "combinatorial\\_object\\_with\\_properties::latex\\_report \\\\" << endl;
-		ost << "\\subsection*{Incidence Matrices}" << endl;
 
 		if (f_v) {
 			cout << "combinatorial_object_with_properties::latex_report "
-					"f_show_incidence_matrices" << endl;
+					"before Any_Combo->encode_incma" << endl;
+		}
+		Any_Combo->encode_incma(Enc, verbose_level);
+		if (f_v) {
+			cout << "combinatorial_object_with_properties::latex_report "
+					"after Any_Combo->encode_incma" << endl;
 		}
 
-		int v = Enc->nb_rows;
-		int b = Enc->nb_cols;
+		int canonical_row;
+		int canonical_orbit;
 
-		std::string *point_labels;
-		std::string *block_labels;
+		canonical_row = NO->canonical_labeling[Enc->nb_rows - 1];
+
+		canonical_orbit = Sch->Forest->orbit_number(canonical_row);
+
+		ost << "canonical row = " << canonical_row << "\\\\" << endl;
+		ost << "canonical orbit number = " << canonical_orbit << "\\\\" << endl;
 
 
-		point_labels = new string [v];
-		block_labels = new string [b];
 
-		int i, j, a;
+		canonical_labeling(ost,
+				Report_options,
+				Enc,
+				verbose_level - 2);
 
-		for (i = 0; i < v; i++) {
 
-			a = NO->canonical_labeling[i];
-			if (Sch->Forest->orbit_number(a) == canonical_orbit) {
-				point_labels[i] = "*" + std::to_string(a);
-			}
-			else {
-				point_labels[i] = std::to_string(a);
-			}
+		if (Report_options->f_show_incidence_matrices) {
+
+			show_incidence_matrices(ost,
+					Report_options,
+					Sch,
+					Enc,
+					canonical_orbit,
+					verbose_level - 2);
+
 		}
-		for (j = 0; j < b; j++) {
-			block_labels[j] = std::to_string(NO->canonical_labeling[v + j]);
-		}
-
-		other::graphics::draw_incidence_structure_description *Draw_incidence_options;
-
-		if (Report_options->f_incidence_draw_options) {
-			Draw_incidence_options = Get_draw_incidence_structure_options(Report_options->incidence_draw_options_label);
-		}
-		else {
-			cout << "combinatorial_object_with_properties::latex_report_wrapper please use -incidence_draw_options" << endl;
-			exit(1);
-		}
-
-
-		Enc->latex_canonical_form_with_labels(
-				ost,
-				Draw_incidence_options,
-				NO,
-				point_labels,
-				block_labels,
-				verbose_level);
-
-		delete [] point_labels;
-		delete [] block_labels;
-
 		FREE_OBJECT(Enc);
 	}
 
@@ -784,83 +466,8 @@ void combinatorial_object_with_properties::latex_report(
 
 	if (Report_options->f_lex_least) {
 
-		//ost << "combinatorial\\_object\\_with\\_properties::latex\\_report \\\\" << endl;
-		ost << "\\subsection*{Lex Least Form}" << endl;
+		print_lexleast(ost, Report_options, verbose_level - 2);
 
-		if (f_v) {
-			cout << "combinatorial_object_with_properties::latex_report f_lex_least" << endl;
-		}
-		combinatorics::geometry_builder::geometry_builder *GB;
-
-		GB = Get_geometry_builder(Report_options->lex_least_geometry_builder);
-
-
-		int idx;
-		int f_found;
-		other::l1_interfaces::nauty_output *NO;
-		other::data_structures::bitvector *Canonical_form;
-
-
-		if (f_v) {
-			cout << "combinatorial_object_with_properties::latex_report "
-					"before find_object, "
-					"OwCF->v=" << Any_Combo->v << endl;
-		}
-
-		other::l1_interfaces::nauty_interface_control *Nauty_control;
-
-
-		Nauty_control = GB->gg->inc->iso_type_at_line[Any_Combo->v - 1]->Nauty_control;
-
-		GB->gg->inc->iso_type_at_line[Any_Combo->v - 1]->Canonical_forms->find_object(
-				Any_Combo,
-				Nauty_control,
-				f_found, idx,
-				NO,
-				Canonical_form,
-				verbose_level);
-
-		if (f_v) {
-			cout << "combinatorial_object_with_properties::latex_report "
-					"after find_object" << endl;
-		}
-
-		// if f_found is true, B[idx] agrees with the given object
-
-
-		if (!f_found) {
-			cout << "combinatorial_object_with_properties::latex_report "
-					"cannot find object in geometry_builder" << endl;
-			exit(1);
-		}
-
-		combinatorics::canonical_form_classification::any_combinatorial_object *Any_Combo2 =
-				(combinatorics::canonical_form_classification::any_combinatorial_object *)
-				GB->gg->inc->iso_type_at_line[Any_Combo->v - 1]->Canonical_forms->Objects[idx];
-
-		if (f_v) {
-			cout << "combinatorial_object_with_properties::latex_report "
-					"before FREE_OBJECT(NO)" << endl;
-		}
-		FREE_OBJECT(NO);
-		if (f_v) {
-			cout << "combinatorial_object_with_properties::latex_report "
-					"after FREE_OBJECT(NO)" << endl;
-		}
-		FREE_OBJECT(Canonical_form);
-		if (f_v) {
-			cout << "combinatorial_object_with_properties::latex_report "
-					"after FREE_OBJECT(Canonical_form)" << endl;
-		}
-
-		ost << "Is isomorphic to object " << idx << " in the list:\\\\" << endl;
-		ost << "Lex-least form is:\\\\" << endl;
-
-
-		Any_Combo2->print_tex_detailed(
-				ost,
-				Report_options,
-				verbose_level);
 	}
 
 	ost << "\\subsubsection*{combinatorial\\_object\\_with\\_properties::latex\\_report done}" << endl;
@@ -868,6 +475,562 @@ void combinatorial_object_with_properties::latex_report(
 	if (f_v) {
 		cout << "combinatorial_object_with_properties::latex_report done" << endl;
 	}
+
+}
+
+void combinatorial_object_with_properties::report_group(
+		std::ostream &ost,
+		combinatorics::canonical_form_classification::objects_report_options
+			*Report_options,
+		int verbose_level)
+{
+	{
+		algebra::ring_theory::longinteger_object go;
+
+		A_perm->Strong_gens->group_order(go);
+
+		ost << "Automorphism group has order: " << go
+				<< " in an action of degree " << A_perm->Strong_gens->A->degree << "\\\\" << endl;
+	}
+
+	ost << "Generators for the automorphism group: \\\\" << endl;
+	if (A_perm->degree < 100) {
+		A_perm->Strong_gens->print_generators_in_latex_individually(ost, verbose_level - 1);
+
+		ost << "\\begin{verbatim}" << endl;
+		A_perm->Strong_gens->print_generators_gap(ost, verbose_level - 1);
+		ost << "\\end{verbatim}" << endl;
+
+	}
+	else {
+		ost << "permutation degree is too large to print. \\\\" << endl;
+
+	}
+
+}
+
+void combinatorial_object_with_properties::report_projective_space(
+		std::ostream &ost,
+		combinatorics::canonical_form_classification::objects_report_options
+			*Report_options,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	//ost << "combinatorial\\_object\\_with\\_properties::latex\\_report \\\\" << endl;
+
+	ost << "\\subsection*{Automorphism Group in Projective Space}" << endl;
+
+	{
+		algebra::ring_theory::longinteger_object go;
+
+		SG->group_order(go);
+
+		ost << "Automorphism group has order: " << go << "\\\\" << endl;
+	}
+
+
+	ost << "Generators for the automorphism group as matrix group: \\\\" << endl;
+
+	if (f_v) {
+		cout << "combinatorial_object_with_properties::report_projective_space "
+				"before SG->print_generators_in_latex_individually" << endl;
+	}
+	SG->print_generators_in_latex_individually(ost, verbose_level - 1);
+	if (f_v) {
+		cout << "combinatorial_object_with_properties::report_projective_space "
+				"after SG->print_generators_in_latex_individually" << endl;
+	}
+
+}
+
+
+void combinatorial_object_with_properties::export_group_orbiter(
+		std::ostream &ost,
+		combinatorics::canonical_form_classification::objects_report_options
+			*Report_options,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "combinatorial_object_with_properties::export_group_orbiter "
+				"f_export_group_orbiter" << endl;
+	}
+
+	std::string fname;
+	std::string label_txt;
+	std::string label_tex;
+
+
+	fname = label + "_aut.makefile";
+	label_txt = label + "_aut";
+	label_tex = label + "\\_aut";
+
+	if (f_v) {
+		cout << "combinatorial_object_with_properties::export_group_orbiter "
+				"before A_perm->Strong_gens->export_to_orbiter_as_bsgs" << endl;
+	}
+	A_perm->Strong_gens->export_to_orbiter_as_bsgs(
+			A_perm,
+			fname, label, label_tex,
+			verbose_level);
+	if (f_v) {
+		cout << "combinatorial_object_with_properties::export_group_orbiter "
+				"after A_perm->Strong_gens->export_to_orbiter_as_bsgs" << endl;
+	}
+
+}
+
+void combinatorial_object_with_properties::export_group_gap(
+		std::ostream &ost,
+		combinatorics::canonical_form_classification::objects_report_options
+			*Report_options,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "combinatorial_object_with_properties::export_group_gap "
+				"f_export_group_GAP" << endl;
+	}
+
+	std::string fname;
+
+
+	fname = label + "_aut.gap";
+
+
+	interfaces::l3_interface_gap GAP;
+
+	if (f_v) {
+		cout << "combinatorial_object_with_properties::export_group_gap "
+				"before GAP.export_permutation_group_to_GAP" << endl;
+	}
+
+	GAP.export_permutation_group_to_GAP(
+			fname,
+			A_perm,
+			A_perm->Strong_gens,
+			verbose_level);
+
+	if (f_v) {
+		cout << "object_with_properties::export_group_gap "
+				"after GAP.export_permutation_group_to_GAP" << endl;
+	}
+
+}
+
+void combinatorial_object_with_properties::export_group_magma(
+		std::ostream &ost,
+		combinatorics::canonical_form_classification::objects_report_options
+			*Report_options,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "combinatorial_object_with_properties::export_group_magma "
+				"f_export_group_magma" << endl;
+	}
+
+	std::string fname;
+
+
+	fname = label + "_aut.magma";
+
+
+	interfaces::magma_interface Magma;
+
+	if (f_v) {
+		cout << "combinatorial_object_with_properties::export_group_magma "
+				"before Magma.export_group" << endl;
+	}
+
+	{
+		ofstream ost(fname);
+
+		Magma.export_group(
+			A_perm,
+			A_perm->Strong_gens,
+			ost,
+			verbose_level);
+	}
+
+	if (f_v) {
+		cout << "object_with_properties::export_group_magma "
+				"after Magma.export_group" << endl;
+	}
+
+}
+
+void combinatorial_object_with_properties::export_flag_orbits(
+		std::ostream &ost,
+		combinatorics::canonical_form_classification::objects_report_options
+			*Report_options,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "combinatorial_object_with_properties::export_flag_orbits "
+				"f_export_flag_orbits" << endl;
+	}
+	//ost << "combinatorial\\_object\\_with\\_properties::export\\_flag\\_orbits \\\\" << endl;
+
+	ost << "\\subsection*{Flag Orbits}" << endl;
+
+	if (f_v) {
+		cout << "combinatorial_object_with_properties::export_flag_orbits "
+				"before GA_on_CO->export_INP_with_flag_orbits" << endl;
+	}
+	GA_on_CO->export_INP_with_flag_orbits(
+			ost,
+			verbose_level);
+	if (f_v) {
+		cout << "combinatorial_object_with_properties::export_flag_orbits "
+				"after GA_on_CO->export_INP_with_flag_orbits" << endl;
+	}
+
+	if (f_v) {
+		cout << "combinatorial_object_with_properties::export_flag_orbits "
+				"before GA_on_CO->export_TDA_with_flag_orbits" << endl;
+	}
+	GA_on_CO->export_TDA_with_flag_orbits(
+			ost,
+			verbose_level);
+	if (f_v) {
+		cout << "combinatorial_object_with_properties::export_flag_orbits "
+				"after GA_on_CO->export_TDA_with_flag_orbits" << endl;
+	}
+	if (f_v) {
+		cout << "combinatorial_object_with_properties::export_flag_orbits "
+				"f_export_flag_orbits done" << endl;
+	}
+
+}
+
+void combinatorial_object_with_properties::show_TDO(
+		std::ostream &ost,
+		combinatorics::canonical_form_classification::objects_report_options
+			*Report_options,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "combinatorial_object_with_properties::show_TDO "
+				"f_show_TDO" << endl;
+	}
+	//ost << "combinatorial\\_object\\_with\\_properties::show\\_TDO \\\\" << endl;
+	ost << "\\subsection*{TDO}" << endl;
+
+	ost << "Decomposition by combinatorial refinement (TDO):\\\\" << endl;
+
+	if (f_has_TDO) {
+		if (f_v) {
+			cout << "combinatorial_object_with_properties::show_TDO "
+					"before TDO->print_schemes" << endl;
+		}
+		TDO->print_schemes(ost, Report_options, verbose_level);
+		if (f_v) {
+			cout << "combinatorial_object_with_properties::show_TDO "
+					"after TDO->print_schemes" << endl;
+		}
+	}
+	else {
+		cout << "combinatorial_object_with_properties::show_TDO "
+				"TDO has not yet been computed" << endl;
+	}
+	if (f_v) {
+		cout << "combinatorial_object_with_properties::show_TDO "
+				"f_show_TDO done" << endl;
+	}
+
+}
+
+void combinatorial_object_with_properties::show_TDA(
+		std::ostream &ost,
+		combinatorics::canonical_form_classification::objects_report_options
+			*Report_options,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "combinatorial_object_with_properties::show_TDA "
+				"f_show_TDA" << endl;
+	}
+	//ost << "combinatorial\\_object\\_with\\_properties::show\\_TDA \\\\" << endl;
+	ost << "\\subsection*{TDA}" << endl;
+
+	{
+		algebra::ring_theory::longinteger_object go;
+
+		A_perm->Strong_gens->group_order(go);
+
+		ost << "Automorphism group has order: " << go << "\\\\" << endl;
+	}
+
+	ost << "Decomposition by automorphism group:\\\\" << endl;
+
+	if (f_v) {
+		cout << "combinatorial_object_with_properties::show_TDA "
+				"before GA_on_CO->print_schemes" << endl;
+	}
+	GA_on_CO->print_schemes(ost, Report_options, verbose_level);
+	if (f_v) {
+		cout << "combinatorial_object_with_properties::show_TDA "
+				"after GA_on_CO->print_schemes" << endl;
+	}
+
+	if (f_v) {
+		cout << "combinatorial_object_with_properties::show_TDA "
+				"f_show_TDA done" << endl;
+	}
+
+}
+
+void combinatorial_object_with_properties::print_lexleast(
+		std::ostream &ost,
+		combinatorics::canonical_form_classification::objects_report_options
+			*Report_options,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	//ost << "combinatorial\\_object\\_with\\_properties::print\\_lexleast \\\\" << endl;
+	ost << "\\subsection*{Lex Least Form}" << endl;
+
+	if (f_v) {
+		cout << "combinatorial_object_with_properties::print_lexleast f_lex_least" << endl;
+	}
+	combinatorics::geometry_builder::geometry_builder *GB;
+
+	GB = Get_geometry_builder(Report_options->lex_least_geometry_builder);
+
+
+	int idx;
+	int f_found;
+	other::l1_interfaces::nauty_output *NO;
+	other::data_structures::bitvector *Canonical_form;
+
+
+	if (f_v) {
+		cout << "combinatorial_object_with_properties::print_lexleast "
+				"before find_object, "
+				"OwCF->v=" << Any_Combo->v << endl;
+	}
+
+	other::l1_interfaces::nauty_interface_control *Nauty_control;
+
+
+	Nauty_control = GB->gg->inc->iso_type_at_line[Any_Combo->v - 1]->Nauty_control;
+
+	GB->gg->inc->iso_type_at_line[Any_Combo->v - 1]->Canonical_forms->find_object(
+			Any_Combo,
+			Nauty_control,
+			f_found, idx,
+			NO,
+			Canonical_form,
+			verbose_level);
+
+	if (f_v) {
+		cout << "combinatorial_object_with_properties::print_lexleast "
+				"after find_object" << endl;
+	}
+
+	// if f_found is true, B[idx] agrees with the given object
+
+
+	if (!f_found) {
+		cout << "combinatorial_object_with_properties::print_lexleast "
+				"cannot find object in geometry_builder" << endl;
+		exit(1);
+	}
+
+	combinatorics::canonical_form_classification::any_combinatorial_object *Any_Combo2 =
+			(combinatorics::canonical_form_classification::any_combinatorial_object *)
+			GB->gg->inc->iso_type_at_line[Any_Combo->v - 1]->Canonical_forms->Objects[idx];
+
+	if (f_v) {
+		cout << "combinatorial_object_with_properties::print_lexleast "
+				"before FREE_OBJECT(NO)" << endl;
+	}
+	FREE_OBJECT(NO);
+	if (f_v) {
+		cout << "combinatorial_object_with_properties::print_lexleast "
+				"after FREE_OBJECT(NO)" << endl;
+	}
+	FREE_OBJECT(Canonical_form);
+	if (f_v) {
+		cout << "combinatorial_object_with_properties::print_lexleast "
+				"after FREE_OBJECT(Canonical_form)" << endl;
+	}
+
+	ost << "Is isomorphic to object " << idx << " in the list:\\\\" << endl;
+	ost << "Lex-least form is:\\\\" << endl;
+
+
+	Any_Combo2->print_tex_detailed(
+			ost,
+			Report_options,
+			verbose_level);
+
+}
+
+void combinatorial_object_with_properties::show_labels(
+		std::ostream &ost,
+		combinatorics::canonical_form_classification::objects_report_options
+			*Report_options,
+		groups::schreier *Sch,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	//ost << "combinatorial\\_object\\_with\\_properties::show\\_labels \\\\" << endl;
+	ost << "\\subsection*{Labels}" << endl;
+
+	combinatorics::canonical_form_classification::encoded_combinatorial_object *Enc;
+
+	Any_Combo->encode_incma(Enc, verbose_level);
+
+	//latex_TDA(ost, Enc, verbose_level);
+	//ost << "\\\\" << endl;
+
+	int *point_labels;
+	int *block_labels;
+
+	Enc->compute_labels(
+			Sch->Forest->nb_orbits,
+			Sch->Forest->orbit_first,
+			Sch->Forest->orbit_len,
+			Sch->Forest->orbit,
+			point_labels, block_labels,
+			verbose_level);
+
+	other::orbiter_kernel_system::file_io Fio;
+
+	string fname;
+
+	fname = "point_labels.csv";
+	Fio.Csv_file_support->int_matrix_write_csv(
+			fname, point_labels, Enc->nb_rows, 1);
+
+	cout << "combinatorial_object_with_properties::show_labels "
+			"Written file " << fname << " of size "
+			<< Fio.file_size(fname) << endl;
+
+	fname = "block_labels.csv";
+	Fio.Csv_file_support->int_matrix_write_csv(
+			fname, block_labels, Enc->nb_cols, 1);
+
+	cout << "combinatorial_object_with_properties::show_labels "
+			"Written file " << fname << " of size "
+			<< Fio.file_size(fname) << endl;
+
+	FREE_int(point_labels);
+	FREE_int(block_labels);
+
+	FREE_OBJECT(Enc);
+
+}
+
+void combinatorial_object_with_properties::canonical_labeling(
+		std::ostream &ost,
+		combinatorics::canonical_form_classification::objects_report_options
+			*Report_options,
+		combinatorics::canonical_form_classification::encoded_combinatorial_object *Enc,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	//ost << "combinatorial\\_object\\_with\\_properties::canonical\\_labeling \\\\" << endl;
+	ost << "\\subsection*{Canonical labeling}" << endl;
+
+	ost << "Canonical labeling:\\\\" << endl;
+	combinatorics::canonical_form_classification::encoded_combinatorial_object *Enc2;
+
+
+	Enc2 = NEW_OBJECT(combinatorics::canonical_form_classification::encoded_combinatorial_object);
+
+	Enc2->init_canonical_form(Enc, NO, verbose_level);
+
+
+
+	Enc2->latex_set_system_by_rows_and_columns(ost, verbose_level);
+
+	FREE_OBJECT(Enc2);
+
+}
+
+void combinatorial_object_with_properties::show_incidence_matrices(
+		std::ostream &ost,
+		combinatorics::canonical_form_classification::objects_report_options
+			*Report_options,
+			groups::schreier *Sch,
+		combinatorics::canonical_form_classification::encoded_combinatorial_object *Enc,
+		int canonical_orbit,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	//ost << "combinatorial\\_object\\_with\\_properties::show\\_incidence\\_matrices \\\\" << endl;
+	ost << "\\subsection*{Incidence Matrices}" << endl;
+
+	if (f_v) {
+		cout << "combinatorial_object_with_properties::show_incidence_matrices "
+				"f_show_incidence_matrices" << endl;
+	}
+
+	int v = Enc->nb_rows;
+	int b = Enc->nb_cols;
+
+	std::string *point_labels;
+	std::string *block_labels;
+
+
+	point_labels = new string [v];
+	block_labels = new string [b];
+
+	int i, j, a;
+
+	for (i = 0; i < v; i++) {
+
+		a = NO->canonical_labeling[i];
+		if (Sch->Forest->orbit_number(a) == canonical_orbit) {
+			point_labels[i] = "*" + std::to_string(a);
+		}
+		else {
+			point_labels[i] = std::to_string(a);
+		}
+	}
+	for (j = 0; j < b; j++) {
+		block_labels[j] = std::to_string(NO->canonical_labeling[v + j]);
+	}
+
+	other::graphics::draw_incidence_structure_description *Draw_incidence_options;
+
+	if (Report_options->f_incidence_draw_options) {
+		Draw_incidence_options = Get_draw_incidence_structure_options(Report_options->incidence_draw_options_label);
+	}
+	else {
+		cout << "combinatorial_object_with_properties::show_incidence_matrices please use -incidence_draw_options" << endl;
+		exit(1);
+	}
+
+
+	Enc->latex_canonical_form_with_labels(
+			ost,
+			Draw_incidence_options,
+			NO,
+			point_labels,
+			block_labels,
+			verbose_level);
+
+	delete [] point_labels;
+	delete [] block_labels;
 
 }
 

@@ -108,7 +108,7 @@ void polar::init_group_by_base_images(
 	if (f_v) {
 		cout << "polar::init_group, calling "
 				"A->init_group_from_generators_by_base_images" << endl;
-		}
+	}
 	A->init_group_from_generators_by_base_images(
 		A->Sims,
 		group_generator_data, group_generator_size, 
@@ -130,7 +130,7 @@ void polar::init_group(
 	if (f_v) {
 		cout << "polar::init_group, calling "
 				"A->init_group_from_generators" << endl;
-		}
+	}
 	A->init_group_from_generators(
 		group_generator_data, group_generator_size, 
 		f_group_order_target, group_order_target, 
@@ -160,7 +160,7 @@ void polar::init(
 	
 	if (f_v) {
 		cout << "polar::init n=" << n << " k=" << k << " q=" << q << endl;
-		}
+	}
 	
 	//matrix_group *M;
 	//M = A->subaction->G.matrix_grp;
@@ -185,23 +185,23 @@ void polar::init2(
 	
 	if (f_v) {
 		cout << "polar::init2" << endl;
-		}
+	}
 	if (f_has_strong_generators) {
 		if (f_v) {
 			cout << "initializing with strong generators" << endl;
-			}
+		}
 		gens = Strong_gens;
 		//gens = SG;
 		//transversal_lengths = tl;
-		}
+	}
 	else {
 		if (f_v) {
 			cout << "initializing full group" << endl;
-			}
+		}
 		gens = A->Strong_gens;
 		//gens = A->strong_generators;
 		//transversal_lengths = A->tl;
-		}
+	}
 
 	if (f_print_generators) {
 		int f_print_as_permutation = true;
@@ -216,7 +216,7 @@ void polar::init2(
 			f_do_it_anyway_even_for_big_degree, 
 			f_print_cycles_of_length_one,
 			0 /* verbose_level */);
-		}
+	}
 	VS = NEW_OBJECT(algebra::linear_algebra::vector_space);
 
 	VS->init(F, n /* dimension */,
@@ -234,7 +234,10 @@ void polar::init2(
 
 	string label;
 
-	label = "polar_" + std::to_string(epsilon) + "_" + std::to_string(n) + "_" + std::to_string(k) + "_" + std::to_string(q);
+	label = "polar_" + std::to_string(epsilon)
+			+ "_" + std::to_string(n)
+			+ "_" + std::to_string(k)
+			+ "_" + std::to_string(q);
 
 
 
@@ -271,21 +274,23 @@ void polar::compute_orbits(
 	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
-		cout << "polar::compute_orbits calling generator_main" << endl;
+		cout << "polar::compute_orbits "
+				"before poset_classification_main" << endl;
 		cout << "A=";
 		Gen->get_A()->print_info();
 		cout << "A2=";
 		Gen->get_A2()->print_info();
-		}
-	Gen->main(t0, 
+	}
+	Gen->poset_classification_main(t0,
 		schreier_depth, 
 		f_use_invariant_subset_if_available, 
 		f_debug, 
 		verbose_level - 1);
 		
 	if (f_v) {
-		cout << "done with generator_main" << endl;
-		}
+		cout << "polar::compute_orbits "
+				"after poset_classification_main" << endl;
+	}
 	first_node = Gen->first_node_at_level(depth);
 	nb_orbits = Gen->nb_orbits_at_level(depth);
 
@@ -293,11 +298,12 @@ void polar::compute_orbits(
 	nb_elements = 0;
 	for (i = 0; i < nb_orbits; i++) {
 		nb_elements += Gen->orbit_length_as_int(i, depth);
-		}
+	}
 	if (f_v) {
-		cout << "we found " << nb_orbits << " orbits containing "
+		cout << "polar::compute_orbits "
+				"we found " << nb_orbits << " orbits containing "
 				<< nb_elements << " elements at depth " << depth << endl;
-		}
+	}
 }
 
 void polar::compute_cosets(
@@ -318,7 +324,7 @@ void polar::compute_cosets(
 
 	if (f_v) {
 		cout << "polar::compute_cosets" << endl;
-		}
+	}
 	Elt1 = NEW_int(Gen->get_A()->elt_size_in_int);
 	Elt2 = NEW_int(Gen->get_A()->elt_size_in_int);
 	the_set1 = NEW_lint(depth);
@@ -336,7 +342,7 @@ void polar::compute_cosets(
 	index_int = index.as_int();
 	if (f_v) {
 		cout << "polar::compute_cosets index=" << index_int << endl;
-		}
+	}
 
 	O2->store_set_to(Gen, depth - 1, the_set1);
 	
@@ -345,15 +351,15 @@ void polar::compute_cosets(
 			<< " at level " << depth << " is ";
 		Lint_vec_print(cout, the_set1, depth);
 		cout << endl;
-		}
+	}
 	for (i = 0; i < k; i++) {
 		unrank_point(M1 + i * n, the_set1[i]);
 		//polar_callback_unrank_point_func(M1 + i * n, the_set1[i], this);
-		}
+	}
 	if (f_vv) {
 		cout << "corresponding to the subspace with basis:" << endl;
 		Int_vec_print_integer_matrix_width(cout, M1, k, n, n, F->log10_of_q);
-		}
+	}
 
 	geometry::projective_geometry::grassmann Grass;
 	
@@ -370,14 +376,14 @@ void polar::compute_cosets(
 		//if (!(c == 2 || c == 4)) {continue;}
 		if (f_v) {
 			cout << "Coset " << c << endl;
-			}
+		}
 		Gen->coset_unrank(depth, orbit_idx, c, Elt1, 0/*verbose_level*/);
 
 		if (f_vvv) {
 			cout << "Left coset " << c << " is represented by" << endl;
 			Gen->get_A()->Group_element->element_print_quick(Elt1, cout);
 			cout << endl;
-			}
+		}
 
 		Gen->get_A()->Group_element->element_invert(Elt1, Elt2, 0);
 
@@ -386,24 +392,25 @@ void polar::compute_cosets(
 			cout << "Right coset " << c << " is represented by" << endl;
 			Gen->get_A()->Group_element->element_print_quick(Elt2, cout);
 			cout << endl;
-			}
+		}
 
 		for (i = 0; i < k; i++) {
-			A->Group_element->element_image_of_low_level(M1 + i * n, M2 + i * n,
+			A->Group_element->element_image_of_low_level(
+					M1 + i * n, M2 + i * n,
 					Elt2, 0/* verbose_level*/);
-			}
+		}
 		if (f_vv) {
 			cout << "basis of subspace that is the image "
 					"under this element:" << endl;
 			Int_vec_print_integer_matrix_width(cout, M2, k, n, n, F->log10_of_q);
-			}
+		}
 		for (i = 0; i < k * n; i++) {
 			Grass.M[i] = M2[i];
-			}
+		}
 		Grass.rank_longinteger(Rank, 0/*verbose_level - 3*/);
 		if (f_vv) {
 			cout << "Coset " << c << " Rank=" << Rank << endl;
-			}
+		}
 		
 		cc = Gen->coset_rank(depth, orbit_idx, Elt1, 0/*verbose_level*/);
 		if (cc != c) {
@@ -413,8 +420,8 @@ void polar::compute_cosets(
 			cout << "cc=" << cc << endl;
 			//cc = Gen->coset_rank(depth, orbit_idx, Elt1, verbose_level);
 			exit(1);
-			}
 		}
+	}
 	FREE_int(Elt1);
 	FREE_int(Elt2);
 	FREE_lint(the_set1);
@@ -447,7 +454,7 @@ void polar::dual_polar_graph(
 
 	if (f_v) {
 		cout << "polar::dual_polar_graph" << endl;
-		}
+	}
 	Elt1 = NEW_int(Gen->get_A()->elt_size_in_int);
 	Elt2 = NEW_int(Gen->get_A()->elt_size_in_int);
 	the_set1 = NEW_lint(depth);
@@ -468,7 +475,7 @@ void polar::dual_polar_graph(
 	if (f_v) {
 		cout << "polar::dual_polar_graph index=" << index_int << endl;
 		cout << "polar::dual_polar_graph witt=" << witt << endl;
-		}
+	}
 
 	nb_maximals = index_int;
 	Rank_table = NEW_OBJECTS(algebra::ring_theory::longinteger_object, index_int);
@@ -477,10 +484,10 @@ void polar::dual_polar_graph(
 
 	for (i = 0; i < index_int; i++) {
 		M[i] = NEW_int(k * n);
-		}
+	}
 	for (i = 0; i < index_int * index_int; i++) {
 		Adj[i] = 0;
-		}
+	}
 	
 	O2->store_set_to(Gen, depth - 1, the_set1);
 	
@@ -489,23 +496,23 @@ void polar::dual_polar_graph(
 			<< " at level " << depth << " is ";
 		Lint_vec_print(cout, the_set1, depth);
 		cout << endl;
-		}
+	}
 	for (i = 0; i < k; i++) {
 		unrank_point(M1 + i * n, the_set1[i]);
 		//polar_callback_unrank_point_func(M1 + i * n, the_set1[i], this);
-		}
+	}
 
 	if (f_v) {
 		cout << "corresponding to the subspace with basis:" << endl;
 		Int_vec_print_integer_matrix_width(cout, M1, k, n, n, F->log10_of_q);
-		}
+	}
 
 	geometry::projective_geometry::grassmann Grass;
 	
 	Grass.init(n, k, F, verbose_level - 2);
 	for (i = 0; i < k * n; i++) {
 		Grass.M[i] = M1[i];
-		}
+	}
 	Grass.rank_longinteger(Rank, 0/*verbose_level - 3*/);
 	cout << "Rank=" << Rank << endl;
 	
@@ -516,14 +523,14 @@ void polar::dual_polar_graph(
 
 		if (false) {
 			cout << "Coset " << c << endl;
-			}
+		}
 		Gen->coset_unrank(depth, orbit_idx, c, Elt1, 0/*verbose_level*/);
 
 		if (false) {
 			cout << "Left coset " << c << " is represented by" << endl;
 			Gen->get_A()->Group_element->element_print_quick(Elt1, cout);
 			cout << endl;
-			}
+		}
 
 		Gen->get_A()->Group_element->element_invert(Elt1, Elt2, 0);
 
@@ -533,38 +540,39 @@ void polar::dual_polar_graph(
 					<< " is represented by" << endl;
 			Gen->get_A()->Group_element->element_print_quick(Elt2, cout);
 			cout << endl;
-			}
+		}
 
 		for (i = 0; i < k; i++) {
-			A->Group_element->element_image_of_low_level(M1 + i * n,
+			A->Group_element->element_image_of_low_level(
+					M1 + i * n,
 					M2 + i * n, Elt2, 0/* verbose_level*/);
-			}
+		}
 
 		F->Linear_algebra->Gauss_easy(M2, k, n);
 		
 		if (f_vv) {
 			cout << "subspace " << c << ":" << endl;
 			Int_vec_print_integer_matrix_width(cout, M2, k, n, n, F->log10_of_q);
-			}
+		}
 
 		
 
 		
 		for (i = 0; i < k * n; i++) {
 			Grass.M[i] = M2[i];
-			}
+		}
 		Grass.rank_longinteger(Rank, 0/*verbose_level - 3*/);
 		if (f_vv) {
 			cout << "Coset " << c << " Rank=" << Rank << endl;
-			}
+		}
 		
 		Rank.assign_to(Rank_table[c]);
 		
 		for (i = 0; i < k * n; i++) {
 			M[c][i] = M2[i];
-			}
-		
 		}
+		
+	}
 	
 	int c1, c2, rk, nb_e, e;
 	int *MM;
@@ -577,25 +585,25 @@ void polar::dual_polar_graph(
 		for (c2 = 0; c2 < index_int; c2++) {
 			for (i = 0; i < k * n; i++) {
 				MM[i] = M[c1][i];
-				}
+			}
 			for (i = 0; i < k * n; i++) {
 				MM[k * n + i] = M[c2][i];
-				}
+			}
 			rk = F->Linear_algebra->rank_of_rectangular_matrix(MM,
 					2 * k, n, 0 /* verbose_level*/);
 			//rk1 = rk - k;
 			//Adj[c1 * index_int + c2] = rk1;
 			if (rk == k + 1) {
 				Adj[c1 * index_int + c2] = 1;
-				}
 			}
 		}
+	}
 
 	if (f_vv) {
 		cout << "adjacency matrix:" << endl;
 		Int_vec_print_integer_matrix_width(cout, Adj,
 				index_int, index_int, index_int, 1);
-		}
+	}
 
 	if (f_vv) {
 		cout << "neighborhood lists:" << endl;
@@ -604,29 +612,32 @@ void polar::dual_polar_graph(
 			for (c2 = 0; c2 < index_int; c2++) {
 				if (Adj[c1 * index_int + c2]) {
 					cout << c2 << " ";
-					}
 				}
-			cout << "}" << endl;
 			}
+			cout << "}" << endl;
 		}
+	}
 
 	nb_e = 0;
 	for (c1 = 0; c1 < index_int; c1++) {
 		for (c2 = c1 + 1; c2 < index_int; c2++) {
 			if (Adj[c1 * index_int + c2]) {
 				nb_e++;
-				}
 			}
 		}
+	}
 	if (f_vv) {
 		cout << "with " << nb_e << " edges" << endl;
-		}
+	}
 
 
 	Inc = NEW_int(index_int * nb_e);
+	Int_vec_zero(Inc, index_int * nb_e);
+#if 0
 	for (i = 0; i < index_int * nb_e; i++) {
 		Inc[i] = 0;
 	}
+#endif
 	
 	e = 0;
 	for (c1 = 0; c1 < index_int; c1++) {
@@ -641,22 +652,26 @@ void polar::dual_polar_graph(
 	if (f_vv) {
 		cout << "Incidence matrix:" << index_int
 				<< " x " << nb_e << endl;
-		Int_vec_print_integer_matrix_width(cout, Inc,
+		Int_vec_print_integer_matrix_width(
+				cout, Inc,
 				index_int, nb_e, nb_e, 1);
 	}
 
 	{
 		string fname;
 
-		fname = "dual_polar_graph_O_" + std::to_string(epsilon) + "_" + std::to_string(n) + "_" + std::to_string(q) + ".inc";
+		fname = "dual_polar_graph_O_" + std::to_string(epsilon)
+				+ "_" + std::to_string(n)
+				+ "_" + std::to_string(q)
+				+ ".inc";
 		{
 			ofstream f(fname);
 			f << index_int << " " << nb_e << " " << 2 * nb_e << endl;
 			for (i = 0; i < index_int * nb_e; i++) {
 				if (Inc[i]) {
 					f << i << " ";
-					}
 				}
+			}
 			f << endl;
 			f << -1 << endl;
 		}
@@ -682,7 +697,7 @@ void polar::dual_polar_graph(
 	FREE_int(Adj);
 	for (i = 0; i < index_int; i++) {
 		FREE_int(M[i]);
-		}
+	}
 	FREE_pint(M);
 }
 
@@ -715,7 +730,7 @@ void polar::show_stabilizer(
 		A->Group_element->element_print_quick(Elt, cout);
 		A->Group_element->element_print_as_permutation(Elt, cout);
 		cout << endl;
-		}
+	}
 	
 	FREE_OBJECT(Strong_gens);
 	FREE_OBJECT(S);
@@ -867,14 +882,14 @@ void polar::test_if_in_perp(
 		cout << "polar::test_if_in_perp done for ";
 		Lint_vec_set_print(cout, S, len);
 		cout << endl;
-		}
+	}
 	if (len == 0) {
 		for (i = 0; i < nb_candidates; i++) {
 			good_candidates[i] = candidates[i];
-			}
+		}
 		nb_good_candidates = nb_candidates;
 		return;
-		}
+	}
 
 	nb_good_candidates = 0;
 
@@ -886,15 +901,15 @@ void polar::test_if_in_perp(
 			cout << "candidate " << i << " = " << c << ":" << endl;
 			Int_vec_print_integer_matrix_width(cout,
 					tmp_M, 2, n, n, F->log10_of_q);
-			}
+		}
 		f = O->Quadratic_form->evaluate_bilinear_form(tmp_M + 0 * n, tmp_M + 1 * n, 1);
 		if (f_vv) {
 			cout << "form value " << f << endl;
-			}
+		}
 		if (f == 0) {
 			good_candidates[nb_good_candidates++] = c;
-			}
 		}
+	}
 
 	
 	if (f_v) {
@@ -902,12 +917,12 @@ void polar::test_if_in_perp(
 		Lint_vec_set_print(cout, S, len);
 		cout << "; # of candidates reduced from " << nb_candidates
 				<< " to " << nb_good_candidates << endl;
-		}
+	}
 	if (f_vv) {
 		cout << "good candidates: ";
 		Lint_vec_print(cout, good_candidates, nb_good_candidates);
 		cout << endl;
-		}
+	}
 }
 
 void polar::test_if_closed_under_cosets(
@@ -939,22 +954,22 @@ void polar::test_if_closed_under_cosets(
 		cout << "candidates: ";
 		Int_vec_print(cout, candidates, nb_candidates);
 		cout << endl;
-		}
+	}
 	if (len == 0) {
 		for (i = 0; i < nb_candidates; i++) {
 			good_candidates[i] = candidates[i];
-			}
+		}
 		nb_good_candidates = nb_candidates;
 		return;
-		}
+	}
 
 	nb = Gg.nb_PG_elements(len - 1, F->q);
 	if (len >= 2) {
 		nb0 = Gg.nb_PG_elements(len - 2, F->q);
-		}
+	}
 	else {
 		nb0 = 1;
-		}
+	}
 	M = NEW_int(len * n);
 	N0 = NEW_int(nb0 * n);
 	N = NEW_int(nb * n);
@@ -964,7 +979,7 @@ void polar::test_if_closed_under_cosets(
 	tmp_candidates = NEW_int(2 * nb_candidates * (1 + nb0));
 	for (i = 0; i < len; i++) {
 		O->Hyperbolic_pair->unrank_point(M + i * n, 1, S[i], 0);
-		}
+	}
 	if (f_v) {
 		cout << "the basis is ";
 		Int_vec_print(cout, S, len);
@@ -972,85 +987,85 @@ void polar::test_if_closed_under_cosets(
 		cout << "corresponding to the vectors:" << endl;
 		Int_vec_print_integer_matrix_width(cout, M, len, n, n, F->log10_of_q);
 		cout << "nb=" << nb << endl;
-		}
+	}
 	if (len >= 2) {
 		for (i = 0; i < nb0; i++) {
 			F->Projective_space_basic->PG_element_unrank_modified(
 					v, 1, len - 1, i);
 			F->Linear_algebra->mult_vector_from_the_left(
 					v, M, N0 + i * n, len - 1, n);
-			}
+		}
 		if (f_v) {
 			cout << "the list of points N0:" << endl;
 			Int_vec_print_integer_matrix_width(cout, N0, nb0, n, n, F->log10_of_q);
-			}
 		}
+	}
 	for (i = 0; i < nb; i++) {
 		F->Projective_space_basic->PG_element_unrank_modified(
 				v, 1, len, i);
 		F->Linear_algebra->mult_vector_from_the_left(
 				v, M, N + i * n, len, n);
-		}
+	}
 	if (f_v) {
 		cout << "the list of points N:" << endl;
 		Int_vec_print_integer_matrix_width(cout, N, nb, n, n, F->log10_of_q);
-		}
+	}
 	if (len >= 2) {
 		// the expand step:
 		if (f_v) {
 			cout << "expand:" << endl;
-			}
+		}
 		nb_candidates_expanded = 0;
 		for (i = 0; i < nb_candidates; i++) {
 			c = candidates[i];
 			candidates_expanded[nb_candidates_expanded++] = c;
 			if (Sorting.int_vec_search(S, len, c, idx)) {
 				continue;
-				}
+			}
 			O->Hyperbolic_pair->unrank_point(v, 1, c, 0);
 			if (f_v) {
 				cout << "i=" << i;
 				Int_vec_print(cout, v, n);
 				cout << endl;
-				}
+			}
 			for (j = 0; j < nb0; j++) {
 				for (y = 1; y < F->q; y++) {
 					for (h = 0; h < n; h++) {
 						w[h] = F->add(v[h], F->mult(y, N0[j * n + h]));
-						}
+					}
 					if (f_v) {
 						cout << "j=" << j << " y=" << y << " : w=";
 						Int_vec_print(cout, w, n);
 						cout << endl;
-						}
+					}
 					d = O->Hyperbolic_pair->rank_point(w, 1, 0);
 					if (f_v) {
 						cout << "d=" << d << endl;
-						}
+					}
 					candidates_expanded[nb_candidates_expanded++] = d;
-					} // next y
-				} // next j
-			} // next i
+				} // next y
+			} // next j
+		} // next i
 		if (f_v) {
 			cout << "expanded candidate set:" << endl;
 			Int_vec_print(cout,
 					candidates_expanded, nb_candidates_expanded);
 			cout << endl;
-			}
+		}
 		Sorting.int_vec_heapsort(candidates_expanded, nb_candidates_expanded);
 		if (f_v) {
 			cout << "expanded candidate set after sort:" << endl;
 			Int_vec_print(cout, candidates_expanded, nb_candidates_expanded);
 			cout << endl;
-			}
 		}
+	}
 	else {
 		nb_candidates_expanded = 0;
 		for (i = 0; i < nb_candidates; i++) {
 			c = candidates[i];
 			candidates_expanded[nb_candidates_expanded++] = c;
-			}
 		}
+	}
 
 	// now we are doing the test if the full coset is present:
 	nb_tmp_candidates = 0;
@@ -1059,24 +1074,24 @@ void polar::test_if_closed_under_cosets(
 		if (Sorting.int_vec_search(S, len, c, idx)) {
 			tmp_candidates[nb_tmp_candidates++] = c;
 			continue;
-			}
+		}
 		O->Hyperbolic_pair->unrank_point(v, 1, c, 0);
 		if (f_v) {
 			cout << "i=" << i;
 			Int_vec_print(cout, v, n);
 			cout << endl;
-			}
+		}
 		f_OK = true;
 		for (j = 0; j < nb; j++) {
 			for (y = 1; y < F->q; y++) {
 				for (h = 0; h < n; h++) {
 					w[h] = F->add(v[h], F->mult(y, N[j * n + h]));
-					}
+				}
 				if (f_v) {
 					cout << "j=" << j << " y=" << y << " : w=";
 					Int_vec_print(cout, w, n);
 					cout << endl;
-					}
+				}
 				d = O->Hyperbolic_pair->rank_point(w, 1, 0);
 				if (!Sorting.int_vec_search(candidates_expanded,
 						nb_candidates_expanded, d, idx)) {
@@ -1085,24 +1100,24 @@ void polar::test_if_closed_under_cosets(
 								"point " << c << " is ruled out, "
 								"coset point " << d << " is not found "
 								"j=" << j << " y=" << y << endl;
-						}
+					}
 					f_OK = false;
 					break;
-					}
 				}
+			}
 			if (!f_OK) {
 				break;
-				}
-			}
-		if (f_OK) {
-			tmp_candidates[nb_tmp_candidates++] = c;
 			}
 		}
+		if (f_OK) {
+			tmp_candidates[nb_tmp_candidates++] = c;
+		}
+	}
 	if (f_v) {
 		cout << "tmp_candidates:" << endl;
 		Int_vec_print(cout, tmp_candidates, nb_tmp_candidates);
 		cout << endl;
-		}
+	}
 
 	nb_good_candidates = 0;
 	for (i = 0; i < nb_candidates; i++) {
@@ -1110,20 +1125,20 @@ void polar::test_if_closed_under_cosets(
 		if (Sorting.int_vec_search(tmp_candidates, nb_tmp_candidates, c, idx)) {
 			good_candidates[nb_good_candidates++] = c;
 			continue;
-			}
 		}
+	}
 	
 	if (f_v) {
 		cout << "polar::test_if_closed_under_cosets for ";
 		Int_vec_set_print(cout, S, len);
 		cout << "; # of candidates reduced from "
 			<< nb_candidates << " to " << nb_good_candidates << endl;
-		}
+	}
 	if (f_vv) {
 		cout << "good candidates: ";
 		Int_vec_print(cout, good_candidates, nb_good_candidates);
 		cout << endl;
-		}
+	}
 	FREE_int(M);
 	FREE_int(N0);
 	FREE_int(N);
@@ -1139,7 +1154,8 @@ void polar::get_stabilizer(
 		data_structures_groups::group_container &G,
 		algebra::ring_theory::longinteger_object &go_G)
 {
-	Gen->get_node(first_node + orbit_idx)->get_stabilizer(Gen,
+	Gen->get_node(
+			first_node + orbit_idx)->get_stabilizer(Gen,
 			G, go_G, 0 /*verbose_level - 2*/);
 }
 
@@ -1213,7 +1229,7 @@ void polar::list_whole_orbit(
 		if (f_limit && j >= limit) {
 			cout << "..." << endl;
 			break;
-			}
+		}
 		orbit_element_unrank(orbit_idx, j, set, 0/*verbose_level*/);
 		cout << setw(4) << j << " : ";
 		Lint_vec_print(cout, set, depth);
@@ -1221,7 +1237,7 @@ void polar::list_whole_orbit(
 			
 		for (h = 0; h < depth; h++) {
 			unrank_point(M1 + h * n, set[h]);
-			}
+		}
 		cout << "corresponding to the subspace with basis:" << endl;
 		Int_vec_print_integer_matrix_width(cout, M1, k, n, n, F->log10_of_q);
 			
@@ -1237,7 +1253,7 @@ void polar::list_whole_orbit(
 		Grass.init(n, k, F, 0/*verbose_level*/);
 		for (h = 0; h < k * n; h++) {
 			Grass.M[h] = M1[h];
-			}
+		}
 		Grass.rank_longinteger(Rank, 0/*verbose_level - 3*/);
 		cout << "Rank=" << Rank << endl;
 			
@@ -1247,13 +1263,13 @@ void polar::list_whole_orbit(
 			cout << "polar::list_whole_orbit: "
 					"fatal: ii != orbit_idx" << endl;
 			exit(1);
-			}
+		}
 		if (jj != j) {
 			cout << "polar::list_whole_orbit: "
 					"fatal: jj != j" << endl;
 			exit(1);
-			}
 		}
+	}
 	FREE_lint(set);
 	FREE_int(M1);
 	FREE_int(base_cols);
@@ -1324,14 +1340,14 @@ void static polar_callback_early_test_func(
 		cout << "polar_callback_early_test_func for set ";
 		Lint_vec_print(cout, S, len);
 		cout << endl;
-		}
+	}
 	P->test_if_in_perp(S, len, 
 		candidates, nb_candidates, 
 		good_candidates, nb_good_candidates, 
 		verbose_level - 2);
 	if (f_v) {
 		cout << "polar_callback_early_test_func done" << endl;
-		}
+	}
 }
 
 }}}

@@ -88,6 +88,8 @@ void combinatorial_object_stream::do_canonical_form(
 		projective_geometry::projective_space_with_action *PA,
 		int verbose_level)
 // called from combinatorial_object_activity::perform_activity_combo
+// performs classification-by-canonical-form for all input objects that are selected
+// allocates Classification_of_objects
 {
 	int f_v = (verbose_level >= 1);
 
@@ -428,7 +430,9 @@ void combinatorial_object_stream::write_canonical_form_data_non_trivial_group(
 void combinatorial_object_stream::do_post_processing(
 		int verbose_level)
 // called from combinatorial_object_activity::perform_activity_combo
-// creates Objects_after_classification, which is memory intense
+// Using Classification_of_objects, creates Objects_after_classification,
+// which is a level 5 data structure.
+// This step may be memory intense
 {
 	int f_v = (verbose_level >= 1);
 
@@ -445,15 +449,15 @@ void combinatorial_object_stream::do_post_processing(
 	}
 	if (f_v) {
 		cout << "combinatorial_object_stream::do_post_processing "
-				"before Objects_after_classification->init_after_nauty" << endl;
+				"before Objects_after_classification->create_objects_with_property" << endl;
 	}
-	Objects_after_classification->init_after_nauty(
+	Objects_after_classification->create_objects_with_property(
 			Classification_of_objects,
 			f_projective_space, PA,
 			verbose_level);
 	if (f_v) {
 		cout << "combinatorial_object_stream::do_post_processing "
-				"after Objects_after_classification->init_after_nauty" << endl;
+				"after Objects_after_classification->create_objects_with_property" << endl;
 	}
 
 	if (f_v) {

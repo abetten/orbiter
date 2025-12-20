@@ -412,6 +412,11 @@ public:
 		int *&partition, int *&partition_first, 
 		int &partition_length, 
 		int verbose_level);
+	void powers_of_adjacency_matrix(
+			int k_max,
+			int *&M,
+			int verbose_level);
+	// M will be of size (k_max + 1) * N where N = nb_points * nb_points
 	colored_graph *sort_by_color_classes(
 			int verbose_level);
 	colored_graph *subgraph_by_color_classes(
@@ -632,6 +637,10 @@ public:
 			double *&E, int verbose_level);
 	void Laplace_eigenvalues(
 			double *&E, int verbose_level);
+	void distance_from_vertex(
+			int given_vertex,
+			int *&Distance,
+			int verbose_level);
 
 };
 

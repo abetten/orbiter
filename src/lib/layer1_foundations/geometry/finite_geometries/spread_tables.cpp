@@ -312,7 +312,10 @@ void spread_tables::init_reduced(
 	dual_spread_idx = NEW_lint(nb_spreads);
 	for (i = 0; i < nb_spreads; i++) {
 		a = select[i];
-		if (!Sorting.int_vec_search(select_sorted, nb_spreads, old_spread_table->dual_spread_idx[a], idx)) {
+		if (!Sorting.int_vec_search(
+				select_sorted, nb_spreads,
+				old_spread_table->dual_spread_idx[a],
+				idx)) {
 			//cout << "spread_tables::init_reduced unable to find the dual spread in the selection" << endl;
 			//exit(1);
 			idx = -1;
@@ -474,10 +477,6 @@ void spread_tables::save(
 
 	Table = new string[nb_rows * nb_cols];
 
-	if (!schreier_table) {
-		cout << "spread_tables::save no schreier table" << endl;
-		exit(1);
-	}
 
 	long int *spread_rep;
 	long int *spread_rep_dual;
@@ -497,13 +496,23 @@ void spread_tables::save(
 
 		Lint_vec_copy(spread_table + i * spread_size, spread_rep, spread_size);
 
-		for (j = 0; j < spread_size; j++) {
-			a = spread_rep[j];
-			b = dual_line_idx[a];
-			spread_rep_dual[j] = b;
-		}
+
+
 		Table[i * nb_cols + 1] = "\"" + Lint_vec_stringify(spread_rep, spread_size) + "\"";
-		Table[i * nb_cols + 2] = "\"" + Lint_vec_stringify(spread_rep_dual, spread_size) + "\"";
+
+		if (dual_line_idx) {
+			for (j = 0; j < spread_size; j++) {
+				a = spread_rep[j];
+				b = dual_line_idx[a];
+				spread_rep_dual[j] = b;
+			}
+			Table[i * nb_cols + 2] = "\"" + Lint_vec_stringify(spread_rep_dual, spread_size) + "\"";
+		}
+		else {
+			Table[i * nb_cols + 2] = "\"\"";
+
+		}
+
 
 		Sorting.lint_vec_heapsort(spread_rep, spread_size);
 		Sorting.lint_vec_heapsort(spread_rep_dual, spread_size);
@@ -525,7 +534,14 @@ void spread_tables::save(
 			f_self_dual = false;
 		}
 		Table[i * nb_cols + 6] = std::to_string(f_self_dual);
-		Table[i * nb_cols + 7] = "\"" + Int_vec_stringify(schreier_table + i * 4, 4) + "\"";
+		if (schreier_table == NULL) {
+			//cout << "spread_tables::save no schreier table" << endl;
+			//exit(1);
+			Table[i * nb_cols + 7] = "\"\"";
+		}
+		else {
+			Table[i * nb_cols + 7] = "\"" + Int_vec_stringify(schreier_table + i * 4, 4) + "\"";
+		}
 
 	}
 
@@ -767,7 +783,11 @@ void spread_tables::load(
 
 		if (len != 4) {
 			cout << "spread_tables::load len != 4" << endl;
-			exit(1);
+			FREE_int(schreier_table);
+			FREE_int(v);
+			schreier_table = NULL;
+			break;
+			//exit(1);
 		}
 
 		Int_vec_copy(v, schreier_table + i * 4, 4);

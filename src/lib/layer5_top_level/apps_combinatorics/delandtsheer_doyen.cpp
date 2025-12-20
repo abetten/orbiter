@@ -648,7 +648,7 @@ void delandtsheer_doyen::create_starter(
 
 	if (f_v) {
 		cout << "delandtsheer_doyen::create_starter "
-				"before Gen->main" << endl;
+				"before Gen->poset_classification_main" << endl;
 		cout << "A=";
 		A->print_info();
 		cout << "A0=";
@@ -658,7 +658,7 @@ void delandtsheer_doyen::create_starter(
 
 	//Control->f_max_depth = false;
 	//Gen->depth = Descr->depth;
-	Gen->main(
+	Gen->poset_classification_main(
 			t0,
 			Search_control->depth /* schreier_depth */,
 			f_use_invariant_subset_if_available,
@@ -667,7 +667,7 @@ void delandtsheer_doyen::create_starter(
 
 	if (f_v) {
 		cout << "delandtsheer_doyen::create_starter "
-				"after Gen->main" << endl;
+				"after Gen->poset_classification_main" << endl;
 	}
 }
 

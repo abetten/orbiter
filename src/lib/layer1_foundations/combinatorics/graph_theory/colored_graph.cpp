@@ -273,6 +273,80 @@ void colored_graph::partition_by_color_classes(
 	}
 }
 
+void colored_graph::powers_of_adjacency_matrix(
+		int k_max,
+		int *&M,
+		int verbose_level)
+// M will be of size (k_max + 1) * N where N = nb_points * nb_points
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "colored_graph::powers_of_adjacency_matrix" << endl;
+	}
+	int *A;
+	int *Ak;
+	int *C;
+	int i, j;
+	int N;
+	string s;
+
+	N = nb_points * nb_points;
+
+	A = NEW_int(N);
+	Ak = NEW_int(N);
+	C = NEW_int(N);
+	M = NEW_int((k_max + 1) * N);
+
+	// A^0 = I
+	Int_vec_zero(A, N);
+	for (i = 0; i < nb_points; i++) {
+		A[i * nb_points + i] = 1;
+	}
+	Int_vec_copy(A, M, N);
+
+
+	// A^1 = A
+	for (i = 0; i < nb_points; i++) {
+		A[i * nb_points + i] = 0;
+		for (j = i + 1; j < nb_points; j++) {
+			if (is_adjacent(i, j)) {
+				A[i * nb_points + j] = 1;
+				A[j * nb_points + i] = 1;
+			}
+		}
+	}
+	Int_vec_copy(A, M + N, N);
+
+	int k, c, h;
+
+	k = 1;
+	Int_vec_copy(A, Ak, N);
+
+	while (k < k_max) {
+		for (i = 0; i < nb_points; i++) {
+			for (j = 0; j < nb_points; j++) {
+				c = 0;
+				for (h = 0; h < nb_points; h++) {
+					c += A[i * nb_points + h] * Ak[h * nb_points + j];
+				}
+				C[i * nb_points + j] = c;
+			}
+		}
+		k++;
+		Int_vec_copy(C, Ak, N);
+		Int_vec_copy(Ak, M + k * N, N);
+
+	}
+
+	FREE_int(A);
+	FREE_int(Ak);
+	FREE_int(C);
+	if (f_v) {
+		cout << "colored_graph::powers_of_adjacency_matrix done" << endl;
+	}
+}
+
 colored_graph *colored_graph::sort_by_color_classes(
 		int verbose_level)
 {
@@ -722,13 +796,29 @@ void colored_graph::init_with_point_labels(
 		cout << "nb_colors=" << nb_colors << endl;
 		cout << "nb_colors_per_vertex=" << nb_colors_per_vertex << endl;
 	}
+	if (f_v) {
+		cout << "colored_graph::init_with_point_labels "
+				"before init_from_bitvector" << endl;
+	}
 	init_from_bitvector(
 			nb_points, nb_colors, nb_colors_per_vertex,
 		colors,
 		Bitvec, f_ownership_of_bitvec,
 		label, label_tex,
 		verbose_level);
+	if (f_v) {
+		cout << "colored_graph::init_with_point_labels "
+				"after init_from_bitvector" << endl;
+	}
+	if (f_v) {
+		cout << "colored_graph::init_with_point_labels "
+				"before copying point_labels" << endl;
+	}
 	Lint_vec_copy(point_labels, points, nb_points);
+	if (f_v) {
+		cout << "colored_graph::init_with_point_labels "
+				"after copying point_labels" << endl;
+	}
 	if (f_v) {
 		cout << "colored_graph::init_with_point_labels done" << endl;
 	}
@@ -824,7 +914,7 @@ void colored_graph::init_from_bitvector(
 		points[i] = i;
 	}
 
-	if (nb_colors) {
+	if (nb_colors_per_vertex) {
 		point_color = NEW_int(nb_points * nb_colors_per_vertex);
 		Int_vec_copy(colors, point_color, nb_points * nb_colors_per_vertex);
 	}
@@ -4170,6 +4260,60 @@ void colored_graph::Laplace_eigenvalues(
 }
 
 
+void colored_graph::distance_from_vertex(
+		int given_vertex,
+		int *&Distance,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "colored_graph::distance_from_vertex" << endl;
+	}
+	if (f_v) {
+		cout << "colored_graph::distance_from_vertex given_vertex = " << given_vertex << endl;
+	}
+
+	Distance = NEW_int(nb_points);
+	Int_vec_mone(Distance, nb_points);
+
+	int len, a, b, j;
+	int *Q;
+
+	Q = NEW_int(nb_points);
+
+	Distance[given_vertex] = 0;
+
+	Q[0] = given_vertex;
+	len = 1;
+
+	while (len) {
+		a = Q[0];
+		for (j = 1; j < len; j++) {
+			Q[j - 1] = Q[j];
+		}
+		len--;
+		for (b = 0; b < nb_points; b++) {
+			if (a == b) {
+				continue;
+			}
+			if (Distance[b] >= 0) {
+				continue;
+			}
+			if (!is_adjacent(a, b)) {
+				continue;
+			}
+			Q[len++] = b;
+			Distance[b] = Distance[a] + 1;
+		}
+	}
+
+	FREE_int(Q);
+	if (f_v) {
+		cout << "colored_graph::distance_from_vertex done" << endl;
+	}
+}
 
 
 

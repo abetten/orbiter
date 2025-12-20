@@ -180,14 +180,34 @@ void orbits_create::init(
 		if (f_v) {
 			cout << "orbits_create::init f_on_subsets" << endl;
 		}
-		if (!Descr->f_group) {
-			cout << "orbits_create::init please specify the group using -group <label>" << endl;
-			exit(1);
-		}
+#if 0
 		if (!Descr->f_group_action) {
-			cout << "orbits_create::init please specify the group using -group_action <label>" << endl;
+			cout << "orbits_create::init please specify the group action using -group_action <label>" << endl;
 			exit(1);
 		}
+#endif
+
+		actions::action *A_base;
+		actions::action *A_action;
+		groups::strong_generators *Subgroup_gens;
+
+
+
+		if (Descr->f_group_action) {
+			A_base = Group_action->MGC->A_base;
+			A_action = Group_action->A;
+			Subgroup_gens = Group_action->Subgroup_gens;
+		}
+		else if (Descr->f_group) {
+			A_base = Group->A_base;
+			A_action = Group->A;
+			Subgroup_gens = Group->Subgroup_gens;
+		}
+		else {
+			cout << "orbits_create::init please specify -group <label> or -group_action <label>" << endl;
+			exit(1);
+		}
+
 
 		poset_classification::poset_classification_control *Control =
 				Get_poset_classification_control(
@@ -197,10 +217,10 @@ void orbits_create::init(
 		orbits::orbits_global Orbits;
 
 		if (f_v) {
-			cout << "Strong generators Group->Subgroup_gens:" << endl;
-			Group->Subgroup_gens->print_generators(cout, 0 /* verbose_level */);
-			cout << "Strong generators Group->Subgroup_gens in tex:" << endl;
-			Group->Subgroup_gens->print_generators_tex(cout);
+			cout << "Strong generators Subgroup_gens:" << endl;
+			Subgroup_gens->print_generators(cout, 0 /* verbose_level */);
+			cout << "Strong generators Subgroup_gens in tex:" << endl;
+			Subgroup_gens->print_generators_tex(cout);
 		}
 
 		if (f_v) {
@@ -208,9 +228,9 @@ void orbits_create::init(
 		}
 
 		Orbits.orbits_on_subsets(
-				Group, Group_action, Group->Subgroup_gens,
+				A_base, A_action, Subgroup_gens,
 				Control, On_subsets,
-				Descr->on_subsets_size, verbose_level);
+				Descr->on_subsets_size, verbose_level + 5);
 
 		f_has_On_subsets = true;
 

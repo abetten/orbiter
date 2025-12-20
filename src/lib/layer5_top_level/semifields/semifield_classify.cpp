@@ -759,14 +759,14 @@ void semifield_classify::compute_orbits(
 
 	if (f_v) {
 		cout << "semifield_classify::compute_orbits "
-				"calling generator_main" << endl;
+				"before poset_classification_main" << endl;
 		cout << "A=";
 		Gen->get_A()->print_info();
 		cout << "A2=";
 		Gen->get_A2()->print_info();
 	}
 	//Gen->depth = depth;
-	Gen->main(t0,
+	Gen->poset_classification_main(t0,
 		schreier_depth,
 		false /*f_use_invariant_subset_if_available*/,
 		false /*f_debug*/,
@@ -776,7 +776,7 @@ void semifield_classify::compute_orbits(
 
 	if (f_v) {
 		cout << "semifield_classify::compute_orbits "
-				"done with generator_main" << endl;
+				"after poset_classification_main" << endl;
 	}
 	nb_orbits = Gen->nb_orbits_at_level(depth);
 	if (f_v) {

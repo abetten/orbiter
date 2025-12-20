@@ -433,11 +433,11 @@ void hermitian_spreads_classify::compute(
 	}
 #endif
 	if (f_v) {
-		cout << "hermitian_spreads_classify::compute calling generator_main" << endl;
+		cout << "hermitian_spreads_classify::compute calling poset_classification_main" << endl;
 	}
 
 	t0 = Os.os_ticks();
-	gen->main(t0,
+	gen->poset_classification_main(t0,
 		schreier_depth,
 		f_use_invariant_subset_if_available,
 		f_debug,
@@ -446,7 +446,7 @@ void hermitian_spreads_classify::compute(
 	int length;
 
 	if (f_v) {
-		cout << "hermitian_spreads_classify::compute done with generator_main" << endl;
+		cout << "hermitian_spreads_classify::compute done with poset_classification_main" << endl;
 	}
 	length = gen->nb_orbits_at_level(depth);
 

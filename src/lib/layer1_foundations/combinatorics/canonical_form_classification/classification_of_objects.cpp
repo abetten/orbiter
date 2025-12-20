@@ -102,8 +102,10 @@ void classification_of_objects::perform_classification(
 
 
 	if (Descr->f_nauty_control) {
-		cout << "classification_of_objects::perform_classification nauty_control: " << endl;
-		Descr->Nauty_control->print();
+		if (f_v) {
+			cout << "classification_of_objects::perform_classification nauty_control: " << endl;
+			Descr->Nauty_control->print();
+		}
 	}
 
 
@@ -161,7 +163,8 @@ void classification_of_objects::classify_objects_using_nauty(
 	if (f_v) {
 		cout << "classification_of_objects::classify_objects_using_nauty" << endl;
 	}
-	int f_vv = false;
+	int f_vv = (verbose_level >= 2);
+	//int f_vv = false;
 
 	int input_idx;
 	int t0, t1, dt;
@@ -256,6 +259,16 @@ void classification_of_objects::classify_objects_using_nauty(
 		if (!Output->F_reject[input_idx]) {
 			//Output->OWCF_transversal[Output->nb_orbits] = (any_combinatorial_object *) IS->Objects[input_idx];
 			Output->nb_orbits++;
+			if (f_vv) {
+				cout << "classification_of_objects::classify_objects_using_nauty "
+						"new isomorphism type, ago = " << Output->Ago[input_idx] <<
+						" Output->nb_orbits = " << Output->nb_orbits << endl;
+			}
+		}
+		else {
+			cout << "classification_of_objects::classify_objects_using_nauty reject! "
+					"Output->nb_orbits = " << Output->nb_orbits << endl;
+
 		}
 
 	}
@@ -522,7 +535,7 @@ int classification_of_objects::process_object(
 			Canonical_form,
 			NO,
 			Enc,
-			verbose_level);
+			verbose_level - 1);
 
 
 	if (f_v) {

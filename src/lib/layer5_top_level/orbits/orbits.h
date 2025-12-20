@@ -475,8 +475,8 @@ public:
 			int verbose_level);
 
 	void orbits_on_subsets(
-			groups::any_group *AG_base,
-			groups::any_group *AG_action,
+			actions::action *A_base,
+			actions::action *A_action,
 			groups::strong_generators *Subgroup_gens,
 			poset_classification::poset_classification_control *Control,
 			poset_classification::poset_classification *&PC,
@@ -491,8 +491,8 @@ public:
 			int &size,
 			int verbose_level);
 	void orbits_on_poset_post_processing(
-			groups::any_group *AG_base,
-			groups::any_group *AG_action,
+			actions::action *A_base,
+			actions::action *A_action,
 			poset_classification::poset_classification *PC,
 			int depth,
 			int verbose_level);

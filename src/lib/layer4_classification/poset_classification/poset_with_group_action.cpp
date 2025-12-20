@@ -417,16 +417,16 @@ poset_classification *poset_with_group_action::orbits_on_k_sets_compute(
 
 	if (f_v) {
 		cout << "poset_with_group_action::orbits_on_k_sets_compute "
-				"before Gen->main" << endl;
+				"before Gen->poset_classification_main" << endl;
 	}
-	Gen->main(t0,
+	Gen->poset_classification_main(t0,
 		schreier_depth,
 		f_use_invariant_subset_if_available,
 		f_debug,
 		verbose_level - 1);
 	if (f_v) {
 		cout << "poset_with_group_action::orbits_on_k_sets_compute "
-				"after Gen->main" << endl;
+				"after Gen->poset_classification_main" << endl;
 	}
 
 

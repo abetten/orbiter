@@ -725,11 +725,11 @@ void spread_classify::classify_partial_spreads(
 	
 	if (f_v) {
 		cout << "spread_classify::classify_partial_spreads "
-				"calling generator_main" << endl;
+				"before poset_classification_main" << endl;
 	}
 
 	t0 = Os.os_ticks();
-	gen->main(t0, 
+	gen->poset_classification_main(t0,
 		schreier_depth, 
 		f_use_invariant_subset_if_available, 
 		f_debug, 
@@ -739,7 +739,7 @@ void spread_classify::classify_partial_spreads(
 	
 	if (f_v) {
 		cout << "spread_classify::classify_partial_spreads "
-				"done with generator_main" << endl;
+				"after poset_classification_main" << endl;
 	}
 	length = gen->nb_orbits_at_level(gen->get_control()->depth);
 	if (f_v) {

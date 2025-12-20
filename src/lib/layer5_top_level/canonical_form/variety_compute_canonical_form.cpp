@@ -755,7 +755,8 @@ void variety_compute_canonical_form::add_canonical_object(
 		variety_stabilizer_compute *extra_data,
 		int idx, int verbose_level)
 // adds the canonical form at position idx,
-// using Classification_of_varieties_nauty
+// using Classification_of_varieties_nauty.
+// Stores the extra_data pointer.
 {
 	int f_v = (verbose_level >= 1);
 

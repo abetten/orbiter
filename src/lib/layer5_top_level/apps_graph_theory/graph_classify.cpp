@@ -234,15 +234,16 @@ void graph_classify::init(
 	t0 = Os.os_ticks();
 
 	if (f_v) {
-		cout << "graph_classify::init before gen->main" << endl;
+		cout << "graph_classify::init before gen->poset_classification_main" << endl;
 	}
-	depth = gen->main(t0,
+	depth = gen->poset_classification_main(
+			t0,
 			target_depth /*schreier_depth*/,
 		true /*f_use_invariant_subset_if_available*/,
 		false /*f_debug*/,
 		verbose_level);
 	if (f_v) {
-		cout << "graph_classify::init after gen->main" << endl;
+		cout << "graph_classify::init after gen->poset_classification_main" << endl;
 		cout << "gen->main returns depth=" << depth << endl;
 	}
 

@@ -344,18 +344,18 @@ void arc_generator::compute_starter(
 	//else {
 		if (f_v) {
 			cout << "arc_generator::compute_starter "
-					"before gen->main" << endl;
+					"before gen->poset_classification_main" << endl;
 			cout << "arc_generator::compute_starter "
 					"problem_label_with_path=" << gen->get_problem_label_with_path() << endl;
 		}
-		depth = gen->main(t0,
+		depth = gen->poset_classification_main(t0,
 			schreier_depth,
 			f_use_invariant_subset_if_available,
 			f_debug,
 			verbose_level);
 		if (f_v) {
 			cout << "arc_generator::compute_starter "
-					"after gen->main" << endl;
+					"after gen->poset_classification_main" << endl;
 		}
 	//}
 

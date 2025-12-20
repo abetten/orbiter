@@ -51,6 +51,12 @@ graph_theoretic_activity_description::graph_theoretic_activity_description()
 
 	f_sort_by_colors = false;
 
+	f_A_powers = false;
+	f_A_powers_max = 0;
+
+	f_distance_from = false;
+	distance_from_vertex = -1;
+
 	f_split = false;
 	//std::string split_input_fname;
 	//std::string split_by_file = NULL;
@@ -176,6 +182,20 @@ int graph_theoretic_activity_description::read_arguments(
 			f_sort_by_colors = true;
 			if (f_v) {
 				cout << "-sort_by_colors " << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-A_powers") == 0) {
+			f_A_powers = true;
+			f_A_powers_max = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-A_powers " << f_A_powers_max << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-distance_from") == 0) {
+			f_distance_from = true;
+			distance_from_vertex = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-distance_from " << distance_from_vertex << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-split") == 0) {
@@ -316,6 +336,12 @@ void graph_theoretic_activity_description::print()
 	}
 	if (f_sort_by_colors) {
 		cout << "-sort_by_colors " << endl;
+	}
+	if (f_A_powers) {
+		cout << "-A_powers " << f_A_powers_max << endl;
+	}
+	if (f_distance_from) {
+		cout << "-distance_from " << distance_from_vertex << endl;
 	}
 	if (f_split) {
 		cout << "-split " << split_input_fname << " " << split_by_file << endl;

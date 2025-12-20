@@ -19,8 +19,13 @@ namespace poset_classification {
 
 void poset_orbit_node::store_strong_generators(
 		poset_classification *gen,
-		groups::strong_generators *Strong_gens)
+		groups::strong_generators *Strong_gens, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "poset_orbit_node::store_strong_generators" << endl;
+	}
 	int i;
 
 	nb_strong_generators = Strong_gens->gens->len;
@@ -28,6 +33,9 @@ void poset_orbit_node::store_strong_generators(
 		first_strong_generator_handle = -1;
 		//hdl_strong_generators = NULL;
 		tl = NULL;
+		if (f_v) {
+			cout << "poset_orbit_node::store_strong_generators tl = NULL" << endl;
+		}
 	}
 	else {
 		//hdl_strong_generators = NEW_int(nb_strong_generators);
@@ -43,6 +51,12 @@ void poset_orbit_node::store_strong_generators(
 			}
 		}
 		Int_vec_copy(Strong_gens->tl, tl, gen->get_A()->base_len());
+		if (f_v) {
+			cout << "poset_orbit_node::store_strong_generators tl has length " << gen->get_A()->base_len() << endl;
+		}
+	}
+	if (f_v) {
+		cout << "poset_orbit_node::store_strong_generators done" << endl;
 	}
 }
 
@@ -308,6 +322,7 @@ void poset_orbit_node::init_extension_node_prepare_H(
 	long int pt, int pt_orbit_len,
 	int verbose_level)
 // sets up the group H which is the stabilizer of the point pt in G
+// called from upstep_work::init_extension_node
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -383,7 +398,8 @@ void poset_orbit_node::init_extension_node_prepare_H(
 					"before compute_point_stabilizer_in_standard_setting"
 					<< endl;
 		}
-		compute_point_stabilizer_in_standard_setting(gen,
+		compute_point_stabilizer_in_standard_setting(
+				gen,
 			prev, prev_ex, size,
 			G, go_G,
 			H,
@@ -480,8 +496,7 @@ void poset_orbit_node::compute_point_stabilizer_in_subspace_setting(
 
 	if (f_v) {
 		gen->print_level_extension_info(size - 1, prev, prev_ex);
-		cout << "poset_orbit_node::compute_point_stabilizer_"
-				"in_subspace_setting, "
+		cout << "poset_orbit_node::compute_point_stabilizer_in_subspace_setting "
 				"verbose_level = " << verbose_level << endl;
 	}
 
@@ -493,14 +508,14 @@ void poset_orbit_node::compute_point_stabilizer_in_subspace_setting(
 
 	if (f_v) {
 		gen->print_level_extension_info(size - 1, prev, prev_ex);
-		cout << "poset_orbit_node::compute_point_stabilizer_"
-				"in_subspace_setting, before H.init()" << endl;
+		cout << "poset_orbit_node::compute_point_stabilizer_in_subspace_setting "
+				"before H.init()" << endl;
 	}
 	H.init(gen->get_A(), verbose_level - 2);
 	if (f_v) {
 		gen->print_level_extension_info(size - 1, prev, prev_ex);
-		cout << "poset_orbit_node::compute_point_stabilizer_"
-				"in_subspace_setting, after H.init()" << endl;
+		cout << "poset_orbit_node::compute_point_stabilizer_in_subspace_setting "
+				"after H.init()" << endl;
 	}
 
 
@@ -511,8 +526,8 @@ void poset_orbit_node::compute_point_stabilizer_in_subspace_setting(
 
 	if (gen->root[prev].A_on_upset == NULL) {
 		gen->print_level_extension_info(size - 1, prev, prev_ex);
-		cout << "poset_orbit_node::compute_point_stabilizer_"
-				"in_subspace_setting gen->root[prev].A_on_upset == NULL" << endl;
+		cout << "poset_orbit_node::compute_point_stabilizer_in_subspace_setting "
+				"gen->root[prev].A_on_upset == NULL" << endl;
 		exit(1);
 	}
 	A_factor_space = gen->root[prev].A_on_upset;
@@ -538,8 +553,7 @@ void poset_orbit_node::compute_point_stabilizer_in_subspace_setting(
 			int i;
 
 			if (f_v) {
-				cout << "poset_orbit_node::compute_point_stabilizer_"
-						"in_subspace_setting, "
+				cout << "poset_orbit_node::compute_point_stabilizer_in_subspace_setting "
 						"with early test function, "
 						"before Op->setup_factor_space_action_with_early_test"
 						<< endl;
@@ -548,24 +562,22 @@ void poset_orbit_node::compute_point_stabilizer_in_subspace_setting(
 				AF, A_factor_space, size - 1,
 				verbose_level - 4);
 			if (f_v) {
-				cout << "poset_orbit_node::compute_point_stabilizer_"
-						"in_subspace_setting after "
-						"Op->setup_factor_space_action_with_early_test"
+				cout << "poset_orbit_node::compute_point_stabilizer_in_subspace_setting "
+						"after Op->setup_factor_space_action_with_early_test"
 						<< endl;
 				}
 			for (i = 0; i < AF.nb_cosets; i++) {
 				if (AF.preimage(i, 0) == pt) {
 					if (f_vv) {
-						cout << "poset_orbit_node::compute_point_stabilizer_"
-								"in_subspace_setting: point pt=" << pt
+						cout << "poset_orbit_node::compute_point_stabilizer_in_subspace_setting "
+								"point pt=" << pt
 								<< " is coset " << i << endl;
 						}
 					break;
 					}
 				}
 			if (i == AF.nb_cosets) {
-				cout << "poset_orbit_node::compute_point_stabilizer_"
-						"in_subspace_setting "
+				cout << "poset_orbit_node::compute_point_stabilizer_in_subspace_setting "
 						"fatal: could not find the coset corresponding "
 						"to point " << pt << endl;
 				exit(1);
@@ -578,8 +590,7 @@ void poset_orbit_node::compute_point_stabilizer_in_subspace_setting(
 
 			if (f_vvv) {
 				gen->print_level_extension_info(size - 1, prev, prev_ex);
-				cout << " poset_orbit_node::compute_point_stabilizer_"
-						"in_subspace_setting, "
+				cout << " poset_orbit_node::compute_point_stabilizer_in_subspace_setting "
 						"without early test function, setting up factor "
 						"space action:" << endl;
 			}
@@ -599,8 +610,7 @@ void poset_orbit_node::compute_point_stabilizer_in_subspace_setting(
 #if 0
 		if (f_vvv) {
 			gen->print_level_extension_info(size - 1, prev, prev_ex);
-			cout << " poset_orbit_node::compute_point_stabilizer_"
-					"in_subspace_setting "
+			cout << " poset_orbit_node::compute_point_stabilizer_in_subspace_setting "
 					" before AF->project_onto_Gauss_reduced_vector"
 					<< endl;
 		}
@@ -611,20 +621,17 @@ void poset_orbit_node::compute_point_stabilizer_in_subspace_setting(
 
 		if (f_vvv) {
 			gen->print_level_extension_info(size - 1, prev, prev_ex);
-			cout << " poset_orbit_node::compute_point_stabilizer_"
-					"in_subspace_setting "
+			cout << " poset_orbit_node::compute_point_stabilizer_in_subspace_setting "
 					" pt=" << pt << " projected_pt=" << projected_pt << endl;
 		}
 		if (projected_pt == -1) {
-			cout << "poset_orbit_node::compute_point_stabilizer_"
-					"in_subspace_setting "
+			cout << "poset_orbit_node::compute_point_stabilizer_in_subspace_setting "
 					"fatal: projected_pt == -1" << endl;
 			exit(1);
 		}
 		if (f_vvv) {
 			gen->print_level_extension_info(size - 1, prev, prev_ex);
-			cout << " poset_orbit_node::compute_point_stabilizer_"
-					"in_subspace_setting "
+			cout << " poset_orbit_node::compute_point_stabilizer_in_subspace_setting "
 					"calling G.point_stabilizer_with_action "
 					"verbose_level=" << verbose_level << endl;
 		}
@@ -642,21 +649,18 @@ void poset_orbit_node::compute_point_stabilizer_in_subspace_setting(
 				verbose_level - 4);
 		if (f_vvv) {
 			gen->print_level_extension_info(size - 1, prev, prev_ex);
-			cout << " poset_orbit_node::compute_point_stabilizer_"
-					"in_subspace_setting "
+			cout << " poset_orbit_node::compute_point_stabilizer_in_subspace_setting "
 					"G.point_stabilizer_with_action done" << endl;
 		}
 
 		if (f_v) {
-			cout << "poset_orbit_node::compute_point_stabilizer_"
-					"in_subspace_setting "
+			cout << "poset_orbit_node::compute_point_stabilizer_in_subspace_setting "
 					"before freeing A_factor_space" << endl;
 		}
 		FREE_OBJECT(A_factor_space);
 	}
 	if (f_v) {
-		cout << "poset_orbit_node::compute_point_stabilizer_"
-				"in_subspace_setting "
+		cout << "poset_orbit_node::compute_point_stabilizer_in_subspace_setting "
 				"done" << endl;
 	}
 
@@ -670,6 +674,7 @@ void poset_orbit_node::compute_point_stabilizer_in_standard_setting(
 	data_structures_groups::group_container &H, /*longinteger_object &go_H, */
 	int pt, int pt_orbit_len,
 	int verbose_level)
+// called from poset_orbit_node::init_extension_node_prepare_H
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -679,7 +684,7 @@ void poset_orbit_node::compute_point_stabilizer_in_standard_setting(
 	algebra::ring_theory::longinteger_domain D;
 
 	if (f_v) {
-		cout << "poset_orbit_node::compute_point_stabilizer_in_standard_setting, "
+		cout << "poset_orbit_node::compute_point_stabilizer_in_standard_setting "
 				"verbose_level = " << verbose_level << endl;
 	}
 
@@ -699,13 +704,13 @@ void poset_orbit_node::compute_point_stabilizer_in_standard_setting(
 
 
 	if (f_v) {
-		cout << "poset_orbit_node::compute_point_stabilizer_in_standard_setting, "
+		cout << "poset_orbit_node::compute_point_stabilizer_in_standard_setting "
 				"verbose_level = " << verbose_level << endl;
-		cout << "poset_orbit_node::compute_point_stabilizer_in_standard_setting, "
+		cout << "poset_orbit_node::compute_point_stabilizer_in_standard_setting "
 				"go_G = " << go_G << endl;
-		cout << "poset_orbit_node::compute_point_stabilizer_in_standard_setting, "
+		cout << "poset_orbit_node::compute_point_stabilizer_in_standard_setting "
 				"pt_orbit_len = " << pt_orbit_len << endl;
-		cout << "poset_orbit_node::compute_point_stabilizer_in_standard_setting, "
+		cout << "poset_orbit_node::compute_point_stabilizer_in_standard_setting "
 				"go_H = " << go_H << endl;
 	}
 
@@ -747,8 +752,8 @@ void poset_orbit_node::compute_point_stabilizer_in_standard_setting(
 			if (f_v) {
 				gen->print_level_extension_info(
 						size - 1, prev, prev_ex);
-				cout << " poset_orbit_node::compute_point_stabilizer_in_standard_setting calling "
-						"G.point_stabilizer_with_action"
+				cout << " poset_orbit_node::compute_point_stabilizer_in_standard_setting "
+						"calling G.point_stabilizer_with_action"
 						<< endl;
 			}
 			G.point_stabilizer_with_action(
@@ -756,8 +761,8 @@ void poset_orbit_node::compute_point_stabilizer_in_standard_setting(
 					0 /*verbose_level - 3*/);
 			if (f_v) {
 				gen->print_level_extension_info(size - 1, prev, prev_ex);
-				cout << " poset_orbit_node::compute_point_stabilizer_in_standard_setting after "
-						"G.point_stabilizer_with_action"
+				cout << " poset_orbit_node::compute_point_stabilizer_in_standard_setting "
+						"after G.point_stabilizer_with_action"
 						<< endl;
 			}
 

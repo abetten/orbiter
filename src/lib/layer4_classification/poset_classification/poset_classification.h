@@ -759,7 +759,7 @@ public:
 		poset_classification_control *PC_control,
 		poset_with_group_action *Poset,
 		int verbose_level);
-	int main(
+	int poset_classification_main(
 			int t0,
 		int schreier_depth, 
 		int f_use_invariant_subset_if_available, 
@@ -1659,7 +1659,7 @@ public:
 	// in poset_orbit_node_group_theory.cpp:
 	void store_strong_generators(
 			poset_classification *gen,
-			groups::strong_generators *Strong_gens);
+			groups::strong_generators *Strong_gens, int verbose_level);
 	void get_stabilizer_order(
 			poset_classification *gen,
 			algebra::ring_theory::longinteger_object &go);

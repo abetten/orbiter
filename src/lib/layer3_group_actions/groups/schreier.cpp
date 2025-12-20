@@ -357,7 +357,7 @@ void schreier::compute_all_point_orbits(
 		//void *preferred_choice_function_data;
 
 
-		if (f_v) {
+		if (false) {
 			cout << "schreier::compute_all_point_orbits pt = "
 					<< pt << " / " << Generators_and_images->degree
 					<< " nb_orbits=" << Forest->nb_orbits
@@ -374,7 +374,7 @@ void schreier::compute_all_point_orbits(
 							"pt_pref=" << pt_pref << endl;
 			pt0 = pt;
 		}
-		compute_point_orbit(pt_pref, print_interval, verbose_level - 2);
+		compute_point_orbit(pt_pref, print_interval, 0 /*verbose_level - 2*/);
 	}
 
 	if (f_v) {

@@ -251,16 +251,17 @@ void tensor_classify::classify_poset(
 
 	if (f_v) {
 		cout << "tensor_classify::classify_poset "
-				"before Gen->main, verbose_level=" << verbose_level << endl;
+				"before Gen->poset_classification_main, "
+				"verbose_level=" << verbose_level << endl;
 	}
-	Gen->main(t0,
+	Gen->poset_classification_main(t0,
 		depth,
 		f_use_invariant_subset_if_available,
 		f_debug,
 		verbose_level);
 	if (f_v) {
 		cout << "tensor_classify::classify_poset "
-				"after Gen->main" << endl;
+				"after Gen->poset_classification_main" << endl;
 	}
 	if (f_v) {
 		cout << "tensor_classify::classify_poset done" << endl;

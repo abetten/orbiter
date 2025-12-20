@@ -568,11 +568,19 @@ void poset_of_orbits::init_root_node_from_base_case(
 	}
 	if (f_v) {
 		cout << "poset_of_orbits::init_root_node_from_base_case "
-				"storing strong poset_classifications" << endl;
+				"before store_strong_generators" << endl;
 	}
-	root[PC->get_Base_case()->size].store_strong_generators(PC, PC->get_Base_case()->Stab_gens);
+	root[PC->get_Base_case()->size].store_strong_generators(
+			PC, PC->get_Base_case()->Stab_gens,
+			verbose_level);
+	if (f_v) {
+		cout << "poset_of_orbits::init_root_node_from_base_case "
+				"after store_strong_generators" << endl;
+	}
+
 	first_poset_orbit_node_at_level[PC->get_Base_case()->size + 1] =
 			PC->get_Base_case()->size + 1;
+
 	if (f_v) {
 		cout << "i : first_poset_orbit_node_at_level[i]" << endl;
 		for (i = 0; i <= PC->get_Base_case()->size + 1; i++) {
@@ -1360,7 +1368,7 @@ void poset_of_orbits::read_level_file(
 				Aut.SG->print(cout);
 				cout << endl;
 	#endif
-				O->store_strong_generators(PC, Strong_gens);
+				O->store_strong_generators(PC, Strong_gens, verbose_level - 2);
 				cout << "strong poset_classifications stored" << endl;
 
 				FREE_OBJECT(Strong_gens);

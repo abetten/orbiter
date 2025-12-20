@@ -721,31 +721,6 @@ void symbol_definition::read_definition(
 		packing_was_choose_fixed_points_control_label.assign(argv[++i]);
 		i++;
 
-#if 0
-		packing_with_assumed_symmetry_choose_fixed_points_control =
-				NEW_OBJECT(poset_classification::poset_classification_control);
-		if (f_v) {
-			cout << "reading -packing_with_symmetry_assumption_choose_fixed_points" << endl;
-		}
-		i += packing_with_assumed_symmetry_choose_fixed_points_control->read_arguments(argc - (i + 1),
-			argv + i + 1, verbose_level);
-
-		i++;
-
-		if (f_v) {
-			cout << "-packing_with_symmetry_assumption_choose_fixed_points" << endl;
-			cout << "i = " << i << endl;
-			cout << "argc = " << argc << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
-			}
-			cout << "-packing_with_symmetry_assumption_choose_fixed_points "
-					<< packing_with_assumed_symmetry_label
-					<< " " << packing_with_assumed_symmetry_choose_fixed_points_clique_size
-					<< endl;
-			packing_with_assumed_symmetry_choose_fixed_points_control->print();
-		}
-#endif
 		if (f_v) {
 			cout << "-packing_with_symmetry_assumption_choose_fixed_points "
 					<< packing_with_assumed_symmetry_label
@@ -2326,23 +2301,6 @@ void symbol_definition::definition_of_projective_space(
 	}
 
 
-#if 0
-	int f_semilinear;
-	number_theory::number_theory_domain NT;
-
-
-	if (NT.is_prime(Projective_space_with_action_description->F->q)) {
-		f_semilinear = false;
-	}
-	else {
-		f_semilinear = true;
-	}
-
-	if (Projective_space_with_action_description->f_use_projectivity_subgroup) {
-		f_semilinear = false;
-	}
-#endif
-
 	projective_geometry::projective_space_with_action *PA;
 
 	PA = NEW_OBJECT(projective_geometry::projective_space_with_action);
@@ -2352,13 +2310,6 @@ void symbol_definition::definition_of_projective_space(
 				"before PA->init_from_description" << endl;
 	}
 	PA->init_from_description(Projective_space_with_action_description, verbose_level);
-#if 0
-	PA->init(Projective_space_with_action_description->F,
-			Projective_space_with_action_description->n,
-		f_semilinear,
-		true /*f_init_incidence_structure*/,
-		verbose_level - 2);
-#endif
 	if (f_v) {
 		cout << "symbol_definition::definition_of_projective_space "
 				"after PA->init_from_description" << endl;
@@ -2413,17 +2364,7 @@ void symbol_definition::definition_of_orthogonal_space(
 				"after get_or_create_finite_field" << endl;
 	}
 
-	//int f_semilinear;
 	algebra::number_theory::number_theory_domain NT;
-
-#if 0
-	if (NT.is_prime(Orthogonal_space_with_action_description->F->q)) {
-		f_semilinear = false;
-	}
-	else {
-		f_semilinear = true;
-	}
-#endif
 
 	orthogonal_geometry_applications::orthogonal_space_with_action *OA;
 

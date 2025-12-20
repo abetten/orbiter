@@ -728,9 +728,14 @@ void graph_theory_apps::test_automorphism_property_of_group(
 
 		perm = NEW_int(AG->A->degree);
 
+		if (f_v) {
+			cout << "graph_theory_apps::test_automorphism_property_of_group "
+					"number of generators of group = " << Subgroup_gens->gens->len << endl;
+		}
+
 		for (h = 0; h < Subgroup_gens->gens->len; h++) {
 
-			if (nb != 1) {
+			if (f_v) {
 				cout << "graph_theory_apps::test_automorphism_property_of_group "
 						"testing generator " << h << " / " << Subgroup_gens->gens->len << endl;
 			}
@@ -740,12 +745,22 @@ void graph_theory_apps::test_automorphism_property_of_group(
 
 			Elt1 = Subgroup_gens->gens->ith(h);
 
+			if (f_v) {
+				cout << "graph_theory_apps::test_automorphism_property_of_group "
+						"testing generator " << h << " / " << Subgroup_gens->gens->len
+						<< " computing permutation representation" << endl;
+			}
 			for (i = 0; i < AG->A->degree; i++) {
 				j = AG->A->Group_element->element_image_of(i, Elt1, 0);
 				perm[i] = j;
 			}
 
 
+			if (f_v) {
+				cout << "graph_theory_apps::test_automorphism_property_of_group "
+						"testing generator " << h << " / " << Subgroup_gens->gens->len
+						<< " testing the automorphism property" << endl;
+			}
 			f_aut = Gamma->test_automorphism_property(
 					perm, AG->A->degree,
 					verbose_level - 2);
@@ -753,7 +768,8 @@ void graph_theory_apps::test_automorphism_property_of_group(
 			if (!f_aut) {
 				if (f_v) {
 					cout << "graph_theory_apps::test_automorphism_property_of_group "
-							"generator " << h << " / " << Subgroup_gens->gens->len << " is not an automorphism" << endl;
+							"generator " << h << " / " << Subgroup_gens->gens->len
+							<< " is not an automorphism" << endl;
 				}
 				break;
 			}

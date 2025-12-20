@@ -373,8 +373,8 @@ void modified_group_init_layer5::create_set_stabilizer_subgroup(
 
 		// ToDo:
 		Orbits_global.orbits_on_subsets(
-				AG,
-				AG,
+				AG->A_base,
+				AG->A,
 				AG->Subgroup_gens,
 				Control,
 				PC,

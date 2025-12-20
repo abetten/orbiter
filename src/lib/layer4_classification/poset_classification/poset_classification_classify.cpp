@@ -60,16 +60,16 @@ void poset_classification::compute_orbits_on_subsets(
 
 	if (f_v) {
 		cout << "poset_classification::compute_orbits_on_subsets "
-				"calling main" << endl;
+				"calling poset_classification_main" << endl;
 	}
-	main(t0,
+	poset_classification_main(t0,
 		schreier_depth,
 		f_use_invariant_subset_if_available,
 		f_debug,
 		verbose_level);
 	if (f_v) {
 		cout << "poset_classification::compute_orbits_on_subsets "
-				"after main" << endl;
+				"after poset_classification_main" << endl;
 	}
 
 	int i, fst, len;
@@ -109,7 +109,7 @@ void poset_classification::compute_orbits_on_subsets(
 
 
 
-int poset_classification::main(
+int poset_classification::poset_classification_main(
 		int t0,
 	int schreier_depth, 
 	int f_use_invariant_subset_if_available, 
@@ -133,8 +133,8 @@ int poset_classification::main(
 	other::orbiter_kernel_system::os_interface Os;
 
 	if (f_v) {
-		cout << "poset_classification::main" << endl;
-		cout << "poset_classification::main ";
+		cout << "poset_classification::poset_classification_main" << endl;
+		cout << "poset_classification::poset_classification_main ";
 		print_problem_label();
 		cout << " depth = " << depth << endl;
 		cout << "f_W = " << Control->f_W << endl;
@@ -144,7 +144,7 @@ int poset_classification::main(
 	}
 	if (Control->f_recover) {
 		if (f_v) {
-			cout << "poset_classification::main: recovering from file "
+			cout << "poset_classification::poset_classification_main recovering from file "
 					<< Control->recover_fname << endl;
 		}
 
@@ -162,7 +162,7 @@ int poset_classification::main(
 		
 		if (f_v) {
 			cout << "depth_completed = " << depth_completed << endl;
-			cout << "poset_classification::main: "
+			cout << "poset_classification::poset_classification_main "
 					"recreating schreier vectors "
 					"to depth " << depth_completed - 1 << endl;
 		}
@@ -182,14 +182,14 @@ int poset_classification::main(
 		target_depth = depth;
 	}
 	if (f_v) {
-		cout << "poset_classification::main "
+		cout << "poset_classification::poset_classification_main "
 				"target_depth=" << target_depth << endl;
 	}
 	
 
 
 	if (f_v) {
-		cout << "poset_classification::main before compute_orbits" << endl;
+		cout << "poset_classification::poset_classification_main before compute_orbits" << endl;
 	}
 	size = compute_orbits(
 			depth_completed, target_depth,
@@ -197,23 +197,23 @@ int poset_classification::main(
 			f_use_invariant_subset_if_available,
 			verbose_level);
 	if (f_v) {
-		cout << "poset_classification::main after compute_orbits" << endl;
+		cout << "poset_classification::poset_classification_main after compute_orbits" << endl;
 	}
 
 
 
 #if 0
 	if (f_v) {
-		cout << "poset_classification::main before post_processing" << endl;
+		cout << "poset_classification::poset_classification_main before post_processing" << endl;
 	}
 	post_processing(size, verbose_level);
 	if (f_v) {
-		cout << "poset_classification::main after post_processing" << endl;
+		cout << "poset_classification::poset_classification_main after post_processing" << endl;
 	}
 #endif
 
 	if (f_v) {
-		cout << "poset_classification::main done" << endl;
+		cout << "poset_classification::poset_classification_main done" << endl;
 	}
 	return size;
 }
