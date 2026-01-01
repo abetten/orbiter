@@ -268,9 +268,20 @@ interface_toolkit::interface_toolkit()
 
 	f_decomposition_matrix = false;
 	//std::string decomposition_matrix_fname;
+	//std::string decomposition_matrix_po_label;
+	//std::string decomposition_matrix_f_fst_label;
+	//std::string decomposition_matrix_iso_idx_label;
+	//std::string decomposition_matrix_n1_label;
+	//std::string decomposition_matrix_n2_label;
+	//std::string decomposition_matrix_n3_label;
 
 	f_stats = false;
 	//std::string stats_fname_base;
+
+	f_intersect_set_of_sets = false;
+	//std::string intersect_set_of_sets_fname;
+	//std::string intersect_set_of_sets_column;
+
 
 }
 
@@ -448,10 +459,15 @@ void interface_toolkit::print_help(
 		cout << "-join_columns <string : fname_in> <string : fname_out> <string : col1> <string : col2>" << endl;
 	}
 	else if (ST.stringcmp(argv[i], "-decomposition_matrix") == 0) {
-		cout << "-decomposition_matrix <string : fname>" << endl;
+		cout << "-decomposition_matrix <string : fname> <string : po_label> "
+				"<string : f_fst_label> <string : iso_idx_label> "
+				"<string : n1_label> <string : n2_label> <string : n3_label>" << endl;
 	}
 	else if (ST.stringcmp(argv[i], "-stats") == 0) {
 		cout << "-stats <string : fname_base>" << endl;
+	}
+	else if (ST.stringcmp(argv[i], "-intersect_set_of_sets") == 0) {
+		cout << "-intersect_set_of_sets <string : fname> <string : col_label>" << endl;
 	}
 
 }
@@ -631,6 +647,9 @@ int interface_toolkit::recognize_keyword(
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-stats") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-intersect_set_of_sets") == 0) {
 		return true;
 	}
 	return false;
@@ -1418,9 +1437,31 @@ void interface_toolkit::read_arguments(
 	else if (ST.stringcmp(argv[i], "-decomposition_matrix") == 0) {
 		f_decomposition_matrix = true;
 		decomposition_matrix_fname.assign(argv[++i]);
+		decomposition_matrix_po_label.assign(argv[++i]);
+		decomposition_matrix_f_fst_label.assign(argv[++i]);
+		decomposition_matrix_iso_idx_label.assign(argv[++i]);
+		decomposition_matrix_n1_label.assign(argv[++i]);
+		decomposition_matrix_n2_label.assign(argv[++i]);
+		decomposition_matrix_n3_label.assign(argv[++i]);
 		if (f_v) {
 			cout << "-decomposition_matrix "
 					<< decomposition_matrix_fname << " "
+					<< decomposition_matrix_po_label << " "
+					<< decomposition_matrix_f_fst_label << " "
+					<< decomposition_matrix_iso_idx_label << " "
+					<< decomposition_matrix_n1_label << " "
+					<< decomposition_matrix_n2_label << " "
+					<< decomposition_matrix_n3_label << " "
+					<< endl;
+		}
+	}
+	else if (ST.stringcmp(argv[i], "-intersect_set_of_sets") == 0) {
+		f_intersect_set_of_sets = true;
+		intersect_set_of_sets_fname.assign(argv[++i]);
+		intersect_set_of_sets_column.assign(argv[++i]);
+		if (f_v) {
+			cout << "-intersect_set_of_sets "
+					<< intersect_set_of_sets_fname << " " << intersect_set_of_sets_column
 					<< endl;
 		}
 	}
@@ -1751,11 +1792,22 @@ void interface_toolkit::print()
 	if (f_decomposition_matrix) {
 		cout << "-decomposition_matrix "
 				<< decomposition_matrix_fname << " "
+				<< decomposition_matrix_po_label << " "
+				<< decomposition_matrix_f_fst_label << " "
+				<< decomposition_matrix_iso_idx_label << " "
+				<< decomposition_matrix_n1_label << " "
+				<< decomposition_matrix_n2_label << " "
+				<< decomposition_matrix_n3_label << " "
 				<< endl;
 	}
 	if (f_stats) {
 		cout << "-stats "
 				<< stats_fname_base << " "
+				<< endl;
+	}
+	if (f_intersect_set_of_sets) {
+		cout << "-intersect_set_of_sets "
+				<< intersect_set_of_sets_fname << " " << intersect_set_of_sets_column
 				<< endl;
 	}
 }
@@ -3072,6 +3124,28 @@ void interface_toolkit::worker(
 		}
 
 
+		combinatorics::other_combinatorics::combinatorics_domain Combi;
+
+		Combi.make_decomposition_matrix(
+				decomposition_matrix_fname,
+				decomposition_matrix_po_label,
+				decomposition_matrix_f_fst_label,
+				decomposition_matrix_iso_idx_label,
+				verbose_level);
+
+		Combi.make_decomposition_diagram(
+				decomposition_matrix_fname,
+				decomposition_matrix_po_label,
+				decomposition_matrix_f_fst_label,
+				decomposition_matrix_iso_idx_label,
+				decomposition_matrix_n1_label,
+				decomposition_matrix_n2_label,
+				decomposition_matrix_n3_label,
+				verbose_level);
+
+
+#if 0
+
 		cout << "reading file " << decomposition_matrix_fname << endl;
 
 
@@ -3150,7 +3224,8 @@ void interface_toolkit::worker(
 
 		m = Int_vec_maximum(Decomp, nb_rows * nb_cols);
 
-		cout << "decomposition matrix has size " << nb_rows << " x " << nb_cols << " max entry = " << m << endl;
+		cout << "decomposition matrix has size " << nb_rows
+				<< " x " << nb_cols << " max entry = " << m << endl;
 		Int_matrix_print(Decomp, nb_rows, nb_cols);
 
 		std::string fname_out;
@@ -3167,7 +3242,9 @@ void interface_toolkit::worker(
 		Fio.Csv_file_support->int_matrix_write_csv(
 				fname_out, Decomp, nb_rows, nb_cols);
 
-		cout << "Written file " << fname_out << " of size " << Fio.file_size(fname_out) << endl;
+		cout << "Written file " << fname_out
+				<< " of size " << Fio.file_size(fname_out) << endl;
+#endif
 
 
 	}
@@ -3191,6 +3268,64 @@ void interface_toolkit::worker(
 			cout << "interface_toolkit::worker "
 					"after save_stats" << endl;
 		}
+
+	}
+	else if (f_intersect_set_of_sets) {
+		if (f_v) {
+			cout << "interface_toolkit::worker -intersect_set_of_sets "
+				<< intersect_set_of_sets_fname << " " << intersect_set_of_sets_column
+				<< endl;
+		}
+
+		other::orbiter_kernel_system::file_io Fio;
+
+		other::data_structures::set_of_sets *SoS;
+
+		Fio.Csv_file_support->read_column_as_set_of_sets(
+				intersect_set_of_sets_fname, intersect_set_of_sets_column,
+				SoS,
+				verbose_level);
+
+		other::data_structures::sorting Sorting;
+
+		int i, j, N;
+		int *Intersection_sz;
+
+		N = SoS->nb_sets;
+		Intersection_sz = NEW_int(N * N);
+		Int_vec_zero(Intersection_sz, N * N);
+
+
+		for (i = 0; i < N; i++) {
+			for (j = 0; j < N; j++) {
+				if (i == j) {
+					continue;
+				}
+				int len3;
+				long int *v3;
+
+				v3 = NEW_lint(SoS->Set_size[i]);
+
+				Sorting.lint_vec_intersect_sorted_vectors(
+						SoS->Sets[i], SoS->Set_size[i],
+						SoS->Sets[j], SoS->Set_size[j], v3, len3);
+
+				Intersection_sz[i * N + j] = len3;
+
+				FREE_lint(v3);
+
+			}
+		}
+
+		cout << "Intersection_sz:" << endl;
+		Int_matrix_print(Intersection_sz, N, N);
+
+		if (f_v) {
+			cout << "interface_toolkit::worker -intersect_set_of_sets read set of sets. "
+					"Number of sets = " << SoS->nb_sets
+				<< endl;
+		}
+
 
 	}
 

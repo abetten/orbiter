@@ -144,7 +144,7 @@ void packing_classify_activity::perform_activity(
 					"before make_graph_of_disjoint_spreads" << endl;
 		}
 
-		Packing_classify->Spread_table_with_selection->Spread_tables->make_graph_of_disjoint_spreads(CG, verbose_level);
+		Packing_classify->Spread_table_with_selection->Spread_table->make_graph_of_disjoint_spreads(CG, verbose_level);
 
 		if (f_v) {
 			cout << "packing_classify_activity::perform_activity "

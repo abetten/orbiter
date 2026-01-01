@@ -28,7 +28,7 @@ public:
 
 
 	actions::action *A;
-		// P Gamma L(n,q)
+		// PGGL(n,q)
 	actions::action *A2;
 		// action of A on grassmannian
 		// of k-subspaces of V(n,q)
@@ -49,7 +49,7 @@ public:
 	//long int starter_j1, starter_j2, starter_j3;
 
 	actions::action *A0;
-		// P Gamma L(k,q)
+		// PGGL(k,q)
 	actions::action *A0_linear;
 		// PGL(k,q), needed for compute_live_points
 	data_structures_groups::vector_ge *gens2;
@@ -93,7 +93,7 @@ public:
 // spread_activity_description.cpp
 // #############################################################################
 
-//! description of an activity regarding a spread
+//! description of an activity for an object of type spread
 
 
 
@@ -121,7 +121,7 @@ public:
 // spread_activity.cpp
 // #############################################################################
 
-//! an activity regarding a spread
+//! an activity for an object of type spread
 
 
 
@@ -134,7 +134,7 @@ public:
 	geometry::finite_geometries::spread_domain *SD;
 
 	actions::action *A;
-		// P Gamma L(n,q)
+		// PGGL(n,q)
 	actions::action *A2;
 		// action of A on grassmannian
 		// of k-subspaces of V(n,q)
@@ -317,7 +317,7 @@ public:
 
 
 	actions::action *A;
-		// P Gamma L(n,q)
+		// PGGL(n,q)
 	actions::action *A2;
 		// action of A on grassmannian
 		// of k-subspaces of V(n,q)
@@ -367,7 +367,6 @@ public:
 			int orbit_at_level, int level_of_candidates_file,
 			int f_lexorder_test, int f_eliminate_graphs_if_possible,
 			int &nb_vertices,
-			//graph_theory::colored_graph *&CG,
 			combinatorics::solvers::diophant *&Dio,
 			long int *&col_labels,
 			int &f_ruled_out,
@@ -396,9 +395,7 @@ public:
 		int iso_cnt,
 		long int *data, int data_size, int verbose_level);
 	void klein(
-			//std::ostream &ost,
-			//isomorph::isomorph *Iso,
-		int iso_cnt, //groups::sims *Stab, groups::schreier &Orb,
+		int iso_cnt,
 		long int *data, int data_size,
 		other::data_structures::tally *&C,
 		int verbose_level);
@@ -636,7 +633,7 @@ public:
 class spread_table_activity_description {
 public:
 
-	// TABLES/spread_table_activity.tex
+	// TABLES/spread_table_activity.csv
 
 	int f_find_spread;
 	std::string find_spread_text;
@@ -665,6 +662,11 @@ public:
 	int f_isomorphism_type_of_spreads;
 	std::string isomorphism_type_of_spreads_list;
 
+
+	int f_dualize_packings;
+	std::string dualize_packings_fname_in;
+	std::string dualize_packings_fname_out;
+	std::string dualize_packings_col_label;
 
 
 	spread_table_activity_description();
@@ -706,6 +708,13 @@ public:
 	void export_spreads_to_csv(
 			std::string &fname,
 			int *spread_idx, int nb, int verbose_level);
+	void packings_dualize(
+			std::string &fname_in, std::string &fname_out, std::string &col_label,
+			int verbose_level);
+	void dualize_packings(
+			long int *Packing_in, int nb_packings, int packing_sz,
+			long int *&Dual_packings,
+			int verbose_level);
 	void report_spreads(
 			int *spread_idx, int nb, int verbose_level);
 	void report_spread2(
@@ -724,14 +733,25 @@ public:
 class spread_table_with_selection {
 public:
 
-	spread_classify *T;
+	geometry::finite_geometries::spread_table_description *Spread_table_description;
+
+	projective_geometry::projective_space_with_action *PA;
+
+	geometry::finite_geometries::spread_domain *SD;
+
+	int dimension_of_spread_elements;
+
+	spread_classify *Spread_classify; // this used to be T
 	algebra::field_theory::finite_field *F;
+	int n;
 	int q;
 	int spread_size;
 	int size_of_packing; // q^2 + q + 1
 	int nb_lines;
-	int f_select_spread;
-	std::string select_spread_text;
+
+	// the following two are now in Spread_table_description:
+	//int f_select_spread;
+	//std::string select_spread_text;
 
 	int *select_spread;
 	int select_spread_nb;
@@ -752,7 +772,7 @@ public:
 	int *sorted_packing; // [size_of_packing]
 	int *dual_packing; // [size_of_packing]
 
-	geometry::finite_geometries::spread_tables *Spread_tables;
+	geometry::finite_geometries::spread_table *Spread_table;
 	int *tmp_isomorphism_type_of_spread; // for packing_swap_func
 
 	other::data_structures::bitvector *Bitvec;
@@ -762,17 +782,11 @@ public:
 	spread_table_with_selection();
 	~spread_table_with_selection();
 	void do_spread_table_init(
-			projective_geometry::projective_space_with_action *PA,
-			int dimension_of_spread_elements,
-			int f_select_spread, std::string &select_spread_text,
-			std::string &path_to_spread_tables,
-			std::string &poset_classification_control_label,
+			geometry::finite_geometries::spread_table_description *Spread_table_description,
 			int verbose_level);
+	void init_restricted_table(
+		int verbose_level);
 	void init(
-			spread_classify *T,
-		int f_select_spread,
-		std::string &select_spread_text,
-		std::string &path_to_spread_tables,
 		int verbose_level);
 	void compute_spread_table(
 			int verbose_level);

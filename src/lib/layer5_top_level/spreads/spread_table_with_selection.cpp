@@ -24,14 +24,26 @@ static void spread_table_with_selection_swap_func(
 spread_table_with_selection::spread_table_with_selection()
 {
 	Record_birth();
-	T = NULL;
+
+	Spread_table_description = NULL;
+
+	PA = NULL;
+
+	SD = NULL;
+
+	dimension_of_spread_elements = 0;
+
+	Spread_classify = NULL;
 	F = NULL;
+	n = 0;
 	q = 0;
 	spread_size = 0;
 	size_of_packing = 0;
 	nb_lines = 0;
+#if 0
 	f_select_spread = false;
 	//select_spread_text = NULL;
+#endif
 	select_spread = NULL;
 	select_spread_nb = 0;
 	//path_to_spread_tables = NULL;
@@ -45,7 +57,7 @@ spread_table_with_selection::spread_table_with_selection()
 	sorted_packing = NULL;
 	dual_packing = NULL;
 
-	Spread_tables = NULL;
+	Spread_table = NULL;
 	tmp_isomorphism_type_of_spread = NULL;
 
 	Bitvec = NULL;
@@ -60,6 +72,10 @@ spread_table_with_selection::spread_table_with_selection()
 spread_table_with_selection::~spread_table_with_selection()
 {
 	Record_death();
+
+	if (SD) {
+		FREE_OBJECT(SD);
+	}
 	if (select_spread) {
 		FREE_int(select_spread);
 	}
@@ -78,8 +94,8 @@ spread_table_with_selection::~spread_table_with_selection()
 	if (dual_packing) {
 		FREE_int(dual_packing);
 	}
-	if (Spread_tables) {
-		FREE_OBJECT(Spread_tables);
+	if (Spread_table) {
+		FREE_OBJECT(Spread_table);
 	}
 	if (Bitvec) {
 		FREE_OBJECT(Bitvec);
@@ -88,26 +104,36 @@ spread_table_with_selection::~spread_table_with_selection()
 
 
 void spread_table_with_selection::do_spread_table_init(
-		projective_geometry::projective_space_with_action *PA,
-		int dimension_of_spread_elements,
-		int f_select_spread, std::string &select_spread_text,
-		std::string &path_to_spread_tables,
-		std::string &poset_classification_control_label,
+		geometry::finite_geometries::spread_table_description *Spread_table_description,
 		int verbose_level)
 // creates geometry::spread_domain and spreads::spread_classify objects
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "spread_table_with_selection::do_spread_table_init "
-				"dimension_of_spread_elements="
-				<< dimension_of_spread_elements << endl;
+		cout << "spread_table_with_selection::do_spread_table_init" << endl;
 	}
-	int n, q;
-	algebra::basic_algebra::matrix_group *Mtx;
-	algebra::field_theory::finite_field *F;
 
-	spreads::spread_classify *Spread_classify;
+	spread_table_with_selection::Spread_table_description = Spread_table_description;
+
+	if (Spread_table_description->f_space) {
+		PA = Get_projective_space(Spread_table_description->space_label);
+	}
+	else {
+		cout << "spread_table_with_selection::do_spread_table_init "
+				"please specify a projective space using -space <label>" << endl;
+		exit(1);
+	}
+
+
+	if (Spread_table_description->f_rk) {
+		dimension_of_spread_elements = Spread_table_description->rk;
+	}
+	else {
+		cout << "spread_table_with_selection::do_spread_table_init please specify the vector space dimension of spread elements using -rk <rk>" << endl;
+		exit(1);
+	}
+	algebra::basic_algebra::matrix_group *Mtx;
 
 
 	n = PA->A->matrix_group_dimension();
@@ -121,7 +147,6 @@ void spread_table_with_selection::do_spread_table_init(
 	}
 
 
-	geometry::finite_geometries::spread_domain *SD;
 
 	SD = NEW_OBJECT(geometry::finite_geometries::spread_domain);
 
@@ -141,44 +166,62 @@ void spread_table_with_selection::do_spread_table_init(
 	}
 
 
-	spreads::spread_classify_description *Descr;
-
-	Descr = NEW_OBJECT(spreads::spread_classify_description);
-
-	Spread_classify = NEW_OBJECT(spreads::spread_classify);
 
 
-	Descr->f_poset_classification_control = true;
-	Descr->poset_classification_control_label = poset_classification_control_label;
 
-	Descr->f_projective_space = false;
-	Descr->f_recoordinatize = true;
+	if (Spread_table_description->f_control) {
 
 
-	if (f_v) {
-		cout << "spread_table_with_selection::do_spread_table_init "
-				"before Spread_classify->init" << endl;
+		if (f_v) {
+			cout << "spread_table_with_selection::do_spread_table_init "
+					"before Spread_classify->init" << endl;
+		}
+
+		spreads::spread_classify_description *Descr;
+
+		Descr = NEW_OBJECT(spreads::spread_classify_description);
+
+		Descr->f_poset_classification_control = true;
+		Descr->poset_classification_control_label = Spread_table_description->control_label;
+
+		Descr->f_projective_space = false;
+		Descr->f_recoordinatize = true;
+
+
+		Spread_classify = NEW_OBJECT(spreads::spread_classify);
+
+		//spreads::spread_classify *Spread_classify;
+
+		Spread_classify->init(Descr, SD, PA, verbose_level - 1);
+
+		if (f_v) {
+			cout << "spread_table_with_selection::do_spread_table_init "
+					"after Spread_classify->init" << endl;
+		}
+
+	#if 0
+		if (f_v) {
+			cout << "spread_table_with_selection::do_spread_table_init "
+					"before Spread_classify->init2" << endl;
+		}
+		Spread_classify->init2(Control, verbose_level);
+		if (f_v) {
+			cout << "spread_table_with_selection::do_spread_table_init "
+					"after Spread_classify->init2" << endl;
+		}
+	#endif
+
+
+	}
+	else {
+
+		if (f_v) {
+			cout << "spread_table_with_selection::do_spread_table_init "
+					"we don't allocate Spread_classify object since -control is not given" << endl;
+		}
+
 	}
 
-
-	Spread_classify->init(Descr, SD, PA, verbose_level - 1);
-
-	if (f_v) {
-		cout << "spread_table_with_selection::do_spread_table_init "
-				"after Spread_classify->init" << endl;
-	}
-
-#if 0
-	if (f_v) {
-		cout << "spread_table_with_selection::do_spread_table_init "
-				"before Spread_classify->init2" << endl;
-	}
-	Spread_classify->init2(Control, verbose_level);
-	if (f_v) {
-		cout << "spread_table_with_selection::do_spread_table_init "
-				"after Spread_classify->init2" << endl;
-	}
-#endif
 
 
 
@@ -186,60 +229,46 @@ void spread_table_with_selection::do_spread_table_init(
 
 	//Spread_table_with_selection = NEW_OBJECT(spreads::spread_table_with_selection);
 
-	if (f_v) {
-		cout << "spread_table_with_selection::do_spread_table_init "
-				"before init" << endl;
+
+	if (Spread_table_description->f_restricted_table) {
+		if (f_v) {
+			cout << "spread_table_with_selection::do_spread_table_init "
+					"restricted table " << Spread_table_description->restricted_table_label << endl;
+			cout << "spread_table_with_selection::do_spread_table_init "
+					"subset " << Spread_table_description->restricted_table_subset << endl;
+		}
+
+		init_restricted_table(verbose_level);
+
 	}
-	init(
-			Spread_classify,
-		f_select_spread,
-		select_spread_text,
-		path_to_spread_tables,
-		verbose_level);
-	if (f_v) {
-		cout << "spread_table_with_selection::do_spread_table_init "
-				"after init" << endl;
+	else {
+
+		if (f_v) {
+			cout << "spread_table_with_selection::do_spread_table_init "
+					"before init" << endl;
+		}
+		init(
+			verbose_level);
+		if (f_v) {
+			cout << "spread_table_with_selection::do_spread_table_init "
+					"after init" << endl;
+		}
+
+		if (f_v) {
+			cout << "spread_table_with_selection::do_spread_table_init "
+					"before compute_spread_table" << endl;
+		}
+		compute_spread_table(verbose_level);
+		if (f_v) {
+			cout << "spread_table_with_selection::do_spread_table_init "
+					"after compute_spread_table" << endl;
+		}
+
 	}
 
 
 
-#if 0
 
-	if (f_v) {
-		cout << "spread_table_with_selection::do_spread_table_init "
-				"before init" << endl;
-	}
-	init(
-		PA,
-		Spread_table_with_selection,
-		true,
-		verbose_level);
-	if (f_v) {
-		cout << "spread_table_with_selection::do_spread_table_init "
-				"after init" << endl;
-	}
-
-#if 0
-	cout << "before IA->init" << endl;
-	IA->init(T->A, P->A_on_spreads, P->gen,
-		P->size_of_packing, P->prefix_with_directory, ECA,
-		callback_packing_report,
-		NULL /*callback_subset_orbits*/,
-		P,
-		verbose_level);
-	cout << "after IA->init" << endl;
-#endif
-#endif
-
-	if (f_v) {
-		cout << "spread_table_with_selection::do_spread_table_init "
-				"before compute_spread_table" << endl;
-	}
-	compute_spread_table(verbose_level);
-	if (f_v) {
-		cout << "spread_table_with_selection::do_spread_table_init "
-				"after compute_spread_table" << endl;
-	}
 
 	if (f_v) {
 		cout << "spread_table_with_selection::do_spread_table_init done" << endl;
@@ -249,13 +278,129 @@ void spread_table_with_selection::do_spread_table_init(
 }
 
 
+void spread_table_with_selection::init_restricted_table(
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
 
+	if (f_v) {
+		cout << "spread_table_with_selection::init_restricted_table" << endl;
+	}
+
+	F = PA->F;
+	q = F->q;
+
+	spread_size = SD->spread_size;
+	size_of_packing = q * q + q + 1;
+
+	nb_lines = SD->nCkq;
+	//nb_lines = Spread_classify->A2->degree;
+
+	if (Spread_table_description->f_path) {
+		spread_table_with_selection::path_to_spread_tables = Spread_table_description->path;
+	}
+	else {
+		spread_table_with_selection::path_to_spread_tables = "";
+	}
+
+
+	if (f_v) {
+		cout << "spread_table_with_selection::init_restricted_table q=" << q << endl;
+		cout << "spread_table_with_selection::init_restricted_table nb_lines=" << nb_lines << endl;
+		cout << "spread_table_with_selection::init_restricted_table spread_size=" << spread_size << endl;
+		cout << "spread_table_with_selection::init_restricted_table size_of_packing=" << size_of_packing << endl;
+	}
+
+
+	spreads::spread_table_with_selection *Old_table;
+
+	Old_table = Get_spread_table(Spread_table_description->restricted_table_label);
+
+	long int *subset;
+	int subset_sz;
+	other::data_structures::vector_builder *vb_Subset;
+
+	vb_Subset = Get_vector(Spread_table_description->restricted_table_subset);
+	subset = vb_Subset->v;
+	subset_sz = vb_Subset->len;
+	if (f_v) {
+		cout << "spread_table_with_selection::init_restricted_table "
+				"subset " << Spread_table_description->restricted_table_subset << " has size " << subset_sz << endl;
+		Lint_vec_print(cout, subset, subset_sz);
+		cout << endl;
+	}
+
+	long int *Spreads_selected;
+	int *isomorphism_type_of_spread;
+	int i, a;
+
+	Spreads_selected = NEW_lint(subset_sz * spread_size);
+	isomorphism_type_of_spread = NEW_int(subset_sz);
+	for (i = 0; i < subset_sz; i++) {
+		a = subset[i];
+		Lint_vec_copy(Old_table->get_spread(a), Spreads_selected + i * spread_size, spread_size);
+		isomorphism_type_of_spread[i] = Old_table->Spread_table->iso_types_of_spreads[a];
+	}
+
+	Spread_table = NEW_OBJECT(geometry::finite_geometries::spread_table);
+
+
+
+	Spread_table->nb_spreads = subset_sz;
+
+	if (f_v) {
+		cout << "spread_table_with_selection::init_restricted_table "
+				"before Spread_tables->init" << endl;
+	}
+
+	Spread_table->init(
+			Spread_table_description,
+				verbose_level);
+
+	if (f_v) {
+		cout << "spread_table_with_selection::init_restricted_table "
+				"after Spread_tables->init" << endl;
+	}
+
+	if (f_v) {
+		cout << "spread_table_with_selection::init_restricted_table "
+				"We will use " << subset_sz << " spreads of the original "
+				<< Old_table->Spread_table->nb_spreads << endl;
+	}
+
+
+	if (f_v) {
+		cout << "spread_table_with_selection::init_restricted_table "
+				"before Spread_table->init_spread_table" << endl;
+	}
+
+	Spread_table->init_spread_table(
+			subset_sz,
+			Spreads_selected, isomorphism_type_of_spread,
+			verbose_level);
+
+	if (f_v) {
+		cout << "spread_table_with_selection::init_restricted_table "
+				"after Spread_tables->init_spread_table" << endl;
+	}
+
+	if (f_v) {
+		cout << "spread_table_with_selection::init_restricted_table "
+				"before Spread_table->save" << endl;
+	}
+
+	Spread_table->save(verbose_level);
+
+	sorted_packing = NEW_int(size_of_packing);
+	dual_packing = NEW_int(size_of_packing);
+
+
+	if (f_v) {
+		cout << "spread_table_with_selection::init_restricted_table done" << endl;
+	}
+}
 
 void spread_table_with_selection::init(
-		spread_classify *T,
-	int f_select_spread,
-	std::string &select_spread_text,
-	std::string &path_to_spread_tables,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -264,30 +409,32 @@ void spread_table_with_selection::init(
 		cout << "spread_table_with_selection::init" << endl;
 	}
 
-	if (f_select_spread) {
-		Int_vec_scan(select_spread_text, select_spread, select_spread_nb);
-		if (f_v) {
-			cout << "select_spread = ";
-			Int_vec_print(cout, select_spread, select_spread_nb);
-			cout << endl;
-		}
+	if (Spread_table_description->f_iso_types) {
+		Int_vec_scan(Spread_table_description->iso_types_string,
+				select_spread, select_spread_nb);
 	}
 	else {
-		select_spread_nb = 0;
+		cout << "spread_table_with_selection::init please specify the isomorphism "
+				"types of spreads using -iso_types <list>" << endl;
+		exit(1);
 	}
 
 
-	spread_table_with_selection::T = T;
-	F = T->PA->F;
+	F = PA->F;
 	q = F->q;
 
-	spread_size = T->SD->spread_size;
+	spread_size = SD->spread_size;
 	size_of_packing = q * q + q + 1;
-	nb_lines = T->A2->degree;
+	nb_lines = SD->nCkq;
+	//nb_lines = Spread_classify->A2->degree;
 
-	spread_table_with_selection::f_select_spread = f_select_spread;
-	spread_table_with_selection::select_spread_text.assign(select_spread_text);
-	spread_table_with_selection::path_to_spread_tables.assign(path_to_spread_tables);
+	if (Spread_table_description->f_path) {
+		spread_table_with_selection::path_to_spread_tables = Spread_table_description->path;
+	}
+	else {
+		spread_table_with_selection::path_to_spread_tables = "";
+	}
+
 
 	if (f_v) {
 		cout << "spread_table_with_selection::init q=" << q << endl;
@@ -297,7 +444,7 @@ void spread_table_with_selection::init(
 	}
 
 
-	if (f_select_spread) {
+	if (Spread_table_description->f_iso_types) {
 		cout << "spread_table_with_selection::init selected spreads are "
 				"from the following orbits: ";
 		Int_vec_print(cout,
@@ -307,7 +454,7 @@ void spread_table_with_selection::init(
 	}
 
 
-	Spread_tables = NEW_OBJECT(geometry::finite_geometries::spread_tables);
+	Spread_table = NEW_OBJECT(geometry::finite_geometries::spread_table);
 
 
 
@@ -316,7 +463,7 @@ void spread_table_with_selection::init(
 				"before predict_spread_table_length" << endl;
 	}
 	predict_spread_table_length(
-			T->A, T->A->Strong_gens, verbose_level - 1);
+			Spread_classify->A, Spread_classify->A->Strong_gens, verbose_level - 1);
 	if (f_v) {
 		cout << "spread_table_with_selection::init "
 				"after predict_spread_table_length" << endl;
@@ -324,18 +471,15 @@ void spread_table_with_selection::init(
 				"total_nb_of_spreads = " << total_nb_of_spreads << endl;
 	}
 
-	Spread_tables->nb_spreads = total_nb_of_spreads;
+	Spread_table->nb_spreads = total_nb_of_spreads;
 
 	if (f_v) {
 		cout << "spread_table_with_selection::init "
 				"before Spread_tables->init" << endl;
 	}
 
-	Spread_tables->init(
-				T->PA->P,
-				false /* f_load */,
-				nb_iso_types_of_spreads,
-				path_to_spread_tables,
+	Spread_table->init(
+			Spread_table_description,
 				verbose_level);
 
 	if (f_v) {
@@ -345,7 +489,7 @@ void spread_table_with_selection::init(
 
 	if (f_v) {
 		cout << "We will use " << nb_spread_reps << " isomorphism types of spreads, "
-				"this will give a total number of " << Spread_tables->nb_spreads
+				"this will give a total number of " << Spread_table->nb_spreads
 				<< " labeled spreads" << endl;
 	}
 
@@ -370,13 +514,13 @@ void spread_table_with_selection::compute_spread_table(
 
 
 
-	if (Spread_tables->files_exist(verbose_level)) {
+	if (Spread_table->files_exist(verbose_level)) {
 		if (f_v) {
 			cout << "spread_table_with_selection::compute_spread_table files exist, "
 					"reading" << endl;
 		}
 
-		Spread_tables->load(verbose_level);
+		Spread_table->load(verbose_level);
 
 		if (f_v) {
 			cout << "spread_table_with_selection::compute_spread_table "
@@ -434,11 +578,11 @@ void spread_table_with_selection::compute_spread_table_from_scratch(
 	int *First;
 	int *Len;
 	int *isomorphism_type_of_spread;
-	long int *Spread_table;
+	long int *my_Spread_table;
 	other::data_structures::sorting Sorting;
 
 
-	nb_spreads = Spread_tables->nb_spreads;
+	nb_spreads = Spread_table->nb_spreads;
 
 	if (f_v) {
 		cout << "spread_table_with_selection::compute_spread_table_from_scratch "
@@ -447,7 +591,7 @@ void spread_table_with_selection::compute_spread_table_from_scratch(
 
 
 	make_spread_table(
-			T->A, T->A2, T->A->Strong_gens,
+			Spread_classify->A, Spread_classify->A2, Spread_classify->A->Strong_gens,
 			Sets,
 			Prev, Label, First, Len,
 			isomorphism_type_of_spread,
@@ -503,36 +647,34 @@ void spread_table_with_selection::compute_spread_table_from_scratch(
 		original_position_inv[j] = i;
 	}
 
-	Spread_table = NEW_lint(nb_spreads * spread_size);
+	my_Spread_table = NEW_lint(nb_spreads * spread_size);
 	for (i = 0; i < nb_spreads; i++) {
-		Lint_vec_copy(Sets[i], Spread_table + i * spread_size, spread_size);
+		Lint_vec_copy(Sets[i], my_Spread_table + i * spread_size, spread_size);
 	}
 
 	if (f_v) {
 		cout << "spread_table_with_selection::compute_spread_table_from_scratch "
-				"before Spread_tables->init" << endl;
+				"before Spread_table->init" << endl;
 	}
 
-	Spread_tables->init(
-			T->PA->P, false,
-			nb_iso_types_of_spreads,
-			path_to_spread_tables,
+	Spread_table->init(
+			Spread_table_description,
 			verbose_level);
 
 	if (f_v) {
 		cout << "spread_table_with_selection::compute_spread_table_from_scratch "
-				"after Spread_tables->init" << endl;
+				"after Spread_table->init" << endl;
 	}
 
 
 	if (f_v) {
 		cout << "spread_table_with_selection::compute_spread_table_from_scratch "
-				"before Spread_tables->init_spread_table" << endl;
+				"before Spread_table->init_spread_table" << endl;
 	}
 
-	Spread_tables->init_spread_table(
+	Spread_table->init_spread_table(
 			nb_spreads,
-			Spread_table, isomorphism_type_of_spread,
+			my_Spread_table, isomorphism_type_of_spread,
 			verbose_level);
 
 	if (f_v) {
@@ -546,9 +688,9 @@ void spread_table_with_selection::compute_spread_table_from_scratch(
 
 	if (f_v) {
 		cout << "spread_table_with_selection::compute_spread_table_from_scratch "
-				"before Spread_tables->compute_dual_spreads" << endl;
+				"before Spread_table->compute_dual_spreads" << endl;
 	}
-	Spread_tables->compute_dual_spreads(
+	Spread_table->compute_dual_spreads(
 			Sets,
 				Dual_spread_idx,
 				self_dual_spread_idx,
@@ -556,25 +698,25 @@ void spread_table_with_selection::compute_spread_table_from_scratch(
 				verbose_level);
 	if (f_v) {
 		cout << "spread_table_with_selection::compute_spread_table_from_scratch "
-				"after Spread_tables->compute_dual_spreads" << endl;
+				"after Spread_table->compute_dual_spreads" << endl;
 	}
 
 
 	if (f_v) {
 		cout << "spread_table_with_selection::compute_spread_table_from_scratch "
-				"before Spread_tables->init_tables" << endl;
+				"before Spread_table->init_tables" << endl;
 	}
 
-	Spread_tables->init_tables(
+	Spread_table->init_tables(
 			nb_spreads,
-			Spread_table, isomorphism_type_of_spread,
+			my_Spread_table, isomorphism_type_of_spread,
 			Dual_spread_idx,
 			self_dual_spread_idx, nb_self_dual_spreads,
 			verbose_level);
 
 	if (f_v) {
 		cout << "spread_table_with_selection::compute_spread_table_from_scratch "
-				"after Spread_tables->init_tables" << endl;
+				"after Spread_table->init_tables" << endl;
 	}
 
 
@@ -602,17 +744,17 @@ void spread_table_with_selection::compute_spread_table_from_scratch(
 
 	if (f_v) {
 		cout << "spread_table_with_selection::compute_spread_table_from_scratch "
-				"before Spread_tables->init_schreier_table" << endl;
+				"before Spread_table->init_schreier_table" << endl;
 	}
-	Spread_tables->init_schreier_table(
+	Spread_table->init_schreier_table(
 			schreier_table, verbose_level);
 
 	if (f_v) {
 		cout << "spread_table_with_selection::compute_spread_table_from_scratch "
-				"before Spread_tables->save" << endl;
+				"before Spread_table->save" << endl;
 	}
 
-	Spread_tables->save(verbose_level);
+	Spread_table->save(verbose_level);
 
 #if 1
 	if (nb_spreads < 10000) {
@@ -652,9 +794,9 @@ void spread_table_with_selection::create_action_on_spreads(
 		cout << "spread_table_with_selection::create_action_on_spreads "
 				"creating action A_on_spreads" << endl;
 	}
-	A_on_spreads = T->A2->Induced_action->create_induced_action_on_sets(
-			Spread_tables->nb_spreads, spread_size,
-			Spread_tables->spread_table,
+	A_on_spreads = Spread_classify->A2->Induced_action->create_induced_action_on_sets(
+			Spread_table->nb_spreads, spread_size,
+			Spread_table->Spread_table,
 			verbose_level - 2);
 
 	if (f_v) {
@@ -688,14 +830,14 @@ int spread_table_with_selection::find_spread(
 long int *spread_table_with_selection::get_spread(
 		int spread_idx)
 {
-	return Spread_tables->get_spread(spread_idx);
+	return Spread_table->get_spread(spread_idx);
 }
 
 void spread_table_with_selection::find_spreads_containing_two_lines(
 		std::vector<int> &v,
 		int line1, int line2, int verbose_level)
 {
-	Spread_tables->find_spreads_containing_two_lines(
+	Spread_table->find_spreads_containing_two_lines(
 			v,
 			line1, line2,
 			verbose_level);
@@ -721,7 +863,7 @@ int spread_table_with_selection::test_if_packing_is_self_dual(
 
 	for (i = 0; i < size_of_packing; i++) {
 		a = packing[i];
-		b = Spread_tables->dual_spread_idx[a];
+		b = Spread_table->dual_spread_idx[a];
 		dual_packing[i] = b;
 	}
 	Sorting.int_vec_heapsort(
@@ -828,7 +970,7 @@ void spread_table_with_selection::predict_spread_table_length(
 
 
 	nb_iso_types_of_spreads = K.Spread_nb_reps(
-			q, T->SD->k /* dimension_of_spread_elements */);
+			q, Spread_classify->SD->k /* dimension_of_spread_elements */);
 	if (f_v) {
 		cout << "spread_table_with_selection::predict_spread_table_length "
 				"nb_iso_types_of_spreads = " << nb_iso_types_of_spreads << endl;
@@ -850,27 +992,36 @@ void spread_table_with_selection::predict_spread_table_length(
 		AcGl.stabilizer_of_spread_representative(
 				A,
 				q,
-				T->SD->k /* dimension_of_spread_elements */, no, gens, stab_order,
+				Spread_classify->SD->k /* dimension_of_spread_elements */, no, gens, stab_order,
 				0 /*verbose_level*/);
 
 
-		f_do_it = false;
-		if (f_select_spread) {
-			if (Sorting.int_vec_search_linear(
-					select_spread,
-					select_spread_nb, no, idx)) {
-				f_do_it = true;
+		if (Sorting.int_vec_search_linear(
+				select_spread,
+				select_spread_nb, no, idx)) {
+			f_do_it = true;
+		}
+		else {
+			f_do_it = false;
+		}
+
+		if (f_do_it) {
+			if (f_v) {
+				cout << "spread_table_with_selection::predict_spread_table_length spread " << no << " is selected" << endl;
 			}
 		}
 		else {
-			f_do_it = true;
+			if (f_v) {
+				cout << "spread_table_with_selection::predict_spread_table_length spread " << no << " is skipped" << endl;
+			}
 		}
+
 		if (f_do_it) {
 			long int *rep;
 			int sz;
 
 			rep = K.Spread_representative(
-					q, T->SD->k /* dimension_of_spread_elements*/, no, sz);
+					q, Spread_classify->SD->k /* dimension_of_spread_elements*/, no, sz);
 			Lint_vec_copy(rep,
 					spread_reps + nb_spread_reps * spread_size,
 					spread_size);
@@ -1056,7 +1207,7 @@ void spread_table_with_selection::compute_covered_points(
 	for (i = 0; i < starter_size; i++) {
 		s = starter[i];
 		for (j = 0; j < spread_size; j++) {
-			a = Spread_tables->spread_table[s * spread_size + j];
+			a = Spread_table->Spread_table[s * spread_size + j];
 			points_covered_by_starter[i * spread_size + j] = a;
 		}
 	}
@@ -1129,9 +1280,9 @@ void spread_table_with_selection::compute_live_blocks2(
 	if (f_v) {
 		cout << "spread_table_with_selection::compute_live_blocks2" << endl;
 	}
-	live_blocks2 = NEW_lint(Spread_tables->nb_spreads);
+	live_blocks2 = NEW_lint(Spread_table->nb_spreads);
 	nb_live_blocks2 = 0;
-	for (i = 0; i < Spread_tables->nb_spreads; i++) {
+	for (i = 0; i < Spread_table->nb_spreads; i++) {
 		for (j = 0; j < starter_size; j++) {
 			if (!is_adjacent(starter[j], i)) {
 				break;
@@ -1161,7 +1312,7 @@ void spread_table_with_selection::compute_adjacency_matrix(
 		cout << "spread_table_with_selection::compute_adjacency_matrix" << endl;
 	}
 
-	Spread_tables->compute_adjacency_matrix(
+	Spread_table->compute_adjacency_matrix(
 			Bitvec,
 			verbose_level);
 
@@ -1184,7 +1335,7 @@ int spread_table_with_selection::is_adjacent(
 	}
 #if 1
 	if (Bitvec) {
-		k = Combi.ij2k(i, j, Spread_tables->nb_spreads);
+		k = Combi.ij2k(i, j, Spread_table->nb_spreads);
 		if (Bitvec->s_i(k)) {
 			return true;
 		}
@@ -1193,7 +1344,7 @@ int spread_table_with_selection::is_adjacent(
 		}
 	}
 	else {
-		if (Spread_tables->test_if_spreads_are_line_disjoint(i, j)) {
+		if (Spread_table->test_if_spreads_are_line_disjoint(i, j)) {
 			return true;
 		}
 		else {

@@ -6113,6 +6113,10 @@ Sym3_in_PGL_2_3_report:
 		-with G -do \
 		-group_theoretic_activity \
 			-print_elements_tex \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-make_element_tree \
 		-end
 	$(ORBITER) -v 2 \
 		-define Do -draw_options \
@@ -7362,6 +7366,7 @@ test_5_5:
 	make PGL_3_2_order_invariant
 	make PGL_3_2_elements
 	make Sym_3_elements
+	make Sym_3_make_element_tree
 	make Cycle_13_power
 	make Cycle_12_power
 	make PGL_3_4_singer
@@ -7417,7 +7422,17 @@ Sym_3_elements:
 		-group_theoretic_activity \
 			-print_elements_tex \
 		-end
+	$(PDFLATEX) Sym_3_elements.tex
+	$(OPEN) Sym_3_elements.pdf
+
+
+Sym_3_make_element_tree:
 	$(ORBITER) -v 2 \
+		-define G -permutation_group -symmetric_group 3 -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-make_element_tree \
+		-end
 		-define Do -draw_options \
 			-nodes \
 			-embedded -radius 250 \
@@ -18707,6 +18722,7 @@ SECTION_COMBINATORICS:
 
 
 test_12_1:
+	make random_permutation_12
 	make Sym_4_conj_classes
 	make Sym_10_conj_classes
 	make Sym_15_conj_classes
@@ -18725,6 +18741,13 @@ test_12_1:
 	make elementary_symmetric_functions_8
 	make domino_portrait
 	make domino_portrait_input
+
+
+random_permutation_12:
+	$(ORBITER) -v 4 \
+		-seed 31415 \
+		-random_permutation 12 random.csv
+
 
 
 
@@ -20861,7 +20884,11 @@ PG_3_2_packing_make_group_and_test:
 		-define F -finite_field -q 2 -end \
 		-define P3 -projective_space -n 3 -field F -v 0 -end \
 		-define P5 -projective_space -n 5 -field F -v 0 -end \
-		-define T -spread_table P3 2 "0" "SPREAD_TABLES_2/" Control
+		-define T -spread_table -space P3 -rk 2 \
+			-iso_types "0" \
+			-path "SPREAD_TABLES_2/" \
+			-control Control \
+			-end \
 		-define PC -packing_classify P3 P5 T \
 		-with PC -do -packing_classify_activity \
 			-make_graph_of_disjoint_spreads \
@@ -20875,7 +20902,11 @@ PG_3_2_packing_make_group_and_test:
 		-define F -finite_field -q 2 -end \
 		-define P3 -projective_space -n 3 -field F -v 0 -end \
 		-define P5 -projective_space -n 5 -field F -v 0 -end \
-		-define T -spread_table P3 2 "0" "SPREAD_TABLES_2/" Control \
+		-define T -spread_table -space P3 -rk 2 \
+			-iso_types "0" \
+			-path "SPREAD_TABLES_2/" \
+			-control Control \
+			-end \
 		-define PC -packing_classify P3 P5 T \
 		-with PC -do -packing_classify_activity \
 			-export_group_on_spreads \
@@ -22147,6 +22178,7 @@ test_15_1:
 	make desarguesian_spread_in_PG_5_2
 	make desarguesian_spread_in_PG_3_4
 	make desarguesian_spread_in_PG_3_5
+	make PG_3_2_spread_table
 	make classify_spreads_4
 	make classify_spreads_16_4
 	make classify_spreads_25_starter_lift_case_0
@@ -22256,6 +22288,26 @@ desarguesian_spread_in_PG_3_5:
 	$(PDFLATEX) Desarguesian_Spread_3_5.tex
 	$(OPEN) Desarguesian_Spread_3_5.pdf
 
+
+
+PG_3_2_spread_table:
+	- mkdir SPREAD_TABLES_2
+	$(ORBITER) -v 5 \
+		-define Control -poset_classification_control \
+			-problem_label spreads_PG_3_2 \
+			-W \
+		-end \
+		-define F -finite_field -q 2 -end \
+		-define P3 -projective_space -n 3 -field F -v 0 -end \
+		-define T -spread_table -space P3 -rk 2 \
+			-iso_types "0" \
+			-path "SPREAD_TABLES_2/" \
+			-control Control \
+			-end \
+
+
+# 56 spreads
+#SPREAD_TABLES_2/spread_4_table.csv
 
 # ToDo -report
 
@@ -22765,7 +22817,11 @@ PG_3_5_packing_PWP_0_dualize:
 	$(ORBITER_PATH)orbiter.out -v 5 \
 		-define F -finite_field -q 5 -end \
 		-define P -projective_space 3 F -end \
-		-define T -spread_table P 2 "12" "SPREAD_TABLES_5_REG/" \
+		-define T -spread_table -space P3 -rk 2 \
+			-iso_types "12" \
+			-path "SPREAD_TABLES_5_REG/" \
+			-control Control \
+			-end \
 		-with T -do \
 			-spread_table_activity \
 			-dualize_packing $(PENTTILA_WILLIAMS_PRINCE_REG_PACKING_0) \
@@ -23128,7 +23184,11 @@ PG_3_3_spread_table:
 		-define F -finite_field -q 3 -end \
 		-define P3 -projective_space -n 3 -field F -v 0 -end \
 		-define P5 -projective_space -n 5 -field F -v 0 -end \
-		-define T -spread_table P3 2 "0,1" "SPREAD_TABLES_3/" Control
+		-define T -spread_table -space P3 -rk 2 \
+			-iso_types "0,1" \
+			-path "SPREAD_TABLES_3/" \
+			-control Control \
+			-end \
 
 
 
@@ -23142,7 +23202,11 @@ spread_table_PG_3_5_regular:
 		-end \
 		-define F -finite_field -q 5 -end \
 		-define P -projective_space -n 3 -field F -end \
-		-define T -spread_table P 2 "12" "SPREAD_TABLES_5_REG/" Control \
+		-define T -spread_table -space P3 -rk 2 \
+			-iso_types "12" \
+			-path "SPREAD_TABLES_5_REG/" \
+			-control Control \
+			-end \
 		-print_symbols
 
 
@@ -23192,7 +23256,11 @@ PG_3_3_assume_5_graph:
 		-define F -finite_field -q 3 -end \
 		-define P3 -projective_space -n 3 -field F -v 0 -end \
 		-define P5 -projective_space -n 5 -field F -v 0 -end \
-		-define T -spread_table P3 2 "0,1" "SPREAD_TABLES_3/" Control \
+		-define T -spread_table -space P3 -rk 2 \
+			-iso_types "0,1" \
+			-path "SPREAD_TABLES_3/" \
+			-control Control \
+			-end \
 		-define PC -packing_classify P3 P5 T \
 		-define PW -packing_with_symmetry_assumption PC \
 				-H "H5" -PGL 4 3 -subgroup_by_generators \
@@ -23262,7 +23330,11 @@ PG_3_3_assume_5_read_solution:
 		-define F -finite_field -q 3 -end \
 		-define P3 -projective_space -n 3 -field F -v 0 -end \
 		-define P5 -projective_space -n 5 -field F -v 0 -end \
-		-define T -spread_table P3 2 "0,1" "SPREAD_TABLES_3/" Control \
+		-define T -spread_table -space P3 -rk 2 \
+			-iso_types "0,1" \
+			-path "SPREAD_TABLES_3/" \
+			-control Control \
+			-end \
 		-define PC -packing_classify P3 P5 T \
 		-define PW -packing_with_symmetry_assumption PC \
 				-H "H5" -PGL 4 3 -subgroup_by_generators \

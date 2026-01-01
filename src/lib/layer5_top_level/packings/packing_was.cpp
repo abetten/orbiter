@@ -81,7 +81,7 @@ packing_was::packing_was()
 	Good_orbit_len = NULL;
 	orb = NULL;
 
-	Spread_tables_reduced = NULL;
+	Spread_table_reduced = NULL;
 	//std::string prefix_spread_types_reduced;
 	Spread_type_reduced = NULL;
 
@@ -788,9 +788,9 @@ void packing_was::compute_spread_types_wrt_H(
 	Spread_type = NEW_OBJECT(combinatorics_with_groups::orbit_type_repository);
 	Spread_type->init(
 			Line_orbits_under_H,
-			P->Spread_table_with_selection->Spread_tables->nb_spreads,
+			P->Spread_table_with_selection->Spread_table->nb_spreads,
 			P->spread_size,
-			P->Spread_table_with_selection->Spread_tables->spread_table,
+			P->Spread_table_with_selection->Spread_table->Spread_table,
 			H_goi,
 			verbose_level - 2);
 	if (false) {
@@ -1030,20 +1030,20 @@ void packing_was::reduce_spreads(
 
 
 
-	Spread_tables_reduced = NEW_OBJECT(geometry::finite_geometries::spread_tables);
+	Spread_table_reduced = NEW_OBJECT(geometry::finite_geometries::spread_table);
 
 	if (f_v) {
 		cout << "packing_was::reduce_spreads before "
-				"Spread_tables_reduced->init_reduced" << endl;
+				"Spread_table_reduced->init_reduced" << endl;
 	}
-	Spread_tables_reduced->init_reduced(
+	Spread_table_reduced->init_reduced(
 			nb_good_spreads, good_spreads,
-			P->Spread_table_with_selection->Spread_tables,
+			P->Spread_table_with_selection->Spread_table,
 			P->path_to_spread_tables,
 			verbose_level - 2);
 	if (f_v) {
 		cout << "packing_was::reduce_spreads after "
-				"Spread_tables_reduced->init_reduced" << endl;
+				"Spread_table_reduced->init_reduced" << endl;
 	}
 
 	string fname_reduced_spread_original_idx;
@@ -1065,7 +1065,7 @@ void packing_was::reduce_spreads(
 		cout << "packing_was::reduce_spreads before "
 				"Spread_tables_reduced->save" << endl;
 	}
-	Spread_tables_reduced->save(verbose_level);
+	Spread_table_reduced->save(verbose_level);
 	if (f_v) {
 		cout << "packing_was::reduce_spreads after "
 				"Spread_tables_reduced->save" << endl;
@@ -1090,9 +1090,9 @@ void packing_was::compute_reduced_spread_types_wrt_H(
 	Spread_type_reduced = NEW_OBJECT(combinatorics_with_groups::orbit_type_repository);
 	Spread_type_reduced->init(
 			Line_orbits_under_H,
-			Spread_tables_reduced->nb_spreads,
+			Spread_table_reduced->nb_spreads,
 			P->spread_size,
-			Spread_tables_reduced->spread_table,
+			Spread_table_reduced->Spread_table,
 			H_goi,
 			verbose_level - 2);
 
@@ -1125,8 +1125,8 @@ void packing_was::compute_H_orbits_on_reduced_spreads(
 				"creating action A_on_reduced_spreads" << endl;
 	}
 	A_on_reduced_spreads = P->T->A2->Induced_action->create_induced_action_on_sets(
-			Spread_tables_reduced->nb_spreads, P->spread_size,
-			Spread_tables_reduced->spread_table,
+			Spread_table_reduced->nb_spreads, P->spread_size,
+			Spread_table_reduced->Spread_table,
 			0 /* verbose_level */);
 
 	if (f_v) {
@@ -1276,7 +1276,7 @@ int packing_was::test_if_pair_of_sets_of_reduced_spreads_are_adjacent(
 	if (f_v) {
 		cout << "packing_was::test_if_pair_of_sets_of_reduced_spreads_are_adjacent" << endl;
 	}
-	return Spread_tables_reduced->test_if_pair_of_sets_are_adjacent(
+	return Spread_table_reduced->test_if_pair_of_sets_are_adjacent(
 			set1, len1,
 			set2, len2,
 			verbose_level);

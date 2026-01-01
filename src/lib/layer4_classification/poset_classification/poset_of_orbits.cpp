@@ -189,10 +189,12 @@ void poset_of_orbits::reallocate()
 
 		length_wanted = length;
 		length = (1L << 31) - 1;
-		cout << "poset_of_orbits::reallocate reducing length from " << length_wanted << " to " << length << endl;
+		cout << "poset_of_orbits::reallocate "
+				"reducing length from " << length_wanted << " to " << length << endl;
 		poset_orbit_nodes_increment = length_wanted - nb_poset_orbit_nodes_allocated;
 	}
-	cout << "poset_of_orbits::reallocate from " << nb_poset_orbit_nodes_allocated << " to " << length << endl;
+	cout << "poset_of_orbits::reallocate "
+			"from " << nb_poset_orbit_nodes_allocated << " to " << length << endl;
 	reallocate_to(length, verbose_level - 1);
 	poset_orbit_nodes_increment_last = poset_orbit_nodes_increment;
 	poset_orbit_nodes_increment = increment_new;
@@ -631,21 +633,23 @@ void poset_of_orbits::init_root_node(
 	}
 }
 
-void poset_of_orbits::make_tabe_of_nodes(
+void poset_of_orbits::make_table_of_nodes(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "poset_of_orbits::make_tabe_of_nodes" << endl;
+		cout << "poset_of_orbits::make_table_of_nodes" << endl;
 	}
 	long int *Table;
 	int nb_rows, nb_cols;
 	string fname;
 	other::orbiter_kernel_system::file_io Fio;
 
-	get_table_of_nodes(Table,
-		nb_rows, nb_cols, 0 /*verbose_level*/);
+	get_table_of_nodes(
+			Table,
+		nb_rows, nb_cols,
+		0 /*verbose_level*/);
 
 	fname = PC->get_problem_label_with_path() + "_table_of_orbits.csv";
 
@@ -653,7 +657,7 @@ void poset_of_orbits::make_tabe_of_nodes(
 			fname, Table, nb_rows, nb_cols);
 
 	if (f_v) {
-		cout << "poset_classification::post_processing "
+		cout << "poset_classification::make_table_of_nodes "
 				"written file " << fname
 				<< " of size " << Fio.file_size(fname) << endl;
 	}
@@ -662,7 +666,7 @@ void poset_of_orbits::make_tabe_of_nodes(
 	FREE_lint(Table);
 
 	if (f_v) {
-		cout << "poset_of_orbits::make_tabe_of_nodes done" << endl;
+		cout << "poset_of_orbits::make_table_of_nodes done" << endl;
 	}
 }
 

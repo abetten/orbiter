@@ -851,8 +851,8 @@ void packing_long_orbits::read_and_process_solutions(
 	}
 
 	int *iso_type;
-	iso_type = NEW_int(Orbits->Forest->nb_orbits * PWF->PW->Spread_tables_reduced->nb_iso_types_of_spreads);
-	Int_vec_zero(iso_type, Orbits->Forest->nb_orbits * PWF->PW->Spread_tables_reduced->nb_iso_types_of_spreads);
+	iso_type = NEW_int(Orbits->Forest->nb_orbits * PWF->PW->Spread_table_reduced->nb_iso_types_of_spreads);
+	Int_vec_zero(iso_type, Orbits->Forest->nb_orbits * PWF->PW->Spread_table_reduced->nb_iso_types_of_spreads);
 
 	int idx, i, j;
 	long int a, b;
@@ -868,11 +868,11 @@ void packing_long_orbits::read_and_process_solutions(
 
 		for (j = 0; j < PWF->PW->P->size_of_packing; j++) {
 			a = Packing[j];
-			b = PWF->PW->Spread_tables_reduced->spread_iso_type[a];
-			iso_type[i * PWF->PW->Spread_tables_reduced->nb_iso_types_of_spreads + b]++;
+			b = PWF->PW->Spread_table_reduced->spread_iso_type[a];
+			iso_type[i * PWF->PW->Spread_table_reduced->nb_iso_types_of_spreads + b]++;
 		}
-		for (j = 0; j < PWF->PW->Spread_tables_reduced->nb_iso_types_of_spreads; j++) {
-			if (iso_type[i * PWF->PW->Spread_tables_reduced->nb_iso_types_of_spreads + j]
+		for (j = 0; j < PWF->PW->Spread_table_reduced->nb_iso_types_of_spreads; j++) {
+			if (iso_type[i * PWF->PW->Spread_table_reduced->nb_iso_types_of_spreads + j]
 						 == PWF->PW->P->size_of_packing) {
 				//nb_uniform++;
 				break;
@@ -898,11 +898,11 @@ void packing_long_orbits::read_and_process_solutions(
 
 			for (j = 0; j < PWF->PW->P->size_of_packing; j++) {
 				a = Packing[j];
-				b = PWF->PW->Spread_tables_reduced->spread_iso_type[a];
-				iso_type[i * PWF->PW->Spread_tables_reduced->nb_iso_types_of_spreads + b]++;
+				b = PWF->PW->Spread_table_reduced->spread_iso_type[a];
+				iso_type[i * PWF->PW->Spread_table_reduced->nb_iso_types_of_spreads + b]++;
 			}
-			for (j = 0; j < PWF->PW->Spread_tables_reduced->nb_iso_types_of_spreads; j++) {
-				if (iso_type[i * PWF->PW->Spread_tables_reduced->nb_iso_types_of_spreads + j]
+			for (j = 0; j < PWF->PW->Spread_table_reduced->nb_iso_types_of_spreads; j++) {
+				if (iso_type[i * PWF->PW->Spread_table_reduced->nb_iso_types_of_spreads + j]
 							 == PWF->PW->P->size_of_packing) {
 					//nb_uniform++;
 					break;
@@ -921,7 +921,7 @@ void packing_long_orbits::read_and_process_solutions(
 	T.init(
 			iso_type,
 			Orbits->Forest->nb_orbits,
-			PWF->PW->Spread_tables_reduced->nb_iso_types_of_spreads,
+			PWF->PW->Spread_table_reduced->nb_iso_types_of_spreads,
 			verbose_level);
 	if (f_v) {
 		cout << "packing_long_orbits::read_and_process_solutions "
@@ -1156,7 +1156,7 @@ void packing_long_orbits::read_solutions(
 			cout << endl;
 		}
 
-		if (!PWF->PW->Spread_tables_reduced->test_if_set_of_spreads_is_line_disjoint_and_complain_if_not(
+		if (!PWF->PW->Spread_table_reduced->test_if_set_of_spreads_is_line_disjoint_and_complain_if_not(
 				packing, PWF->PW->P->size_of_packing)) {
 			cout << "packing_long_orbits::read_solutions "
 					"The packing is not line disjoint" << endl;

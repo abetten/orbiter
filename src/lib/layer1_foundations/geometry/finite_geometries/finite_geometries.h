@@ -509,16 +509,64 @@ public:
 };
 
 
+
 // #############################################################################
-// spread_tables.cpp
+// spread_table_description.cpp
+// #############################################################################
+
+//! description of a table of spreads
+
+
+class spread_table_description {
+
+public:
+
+	int f_space;
+	std::string space_label;
+
+	int f_rk;
+	int rk;
+
+	int f_iso_types;
+	std::string iso_types_string;
+
+
+	int f_path;
+	std::string path;
+
+	int f_control;
+	std::string control_label;
+
+	int f_load;
+
+	int f_restricted_table;
+	std::string restricted_table_label;
+	std::string restricted_table_subset;
+
+
+	spread_table_description();
+	~spread_table_description();
+	int read_arguments(
+			int argc, std::string *argv,
+		int verbose_level);
+	void print();
+
+};
+
+
+// #############################################################################
+// spread_table.cpp
 // #############################################################################
 
 //! tables with line-spreads in PG(3,q)
 
 
-class spread_tables {
+class spread_table {
 
 public:
+
+	spread_table_description *Descr;
+
 	int q;
 	int d; // = 4
 	algebra::field_theory::finite_field *F;
@@ -526,6 +574,8 @@ public:
 	projective_geometry::grassmann *Gr; // Gr_{4,2}
 	long int nb_lines;
 	int spread_size;
+
+	int *iso_types_of_spreads;
 	int nb_iso_types_of_spreads;
 
 	std::string prefix;
@@ -543,7 +593,7 @@ public:
 	int nb_self_dual_lines;
 
 	int nb_spreads;
-	long int *spread_table; // [nb_spreads * spread_size]
+	long int *Spread_table; // [nb_spreads * spread_size]
 	int *spread_iso_type; // [nb_spreads]
 	long int *dual_spread_idx; // [nb_spreads]
 	long int *self_dual_spreads; // [nb_self_dual_spreads]
@@ -551,20 +601,23 @@ public:
 
 	int *schreier_table; // [nb_spreads * 4]
 
-	spread_tables();
-	~spread_tables();
+	spread_table();
+	~spread_table();
 	void init(
+			spread_table_description *Descr,
+#if 0
 			projective_geometry::projective_space *P,
 			int f_load,
 			int nb_iso_types_of_spreads,
 			std::string &path_to_spread_tables,
+#endif
 			int verbose_level);
 	// For spreads in PG(3,q)
 	void create_file_names(
 			int verbose_level);
 	void init_spread_table(
 			int nb_spreads,
-			long int *spread_table, int *spread_iso_type,
+			long int *Spread_table, int *spread_iso_type,
 			int verbose_level);
 	void init_tables(
 			int nb_spreads,
@@ -577,7 +630,7 @@ public:
 			int verbose_level);
 	void init_reduced(
 			int nb_select, int *select,
-			spread_tables *old_spread_table,
+			spread_table *old_spread_table,
 			std::string &path_to_spread_tables,
 			int verbose_level);
 	long int *get_spread(

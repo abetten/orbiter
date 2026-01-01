@@ -1200,7 +1200,6 @@ void group_theoretic_activity::perform_activity(
 			cout << "group_theoretic_activity::perform_activity "
 					"f_print_elements_tex" << endl;
 		}
-		//int f_with_permutation = true;
 		int f_override_action = true;
 		actions::action *A_special;
 
@@ -1210,7 +1209,30 @@ void group_theoretic_activity::perform_activity(
 					"before AG->print_elements_tex" << endl;
 		}
 		AG->print_elements_tex(
-				//f_with_permutation,
+				f_override_action,
+				A_special,
+				verbose_level);
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after AG->print_elements_tex" << endl;
+		}
+	}
+
+	else if (Descr->f_make_element_tree) {
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"-make_element_tree" << endl;
+		}
+		int f_override_action = true;
+		actions::action *A_special;
+
+		A_special = AG->A;
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before AG->print_elements_tex" << endl;
+		}
+		AG->make_element_tree(
 				f_override_action,
 				A_special,
 				verbose_level);

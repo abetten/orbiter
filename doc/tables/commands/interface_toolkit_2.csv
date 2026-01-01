@@ -16,5 +16,5 @@ ROW,C1,C2,C3
 1,"\verb'-cp' "," fname-in fname-out  ","Copy file fname-in to fname-out. "
 1,"\verb'-system' "," command  ","Execute the given system command. "
 1,"\verb'-loop' "," variable val\_from val\_to val\_step ","Create a loop with the given loop variable, whose values rangle from loop\_from to val\_to minus one in steps of val\_step.  "
-1,"\verb'-loop_over' "," variable domain ","Create a loop with the given loop variable, whose values rangle over the given domain. "
+1,"\verb'-loop_over' "," variable domain ","Create a loop with the given loop variable, whose values range over the given domain. "
 END

@@ -1428,11 +1428,11 @@ void spreadsheet::join_with(
 
 	if (f_v) {
 		cout << "spreadsheet::join_with" << endl;
-		cout << "verbose_level=" << verbose_level << endl;
+		cout << "spreadsheet::join_with verbose_level=" << verbose_level << endl;
 	}
 
 	if (f_vv) {
-		cout << "by1=" << by1 << " by2=" << by2 << endl;
+		cout << "spreadsheet::join_with by1=" << by1 << " by2=" << by2 << endl;
 	}
 
 
@@ -1459,7 +1459,7 @@ void spreadsheet::join_with(
 			}
 		}
 		if (i1 == nb_rows) {
-			cout << "adding a row corresponding to " << T2 << endl;
+			cout << "spreadsheet::join_with adding a row corresponding to " << T2 << endl;
 			reallocate_table_add_row();
 			add_token(T2);
 			Table[i1 * nb_cols + by1] = nb_tokens - 1;
@@ -1479,7 +1479,7 @@ void spreadsheet::join_with(
 			continue;
 		}
 		if (f_vv) {
-			cout << "joining column " << S2->tokens[t2] << endl;
+			cout << "spreadsheet::join_with joining column " << S2->tokens[t2] << endl;
 		}
 
 		for (j1 = 0; j1 < nb_cols; j1++) {
@@ -1496,18 +1496,18 @@ void spreadsheet::join_with(
 		}
 		if (j1 == nb_cols) {
 			// reallocate Table
-			cout << "reallocating table" << endl;
+			cout << "spreadsheet::join_with reallocating table" << endl;
 			reallocate_table();
-			cout << "reallocating table done" << endl;
+			cout << "spreadsheet::join_with reallocating table done" << endl;
 			add_token(S2->tokens[t2]);
 			Table[0 * nb_cols + j1] = nb_tokens - 1;
-			cout << "added token " << S2->tokens[t2]
+			cout << "spreadsheet::join_with added token " << S2->tokens[t2]
 				<< " as a column heading" << endl;
  		}
 		t1 = Table[j1];
 
 		if (f_vv) {
-			cout << "joining columns " << tokens[t1] << " and "
+			cout << "spreadsheet::join_with joining columns " << tokens[t1] << " and "
 					<< S2->tokens[t2] << endl;
 		}
 		
@@ -1527,7 +1527,7 @@ void spreadsheet::join_with(
 			}
 			label2 = S2->tokens[S2->Table[i2 * S2->nb_cols + by2]];
 			if (f_v3) {
-				cout << "label2='" << label2 << "'" << endl;
+				cout << "spreadsheet::join_with label2='" << label2 << "'" << endl;
 			}
 			for (i1 = 1; i1 < nb_rows; i1++) {
 				if (Table[i1 * nb_cols + by1] == -1) {
@@ -1541,49 +1541,50 @@ void spreadsheet::join_with(
 				}
 			}
 			if (i1 == nb_rows) {
-				cout << "entry " << label2 << " not found in "
+				cout << "spreadsheet::join_with entry " << label2 << " not found in "
 						"first table" << endl;
-				exit(1);
+				f_need_to_add = false;
+				//exit(1);
 				//reallocate_table_add_row();
 				//Table[i1 * nb_cols + by1] =
 				//S2->Table[i2 * S2->nb_cols + by2];
 				//exit(1);
 			}
 			else {
-				cout << "label2 " << label2 << " found in row "
+				cout << "spreadsheet::join_with label2 " << label2 << " found in row "
 						<< i1 << " in first table" << endl;
-			}
-			tt1 = Table[i1 * nb_cols + j1];
-			f_need_to_add = true;
-			if (tt1 >= 0) {
-				if (f_v3) {
-					cout << "i1=" << i1 << " i2=" << i2 << " we have "
-							<< tokens[tt1] << " vs "
-							<< S2->tokens[tt2] << endl;
-				}
-				if (ST.strcmp_with_or_without(tokens[tt1],
-						S2->tokens[tt2]) == 0) {
-					f_need_to_add = false;
+				tt1 = Table[i1 * nb_cols + j1];
+				f_need_to_add = true;
+				if (tt1 >= 0) {
+					if (f_v3) {
+						cout << "spreadsheet::join_with i1=" << i1 << " i2=" << i2 << " we have "
+								<< tokens[tt1] << " vs "
+								<< S2->tokens[tt2] << endl;
+					}
+					if (ST.strcmp_with_or_without(tokens[tt1],
+							S2->tokens[tt2]) == 0) {
+						f_need_to_add = false;
+					}
 				}
 			}
 			if (f_v3) {
-				cout << "f_need_to_add=" << f_need_to_add << endl;
+				cout << "spreadsheet::join_with f_need_to_add=" << f_need_to_add << endl;
 			}
 			if (f_need_to_add) {
 				if (f_v3) {
-					cout << "adding token " << S2->tokens[tt2] << endl;
+					cout << "spreadsheet::join_with adding token " << S2->tokens[tt2] << endl;
 				}
 				add_token(S2->tokens[tt2]);
 				Table[i1 * nb_cols + j1] = nb_tokens - 1;
 				if (f_v3) {
-					cout << "added token " << S2->tokens[tt2]
+					cout << "spreadsheet::join_with added token " << S2->tokens[tt2]
 						<< " check: " << tokens[Table[i1 * nb_cols + j1]]
 						<< endl;
 				}
 			}
 			else {
 				if (f_v3) {
-					cout << "no need to add" << endl;
+					cout << "spreadsheet::join_with no need to add" << endl;
 				}
 			}
 		} // next i2

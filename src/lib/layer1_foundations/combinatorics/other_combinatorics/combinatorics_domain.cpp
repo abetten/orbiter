@@ -2773,6 +2773,359 @@ void combinatorics_domain::free_tab_q_binomials()
 }
 
 
+void combinatorics_domain::make_decomposition_matrix(
+		std::string &decomposition_matrix_fname,
+		std::string &po_label, std::string &f_fst_label, std::string &iso_idx_label,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "combinatorics_domain::make_decomposition_matrix" << endl;
+	}
+
+	if (f_v) {
+		cout << "combinatorics_domain::make_decomposition_matrix "
+				"reading file " << decomposition_matrix_fname << endl;
+	}
+
+
+	other::data_structures::spreadsheet S;
+
+	S.read_spreadsheet(decomposition_matrix_fname, 0/*verbose_level - 1*/);
+
+	int nb_flag_orbits;
+
+	nb_flag_orbits = S.nb_rows - 1;
+	//n = S.nb_cols;
+
+	if (f_v) {
+		cout << "combinatorics_domain::make_decomposition_matrix nb_flag_orbits = " << nb_flag_orbits << endl;
+	}
+
+#if 0
+	std::string po_label;
+	std::string f_fst_label;
+	std::string iso_idx_label;
+
+
+	//fo_label = "FO";
+	po_label = "PO";
+	//so_label = "SO";
+	f_fst_label = "F_Fst";
+	iso_idx_label = "Iso_idx";
+#endif
+
+	//int fo_idx;
+	int po_idx;
+	//int so_idx;
+	int f_fst_idx;
+	int iso_idx_idx;
+
+
+
+	//fo_idx = S.find_column(fo_label);
+	po_idx = S.find_column(po_label);
+	//so_idx = S.find_column(so_label);
+	f_fst_idx = S.find_column(f_fst_label);
+	iso_idx_idx = S.find_column(iso_idx_label);
+
+	int f, i, j;
+
+	int *Decomp;
+	int nb_rows;
+	int nb_cols;
+
+
+	nb_rows = S.get_lint(1 + nb_flag_orbits - 1, po_idx);
+	nb_rows++;
+
+	if (f_v) {
+		cout << "combinatorics_domain::make_decomposition_matrix nb_rows = " << nb_rows << endl;
+	}
+
+	nb_cols = 0;
+	for (f = 0; f < nb_flag_orbits; f++) {
+		j = S.get_lint(1 + f, f_fst_idx);
+		if (j) {
+			nb_cols++;
+		}
+	}
+
+	if (f_v) {
+		cout << "combinatorics_domain::make_decomposition_matrix "
+				"nb_cols = " << nb_cols << endl;
+	}
+
+	Decomp = NEW_int(nb_rows * nb_cols);
+	Int_vec_zero(Decomp, nb_rows * nb_cols);
+
+	for (f = 0; f < nb_flag_orbits; f++) {
+		i = S.get_lint(1 + f, po_idx);
+		j = S.get_lint(1 + f, iso_idx_idx);
+		cout << "f = " << f << " i=" << i << " j=" << j << endl;
+		Decomp[i * nb_cols + j]++;
+	}
+
+	other::orbiter_kernel_system::file_io Fio;
+
+	int m;
+
+	m = Int_vec_maximum(Decomp, nb_rows * nb_cols);
+
+	if (f_v) {
+		cout << "combinatorics_domain::make_decomposition_matrix "
+				"decomposition matrix has size " << nb_rows
+				<< " x " << nb_cols << " max entry = " << m << endl;
+	}
+	Int_matrix_print(Decomp, nb_rows, nb_cols);
+
+	std::string fname_out;
+
+	fname_out = decomposition_matrix_fname;
+
+	other::data_structures::string_tools String;
+
+	String.chop_off_extension(
+			fname_out);
+
+	fname_out += "_decomp.csv";
+
+	Fio.Csv_file_support->int_matrix_write_csv(
+			fname_out, Decomp, nb_rows, nb_cols);
+
+	if (f_v) {
+		cout << "combinatorics_domain::make_decomposition_matrix Written file " << fname_out
+				<< " of size " << Fio.file_size(fname_out) << endl;
+	}
+
+	if (f_v) {
+		cout << "combinatorics_domain::make_decomposition_matrix done" << endl;
+	}
+}
+
+
+
+void combinatorics_domain::make_decomposition_diagram(
+		std::string &decomposition_matrix_fname,
+		std::string &po_label, std::string &f_fst_label, std::string &iso_idx_label,
+		std::string &node_label1, std::string &node_label2, std::string &node_label3,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "combinatorics_domain::make_decomposition_diagram" << endl;
+	}
+
+	if (f_v) {
+		cout << "combinatorics_domain::make_decomposition_diagram "
+				"reading file " << decomposition_matrix_fname << endl;
+	}
+
+
+	other::data_structures::spreadsheet S;
+
+	S.read_spreadsheet(decomposition_matrix_fname, 0/*verbose_level - 1*/);
+
+	int nb_flag_orbits;
+
+	nb_flag_orbits = S.nb_rows - 1;
+	//n = S.nb_cols;
+
+	if (f_v) {
+		cout << "combinatorics_domain::make_decomposition_diagram nb_flag_orbits = " << nb_flag_orbits << endl;
+	}
+
+
+	int po_idx;
+	int f_fst_idx;
+	int iso_idx_idx;
+	int n1_idx;
+	int n2_idx;
+	int n3_idx;
+
+
+
+	po_idx = S.find_column(po_label);
+	f_fst_idx = S.find_column(f_fst_label);
+	iso_idx_idx = S.find_column(iso_idx_label);
+	n1_idx = S.find_column(node_label1);
+	n2_idx = S.find_column(node_label2);
+	n3_idx = S.find_column(node_label3);
+
+	int f, i, j;
+
+	//int *Decomp;
+	int nb_rows;
+	int nb_cols;
+
+
+	nb_rows = S.get_lint(1 + nb_flag_orbits - 1, po_idx);
+	nb_rows++;
+
+	if (f_v) {
+		cout << "combinatorics_domain::make_decomposition_diagram nb_rows = " << nb_rows << endl;
+	}
+
+	nb_cols = 0;
+	for (f = 0; f < nb_flag_orbits; f++) {
+		j = S.get_lint(1 + f, f_fst_idx);
+		if (j) {
+			nb_cols++;
+		}
+	}
+
+	if (f_v) {
+		cout << "combinatorics_domain::make_decomposition_diagram "
+				"nb_cols = " << nb_cols << endl;
+	}
+
+
+
+	int nb_layers;
+	int *Nb;
+
+
+	combinatorics::graph_theory::layered_graph *LG;
+
+
+	nb_layers = 3;
+	Nb = NEW_int(nb_layers);
+
+	Nb[0] = nb_rows;
+	Nb[1] = nb_flag_orbits;
+	Nb[2] = nb_cols;
+
+
+
+	LG = NEW_OBJECT(combinatorics::graph_theory::layered_graph);
+	if (f_v) {
+		cout << "combinatorics_domain::make_decomposition_diagram "
+				"before LG->init" << endl;
+	}
+	//LG->add_data1(data1, 0/*verbose_level*/);
+
+	string dummy;
+	dummy.assign("");
+
+	LG->init(nb_layers, Nb, dummy, verbose_level);
+	if (f_v) {
+		cout << "combinatorics_domain::make_decomposition_diagram "
+				"after LG->init" << endl;
+	}
+	LG->place(verbose_level);
+	if (f_v) {
+		cout << "combinatorics_domain::make_decomposition_diagram "
+				"after LG->place" << endl;
+	}
+
+
+	int f_fst;
+	int edge_color;
+
+	for (f = 0; f < nb_flag_orbits; f++) {
+		i = S.get_lint(1 + f, po_idx);
+		j = S.get_lint(1 + f, iso_idx_idx);
+		f_fst = S.get_lint(1 + f, f_fst_idx);
+
+		cout << "combinatorics_domain::make_decomposition_diagram "
+				"f = " << f << " i=" << i << " j=" << j << " f_fst=" << f_fst << endl;
+
+		edge_color = 3;
+
+		LG->add_edge(0, i, 1, f,
+				edge_color,
+				0 /*verbose_level*/);
+
+		cout << "combinatorics_domain::make_decomposition_diagram "
+				"add_edge " << 0 << "," << i << " -> " << 1 << "," << f << " c=" << edge_color << endl;
+
+		if (f_fst) {
+			edge_color = 2;
+		}
+		else {
+			edge_color = 1;
+		}
+
+
+		LG->add_edge(1, f, 2, j,
+				edge_color,
+				0 /*verbose_level*/);
+
+		cout << "combinatorics_domain::make_decomposition_diagram "
+				"add_edge " << 1 << "," << f << " -> " << 2 << "," << j << " c=" << edge_color << endl;
+
+
+	}
+
+	other::data_structures::string_tools String;
+
+	for (f = 0; f < nb_flag_orbits; f++) {
+
+		i = S.get_lint(1 + f, po_idx);
+		j = S.get_lint(1 + f, iso_idx_idx);
+		f_fst = S.get_lint(1 + f, f_fst_idx);
+
+		string label;
+		string label1;
+
+		S.get_string(label, f + 1, n1_idx);
+
+		String.drop_quotes(label, label1);
+
+		LG->add_text(0, i, label1, 0/*verbose_level*/);
+
+		S.get_string(label, f + 1, n2_idx);
+
+		String.drop_quotes(label, label1);
+
+		LG->add_text(1, f, label1, 0/*verbose_level*/);
+
+		S.get_string(label, f + 1, n3_idx);
+
+		String.drop_quotes(label, label1);
+
+		LG->add_text(2, j, label1, 0/*verbose_level*/);
+
+	}
+
+	FREE_int(Nb);
+
+	//other::data_structures::string_tools String;
+
+	string fname_base;
+	string fname;
+
+
+	fname_base = decomposition_matrix_fname;
+
+	String.chop_off_extension(fname_base);
+	fname = fname_base + "_decomp.layered_graph";
+
+	LG->write_file(fname, 0 /*verbose_level*/);
+
+
+	FREE_OBJECT(LG);
+
+	other::orbiter_kernel_system::file_io Fio;
+
+
+	if (f_v) {
+		cout << "combinatorics_domain::make_decomposition_diagram Written file " << fname
+				<< " of size " << Fio.file_size(fname) << endl;
+	}
+
+	if (f_v) {
+		cout << "combinatorics_domain::make_decomposition_diagram done" << endl;
+	}
+}
+
+
+
+
+
+
 
 
 

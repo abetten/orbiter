@@ -205,7 +205,11 @@ public:
 	void lint_matrix_write_csv(
 			std::string &fname,
 			long int *M, int m, int n);
-	// outdated, used write_table_of_strings_with_col_headings instead
+	// outdated, used write_table_of_strings_with_col_headings
+	// or lint_matrix_write_csv_tabulated instead
+	void lint_matrix_write_csv_tabulated(
+			std::string &fname, std::string &col_heading,
+			long int *M, int m, int n, int verbose_level);
 
 	void lint_matrix_write_csv_override_headers(
 			std::string &fname,

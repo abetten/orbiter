@@ -13,7 +13,8 @@ MODULES = \
 	desarguesian_spread.o \
 	knarr.o \
 	spread_domain.o \
-	spread_tables.o \
+	spread_table_description.o \
+	spread_table.o \
 	w3q.o
 
 

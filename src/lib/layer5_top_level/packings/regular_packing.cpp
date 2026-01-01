@@ -61,7 +61,7 @@ void regular_packing::init(
 		cout << "regular_packing::init before PW->P->T->Klein->identify_external_lines_and_spreads" << endl;
 	}
 	PW->P->T->SD->Klein->identify_external_lines_and_spreads(
-			PW->Spread_tables_reduced,
+			PW->Spread_table_reduced,
 			External_lines,
 			spread_to_external_line_idx,
 			external_line_to_spread,

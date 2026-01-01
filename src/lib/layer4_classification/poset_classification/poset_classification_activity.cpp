@@ -153,7 +153,7 @@ void poset_classification_activity::perform_work(
 			cout << "poset_classification_activity::perform_work "
 					"f_table_of_nodes" << endl;
 		}
-		PC->get_Poo()->make_tabe_of_nodes(verbose_level);
+		PC->get_Poo()->make_table_of_nodes(verbose_level);
 	}
 
 	if (Descr->f_list_all) {

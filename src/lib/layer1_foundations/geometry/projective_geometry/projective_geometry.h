@@ -338,7 +338,7 @@ public:
 			std::vector<long int> &External_lines,
 			int verbose_level);
 	void identify_external_lines_and_spreads(
-			finite_geometries::spread_tables *T,
+			finite_geometries::spread_table *T,
 			std::vector<long int> &External_lines,
 			long int *&spread_to_external_line_idx,
 			long int *&external_line_to_spread,

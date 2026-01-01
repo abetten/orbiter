@@ -453,17 +453,17 @@ void poset_orbit_node::log_current_node_without_group(
 
 	if (f_v) {
 		cout << "poset_orbit_node::log_current_node_without_group" << endl;
-		}
+	}
 	store_set_to(gen, s - 1, gen->get_set0());
 	
 	if (f_v) {
 		f << "# ***** orbit ***** " <<
 				node - gen->first_node_at_level(s) << " "<< endl;
-		}
+	}
 	f << s << " ";
 	for (i = 0; i < s; i++) {
 		f << gen->get_set0()[i] << " ";
-		}
+	}
 	f << endl;
 
 #if 0
@@ -651,17 +651,17 @@ void poset_orbit_node::log_current_node_after_applying_group_element(
 	gen->get_poset()->A->Group_element->element_invert(Elt, Elt_inv, 0);
 	for (i = 0; i < s; i++) {
 		S[i] = Elt[gen->get_set0()[i]];
-		}
+	}
 	
 	if (f_v) {
 		f << "# ***** orbit ***** "
 				<< node - gen->first_node_at_level(s)
 				<< " " << endl;
-		}
+	}
 	f << s << " ";
 	for (i = 0; i < s; i++) {
 		f << S[i] << " ";
-		}
+	}
 	data_structures_groups::group_container G;
 
 	G.init(gen->get_poset()->A, verbose_level - 2);
@@ -689,24 +689,25 @@ void poset_orbit_node::log_current_node_after_applying_group_element(
 		//}
 	if (go.is_one()) {
 		f << go << endl;
-		}
+	}
 	else {
 		G.code_ascii(false);
 		f << go << " " << G.ascii_coding << endl;
-		}
+	}
 
 	if (f_v) {
 #if 0
 		if (gen->f_print_function) {
 			(*gen->print_function)(f, s, S,
 					gen->print_function_data);
-			}
+		}
 #endif
 		if (!go.is_one()) {
 			G.require_strong_generators();
 			f << "# ";
-			for (i = 0; i < G.A->base_len(); i++)
+			for (i = 0; i < G.A->base_len(); i++) {
 				f << G.tl[i] << " ";
+			}
 			f << endl;
 			for (i = 0; i < G.SG->len; i++) {
 				f << "# ";
@@ -715,9 +716,9 @@ void poset_orbit_node::log_current_node_after_applying_group_element(
 				G.A->Group_element->element_mult(Elt1, Elt, Elt2, false);
 				G.A->Group_element->element_print(Elt2, f);
 				//f << endl;
-				}
 			}
 		}
+	}
 	FREE_int(S);
 	FREE_int(Elt);
 	FREE_int(Elt_inv);
@@ -737,7 +738,7 @@ void poset_orbit_node::log_current_node_with_candidates(
 	f << lvl << " ";
 	for (i = 0; i < lvl; i++) {
 		f << gen->get_set0()[i] << " ";
-		}
+	}
 	f << -1 << " ";
 	
 #if 0
@@ -781,10 +782,10 @@ int poset_orbit_node::depth_of_node(
 {
 	if (prev == -1) {
 		return 0;
-		}
+	}
 	else {
 		return gen->get_node(prev)->depth_of_node(gen) + 1;
-		}
+	}
 }
 
 void poset_orbit_node::store_set(
@@ -823,7 +824,7 @@ void poset_orbit_node::store_set_with_verbose_level(
 		if (prev == -1) {
 			cout << "store_set prev == -1" << endl;
 			exit(1);
-			}
+		}
 		gen->get_node(prev)->store_set(gen, i - 1);
 	}
 }
@@ -865,7 +866,7 @@ int poset_orbit_node::check_node_and_set_consistency(
 		if (prev == -1) {
 			cout << "check_node_and_set_consistency prev == -1" << endl;
 			exit(1);
-			}
+		}
 		gen->get_node(prev)->check_node_and_set_consistency(
 				gen, i - 1, set);
 	}
@@ -887,7 +888,7 @@ void poset_orbit_node::print_set_verbose(poset_classification *gen)
 	store_set_to(gen, depth - 1, set /* gen->S0 */);
 	if (gen->get_poset()->f_print_function) {
 		gen->get_poset()->invoke_print_function(cout, depth, set /* gen->S0 */);
-		}
+	}
 	FREE_lint(set);
 	//cout << "poset_orbit_node::print_set_verbose done" << endl;
 }
@@ -950,57 +951,11 @@ void poset_orbit_node::print_node(
 
 	if (gen->get_poset()->f_print_function) {
 		gen->get_poset()->invoke_print_function(cout, depth, set /* gen->S0 */);
-		}
+	}
 
 	FREE_lint(set);
 	print_extensions(gen);
 	
-#if 0
-	for (i = 0; i < nb_extensions; i++) {
-		cout << setw(3) << i << " : " << setw(7)
-				<< E[i].pt << " : " << setw(5) << E[i].orbit_len << " : ";
-		len = gen->A->compute_orbit_of_point_generators_by_handle(
-			nb_strong_generators, hdl_strong_generators, E[i].pt, orbit, 0);
-		if (len != E[i].orbit_len) {
-			cout << "poset_orbit_node::print_node "
-					"len != E[i].orbit_len" << endl;
-			cout << "len = " << len << endl;
-			cout << "E[i].orbit_len = " << E[i].orbit_len << endl;
-			}
-		int_vec_heapsort(orbit, len); // int_vec_sort(len, orbit);
-		if (E[i].type == EXTENSION_TYPE_UNPROCESSED) {
-			cout << "unprocessed";
-			}
-		else if (E[i].type == EXTENSION_TYPE_EXTENSION) {
-			cout << "extension to node " << E[i].data;
-			}
-		else if (E[i].type == EXTENSION_TYPE_FUSION) {
-			//cout << "fusion node from ";
-			gen->A->element_retrieve(E[i].data, gen->Elt1, false);
-			store_set(gen, depth - 1);
-			gen->S[depth] = E[i].pt;
-			//int_vec_print(cout, gen->S, depth + 1);
-			//cout << " to ";
-			gen->A->map_a_set(gen->S, gen->set[0], depth + 1, gen->Elt1, 0);
-			//int_vec_print(cout, gen->set[0], depth + 1);
-			int_vec_heapsort(gen->set[0], depth + 1);
-			// int_vec_sort(depth + 1, gen->set[0]);
-			//cout << " = ";
-			//int_vec_print(cout, gen->set[0], depth + 1);
-			node2 = gen->find_poset_orbit_node_for_set(
-					depth + 1, gen->set[0], 0 /* f_tolerant */, 0);
-			//cout << node2;
-			cout << "fusion to node " << node2;
-			}
-		else if (E[i].type == EXTENSION_TYPE_PROCESSING) {
-			cout << "currently processing";
-			}
-		cout << " : ";
-		int_vec_print(cout, orbit, len);
-		cout << endl;
-		}
-	FREE_int(orbit);
-#endif	
 }
 
 void poset_orbit_node::print_extensions(

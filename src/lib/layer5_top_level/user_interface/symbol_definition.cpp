@@ -85,12 +85,7 @@ symbol_definition::symbol_definition()
 
 
 	f_spread_table = false;
-	//std::string spread_table_label_PA;
-	dimension_of_spread_elements = 0;
-	//std::string spread_selection_text;
-	//std::string spread_table_prefix;
-	//std::string spread_table_control;
-
+	Spread_table_description = NULL;
 
 
 
@@ -634,36 +629,28 @@ void symbol_definition::read_definition(
 
 
 	else if (ST.stringcmp(argv[i], "-spread_table") == 0) {
+
 		f_spread_table = true;
 
-		spread_table_label_PA.assign(argv[++i]);
-		dimension_of_spread_elements = ST.strtoi(argv[++i]);
-		spread_selection_text.assign(argv[++i]);
-		spread_table_prefix.assign(argv[++i]);
-		spread_table_control.assign(argv[++i]);
+		Spread_table_description = NEW_OBJECT(geometry::finite_geometries::spread_table_description);
+		if (f_v) {
+			cout << "reading -spread_table" << endl;
+		}
 
+		i += Spread_table_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
 
 		i++;
 
 		if (f_v) {
-			cout << "dimension_of_spread_elements = " << dimension_of_spread_elements
-					<< " " << spread_selection_text
-					<< " " << spread_table_prefix
-					<< " " << spread_table_control
-					<< endl;
+			cout << "-spread_table" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
 			if (i < argc) {
 				cout << "next argument is " << argv[i] << endl;
 			}
-		}
-
-
-		if (f_v) {
-			cout << "-spread_table " << spread_table_label_PA
-					<< " " << dimension_of_spread_elements
-					<< " " << spread_selection_text
-					<< " " << spread_table_prefix
-					<< " " << spread_table_control
-					<< endl;
+			cout << "-spread_table " << endl;
+			Spread_table_description->print();
 		}
 	}
 
@@ -2050,12 +2037,8 @@ void symbol_definition::print()
 				<< endl;
 	}
 	else if (f_spread_table) {
-		cout << "-spread_table " << spread_table_label_PA
-				<< " " << dimension_of_spread_elements
-				<< " " << spread_selection_text
-				<< " " << spread_table_prefix
-				<< " " << spread_table_control
-				<< endl;
+		cout << "-spread_table " << endl;
+		Spread_table_description->print();
 	}
 	else if (f_packing_classify) {
 		cout << "-packing_classify "
@@ -3225,52 +3208,14 @@ void symbol_definition::definition_of_spread_table(
 		cout << "symbol_definition::definition_of_spread_table" << endl;
 	}
 
-	if (f_v) {
-		cout << "symbol_definition::definition_of_spread_table "
-				"using existing PA "
-				<< spread_table_label_PA << endl;
-	}
-	projective_geometry::projective_space_with_action *PA;
 
-	PA = Get_projective_space(spread_table_label_PA);
-
-
-
-#if 0
-	packings::packing_classify *P;
-
-	if (f_v) {
-		cout << "symbol_definition::definition_of_spread_table "
-				"before P->spread_table_init" << endl;
-	}
-
-	P = NEW_OBJECT(packings::packing_classify);
-
-	P->spread_table_init(
-			PA,
-			dimension_of_spread_elements,
-			true /* f_select_spread */, spread_selection_text,
-			spread_tables_prefix,
-			spread_table_control,
-			verbose_level);
-
-
-	if (f_v) {
-		cout << "symbol_definition::definition_of_spread_table "
-				"after P->spread_table_init" << endl;
-	}
-#endif
 
 	spreads::spread_table_with_selection *Spread_table_with_selection;
 
 	Spread_table_with_selection = NEW_OBJECT(spreads::spread_table_with_selection);
 
 	Spread_table_with_selection->do_spread_table_init(
-			PA,
-			dimension_of_spread_elements,
-			true /* f_select_spread */, spread_selection_text,
-			spread_table_prefix,
-			spread_table_control,
+			Spread_table_description,
 			verbose_level);
 
 
@@ -3304,11 +3249,6 @@ void symbol_definition::definition_of_packing_classify(
 		cout << "symbol_definition::definition_of_packing_classify" << endl;
 	}
 
-	if (f_v) {
-		cout << "symbol_definition::definition_of_packing_classify "
-				"using existing PA "
-				<< spread_table_label_PA << endl;
-	}
 	projective_geometry::projective_space_with_action *PA3;
 	projective_geometry::projective_space_with_action *PA5;
 

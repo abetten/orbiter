@@ -8,4 +8,5 @@ ROW,C1,C2,C3
 1,"\verb'-export_spreads_to_csv' "," fname index "," Export the spread whose index is given to csv-file. "
 1,"\verb'-find_spreads_containing_one_line' "," index "," Find all spreads which contain the given line. "
 1,"\verb'-isomorphism_type_of_spreads' "," spreads-by-index "," Determine the isomorphism type of each spread in the list. "
+1,"\verb'-dualize_packings' "," fname\_in fname\_out col\_label "," Reads the packings from fname\_in and dualizes them. The dual packings are written to fname\_out. Here, col\_label is the column containing the data. "
 END

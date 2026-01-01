@@ -255,6 +255,15 @@ public:
 	void free_global_data();
 	void free_tab_q_binomials();
 
+	void make_decomposition_matrix(
+			std::string &decomposition_matrix_fname,
+			std::string &po_label, std::string &f_fst_label, std::string &iso_idx_label,
+			int verbose_level);
+	void make_decomposition_diagram(
+			std::string &decomposition_matrix_fname,
+			std::string &po_label, std::string &f_fst_label, std::string &iso_idx_label,
+			std::string &node_label1, std::string &node_label2, std::string &node_label3,
+			int verbose_level);
 
 
 };

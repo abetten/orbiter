@@ -2826,6 +2826,10 @@ public:
 	std::string file_column_name;
 	std::string file_column_label;
 
+	int f_union_of_column;
+	std::string union_of_column_fname;
+	std::string union_of_column_col_label;
+
 	int f_load_csv_no_border;
 	std::string load_csv_no_border_fname;
 

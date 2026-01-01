@@ -131,17 +131,17 @@ void packing_classify::init(
 	packing_classify::Spread_table_with_selection = Spread_table_with_selection;
 
 
-	packing_classify::T = Spread_table_with_selection->T;
-	F = Spread_table_with_selection->T->SD->F;
-	q = Spread_table_with_selection->T->SD->q;
-	spread_size = Spread_table_with_selection->T->SD->spread_size;
+	packing_classify::T = Spread_table_with_selection->Spread_classify;
+	F = Spread_table_with_selection->Spread_classify->SD->F;
+	q = Spread_table_with_selection->Spread_classify->SD->q;
+	spread_size = Spread_table_with_selection->Spread_classify->SD->spread_size;
 	size_of_packing = q * q + q + 1;
-	nb_lines = Spread_table_with_selection->T->A2->degree;
+	nb_lines = Spread_table_with_selection->Spread_classify->A2->degree;
 
 	int nb_points;
 
 
-	nb_points = Spread_table_with_selection->T->A->degree;
+	nb_points = Spread_table_with_selection->Spread_classify->A->degree;
 
 	packing_classify::f_lexorder_test = f_lexorder_test;
 
@@ -225,26 +225,13 @@ void packing_classify::init_P3_and_P5_and_Gr(
 	packing_classify::P3 = P3;
 	packing_classify::P5 = P5;
 
-#if 0
-	P3 = NEW_OBJECT(geometry::projective_space);
-	
-	P3->projective_space_init(3, F,
-		true /* f_init_incidence_structure */, 
-		0 /* verbose_level - 2 */);
-
-
-	P5 = NEW_OBJECT(geometry::projective_space);
-
-	P5->projective_space_init(5, F,
-		true /* f_init_incidence_structure */,
-		0 /* verbose_level - 2 */);
-
-#endif
 	if (f_v) {
 		cout << "packing_classify::init_P3_and_P5_and_Gr P3->N_points=" << P3->Subspaces->N_points << endl;
 		cout << "packing_classify::init_P3_and_P5_and_Gr P3->N_lines=" << P3->Subspaces->N_lines << endl;
+		cout << "packing_classify::init_P3_and_P5_and_Gr P3->N_planes=" << P3->Subspaces->Nb_subspaces[2] << endl;
 		cout << "packing_classify::init_P3_and_P5_and_Gr P5->N_points=" << P5->Subspaces->N_points << endl;
 		cout << "packing_classify::init_P3_and_P5_and_Gr P5->N_lines=" << P5->Subspaces->N_lines << endl;
+		cout << "packing_classify::init_P3_and_P5_and_Gr P5->N_planes=" << P5->Subspaces->Nb_subspaces[2] << endl;
 	}
 
 	the_packing = NEW_lint(size_of_packing);
@@ -474,7 +461,7 @@ void packing_classify::lifting_prepare_function_new(
 				"nb_cols=" << nb_cols << endl;
 	}
 
-	Spread_table_with_selection->Spread_tables->make_exact_cover_problem(
+	Spread_table_with_selection->Spread_table->make_exact_cover_problem(
 			Dio,
 			free_point_idx, nb_free_points2,
 			live_blocks2, nb_live_blocks2,
@@ -507,7 +494,7 @@ int packing_classify::test_if_orbit_is_partial_packing(
 				"orbit_idx = " << orbit_idx << endl;
 	}
 	Orbits->Forest->get_orbit(orbit_idx, orbit1, len, 0 /* verbose_level*/);
-	return Spread_table_with_selection->Spread_tables->test_if_set_of_spreads_is_line_disjoint(orbit1, len);
+	return Spread_table_with_selection->Spread_table->test_if_set_of_spreads_is_line_disjoint(orbit1, len);
 }
 
 int packing_classify::test_if_pair_of_orbits_are_adjacent(
@@ -530,7 +517,7 @@ int packing_classify::test_if_pair_of_orbits_are_adjacent(
 	Orbits->Forest->get_orbit(a, orbit1, len1, 0 /* verbose_level*/);
 	Orbits->Forest->get_orbit(b, orbit2, len2, 0 /* verbose_level*/);
 
-	return Spread_table_with_selection->Spread_tables->test_if_pair_of_sets_are_adjacent(
+	return Spread_table_with_selection->Spread_table->test_if_pair_of_sets_are_adjacent(
 			orbit1, len1,
 			orbit2, len2,
 			verbose_level);

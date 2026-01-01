@@ -155,7 +155,7 @@ void vector_builder::init(
 	else if (Descr->f_file_column) {
 		if (f_v) {
 			cout << "vector_builder::init "
-					"-f_file_column " << Descr->file_column_name
+					"-file_column " << Descr->file_column_name
 					<< " " << Descr->file_column_label << endl;
 		}
 		orbiter_kernel_system::file_io Fio;
@@ -197,6 +197,70 @@ void vector_builder::init(
 		len = m * n;
 		f_has_k = true;
 		k = m;
+		if (f_v) {
+			cout << "vector_builder::init found a vector of length " << len << endl;
+		}
+
+	}
+
+	else if (Descr->f_union_of_column) {
+		if (f_v) {
+			cout << "vector_builder::init "
+					"-union_of_column " << Descr->union_of_column_fname
+					<< " " << Descr->union_of_column_col_label << endl;
+		}
+		orbiter_kernel_system::file_io Fio;
+		int m, n;
+		data_structures::set_of_sets *SoS;
+
+
+		if (f_v) {
+			cout << "vector_builder::init "
+					"reading file " << Descr->union_of_column_fname
+					<< ", column " << Descr->union_of_column_col_label << endl;
+		}
+
+		Fio.Csv_file_support->read_column_as_set_of_sets(
+				Descr->union_of_column_fname, Descr->union_of_column_col_label,
+					SoS,
+					verbose_level);
+
+		if (SoS->nb_sets == 0) {
+			cout << "vector_builder::init the file seems to be empty" << endl;
+			exit(1);
+		}
+
+		m = SoS->nb_sets;
+		n = SoS->Set_size[0];
+		v = NEW_lint(m * n);
+
+		int i;
+
+		for (i = 0; i < m; i++) {
+			Lint_vec_copy(SoS->Sets[i], v + i * n, n);
+		}
+
+		other::data_structures::sorting Sorting;
+
+		int l;
+
+		l = m * n;
+
+		Sorting.lint_vec_sort_and_remove_duplicates(
+					v, l);
+
+		if (f_v) {
+			cout << "vector_builder::init found a vector of length " << l << endl;
+			Lint_vec_print_fully(cout, v, l);
+			cout << endl;
+		}
+
+
+		FREE_OBJECT(SoS);
+
+		len = l;
+		f_has_k = false;
+		k = 0;
 		if (f_v) {
 			cout << "vector_builder::init found a vector of length " << len << endl;
 		}

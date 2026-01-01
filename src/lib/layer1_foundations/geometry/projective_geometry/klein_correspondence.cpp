@@ -884,7 +884,7 @@ void klein_correspondence::compute_external_lines(
 }
 
 void klein_correspondence::identify_external_lines_and_spreads(
-		finite_geometries::spread_tables *T,
+		finite_geometries::spread_table *T,
 		std::vector<long int> &External_lines,
 		long int *&spread_to_external_line_idx,
 		long int *&external_line_to_spread,
@@ -929,7 +929,7 @@ void klein_correspondence::identify_external_lines_and_spreads(
 					"progress " << ((double)i / N100) << " %" << endl;
 		}
 		for (j = 0; j < T->spread_size; j++) {
-			a = T->spread_table[i * T->spread_size + j];
+			a = T->Spread_table[i * T->spread_size + j];
 			b = line_to_point_on_quadric(a, 0 /* verbose_level */);
 
 			O->Hyperbolic_pair->unrank_point(

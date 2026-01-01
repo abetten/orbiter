@@ -775,7 +775,7 @@ public:
 	int *good_spreads;
 		// the union of all good orbits on spreads
 
-	geometry::finite_geometries::spread_tables *Spread_tables_reduced;
+	geometry::finite_geometries::spread_table *Spread_table_reduced;
 		// The spreads in the good orbits, listed one-by-one
 		// This table is *not* sorted.
 		// The induced action on reduced spreads

@@ -99,7 +99,7 @@ void packing_invariants::init(
 		packing_invariants::the_packing[i] = the_packing[i];
 	}
 	list_of_lines = NEW_lint(P->size_of_packing * P->spread_size);
-	P->Spread_table_with_selection->Spread_tables->compute_list_of_lines_from_packing(
+	P->Spread_table_with_selection->Spread_table->compute_list_of_lines_from_packing(
 			list_of_lines,
 			packing_invariants::the_packing, P->size_of_packing,
 			verbose_level - 2);
@@ -217,7 +217,7 @@ void packing_invariants::compute_decomposition(
 	plane_to_block = NEW_int(nb_planes);
 
 
-	nb_fake_points = P->Spread_table_with_selection->Spread_tables->nb_spreads; //P->E->Reps->count;
+	nb_fake_points = P->Spread_table_with_selection->Spread_table->nb_spreads; //P->E->Reps->count;
 	nb_fake_blocks = P->size_of_packing;
 	total_nb_points =
 			P->size_of_packing * P->spread_size
@@ -259,7 +259,7 @@ void packing_invariants::compute_decomposition(
 	}
 	for (h = 0; h < P->size_of_packing; h++) {
 		a = the_packing[h];
-		b = P->Spread_table_with_selection->Spread_tables->spread_iso_type[a];
+		b = P->Spread_table_with_selection->Spread_table->spread_iso_type[a];
 		i = P->size_of_packing * P->spread_size + b;
 		j = nb_blocks + h;
 		Inc[i * total_nb_blocks + j] = 1;

@@ -155,7 +155,16 @@ void spread_domain::init_spread_domain(
 	tmp_M4 = NEW_int(n * n);
 
 	Grass = NEW_OBJECT(geometry::projective_geometry::grassmann);
+
+	if (f_v) {
+		cout << "spread_domain::init_spread_domain "
+				"before Grass->init" << endl;
+	}
 	Grass->init(n, k, F, 0 /*MINIMUM(verbose_level - 1, 1)*/);
+	if (f_v) {
+		cout << "spread_domain::init_spread_domain "
+				"after Grass->init" << endl;
+	}
 
 
 	if (f_v) {
@@ -179,8 +188,24 @@ void spread_domain::init_spread_domain(
 		Klein = NEW_OBJECT(geometry::projective_geometry::klein_correspondence);
 		O = NEW_OBJECT(layer1_foundations::geometry::orthogonal_geometry::orthogonal);
 
-		O->init(1 /* epsilon */, 6, F, 0 /* verbose_level*/);
-		Klein->init(F, O, 0 /* verbose_level */);
+		if (f_v) {
+			cout << "spread_domain::init_spread_domain "
+					"before O->init" << endl;
+		}
+		O->init(1 /* epsilon */, 6, F, verbose_level - 2);
+		if (f_v) {
+			cout << "spread_domain::init_spread_domain "
+					"after O->init" << endl;
+		}
+		if (f_v) {
+			cout << "spread_domain::init_spread_domain "
+					"before Klein->init" << endl;
+		}
+		Klein->init(F, O, verbose_level - 2);
+		if (f_v) {
+			cout << "spread_domain::init_spread_domain "
+					"after Klein->init" << endl;
+		}
 	}
 	else {
 		if (f_v) {

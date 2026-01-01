@@ -160,7 +160,7 @@ void invariants_packing::init(
 		
 		
 		for (i = 0; i < Iso->size; i++) {
-			a = P->Spread_table_with_selection->Spread_tables->spread_iso_type[P->the_packing[i]];
+			a = P->Spread_table_with_selection->Spread_table->spread_iso_type[P->the_packing[i]];
 			Spread_type_of_packing[orbit * P->Spread_table_with_selection->nb_iso_types_of_spreads + a]++;
 		}
 	}
@@ -287,7 +287,7 @@ void invariants_packing::compute_dual_packings(
 
 	
 		for (i = 0; i < Iso->size; i++) {
-			P->dual_packing[i] = P->Spread_table_with_selection->Spread_tables->dual_spread_idx[P->the_packing[i]];
+			P->dual_packing[i] = P->Spread_table_with_selection->Spread_table->dual_spread_idx[P->the_packing[i]];
 		}
 		Sorting.lint_vec_heapsort(P->the_packing, Iso->size);
 		Sorting.lint_vec_heapsort(P->dual_packing, Iso->size);
@@ -323,8 +323,8 @@ void invariants_packing::compute_dual_packings(
 	fname.assign("Dual_spread_idx.csv");
 	label.assign("dual_spread_idx");
 	Fio.Csv_file_support->lint_vec_write_csv(
-			P->Spread_table_with_selection->Spread_tables->dual_spread_idx,
-		P->Spread_table_with_selection->Spread_tables->nb_spreads,
+			P->Spread_table_with_selection->Spread_table->dual_spread_idx,
+		P->Spread_table_with_selection->Spread_table->nb_spreads,
 		fname, label);
 	
 	if (f_v) {

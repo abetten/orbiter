@@ -1272,11 +1272,13 @@ void data_input_stream::read_objects(
 			other::orbiter_kernel_system::file_io Fio;
 
 			string fname_spread_table;
+			string fname_solutions;
 
 			long int *Spread_table;
 			int nb_spreads;
 			int spread_size;
 
+			fname_solutions = Descr->Input[input_idx].input_string;
 			fname_spread_table = Descr->Input[input_idx].input_string2;
 			if (f_v) {
 				cout << "data_input_stream::read_objects "
@@ -1314,10 +1316,10 @@ void data_input_stream::read_objects(
 
 			if (f_v) {
 				cout << "data_input_stream::read_objects "
-						"Reading the file " << Descr->Input[input_idx].input_string << endl;
+						"Reading the file " << fname_solutions << endl;
 			}
 			Fio.Csv_file_support->read_column_as_set_of_sets(
-					Descr->Input[input_idx].input_string, column_header,
+					fname_solutions, column_header,
 					SoS,
 					verbose_level);
 
@@ -1326,17 +1328,17 @@ void data_input_stream::read_objects(
 
 			if (f_v) {
 				cout << "data_input_stream::read_objects "
-						"Reading the file " << Descr->Input[input_idx].input_string << endl;
+						"Reading the file " << fname_solutions << endl;
 			}
 			Fio.Csv_file_support->read_column_as_set_of_sets(
-					Descr->Input[input_idx].input_string, column_header,
+					fname_solutions, column_header,
 					SoS_index,
 					verbose_level);
 
 
 			if (f_v) {
 				cout << "data_input_stream::read_objects "
-						"Read the file " << Descr->Input[input_idx].input_string
+						"Read the file " << fname_solutions
 						<< ", SoS->nb_sets=" << SoS->nb_sets << endl;
 			}
 

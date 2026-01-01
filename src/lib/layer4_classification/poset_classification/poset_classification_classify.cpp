@@ -50,7 +50,8 @@ void poset_classification::compute_orbits_on_subsets(
 		cout << "poset_classification::compute_orbits_on_subsets "
 				"calling initialize_and_allocate_root_node" << endl;
 	}
-	initialize_and_allocate_root_node(PC_control,
+	initialize_and_allocate_root_node(
+			PC_control,
 		Poset,
 		target_depth, verbose_level - 1);
 
@@ -581,9 +582,11 @@ void poset_classification::recognize(
 	int *Elt_transporter;
 	int *Elt_transporter_inv;
 
-	cout << "recognize " << h << " / " << nb_to_recognize << endl;
+	cout << "poset_classification::recognize "
+			"recognize " << h << " / " << nb_to_recognize << endl;
 	Lint_vec_scan(set_to_recognize, recognize_set, recognize_set_sz);
-	cout << "input set = " << h << " / " << nb_to_recognize << " : ";
+	cout << "poset_classification::recognize "
+			"input set = " << h << " / " << nb_to_recognize << " : ";
 	Lint_vec_print(cout, recognize_set, recognize_set_sz);
 	cout << endl;
 
@@ -605,29 +608,39 @@ void poset_classification::recognize(
 			verbose_level);
 
 
-	orb = trace_set(recognize_set,
+	orb = trace_set(
+			recognize_set,
 		recognize_set_sz, recognize_set_sz /* level */,
 		canonical_set, Elt_transporter,
 		0 /*verbose_level */);
 
-	cout << "recognize " << h << " / " << nb_to_recognize << endl;
-	cout << "canonical set = ";
+	cout << "poset_classification::recognize "
+			"recognize " << h << " / " << nb_to_recognize << endl;
+	cout << "poset_classification::recognize "
+			"canonical set = ";
 	Lint_vec_print(cout, canonical_set, recognize_set_sz);
 	cout << endl;
-	cout << "is orbit " << orb << endl;
-	cout << "recognize " << h << " / " << nb_to_recognize << endl;
-	cout << "transporter:" << endl;
+	cout << "poset_classification::recognize "
+			"is orbit " << orb << endl;
+	cout << "poset_classification::recognize "
+			"recognize " << h << " / " << nb_to_recognize << endl;
+	cout << "poset_classification::recognize "
+			"transporter:" << endl;
 	get_A()->Group_element->element_print_quick(Elt_transporter, cout);
 
 	get_A()->Group_element->element_invert(Elt_transporter, Elt_transporter_inv, 0);
-	cout << "recognize " << h << " / " << nb_to_recognize << endl;
-	cout << "transporter inverse:" << endl;
+	cout << "poset_classification::recognize "
+			"recognize " << h << " / " << nb_to_recognize << endl;
+	cout << "poset_classification::recognize "
+			"transporter inverse:" << endl;
 	get_A()->Group_element->element_print_quick(Elt_transporter_inv, cout);
 
-	cout << "Stabilizer of the given set:" << endl;
+	cout << "poset_classification::recognize "
+			"Stabilizer of the given set:" << endl;
 	SaS_original->print_generators_tex(cout);
 
-	cout << "Stabilizer of the canonical set:" << endl;
+	cout << "poset_classification::recognize "
+			"Stabilizer of the canonical set:" << endl;
 	SaS_canonical->print_generators_tex(cout);
 
 	FREE_lint(canonical_set);

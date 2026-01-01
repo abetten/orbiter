@@ -88,7 +88,7 @@ void spread_table_activity::perform_activity(
 
 		cout << "The given spread has index " << idx << " in the spread table" << endl;
 
-		iso_idx = Spread_table_with_selection->Spread_tables->spread_iso_type[idx];
+		iso_idx = Spread_table_with_selection->Spread_table->spread_iso_type[idx];
 
 		cout << "The spread has isomorphism type " << iso_idx << endl;
 
@@ -125,16 +125,16 @@ void spread_table_activity::perform_activity(
 
 		cout << "The given spread has index " << a << " in the spread table" << endl;
 
-		a_iso_idx = Spread_table_with_selection->Spread_tables->spread_iso_type[a];
+		a_iso_idx = Spread_table_with_selection->Spread_table->spread_iso_type[a];
 
 		cout << "The spread has isomorphism type " << a_iso_idx << endl;
 
 
-		b = Spread_table_with_selection->Spread_tables->dual_spread_idx[a];
+		b = Spread_table_with_selection->Spread_table->dual_spread_idx[a];
 
 		cout << "The dual spread has index " << b << " in the spread table" << endl;
 
-		b_iso_idx = Spread_table_with_selection->Spread_tables->spread_iso_type[b];
+		b_iso_idx = Spread_table_with_selection->Spread_table->spread_iso_type[b];
 
 		cout << "The spread has isomorphism type " << b_iso_idx << endl;
 
@@ -163,7 +163,7 @@ void spread_table_activity::perform_activity(
 		dual_packing = NEW_lint(sz);
 		for (int i = 0; i < sz; i++) {
 			a = packing[i];
-			b = Spread_table_with_selection->Spread_tables->dual_spread_idx[a];
+			b = Spread_table_with_selection->Spread_table->dual_spread_idx[a];
 			dual_packing[i] = b;
 		}
 
@@ -294,7 +294,7 @@ void spread_table_activity::perform_activity(
 			cout << "spread_table_activity::perform_activity Spread_table_with_selection == NULL" << endl;
 			exit(1);
 		}
-		if (Spread_table_with_selection->Spread_tables == NULL) {
+		if (Spread_table_with_selection->Spread_table == NULL) {
 			cout << "spread_table_activity::perform_activity Spread_table_with_selection->Spread_tables == NULL" << endl;
 			exit(1);
 		}
@@ -314,7 +314,7 @@ void spread_table_activity::perform_activity(
 			if (f_v) {
 				cout << "spread_table_activity::perform_activity h = " << h << " / " << sz << endl;
 			}
-			Iso_type[h] = Spread_table_with_selection->Spread_tables->spread_iso_type[elts[h]];
+			Iso_type[h] = Spread_table_with_selection->Spread_table->spread_iso_type[elts[h]];
 		}
 
 
@@ -337,6 +337,19 @@ void spread_table_activity::perform_activity(
 		FREE_lint(elts);
 
 
+
+	}
+	else if (Descr->f_dualize_packings) {
+
+		if (f_v) {
+			cout << "spread_table_activity::perform_activity f_dualize_packings" << endl;
+		}
+
+		packings_dualize(
+				Descr->dualize_packings_fname_in,
+				Descr->dualize_packings_fname_out,
+				Descr->dualize_packings_col_label,
+				verbose_level);
 
 	}
 
@@ -362,7 +375,7 @@ void spread_table_activity::export_spreads_to_csv(
 	}
 
 	long int *T;
-	int i, j, idx;
+	int i, idx;
 	other::orbiter_kernel_system::file_io Fio;
 
 	T = NEW_lint(nb * Spread_table_with_selection->spread_size);
@@ -370,19 +383,149 @@ void spread_table_activity::export_spreads_to_csv(
 		long int *spread_elts;
 
 		idx = spread_idx[i];
+
 		spread_elts = Spread_table_with_selection->get_spread(idx);
+
+		Lint_vec_copy(spread_elts,
+				T + i * Spread_table_with_selection->spread_size,
+				Spread_table_with_selection->spread_size);
+#if 0
 		for (j = 0; j < Spread_table_with_selection->spread_size; j++) {
 			T[i * Spread_table_with_selection->spread_size + j] = spread_elts[j];
 		}
+#endif
 	}
+
+	std::string col_heading;
+
+	col_heading = "spread";
+
+	Fio.Csv_file_support->lint_matrix_write_csv_tabulated(
+			fname, col_heading,
+			T, nb, Spread_table_with_selection->spread_size,
+			verbose_level - 1);
+
+#if 0
 	Fio.Csv_file_support->lint_matrix_write_csv(
 			fname, T, nb, Spread_table_with_selection->spread_size);
-	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+#endif
+
+	if (f_v) {
+		cout << "spread_table_activity::export_spreads_to_csv "
+				"Written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
 
 	if (f_v) {
 		cout << "spread_table_activity::export_spreads_to_csv done" << endl;
 	}
 }
+
+
+void spread_table_activity::packings_dualize(
+		std::string &fname_in, std::string &fname_out, std::string &col_label,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "spread_table_activity::packings_dualize" << endl;
+	}
+
+	other::orbiter_kernel_system::file_io Fio;
+
+	long int *Packing_in;
+	long int *Packing_out;
+	long int *Packing_combined;
+	int m, n;
+
+	if (f_v) {
+		cout << "spread_table_activity::packings_dualize "
+				"before read_column_as_table_of_lint" << endl;
+	}
+	Fio.Csv_file_support->read_column_as_table_of_lint(
+			fname_in, col_label,
+			Packing_in, m, n, verbose_level);
+	if (f_v) {
+		cout << "spread_table_activity::packings_dualize "
+				"after read_column_as_table_of_lint" << endl;
+	}
+
+	if (f_v) {
+		cout << "spread_table_activity::packings_dualize "
+				"before dualize_packings" << endl;
+	}
+	dualize_packings(Packing_in, m, n,
+			Packing_out, verbose_level - 1);
+	if (f_v) {
+		cout << "spread_table_activity::packings_dualize "
+				"after dualize_packings" << endl;
+	}
+
+	Packing_combined = NEW_lint(2 * m * n);
+	Lint_vec_copy(Packing_in, Packing_combined, m * n);
+	Lint_vec_copy(Packing_out, Packing_combined + m * n, m * n);
+
+	if (f_v) {
+		cout << "spread_table_activity::packings_dualize "
+				"before lint_matrix_write_csv_tabulated" << endl;
+	}
+	Fio.Csv_file_support->lint_matrix_write_csv_tabulated(
+			fname_out, col_label,
+			Packing_combined, 2 * m, n,
+			verbose_level - 1);
+	if (f_v) {
+		cout << "spread_table_activity::packings_dualize "
+				"after lint_matrix_write_csv_tabulated" << endl;
+	}
+
+	FREE_lint(Packing_in);
+	FREE_lint(Packing_out);
+	FREE_lint(Packing_combined);
+
+	if (f_v) {
+		cout << "spread_table_activity::packings_dualize done" << endl;
+	}
+}
+
+void spread_table_activity::dualize_packings(
+		long int *Packing_in, int nb_packings, int packing_sz,
+		long int *&Dual_packings,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "spread_table_activity::dualize_packings" << endl;
+	}
+
+	if (Spread_table_with_selection->Spread_table->dual_spread_idx == NULL) {
+		cout << "spread_table_activity::dualize_packings "
+				"dual_spread_idx is not available" << endl;
+		exit(1);
+	}
+
+	Dual_packings = NEW_lint(nb_packings * packing_sz);
+
+	int i, j;
+	long int a, b;
+
+	for (i = 0; i < nb_packings; i++) {
+		for (j = 0; j < packing_sz; j++) {
+			a = Packing_in[i * packing_sz + j];
+			b = Spread_table_with_selection->Spread_table->dual_spread_idx[a];
+			Dual_packings[i * packing_sz + j] = b;
+		}
+	}
+
+	if (f_v) {
+		cout << "spread_table_activity::dualize_packings done" << endl;
+	}
+}
+
+
 
 void spread_table_activity::report_spreads(
 		int *spread_idx, int nb,
@@ -485,7 +628,7 @@ void spread_table_activity::report_spread2(
 
 	geometry::projective_geometry::projective_space *P;
 
-	P = Spread_table_with_selection->Spread_tables->P;
+	P = Spread_table_with_selection->Spread_table->P;
 
 	P->Subspaces->Grass_lines->print_set_tex(
 			ost, spread_elts, Spread_table_with_selection->spread_size,

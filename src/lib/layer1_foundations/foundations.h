@@ -604,7 +604,8 @@ namespace geometry {
 		class desarguesian_spread;
 		class knarr;
 		class spread_domain;
-		class spread_tables;
+		class spread_table_description;
+		class spread_table;
 		class W3q;
 
 		}

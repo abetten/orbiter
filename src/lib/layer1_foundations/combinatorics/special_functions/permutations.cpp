@@ -53,11 +53,11 @@ void permutations::random_permutation(
 	}
 	l = n;
 	for (i = 0; i < n; i++) {
+		a = Os.random_integer(l);
 		if ((i % 1000) == 0) {
 			cout << "permutations::random_permutation "
-					<< i << " / " << n << endl;
+					<< i << " / " << n << " a=" << a << " digit=" << available_digits[a] << endl;
 		}
-		a = Os.random_integer(l);
 		random_permutation[i] = available_digits[a];
 		available_digits[a] = available_digits[l - 1];
 #if 0
@@ -191,6 +191,7 @@ void permutations::perm_inverse(
 void permutations::perm_raise(
 		int *a, int *b, int e, long int n)
 // b := a^e (e >= 0)
+// a and b must point to distinct memory addresses.
 {
 	long int i, j, k;
 

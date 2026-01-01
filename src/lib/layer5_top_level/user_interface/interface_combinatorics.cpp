@@ -81,7 +81,7 @@ interface_combinatorics::interface_combinatorics()
 	// TABLES/combinatorics_2.csv
 
 
-	#if 0
+#if 0
 	f_regular_linear_space_classify = false;
 	Rls_descr = NULL;
 #endif
@@ -549,7 +549,7 @@ void interface_combinatorics::read_arguments(
 
 
 	// Section 12.1
-	// TABLES/combinatorics_1.csv
+	// TABLES/combinatorics_2.csv
 
 
 	else if (ST.stringcmp(argv[i], "-read_solutions_and_tally") == 0) {
@@ -953,7 +953,10 @@ void interface_combinatorics::worker(
 
 		combinatorics::other_combinatorics::combinatorics_domain Combi;
 
-		Combi.do_make_tree_of_all_k_subsets(tree_of_all_k_subsets_n, tree_of_all_k_subsets_k, verbose_level);
+		Combi.do_make_tree_of_all_k_subsets(
+				tree_of_all_k_subsets_n,
+				tree_of_all_k_subsets_k,
+				verbose_level);
 	}
 	else if (f_Delandtsheer_Doyen) {
 
@@ -1016,7 +1019,7 @@ void interface_combinatorics::worker(
 	}
 
 	// Section 12.1
-	// TABLES/combinatorics_1.csv
+	// TABLES/combinatorics_2.csv
 
 
 #if 0
@@ -1428,7 +1431,7 @@ void interface_combinatorics::do_conjugacy_classes_Sym_n_file(
 		if (!A.is_one()) {
 			cout << "the class sizes do not add up" << endl;
 			exit(1);
-			}
+		}
 		cout << "The sum of the class sizes is n!" << endl;
 		fp << "END" << endl;
 	}

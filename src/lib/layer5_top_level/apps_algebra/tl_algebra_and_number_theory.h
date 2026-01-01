@@ -737,6 +737,7 @@ public:
 
 	int f_print_elements;
 	int f_print_elements_tex;
+	int f_make_element_tree;
 
 	int f_vector_ge_print_elements_tex;
 	std::string vector_ge_print_elements_tex_label;

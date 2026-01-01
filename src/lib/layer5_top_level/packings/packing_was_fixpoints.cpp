@@ -360,7 +360,7 @@ void packing_was_fixpoints::compute_cliques_on_fixpoint_graph(
 			Partial_packings[i * clique_size + j] = b;
 		}
 	}
-	PW->Spread_tables_reduced->compute_iso_type_invariant(
+	PW->Spread_table_reduced->compute_iso_type_invariant(
 				Partial_packings, nb_cliques, clique_size,
 				Iso_type_invariant,
 				verbose_level);
@@ -369,7 +369,7 @@ void packing_was_fixpoints::compute_cliques_on_fixpoint_graph(
 
 
 	C.init(Iso_type_invariant, nb_cliques,
-			PW->Spread_tables_reduced->nb_iso_types_of_spreads,
+			PW->Spread_table_reduced->nb_iso_types_of_spreads,
 			verbose_level);
 	C.print();
 
@@ -569,7 +569,7 @@ void packing_was_fixpoints::print_packing(
 	for (i = 0; i < sz; i++) {
 		a = packing[i];
 		for (j = 0; j < PW->P->spread_size; j++) {
-			b = PW->P->Spread_table_with_selection->Spread_tables->spread_table[a * PW->P->spread_size + j];
+			b = PW->P->Spread_table_with_selection->Spread_table->Spread_table[a * PW->P->spread_size + j];
 			Lines[i * PW->P->spread_size + j] = b;
 		}
 	}

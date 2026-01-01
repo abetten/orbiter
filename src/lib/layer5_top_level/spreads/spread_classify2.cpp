@@ -345,9 +345,7 @@ void spread_classify::save_klein_invariants(
 }
 
 void spread_classify::klein(
-		//std::ostream &ost,
-		//isomorph::isomorph *Iso,
-	int iso_cnt, //groups::sims *Stab, groups::schreier &Orb,
+	int iso_cnt,
 	long int *data, int data_size,
 	other::data_structures::tally *&C,
 	int verbose_level)
@@ -355,9 +353,6 @@ void spread_classify::klein(
 {
 	int f_v = (verbose_level >= 1);
 	algebra::ring_theory::longinteger_object *R;
-	//long int **Pts_on_plane;
-	//int *nb_pts_on_plane;
-	//int nb_planes;
 
 	other::data_structures::set_of_sets *Intersections;
 
@@ -368,9 +363,6 @@ void spread_classify::klein(
 	SD->Klein->plane_intersections(
 			data, data_size,
 			R,
-			//Pts_on_plane,
-			//nb_pts_on_plane,
-			//nb_planes,
 			Intersections,
 			verbose_level);
 
@@ -584,7 +576,8 @@ void spread_classify::report2(
 		int f_pagenumbers = true;
 		other::l1_interfaces::latex_interface L;
 
-		title = "$" + std::to_string(SD->k - 1) + "$-Spreads of PG($" + std::to_string(2 * SD->k - 1) + "," + std::to_string(SD->q) + "$)";
+		title = "$" + std::to_string(SD->k - 1) + "$-Spreads of "
+				"PG($" + std::to_string(2 * SD->k - 1) + "," + std::to_string(SD->q) + "$)";
 		author = "Orbiter";
 
 		cout << "Writing file " << fname << " with "
@@ -821,18 +814,6 @@ void spread_classify::report3(
 			//cout << endl;
 		}
 
-#if 0
-		if (h == 35) {
-			cout << "Isomorphism type 35:" << endl;
-			cout << "rep=" << rep << endl;
-			cout << "first=" << first << endl;
-			cout << "id=" << id << endl;
-			cout << "starter_number=" << c << endl;
-			cout << "solution:" << endl;
-			int_vec_print(cout, data, target_size);
-			cout << endl;
-		}
-#endif
 
 		groups::sims *Stab;
 		

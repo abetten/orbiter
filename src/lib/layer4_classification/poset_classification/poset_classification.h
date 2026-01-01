@@ -1434,7 +1434,7 @@ public:
 			int verbose_level);
 	void init_root_node(
 			int verbose_level);
-	void make_tabe_of_nodes(
+	void make_table_of_nodes(
 			int verbose_level);
 	void poset_orbit_node_depth_breadth_perm_and_inverse(
 		int max_depth,

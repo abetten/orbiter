@@ -1406,7 +1406,6 @@ void any_group::print_elements(
 }
 
 void any_group::print_elements_tex(
-		//int f_with_permutation,
 		int f_override_action, actions::action *A_special,
 		int verbose_level)
 {
@@ -1427,7 +1426,10 @@ void any_group::print_elements_tex(
 
 	H = SG->create_sims(verbose_level);
 
-	cout << "group order H = " << H->group_order_lint() << endl;
+	if (f_v) {
+		cout << "any_group::print_elements_tex "
+				"group order H = " << H->group_order_lint() << endl;
+	}
 
 	int *Elt;
 	algebra::ring_theory::longinteger_object go;
@@ -1456,8 +1458,52 @@ void any_group::print_elements_tex(
 
 		L.foot(fp);
 	}
-	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	if (f_v) {
+		cout << "any_group::print_elements_tex "
+				"Written file " << fname
+				<< " of size " << Fio.file_size(fname) << endl;
+	}
 
+
+
+	FREE_int(Elt);
+	if (f_v) {
+		cout << "any_group::print_elements_tex done" << endl;
+	}
+}
+
+
+void any_group::make_element_tree(
+		int f_override_action, actions::action *A_special,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "any_group::make_element_tree" << endl;
+	}
+
+	other::orbiter_kernel_system::file_io Fio;
+
+	groups::strong_generators *SG;
+
+
+	SG = get_strong_generators();
+
+	groups::sims *H;
+
+	H = SG->create_sims(verbose_level);
+
+	if (f_v) {
+		cout << "any_group::print_elements_tex "
+				"group order H = " << H->group_order_lint() << endl;
+	}
+
+	algebra::ring_theory::longinteger_object go;
+
+	H->group_order(go);
+
+	string fname;
 
 	fname = label + "_elements_tree.txt";
 
@@ -1477,13 +1523,14 @@ void any_group::print_elements_tex(
 
 		//L.foot(fp);
 	}
-	cout << "Written file " << fname
-			<< " of size " << Fio.file_size(fname) << endl;
-
-
-	FREE_int(Elt);
 	if (f_v) {
-		cout << "any_group::print_elements_tex done" << endl;
+		cout << "any_group::print_elements_tex "
+				"Written file " << fname
+				<< " of size " << Fio.file_size(fname) << endl;
+	}
+
+	if (f_v) {
+		cout << "any_group::make_element_tree done" << endl;
 	}
 }
 

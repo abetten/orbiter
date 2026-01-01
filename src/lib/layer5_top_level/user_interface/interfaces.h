@@ -1202,9 +1202,20 @@ class interface_toolkit {
 	// ToDo: undocumented
 	int f_decomposition_matrix;
 	std::string decomposition_matrix_fname;
+	std::string decomposition_matrix_po_label;
+	std::string decomposition_matrix_f_fst_label;
+	std::string decomposition_matrix_iso_idx_label;
+	std::string decomposition_matrix_n1_label;
+	std::string decomposition_matrix_n2_label;
+	std::string decomposition_matrix_n3_label;
 
 	int f_stats;
 	std::string stats_fname_base;
+
+	// ToDo: undocumented
+	int f_intersect_set_of_sets;
+	std::string intersect_set_of_sets_fname;
+	std::string intersect_set_of_sets_column;
 
 
 public:
@@ -1488,11 +1499,8 @@ public:
 
 
 	int f_spread_table;
-	std::string spread_table_label_PA;
-	int dimension_of_spread_elements;
-	std::string spread_selection_text;
-	std::string spread_table_prefix;
-	std::string spread_table_control;
+	geometry::finite_geometries::spread_table_description *Spread_table_description;
+
 
 	int f_packing_classify;
 	std::string packing_classify_label_PA3;

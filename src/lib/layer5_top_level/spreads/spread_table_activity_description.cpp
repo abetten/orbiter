@@ -45,8 +45,13 @@ spread_table_activity_description::spread_table_activity_description()
 	f_find_spreads_containing_one_line = false;
 	find_spreads_containing_one_line_line_idx = 0;
 
-	f_isomorphism_type_of_spreads = -1;
+	f_isomorphism_type_of_spreads = false;
 	//std::string isomorphism_type_of_spreads_list;
+
+	f_dualize_packings = false;
+	//std::string dualize_packings_fname_in;
+	//std::string dualize_packings_fname_out;
+	//std::string dualize_packings_col_label;
 
 }
 
@@ -140,7 +145,18 @@ int spread_table_activity_description::read_arguments(
 						<< endl;
 			}
 		}
-
+		else if (ST.stringcmp(argv[i], "-dualize_packings") == 0) {
+			f_dualize_packings = true;
+			dualize_packings_fname_in.assign(argv[++i]);
+			dualize_packings_fname_out.assign(argv[++i]);
+			dualize_packings_col_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-dualize_packings " << dualize_packings_fname_in
+						<< " " << dualize_packings_fname_out
+						<< " " << dualize_packings_col_label
+						<< endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
 				cout << "-end" << endl;
@@ -194,6 +210,12 @@ void spread_table_activity_description::print()
 	}
 	if (f_isomorphism_type_of_spreads) {
 		cout << "-isomorphism_type_of_spreads " << isomorphism_type_of_spreads_list
+				<< endl;
+	}
+	if (f_dualize_packings) {
+		cout << "-dualize_packings " << dualize_packings_fname_in
+				<< " " << dualize_packings_fname_out
+				<< " " << dualize_packings_col_label
 				<< endl;
 	}
 

@@ -173,6 +173,7 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 
 	f_print_elements = false;
 	f_print_elements_tex = false;
+	f_make_element_tree = false;
 
 	f_vector_ge_print_elements_tex = false;
 	//std::string vector_ge_print_elements_tex_label;
@@ -717,6 +718,12 @@ int group_theoretic_activity_description::read_arguments(
 			f_print_elements_tex = true;
 			if (f_v) {
 				cout << "-print_elements_tex " << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-make_element_tree") == 0) {
+			f_make_element_tree = true;
+			if (f_v) {
+				cout << "-make_element_tree " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-vector_ge_print_elements_tex") == 0) {
@@ -1348,6 +1355,9 @@ void group_theoretic_activity_description::print()
 	}
 	if (f_print_elements_tex) {
 		cout << "-print_elements_tex " << endl;
+	}
+	if (f_make_element_tree) {
+		cout << "-make_element_tree " << endl;
 	}
 	if (f_vector_ge_print_elements_tex) {
 		cout << "-vector_ge_print_elements_tex " << vector_ge_print_elements_tex_label << endl;

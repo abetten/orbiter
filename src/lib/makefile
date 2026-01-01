@@ -207,7 +207,8 @@ ORBITER_MODULES= \
 		layer1_foundations/geometry/finite_geometries/desarguesian_spread.o \
 		layer1_foundations/geometry/finite_geometries/knarr.o \
 		layer1_foundations/geometry/finite_geometries/spread_domain.o \
-		layer1_foundations/geometry/finite_geometries/spread_tables.o \
+		layer1_foundations/geometry/finite_geometries/spread_table_description.o \
+		layer1_foundations/geometry/finite_geometries/spread_table.o \
 		layer1_foundations/geometry/finite_geometries/w3q.o \
 		layer1_foundations/geometry/orthogonal/blt_set_domain.o \
 		layer1_foundations/geometry/orthogonal/blt_set_invariants.o \

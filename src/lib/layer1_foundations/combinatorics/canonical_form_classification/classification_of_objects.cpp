@@ -261,7 +261,8 @@ void classification_of_objects::classify_objects_using_nauty(
 			Output->nb_orbits++;
 			if (f_vv) {
 				cout << "classification_of_objects::classify_objects_using_nauty "
-						"new isomorphism type, ago = " << Output->Ago[input_idx] <<
+						"new isomorphism type, input_idx = " << input_idx
+						<< " ago = " << Output->Ago[input_idx] <<
 						" Output->nb_orbits = " << Output->nb_orbits << endl;
 			}
 		}
@@ -599,7 +600,6 @@ int classification_of_objects::process_object(
 	}
 
 
-	//delete SG;
 
 	if (f_v) {
 		cout << "classification_of_objects::process_object done" << endl;

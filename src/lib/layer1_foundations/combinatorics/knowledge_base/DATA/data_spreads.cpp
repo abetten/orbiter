@@ -261,7 +261,8 @@ static const char *Spreads_5_2_stab_order[] = {
 "720", // 19 = M2 = Hering = b4
 "1920", // 20 = Walker = M16 = b5
 };
-
+// M-number = Moorhouse number
+// ai,bi,si = labels from the Czerwinski / Oakden
 
 // group order 52
 // OCN=14,15

@@ -48,6 +48,11 @@ vector_builder_description::vector_builder_description()
 	//std::string file_column_name;
 	//std::string file_column_label;
 
+	f_union_of_column = false;
+	//std::string union_of_column_fname;
+	//std::string union_of_column_col_label;
+
+
 	f_load_csv_no_border = false;
 	//std::string load_csv_no_border_fname;
 
@@ -170,6 +175,14 @@ int vector_builder_description::read_arguments(
 				cout << "-file_column " << file_column_name << " " << file_column_label << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-union_of_column") == 0) {
+			f_union_of_column = true;
+			union_of_column_fname.assign(argv[++i]);
+			union_of_column_col_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-union_of_column " << union_of_column_fname << " " << union_of_column_col_label << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-load_csv_no_border") == 0) {
 			f_load_csv_no_border = true;
 			load_csv_no_border_fname.assign(argv[++i]);
@@ -290,6 +303,9 @@ void vector_builder_description::print()
 	}
 	if (f_file_column) {
 		cout << "-file_column " << file_column_name << " " << file_column_label << endl;
+	}
+	if (f_union_of_column) {
+		cout << "-union_of_column " << union_of_column_fname << " " << union_of_column_col_label << endl;
 	}
 	if (f_load_csv_no_border) {
 		cout << "-load_csv_no_border " << load_csv_no_border_fname << endl;
