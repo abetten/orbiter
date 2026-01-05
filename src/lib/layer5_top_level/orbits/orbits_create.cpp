@@ -194,13 +194,37 @@ void orbits_create::init(
 
 
 		if (Descr->f_group_action) {
+			if (f_v) {
+				cout << "orbits_create::init -group_action" << endl;
+			}
+			if (f_v) {
+				cout << "orbits_create::init loading A_base" << endl;
+			}
 			A_base = Group_action->MGC->A_base;
+			if (f_v) {
+				cout << "orbits_create::init loading A_action" << endl;
+			}
 			A_action = Group_action->A;
+			if (f_v) {
+				cout << "orbits_create::init loading Subgroup_gens" << endl;
+			}
 			Subgroup_gens = Group_action->Subgroup_gens;
 		}
 		else if (Descr->f_group) {
+			if (f_v) {
+				cout << "orbits_create::init -group" << endl;
+			}
+			if (f_v) {
+				cout << "orbits_create::init loading A_base" << endl;
+			}
 			A_base = Group->A_base;
+			if (f_v) {
+				cout << "orbits_create::init loading A_action" << endl;
+			}
 			A_action = Group->A;
+			if (f_v) {
+				cout << "orbits_create::init loading Subgroup_gens" << endl;
+			}
 			Subgroup_gens = Group->Subgroup_gens;
 		}
 		else {
@@ -217,9 +241,9 @@ void orbits_create::init(
 		orbits::orbits_global Orbits;
 
 		if (f_v) {
-			cout << "Strong generators Subgroup_gens:" << endl;
+			cout << "orbits_create::init Strong generators Subgroup_gens:" << endl;
 			Subgroup_gens->print_generators(cout, 0 /* verbose_level */);
-			cout << "Strong generators Subgroup_gens in tex:" << endl;
+			cout << "orbits_create::init Strong generators Subgroup_gens in tex:" << endl;
 			Subgroup_gens->print_generators_tex(cout);
 		}
 

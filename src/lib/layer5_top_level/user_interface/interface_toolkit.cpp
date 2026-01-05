@@ -2404,7 +2404,8 @@ void interface_toolkit::worker(
 		long int *Domain;
 		int sz;
 
-		Get_lint_vector_from_label(loop_over_domain, Domain, sz, 0 /* verbose_level */);
+		Get_lint_vector_from_label(loop_over_domain, Domain, sz,
+				0 /* verbose_level */);
 
 		for (h = 0; h < sz; h++) {
 			cout << "loop_over iteration "
@@ -2500,7 +2501,8 @@ void interface_toolkit::worker(
 		int m1, n1, x, y;
 
 		Fio.Csv_file_support->int_matrix_read_csv(
-				plot_function_fname, T, m1, n1, verbose_level);
+				plot_function_fname, T, m1, n1,
+				verbose_level);
 
 
 
@@ -3143,108 +3145,6 @@ void interface_toolkit::worker(
 				decomposition_matrix_n3_label,
 				verbose_level);
 
-
-#if 0
-
-		cout << "reading file " << decomposition_matrix_fname << endl;
-
-
-		other::data_structures::spreadsheet S;
-
-		S.read_spreadsheet(decomposition_matrix_fname, 0/*verbose_level - 1*/);
-
-		int nb_flag_orbits;
-
-		nb_flag_orbits = S.nb_rows - 1;
-		//n = S.nb_cols;
-
-		cout << "nb_flag_orbits = " << nb_flag_orbits << endl;
-
-		//std::string fo_label;
-		std::string po_label;
-		//std::string so_label;
-		std::string f_fst_label;
-		std::string iso_idx_label;
-
-		//fo_label = "FO";
-		po_label = "PO";
-		//so_label = "SO";
-		f_fst_label = "F_Fst";
-		iso_idx_label = "Iso_idx";
-
-		//int fo_idx;
-		int po_idx;
-		//int so_idx;
-		int f_fst_idx;
-		int iso_idx_idx;
-
-
-
-		//fo_idx = S.find_column(fo_label);
-		po_idx = S.find_column(po_label);
-		//so_idx = S.find_column(so_label);
-		f_fst_idx = S.find_column(f_fst_label);
-		iso_idx_idx = S.find_column(iso_idx_label);
-
-		int f, i, j;
-
-		int *Decomp;
-		int nb_rows;
-		int nb_cols;
-
-
-		nb_rows = S.get_lint(1 + nb_flag_orbits - 1, po_idx);
-		nb_rows++;
-
-		cout << "nb_rows = " << nb_rows << endl;
-
-		nb_cols = 0;
-		for (f = 0; f < nb_flag_orbits; f++) {
-			j = S.get_lint(1 + f, f_fst_idx);
-			if (j) {
-				nb_cols++;
-			}
-		}
-
-		cout << "nb_cols = " << nb_cols << endl;
-
-		Decomp = NEW_int(nb_rows * nb_cols);
-		Int_vec_zero(Decomp, nb_rows * nb_cols);
-
-		for (f = 0; f < nb_flag_orbits; f++) {
-			i = S.get_lint(1 + f, po_idx);
-			j = S.get_lint(1 + f, iso_idx_idx);
-			cout << "f = " << f << " i=" << i << " j=" << j << endl;
-			Decomp[i * nb_cols + j]++;
-		}
-
-		other::orbiter_kernel_system::file_io Fio;
-
-		int m;
-
-		m = Int_vec_maximum(Decomp, nb_rows * nb_cols);
-
-		cout << "decomposition matrix has size " << nb_rows
-				<< " x " << nb_cols << " max entry = " << m << endl;
-		Int_matrix_print(Decomp, nb_rows, nb_cols);
-
-		std::string fname_out;
-
-		fname_out = decomposition_matrix_fname;
-
-		other::data_structures::string_tools String;
-
-		String.chop_off_extension(
-				fname_out);
-
-		fname_out += "_decomp.csv";
-
-		Fio.Csv_file_support->int_matrix_write_csv(
-				fname_out, Decomp, nb_rows, nb_cols);
-
-		cout << "Written file " << fname_out
-				<< " of size " << Fio.file_size(fname_out) << endl;
-#endif
 
 
 	}

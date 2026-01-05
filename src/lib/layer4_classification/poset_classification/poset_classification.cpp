@@ -1308,11 +1308,6 @@ void poset_classification::map_to_canonical_k_subset(
 
 	// trace the subset:
 	
-	if (f_v) {
-		cout << "poset_classification::map_to_canonical_k_subset "
-				"before trace_set" << endl;
-	}
-
 	if (set_size > max_set_size) {
 		cout << "poset_classification::map_to_canonical_k_subset "
 				"set_size > max_set_size" << endl;
@@ -1323,10 +1318,16 @@ void poset_classification::map_to_canonical_k_subset(
 		exit(1);
 	}
 
+	if (f_v) {
+		cout << "poset_classification::map_to_canonical_k_subset "
+				"before trace_set" << endl;
+	}
+
 	local_idx = trace_set(
 		subset, set_size, subset_size,
 		canonical_subset, Elt1, 
-		verbose_level);
+		verbose_level - 2);
+
 	if (f_v) {
 		cout << "poset_classification::"
 				"map_to_canonical_k_subset "
