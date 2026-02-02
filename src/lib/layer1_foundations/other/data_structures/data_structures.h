@@ -154,7 +154,7 @@ public:
 	void make_and_draw_tree(
 			std::string &fname_base,
 			int n, int *pts, int *prev, int f_use_pts_inv, int *pts_inv,
-			other::graphics::layered_graph_draw_options *LG_Draw_options,
+			other::graphics::draw_options *LG_Draw_options,
 			int verbose_level);
 	void schreier_vector_compute_depth_and_ancestor(
 		int n, int *pts, int *prev, int f_prev_is_point_index, int *pts_inv,
@@ -526,7 +526,7 @@ class fancy_set {
 // forest.cpp
 // #############################################################################
 
-//! A forest representation of a set of group orbits. One orbit is one tree.
+//! A forest representation of a set of group orbits. Each orbit is one tree.
 
 
 class forest {
@@ -536,21 +536,19 @@ class forest {
 	int degree;
 
 
-	// suggested new class: schreier_forest:
-	// long int degree
-	int *orbit; // [A->degree]
-	int *orbit_inv; // [A->degree]
+	int *orbit; // [degree]
+	int *orbit_inv; // [degree]
 
 		// prev and label are indexed
 		// by the points in the order as listed in orbit.
 
-	int *prev; // [A->degree]
-	int *label; // [A->degree]
+	int *prev; // [degree]
+	int *label; // [degree]
 
 		// prev[coset] is the point which maps
 		// to orbit[coset] under generator label[coset]
 
-	//int *orbit_no; // [A->degree]
+	//int *orbit_no; // [degree]
 		// to find out which orbit point a lies in,
 		// use orbit_number(pt).
 		// It used to be orbit_no[orbit_inv[a]]
@@ -558,11 +556,10 @@ class forest {
 	//prev[total] = cur_pt;
 	//label[total] = i;
 
-	int *orbit_first;  // [A->degree + 1]
-	int *orbit_len;  // [A->degree]
+	int *orbit_first;  // [degree + 1]
+	int *orbit_len;  // [degree]
 	int nb_orbits;
 
-	// end schreier_forest
 
 	forest();
 	~forest();
@@ -691,7 +688,7 @@ class forest {
 			int orbit_no);
 	void draw_forest(
 			std::string &fname_mask,
-			other::graphics::layered_graph_draw_options *Opt,
+			other::graphics::draw_options *Opt,
 			int f_has_point_labels, long int *point_labels,
 			int verbose_level);
 	void get_orbit_by_levels(
@@ -708,27 +705,27 @@ class forest {
 			int verbose_level);
 	void draw_tree(
 			std::string &fname,
-			other::graphics::layered_graph_draw_options *Opt,
+			other::graphics::draw_options *Opt,
 			int orbit_no,
 			int f_has_point_labels, long int *point_labels,
 			int verbose_level);
 	void draw_tree2(
 			std::string &fname,
-			other::graphics::layered_graph_draw_options *Opt,
+			other::graphics::draw_options *Opt,
 			int *weight, int *placement_x, int max_depth,
 			int i, int last,
 			int f_has_point_labels, long int *point_labels,
 			int verbose_level);
 	void subtree_draw_lines(
 			other::graphics::mp_graphics &G,
-			other::graphics::layered_graph_draw_options *Opt,
+			other::graphics::draw_options *Opt,
 			int parent_x, int parent_y, int *weight,
 			int *placement_x, int max_depth, int i, int last,
 			int y_max,
 			int verbose_level);
 	void subtree_draw_vertices(
 			other::graphics::mp_graphics &G,
-			other::graphics::layered_graph_draw_options *Opt,
+			other::graphics::draw_options *Opt,
 			int parent_x, int parent_y, int *weight,
 			int *placement_x, int max_depth, int i, int last,
 			int f_has_point_labels, long int *point_labels,
@@ -773,7 +770,7 @@ class forest {
 	void make_orbit_trees(
 			std::ostream &ost,
 			std::string &fname_mask,
-			other::graphics::layered_graph_draw_options *Opt,
+			other::graphics::draw_options *Opt,
 			int verbose_level);
 	void print_and_list_orbit_tex(
 			int i, std::ostream &ost);

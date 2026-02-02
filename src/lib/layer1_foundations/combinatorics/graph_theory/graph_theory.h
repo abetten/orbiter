@@ -478,33 +478,33 @@ public:
 			std::string &fname, int verbose_level);
 	void draw_on_circle(
 			std::string &fname,
-			other::graphics::layered_graph_draw_options *Draw_options,
+			other::graphics::draw_options *Draw_options,
 		int verbose_level);
 	void draw_on_circle_2(
 			other::graphics::mp_graphics &G,
-			other::graphics::layered_graph_draw_options *Draw_options);
+			other::graphics::draw_options *Draw_options);
 	void create_bitmatrix(
 			other::data_structures::bitmatrix *&Bitmatrix,
 		int verbose_level);
 	void draw(
 			std::string &fname,
-			other::graphics::layered_graph_draw_options *Draw_options,
+			other::graphics::draw_options *Draw_options,
 		int verbose_level);
 	void draw_Levi(
 			std::string &fname,
-			other::graphics::layered_graph_draw_options *Draw_options,
+			other::graphics::draw_options *Draw_options,
 		int f_partition, int nb_row_parts, int *row_part_first, 
 		int nb_col_parts, int *col_part_first, 
 		int m, int n, int f_draw_labels, 
 		int verbose_level);
 	void draw_with_a_given_partition(
 			std::string &fname,
-			other::graphics::layered_graph_draw_options *Draw_options,
+			other::graphics::draw_options *Draw_options,
 			int *parts, int nb_parts,
 			int verbose_level);
 	void draw_partitioned(
 			std::string &fname,
-			other::graphics::layered_graph_draw_options *Draw_options,
+			other::graphics::draw_options *Draw_options,
 		int f_labels,
 		int verbose_level);
 	colored_graph *compute_neighborhood_subgraph(
@@ -641,8 +641,49 @@ public:
 			int given_vertex,
 			int *&Distance,
 			int verbose_level);
+	layer1_foundations::combinatorics::graph_theory::layered_graph *create_distance_poset(
+			int given_vertex,
+			int verbose_level);
 
 };
+
+
+
+// #############################################################################
+// distance_information.cpp
+// #############################################################################
+
+
+//! keeping track of the distance sets from a given vertex of a graph
+
+
+
+class distance_information {
+
+public:
+
+	int nb_layers;
+	int *Nb_nodes;
+
+	int nb_nodes_total;
+	int *perm;
+	int *perm_inv;
+	int *depth;
+	int *Fst;
+
+	distance_information();
+	~distance_information();
+	void init_SoS(
+			other::data_structures::set_of_sets *SoS,
+			int nb_nodes_total,
+			int verbose_level);
+	void init_layered_graph(
+			layer1_foundations::combinatorics::graph_theory::layered_graph *Layered_graph,
+			int verbose_level);
+
+};
+
+
 
 
 
@@ -791,7 +832,7 @@ public:
 
 	void colored_graph_draw(
 			std::string &fname,
-			other::graphics::layered_graph_draw_options *Draw_options,
+			other::graphics::draw_options *Draw_options,
 			int f_labels,
 			int verbose_level);
 	void colored_graph_all_cliques(
@@ -823,7 +864,7 @@ public:
 		int verbose_level);
 	void draw_bitmatrix(
 			std::string &fname_base,
-			other::graphics::layered_graph_draw_options *Draw_options,
+			other::graphics::draw_options *Draw_options,
 			int f_dots,
 			int f_partition, int nb_row_parts, int *row_part_first,
 			int nb_col_parts, int *col_part_first,
@@ -1011,7 +1052,8 @@ public:
 	~layered_graph();
 	void init(
 			int nb_layers, int *Nb_nodes_layer,
-			std::string &fname_base, int verbose_level);
+			std::string &fname_base,
+			int verbose_level);
 	int nb_nodes();
 	void print_nb_nodes_per_level();
 	double average_word_length();
@@ -1053,18 +1095,18 @@ public:
 			int verbose_level);
 	void draw_with_options(
 			std::string &fname,
-			other::graphics::layered_graph_draw_options *O,
+			other::graphics::draw_options *O,
 			int verbose_level);
 	void draw_edges(
-			other::graphics::layered_graph_draw_options *O,
+			other::graphics::draw_options *O,
 			other::graphics::mp_graphics *G,
 			int verbose_level);
 	void draw_vertices(
-			other::graphics::layered_graph_draw_options *O,
+			other::graphics::draw_options *O,
 			other::graphics::mp_graphics *G,
 			int verbose_level);
 	void draw_level_info(
-			other::graphics::layered_graph_draw_options *O,
+			other::graphics::draw_options *O,
 			other::graphics::mp_graphics *G,
 			int verbose_level);
 	void coordinates_direct(
@@ -1123,6 +1165,9 @@ public:
 			std::string &fname,
 			int f_grouping, double x_stretch,
 			int verbose_level);
+	int test_if_distance_regular(
+			int verbose_level);
+
 };
 
 
@@ -1142,7 +1187,6 @@ public:
 
 	clique_finder_control *Control;
 
-	//std::ostream *ost_sol;
 	
 	colored_graph *graph;
 	clique_finder *CF;
@@ -1156,7 +1200,6 @@ public:
 	void search(
 			clique_finder_control *Control,
 			colored_graph *graph,
-			//std::ostream &ost_sol,
 			int verbose_level);
 	int find_candidates(
 		int current_clique_size, int *current_clique, 

@@ -482,7 +482,7 @@ void classify_five_plus_one::identify_five_plus_one(
 
 void classify_five_plus_one::report(
 		std::ostream &ost,
-		other::graphics::layered_graph_draw_options
+		other::graphics::draw_options
 			*draw_options,
 		poset_classification::poset_classification_report_options
 			*Opt,

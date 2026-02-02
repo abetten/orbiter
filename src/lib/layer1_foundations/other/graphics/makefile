@@ -10,10 +10,10 @@ MODULES = \
 	draw_bitmap_control.o \
 	draw_incidence_structure_description.o \
 	draw_mod_n_description.o \
+	draw_options.o \
 	draw_projective_curve_description.o \
 	drawable_set_of_objects.o \
 	graphical_output.o \
-	layered_graph_draw_options.o \
 	mp_graphics.o \
 	parametric_curve_point.o \
 	parametric_curve.o \

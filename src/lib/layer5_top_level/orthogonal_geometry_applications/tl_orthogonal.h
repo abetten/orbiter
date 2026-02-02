@@ -750,11 +750,11 @@ public:
 	void init_group(
 			int verbose_level);
 	void report(
-			other::graphics::layered_graph_draw_options *Draw_options,
+			other::graphics::draw_options *Draw_options,
 			int verbose_level);
 	void report2(
 			std::ostream &ost,
-			other::graphics::layered_graph_draw_options *Draw_options,
+			other::graphics::draw_options *Draw_options,
 			int verbose_level);
 	void make_table_of_blt_sets(
 			int verbose_level);

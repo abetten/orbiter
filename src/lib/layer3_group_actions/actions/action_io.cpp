@@ -24,7 +24,7 @@ void action::report(
 		std::ostream &ost,
 		int f_sims, groups::sims *S,
 		int f_strong_gens, groups::strong_generators *SG,
-		other::graphics::layered_graph_draw_options *LG_Draw_options,
+		other::graphics::draw_options *LG_Draw_options,
 		int verbose_level)
 // reports the sims object from the arguments
 {

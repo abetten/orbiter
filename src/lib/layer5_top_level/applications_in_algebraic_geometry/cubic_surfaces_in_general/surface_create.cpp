@@ -2918,7 +2918,7 @@ void surface_create::export_gap(
 
 
 void surface_create::do_report(
-		other::graphics::layered_graph_draw_options *Draw_options,
+		other::graphics::draw_options *Draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3071,7 +3071,7 @@ void surface_create::do_report_group_elements(
 
 void surface_create::do_report2(
 		std::ostream &ost,
-		other::graphics::layered_graph_draw_options *Draw_options,
+		other::graphics::draw_options *Draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3203,7 +3203,7 @@ void surface_create::do_report_group_elements2(
 
 
 void surface_create::report_with_group(
-		other::graphics::layered_graph_draw_options *Draw_options,
+		other::graphics::draw_options *Draw_options,
 		std::string &Control_six_arcs_label,
 		int verbose_level)
 {

@@ -30,7 +30,7 @@ plot_tools::~plot_tools()
 
 
 void plot_tools::draw_density(
-		layered_graph_draw_options *Draw_options,
+		draw_options *Draw_options,
 		std::string &prefix, int *the_set, int set_size,
 	int f_title, std::string &title, int out_of,
 	std::string &label_x,
@@ -148,7 +148,7 @@ void plot_tools::draw_density(
 }
 
 void plot_tools::draw_density_multiple_curves(
-		layered_graph_draw_options *Draw_options,
+		draw_options *Draw_options,
 		std::string &prefix,
 	int **Data, int *Data_size, int nb_data_sets, 
 	int f_title, std::string &title, int out_of,
@@ -352,7 +352,7 @@ void plot_tools::y_to_pt_on_curve(
 
 void plot_tools::projective_plane_draw_grid(
 		std::string &fname,
-		layered_graph_draw_options *O,
+		draw_options *O,
 	int q, int *Table, int nb, 
 	int f_point_labels, std::string *Point_labels,
 	int verbose_level)
@@ -436,7 +436,7 @@ void plot_tools::draw_something(
 		cout << "plot_tools::draw_something" << endl;
 	}
 
-	graphics::layered_graph_draw_options *O;
+	graphics::draw_options *O;
 
 
 	if (!Descr->f_file) {
@@ -613,7 +613,7 @@ void plot_tools::draw_something(
 
 void plot_tools::draw_mod_n_work(
 		mp_graphics &G,
-		layered_graph_draw_options *O,
+		draw_options *O,
 		draw_mod_n_description *Descr,
 		int verbose_level)
 {
@@ -996,7 +996,7 @@ void plot_tools::draw_mod_n_work(
 
 void plot_tools::draw_desargues(
 		mp_graphics &G,
-		layered_graph_draw_options *O,
+		draw_options *O,
 		draw_mod_n_description *Descr,
 		int verbose_level)
 {
@@ -1253,7 +1253,7 @@ void plot_tools::draw_desargues(
 
 void plot_tools::draw_point_set_in_plane(
 	std::string &fname,
-	layered_graph_draw_options *O,
+	draw_options *O,
 	geometry::projective_geometry::projective_space *P,
 	long int *Pts, int nb_pts,
 	int f_point_labels,

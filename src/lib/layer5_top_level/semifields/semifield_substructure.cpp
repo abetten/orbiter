@@ -111,8 +111,9 @@ void semifield_substructure::compute_cases(
 	int i, a, sum;
 
 	if (f_v) {
-		cout << "computing non-unique cases with non-trivial group:" << endl;
-		}
+		cout << "semifield_substructure::compute_cases "
+				"computing non-unique cases with non-trivial group:" << endl;
+	}
 
 	Non_unique_cases_with_non_trivial_group = NEW_int(nb_non_unique_cases);
 	nb_non_unique_cases_with_non_trivial_group = 0;
@@ -121,16 +122,17 @@ void semifield_substructure::compute_cases(
 		if (Non_unique_cases_go[i] > 1) {
 			Non_unique_cases_with_non_trivial_group
 				[nb_non_unique_cases_with_non_trivial_group++] = a;
-			}
 		}
+	}
 	if (f_v) {
-		cout << "There are " << nb_non_unique_cases_with_non_trivial_group
+		cout << "semifield_substructure::compute_cases "
+				"There are " << nb_non_unique_cases_with_non_trivial_group
 			<< " cases with more than one solution and with a "
 				"non-trivial group" << endl;
 		cout << "They are:" << endl;
 		Int_matrix_print(Non_unique_cases_with_non_trivial_group,
 			nb_non_unique_cases_with_non_trivial_group / 10 + 1, 10);
-		}
+	}
 
 
 	Need_orbits_fst = NEW_int(nb_non_unique_cases_with_non_trivial_group);
@@ -139,13 +141,13 @@ void semifield_substructure::compute_cases(
 		a = Non_unique_cases_with_non_trivial_group[i];
 		Need_orbits_fst[i] = FstLen[2 * a + 0];
 		Need_orbits_len[i] = FstLen[2 * a + 1];
-		}
+	}
 
 
 	sum = 0;
 	for (i = 0; i < nb_non_unique_cases_with_non_trivial_group; i++) {
 		sum += Need_orbits_len[i];
-		}
+	}
 	{
 		other::data_structures::tally C;
 
@@ -153,14 +155,16 @@ void semifield_substructure::compute_cases(
 				nb_non_unique_cases_with_non_trivial_group, false,
 				0);
 		if (f_v) {
-			cout << "classification of Len amongst the need orbits cases:" << endl;
+			cout << "semifield_substructure::compute_cases "
+					"classification of Len amongst the need orbits cases:" << endl;
 			C.print_bare(true);
 			cout << endl;
-			}
+		}
 	}
 	if (f_v) {
-		cout << "For a total of " << sum << " semifields" << endl;
-		}
+		cout << "semifield_substructure::compute_cases "
+				"For a total of " << sum << " semifields" << endl;
+	}
 }
 
 
@@ -174,10 +178,11 @@ void semifield_substructure::compute_orbits(
 
 	if (f_v) {
 		cout << "semifield_substructure::compute_orbits" << endl;
-		}
+	}
 	if (f_v) {
-		cout << "computing all orbits:" << endl;
-		}
+		cout << "semifield_substructure::compute_orbits "
+				"computing all orbits:" << endl;
+	}
 
 
 
@@ -200,11 +205,12 @@ void semifield_substructure::compute_orbits(
 		All_Orbits[o] = new orbits_schreier::orbit_of_subspaces *[len];
 
 		if (f_v) {
-			cout << "case " << o << " / "
+			cout << "semifield_substructure::compute_orbits "
+					"case " << o << " / "
 				<< nb_non_unique_cases_with_non_trivial_group
 				<< " with " << len
 				<< " semifields" << endl;
-			}
+		}
 
 		int *f_reached;
 		int *position;
@@ -224,7 +230,7 @@ void semifield_substructure::compute_orbits(
 		for (f = 0; f < len; f++) {
 			if (f_reached[f]) {
 				continue;
-				}
+			}
 			orbits_schreier::orbit_of_subspaces *Orb;
 			long int *input_data;
 
@@ -232,35 +238,40 @@ void semifield_substructure::compute_orbits(
 			input_data = Data + (fst + f) * data_size + start_column;
 
 			if (f_vvv) {
-				cout << "case " << o << " / "
+				cout << "semifield_substructure::compute_orbits "
+						"case " << o << " / "
 					<< nb_non_unique_cases_with_non_trivial_group
 					<< " is original case " << a << " at "
 					<< fst << " with " << len
 					<< " semifields. Computing orbit of "
 					"semifield " << f << " / " << len << endl;
-				cout << "Orbit rep "
+				cout << "semifield_substructure::compute_orbits "
+						"Orbit rep "
 					<< f << ":" << endl;
 				Lint_vec_print(cout, input_data, SC->k);
 				cout << endl;
-				}
+			}
 			if (false) {
-				cout << "The stabilizer is:" << endl;
+				cout << "semifield_substructure::compute_orbits "
+						"The stabilizer is:" << endl;
 				L3->Stabilizer_gens[a].print_generators(cout, verbose_level - 1);
 			}
 
-			SC->compute_orbit_of_subspaces(input_data,
+			SC->compute_orbit_of_subspaces(
+					input_data,
 				&L3->Stabilizer_gens[a],
 				Orb,
 				verbose_level - 4);
 			if (f_vv) {
-				cout << "case " << o << " / "
+				cout << "semifield_substructure::compute_orbits "
+						"case " << o << " / "
 					<< nb_non_unique_cases_with_non_trivial_group
 					<< " is original case " << a << " at "
 					<< fst << " with " << len
 					<< " semifields. Orbit of semifield " << f << " / "
 					<< len << " has length "
 					<< Orb->used_length << endl;
-				}
+			}
 
 			int idx, g, c;
 
@@ -268,9 +279,10 @@ void semifield_substructure::compute_orbits(
 			for (g = 0; g < len; g++) {
 				if (f_reached[g]) {
 					continue;
-					}
+				}
 				if (false) {
-					cout << "testing subspace " << g << " / " << len << ":" << endl;
+					cout << "semifield_substructure::compute_orbits "
+							"testing subspace " << g << " / " << len << ":" << endl;
 				}
 				if (Orb->find_subspace_lint(
 						Data + (fst + g) * data_size + start_column,
@@ -279,26 +291,27 @@ void semifield_substructure::compute_orbits(
 					position[g] = idx;
 					orbit_idx[g] = cnt;
 					c++;
-					}
 				}
+			}
 			if (c != Orb->used_length) {
 				cout << "c != Orb->used_length" << endl;
 				cout << "Orb->used_length=" << Orb->used_length << endl;
 				cout << "c=" << c << endl;
 				exit(1);
-				}
+			}
 			All_Orbits[o][cnt] = Orb;
 
 			cnt++;
 
-			}
+		}
 
 		if (f_vv) {
-			cout << "case " << o << " / "
+			cout << "semifield_substructure::compute_orbits "
+					"case " << o << " / "
 				<< nb_non_unique_cases_with_non_trivial_group
 				<< " with " << len << " semifields done, there are "
 				<< cnt << " orbits in this case." << endl;
-			}
+		}
 
 		Nb_orb[o] = cnt;
 		nb_orb_total += cnt;
@@ -310,18 +323,19 @@ void semifield_substructure::compute_orbits(
 
 
 
-		}
+	}
 
 	if (f_v) {
-		cout << "Number of orbits:" << endl;
+		cout << "semifield_substructure::compute_orbits "
+				"Number of orbits:" << endl;
 		for (o = 0; o < nb_non_unique_cases_with_non_trivial_group; o++) {
 			cout << o << " : " << Nb_orb[o] << endl;
-			}
-		cout << "Total number of orbits = " << nb_orb_total << endl;
 		}
+		cout << "Total number of orbits = " << nb_orb_total << endl;
+	}
 	if (f_v) {
 		cout << "semifield_substructure::compute_orbits done" << endl;
-		}
+	}
 }
 
 
@@ -337,50 +351,56 @@ void semifield_substructure::compute_flag_orbits(
 
 	if (f_v) {
 		cout << "semifield_substructure::compute_flag_orbits" << endl;
-		}
+	}
 	if (f_v) {
-		cout << "Counting number of flag orbits:" << endl;
-		}
+		cout << "semifield_substructure::compute_flag_orbits "
+				"Counting number of flag orbits:" << endl;
+	}
 	nb_flag_orbits = 0;
 	for (o = 0; o < nb_orbits_at_level_3; o++) {
 
 		if (false) {
-			cout << "orbit " << o << " number of semifields = "
+			cout << "semifield_substructure::compute_flag_orbits "
+					"orbit " << o << " number of semifields = "
 				<< Len[o] << " group order = "
 				<< L3->Stabilizer_gens[o].group_order_as_lint() << endl;
-			}
+		}
 		if (Len[o] == 0) {
-			}
+		}
 		else if (Len[o] == 1) {
 			nb_flag_orbits += 1;
-			}
+		}
 		else if (L3->Stabilizer_gens[o].group_order_as_lint() == 1) {
 			nb_flag_orbits += Len[o];
-			}
+		}
 		else {
 			if (!Sorting.int_vec_search(
 				Non_unique_cases_with_non_trivial_group,
 				nb_non_unique_cases_with_non_trivial_group, o, idx)) {
-				cout << "cannot find orbit " << o
+				cout << "semifield_substructure::compute_flag_orbits "
+						"cannot find orbit " << o
 						<< " in the list " << endl;
 				exit(1);
-				}
-			if (f_vv) {
-				cout << "Found orbit " << o
-						<< " at position " << idx << endl;
-				}
-			nb_flag_orbits += Nb_orb[idx];
 			}
-
-		} // next o
-	if (f_v) {
-		cout << "nb_flag_orbits = " << nb_flag_orbits << endl;
+			if (f_vv) {
+				cout << "semifield_substructure::compute_flag_orbits "
+						"Found orbit " << o
+						<< " at position " << idx << endl;
+			}
+			nb_flag_orbits += Nb_orb[idx];
 		}
 
+	} // next o
+	if (f_v) {
+		cout << "semifield_substructure::compute_flag_orbits "
+				"nb_flag_orbits = " << nb_flag_orbits << endl;
+	}
+
 
 	if (f_v) {
-		cout << "Computing Flag_orbits:" << endl;
-		}
+		cout << "semifield_substructure::compute_flag_orbits "
+				"Computing Flag_orbits:" << endl;
+	}
 
 
 	Fo_first = NEW_int(nb_orbits_at_level_3);
@@ -445,11 +465,13 @@ void semifield_substructure::compute_flag_orbits(
 			if (!Sorting.int_vec_search(
 					Non_unique_cases_with_non_trivial_group,
 					nb_non_unique_cases_with_non_trivial_group, o, idx)) {
-				cout << "cannot find orbit " << o << " in the list " << endl;
+				cout << "semifield_substructure::compute_flag_orbits "
+						"cannot find orbit " << o << " in the list " << endl;
 				exit(1);
 			}
 			if (false) {
-				cout << "Found orbit " << o
+				cout << "semifield_substructure::compute_flag_orbits "
+						"Found orbit " << o
 					<< " at position " << idx << endl;
 			}
 			for (g = 0; g < Nb_orb[idx]; g++) {
@@ -479,16 +501,18 @@ void semifield_substructure::compute_flag_orbits(
 
 	}
 	if (h != nb_flag_orbits) {
-		cout << "h != nb_flag_orbits" << endl;
+		cout << "semifield_substructure::compute_flag_orbits "
+				"h != nb_flag_orbits" << endl;
 		exit(1);
 	}
 	if (f_v) {
-		cout << "Finished initializing flag orbits. "
+		cout << "semifield_substructure::compute_flag_orbits "
+				"Finished initializing flag orbits. "
 				"Number of flag orbits = " << nb_flag_orbits << endl;
 	}
 	if (f_v) {
 		cout << "semifield_substructure::compute_flag_orbits done" << endl;
-		}
+	}
 }
 
 
@@ -502,7 +526,7 @@ void semifield_substructure::do_classify(
 		cout << "semifield_substructure::do_classify" << endl;
 	}
 	if (f_v) {
-		cout << "Computing classification:" << endl;
+		cout << "semifield_substructure::do_classify Computing classification:" << endl;
 	}
 
 	//int depth0 = 3;
@@ -535,15 +559,18 @@ void semifield_substructure::do_classify(
 		cout << "semifield_substructure::do_classify "
 				"before SCWS->Semifields->init" << endl;
 	}
-	SCWS->Semifields->init(SC->A, SC->AS,
-			nb_flag_orbits, SC->k, go, verbose_level);
+	SCWS->Semifields->init(
+			SC->A, SC->AS,
+			nb_flag_orbits, SC->k, go,
+			verbose_level);
 	if (f_v) {
 		cout << "semifield_substructure::do_classify "
 				"after SCWS->Semifields->init" << endl;
 	}
 
 	if (Flag_orbits == NULL) {
-		cout << "semifield_substructure::do_classify Flag_orbits == NULL" << endl;
+		cout << "semifield_substructure::do_classify "
+				"Flag_orbits == NULL" << endl;
 		exit(1);
 	}
 
@@ -587,7 +614,8 @@ void semifield_substructure::do_classify(
 		po = Flag_orbits->Flag_orbit_node[f].downstep_primary_orbit;
 		so = Flag_orbits->Flag_orbit_node[f].downstep_secondary_orbit;
 		if (f_v) {
-			cout << "po=" << po << " so=" << so << endl;
+			cout << "semifield_substructure::do_classify "
+					"po=" << po << " so=" << so << endl;
 		}
 		Lint_vec_copy(
 				Flag_orbits->Pt + f * Flag_orbits->pt_representation_sz,
@@ -619,7 +647,8 @@ void semifield_substructure::do_classify(
 			v3[i] = Basis1[2 * SC->k2 + i * SC->k + 0];
 		}
 		if (!SC->Mtx->GFq->Linear_algebra->is_unit_vector(v3, SC->k, SC->k - 1)) {
-			cout << "flag orbit " << f << " / "
+			cout << "semifield_substructure::do_classify "
+					"flag orbit " << f << " / "
 					<< nb_flag_orbits
 					<< " 1st col of third matrix is = ";
 			Int_vec_print(cout, v3, SC->k);
@@ -630,7 +659,8 @@ void semifield_substructure::do_classify(
 
 		if (f_skip) {
 			if (f_v) {
-				cout << "flag orbit " << f << " / "
+				cout << "semifield_substructure::do_classify "
+						"flag orbit " << f << " / "
 						<< nb_flag_orbits
 					<< ", first vector is not the unit vector, "
 					"so we skip" << endl;
@@ -640,7 +670,8 @@ void semifield_substructure::do_classify(
 			continue;
 		}
 		if (f_v) {
-			cout << "flag orbit " << f << " / " << nb_flag_orbits
+			cout << "semifield_substructure::do_classify "
+					"flag orbit " << f << " / " << nb_flag_orbits
 				<< ", looping over the " << N << " subspaces" << endl;
 		}
 
@@ -655,12 +686,14 @@ void semifield_substructure::do_classify(
 		}
 
 
-		loop_over_all_subspaces(f_processed, nb_processed,
+		loop_over_all_subspaces(
+				f_processed, nb_processed,
 				verbose_level - 3);
 
 
 		if (f_v) {
-			cout << "flag orbit " << f << " / " << nb_flag_orbits
+			cout << "semifield_substructure::do_classify "
+					"flag orbit " << f << " / " << nb_flag_orbits
 				<< ", looping over the " << N << " subspaces, "
 				"after loop_over_all_subspaces" << endl;
 		}
@@ -684,7 +717,7 @@ void semifield_substructure::do_classify(
 		Cl.create(cl);
 		D.mult(go, Cl, ago);
 		if (f_v) {
-			cout << "Semifield "
+			cout << "semifield_substructure::do_classify "
 					<< Flag_orbits->nb_primary_orbits_upper
 					<< ", Ago = starter * number of cosets = " << ago
 					<< " = " << go << " * " << Cl
@@ -697,7 +730,8 @@ void semifield_substructure::do_classify(
 
 		Stab = NEW_OBJECT(groups::strong_generators);
 		if (f_v) {
-			cout << "flag orbit " << f << " / " << nb_flag_orbits
+			cout << "semifield_substructure::do_classify "
+					"flag orbit " << f << " / " << nb_flag_orbits
 				<< ", semifield isotopy class "
 				<< Flag_orbits->nb_primary_orbits_upper <<
 				"computing stabilizer" << endl;
@@ -707,7 +741,8 @@ void semifield_substructure::do_classify(
 				verbose_level);
 		Stab->group_order(ago1);
 		if (f_v) {
-			cout << "flag orbit " << f << " / " << nb_flag_orbits
+			cout << "semifield_substructure::do_classify "
+					"flag orbit " << f << " / " << nb_flag_orbits
 				<< ", semifield isotopy class "
 				<< Flag_orbits->nb_primary_orbits_upper <<
 				" computing stabilizer done, order = " <<  ago1 << endl;
@@ -737,7 +772,8 @@ void semifield_substructure::do_classify(
 
 
 	if (f_v) {
-		cout << "Computing classification done, we found "
+		cout << "semifield_substructure::do_classify "
+				"Computing classification done, we found "
 				<< SCWS->Semifields->nb_orbits
 				<< " semifields" << endl;
 		Os.time_check(cout, SCWS->t0);
@@ -772,7 +808,7 @@ void semifield_substructure::loop_over_all_subspaces(
 #endif
 
 	if (f_v) {
-		cout << "loop_over_all_subspaces" << endl;
+		cout << "semifield_substructure::loop_over_all_subspaces" << endl;
 	}
 
 
@@ -790,7 +826,8 @@ void semifield_substructure::loop_over_all_subspaces(
 
 
 		if (f_vv) {
-			cout << "flag orbit " << f << " / "
+			cout << "semifield_substructure::loop_over_all_subspaces "
+					"flag orbit " << f << " / "
 				<< nb_flag_orbits << ", subspace "
 				<< rk << " / " << N << ":" << endl;
 		}
@@ -816,17 +853,20 @@ void semifield_substructure::loop_over_all_subspaces(
 
 
 		if (f_vvv) {
-			cout << "base change matrix B=" << endl;
+			cout << "semifield_substructure::loop_over_all_subspaces "
+					"base change matrix B=" << endl;
 			Int_matrix_print_bitwise(B, k, k);
 
-			cout << "Basis2 = B * Basis1 (before trace)=" << endl;
+			cout << "semifield_substructure::loop_over_all_subspaces "
+					"Basis2 = B * Basis1 (before trace)=" << endl;
 			Int_matrix_print_bitwise(Basis2, k, k2);
 			SC->basis_print(Basis2, k);
 		}
 
 
 		if (f_vv) {
-			cout << "before trace_to_level_three" << endl;
+			cout << "semifield_substructure::loop_over_all_subspaces "
+					"before trace_to_level_three" << endl;
 		}
 		ret = L3->trace_to_level_three(
 			Basis2,
@@ -838,7 +878,8 @@ void semifield_substructure::loop_over_all_subspaces(
 		f_skip = false;
 
 		if (ret == false) {
-			cout << "flag orbit " << f << " / "
+			cout << "semifield_substructure::loop_over_all_subspaces "
+					"flag orbit " << f << " / "
 				<< nb_flag_orbits << ", subspace "
 				<< rk << " / " << N
 				<< " : trace_to_level_three return false" << endl;
@@ -849,7 +890,8 @@ void semifield_substructure::loop_over_all_subspaces(
 		T->trace_po = trace_po;
 
 		if (f_vvv) {
-			cout << "After trace, trace_po = "
+			cout << "semifield_substructure::loop_over_all_subspaces "
+					"After trace, trace_po = "
 					<< trace_po << endl;
 			cout << "Basis2 (after trace)=" << endl;
 			Int_matrix_print_bitwise(Basis2, k, k2);
@@ -877,7 +919,8 @@ void semifield_substructure::loop_over_all_subspaces(
 
 		if (f_skip) {
 			if (f_vv) {
-				cout << "skipping this case " << trace_po
+				cout << "semifield_substructure::loop_over_all_subspaces "
+						"skipping this case " << trace_po
 					<< " because pivot is not "
 						"in the last row." << endl;
 			}
@@ -893,7 +936,8 @@ void semifield_substructure::loop_over_all_subspaces(
 				k - 3, k2,
 				0 /*verbose_level - 2*/);
 			if (f_vvv) {
-				cout << "Basis2 after RREF(2)=" << endl;
+				cout << "semifield_substructure::loop_over_all_subspaces "
+						"Basis2 after RREF(2)=" << endl;
 				Int_matrix_print_bitwise(Basis2, k, k2);
 				SC->basis_print(Basis2, k);
 			}
@@ -902,7 +946,8 @@ void semifield_substructure::loop_over_all_subspaces(
 				data2[i] = SC->matrix_rank(Basis2 + i * k2);
 			}
 			if (f_vvv) {
-				cout << "data2=";
+				cout << "semifield_substructure::loop_over_all_subspaces "
+						"data2=";
 				Lint_vec_print(cout, data2, k);
 				cout << endl;
 			}
@@ -910,7 +955,8 @@ void semifield_substructure::loop_over_all_subspaces(
 			int solution_idx;
 
 			if (f_vvv) {
-				cout << "before find_semifield_in_table" << endl;
+				cout << "semifield_substructure::loop_over_all_subspaces "
+						"before find_semifield_in_table" << endl;
 			}
 			if (!find_semifield_in_table(
 				trace_po,
@@ -941,7 +987,8 @@ void semifield_substructure::loop_over_all_subspaces(
 			T->nb_sol = Len[trace_po];
 
 			if (f_vvv) {
-				cout << "solution_idx=" << solution_idx << endl;
+				cout << "semifield_substructure::loop_over_all_subspaces "
+						"solution_idx=" << solution_idx << endl;
 			}
 
 			long int go;
@@ -954,7 +1001,8 @@ void semifield_substructure::loop_over_all_subspaces(
 			T->f2 = -1;
 
 			if (f_vv) {
-				cout << "flag orbit " << f << " / "
+				cout << "semifield_substructure::loop_over_all_subspaces "
+						"flag orbit " << f << " / "
 					<< nb_flag_orbits << ", subspace "
 					<< rk << " / " << N << " trace_po="
 					<< trace_po << " go=" << go
@@ -964,7 +1012,8 @@ void semifield_substructure::loop_over_all_subspaces(
 
 			if (go == 1) {
 				if (f_vv) {
-					cout << "This starter case has a trivial "
+					cout << "semifield_substructure::loop_over_all_subspaces "
+							"This starter case has a trivial "
 							"group order" << endl;
 				}
 
@@ -976,24 +1025,24 @@ void semifield_substructure::loop_over_all_subspaces(
 
 				if (f2 == f) {
 					if (f_vv) {
-						cout << "We found an automorphism" << endl;
+						cout << "semifield_substructure::loop_over_all_subspaces "
+								"We found an automorphism" << endl;
 					}
 					coset_reps->append(transporter1, verbose_level - 2);
 				}
 				else {
 					if (!f_processed[f2]) {
 						if (f_vv) {
-							cout << "We are identifying with "
+							cout << "semifield_substructure::loop_over_all_subspaces "
+									"We are identifying with "
 									"flag orbit " << f2 << ", which is "
 									"po=" << trace_po << " so="
 									<< solution_idx << endl;
 						}
 						Flag_orbits->Flag_orbit_node[f2].upstep_primary_orbit =
 								Flag_orbits->nb_primary_orbits_upper;
-						Flag_orbits->Flag_orbit_node[f2].f_fusion_node
-							= true;
-						Flag_orbits->Flag_orbit_node[f2].fusion_with
-							= f;
+						Flag_orbits->Flag_orbit_node[f2].f_fusion_node = true;
+						Flag_orbits->Flag_orbit_node[f2].fusion_with = f;
 						Flag_orbits->Flag_orbit_node[f2].fusion_elt
 							= NEW_int(SC->A->elt_size_in_int);
 						SC->A->Group_element->element_invert(
@@ -1003,14 +1052,16 @@ void semifield_substructure::loop_over_all_subspaces(
 						f_processed[f2] = true;
 						nb_processed++;
 						if (f_vv) {
-							cout << "Flag orbit f2 = " << f2
+							cout << "semifield_substructure::loop_over_all_subspaces "
+									"Flag orbit f2 = " << f2
 								<< " has been fused with flag orbit "
 								<< f << endl;
 						}
 					}
 					else {
 						if (f_vv) {
-							cout << "Flag orbit f2 = " << f2
+							cout << "semifield_substructure::loop_over_all_subspaces "
+									"Flag orbit f2 = " << f2
 									<< " has already been processed, "
 											"nothing to do here" << endl;
 						}
@@ -1020,7 +1071,8 @@ void semifield_substructure::loop_over_all_subspaces(
 			else {
 				if (Len[trace_po] == 1) {
 					if (f_vv) {
-						cout << "This starter case has only "
+						cout << "semifield_substructure::loop_over_all_subspaces "
+								"This starter case has only "
 								"one solution" << endl;
 					}
 					f2 = Fo_first[trace_po] + 0;
@@ -1033,24 +1085,24 @@ void semifield_substructure::loop_over_all_subspaces(
 
 					if (f2 == f) {
 						if (f_vv) {
-							cout << "We found an automorphism" << endl;
+							cout << "semifield_substructure::loop_over_all_subspaces "
+									"We found an automorphism" << endl;
 						}
 						coset_reps->append(transporter1, verbose_level - 2);
 					}
 					else {
 						if (!f_processed[f2]) {
 							if (f_vv) {
-								cout << "We are identifying with po="
+								cout << "semifield_substructure::loop_over_all_subspaces "
+										"We are identifying with po="
 										<< trace_po << " so=" << 0
 										<< ", which is flag orbit "
 										<< f2 << endl;
 							}
 							Flag_orbits->Flag_orbit_node[f2].upstep_primary_orbit =
 									Flag_orbits->nb_primary_orbits_upper;
-							Flag_orbits->Flag_orbit_node[f2].f_fusion_node
-								= true;
-							Flag_orbits->Flag_orbit_node[f2].fusion_with
-								= f;
+							Flag_orbits->Flag_orbit_node[f2].f_fusion_node = true;
+							Flag_orbits->Flag_orbit_node[f2].fusion_with = f;
 							Flag_orbits->Flag_orbit_node[f2].fusion_elt
 								= NEW_int(SC->A->elt_size_in_int);
 							SC->A->Group_element->element_invert(transporter1,
@@ -1059,14 +1111,16 @@ void semifield_substructure::loop_over_all_subspaces(
 							f_processed[f2] = true;
 							nb_processed++;
 							if (f_vv) {
-								cout << "Flag orbit f2 = " << f2
+								cout << "semifield_substructure::loop_over_all_subspaces "
+										"Flag orbit f2 = " << f2
 									<< " has been fused with "
 										"flag orbit " << f << endl;
 							}
 						}
 						else {
 							if (f_vv) {
-								cout << "Flag orbit f2 = " << f2
+								cout << "semifield_substructure::loop_over_all_subspaces "
+										"Flag orbit f2 = " << f2
 									<< " has already been processed, "
 										"nothing to do here" << endl;
 							}
@@ -1088,8 +1142,8 @@ void semifield_substructure::loop_over_all_subspaces(
 						Non_unique_cases_with_non_trivial_group,
 						nb_non_unique_cases_with_non_trivial_group,
 						trace_po, non_unique_case_idx)) {
-						cout << "cannot find in Non_unique_cases_with_"
-								"non_trivial_group array" << endl;
+						cout << "semifield_substructure::loop_over_all_subspaces "
+								"cannot find in Non_unique_cases_with_non_trivial_group array" << endl;
 						exit(1);
 					}
 					orbit_idx = Orbit_idx[non_unique_case_idx][solution_idx];
@@ -1107,11 +1161,13 @@ void semifield_substructure::loop_over_all_subspaces(
 
 
 					if (f_vv) {
-						cout << "orbit_idx = " << orbit_idx
+						cout << "semifield_substructure::loop_over_all_subspaces "
+								"orbit_idx = " << orbit_idx
 								<< " position = " << position
 								<< " f2 = " << f2 << endl;
 					}
-					Orb->get_transporter(position, transporter2,
+					Orb->get_transporter(
+							position, transporter2,
 							0 /*verbose_level */);
 					SC->A->Group_element->element_invert(transporter2, Elt1, 0);
 					SC->A->Group_element->element_mult(transporter1, Elt1,
@@ -1119,40 +1175,43 @@ void semifield_substructure::loop_over_all_subspaces(
 
 					if (f2 == f) {
 						if (f_vv) {
-							cout << "We found an automorphism" << endl;
-							}
+							cout << "semifield_substructure::loop_over_all_subspaces "
+									"We found an automorphism" << endl;
+						}
 						coset_reps->append(transporter3, verbose_level - 2);
 					}
 					else {
 						if (!f_processed[f2]) {
 							if (f_vv) {
-								cout << "We are identifying with po="
+								cout << "semifield_substructure::loop_over_all_subspaces "
+										"We are identifying with po="
 									<< trace_po << " so=" << solution_idx
 									<< ", which is flag orbit "
 									<< f2 << endl;
 							}
 							Flag_orbits->Flag_orbit_node[f2].upstep_primary_orbit =
 									Flag_orbits->nb_primary_orbits_upper;
-							Flag_orbits->Flag_orbit_node[f2].f_fusion_node
-								= true;
-							Flag_orbits->Flag_orbit_node[f2].fusion_with
-								= f;
+							Flag_orbits->Flag_orbit_node[f2].f_fusion_node = true;
+							Flag_orbits->Flag_orbit_node[f2].fusion_with = f;
 							Flag_orbits->Flag_orbit_node[f2].fusion_elt =
 								NEW_int(SC->A->elt_size_in_int);
-							SC->A->Group_element->element_invert(transporter3,
+							SC->A->Group_element->element_invert(
+									transporter3,
 								Flag_orbits->Flag_orbit_node[f2].fusion_elt,
 								0);
 							f_processed[f2] = true;
 							nb_processed++;
 							if (f_vv) {
-								cout << "Flag orbit f2 = " << f2
+								cout << "semifield_substructure::loop_over_all_subspaces "
+										"Flag orbit f2 = " << f2
 									<< " has been fused with flag "
 									"orbit " << f << endl;
 							}
 						}
 						else {
 							if (f_vv) {
-								cout << "Flag orbit f2 = " << f2
+								cout << "semifield_substructure::loop_over_all_subspaces "
+										"Flag orbit f2 = " << f2
 									<< " has already been processed, "
 											"nothing to do here" << endl;
 							}
@@ -1224,17 +1283,20 @@ void semifield_substructure::all_two_dimensional_subspaces(
 
 
 		if (f_vvv) {
-			cout << "base change matrix B=" << endl;
+			cout << "semifield_substructure::all_two_dimensional_subspaces "
+					"base change matrix B=" << endl;
 			Int_matrix_print_bitwise(B, k, k);
 
-			cout << "Basis2 = B * Basis1 (before trace)=" << endl;
+			cout << "semifield_substructure::all_two_dimensional_subspaces "
+					"Basis2 = B * Basis1 (before trace)=" << endl;
 			Int_matrix_print_bitwise(Basis2, k, k2);
 			SC->basis_print(Basis2, k);
 		}
 
 
 		if (f_vv) {
-			cout << "before trace_to_level_two" << endl;
+			cout << "semifield_substructure::all_two_dimensional_subspaces "
+					"before trace_to_level_two" << endl;
 		}
 
 		L3->trace_to_level_two(
@@ -1248,7 +1310,8 @@ void semifield_substructure::all_two_dimensional_subspaces(
 		Trace_po[rk] = trace_po;
 
 		if (f_vvv) {
-			cout << "After trace, trace_po = "
+			cout << "semifield_substructure::all_two_dimensional_subspaces "
+					"After trace, trace_po = "
 					<< trace_po << endl;
 			//cout << "Basis3 (after trace)=" << endl;
 			//int_matrix_print_bitwise(Basis3, k, k2);
@@ -1442,7 +1505,8 @@ int semifield_substructure::identify(
 			//T->nb_sol = Len[trace_po];
 			if (go == 1) {
 				if (f_vv) {
-					cout << "This starter case has a trivial "
+					cout << "semifield_substructure::identify "
+							"This starter case has a trivial "
 							"group order" << endl;
 				}
 
@@ -1494,8 +1558,7 @@ int semifield_substructure::identify(
 					nb_non_unique_cases_with_non_trivial_group,
 					trace_po, non_unique_case_idx)) {
 					cout << "semifield_substructure::identify "
-							"cannot find in Non_unique_cases_with_"
-							"non_trivial_group array" << endl;
+							"cannot find in Non_unique_cases_with_non_trivial_group array" << endl;
 					exit(1);
 				}
 				orbit_idx = Orbit_idx[non_unique_case_idx][solution_idx];
@@ -1504,7 +1567,8 @@ int semifield_substructure::identify(
 				f2 = Fo_first[trace_po] + orbit_idx;
 
 				if (f_vv) {
-					cout << "orbit_idx = " << orbit_idx
+					cout << "semifield_substructure::identify "
+							"orbit_idx = " << orbit_idx
 							<< " position = " << position
 							<< " f2 = " << f2 << endl;
 				}
@@ -1567,8 +1631,8 @@ int semifield_substructure::find_semifield_in_table(
 
 
 	if (f_v) {
-		cout << "find_semifield_in_table" << endl;
-		}
+		cout << "semifield_substructure::find_semifield_in_table" << endl;
+	}
 
 	idx = -1;
 
@@ -1576,24 +1640,27 @@ int semifield_substructure::find_semifield_in_table(
 		cout << "searching for: ";
 		Lint_vec_print(cout, given_data, SC->k);
 		cout << endl;
-		}
+	}
 	fst = FstLen[2 * po + 0];
 	len = FstLen[2 * po + 1];
 	if (f_v) {
-		cout << "find_semifield_in_table po = " << po
+		cout << "semifield_substructure::find_semifield_in_table "
+				"po = " << po
 				<< " len = " << len << endl;
-		}
+	}
 	// make sure that the first three integers
 	// agree with what is stored
 	// in the table for orbit po:
 	if (len == 0) {
-		cout << "find_semifield_in_table len == 0" << endl;
+		cout << "semifield_substructure::find_semifield_in_table "
+				"len == 0" << endl;
 		return false;
-		}
+	}
 
 	if (Sorting.lint_vec_compare(Data + fst * data_size + start_column,
 			given_data, 3)) {
-		cout << "find_semifield_in_table the first three entries "
+		cout << "semifield_substructure::find_semifield_in_table "
+				"the first three entries "
 				"of given_data do not match with what "
 				"is in Data" << endl;
 		exit(1);
@@ -1602,7 +1669,8 @@ int semifield_substructure::find_semifield_in_table(
 	if (len == 1) {
 		if (Sorting.lint_vec_compare(Data + fst * data_size + start_column,
 				given_data, SC->k)) {
-			cout << "find_semifield_in_table len is 1 and the first six "
+			cout << "semifield_substructure::find_semifield_in_table "
+					"len is 1 and the first six "
 				"entries of given_data do not match with what "
 				"is in Data" << endl;
 			exit(1);
@@ -1618,8 +1686,8 @@ int semifield_substructure::find_semifield_in_table(
 				}
 		}
 		if (g == len) {
-			cout << "find_semifield_in_table cannot find the "
-					"semifield in the table" << endl;
+			cout << "semifield_substructure::find_semifield_in_table "
+					"cannot find the semifield in the table" << endl;
 			for (g = 0; g < len; g++) {
 				cout << g << " : " << fst + g << " : ";
 				Lint_vec_print(cout,
@@ -1636,7 +1704,7 @@ int semifield_substructure::find_semifield_in_table(
 	}
 
 	if (f_v) {
-		cout << "find_semifield_in_table done, idx = " << idx << endl;
+		cout << "semifield_substructure::find_semifield_in_table done, idx = " << idx << endl;
 	}
 	return true;
 }

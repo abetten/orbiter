@@ -839,7 +839,7 @@ void surfaces_arc_lifting::report(
 		exit(1);
 	}
 
-	other::graphics::layered_graph_draw_options *Draw_options;
+	other::graphics::draw_options *Draw_options;
 
 
 	Draw_options = Get_draw_options(Control->draw_options_label);
@@ -894,7 +894,7 @@ void surfaces_arc_lifting::report(
 
 void surfaces_arc_lifting::report2(
 		std::ostream &ost,
-		other::graphics::layered_graph_draw_options *draw_options,
+		other::graphics::draw_options *draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

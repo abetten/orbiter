@@ -62,6 +62,7 @@ namespace orbiter {
 			class orbit_of_equations;
 			class orbit_of_sets;
 			class orbit_of_subspaces;
+			class schreier_poset;
 
 		}
 

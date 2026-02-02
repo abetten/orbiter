@@ -160,6 +160,11 @@ public:
 	int f_transporter;
 	std::string transporter_label_of_set;
 
+	// ToDo: undocumented
+	int f_schreier_poset;
+	int schreier_poset_orbit_idx;
+	std::string schreier_poset_prefix;
+
 	int f_draw_options;
 	std::string draw_options_label;
 
@@ -218,7 +223,7 @@ public:
 	void do_export_levels(
 			int orbit_idx, int verbose_level);
 	void do_draw_tree(
-			other::graphics::layered_graph_draw_options *Draw_options,
+			other::graphics::draw_options *Draw_options,
 			int verbose_level);
 	void do_stabilizer(
 			int verbose_level);
@@ -230,6 +235,8 @@ public:
 			int verbose_level);
 	void do_transporter(
 			std::string &label_of_set, int verbose_level);
+	void do_schreier_poset(
+			std::string &prefix, int orbit_idx, int verbose_level);
 
 };
 
@@ -250,14 +257,8 @@ class orbits_create_description {
 
 public:
 
-	// TABLES/orbits_create.tex
+	// tables/commands/orbits_create1.csv
 
-
-	int f_group;
-	std::string group_label;
-
-	int f_group_action;
-	std::string group_action_label;
 
 	int f_on_points;
 
@@ -318,8 +319,25 @@ public:
 	canonical_form::canonical_form_classifier_description
 		*Canonical_form_classifier_description;
 
+
+	// tables/commands/orbits_create2.csv
+
+
+
+	int f_group;
+	std::string group_label;
+
+	int f_group_action;
+	std::string group_action_label;
+
+	int f_generators;
+	std::string generators_label;
+
+
+#if 0
 	int f_override_generators;
 	std::string override_generators_label;
+#endif
 
 	int f_print_interval;
 	int print_interval;
@@ -349,6 +367,7 @@ public:
 
 	groups::any_group *Group;
 	groups::any_group *Group_action;
+	groups::any_group *Generators;
 
 	std::string prefix;
 	std::string label_txt;

@@ -22,6 +22,8 @@ orbits_create::orbits_create()
 
 	Group = NULL;
 	Group_action = NULL;
+	Generators = NULL;
+
 
 	f_has_Orb = false;
 	Orb = NULL;
@@ -101,6 +103,12 @@ void orbits_create::init(
 
 		Group_action = Get_any_group(Descr->group_action_label);
 		prefix += "_in_action_" + Group_action->label;
+	}
+
+	if (Descr->f_generators) {
+
+		Generators = Get_any_group(Descr->generators_label);
+		prefix += "_subgroup_" + Generators->label;
 	}
 
 
@@ -187,9 +195,9 @@ void orbits_create::init(
 		}
 #endif
 
-		actions::action *A_base;
-		actions::action *A_action;
-		groups::strong_generators *Subgroup_gens;
+		actions::action *A_base = NULL;
+		actions::action *A_action = NULL;
+		groups::strong_generators *Subgroup_gens = NULL;
 
 
 
@@ -197,10 +205,12 @@ void orbits_create::init(
 			if (f_v) {
 				cout << "orbits_create::init -group_action" << endl;
 			}
+#if 0
 			if (f_v) {
 				cout << "orbits_create::init loading A_base" << endl;
 			}
 			A_base = Group_action->MGC->A_base;
+#endif
 			if (f_v) {
 				cout << "orbits_create::init loading A_action" << endl;
 			}
@@ -208,9 +218,14 @@ void orbits_create::init(
 			if (f_v) {
 				cout << "orbits_create::init loading Subgroup_gens" << endl;
 			}
-			Subgroup_gens = Group_action->Subgroup_gens;
+			//Subgroup_gens = Group->Subgroup_gens;
 		}
-		else if (Descr->f_group) {
+		else {
+			cout << "orbits_create::init please specify -group_action <label>" << endl;
+			exit(1);
+		}
+
+		if (Descr->f_group) {
 			if (f_v) {
 				cout << "orbits_create::init -group" << endl;
 			}
@@ -218,6 +233,7 @@ void orbits_create::init(
 				cout << "orbits_create::init loading A_base" << endl;
 			}
 			A_base = Group->A_base;
+#if 0
 			if (f_v) {
 				cout << "orbits_create::init loading A_action" << endl;
 			}
@@ -225,10 +241,25 @@ void orbits_create::init(
 			if (f_v) {
 				cout << "orbits_create::init loading Subgroup_gens" << endl;
 			}
-			Subgroup_gens = Group->Subgroup_gens;
+			//Subgroup_gens = Group->Subgroup_gens;
+#endif
 		}
 		else {
-			cout << "orbits_create::init please specify -group <label> or -group_action <label>" << endl;
+			cout << "orbits_create::init please specify -group <label>" << endl;
+			exit(1);
+		}
+
+		if (Descr->f_generators) {
+			if (f_v) {
+				cout << "orbits_create::init -generators" << endl;
+			}
+			if (f_v) {
+				cout << "orbits_create::init loading Subgroup_gens" << endl;
+			}
+			Subgroup_gens = Generators->Subgroup_gens;
+		}
+		else {
+			cout << "orbits_create::init please specify -generators <label>" << endl;
 			exit(1);
 		}
 

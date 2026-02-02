@@ -697,7 +697,7 @@ void semifield_level_two::downstep(
 
 		C->make_matrix_from_class_rep(Mtx, R + i, 0 /*verbose_level - 1 */);
 
-		if (f_vv) {
+		if (false) {
 			cout << "representative:" << endl;
 			Int_matrix_print(Mtx, k, k);
 		}
@@ -722,26 +722,26 @@ void semifield_level_two::downstep(
 		C->identify_matrix(Mtx_2, R2,
 				class_rep_plus_I_Basis[i], Rational_normal_form1,
 				verbose_level - 1);
-		if (f_vv) {
+		if (false) {
 			cout << "class_rep_plus_I_Basis[i]" << endl;
 			Int_matrix_print(class_rep_plus_I_Basis[i], k, k);
 		}
 
 		R_i_plus_I_class_idx[i] = C->find_class_rep(
 				R, nb_classes, R2, 0 /* verbose_level */);
-		if (f_vv) {
+		if (false) {
 			cout << "R_i_plus_I_class_idx[i]="
 					<< R_i_plus_I_class_idx[i] << endl;
 		}
 
 		F->Linear_algebra->matrix_inverse(class_rep_plus_I_Basis[i],
 				class_rep_plus_I_Basis_inv[i], k, 0 /*verbose_level */);
-		if (f_vv) {
+		if (false) {
 			cout << "class_rep_plus_I_Basis_inv[i]" << endl;
 			Int_matrix_print(class_rep_plus_I_Basis_inv[i], k, k);
 		}
 
-		if (f_vv) {
+		if (false) {
 
 			int f_elements_exponential = false;
 			string symbol_for_print;

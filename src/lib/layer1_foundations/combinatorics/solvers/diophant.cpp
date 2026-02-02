@@ -7,7 +7,6 @@
 
 #include "foundations.h"
 
-
 using namespace std;
 
 namespace orbiter {
@@ -17,7 +16,8 @@ namespace solvers {
 
 
 
-static void (*diophant_user_callback_solution_found)(int *sol,
+static void (*diophant_user_callback_solution_found)(
+		int *sol,
 	int len, int nb_sol, void *data) = NULL;
 
 static void diophant_callback_solution_found(
@@ -3997,7 +3997,7 @@ void diophant::draw_as_bitmap(
 
 void diophant::draw_it(
 		std::string &fname_base,
-		other::graphics::layered_graph_draw_options *Draw_options,
+		other::graphics::draw_options *Draw_options,
 		int verbose_level)
 {
 	int f_dots = false;
@@ -4022,7 +4022,7 @@ void diophant::draw_it(
 
 void diophant::draw_partitioned(
 		std::string &fname_base,
-		other::graphics::layered_graph_draw_options *Draw_options,
+		other::graphics::draw_options *Draw_options,
 	int f_solution, int *solution, int solution_sz, 
 	int verbose_level)
 {

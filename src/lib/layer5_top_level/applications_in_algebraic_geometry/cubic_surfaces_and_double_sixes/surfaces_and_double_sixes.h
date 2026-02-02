@@ -187,7 +187,7 @@ public:
 		int *transporter, int verbose_level);
 	void report(
 			std::ostream &ost,
-			other::graphics::layered_graph_draw_options
+			other::graphics::draw_options
 				*draw_options,
 			poset_classification::poset_classification_report_options
 				*Opt,
@@ -448,7 +448,7 @@ public:
 	void latex_surfaces(
 			std::ostream &ost,
 			int f_print_orbits, std::string &fname_mask,
-			other::graphics::layered_graph_draw_options *draw_options,
+			other::graphics::draw_options *draw_options,
 			poset_classification::poset_classification_report_options *Opt,
 			int max_nb_elements_printed,
 			int verbose_level);
@@ -532,7 +532,7 @@ public:
 			std::ostream &ost,
 			int orbit_index,
 			int f_print_orbits, std::string &fname_mask,
-			other::graphics::layered_graph_draw_options *draw_options,
+			other::graphics::draw_options *draw_options,
 			int max_nb_elements_printed,
 			int verbose_level);
 

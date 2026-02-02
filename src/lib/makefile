@@ -115,6 +115,7 @@ ORBITER_MODULES= \
 		layer1_foundations/combinatorics/graph_theory/clique_finder_control.o \
 		layer1_foundations/combinatorics/graph_theory/colored_graph_cliques.o \
 		layer1_foundations/combinatorics/graph_theory/colored_graph.o \
+		layer1_foundations/combinatorics/graph_theory/distance_information.o \
 		layer1_foundations/combinatorics/graph_theory/graph_layer.o \
 		layer1_foundations/combinatorics/graph_theory/graph_node.o \
 		layer1_foundations/combinatorics/graph_theory/graph_theory_domain.o \
@@ -287,10 +288,10 @@ ORBITER_MODULES= \
 		layer1_foundations/other/graphics/draw_bitmap_control.o \
 		layer1_foundations/other/graphics/draw_incidence_structure_description.o \
 		layer1_foundations/other/graphics/draw_mod_n_description.o \
+		layer1_foundations/other/graphics/draw_options.o \
 		layer1_foundations/other/graphics/draw_projective_curve_description.o \
 		layer1_foundations/other/graphics/drawable_set_of_objects.o \
 		layer1_foundations/other/graphics/graphical_output.o \
-		layer1_foundations/other/graphics/layered_graph_draw_options.o \
 		layer1_foundations/other/graphics/mp_graphics.o \
 		layer1_foundations/other/graphics/parametric_curve_point.o \
 		layer1_foundations/other/graphics/parametric_curve.o \
@@ -489,6 +490,7 @@ ORBITER_MODULES= \
 		layer4_classification/orbits_schreier/orbit_of_equations.o \
 		layer4_classification/orbits_schreier/orbit_of_sets.o \
 		layer4_classification/orbits_schreier/orbit_of_subspaces.o \
+		layer4_classification/orbits_schreier/schreier_poset.o \
 		layer4_classification/poset_classification/classification_base_case.o \
 		layer4_classification/poset_classification/extension.o \
 		layer4_classification/poset_classification/orbit_based_testing.o \

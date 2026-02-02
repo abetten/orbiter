@@ -375,7 +375,7 @@ public:
 	void report(
 			std::ostream &ost, int f_sims, groups::sims *S,
 			int f_strong_gens, groups::strong_generators *SG,
-			other::graphics::layered_graph_draw_options *LG_Draw_options,
+			other::graphics::draw_options *LG_Draw_options,
 			int verbose_level);
 	// reports the sims object from the arguments
 	void report_base(
@@ -889,7 +889,7 @@ public:
 			actions::action *A,
 			groups::strong_generators *Strong_gens,
 			groups::sims *Sims,
-			other::graphics::layered_graph_draw_options *LG_Draw_options,
+			other::graphics::draw_options *LG_Draw_options,
 			int verbose_level);
 	void report_order_invariant(
 			std::ostream &ost,
@@ -905,7 +905,7 @@ public:
 			std::string &label_tex,
 			actions::action *A,
 			groups::strong_generators *Strong_gens,
-			other::graphics::layered_graph_draw_options *LG_Draw_options,
+			other::graphics::draw_options *LG_Draw_options,
 			int verbose_level);
 	void report_sylow(
 			std::ostream &ost,

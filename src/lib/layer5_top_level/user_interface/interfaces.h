@@ -626,7 +626,7 @@ class interface_combinatorics {
 	int domino_portrait_D;
 	int domino_portrait_s;
 	std::string domino_portrait_fname;
-	other::graphics::layered_graph_draw_options *domino_portrait_draw_options;
+	other::graphics::draw_options *domino_portrait_draw_options;
 
 
 
@@ -1161,7 +1161,7 @@ class interface_toolkit {
 
 	int f_draw_layered_graph;
 	std::string draw_layered_graph_fname;
-	other::graphics::layered_graph_draw_options *Layered_graph_draw_options;
+	other::graphics::draw_options *Layered_graph_draw_options;
 
 	// undocumented:
 	int f_read_gedcom;
@@ -1216,6 +1216,10 @@ class interface_toolkit {
 	int f_intersect_set_of_sets;
 	std::string intersect_set_of_sets_fname;
 	std::string intersect_set_of_sets_column;
+
+	// ToDo: undocumented
+	int f_test_if_distance_regular_graph;
+	std::string test_if_distance_regular_graph_fname;
 
 
 public:
@@ -1596,7 +1600,7 @@ public:
 		*Poset_classification_report_options;
 
 	int f_draw_options;
-	other::graphics::layered_graph_draw_options *Draw_options;
+	other::graphics::draw_options *Draw_options;
 
 	int f_draw_incidence_structure_options;
 	other::graphics::draw_incidence_structure_description

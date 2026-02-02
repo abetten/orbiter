@@ -1926,7 +1926,7 @@ void algorithms::make_layered_graph_for_schreier_vector_tree(
 void algorithms::make_and_draw_tree(
 		std::string &fname_base,
 		int n, int *pts, int *prev, int f_use_pts_inv, int *pts_inv,
-		other::graphics::layered_graph_draw_options *LG_Draw_options,
+		other::graphics::draw_options *LG_Draw_options,
 		int verbose_level)
 // called from:
 // sims_io.cpp

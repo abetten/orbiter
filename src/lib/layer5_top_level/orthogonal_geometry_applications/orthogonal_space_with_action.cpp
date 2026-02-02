@@ -224,7 +224,7 @@ void orthogonal_space_with_action::init_group(
 }
 
 void orthogonal_space_with_action::report(
-		other::graphics::layered_graph_draw_options *Draw_options,
+		other::graphics::draw_options *Draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -264,7 +264,7 @@ void orthogonal_space_with_action::report(
 
 void orthogonal_space_with_action::report2(
 		std::ostream &ost,
-		other::graphics::layered_graph_draw_options *Draw_options,
+		other::graphics::draw_options *Draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

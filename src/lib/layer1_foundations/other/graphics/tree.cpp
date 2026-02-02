@@ -231,7 +231,7 @@ void tree::init(
 void tree::draw(
 		std::string &fname,
 		graphics::tree_draw_options *Tree_draw_options,
-		layered_graph_draw_options *Opt,
+		draw_options *Opt,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -373,7 +373,7 @@ void tree::draw(
 void tree::draw_preprocess(
 		std::string &fname,
 		graphics::tree_draw_options *Tree_draw_options,
-		layered_graph_draw_options *Opt,
+		draw_options *Opt,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

@@ -531,7 +531,7 @@ public:
 			int level_min, int level_max, int verbose_level);
 	void draw_graphs(
 			int level,
-			other::graphics::layered_graph_draw_options *draw_options,
+			other::graphics::draw_options *draw_options,
 			int verbose_level);
 	void recognize_graph_from_adjacency_list(
 			int *Adj, int N2,
@@ -650,6 +650,9 @@ public:
 
 	int f_draw;
 	std::string draw_options;
+
+	int f_create_distance_poset;
+	int create_distance_poset_vertex;
 
 
 	graph_theoretic_activity_description();

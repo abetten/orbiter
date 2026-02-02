@@ -671,7 +671,7 @@ void domino_assignment::draw_domino_matrix(
 		std::string &fname,
 		int depth,
 		int f_has_cost, int cost,
-		other::graphics::layered_graph_draw_options *Draw_options,
+		other::graphics::draw_options *Draw_options,
 		int verbose_level)
 {
 	compute_domino_matrix(depth);
@@ -690,7 +690,7 @@ void domino_assignment::draw_domino_matrix2(
 	int f_has_cost, int cost,
 	int f_frame, int f_grid, int f_B, int *B,
 	int f_numbers, int f_gray,
-	other::graphics::layered_graph_draw_options *Draw_options,
+	other::graphics::draw_options *Draw_options,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

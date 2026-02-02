@@ -42,7 +42,8 @@ layered_graph::~layered_graph()
 
 void layered_graph::init(
 		int nb_layers, int *Nb_nodes_layer,
-	std::string &fname_base, int verbose_level)
+	std::string &fname_base,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -341,7 +342,7 @@ void layered_graph::add_node_data3(
 
 void layered_graph::draw_with_options(
 		std::string &fname,
-		other::graphics::layered_graph_draw_options *O,
+		other::graphics::draw_options *O,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -388,7 +389,7 @@ void layered_graph::draw_with_options(
 		if (f_v) {
 			cout << "layered_graph::draw" << endl;
 			cout << "f_nodes_empty=" << O->f_nodes_empty << endl;
-			}
+		}
 
 		if (O->f_has_draw_begining_callback) {
 			(*O->draw_begining_callback)(
@@ -468,7 +469,7 @@ void layered_graph::draw_with_options(
 }
 
 void layered_graph::draw_edges(
-		other::graphics::layered_graph_draw_options *O,
+		other::graphics::draw_options *O,
 		other::graphics::mp_graphics *G,
 		int verbose_level)
 {
@@ -855,7 +856,7 @@ void layered_graph::draw_edges(
 
 
 void layered_graph::draw_vertices(
-		other::graphics::layered_graph_draw_options *O,
+		other::graphics::draw_options *O,
 		other::graphics::mp_graphics *G,
 		int verbose_level)
 {
@@ -999,7 +1000,7 @@ void layered_graph::draw_vertices(
 }
 
 void layered_graph::draw_level_info(
-		other::graphics::layered_graph_draw_options *O,
+		other::graphics::draw_options *O,
 		other::graphics::mp_graphics *G,
 		int verbose_level)
 {
@@ -1725,6 +1726,101 @@ void layered_graph::init_poset_from_file(
 	if (f_v) {
 		cout << "layered_graph::init_poset_from_file done" << endl;
 	}
+}
+
+int layered_graph::test_if_distance_regular(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "layered_graph::test_if_distance_regular" << endl;
+	}
+
+	layer1_foundations::combinatorics::graph_theory::distance_information *Distance_information;
+
+	Distance_information = NEW_OBJECT(layer1_foundations::combinatorics::graph_theory::distance_information);
+
+	if (f_v) {
+		cout << "layered_graph::test_if_distance_regular "
+				"before Distance_information->init_layered_graph" << endl;
+	}
+	Distance_information->init_layered_graph(this, verbose_level);
+	if (f_v) {
+		cout << "layered_graph::test_if_distance_regular "
+				"after Distance_information->init_layered_graph" << endl;
+	}
+
+	int *ABC;
+	int l, n, a, b, h, location, l2, n2, cnt;
+
+	ABC = NEW_int(nb_nodes_total * 3);
+	Int_vec_zero(ABC, nb_nodes_total * 3);
+	cnt = 0;
+	for (l = 0; l < nb_layers; l++) {
+		for (n = 0; n < L[l].nb_nodes; n++, cnt++) {
+			a = L[l].Nodes[n].id;
+			for (h = 0; h < L[l].Nodes[n].nb_neighbors; h++) {
+				b = L[l].Nodes[n].neighbor_list[h];
+
+				location = Distance_information->perm_inv[b];
+				l2 = Distance_information->depth[location];
+				n2 = location - Distance_information->Fst[l2];
+				if (l2 == l + 1) {
+					ABC[cnt * 3 + 1]++; // b
+				}
+				else if (l2 == l) {
+					ABC[cnt * 3 + 0]++; // a
+				}
+				else if (l2 == l - 1) {
+					ABC[cnt * 3 + 2]++; // c
+				}
+				else {
+					cout << "layered_graph::test_if_distance_regular not distance regular" << endl;
+					return false;
+				}
+			}
+		}
+
+	}
+	if (f_v) {
+		cout << "layered_graph::test_if_distance_regular "
+				"ABC based on all vertices:" << endl;
+		Int_matrix_print(ABC, nb_nodes_total, 3);
+	}
+
+	int *ABC_by_layer;
+	int cmp, fst;
+
+	other::data_structures::sorting Sorting;
+
+	ABC_by_layer = NEW_int(nb_layers * 3);
+	Int_vec_zero(ABC_by_layer, nb_layers * 3);
+	for (l = 0; l < nb_layers; l++) {
+		for (n = 1; n < L[l].nb_nodes; n++, cnt++) {
+			fst = Distance_information->Fst[l];
+			cmp = Sorting.int_vec_compare(ABC + fst * 3, ABC + (fst + n) * 3, 3);
+			if (cmp){
+				cout << "layered_graph::test_if_distance_regular not distance regular, vertex 0 and vertex " << n << " in level " << l << " differ" << endl;
+				return false;
+			}
+		}
+		Int_vec_copy(ABC + fst * 3, ABC_by_layer + l * 3, 3);
+	}
+	if (f_v) {
+		cout << "layered_graph::test_if_distance_regular "
+				"ABC based on layers:" << endl;
+		Int_matrix_print(ABC_by_layer, nb_layers, 3);
+	}
+
+
+	FREE_OBJECT(Distance_information);
+
+	if (f_v) {
+		cout << "layered_graph::test_if_distance_regular done" << endl;
+	}
+	return true;
 }
 
 // example file created in DISCRETA/sgls2.cpp for the subgroup lattice of Sym(4):

@@ -271,9 +271,9 @@ void hadamard_classify::init(
 
 		fname_base = "Hadamard_graph_" + std::to_string(n);
 
-		other::graphics::layered_graph_draw_options *Draw_options;
+		other::graphics::draw_options *Draw_options;
 
-		Draw_options = NEW_OBJECT(other::graphics::layered_graph_draw_options);
+		Draw_options = NEW_OBJECT(other::graphics::draw_options);
 
 		CG->draw(fname_base,
 				Draw_options,

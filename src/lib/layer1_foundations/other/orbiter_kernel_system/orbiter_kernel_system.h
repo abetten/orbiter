@@ -1502,7 +1502,7 @@ public:
 	combinatorics::design_theory::design_object
 		*get_object_of_type_design(
 				std::string &label);
-	graphics::layered_graph_draw_options
+	graphics::draw_options
 		*get_draw_options(
 				std::string &label);
 	graphics::draw_incidence_structure_description
@@ -1692,7 +1692,7 @@ public:
 			void *PCRO, int verbose_level);
 	void init_draw_options(
 			std::string &label,
-			graphics::layered_graph_draw_options *Draw_options,
+			graphics::draw_options *Draw_options,
 			int verbose_level);
 	void init_draw_incidence_structure_options(
 			std::string &label,

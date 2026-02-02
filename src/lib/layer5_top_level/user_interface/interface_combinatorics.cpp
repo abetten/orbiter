@@ -711,7 +711,7 @@ void interface_combinatorics::read_arguments(
 		domino_portrait_D = ST.strtoi(argv[++i]);
 		domino_portrait_s = ST.strtoi(argv[++i]);
 		domino_portrait_fname.assign(argv[++i]);
-		domino_portrait_draw_options = NEW_OBJECT(other::graphics::layered_graph_draw_options);
+		domino_portrait_draw_options = NEW_OBJECT(other::graphics::draw_options);
 		i += domino_portrait_draw_options->read_arguments(argc - i - 1,
 				argv + i + 1, verbose_level);
 		if (f_v) {

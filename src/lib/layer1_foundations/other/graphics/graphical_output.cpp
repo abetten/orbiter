@@ -55,7 +55,7 @@ graphical_output::~graphical_output()
 
 void graphical_output::draw_layered_graph_from_file(
 		std::string &fname,
-		layered_graph_draw_options *Opt,
+		draw_options *Opt,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -201,7 +201,7 @@ void graphical_output::draw_layered_graph_from_file(
 void graphical_output::do_domino_portrait(
 		int D, int s,
 		std::string &photo_label,
-		layered_graph_draw_options *Opt,
+		draw_options *Opt,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -930,7 +930,7 @@ void graphical_output::draw_projective_curve(
 	int i;
 
 
-	layered_graph_draw_options *Opt;
+	draw_options *Opt;
 
 	if (!Descr->f_draw_options) {
 		cout << "graphical_output::draw_projective_curve please use -draw_options" << endl;
@@ -1786,7 +1786,7 @@ void graphical_output::tree_draw(
 	}
 
 
-	layered_graph_draw_options *Draw_options;
+	draw_options *Draw_options;
 
 	Draw_options = Get_draw_options(Tree_draw_options->draw_options_label);
 

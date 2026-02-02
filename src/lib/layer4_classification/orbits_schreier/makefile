@@ -8,7 +8,8 @@ LFLAGS = -lm
 MODULES = \
 	orbit_of_equations.o \
 	orbit_of_sets.o \
-	orbit_of_subspaces.o 
+	orbit_of_subspaces.o \
+	schreier_poset.o 
 
 
 all : $(MODULES)

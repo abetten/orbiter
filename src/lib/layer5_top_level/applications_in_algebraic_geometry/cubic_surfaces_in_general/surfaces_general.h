@@ -285,21 +285,21 @@ public:
 	void export_gap(
 			int verbose_level);
 	void do_report(
-			other::graphics::layered_graph_draw_options *Draw_options,
+			other::graphics::draw_options *Draw_options,
 			int verbose_level);
 	void do_report_group_elements(
 			std::string &fname_csv, std::string &col_heading,
 			int verbose_level);
 	void do_report2(
 			std::ostream &ost,
-			other::graphics::layered_graph_draw_options *Draw_options,
+			other::graphics::draw_options *Draw_options,
 			int verbose_level);
 	void do_report_group_elements2(
 			std::ostream &ost,
 			std::string &fname_csv, std::string &col_heading,
 			int verbose_level);
 	void report_with_group(
-			other::graphics::layered_graph_draw_options *Draw_options,
+			other::graphics::draw_options *Draw_options,
 			std::string &Control_six_arcs_label,
 			int verbose_level);
 	void test_group(
@@ -485,7 +485,7 @@ public:
 			projective_geometry::projective_space_with_action *PA,
 			poset_classification::poset_classification_control *Control1,
 			poset_classification::poset_classification_control *Control2,
-			other::graphics::layered_graph_draw_options *Draw_options,
+			other::graphics::draw_options *Draw_options,
 			std::string &Control_six_arcs_label,
 			int f_test_nb_Eckardt_points, int nb_E,
 			int verbose_level);
@@ -615,7 +615,7 @@ public:
 	void cheat_sheet(
 			std::ostream &ost,
 			int f_print_orbits, std::string &fname_mask,
-			other::graphics::layered_graph_draw_options *Opt,
+			other::graphics::draw_options *Opt,
 			int max_nb_elements_printed,
 			int verbose_level);
 	void init_equation(
@@ -699,13 +699,13 @@ public:
 	void print_orbits_of_automorphism_group(
 		std::ostream &ost,
 		int f_print_orbits, std::string &fname_mask,
-		other::graphics::layered_graph_draw_options *Opt,
+		other::graphics::draw_options *Opt,
 		int max_nb_elements_printed,
 		int verbose_level);
 	void print_orbits_on_schlaefli_related_things(
 		std::ostream &ost,
 		int f_print_orbits, std::string &fname_mask,
-		other::graphics::layered_graph_draw_options *Opt,
+		other::graphics::draw_options *Opt,
 		int max_nb_elements_printed,
 		int verbose_level);
 	void cheat_sheet_basic(
@@ -727,14 +727,14 @@ public:
 			std::ostream &ost,
 			int verbose_level);
 	void investigate_surface_and_write_report(
-			other::graphics::layered_graph_draw_options *Opt,
+			other::graphics::draw_options *Opt,
 			actions::action *A,
 			surface_create *SC,
 			cubic_surfaces_and_arcs::six_arcs_not_on_a_conic *Six_arcs,
 			int verbose_level);
 	void investigate_surface_and_write_report2(
 			std::ostream &ost,
-			other::graphics::layered_graph_draw_options *Opt,
+			other::graphics::draw_options *Opt,
 			actions::action *A,
 			surface_create *SC,
 			cubic_surfaces_and_arcs::six_arcs_not_on_a_conic *Six_arcs,

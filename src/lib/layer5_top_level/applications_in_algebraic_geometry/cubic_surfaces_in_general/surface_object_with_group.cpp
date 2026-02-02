@@ -190,7 +190,7 @@ surface_object_with_group::~surface_object_with_group()
 void surface_object_with_group::cheat_sheet(
 		std::ostream &ost,
 		int f_print_orbits, std::string &fname_mask,
-		other::graphics::layered_graph_draw_options *Opt,
+		other::graphics::draw_options *Opt,
 		int max_nb_elements_printed,
 		int verbose_level)
 {
@@ -2400,7 +2400,7 @@ void surface_object_with_group::print_automorphism_group(
 void surface_object_with_group::print_orbits_of_automorphism_group(
 	std::ostream &ost,
 	int f_print_orbits, std::string &fname_mask,
-	other::graphics::layered_graph_draw_options *Opt,
+	other::graphics::draw_options *Opt,
 	int max_nb_elements_printed,
 	int verbose_level)
 // called from surface_object_with_group::cheat_sheet
@@ -2548,7 +2548,7 @@ void surface_object_with_group::print_orbits_of_automorphism_group(
 void surface_object_with_group::print_orbits_on_schlaefli_related_things(
 	std::ostream &ost,
 	int f_print_orbits, std::string &fname_mask,
-	other::graphics::layered_graph_draw_options *Opt,
+	other::graphics::draw_options *Opt,
 	int max_nb_elements_printed,
 	int verbose_level)
 {
@@ -3219,7 +3219,7 @@ void surface_object_with_group::print_sylow_groups_of_projectivity_group(
 
 
 void surface_object_with_group::investigate_surface_and_write_report(
-		other::graphics::layered_graph_draw_options *Opt,
+		other::graphics::draw_options *Opt,
 		actions::action *A,
 		surface_create *SC,
 		cubic_surfaces_and_arcs::six_arcs_not_on_a_conic *Six_arcs,
@@ -3272,7 +3272,7 @@ void surface_object_with_group::investigate_surface_and_write_report(
 
 void surface_object_with_group::investigate_surface_and_write_report2(
 		std::ostream &ost,
-		other::graphics::layered_graph_draw_options *Opt,
+		other::graphics::draw_options *Opt,
 		actions::action *A,
 		surface_create *SC,
 		cubic_surfaces_and_arcs::six_arcs_not_on_a_conic *Six_arcs,

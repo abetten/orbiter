@@ -1132,7 +1132,7 @@ void sims::read_list_of_elements(
 void sims::report(
 		std::ostream &ost,
 		std::string &prefix,
-		other::graphics::layered_graph_draw_options *LG_Draw_options,
+		other::graphics::draw_options *LG_Draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1242,7 +1242,7 @@ void sims::report_subgroup_chain_table(
 void sims::report_basic_orbit(
 		std::ostream &ost,
 		std::string &prefix,
-		other::graphics::layered_graph_draw_options *LG_Draw_options,
+		other::graphics::draw_options *LG_Draw_options,
 		int orbit_idx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

@@ -461,6 +461,7 @@ namespace combinatorics {
 		class clique_finder;
 		class colored_graph_cliques;
 		class colored_graph;
+		class distance_information;
 		class graph_layer;
 		class graph_node;
 		class graph_theory_domain;
@@ -725,10 +726,10 @@ namespace other {
 		class draw_bitmap_control;
 		class draw_incidence_structure_description;
 		class draw_mod_n_description;
+		class draw_options;
 		class draw_projective_curve_description;
 		class drawable_set_of_objects;
 		class graphical_output;
-		class layered_graph_draw_options;
 		class mp_graphics;
 		class parametric_curve_point;
 		class parametric_curve;

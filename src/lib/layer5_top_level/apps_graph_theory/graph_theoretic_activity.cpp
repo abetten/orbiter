@@ -1178,7 +1178,7 @@ void graph_theoretic_activity::perform_activity(
 
 		fname = CG[0]->label + "_draw.mp";
 
-		other::graphics::layered_graph_draw_options *Draw_options;
+		other::graphics::draw_options *Draw_options;
 
 		Draw_options = Get_draw_options(Descr->draw_options);
 
@@ -1186,6 +1186,24 @@ void graph_theoretic_activity::perform_activity(
 				fname,
 				Draw_options,
 				verbose_level);
+	}
+	else if (Descr->f_create_distance_poset) {
+
+		if (f_v) {
+			cout << "graph_theoretic_activity::perform_activity "
+					"f_create_distance_poset" << endl;
+		}
+
+		layer1_foundations::combinatorics::graph_theory::layered_graph *Layered_graph;
+
+		Layered_graph = CG[0]->create_distance_poset(
+				Descr->create_distance_poset_vertex,
+				verbose_level);
+		// saves the layered graph to file
+
+
+		FREE_OBJECT(Layered_graph);
+
 	}
 
 

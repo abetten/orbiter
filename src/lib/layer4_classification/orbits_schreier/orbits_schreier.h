@@ -263,7 +263,9 @@ class orbit_of_subspaces {
 public:
 	actions::action *A;
 	actions::action *A2;
+
 	algebra::field_theory::finite_field *F;
+
 	data_structures_groups::vector_ge *gens;
 	int f_lint;
 	int k;
@@ -271,6 +273,7 @@ public:
 	int kn;
 	int sz; // = 1 + k + kn
 	//int sz_for_compare; // = 1 + k + kn
+
 	int f_has_desired_pivots;
 	int *desired_pivots; // [k]
 	int *subspace_by_rank; // [k]
@@ -416,6 +419,50 @@ public:
 			groups::sims *&Stab, int verbose_level);
 		// this function allocates a sims structure into Stab.
 };
+
+
+
+// #############################################################################
+// schreier_poset.cpp
+// #############################################################################
+
+
+
+//! poset structure for group orbit in terms of word length
+
+
+
+class schreier_poset {
+public:
+
+	layer3_group_actions::groups::schreier *Schreier;
+
+	layer1_foundations::combinatorics::graph_theory::layered_graph *Layered_graph;
+
+	layer1_foundations::combinatorics::graph_theory::distance_information *Distance_information;
+
+#if 0
+	int nb_layers;
+	int *Nb_nodes;
+
+	int nb_nodes_total;
+	int *perm;
+	int *perm_inv;
+	int *depth;
+	int *Fst;
+#endif
+
+	schreier_poset();
+	~schreier_poset();
+	void init(
+			layer3_group_actions::groups::schreier *Schreier,
+			int orbit_no,
+			std::string &fname_base,
+		int verbose_level);
+
+
+};
+
 
 
 }}}

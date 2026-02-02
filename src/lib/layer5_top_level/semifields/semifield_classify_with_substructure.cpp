@@ -18,7 +18,8 @@ namespace semifields {
 
 static void semifield_print_function_callback(
 		std::ostream &ost, int orbit_idx,
-		invariant_relations::classification_step *Step, void *print_function_data);
+		invariant_relations::classification_step *Step,
+		void *print_function_data);
 
 
 semifield_classify_with_substructure::semifield_classify_with_substructure()
@@ -146,7 +147,7 @@ void semifield_classify_with_substructure::init(
 			PA, k, Control,
 			Descr->level_two_prefix,
 			Descr->level_three_prefix,
-			verbose_level - 1);
+			verbose_level - 2);
 	if (f_v) {
 		cout << "semifield_classify_with_substructure::init after Sub->SC->init" << endl;
 	}
@@ -166,7 +167,7 @@ void semifield_classify_with_substructure::init(
 			cout << i << " : " << data[i] << endl;
 		}
 		if (Sub->SC->test_partial_semifield_numerical_data(
-				data, data_len, verbose_level)) {
+				data, data_len, verbose_level - 2)) {
 			cout << "the set satisfies the partial semifield condition" << endl;
 		}
 		else {
@@ -182,7 +183,7 @@ void semifield_classify_with_substructure::init(
 		cout << "semifield_classify_with_substructure::init "
 				"before L2->init" << endl;
 	}
-	L2->init(Sub->SC, verbose_level);
+	L2->init(Sub->SC, verbose_level - 2);
 	if (f_v) {
 		cout << "semifield_classify_with_substructure::init "
 				"after L2->init" << endl;
@@ -194,7 +195,7 @@ void semifield_classify_with_substructure::init(
 		cout << "semifield_classify_with_substructure::init "
 				"before L2->compute_level_two" << endl;
 	}
-	L2->compute_level_two(4, verbose_level);
+	L2->compute_level_two(4, verbose_level - 2);
 	if (f_v) {
 		cout << "semifield_classify_with_substructure::init "
 				"after L2->compute_level_two" << endl;
@@ -211,7 +212,7 @@ void semifield_classify_with_substructure::init(
 	}
 	Sub->L3->init_level_three(L2,
 			true /* f_prefix */, Sub->SC->level_three_prefix,
-			verbose_level);
+			verbose_level - 2);
 	if (f_v) {
 		cout << "semifield_classify_with_substructure::init "
 				"after L3->init_level_three" << endl;
@@ -235,7 +236,8 @@ void semifield_classify_with_substructure::read_data(
 	}
 
 	if (f_v) {
-		cout << "before reading files " << fname_FstLen
+		cout << "semifield_classify_with_substructure::read_data "
+				"before reading files " << fname_FstLen
 			<< " and " << fname_Data << endl;
 	}
 
@@ -270,7 +272,8 @@ void semifield_classify_with_substructure::read_data(
 
 
 	if (f_v) {
-		cout << "Read " << Sub->nb_solutions
+		cout << "semifield_classify_with_substructure::read_data "
+				"Read " << Sub->nb_solutions
 			<< " solutions arising from "
 			<< Sub->nb_orbits_at_level_3 << " orbits" << endl;
 	}
@@ -281,13 +284,15 @@ void semifield_classify_with_substructure::read_data(
 
 	C.init(Sub->Len, Sub->nb_orbits_at_level_3, false, 0);
 	if (f_v) {
-		cout << "classification of Len:" << endl;
+		cout << "semifield_classify_with_substructure::read_data "
+				"classification of Len:" << endl;
 		C.print_bare(true);
 		cout << endl;
 	}
 
 	if (f_v) {
-		cout << "computing existing cases:" << endl;
+		cout << "semifield_classify_with_substructure::read_data "
+				"computing existing cases:" << endl;
 	}
 
 
@@ -307,12 +312,14 @@ void semifield_classify_with_substructure::read_data(
 		Existing_cases_len[i] = Sub->FstLen[2 * a + 1];
 	}
 	if (f_v) {
-		cout << "There are " << nb_existing_cases
+		cout << "semifield_classify_with_substructure::read_data "
+				"There are " << nb_existing_cases
 			<< " cases which exist" << endl;
 	}
 
 	if (f_v) {
-		cout << "computing non-unique cases:" << endl;
+		cout << "semifield_classify_with_substructure::read_data "
+				"computing non-unique cases:" << endl;
 	}
 
 	Non_unique_cases = NEW_int(nb_existing_cases);
@@ -325,7 +332,8 @@ void semifield_classify_with_substructure::read_data(
 	}
 
 	if (f_v) {
-		cout << "There are " << nb_non_unique_cases
+		cout << "semifield_classify_with_substructure::read_data "
+				"There are " << nb_non_unique_cases
 			<< " cases which have more than one solution" << endl;
 	}
 	Non_unique_cases_fst = NEW_int(nb_non_unique_cases);
@@ -344,7 +352,8 @@ void semifield_classify_with_substructure::read_data(
 
 		C.init(Non_unique_cases_len, nb_non_unique_cases, false, 0);
 		if (f_v) {
-			cout << "classification of Len amongst the non-unique cases:" << endl;
+			cout << "semifield_classify_with_substructure::read_data "
+					"classification of Len amongst the non-unique cases:" << endl;
 			C.print_bare(true);
 			cout << endl;
 		}
@@ -354,7 +363,8 @@ void semifield_classify_with_substructure::read_data(
 
 		C.init_lint(Non_unique_cases_go, nb_non_unique_cases, false, 0);
 		if (f_v) {
-			cout << "classification of group orders amongst "
+			cout << "semifield_classify_with_substructure::read_data "
+					"classification of group orders amongst "
 					"the non-unique cases:" << endl;
 			C.print_bare(true);
 			cout << endl;
@@ -403,8 +413,20 @@ void semifield_classify_with_substructure::classify_semifields(
 
 	Semifields = NEW_OBJECT(invariant_relations::classification_step);
 
+	if (f_v) {
+		cout << "semifield_classify_with_substructure::classify_semifields "
+				"before Sub->do_classify" << endl;
+	}
 	Sub->do_classify(verbose_level);
+	if (f_v) {
+		cout << "semifield_classify_with_substructure::classify_semifields "
+				"after Sub->do_classify" << endl;
+	}
 
+	if (f_v) {
+		cout << "semifield_classify_with_substructure::classify_semifields "
+				"before writing file (1)" << endl;
+	}
 	{
 		string fname;
 
@@ -417,6 +439,10 @@ void semifield_classify_with_substructure::classify_semifields(
 		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 	}
 
+	if (f_v) {
+		cout << "semifield_classify_with_substructure::classify_semifields "
+				"before writing file (2)" << endl;
+	}
 	{
 		string fname;
 
@@ -451,6 +477,10 @@ void semifield_classify_with_substructure::load_classification(
 	Sub->SC->A->group_order(go);
 
 
+	if (f_v) {
+		cout << "semifield_classify_with_substructure::load_classification "
+				"before reading file" << endl;
+	}
 	{
 		string fname;
 
@@ -485,6 +515,10 @@ void semifield_classify_with_substructure::load_flag_orbits(
 
 
 
+	if (f_v) {
+		cout << "semifield_classify_with_substructure::load_flag_orbits "
+				"before reading file" << endl;
+	}
 	{
 		string fname;
 
@@ -522,11 +556,17 @@ void semifield_classify_with_substructure::identify_semifield(
 	if (Descr->f_identify_semifield) {
 		long int *data = NULL;
 		int data_len = 0;
-		cout << "f_identify_semifield" << endl;
+		if (f_v) {
+			cout << "semifield_classify_with_substructure::identify_semifield "
+					"before Lint_vec_scan" << endl;
+		}
 		Lint_vec_scan(Descr->identify_semifield_data, data, data_len);
-		cout << "input semifield:" << endl;
-		for (i = 0; i < data_len; i++) {
-			cout << i << " : " << data[i] << endl;
+		if (f_v) {
+			cout << "semifield_classify_with_substructure::identify_semifield "
+					"input semifield:" << endl;
+			for (i = 0; i < data_len; i++) {
+				cout << i << " : " << data[i] << endl;
+			}
 		}
 
 
@@ -539,7 +579,7 @@ void semifield_classify_with_substructure::identify_semifield(
 
 			long int data_out[6];
 
-			cout << "Knuth operation " << t << " / " << 6 << ":" << endl;
+			cout << "semifield_classify_with_substructure::identify_semifield Knuth operation " << t << " / " << 6 << ":" << endl;
 			Sub->SC->knuth_operation(t,
 					data, data_out,
 					verbose_level);
@@ -556,7 +596,8 @@ void semifield_classify_with_substructure::identify_semifield(
 					rk, trace_po, fo, po,
 					transporter,
 					verbose_level)) {
-				cout << "The given semifield has been identified "
+				cout << "semifield_classify_with_substructure::identify_semifield "
+						"The given semifield has been identified "
 						"as semifield orbit " << po << endl;
 				cout << "rk=" << rk << endl;
 				cout << "trace_po=" << trace_po << endl;
@@ -567,7 +608,8 @@ void semifield_classify_with_substructure::identify_semifield(
 				cout << endl;
 			}
 			else {
-				cout << "The given semifield cannot be identified" << endl;
+				cout << "semifield_classify_with_substructure::identify_semifield "
+						"The given semifield cannot be identified" << endl;
 			}
 		}
 	}
@@ -683,7 +725,7 @@ void semifield_classify_with_substructure::latex_report(
 
 	if (f_v) {
 		cout << "writing latex file " << fname << endl;
-		}
+	}
 
 	{
 		ofstream ost(fname);
@@ -731,19 +773,19 @@ void semifield_classify_with_substructure::latex_report(
 		if (f_v) {
 			cout << "semifield_classify_with_substructure::latex_report "
 					"before L2->print_representatives" << endl;
-			}
+		}
 
 		L2->report(ost, verbose_level);
 
 		if (f_v) {
 			cout << "semifield_classify_with_substructure::latex_report "
 					"after L2->print_representatives" << endl;
-			}
+		}
 
 		if (f_v) {
 			cout << "semifield_classify_with_substructure::latex_report "
 					"before Semifields->print_latex" << endl;
-			}
+		}
 
 		Semifields->print_latex(
 				ost,
@@ -757,7 +799,7 @@ void semifield_classify_with_substructure::latex_report(
 		if (f_v) {
 			cout << "semifield_classify_with_substructure::latex_report "
 					"after Semifields->print_latex" << endl;
-			}
+		}
 
 		if (Descr->f_identify_semifields_from_file) {
 			ost << "\\clearpage" << endl;
@@ -782,7 +824,7 @@ void semifield_classify_with_substructure::latex_report(
 		if (f_v) {
 			cout << "semifield_classify_with_substructure::latex_report "
 					"substructures of dimension two" << endl;
-			}
+		}
 
 		int *Po2;
 		int *PO2;
@@ -837,11 +879,15 @@ void semifield_classify_with_substructure::latex_report(
 
 		L.foot(ost);
 	}
-	cout << "Written file " << fname << " of size "
+	if (f_v) {
+		cout << "semifield_classify_with_substructure::latex_report "
+				"Written file " << fname << " of size "
 			<< Fio.file_size(fname) << endl;
+	}
 
 	if (f_v) {
-		cout << "writing latex file " << fname << " done" << endl;
+		cout << "semifield_classify_with_substructure::latex_report "
+				"writing latex file " << fname << " done" << endl;
 	}
 	if (f_v) {
 		cout << "semifield_classify_with_substructure::latex_report" << endl;
@@ -862,13 +908,13 @@ void semifield_classify_with_substructure::generate_source_code(
 
 	if (f_v) {
 		cout << "before Semifields->generate_source_code " << fname_base << endl;
-		}
+	}
 
 	Semifields->generate_source_code(fname_base, verbose_level);
 
 	if (f_v) {
 		cout << "after Semifields->generate_source_code " << fname_base << endl;
-		}
+	}
 	if (f_v) {
 		cout << "semifield_classify_with_substructure::generate_source_code done" << endl;
 	}

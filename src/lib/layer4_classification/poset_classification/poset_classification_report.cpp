@@ -42,7 +42,7 @@ void poset_classification::report(
 		L.head_easy(ost);
 
 
-		other::graphics::layered_graph_draw_options *Draw_options;
+		other::graphics::draw_options *Draw_options;
 
 		if (!Opt->f_draw_options) {
 			cout << "poset_classification::report "
@@ -118,7 +118,7 @@ void poset_classification::report2(
 			cout << "poset_classification::report2 f_draw_poset" << endl;
 		}
 
-		other::graphics::layered_graph_draw_options *Draw_options;
+		other::graphics::draw_options *Draw_options;
 
 		if (!Control->f_draw_options) {
 			cout << "poset_classification::report2 "
@@ -704,7 +704,7 @@ void poset_classification::report_poset_of_orbits(
 		exit(1);
 	}
 
-	other::graphics::layered_graph_draw_options *Draw_options;
+	other::graphics::draw_options *Draw_options;
 
 
 	Draw_options = Get_draw_options(Opt->draw_options_label);

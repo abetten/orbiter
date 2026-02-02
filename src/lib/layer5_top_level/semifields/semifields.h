@@ -239,7 +239,7 @@ public:
 			std::ostream &ost, int level,
 			semifield_level_two *L2,
 			semifield_lifting *L3,
-			other::graphics::layered_graph_draw_options *draw_options,
+			other::graphics::draw_options *draw_options,
 			int verbose_level);
 	void init_poset_classification(
 			poset_classification::poset_classification_control *Control,
@@ -749,7 +749,7 @@ public:
 	int **Orbit_idx; // [nb_non_unique_cases_with_non_trivial_group]
 		// Orbit_idx[i][j] = b
 		// means that the j-th solution of Nontrivial case i
-		// belongs to orbt All_Orbits[i][b]
+		// belongs to orbit All_Orbits[i][b]
 	int **Position; // [nb_non_unique_cases_with_non_trivial_group]
 		// Position[i][j] = a
 		// means that the j-th solution of Nontrivial case i

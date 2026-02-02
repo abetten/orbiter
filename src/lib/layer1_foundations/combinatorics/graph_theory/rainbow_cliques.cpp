@@ -62,7 +62,6 @@ rainbow_cliques::~rainbow_cliques()
 void rainbow_cliques::search(
 	clique_finder_control *Control,
 	colored_graph *graph,
-	//std::ostream &ost_sol,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -74,10 +73,8 @@ void rainbow_cliques::search(
 	}
 
 	rainbow_cliques::Control = Control;
-	//rainbow_cliques::f_output_solution_raw = f_output_solution_raw;
 
 	rainbow_cliques::graph = graph;
-	//rainbow_cliques::ost_sol = &ost_sol;
 	f_color_satisfied = NEW_int(graph->nb_colors);
 	color_chosen_at_depth = NEW_int(graph->nb_colors);
 	color_frequency = NEW_int(graph->nb_colors);

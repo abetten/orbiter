@@ -768,20 +768,20 @@ public:
 	void init(
 			projective_space *P, int verbose_level);
 	void create_latex_report(
-			other::graphics::layered_graph_draw_options *O,
+			other::graphics::draw_options *O,
 			int verbose_level);
 	void report_summary(
 			std::ostream &ost);
 	void report(
 			std::ostream &ost,
-			other::graphics::layered_graph_draw_options *O,
+			other::graphics::draw_options *O,
 			int verbose_level);
 	void report_polynomial_rings(
 			std::ostream &ost,
 			int verbose_level);
 	void create_drawing_of_plane(
 			std::ostream &ost,
-			other::graphics::layered_graph_draw_options *Draw_options,
+			other::graphics::draw_options *Draw_options,
 			int verbose_level);
 	void report_subspaces_of_dimension(
 			std::ostream &ost,

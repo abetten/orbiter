@@ -3,6 +3,7 @@
 // Anton Betten
 // March 6, 2003
 
+
 #include "foundations.h"
 
 
@@ -74,7 +75,7 @@ mp_graphics::~mp_graphics()
 
 void mp_graphics::init(
 		std::string &file_name,
-		layered_graph_draw_options *Draw_options,
+		draw_options *Draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -559,7 +560,7 @@ void mp_graphics::draw_polar_grid(
 }
 
 void mp_graphics::draw_axes_and_grid(
-		layered_graph_draw_options *O,
+		draw_options *O,
 	double x_min, double x_max,
 	double y_min, double y_max,
 	double dx, double dy,
@@ -3950,7 +3951,7 @@ void mp_graphics::draw_density2_multiple_curves(
 }
 
 void mp_graphics::projective_plane_draw_grid2(
-		layered_graph_draw_options *O,
+		draw_options *O,
 		int q,
 		int *Table, int nb,
 		int f_point_labels,

@@ -49,7 +49,7 @@ void projective_space_reporting::init(
 }
 
 void projective_space_reporting::create_latex_report(
-		other::graphics::layered_graph_draw_options *O,
+		other::graphics::draw_options *O,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -130,7 +130,7 @@ void projective_space_reporting::report_summary(
 
 void projective_space_reporting::report(
 		std::ostream &ost,
-		other::graphics::layered_graph_draw_options *Draw_options,
+		other::graphics::draw_options *Draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -320,7 +320,7 @@ void projective_space_reporting::report_polynomial_rings(
 
 void projective_space_reporting::create_drawing_of_plane(
 		std::ostream &ost,
-		other::graphics::layered_graph_draw_options *Draw_options,
+		other::graphics::draw_options *Draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

@@ -55,6 +55,10 @@ orbits_activity_description::orbits_activity_description()
 	f_transporter = false;
 	//std::string transporter_label_of_set;
 
+	f_schreier_poset = false;
+	schreier_poset_orbit_idx = -1;
+	//std::string schreier_poset_prefix;
+
 	f_draw_options = false;
 	//std::string draw_options_label;
 
@@ -168,6 +172,15 @@ int orbits_activity_description::read_arguments(
 				cout << "-transporter " << transporter_label_of_set << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-schreier_poset") == 0) {
+
+			f_schreier_poset = true;
+			schreier_poset_orbit_idx = ST.strtoi(argv[++i]);
+			schreier_poset_prefix.assign(argv[++i]);
+			if (f_v) {
+				cout << "-schreier_poset " << schreier_poset_orbit_idx << " " << schreier_poset_prefix << endl;
+			}
+		}
 
 		else if (ST.stringcmp(argv[i], "-draw_options") == 0) {
 			f_draw_options = true;
@@ -247,6 +260,13 @@ void orbits_activity_description::print()
 	if (f_transporter) {
 		cout << "-transporter " << transporter_label_of_set << endl;
 	}
+	if (f_schreier_poset) {
+		cout << "-schreier_poset " << schreier_poset_orbit_idx << " " << schreier_poset_prefix << endl;
+	}
+	if (f_draw_options) {
+		cout << "-draw_options " << draw_options_label << endl;
+	}
+
 	if (f_report_options) {
 		cout << "-report_options " << report_options_label << endl;
 	}

@@ -852,7 +852,7 @@ void poset_classification::housekeeping(
 					"before write_treefile_and_draw_tree" << endl;
 		}
 
-		other::graphics::layered_graph_draw_options *Draw_options;
+		other::graphics::draw_options *Draw_options;
 
 		if (!Control->f_draw_options) {
 			cout << "poset_classification::housekeeping_no_data_file "
@@ -959,7 +959,7 @@ void poset_classification::housekeeping_no_data_file(
 
 	if (Control->f_T || (Control->f_t && i == sz)) {
 
-		other::graphics::layered_graph_draw_options *Draw_options;
+		other::graphics::draw_options *Draw_options;
 
 		if (!Control->f_draw_options) {
 			cout << "poset_classification::housekeeping_no_data_file "

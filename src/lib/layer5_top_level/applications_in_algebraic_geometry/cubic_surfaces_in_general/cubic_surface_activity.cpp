@@ -65,7 +65,7 @@ void cubic_surface_activity::perform_activity(
 		}
 
 
-		other::graphics::layered_graph_draw_options *Draw_options;
+		other::graphics::draw_options *Draw_options;
 
 		Draw_options = Get_draw_options(Descr->report_draw_options_label);
 

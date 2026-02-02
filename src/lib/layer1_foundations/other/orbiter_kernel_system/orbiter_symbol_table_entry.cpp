@@ -826,7 +826,7 @@ void orbiter_symbol_table_entry::init_poset_classification_report_options(
 
 void orbiter_symbol_table_entry::init_draw_options(
 		std::string &label,
-		graphics::layered_graph_draw_options *Draw_options,
+		graphics::draw_options *Draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

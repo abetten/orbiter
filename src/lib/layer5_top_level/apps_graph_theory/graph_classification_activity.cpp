@@ -66,7 +66,7 @@ void graph_classification_activity::perform_activity(int verbose_level)
 			exit(1);
 		}
 
-		other::graphics::layered_graph_draw_options *Draw_options;
+		other::graphics::draw_options *Draw_options;
 
 		Draw_options = Get_draw_options(Descr->draw_options_label);
 
@@ -87,7 +87,7 @@ void graph_classification_activity::perform_activity(int verbose_level)
 			exit(1);
 		}
 
-		other::graphics::layered_graph_draw_options *Draw_options;
+		other::graphics::draw_options *Draw_options;
 
 		Draw_options = Get_draw_options(Descr->draw_options_label);
 
@@ -116,7 +116,7 @@ void graph_classification_activity::perform_activity(int verbose_level)
 			exit(1);
 		}
 
-		other::graphics::layered_graph_draw_options *Draw_options;
+		other::graphics::draw_options *Draw_options;
 
 		Draw_options = Get_draw_options(Descr->draw_options_label);
 

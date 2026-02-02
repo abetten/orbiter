@@ -645,7 +645,7 @@ void surface_repository::report_surface(
 		std::ostream &ost,
 		int orbit_index,
 		int f_print_orbits, std::string &fname_mask,
-		other::graphics::layered_graph_draw_options *draw_options,
+		other::graphics::draw_options *draw_options,
 		int max_nb_elements_printed,
 		int verbose_level)
 {

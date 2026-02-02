@@ -128,7 +128,7 @@ void orbits_activity::perform_activity(
 			cout << "orbits_activity::perform_activity f_draw_tree" << endl;
 		}
 
-		other::graphics::layered_graph_draw_options *Draw_options;
+		other::graphics::draw_options *Draw_options;
 
 		Draw_options = Get_draw_options(Descr->draw_tree_draw_options);
 
@@ -206,6 +206,22 @@ void orbits_activity::perform_activity(
 		}
 
 	}
+	else if (Descr->f_schreier_poset) {
+
+		if (f_v) {
+			cout << "orbits_activity::perform_activity f_schreier_poset" << endl;
+		}
+		if (f_v) {
+			cout << "orbits_activity::perform_activity before do_schreier_poset" << endl;
+		}
+		do_schreier_poset(Descr->schreier_poset_prefix, Descr->schreier_poset_orbit_idx, verbose_level);
+		if (f_v) {
+			cout << "orbits_activity::perform_activity after do_schreier_poset" << endl;
+		}
+
+	}
+
+
 	else {
 		cout << "orbits_activity::perform_activity "
 				"no activity found" << endl;
@@ -1170,7 +1186,7 @@ void orbits_activity::do_export_levels(
 
 
 void orbits_activity::do_draw_tree(
-		other::graphics::layered_graph_draw_options *Draw_options,
+		other::graphics::draw_options *Draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1956,6 +1972,51 @@ void orbits_activity::do_transporter(
 		cout << "orbits_activity::do_transporter done" << endl;
 	}
 }
+
+void orbits_activity::do_schreier_poset(
+		std::string &prefix, int orbit_idx, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbits_activity::do_schreier_poset" << endl;
+	}
+
+
+	if (OC->f_has_Orb) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_schreier_poset f_has_Orb" << endl;
+		}
+
+		layer4_classification::orbits_schreier::schreier_poset *Schreier_poset;
+
+
+		Schreier_poset = NEW_OBJECT(layer4_classification::orbits_schreier::schreier_poset);
+
+		if (f_v) {
+			cout << "orbits_activity::do_schreier_poset "
+					"before Schreier_poset->init" << endl;
+		}
+		Schreier_poset->init(
+				OC->Orb->Sch,
+				orbit_idx,
+				prefix,
+				verbose_level);
+		if (f_v) {
+			cout << "orbits_activity::do_schreier_poset "
+					"after Schreier_poset->init" << endl;
+		}
+
+	}
+
+
+	if (f_v) {
+		cout << "orbits_activity::do_schreier_poset done" << endl;
+	}
+}
+
+
 
 }}}
 

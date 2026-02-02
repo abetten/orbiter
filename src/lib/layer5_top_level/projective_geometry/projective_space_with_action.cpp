@@ -860,7 +860,7 @@ void projective_space_with_action::canonical_form_of_code(
 
 
 void projective_space_with_action::cheat_sheet(
-		other::graphics::layered_graph_draw_options *O,
+		other::graphics::draw_options *O,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1053,7 +1053,7 @@ void projective_space_with_action::print_points(
 
 void projective_space_with_action::report(
 		std::ostream &ost,
-		other::graphics::layered_graph_draw_options *Draw_options,
+		other::graphics::draw_options *Draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

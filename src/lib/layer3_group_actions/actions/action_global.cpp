@@ -6748,7 +6748,7 @@ void action_global::report(
 		actions::action *A,
 		groups::strong_generators *Strong_gens,
 		groups::sims *Sims,
-		other::graphics::layered_graph_draw_options *LG_Draw_options,
+		other::graphics::draw_options *LG_Draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -7013,7 +7013,7 @@ void action_global::report_group_table(
 		std::string &label_tex,
 		actions::action *A,
 		groups::strong_generators *Strong_gens,
-		other::graphics::layered_graph_draw_options *LG_Draw_options,
+		other::graphics::draw_options *LG_Draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

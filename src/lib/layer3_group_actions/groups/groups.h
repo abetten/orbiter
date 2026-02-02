@@ -102,14 +102,14 @@ public:
 			std::string &label, std::string &label_tex,
 			int verbose_level);
 	void create_latex_report(
-			other::graphics::layered_graph_draw_options *O,
+			other::graphics::draw_options *O,
 			groups::sims *Sims,
 			int verbose_level);
 	void create_order_invariant(
 			groups::sims *Sims,
 			int verbose_level);
 	void create_group_table_report(
-			other::graphics::layered_graph_draw_options *LG_Draw_options,
+			other::graphics::draw_options *LG_Draw_options,
 			int verbose_level);
 	void create_report_sylow_subgroups(
 			int verbose_level);
@@ -228,10 +228,10 @@ public:
 			std::string &fname,
 			int verbose_level);
 	void subgroup_lattice_draw(
-			other::graphics::layered_graph_draw_options *Draw_options,
+			other::graphics::draw_options *Draw_options,
 			int verbose_level);
 	void subgroup_lattice_draw_by_orbits(
-			other::graphics::layered_graph_draw_options *Draw_options,
+			other::graphics::draw_options *Draw_options,
 			int verbose_level);
 	void subgroup_lattice_intersection_orbit_orbit(
 			int orbit1, int orbit2,
@@ -445,11 +445,14 @@ public:
 
 	actions::action *A;
 
-	int f_images_only;
+	int f_images_only; // why do we need this?
+
 	long int degree;
+
 	data_structures_groups::vector_ge gens;
 	data_structures_groups::vector_ge gens_inv;
-	int nb_images;
+
+	int nb_images; // this should be called nb_generators
 	int **images;
 		// [nb_gens][2 * A->degree],
 		// allocated by init_images,
@@ -461,6 +464,7 @@ public:
 		// we store the permutation in 0..A->degree-1 ,
 		// then the inverse of the generator
 		// in A->degree..2*A->degree-1
+		// A value of -1 indicates that the image has not yet been computed.
 
 	int *Elt1, *Elt2, *Elt3;
 	int *schreier_gen, *schreier_gen1;
@@ -480,11 +484,12 @@ public:
 	void delete_images();
 	void init_images(
 			int nb_images, int verbose_level);
-	void init_images_only(
+	// sets all images to -1.
+	void init_images_known(
 			schreier *Schreier,
 			actions::action *A,
 			int nb_images,
-			int *images, int verbose_level);
+			int *known_images, int verbose_level);
 #if 0
 	void init_images_recycle(
 			int nb_images,
@@ -504,28 +509,6 @@ public:
 	void init_generators(
 			int nb, int *elt, int verbose_level);
 
-#if 0
-	void init_generators_recycle_images(
-			data_structures_groups::vector_ge &generators,
-			int **old_images,
-			int idx_generator_to_delete, int verbose_level);
-	void init_generators_recycle_images(
-			data_structures_groups::vector_ge &generators,
-			int **old_images, int verbose_level);
-
-
-		// elt must point to nb * A->elt_size_in_int
-		// int's that are
-		// group elements in int format
-	void init_generators_recycle_images(
-			int nb, int *elt,
-			int **old_images,
-			int idx_generator_to_delete,
-			int verbose_level);
-	void init_generators_recycle_images(
-			int nb,
-			int *elt, int **old_images, int verbose_level);
-#endif
 	void init_generators_by_hdl(
 			int nb_gen, int *gen_hdl,
 		int verbose_level);
@@ -936,10 +919,11 @@ public:
 			int verbose_level);
 	void init(
 			actions::action *A, int verbose_level);
-	void init_images_only(
+	void init_images_known(
 			actions::action *A,
-			int nb_images, int *images,
+			int nb_images, int *known_images,
 			int verbose_level);
+	// this function is not used
 
 	void extend_orbit(
 			int *elt, int verbose_level);
@@ -1014,18 +998,8 @@ public:
 			int f_randomized,
 			schreier *&shallow_tree,
 			int verbose_level);
-#if 0
-	data_structures_groups::schreier_vector
-		*get_schreier_vector(
-			int gen_hdl_first, int nb_gen,
-			enum shallow_schreier_tree_strategy
-				Shallow_schreier_tree_strategy,
-			int verbose_level);
-#endif
 	data_structures_groups::schreier_vector *get_schreier_vector(
 			int gen_hdl_first, int nb_gen,
-			//enum shallow_schreier_tree_strategy
-			//	Shallow_schreier_tree_strategy,
 			int verbose_level);
 	void compute_orbit_invariant(
 			int *&orbit_invariant,
@@ -1776,14 +1750,14 @@ public:
 	void report(
 			std::ostream &ost,
 			std::string &prefix,
-			other::graphics::layered_graph_draw_options *LG_Draw_options,
+			other::graphics::draw_options *LG_Draw_options,
 			int verbose_level);
 	void report_subgroup_chain_table(
 			std::ostream &ost);
 	void report_basic_orbit(
 			std::ostream &ost,
 			std::string &prefix,
-			other::graphics::layered_graph_draw_options *LG_Draw_options,
+			other::graphics::draw_options *LG_Draw_options,
 			int orbit_idx, int verbose_level);
 
 

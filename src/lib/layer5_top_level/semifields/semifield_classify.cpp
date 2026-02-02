@@ -507,7 +507,7 @@ void semifield_classify::report(
 		std::ostream &ost, int level,
 		semifield_level_two *L2,
 		semifield_lifting *L3,
-		other::graphics::layered_graph_draw_options *draw_options,
+		other::graphics::draw_options *draw_options,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

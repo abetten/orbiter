@@ -1254,7 +1254,7 @@ void colored_graph::load(
 
 void colored_graph::draw_on_circle(
 		std::string &fname,
-		other::graphics::layered_graph_draw_options *Draw_options,
+		other::graphics::draw_options *Draw_options,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1292,7 +1292,7 @@ void colored_graph::draw_on_circle(
 
 void colored_graph::draw_on_circle_2(
 		other::graphics::mp_graphics &G,
-		other::graphics::layered_graph_draw_options *Draw_options)
+		other::graphics::draw_options *Draw_options)
 {
 	int n = nb_points;
 	int i, j;
@@ -1441,7 +1441,7 @@ void colored_graph::create_bitmatrix(
 
 void colored_graph::draw(
 		std::string &fname,
-		other::graphics::layered_graph_draw_options *Draw_options,
+		other::graphics::draw_options *Draw_options,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1481,7 +1481,7 @@ void colored_graph::draw(
 
 void colored_graph::draw_Levi(
 		std::string &fname,
-		other::graphics::layered_graph_draw_options *Draw_options,
+		other::graphics::draw_options *Draw_options,
 	int f_partition, int nb_row_parts, int *row_part_first, 
 	int nb_col_parts, int *col_part_first, 
 	int m, int n, int f_draw_labels, 
@@ -1564,7 +1564,7 @@ void colored_graph::draw_Levi(
 
 void colored_graph::draw_with_a_given_partition(
 		std::string &fname,
-		other::graphics::layered_graph_draw_options *Draw_options,
+		other::graphics::draw_options *Draw_options,
 		int *parts, int nb_parts,
 		int verbose_level)
 {
@@ -1614,7 +1614,7 @@ void colored_graph::draw_with_a_given_partition(
 
 void colored_graph::draw_partitioned(
 		std::string &fname,
-		other::graphics::layered_graph_draw_options *Draw_options,
+		other::graphics::draw_options *Draw_options,
 	int f_labels,
 	int verbose_level)
 {
@@ -4315,6 +4315,184 @@ void colored_graph::distance_from_vertex(
 	}
 }
 
+layer1_foundations::combinatorics::graph_theory::layered_graph *colored_graph::create_distance_poset(
+		int given_vertex,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "colored_graph::create_distance_poset" << endl;
+	}
+
+	int *Distance;
+
+	distance_from_vertex(
+			given_vertex,
+			Distance,
+			verbose_level - 2);
+
+
+	if (f_v) {
+		cout << "colored_graph::create_distance_poset Distance = ";
+		Int_vec_print(cout, Distance, nb_points);
+		cout << endl;
+	}
+
+	other::data_structures::tally *Tally;
+
+	Tally = NEW_OBJECT(other::data_structures::tally);
+
+	Tally->init(
+			Distance,
+			nb_points, false /* f_second */, 0 /* verbose_level */);
+
+	other::data_structures::set_of_sets *SoS;
+	int *types;
+	int nb_types;
+
+	SoS = Tally->get_set_partition_and_types(
+			types, nb_types, verbose_level);
+
+	if (f_v) {
+		cout << "colored_graph::create_distance_poset SoS=" << endl;
+		SoS->print();
+	}
+
+	SoS->sort();
+
+	if (f_v) {
+		cout << "colored_graph::create_distance_poset after sorting: SoS=" << endl;
+		SoS->print();
+	}
+
+	layer1_foundations::combinatorics::graph_theory::distance_information *Distance_information;
+
+	Distance_information = NEW_OBJECT(layer1_foundations::combinatorics::graph_theory::distance_information);
+
+	if (f_v) {
+		cout << "colored_graph::create_distance_poset "
+				"before Distance_information->init_SoS" << endl;
+	}
+	Distance_information->init_SoS(SoS, nb_points, verbose_level);
+	if (f_v) {
+		cout << "colored_graph::create_distance_poset "
+				"after Distance_information->init_SoS" << endl;
+	}
+
+	layer1_foundations::combinatorics::graph_theory::layered_graph *Layered_graph;
+
+
+	Layered_graph = NEW_OBJECT(layer1_foundations::combinatorics::graph_theory::layered_graph);
+
+
+
+
+	if (f_v) {
+		cout << "colored_graph::create_distance_poset "
+				"before Layered_graph->init" << endl;
+	}
+	Layered_graph->init(
+			Distance_information->nb_layers, Distance_information->Nb_nodes, fname_base,
+			verbose_level - 2);
+	if (f_v) {
+		cout << "colored_graph::create_distance_poset "
+				"after Layered_graph->init" << endl;
+	}
+
+	int l, n;
+	int a;
+
+	for (l = 0; l < Distance_information->nb_layers; l++) {
+		for (n = 0; n < Distance_information->Nb_nodes[l]; n++) {
+			a = SoS->Sets[l][n];
+			//Layered_graph->L[l].Nodes[n].id = a;
+			Layered_graph->L[l].Nodes[n].f_has_data1 = true;
+			Layered_graph->L[l].Nodes[n].data1 = a;
+
+			cout << "layer " << l << " node " << n << " has vertex label = " << a << endl;
+		}
+	}
+
+
+
+	if (f_v) {
+		cout << "colored_graph::create_distance_poset "
+				"adding edges" << endl;
+	}
+
+	int b;
+	int location, l2, n2;
+
+
+	for (l = 0; l < Distance_information->nb_layers; l++) {
+		for (n = 0; n < Distance_information->Nb_nodes[l]; n++) {
+
+			a = Layered_graph->L[l].Nodes[n].data1;
+			//a = SoS->Sets[l][n];
+
+			for (b = a + 1; b < nb_points; b++) {
+
+				if (!is_adjacent(a, b)) {
+					continue;
+				}
+
+				//cout << "adding edge " << a << " - " << b << endl;
+
+				location = Distance_information->perm_inv[b];
+				l2 = Distance_information->depth[location];
+				n2 = location - Distance_information->Fst[l2];
+
+				cout << "adding edge " << a << " - " << b << " : " << l << " " << n << " " << l2 << " " << n2 << endl;
+
+				Layered_graph->add_edge(l, n, l2, n2, 0 /* edge_color */, 0 /* verbose_level */);
+
+
+			}
+
+		}
+	}
+
+	if (f_v) {
+		cout << "colored_graph::create_distance_poset "
+				"before Layered_graph->place" << endl;
+	}
+
+
+	Layered_graph->place(0 /*verbose_level*/);
+
+	other::orbiter_kernel_system::file_io Fio;
+	std::string fname;
+
+	fname = label + "_distance_poset.layered_graph";
+
+
+	if (f_v) {
+		cout << "colored_graph::create_distance_poset "
+				"before Layered_graph->write_file" << endl;
+	}
+
+
+	Layered_graph->write_file(
+				fname, 0 /* verbose_level*/);
+
+	if (f_v) {
+		cout << "colored_graph::create_distance_poset written file "
+			<< fname << " of size " << Fio.file_size(fname) << endl;
+	}
+
+
+
+	FREE_int(types);
+	FREE_int(Distance);
+	FREE_OBJECT(Distance_information);
+
+	if (f_v) {
+		cout << "colored_graph::create_distance_poset done" << endl;
+	}
+	return Layered_graph;
+}
 
 
 

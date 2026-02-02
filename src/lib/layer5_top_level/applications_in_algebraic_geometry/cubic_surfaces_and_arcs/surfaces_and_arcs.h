@@ -324,11 +324,11 @@ public:
 			int f_test_nb_Eckardt_points, int nb_E,
 			int verbose_level);
 	void report(
-			other::graphics::layered_graph_draw_options *Opt,
+			other::graphics::draw_options *Opt,
 			int verbose_level);
 	void report2(
 			std::ostream &ost,
-			other::graphics::layered_graph_draw_options *Opt,
+			other::graphics::draw_options *Opt,
 			int verbose_level);
 	void report_decomposition_matrix(
 			std::ostream &ost, int verbose_level);
@@ -375,7 +375,7 @@ public:
 			std::ostream &ost, int verbose_level);
 	void report(
 			std::ostream &ost,
-			other::graphics::layered_graph_draw_options *Opt,
+			other::graphics::draw_options *Opt,
 			int verbose_level);
 
 };
@@ -722,7 +722,7 @@ public:
 			int verbose_level);
 	void report2(
 			std::ostream &ost,
-			other::graphics::layered_graph_draw_options *draw_options,
+			other::graphics::draw_options *draw_options,
 			int verbose_level);
 	void report_flag_orbits(
 			std::ostream &ost, int verbose_level);

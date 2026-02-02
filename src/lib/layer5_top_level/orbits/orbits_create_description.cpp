@@ -22,11 +22,8 @@ orbits_create_description::orbits_create_description()
 {
 	Record_birth();
 
-	f_group = false;
-	//std::string group_label;
+	// tables/commands/orbits_create1.csv
 
-	f_group_action = false;
-	//std::string group_action_label;
 
 	f_on_points = false;
 
@@ -79,8 +76,26 @@ orbits_create_description::orbits_create_description()
 	f_classification_by_canonical_form = false;
 	Canonical_form_classifier_description = NULL;
 
+
+	// tables/commands/orbits_create2.csv
+
+
+
+	f_group = false;
+	//std::string group_label;
+
+	f_group_action = false;
+	//std::string group_action_label;
+
+	f_generators = false;
+	//std::string generators_label;
+
+
+
+#if 0
 	f_override_generators = false;
 	//std::string override_generators_label;
+#endif
 
 	f_print_interval = false;
 	print_interval = 100000;
@@ -103,21 +118,9 @@ int orbits_create_description::read_arguments(
 	cout << "design_create_description::read_arguments" << endl;
 	for (i = 0; i < argc; i++) {
 
-		if (ST.stringcmp(argv[i], "-group") == 0) {
-			f_group = true;
-			group_label.assign(argv[++i]);
-			if (f_v) {
-				cout << "-group " << group_label << endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-group_action") == 0) {
-			f_group_action = true;
-			group_action_label.assign(argv[++i]);
-			if (f_v) {
-				cout << "-group_action " << group_action_label << endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-on_points") == 0) {
+		// tables/commands/orbits_create1.csv
+
+		if (ST.stringcmp(argv[i], "-on_points") == 0) {
 			f_on_points = true;
 			if (f_v) {
 				cout << "-on_points" << endl;
@@ -272,6 +275,31 @@ int orbits_create_description::read_arguments(
 				Canonical_form_classifier_description->print();
 			}
 		}
+
+		// tables/commands/orbits_create2.csv
+
+		else if (ST.stringcmp(argv[i], "-group") == 0) {
+			f_group = true;
+			group_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-group " << group_label << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-group_action") == 0) {
+			f_group_action = true;
+			group_action_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-group_action " << group_action_label << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-generators") == 0) {
+			f_generators = true;
+			generators_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-generators " << generators_label << endl;
+			}
+		}
+#if 0
 		else if (ST.stringcmp(argv[i], "-override_generators") == 0) {
 			f_override_generators = true;
 			override_generators_label = ST.strtoi(argv[++i]);
@@ -279,6 +307,7 @@ int orbits_create_description::read_arguments(
 				cout << "-override_generators " << override_generators_label << endl;
 			}
 		}
+#endif
 		else if (ST.stringcmp(argv[i], "-print_interval") == 0) {
 			f_print_interval = true;
 			print_interval = ST.strtoi(argv[++i]);
@@ -322,12 +351,9 @@ int orbits_create_description::read_arguments(
 
 void orbits_create_description::print()
 {
-	if (f_group) {
-		cout << "-group " << group_label << endl;
-	}
-	if (f_group_action) {
-		cout << "-group_action " << group_action_label << endl;
-	}
+
+	// tables/commands/orbits_create1.csv
+
 	if (f_on_points) {
 		cout << "-on_points" << endl;
 	}
@@ -378,9 +404,23 @@ void orbits_create_description::print()
 		cout << "-classification_by_canonical_form " << endl;
 		Canonical_form_classifier_description->print();
 	}
+
+	// tables/commands/orbits_create2.csv
+
+	if (f_group) {
+		cout << "-group " << group_label << endl;
+	}
+	if (f_group_action) {
+		cout << "-group_action " << group_action_label << endl;
+	}
+	if (f_generators) {
+		cout << "-generators " << generators_label << endl;
+	}
+#if 0
 	if (f_override_generators) {
 		cout << "-override_generators " << override_generators_label << endl;
 	}
+#endif
 	if (f_print_interval) {
 		cout << "-print_interval " << print_interval << endl;
 	}

@@ -703,7 +703,7 @@ void exact_cover::compute_liftings_single_case_new(
 			int ymax_out = 1000000;
 #endif
 
-			other::graphics::layered_graph_draw_options *Draw_options;
+			other::graphics::draw_options *Draw_options;
 
 			Draw_options = Get_draw_options(draw_options_label);
 

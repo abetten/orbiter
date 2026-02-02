@@ -1142,7 +1142,7 @@ void symbol_definition::read_definition(
 		f_draw_options = true;
 
 		Draw_options =
-				NEW_OBJECT(other::graphics::layered_graph_draw_options);
+				NEW_OBJECT(other::graphics::draw_options);
 		if (f_v) {
 			cout << "reading -draw_options" << endl;
 		}

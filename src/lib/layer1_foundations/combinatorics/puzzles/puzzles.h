@@ -136,14 +136,14 @@ public:
 			std::string &fname,
 			int depth,
 			int f_has_cost, int cost,
-			other::graphics::layered_graph_draw_options *Draw_options,
+			other::graphics::draw_options *Draw_options,
 			int verbose_level);
 	void draw_domino_matrix2(
 			std::string &fname,
 			int f_has_cost, int cost,
 		int f_frame, int f_grid, int f_B, int *B,
 		int f_numbers, int f_gray,
-		other::graphics::layered_graph_draw_options *Draw_options,
+		other::graphics::draw_options *Draw_options,
 		int verbose_level);
 	void read_photo(
 			std::string &photo_fname, int verbose_level);

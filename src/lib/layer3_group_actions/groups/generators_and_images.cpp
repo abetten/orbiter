@@ -124,6 +124,7 @@ void generators_and_images::delete_images()
 
 void generators_and_images::init_images(
 		int nb_images, int verbose_level)
+// sets all images to -1.
 {
 	int f_v = (verbose_level >= 1);
 	long int i;
@@ -147,30 +148,25 @@ void generators_and_images::init_images(
 		}
 		images[i] = NEW_int(2 * degree);
 		Int_vec_mone(images[i], 2 * degree);
-#if 0
-		for (j = 0; j < 2 * degree; j++) {
-			images[i][j] = -1;
-		}
-#endif
 	}
 	if (f_v) {
 		cout << "generators_and_images::init_images done" << endl;
 	}
 }
 
-void generators_and_images::init_images_only(
+void generators_and_images::init_images_known(
 		schreier *Schreier,
 		actions::action *A,
 		int nb_images,
-		int *images, int verbose_level)
-// images[nb_images * A->degree]
+		int *known_images, int verbose_level)
+// known_images[nb_images * A->degree]
 {
 	int f_v = (verbose_level >= 1);
 	int i;
 	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
-		cout << "generators_and_images::init_images_only" << endl;
+		cout << "generators_and_images::init_images_known" << endl;
 	}
 	delete_images();
 	f_images_only = true;
@@ -178,23 +174,23 @@ void generators_and_images::init_images_only(
 	generators_and_images::A = A;
 	generators_and_images::degree = A->degree;
 	generators_and_images::nb_images = nb_images;
-	generators_and_images::images = NEW_pint(nb_images);
+	images = NEW_pint(nb_images);
 	for (i = 0; i < nb_images; i++) {
 		if (f_v) {
-			cout << "generators_and_images::init_images_only "
+			cout << "generators_and_images::init_images_known "
 					"allocating images[i], i=" << i << endl;
 		}
-		generators_and_images::images[i] = NEW_int(2 * degree);
+		images[i] = NEW_int(2 * degree);
 		Int_vec_copy(
-				images + i * degree,
-				generators_and_images::images[i], degree);
+				known_images + i * degree,
+				images[i], degree);
 		Combi.Permutations->perm_inverse(
-				generators_and_images::images[i],
-				generators_and_images::images[i] + degree,
+				images[i],
+				images[i] + degree,
 				degree);
 	}
 	if (f_v) {
-		cout << "generators_and_images::init_images_only done" << endl;
+		cout << "generators_and_images::init_images_known done" << endl;
 	}
 }
 
@@ -281,11 +277,6 @@ void generators_and_images::init_images_recycle(
 		}
 		else {
 			Int_vec_mone(images[i], 2 * degree);
-#if 0
-			for (j = 0; j < 2 * degree; j++) {
-				images[i][j] = -1;
-			}
-#endif
 		}
 	}
 
@@ -311,11 +302,6 @@ void generators_and_images::images_append(
 	new_images[nb_images] = NEW_int(2 * degree);
 
 	Int_vec_mone(new_images[nb_images], 2 * degree);
-#if 0
-	for (j = 0; j < 2 * degree; j++) {
-		new_images[nb_images][j] = -1;
-	}
-#endif
 
 	for (i = 0; i < nb_images; i++) {
 		new_images[i] = images[i];
@@ -405,127 +391,6 @@ void generators_and_images::init_generators(
 
 
 
-
-#if 0
-void generators_and_images::init_generators_recycle_images(
-		data_structures_groups::vector_ge &generators,
-		int **old_images,
-		int idx_generator_to_delete, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "generators_and_images::init_generators_recycle_images" << endl;
-	}
-	if (generators.len) {
-		init_generators_recycle_images(
-				generators.len,
-				generators.ith(0),
-				old_images,
-				idx_generator_to_delete);
-	}
-	else {
-		init_generators_recycle_images(generators.len,
-				NULL, old_images, idx_generator_to_delete);
-	}
-	if (f_v) {
-		cout << "generators_and_images::init_generators_recycle_images done" << endl;
-	}
-}
-
-void generators_and_images::init_generators_recycle_images(
-		data_structures_groups::vector_ge &generators,
-		int **old_images, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "generators_and_images::init_generators_recycle_images" << endl;
-	}
-	if (generators.len) {
-		init_generators_recycle_images(
-				generators.len,
-				generators.ith(0),
-				old_images,
-				verbose_level);
-	}
-	else {
-		init_generators_recycle_images(
-				generators.len,
-				NULL,
-				old_images,
-				verbose_level);
-	}
-	if (f_v) {
-		cout << "generators_and_images::init_generators_recycle_images done" << endl;
-	}
-}
-#endif
-
-#if 0
-void generators_and_images::init_generators_recycle_images(
-		int nb, int *elt,
-		int **old_images, int idx_generator_to_delete,
-		int verbose_level)
-// elt must point to nb * A->elt_size_in_int
-// int's that are
-// group elements in int format
-{
-	int i;
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "generators_and_images::init_generators_recycle_images" << endl;
-	}
-
-	gens.allocate(nb, verbose_level - 2);
-	gens_inv.allocate(nb, verbose_level - 2);
-	for (i = 0; i < nb; i++) {
-		//cout << "schreier::init_generators i = " << i << endl;
-		gens.copy_in(i, elt + i * A->elt_size_in_int);
-		A->Group_element->element_invert(
-				elt + i * A->elt_size_in_int,
-				gens_inv.ith(i), 0);
-	}
-	init_images_recycle(nb, old_images,
-			idx_generator_to_delete,
-			0 /* verbose_level */);
-	if (f_v) {
-		cout << "generators_and_images::init_generators_recycle_images done" << endl;
-	}
-}
-
-
-
-void generators_and_images::init_generators_recycle_images(
-		int nb,
-		int *elt, int **old_images, int verbose_level)
-// elt must point to nb * A->elt_size_in_int
-// int's that are
-// group elements in int format
-{
-	int i;
-
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "generators_and_images::init_generators_recycle_images" << endl;
-	}
-	gens.allocate(nb, verbose_level - 2);
-	gens_inv.allocate(nb, verbose_level - 2);
-	for (i = 0; i < nb; i++) {
-		//cout << "schreier::init_generators i = " << i << endl;
-		gens.copy_in(i, elt + i * A->elt_size_in_int);
-		A->Group_element->element_invert(
-				elt + i * A->elt_size_in_int,
-				gens_inv.ith(i), 0);
-	}
-	init_images_recycle(nb, old_images, verbose_level - 2);
-	if (f_v) {
-		cout << "generators_and_images::init_generators_recycle_images done" << endl;
-	}
-}
-#endif
 
 
 

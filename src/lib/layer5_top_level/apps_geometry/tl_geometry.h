@@ -1144,7 +1144,7 @@ public:
 		int verbose_level);
 	void report(
 			int f_poset_classify, int poset_classify_depth,
-			other::graphics::layered_graph_draw_options *draw_options,
+			other::graphics::draw_options *draw_options,
 			int verbose_level);
 };
 

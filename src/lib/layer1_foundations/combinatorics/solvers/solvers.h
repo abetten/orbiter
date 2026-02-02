@@ -463,11 +463,11 @@ public:
 			int bit_depth, int verbose_level);
 	void draw_it(
 			std::string &fname_base,
-			other::graphics::layered_graph_draw_options *Draw_options,
+			other::graphics::draw_options *Draw_options,
 			int verbose_level);
 	void draw_partitioned(
 			std::string &fname_base,
-			other::graphics::layered_graph_draw_options *Draw_options,
+			other::graphics::draw_options *Draw_options,
 		int f_solution, int *solution, int solution_sz, 
 		int verbose_level);
 	int test_solution(

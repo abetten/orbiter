@@ -106,7 +106,7 @@ void group_theoretic_activity::perform_activity(
 		Sims = AG->Subgroup_sims;
 
 
-		other::graphics::layered_graph_draw_options *Draw_options;
+		other::graphics::draw_options *Draw_options;
 
 		Draw_options = Get_draw_options(Descr->report_draw_options);
 
@@ -163,7 +163,7 @@ void group_theoretic_activity::perform_activity(
 					"f_group_table" << endl;
 		}
 
-		other::graphics::layered_graph_draw_options *Draw_options;
+		other::graphics::draw_options *Draw_options;
 
 		Draw_options = Get_draw_options(Descr->group_table_draw_options);
 
@@ -1807,7 +1807,7 @@ void group_theoretic_activity::perform_activity(
 					"f_subgroup_lattice_draw_by_orbits" << endl;
 		}
 
-		other::graphics::layered_graph_draw_options *Draw_options;
+		other::graphics::draw_options *Draw_options;
 
 		Draw_options = Get_draw_options(Descr->subgroup_lattice_draw_by_orbits_draw_options);
 
@@ -1832,7 +1832,7 @@ void group_theoretic_activity::perform_activity(
 					"f_subgroup_lattice_draw_by_groups" << endl;
 		}
 
-		other::graphics::layered_graph_draw_options *Draw_options;
+		other::graphics::draw_options *Draw_options;
 
 		Draw_options = Get_draw_options(Descr->subgroup_lattice_draw_by_groups_draw_options);
 

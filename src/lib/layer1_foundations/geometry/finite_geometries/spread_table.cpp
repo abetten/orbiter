@@ -100,12 +100,6 @@ spread_table::~spread_table()
 
 void spread_table::init(
 		spread_table_description *Descr,
-#if 0
-		projective_geometry::projective_space *P,
-		int f_load,
-		int nb_iso_types_of_spreads,
-		std::string &path_to_spread_tables,
-#endif
 		int verbose_level)
 // For spreads in PG(3,q)
 {
@@ -221,13 +215,7 @@ void spread_table::create_file_names(
 
 	fname_spreads = prefix + "_table.csv";
 
-	//fname_isomorphism_type_of_spreads = prefix + "_spreads_iso.csv";
-
-	//fname_dual_spread = prefix + "_dual_spread_idx.csv";
-
 	fname_self_dual_spreads = prefix + "_self_dual_spreads.csv";
-
-	//fname_schreier_table = prefix + "_schreier_table.csv";
 
 }
 
@@ -648,60 +636,6 @@ void spread_table::save(
 
 
 
-#if 0
-	if (f_v) {
-		cout << "spread_table::save "
-				"writing file " << fname_spreads << endl;
-	}
-
-	Fio.Csv_file_support->lint_matrix_write_csv(
-			fname_spreads,
-			spread_table, nb_spreads, spread_size);
-	if (f_v) {
-		cout << "spread_table::save "
-				"written file " << fname_spreads << endl;
-	}
-
-	if (f_v) {
-		cout << "spread_table::save, "
-				"writing file " << fname_isomorphism_type_of_spreads
-				<< endl;
-	}
-	string label;
-
-	label.assign("isomorphism_type_of_spread");
-	Fio.Csv_file_support->int_vec_write_csv(
-			spread_iso_type, nb_spreads,
-			fname_isomorphism_type_of_spreads,
-			label);
-	if (f_v) {
-		cout << "spread_table::save, "
-				"written file " << fname_isomorphism_type_of_spreads
-				<< endl;
-	}
-	if (f_v) {
-		cout << "spread_table::save, "
-				"writing file " << fname_dual_spread
-				<< endl;
-	}
-	label.assign("dual_spread_idx");
-	Fio.Csv_file_support->lint_vec_write_csv(
-			dual_spread_idx, nb_spreads,
-			fname_dual_spread,
-			label);
-	if (f_v) {
-		cout << "spread_table::save, "
-				"written file " << fname_dual_spread
-				<< endl;
-	}
-
-	if (f_v) {
-		cout << "spread_table::save, "
-				"writing file " << fname_self_dual_spreads
-				<< endl;
-	}
-#endif
-
 	string label;
 
 	label.assign("self_dual_spreads");
@@ -715,25 +649,6 @@ void spread_table::save(
 				<< endl;
 	}
 
-
-#if 0
-	if (schreier_table) {
-		if (f_v) {
-			cout << "spread_table::save "
-					"writing file " << fname_schreier_table << endl;
-		}
-
-		Fio.Csv_file_support->int_matrix_write_csv(fname_schreier_table,
-				schreier_table, nb_spreads, 4);
-		if (f_v) {
-			cout << "spread_table::save "
-					"written file " << fname_schreier_table << endl;
-		}
-	}
-	else {
-		cout << "spread_table::save no schreier table" << endl;
-	}
-#endif
 
 	if (f_v) {
 		cout << "spread_table::save done" << endl;
@@ -856,64 +771,6 @@ void spread_table::load(
 		FREE_int(v);
 	}
 
-#if 0
-	if (f_v) {
-		cout << "spread_table::load "
-				"reading file " << fname_spreads << endl;
-	}
-
-	Fio.Csv_file_support->lint_matrix_read_csv(
-			fname_spreads,
-			spread_table, nb_spreads, b,
-			0 /* verbose_level */);
-	if (b != spread_size) {
-		cout << "spread_table::load b != spread_size" << endl;
-		exit(1);
-	}
-	if (f_v) {
-		cout << "spread_table::load "
-				"read file " << fname_spreads << endl;
-	}
-
-	if (f_v) {
-		cout << "spread_table::load, "
-				"reading file " << fname_isomorphism_type_of_spreads
-				<< endl;
-	}
-	Fio.Csv_file_support->int_matrix_read_csv(
-			fname_isomorphism_type_of_spreads,
-			spread_iso_type, a, b,
-			0 /* verbose_level */);
-	if (a != nb_spreads) {
-		cout << "spread_table::load a != nb_spreads" << endl;
-		exit(1);
-	}
-	if (f_v) {
-		cout << "spread_table::load, "
-				"read file " << fname_isomorphism_type_of_spreads
-				<< endl;
-	}
-
-	if (f_v) {
-		cout << "spread_table::load, "
-				"reading file " << fname_dual_spread
-				<< endl;
-	}
-	Fio.Csv_file_support->lint_matrix_read_csv(
-			fname_dual_spread,
-			dual_spread_idx, a, b,
-			0 /* verbose_level */);
-	if (a != nb_spreads) {
-		cout << "spread_table::load a != nb_spreads" << endl;
-		exit(1);
-	}
-	if (f_v) {
-		cout << "spread_table::load, "
-				"read file " << fname_dual_spread
-				<< endl;
-	}
-#endif
-
 	if (f_v) {
 		cout << "spread_table::load, "
 				"reading file " << fname_self_dual_spreads
@@ -929,37 +786,6 @@ void spread_table::load(
 				"read file " << fname_self_dual_spreads
 				<< endl;
 	}
-
-#if 0
-	if (Fio.file_size(fname_schreier_table) > 0) {
-		if (f_v) {
-			cout << "spread_table::load, "
-					"reading file " << fname_schreier_table
-					<< endl;
-		}
-		Fio.Csv_file_support->int_matrix_read_csv(
-				fname_schreier_table,
-				schreier_table, a, b,
-				0 /* verbose_level */);
-		if (a != nb_spreads) {
-			cout << "spread_table::load a != nb_spreads" << endl;
-			exit(1);
-		}
-		if (b != 4) {
-			cout << "spread_table::load b != 4" << endl;
-			exit(1);
-		}
-		if (f_v) {
-			cout << "spread_table::load, "
-					"read file " << fname_schreier_table
-					<< endl;
-		}
-	}
-	else {
-		cout << "spread_table::load no schreier tables" << endl;
-		exit(1);
-	}
-#endif
 
 
 	if (f_v) {
@@ -1052,7 +878,7 @@ void spread_table::compute_adjacency_matrix(
 
 int spread_table::test_if_spreads_are_line_disjoint(
 		int a, int b)
-// tests of spreads are line-disjoint
+// testing if spreads are line-disjoint
 {
 	long int *p, *q;
 	other::data_structures::sorting Sorting;

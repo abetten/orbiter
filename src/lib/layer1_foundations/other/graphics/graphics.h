@@ -321,6 +321,112 @@ public:
 
 
 // #############################################################################
+// draw_options.cpp
+// #############################################################################
+
+//! options for drawing a vector graphic (TikZ etc.)
+
+class draw_options {
+public:
+
+	// TABLES/layered_graph_draw_options_1.tex
+	// Section 17.1
+
+	int f_paperheight;
+	int paperheight;
+
+	int f_paperwidth;
+	int paperwidth;
+
+	int xin; // Assume input $x$-coordinates are in the interval $[0,xin]$. Default value: 10000.
+	int yin; // Assume input $y$-coordinates are in the interval $[0,yin]$. Default value: 10000.
+	int xout; // Assume output $x$-coordinates are in the interval $[0,xout]$. Default value: 1000000.
+	int yout; // Assume output $y$-coordinates are in the interval $[0,yout]$. Default value: 1000000.
+
+
+	int f_spanning_tree;
+
+
+	int f_circle;
+	int f_corners;
+	int rad; // Default value: 200.
+	int f_embedded;
+	int f_sideways;
+
+	int f_show_level_info; // undocumented
+
+	int f_label_edges;
+
+	int f_x_stretch;
+	double x_stretch; // Apply $x$-axis scaling by a factor of $s$. Default value: $s=1.0$.
+	int f_y_stretch;
+	double y_stretch; // Apply $y$-axis scaling by a factor of $s$. Default value: $s=1.0$.
+
+
+	// TABLES/layered_graph_draw_options_2.tex
+
+
+	int f_scale;
+	double scale; // Use Tikz global scale-factor of $s$. Default value: $s=0.45$.
+
+	int f_line_width;
+	double line_width; // Set Tikz line width to $s$. Default value: $s=1.5$.
+
+	int f_rotated; // Rotate the output.
+
+
+	int f_nodes; // Turn on node drawing.
+	int f_nodes_empty; // Do not label the nodes. Default value: off.
+	int f_no_vertices; // do not draw the nodes
+
+	int f_show_colors; // indicate the color in the subscript of the vertex label
+
+	int f_select_layers;
+	std::string select_layers; // Draw layers whose index is given in the list $S$ only.
+	int nb_layer_select;
+	int *layer_select;
+
+
+	// undocumented
+
+	int f_has_draw_begining_callback;
+	void (*draw_begining_callback)(
+			combinatorics::graph_theory::layered_graph *LG, mp_graphics *G,
+		int x_max, int y_max, int f_rotated, int dx, int dy);
+	int f_has_draw_ending_callback;
+	void (*draw_ending_callback)(
+			combinatorics::graph_theory::layered_graph *LG, mp_graphics *G,
+		int x_max, int y_max, int f_rotated, int dx, int dy);
+	int f_has_draw_vertex_callback;
+	void (*draw_vertex_callback)(
+			combinatorics::graph_theory::layered_graph *LG, mp_graphics *G,
+		int layer, int node, int x, int y, int dx, int dy);
+
+
+	int f_paths_in_between;
+	int layer1, node1;
+	int layer2, node2;
+
+	//Draw all paths from node $(l_1,i_1)$ to node $(l_2,i_2)$.
+	//Here, $(l,i)$ is the $i$-th node at layer $l$ (counting from zero).
+	//Delete all other edges between layers $l_1$ and $l_2.$
+
+
+	draw_options();
+	~draw_options();
+	int read_arguments(
+		int argc, std::string *argv,
+		int verbose_level);
+	void print();
+	std::string stringify();
+		// stringifies all options except -embedded
+
+};
+
+
+
+
+// #############################################################################
 // draw_projective_curve_description.cpp
 // #############################################################################
 
@@ -466,12 +572,12 @@ public:
 	~graphical_output();
 	void draw_layered_graph_from_file(
 			std::string &fname,
-			layered_graph_draw_options *Opt,
+			draw_options *Opt,
 			int verbose_level);
 	void do_domino_portrait(
 			int D, int s,
 			std::string &photo_label,
-			layered_graph_draw_options *Opt,
+			draw_options *Opt,
 			int verbose_level);
 	void do_create_points_on_quartic(
 			double desired_distance, int verbose_level);
@@ -503,109 +609,6 @@ public:
 };
 
 
-// #############################################################################
-// layered_graph_draw_options.cpp
-// #############################################################################
-
-//! options for drawing an object of type layered_graph
-
-class layered_graph_draw_options {
-public:
-
-	// TABLES/layered_graph_draw_options_1.tex
-	// Section 17.1
-
-	int f_paperheight;
-	int paperheight;
-
-	int f_paperwidth;
-	int paperwidth;
-
-	int xin; // Assume input $x$-coordinates are in the interval $[0,xin]$. Default value: 10000.
-	int yin; // Assume input $y$-coordinates are in the interval $[0,yin]$. Default value: 10000.
-	int xout; // Assume output $x$-coordinates are in the interval $[0,xout]$. Default value: 1000000.
-	int yout; // Assume output $y$-coordinates are in the interval $[0,yout]$. Default value: 1000000.
-
-
-	int f_spanning_tree;
-
-
-	int f_circle;
-	int f_corners;
-	int rad; // Default value: 200.
-	int f_embedded;
-	int f_sideways;
-
-	int f_show_level_info; // undocumented
-
-	int f_label_edges;
-
-	int f_x_stretch;
-	double x_stretch; // Apply $x$-axis scaling by a factor of $s$. Default value: $s=1.0$.
-	int f_y_stretch;
-	double y_stretch; // Apply $y$-axis scaling by a factor of $s$. Default value: $s=1.0$.
-
-
-	// TABLES/layered_graph_draw_options_2.tex
-
-
-	int f_scale;
-	double scale; // Use Tikz global scale-factor of $s$. Default value: $s=0.45$.
-
-	int f_line_width;
-	double line_width; // Set Tikz line width to $s$. Default value: $s=1.5$.
-
-	int f_rotated; // Rotate the output.
-
-
-	int f_nodes; // Turn on node drawing.
-	int f_nodes_empty; // Do not label the nodes. Default value: off.
-	int f_no_vertices; // do not draw the nodes
-
-	int f_show_colors; // indicate the color in the subscript of the vertex label
-
-	int f_select_layers;
-	std::string select_layers; // Draw layers whose index is given in the list $S$ only.
-	int nb_layer_select;
-	int *layer_select;
-
-
-	// undocumented
-
-	int f_has_draw_begining_callback;
-	void (*draw_begining_callback)(
-			combinatorics::graph_theory::layered_graph *LG, mp_graphics *G,
-		int x_max, int y_max, int f_rotated, int dx, int dy);
-	int f_has_draw_ending_callback;
-	void (*draw_ending_callback)(
-			combinatorics::graph_theory::layered_graph *LG, mp_graphics *G,
-		int x_max, int y_max, int f_rotated, int dx, int dy);
-	int f_has_draw_vertex_callback;
-	void (*draw_vertex_callback)(
-			combinatorics::graph_theory::layered_graph *LG, mp_graphics *G,
-		int layer, int node, int x, int y, int dx, int dy);
-
-
-	int f_paths_in_between;
-	int layer1, node1;
-	int layer2, node2;
-
-	//Draw all paths from node $(l_1,i_1)$ to node $(l_2,i_2)$.
-	//Here, $(l,i)$ is the $i$-th node at layer $l$ (counting from zero).
-	//Delete all other edges between layers $l_1$ and $l_2.$
-
-
-	layered_graph_draw_options();
-	~layered_graph_draw_options();
-	int read_arguments(
-		int argc, std::string *argv,
-		int verbose_level);
-	void print();
-	std::string stringify();
-		// stringifies all options except -embedded
-
-};
-
 
 // #############################################################################
 // mp_graphics.cpp
@@ -629,7 +632,7 @@ struct grid_frame {
 
 class mp_graphics {
 
-	layered_graph_draw_options *Draw_options;
+	draw_options *Draw_options;
 
 	//std::string fname_base;
 	std::string fname_mp;
@@ -689,7 +692,7 @@ public:
 	~mp_graphics();
 	void init(
 			std::string &file_name,
-			layered_graph_draw_options *Draw_options,
+			draw_options *Draw_options,
 		int verbose_level);
 	void exit(
 			std::ostream &ost, int verbose_level);
@@ -722,7 +725,7 @@ public:
 			double r_max, int nb_circles,
 		int nb_rays, double x_stretch);
 	void draw_axes_and_grid(
-			layered_graph_draw_options *O,
+			draw_options *O,
 		double x_min, double x_max, 
 		double y_min, double y_max, 
 		double dx, double dy,
@@ -1095,7 +1098,7 @@ public:
 		int f_v_grid, int v_grid, int f_h_grid, int h_grid,
 		int f_v_logarithmic, double log_base);
 	void projective_plane_draw_grid2(
-			layered_graph_draw_options *O,
+			draw_options *O,
 			int q,
 			int *Table, int nb,
 			int f_point_labels,
@@ -1220,7 +1223,7 @@ public:
 	~plot_tools();
 
 	void draw_density(
-			layered_graph_draw_options *Draw_options,
+			draw_options *Draw_options,
 			std::string &prefix, int *the_set, int set_size,
 		int f_title, std::string &title, int out_of,
 		std::string &label_x,
@@ -1231,7 +1234,7 @@ public:
 		int f_switch_x, int no, int f_embedded,
 		int verbose_level);
 	void draw_density_multiple_curves(
-			layered_graph_draw_options *Draw_options,
+			draw_options *Draw_options,
 			std::string &prefix,
 		int **Data, int *Data_size, int nb_data_sets,
 		int f_title, std::string &title, int out_of,
@@ -1252,7 +1255,7 @@ public:
 		int *outline_value, int *outline_number, int outline_sz);
 	void projective_plane_draw_grid(
 			std::string &fname,
-			layered_graph_draw_options *O,
+			draw_options *O,
 			int q, int *Table, int nb,
 			int f_point_labels, std::string *Point_labels,
 			int verbose_level);
@@ -1262,17 +1265,17 @@ public:
 			int verbose_level);
 	void draw_mod_n_work(
 			mp_graphics &G,
-			layered_graph_draw_options *O,
+			draw_options *O,
 			draw_mod_n_description *Descr,
 			int verbose_level);
 	void draw_desargues(
 			mp_graphics &G,
-			layered_graph_draw_options *O,
+			draw_options *O,
 			draw_mod_n_description *Descr,
 			int verbose_level);
 	void draw_point_set_in_plane(
 		std::string &fname,
-		layered_graph_draw_options *O,
+		draw_options *O,
 		geometry::projective_geometry::projective_space *P,
 		long int *Pts, int nb_pts,
 		int f_point_labels,
@@ -1972,12 +1975,12 @@ public:
 	void draw(
 			std::string &fname,
 			graphics::tree_draw_options *Tree_draw_options,
-			layered_graph_draw_options *Opt,
+			draw_options *Opt,
 			int verbose_level);
 	void draw_preprocess(
 			std::string &fname,
 			graphics::tree_draw_options *Tree_draw_options,
-			layered_graph_draw_options *Opt,
+			draw_options *Opt,
 			int verbose_level);
 	void circle_center_and_radii(
 			int xmax, int ymax, int max_depth,
@@ -2097,13 +2100,13 @@ public:
 	void draw_edges(
 			mp_graphics &G,
 			tree_draw_options *Tree_draw_options,
-			layered_graph_draw_options *Opt,
+			draw_options *Opt,
 		int f_has_parent, int parent_x, int parent_y, int max_depth,
 		tree *T, int verbose_level);
 	void draw_vertices(
 			mp_graphics &G,
 			tree_draw_options *Tree_draw_options,
-			layered_graph_draw_options *Opt,
+			draw_options *Opt,
 		int f_has_parent, int parent_x, int parent_y, int max_depth,
 		tree *T, int verbose_level);
 	void draw_sideways(

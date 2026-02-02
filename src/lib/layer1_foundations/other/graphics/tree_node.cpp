@@ -381,7 +381,7 @@ void tree_node::get_values(
 void tree_node::draw_edges(
 		mp_graphics &G,
 		tree_draw_options *Tree_draw_options,
-		layered_graph_draw_options *Opt,
+		draw_options *Opt,
 	int f_has_parent, int parent_x, int parent_y, int max_depth,
 	tree *T, int verbose_level)
 {
@@ -483,7 +483,7 @@ void tree_node::draw_edges(
 void tree_node::draw_vertices(
 		mp_graphics &G,
 		tree_draw_options *Tree_draw_options,
-		layered_graph_draw_options *Opt,
+		draw_options *Opt,
 		int f_has_parent, int parent_x, int parent_y, int max_depth,
 		tree *T, int verbose_level)
 {

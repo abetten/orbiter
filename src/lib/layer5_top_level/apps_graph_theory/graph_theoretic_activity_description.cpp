@@ -89,6 +89,9 @@ graph_theoretic_activity_description::graph_theoretic_activity_description()
 	f_draw = false;
 	//std::string draw_options;
 
+	f_create_distance_poset = false;
+	create_distance_poset_vertex = 0;
+
 }
 
 graph_theoretic_activity_description::~graph_theoretic_activity_description()
@@ -278,12 +281,19 @@ int graph_theoretic_activity_description::read_arguments(
 				cout << "-draw " << draw_options << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-create_distance_poset") == 0) {
+			f_create_distance_poset = true;
+			create_distance_poset_vertex = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-create_distance_poset " << create_distance_poset_vertex << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
 				cout << "-end" << endl;
 			}
 			break;
-			}
+		}
 		else {
 			cout << "graph_theoretic_activity_description::read_arguments "
 					"unrecognized option " << argv[i] << endl;
@@ -379,6 +389,9 @@ void graph_theoretic_activity_description::print()
 	}
 	if (f_draw) {
 		cout << "-draw " << draw_options << endl;
+	}
+	if (f_create_distance_poset) {
+		cout << "-create_distance_poset " << create_distance_poset_vertex << endl;
 	}
 }
 

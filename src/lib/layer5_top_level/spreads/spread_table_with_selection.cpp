@@ -130,7 +130,8 @@ void spread_table_with_selection::do_spread_table_init(
 		dimension_of_spread_elements = Spread_table_description->rk;
 	}
 	else {
-		cout << "spread_table_with_selection::do_spread_table_init please specify the vector space dimension of spread elements using -rk <rk>" << endl;
+		cout << "spread_table_with_selection::do_spread_table_init "
+				"please specify the vector space dimension of the spread elements using -rk <rk>" << endl;
 		exit(1);
 	}
 	algebra::basic_algebra::matrix_group *Mtx;
@@ -463,7 +464,9 @@ void spread_table_with_selection::init(
 				"before predict_spread_table_length" << endl;
 	}
 	predict_spread_table_length(
-			Spread_classify->A, Spread_classify->A->Strong_gens, verbose_level - 1);
+			Spread_classify->A,
+			Spread_classify->A->Strong_gens,
+			verbose_level - 1);
 	if (f_v) {
 		cout << "spread_table_with_selection::init "
 				"after predict_spread_table_length" << endl;
@@ -578,7 +581,6 @@ void spread_table_with_selection::compute_spread_table_from_scratch(
 	int *First;
 	int *Len;
 	int *isomorphism_type_of_spread;
-	long int *my_Spread_table;
 	other::data_structures::sorting Sorting;
 
 
@@ -598,6 +600,8 @@ void spread_table_with_selection::compute_spread_table_from_scratch(
 			verbose_level);
 
 	// does not sort the spread table
+
+
 
 
 	if (f_v) {
@@ -647,9 +651,11 @@ void spread_table_with_selection::compute_spread_table_from_scratch(
 		original_position_inv[j] = i;
 	}
 
-	my_Spread_table = NEW_lint(nb_spreads * spread_size);
+	long int *Spread_table_sorted;
+
+	Spread_table_sorted = NEW_lint(nb_spreads * spread_size);
 	for (i = 0; i < nb_spreads; i++) {
-		Lint_vec_copy(Sets[i], my_Spread_table + i * spread_size, spread_size);
+		Lint_vec_copy(Sets[i], Spread_table_sorted + i * spread_size, spread_size);
 	}
 
 	if (f_v) {
@@ -666,6 +672,24 @@ void spread_table_with_selection::compute_spread_table_from_scratch(
 				"after Spread_table->init" << endl;
 	}
 
+	string fname;
+
+	fname = Spread_table->prefix + "_gens.tex";
+	{
+		std::ofstream ost(fname);
+
+		layer1_foundations::other::l1_interfaces::latex_interface Latex;
+
+
+		Latex.head_easy(ost);
+
+		Spread_classify->A->Strong_gens->print_generators_as_permutations_tex(
+				ost, Spread_classify->A2);
+
+		Latex.foot(ost);
+
+	}
+
 
 	if (f_v) {
 		cout << "spread_table_with_selection::compute_spread_table_from_scratch "
@@ -674,7 +698,7 @@ void spread_table_with_selection::compute_spread_table_from_scratch(
 
 	Spread_table->init_spread_table(
 			nb_spreads,
-			my_Spread_table, isomorphism_type_of_spread,
+			Spread_table_sorted, isomorphism_type_of_spread,
 			verbose_level);
 
 	if (f_v) {
@@ -709,7 +733,7 @@ void spread_table_with_selection::compute_spread_table_from_scratch(
 
 	Spread_table->init_tables(
 			nb_spreads,
-			my_Spread_table, isomorphism_type_of_spread,
+			Spread_table_sorted, isomorphism_type_of_spread,
 			Dual_spread_idx,
 			self_dual_spread_idx, nb_self_dual_spreads,
 			verbose_level);
@@ -732,8 +756,15 @@ void spread_table_with_selection::compute_spread_table_from_scratch(
 	for (i = 0; i < nb_spreads; i++) {
 		schreier_table[i * 4 + 0] = original_position[i];
 		schreier_table[i * 4 + 1] = original_position_inv[i];
-		schreier_table[i * 4 + 2] = Prev[i];
-		schreier_table[i * 4 + 3] = Label[i];
+		//schreier_table[i * 4 + 2] = Prev[i];
+		//schreier_table[i * 4 + 3] = Label[i];
+		if (Prev[original_position[i]] == -1) {
+			schreier_table[i * 4 + 2] = -1;
+		}
+		else {
+			schreier_table[i * 4 + 2] = original_position_inv[Prev[original_position[i]]];
+		}
+		schreier_table[i * 4 + 3] = Label[original_position[i]];
 	}
 
 	FREE_int(Prev);
@@ -879,71 +910,6 @@ int spread_table_with_selection::test_if_packing_is_self_dual(
 	return ret;
 }
 
-#if 0
-void packing_classify::read_spread_table(int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int i;
-
-	if (f_v) {
-		cout << "packing_classify::read_spread_table" << endl;
-	}
-
-	Spread_tables = NEW_OBJECT(spread_tables);
-
-	if (f_v) {
-		cout << "packing_classify::read_spread_table "
-				"before Spread_tables->init" << endl;
-	}
-
-	Spread_tables->init(F,
-			true /* f_load */, nb_iso_types_of_spreads,
-			spread_tables_prefix,
-			verbose_level);
-
-	{
-		int *type;
-		set_of_sets *SoS;
-		int a, b;
-
-		Spread_tables->classify_self_dual_spreads(type,
-				SoS,
-				verbose_level);
-		cout << "the self-dual spreads belong to the "
-				"following isomorphism types:" << endl;
-		for (i = 0; i < nb_iso_types_of_spreads; i++) {
-			cout << i << " : " << type[i] << endl;
-		}
-		SoS->print();
-		for (a = 0; a < SoS->nb_sets; a++) {
-			if (SoS->Set_size[a] < 10) {
-				cout << "iso type " << a << endl;
-				lint_vec_print(cout, SoS->Sets[a], SoS->Set_size[a]);
-				cout << endl;
-				for (i = 0; i < SoS->Set_size[a]; i++) {
-					b = SoS->Sets[a][i];
-					cout << i << " : " << b << " : ";
-					lint_vec_print(cout, Spread_tables->spread_table +
-							b * spread_size, spread_size);
-					cout << endl;
-				}
-			}
-		}
-		FREE_int(type);
-	}
-
-	if (f_v) {
-		cout << "packing_classify::read_spread_table "
-				"after Spread_tables->init" << endl;
-	}
-
-
-
-	if (f_v) {
-		cout << "packing_classify::read_spread_table done" << endl;
-	}
-}
-#endif
 
 void spread_table_with_selection::predict_spread_table_length(
 		actions::action *A, groups::strong_generators *Strong_gens,

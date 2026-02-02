@@ -1,4 +1,4 @@
-// layered_graph_draw_options.cpp
+// draw_options.cpp
 // 
 // Anton Betten
 // December 15, 2015
@@ -21,7 +21,7 @@ namespace graphics {
 
 
 
-layered_graph_draw_options::layered_graph_draw_options()
+draw_options::draw_options()
 {
 	Record_birth();
 
@@ -81,12 +81,12 @@ layered_graph_draw_options::layered_graph_draw_options()
 	node2 = 0;
 }
 
-layered_graph_draw_options::~layered_graph_draw_options()
+draw_options::~draw_options()
 {
 	Record_death();
 }
 
-int layered_graph_draw_options::read_arguments(
+int draw_options::read_arguments(
 	int argc, std::string *argv,
 	int verbose_level)
 {
@@ -95,7 +95,7 @@ int layered_graph_draw_options::read_arguments(
 	data_structures::string_tools ST;
 
 	if (f_v) {
-		cout << "layered_graph_draw_options::read_arguments" << endl;
+		cout << "draw_options::read_arguments" << endl;
 	}
 	for (i = 0; i < argc; i++) {
 
@@ -271,21 +271,21 @@ int layered_graph_draw_options::read_arguments(
 			break;
 		}
 		else {
-			cout << "layered_graph_draw_options::read_arguments "
+			cout << "draw_options::read_arguments "
 					"unrecognized option " << argv[i] << endl;
 			exit(1);
 		}
 	} // next i
 	if (f_v) {
-		cout << "layered_graph_draw_options::read_arguments done" << endl;
+		cout << "draw_options::read_arguments done" << endl;
 	}
 	return i + 1;
 }
 
 
-void layered_graph_draw_options::print()
+void draw_options::print()
 {
-	//cout << "layered_graph_draw_options::print:" << endl;
+	//cout << "draw_options::print:" << endl;
 
 
 	if (f_paperheight) {
@@ -364,7 +364,7 @@ void layered_graph_draw_options::print()
 	}
 }
 
-std::string layered_graph_draw_options::stringify()
+std::string draw_options::stringify()
 // stringifies all options except -embedded
 {
 	string s;

@@ -122,43 +122,44 @@ void schreier::init(
 }
 
 
-void schreier::init_images_only(
+void schreier::init_images_known(
 		actions::action *A,
-		int nb_images, int *images,
+		int nb_images, int *known_images,
 		int verbose_level)
+// this function is not used
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "generators_and_images::init_images_only" << endl;
+		cout << "generators_and_images::init_images_known" << endl;
 	}
 	Generators_and_images = NEW_OBJECT(generators_and_images);
 
 	if (f_v) {
-		cout << "generators_and_images::init_images_only "
+		cout << "generators_and_images::init_images_known "
 				"before Generators_and_images->init_images_only" << endl;
 	}
-	Generators_and_images->init_images_only(
+	Generators_and_images->init_images_known(
 			this, A,
-			nb_images, images,
+			nb_images, known_images,
 			0 /* verbose_level */);
 	if (f_v) {
-		cout << "generators_and_images::init_images_only "
+		cout << "generators_and_images::init_images_known "
 				"after Generators_and_images->init_images_only" << endl;
 	}
 
 	if (f_v) {
-		cout << "generators_and_images::init_images_only "
+		cout << "generators_and_images::init_images_known "
 				"before Forest->allocate_tables" << endl;
 	}
 	Forest->allocate_tables(verbose_level - 2);
 	if (f_v) {
-		cout << "generators_and_images::init_images_only "
+		cout << "generators_and_images::init_images_known "
 				"after Forest->allocate_tables" << endl;
 	}
 
 	if (f_v) {
-		cout << "generators_and_images::init_images_only done" << endl;
+		cout << "generators_and_images::init_images_known done" << endl;
 	}
 }
 
@@ -419,11 +420,6 @@ void schreier::compute_all_point_orbits_with_preferred_labels(
 	perm_inv = NEW_int(Generators_and_images->degree);
 
 	Lint_vec_copy_to_int(preferred_labels, labels, Generators_and_images->degree);
-#if 0
-	for (i = 0; i < Generators_and_images->degree; i++) {
-		labels[i] = preferred_labels[i];
-	}
-#endif
 
 	if (f_v) {
 		cout << "schreier::compute_all_point_orbits_with_preferred_labels "
@@ -555,11 +551,6 @@ void schreier::compute_all_orbits_on_invariant_subset_lint(
 	Forest->initialize_tables(verbose_level - 2);
 
 	Forest->move_point_set_lint_to_here(subset, len);
-#if 0
-	for (i = 0; i < len; i++) {
-		Forest->move_point_here(i, subset[i]);
-	}
-#endif
 
 	while (true) {
 
@@ -2126,8 +2117,6 @@ data_structures_groups::schreier_vector *schreier::get_schreier_vector(
 
 data_structures_groups::schreier_vector *schreier::get_schreier_vector(
 		int gen_hdl_first, int nb_gen,
-		//enum shallow_schreier_tree_strategy
-		//	Shallow_schreier_tree_strategy,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

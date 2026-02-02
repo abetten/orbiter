@@ -583,10 +583,7 @@ public:
 	std::string fname_dual_line_idx;
 	std::string fname_self_dual_lines;
 	std::string fname_spreads;
-	//std::string fname_isomorphism_type_of_spreads;
-	//std::string fname_dual_spread;
 	std::string fname_self_dual_spreads;
-	//std::string fname_schreier_table;
 
 	int *dual_line_idx; // [nb_lines]
 	int *self_dual_lines; // [nb_self_dual_lines]
@@ -600,17 +597,15 @@ public:
 	int nb_self_dual_spreads;
 
 	int *schreier_table; // [nb_spreads * 4]
+		//schreier_table[i * 4 + 0] = original_position[i];
+		//schreier_table[i * 4 + 1] = original_position_inv[i];
+		//schreier_table[i * 4 + 2] = Prev[i];
+		//schreier_table[i * 4 + 3] = Label[i];
 
 	spread_table();
 	~spread_table();
 	void init(
 			spread_table_description *Descr,
-#if 0
-			projective_geometry::projective_space *P,
-			int f_load,
-			int nb_iso_types_of_spreads,
-			std::string &path_to_spread_tables,
-#endif
 			int verbose_level);
 	// For spreads in PG(3,q)
 	void create_file_names(

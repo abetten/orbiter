@@ -501,14 +501,14 @@ public:
 				*Canonical_form_codes_Descr,
 			int verbose_level);
 	void cheat_sheet(
-			other::graphics::layered_graph_draw_options *O,
+			other::graphics::draw_options *O,
 			int verbose_level);
 	void print_points(
 			long int *Pts, int nb_pts,
 			int verbose_level);
 	void report(
 			std::ostream &ost,
-			other::graphics::layered_graph_draw_options *Draw_options,
+			other::graphics::draw_options *Draw_options,
 			int verbose_level);
 	void do_spread_classify(
 			int k,

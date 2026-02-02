@@ -1,0 +1,11 @@
+ROW,C1,C2,C3
+0,"tab:orbits:2",,
+1,"Computing Orbits",,
+1,"\verb'-group' ","  G "," Specify the group. The argument must be an object of type group. "
+1,"\verb'-group_action' ","  G "," Specify the action. The argument must be an object of type group. "
+1,"\verb'-generators' ","  G "," Specify the generators for the group or subgroup whose orbits we wish to compute. The argument must be an object of type group. This option is only required when poset classification is used (i.e., not for the Schreier algorithm). "
+1,"\verb'-print_interval' ","  n "," Set the print interval for the Schreier orbit algorithm to $n$. "
+END
+1,"\verb'-classify_semifields' ","  P control description "," Classify finite semifields. "
+1,"\verb'-on_boolean_functions' ","  P  "," Classify boolean functions.  "
+1,"\verb'-override_generators' ","  generators "," Override the generators of the group. "

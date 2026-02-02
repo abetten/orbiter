@@ -43,7 +43,7 @@ void projective_space_activity::perform_activity(
 
 	if (Descr->f_cheat_sheet) {
 
-		other::graphics::layered_graph_draw_options *O;
+		other::graphics::draw_options *O;
 
 		O = Get_draw_options(Descr->cheat_sheet_draw_options_label);
 
@@ -1335,7 +1335,7 @@ void projective_space_activity::perform_activity(
 		applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_domain_high_level SH;
 
 
-		other::graphics::layered_graph_draw_options *Draw_options;
+		other::graphics::draw_options *Draw_options;
 
 		Draw_options = Get_draw_options(Descr->classify_surfaces_through_arcs_and_trihedral_pairs_draw_options_label);
 

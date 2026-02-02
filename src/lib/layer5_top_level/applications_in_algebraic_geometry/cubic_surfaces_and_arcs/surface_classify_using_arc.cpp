@@ -217,7 +217,7 @@ void surface_classify_using_arc::classify_surfaces_through_arcs_and_trihedral_pa
 
 
 void surface_classify_using_arc::report(
-		other::graphics::layered_graph_draw_options *Opt,
+		other::graphics::draw_options *Opt,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -280,7 +280,7 @@ void surface_classify_using_arc::report(
 
 void surface_classify_using_arc::report2(
 		std::ostream &ost,
-		other::graphics::layered_graph_draw_options *Opt,
+		other::graphics::draw_options *Opt,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

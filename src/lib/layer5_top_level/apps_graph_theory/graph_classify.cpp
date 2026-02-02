@@ -752,7 +752,7 @@ void graph_classify::list_graphs(
 
 void graph_classify::draw_graphs(
 		int level,
-		other::graphics::layered_graph_draw_options *draw_options,
+		other::graphics::draw_options *draw_options,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

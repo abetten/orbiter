@@ -134,7 +134,7 @@ void poset_classification_activity::perform_work(
 	if (Descr->f_write_tree) {
 
 
-		other::graphics::layered_graph_draw_options *Draw_options;
+		other::graphics::draw_options *Draw_options;
 
 		Draw_options = Get_draw_options(Descr->write_tree_draw_options);
 
@@ -338,7 +338,7 @@ void poset_classification_activity::perform_work(
 		}
 #endif
 
-		other::graphics::layered_graph_draw_options *Draw_options;
+		other::graphics::draw_options *Draw_options;
 
 		Draw_options = Get_draw_options(Descr->draw_poset_draw_options);
 
@@ -359,7 +359,7 @@ void poset_classification_activity::perform_work(
 					"before draw_full_poset" << endl;
 		}
 
-		other::graphics::layered_graph_draw_options *Draw_options;
+		other::graphics::draw_options *Draw_options;
 
 		Draw_options = Get_draw_options(Descr->draw_full_poset_draw_options);
 

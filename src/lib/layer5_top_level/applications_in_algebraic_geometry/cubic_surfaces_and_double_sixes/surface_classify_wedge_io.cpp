@@ -543,7 +543,7 @@ void surface_classify_wedge::report(
 		exit(1);
 	}
 
-	other::graphics::layered_graph_draw_options *Draw_options;
+	other::graphics::draw_options *Draw_options;
 
 	Draw_options = Get_draw_options(Opt->draw_options_label);
 
@@ -742,7 +742,7 @@ void surface_classify_wedge::report(
 void surface_classify_wedge::latex_surfaces(
 		std::ostream &ost,
 		int f_print_orbits, std::string &fname_mask,
-		other::graphics::layered_graph_draw_options *draw_options,
+		other::graphics::draw_options *draw_options,
 		poset_classification::poset_classification_report_options *Opt,
 		int max_nb_elements_printed,
 		int verbose_level)

@@ -292,7 +292,7 @@ void forest::print_tree(
 
 void forest::draw_forest(
 		std::string &fname_mask,
-		other::graphics::layered_graph_draw_options *Opt,
+		other::graphics::draw_options *Opt,
 		int f_has_point_labels, long int *point_labels,
 		int verbose_level)
 {
@@ -535,7 +535,7 @@ void forest::export_tree_as_layered_graph(
 
 void forest::draw_tree(
 		std::string &fname,
-		other::graphics::layered_graph_draw_options *Opt,
+		other::graphics::draw_options *Opt,
 		int orbit_no,
 		int f_has_point_labels, long int *point_labels,
 		int verbose_level)
@@ -639,7 +639,7 @@ static void calc_y_coordinate(
 
 void forest::draw_tree2(
 		std::string &fname,
-		other::graphics::layered_graph_draw_options *Opt,
+		other::graphics::draw_options *Opt,
 		int *weight, int *placement_x,
 		int max_depth,
 		int i,
@@ -759,7 +759,7 @@ void forest::draw_tree2(
 
 void forest::subtree_draw_lines(
 		other::graphics::mp_graphics &G,
-		other::graphics::layered_graph_draw_options *Opt,
+		other::graphics::draw_options *Opt,
 		int parent_x, int parent_y, int *weight,
 		int *placement_x, int max_depth, int i, int last,
 		int y_max,
@@ -830,7 +830,7 @@ void forest::subtree_draw_lines(
 
 void forest::subtree_draw_vertices(
 		other::graphics::mp_graphics &G,
-		other::graphics::layered_graph_draw_options *Opt,
+		other::graphics::draw_options *Opt,
 		int parent_x, int parent_y, int *weight,
 		int *placement_x, int max_depth, int i, int last,
 		int f_has_point_labels, long int *point_labels,
@@ -1402,7 +1402,7 @@ void forest::print(
 void forest::make_orbit_trees(
 		std::ostream &ost,
 		std::string &fname_mask,
-		other::graphics::layered_graph_draw_options *Opt,
+		other::graphics::draw_options *Opt,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

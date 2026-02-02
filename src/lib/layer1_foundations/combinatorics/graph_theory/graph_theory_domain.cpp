@@ -29,7 +29,7 @@ graph_theory_domain::~graph_theory_domain()
 
 void graph_theory_domain::colored_graph_draw(
 		std::string &fname_graph,
-		other::graphics::layered_graph_draw_options *Draw_options,
+		other::graphics::draw_options *Draw_options,
 		int f_labels,
 		int verbose_level)
 {
@@ -436,7 +436,7 @@ void graph_theory_domain::compute_decomposition_of_graph_wrt_partition(
 
 void graph_theory_domain::draw_bitmatrix(
 		std::string &fname_base,
-		other::graphics::layered_graph_draw_options *Draw_options,
+		other::graphics::draw_options *Draw_options,
 		int f_dots,
 		int f_partition,
 		int nb_row_parts, int *row_part_first,
@@ -2220,6 +2220,9 @@ void graph_theory_domain::eigenvalue_report(
 	}
 
 }
+
+
+
 
 
 }}}}

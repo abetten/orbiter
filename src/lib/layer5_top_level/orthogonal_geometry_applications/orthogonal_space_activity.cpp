@@ -77,7 +77,7 @@ void orthogonal_space_activity::perform_activity(
 			cout << "orthogonal_space_activity::perform_activity before OA->report" << endl;
 		}
 
-		other::graphics::layered_graph_draw_options *Draw_options;
+		other::graphics::draw_options *Draw_options;
 
 		Draw_options = Get_draw_options(Descr->cheat_sheet_orthogonal_draw_options_label);
 

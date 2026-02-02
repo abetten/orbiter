@@ -354,7 +354,7 @@ void any_group::create_latex_report(
 
 
 void any_group::create_latex_report(
-		other::graphics::layered_graph_draw_options *LG_Draw_options,
+		other::graphics::draw_options *LG_Draw_options,
 		groups::sims *Sims,
 		int verbose_level)
 {
@@ -558,7 +558,7 @@ void any_group::create_order_invariant(
 }
 
 void any_group::create_group_table_report(
-		other::graphics::layered_graph_draw_options *LG_Draw_options,
+		other::graphics::draw_options *LG_Draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2925,7 +2925,7 @@ void any_group::subgroup_lattice_load(
 }
 
 void any_group::subgroup_lattice_draw(
-		other::graphics::layered_graph_draw_options *Draw_options,
+		other::graphics::draw_options *Draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2981,7 +2981,7 @@ void any_group::subgroup_lattice_draw(
 
 
 void any_group::subgroup_lattice_draw_by_orbits(
-		other::graphics::layered_graph_draw_options *Draw_options,
+		other::graphics::draw_options *Draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

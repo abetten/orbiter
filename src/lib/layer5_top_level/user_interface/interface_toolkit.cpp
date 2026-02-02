@@ -282,6 +282,9 @@ interface_toolkit::interface_toolkit()
 	//std::string intersect_set_of_sets_fname;
 	//std::string intersect_set_of_sets_column;
 
+	f_test_if_distance_regular_graph = false;
+	//std::string test_if_distance_regular_graph_fname;
+
 
 }
 
@@ -469,6 +472,9 @@ void interface_toolkit::print_help(
 	else if (ST.stringcmp(argv[i], "-intersect_set_of_sets") == 0) {
 		cout << "-intersect_set_of_sets <string : fname> <string : col_label>" << endl;
 	}
+	else if (ST.stringcmp(argv[i], "-test_if_distance_regular_graph") == 0) {
+		cout << "-test_if_distance_regular_graph <string : fname> " << endl;
+	}
 
 }
 
@@ -650,6 +656,9 @@ int interface_toolkit::recognize_keyword(
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-intersect_set_of_sets") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-test_if_distance_regular_graph") == 0) {
 		return true;
 	}
 	return false;
@@ -1338,7 +1347,7 @@ void interface_toolkit::read_arguments(
 		if (f_v) {
 			cout << "-draw_layered_graph " << endl;
 		}
-		Layered_graph_draw_options = NEW_OBJECT(other::graphics::layered_graph_draw_options);
+		Layered_graph_draw_options = NEW_OBJECT(other::graphics::draw_options);
 		i += Layered_graph_draw_options->read_arguments(argc - i - 1,
 				argv + i + 1, verbose_level);
 		if (f_v) {
@@ -1465,6 +1474,15 @@ void interface_toolkit::read_arguments(
 					<< endl;
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-test_if_distance_regular_graph") == 0) {
+		f_test_if_distance_regular_graph = true;
+		test_if_distance_regular_graph_fname.assign(argv[++i]);
+		if (f_v) {
+			cout << "-test_if_distance_regular_graph "
+					<< test_if_distance_regular_graph_fname << endl;
+		}
+	}
+
 	else if (ST.stringcmp(argv[i], "-stats") == 0) {
 		f_stats = true;
 		stats_fname_base.assign(argv[++i]);
@@ -1809,6 +1827,10 @@ void interface_toolkit::print()
 		cout << "-intersect_set_of_sets "
 				<< intersect_set_of_sets_fname << " " << intersect_set_of_sets_column
 				<< endl;
+	}
+	if (f_test_if_distance_regular_graph) {
+		cout << "-test_if_distance_regular_graph "
+				<< test_if_distance_regular_graph_fname << endl;
 	}
 }
 
@@ -3228,7 +3250,54 @@ void interface_toolkit::worker(
 
 
 	}
+	else if (f_test_if_distance_regular_graph) {
+		if (f_v) {
+			cout << "interface_toolkit::worker -test_if_distance_regular_graph "
+				<< test_if_distance_regular_graph_fname
+				<< endl;
+		}
 
+
+		if (f_v) {
+			cout << "interface_toolkit::worker "
+					"fname=" << test_if_distance_regular_graph_fname << endl;
+		}
+		combinatorics::graph_theory::layered_graph *LG;
+		other::orbiter_kernel_system::file_io Fio;
+
+		LG = NEW_OBJECT(combinatorics::graph_theory::layered_graph);
+		if (Fio.file_size(test_if_distance_regular_graph_fname) <= 0) {
+			cout << "interface_toolkit::worker "
+					"file " << test_if_distance_regular_graph_fname << " does not exist" << endl;
+			exit(1);
+		}
+		LG->read_file(test_if_distance_regular_graph_fname, verbose_level - 1);
+
+		if (f_v) {
+			cout << "interface_toolkit::worker "
+					"Layered graph read from file" << endl;
+		}
+
+		LG->print_nb_nodes_per_level();
+
+
+		int f_drg;
+
+
+		if (f_v) {
+			cout << "interface_toolkit::worker "
+					"before LG->test_if_distance_regular" << endl;
+		}
+		f_drg = LG->test_if_distance_regular(
+				verbose_level);
+		if (f_v) {
+			cout << "interface_toolkit::worker "
+					"after LG->test_if_distance_regular" << endl;
+		}
+
+		cout << "f_drg = " << f_drg << endl;
+
+	}
 	if (f_v) {
 		cout << "interface_toolkit::worker done" << endl;
 	}

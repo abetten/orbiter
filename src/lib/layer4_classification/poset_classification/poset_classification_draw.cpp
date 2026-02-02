@@ -88,7 +88,7 @@ void poset_classification::draw_poset_fname_poset_detailed(
 
 void poset_classification::write_treefile(
 		std::string &fname_base, int lvl,
-		other::graphics::layered_graph_draw_options *draw_options,
+		other::graphics::draw_options *draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -179,7 +179,7 @@ int poset_classification::write_treefile(
 void poset_classification::draw_tree(
 		std::string &fname_base, int lvl,
 		other::graphics::tree_draw_options *Tree_draw_options,
-		other::graphics::layered_graph_draw_options *Draw_options,
+		other::graphics::draw_options *Draw_options,
 	int xmax, int ymax, int rad, int f_embedded,
 	int f_sideways, int verbose_level)
 {
@@ -310,7 +310,7 @@ void poset_classification::draw_tree(
 void poset_classification::draw_tree_low_level(
 		std::string &fname,
 		other::graphics::tree_draw_options *Tree_draw_options,
-		other::graphics::layered_graph_draw_options *Draw_options,
+		other::graphics::draw_options *Draw_options,
 		int nb_nodes,
 	int *coord_xyw, int *perm, int *perm_inv, 
 	int f_draw_points, int f_draw_extension_points,
@@ -683,7 +683,7 @@ void poset_classification::draw_tree_low_level1(
 void poset_classification::draw_poset_full(
 		std::string &fname_base,
 		int depth, int data,
-		other::graphics::layered_graph_draw_options *LG_Draw_options,
+		other::graphics::draw_options *LG_Draw_options,
 		double x_stretch,
 		int verbose_level)
 {
@@ -733,7 +733,7 @@ void poset_classification::draw_poset_full(
 void poset_classification::draw_poset(
 		std::string &fname_base,
 		int depth, int data,
-		other::graphics::layered_graph_draw_options *LG_Draw_options,
+		other::graphics::draw_options *LG_Draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -855,7 +855,7 @@ void poset_classification::draw_poset(
 void poset_classification::draw_level_graph(
 		std::string &fname_base,
 		int depth, int data, int level,
-		other::graphics::layered_graph_draw_options *LG_Draw_options,
+		other::graphics::draw_options *LG_Draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

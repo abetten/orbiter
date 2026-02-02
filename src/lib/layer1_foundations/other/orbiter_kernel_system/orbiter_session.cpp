@@ -1082,7 +1082,7 @@ combinatorics::design_theory::design_object
 }
 
 
-graphics::layered_graph_draw_options
+graphics::draw_options
 	*orbiter_session::get_draw_options(
 			std::string &label)
 {
@@ -1103,7 +1103,7 @@ graphics::layered_graph_draw_options
 	}
 
 
-	return (graphics::layered_graph_draw_options *) get_object(idx);
+	return (graphics::draw_options *) get_object(idx);
 }
 
 graphics::draw_incidence_structure_description
