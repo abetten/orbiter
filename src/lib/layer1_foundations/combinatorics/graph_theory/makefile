@@ -14,6 +14,7 @@ MODULES = \
 	colored_graph_cliques.o \
 	colored_graph.o \
 	distance_information.o \
+	factor_poset.o \
 	graph_layer.o \
 	graph_node.o \
 	graph_theory_domain.o \

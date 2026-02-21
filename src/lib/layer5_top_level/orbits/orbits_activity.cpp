@@ -221,6 +221,23 @@ void orbits_activity::perform_activity(
 
 	}
 
+	else if (Descr->f_poset_classification_activity) {
+		if (f_v) {
+			cout << "orbits_activity::perform_activity poset_classification_activity" << endl;
+		}
+
+		if (f_v) {
+			cout << "orbits_activity::perform_activity before do_poset_classification_activity" << endl;
+		}
+		do_poset_classification_activity(
+				Descr->poset_classification_activity_label, verbose_level);
+		if (f_v) {
+			cout << "orbits_activity::perform_activity after do_poset_classification_activity" << endl;
+		}
+
+	}
+
+
 
 	else {
 		cout << "orbits_activity::perform_activity "
@@ -2015,6 +2032,137 @@ void orbits_activity::do_schreier_poset(
 		cout << "orbits_activity::do_schreier_poset done" << endl;
 	}
 }
+
+void orbits_activity::do_poset_classification_activity(
+		std::string &activity_label, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbits_activity::do_poset_classification_activity" << endl;
+	}
+
+	if (OC->f_has_Orb) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_schreier_poset f_has_Orb is not suitable" << endl;
+		}
+	}
+
+	else if (OC->f_has_On_subsets) {
+
+
+
+		if (f_v) {
+			cout << "orbits_activity::do_poset_classification_activity f_has_On_subsets" << endl;
+		}
+
+		poset_classification::poset_classification *On_subsets = OC->On_subsets;
+
+		if (f_v) {
+			cout << "orbits_activity::do_poset_classification_activity "
+					"depth = " << On_subsets->get_depth() << endl;
+		}
+
+		poset_classification::poset_classification_activity_description *Activity_description;
+
+		Activity_description =
+				Get_object_of_type_poset_classification_activity(activity_label);
+
+
+		poset_classification::poset_classification_activity Activity;
+
+		if (f_v) {
+			cout << "orbits_activity::do_poset_classification_activity "
+					"before Activity.init" << endl;
+		}
+		Activity.init(
+				Activity_description,
+				On_subsets,
+				On_subsets->get_depth() /* actual_size */,
+				verbose_level);
+		if (f_v) {
+			cout << "orbits_activity::do_poset_classification_activity "
+					"after Activity.init" << endl;
+		}
+
+		if (f_v) {
+			cout << "orbits_activity::do_poset_classification_activity "
+					"before Activity.perform_work" << endl;
+		}
+		Activity.perform_work(
+				verbose_level);
+		if (f_v) {
+			cout << "orbits_activity::do_poset_classification_activity "
+					"after Activity.perform_work" << endl;
+		}
+
+	}
+	else if (OC->f_has_On_Subspaces) {
+
+
+
+		if (f_v) {
+			cout << "orbits_activity::do_schreier_poset f_has_On_Subspaces" << endl;
+		}
+
+		orbits_on_subspaces *On_Subspaces = OC->On_Subspaces;
+
+		if (f_v) {
+			cout << "orbits_activity::do_poset_classification_activity "
+					"depth = " << On_Subspaces->orbits_on_subspaces_PC->get_depth() << endl;
+		}
+
+		poset_classification::poset_classification_activity_description *Activity_description;
+
+		Activity_description =
+				Get_object_of_type_poset_classification_activity(activity_label);
+
+
+		poset_classification::poset_classification_activity Activity;
+
+		if (f_v) {
+			cout << "orbits_activity::do_poset_classification_activity "
+					"before Activity.init" << endl;
+		}
+		Activity.init(
+				Activity_description,
+				On_Subspaces->orbits_on_subspaces_PC,
+				On_Subspaces->orbits_on_subspaces_PC->get_depth() /* actual_size */,
+				verbose_level);
+		if (f_v) {
+			cout << "orbits_activity::do_poset_classification_activity "
+					"after Activity.init" << endl;
+		}
+
+		if (f_v) {
+			cout << "orbits_activity::do_poset_classification_activity "
+					"before Activity.perform_work" << endl;
+		}
+		Activity.perform_work(
+				verbose_level);
+		if (f_v) {
+			cout << "orbits_activity::do_poset_classification_activity "
+					"after Activity.perform_work" << endl;
+		}
+
+
+	}
+
+
+	else {
+
+		if (f_v) {
+			cout << "orbits_activity::do_poset_classification_activity must have orbits on subsets of orbits on subspaces." << endl;
+		}
+
+	}
+
+
+
+
+}
+
 
 
 

@@ -412,6 +412,14 @@ public:
 	//Delete all other edges between layers $l_1$ and $l_2.$
 
 
+	int f_poset_orbits_x_stretch;
+	int poset_orbits_x_stretch;
+
+	int f_place;
+
+	int f_poset_type_Asup;
+	int f_poset_type_Ainf;
+
 	draw_options();
 	~draw_options();
 	int read_arguments(

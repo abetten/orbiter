@@ -367,7 +367,7 @@ void poset_classification_activity::perform_work(
 				PC->get_problem_label_with_path(), actual_size,
 				0 /* data1 */,
 				Draw_options,
-				1 /* x_stretch */,
+				//1 /* x_stretch */,
 				verbose_level);
 		if (f_v) {
 			cout << "poset_classification_activity::perform_work "

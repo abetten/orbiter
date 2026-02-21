@@ -1410,6 +1410,16 @@ std::string int_vec::stringify(
 	return output;
 }
 
+void int_vec::heapsort(
+		int *v, int len)
+{
+
+	other::data_structures::sorting Sorting;
+
+	Sorting.int_vec_heapsort(
+			v, len);
+
+}
 
 
 }}}}

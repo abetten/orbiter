@@ -198,6 +198,77 @@ void tally_vector_data::init(
 
 }
 
+
+void tally_vector_data::get_reps_and_frequency(
+		int *&Reps_sorted, int *&Frequency_in_lex_order,
+		int verbose_level)
+// Reps_sorted[nb_types * data_set_sz]
+{
+	int f_v = (verbose_level >= 1);
+	int i;
+	data_structures::sorting Sorting;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
+
+	if (f_v) {
+		cout << "tally_vector_data::get_reps_and_frequency" << endl;
+	}
+
+	int **Reps_in_lex_order;
+
+	Reps_in_lex_order = NEW_pint(nb_types);
+	Frequency_in_lex_order = NEW_int(nb_types);
+
+	int nb_types2, j;
+	int idx;
+
+	if (f_v) {
+		cout << "tally_vector_data::get_reps_and_frequency nb_types = " << nb_types << endl;
+	}
+
+	nb_types2 = 0;
+	for (i = 0; i < nb_types; i++) {
+		if (Sorting.vec_search((void **)Reps_in_lex_order,
+				classify_int_vec_compare_function, this,
+				nb_types2,
+				Reps + i * data_set_sz,
+				idx,
+				0 /* verbose_level */)) {
+			cout << "tally_vector_data::get_reps_and_frequency error!" << endl;
+			exit(1);
+		}
+		else {
+			for (j = nb_types2; j > idx; j--) {
+				Reps_in_lex_order[j] = Reps_in_lex_order[j - 1];
+				Frequency_in_lex_order[j] = Frequency_in_lex_order[j - 1];
+			}
+			Reps_in_lex_order[idx] = NEW_int(data_set_sz);
+			Frequency_in_lex_order[idx] = Frequency[i];
+			Int_vec_copy(Reps + i * data_set_sz, Reps_in_lex_order[idx],
+					data_set_sz);
+			nb_types2++;
+		}
+	}
+
+	if (nb_types2 != nb_types) {
+		cout << "tally_vector_data::get_reps_and_frequency nb_types2 != nb_types" << endl;
+		exit(1);
+	}
+
+	Reps_sorted = NEW_int(nb_types * data_set_sz);
+	for (i = 0; i < nb_types; i++) {
+		Int_vec_copy(Reps_in_lex_order[i], Reps_sorted + i * data_set_sz,
+							data_set_sz);
+	}
+	for (i = 0; i < nb_types; i++) {
+		FREE_int(Reps_in_lex_order[i]);
+	}
+	FREE_pint(Reps_in_lex_order);
+	if (f_v) {
+		cout << "tally_vector_data::get_reps_and_frequency done" << endl;
+	}
+}
+
+
 int tally_vector_data::hash_and_find(
 		int *data,
 		int &idx, uint32_t &h, int verbose_level)

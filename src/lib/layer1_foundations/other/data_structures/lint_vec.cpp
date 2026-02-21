@@ -651,6 +651,17 @@ std::string lint_vec::stringify(
 }
 
 
+void lint_vec::heapsort(
+		long int *v, int len)
+{
+
+	other::data_structures::sorting Sorting;
+
+	Sorting.lint_vec_heapsort(
+			v, len);
+
+}
+
 
 }}}}
 

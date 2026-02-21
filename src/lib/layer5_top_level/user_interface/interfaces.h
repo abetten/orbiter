@@ -628,6 +628,8 @@ class interface_combinatorics {
 	std::string domino_portrait_fname;
 	other::graphics::draw_options *domino_portrait_draw_options;
 
+	int f_test_if_distance_regular_graph;
+	std::string test_if_distance_regular_graph_fname;
 
 
 public:
@@ -1218,8 +1220,8 @@ class interface_toolkit {
 	std::string intersect_set_of_sets_column;
 
 	// ToDo: undocumented
-	int f_test_if_distance_regular_graph;
-	std::string test_if_distance_regular_graph_fname;
+	int f_eliminate_duplicate_columns;
+	std::string eliminate_duplicate_columns_fname;
 
 
 public:

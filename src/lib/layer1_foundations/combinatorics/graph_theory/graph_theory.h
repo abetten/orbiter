@@ -684,6 +684,45 @@ public:
 };
 
 
+// #############################################################################
+// factor_poset.cpp
+// #############################################################################
+
+
+//! a factor poset is a poset whose nodes have been lumped together, for instance by orbits of a group.
+
+
+
+class factor_poset {
+
+public:
+
+	int nb_layers;
+	int *Nb_elements;
+	int *Fst;
+	int *Nb_orbits;
+	int **Fst_element_per_orbit;
+	int **Orbit_len;
+
+	combinatorics::graph_theory::layered_graph *LG;
+
+
+	factor_poset();
+	~factor_poset();
+	void init(
+			int depth,
+			int *Nb_orbits,
+			int **Orbit_len,
+			int data1,
+			double x_stretch,
+			int verbose_level);
+
+};
+
+
+
+
+
 
 
 

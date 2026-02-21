@@ -462,6 +462,7 @@ namespace combinatorics {
 		class colored_graph_cliques;
 		class colored_graph;
 		class distance_information;
+		class factor_poset;
 		class graph_layer;
 		class graph_node;
 		class graph_theory_domain;
@@ -1114,6 +1115,9 @@ namespace other {
 
 #define Int_vec_stringify(v, len) other::orbiter_kernel_system::Orbiter->Int_vec->stringify(v, len)
 #define Lint_vec_stringify(v, len) other::orbiter_kernel_system::Orbiter->Lint_vec->stringify(v, len)
+
+#define Int_vec_heapsort(v, len) other::orbiter_kernel_system::Orbiter->Int_vec->heapsort(v, len)
+#define Lint_vec_heapsort(v, len) other::orbiter_kernel_system::Orbiter->Lint_vec->heapsort(v, len)
 
 #define Get_vector(A) other::orbiter_kernel_system::Orbiter->get_object_of_type_vector(A)
 #define Has_text(A) other::orbiter_kernel_system::Orbiter->is_text_available(A)

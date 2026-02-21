@@ -65,6 +65,10 @@ orbits_activity_description::orbits_activity_description()
 	f_report_options = false;
 	//std::string report_options_label;
 
+
+	f_poset_classification_activity = false;
+	//std::string poset_classification_activity_label;
+
 }
 
 
@@ -118,7 +122,10 @@ int orbits_activity_description::read_arguments(
 			export_something_what.assign(argv[++i]);
 			export_something_data1 = ST.strtoi(argv[++i]);
 			if (f_v) {
-				cout << "-export_something " << export_something_what << " " << export_something_data1 << endl;
+				cout << "-export_something "
+						<< export_something_what
+						<< " " << export_something_data1
+						<< endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-draw_tree") == 0) {
@@ -197,7 +204,13 @@ int orbits_activity_description::read_arguments(
 				cout << "-report_options " << report_options_label << endl;
 			}
 		}
-
+		else if (ST.stringcmp(argv[i], "-poset_classification_activity") == 0) {
+			f_poset_classification_activity = true;
+			poset_classification_activity_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-poset_classification_activity " << poset_classification_activity_label << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
 				cout << "-end" << endl;
@@ -269,6 +282,9 @@ void orbits_activity_description::print()
 
 	if (f_report_options) {
 		cout << "-report_options " << report_options_label << endl;
+	}
+	if (f_poset_classification_activity) {
+		cout << "-poset_classification_activity " << poset_classification_activity_label << endl;
 	}
 
 

@@ -146,6 +146,10 @@ interface_combinatorics::interface_combinatorics()
 	//std::string read_widor_fname;
 
 	f_Kaempfer = false;
+
+	f_test_if_distance_regular_graph = false;
+	//std::string test_if_distance_regular_graph_fname;
+
 }
 
 interface_combinatorics::~interface_combinatorics()
@@ -261,6 +265,9 @@ void interface_combinatorics::print_help(
 	else if (ST.stringcmp(argv[i], "-domino_portrait") == 0) {
 		cout << "-domino_portrait <string : fname> <int : D> <int : s> <layered_graph_options>" << endl;
 	}
+	else if (ST.stringcmp(argv[i], "-test_if_distance_regular_graph") == 0) {
+		cout << "-test_if_distance_regular_graph <string : fname> " << endl;
+	}
 }
 
 int interface_combinatorics::recognize_keyword(
@@ -373,6 +380,9 @@ int interface_combinatorics::recognize_keyword(
 	else if (ST.stringcmp(argv[i], "-domino_portrait") == 0) {
 		return true;
 	}
+	else if (ST.stringcmp(argv[i], "-test_if_distance_regular_graph") == 0) {
+		return true;
+	}
 	return false;
 }
 
@@ -389,7 +399,8 @@ void interface_combinatorics::read_arguments(
 
 
 	if (f_v) {
-		cout << "interface_combinatorics::read_arguments the next argument is " << argv[i] << endl;
+		cout << "interface_combinatorics::read_arguments "
+				"the next argument is " << argv[i] << endl;
 	}
 
 	// Section 12.1
@@ -410,7 +421,11 @@ void interface_combinatorics::read_arguments(
 		create_random_k_subsets_k = ST.strtoi(argv[++i]);
 		create_random_k_subsets_nb = ST.strtoi(argv[++i]);
 		if (f_v) {
-			cout << "-create_random_k_subsets " << create_random_k_subsets_n << " " << create_random_k_subsets_k << " " << create_random_k_subsets_nb << endl;
+			cout << "-create_random_k_subsets "
+					<< create_random_k_subsets_n << " "
+					<< create_random_k_subsets_k << " "
+					<< create_random_k_subsets_nb
+					<< endl;
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-read_poset_file") == 0) {
@@ -450,12 +465,15 @@ void interface_combinatorics::read_arguments(
 		tree_of_all_k_subsets_n = ST.strtoi(argv[++i]);
 		tree_of_all_k_subsets_k = ST.strtoi(argv[++i]);
 		if (f_v) {
-			cout << "-tree_of_all_k_subsets " << tree_of_all_k_subsets_n << " " << tree_of_all_k_subsets_k << endl;
+			cout << "-tree_of_all_k_subsets "
+					<< tree_of_all_k_subsets_n << " "
+					<< tree_of_all_k_subsets_k << endl;
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-Delandtsheer_Doyen") == 0) {
 		f_Delandtsheer_Doyen = true;
-		Delandtsheer_Doyen_description = NEW_OBJECT(apps_combinatorics::delandtsheer_doyen_description);
+		Delandtsheer_Doyen_description =
+				NEW_OBJECT(apps_combinatorics::delandtsheer_doyen_description);
 		i += Delandtsheer_Doyen_description->read_arguments(argc - (i + 1),
 				argv + i + 1, verbose_level);
 
@@ -468,7 +486,8 @@ void interface_combinatorics::read_arguments(
 		if (f_v) {
 			cout << "-tdo_refinement " << endl;
 		}
-		Tdo_refinement_descr = NEW_OBJECT(combinatorics::tactical_decompositions::tdo_refinement_description);
+		Tdo_refinement_descr =
+				NEW_OBJECT(combinatorics::tactical_decompositions::tdo_refinement_description);
 		i += Tdo_refinement_descr->read_arguments(argc - (i + 1),
 				argv + i + 1, verbose_level);
 		if (f_v) {
@@ -567,7 +586,8 @@ void interface_combinatorics::read_arguments(
 		make_elementary_symmetric_functions_n = ST.strtoi(argv[++i]);
 		make_elementary_symmetric_functions_k_max = ST.strtoi(argv[++i]);
 		if (f_v) {
-			cout << "-make_elementary_symmetric_functions " << make_elementary_symmetric_functions_n
+			cout << "-make_elementary_symmetric_functions "
+					<< make_elementary_symmetric_functions_n
 				<< " " << make_elementary_symmetric_functions_k_max << endl;
 		}
 	}
@@ -623,7 +643,8 @@ void interface_combinatorics::read_arguments(
 		if (f_v) {
 			cout << "-geometry_builder " << endl;
 		}
-		Geometry_builder_description = NEW_OBJECT(combinatorics::geometry_builder::geometry_builder_description);
+		Geometry_builder_description =
+				NEW_OBJECT(combinatorics::geometry_builder::geometry_builder_description);
 		i += Geometry_builder_description->read_arguments(argc - (i + 1),
 			argv + i + 1, verbose_level);
 
@@ -724,6 +745,14 @@ void interface_combinatorics::read_arguments(
 			}
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-test_if_distance_regular_graph") == 0) {
+		f_test_if_distance_regular_graph = true;
+		test_if_distance_regular_graph_fname.assign(argv[++i]);
+		if (f_v) {
+			cout << "-test_if_distance_regular_graph "
+					<< test_if_distance_regular_graph_fname << endl;
+		}
+	}
 
 	if (f_v) {
 		cout << "interface_combinatorics::read_arguments done" << endl;
@@ -761,7 +790,9 @@ void interface_combinatorics::print()
 		cout << "-conjugacy_classes_Sym_n " << conjugacy_classes_Sym_n_n << endl;
 	}
 	if (f_tree_of_all_k_subsets) {
-		cout << "-tree_of_all_k_subsets " << tree_of_all_k_subsets_n << " " << tree_of_all_k_subsets_k << endl;
+		cout << "-tree_of_all_k_subsets "
+				<< tree_of_all_k_subsets_n << " "
+				<< tree_of_all_k_subsets_k << endl;
 	}
 	if (f_Delandtsheer_Doyen) {
 		cout << "-Delandtsheer_Doyen" << endl;
@@ -803,7 +834,8 @@ void interface_combinatorics::print()
 	}
 #endif
 	if (f_read_solutions_and_tally) {
-		cout << "-read_solutions_and_tally " << read_solutions_and_tally_fname
+		cout << "-read_solutions_and_tally "
+				<< read_solutions_and_tally_fname
 				<< " " << read_solutions_and_tally_sz << endl;
 	}
 
@@ -883,6 +915,10 @@ void interface_combinatorics::print()
 				<< " " << domino_portrait_fname;
 			cout << endl;
 		domino_portrait_draw_options->print();
+	}
+	if (f_test_if_distance_regular_graph) {
+		cout << "-test_if_distance_regular_graph "
+				<< test_if_distance_regular_graph_fname << endl;
 	}
 
 }
@@ -1250,6 +1286,60 @@ void interface_combinatorics::worker(
 				domino_portrait_fname,
 				domino_portrait_draw_options,
 				verbose_level);
+
+	}
+	else if (f_test_if_distance_regular_graph) {
+		if (f_v) {
+			cout << "interface_combinatorics::worker -test_if_distance_regular_graph "
+				<< test_if_distance_regular_graph_fname
+				<< endl;
+		}
+
+
+		if (f_v) {
+			cout << "interface_combinatorics::worker "
+					"fname=" << test_if_distance_regular_graph_fname << endl;
+		}
+		combinatorics::graph_theory::layered_graph *LG;
+		other::orbiter_kernel_system::file_io Fio;
+
+		LG = NEW_OBJECT(combinatorics::graph_theory::layered_graph);
+		if (Fio.file_size(test_if_distance_regular_graph_fname) <= 0) {
+			cout << "interface_combinatorics::worker "
+					"file " << test_if_distance_regular_graph_fname << " does not exist" << endl;
+			exit(1);
+		}
+		LG->read_file(test_if_distance_regular_graph_fname, verbose_level - 1);
+
+		if (f_v) {
+			cout << "interface_combinatorics::worker "
+					"Layered graph read from file" << endl;
+		}
+
+		LG->print_nb_nodes_per_level();
+
+
+		int f_drg;
+
+
+		if (f_v) {
+			cout << "interface_combinatorics::worker "
+					"before LG->test_if_distance_regular" << endl;
+		}
+		f_drg = LG->test_if_distance_regular(
+				verbose_level);
+		if (f_v) {
+			cout << "interface_combinatorics::worker "
+					"after LG->test_if_distance_regular" << endl;
+		}
+
+		if (f_drg) {
+			cout << "The graph is distance regular" << endl;
+		}
+		else {
+			cout << "The graph is *not* distance regular" << endl;
+		}
+		//cout << "f_drg = " << f_drg << endl;
 
 	}
 

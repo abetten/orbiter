@@ -282,8 +282,9 @@ interface_toolkit::interface_toolkit()
 	//std::string intersect_set_of_sets_fname;
 	//std::string intersect_set_of_sets_column;
 
-	f_test_if_distance_regular_graph = false;
-	//std::string test_if_distance_regular_graph_fname;
+
+	f_eliminate_duplicate_columns = false;
+	//std::string eliminate_duplicate_columns_fname;
 
 
 }
@@ -472,11 +473,12 @@ void interface_toolkit::print_help(
 	else if (ST.stringcmp(argv[i], "-intersect_set_of_sets") == 0) {
 		cout << "-intersect_set_of_sets <string : fname> <string : col_label>" << endl;
 	}
-	else if (ST.stringcmp(argv[i], "-test_if_distance_regular_graph") == 0) {
-		cout << "-test_if_distance_regular_graph <string : fname> " << endl;
+	else if (ST.stringcmp(argv[i], "-eliminate_duplicate_columns") == 0) {
+		cout << "-eliminate_duplicate_columns <string : fname>" << endl;
 	}
 
 }
+
 
 
 
@@ -658,7 +660,7 @@ int interface_toolkit::recognize_keyword(
 	else if (ST.stringcmp(argv[i], "-intersect_set_of_sets") == 0) {
 		return true;
 	}
-	else if (ST.stringcmp(argv[i], "-test_if_distance_regular_graph") == 0) {
+	else if (ST.stringcmp(argv[i], "-eliminate_duplicate_columns") == 0) {
 		return true;
 	}
 	return false;
@@ -1464,6 +1466,15 @@ void interface_toolkit::read_arguments(
 					<< endl;
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-stats") == 0) {
+		f_stats = true;
+		stats_fname_base.assign(argv[++i]);
+		if (f_v) {
+			cout << "-stats "
+					<< stats_fname_base << " "
+					<< endl;
+		}
+	}
 	else if (ST.stringcmp(argv[i], "-intersect_set_of_sets") == 0) {
 		f_intersect_set_of_sets = true;
 		intersect_set_of_sets_fname.assign(argv[++i]);
@@ -1474,21 +1485,12 @@ void interface_toolkit::read_arguments(
 					<< endl;
 		}
 	}
-	else if (ST.stringcmp(argv[i], "-test_if_distance_regular_graph") == 0) {
-		f_test_if_distance_regular_graph = true;
-		test_if_distance_regular_graph_fname.assign(argv[++i]);
+	else if (ST.stringcmp(argv[i], "-eliminate_duplicate_columns") == 0) {
+		f_eliminate_duplicate_columns = true;
+		eliminate_duplicate_columns_fname.assign(argv[++i]);
 		if (f_v) {
-			cout << "-test_if_distance_regular_graph "
-					<< test_if_distance_regular_graph_fname << endl;
-		}
-	}
-
-	else if (ST.stringcmp(argv[i], "-stats") == 0) {
-		f_stats = true;
-		stats_fname_base.assign(argv[++i]);
-		if (f_v) {
-			cout << "-stats "
-					<< stats_fname_base << " "
+			cout << "-eliminate_duplicate_columns "
+					<< eliminate_duplicate_columns_fname << " "
 					<< endl;
 		}
 	}
@@ -1828,9 +1830,10 @@ void interface_toolkit::print()
 				<< intersect_set_of_sets_fname << " " << intersect_set_of_sets_column
 				<< endl;
 	}
-	if (f_test_if_distance_regular_graph) {
-		cout << "-test_if_distance_regular_graph "
-				<< test_if_distance_regular_graph_fname << endl;
+	if (f_eliminate_duplicate_columns) {
+		cout << "-eliminate_duplicate_columns "
+				<< eliminate_duplicate_columns_fname << " "
+				<< endl;
 	}
 }
 
@@ -3250,54 +3253,63 @@ void interface_toolkit::worker(
 
 
 	}
-	else if (f_test_if_distance_regular_graph) {
+	else if (f_eliminate_duplicate_columns) {
 		if (f_v) {
-			cout << "interface_toolkit::worker -test_if_distance_regular_graph "
-				<< test_if_distance_regular_graph_fname
-				<< endl;
+			cout << "-eliminate_duplicate_columns "
+					<< eliminate_duplicate_columns_fname << " "
+					<< endl;
 		}
 
-
-		if (f_v) {
-			cout << "interface_toolkit::worker "
-					"fname=" << test_if_distance_regular_graph_fname << endl;
-		}
-		combinatorics::graph_theory::layered_graph *LG;
 		other::orbiter_kernel_system::file_io Fio;
 
-		LG = NEW_OBJECT(combinatorics::graph_theory::layered_graph);
-		if (Fio.file_size(test_if_distance_regular_graph_fname) <= 0) {
-			cout << "interface_toolkit::worker "
-					"file " << test_if_distance_regular_graph_fname << " does not exist" << endl;
-			exit(1);
+		long int *M;
+		int m, n;
+
+		Fio.Csv_file_support->lint_matrix_read_csv(
+				eliminate_duplicate_columns_fname,
+				M, m, n, verbose_level);
+
+		int *Mt;
+		int i, j;
+
+		Mt = NEW_int(n * m);
+		for (i = 0; i < n; i++) {
+			for (j = 0; j < m; j++) {
+				Mt[i * m + j] = M[j * n + i];
+			}
 		}
-		LG->read_file(test_if_distance_regular_graph_fname, verbose_level - 1);
 
-		if (f_v) {
-			cout << "interface_toolkit::worker "
-					"Layered graph read from file" << endl;
-		}
-
-		LG->print_nb_nodes_per_level();
+		other::data_structures::tally_vector_data Tally;
 
 
-		int f_drg;
-
-
-		if (f_v) {
-			cout << "interface_toolkit::worker "
-					"before LG->test_if_distance_regular" << endl;
-		}
-		f_drg = LG->test_if_distance_regular(
+		Tally.init(
+				Mt, n /* data_length */, m /* data_set_sz */,
 				verbose_level);
+		// data[data_length * data_set_sz]
+
+		int *Reps_sorted;
+		int *Frequency_in_lex_order;
+
+		Tally.get_reps_and_frequency(
+				Reps_sorted, Frequency_in_lex_order,
+				verbose_level);
+
+		// Reps_sorted[nb_types * data_set_sz]
+
 		if (f_v) {
-			cout << "interface_toolkit::worker "
-					"after LG->test_if_distance_regular" << endl;
+			cout << "reduced set of columns (written as rows) together with the frequency:" << endl;
+
+			for (i = 0; i < Tally.nb_types; i++) {
+				Int_vec_print(cout, Reps_sorted + i * Tally.data_set_sz, Tally.data_set_sz);
+				cout << " : " << Frequency_in_lex_order[i] << endl;
+
+			}
+			//Int_matrix_print(Reps_sorted, Tally.nb_types, Tally.data_set_sz);
 		}
 
-		cout << "f_drg = " << f_drg << endl;
 
 	}
+
 	if (f_v) {
 		cout << "interface_toolkit::worker done" << endl;
 	}

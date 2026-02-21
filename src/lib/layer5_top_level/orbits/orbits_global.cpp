@@ -1370,10 +1370,18 @@ void orbits_global::linear_codes_with_bounded_minimum_distance(
 
 	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
 
+	if (f_v) {
+		cout << "orbits_global::linear_codes_with_bounded_minimum_distance "
+				"before Poset->init_subset_lattice" << endl;
+	}
 	Poset->init_subset_lattice(
 			LG->A_linear, LG->A_linear,
 			LG->Strong_gens,
-			verbose_level);
+			verbose_level - 2);
+	if (f_v) {
+		cout << "orbits_global::linear_codes_with_bounded_minimum_distance "
+				"after Poset->init_subset_lattice" << endl;
+	}
 
 
 	int independence_value = d - 1;
@@ -1389,8 +1397,17 @@ void orbits_global::linear_codes_with_bounded_minimum_distance(
 #endif
 
 	PC = NEW_OBJECT(poset_classification::poset_classification);
+
+	if (f_v) {
+		cout << "orbits_global::linear_codes_with_bounded_minimum_distance "
+				"before PC->initialize_and_allocate_root_node" << endl;
+	}
 	PC->initialize_and_allocate_root_node(Control, Poset,
-			target_depth, verbose_level);
+			target_depth, verbose_level - 2);
+	if (f_v) {
+		cout << "orbits_global::linear_codes_with_bounded_minimum_distance "
+				"after PC->initialize_and_allocate_root_node" << endl;
+	}
 
 	int t0;
 	other::orbiter_kernel_system::os_interface Os;
@@ -1402,13 +1419,12 @@ void orbits_global::linear_codes_with_bounded_minimum_distance(
 		cout << "orbits_global::linear_codes_with_bounded_minimum_distance "
 				"before PC->poset_classification_main" << endl;
 	}
-
 	depth = PC->poset_classification_main(
 			t0,
 			target_depth /*schreier_depth*/,
 		true /*f_use_invariant_subset_if_available*/,
 		false /*f_debug */,
-		verbose_level);
+		verbose_level - 2);
 
 	if (f_v) {
 		cout << "orbits_global::linear_codes_with_bounded_minimum_distance "
@@ -1425,6 +1441,7 @@ void orbits_global::linear_codes_with_bounded_minimum_distance(
 				"done" << endl;
 	}
 }
+
 void orbits_global::do_orbits_on_subspaces(
 		groups::any_group *Any_group,
 		poset_classification::poset_classification_control *Control,
@@ -1458,7 +1475,15 @@ void orbits_global::do_orbits_on_subspaces(
 
 	OoS = NEW_OBJECT(orbits::orbits_on_subspaces);
 
+	if (f_v) {
+		cout << "orbits_global::do_orbits_on_subspaces "
+				"before OoS->init" << endl;
+	}
 	OoS->init(Any_group, Control, depth, verbose_level);
+	if (f_v) {
+		cout << "orbits_global::do_orbits_on_subspaces "
+				"after OoS->init" << endl;
+	}
 
 
 	//finite_field *F;
@@ -1519,7 +1544,8 @@ void orbits_global::do_tensor_classify(
 		cout << "orbits_global::do_tensor_classify "
 				"before classify_poset" << endl;
 	}
-	T->classify_poset(depth,
+	T->classify_poset(
+			depth,
 			Control,
 			verbose_level);
 	if (f_v) {
@@ -1561,7 +1587,15 @@ void orbits_global::do_tensor_permutations(
 
 	T = NEW_OBJECT(apps_geometry::tensor_classify);
 
+	if (f_v) {
+		cout << "orbits_global::do_tensor_permutations "
+				"before T->init" << endl;
+	}
 	T->init(F, Any_group->LG, verbose_level - 1);
+	if (f_v) {
+		cout << "orbits_global::do_tensor_permutations "
+				"after T->init" << endl;
+	}
 
 
 	FREE_OBJECT(T);
@@ -1640,9 +1674,19 @@ void orbits_global::do_classify_ovoids(
 	Ovoid_classify = NEW_OBJECT(apps_geometry::ovoid_classify);
 
 
+	if (f_v) {
+		cout << "orbits_global::do_classify_ovoids "
+				"before Ovoid_classify->init" << endl;
+	}
+
 	Ovoid_classify->init(Ovoid_classify_description,
 			Any_group->LG,
 			verbose_level);
+
+	if (f_v) {
+		cout << "orbits_global::do_classify_ovoids "
+				"after Ovoid_classify->init" << endl;
+	}
 
 	FREE_OBJECT(Ovoid_classify);
 
@@ -1656,6 +1700,8 @@ void orbits_global::conjugacy_class_of(
 		std::string &label_of_class,
 		std::string &elt_data,
 		int verbose_level)
+// Computes the conjugacy class of a given element in a given group.
+// The resulting class is written to csv file.
 // uses orbits_schreier::orbit_of_sets
 // needs Subgroup_sims to set up action by conjugation
 // uses Any_group->Subgroup_sims as base group
@@ -1688,7 +1734,8 @@ void orbits_global::conjugacy_class_of(
 				"creating element " << elt_data << endl;
 	}
 
-	Any_group->A->Group_element->make_element_from_string(Elt, elt_data, 0);
+	Any_group->A->Group_element->make_element_from_string(
+			Elt, elt_data, 0);
 
 	Any_group->Subgroup_sims->element_rank(a, Elt);
 
@@ -1818,7 +1865,8 @@ void orbits_global::conjugacy_class_of(
 
 	if (f_v) {
 		cout << "orbits_global::conjugacy_class_of "
-				"Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+				"Written file " << fname
+				<< " of size " << Fio.file_size(fname) << endl;
 	}
 
 

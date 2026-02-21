@@ -1465,6 +1465,102 @@ void poset_classification::rank_basis(
 	}
 }
 
+void poset_classification::get_all_orbits(
+		other::data_structures::set_of_sets *&All_orbits,
+		int *&Nb_orbits,
+		int &nb_orbits_total,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+
+	if (f_v) {
+		cout << "poset_classification::get_all_orbits" << endl;
+	}
+
+	int lvl, po, ol, el, node, i;
+	//int *Nb_orbits;
+	//int nb_orbits_total;
+
+	Nb_orbits = NEW_int(depth + 1);
+
+	nb_orbits_total = 0;
+	for (i = 0; i <= depth; i++) {
+		Nb_orbits[i] = Poo->nb_orbits_at_level(i);
+		nb_orbits_total += Nb_orbits[i];
+	}
+
+	int underlying_set_size;
+
+	underlying_set_size = get_A2()->degree;
+
+	long int *Sz;
+
+	Sz = NEW_lint(nb_orbits_total);
+
+	for (lvl = 0; lvl <= depth; lvl++) {
+
+		for (po = 0; po < nb_orbits_at_level(lvl); po++) {
+
+			node = Poo->first_node_at_level(lvl) + po;
+			ol = orbit_length_as_int(po, lvl);
+			Sz[node] = ol * lvl;
+		}
+	}
+
+
+	All_orbits = NEW_OBJECT(other::data_structures::set_of_sets);
+	All_orbits->init_basic(
+			underlying_set_size, nb_orbits_total,
+			Sz, verbose_level);
+
+
+	for (lvl = 0; lvl <= depth; lvl++) {
+
+		if (f_vv) {
+			cout << "poset_classification::get_all_orbits "
+					"adding edges lvl=" << lvl << " / " << depth << endl;
+		}
+
+		for (po = 0; po < nb_orbits_at_level(lvl); po++) {
+
+			node = Poo->first_node_at_level(lvl) + po;
+
+
+			ol = orbit_length_as_int(po, lvl);
+
+			long int *Orbit;
+
+			Orbit = All_orbits->Sets[node];
+
+
+			for (el = 0; el < ol; el++) {
+				if (false) {
+					cout << "unrank " << lvl << ", " << po
+							<< ", " << el << endl;
+				}
+				orbit_element_unrank(lvl, po, el, Orbit + el * lvl,
+						0 /* verbose_level */);
+
+				if (false) {
+					cout << "set=";
+					Lint_vec_print(cout, Orbit + el * lvl, lvl);
+					cout << endl;
+				}
+			}
+
+		}
+	}
+
+	//FREE_int(Nb_orbits);
+	FREE_lint(Sz);
+
+	if (f_v) {
+		cout << "poset_classification::get_all_orbits done" << endl;
+	}
+}
+
+
 }}}
 
 

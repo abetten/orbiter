@@ -116,6 +116,7 @@ ORBITER_MODULES= \
 		layer1_foundations/combinatorics/graph_theory/colored_graph_cliques.o \
 		layer1_foundations/combinatorics/graph_theory/colored_graph.o \
 		layer1_foundations/combinatorics/graph_theory/distance_information.o \
+		layer1_foundations/combinatorics/graph_theory/factor_poset.o \
 		layer1_foundations/combinatorics/graph_theory/graph_layer.o \
 		layer1_foundations/combinatorics/graph_theory/graph_node.o \
 		layer1_foundations/combinatorics/graph_theory/graph_theory_domain.o \

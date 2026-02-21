@@ -20,6 +20,23 @@ void make_table_of_strings(
 		int verbose_level);
 
 
+void rabbit_and_wolves_euler_step(
+		double xi, double yi, double &xip1, double &yip1, double h)
+{
+	double k = 0.08;
+	double z = 0.0002;
+	double a = 0.001;
+	double r = 0.02;
+	double b = 0.00002;
+	double xp, yp;
+
+	xp = k * xi * (1. - z * xi) - a * xi * yi;
+	yp = -r * yi + b * xi * yi;
+
+	xip1 = xi + h * xp;
+	yip1 = yi + h * yp;
+}
+
 int main()
 {
 
@@ -27,6 +44,82 @@ int main()
 	int verbose_level = 2;
 	int f_v = (verbose_level >= 1);
 
+	orbiter::layer5_applications::user_interface::orbiter_top_level_session Top_level_session;
+	orbiter::layer5_applications::user_interface::The_Orbiter_top_level_session = &Top_level_session;
+
+
+	double *X, *Y;
+	int N;
+	double x0 = 50;
+	double y0 = 10;
+	int i;
+	double h = 1.0;
+
+	N = 1000;
+	X = new double[N + 1];
+	Y = new double[N + 1];
+
+	{
+	ofstream ost("data.txt");
+
+	ost << "# data.txt" << endl;
+	ost << "# X Y" << endl;
+
+
+	X[0] = x0;
+	Y[0] = y0;
+	for (i = 1; i <= N; i++) {
+		rabbit_and_wolves_euler_step(
+				X[i - 1], Y[i - 1], X[i], Y[i], h);
+		cout << i << " : " << X[i] << ", " << Y[i] << endl;
+		ost << X[i] << ", " << Y[i] << endl;
+	}
+	cout << "X[" << N << "]=" << X[N] << endl;
+	cout << "Y[" << N << "]=" << Y[N] << endl;
+
+	}
+
+
+
+#if 0
+	int x1, x2, x3, cnt;
+
+	cnt = 0;
+	for (x1 = 1; x1 <= 75; x1++) {
+		for (x2 = x1 + 1; x2 <= 75 - x1; x2++) {
+			x3 = 75 - x1 - x2;
+			if (x3 > x2) {
+				cout << "solution " << cnt << " : x1=" << x1 << " x2=" << x2 << " x3=" << x3 << endl;
+				cnt++;
+			}
+		}
+	}
+	cout << "number of solutions is " << cnt << endl;
+
+#endif
+
+
+
+#if 0
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
+	int m, n;
+	int k = 4;
+	long int mk, nk;
+	long int sol_cnt = 0;
+
+	for (m = k; m < 100; m++) {
+		mk = Combi.binomial_lint(m, k);
+		for (n = k; n < 100; n++) {
+			nk = Combi.binomial_lint(n, k);
+			if (nk * 2 == mk) {
+				sol_cnt++;
+				cout << "solution " << sol_cnt << " m=" << m << " n=" << n << " mk=" << mk << " nk=" << nk << endl;
+			}
+		}
+	}
+#endif
+
+#if 0
 	orbiter::layer5_applications::user_interface::orbiter_top_level_session Top_level_session;
 	orbiter::layer5_applications::user_interface::The_Orbiter_top_level_session = &Top_level_session;
 
@@ -61,7 +154,7 @@ int main()
 
 	delete [] Table;
 	delete [] Col_headings;
-
+#endif
 
 #if 0
 	int verbose_level = 2;

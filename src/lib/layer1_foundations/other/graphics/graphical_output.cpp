@@ -92,28 +92,39 @@ void graphical_output::draw_layered_graph_from_file(
 				"data1=" << data1 << endl;
 	}
 
-	if (Opt->f_y_stretch) {
-		LG->place_with_y_stretch(
-				Opt->y_stretch, verbose_level - 1);
-	}
-	if (Opt->f_spanning_tree) {
-		// create updated x coordinates
-		LG->create_spanning_tree(
-				true /* f_place_x */, verbose_level);
-	}
-#if 0
-	if (Opt->f_numbering_on) {
-		// create depth first ranks at each node:
-		LG->create_spanning_tree(
-				false /* f_place_x */, verbose_level);
-	}
-#endif
+	if (Opt->f_place) {
+		if (f_v) {
+			cout << "graphical_output::draw_layered_graph_from_file "
+					"-place" << endl;
+		}
+		if (Opt->f_y_stretch) {
+			LG->place_with_y_stretch(
+					Opt->y_stretch, verbose_level - 1);
+		}
+		if (Opt->f_spanning_tree) {
+			// create updated x coordinates
+			LG->create_spanning_tree(
+					true /* f_place_x */, verbose_level);
+		}
+	#if 0
+		if (Opt->f_numbering_on) {
+			// create depth first ranks at each node:
+			LG->create_spanning_tree(
+					false /* f_place_x */, verbose_level);
+		}
+	#endif
 
-	if (Opt->f_x_stretch) {
-		LG->scale_x_coordinates(
-				Opt->x_stretch, verbose_level);
+		if (Opt->f_x_stretch) {
+			LG->scale_x_coordinates(
+					Opt->x_stretch, verbose_level);
+		}
 	}
-
+	else {
+		if (f_v) {
+			cout << "graphical_output::draw_layered_graph_from_file "
+					"use -place if you want to layout the graph" << endl;
+		}
+	}
 
 	string fname_out;
 	data_structures::string_tools ST;

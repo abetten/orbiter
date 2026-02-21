@@ -728,6 +728,11 @@ public:
 			int *Basis, long int *S, int len);
 	void rank_basis(
 			int *Basis, long int *S, int len);
+	void get_all_orbits(
+			other::data_structures::set_of_sets *&All_orbits,
+			int *&Nb_orbits,
+			int &nb_orbits_total,
+			int verbose_level);
 
 	// poset_classification_init.cpp:
 	poset_classification();
@@ -870,7 +875,6 @@ public:
 			std::string &fname_base,
 			int depth, int data,
 			other::graphics::draw_options *LG_Draw_options,
-			double x_stretch,
 			int verbose_level);
 	void draw_poset(
 			std::string &fname_base,
@@ -887,13 +891,24 @@ public:
 			std::string &fname_prefix, int verbose_level);
 	void make_full_poset_graph(
 			int depth,
-			combinatorics::graph_theory::layered_graph *&LG,
+			//combinatorics::graph_theory::layered_graph *&LG,
 		int data1, double x_stretch, 
+		layer1_foundations::combinatorics::graph_theory::factor_poset *&Factor_poset,
+		int type_of_poset,
 		int verbose_level);
 		// Draws the full poset: each element of each orbit is drawn.
 		// The orbits are indicated by grouping the elements closer together.
 		// Uses int_vec_sort_and_test_if_contained to test containment relation.
 		// This is only good for actions on sets, not for actions on subspaces
+	void make_full_poset_graph_edges(
+			layer1_foundations::combinatorics::graph_theory::factor_poset *Factor_poset,
+			other::data_structures::set_of_sets *All_orbits,
+			int type_of_poset,
+			int verbose_level);
+	void make_full_poset_graph_vertex_labels(
+			layer1_foundations::combinatorics::graph_theory::factor_poset *Factor_poset,
+			other::data_structures::set_of_sets *All_orbits,
+			int verbose_level);
 	void make_auxiliary_graph(
 			int depth,
 			combinatorics::graph_theory::layered_graph *&LG, int data1,

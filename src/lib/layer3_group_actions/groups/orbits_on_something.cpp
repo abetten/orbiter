@@ -2275,11 +2275,18 @@ void orbits_on_something::report(
 
 	algebra::ring_theory::longinteger_object go;
 
+	SG->group_order(go);
+
+
+
+
+
+
+	// report summary of orbit lengths:
 
 
 	cout << "orbits_on_something::report step 1" << endl;
 
-	SG->group_order(go);
 
 	int i, orbit_length, nb_orbits, j, idx, l1;
 
@@ -2306,6 +2313,13 @@ void orbits_on_something::report(
 
 	cout << "orbits_on_something::report step 2" << endl;
 
+
+
+
+
+	// report orbit representatives, sorted by orbit lengths:
+
+
 	ost << "\\section*{Orbit Representatives}" << endl;
 
 	long int *Orb;
@@ -2323,7 +2337,8 @@ void orbits_on_something::report(
 		j_max = MINIMUM(nb_orbits, 100);
 		if (j_max < nb_orbits) {
 			cout << "orbits_on_something::report step 2, "
-					"cutting off at " << j_max << " because the number of orbits is too large: " << nb_orbits << endl;
+					"cutting off at " << j_max
+					<< " because the number of orbits is too large: " << nb_orbits << endl;
 		}
 
 		for (j = 0; j < j_max; j++) {
@@ -2357,6 +2372,8 @@ void orbits_on_something::report(
 
 
 
+	// report orbits as sets of elements (apply sorting):
+
 
 #if 1
 	cout << "orbits_on_something::report step 3" << endl;
@@ -2376,7 +2393,10 @@ void orbits_on_something::report(
 			ost << "Orbit " << idx << ":" << endl;
 			Sch->Forest->get_orbit(idx, Orb, l1, 0 /* verbose_level*/);
 			//ost << "$$" << endl;
-			Lint_vec_print(ost, Orb, orbit_length);
+
+			Lint_vec_heapsort(Orb, orbit_length);
+
+			Lint_vec_print_fully(ost, Orb, orbit_length);
 			//ost << "$$" << endl;
 			ost << "\\\\" << endl;
 

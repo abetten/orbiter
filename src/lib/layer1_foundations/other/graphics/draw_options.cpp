@@ -79,6 +79,15 @@ draw_options::draw_options()
 	node1 = 0;;
 	layer2 = 0;
 	node2 = 0;
+
+	f_poset_orbits_x_stretch = false;
+	poset_orbits_x_stretch = 750;
+
+	f_place = false;
+
+	f_poset_type_Asup = false;
+	f_poset_type_Ainf = false;
+
 }
 
 draw_options::~draw_options()
@@ -264,6 +273,31 @@ int draw_options::read_arguments(
 					<< " " << layer2 << " " << node2 << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-poset_orbits_x_stretch") == 0) {
+			f_poset_orbits_x_stretch = true;
+			poset_orbits_x_stretch = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-poset_orbits_x_stretch " << poset_orbits_x_stretch << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-place") == 0) {
+			f_place = true;
+			if (f_v) {
+				cout << "-place " << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-poset_type_Asup") == 0) {
+			f_poset_type_Asup = true;
+			if (f_v) {
+				cout << "-poset_type_Asup " << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-poset_type_Ainf") == 0) {
+			f_poset_type_Ainf = true;
+			if (f_v) {
+				cout << "-poset_type_Ainf " << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
 				cout << "-end" << endl;
@@ -362,6 +396,18 @@ void draw_options::print()
 		cout << "layer2=" << layer2 << endl;
 		cout << "node2=" << node2 << endl;
 	}
+	if (f_poset_orbits_x_stretch) {
+		cout << "-poset_orbits_x_stretch " << poset_orbits_x_stretch << endl;
+	}
+	if (f_place) {
+		cout << "-place " << endl;
+	}
+	if (f_poset_type_Asup) {
+		cout << "-poset_type_Asup " << endl;
+	}
+	if (f_poset_type_Ainf) {
+		cout << "-poset_type_Ainf " << endl;
+	}
 }
 
 std::string draw_options::stringify()
@@ -457,6 +503,18 @@ std::string draw_options::stringify()
 		cout << "node2=" << node2 << endl;
 	}
 #endif
+	if (f_poset_orbits_x_stretch) {
+		s += " -poset_orbits_x_stretch " + std::to_string(poset_orbits_x_stretch);
+	}
+	if (f_place) {
+		s += " -place ";
+	}
+	if (f_poset_type_Asup) {
+		s += "-poset_type_Asup ";
+	}
+	if (f_poset_type_Ainf) {
+		s += "-poset_type_Ainf ";
+	}
 
 	return s;
 }

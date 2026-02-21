@@ -160,7 +160,6 @@ public:
 	int f_transporter;
 	std::string transporter_label_of_set;
 
-	// ToDo: undocumented
 	int f_schreier_poset;
 	int schreier_poset_orbit_idx;
 	std::string schreier_poset_prefix;
@@ -171,6 +170,9 @@ public:
 	int f_report_options;
 	std::string report_options_label;
 
+
+	int f_poset_classification_activity;
+	std::string poset_classification_activity_label;
 
 	//poset_classification::poset_classification_report_options
 	//	*report_options;
@@ -237,6 +239,8 @@ public:
 			std::string &label_of_set, int verbose_level);
 	void do_schreier_poset(
 			std::string &prefix, int orbit_idx, int verbose_level);
+	void do_poset_classification_activity(
+			std::string &activity_label, int verbose_level);
 
 };
 

@@ -684,18 +684,49 @@ void poset_classification::draw_poset_full(
 		std::string &fname_base,
 		int depth, int data,
 		other::graphics::draw_options *LG_Draw_options,
-		double x_stretch,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	combinatorics::graph_theory::layered_graph *LG;
+	//combinatorics::graph_theory::layered_graph *LG;
 
 	if (f_v) {
 		cout << "poset_classification::draw_poset_full "
 				"fname_base=" << fname_base << " data=" << data << endl;
 	}
+
+	layer1_foundations::combinatorics::graph_theory::factor_poset *Factor_poset;
+
+	double x_stretch = 1.0;
+
+	if (LG_Draw_options->f_poset_orbits_x_stretch) {
+		if (f_v) {
+			cout << "poset_classification::draw_poset_full "
+					"poset_orbits_x_stretch = " << LG_Draw_options->poset_orbits_x_stretch << endl;
+		}
+		x_stretch = (float) LG_Draw_options->poset_orbits_x_stretch / (float) 1000;
+	}
+	if (f_v) {
+		cout << "poset_classification::draw_poset_full "
+				"x_stretch = " << x_stretch << endl;
+	}
+
+	int type_of_poset = 0;
+
+	if (LG_Draw_options->f_poset_type_Asup) {
+		type_of_poset = 1;
+	}
+	else if (LG_Draw_options->f_poset_type_Ainf) {
+		type_of_poset = 2;
+	}
+
+	if (f_v) {
+		cout << "poset_classification::draw_poset_full "
+				"before make_full_poset_graph" << endl;
+	}
 	make_full_poset_graph(
-			depth, LG, data, x_stretch, verbose_level);
+			depth, /*LG,*/ data, x_stretch, Factor_poset,
+			type_of_poset,
+			verbose_level - 2);
 	if (f_v) {
 		cout << "poset_classification::draw_poset_full "
 				"after make_full_poset_graph" << endl;
@@ -706,7 +737,7 @@ void poset_classification::draw_poset_full(
 
 	fname1 = fname_base + "_poset_full_lvl_" + std::to_string(depth) + ".layered_graph";
 	
-	LG->write_file(fname1, 0 /*verbose_level*/);
+	Factor_poset->LG->write_file(fname1, 0 /*verbose_level*/);
 	if (f_v) {
 		cout << "poset_classification::draw_poset_full "
 				"after LG->write_file" << endl;
@@ -714,16 +745,26 @@ void poset_classification::draw_poset_full(
 
 	fname2 = fname_base + "_poset_full_lvl_" + std::to_string(depth);
 
-	LG->draw_with_options(
+	Factor_poset->LG->draw_with_options(
 			fname2, LG_Draw_options,
 			0 /* verbose_level */);
 
 	if (f_v) {
 		cout << "poset_classification::draw_poset_full "
-				"after LG->draw" << endl;
+				"after Factor_poset->LG->draw" << endl;
 	}
 
-	FREE_OBJECT(LG);
+	//FREE_OBJECT(LG);
+
+	if (f_v) {
+		cout << "poset_classification::draw_poset_full "
+				"before FREE_OBJECT(Factor_poset)" << endl;
+	}
+	FREE_OBJECT(Factor_poset);
+	if (f_v) {
+		cout << "poset_classification::draw_poset_full "
+				"after FREE_OBJECT(Factor_poset)" << endl;
+	}
 	
 	if (f_v) {
 		cout << "poset_classification::draw_poset_full done" << endl;
@@ -1206,8 +1247,11 @@ void poset_classification::make_flag_orbits_on_relations(
 
 
 void poset_classification::make_full_poset_graph(
-		int depth, combinatorics::graph_theory::layered_graph *&LG,
-		int data1, double x_stretch, int verbose_level)
+		int depth, //combinatorics::graph_theory::layered_graph *&LG,
+		int data1, double x_stretch,
+		layer1_foundations::combinatorics::graph_theory::factor_poset *&Factor_poset,
+		int type_of_poset,
+		int verbose_level)
 // Draws the full poset: each element of each orbit is drawn.
 // The orbits are indicated by grouping the elements closer together.
 // Uses int_vec_sort_and_test_if_contained to test containment relation.
@@ -1215,98 +1259,219 @@ void poset_classification::make_full_poset_graph(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int nb_layers;
-	int *Nb_elements;
-	int *Fst;
-	int *Nb_orbits;
-	int **Fst_element_per_orbit;
-	int **Orbit_len;
-	int i, j, lvl, po, po2, so, n1, n2, ol1, ol2, el1, el2, h;
-	long int *set;
-	long int *set1;
-	long int *set2;
-	int f_contained;
-	//longinteger_domain D;
-	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "poset_classification::make_full_poset_graph" << endl;
 	}
-	set = NEW_lint(depth + 1);
-	set1 = NEW_lint(depth + 1);
-	set2 = NEW_lint(depth + 1);
+
+
+	int i, j;
+
+
+	int nb_layers;
+	int *Nb_orbits;
+	int **Orbit_len;
+
+
 	nb_layers = depth + 1;
-	Nb_elements = NEW_int(nb_layers);
 	Nb_orbits = NEW_int(nb_layers);
-	Fst = NEW_int(nb_layers + 1);
-	Fst_element_per_orbit = NEW_pint(nb_layers);
 	Orbit_len = NEW_pint(nb_layers);
 
-	Fst[0] = 0;
+
+	if (f_v) {
+		cout << "poset_classification::make_full_poset_graph "
+				"depth = " << depth << endl;
+	}
+
+	if (f_v) {
+		cout << "poset_classification::make_full_poset_graph "
+				"computing Nb_orbits" << endl;
+	}
+
 	for (i = 0; i <= depth; i++) {
 		Nb_orbits[i] = nb_orbits_at_level(i);
-		Fst_element_per_orbit[i] = NEW_int(Nb_orbits[i] + 1);
-		Orbit_len[i] = NEW_int(Nb_orbits[i]);
-		Nb_elements[i] = 0;
+	}
 
-		Fst_element_per_orbit[i][0] = 0;
+
+	if (f_v) {
+		cout << "poset_classification::make_full_poset_graph "
+				"Nb_orbits = ";
+		Int_vec_print(cout, Nb_orbits, nb_layers);
+		cout << endl;
+	}
+
+	if (f_v) {
+		cout << "poset_classification::make_full_poset_graph "
+				"computing Orbit_len" << endl;
+	}
+	for (i = 0; i <= depth; i++) {
+		Orbit_len[i] = NEW_int(Nb_orbits[i]);
 		for (j = 0; j < Nb_orbits[i]; j++) {
 			Orbit_len[i][j] = orbit_length_as_int(j, i);
-			Nb_elements[i] += Orbit_len[i][j];
-			Fst_element_per_orbit[i][j + 1] =
-					Fst_element_per_orbit[i][j] + Orbit_len[i][j];
 		}
-		Fst[i + 1] = Fst[i] + Nb_elements[i];
-	}
-
-	LG = NEW_OBJECT(combinatorics::graph_theory::layered_graph);
-	LG->add_data1(data1, 0/*verbose_level*/);
-
-	if (f_v) {
-		cout << "poset_classification::make_full_poset_graph "
-				"before LG->init" << endl;
-		cout << "nb_layers=" << nb_layers << endl;
-		for (lvl = 0; lvl < depth; lvl++) {
-			cout << "Nb_elements[" << lvl << "]=" << Nb_elements[lvl] << endl;
+		if (f_v) {
+			cout << "poset_classification::make_full_poset_graph "
+					"Orbit_len[" << i << "] = ";
+			Int_vec_print(cout, Orbit_len[i], Nb_orbits[i]);
+			cout << endl;
 		}
 	}
-	string dummy;
-	dummy.assign("");
-	LG->init(nb_layers, Nb_elements, dummy, verbose_level);
+
+	other::data_structures::set_of_sets *All_orbits;
+
+	{
+		int *Nb_orbits2;
+		int nb_orbits_total;
+
+		if (f_v) {
+			cout << "poset_classification::make_full_poset_graph "
+					"before get_all_orbits" << endl;
+		}
+		get_all_orbits(
+				All_orbits,
+				Nb_orbits2,
+				nb_orbits_total,
+				verbose_level);
+		if (f_v) {
+			cout << "poset_classification::make_full_poset_graph "
+					"after get_all_orbits" << endl;
+		}
+
+		FREE_int(Nb_orbits2);
+	}
+
+
+	if (f_v) {
+		cout << "poset_classification::make_full_poset_graph All_orbits=" << endl;
+		All_orbits->print_table();
+	}
+
+
+
+	//int lvl, po, po2, so, n1, n2, ol1, ol2, el1, el2, h;
+
+	Factor_poset = NEW_OBJECT(layer1_foundations::combinatorics::graph_theory::factor_poset);
+
 
 	if (f_v) {
 		cout << "poset_classification::make_full_poset_graph "
-				"after LG->init" << endl;
+				"before Factor_poset->init" << endl;
 	}
+	Factor_poset->init(
+			depth,
+			Nb_orbits,
+			Orbit_len,
+			data1,
+			x_stretch,
+			verbose_level);
 	if (f_v) {
 		cout << "poset_classification::make_full_poset_graph "
-				"before LG->place_with_grouping" << endl;
+				"after Factor_poset->init" << endl;
 	}
-	LG->place_with_grouping(Orbit_len, Nb_orbits, x_stretch, verbose_level);
-	//LG->place(verbose_level);
-	if (f_v) {
+
+
+
+	if (f_vv) {
 		cout << "poset_classification::make_full_poset_graph "
-				"after LG->place" << endl;
+				"before make_full_poset_graph_edges" << endl;
 	}
+	make_full_poset_graph_edges(
+			Factor_poset,
+			All_orbits,
+			type_of_poset,
+			verbose_level - 2);
+	if (f_vv) {
+		cout << "poset_classification::make_full_poset_graph "
+				"after make_full_poset_graph_edges" << endl;
+	}
+
+
+
+
+
+	if (f_vv) {
+		cout << "poset_classification::make_full_poset_graph "
+				"before make_full_poset_graph_vertex_labels" << endl;
+	}
+	make_full_poset_graph_vertex_labels(
+			Factor_poset,
+			All_orbits,
+			verbose_level - 2);
+	if (f_vv) {
+		cout << "poset_classification::make_full_poset_graph "
+				"after make_full_poset_graph_vertex_labels" << endl;
+	}
+
+
+	FREE_OBJECT(All_orbits);
+
+	if (f_v) {
+		cout << "poset_classification::make_full_poset_graph done" << endl;
+	}
+}
+
+
+void poset_classification::make_full_poset_graph_edges(
+		layer1_foundations::combinatorics::graph_theory::factor_poset *Factor_poset,
+		other::data_structures::set_of_sets *All_orbits,
+		int type_of_poset,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
+
+	if (f_v) {
+		cout << "poset_classification::make_full_poset_graph_edges" << endl;
+	}
+
+
+	int depth;
+
+	depth = Factor_poset->nb_layers - 1;
+
+
+
+	long int *set;
+	long int *set1;
+	long int *set2;
+	//long int *set3;
+	int f_contained;
+	other::data_structures::sorting Sorting;
+
+
+	// preparing the data structure:
+
+
+	set = NEW_lint(depth + 1);
+	//set1 = NEW_lint(depth + 1);
+	//set2 = NEW_lint(depth + 1);
+	//set3 = NEW_lint(depth + 1);
+
+	// making edges:
+
+
+	int lvl, po, po2, so, n1, n2, ol1, ol2, el1, el2, h;
+
 
 	for (lvl = 0; lvl < depth; lvl++) {
 		if (f_vv) {
-			cout << "poset_classification::make_full_poset_graph "
+			cout << "poset_classification::make_full_poset_graph_edges "
 					"adding edges lvl=" << lvl << " / " << depth << endl;
 		}
 		//f = 0;
 		for (po = 0; po < nb_orbits_at_level(lvl); po++) {
 
 			if (f_vv) {
-				cout << "poset_classification::make_full_poset_graph "
+				cout << "poset_classification::make_full_poset_graph_edges "
 						"adding edges lvl=" << lvl
 						<< " po=" << po << " / "
 						<< nb_orbits_at_level(lvl)
 						<< " Fst_element_per_orbit[lvl][po]="
-						<< Fst_element_per_orbit[lvl][po] << endl;
+						<< Factor_poset->Fst_element_per_orbit[lvl][po] << endl;
 			}
 
-			ol1 = Orbit_len[lvl][po];
+			ol1 = Factor_poset->Orbit_len[lvl][po];
 			//
 			n1 = Poo->first_node_at_level(lvl) + po;
 
@@ -1320,7 +1485,7 @@ void poset_classification::make_full_poset_graph(
 			for (so = 0; so < Poo->node_get_nb_of_extensions(n1); so++) {
 
 				if (f_vv) {
-					cout << "poset_classification::make_full_poset_graph "
+					cout << "poset_classification::make_full_poset_graph_edges "
 							"adding edges lvl=" << lvl
 							<< " po=" << po << " so=" << so << endl;
 				}
@@ -1360,8 +1525,9 @@ void poset_classification::make_full_poset_graph(
 
 
 			if (f_vv) {
-				cout << "poset_classification::make_full_poset_graph adding edges "
-						"lvl=" << lvl << " po=" << po
+				cout << "poset_classification::make_full_poset_graph_edges adding edges "
+						"lvl=" << lvl << " po=" << po << " / "
+						<< nb_orbits_at_level(lvl)
 						<< " so=" << so << " downorbits = ";
 				Int_vec_print(cout, Down_orbits, nb_down_orbits);
 				cout << endl;
@@ -1369,8 +1535,9 @@ void poset_classification::make_full_poset_graph(
 
 			Sorting.int_vec_sort_and_remove_duplicates(Down_orbits, nb_down_orbits);
 			if (f_vv) {
-				cout << "poset_classification::make_full_poset_graph adding edges "
-						"lvl=" << lvl << " po=" << po
+				cout << "poset_classification::make_full_poset_graph_edges adding edges "
+						"lvl=" << lvl << " po=" << po << " / "
+						<< nb_orbits_at_level(lvl)
 						<< " so=" << so << " unique downorbits = ";
 				Int_vec_print(cout, Down_orbits, nb_down_orbits);
 				cout << endl;
@@ -1379,50 +1546,105 @@ void poset_classification::make_full_poset_graph(
 			for (h = 0; h < nb_down_orbits; h++) {
 				n2 = Down_orbits[h];
 				po2 = n2 - Poo->first_node_at_level(lvl + 1);
-				ol2 = Orbit_len[lvl + 1][po2];
+				ol2 = Factor_poset->Orbit_len[lvl + 1][po2];
 				if (f_vv) {
-					cout << "poset_classification::make_full_poset_graph "
-							"adding edges lvl=" << lvl << " po=" << po
+					cout << "poset_classification::make_full_poset_graph_edges "
+							"adding edges lvl=" << lvl << " po=" << po << " / "
+							<< nb_orbits_at_level(lvl)
 							<< " so=" << so << " downorbit = " << h
 							<< " / " << nb_down_orbits << " n1=" << n1
 							<< " n2=" << n2 << " po2=" << po2
 							<< " ol1=" << ol1 << " ol2=" << ol2
 							<< " Fst_element_per_orbit[lvl][po]="
-							<< Fst_element_per_orbit[lvl][po]
+							<< Factor_poset->Fst_element_per_orbit[lvl][po]
 							<< " Fst_element_per_orbit[lvl + 1][po2]="
-							<< Fst_element_per_orbit[lvl + 1][po2] << endl;
+							<< Factor_poset->Fst_element_per_orbit[lvl + 1][po2] << endl;
 				}
 				for (el1 = 0; el1 < ol1; el1++) {
-					if (f_vv) {
-						cout << "unrank " << lvl << ", " << po
+					if (f_vvv) {
+						cout << "poset_classification::make_full_poset_graph_edges unrank " << lvl << ", " << po
 								<< ", " << el1 << endl;
 					}
+
+					if (type_of_poset == 1) {
+
+						// Asup
+
+						if (el1 != 0) {
+							continue;
+						}
+					}
+
+
+					set1 = All_orbits->Sets[n1] + el1 * lvl;
+
+#if 0
 					orbit_element_unrank(lvl, po, el1, set1,
 							0 /* verbose_level */);
-					if (f_vv) {
-						cout << "set1=";
+#endif
+
+
+					if (f_vvv) {
+						cout << "poset_classification::make_full_poset_graph_edges set1=";
 						Lint_vec_print(cout, set1, lvl);
 						cout << endl;
 					}
 
 
 					for (el2 = 0; el2 < ol2; el2++) {
-						if (f_vv) {
-							cout << "unrank " << lvl + 1 << ", "
+						if (f_vvv) {
+							cout << "poset_classification::make_full_poset_graph_edges unrank " << lvl + 1 << ", "
 									<< po2 << ", " << el2 << endl;
 						}
-						orbit_element_unrank(lvl + 1, po2, el2, set2,
+
+						if (type_of_poset == 2) {
+
+							// Ainf
+
+							if (el2 != 0) {
+								continue;
+							}
+						}
+
+						set2 = All_orbits->Sets[n2] + el2 * (lvl + 1);
+
+#if 0
+						orbit_element_unrank(lvl + 1, po2, el2, set3,
 								0 /* verbose_level */);
-						if (f_vv) {
-							cout << "set2=";
+
+						if (Lint_vec_compare(set2, set3, lvl + 1)) {
+							cout << "poset_classification::make_full_poset_graph_edges unrank not the same set" << endl;
+							Lint_vec_print(cout, set2, lvl + 1);
+							cout << endl;
+							Lint_vec_print(cout, set3, lvl + 1);
+							cout << endl;
+							cout << "poset_classification::make_full_poset_graph "
+									"adding edges lvl=" << lvl
+									<< " po=" << po << " / "
+									<< nb_orbits_at_level(lvl)
+									<< " so=" << so
+									<< " downorbit = " << h << " / "
+									<< nb_down_orbits << " n1=" << n1
+									<< " n2=" << n2 << " po2=" << po2
+									<< " ol1=" << ol1 << " ol2=" << ol2
+									<< " el1=" << el1 << " el2=" << el2
+									<< endl;
+							exit(1);
+						}
+#endif
+
+						if (f_vvv) {
+							cout << "poset_classification::make_full_poset_graph_edges set2=";
 							Lint_vec_print(cout, set2, lvl + 1);
 							cout << endl;
 						}
 
-						if (f_vv) {
-							cout << "poset_classification::make_full_poset_graph "
+						if (f_vvv) {
+							cout << "poset_classification::make_full_poset_graph_edges "
 									"adding edges lvl=" << lvl
-									<< " po=" << po << " so=" << so
+									<< " po=" << po << " / "
+									<< nb_orbits_at_level(lvl)
+									<< " so=" << so
 									<< " downorbit = " << h << " / "
 									<< nb_down_orbits << " n1=" << n1
 									<< " n2=" << n2 << " po2=" << po2
@@ -1436,7 +1658,7 @@ void poset_classification::make_full_poset_graph(
 							Lint_vec_print(cout, set2, lvl + 1);
 							cout << endl;
 						}
-						
+
 
 						Lint_vec_copy(set1, set, lvl);
 
@@ -1445,25 +1667,25 @@ void poset_classification::make_full_poset_graph(
 						f_contained = poset_structure_is_contained(
 								set, lvl, set2, lvl + 1,
 								0 /* verbose_level*/);
-						
+
 
 						if (f_contained) {
-							if (f_vv) {
-								cout << "is contained" << endl;
+							if (f_vvv) {
+								cout << "poset_classification::make_full_poset_graph_edges is contained" << endl;
 							}
-							LG->add_edge(lvl,
-								Fst_element_per_orbit[lvl][po] + el1,
+							Factor_poset->LG->add_edge(lvl,
+									Factor_poset->Fst_element_per_orbit[lvl][po] + el1,
 								lvl + 1,
-								Fst_element_per_orbit[lvl + 1][po2] + el2,
+								Factor_poset->Fst_element_per_orbit[lvl + 1][po2] + el2,
 								1, // edge_color
 								0 /*verbose_level*/);
 						}
 						else {
-							if (f_vv) {
-								cout << "is NOT contained" << endl;
+							if (f_vvv) {
+								cout << "poset_classification::make_full_poset_graph_edges is NOT contained" << endl;
 							}
 						}
-						
+
 					} // next el2
 				} // next el1
 			} // next h
@@ -1474,26 +1696,64 @@ void poset_classification::make_full_poset_graph(
 		} // po
 	} // lvl
 
+	FREE_lint(set);
+	//FREE_lint(set1);
+	//FREE_lint(set2);
+	//FREE_lint(set3);
 
+
+
+	if (f_v) {
+		cout << "poset_classification::make_full_poset_graph_edges done" << endl;
+	}
+
+}
+
+void poset_classification::make_full_poset_graph_vertex_labels(
+		layer1_foundations::combinatorics::graph_theory::factor_poset *Factor_poset,
+		other::data_structures::set_of_sets *All_orbits,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+
+	if (f_v) {
+		cout << "poset_classification::make_full_poset_graph_vertex_labels" << endl;
+	}
+
+
+	// making vertex labels:
+
+	int depth;
+
+	depth = Factor_poset->nb_layers - 1;
+
+	long int *set1;
+
+	int lvl, po;
+	int ol1, n1;
+	int el1;
+
+	//set1 = NEW_lint(depth + 1);
 
 	if (f_vv) {
-		cout << "poset_classification::make_full_poset_graph "
+		cout << "poset_classification::make_full_poset_graph_vertex_labels "
 				"now making vertex labels" << endl;
 	}
 	for (lvl = 0; lvl <= depth; lvl++) {
 		if (f_vv) {
-			cout << "poset_classification::make_full_poset_graph "
+			cout << "poset_classification::make_full_poset_graph_vertex_labels "
 					"now making vertex labels lvl " << lvl
 					<< " / " << depth << endl;
 		}
 		for (po = 0; po < nb_orbits_at_level(lvl); po++) {
 
-			ol1 = Orbit_len[lvl][po];
+			ol1 = Factor_poset->Orbit_len[lvl][po];
 			//
 			n1 = Poo->first_node_at_level(lvl) + po;
 
 			if (f_vv) {
-				cout << "poset_classification::make_full_poset_graph "
+				cout << "poset_classification::make_full_poset_graph_vertex_labels "
 						"now making vertex labels lvl " << lvl
 						<< " / " << depth << " po=" << po << " / "
 						<< nb_orbits_at_level(lvl)
@@ -1502,20 +1762,25 @@ void poset_classification::make_full_poset_graph(
 
 			for (el1 = 0; el1 < ol1; el1++) {
 
+				set1 = All_orbits->Sets[n1] + el1 * lvl;
+
 				if (f_vv) {
 					cout << "unrank " << lvl << ", "
 							<< po << ", " << el1 << endl;
 				}
+#if 0
 				orbit_element_unrank(lvl, po, el1, set1,
 						0 /* verbose_level */);
+#endif
 				if (f_vv) {
 					cout << "set1=";
 					Lint_vec_print(cout, set1, lvl);
 					cout << endl;
 				}
 
-				LG->add_node_vec_data(lvl,
-						Fst_element_per_orbit[lvl][po] + el1,
+				Factor_poset->LG->add_node_vec_data(
+						lvl,
+						Factor_poset->Fst_element_per_orbit[lvl][po] + el1,
 						set1, lvl,
 						0 /* verbose_level */);
 			}
@@ -1524,24 +1789,11 @@ void poset_classification::make_full_poset_graph(
 		}
 	}
 
+	//FREE_lint(set1);
 
 
-	FREE_lint(set);
-	FREE_lint(set1);
-	FREE_lint(set2);
-	FREE_int(Nb_elements);
-	FREE_int(Nb_orbits);
-	FREE_int(Fst);
-	for (i = 0; i <= depth; i++) {
-		FREE_int(Fst_element_per_orbit[i]);
-	}
-	FREE_pint(Fst_element_per_orbit);
-	for (i = 0; i <= depth; i++) {
-		FREE_int(Orbit_len[i]);
-	}
-	FREE_pint(Orbit_len);
 	if (f_v) {
-		cout << "poset_classification::make_full_poset_graph done" << endl;
+		cout << "poset_classification::make_full_poset_graph_vertex_labels done" << endl;
 	}
 }
 

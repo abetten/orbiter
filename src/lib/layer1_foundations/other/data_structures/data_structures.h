@@ -1028,6 +1028,8 @@ public:
 			int *p, int *q, int len);
 	std::string stringify(
 			int *v, int len);
+	void heapsort(
+			int *v, int len);
 
 };
 
@@ -1171,6 +1173,8 @@ public:
 	int compare(
 			long int *p, long int *q, int len);
 	std::string stringify(
+			long int *v, int len);
+	void heapsort(
 			long int *v, int len);
 
 
@@ -2706,6 +2710,10 @@ public:
 	void init(
 			int *data, int data_length, int data_set_sz,
 		int verbose_level);
+	void get_reps_and_frequency(
+			int *&Reps_sorted, int *&Frequency_in_lex_order,
+			int verbose_level);
+	// Reps_sorted[nb_types * data_set_sz]
 	int hash_and_find(
 			int *data,
 			int &idx, uint32_t &h, int verbose_level);
