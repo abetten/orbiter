@@ -887,7 +887,7 @@ void combinatorial_object_with_properties::show_labels(
 		groups::schreier *Sch,
 		int verbose_level)
 {
-	int f_v = (verbose_level >= 1);
+	//int f_v = (verbose_level >= 1);
 
 	//ost << "combinatorial\\_object\\_with\\_properties::show\\_labels \\\\" << endl;
 	ost << "\\subsection*{Labels}" << endl;
@@ -944,7 +944,7 @@ void combinatorial_object_with_properties::canonical_labeling(
 		combinatorics::canonical_form_classification::encoded_combinatorial_object *Enc,
 		int verbose_level)
 {
-	int f_v = (verbose_level >= 1);
+	//int f_v = (verbose_level >= 1);
 
 	//ost << "combinatorial\\_object\\_with\\_properties::canonical\\_labeling \\\\" << endl;
 	ost << "\\subsection*{Canonical labeling}" << endl;

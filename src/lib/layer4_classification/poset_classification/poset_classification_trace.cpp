@@ -101,10 +101,10 @@ void poset_classification::identify_and_get_stabilizer(
 	Orbit_tracer->identify(set, sz, transporter,
 			orbit_at_level, verbose_level - 2);
 
-	Set_and_stab_canonical = get_set_and_stabilizer(sz,
+	Set_and_stab_canonical = Poo->get_set_and_stabilizer(sz,
 			orbit_at_level, 0 /* verbose_level */);
 
-	Set_and_stab_original = get_set_and_stabilizer(sz,
+	Set_and_stab_original = Poo->get_set_and_stabilizer(sz,
 			orbit_at_level, 0 /* verbose_level */);
 
 	Poset->A->Group_element->element_invert(transporter, Elt, 0);
@@ -154,14 +154,14 @@ void poset_classification::test_identify(
 	other::orbiter_kernel_system::os_interface Os;
 
 	if (f_v) {
-		cout << "poset_classification::test_identify, "
+		cout << "poset_classification::test_identify "
 				"level = " << level
 				<< " nb_times = " << nb_times << endl;
 	}
 
 	Elt = NEW_int(Poset->A->elt_size_in_int);
 	transporter = NEW_int(Poset->A->elt_size_in_int);
-	nb_orbits = nb_orbits_at_level(level);
+	nb_orbits = get_Poo()->nb_orbits_at_level(level);
 	set1 = NEW_lint(level);
 	set2 = NEW_lint(level);
 
@@ -181,7 +181,7 @@ void poset_classification::test_identify(
 		if (f_v) {
 			cout << "random orbit " << r << " / " << nb_orbits << endl;
 		}
-		get_set_by_level(level, r, set1);
+		Poo->get_set_by_level(level, r, set1);
 		if (f_v) {
 			cout << "random orbit " << r << " / "
 					<< nb_orbits << " is represented by ";
@@ -237,8 +237,7 @@ void poset_classification::poset_classification_apply_isomorphism_no_transporter
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "poset_classification::poset_classification_apply_isomorphism_"
-				"no_transporter" << endl;
+		cout << "poset_classification::poset_classification_apply_isomorphism_no_transporter" << endl;
 	}
 
 	Elt1 = NEW_int(Poset->A->elt_size_in_int);
@@ -246,7 +245,8 @@ void poset_classification::poset_classification_apply_isomorphism_no_transporter
 	set_tmp = NEW_lint(size);
 	Poset->A->Group_element->element_one(Elt1, 0);
 
-	poset_classification_apply_isomorphism(cur_level, size, cur_node, cur_ex, 
+	poset_classification_apply_isomorphism(
+			cur_level, size, cur_node, cur_ex,
 		set_in, set_out, set_tmp, 
 		Elt1, Elt2, 
 		true /* f_tolerant */, 
@@ -257,8 +257,7 @@ void poset_classification::poset_classification_apply_isomorphism_no_transporter
 	FREE_lint(set_tmp);
 
 	if (f_v) {
-		cout << "poset_classification::poset_classification_apply_isomorphism_"
-				"no_transporter done" << endl;
+		cout << "poset_classification::poset_classification_apply_isomorphism_no_transporter done" << endl;
 	}
 }
 #endif
@@ -343,7 +342,7 @@ int poset_classification::poset_classification_apply_isomorphism(
 			cout << endl;
 		}
 
-		next_node = find_poset_orbit_node_for_set(level + 1 /*size*/,
+		next_node = get_Poo()->find_poset_orbit_node_for_set(level + 1 /*size*/,
 				set_out, f_tolerant, 0);
 		// changed A Betten 2/19/2011
 
@@ -697,7 +696,7 @@ long int poset_classification::find_node_for_subspace_by_rank(
 	//v = tmp_find_node_for_subspace_by_rank1;
 	//basis = tmp_find_node_for_subspace_by_rank2;
 
-	unrank_basis(basis, set, len);
+	get_poset()->unrank_basis(basis, set, len);
 
 	rk = Poset->VS->RREF_and_rank(basis, len);
 
@@ -717,7 +716,7 @@ long int poset_classification::find_node_for_subspace_by_rank(
 				continue;
 			}
 			pt = O->get_E(j)->get_pt();
-			unrank_point(v, pt);
+			get_poset()->unrank_point(v, pt);
 			if (!Poset->VS->is_contained_in_subspace(v, basis, len)) {
 				continue;
 			}
@@ -750,49 +749,6 @@ long int poset_classification::find_node_for_subspace_by_rank(
 
 	return node;
 }
-
-// #############################################################################
-// global:
-// #############################################################################
-
-
-
-const char *trace_result_as_text(
-		trace_result r)
-{
-	if (r == found_automorphism) {
-		return "found_automorphism";
-	}
-	else if (r == not_canonical) {
-		return "not_canonical";
-	}
-	else if (r == no_result_extension_not_found) {
-		return "no_result_extension_not_found";
-	}
-	else if (r == no_result_fusion_node_installed) {
-		return "no_result_fusion_node_installed";
-	}
-	else if (r == no_result_fusion_node_already_installed) {
-		return "no_result_fusion_node_already_installed";
-	}
-	else {
-		return "unkown trace result";
-	}
-}
-
-int trace_result_is_no_result(
-		trace_result r)
-{
-	if (r == no_result_extension_not_found ||
-		r == no_result_fusion_node_installed ||
-		r == no_result_fusion_node_already_installed) {
-		return true;
-	}
-	else {
-		return false;
-	}
-}
-
 
 
 

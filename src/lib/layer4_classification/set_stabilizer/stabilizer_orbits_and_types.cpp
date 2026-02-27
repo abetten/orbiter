@@ -155,7 +155,7 @@ void stabilizer_orbits_and_types::init(
 		cout << "stabilizer_orbits_and_types::init "
 				"before CS->SubSt->SubC->PC->get_stabilizer_generators" << endl;
 	}
-	CS->SubSt->SubC->PC->get_stabilizer_generators(
+	CS->SubSt->SubC->PC->get_Poo()->get_stabilizer_generators(
 			selected_set_stab_gens,
 			CS->SubSt->SubC->substructure_size,
 			CS->SubSt->selected_orbit,
@@ -464,7 +464,7 @@ void stabilizer_orbits_and_types::find_orbit_pattern(
 		cout << "stabilizer_orbits_and_types::find_orbit_pattern "
 				"before PC->map_to_canonical_k_subset" << endl;
 	}
-	CS->SubSt->SubC->PC->map_to_canonical_k_subset(
+	CS->SubSt->SubC->PC->get_Poo()->map_to_canonical_k_subset(
 			CS->SubSt->Pts,
 			CS->SubSt->nb_pts,
 			CS->SubSt->SubC->substructure_size /* subset_size */,
@@ -744,7 +744,7 @@ void stabilizer_orbits_and_types::map_reduced_set_and_do_orbit_counting(
 {
 	other::data_structures::sorting Sorting;
 
-	CS->SubSt->SubC->PC->map_to_canonical_k_subset(
+	CS->SubSt->SubC->PC->get_Poo()->map_to_canonical_k_subset(
 			CS->SubSt->Pts, CS->SubSt->nb_pts,
 			CS->SubSt->SubC->substructure_size /* subset_size */,
 			subset_idx,

@@ -416,7 +416,7 @@ void surfaces_arc_lifting::downstep(
 		int orbit_on_pairs_idx, nb_orbits_on_pairs;
 		//int downstep_secondary_orbit = 0;
 
-		nb_orbits_on_pairs = T->Orbits_on_pairs->nb_orbits_at_level(2);
+		nb_orbits_on_pairs = T->Orbits_on_pairs->get_Poo()->nb_orbits_at_level(2);
 
 		for (orbit_on_pairs_idx = 0;
 				orbit_on_pairs_idx < nb_orbits_on_pairs;
@@ -515,7 +515,7 @@ void surfaces_arc_lifting::downstep_one_arc(
 
 	flag_orbit_fst[arc_idx] = cur_flag_orbit;
 
-	The_arc = Six_arcs->Gen->gen->get_set_and_stabilizer(
+	The_arc = Six_arcs->Gen->gen->get_Poo()->get_set_and_stabilizer(
 			6 /* level */,
 			Six_arcs->Not_on_conic_idx[arc_idx],
 			verbose_level);
@@ -535,7 +535,7 @@ void surfaces_arc_lifting::downstep_one_arc(
 	int orbit_on_pairs_idx, nb_orbits_on_pairs;
 	int downstep_secondary_orbit = 0;
 
-	nb_orbits_on_pairs = T->Orbits_on_pairs->nb_orbits_at_level(2);
+	nb_orbits_on_pairs = T->Orbits_on_pairs->get_Poo()->nb_orbits_at_level(2);
 
 	for (orbit_on_pairs_idx = 0;
 			orbit_on_pairs_idx < nb_orbits_on_pairs;
@@ -550,7 +550,7 @@ void surfaces_arc_lifting::downstep_one_arc(
 
 
 		data_structures_groups::set_and_stabilizer *pair_orbit;
-		pair_orbit = T->Orbits_on_pairs->get_set_and_stabilizer(
+		pair_orbit = T->Orbits_on_pairs->get_Poo()->get_set_and_stabilizer(
 				2 /* level */,
 				orbit_on_pairs_idx,
 				0 /* verbose_level */);
@@ -943,7 +943,7 @@ void surfaces_arc_lifting::report2(
 
 
 
-	nb_arcs = Six_arcs->Gen->gen->nb_orbits_at_level(6);
+	nb_arcs = Six_arcs->Gen->gen->get_Poo()->nb_orbits_at_level(6);
 
 
 
@@ -964,7 +964,7 @@ void surfaces_arc_lifting::report2(
 		{
 			data_structures_groups::set_and_stabilizer *The_arc;
 
-		The_arc = Six_arcs->Gen->gen->get_set_and_stabilizer(
+		The_arc = Six_arcs->Gen->gen->get_Poo()->get_set_and_stabilizer(
 				6 /* level */,
 				Six_arcs->Not_on_conic_idx[arc_idx],
 				0 /* verbose_level */);
@@ -1019,8 +1019,17 @@ void surfaces_arc_lifting::report2(
 
 	poset_classification::poset_classification_report_options Opt;
 
-	Six_arcs->Gen->gen->report2(ost, &Opt, verbose_level);
+	//Six_arcs->Gen->gen->report2(ost, &Opt, verbose_level);
 
+	poset_classification::pc_latex_interface Pc_latex_interface;
+
+	Pc_latex_interface.init(
+			Six_arcs->Gen->gen,
+			Six_arcs->Gen->gen->get_depth(),
+			&Opt /*poset_classification_report_options *Opt*/,
+			0 /* verbose_level */);
+
+	Pc_latex_interface.report2(ost, 0 /* verbose_level */);
 
 
 
@@ -1227,7 +1236,7 @@ void surfaces_arc_lifting::report_flag_orbits_in_detail(
 
 		data_structures_groups::set_and_stabilizer *pair_orbit;
 		pair_orbit = Table_orbits_on_pairs[arc_idx].
-				Orbits_on_pairs->get_set_and_stabilizer(
+				Orbits_on_pairs->get_Poo()->get_set_and_stabilizer(
 				2 /* level */,
 				pair_idx,
 				0 /* verbose_level */);

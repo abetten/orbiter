@@ -80,7 +80,7 @@ void arc_partition::init(
 				"creating The_arc" << endl;
 	}
 
-	The_pair = OP->Orbits_on_pairs->get_set_and_stabilizer(
+	The_pair = OP->Orbits_on_pairs->get_Poo()->get_set_and_stabilizer(
 			2 /* level */,
 			pair_orbit_idx,
 			0 /* verbose_level */);

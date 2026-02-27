@@ -250,7 +250,7 @@ void hall_system_classify::init(
 	}
 
 
-	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
+	Poset = NEW_OBJECT(layer3_group_actions::combinatorics_with_groups::poset_with_group_action);
 	if (f_v) {
 		cout << "hall_system_classify::init "
 				"before Poset->init_subset_lattice" << endl;

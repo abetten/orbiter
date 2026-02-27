@@ -72,7 +72,7 @@ public:
 	algebra::ring_theory::longinteger_object Aut_order;
 	actions::action *Aut;
 	actions::action *A2;
-	poset_classification::poset_with_group_action *Poset;
+	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset;
 	poset_classification::poset_classification_control *Control;
 	poset_classification::poset_classification *gen;
 
@@ -122,6 +122,9 @@ class create_graph_description {
 public:
 
 	// TABLES/create_graph_1.tex
+
+	int f_adjacency_matrix;
+	std::string adjacency_matrix_label;
 
 	int f_load;
 	std::string fname;
@@ -476,7 +479,7 @@ public:
 
 	graph_classify_description *Descr;
 
-	poset_classification::poset_with_group_action *Poset;
+	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset;
 	poset_classification::poset_classification *gen;
 
 	actions::action *A_base; // symmetric group on n vertices
@@ -590,7 +593,7 @@ class graph_theoretic_activity_description {
 
 public:
 
-	// TABLES/graph_theoretic_activity.tex
+	// TABLES/graph_theoretic_activities_1.tex
 
 	int f_find_cliques;
 	combinatorics::graph_theory::clique_finder_control *Clique_finder_control;
@@ -641,8 +644,13 @@ public:
 	std::string split_by_clique_set;
 
 	int f_save;
-	int f_automorphism_group_colored_graph;
+
+
+	// TABLES/graph_theoretic_activities_2.tex
+
+
 	int f_automorphism_group;
+	int f_automorphism_group_colored_graph;
 
 	int f_properties;
 	int f_eigenvalues;

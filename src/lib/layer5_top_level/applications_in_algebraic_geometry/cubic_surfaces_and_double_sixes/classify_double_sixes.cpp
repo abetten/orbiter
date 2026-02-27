@@ -100,7 +100,7 @@ void classify_double_sixes::test_orbits(
 		cout << "classify_double_sixes::test_orbits" << endl;
 		cout << "verbose_level = " << verbose_level << endl;
 	}
-	len = Five_p1->Five_plus_one->nb_orbits_at_level(5);
+	len = Five_p1->Five_plus_one->get_Poo()->nb_orbits_at_level(5);
 
 	if (f_v) {
 		cout << "classify_double_sixes::test_orbits testing "
@@ -113,7 +113,7 @@ void classify_double_sixes::test_orbits(
 			cout << "classify_double_sixes::test_orbits orbit "
 				<< i << " / " << len << ":" << endl;
 		}
-		Five_p1->Five_plus_one->get_set_by_level(5, i, S);
+		Five_p1->Five_plus_one->get_Poo()->get_set_by_level(5, i, S);
 		if (f_vv) {
 			cout << "set: ";
 			Lint_vec_print(cout, S, 5);
@@ -185,7 +185,7 @@ void classify_double_sixes::classify(
 				"after downstep" << endl;
 		cout << "we found " << Flag_orbits->nb_flag_orbits
 				<< " flag orbits out of "
-				<< Five_p1->Five_plus_one->nb_orbits_at_level(5)
+				<< Five_p1->Five_plus_one->get_Poo()->nb_orbits_at_level(5)
 				<< " orbits" << endl;
 	}
 
@@ -239,7 +239,7 @@ void classify_double_sixes::downstep(
 
 
 
-	nb_orbits = Five_p1->Five_plus_one->nb_orbits_at_level(5);
+	nb_orbits = Five_p1->Five_plus_one->get_Poo()->nb_orbits_at_level(5);
 	
 	Flag_orbits = NEW_OBJECT(invariant_relations::flag_orbits);
 	Flag_orbits->init(
@@ -290,12 +290,12 @@ void classify_double_sixes::downstep(
 		algebra::ring_theory::longinteger_object go;
 		long int dataset[23];
 
-		R = Five_p1->Five_plus_one->get_set_and_stabilizer(
+		R = Five_p1->Five_plus_one->get_Poo()->get_set_and_stabilizer(
 				5 /* level */,
 				i /* orbit_at_level */,
 				0 /* verbose_level */);
 
-		Five_p1->Five_plus_one->orbit_length(
+		Five_p1->Five_plus_one->get_Poo()->orbit_length(
 				i /* node */, 5 /* level */, ol);
 
 		R->Strong_gens->group_order(go);
@@ -727,7 +727,7 @@ void classify_double_sixes::print_five_plus_ones(
 {
 	int f, i, l;
 
-	l = Five_p1->Five_plus_one->nb_orbits_at_level(5);
+	l = Five_p1->Five_plus_one->get_Poo()->nb_orbits_at_level(5);
 
 	//ost << "\\clearpage" << endl;
 	ost << "\\subsection*{Classification of $5+1$ Configurations "
@@ -773,11 +773,11 @@ void classify_double_sixes::print_five_plus_ones(
 
 		data_structures_groups::set_and_stabilizer *R;
 
-		R = Five_p1->Five_plus_one->get_set_and_stabilizer(
+		R = Five_p1->Five_plus_one->get_Poo()->get_set_and_stabilizer(
 				5 /* level */,
 				i /* orbit_at_level */,
 				0 /* verbose_level */);
-		Five_p1->Five_plus_one->orbit_length(
+		Five_p1->Five_plus_one->get_Poo()->orbit_length(
 				i /* node */,
 				5 /* level */, ol);
 		D.add_in_place(Ol, ol);
@@ -925,14 +925,14 @@ void classify_double_sixes::make_spreadsheet_of_fiveplusone_configurations(
 
 	for (i = 0; i < nb; i++) {
 
-		Five_p1->Five_plus_one->get_set_by_level(k, Idx[i], rep);
+		Five_p1->Five_plus_one->get_Poo()->get_set_by_level(k, Idx[i], rep);
 
 		Lint_vec_apply(
 				rep, Five_p1->Linear_complex->Neighbor_to_line, lines, k);
 
-		Five_p1->Five_plus_one->get_stabilizer_order(k, Idx[i], go);
+		Five_p1->Five_plus_one->get_Poo()->get_stabilizer_order(k, Idx[i], go);
 
-		Five_p1->Five_plus_one->orbit_length(Idx[i], k, len);
+		Five_p1->Five_plus_one->get_Poo()->orbit_length(Idx[i], k, len);
 
 		Stab_order[i] = go.as_int();
 
@@ -940,7 +940,7 @@ void classify_double_sixes::make_spreadsheet_of_fiveplusone_configurations(
 	}
 	for (i = 0; i < nb; i++) {
 
-		Five_p1->Five_plus_one->get_set_by_level(k, Idx[i], rep);
+		Five_p1->Five_plus_one->get_Poo()->get_set_by_level(k, Idx[i], rep);
 
 		Lint_vec_apply(
 				rep,

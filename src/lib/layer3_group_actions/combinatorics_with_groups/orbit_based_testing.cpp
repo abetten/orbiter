@@ -5,14 +5,14 @@
 
 #include "layer1_foundations/foundations.h"
 #include "layer2_discreta/discreta.h"
-#include "layer3_group_actions/group_actions.h"
-#include "classification.h"
+#include "group_actions.h"
 
 using namespace std;
 
+
 namespace orbiter {
-namespace layer4_classification {
-namespace poset_classification {
+namespace layer3_group_actions {
+namespace combinatorics_with_groups {
 
 
 orbit_based_testing::orbit_based_testing()
@@ -20,7 +20,9 @@ orbit_based_testing::orbit_based_testing()
 	Record_birth();
 	int i;
 
-	PC = NULL;
+	Poset_with_group_action = NULL;
+	//PC = NULL;
+
 	max_depth = 0;
 	local_S = NULL;
 	nb_callback = 0;
@@ -44,7 +46,8 @@ orbit_based_testing::~orbit_based_testing()
 }
 
 void orbit_based_testing::init(
-		poset_classification *PC,
+		layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset_with_group_action,
+		//void *PC,
 		int max_depth,
 		int verbose_level)
 {
@@ -53,7 +56,8 @@ void orbit_based_testing::init(
 	if (f_v) {
 		cout << "orbit_based_testing::init" << endl;
 	}
-	orbit_based_testing::PC = PC;
+	orbit_based_testing::Poset_with_group_action = Poset_with_group_action;
+	//orbit_based_testing::PC = PC;
 	orbit_based_testing::max_depth = max_depth;
 	local_S = NEW_lint(max_depth);
 	if (f_v) {
@@ -192,14 +196,11 @@ void orbit_based_testing::early_test_func_by_using_group(
 	}
 	Lint_vec_copy(S, local_S, len);
 
-
-	int i, j, node, f, l, nb_good_orbits;
-	long int pt;
+#if 0
 	poset_orbit_node *O;
-	int f_orbit_is_good;
 	//int s, a;
 
-	node = PC->find_poset_orbit_node_for_set(len, local_S,
+	node = PC->get_Poo()->find_poset_orbit_node_for_set(len, local_S,
 		false /* f_tolerant */, 0);
 	O = PC->get_node(node);
 
@@ -208,12 +209,18 @@ void orbit_based_testing::early_test_func_by_using_group(
 		O->print_set(PC);
 		cout << endl;
 	}
+#endif
 
 	groups::schreier Schreier;
 
-	Schreier.init(PC->get_A2(), verbose_level - 2);
+	//Schreier.init(PC->get_A2(), verbose_level - 2);
+	Schreier.init(Poset_with_group_action->A2, verbose_level - 2);
 
 
+	// ToDo: need to initialize the generators for the stabilizer
+
+
+#if 0
 #if 0
 	Schreier.init_generators_by_hdl(
 		O->nb_strong_generators, O->hdl_strong_generators, 0);
@@ -224,6 +231,7 @@ void orbit_based_testing::early_test_func_by_using_group(
 		O->get_strong_generators_handle(gen_hdl, verbose_level);
 	}
 #endif
+#endif
 
 	if (f_v) {
 		cout << "orbit_based_testing::early_test_func_by_using_group "
@@ -232,6 +240,11 @@ void orbit_based_testing::early_test_func_by_using_group(
 	Schreier.orbits_on_invariant_subset_fast_lint(
 		nb_candidates, candidates,
 		0/*verbose_level*/);
+
+	int i, j, node, f, l, nb_good_orbits;
+	long int pt;
+	int f_orbit_is_good;
+
 
 	if (f_v) {
 		cout << "orbit_based_testing::early_test_func_by_using_group "

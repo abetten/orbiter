@@ -873,14 +873,21 @@ void isomorph_global::compute_down_orbits_for_isomorphism_type(
 					<< " computing orbits on subsets" << endl;
 		}
 		poset_classification::poset_classification_control *Control;
-		poset_classification::poset_with_group_action *Poset;
+		layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset;
 		Control = NEW_OBJECT(poset_classification::poset_classification_control);
-		Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
+		Poset = NEW_OBJECT(layer3_group_actions::combinatorics_with_groups::poset_with_group_action);
 		Poset->init_subset_lattice(
 				Iso->A_base, Iso->Folding->AA, Strong_gens,
 				verbose_level);
-		Poset->orbits_on_k_sets(Control,
+
+		poset_classification::poset_classification_global Poset_classification_global;
+
+		Poset_classification_global.orbits_on_k_sets(
+				Poset,
+				Control,
 			Iso->level, orbit_reps, nb_orbits, verbose_level - 5);
+
+
 		FREE_OBJECT(Poset);
 		FREE_OBJECT(Control);
 		if (f_vv) {

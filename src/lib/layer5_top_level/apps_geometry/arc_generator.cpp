@@ -234,7 +234,7 @@ void arc_generator::prepare_generator(
 
 
 
-	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
+	Poset = NEW_OBJECT(layer3_group_actions::combinatorics_with_groups::poset_with_group_action);
 	Poset->init_subset_lattice(
 			PA->A, PA->A, SG /* A->Strong_gens*/,
 			verbose_level);

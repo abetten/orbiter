@@ -89,7 +89,7 @@ void orbits_on_subspaces::init(
 
 
 	orbits_on_subspaces_PC = NEW_OBJECT(poset_classification::poset_classification);
-	orbits_on_subspaces_Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
+	orbits_on_subspaces_Poset = NEW_OBJECT(layer3_group_actions::combinatorics_with_groups::poset_with_group_action);
 
 
 
@@ -127,7 +127,7 @@ void orbits_on_subspaces::init(
 	}
 #endif
 
-	orbits_on_subspaces_Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
+	orbits_on_subspaces_Poset = NEW_OBJECT(layer3_group_actions::combinatorics_with_groups::poset_with_group_action);
 	orbits_on_subspaces_Poset->init_subspace_lattice(
 			Group->A_base /*LG->A_linear*/,
 			Group->A /* LG->A2 */,
@@ -184,7 +184,7 @@ void orbits_on_subspaces::init(
 		cout << "orbits_on_subspaces::init "
 				"after poset_classification_main" << endl;
 	}
-	nb_orbits = orbits_on_subspaces_PC->nb_orbits_at_level(Control->depth);
+	nb_orbits = orbits_on_subspaces_PC->get_Poo()->nb_orbits_at_level(Control->depth);
 	if (f_v) {
 		cout << "orbits_on_subspaces::init we found "
 				<< nb_orbits << " orbits at depth "

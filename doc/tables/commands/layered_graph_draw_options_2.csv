@@ -9,4 +9,8 @@ ROW,C1,C2,C3
 1,"\verb'-no_vertices' ","   ","Do not draw vertices."
 1,"\verb'-select_layers' ","  $S$ ","Draw layers whose index is given in the list $S$ only. "
 1,"\verb'-paths_in_between' "," $l_1$ $i_1$ $l_2$ $i_2$ ","Draw all paths from node $(l_1,i_1)$ to node $(l_2,i_2)$. Here, $(l,i)$ is the $i$-th node at layer $l$ (counting from zero). Delete all other edges between layers $l_1$ and $l_2.$ "
+1,"\verb'-poset_orbits_x_stretch' "," f1000 ","Specify a stretch factor for grouping of poset orbits in 1000th. "
+1,"\verb'-place' "," ","Layout the graph. "
+1,"\verb'-poset_type_Asup' "," ","Draw poset in supremum style. "
+1,"\verb'-poset_type_Ainf' "," ","Draw poset in infimum style. "
 END

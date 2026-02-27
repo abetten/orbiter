@@ -67,7 +67,7 @@ public:
 	groups::any_group *G;
 
 	poset_classification::poset_classification_control *Control;
-	poset_classification::poset_with_group_action *Primary_poset;
+	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Primary_poset;
 	poset_classification::poset_classification *Orbits_on_primary_poset;
 
 	int number_primary_orbits;
@@ -77,7 +77,7 @@ public:
 		// [number_primary_orbits * degree]
 
 	actions::action **A_restricted;
-	poset_classification::poset_with_group_action **Secondary_poset;
+	layer3_group_actions::combinatorics_with_groups::poset_with_group_action **Secondary_poset;
 		// [number_primary_orbits]
 	poset_classification::poset_classification **orbits_secondary_poset;
 		// [number_primary_orbits]
@@ -587,7 +587,7 @@ public:
 	int V; // A0->degree
 
 	poset_classification::poset_classification_control *Control;
-	poset_classification::poset_with_group_action *Poset;
+	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset;
 	poset_classification::poset_classification *Poset_classification;
 
 	// orbits on pairs:
@@ -710,7 +710,7 @@ public:
 	groups::any_group *Group;
 
 	// local data for orbits on subspaces:
-	poset_classification::poset_with_group_action
+	layer3_group_actions::combinatorics_with_groups::poset_with_group_action
 		*orbits_on_subspaces_Poset;
 	poset_classification::poset_classification
 		*orbits_on_subspaces_PC;

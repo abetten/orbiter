@@ -24,6 +24,16 @@ src/apps/Jeffrey_Leons_partition_backtrack/setstab
 src/apps/Jeffrey_Leons_partition_backtrack/wtdist
 
 
+src/apps/sandbox/data.txt
+src/apps/sandbox/out.eps
+src/apps/sandbox/out.pdf
+src/apps/sandbox/rabbit.pdf
+src/apps/sandbox/log
+src/apps/sandbox/test_hex.csv
+
+
+
+
 idea/
 CMakeLists.txt
 cmake-build-debug/

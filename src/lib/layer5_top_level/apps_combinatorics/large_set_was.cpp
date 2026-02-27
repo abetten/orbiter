@@ -395,7 +395,7 @@ void large_set_was::do_normalizer_on_orbits_of_a_given_length_multiple_orbits(
 	}
 
 
-	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
+	Poset = NEW_OBJECT(layer3_group_actions::combinatorics_with_groups::poset_with_group_action);
 
 #if 0
 	Control = NEW_OBJECT(poset_classification_control);
@@ -424,28 +424,32 @@ void large_set_was::do_normalizer_on_orbits_of_a_given_length_multiple_orbits(
 			N_gens,
 			verbose_level);
 
+
+
 	if (f_v) {
 		cout << "large_set_was::do_normalizer_on_orbits_of_a_given_length_multiple_orbits before "
 				"Poset->add_testing_without_group" << endl;
-		}
+	}
 	Poset->add_testing_without_group(
 			large_set_was_normalizer_orbits_early_test_func_callback,
 			this /* void *data */,
 			verbose_level);
 
+	poset_classification::poset_classification_global Poset_classification_global;
 
 
 	if (f_v) {
 		cout << "large_set_was::do_normalizer_on_orbits_of_a_given_length_multiple_orbits "
-				"before Poset->orbits_on_k_sets_compute, nb_of_orbits_to_choose=" << nb_of_orbits_to_choose << endl;
+				"before Poset_classification_global.orbits_on_k_sets_compute, nb_of_orbits_to_choose=" << nb_of_orbits_to_choose << endl;
 	}
-	PC = Poset->orbits_on_k_sets_compute(
+	PC = Poset_classification_global.orbits_on_k_sets_compute(
+			Poset,
 			Control,
 			nb_of_orbits_to_choose,
 			verbose_level);
 	if (f_v) {
 		cout << "large_set_was::do_normalizer_on_orbits_of_a_given_length_multiple_orbits "
-				"after Poset->orbits_on_k_sets_compute" << endl;
+				"after Poset_classification_global.orbits_on_k_sets_compute" << endl;
 	}
 
 	//FREE_OBJECT(Control);
@@ -537,7 +541,7 @@ void large_set_was::create_graph_on_orbits_of_length_based_on_N_orbits(
 	extracted_set_size = nb_N_orbits_preselected * orbit_length;
 	extracted_set = NEW_lint(extracted_set_size);
 
-	nb_N_orbits = PC->nb_orbits_at_level(nb_N_orbits_preselected);
+	nb_N_orbits = PC->get_Poo()->nb_orbits_at_level(nb_N_orbits_preselected);
 
 	if (f_v) {
 		cout << "large_set_was::create_graph_on_orbits_of_length_based_on_N_orbits, "
@@ -561,7 +565,7 @@ void large_set_was::create_graph_on_orbits_of_length_based_on_N_orbits(
 					"idx_N = " << idx_N << " / " << nb_N_orbits << endl;
 		}
 
-		PC->get_set_by_level(nb_N_orbits_preselected, idx_N, Orbit1_idx);
+		PC->get_Poo()->get_set_by_level(nb_N_orbits_preselected, idx_N, Orbit1_idx);
 
 
 		H_orbits->extract_orbits_using_classification(

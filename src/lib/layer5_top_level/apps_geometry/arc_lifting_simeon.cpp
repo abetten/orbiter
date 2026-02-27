@@ -137,11 +137,11 @@ void arc_lifting_simeon::init(
 
 	P->Subspaces->init_incidence_structure(0 /*verbose_level*/);
 
-	poset_classification::poset_with_group_action *Poset;
+	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset;
 	poset_classification::poset_classification_control *Control;
 
 	Control = NEW_OBJECT(poset_classification::poset_classification_control);
-	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
+	Poset = NEW_OBJECT(layer3_group_actions::combinatorics_with_groups::poset_with_group_action);
 	Poset->init_subset_lattice(A, A,
 			A->Strong_gens,
 			verbose_level);
@@ -379,11 +379,11 @@ void arc_lifting_simeon::do_covering_problem(
 
 
 	int target_depth = 6;
-	poset_classification::poset_with_group_action *Poset2;
+	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset2;
 	poset_classification::poset_classification_control *Control2;
 	poset_classification::poset_classification *Gen2;
 
-	Poset2 = NEW_OBJECT(poset_classification::poset_with_group_action);
+	Poset2 = NEW_OBJECT(layer3_group_actions::combinatorics_with_groups::poset_with_group_action);
 	Control2 = NEW_OBJECT(poset_classification::poset_classification_control);
 	Poset2->init_subset_lattice(A, A3,
 			SaS->Strong_gens,
@@ -408,7 +408,7 @@ void arc_lifting_simeon::do_covering_problem(
 	int count;
 	int nb_sol = 0;
 
-	nb_orbits = Gen2->nb_orbits_at_level(target_depth);
+	nb_orbits = Gen2->get_Poo()->nb_orbits_at_level(target_depth);
 	cout << "We found " << nb_orbits << " orbits of subsets "
 			"of filtered external lines of size " << k << endl;
 
@@ -431,7 +431,7 @@ void arc_lifting_simeon::do_covering_problem(
 
 		data_structures_groups::set_and_stabilizer *SaS;
 
-		SaS = Gen2->get_set_and_stabilizer(target_depth,
+		SaS = Gen2->get_Poo()->get_set_and_stabilizer(target_depth,
 				i /* orbit_at_level */, 0 /* verbose_level */);
 
 		if ((i % 10000) == 0) {

@@ -823,7 +823,7 @@ void cayley_graph_search::classify_subsets(
 	Control->problem_label = prefix;
 	Control->f_problem_label = true;
 
-	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
+	Poset = NEW_OBJECT(layer3_group_actions::combinatorics_with_groups::poset_with_group_action);
 	Poset->init_subset_lattice(Aut, Aut,
 			Aut_gens,
 			verbose_level);
@@ -909,7 +909,7 @@ void cayley_graph_search::write_file(
 
 		Adj = NEW_lint(go * sz);
 
-		nb_orbits = gen->nb_orbits_at_level(sz);
+		nb_orbits = gen->get_Poo()->nb_orbits_at_level(sz);
 		cout << "We found " << nb_orbits << " orbits on "
 				<< sz << "-subsets" << endl;
 		//fp << "[";
@@ -930,7 +930,7 @@ void cayley_graph_search::write_file(
 
 			data_structures_groups::set_and_stabilizer *SaS;
 
-			SaS = gen->get_set_and_stabilizer(sz, n, 0 /*verbose_level*/);
+			SaS = gen->get_Poo()->get_set_and_stabilizer(sz, n, 0 /*verbose_level*/);
 
 			if ((n % 1000) == 0) {
 				cout << n << " / " << nb_orbits << " : ";

@@ -608,7 +608,7 @@ void spread_classify::init2(
 
 
 
-	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
+	Poset = NEW_OBJECT(layer3_group_actions::combinatorics_with_groups::poset_with_group_action);
 	Poset->init_subset_lattice(
 			A, A2,
 			A->Strong_gens,
@@ -741,9 +741,9 @@ void spread_classify::classify_partial_spreads(
 		cout << "spread_classify::classify_partial_spreads "
 				"after poset_classification_main" << endl;
 	}
-	length = gen->nb_orbits_at_level(gen->get_control()->depth);
+	length = gen->get_Poo()->nb_orbits_at_level(gen->get_control()->depth);
 	if (f_v) {
-		cout << "spread_classify::compute "
+		cout << "spread_classify::classify_partial_spreads "
 				"We found " << length << " orbits on "
 			<< gen->get_control()->depth << "-sets of " << SD->k
 			<< "-subspaces in PG(" << SD->n - 1 << "," << SD->q << ")"

@@ -197,7 +197,7 @@ void large_set_classify::create_action_and_poset(
 				"A_on_designs->degree=" << A_on_designs->degree << endl;
 	}
 
-	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
+	Poset = NEW_OBJECT(layer3_group_actions::combinatorics_with_groups::poset_with_group_action);
 	Poset->init_subset_lattice(DC->A, A_on_designs,
 			DC->A->Strong_gens,
 			verbose_level);
@@ -285,7 +285,7 @@ void large_set_classify::compute(
 		cout << "large_set_classify::compute "
 				"after poset_classification_main" << endl;
 	}
-	length = gen->nb_orbits_at_level(search_depth);
+	length = gen->get_Poo()->nb_orbits_at_level(search_depth);
 	if (f_v) {
 		cout << "large_set_classify::compute We found "
 			<< length << " orbits on "

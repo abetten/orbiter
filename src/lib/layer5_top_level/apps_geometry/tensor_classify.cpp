@@ -192,7 +192,7 @@ void tensor_classify::classify_poset(
 				"after create_restricted_action_on_rank_one_tensors" << endl;
 	}
 
-	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
+	Poset = NEW_OBJECT(layer3_group_actions::combinatorics_with_groups::poset_with_group_action);
 	Poset->init_subset_lattice(A, Ar,
 			SG,
 			verbose_level);
@@ -489,11 +489,22 @@ void tensor_classify::report(
 
 			poset_classification::poset_classification_report_options Opt;
 
-			Gen->report2(fp, &Opt, verbose_level);
+			poset_classification::pc_latex_interface Pc_latex_interface;
+
+			Pc_latex_interface.init(
+					Gen,
+					Gen->get_depth(),
+					&Opt /*poset_classification_report_options *Opt*/,
+					0 /* verbose_level */);
+
+			Pc_latex_interface.report2(fp, 0 /* verbose_level */);
+			//Gen->report2(fp, &Opt, verbose_level);
+
+
 			fp << "\\subsection*{Orbits at level " << poset_classify_depth << "}" << endl;
 			int nb_orbits, orbit_idx;
 
-			nb_orbits = Gen->nb_orbits_at_level(poset_classify_depth);
+			nb_orbits = Gen->get_Poo()->nb_orbits_at_level(poset_classify_depth);
 			for (orbit_idx = 0; orbit_idx < nb_orbits; orbit_idx++) {
 				fp << "\\subsubsection*{Orbit " << orbit_idx << " / " << nb_orbits << "}" << endl;
 

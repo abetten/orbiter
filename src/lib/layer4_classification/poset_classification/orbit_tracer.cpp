@@ -598,7 +598,7 @@ void orbit_tracer::identify(
 	algebra::ring_theory::longinteger_object go;
 
 	orbit_at_level = final_node - PC->get_Poo()->first_node_at_level(sz);
-	PC->get_stabilizer_order(sz, orbit_at_level, go);
+	PC->get_Poo()->get_stabilizer_order(sz, orbit_at_level, go);
 
 	if (f_v) {
 		cout << "orbit_tracer::identify trace returns "

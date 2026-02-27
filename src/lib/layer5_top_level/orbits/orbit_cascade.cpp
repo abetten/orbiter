@@ -76,7 +76,7 @@ void orbit_cascade::init(
 	Control = Get_poset_classification_control(Control_label);
 
 
-	Primary_poset = NEW_OBJECT(poset_classification::poset_with_group_action);
+	Primary_poset = NEW_OBJECT(layer3_group_actions::combinatorics_with_groups::poset_with_group_action);
 
 	if (f_v) {
 		cout << "orbit_cascade::init control=" << endl;
@@ -109,20 +109,24 @@ void orbit_cascade::init(
 			G->Subgroup_gens,
 			verbose_level);
 
+
+	poset_classification::poset_classification_global Poset_classification_global;
+
 	if (f_v) {
 		cout << "orbit_cascade::init "
-				"before Primary_poset->orbits_on_k_sets_compute" << endl;
+				"before Poset_classification_global.orbits_on_k_sets_compute" << endl;
 	}
-	Orbits_on_primary_poset = Primary_poset->orbits_on_k_sets_compute(
+	Orbits_on_primary_poset = Poset_classification_global.orbits_on_k_sets_compute(
+			Primary_poset,
 			Control,
 			k /* subset_size */,
 			verbose_level);
 	if (f_v) {
 		cout << "orbit_cascade::init "
-				"after Primary_poset->orbits_on_k_sets_compute" << endl;
+				"after Poset_classification_global.orbits_on_k_sets_compute" << endl;
 	}
 
-	number_primary_orbits = Orbits_on_primary_poset->nb_orbits_at_level(k);
+	number_primary_orbits = Orbits_on_primary_poset->get_Poo()->nb_orbits_at_level(k);
 
 	stabilizer_gens = (groups::strong_generators **) NEW_pvoid(number_primary_orbits);
 
@@ -136,7 +140,7 @@ void orbit_cascade::init(
 	}
 	for (i = 0; i < number_primary_orbits; i++) {
 
-		Orbits_on_primary_poset->get_stabilizer_generators(stabilizer_gens[i],
+		Orbits_on_primary_poset->get_Poo()->get_stabilizer_generators(stabilizer_gens[i],
 				k, i, 0 /* verbose_level */);
 
 	}
@@ -162,7 +166,7 @@ void orbit_cascade::init(
 	}
 	for (i = 0; i < number_primary_orbits; i++) {
 
-		Orbits_on_primary_poset->get_set(
+		Orbits_on_primary_poset->get_Poo()->get_set(
 			k, i, set, size);
 
 		if (size != k) {
@@ -219,10 +223,10 @@ void orbit_cascade::init(
 				"setting up Secondary_poset" << endl;
 	}
 
-	Secondary_poset = (poset_classification::poset_with_group_action **) NEW_pvoid(number_primary_orbits);
+	Secondary_poset = (layer3_group_actions::combinatorics_with_groups::poset_with_group_action **) NEW_pvoid(number_primary_orbits);
 
 	for (i = 0; i < number_primary_orbits; i++) {
-		Secondary_poset[i] = NEW_OBJECT(poset_classification::poset_with_group_action);
+		Secondary_poset[i] = NEW_OBJECT(layer3_group_actions::combinatorics_with_groups::poset_with_group_action);
 
 		Secondary_poset[i]->init_subset_lattice(
 				G->A_base, A_restricted[i],
@@ -244,7 +248,9 @@ void orbit_cascade::init(
 	orbits_secondary_poset = (poset_classification::poset_classification **) NEW_pvoid(number_primary_orbits);
 
 	for (i = 0; i < number_primary_orbits; i++) {
-		orbits_secondary_poset[i] = Secondary_poset[i]->orbits_on_k_sets_compute(
+		orbits_secondary_poset[i] =
+				Poset_classification_global.orbits_on_k_sets_compute(
+				Secondary_poset[i],
 				Control,
 				k /* subset_size */,
 				verbose_level);
@@ -269,7 +275,7 @@ void orbit_cascade::init(
 
 	for (i = 0; i < number_primary_orbits; i++) {
 
-		nb_orbits_secondary[i] = orbits_secondary_poset[i]->nb_orbits_at_level(k);
+		nb_orbits_secondary[i] = orbits_secondary_poset[i]->get_Poo()->nb_orbits_at_level(k);
 
 		if (i == 0) {
 			flag_orbit_first[0] = 0;
@@ -401,12 +407,12 @@ void orbit_cascade::downstep(
 				algebra::ring_theory::longinteger_object ol;
 				algebra::ring_theory::longinteger_object go;
 
-				R = orbits_secondary_poset[po]->get_set_and_stabilizer(
+				R = orbits_secondary_poset[po]->get_Poo()->get_set_and_stabilizer(
 						k /* level */,
 						so /* orbit_at_level */,
 						0 /* verbose_level */);
 
-				orbits_secondary_poset[po]->orbit_length(
+				orbits_secondary_poset[po]->get_Poo()->orbit_length(
 						so /* node */,
 						k /* level */,
 						ol);
@@ -451,12 +457,12 @@ void orbit_cascade::downstep(
 			algebra::ring_theory::longinteger_object ol;
 			algebra::ring_theory::longinteger_object go;
 
-			R = orbits_secondary_poset[po]->get_set_and_stabilizer(
+			R = orbits_secondary_poset[po]->get_Poo()->get_set_and_stabilizer(
 					k /* level */,
 					so /* orbit_at_level */,
 					0 /* verbose_level */);
 
-			orbits_secondary_poset[po]->orbit_length(
+			orbits_secondary_poset[po]->get_Poo()->orbit_length(
 					so /* node */,
 					k /* level */,
 					ol);

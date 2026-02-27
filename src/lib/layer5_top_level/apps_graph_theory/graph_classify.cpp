@@ -208,7 +208,7 @@ void graph_classify::init(
 		cout << "please use -poset_classification_control ... -end" << endl;
 		exit(1);
 	}
-	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
+	Poset = NEW_OBJECT(layer3_group_actions::combinatorics_with_groups::poset_with_group_action);
 	Poset->init_subset_lattice(A_base, A_on_edges,
 			A_base->Strong_gens,
 			verbose_level);
@@ -618,13 +618,13 @@ void graph_classify::print_score_sequences(
 
 	set = NEW_lint(level);
 	score = NEW_lint(Descr->n);
-	nb_orbits = gen->nb_orbits_at_level(level);
+	nb_orbits = gen->get_Poo()->nb_orbits_at_level(level);
 	for (h = 0; h < nb_orbits; h++) {
 		groups::strong_generators *Strong_gens;
 		algebra::ring_theory::longinteger_object go;
 
-		gen->get_set_by_level(level, h, set);
-		gen->get_stabilizer_generators(Strong_gens,  
+		gen->get_Poo()->get_set_by_level(level, h, set);
+		gen->get_Poo()->get_stabilizer_generators(Strong_gens,
 			level, h, 0 /* verbose_level*/);
 
 		Strong_gens->group_order(go);
@@ -696,7 +696,7 @@ void graph_classify::list_graphs(
 	nb = 0;
 	for (level = level_min; level <= level_max; level++) {
 
-		nb_orbits = gen->nb_orbits_at_level(level);
+		nb_orbits = gen->get_Poo()->nb_orbits_at_level(level);
 		nb += nb_orbits;
 
 		if (f_v) {
@@ -710,7 +710,7 @@ void graph_classify::list_graphs(
 
 	for (level = level_min; level <= level_max; level++) {
 
-		nb_orbits = gen->nb_orbits_at_level(level);
+		nb_orbits = gen->get_Poo()->nb_orbits_at_level(level);
 
 		if (f_v) {
 			cout << "graph_classify::list_graphs level = " << level << " nb_orbits = " << nb_orbits << endl;
@@ -720,8 +720,8 @@ void graph_classify::list_graphs(
 			groups::strong_generators *Strong_gens;
 			algebra::ring_theory::longinteger_object go;
 
-			gen->get_set_by_level(level, h, set);
-			gen->get_stabilizer_generators(Strong_gens,
+			gen->get_Poo()->get_set_by_level(level, h, set);
+			gen->get_Poo()->get_stabilizer_generators(Strong_gens,
 				level, h, 0 /* verbose_level*/);
 
 			Strong_gens->group_order(go);
@@ -766,7 +766,7 @@ void graph_classify::draw_graphs(
 
 	set = NEW_lint(level);
 	v = NEW_int(n2);
-	nb_orbits = gen->nb_orbits_at_level(level);
+	nb_orbits = gen->get_Poo()->nb_orbits_at_level(level);
 
 	if (f_v) {
 		cout << "graph_classify::draw_graphs nb_orbits = " << nb_orbits << endl;
@@ -777,8 +777,8 @@ void graph_classify::draw_graphs(
 		groups::strong_generators *Strong_gens;
 		algebra::ring_theory::longinteger_object go;
 
-		gen->get_set_by_level(level, h, set);
-		gen->get_stabilizer_generators(Strong_gens,  
+		gen->get_Poo()->get_set_by_level(level, h, set);
+		gen->get_Poo()->get_stabilizer_generators(Strong_gens,
 			level, h, 0 /* verbose_level*/);
 
 		Strong_gens->group_order(go);

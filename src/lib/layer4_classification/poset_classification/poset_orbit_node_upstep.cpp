@@ -97,7 +97,7 @@ int poset_orbit_node::apply_isomorphism(
 			Lint_vec_print(cout, gen->get_set_i(lvl + 1), lvl + 1);
 			cout << endl;
 			}
-		next_node = gen->find_poset_orbit_node_for_set(
+		next_node = gen->get_Poo()->find_poset_orbit_node_for_set(
 				lvl + 1,
 				gen->get_set_i(lvl + 1),
 				f_tolerant, 0);
@@ -294,14 +294,14 @@ void poset_orbit_node::install_fusion_node(
 			Lint_vec_set_print(cout, gen->get_set3(), lvl + 1);
 			cout << " is " << endl;
 			for (i = 0; i < lvl + 1; i++) {
-				gen->unrank_point(v, gen->get_set3()[i]);
+				gen->get_poset()->unrank_point(v, gen->get_set3()[i]);
 				Int_vec_print(cout, v, gen->get_VS()->dimension);
 				cout << endl;
 				}
 			Lint_vec_set_print(cout, gen->get_set0(), lvl + 1);
 			cout << " is " << endl;
 			for (i = 0; i < lvl + 1; i++) {
-				gen->unrank_point(v, gen->get_set0()[i]);
+				gen->get_poset()->unrank_point(v, gen->get_set0()[i]);
 				Int_vec_print(cout, v, gen->get_VS()->dimension);
 				cout << endl;
 				}

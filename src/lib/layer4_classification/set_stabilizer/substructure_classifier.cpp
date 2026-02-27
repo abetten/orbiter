@@ -75,7 +75,7 @@ void substructure_classifier::classify_substructures(
 	substructure_classifier::A2 = A2;
 	substructure_classifier::substructure_size = substructure_size;
 
-	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
+	Poset = NEW_OBJECT(layer3_group_actions::combinatorics_with_groups::poset_with_group_action);
 
 
 	Control = NEW_OBJECT(poset_classification::poset_classification_control);
@@ -95,20 +95,26 @@ void substructure_classifier::classify_substructures(
 			gens,
 			verbose_level);
 
+
+	poset_classification::poset_classification_global Poset_classification_global;
+
+
+
 	if (f_v) {
 		cout << "substructure_classifier::classify_substructures "
-				"before Poset->orbits_on_k_sets_compute" << endl;
+				"before Poset_classification_global->orbits_on_k_sets_compute" << endl;
 	}
-	PC = Poset->orbits_on_k_sets_compute(
+	PC = Poset_classification_global.orbits_on_k_sets_compute(
+			Poset,
 			Control,
 			substructure_size,
 			verbose_level);
 	if (f_v) {
 		cout << "substructure_classifier::classify_substructures "
-				"after Poset->orbits_on_k_sets_compute" << endl;
+				"after Poset_classification_global->orbits_on_k_sets_compute" << endl;
 	}
 
-	nb_orbits = PC->nb_orbits_at_level(substructure_size);
+	nb_orbits = PC->get_Poo()->nb_orbits_at_level(substructure_size);
 
 	cout << "We found " << nb_orbits << " orbits "
 			"at level " << substructure_size << ":" << endl;
@@ -120,7 +126,7 @@ void substructure_classifier::classify_substructures(
 
 		groups::strong_generators *Strong_gens;
 
-		PC->get_stabilizer_generators(
+		PC->get_Poo()->get_stabilizer_generators(
 				Strong_gens,
 				substructure_size, j,
 				0 /* verbose_level*/);

@@ -67,7 +67,17 @@ void poset_classification_activity::perform_work(
 					"f_report" << endl;
 		}
 
-		PC->report(Descr->report_options, verbose_level);
+		pc_latex_interface Pc_latex_interface;
+
+		Pc_latex_interface.init(
+				PC,
+				PC->get_depth(),
+				Descr->report_options /*poset_classification_report_options *Opt*/,
+				verbose_level);
+
+		Pc_latex_interface.report(verbose_level);
+
+		//PC->report(Descr->report_options, verbose_level);
 
 	}
 
@@ -139,11 +149,18 @@ void poset_classification_activity::perform_work(
 		Draw_options = Get_draw_options(Descr->write_tree_draw_options);
 
 
-		PC->get_Poo()->print_tree();
-		PC->write_treefile(
-				PC->get_problem_label_with_path(),
+		pc_tree_interface Pc_tree_interface;
+
+		Pc_tree_interface.init(
+				PC,
 				PC->get_depth(),
 				Draw_options,
+				verbose_level - 1);
+
+		//PC->get_Poo()->print_tree();
+
+		Pc_tree_interface.write_treefile(
+				PC->get_depth(),
 				verbose_level - 1);
 
 		//return 0;
@@ -165,7 +182,7 @@ void poset_classification_activity::perform_work(
 		int d;
 
 		for (d = 0; d <= PC->get_depth(); d++) {
-			cout << "There are " << PC->nb_orbits_at_level(d)
+			cout << "There are " << PC->get_Poo()->nb_orbits_at_level(d)
 					<< " orbits on subsets of size " << d << ":" << endl;
 
 #if 0
@@ -241,10 +258,20 @@ void poset_classification_activity::perform_work(
 			cout << "poset_classification_activity::perform_work "
 					"preparing level spreadsheet" << endl;
 		}
+
+		pc_convert_data_structure Pc_convert_data_structure;
+
+		Pc_convert_data_structure.init(
+				PC,
+				0 /* verbose_level*/);
+
 		{
 			other::data_structures::spreadsheet *Sp;
-			PC->make_spreadsheet_of_level_info(
+
+			Pc_convert_data_structure.make_spreadsheet_of_level_info(
 					Sp, actual_size, verbose_level);
+
+
 			string fname_csv;
 
 			fname_csv = PC->get_problem_label_with_path()
@@ -375,29 +402,47 @@ void poset_classification_activity::perform_work(
 		}
 	}
 	if (Descr->f_make_relations_with_flag_orbits) {
-			string fname_prefix;
 
 
-			fname_prefix = PC->get_problem_label_with_path() + "_flag_orbits";
+		pc_convert_data_structure Pc_convert_data_structure;
 
-			if (f_v) {
-				cout << "poset_classification_activity::perform_work "
-						"before make_flag_orbits_on_relations" << endl;
-			}
-			PC->make_flag_orbits_on_relations(
-					PC->get_depth(), fname_prefix,
-					verbose_level);
-			if (f_v) {
-				cout << "poset_classification_activity::perform_work "
-						"after make_flag_orbits_on_relations" << endl;
-			}
+		Pc_convert_data_structure.init(
+				PC,
+				0 /* verbose_level*/);
+
+
+
+		string fname_prefix;
+
+
+		fname_prefix = PC->get_problem_label_with_path() + "_flag_orbits";
+
+		if (f_v) {
+			cout << "poset_classification_activity::perform_work "
+					"before make_flag_orbits_on_relations" << endl;
+		}
+		Pc_convert_data_structure.make_flag_orbits_on_relations(
+				PC->get_depth(), fname_prefix,
+				verbose_level);
+		if (f_v) {
+			cout << "poset_classification_activity::perform_work "
+					"after make_flag_orbits_on_relations" << endl;
+		}
 	}
 	if (Descr->f_print_data_structure) {
 		if (f_v) {
 			cout << "poset_classification_activity::perform_work "
 					"f_print_data_structure" << endl;
 		}
-		PC->print_data_structure_tex(
+		pc_latex_interface Pc_latex_interface;
+
+		Pc_latex_interface.init(
+				PC,
+				PC->get_depth(),
+				NULL /*poset_classification_report_options *Opt*/,
+				verbose_level);
+
+		Pc_latex_interface.print_data_structure_tex(
 				actual_size, verbose_level);
 	}
 
@@ -408,22 +453,22 @@ void poset_classification_activity::perform_work(
 					"f_test_multi_edge_in_decomposition_matrix" << endl;
 		}
 
-		poset_classification_global PCG;
+		pc_combinatorics Pc_combinatorics;
 
-		PCG.init(
+		Pc_combinatorics.init(
 				PC,
 				verbose_level);
 
 
 		if (f_v) {
 			cout << "poset_classification_activity::perform_work "
-					"before PCG.test_for_multi_edge_in_classification_graph" << endl;
+					"before Pc_combinatorics.test_for_multi_edge_in_classification_graph" << endl;
 		}
-		PCG.test_for_multi_edge_in_classification_graph(
+		Pc_combinatorics.test_for_multi_edge_in_classification_graph(
 				PC->get_depth(), verbose_level);
 		if (f_v) {
 			cout << "poset_classification_activity::perform_work "
-					"after PCG.test_for_multi_edge_in_classification_graph" << endl;
+					"after Pc_combinatorics.test_for_multi_edge_in_classification_graph" << endl;
 		}
 	}
 
@@ -431,19 +476,171 @@ void poset_classification_activity::perform_work(
 	if (Descr->recognize.size()) {
 		int h;
 
+		poset_classification_global PCG;
+
+		PCG.init(
+				PC,
+				verbose_level);
+
 		for (h = 0; h < Descr->recognize.size(); h++) {
 
-			PC->recognize(
+			PCG.recognize(
 					Descr->recognize[h],
 					h, Descr->recognize.size(),
 					verbose_level);
 		}
 	}
 
+	if (Descr->f_pair_relations_within_orbit) {
+		if (f_v) {
+			cout << "poset_classification_activity::perform_work "
+					"f_pair_relations_within_orbit orbit_idx = "
+					<< Descr->pair_relations_within_orbit_idx << endl;
+		}
+
+		pc_combinatorics Pc_combinatorics;
+
+		Pc_combinatorics.init(
+				PC,
+				verbose_level);
+
+
+		int level, po;
+		int *M;
+		int ol;
+
+		PC->get_Poo()->node_to_lvl_po(
+				Descr->pair_relations_within_orbit_idx, level, po);
+
+		if (f_v) {
+			cout << "poset_classification_activity::perform_work "
+					"f_pair_relations_within_orbit level = "
+					<< level << " po = " << po << endl;
+		}
+
+
+		Pc_combinatorics.pair_relations_within_orbit(level, po, M, ol, verbose_level);
+
+		if (f_v) {
+			cout << "poset_classification_activity::perform_work "
+					"color matrix of size " << ol << endl;
+			Int_matrix_print(M, ol, ol);
+		}
+
+		other::orbiter_kernel_system::file_io Fio;
+
+		std::string fname;
+
+		fname = PC->get_problem_label() + "_pairs_on_orbit_"
+				+ std::to_string(Descr->pair_relations_within_orbit_idx) + ".csv";
+		Fio.Csv_file_support->int_matrix_write_csv(
+				fname, M, ol, ol);
+		if (f_v) {
+			cout << "Written file " << fname
+					<< " of size " << Fio.file_size(fname) << endl;
+		}
+
+
+	}
+	else if (Descr->f_export_orbits_long) {
+
+		if (f_v) {
+			cout << "poset_classification_activity::perform_work "
+					"f_export_orbits_long" << endl;
+		}
+
+		other::data_structures::set_of_sets *All_orbits;
+
+		{
+			int *Nb_orbits;
+			int *Orbit_first;
+			int nb_orbits_total;
+			int nb_sets_total;
+
+			std::string *Table;
+			std::string *Col_headings;
+			int nb_rows;
+			int nb_cols;
+
+			if (f_v) {
+				cout << "poset_classification_activity::perform_work "
+						"before get_all_orbits_expanded_table" << endl;
+			}
+			PC->get_Poo()->get_all_orbits_expanded_table(
+					All_orbits,
+					Nb_orbits,
+					Orbit_first,
+					nb_orbits_total,
+					nb_sets_total,
+					Table,
+					Col_headings,
+					nb_rows, nb_cols,
+					verbose_level);
+
+			if (f_v) {
+				cout << "poset_classification_activity::perform_work "
+						"after get_all_orbits_expanded_table" << endl;
+			}
+
+			other::orbiter_kernel_system::file_io Fio;
+
+			std::string fname;
+
+			fname = PC->get_problem_label() + "_all_orbits_expanded.csv";
+
+			Fio.Csv_file_support->write_table_of_strings_with_col_headings(
+					fname,
+					nb_rows, nb_cols, Table,
+					Col_headings,
+					verbose_level);
+
+			delete [] Table;
+			delete [] Col_headings;
+
+
+			if (f_v) {
+				cout << "vector_ge::save_csv Written file " << fname
+						<< " of size " << Fio.file_size(fname) << endl;
+			}
+
+
+
+			FREE_int(Nb_orbits);
+			FREE_int(Orbit_first);
+		}
+
+		std::string fname;
+
+		fname = PC->get_problem_label() + "_all_orbits_long.csv";
+
+		All_orbits->save_csv(
+				fname,
+				verbose_level);
+
+		other::orbiter_kernel_system::file_io Fio;
+
+
+
+		if (f_v) {
+			cout << "poset_classification_activity::perform_work "
+					"Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+		}
+
+
+		if (f_v) {
+			cout << "poset_classification_activity::perform_work All_orbits=" << endl;
+			All_orbits->print_table();
+		}
+		FREE_OBJECT(All_orbits);
+
+	}
+
 	if (f_v) {
 		cout << "poset_classification_activity::perform_work done" << endl;
 	}
 }
+
+
 
 
 

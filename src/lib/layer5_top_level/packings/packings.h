@@ -160,7 +160,7 @@ public:
 	int *degree;
 
 	poset_classification::poset_classification_control *Control;
-	poset_classification::poset_with_group_action *Poset;
+	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset;
 	poset_classification::poset_classification *gen;
 
 	int nb_needed;
@@ -630,7 +630,7 @@ public:
 		// Orbits_classified->Sets[fixpoints_idx])
 
 	combinatorics::graph_theory::colored_graph *fixpoint_graph;
-	poset_classification::poset_with_group_action
+	layer3_group_actions::combinatorics_with_groups::poset_with_group_action
 		*Poset_fixpoint_cliques;
 	poset_classification::poset_classification
 		*fixpoint_clique_gen;

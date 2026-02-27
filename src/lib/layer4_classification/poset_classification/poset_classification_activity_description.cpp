@@ -68,6 +68,11 @@ poset_classification_activity_description::poset_classification_activity_descrip
 
 	//std::vector<std::string> recognize;
 
+	f_pair_relations_within_orbit = false;
+	pair_relations_within_orbit_idx = -1;
+
+	f_export_orbits_long = false;
+
 }
 
 poset_classification_activity_description::~poset_classification_activity_description()
@@ -268,6 +273,20 @@ int poset_classification_activity_description::read_arguments(
 				cout << "-recognize " << s << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-pair_relations_within_orbit") == 0) {
+			f_pair_relations_within_orbit = true;
+			pair_relations_within_orbit_idx = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-pair_relations_within_orbit "
+						<< pair_relations_within_orbit_idx << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-export_orbits_long") == 0) {
+			f_export_orbits_long = true;
+			if (f_v) {
+				cout << "-export_orbits_long " << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			break;
@@ -367,6 +386,13 @@ void poset_classification_activity_description::print()
 			cout << "-recognize " << recognize[i] << endl;
 		}
 
+	}
+	if (f_pair_relations_within_orbit) {
+		cout << "-pair_relations_within_orbit "
+				<< pair_relations_within_orbit_idx << endl;
+	}
+	if (f_export_orbits_long) {
+		cout << "-export_orbits_long " << endl;
 	}
 }
 

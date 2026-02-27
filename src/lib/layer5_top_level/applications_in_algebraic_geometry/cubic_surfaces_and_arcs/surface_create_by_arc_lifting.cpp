@@ -86,7 +86,7 @@ void surface_create_by_arc_lifting::init(
 
 	Arc6 = NEW_lint(6);
 
-	SCA->Six_arcs->Gen->gen->get_set_by_level(
+	SCA->Six_arcs->Gen->gen->get_Poo()->get_set_by_level(
 			6 /* level */,
 			SCA->Six_arcs->Not_on_conic_idx[arc_idx],
 			Arc6);

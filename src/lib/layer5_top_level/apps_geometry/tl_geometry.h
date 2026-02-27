@@ -97,7 +97,7 @@ public:
 
 	groups::strong_generators *SG;
 	
-	poset_classification::poset_with_group_action *Poset;
+	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset;
 
 
 
@@ -202,7 +202,7 @@ public:
 	int *Elt;
 	int *v;
 	groups::schreier *Sch;
-	poset_classification::poset_with_group_action *Poset;
+	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset;
 	poset_classification::poset_classification *Gen;
 	geometry::projective_geometry::projective_space *P;
 
@@ -274,7 +274,7 @@ public:
 
 	poset_classification::poset_classification *gen;
 	poset_classification::poset_classification_control *Control;
-	poset_classification::poset_with_group_action *Poset;
+	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset;
 
 	int nb_orbits;
 	int current_orbit;
@@ -476,7 +476,7 @@ public:
 	actions::action *A2r;
 
 	poset_classification::poset_classification_control *Control;
-	poset_classification::poset_with_group_action *Poset;
+	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset;
 	poset_classification::poset_classification *gen;
 
 
@@ -550,7 +550,7 @@ public:
 
 	algebra::linear_algebra::vector_space *VS;
 	poset_classification::poset_classification_control *Control1;
-	poset_classification::poset_with_group_action *Poset1;
+	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset1;
 	poset_classification::poset_classification *Gen;
 	int vector_space_dimension; // = n
 
@@ -584,11 +584,11 @@ public:
 	int secondary_schreier_depth;
 
 	poset_classification::poset_classification_control *Control_stab;
-	poset_classification::poset_with_group_action *Poset_stab;
+	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset_stab;
 	poset_classification::poset_classification *Gen_stab;
 
 	poset_classification::poset_classification_control *Control2;
-	poset_classification::poset_with_group_action *Poset2;
+	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset2;
 	poset_classification::poset_classification *Gen2;
 	int *is_allowed;
 
@@ -801,7 +801,7 @@ public:
 
 	int m; // Witt index
 
-	poset_classification::poset_with_group_action *Poset;
+	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset;
 	poset_classification::poset_classification *gen;
 
 
@@ -903,7 +903,7 @@ public:
 
 	algebra::linear_algebra::vector_space *VS;
 	poset_classification::poset_classification_control *Control;
-	poset_classification::poset_with_group_action *Poset;
+	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset;
 	poset_classification::poset_classification *Gen;
 
 	int schreier_depth;
@@ -994,7 +994,7 @@ public:
 	geometry::other_geometry::incidence_structure *Inc; // do not free
 	actions::action *A; // do not free
 	poset_classification::poset_classification_control *Control;
-	poset_classification::poset_with_group_action *Poset;
+	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset;
 	poset_classification::poset_classification *gen;
 
 	other::data_structures::fancy_set *Line_intersections; // [Inc->nb_cols]
@@ -1121,7 +1121,7 @@ public:
 	group_constructions::wreath_product *W;
 	algebra::linear_algebra::vector_space *VS;
 	poset_classification::poset_classification_control *Control;
-	poset_classification::poset_with_group_action *Poset;
+	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset;
 	poset_classification::poset_classification *Gen;
 	int vector_space_dimension;
 	int *v; // [vector_space_dimension]

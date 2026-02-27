@@ -15,7 +15,6 @@ namespace layer4_classification {
 namespace poset_classification {
 
 
-static void print_coset_table(coset_table_entry *coset_table, int len);
 
 upstep_work::upstep_work()
 {
@@ -193,45 +192,45 @@ void upstep_work::handle_extension(
 		cout << "upstep_work::handle_extension verbose_level = "
 				<< verbose_level << endl;
 		cout << "prev=" << prev << " prev_ex=" << prev_ex << endl;
-		}
+	}
 	pt = O_prev->get_E(prev_ex)->get_pt();
 	type = O_prev->get_E(prev_ex)->get_type();
 
 	if (f_v) {
 		gen->print_level_extension_info(size, prev, prev_ex);
 		cout << "type ";
-		print_extension_type(cout, type);
+		gen->print_extension_type(cout, type);
 		cout << endl;
-		}
+	}
 
 	if (type == EXTENSION_TYPE_FUSION) {
 		if (f_v) {
 			cout << "upstep_work::handle_extension fusion type" << endl;
-			}
+		}
 		handle_extension_fusion_type(verbose_level - 2);	
 		nb_fuse_cur++;
-		}
+	}
 	else if (type == EXTENSION_TYPE_UNPROCESSED) {
 		if (f_v) {
 			cout << "upstep_work::handle_extension unprocessed type" << endl;
-			}
+		}
 		handle_extension_unprocessed_type(verbose_level);
 		nb_ext_cur++;
-		}
+	}
 	else {
 		gen->print_level_extension_info(size, prev, prev_ex);
 		cout << endl;
 		cout << "upstep_work::handle_extension extension "
 				"not of unprocessed type, error" << endl;
 		cout << "type is ";
-		print_extension_type(cout, type);
+		gen->print_extension_type(cout, type);
 		cout << endl;
 		exit(1);
-		}
+	}
 	if (f_v) {
 		cout << "upstep_work::handle_extension prev=" << prev
 				<< " prev_ex=" << prev_ex << " done" << endl;
-		}
+	}
 }
 
 void upstep_work::handle_extension_fusion_type(
@@ -248,7 +247,7 @@ void upstep_work::handle_extension_fusion_type(
 	if (f_v) {
 		print_level_extension_info();
 		cout << "upstep_work::handle_extension_fusion_type" << endl;
-		}		
+	}
 	if (f_vv) {
 		long int *set;
 		set = NEW_lint(size + 1);
@@ -271,7 +270,7 @@ void upstep_work::handle_extension_fusion_type(
 			if (gen->f_print_function) {
 				(*gen->print_function)(cout, size + 1,
 						gen->S1, gen->print_function_data);
-				}
+			}
 			gen->generator_apply_isomorphism_no_transporter(
 				size, size + 1, prev, prev_ex, 
 				gen->S1, gen->S2, 
@@ -284,10 +283,10 @@ void upstep_work::handle_extension_fusion_type(
 			if (gen->f_print_function) {
 				(*gen->print_function)(cout, size + 1,
 						gen->S2, gen->print_function_data);
-				}
 			}
-#endif
 		}
+#endif
+	}
 }
 
 void upstep_work::handle_extension_unprocessed_type(
@@ -316,7 +315,7 @@ void upstep_work::handle_extension_unprocessed_type(
 		cout << "upstep_work::handle_extension_unprocessed_type "
 				"extension not of unprocessed type, error" << endl;
 		cout << "type is ";
-		print_extension_type(cout, type);
+		gen->print_extension_type(cout, type);
 		cout << endl;
 		exit(1);
 	}
@@ -680,7 +679,7 @@ int upstep_work::init_extension_node(
 	if (f_v) {
 		algebra::ring_theory::longinteger_object go;
 		
-		gen->stabilizer_order(cur, go);
+		gen->get_Poo()->stabilizer_order(cur, go);
 		gen->print_level_extension_info(size - 1, prev, prev_ex);
 		Lint_vec_print(cout, gen->get_S(), size);
 		cout << "_{";
@@ -1015,7 +1014,46 @@ void upstep_work::print_level_extension_coset_info()
 
 
 
-static void print_coset_table(coset_table_entry *coset_table, int len)
+const char *upstep_work::trace_result_as_text(
+		trace_result r)
+{
+	if (r == found_automorphism) {
+		return "found_automorphism";
+	}
+	else if (r == not_canonical) {
+		return "not_canonical";
+	}
+	else if (r == no_result_extension_not_found) {
+		return "no_result_extension_not_found";
+	}
+	else if (r == no_result_fusion_node_installed) {
+		return "no_result_fusion_node_installed";
+	}
+	else if (r == no_result_fusion_node_already_installed) {
+		return "no_result_fusion_node_already_installed";
+	}
+	else {
+		return "unkown trace result";
+	}
+}
+
+int upstep_work::trace_result_is_no_result(
+		trace_result r)
+{
+	if (r == no_result_extension_not_found ||
+		r == no_result_fusion_node_installed ||
+		r == no_result_fusion_node_already_installed) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+
+
+void upstep_work::print_coset_table(
+		coset_table_entry *coset_table, int len)
 {
 	int i;
 	
@@ -1030,8 +1068,7 @@ static void print_coset_table(coset_table_entry *coset_table, int len)
 			<< coset_table[i].nb_times_mult_called << "/" 
 			<< coset_table[i].nb_times_invert_called << "/" 
 			<< coset_table[i].nb_times_retrieve_called << ") : " 
-			<< setw(5) << trace_result_as_text((trace_result)
-					coset_table[i].type) << endl;
+			<< setw(5) << trace_result_as_text((trace_result) coset_table[i].type) << endl;
 	}
 }
 

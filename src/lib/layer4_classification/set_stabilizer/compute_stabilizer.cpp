@@ -163,7 +163,7 @@ void compute_stabilizer::init(
 
 	int size;
 
-	SubSt->SubC->PC->get_set(
+	SubSt->SubC->PC->get_Poo()->get_set(
 			SubSt->SubC->substructure_size,
 			SubSt->selected_orbit,
 			canonical_pts,
@@ -1422,7 +1422,19 @@ void compute_stabilizer::report(
 
 	poset_classification::poset_classification_report_options Opt;
 
-	SubSt->SubC->PC->report2(ost, &Opt, 0 /* verbose_level */);
+	//SubSt->SubC->PC->report2(ost, &Opt, 0 /* verbose_level */);
+
+
+	poset_classification::pc_latex_interface Pc_latex_interface;
+
+	Pc_latex_interface.init(
+			SubSt->SubC->PC,
+			SubSt->SubC->PC->get_depth(),
+			&Opt /*poset_classification_report_options *Opt*/,
+			0 /* verbose_level */);
+
+	Pc_latex_interface.report2(ost, 0 /* verbose_level */);
+
 
 }
 

@@ -2794,7 +2794,7 @@ int flag_orbit_folding::handle_extension_database(
 			Lint_vec_print(cout, canonical_set, Iso->size);
 			cout << endl;
 		}
-		next_node_global = Iso->Sub->gen->find_poset_orbit_node_for_set(cur_level + 1,
+		next_node_global = Iso->Sub->gen->get_Poo()->find_poset_orbit_node_for_set(cur_level + 1,
 				canonical_set, false /*f_tolerant*/, 0);
 		if (f_vv) {
 			cout << "iso_node " << iso_nodes
@@ -2954,7 +2954,7 @@ int flag_orbit_folding::handle_extension_tree(
 					<< " flag_orbit_folding::handle_extension_tree "
 					<< " before gen->find_oracle_node_for_set" << endl;
 		}
-		next_node_global = Iso->Sub->gen->find_poset_orbit_node_for_set(
+		next_node_global = Iso->Sub->gen->get_Poo()->find_poset_orbit_node_for_set(
 				cur_level + 1, canonical_set, false /*f_tolerant*/,
 				verbose_level);
 		if (f_vv) {

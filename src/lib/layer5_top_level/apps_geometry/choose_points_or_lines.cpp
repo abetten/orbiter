@@ -203,7 +203,7 @@ void choose_points_or_lines::compute_orbits(
 	Control->f_depth = true;
 	Control->depth = nb_points_or_lines;
 
-	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
+	Poset = NEW_OBJECT(layer3_group_actions::combinatorics_with_groups::poset_with_group_action);
 	Poset->init_subset_lattice(A, A2, Strong_gens, verbose_level);
 
 	gen->initialize_and_allocate_root_node(Control, Poset,
@@ -242,7 +242,7 @@ void choose_points_or_lines::compute_orbits(
 		cout << "choose_points_or_lines::compute_orbits "
 				<< label << " done with poset_classification_main" << endl;
 	}
-	nb_orbits = gen->nb_orbits_at_level(nb_points_or_lines);
+	nb_orbits = gen->get_Poo()->nb_orbits_at_level(nb_points_or_lines);
 
 	if (f_v) {
 		cout << "choose_points_or_lines::compute_orbits "

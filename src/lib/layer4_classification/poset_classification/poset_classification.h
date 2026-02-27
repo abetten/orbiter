@@ -32,7 +32,7 @@ namespace poset_classification {
 class classification_base_case {
 
 public:
-	poset_with_group_action *Poset;
+	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset;
 
 	int size;
 	long int *orbit_rep; // [size]
@@ -48,7 +48,7 @@ public:
 	classification_base_case();
 	~classification_base_case();
 	void init(
-			poset_with_group_action *Poset,
+			layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset,
 			int size, long int *orbit_rep,
 			long int *live_points, int nb_live_points,
 			groups::strong_generators *Stab_gens,
@@ -125,71 +125,7 @@ public:
 };
 
 
-void print_extension_type(
-		std::ostream &ost, int t);
 
-
-// #############################################################################
-// orbit_based_testing.cpp
-// #############################################################################
-
-
-#define MAX_CALLBACK 100
-
-
-//! maintains a list of test functions which define a G-invariant poset
-
-class orbit_based_testing {
-
-public:
-
-	poset_classification *PC;
-	int max_depth;
-	long int *local_S; // [max_depth]
-	int nb_callback;
-	int (*callback_testing[MAX_CALLBACK])(orbit_based_testing *Obt,
-			long int *S, int len, void *data, int verbose_level);
-	void *callback_data[MAX_CALLBACK];
-
-	int nb_callback_no_group;
-	void (*callback_testing_no_group[MAX_CALLBACK])(
-			long int *S, int len,
-			long int *candidates, int nb_candidates,
-			long int *good_candidates, int &nb_good_candidates,
-			void *data, int verbose_level);
-	void *callback_data_no_group[MAX_CALLBACK];
-
-	orbit_based_testing();
-	~orbit_based_testing();
-	void init(
-			poset_classification *PC,
-			int max_depth,
-			int verbose_level);
-	void add_callback(
-			int (*func)(orbit_based_testing *Obt,
-					long int *S, int len,
-					void *data, int verbose_level),
-			void *data,
-			int verbose_level);
-	void add_callback_no_group(
-			void (*func)(long int *S, int len,
-					long int *candidates, int nb_candidates,
-					long int *good_candidates,
-					int &nb_good_candidates,
-					void *data, int verbose_level),
-			void *data,
-			int verbose_level);
-	void early_test_func(
-		long int *S, int len,
-		long int *candidates, int nb_candidates,
-		long int *good_candidates, int &nb_good_candidates,
-		int verbose_level);
-	void early_test_func_by_using_group(
-		long int *S, int len,
-		long int *candidates, int nb_candidates,
-		long int *good_candidates, int &nb_good_candidates,
-		int verbose_level);
-};
 
 
 // #############################################################################
@@ -250,6 +186,268 @@ public:
 			int *transporter, int &orbit_at_level,
 			int verbose_level);
 
+
+
+};
+
+
+
+// #############################################################################
+// pc_combinatorics.cpp
+// #############################################################################
+
+//! structure constants associated to the poset of orbits
+
+
+class pc_combinatorics {
+
+public:
+
+	poset_classification *PC;
+
+	pc_combinatorics();
+	~pc_combinatorics();
+	void init(
+			poset_classification *PC,
+			int verbose_level);
+	void compute_Kramer_Mesner_matrix(
+			int t, int k,
+			int verbose_level);
+	void Plesken_matrix_up(
+			int depth,
+		int *&P, int &N, int verbose_level);
+	void Plesken_matrix_down(
+			int depth,
+		int *&P, int &N, int verbose_level);
+	void Plesken_submatrix_up(
+			int i, int j,
+		int *&Pij, int &N1, int &N2, int verbose_level);
+	void Plesken_submatrix_down(
+			int i, int j,
+		int *&Pij, int &N1, int &N2, int verbose_level);
+	int count_incidences_up(
+			int lvl1, int po1,
+		int lvl2, int po2, int verbose_level);
+	int count_incidences_down(
+			int lvl1,
+		int po1, int lvl2, int po2, int verbose_level);
+	void Asup_to_Ainf(
+			int t, int k,
+		long int *M_sup, long int *&M_inf,
+		int verbose_level);
+	void test_for_multi_edge_in_classification_graph(
+		int depth, int verbose_level);
+	void Kramer_Mesner_matrix_neighboring(
+			int level, long int *&M,
+			int &nb_rows, int &nb_cols, int verbose_level);
+	void Mtk_via_Mtr_Mrk(
+			int t, int r, int k,
+			long int *Mtr, long int *Mrk, long int *&Mtk,
+			int nb_r1, int nb_c1, int nb_r2, int nb_c2,
+			int &nb_r3, int &nb_c3,
+			int verbose_level);
+	// Computes $M_{tk}$ via a recursion formula:
+	// $M_{tk} = {{k - t} \choose {k - r}} \cdot M_{t,r} \cdot M_{r,k}$.
+	void Mtk_from_MM(
+			long int **pM,
+		int *Nb_rows, int *Nb_cols,
+		int t, int k,
+		long int *&Mtk, int &nb_r, int &nb_c,
+		int verbose_level);
+	void pair_relations_within_orbit(
+			int lvl, int po, int *&M, int &ol,
+			int verbose_level);
+
+};
+
+
+
+// #############################################################################
+// pc_convert_data_structure.cpp
+// #############################################################################
+
+//! converting from poset_classification to other types of data structures
+
+
+class pc_convert_data_structure {
+
+public:
+
+	poset_classification *PC;
+
+	pc_convert_data_structure();
+	~pc_convert_data_structure();
+	void init(
+			poset_classification *PC,
+			int verbose_level);
+
+	void make_flag_orbits_on_relations(
+			int depth,
+			std::string &fname_prefix, int verbose_level);
+	void make_factor_poset(
+			int depth,
+			//combinatorics::graph_theory::layered_graph *&LG,
+		int data1, double x_stretch,
+		layer1_foundations::combinatorics::graph_theory::factor_poset *&Factor_poset,
+		int type_of_poset,
+		int verbose_level);
+		// Draws the full poset: each element of each orbit is drawn.
+		// The orbits are indicated by grouping the elements closer together.
+		// Uses int_vec_sort_and_test_if_contained to test containment relation.
+		// This is only good for actions on sets, not for actions on subspaces
+	void make_full_poset_graph_edges(
+			layer1_foundations::combinatorics::graph_theory::factor_poset *Factor_poset,
+			other::data_structures::set_of_sets *All_orbits,
+			int type_of_poset,
+			int verbose_level);
+	void make_full_poset_graph_vertex_labels(
+			layer1_foundations::combinatorics::graph_theory::factor_poset *Factor_poset,
+			other::data_structures::set_of_sets *All_orbits,
+			int verbose_level);
+	void make_auxiliary_graph(
+			int depth,
+			combinatorics::graph_theory::layered_graph *&LG, int data1,
+		int verbose_level);
+		// makes a graph of the poset of orbits with 2 * depth + 1 layers.
+		// The middle layers represent the flag orbits.
+	void make_graph(
+			int depth, combinatorics::graph_theory::layered_graph *&LG,
+		int data1, int f_tree, int verbose_level);
+		// makes a graph  of the poset of orbits with depth + 1 layers.
+	void make_level_graph(
+			int depth,
+			combinatorics::graph_theory::layered_graph *&LG,
+		int data1, int level, int verbose_level);
+		// makes a graph with 4 levels showing the relation between
+		// orbits at level 'level' and orbits at level 'level' + 1
+	void make_poset_graph_detailed(
+			combinatorics::graph_theory::layered_graph *&LG,
+		int data1, int max_depth, int verbose_level);
+		// creates the poset graph, with two middle layers at each level.
+		// In total, the graph that is created will have 3 * depth + 1 layers.
+	void make_spreadsheet_of_level_info(
+			other::data_structures::spreadsheet *&Sp, int max_depth,
+			int verbose_level);
+
+};
+
+
+// #############################################################################
+// pc_latex_interface.cpp
+// #############################################################################
+
+//! latex interface for poset_classification
+
+
+class pc_latex_interface {
+
+public:
+
+	poset_classification *PC;
+
+	int lvl;
+
+	poset_classification_report_options *Opt;
+	other::graphics::draw_options *Draw_options;
+
+	std::string fname;
+	std::string fname_latex;
+
+
+	pc_latex_interface();
+	~pc_latex_interface();
+	void init(
+			poset_classification *PC,
+			int lvl,
+			poset_classification_report_options *Opt,
+			int verbose_level);
+
+	void report(
+			//poset_classification_report_options *Opt,
+			int verbose_level);
+	void report2(
+			std::ostream &ost,
+			//poset_classification_report_options *Opt,
+			int verbose_level);
+	void report_orbits_in_detail(
+			std::ostream &ost,
+			//poset_classification_report_options *Opt,
+			int verbose_level);
+	void report_number_of_orbits_at_level(
+			std::ostream &ost,
+			//poset_classification_report_options *Opt,
+			int verbose_level);
+	void report_orbits_summary(
+			std::ostream &ost,
+			//poset_classification_report_options *Opt,
+			int verbose_level);
+	void report_poset_of_orbits(
+			std::ostream &ost,
+			//poset_classification_report_options *Opt,
+			int verbose_level);
+	void report_orbit(
+			int level, int orbit_at_level,
+			//poset_classification_report_options *Opt,
+			std::ostream &ost, int verbose_level);
+	void print_data_structure_tex(
+			int depth, int verbose_level);
+
+};
+
+
+
+
+
+
+// #############################################################################
+// pc_tree_interface.cpp
+// #############################################################################
+
+//! drawing the poset from the poset_classification in tree form
+
+
+class pc_tree_interface {
+
+public:
+
+	poset_classification *PC;
+
+	int lvl;
+
+	other::graphics::tree_draw_options *Tree_draw_options;
+	other::graphics::draw_options *Draw_options;
+
+	std::string fname;
+	std::string fname_tree;
+
+	pc_tree_interface();
+	~pc_tree_interface();
+	void init(
+			poset_classification *PC,
+			int lvl,
+			other::graphics::draw_options *Draw_options,
+			int verbose_level);
+	int write_treefile(
+			int lvl,
+		int verbose_level);
+	void draw_tree(
+			int lvl,
+		int xmax, int ymax, int rad, int f_embedded,
+		int f_sideways, int verbose_level);
+	void draw_tree_low_level(
+			int nb_nodes,
+		int *coord_xyw, int *perm, int *perm_inv,
+		int f_draw_points, int f_draw_extension_points,
+		int f_draw_aut_group_order,
+		int xmax, int ymax, int rad, int f_embedded,
+		int f_sideways,
+		int verbose_level);
+	void draw_tree_low_level1(
+			other::graphics::mp_graphics &G, int nb_nodes,
+		int *coords, int *perm, int *perm_inv,
+		int f_draw_points, int f_draw_extension_points,
+		int f_draw_aut_group_order,
+		int radius, int verbose_level);
 
 
 };
@@ -328,6 +526,10 @@ public:
 
 	std::vector<std::string> recognize;
 
+	int f_pair_relations_within_orbit;
+	int pair_relations_within_orbit_idx;
+
+	int f_export_orbits_long;
 
 	poset_classification_activity_description();
 	~poset_classification_activity_description();
@@ -527,7 +729,7 @@ private:
 		// Control->path + Control->problem_label
 
 	
-	poset_with_group_action *Poset;
+	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset;
 
 
 	int f_base_case;
@@ -592,7 +794,7 @@ public:
 	long int *get_set3();
 	int allowed_to_show_group_elements();
 	int do_group_extension_in_upstep();
-	poset_with_group_action *get_poset();
+	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *get_poset();
 	poset_classification_control *get_control();
 	actions::action *get_A();
 	actions::action *get_A2();
@@ -609,146 +811,25 @@ public:
 			int node_idx);
 	int max_number_of_orbits_to_print();
 	int max_number_of_points_to_print_in_orbit();
-	void invoke_early_test_func(
-			long int *the_set, int lvl,
-			long int *candidates,
-			int nb_candidates,
-			long int *good_candidates,
-			int &nb_good_candidates,
-			int verbose_level);
-	int nb_orbits_at_level(
-			int level);
-	long int nb_flag_orbits_up_at_level(
-			int level);
-	poset_orbit_node *get_node_ij(
-			int level, int node);
-	int poset_structure_is_contained(
-			long int *set1, int sz1,
-		long int *set2, int sz2, int verbose_level);
-	data_structures_groups::orbit_transversal
-		*get_orbit_transversal(
-			int level, int verbose_level);
-	int test_if_stabilizer_is_trivial(
-			int level, int orbit_at_level, int verbose_level);
-	data_structures_groups::set_and_stabilizer
-		*get_set_and_stabilizer(
-				int level,
-		int orbit_at_level, int verbose_level);
-	void get_set_by_level(
-			int level, int node, long int *set);
-	void get_set(
-			int node, long int *set, int &size);
-	void get_set(
-			int level, int orbit, long int *set, int &size);
-	
-	int find_poset_orbit_node_for_set(
-			int len, long int *set,
-		int f_tolerant, int verbose_level);
-	int find_poset_orbit_node_for_set_basic(
-			int from,
-		int node, int len, long int *set, int f_tolerant,
-		int verbose_level);
-	long int count_extension_nodes_at_level(
-			int lvl);
-	double level_progress(
-			int lvl);
-	void stabilizer_order(
-			int node, algebra::ring_theory::longinteger_object &go);
-	void orbit_length(
-			int orbit_at_level, int level,
-			algebra::ring_theory::longinteger_object &len);
-	void get_orbit_length_and_stabilizer_order(
-			int node, int level,
-			algebra::ring_theory::longinteger_object &stab_order,
-			algebra::ring_theory::longinteger_object &len);
-	int orbit_length_as_int(
-			int orbit_at_level, int level);
-	void recreate_schreier_vectors_up_to_level(
-			int lvl,
-		int verbose_level);
-	void recreate_schreier_vectors_at_level(
-			int level,
-		int verbose_level);
-	void find_node_by_stabilizer_order(
-			int level, int order, int verbose_level);
-	void get_all_stabilizer_orders_at_level(
-			int level,
-			long int *&Ago, int &nb, int verbose_level);
-	void get_stabilizer_order(
-			int level, int orbit_at_level,
-			algebra::ring_theory::longinteger_object &go);
-	long int get_stabilizer_order_lint(
-			int level,
-			int orbit_at_level);
-	void get_stabilizer_group(
-			data_structures_groups::group_container *&G,
-		int level, int orbit_at_level, int verbose_level);
-	void get_stabilizer_generators_cleaned_up(
-			groups::strong_generators *&gens,
-		int level, int orbit_at_level, int verbose_level);
-	void get_stabilizer_generators(
-			groups::strong_generators *&gens,
-		int level, int orbit_at_level, int verbose_level);
-	void orbit_element_unrank(
-			int depth, int orbit_idx,
-		long int rank, long int *set, int verbose_level);
-	void orbit_element_rank(
-			int depth, int &orbit_idx,
-		long int &rank, long int *set,
-		int verbose_level);
-	void coset_unrank(
-			int depth, int orbit_idx, long int rank,
-		int *Elt, int verbose_level);
-	long int coset_rank(
-			int depth, int orbit_idx, int *Elt,
-		int verbose_level);
-	void map_to_canonical_k_subset(
-			long int *the_set, int set_size,
-		int subset_size, int subset_rk, 
-		long int *reduced_set, int *transporter, int &local_idx,
-		int verbose_level);
-		// fills reduced_set[set_size - subset_size], 
-		// transporter and local_idx
-		// local_idx is the index of the orbit that the 
-		// subset belongs to 
-		// (in the list of orbit of subsets of size subset_size)
-	void get_representative_of_subset_orbit(
-			long int *set, int size,
-		int local_orbit_no, 
-		groups::strong_generators *&Strong_gens,
-		int verbose_level);
-	void get_orbit_representatives(
-			int level, int &nb_orbits,
-		long int *&Orbit_reps, int verbose_level);
-	void unrank_point(
-			int *v, long int rk);
-	long int rank_point(
-			int *v);
-	void unrank_basis(
-			int *Basis, long int *S, int len);
-	void rank_basis(
-			int *Basis, long int *S, int len);
-	void get_all_orbits(
-			other::data_structures::set_of_sets *&All_orbits,
-			int *&Nb_orbits,
-			int &nb_orbits_total,
-			int verbose_level);
+	void print_extension_type(
+			std::ostream &ost, int t);
+
 
 	// poset_classification_init.cpp:
 	poset_classification();
 	~poset_classification();
 	void init_internal(
 		poset_classification_control *PC_control,
-		poset_with_group_action *Poset,
+		layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset,
 		int sz, int verbose_level);
 	void initialize_and_allocate_root_node(
 		poset_classification_control *PC_control,
-		poset_with_group_action *Poset,
+		layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset,
 		int depth, 
 		int verbose_level);
 	void initialize_with_base_case(
 		poset_classification_control *PC_control,
-		poset_with_group_action *Poset,
+		layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset,
 		int depth,
 		classification_base_case *Base_case,
 		int verbose_level);
@@ -762,7 +843,7 @@ public:
 	void compute_orbits_on_subsets(
 		int target_depth,
 		poset_classification_control *PC_control,
-		poset_with_group_action *Poset,
+		layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset,
 		int verbose_level);
 	int poset_classification_main(
 			int t0,
@@ -787,9 +868,6 @@ public:
 			int verbose_level);
 			// returns the last level that has at least one orbit
 	//void post_processing(int actual_size, int verbose_level);
-	void recognize(
-			std::string &set_to_recognize,
-			int h, int nb_to_recognize, int verbose_level);
 	void extend_level(
 			int size,
 		int f_create_schreier_vector, 
@@ -832,45 +910,6 @@ public:
 			std::string &fname, int depth);
 	void draw_poset_fname_base_poset_detailed_lvl(
 			std::string &fname, int depth);
-	void draw_poset_fname_aux_poset(
-			std::string &fname, int depth);
-	void draw_poset_fname_poset(
-			std::string &fname, int depth);
-	void draw_poset_fname_tree(
-			std::string &fname, int depth);
-	void draw_poset_fname_poset_detailed(
-			std::string &fname, int depth);
-	void write_treefile(
-			std::string &fname_base,
-		int lvl,
-		other::graphics::draw_options *draw_options,
-		int verbose_level);
-	int write_treefile(
-			std::string &fname_base, int lvl,
-		int verbose_level);
-	void draw_tree(
-			std::string &fname_base, int lvl,
-			other::graphics::tree_draw_options *Tree_draw_options,
-			other::graphics::draw_options *Draw_options,
-		int xmax, int ymax, int rad, int f_embedded,
-		int f_sideways, int verbose_level);
-	void draw_tree_low_level(
-			std::string &fname,
-			other::graphics::tree_draw_options *Tree_draw_options,
-			other::graphics::draw_options *Draw_options,
-			int nb_nodes,
-		int *coord_xyw, int *perm, int *perm_inv, 
-		int f_draw_points, int f_draw_extension_points,
-		int f_draw_aut_group_order,
-		int xmax, int ymax, int rad, int f_embedded,
-		int f_sideways,
-		int verbose_level);
-	void draw_tree_low_level1(
-			other::graphics::mp_graphics &G, int nb_nodes,
-		int *coords, int *perm, int *perm_inv, 
-		int f_draw_points, int f_draw_extension_points, 
-		int f_draw_aut_group_order, 
-		int radius, int verbose_level);
 	void draw_poset_full(
 			std::string &fname_base,
 			int depth, int data,
@@ -886,52 +925,6 @@ public:
 			int depth, int data, int level,
 			other::graphics::draw_options *LG_Draw_options,
 			int verbose_level);
-	void make_flag_orbits_on_relations(
-			int depth,
-			std::string &fname_prefix, int verbose_level);
-	void make_full_poset_graph(
-			int depth,
-			//combinatorics::graph_theory::layered_graph *&LG,
-		int data1, double x_stretch, 
-		layer1_foundations::combinatorics::graph_theory::factor_poset *&Factor_poset,
-		int type_of_poset,
-		int verbose_level);
-		// Draws the full poset: each element of each orbit is drawn.
-		// The orbits are indicated by grouping the elements closer together.
-		// Uses int_vec_sort_and_test_if_contained to test containment relation.
-		// This is only good for actions on sets, not for actions on subspaces
-	void make_full_poset_graph_edges(
-			layer1_foundations::combinatorics::graph_theory::factor_poset *Factor_poset,
-			other::data_structures::set_of_sets *All_orbits,
-			int type_of_poset,
-			int verbose_level);
-	void make_full_poset_graph_vertex_labels(
-			layer1_foundations::combinatorics::graph_theory::factor_poset *Factor_poset,
-			other::data_structures::set_of_sets *All_orbits,
-			int verbose_level);
-	void make_auxiliary_graph(
-			int depth,
-			combinatorics::graph_theory::layered_graph *&LG, int data1,
-		int verbose_level);
-		// makes a graph of the poset of orbits with 2 * depth + 1 layers.
-		// The middle layers represent the flag orbits.
-	void make_graph(
-			int depth, combinatorics::graph_theory::layered_graph *&LG,
-		int data1, int f_tree, int verbose_level);
-		// makes a graph  of the poset of orbits with depth + 1 layers.
-	void make_level_graph(
-			int depth,
-			combinatorics::graph_theory::layered_graph *&LG,
-		int data1, int level, int verbose_level);
-		// makes a graph with 4 levels showing the relation between
-		// orbits at level 'level' and orbits at level 'level' + 1
-	void make_poset_graph_detailed(
-			combinatorics::graph_theory::layered_graph *&LG,
-		int data1, int max_depth, int verbose_level);
-		// creates the poset graph, with two middle layers at each level.
-		// In total, the graph that is created will have 3 * depth + 1 layers.
-	void print_data_structure_tex(
-			int depth, int verbose_level);
 
 
 	// in poset_classification_io.cpp:
@@ -1029,16 +1022,10 @@ public:
 	void make_fname_lvl_reps_file(
 			std::string &fname,
 			std::string &fname_base, int lvl);
+#if 0
 	void log_current_node(
 			std::ostream &f, int size);
-#if 0
-	void make_spreadsheet_of_orbit_reps(
-			other::data_structures::spreadsheet *&Sp,
-		int max_depth);
 #endif
-	void make_spreadsheet_of_level_info(
-			other::data_structures::spreadsheet *&Sp,
-		int max_depth, int verbose_level);
 
 	void create_schreier_tree_fname_mask_base(
 			std::string &fname_mask);
@@ -1053,11 +1040,6 @@ public:
 	void wedge_product_export_magma(
 			int n, int q, int vector_space_dimension,
 			int level, int verbose_level);
-	void write_reps_csv(
-			int lvl, int verbose_level);
-	void write_reps_csv_fname(
-			std::string &fname,
-			int lvl, int verbose_level);
 	void export_something(
 			std::string &what, int data1,
 			std::string &fname, int verbose_level);
@@ -1065,38 +1047,14 @@ public:
 			std::string &what, int data1,
 			std::string &fname,
 			int verbose_level);
+	std::string make_fname_for_representatives_at_level(
+			int lvl);
+	void write_representatives_at_level_csv(
+			int lvl, int verbose_level);
+	void write_representatives_at_level_csv_fname(
+			std::string &fname,
+			int lvl, int verbose_level);
 
-
-
-	// in poset_classification_report.cpp:
-	void report(
-			poset_classification_report_options *Opt,
-			int verbose_level);
-	void report2(
-			std::ostream &ost,
-			poset_classification_report_options *Opt,
-			int verbose_level);
-	void report_orbits_in_detail(
-			std::ostream &ost,
-			poset_classification_report_options *Opt,
-			int verbose_level);
-	void report_number_of_orbits_at_level(
-			std::ostream &ost,
-			poset_classification_report_options *Opt,
-			int verbose_level);
-	void report_orbits_summary(
-			std::ostream &ost,
-			poset_classification_report_options *Opt,
-			int verbose_level);
-	void report_poset_of_orbits(
-			std::ostream &ost,
-			poset_classification_report_options *Opt,
-			int verbose_level);
-	void report_orbit(
-			int level, int orbit_at_level,
-			poset_classification_report_options *Opt,
-			std::ostream &ost,
-			int verbose_level);
 
 	// poset_classification_trace.cpp:
 	int find_isomorphism(
@@ -1149,11 +1107,6 @@ public:
 
 };
 
-
-const char *trace_result_as_text(
-		trace_result r);
-int trace_result_is_no_result(
-		trace_result r);
 
 
 
@@ -1239,50 +1192,20 @@ public:
 		int depth, int orbit_idx,
 		long int *&Orbit, int &orbit_length,
 		int verbose_level);
-	void compute_Kramer_Mesner_matrix(
-			int t, int k,
+	void recognize(
+			std::string &set_to_recognize,
+			int h, int nb_to_recognize,
 			int verbose_level);
-	void Plesken_matrix_up(
-			int depth,
-		int *&P, int &N, int verbose_level);
-	void Plesken_matrix_down(
-			int depth,
-		int *&P, int &N, int verbose_level);
-	void Plesken_submatrix_up(
-			int i, int j,
-		int *&Pij, int &N1, int &N2, int verbose_level);
-	void Plesken_submatrix_down(
-			int i, int j,
-		int *&Pij, int &N1, int &N2, int verbose_level);
-	int count_incidences_up(
-			int lvl1, int po1,
-		int lvl2, int po2, int verbose_level);
-	int count_incidences_down(
-			int lvl1,
-		int po1, int lvl2, int po2, int verbose_level);
-	void Asup_to_Ainf(
-			int t, int k,
-		long int *M_sup, long int *&M_inf,
-		int verbose_level);
-	void test_for_multi_edge_in_classification_graph(
-		int depth, int verbose_level);
-	void Kramer_Mesner_matrix_neighboring(
-			int level, long int *&M,
-			int &nb_rows, int &nb_cols, int verbose_level);
-	void Mtk_via_Mtr_Mrk(
-			int t, int r, int k,
-			long int *Mtr, long int *Mrk, long int *&Mtk,
-			int nb_r1, int nb_c1, int nb_r2, int nb_c2,
-			int &nb_r3, int &nb_c3,
-			int verbose_level);
-	// Computes $M_{tk}$ via a recursion formula:
-	// $M_{tk} = {{k - t} \choose {k - r}} \cdot M_{t,r} \cdot M_{r,k}$.
-	void Mtk_from_MM(
-			long int **pM,
-		int *Nb_rows, int *Nb_cols,
-		int t, int k,
-		long int *&Mtk, int &nb_r, int &nb_c,
-		int verbose_level);
+	void orbits_on_k_sets(
+			layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset,
+			poset_classification_control *Control,
+			int k, long int *&orbit_reps,
+			int &nb_orbits, int verbose_level);
+	poset_classification *orbits_on_k_sets_compute(
+			layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset,
+			poset_classification_control *Control,
+			int k, int verbose_level);
+
 
 	// poset_classification_global_export_source_code.cpp:
 	void generate_source_code(
@@ -1418,6 +1341,8 @@ public:
 			int level);
 	long int nb_flag_orbits_up_at_level(
 			int level);
+	void node_to_lvl_po(
+			int node_idx, int &level, int &po);
 	poset_orbit_node *get_node_ij(
 			int level, int node);
 	int node_get_nb_of_extensions(
@@ -1524,6 +1449,116 @@ public:
 	void get_set_orbits_at_level(
 			int lvl, other::data_structures::set_of_sets *&SoS,
 			int verbose_level);
+	int find_poset_orbit_node_for_set_basic(
+			int from,
+			int node, int len, long int *set, int f_tolerant,
+			int verbose_level);
+	int find_poset_orbit_node_for_set(
+			int len,
+			long int *set, int f_tolerant, int verbose_level);
+	// finds the node that represents s_0,...,s_{len - 1}
+
+	data_structures_groups::orbit_transversal
+		*get_orbit_transversal(
+			int level, int verbose_level);
+	int test_if_stabilizer_is_trivial(
+			int level, int orbit_at_level, int verbose_level);
+	data_structures_groups::set_and_stabilizer
+		*get_set_and_stabilizer(
+				int level,
+		int orbit_at_level, int verbose_level);
+	void get_set_by_level(
+			int level, int node, long int *set);
+	void stabilizer_order(
+			int node, algebra::ring_theory::longinteger_object &go);
+	void orbit_length(
+			int orbit_at_level, int level,
+			algebra::ring_theory::longinteger_object &len);
+	void get_orbit_length_and_stabilizer_order(
+			int node, int level,
+			algebra::ring_theory::longinteger_object &stab_order,
+			algebra::ring_theory::longinteger_object &len);
+	int orbit_length_as_int(
+			int orbit_at_level, int level);
+	void recreate_schreier_vectors_up_to_level(
+			int lvl,
+		int verbose_level);
+	void recreate_schreier_vectors_at_level(
+			int level,
+		int verbose_level);
+	void find_node_by_stabilizer_order(
+			int level, int order, int verbose_level);
+	void get_all_stabilizer_orders_at_level(
+			int level,
+			long int *&Ago, int &nb, int verbose_level);
+	void get_stabilizer_order(
+			int level, int orbit_at_level,
+			algebra::ring_theory::longinteger_object &go);
+	long int get_stabilizer_order_lint(
+			int level,
+			int orbit_at_level);
+	void get_stabilizer_group(
+			data_structures_groups::group_container *&G,
+		int level, int orbit_at_level, int verbose_level);
+	void get_stabilizer_generators_cleaned_up(
+			groups::strong_generators *&gens,
+		int level, int orbit_at_level, int verbose_level);
+	void get_stabilizer_generators(
+			groups::strong_generators *&gens,
+		int level, int orbit_at_level, int verbose_level);
+	void orbit_element_unrank(
+			int depth, int orbit_idx,
+		long int rank, long int *set, int verbose_level);
+	void orbit_element_rank(
+			int depth, int &orbit_idx,
+		long int &rank, long int *set,
+		int verbose_level);
+	void coset_unrank(
+			int depth, int orbit_idx, long int rank,
+		int *Elt, int verbose_level);
+	long int coset_rank(
+			int depth, int orbit_idx, int *Elt,
+		int verbose_level);
+	void map_to_canonical_k_subset(
+			long int *the_set, int set_size,
+		int subset_size, int subset_rk,
+		long int *reduced_set, int *transporter, int &local_idx,
+		int verbose_level);
+		// fills reduced_set[set_size - subset_size],
+		// transporter and local_idx
+		// local_idx is the index of the orbit that the
+		// subset belongs to
+		// (in the list of orbit of subsets of size subset_size)
+	void get_representative_of_subset_orbit(
+			long int *set, int size,
+		int local_orbit_no,
+		groups::strong_generators *&Strong_gens,
+		int verbose_level);
+	void get_orbit_representatives(
+			int level, int &nb_orbits,
+		long int *&Orbit_reps, int verbose_level);
+	void get_all_orbits(
+			other::data_structures::set_of_sets *&All_orbits,
+			int *&Nb_orbits,
+			int &nb_orbits_total,
+			int verbose_level);
+	void get_all_orbits_expanded(
+			other::data_structures::set_of_sets *&All_orbits,
+			int *&Nb_orbits,
+			int *&Orbit_first,
+			int &nb_orbits_total,
+			int &nb_sets_total,
+			int verbose_level);
+	void get_all_orbits_expanded_table(
+			other::data_structures::set_of_sets *&All_orbits,
+			int *&Nb_orbits,
+			int *&Orbit_first,
+			int &nb_orbits_total,
+			int &nb_sets_total,
+			std::string *&Table,
+			std::string *&Col_headings,
+			int &nb_rows, int &nb_cols,
+			int verbose_level);
 
 };
 
@@ -1624,6 +1659,7 @@ public:
 			poset_classification *gen, long int pt,
 		int verbose_level);
 	void print_extensions(
+			poset_classification *gen,
 			std::ostream &ost);
 	void log_current_node_without_group(
 			poset_classification *gen,
@@ -2064,85 +2100,6 @@ public:
 };
 
 
-// #############################################################################
-// poset_with_group_action.cpp
-// #############################################################################
-
-//! a poset with a group action on it
-
-
-class poset_with_group_action {
-public:
-
-	int f_subset_lattice;
-	int n;
-
-	int f_subspace_lattice;
-	algebra::linear_algebra::vector_space *VS;
-
-	actions::action *A; // the action in which the group is given
-	actions::action *A2; // the action in which we do the search
-
-	groups::strong_generators *Strong_gens;
-	algebra::ring_theory::longinteger_object go;
-
-	int f_has_orbit_based_testing;
-	orbit_based_testing *Orbit_based_testing;
-
-	int f_print_function;
-	void (*print_function)(std::ostream &ost,
-			int len, long int *S, void *data);
-	void *print_function_data;
-
-	poset_with_group_action();
-	~poset_with_group_action();
-	void init_subset_lattice(
-			actions::action *A, actions::action *A2,
-			groups::strong_generators *Strong_gens,
-			int verbose_level);
-	void init_subspace_lattice(
-			actions::action *A, actions::action *A2,
-			groups::strong_generators *Strong_gens,
-			algebra::linear_algebra::vector_space *VS,
-			int verbose_level);
-	void add_independence_condition(
-			int independence_value,
-			int verbose_level);
-	void add_testing(
-			int (*func)(orbit_based_testing *Obt,
-					long int *S, int len,
-					void *data, int verbose_level),
-			void *data,
-			int verbose_level);
-	void add_testing_without_group(
-			void (*func)(long int *S, int len,
-					long int *candidates, int nb_candidates,
-					long int *good_candidates, int &nb_good_candidates,
-					void *data, int verbose_level),
-			void *data,
-			int verbose_level);
-	void print();
-	void early_test_func(
-		long int *S, int len,
-		long int *candidates, int nb_candidates,
-		long int *good_candidates, int &nb_good_candidates,
-		int verbose_level);
-	void unrank_point(
-			int *v, long int rk);
-	long int rank_point(
-			int *v);
-	void orbits_on_k_sets(
-			poset_classification_control *Control,
-			int k, long int *&orbit_reps,
-			int &nb_orbits, int verbose_level);
-	poset_classification *orbits_on_k_sets_compute(
-			poset_classification_control *Control,
-			int k, int verbose_level);
-	void invoke_print_function(
-			std::ostream &ost, int sz, long int *set);
-
-};
-
 
 
 
@@ -2277,6 +2234,12 @@ public:
 	//void print_level_extension_info_original_size();
 	void print_level_extension_info();
 	void print_level_extension_coset_info();
+	const char *trace_result_as_text(
+			trace_result r);
+	int trace_result_is_no_result(
+			trace_result r);
+	void print_coset_table(
+			coset_table_entry *coset_table, int len);
 
 	// upstep_work_subspace_action.cpp:
 	int upstep_subspace_action(

@@ -45,7 +45,9 @@ namespace combinatorics_with_groups {
 	class fixed_objects_in_PG;
 	class flag_orbits_incidence_structure;
 	class group_action_on_combinatorial_object;
+	class orbit_based_testing;
 	class orbit_type_repository;
+	class poset_with_group_action;
 	class translation_plane_via_andre_model;
 
 }

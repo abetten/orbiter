@@ -331,9 +331,9 @@ void hadamard_classify::init(
 	}
 
 	poset_classification::poset_classification_control *Control;
-	poset_classification::poset_with_group_action *Poset;
+	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset;
 
-	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
+	Poset = NEW_OBJECT(layer3_group_actions::combinatorics_with_groups::poset_with_group_action);
 	Poset->init_subset_lattice(A, A,
 			A->Strong_gens,
 			verbose_level);
@@ -357,7 +357,7 @@ void hadamard_classify::init(
 		Poset,
 		verbose_level_clique);
 
-	nb_orbits = gen->nb_orbits_at_level(n);
+	nb_orbits = gen->get_Poo()->nb_orbits_at_level(n);
 
 	int h, a, c;
 	long int *set;
@@ -370,7 +370,7 @@ void hadamard_classify::init(
 	Ht = NEW_int(n * n);
 	M = NEW_int(n * n);
 	for (h = 0; h < nb_orbits; h++) {
-		gen->get_set_by_level(n, h, set);
+		gen->get_Poo()->get_set_by_level(n, h, set);
 		cout << "Orbit " << h << " is the set ";
 		Lint_vec_print(cout, set, n);
 		cout << endl;

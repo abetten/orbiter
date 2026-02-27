@@ -266,7 +266,7 @@ void packing_classify::prepare_generator(
 	if (f_v) {
 		cout << "packing_classify::prepare_generator" << endl;
 	}
-	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
+	Poset = NEW_OBJECT(layer3_group_actions::combinatorics_with_groups::poset_with_group_action);
 	Poset->init_subset_lattice(
 			T->A,
 			Spread_table_with_selection->A_on_spreads,
@@ -341,7 +341,7 @@ void packing_classify::compute(
 	if (f_v) {
 		cout << "packing_classify::compute after poset_classification_main" << endl;
 	}
-	length = gen->nb_orbits_at_level(search_depth);
+	length = gen->get_Poo()->nb_orbits_at_level(search_depth);
 	if (f_v) {
 		cout << "packing_classify::compute We found "
 			<< length << " orbits on "

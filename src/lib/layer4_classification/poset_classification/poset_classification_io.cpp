@@ -58,7 +58,7 @@ void poset_classification::print_progress_by_extension(
 	double progress;
 
 
-	progress = level_progress(size);
+	progress = Poo->level_progress(size);
 
 	print_level_info(size, prev);
 	cout << " **** Upstep extension " << cur_ex << " / "
@@ -80,7 +80,7 @@ void poset_classification::print_progress(
 	double progress;
 
 
-	progress = level_progress(size);
+	progress = Poo->level_progress(size);
 
 	print_level_info(size, prev);
 	cout << " **** Upstep finished with "
@@ -119,13 +119,13 @@ void poset_classification::print_orbit_numbers(
 {
 	int nb_nodes, j;
 
-	nb_nodes = nb_orbits_at_level(depth);
+	nb_nodes = get_Poo()->nb_orbits_at_level(depth);
 	cout << "###########################################################"
 			"#######################################" << endl;
 	print_problem_label();
 	cout << "Found " << nb_nodes << " orbits at depth " << depth << endl;
 	for (j = 0; j <= depth; j++) {
-		cout << j << " : " << nb_orbits_at_level(j) << " orbits" << endl;
+		cout << j << " : " << get_Poo()->nb_orbits_at_level(j) << " orbits" << endl;
 	}
 	cout << "total: " << Poo->first_node_at_level(depth + 1) << endl;
 	//gen->print_statistic_on_callbacks();
@@ -160,10 +160,10 @@ void poset_classification::print()
 	cout << "Group order:" << Poset->go << endl;
 	cout << "Degree:" << Poset->A2->degree << endl;
 	cout << "depth:" << depth << endl;
-	nb_nodes = nb_orbits_at_level(depth);
+	nb_nodes = get_Poo()->nb_orbits_at_level(depth);
 	cout << "Found " << nb_nodes << " orbits at depth " << depth << endl;
 	for (j = 0; j <= depth; j++) {
-		cout << j << " : " << nb_orbits_at_level(j) << " orbits" << endl;
+		cout << j << " : " << get_Poo()->nb_orbits_at_level(j) << " orbits" << endl;
 	}
 	cout << "total: " << Poo->first_node_at_level(depth + 1) << endl;
 }
@@ -197,7 +197,7 @@ void poset_classification::print_representatives_at_level(
 {
 	int i, l;
 
-	l = nb_orbits_at_level(lvl);
+	l = get_Poo()->nb_orbits_at_level(lvl);
 	cout << "The " << l << " representatives at level "
 			<< lvl << " are:" << endl;
 	for (i = 0; i < l; i++) {
@@ -254,7 +254,7 @@ void poset_classification::print_level_info(
 	cout << " : Level " << prev_level << " Node " << prev << " = "
 		<< prev - Poo->first_node_at_level(prev_level)
 		<< " / "
-		<< nb_orbits_at_level(prev_level)
+		<< get_Poo()->nb_orbits_at_level(prev_level)
 		<< " : ";
 }
 
@@ -265,7 +265,7 @@ void poset_classification::print_level_extension_info(
 	cout << "Level " << prev_level << " Node " << prev << " = "
 		<< prev - Poo->first_node_at_level(prev_level)
 		<< " / "
-		<< nb_orbits_at_level(prev_level)
+		<< get_Poo()->nb_orbits_at_level(prev_level)
 		<< " Extension " << cur_extension
 		<< " / "
 		<< Poo->node_get_nb_of_extensions(prev)
@@ -279,7 +279,7 @@ void poset_classification::print_level_extension_coset_info(
 	cout << "Level " << prev_level << " Node " << prev << " = "
 		<< prev - Poo->first_node_at_level(prev_level)
 		<< " / "
-		<< nb_orbits_at_level(prev_level)
+		<< get_Poo()->nb_orbits_at_level(prev_level)
 		<< " Extension " << cur_extension
 		<< " / "
 		<< Poo->node_get_nb_of_extensions(prev)
@@ -304,13 +304,13 @@ void poset_classification::print_extensions_at_level(
 
 	ost << "extensions at level " << lvl << ":" << endl;
 	fst = Poo->first_node_at_level(lvl);
-	len = nb_orbits_at_level(lvl);
+	len = get_Poo()->nb_orbits_at_level(lvl);
 	ost << "there are " << len << " nodes at level " << lvl << ":" << endl;
 	for (i = 0; i < len; i++) {
 		node = fst + i;
 		O = Poo->get_node(node);
 		ost << "Node " << i << " / " << len << " = " << node << ":" << endl;
-		O->print_extensions(ost);
+		O->print_extensions(this, ost);
 	}
 }
 
@@ -321,7 +321,7 @@ void poset_classification::print_fusion_nodes(
 
 	for (i = 0; i <= depth; i++) {
 		f = Poo->first_node_at_level(i);
-		l = nb_orbits_at_level(i);
+		l = get_Poo()->nb_orbits_at_level(i);
 		for (j = 0; j < l; j++) {
 			poset_orbit_node *O;
 
@@ -661,7 +661,7 @@ void poset_classification::housekeeping(
 		cout << "poset_classification::housekeeping "
 				"problem_label_with_path=" << problem_label_with_path << endl;
 	}
-	nb_nodes = nb_orbits_at_level(i);
+	nb_nodes = get_Poo()->nb_orbits_at_level(i);
 	if (f_v) {
 		cout << "###################################################"
 				"###############################################" << endl;
@@ -674,7 +674,7 @@ void poset_classification::housekeeping(
 		}
 
 		for (j = 0; j <= i; j++) {
-			cout << j << " : " << nb_orbits_at_level(j) << " orbits" << endl;
+			cout << j << " : " << get_Poo()->nb_orbits_at_level(j) << " orbits" << endl;
 		}
 		cout << "total: " << Poo->first_node_at_level(i + 1) << endl;
 
@@ -862,11 +862,27 @@ void poset_classification::housekeeping(
 
 		Draw_options = Get_draw_options(Control->draw_options_label);
 
+
+
+		pc_tree_interface Pc_tree_interface;
+
+		Pc_tree_interface.init(
+				this,
+				get_depth(),
+				Draw_options,
+				verbose_level - 1);
+
+		Pc_tree_interface.write_treefile(
+				i /* level */,
+				verbose_level - 1);
+
+#if 0
 		write_treefile(
 				problem_label_with_path, i,
 				Draw_options,
 				0 /*verbose_level - 1*/);
 			// in poset_classification_draw.cpp
+#endif
 
 		if (f_v) {
 			cout << "poset_classification::housekeeping "
@@ -903,7 +919,7 @@ void poset_classification::housekeeping_no_data_file(
 		cout << "######################################################"
 				"############################################" << endl;
 		cout << "depth " << i << " completed, found " 
-			<< nb_orbits_at_level(i) << " orbits" << endl;
+			<< get_Poo()->nb_orbits_at_level(i) << " orbits" << endl;
 
 
 		if (f_v5) {
@@ -914,7 +930,7 @@ void poset_classification::housekeeping_no_data_file(
 
 
 		for (j = 0; j <= i; j++) {
-			cout << j << " : " << nb_orbits_at_level(j)
+			cout << j << " : " << get_Poo()->nb_orbits_at_level(j)
 					<< " orbits" << endl;
 		}
 		cout << "total: " << Poo->first_node_at_level(i + 1) << endl;
@@ -968,10 +984,26 @@ void poset_classification::housekeeping_no_data_file(
 		}
 		Draw_options = Get_draw_options(Control->draw_options_label);
 
+		pc_tree_interface Pc_tree_interface;
+
+		Pc_tree_interface.init(
+				this,
+				get_depth(),
+				Draw_options,
+				verbose_level - 1);
+
+		Pc_tree_interface.write_treefile(
+				i /* level */,
+				verbose_level - 1);
+
+
+#if 0
 		write_treefile(
 				problem_label_with_path, i,
 				Draw_options,
 				verbose_level - 1);
+#endif
+
 	}
 	if (f_v) {
 		cout << "poset_classification::housekeeping_no_data_file done" << endl;
@@ -1175,96 +1207,8 @@ void poset_classification::make_fname_lvl_reps_file(
 }
 
 
+
 #if 0
-void poset_classification::Log_nodes(int cur, int depth,
-		ostream &f, int f_recurse,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int i, next;
-	poset_orbit_node *node = &root[cur];
-		
-
-	if (f_v) {
-		cout << "Log_nodes cur=" << cur << endl;
-		}
-	if (f_base_case && cur < Base_case->size) {
-		return; // !!!
-		}
-	if (f_v) {
-		f << "Node " << cur << endl;
-		f << "===============" << endl;
-		node->log_current_node(this, depth, f,
-				false /* f_with_strong_generators */,
-				verbose_level);
-		//f << "the stabilizer has order ";
-		//G.print_group_order(f);
-		//f << endl;	
-		
-		f << "with " << node->nb_strong_generators
-				<< " strong poset_classifications:" << endl;
-		if (f_v) {
-			cout << "Log_nodes cur=" << cur
-					<< " printing strong poset_classifications" << endl;
-			}
-		for (i = 0; i < node->nb_strong_generators; i++) {
-			Poset->A->element_retrieve(
-					node->hdl_strong_generators[i], Elt1, 0);
-			Poset->A->element_print_quick(Elt1, f);
-			f << endl;
-			if (Poset->A->degree < 100) {
-				Poset->A->element_print_as_permutation(Elt1, f);
-				f << endl;
-				}
-			}
-
-		if (node->nb_strong_generators) {
-			if (f_v) {
-				cout << "Log_nodes cur=" << cur
-						<< " printing tl" << endl;
-				}
-			f << "tl: ";
-			int_vec_print(f, node->tl, Poset->A->base_len());
-			f << endl;
-			}
-		
-		if (f_v) {
-			cout << "Log_nodes cur=" << cur
-					<< " printing extensions" << endl;
-			}
-		node->print_extensions(f);
-		f << endl;
-
-		for (i = 0; i < node->get_nb_of_extensions(); i++) {
-			if (node->get_E(i)->get_type() == EXTENSION_TYPE_FUSION) {
-				f << "fusion node " << i << ":" << endl;
-				Poset->A->element_retrieve(node->get_E(i)->get_data(), Elt1, 0);
-				Poset->A->element_print_verbose(Elt1, f);
-				f << endl;
-				}
-			}
-		}
-	else {
-		//cout << "log_current_node node=" << node->node
-		// << " prev=" << node->prev << endl;
-		node->log_current_node(this, depth, f,
-				false /* f_with_strong_generators */, 0);
-		}
-	
-	if (f_recurse) {
-		//cout << "recursing into dependent nodes" << endl;
-		for (i = 0; i < node->get_nb_of_extensions(); i++) {
-			if (node->get_E(i)->get_type() == EXTENSION_TYPE_EXTENSION) {
-				if (node->get_E(i)->get_data() >= 0) {
-					next = node->get_E(i)->get_data();
-					Log_nodes(next, depth + 1, f, true, verbose_level);
-					}
-				}
-			}
-		}
-}
-#endif
-
 void poset_classification::log_current_node(
 		std::ostream &f, int size)
 {
@@ -1279,245 +1223,7 @@ void poset_classification::log_current_node(
 	f << endl;
 
 }
-
-
-
-#if 0
-void poset_classification::make_spreadsheet_of_orbit_reps(
-		other::data_structures::spreadsheet *&Sp, int max_depth)
-{
-	int Nb_orbits, nb_orbits, i, level, first;
-	string *Text_level;
-	string *Text_node;
-	string *Text_orbit_reps;
-	string *Text_stab_order;
-	string *Text_orbit_length;
-	string *Text_schreier_vector_length;
-	algebra::ring_theory::longinteger_object stab_order, orbit_length;
-	int schreier_vector_length;
-	long int *rep;
-	poset_orbit_node *O;
-
-	Nb_orbits = 0;
-	for (level = 0; level <= max_depth; level++) {
-		Nb_orbits += nb_orbits_at_level(level);
-	}
-
-	rep = NEW_lint(max_depth);
-	Text_level = new string [Nb_orbits];
-	Text_node = new string [Nb_orbits];
-	Text_orbit_reps = new string [Nb_orbits];
-	Text_stab_order = new string [Nb_orbits];
-	Text_orbit_length = new string [Nb_orbits];
-	Text_schreier_vector_length = new string [Nb_orbits];
-
-	first = 0;
-	for (level = 0; level <= max_depth; level++) {
-		first = Poo->first_node_at_level(level);
-		nb_orbits = nb_orbits_at_level(level);
-		for (i = 0; i < nb_orbits; i++) {
-			Text_level[first + i] = std::to_string(level);
-
-			Text_node[first + i] = std::to_string(i);
-
-			get_set_by_level(level, i, rep);
-			Lint_vec_print_to_str(Text_orbit_reps[first + i], rep, level);
-			
-			get_orbit_length_and_stabilizer_order(i, level, 
-				stab_order, orbit_length);
-			stab_order.print_to_string(Text_stab_order[first + i]);
-			
-			orbit_length.print_to_string(Text_orbit_length[first + i]);
-			
-			O = get_node_ij(level, i);
-			if (O->has_Schreier_vector()) {
-				schreier_vector_length = O->get_nb_of_live_points();
-			}
-			else {
-				schreier_vector_length = 0;
-			}
-			Text_schreier_vector_length[first + i] = std::to_string(schreier_vector_length);
-		}
-	}
-	Sp = NEW_OBJECT(other::data_structures::spreadsheet);
-	Sp->init_empty_table(Nb_orbits + 1, 7);
-	Sp->fill_column_with_row_index(0, "Line");
-	Sp->fill_column_with_text(1, Text_level, "Level");
-	Sp->fill_column_with_text(2, Text_node, "Node");
-	Sp->fill_column_with_text(3, Text_orbit_reps, "Orbit rep");
-	Sp->fill_column_with_text(4, Text_stab_order, "Stab order");
-	Sp->fill_column_with_text(5, Text_orbit_length, "Orbit length");
-	Sp->fill_column_with_text(6, Text_schreier_vector_length, "Schreier vector length");
-
-#if 0
-	cout << "before Sp->save " << fname_csv << endl;
-	Sp->save(fname_csv, verbose_level);
-	cout << "after Sp->save " << fname_csv << endl;
 #endif
-
-	FREE_lint(rep);
-	delete [] Text_level;
-	delete [] Text_node;
-	delete [] Text_orbit_reps;
-	delete [] Text_stab_order;
-	delete [] Text_orbit_length;
-	delete [] Text_schreier_vector_length;
-	
-}
-#endif
-
-void poset_classification::make_spreadsheet_of_level_info(
-		other::data_structures::spreadsheet *&Sp, int max_depth,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	//int f_vv = false; //(verbose_level >= 1);
-	int nb_rows, Nb_orbits, nb_orbits, i, level;
-	string *Text_label;
-	string *Text_nb_orbits;
-	string *Text_orbit_length_sum;
-	string *Text_schreier_vector_length_sum;
-	string *Text_binomial;
-	algebra::ring_theory::longinteger_object stab_order, orbit_length,
-		orbit_length_sum, orbit_length_total;
-	algebra::ring_theory::longinteger_object a, a_total;
-	algebra::ring_theory::longinteger_domain D;
-	combinatorics::other_combinatorics::combinatorics_domain C;
-	int schreier_vector_length_int;
-	algebra::ring_theory::longinteger_object schreier_vector_length,
-		schreier_vector_length_sum, schreier_vector_length_total;
-	int *rep;
-	poset_orbit_node *O;
-
-	if (f_v) {
-		cout << "poset_classification::"
-				"make_spreadsheet_of_level_info" << endl;
-	}
-	nb_rows = max_depth + 2; // one extra row for totals
-	rep = NEW_int(max_depth);
-	Text_label = new string [nb_rows];
-	Text_nb_orbits = new string [nb_rows];
-	Text_orbit_length_sum = new string [nb_rows];
-	Text_schreier_vector_length_sum = new string [nb_rows];
-	Text_binomial = new string [nb_rows];
-
-	Nb_orbits = 0;
-	orbit_length_total.create(0);
-	schreier_vector_length_total.create(0);
-	a_total.create(0);
-	
-	for (level = 0; level <= max_depth; level++) {
-
-		if (f_v) {
-			cout << "poset_classification::"
-					"make_spreadsheet_of_level_info "
-					"level = " << level << " / " << max_depth << endl;
-		}
-		nb_orbits = nb_orbits_at_level(level);
-
-
-		Text_label[level] = std::to_string(level);
-
-		Text_nb_orbits[level] = std::to_string(nb_orbits);
-
-		orbit_length_sum.create(0);
-		schreier_vector_length_sum.create(0);
-
-		for (i = 0; i < nb_orbits; i++) {
-			
-			if (false) {
-				cout << "poset_classification::"
-						"make_spreadsheet_of_level_info "
-						"level = " << level << " / " << max_depth
-						<< " orbit " << i << " / " << nb_orbits << endl;
-			}
-			get_orbit_length_and_stabilizer_order(i, level, 
-				stab_order, orbit_length);
-
-			D.add_in_place(orbit_length_sum, orbit_length);
-			
-			
-			O = get_node_ij(level, i);
-
-			if (O->has_Schreier_vector()) {
-				schreier_vector_length_int = O->get_nb_of_live_points();
-
-
-			}
-			else {
-				//cout << "node " << level << " / " << i
-				//		<< " does not have a Schreier vector" << endl;
-				schreier_vector_length_int = 1;
-			}
-			if (schreier_vector_length_int <= 0) {
-				schreier_vector_length_int = 1;
-				}
-			schreier_vector_length.create(schreier_vector_length_int);
-
-			if (schreier_vector_length_int >= 0) {
-				D.add_in_place(schreier_vector_length_sum,
-						schreier_vector_length);
-			}
-
-		}
-
-		//cout << "poset_classification::make_spreadsheet_of_level_info
-		// computing binomial coeffcient" << endl;
-		C.binomial(a, Poset->A2->degree, level, false);
-
-		Nb_orbits += nb_orbits;
-		D.add_in_place(orbit_length_total, orbit_length_sum);
-		D.add_in_place(schreier_vector_length_total,
-				schreier_vector_length_sum);
-		D.add_in_place(a_total, a);
-
-		orbit_length_sum.print_to_string(Text_orbit_length_sum[level]);
-
-		schreier_vector_length_sum.print_to_string(Text_schreier_vector_length_sum[level]);
-
-		a.print_to_string(Text_binomial[level]);
-
-	}
-
-	level = max_depth + 1;
-	Text_label[level] = "total";
-
-	Text_nb_orbits[level] = std::to_string(Nb_orbits);
-
-	orbit_length_total.print_to_string(Text_orbit_length_sum[level]);
-
-	schreier_vector_length_total.print_to_string(Text_schreier_vector_length_sum[level]);
-
-	a_total.print_to_string(Text_binomial[level]);
-
-
-	Sp = NEW_OBJECT(other::data_structures::spreadsheet);
-	Sp->init_empty_table(nb_rows + 1, 6);
-	Sp->fill_column_with_row_index(0, "Line");
-	Sp->fill_column_with_text(1, Text_label, "Level");
-	Sp->fill_column_with_text(2, Text_nb_orbits, "Nb_orbits");
-	Sp->fill_column_with_text(3, Text_orbit_length_sum, "Orbit_length_sum");
-	Sp->fill_column_with_text(4, Text_schreier_vector_length_sum, "Schreier_vector_length_sum");
-	Sp->fill_column_with_text(5, Text_binomial, "Binomial");
-
-
-
-#if 0
-	cout << "before Sp->save " << fname_csv << endl;
-	Sp->save(fname_csv, verbose_level);
-	cout << "after Sp->save " << fname_csv << endl;
-#endif
-
-	FREE_int(rep);
-	delete [] Text_label;
-	delete [] Text_nb_orbits;
-	delete [] Text_orbit_length_sum;
-	delete [] Text_schreier_vector_length_sum;
-	delete [] Text_binomial;
-	
-}
-
-
 
 
 
@@ -1619,7 +1325,7 @@ void poset_classification::wedge_product_export_magma(
 			O->store_set_to(this, level - 1, the_set);
 			for (j = 0; j < level; j++) {
 				a = the_set[j];
-				unrank_point(v, a);
+				get_poset()->unrank_point(v, a);
 				f << "[ ";
 				for (h = 0; h < vector_space_dimension; h++) {
 					f << v[h];
@@ -1653,7 +1359,7 @@ void poset_classification::wedge_product_export_magma(
 				f << "// orbits " << i << " and following:" << endl;
 			}
 
-			orbit_length(i, level, go);
+			get_Poo()->orbit_length(i, level, go);
 			f << go;
 			if (i < len - 1) {
 				f << ", ";
@@ -1781,43 +1487,7 @@ void poset_classification::wedge_product_export_magma(
 	}
 }
 
-void poset_classification::write_reps_csv(
-		int lvl, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	string fname_reps_csv;
 
-	if (f_v) {
-		cout << "poset_classification::write_reps_csv" << endl;
-	}
-	fname_reps_csv = problem_label_with_path + "_reps_lvl_" + std::to_string(lvl) + ".csv";
-
-	Poo->save_representatives_at_level_to_csv(fname_reps_csv, lvl, verbose_level);
-
-	if (f_v) {
-		cout << "poset_classification::write_reps_csv done" << endl;
-	}
-
-}
-
-void poset_classification::write_reps_csv_fname(
-		std::string &fname,
-		int lvl, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	string fname_reps_csv;
-
-	if (f_v) {
-		cout << "poset_classification::write_reps_csv_fname" << endl;
-	}
-
-	Poo->save_representatives_at_level_to_csv(fname, lvl, verbose_level);
-
-	if (f_v) {
-		cout << "poset_classification::write_reps_csv_fname done" << endl;
-	}
-
-}
 
 void poset_classification::export_something(
 		std::string &what, int data1,
@@ -1878,10 +1548,14 @@ void poset_classification::export_something_worker(
 		if (f_v) {
 			cout << "poset_classification::export_something_worker type orbit" << endl;
 		}
-		fname = problem_label_with_path + "_orbits" + "_level_" + std::to_string(data1) + ".csv";
 
+		//fname = problem_label_with_path + "_orbits" + "_level_" + std::to_string(data1) + ".csv";
+		//fname = problem_label_with_path + "_reps_lvl_" + std::to_string(data1) + ".csv";
 
-		write_reps_csv(
+		fname = make_fname_for_representatives_at_level(data1);
+
+		write_representatives_at_level_csv_fname(
+				fname,
 				data1 /* lvl */, verbose_level);
 
 
@@ -1916,6 +1590,64 @@ void poset_classification::export_something_worker(
 
 }
 
+
+std::string poset_classification::make_fname_for_representatives_at_level(
+		int lvl)
+{
+	std::string fname;
+
+	fname = problem_label_with_path + "_reps_lvl_" + std::to_string(lvl) + ".csv";
+	return fname;
+}
+
+void poset_classification::write_representatives_at_level_csv(
+		int lvl, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	string fname_reps_csv;
+
+	if (f_v) {
+		cout << "poset_classification::write_representatives_at_level_csv" << endl;
+	}
+
+
+	string fname;
+
+	fname = make_fname_for_representatives_at_level(lvl);
+
+	write_representatives_at_level_csv_fname(
+			fname,
+			lvl /* lvl */, verbose_level);
+
+
+	//fname_reps_csv = problem_label_with_path + "_reps_lvl_" + std::to_string(lvl) + ".csv";
+
+	//Poo->save_representatives_at_level_to_csv(fname_reps_csv, lvl, verbose_level);
+
+	if (f_v) {
+		cout << "poset_classification::write_representatives_at_level_csv done" << endl;
+	}
+
+}
+
+void poset_classification::write_representatives_at_level_csv_fname(
+		std::string &fname,
+		int lvl, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	string fname_reps_csv;
+
+	if (f_v) {
+		cout << "poset_classification::write_representatives_at_level_csv_fname" << endl;
+	}
+
+	Poo->save_representatives_at_level_to_csv(fname, lvl, verbose_level);
+
+	if (f_v) {
+		cout << "poset_classification::write_representatives_at_level_csv_fname done" << endl;
+	}
+
+}
 
 
 

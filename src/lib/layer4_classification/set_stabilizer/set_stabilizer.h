@@ -251,7 +251,7 @@ public:
 	poset_classification::poset_classification_control *Control;
 	actions::action *A;
 	actions::action *A2;
-	poset_classification::poset_with_group_action *Poset;
+	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset;
 	int nb_orbits;
 
 

@@ -76,8 +76,11 @@ namespace orbiter {
 			// poset_classification
 			class classification_base_case;
 			class extension;
-			class orbit_based_testing;
 			class orbit_tracer;
+			class pc_combinatorics;
+			class pc_convert_data_structure;
+			class pc_latex_interface;
+			class pc_tree_interface;
 			class poset_classification_activity_description;
 			class poset_classification_activity;
 			class poset_classification;
@@ -86,7 +89,6 @@ namespace orbiter {
 			class poset_classification_report_options;
 			class poset_of_orbits;
 			class poset_orbit_node;
-			class poset_with_group_action;
 			class upstep_work;
 
 		}

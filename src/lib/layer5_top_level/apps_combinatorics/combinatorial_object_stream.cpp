@@ -612,7 +612,7 @@ void combinatorial_object_stream::do_covering_type(
 
 	int nb_orbits;
 
-	nb_orbits = PC->nb_orbits_at_level(subset_sz);
+	nb_orbits = PC->get_Poo()->nb_orbits_at_level(subset_sz);
 
 	if (f_v) {
 		cout << "combinatorial_object_stream::do_covering_type nb_orbits = " << nb_orbits << endl;

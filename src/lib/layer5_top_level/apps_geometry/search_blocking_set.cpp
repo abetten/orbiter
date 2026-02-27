@@ -159,7 +159,7 @@ void search_blocking_set::find_partial_blocking_sets(
 	Control->f_depth = true;
 	Control->depth = Inc->nb_rows;
 
-	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
+	Poset = NEW_OBJECT(layer3_group_actions::combinatorics_with_groups::poset_with_group_action);
 	Poset->init_subset_lattice(A, A,
 			A->Strong_gens,
 			verbose_level);
@@ -220,7 +220,7 @@ int search_blocking_set::test_level(
 				"blocking sets at level " << depth << endl;
 	}
 	f = gen->first_node_at_level(depth);
-	nb_orbits = gen->nb_orbits_at_level(depth);
+	nb_orbits = gen->get_Poo()->nb_orbits_at_level(depth);
 	if (f_v) {
 		cout << "search_blocking_set::test_level we found " << nb_orbits
 				<< " orbits on partial blocking sets "
@@ -446,7 +446,7 @@ void search_blocking_set::search_for_blocking_set(
 	}
 
 	f = gen->first_node_at_level(level);
-	nb_orbits = gen->nb_orbits_at_level(level);
+	nb_orbits = gen->get_Poo()->nb_orbits_at_level(level);
 	if (f_v) {
 		cout << "search_blocking_set::search_for_blocking_set: "
 				"we found " << nb_orbits << " orbits on partial "

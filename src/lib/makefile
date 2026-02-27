@@ -391,7 +391,9 @@ ORBITER_MODULES= \
 		layer3_group_actions/combinatorics_with_groups/fixed_objects_in_PG.o \
 		layer3_group_actions/combinatorics_with_groups/flag_orbits_incidence_structure.o \
 		layer3_group_actions/combinatorics_with_groups/group_action_on_combinatorial_object.o \
+		layer3_group_actions/combinatorics_with_groups/orbit_based_testing.o \
 		layer3_group_actions/combinatorics_with_groups/orbit_type_repository.o \
+		layer3_group_actions/combinatorics_with_groups/poset_with_group_action.o \
 		layer3_group_actions/combinatorics_with_groups/translation_plane_via_andre_model.o \
 		layer3_group_actions/data_structures_groups/export_group.o \
 		layer3_group_actions/data_structures_groups/group_container.o \
@@ -494,8 +496,11 @@ ORBITER_MODULES= \
 		layer4_classification/orbits_schreier/schreier_poset.o \
 		layer4_classification/poset_classification/classification_base_case.o \
 		layer4_classification/poset_classification/extension.o \
-		layer4_classification/poset_classification/orbit_based_testing.o \
 		layer4_classification/poset_classification/orbit_tracer.o \
+		layer4_classification/poset_classification/pc_combinatorics.o \
+		layer4_classification/poset_classification/pc_convert_data_structure.o \
+		layer4_classification/poset_classification/pc_latex_interface.o \
+		layer4_classification/poset_classification/pc_tree_interface.o \
 		layer4_classification/poset_classification/poset_classification_activity_description.o \
 		layer4_classification/poset_classification/poset_classification_activity.o \
 		layer4_classification/poset_classification/poset_classification.o \
@@ -507,7 +512,6 @@ ORBITER_MODULES= \
 		layer4_classification/poset_classification/poset_classification_init.o \
 		layer4_classification/poset_classification/poset_classification_io.o \
 		layer4_classification/poset_classification/poset_classification_report_options.o \
-		layer4_classification/poset_classification/poset_classification_report.o \
 		layer4_classification/poset_classification/poset_classification_trace.o \
 		layer4_classification/poset_classification/poset_of_orbits.o \
 		layer4_classification/poset_classification/poset_orbit_node.o \
@@ -517,7 +521,6 @@ ORBITER_MODULES= \
 		layer4_classification/poset_classification/poset_orbit_node_io.o \
 		layer4_classification/poset_classification/poset_orbit_node_upstep.o \
 		layer4_classification/poset_classification/poset_orbit_node_upstep_subspace_action.o \
-		layer4_classification/poset_classification/poset_with_group_action.o \
 		layer4_classification/poset_classification/upstep_work.o \
 		layer4_classification/poset_classification/upstep_work_subspace_action.o \
 		layer4_classification/poset_classification/upstep_work_trace.o \

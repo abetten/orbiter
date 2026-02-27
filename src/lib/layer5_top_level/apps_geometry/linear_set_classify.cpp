@@ -436,7 +436,7 @@ void linear_set_classify::init(
 
 
 	Control1 = NEW_OBJECT(poset_classification::poset_classification_control);
-	Poset1 = NEW_OBJECT(poset_classification::poset_with_group_action);
+	Poset1 = NEW_OBJECT(layer3_group_actions::combinatorics_with_groups::poset_with_group_action);
 	Gen = NEW_OBJECT(poset_classification::poset_classification);
 
 
@@ -585,7 +585,7 @@ void linear_set_classify::do_classify(
 		cout << "linear_set_classify::do_classify "
 				"done with generator_main" << endl;
 	}
-	nb_orbits = Gen->nb_orbits_at_level(depth);
+	nb_orbits = Gen->get_Poo()->nb_orbits_at_level(depth);
 	if (f_v) {
 		cout << "linear_set_classify::do_classify we found " << nb_orbits
 				<< " orbits at depth " << depth<< endl;
@@ -665,10 +665,10 @@ void linear_set_classify::compute_intersection_types_at_level(
 
 	set = NEW_lint(level);
 
-	nb_nodes = Gen->nb_orbits_at_level(level);
+	nb_nodes = Gen->get_Poo()->nb_orbits_at_level(level);
 	Intersection_dimensions = NEW_int(nb_nodes * D->N);
 	for (node = 0; node < nb_nodes; node++) {
-		Gen->get_set_by_level(level, node, set);
+		Gen->get_Poo()->get_set_by_level(level, node, set);
 		for (i = 0; i < level; i++) {
 			Fq->Projective_space_basic->PG_element_unrank_modified(
 					Basis + i * n, 1, n, set[i]);
@@ -730,7 +730,7 @@ void linear_set_classify::calculate_intersections(
 				C.print_bare(true);
 			}
 			cout << " : ";
-			Gen->get_stabilizer_order(level, i, go);
+			Gen->get_Poo()->get_stabilizer_order(level, i, go);
 			cout << go;
 			cout << endl;
 		}
@@ -846,14 +846,14 @@ void linear_set_classify::print_orbits_at_level(
 	set = NEW_lint(level);
 	Basis = NEW_int(level * n);
 
-	len = Gen->nb_orbits_at_level(level);
+	len = Gen->get_Poo()->nb_orbits_at_level(level);
 	for (orbit_at_level = 0; orbit_at_level < len; orbit_at_level++) {
-		Gen->get_set_by_level(level, orbit_at_level, set);
+		Gen->get_Poo()->get_set_by_level(level, orbit_at_level, set);
 		for (i = 0; i < level; i++) {
 			Fq->Projective_space_basic->PG_element_unrank_modified(
 					Basis + i * n, 1, n, set[i]);
 		}
-		Gen->get_stabilizer_order(level, orbit_at_level, go);
+		Gen->get_Poo()->get_stabilizer_order(level, orbit_at_level, go);
 		cout << "orbit " << orbit_at_level << " / " << len
 				<< " stabilizer order " << go << ":" << endl;
 		cout << "set: ";
@@ -888,7 +888,7 @@ void linear_set_classify::classify_secondary(
 	set = NEW_lint(level);
 	is_allowed = NEW_int(Aq->degree);
 
-	Gen->get_set_by_level(level, orbit_at_level, set);
+	Gen->get_Poo()->get_set_by_level(level, orbit_at_level, set);
 	for (i = 0; i < level; i++) {
 		Fq->Projective_space_basic->PG_element_unrank_modified(
 				Basis + i * n, 1, n, set[i]);
@@ -971,7 +971,7 @@ void linear_set_classify::init_secondary(
 	secondary_nb_candidates = nb_candidates;
 
 	Control2 = NEW_OBJECT(poset_classification::poset_classification_control);
-	Poset2 = NEW_OBJECT(poset_classification::poset_with_group_action);
+	Poset2 = NEW_OBJECT(layer3_group_actions::combinatorics_with_groups::poset_with_group_action);
 	Gen2 = NEW_OBJECT(poset_classification::poset_classification);
 
 	secondary_depth = n - secondary_level;
@@ -1088,7 +1088,7 @@ void linear_set_classify::do_classify_secondary(
 		cout << "linear_set_classify::do_classify_secondary "
 				"done with poset_classification_main" << endl;
 	}
-	nb_orbits = Gen2->nb_orbits_at_level(secondary_depth);
+	nb_orbits = Gen2->get_Poo()->nb_orbits_at_level(secondary_depth);
 	if (f_v) {
 		cout << "linear_set_classify::do_classify_secondary we found "
 				<< nb_orbits << " orbits at depth " << secondary_depth<< endl;
@@ -1106,7 +1106,7 @@ void linear_set_classify::do_classify_secondary(
 	Basis1 = NEW_int(secondary_level * n);
 	Basis2 = NEW_int(secondary_depth * n);
 
-	Gen->get_set_by_level(secondary_level, secondary_orbit_at_level, set1);
+	Gen->get_Poo()->get_set_by_level(secondary_level, secondary_orbit_at_level, set1);
 	for (i = 0; i < secondary_level; i++) {
 		Fq->Projective_space_basic->PG_element_unrank_modified(
 				Basis1 + i * n, 1, n, set1[i]);
@@ -1124,7 +1124,7 @@ void linear_set_classify::do_classify_secondary(
 
 	for (h = 0; h < nb_orbits; h++) {
 		cout << "Orbit " << h << " / " << nb_orbits << ":" << endl;
-		Gen2->get_set_by_level(secondary_depth, h, set2);
+		Gen2->get_Poo()->get_set_by_level(secondary_depth, h, set2);
 		for (i = 0; i < secondary_depth; i++) {
 			Fq->Projective_space_basic->PG_element_unrank_modified(
 					Basis2 + i * n, 1, n, set2[i]);
@@ -1146,7 +1146,7 @@ void linear_set_classify::do_classify_secondary(
 		groups::strong_generators *Strong_gens2;
 		algebra::ring_theory::longinteger_object go;
 
-		Gen2->get_stabilizer_generators(Strong_gens2,
+		Gen2->get_Poo()->get_stabilizer_generators(Strong_gens2,
 			secondary_depth, h, 0 /*verbose_level*/);
 
 		Strong_gens2->group_order(go);
@@ -1271,7 +1271,7 @@ void linear_set_classify::compute_stabilizer_of_linear_set(
 	set = NEW_lint(level);
 	is_allowed = NEW_int(Aq->degree);
 
-	Gen->get_set_by_level(level, orbit_at_level, set);
+	Gen->get_Poo()->get_set_by_level(level, orbit_at_level, set);
 	for (i = 0; i < level; i++) {
 		Fq->Projective_space_basic->PG_element_unrank_modified(
 				Basis + i * n, 1, n, set[i]);
@@ -1321,7 +1321,7 @@ void linear_set_classify::compute_stabilizer_of_linear_set(
 
 	groups::strong_generators *Strong_gens_previous;
 
-	Gen->get_stabilizer_generators(Strong_gens_previous,
+	Gen->get_Poo()->get_stabilizer_generators(Strong_gens_previous,
 		level, orbit_at_level, verbose_level);
 
 
@@ -1355,7 +1355,7 @@ void linear_set_classify::init_compute_stabilizer(
 	}
 
 	Control_stab = NEW_OBJECT(poset_classification::poset_classification_control);
-	Poset_stab = NEW_OBJECT(poset_classification::poset_with_group_action);
+	Poset_stab = NEW_OBJECT(layer3_group_actions::combinatorics_with_groups::poset_with_group_action);
 
 
 	Control_stab->f_depth = true;
@@ -1503,7 +1503,7 @@ void linear_set_classify::do_compute_stabilizer(
 		cout << "linear_set_classify::do_compute_stabilizer "
 				"done with poset_classification_main" << endl;
 	}
-	nb_orbits = Gen_stab->nb_orbits_at_level(level);
+	nb_orbits = Gen_stab->get_Poo()->nb_orbits_at_level(level);
 	if (f_v) {
 		cout << "linear_set_classify::do_compute_stabilizer we found "
 				<< nb_orbits << " orbits at depth "
@@ -1524,7 +1524,7 @@ void linear_set_classify::do_compute_stabilizer(
 	Basis2 = NEW_int(level * n);
 
 
-	Gen->get_set_by_level(level, orbit_at_level, set1);
+	Gen->get_Poo()->get_set_by_level(level, orbit_at_level, set1);
 	for (i = 0; i < level; i++) {
 		Fq->Projective_space_basic->PG_element_unrank_modified(
 				Basis1 + i * n, 1, n, set1[i]);
@@ -1579,7 +1579,7 @@ void linear_set_classify::do_compute_stabilizer(
 	int group_index, orbit_len, go_int;
 	algebra::ring_theory::longinteger_object go;
 
-	Gen->get_stabilizer_generators(Strong_gens_previous,
+	Gen->get_Poo()->get_stabilizer_generators(Strong_gens_previous,
 		level, orbit_at_level, verbose_level);
 
 	Strong_gens_previous->group_order(go);
@@ -1600,10 +1600,10 @@ void linear_set_classify::do_compute_stabilizer(
 
 	group_index = 0;
 	for (h = 0; h < nb_orbits; h++) {
-		orbit_len = Gen_stab->orbit_length_as_int(h, level);
+		orbit_len = Gen_stab->get_Poo()->orbit_length_as_int(h, level);
 		cout << h << " / " << nb_orbits << " orbit if length "
 				<< orbit_len << ":" << endl;
-		Gen_stab->get_set_by_level(level, h, set2);
+		Gen_stab->get_Poo()->get_set_by_level(level, h, set2);
 		for (i = 0; i < level; i++) {
 			Fq->Projective_space_basic->PG_element_unrank_modified(
 					Basis2 + i * n, 1, n, set2[i]);
@@ -1647,7 +1647,7 @@ void linear_set_classify::do_compute_stabilizer(
 			aut_gens->append(Elt1, verbose_level - 2);
 			groups::strong_generators *Strong_gens_next;
 
-			Gen_stab->get_stabilizer_generators(Strong_gens_next,
+			Gen_stab->get_Poo()->get_stabilizer_generators(Strong_gens_next,
 				level, h, verbose_level);
 
 			for (i = 0; i < Strong_gens_next->gens->len; i++) {
@@ -1763,7 +1763,7 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 	Int_vec_zero(BasisU, dimU * n1);
 	Int_vec_zero(BasisW, dimW * n1);
 
-	Gen->get_set_by_level(secondary_level, secondary_orbit_at_level, set1);
+	Gen->get_Poo()->get_set_by_level(secondary_level, secondary_orbit_at_level, set1);
 	for (i = 0; i < secondary_level; i++) {
 		Fq->Projective_space_basic->PG_element_unrank_modified(
 				Basis1 + i * n, 1, n, set1[i]);
@@ -1784,7 +1784,7 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 	}
 
 
-	Gen2->get_set_by_level(secondary_depth, orbit_for_W, set2);
+	Gen2->get_Poo()->get_set_by_level(secondary_depth, orbit_for_W, set2);
 	for (i = 0; i < secondary_depth; i++) {
 		Fq->Projective_space_basic->PG_element_unrank_modified(
 				Basis2 + i * n, 1, n, set2[i]);
@@ -2153,7 +2153,7 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 		lvl = order + 1;
 		orbit_at_lvl = final_node - T->gen->first_node_at_level(lvl);
 
-		T->gen->get_stabilizer_order(lvl, orbit_at_lvl, go);
+		T->gen->get_Poo()->get_stabilizer_order(lvl, orbit_at_lvl, go);
 
 		cout << "linear_set::construct_semifield after recognize" << endl;
 		cout << "final_node=" << final_node

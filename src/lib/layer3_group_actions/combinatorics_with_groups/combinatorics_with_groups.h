@@ -254,6 +254,76 @@ public:
 
 
 
+// #############################################################################
+// orbit_based_testing.cpp
+// #############################################################################
+
+
+#define MAX_CALLBACK 100
+
+
+//! maintains a list of test functions which define a G-invariant poset
+
+class orbit_based_testing {
+
+public:
+
+	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset_with_group_action;
+
+	//void *PC; // poset_classification *PC;
+
+
+	int max_depth;
+	long int *local_S; // [max_depth]
+	int nb_callback;
+	int (*callback_testing[MAX_CALLBACK])(orbit_based_testing *Obt,
+			long int *S, int len, void *data, int verbose_level);
+	void *callback_data[MAX_CALLBACK];
+
+	int nb_callback_no_group;
+	void (*callback_testing_no_group[MAX_CALLBACK])(
+			long int *S, int len,
+			long int *candidates, int nb_candidates,
+			long int *good_candidates, int &nb_good_candidates,
+			void *data, int verbose_level);
+	void *callback_data_no_group[MAX_CALLBACK];
+
+	orbit_based_testing();
+	~orbit_based_testing();
+	void init(
+			layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset_with_group_action,
+			//void *PC,
+			int max_depth,
+			int verbose_level);
+	void add_callback(
+			int (*func)(orbit_based_testing *Obt,
+					long int *S, int len,
+					void *data, int verbose_level),
+			void *data,
+			int verbose_level);
+	void add_callback_no_group(
+			void (*func)(long int *S, int len,
+					long int *candidates, int nb_candidates,
+					long int *good_candidates,
+					int &nb_good_candidates,
+					void *data, int verbose_level),
+			void *data,
+			int verbose_level);
+	void early_test_func(
+		long int *S, int len,
+		long int *candidates, int nb_candidates,
+		long int *good_candidates, int &nb_good_candidates,
+		int verbose_level);
+	void early_test_func_by_using_group(
+		long int *S, int len,
+		long int *candidates, int nb_candidates,
+		long int *good_candidates, int &nb_good_candidates,
+		int verbose_level);
+};
+
+
+
+
 
 // #############################################################################
 // orbit_type_repository.cpp
@@ -313,6 +383,95 @@ public:
 	void report_one_type(
 			std::ostream &ost,
 			int type_idx, int verbose_level);
+
+};
+
+
+// #############################################################################
+// poset_with_group_action.cpp
+// #############################################################################
+
+//! a poset with a group action on it
+
+
+class poset_with_group_action {
+public:
+
+	int f_subset_lattice;
+	int n;
+
+	int f_subspace_lattice;
+	algebra::linear_algebra::vector_space *VS;
+
+	actions::action *A; // the action in which the group is given
+	actions::action *A2; // the action in which we do the search
+
+	groups::strong_generators *Strong_gens;
+	algebra::ring_theory::longinteger_object go;
+
+	int f_has_orbit_based_testing;
+	orbit_based_testing *Orbit_based_testing;
+
+	int f_print_function;
+	void (*print_function)(std::ostream &ost,
+			int len, long int *S, void *data);
+	void *print_function_data;
+
+	poset_with_group_action();
+	~poset_with_group_action();
+	void init_subset_lattice(
+			actions::action *A, actions::action *A2,
+			groups::strong_generators *Strong_gens,
+			int verbose_level);
+	void init_subspace_lattice(
+			actions::action *A, actions::action *A2,
+			groups::strong_generators *Strong_gens,
+			algebra::linear_algebra::vector_space *VS,
+			int verbose_level);
+	void add_independence_condition(
+			int independence_value,
+			int verbose_level);
+	void add_testing(
+			int (*func)(orbit_based_testing *Obt,
+					long int *S, int len,
+					void *data, int verbose_level),
+			void *data,
+			int verbose_level);
+	void add_testing_without_group(
+			void (*func)(long int *S, int len,
+					long int *candidates, int nb_candidates,
+					long int *good_candidates, int &nb_good_candidates,
+					void *data, int verbose_level),
+			void *data,
+			int verbose_level);
+	void print();
+	void early_test_func(
+		long int *S, int len,
+		long int *candidates, int nb_candidates,
+		long int *good_candidates, int &nb_good_candidates,
+		int verbose_level);
+	void unrank_point(
+			int *v, long int rk);
+	long int rank_point(
+			int *v);
+	void unrank_basis(
+			int *Basis, long int *S, int len);
+	void rank_basis(
+			int *Basis, long int *S, int len);
+
+	void invoke_print_function(
+			std::ostream &ost, int sz, long int *set);
+	int is_contained(
+			long int *set1, int sz1, long int *set2, int sz2,
+			int verbose_level);
+	void invoke_early_test_func(
+			long int *the_set, int lvl,
+			long int *candidates,
+			int nb_candidates,
+			long int *good_candidates,
+			int &nb_good_candidates,
+			int verbose_level);
+
 
 };
 

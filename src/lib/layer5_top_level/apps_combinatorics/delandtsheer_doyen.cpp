@@ -615,7 +615,7 @@ void delandtsheer_doyen::create_starter(
 		exit(1);
 	}
 
-	Poset_search = NEW_OBJECT(poset_classification::poset_with_group_action);
+	Poset_search = NEW_OBJECT(layer3_group_actions::combinatorics_with_groups::poset_with_group_action);
 	Poset_search->init_subset_lattice(
 			A0, A, SG,
 			verbose_level);
@@ -693,7 +693,7 @@ void delandtsheer_doyen::create_graphs(
 
 	s = Search_control->depth;
 	s2 = s * (s - 1) >> 1;
-	nb_s_orbits = Gen->nb_orbits_at_level(s);
+	nb_s_orbits = Gen->get_Poo()->nb_orbits_at_level(s);
 	if (f_v) {
 		cout << "target level = s = " << s << endl;
 		cout << "s2 = {s choose 2} = " << s2 << endl;
@@ -714,7 +714,7 @@ void delandtsheer_doyen::create_graphs(
 					"case " << h << " / " << nb_s_orbits << endl;
 		}
 
-		Gen->get_set(s, h, line, sz);
+		Gen->get_Poo()->get_set(s, h, line, sz);
 
 		Table[h * nb_cols + 0] = std::to_string(h);
 		Table[h * nb_cols + 1] = "\"" + Lint_vec_stringify(line, s) + "\"";

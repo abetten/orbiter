@@ -414,7 +414,7 @@ void modified_group_init_layer5::create_set_stabilizer_subgroup(
 
 		groups::strong_generators *stab_gens_canonical_set;
 
-		PC->get_stabilizer_generators_cleaned_up(
+		PC->get_Poo()->get_stabilizer_generators_cleaned_up(
 				stab_gens_canonical_set,
 				the_set_sz, local_idx, verbose_level - 2);
 

@@ -644,7 +644,7 @@ void poset_classification_control::early_test_func_for_max_line_intersection(
 	}
 
 
-	long int j, a, pt;
+	long int j, a;
 
 	if (f_v) {
 		cout << "colored_graph_cliques::early_test_func_for_max_line_intersection "
@@ -664,19 +664,19 @@ void poset_classification_control::early_test_func_for_max_line_intersection(
 
 
 	int n;
-	algebra::field_theory::finite_field *F;
-	int q;
+	//algebra::field_theory::finite_field *F;
+	//int q;
 
 	other::data_structures::sorting Sorting;
 
 
-	F = test_max_line_intersections_PC->get_A2()->matrix_group_finite_field();
+	//F = test_max_line_intersections_PC->get_A2()->matrix_group_finite_field();
 
 	n = test_max_line_intersections_PC->get_A2()->degree;
 
 
-	q = F->q;
-	pt = S[len - 1];
+	//q = F->q;
+	//pt = S[len - 1];
 
 #if 1
 	//geometry::other_geometry::geometry_global Gg;
@@ -690,7 +690,7 @@ void poset_classification_control::early_test_func_for_max_line_intersection(
 	int nb_cols;
 	int *T;
 	long int *Pts;
-	int nb_T, nb_pts;
+	int nb_T; //, nb_pts;
 
 	T = NEW_int(n);
 	Pts = NEW_lint(n);
@@ -716,7 +716,7 @@ void poset_classification_control::early_test_func_for_max_line_intersection(
 					"after line_intersection_graph_for_a_given_set" << endl;
 		}
 
-		int i, h;
+		int i;
 
 		nb_T = 0;
 		for (i = 0; i < len; i++) {

@@ -15,5 +15,6 @@ ROW,C1,C2,C3
 1,"\verb'-read_widor' "," file  "," Create a tactical decomposition from a file in Widor format. "
 1,"\verb'-Kaempfer' ","   "," Invoke Kaempfer's TDO-refinement algorithm. "
 1,"\verb'-domino_portrait' "," $D$ $s$ fname  "," Computes a domino portrait for a graphics file in r/g/b format using double-$D$ domino sets. "
+1,"\verb'-test_if_distance_regular_graph' "," fname  "," Tests wether the layered graph whose file name is give is distance regular. "
 END
 1,"\verb'-character_table_symmetric_group' "," $n$  ","Computes the character table of  $\Sym(n)$ using the algorithm of Burnside. "

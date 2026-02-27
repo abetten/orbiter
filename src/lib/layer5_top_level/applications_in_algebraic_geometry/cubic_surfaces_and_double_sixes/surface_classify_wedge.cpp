@@ -826,7 +826,7 @@ void surface_classify_wedge::derived_arcs(
 						<< " is orbit " << orb << endl;
 			}
 
-			Five_p1->Five_plus_one->get_set_by_level(5, orb, S);
+			Five_p1->Five_plus_one->get_Poo()->get_set_by_level(5, orb, S);
 
 			if (f_v) {
 				cout << "surface_classify_wedge::derived_arcs "

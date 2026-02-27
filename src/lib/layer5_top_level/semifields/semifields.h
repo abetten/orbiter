@@ -203,7 +203,7 @@ public:
 		// infinity and zero
 
 
-	poset_classification::poset_with_group_action *Poset;
+	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset;
 	poset_classification::poset_classification_control *Control;
 
 	poset_classification::poset_classification *Gen;

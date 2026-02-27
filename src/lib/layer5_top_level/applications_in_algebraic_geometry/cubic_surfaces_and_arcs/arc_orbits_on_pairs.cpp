@@ -91,7 +91,7 @@ void arc_orbits_on_pairs::init(
 		cout << "arc_orbits_on_pairs::init creating The_arc" << endl;
 		}
 
-	The_arc = SAL->Six_arcs->Gen->gen->get_set_and_stabilizer(
+	The_arc = SAL->Six_arcs->Gen->gen->get_Poo()->get_set_and_stabilizer(
 			6 /* level */,
 			SAL->Six_arcs->Not_on_conic_idx[arc_idx],
 			verbose_level);
@@ -124,7 +124,7 @@ void arc_orbits_on_pairs::init(
 	Control->f_depth = true;
 	Control->depth = 2;
 
-	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
+	Poset = NEW_OBJECT(layer3_group_actions::combinatorics_with_groups::poset_with_group_action);
 	Poset->init_subset_lattice(A, A_on_arc,
 			The_arc->Strong_gens,
 			verbose_level);
@@ -164,7 +164,7 @@ void arc_orbits_on_pairs::init(
 				"after Orbits_on_pairs->poset_classification_main" << endl;
 	}
 
-	nb_orbits_on_pairs = Orbits_on_pairs->nb_orbits_at_level(2);
+	nb_orbits_on_pairs = Orbits_on_pairs->get_Poo()->nb_orbits_at_level(2);
 	if (f_v) {
 		cout << "arc_orbits_on_pairs::init "
 				"nb_orbits_on_pairs=" << nb_orbits_on_pairs << endl;

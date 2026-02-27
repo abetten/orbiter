@@ -99,28 +99,6 @@ void extension::set_data2(
 }
 
 
-void print_extension_type(
-		std::ostream &ost, int t)
-{
-	if (t == EXTENSION_TYPE_UNPROCESSED) {
-		ost << "   unprocessed";
-		}
-	else if (t == EXTENSION_TYPE_EXTENSION) {
-		ost << "     extension";
-		}
-	else if (t == EXTENSION_TYPE_FUSION) {
-		ost << "        fusion";
-		}
-	else if (t == EXTENSION_TYPE_PROCESSING) {
-		ost << "    processing";
-		}
-	else if (t == EXTENSION_TYPE_NOT_CANONICAL) {
-		ost << " not canonical";
-		}
-	else {
-		ost << "type=" << t;
-		}
-}
 
 
 }}}

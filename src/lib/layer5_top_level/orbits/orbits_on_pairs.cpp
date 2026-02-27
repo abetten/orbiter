@@ -112,7 +112,7 @@ void orbits_on_pairs::compute_orbits_on_pairs(
 	Control->f_depth = true;
 	Control->depth = 2;
 
-	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
+	Poset = NEW_OBJECT(layer3_group_actions::combinatorics_with_groups::poset_with_group_action);
 	Poset->init_subset_lattice(
 			A0, A, Strong_gens,
 			verbose_level);
@@ -168,7 +168,7 @@ void orbits_on_pairs::compute_orbits_on_pairs(
 	}
 
 
-	nb_orbits = Poset_classification->nb_orbits_at_level(2);
+	nb_orbits = Poset_classification->get_Poo()->nb_orbits_at_level(2);
 
 	if (f_v) {
 		cout << "orbits_on_pairs::compute_orbits_on_pairs "
@@ -185,7 +185,7 @@ void orbits_on_pairs::compute_orbits_on_pairs(
 
 	for (i = 0; i < nb_orbits; i++) {
 
-		orbit_length[i] = Poset_classification->orbit_length_as_int(
+		orbit_length[i] = Poset_classification->get_Poo()->orbit_length_as_int(
 				i /* orbit_at_level*/, 2 /* level*/);
 
 	}

@@ -409,6 +409,7 @@ int poset_orbit_node::find_extension_from_point(
 }
 
 void poset_orbit_node::print_extensions(
+		poset_classification *gen,
 		std::ostream &ost)
 {
 	int i;
@@ -424,7 +425,7 @@ void poset_orbit_node::print_extensions(
 			<< setw(7) << E[i].get_pt() << " : "
 			<< setw(5) << E[i].get_orbit_len() << " : ";
 
-		print_extension_type(ost, E[i].get_type());
+		gen->print_extension_type(ost, E[i].get_type());
 		if (E[i].get_type() == EXTENSION_TYPE_FUSION) {
 			ost << " -> (" << E[i].get_data1() << ","
 					<< E[i].get_data2() << ") hdl=" << E[i].get_data() << endl;
@@ -969,7 +970,7 @@ void poset_orbit_node::print_extensions(
 	cout << "poset_orbit_node::print_extensions node=" << node
 			<< " at depth " << depth
 			<< " degree=" << gen->get_A2()->degree << endl;
-	print_extensions(cout);
+	print_extensions(gen, cout);
 	orbit = NEW_int(gen->get_A2()->degree);
 
 #if 0
@@ -1040,7 +1041,7 @@ void poset_orbit_node::print_extensions(
 			cout << " = " << endl;
 			int_vec_print(cout, gen->set[0], depth + 1);
 			cout << endl;
-			node2 = gen->find_poset_orbit_node_for_set(
+			node2 = gen->get_Poo()->find_poset_orbit_node_for_set(
 					depth + 1, gen->set[0], 0 /* f_tolerant */, 0);
 			cout << "Which is node " << node2 << endl;
 			cout << "fusion to node " << node2 << endl;

@@ -224,7 +224,7 @@ public:
 	int q;
 
 	poset_classification::poset_classification_control *Control;
-	poset_classification::poset_with_group_action *Poset;
+	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset;
 	poset_classification::poset_classification *gen;
 	int nb_points_on_quadric;
 

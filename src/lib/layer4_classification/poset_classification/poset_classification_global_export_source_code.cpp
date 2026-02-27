@@ -44,7 +44,7 @@ void poset_classification_global::generate_source_code(
 	fname = my_prefix + ".cpp";
 
 	set = NEW_lint(level);
-	nb_iso = PC->nb_orbits_at_level(level);
+	nb_iso = PC->get_Poo()->nb_orbits_at_level(level);
 
 
 
@@ -70,7 +70,7 @@ void poset_classification_global::generate_source_code(
 		fp << "static long int " << PC->get_control()->problem_label
 				<< "_reps[] = {" << endl;
 		for (iso_type = 0; iso_type < nb_iso; iso_type++) {
-			PC->get_set_by_level(level, iso_type, set);
+			PC->get_Poo()->get_set_by_level(level, iso_type, set);
 			rep = set;
 			fp << "\t";
 			for (i = 0; i < level; i++) {
@@ -87,7 +87,7 @@ void poset_classification_global::generate_source_code(
 
 			data_structures_groups::set_and_stabilizer *SaS;
 
-			SaS = PC->get_set_and_stabilizer(
+			SaS = PC->get_Poo()->get_set_and_stabilizer(
 					level, iso_type,
 					0 /* verbose_level */);
 			fp << "\t\"";
@@ -120,7 +120,7 @@ void poset_classification_global::generate_source_code(
 			data_structures_groups::set_and_stabilizer *SaS;
 
 
-			SaS = PC->get_set_and_stabilizer(level,
+			SaS = PC->get_Poo()->get_set_and_stabilizer(level,
 					iso_type, 0 /* verbose_level */);
 
 			stab_gens_first[iso_type] = fst;
@@ -245,7 +245,7 @@ void poset_classification_global::generate_history(
 
 			cout << "poset_classification_global::generate_history "
 					"lvl = " << lvl << " / " << level << endl;
-			nb_iso = PC->nb_orbits_at_level(lvl);
+			nb_iso = PC->get_Poo()->nb_orbits_at_level(lvl);
 
 			fp << "// level " << lvl << ":" << endl;
 			fp << "static long int " << PC->get_problem_label()
@@ -259,7 +259,7 @@ void poset_classification_global::generate_history(
 					<< "_reps[] = {" << endl;
 
 			for (iso_type = 0; iso_type < nb_iso; iso_type++) {
-				PC->get_set_by_level(lvl, iso_type, set);
+				PC->get_Poo()->get_set_by_level(lvl, iso_type, set);
 				rep = set;
 				fp << "\t";
 				for (i = 0; i < lvl; i++) {
@@ -287,7 +287,7 @@ void poset_classification_global::generate_history(
 				//rep = The_surface[iso_type]->coeff;
 
 
-				if (PC->test_if_stabilizer_is_trivial(
+				if (PC->get_Poo()->test_if_stabilizer_is_trivial(
 						lvl, iso_type,
 						0 /* verbose_level */)) {
 					fp << "\"1\",";
@@ -296,7 +296,7 @@ void poset_classification_global::generate_history(
 				else {
 					data_structures_groups::set_and_stabilizer *SaS;
 
-					SaS = PC->get_set_and_stabilizer(
+					SaS = PC->get_Poo()->get_set_and_stabilizer(
 							lvl, iso_type,
 							0 /* verbose_level */);
 
@@ -338,7 +338,7 @@ void poset_classification_global::generate_history(
 				for (iso_type = 0; iso_type < nb_iso; iso_type++) {
 
 
-					if (PC->test_if_stabilizer_is_trivial(
+					if (PC->get_Poo()->test_if_stabilizer_is_trivial(
 							lvl, iso_type,
 							0 /* verbose_level */)) {
 
@@ -350,7 +350,7 @@ void poset_classification_global::generate_history(
 						data_structures_groups::set_and_stabilizer *SaS;
 
 
-						SaS = PC->get_set_and_stabilizer(lvl,
+						SaS = PC->get_Poo()->get_set_and_stabilizer(lvl,
 								iso_type, 0 /* verbose_level */);
 
 						stab_gens_first[iso_type] = fst;
@@ -433,7 +433,7 @@ void poset_classification_global::generate_history(
 
 					poset_orbit_node *N;
 
-					N = PC->get_node_ij(lvl, iso_type);
+					N = PC->get_Poo()->get_node_ij(lvl, iso_type);
 					//N = root + Poo->first_node_at_level(lvl) + iso_type;
 
 					flag_orbit_nb[iso_type] = N->get_nb_of_extensions();
@@ -498,7 +498,7 @@ void poset_classification_global::generate_history(
 
 					poset_orbit_node *N;
 
-					N = PC->get_node_ij(lvl, po);
+					N = PC->get_Poo()->get_node_ij(lvl, po);
 					//N = root + Poo->first_node_at_level(lvl) + po;
 
 					if (so >= N->get_nb_of_extensions()) {
@@ -533,7 +533,7 @@ void poset_classification_global::generate_history(
 
 					poset_orbit_node *N;
 
-					N = PC->get_node_ij(lvl, po);
+					N = PC->get_Poo()->get_node_ij(lvl, po);
 					//N = root + Poo->first_node_at_level(lvl) + po;
 
 					fp << N->get_E(so)->get_pt();
@@ -561,7 +561,7 @@ void poset_classification_global::generate_history(
 
 					poset_orbit_node *N;
 
-					N = PC->get_node_ij(lvl, po);
+					N = PC->get_Poo()->get_node_ij(lvl, po);
 					//N = root + Poo->first_node_at_level(lvl) + po;
 					fp << N->get_E(so)->get_orbit_len();
 
@@ -590,7 +590,7 @@ void poset_classification_global::generate_history(
 
 					poset_orbit_node *N;
 
-					N = PC->get_node_ij(lvl, po);
+					N = PC->get_Poo()->get_node_ij(lvl, po);
 					//N = root + Poo->first_node_at_level(lvl) + po;
 					if (N->get_E(so)->get_type() == 2) {
 						fusion_idx[f] = nb_fuse;
@@ -617,7 +617,7 @@ void poset_classification_global::generate_history(
 
 					poset_orbit_node *N;
 
-					N = PC->get_node_ij(lvl, po);
+					N = PC->get_Poo()->get_node_ij(lvl, po);
 					//N = root + Poo->first_node_at_level(lvl) + po;
 					if (N->get_E(so)->get_type() == 1) {
 						fp << N->get_E(so)->get_data();
@@ -654,7 +654,7 @@ void poset_classification_global::generate_history(
 
 					poset_orbit_node *N;
 
-					N = PC->get_node_ij(lvl, po);
+					N = PC->get_Poo()->get_node_ij(lvl, po);
 					//N = root + Poo->first_node_at_level(lvl) + po;
 					if (N->get_E(so)->get_type() == 2) {
 						fuse_data[nb_fuse * 3 + 0] = N->get_E(so)->get_data();

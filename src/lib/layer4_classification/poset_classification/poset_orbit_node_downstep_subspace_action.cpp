@@ -363,7 +363,7 @@ void poset_orbit_node::setup_factor_space_action_with_early_test(
 				<< " n = " << n << endl;
 	}
 
-	gen->invoke_early_test_func(
+	gen->get_poset()->invoke_early_test_func(
 			the_set, lvl,
 			subset /* candidates */,
 			n /* nb_candidates */,
@@ -465,7 +465,7 @@ void poset_orbit_node::setup_factor_space_action(
 		Lint_vec_print(cout, the_set, lvl);
 		cout << endl;
 	}
-	gen->unrank_basis(coordinates, the_set, lvl);
+	gen->get_poset()->unrank_basis(coordinates, the_set, lvl);
 
 
 	if (f_v) {
@@ -549,7 +549,7 @@ void poset_orbit_node::downstep_subspace_action_print_orbits(
 		cout << setw(4) << h << " : " 
 			<< setw(5) << rep;
 
-		gen->unrank_point(gen->get_VS()->v1, rep);
+		gen->get_poset()->unrank_point(gen->get_VS()->v1, rep);
 
 		cout << " = ";
 		Int_vec_print(cout,
@@ -627,7 +627,7 @@ void poset_orbit_node::downstep_orbits_subspace_action(
 			len = Schreier.Forest->orbit_len[h];
 			rep = AF->preimage_table[Schreier.Forest->orbit[first + 0]];
 
-			gen->unrank_point(gen->get_VS()->v1, rep);
+			gen->get_poset()->unrank_point(gen->get_VS()->v1, rep);
 
 			cout << rep << " = ";
 			Int_vec_print(cout,
@@ -662,7 +662,7 @@ void poset_orbit_node::downstep_orbits_subspace_action(
 				for (j = 0; j < len; j++) {
 					rep = AF->preimage_table[Schreier.Forest->orbit[first + j]];
 
-					gen->unrank_point(gen->get_VS()->v1, rep);
+					gen->get_poset()->unrank_point(gen->get_VS()->v1, rep);
 
 					cout << setw(3) << j << " / " << setw(3) << len
 							<< " : " << rep << " = ";

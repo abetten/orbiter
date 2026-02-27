@@ -317,6 +317,17 @@ long int poset_of_orbits::nb_flag_orbits_up_at_level(
 	return F;
 }
 
+void poset_of_orbits::node_to_lvl_po(
+		int node_idx, int &level, int &po)
+{
+
+	poset_orbit_node * Node;
+
+	Node = root + node_idx;
+	level = Node->depth_of_node(PC);
+	po = node_idx - first_poset_orbit_node_at_level[level];
+}
+
 poset_orbit_node *poset_of_orbits::get_node_ij(
 		int level, int node)
 {
@@ -405,7 +416,7 @@ void poset_of_orbits::change_extension_type(
 		// extension node
 		if (root[node].get_E(cur_ext)->get_type() != EXTENSION_TYPE_UNPROCESSED &&
 			root[node].get_E(cur_ext)->get_type() != EXTENSION_TYPE_PROCESSING) {
-			cout << "poset_classification::change_extension_type trying to install "
+			cout << "poset_of_orbits::change_extension_type trying to install "
 					"extension node, fatal: root[node].get_E(cur_ext)->type != "
 					"EXTENSION_TYPE_UNPROCESSED && root[node].get_E(cur_ext)->type "
 					"!= EXTENSION_TYPE_PROCESSING" << endl;
@@ -420,7 +431,7 @@ void poset_of_orbits::change_extension_type(
 	else if (type == EXTENSION_TYPE_FUSION) {
 		// fusion
 		if (root[node].get_E(cur_ext)->get_type() != EXTENSION_TYPE_UNPROCESSED) {
-			cout << "poset_classification::change_extension_type trying to install "
+			cout << "poset_of_orbits::change_extension_type trying to install "
 					"fusion node, fatal: root[node].E[cur_ext].get_type() != "
 					"EXTENSION_TYPE_UNPROCESSED" << endl;
 			cout << "root[node].get_E(cur_ext)->get_type()="
@@ -515,7 +526,7 @@ void poset_of_orbits::print_tree()
 {
 	int i;
 
-	cout << "poset_classification::print_tree "
+	cout << "poset_of_orbits::print_tree "
 			"nb_poset_orbit_nodes_used="
 			<< nb_poset_orbit_nodes_used << endl;
 	for (i = 0; i < nb_poset_orbit_nodes_used; i++) {
@@ -657,7 +668,7 @@ void poset_of_orbits::make_table_of_nodes(
 			fname, Table, nb_rows, nb_cols);
 
 	if (f_v) {
-		cout << "poset_classification::make_table_of_nodes "
+		cout << "poset_of_orbits::make_table_of_nodes "
 				"written file " << fname
 				<< " of size " << Fio.file_size(fname) << endl;
 	}
@@ -1319,7 +1330,7 @@ void poset_of_orbits::read_level_file(
 		Lint_vec_print(cout, sets[i], level);
 		cout << endl;
 
-		J = PC->find_poset_orbit_node_for_set(level - 1,
+		J = PC->get_Poo()->find_poset_orbit_node_for_set(level - 1,
 				sets[i], false /* f_tolerant */,
 				0/*verbose_level*/);
 		cout << "J=" << J << endl;
@@ -1598,7 +1609,7 @@ void poset_of_orbits::log_nodes_for_treefile(
 
 
 	if (f_v) {
-		cout << "poset_classification::log_nodes_for_treefile "
+		cout << "poset_of_orbits::log_nodes_for_treefile "
 				"cur=" << cur << endl;
 	}
 	if (PC->has_base_case() && cur < PC->get_Base_case()->size) {
@@ -1668,11 +1679,11 @@ void poset_of_orbits::make_table_of_orbit_reps(
 
 		for (i = 0; i < nb_orbits; i++, cur++) {
 
-			PC->get_set_by_level(level, i, rep);
+			get_set_by_level(level, i, rep);
 
 			algebra::ring_theory::longinteger_object stab_order, orbit_length;
 
-			PC->get_orbit_length_and_stabilizer_order(
+			get_orbit_length_and_stabilizer_order(
 					i, level,
 				stab_order, orbit_length);
 
@@ -1726,7 +1737,7 @@ void poset_of_orbits::save_representatives_up_to_a_given_level_to_csv(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "poset_classification::save_representatives_up_to_a_given_level_to_csv" << endl;
+		cout << "poset_of_orbits::save_representatives_up_to_a_given_level_to_csv" << endl;
 	}
 
 	//other::data_structures::spreadsheet *Sp;
@@ -1735,7 +1746,7 @@ void poset_of_orbits::save_representatives_up_to_a_given_level_to_csv(
 	int nb_rows, nb_cols;
 
 	if (f_v) {
-		cout << "poset_classification::save_representatives_up_to_a_given_level_to_csv "
+		cout << "poset_of_orbits::save_representatives_up_to_a_given_level_to_csv "
 				"before make_table_of_orbit_reps" << endl;
 	}
 	make_table_of_orbit_reps(
@@ -1745,7 +1756,7 @@ void poset_of_orbits::save_representatives_up_to_a_given_level_to_csv(
 			0 /* level_min */, lvl /* level_max */,
 			0 /*verbose_level*/);
 	if (f_v) {
-		cout << "poset_classification::save_representatives_up_to_a_given_level_to_csv "
+		cout << "poset_of_orbits::save_representatives_up_to_a_given_level_to_csv "
 				"after make_table_of_orbit_reps" << endl;
 	}
 
@@ -1774,7 +1785,7 @@ void poset_of_orbits::save_representatives_up_to_a_given_level_to_csv(
 	//FREE_OBJECT(Sp);
 
 	if (f_v) {
-		cout << "poset_classification::save_representatives_up_to_a_given_level_to_csv done" << endl;
+		cout << "poset_of_orbits::save_representatives_up_to_a_given_level_to_csv done" << endl;
 	}
 }
 
@@ -1786,7 +1797,7 @@ void poset_of_orbits::save_representatives_at_level_to_csv(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "poset_classification::save_representatives_at_level_to_csv" << endl;
+		cout << "poset_of_orbits::save_representatives_at_level_to_csv" << endl;
 	}
 
 	{
@@ -1819,79 +1830,9 @@ void poset_of_orbits::save_representatives_at_level_to_csv(
 		}
 
 	}
-#if 0
-	{
-		ofstream ost(fname);
-
-		int i, l;
-		long int *set;
-		//long int ago;
-
-		set = NEW_lint(lvl);
-
-
-		l = PC->nb_orbits_at_level(lvl);
-		//cout << "The " << l << " representatives at level " << lvl << " are:" << endl;
-		ost << "ROW,SZ,ORBIDX,REP,AGO,OL" << endl;
-		for (i = 0; i < l; i++) {
-
-			get_node_ij(lvl, i)->store_set_to(PC, lvl - 1, set /*gen->S0*/);
-			//Lint_vec_print(cout, set /*gen->S0*/, lvl);
-
-			algebra::ring_theory::longinteger_object ago;
-			algebra::ring_theory::longinteger_object orbit_length;
-
-			get_node_ij(lvl, i)->get_stabilizer_order(
-					PC, ago);
-
-			PC->orbit_length(i, lvl, orbit_length);
-
-
-			string s_rep;
-			string s_ago;
-			string s_ol;
-
-			s_rep = "\"" + Lint_vec_stringify(set, lvl) + "\"";
-
-			s_ago = ago.stringify();
-
-			s_ol = orbit_length.stringify();
-
-
-			ost << i;
-			ost << ",";
-			ost << std::to_string(lvl);
-			ost << ",";
-			ost << std::to_string(i);
-			ost << ",";
-			ost << s_rep;
-			ost << ",";
-			ost << s_ago;
-			ost << ",";
-			ost << s_ol;
-
-
-			//ago = get_node_ij(lvl, i)->get_stabilizer_order_lint(PC);
-			//ost << "," << ago;
-
-
-			//ost << "," << len;
-
-
-			ost << endl;
-
-		}
-
-		ost << "END" << endl;
-
-
-		FREE_lint(set);
-	}
-	other::orbiter_kernel_system::file_io Fio;
-#endif
 
 	if (f_v) {
-		cout << "poset_classification::save_representatives_at_level_to_csv done" << endl;
+		cout << "poset_of_orbits::save_representatives_at_level_to_csv done" << endl;
 	}
 }
 
@@ -1902,7 +1843,7 @@ void poset_of_orbits::get_set_orbits_at_level(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "poset_classification::get_set_orbits_at_level" << endl;
+		cout << "poset_of_orbits::get_set_orbits_at_level" << endl;
 	}
 
 	int i, nb_orbits;
@@ -1913,7 +1854,7 @@ void poset_of_orbits::get_set_orbits_at_level(
 
 	set = NEW_lint(lvl);
 
-	nb_orbits = PC->nb_orbits_at_level(lvl);
+	nb_orbits = nb_orbits_at_level(lvl);
 	Length = NEW_lint(nb_orbits);
 	Length_expanded = NEW_lint(nb_orbits);
 
@@ -1939,7 +1880,7 @@ void poset_of_orbits::get_set_orbits_at_level(
 				verbose_level);
 
 		if (f_v) {
-			cout << "poset_classification::get_set_orbits_at_level "
+			cout << "poset_of_orbits::get_set_orbits_at_level "
 					"orbit " << i << " / " << nb_orbits
 					<< " Found an orbit of size " << Orb[i]->used_length << endl;
 		}
@@ -1967,7 +1908,7 @@ void poset_of_orbits::get_set_orbits_at_level(
 				verbose_level);
 
 		if (orbit_length * lvl != Length_expanded[i]) {
-			cout << "poset_classification::get_set_orbits_at_level "
+			cout << "poset_of_orbits::get_set_orbits_at_level "
 					"orbit length is wrong" << endl;
 			exit(1);
 		}
@@ -1988,7 +1929,1422 @@ void poset_of_orbits::get_set_orbits_at_level(
 	FREE_pvoid((void **) Orb);
 
 	if (f_v) {
-		cout << "poset_classification::get_set_orbits_at_level done" << endl;
+		cout << "poset_of_orbits::get_set_orbits_at_level done" << endl;
+	}
+}
+
+int poset_of_orbits::find_poset_orbit_node_for_set_basic(
+		int from,
+		int node, int len, long int *set, int f_tolerant,
+		int verbose_level)
+{
+	int i, j;
+	long int pt;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 1);
+
+	if (f_vv) {
+		cout << "poset_of_orbits::"
+				"find_poset_orbit_node_for_set_basic "
+				"looking for set ";
+		Lint_vec_print(cout, set, len);
+		cout << endl;
+		cout << "node=" << node << endl;
+		cout << "from=" << from << endl;
+		cout << "len=" << len << endl;
+		cout << "f_tolerant=" << f_tolerant << endl;
+	}
+	for (i = from; i < len; i++) {
+		pt = set[i];
+		if (f_vv) {
+			cout << "pt=" << pt << endl;
+			cout << "calling root[node].find_extension_from_point" << endl;
+		}
+		j = find_extension_from_point(
+				node, pt, 0 /* verbose_level */);
+
+		//j = root[node].find_extension_from_point(this, pt, false);
+
+		if (j == -1) {
+			if (f_v) {
+				cout << "poset_of_orbits::"
+						"find_poset_orbit_node_for_set_basic "
+						"depth " << i << " no extension for point "
+						<< pt << " found" << endl;
+			}
+			if (f_tolerant) {
+				if (f_v) {
+					cout << "poset_of_orbits::"
+							"find_poset_orbit_node_for_set_basic "
+							"since we are tolerant, we return -1" << endl;
+				}
+				return -1;
+			}
+			else {
+				cout << "poset_of_orbits::"
+						"find_poset_orbit_node_for_set_basic "
+						"failure in find_extension_from_point" << endl;
+				Lint_vec_print(cout, set, len);
+				cout << endl;
+				cout << "node=" << node << endl;
+				cout << "from=" << from << endl;
+				cout << "i=" << i << endl;
+				cout << "pt=" << pt << endl;
+				get_node(node)->print_extensions(PC);
+				exit(1);
+			}
+		}
+		if (get_node(node)->get_E(j)->get_pt() != pt) {
+			cout << "poset_of_orbits::"
+					"find_poset_orbit_node_for_set_basic "
+					"root[node].E[j].pt != pt" << endl;
+			exit(1);
+		}
+		if (get_node(node)->get_E(j)->get_type() != EXTENSION_TYPE_EXTENSION &&
+				get_node(node)->get_E(j)->get_type() != EXTENSION_TYPE_PROCESSING) {
+			cout << "poset_of_orbits::"
+					"find_poset_orbit_node_for_set_basic "
+					"root[node].get_E(j)->type != "
+					"EXTENSION_TYPE_EXTENSION" << endl;
+			cout << "root[node].get_E(j)->type="
+					<< get_node(node)->get_E(j)->get_type() << " = ";
+			PC->print_extension_type(cout, get_node(node)->get_E(j)->get_type());
+			cout << endl;
+			cout << "poset_of_orbits::"
+					"find_poset_orbit_node_for_set_basic "
+					"looking for set ";
+			Lint_vec_print(cout, set, len);
+			cout << endl;
+			cout << "node=" << node << endl;
+			cout << "from=" << from << endl;
+			cout << "i=" << i << endl;
+			cout << "node=" << node << endl;
+			cout << "f_tolerant=" << f_tolerant << endl;
+			cout << "node=" << node << endl;
+			cout << "pt=" << pt << endl;
+			cout << "j=" << j << endl;
+			exit(1);
+		}
+		node = get_node(node)->get_E(j)->get_data();
+		if (f_v) {
+			cout << "depth " << i << " extension " << j
+					<< " new node " << node << endl;
+		}
+	}
+	return node;
+}
+
+int poset_of_orbits::find_poset_orbit_node_for_set(
+		int len,
+		long int *set, int f_tolerant, int verbose_level)
+// finds the node that represents s_0,...,s_{len - 1}
+{
+	int f_v = (verbose_level >= 1);
+	int ret;
+
+	if (f_v) {
+		cout << "poset_of_orbits::find_poset_orbit_node_for_set ";
+		Lint_vec_print(cout, set, len);
+		cout << endl;
+	}
+	if (PC->has_base_case()) {
+		int i, j, h;
+		if (len < PC->get_Base_case()->size) {
+			cout << "poset_of_orbits::find_poset_orbit_node_for_set "
+					"len < starter_size" << endl;
+			cout << "len=" << len << endl;
+			exit(1);
+		}
+		for (i = 0; i < PC->get_Base_case()->size; i++) {
+			for (j = i; j < len; j++) {
+				if (set[j] == PC->get_Base_case()->orbit_rep[i]) {
+					if (f_v) {
+						cout << "found " << i << "-th element "
+								"of the starter which is " << PC->get_Base_case()->orbit_rep[i]
+							<< " at position " << j << endl;
+					}
+					break;
+				}
+			}
+			if (j == len) {
+				cout << "poset_of_orbits::find_poset_orbit_node_for_set "
+						"did not find " << i << "-th element "
+						"of the starter" << endl;
+			}
+			for (h = j; h > i; h--) {
+				set[h] = set[h - 1];
+			}
+			set[i] = PC->get_Base_case()->orbit_rep[i];
+		}
+		int from = PC->get_Base_case()->size;
+		int node = PC->get_Base_case()->size;
+		ret = find_poset_orbit_node_for_set_basic(from,
+				node, len, set, f_tolerant, verbose_level);
+	}
+	else {
+		int from = 0;
+		int node = 0;
+		ret = find_poset_orbit_node_for_set_basic(from,
+				node, len, set, f_tolerant, verbose_level);
+	}
+	if (ret == -1) {
+		if (f_tolerant) {
+			if (f_v) {
+				cout << "poset_of_orbits::find_poset_orbit_node_for_set ";
+				Lint_vec_print(cout, set, len);
+				cout << " extension not found, "
+						"we are tolerant, returnning -1" << endl;
+			}
+			return -1;
+		}
+		else {
+			cout << "poset_of_orbits::find_poset_orbit_node_for_set "
+					"we should not be here" << endl;
+			exit(1);
+		}
+	}
+	return ret;
+
+}
+
+
+
+data_structures_groups::orbit_transversal *poset_of_orbits::get_orbit_transversal(
+		int level, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	data_structures_groups::orbit_transversal *T;
+	int orbit_at_level;
+
+	if (f_v) {
+		cout << "poset_of_orbits::get_orbit_transversal" << endl;
+	}
+	T = NEW_OBJECT(data_structures_groups::orbit_transversal);
+	T->A = PC->get_poset()->A;
+	T->A2 = PC->get_poset()->A2;
+
+
+	T->nb_orbits = nb_orbits_at_level(level);
+
+
+	if (f_v) {
+		cout << "poset_of_orbits::get_orbit_transversal "
+				"processing " << T->nb_orbits
+				<< " orbit representatives" << endl;
+	}
+
+
+	T->Reps = NEW_OBJECTS(data_structures_groups::set_and_stabilizer, T->nb_orbits);
+
+	for (orbit_at_level = 0;
+			orbit_at_level < T->nb_orbits;
+			orbit_at_level++) {
+
+		data_structures_groups::set_and_stabilizer *SaS;
+
+		SaS = get_set_and_stabilizer(level,
+				orbit_at_level, verbose_level);
+
+
+
+		T->Reps[orbit_at_level].init_everything(
+				PC->get_poset()->A, PC->get_poset()->A2, SaS->data, level,
+				SaS->Strong_gens, 0 /* verbose_level */);
+
+		SaS->data = NULL;
+		SaS->Strong_gens = NULL;
+
+		FREE_OBJECT(SaS);
+
+	}
+
+
+
+	if (f_v) {
+		cout << "poset_of_orbits::get_orbit_transversal done" << endl;
+	}
+	return T;
+}
+
+int poset_of_orbits::test_if_stabilizer_is_trivial(
+		int level, int orbit_at_level, int verbose_level)
+{
+	poset_orbit_node *O;
+
+	O = get_node_ij(level, orbit_at_level);
+	return O->test_if_stabilizer_is_trivial();
+}
+
+data_structures_groups::set_and_stabilizer *poset_of_orbits::get_set_and_stabilizer(
+		int level, int orbit_at_level, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	data_structures_groups::set_and_stabilizer *SaS;
+
+	if (f_v) {
+		cout << "poset_of_orbits::get_set_and_stabilizer" << endl;
+	}
+
+	SaS = NEW_OBJECT(data_structures_groups::set_and_stabilizer);
+
+	SaS->init(PC->get_poset()->A, PC->get_poset()->A2, 0 /*verbose_level */);
+
+	SaS->allocate_data(level, 0 /* verbose_level */);
+
+	get_set_by_level(level, orbit_at_level, SaS->data);
+
+	get_stabilizer_generators(SaS->Strong_gens,
+		level, orbit_at_level, 0 /* verbose_level */);
+
+	SaS->Strong_gens->group_order(SaS->target_go);
+
+	SaS->Stab = SaS->Strong_gens->create_sims(0 /*verbose_level*/);
+
+	if (f_v) {
+		cout << "poset_of_orbits::get_set_and_stabilizer done" << endl;
+	}
+	return SaS;
+}
+
+void poset_of_orbits::get_set_by_level(
+		int level, int node, long int *set)
+{
+	int size;
+	poset_orbit_node *O;
+
+	O = get_node_ij(level, node);
+	size = O->depth_of_node(PC);
+	if (size != level) {
+		cout << "poset_of_orbits::get_set_by_level "
+				"size != level" << endl;
+		exit(1);
+	}
+	//root[n].store_set_to(this, size - 1, set);
+	O->store_set_to(PC, size - 1, set);
+}
+
+
+void poset_of_orbits::stabilizer_order(
+		int node, algebra::ring_theory::longinteger_object &go)
+{
+#if 0
+	if (root[node].get_nb_strong_generators()) {
+		go.create_product(Poset->A->base_len(), root[node].tl);
+	}
+	else {
+		go.create(1, __FILE__, __LINE__);
+	}
+#else
+	get_node(node)->get_stabilizer_order(PC, go);
+#endif
+}
+
+
+void poset_of_orbits::orbit_length(
+		int orbit_at_level,
+		int level, algebra::ring_theory::longinteger_object &len)
+// uses poset_classification::go for the group order
+{
+	algebra::ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_object stab_order, quo, rem;
+
+	get_stabilizer_order(level, orbit_at_level, stab_order);
+	D.integral_division(PC->get_poset()->go, stab_order, len, rem, 0);
+	if (!rem.is_zero()) {
+		cout << "poset_of_orbits::orbit_length stabilizer order does "
+				"not divide group order" << endl;
+		exit(1);
+	}
+}
+
+void poset_of_orbits::get_orbit_length_and_stabilizer_order(
+		int node,
+		int level, algebra::ring_theory::longinteger_object &stab_order,
+		algebra::ring_theory::longinteger_object &len)
+// uses poset_classification::go for the group order
+{
+	algebra::ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_object quo, rem;
+
+	get_stabilizer_order(level, node, stab_order);
+	D.integral_division(PC->get_poset()->go, stab_order, len, rem, 0);
+	if (!rem.is_zero()) {
+		cout << "poset_of_orbits::orbit_length "
+				"stabilizer order "
+				"does not divide group order" << endl;
+		exit(1);
+	}
+}
+
+int poset_of_orbits::orbit_length_as_int(
+		int orbit_at_level, int level)
+{
+	algebra::ring_theory::longinteger_object len;
+
+	orbit_length(orbit_at_level, level, len);
+	return len.as_int();
+
+}
+
+
+void poset_of_orbits::recreate_schreier_vectors_up_to_level(
+		int lvl,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i;
+
+	if (f_v) {
+		cout << "poset_of_orbits::recreate_schreier_vectors_up_to_level "
+				"creating Schreier vectors up to "
+				"level " << lvl << endl;
+	}
+	for (i = 0; i <= lvl; i++) {
+		if (f_v) {
+			cout << "poset_of_orbits::recreate_schreier_vectors_up_to_level "
+					"creating Schreier vectors at "
+					"level " << i << endl;
+		}
+		recreate_schreier_vectors_at_level(i, verbose_level - 1);
+	}
+	if (f_v) {
+		cout << "poset_of_orbits::recreate_schreier_vectors_up_to_level done" << endl;
+	}
+}
+
+void poset_of_orbits::recreate_schreier_vectors_at_level(
+		int level,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_vvv = false;//(verbose_level >= 3);
+	int f, l, prev, u;
+	int f_recreate_extensions = false;
+	int f_dont_keep_sv = false;
+
+	if (f_v) {
+		cout << "poset_of_orbits::recreate_schreier_vectors_at_level "
+				"level = " << level << endl;
+	}
+	f = first_node_at_level(level);
+	if (f_v) {
+		cout << "poset_of_orbits::recreate_schreier_vectors_at_level "
+				"f = " << f << endl;
+	}
+	//cur = Poo->first_node_at_level(level + 1);
+	//l = cur - f;
+	l = nb_orbits_at_level(level);
+
+	if (f_vv) {
+		cout << "creating Schreier vectors at depth " << level
+				<< " for " << l << " orbits" << endl;
+	}
+	if (f_vv) {
+		cout << "poset_of_orbits::recreate_schreier_vectors_at_level "
+				"Testing if a schreier vector file exists" << endl;
+	}
+	if (PC->test_sv_level_file_binary(level, PC->get_problem_label_with_path())) {
+
+		if (f_vv) {
+			cout << "poset_of_orbits::recreate_schreier_vectors_at_level "
+					"Yes, a schreier vector file exists. "
+					"We will read this file" << endl;
+		}
+
+		PC->read_sv_level_file_binary(level, PC->get_problem_label_with_path(), false, 0, 0,
+			f_recreate_extensions, f_dont_keep_sv,
+			verbose_level - 2);
+		if (f_vv) {
+			cout << "read Schreier vectors at depth " << level
+					<< " from file" << endl;
+		}
+		return;
+	}
+
+
+	if (f_vv) {
+		cout << "poset_of_orbits::recreate_schreier_vectors_at_level "
+				"No, a schreier vector file does not exist. "
+				"We will create such a file now" << endl;
+	}
+
+
+
+	for (u = 0; u < l; u++) {
+
+		prev = f + u;
+
+		if (f_vv && !f_vvv) {
+			cout << ".";
+			if (((u + 1) % 50) == 0) {
+				cout << "; " << u + 1 << " / " << l << endl;
+			}
+			if (((u + 1) % 1000) == 0) {
+				cout << " " << u + 1 << endl;
+			}
+		}
+		if (f_vv) {
+			cout << "poset_of_orbits::recreate_schreier_vectors_at_level "
+				<< level << " node " << u << " / " << l
+				<< " before compute_schreier_vector" << endl;
+		}
+
+		get_node(prev)->compute_schreier_vector(
+				PC, level,
+				verbose_level - 1);
+	}
+	PC->write_sv_level_file_binary(
+			level, PC->get_problem_label_with_path(), false, 0, 0,
+			verbose_level);
+	if (f_vv) {
+		cout << "poset_of_orbits::recreate_schreier_vectors_at_level "
+				"Written a file with Schreier "
+				"vectors at depth " << level << endl;
+	}
+	if (f_vv) {
+		cout << endl;
+	}
+	if (f_v) {
+		cout << "poset_of_orbits::recreate_schreier_vectors_at_level done" << endl;
+	}
+}
+
+
+void poset_of_orbits::find_node_by_stabilizer_order(
+		int level, int order, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int nb_nodes, node, i, j, elt_order;
+	algebra::ring_theory::longinteger_object ago;
+	long int set[300];
+
+	if (f_v) {
+		cout << "poset_of_orbits::find_node_by_stabilizer_order" << endl;
+	}
+	nb_nodes = nb_orbits_at_level(level);
+	for (i = 0; i < nb_nodes; i++) {
+		node = first_node_at_level(level) + i;
+
+		get_node(node)->get_stabilizer_order(PC, ago);
+
+		if (ago.as_int() == order) {
+			cout << "found a node whose automorphism group is order "
+					<< order << endl;
+			cout << "the node is # " << i << " at level "
+					<< level << endl;
+			get_set(first_node_at_level(level) + i,
+					set, level);
+			Lint_vec_print(cout, set, level);
+			cout << endl;
+
+			groups::strong_generators *Strong_gens;
+
+			get_stabilizer_generators(Strong_gens,
+				level, i, 0  /* verbose_level */);
+
+			for (j = 0; j < Strong_gens->gens->len; j++) {
+				elt_order = PC->get_poset()->A->Group_element->element_order(
+						Strong_gens->gens->ith(j));
+				cout << "poset_classification " << j << " of order "
+						<< elt_order << ":" << endl;
+				if (order == elt_order) {
+					cout << "CYCLIC" << endl;
+					}
+				PC->get_poset()->A->Group_element->element_print(
+						Strong_gens->gens->ith(j), cout);
+				PC->get_poset()->A->Group_element->element_print_as_permutation(
+						Strong_gens->gens->ith(j), cout);
+			}
+			FREE_OBJECT(Strong_gens);
+		}
+	}
+}
+
+void poset_of_orbits::get_all_stabilizer_orders_at_level(
+		int level,
+		long int *&Ago, int &nb, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "poset_of_orbits::get_all_stabilizer_orders_at_level, "
+				"level = " << level << endl;
+	}
+	int i;
+
+	nb = nb_orbits_at_level(level);
+	if (f_v) {
+		cout << "poset_of_orbits::get_all_stabilizer_orders_at_level "
+				"nb = " << nb << endl;
+	}
+	Ago = NEW_lint(nb);
+	for (i = 0; i < nb; i++) {
+		Ago[i] = get_stabilizer_order_lint(level, i);
+	}
+	if (f_v) {
+		cout << "poset_of_orbits::get_all_stabilizer_orders_at_level done" << endl;
+	}
+}
+
+void poset_of_orbits::get_stabilizer_order(
+		int level,
+		int orbit_at_level, algebra::ring_theory::longinteger_object &go)
+{
+	poset_orbit_node *O;
+
+	O = get_node_ij(level, orbit_at_level);
+
+
+#if 0
+	if (O->nb_strong_generators == 0) {
+		go.create(1, __FILE__, __LINE__);
+	}
+	else {
+		longinteger_domain D;
+
+		D.multiply_up(go, O->tl, Poset->A->base_len(), 0 /* verbose_level */);
+	}
+#else
+	O->get_stabilizer_order(PC, go);
+#endif
+}
+
+long int poset_of_orbits::get_stabilizer_order_lint(
+		int level,
+		int orbit_at_level)
+{
+	poset_orbit_node *O;
+
+	O = get_node_ij(level, orbit_at_level);
+	return O->get_stabilizer_order_lint(PC);
+}
+
+void poset_of_orbits::get_stabilizer_group(
+		data_structures_groups::group_container *&G,
+	int level, int orbit_at_level,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	poset_orbit_node *O;
+	//int node;
+
+	if (f_v) {
+		cout << "poset_of_orbits::get_stabilizer_group "
+				"level=" << level
+				<< " orbit_at_level=" << orbit_at_level << endl;
+	}
+
+	O = get_node_ij(level, orbit_at_level);
+
+
+#if 0
+	G = NEW_OBJECT(group);
+	//node = first_poset_orbit_node_at_level[level] + orbit_at_level;
+	//O = root + node;
+
+	G->init(Poset->A, verbose_level - 2);
+	if (f_vv) {
+		cout << "poset_of_orbits::get_stabilizer_group before "
+				"G->init_strong_generators_by_hdl" << endl;
+	}
+	G->init_strong_generators_by_hdl(O->nb_strong_generators,
+			O->hdl_strong_generators, O->tl, false);
+	G->schreier_sims(0);
+#else
+	algebra::ring_theory::longinteger_object go;
+
+	G = NEW_OBJECT(data_structures_groups::group_container);
+	O->get_stabilizer(
+		PC,
+		*G, go,
+		verbose_level - 2);
+#endif
+
+	if (f_v) {
+		cout << "poset_of_orbits::get_stabilizer_group "
+				"level=" << level
+				<< " orbit_at_level=" << orbit_at_level
+				<< " done" << endl;
+	}
+}
+
+void poset_of_orbits::get_stabilizer_generators_cleaned_up(
+		groups::strong_generators *&gens,
+	int level, int orbit_at_level, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "poset_of_orbits::get_stabilizer_generators_cleaned_up "
+				"level=" << level
+				<< " orbit_at_level=" << orbit_at_level << endl;
+	}
+	data_structures_groups::group_container *G;
+
+	get_stabilizer_group(G,
+			level, orbit_at_level, verbose_level - 1);
+
+	gens = NEW_OBJECT(groups::strong_generators);
+
+	gens->init_from_sims(G->S, 0 /* verbose_level */);
+	FREE_OBJECT(G);
+	if (f_v) {
+		cout << "poset_of_orbits::get_stabilizer_generators_cleaned_up "
+				"level=" << level
+				<< " orbit_at_level=" << orbit_at_level
+				<< " done" << endl;
+	}
+
+}
+
+void poset_of_orbits::get_stabilizer_generators(
+		groups::strong_generators *&gens,
+	int level, int orbit_at_level, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "poset_of_orbits::get_stabilizer_generators "
+				"level=" << level
+				<< " orbit_at_level=" << orbit_at_level << endl;
+	}
+
+	poset_orbit_node *O;
+	//int node;
+
+	//node = first_poset_orbit_node_at_level[level] + orbit_at_level;
+	//O = root + node;
+	O = get_node_ij(
+			level, orbit_at_level);
+
+	if (f_v) {
+		cout << "poset_of_orbits::get_stabilizer_generators "
+				"level=" << level
+				<< " orbit_at_level=" << orbit_at_level
+				<< " before O->get_stabilizer_generators" << endl;
+	}
+
+	O->get_stabilizer_generators(
+			PC, gens, verbose_level);
+
+	if (f_v) {
+		cout << "poset_of_orbits::get_stabilizer_generators "
+				"level=" << level
+				<< " orbit_at_level=" << orbit_at_level
+				<< " done" << endl;
+	}
+}
+
+
+
+void poset_of_orbits::orbit_element_unrank(
+		int depth,
+		int orbit_idx, long int rank, long int *set,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int *Elt1;
+	int *Elt2;
+	long int *the_set;
+	poset_orbit_node *O;
+
+
+	if (f_v) {
+		cout << "poset_of_orbits::orbit_element_unrank "
+				"depth=" << depth
+				<< " orbit_idx=" << orbit_idx
+				<< " rank=" << rank << endl;
+	}
+
+	Elt1 = NEW_int(PC->get_poset()->A->elt_size_in_int);
+	Elt2 = NEW_int(PC->get_poset()->A->elt_size_in_int);
+	the_set = NEW_lint(depth);
+
+	//O = &root[first_poset_orbit_node_at_level[depth] + orbit_idx];
+	O = get_node_ij(
+			depth, orbit_idx);
+	coset_unrank(
+			depth, orbit_idx, rank, Elt1, 0 /*verbose_level*/);
+
+	PC->get_poset()->A->Group_element->element_invert(
+			Elt1, Elt2, 0);
+	O->store_set_to(PC, depth - 1, the_set);
+	PC->get_poset()->A2->Group_element->map_a_set(
+			the_set, set, depth, Elt2,
+			0 /*verbose_level*/);
+
+	FREE_lint(the_set);
+	FREE_int(Elt1);
+	FREE_int(Elt2);
+	if (f_v) {
+		cout << "poset_of_orbits::orbit_element_unrank ";
+		Lint_vec_print(cout, set, depth);
+		cout << endl;
+	}
+}
+
+void poset_of_orbits::orbit_element_rank(
+	int depth,
+	int &orbit_idx, long int &rank, long int *set,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int *Elt1;
+	long int *the_set;
+	long int *canonical_set;
+	int i;
+
+
+	if (f_v) {
+		cout << "poset_of_orbits::orbit_element_rank "
+				"depth=" << depth << " ";
+		Lint_vec_print(cout, set, depth);
+		cout << endl;
+	}
+
+	Elt1 = NEW_int(PC->get_poset()->A->elt_size_in_int);
+	the_set = NEW_lint(depth);
+	canonical_set = NEW_lint(depth);
+	for (i = 0; i < depth; i++) {
+		the_set[i] = set[i];
+	}
+
+	orbit_idx = PC->trace_set(the_set, depth, depth,
+		canonical_set, Elt1,
+		verbose_level - 3);
+
+	// now Elt1 is the transporter element that moves
+	// the given set to the orbit representative
+
+	if (f_vv) {
+		cout << "poset_of_orbits::orbit_element_rank "
+				"after trace_set, "
+				"orbit_idx = " << orbit_idx << endl;
+		cout << "transporter:" << endl;
+		PC->get_poset()->A->Group_element->element_print_quick(Elt1, cout);
+		cout << "as permutation:" << endl;
+		PC->get_poset()->A2->Group_element->element_print_as_permutation(Elt1, cout);
+	}
+	if (f_v) {
+		cout << "calling coset_rank" << endl;
+	}
+	rank = coset_rank(depth, orbit_idx, Elt1, verbose_level);
+	if (f_v) {
+		cout << "after coset_rank, rank=" << rank << endl;
+	}
+
+	FREE_int(Elt1);
+	FREE_lint(the_set);
+	FREE_lint(canonical_set);
+	if (f_v) {
+		cout << "poset_of_orbits::orbit_element_rank "
+				"orbit_idx="
+				<< orbit_idx << " rank=" << rank << endl;
+	}
+}
+
+void poset_of_orbits::coset_unrank(
+		int depth, int orbit_idx,
+		long int rank, int *Elt, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	long int *the_set;
+	data_structures_groups::group_container *G1, *G2;
+	int *Elt_gk;
+	algebra::ring_theory::longinteger_object G_order, U_order;
+	poset_orbit_node *O1, *O2;
+
+	if (f_v) {
+		cout << "poset_of_orbits::coset_unrank "
+				"depth=" << depth
+				<< " orbit_idx=" << orbit_idx << endl;
+		cout << "action A:" << endl;
+		PC->get_poset()->A->print_info();
+		cout << "action A2:" << endl;
+		PC->get_poset()->A2->print_info();
+	}
+
+	//O1 = &root[0];
+	//O2 = &root[first_poset_orbit_node_at_level[depth] + orbit_idx];
+	O1 = get_node_ij(0, 0);
+	O2 = get_node_ij(depth, orbit_idx);
+
+
+
+	G1 = NEW_OBJECT(data_structures_groups::group_container);
+	G2 = NEW_OBJECT(data_structures_groups::group_container);
+	the_set = NEW_lint(depth);
+	Elt_gk = NEW_int(PC->get_poset()->A->elt_size_in_int);
+
+	O2->store_set_to(PC, depth - 1, the_set);
+
+	if (f_v) {
+		cout << "the set representing orbit " << orbit_idx
+			<< " at level " << depth << " is ";
+		Lint_vec_print(cout, the_set, depth);
+		cout << endl;
+	}
+
+	O1->get_stabilizer(PC, *G1, G_order, verbose_level - 2);
+	O2->get_stabilizer(PC, *G2, U_order, verbose_level - 2);
+
+
+	PC->get_poset()->A->coset_unrank(G1->S, G2->S, rank, Elt, verbose_level);
+
+	FREE_OBJECT(G1);
+	FREE_OBJECT(G2);
+	FREE_lint(the_set);
+	FREE_int(Elt_gk);
+
+}
+
+long int poset_of_orbits::coset_rank(
+		int depth, int orbit_idx,
+		int *Elt, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	long int rank;
+	long int *the_set;
+	data_structures_groups::group_container *G1, *G2;
+	int *Elt_gk;
+	algebra::ring_theory::longinteger_object G_order, U_order;
+	poset_orbit_node *O1, *O2;
+
+	if (f_v) {
+		cout << "poset_of_orbits::coset_rank "
+				"depth=" << depth
+				<< " orbit_idx=" << orbit_idx << endl;
+		cout << "action A:" << endl;
+		PC->get_poset()->A->print_info();
+		cout << "action A2:" << endl;
+		PC->get_poset()->A2->print_info();
+	}
+
+	//O1 = &root[0];
+	//O2 = &root[first_poset_orbit_node_at_level[depth] + orbit_idx];
+	O1 = get_node_ij(0, 0);
+	O2 = get_node_ij(depth, orbit_idx);
+
+
+
+	G1 = NEW_OBJECT(data_structures_groups::group_container);
+	G2 = NEW_OBJECT(data_structures_groups::group_container);
+	the_set = NEW_lint(depth);
+	Elt_gk = NEW_int(PC->get_poset()->A->elt_size_in_int);
+
+	O2->store_set_to(PC, depth - 1, the_set);
+
+	if (f_v) {
+		cout << "the set representing orbit " << orbit_idx
+			<< " at level " << depth << " is ";
+		Lint_vec_print(cout, the_set, depth);
+		cout << endl;
+	}
+
+	O1->get_stabilizer(PC, *G1, G_order, verbose_level - 2);
+	O2->get_stabilizer(PC, *G2, U_order, verbose_level - 2);
+
+
+	rank = PC->get_poset()->A->coset_rank(
+			G1->S, G2->S, Elt, verbose_level);
+
+	FREE_OBJECT(G1);
+	FREE_OBJECT(G2);
+	FREE_lint(the_set);
+	FREE_int(Elt_gk);
+
+	return rank;
+}
+
+
+void poset_of_orbits::map_to_canonical_k_subset(
+	long int *the_set, int set_size,
+	int subset_size, int subset_rk,
+	long int *reduced_set, int *transporter, int &local_idx,
+	int verbose_level)
+// fills reduced_set[set_size - subset_size], transporter and local_idx
+// local_idx is the index of the orbit that the subset belongs to
+// (in the list of orbit of subsets of size subset_size)
+{
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+
+	if (f_v) {
+		cout << "poset_of_orbits::map_to_canonical_k_subset" << endl;
+	}
+	int *our_set;
+	long int *subset;
+	long int *canonical_subset;
+	int *Elt1;
+	int i; //, j, k;
+	int reduced_set_size;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
+
+	our_set = NEW_int(set_size);
+	subset = NEW_lint(set_size);
+	canonical_subset = NEW_lint(set_size);
+	Elt1 = NEW_int(PC->get_poset()->A->elt_size_in_int);
+	reduced_set_size = set_size - subset_size;
+
+	// unrank the k-subset and its complement to our_set[set_size]:
+	Combi.unrank_k_subset_and_complement(subset_rk,
+			our_set, set_size, subset_size);
+
+	if (f_v) {
+		cout << "poset_of_orbits::map_to_canonical_k_subset "
+				"our_set=";
+		Int_vec_print(cout, our_set, set_size);
+		cout << endl;
+	}
+
+	for (i = 0; i < set_size; i++) {
+		subset[i] = the_set[our_set[i]];
+		//set[0][i] = subset[i]; // ToDo
+	}
+	for (i = 0; i < sz; i++) {
+		//set[0][i] = subset[i]; // ToDo
+	}
+	if (f_v) {
+		cout << "poset_of_orbits::map_to_canonical_k_subset "
+				"subset=";
+		Lint_vec_print(cout, subset, set_size);
+		cout << endl;
+	}
+
+	// ToDo
+	//Poset->A->element_one(poset_classification::transporter->ith(0), false);
+
+
+	// trace the subset:
+
+	if (set_size > max_set_size) {
+		cout << "poset_of_orbits::map_to_canonical_k_subset "
+				"set_size > max_set_size" << endl;
+		cout << "poset_of_orbits::map_to_canonical_k_subset "
+				"set_size = " << set_size << endl;
+		cout << "poset_of_orbits::map_to_canonical_k_subset "
+				"max_set_size = " << max_set_size << endl;
+		exit(1);
+	}
+
+	if (f_v) {
+		cout << "poset_of_orbits::map_to_canonical_k_subset "
+				"before trace_set" << endl;
+	}
+
+	local_idx = PC->trace_set(
+		subset, set_size, subset_size,
+		canonical_subset, Elt1,
+		verbose_level - 2);
+
+	if (f_v) {
+		cout << "poset_of_orbits::map_to_canonical_k_subset "
+				"after trace_set local_idx=" << local_idx << endl;
+		cout << "poset_of_orbits::map_to_canonical_k_subset "
+				"canonical_subset=";
+		Lint_vec_print(cout, canonical_subset, set_size);
+		cout << endl;
+	}
+
+
+	if (f_v) {
+		cout << "poset_of_orbits::map_to_canonical_k_subset "
+				"the transporter is" << endl;
+		PC->get_poset()->A->Group_element->element_print(Elt1, cout);
+		cout << endl;
+	}
+	PC->get_poset()->A->Group_element->element_move(Elt1, transporter, false);
+
+	for (i = 0; i < reduced_set_size; i++) {
+		reduced_set[i] = canonical_subset[subset_size + i];
+	}
+	if (f_v) {
+		cout << "poset_of_orbits::map_to_canonical_k_subset "
+				"reduced set = ";
+		Lint_vec_print(cout, reduced_set, reduced_set_size);
+		cout << endl;
+	}
+	FREE_int(Elt1);
+	FREE_int(our_set);
+	FREE_lint(subset);
+	FREE_lint(canonical_subset);
+
+	if (f_v) {
+		cout << "poset_of_orbits::"
+				"map_to_canonical_k_subset done" << endl;
+	}
+}
+
+void poset_of_orbits::get_representative_of_subset_orbit(
+	long int *set, int size, int local_orbit_no,
+	groups::strong_generators *&Strong_gens,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int fst, node, sz;
+	poset_orbit_node *O;
+
+	if (f_v) {
+		cout << "poset_of_orbits::get_representative_of_subset_orbit "
+				"verbose_level=" << verbose_level << endl;
+	}
+	fst = first_node_at_level(size);
+	node = fst + local_orbit_no;
+	if (f_vv) {
+		cout << "poset_of_orbits::get_representative_of_subset_orbit "
+				"before get_set" << endl;
+	}
+	get_set(node, set, sz);
+	if (sz != size) {
+		cout << "poset_of_orbits::get_representative_of_subset_orbit "
+				"sz != size" << endl;
+		exit(1);
+	}
+	//O = root + node;
+	O = get_node_ij(size, local_orbit_no);
+	if (f_vv) {
+		cout << "poset_of_orbits::get_representative_of_subset_orbit "
+				"before get_stabilizer_poset_classifications" << endl;
+	}
+	O->get_stabilizer_generators(PC, Strong_gens, 0);
+	if (f_v) {
+		cout << "poset_of_orbits::get_representative_of_subset_orbit done" << endl;
+	}
+}
+
+
+void poset_of_orbits::get_orbit_representatives(
+		int level,
+		int &nb_orbits, long int *&Orbit_reps, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i;
+
+	if (f_v) {
+		cout << "poset_of_orbits::get_orbit_representatives" << endl;
+	}
+	nb_orbits = nb_orbits_at_level(level);
+	if (f_v) {
+		cout << "poset_of_orbits::get_orbit_representatives we found " << nb_orbits
+				<< " orbits on " << level << "-sets" << endl;
+	}
+	Orbit_reps = NEW_lint(nb_orbits * level);
+	for (i = 0; i < nb_orbits; i++) {
+		get_set_by_level(level, i, Orbit_reps + i * level);
+	}
+
+	if (f_v) {
+		cout << "poset_of_orbits::get_orbit_representatives done" << endl;
+	}
+}
+
+
+void poset_of_orbits::get_all_orbits(
+		other::data_structures::set_of_sets *&All_orbits,
+		int *&Nb_orbits,
+		int &nb_orbits_total,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+
+	if (f_v) {
+		cout << "poset_of_orbits::get_all_orbits" << endl;
+	}
+
+	int lvl, po, ol, el, node, i;
+	//int *Nb_orbits;
+	//int nb_orbits_total;
+
+	Nb_orbits = NEW_int(PC->get_depth() + 1);
+
+	nb_orbits_total = 0;
+	for (i = 0; i <= PC->get_depth(); i++) {
+		Nb_orbits[i] = nb_orbits_at_level(i);
+		nb_orbits_total += Nb_orbits[i];
+	}
+
+	int underlying_set_size;
+
+	underlying_set_size = PC->get_A2()->degree;
+
+	long int *Sz;
+
+	Sz = NEW_lint(nb_orbits_total);
+
+	for (lvl = 0; lvl <= PC->get_depth(); lvl++) {
+
+		for (po = 0; po < nb_orbits_at_level(lvl); po++) {
+
+			node = first_node_at_level(lvl) + po;
+			ol = orbit_length_as_int(po, lvl);
+			Sz[node] = ol * lvl;
+		}
+	}
+
+
+	All_orbits = NEW_OBJECT(other::data_structures::set_of_sets);
+	All_orbits->init_basic(
+			underlying_set_size, nb_orbits_total,
+			Sz, verbose_level);
+
+
+	for (lvl = 0; lvl <= PC->get_depth(); lvl++) {
+
+		if (f_vv) {
+			cout << "poset_of_orbits::get_all_orbits "
+					"lvl=" << lvl << " / " << PC->get_depth() << endl;
+		}
+
+		for (po = 0; po < nb_orbits_at_level(lvl); po++) {
+
+			node = first_node_at_level(lvl) + po;
+
+
+			ol = orbit_length_as_int(po, lvl);
+
+			long int *Orbit;
+
+			Orbit = All_orbits->Sets[node];
+
+
+			for (el = 0; el < ol; el++) {
+				if (false) {
+					cout << "unrank " << lvl << ", " << po
+							<< ", " << el << endl;
+				}
+				orbit_element_unrank(lvl, po, el, Orbit + el * lvl,
+						0 /* verbose_level */);
+
+				if (false) {
+					cout << "set=";
+					Lint_vec_print(cout, Orbit + el * lvl, lvl);
+					cout << endl;
+				}
+			}
+
+		}
+	}
+
+	//FREE_int(Nb_orbits);
+	FREE_lint(Sz);
+
+	if (f_v) {
+		cout << "poset_of_orbits::get_all_orbits done" << endl;
+	}
+}
+
+
+void poset_of_orbits::get_all_orbits_expanded(
+		other::data_structures::set_of_sets *&All_orbits,
+		int *&Nb_orbits,
+		int *&Orbit_first,
+		int &nb_orbits_total,
+		int &nb_sets_total,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+
+	if (f_v) {
+		cout << "poset_of_orbits::get_all_orbits_expanded" << endl;
+	}
+
+	int lvl, po, ol, el, node;
+	//int *Nb_orbits;
+	//int nb_orbits_total;
+
+	Nb_orbits = NEW_int(PC->get_depth() + 1);
+
+	nb_orbits_total = 0;
+	nb_sets_total = 0;
+	for (lvl = 0; lvl <= PC->get_depth(); lvl++) {
+		Nb_orbits[lvl] = nb_orbits_at_level(lvl);
+		nb_orbits_total += Nb_orbits[lvl];
+		for (po = 0; po < Nb_orbits[lvl]; po++) {
+			ol = orbit_length_as_int(po, lvl);
+			nb_sets_total += ol;
+		}
+	}
+
+	Orbit_first = NEW_int(nb_sets_total);
+
+	int underlying_set_size;
+
+	underlying_set_size = PC->get_A2()->degree;
+
+	long int *Sz;
+	int cur, j;
+
+	Sz = NEW_lint(nb_sets_total);
+
+	cur = 0;
+	for (lvl = 0; lvl <= PC->get_depth(); lvl++) {
+
+		for (po = 0; po < nb_orbits_at_level(lvl); po++) {
+
+			node = first_node_at_level(lvl) + po;
+			Orbit_first[node] = cur;
+			ol = orbit_length_as_int(po, lvl);
+			for (j = 0; j < ol; j++) {
+				Sz[cur] = lvl;
+				cur++;
+			}
+		}
+	}
+
+
+	All_orbits = NEW_OBJECT(other::data_structures::set_of_sets);
+	All_orbits->init_basic(
+			underlying_set_size, nb_sets_total,
+			Sz, verbose_level);
+
+
+	cur = 0;
+	for (lvl = 0; lvl <= PC->get_depth(); lvl++) {
+
+		if (f_vv) {
+			cout << "poset_of_orbits::get_all_orbits_expanded "
+					"lvl=" << lvl << " / " << PC->get_depth() << endl;
+		}
+
+		for (po = 0; po < nb_orbits_at_level(lvl); po++) {
+
+			//node = Poo->first_node_at_level(lvl) + po;
+
+
+			ol = orbit_length_as_int(po, lvl);
+
+			long int *Set;
+
+
+
+			for (el = 0; el < ol; el++) {
+				if (false) {
+					cout << "unrank " << lvl << ", " << po
+							<< ", " << el << endl;
+				}
+
+				Set = All_orbits->Sets[cur];
+
+				orbit_element_unrank(lvl, po, el, Set,
+						0 /* verbose_level */);
+
+				if (false) {
+					cout << "set=";
+					Lint_vec_print(cout, Set, lvl);
+					cout << endl;
+				}
+
+				cur++;
+			}
+
+		}
+	}
+
+	//FREE_int(Nb_orbits);
+	FREE_lint(Sz);
+
+	if (f_v) {
+		cout << "poset_of_orbits::get_all_orbits_expanded done" << endl;
+	}
+}
+
+void poset_of_orbits::get_all_orbits_expanded_table(
+		other::data_structures::set_of_sets *&All_orbits,
+		int *&Nb_orbits,
+		int *&Orbit_first,
+		int &nb_orbits_total,
+		int &nb_sets_total,
+		std::string *&Table,
+		std::string *&Col_headings,
+		int &nb_rows, int &nb_cols,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+
+	if (f_v) {
+		cout << "poset_of_orbits::get_all_orbits_expanded_table" << endl;
+	}
+
+
+	//other::data_structures::set_of_sets *All_orbits;
+
+
+	if (f_v) {
+		cout << "poset_of_orbits::get_all_orbits_expanded_table "
+				"before get_all_orbits_expanded" << endl;
+	}
+	get_all_orbits_expanded(
+			All_orbits,
+			Nb_orbits,
+			Orbit_first,
+			nb_orbits_total,
+			nb_sets_total,
+			verbose_level);
+	if (f_v) {
+		cout << "poset_of_orbits::get_all_orbits_expanded_table "
+				"after get_all_orbits_expanded" << endl;
+	}
+
+
+	nb_cols = 5;
+	nb_rows = nb_sets_total;
+	Table = new std::string [nb_rows * nb_cols];
+	Col_headings = new std::string [nb_cols];
+
+	Col_headings[0] = "Index";
+	Col_headings[1] = "Layer";
+	Col_headings[2] = "Orbit";
+	Col_headings[3] = "Element";
+	Col_headings[4] = "Set";
+
+	int lvl, po, ol, el, node, cur;
+
+	for (lvl = 0; lvl <= PC->get_depth(); lvl++) {
+
+		if (f_vv) {
+			cout << "poset_of_orbits::get_all_orbits_expanded_table "
+					"lvl=" << lvl << " / " << PC->get_depth() << endl;
+		}
+
+		for (po = 0; po < nb_orbits_at_level(lvl); po++) {
+
+			node = first_node_at_level(lvl) + po;
+
+
+			ol = orbit_length_as_int(po, lvl);
+
+			long int *Set;
+
+
+
+			for (el = 0; el < ol; el++) {
+				if (false) {
+					cout << "unrank " << lvl << ", " << po
+							<< ", " << el << endl;
+				}
+
+				cur = Orbit_first[node] + el;
+
+				Set = All_orbits->Sets[cur];
+
+				Table[cur * nb_cols + 0] = std::to_string(cur);
+				Table[cur * nb_cols + 1] = std::to_string(lvl);
+				Table[cur * nb_cols + 2] = std::to_string(po);
+				Table[cur * nb_cols + 3] = std::to_string(el);
+				Table[cur * nb_cols + 4] = "\"" + Lint_vec_stringify(Set, lvl) + "\"";
+			}
+		}
+	}
+
+	if (f_v) {
+		cout << "poset_of_orbits::get_all_orbits_expanded_table done" << endl;
 	}
 }
 

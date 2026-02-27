@@ -21,7 +21,7 @@ namespace poset_classification {
 void poset_classification::compute_orbits_on_subsets(
 	int target_depth,
 	poset_classification_control *PC_control,
-	poset_with_group_action *Poset,
+	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -92,10 +92,10 @@ void poset_classification::compute_orbits_on_subsets(
 	N = 0;
 	F = 0;
 	for (level = 0; level <= target_depth; level++) {
-		N += nb_orbits_at_level(level);
+		N += get_Poo()->nb_orbits_at_level(level);
 	}
 	for (level = 0; level < target_depth; level++) {
-		F += nb_flag_orbits_up_at_level(level);
+		F += get_Poo()->nb_flag_orbits_up_at_level(level);
 	}
 	if (f_v) {
 		cout << "poset_classification::compute_orbits_on_subsets N=" << N << endl;
@@ -168,7 +168,7 @@ int poset_classification::poset_classification_main(
 					"to depth " << depth_completed - 1 << endl;
 		}
 	
-		recreate_schreier_vectors_up_to_level(depth_completed - 1, 
+		Poo->recreate_schreier_vectors_up_to_level(depth_completed - 1,
 			verbose_level /*MINIMUM(verbose_level, 1)*/);
 	}
 	if (f_base_case) {
@@ -309,12 +309,12 @@ int poset_classification::compute_orbits(
 
 			if (f_v) {
 				cout << "poset_classification::compute_orbits "
-						"before write_reps_csv" << endl;
+						"before write_representatives_at_level_csv" << endl;
 			}
-			write_reps_csv(level + 1, verbose_level - 1);
+			write_representatives_at_level_csv(level + 1, verbose_level - 1);
 			if (f_v) {
 				cout << "poset_classification::compute_orbits "
-						"after write_reps_csv" << endl;
+						"after write_representatives_at_level_csv" << endl;
 			}
 		}
 
@@ -345,7 +345,7 @@ int poset_classification::compute_orbits(
 
 
 		int nb_nodes;
-		nb_nodes = nb_orbits_at_level(level + 1);
+		nb_nodes = get_Poo()->nb_orbits_at_level(level + 1);
 		if (nb_nodes == 0) {
 			int j;
 			for (j = level + 2; j <= to_level + 1; j++) {
@@ -366,298 +366,7 @@ int poset_classification::compute_orbits(
 	return level;
 }
 
-#if 0
-void poset_classification::post_processing(int actual_size, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
 
-	if (f_v) {
-		cout << "poset_classification::post_processing problem_label_with_path=" << problem_label_with_path << " verbose_level=" << verbose_level << endl;
-	}
-
-	if (Control->f_write_tree) {
-		Poo->print_tree();
-		write_treefile(
-				problem_label_with_path, depth,
-				Control->draw_options,
-				verbose_level - 1);
-
-		//return 0;
-	}
-	if (Control->f_table_of_nodes) {
-		if (f_v) {
-			cout << "poset_classification::post_processing f_table_of_nodes" << endl;
-		}
-		Poo->make_tabe_of_nodes(verbose_level);
-	}
-
-	if (Control->f_list_all) {
-		if (f_v) {
-			cout << "poset_classification::post_processing f_list_all" << endl;
-		}
-
-		int d;
-
-		for (d = 0; d <= depth; d++) {
-			cout << "There are " << nb_orbits_at_level(d)
-					<< " orbits on subsets of size " << d << ":" << endl;
-
-#if 0
-			if (d < Descr->orbits_on_subsets_size) {
-				//continue;
-			}
-#endif
-
-			list_all_orbits_at_level(d,
-					false /* f_has_print_function */,
-					NULL /* void (*print_function)(std::ostream &ost, int len, int *S, void *data)*/,
-					NULL /* void *print_function_data*/,
-					Control->f_show_orbit_decomposition /* f_show_orbit_decomposition */,
-					Control->f_show_stab /* f_show_stab */,
-					Control->f_save_stab /* f_save_stab */,
-					Control->f_show_whole_orbits /* f_show_whole_orbit*/);
-		}
-	}
-
-	if (Control->f_list) {
-		if (f_v) {
-			cout << "poset_classification::post_processing f_list" << endl;
-		}
-#if 1
-		//int f_show_orbit_decomposition = true;
-		//int f_show_stab = true;
-		//int f_save_stab = true;
-		//int f_show_whole_orbit = false;
-
-		if (f_v) {
-			cout << "poset_classification::post_processing before "
-					"list_all_orbits_at_level" << endl;
-		}
-		list_all_orbits_at_level(actual_size,
-			false,
-			NULL,
-			this,
-			Control->f_show_orbit_decomposition,
-			Control->f_show_stab,
-			Control->f_save_stab,
-			Control->f_show_whole_orbits);
-
-		if (f_v) {
-			cout << "poset_classification::post_processing after "
-					"list_all_orbits_at_level" << endl;
-		}
-
-#if 0
-		int d;
-		for (d = 0; d < 3; d++) {
-			gen->print_schreier_vectors_at_depth(d, verbose_level);
-		}
-#endif
-#endif
-	}
-
-	if (Control->f_level_summary_csv) {
-		if (f_v) {
-			cout << "poset_classification::post_processing preparing level spreadsheet" << endl;
-		}
-		{
-			data_structures::spreadsheet *Sp;
-			make_spreadsheet_of_level_info(Sp, actual_size, verbose_level);
-			string fname_csv;
-
-			fname_csv = problem_label_with_path + "_levels_" + std::to_string(actual_size) + ".csv";
-			Sp->save(fname_csv, verbose_level);
-			FREE_OBJECT(Sp);
-		}
-		if (f_v) {
-			cout << "poset_classification::post_processing preparing level spreadsheet done" << endl;
-		}
-	}
-
-
-	if (Control->f_orbit_reps_csv) {
-		if (f_v) {
-			cout << "poset_classification::post_processing preparing orbit spreadsheet" << endl;
-		}
-		{
-			data_structures::spreadsheet *Sp;
-			make_spreadsheet_of_orbit_reps(Sp, actual_size);
-			string fname_csv;
-
-			fname_csv = problem_label_with_path + "_orbits_at_level_" + std::to_string(actual_size) + ".csv";
-			Sp->save(fname_csv, verbose_level);
-			FREE_OBJECT(Sp);
-		}
-		if (f_v) {
-			cout << "poset_classification::post_processing preparing orbit spreadsheet done" << endl;
-		}
-	}
-
-
-	if (Control->f_draw_poset) {
-		if (f_v) {
-			cout << "poset_classification::post_processing before draw_poset" << endl;
-		}
-		if (!Control->f_draw_options) {
-			cout << "poset_classification::post_processing Control->f_draw_poset && !Control->f_draw_options" << endl;
-			exit(1);
-		}
-		draw_poset(get_problem_label_with_path(), actual_size,
-			0 /* data1 */,
-			Control->draw_options,
-			verbose_level);
-		if (f_v) {
-			cout << "poset_classification::post_processing after draw_poset" << endl;
-		}
-	}
-
-	if (Control->f_draw_full_poset) {
-		if (f_v) {
-			cout << "poset_classification::post_processing before draw_full_poset" << endl;
-		}
-		draw_poset_full(get_problem_label_with_path(), actual_size,
-				0 /* data1 */,
-				Control->draw_options,
-				1 /* x_stretch */, verbose_level);
-		if (f_v) {
-			cout << "poset_classification::post_processing after draw_full_poset" << endl;
-		}
-	}
-	if (Control->f_make_relations_with_flag_orbits) {
-			string fname_prefix;
-
-
-			fname_prefix = problem_label_with_path + "_flag_orbits";
-
-			if (f_v) {
-				cout << "poset_classification::post_processing before make_flag_orbits_on_relations" << endl;
-			}
-			make_flag_orbits_on_relations(
-					depth, fname_prefix, verbose_level);
-			if (f_v) {
-				cout << "poset_classification::post_processing after make_flag_orbits_on_relations" << endl;
-			}
-	}
-	if (Control->f_print_data_structure) {
-		if (f_v) {
-			cout << "poset_classification::post_processing f_print_data_structure" << endl;
-		}
-		print_data_structure_tex(actual_size, verbose_level);
-	}
-
-
-	if (Control->f_report) {
-
-		if (f_v) {
-			cout << "poset_classification::post_processing f_report" << endl;
-		}
-
-		report(Control->report_options, verbose_level);
-
-	}
-	if (Control->f_test_multi_edge_in_decomposition_matrix) {
-		test_for_multi_edge_in_classification_graph(depth, verbose_level);
-		}
-
-	if (f_v) {
-		cout << "poset_classification::post_processing done" << endl;
-	}
-}
-#endif
-
-void poset_classification::recognize(
-		std::string &set_to_recognize,
-		int h, int nb_to_recognize,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "poset_classification::recognize" << endl;
-	}
-	long int *recognize_set;
-	int recognize_set_sz;
-	int orb;
-	long int *canonical_set;
-	int *Elt_transporter;
-	int *Elt_transporter_inv;
-
-	cout << "poset_classification::recognize "
-			"recognize " << h << " / " << nb_to_recognize << endl;
-	Lint_vec_scan(set_to_recognize, recognize_set, recognize_set_sz);
-	cout << "poset_classification::recognize "
-			"input set = " << h << " / " << nb_to_recognize << " : ";
-	Lint_vec_print(cout, recognize_set, recognize_set_sz);
-	cout << endl;
-
-	canonical_set = NEW_lint(recognize_set_sz);
-	Elt_transporter = NEW_int(get_A()->elt_size_in_int);
-	Elt_transporter_inv = NEW_int(get_A()->elt_size_in_int);
-
-
-	data_structures_groups::set_and_stabilizer *SaS_original;
-	data_structures_groups::set_and_stabilizer *SaS_canonical;
-	int orbit_at_level;
-
-
-	identify_and_get_stabilizer(
-			recognize_set, recognize_set_sz, Elt_transporter,
-			orbit_at_level,
-			SaS_original,
-			SaS_canonical,
-			verbose_level);
-
-
-	orb = trace_set(
-			recognize_set,
-		recognize_set_sz, recognize_set_sz /* level */,
-		canonical_set, Elt_transporter,
-		0 /*verbose_level */);
-
-	cout << "poset_classification::recognize "
-			"recognize " << h << " / " << nb_to_recognize << endl;
-	cout << "poset_classification::recognize "
-			"canonical set = ";
-	Lint_vec_print(cout, canonical_set, recognize_set_sz);
-	cout << endl;
-	cout << "poset_classification::recognize "
-			"is orbit " << orb << endl;
-	cout << "poset_classification::recognize "
-			"recognize " << h << " / " << nb_to_recognize << endl;
-	cout << "poset_classification::recognize "
-			"transporter:" << endl;
-	get_A()->Group_element->element_print_quick(Elt_transporter, cout);
-
-	get_A()->Group_element->element_invert(Elt_transporter, Elt_transporter_inv, 0);
-	cout << "poset_classification::recognize "
-			"recognize " << h << " / " << nb_to_recognize << endl;
-	cout << "poset_classification::recognize "
-			"transporter inverse:" << endl;
-	get_A()->Group_element->element_print_quick(Elt_transporter_inv, cout);
-
-	cout << "poset_classification::recognize "
-			"Stabilizer of the given set:" << endl;
-	SaS_original->print_generators_tex(cout);
-
-	cout << "poset_classification::recognize "
-			"Stabilizer of the canonical set:" << endl;
-	SaS_canonical->print_generators_tex(cout);
-
-	FREE_lint(canonical_set);
-	FREE_int(Elt_transporter);
-	FREE_int(Elt_transporter_inv);
-	FREE_lint(recognize_set);
-
-	if (f_v) {
-		cout << "poset_classification::recognize before FREE_OBJECT" << endl;
-	}
-	FREE_OBJECT(SaS_original);
-	FREE_OBJECT(SaS_canonical);
-
-	if (f_v) {
-		cout << "poset_classification::recognize done" << endl;
-	}
-}
 
 void poset_classification::extend_level(
 		int size,
@@ -679,7 +388,7 @@ void poset_classification::extend_level(
 				"constructing orbits at depth "
 				<< size + 1 << endl;
 		cout << "poset_classification::extend_level from "
-				<< nb_orbits_at_level(size)
+				<< get_Poo()->nb_orbits_at_level(size)
 				<< " nodes at depth " << size << endl;
 		//cout << "f_create_schreier_vector="
 		//<< f_create_schreier_vector << endl;
@@ -893,7 +602,7 @@ void poset_classification::upstep(
 		cout << "f_indicate_not_canonicals="
 				<< f_indicate_not_canonicals << endl;
 	}
-	count_extension_nodes_at_level(size);
+	Poo->count_extension_nodes_at_level(size);
 	if (f_v) {
 		cout << "with " << Poo->get_nb_extension_nodes_at_level_total(size)
 			<< " extension nodes" << endl;
@@ -941,7 +650,7 @@ void poset_classification::upstep(
 		double progress;
 	
 	
-		progress = level_progress(size);
+		progress = Poo->level_progress(size);
 
 		if (f_print) {
 			print_level_info(size, prev);

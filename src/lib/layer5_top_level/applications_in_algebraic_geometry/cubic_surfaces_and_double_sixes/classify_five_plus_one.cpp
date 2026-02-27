@@ -175,7 +175,7 @@ void classify_five_plus_one::init(
 	}
 
 
-	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
+	Poset = NEW_OBJECT(layer3_group_actions::combinatorics_with_groups::poset_with_group_action);
 	Poset->init_subset_lattice(A, A_on_neighbors,
 			SG_line_stab,
 			verbose_level);
@@ -549,8 +549,19 @@ void classify_five_plus_one::report(
 		cout << "classify_five_plus_one::report before Five_plus_one->report" << endl;
 	}
 	ost << "\\section*{The classification of five-plus-ones}" << endl;
-	Five_plus_one->report2(
-			ost, Opt, verbose_level);
+
+	poset_classification::pc_latex_interface Pc_latex_interface;
+
+	Pc_latex_interface.init(
+			Five_plus_one,
+			Five_plus_one->get_depth(),
+			Opt /*poset_classification_report_options *Opt*/,
+			0 /* verbose_level */);
+
+	Pc_latex_interface.report2(ost, 0 /* verbose_level */);
+
+	//Five_plus_one->report2(ost, Opt, verbose_level);
+
 	if (f_v) {
 		cout << "classify_five_plus_one::report after Five_plus_one->report" << endl;
 	}

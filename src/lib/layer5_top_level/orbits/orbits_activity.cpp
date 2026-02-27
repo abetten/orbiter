@@ -300,9 +300,20 @@ void orbits_activity::do_report(
 			cout << "orbits_activity::do_report "
 					"before OC->On_subsets->report" << endl;
 		}
-		OC->On_subsets->report(
-				report_options,
+
+		poset_classification::poset_classification_report_options Opt;
+
+		poset_classification::pc_latex_interface Pc_latex_interface;
+
+		Pc_latex_interface.init(
+				OC->On_subsets,
+				OC->On_subsets->get_depth(),
+				report_options /*poset_classification_report_options *Opt*/,
 				verbose_level);
+
+		Pc_latex_interface.report(0 /* verbose_level */);
+
+		//OC->On_subsets->report(report_options, verbose_level);
 		if (f_v) {
 			cout << "orbits_activity::do_report "
 					"after OC->On_subsets->report" << endl;
@@ -330,9 +341,16 @@ void orbits_activity::do_report(
 			report_options = NEW_OBJECT(poset_classification::poset_classification_report_options);
 		}
 
-		OC->On_Subspaces->orbits_on_subspaces_PC->report(
-				report_options,
+		poset_classification::pc_latex_interface Pc_latex_interface;
+
+		Pc_latex_interface.init(
+				OC->On_Subspaces->orbits_on_subspaces_PC,
+				OC->On_Subspaces->orbits_on_subspaces_PC->get_depth(),
+				report_options /*poset_classification_report_options *Opt*/,
 				verbose_level);
+
+		Pc_latex_interface.report(0 /* verbose_level */);
+		//OC->On_Subspaces->orbits_on_subspaces_PC->report(report_options, verbose_level);
 		if (!Descr->f_report_options) {
 			FREE_OBJECT(report_options);
 		}
@@ -1643,24 +1661,24 @@ void orbits_activity::do_Kramer_Mesner_matrix(
 					"f_has_On_subsets" << endl;
 		}
 
-		poset_classification::poset_classification_global PCG;
+		poset_classification::pc_combinatorics Pc_combinatorics;
 
-		PCG.init(
+		Pc_combinatorics.init(
 				OC->On_subsets,
 				verbose_level);
 
 		if (f_v) {
 			cout << "orbits_activity::do_Kramer_Mesner_matrix "
-					"before PCG.compute_Kramer_Mesner_matrix" << endl;
+					"before Pc_combinatorics.compute_Kramer_Mesner_matrix" << endl;
 		}
-		PCG.compute_Kramer_Mesner_matrix(
+		Pc_combinatorics.compute_Kramer_Mesner_matrix(
 				Descr->Kramer_Mesner_t,
 				Descr->Kramer_Mesner_k,
 				verbose_level);
 
 		if (f_v) {
 			cout << "orbits_activity::do_Kramer_Mesner_matrix "
-					"after PCG.compute_Kramer_Mesner_matrix" << endl;
+					"after Pc_combinatorics.compute_Kramer_Mesner_matrix" << endl;
 		}
 
 	}
@@ -1672,23 +1690,23 @@ void orbits_activity::do_Kramer_Mesner_matrix(
 					"f_has_On_Subspaces" << endl;
 		}
 
-		poset_classification::poset_classification_global PCG;
+		poset_classification::pc_combinatorics Pc_combinatorics;
 
-		PCG.init(
+		Pc_combinatorics.init(
 				OC->On_Subspaces->orbits_on_subspaces_PC,
 				verbose_level);
 
 		if (f_v) {
 			cout << "orbits_activity::do_Kramer_Mesner_matrix "
-					"before PCG.compute_Kramer_Mesner_matrix" << endl;
+					"before Pc_combinatorics.compute_Kramer_Mesner_matrix" << endl;
 		}
-		PCG.compute_Kramer_Mesner_matrix(
+		Pc_combinatorics.compute_Kramer_Mesner_matrix(
 				Descr->Kramer_Mesner_t,
 				Descr->Kramer_Mesner_k,
 				verbose_level);
 		if (f_v) {
 			cout << "orbits_activity::do_Kramer_Mesner_matrix "
-					"after PCG.compute_Kramer_Mesner_matrix" << endl;
+					"after Pc_combinatorics.compute_Kramer_Mesner_matrix" << endl;
 		}
 
 	}
@@ -1728,6 +1746,13 @@ void orbits_activity::do_recognize(
 			cout << "orbits_activity::do_recognize "
 					"number of objects to recognize = " << Descr->recognize.size() << endl;
 		}
+
+		layer4_classification::poset_classification::poset_classification_global PCG;
+
+		PCG.init(
+				OC->On_subsets,
+				verbose_level);
+
 		for (h = 0; h < Descr->recognize.size(); h++) {
 			if (f_v) {
 				cout << "orbits_activity::do_recognize "
@@ -1738,7 +1763,7 @@ void orbits_activity::do_recognize(
 						"before OC->On_subsets->recognize" << endl;
 			}
 
-			OC->On_subsets->recognize(
+			PCG.recognize(
 					Descr->recognize[h],
 					h, Descr->recognize.size(),
 					verbose_level);
@@ -1756,6 +1781,12 @@ void orbits_activity::do_recognize(
 
 		int h;
 
+		layer4_classification::poset_classification::poset_classification_global PCG;
+
+		PCG.init(
+				OC->On_Subspaces->orbits_on_subspaces_PC,
+				verbose_level);
+
 		for (h = 0; h < Descr->recognize.size(); h++) {
 			if (f_v) {
 				cout << "orbits_activity::do_recognize "
@@ -1766,7 +1797,7 @@ void orbits_activity::do_recognize(
 						"before OC->On_Subspaces->orbits_on_subspaces_PC->recognize" << endl;
 			}
 
-			OC->On_Subspaces->orbits_on_subspaces_PC->recognize(
+			PCG.recognize(
 					Descr->recognize[h],
 					h, Descr->recognize.size(),
 					verbose_level);

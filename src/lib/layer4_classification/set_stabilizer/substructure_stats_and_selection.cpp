@@ -171,7 +171,7 @@ void substructure_stats_and_selection::init(
 
 			algebra::ring_theory::longinteger_object go;
 
-			SubC->PC->get_stabilizer_order(SubC->substructure_size, idx, go);
+			SubC->PC->get_Poo()->get_stabilizer_order(SubC->substructure_size, idx, go);
 
 			if (types[i]) {
 
@@ -246,7 +246,7 @@ void substructure_stats_and_selection::init(
 #endif
 
 
-	SubC->PC->get_stabilizer_generators(
+	SubC->PC->get_Poo()->get_stabilizer_generators(
 		gens,
 		SubC->substructure_size, selected_orbit, verbose_level);
 

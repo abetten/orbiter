@@ -692,7 +692,7 @@ void semifield_classify::init_poset_classification(
 		cout << "semifield_classify::init_poset_classification" << endl;
 	}
 
-	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
+	Poset = NEW_OBJECT(layer3_group_actions::combinatorics_with_groups::poset_with_group_action);
 
 	algebra::linear_algebra::vector_space *VS;
 	VS = NEW_OBJECT(algebra::linear_algebra::vector_space);
@@ -778,7 +778,7 @@ void semifield_classify::compute_orbits(
 		cout << "semifield_classify::compute_orbits "
 				"after poset_classification_main" << endl;
 	}
-	nb_orbits = Gen->nb_orbits_at_level(depth);
+	nb_orbits = Gen->get_Poo()->nb_orbits_at_level(depth);
 	if (f_v) {
 		cout << "semifield_classify::compute_orbits "
 				"we found " << nb_orbits
@@ -798,7 +798,7 @@ void semifield_classify::compute_orbits(
 		Table = NEW_lint(nb_orbits * k);
 		v = NEW_int(k2);
 		for (i = 0; i < nb_orbits; i++) {
-			Gen->get_set_by_level(k, i, set);
+			Gen->get_Poo()->get_set_by_level(k, i, set);
 			for (j = 0; j < k; j++) {
 				unrank_point(v, set[j], 0/* verbose_level*/);
 				set[j] = matrix_rank(v);

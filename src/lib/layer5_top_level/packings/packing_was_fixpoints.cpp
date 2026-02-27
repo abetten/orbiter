@@ -412,7 +412,7 @@ void packing_was_fixpoints::compute_cliques_on_fixpoint_graph_from_scratch(
 				"before compute_orbits_on_subsets" << endl;
 	}
 
-	Poset_fixpoint_cliques = NEW_OBJECT(poset_classification::poset_with_group_action);
+	Poset_fixpoint_cliques = NEW_OBJECT(layer3_group_actions::combinatorics_with_groups::poset_with_group_action);
 	Poset_fixpoint_cliques->init_subset_lattice(
 			PW->P->T->A, A_on_fixpoints,
 			PW->N_gens,
@@ -443,7 +443,7 @@ void packing_was_fixpoints::compute_cliques_on_fixpoint_graph_from_scratch(
 	}
 
 
-	fixpoint_clique_gen->get_orbit_representatives(clique_size,
+	fixpoint_clique_gen->get_Poo()->get_orbit_representatives(clique_size,
 			nb_cliques, Cliques, verbose_level);
 
 	if (f_v) {

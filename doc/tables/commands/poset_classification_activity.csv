@@ -26,4 +26,6 @@ ROW,C1,C2,C3
 1,"\verb'-draw_schreier_trees' ","   "," Draw all Schreier trees.  "
 1,"\verb'-test_multi_edge_in_' \verb'decomposition_matrix' ","   "," "
 1,"\verb'-recognize' "," set  "," Recognizes the given set in the poset of orbits. This option can be repeated."
+1,"\verb'-pair_relations_within_orbit' "," orbit  "," Computes the pairwise join of elements in the given orbit and identifies the orbit in the poset. A matrix is written. "
+1,"\verb'-export_orbits_long' ","   "," Exports all orbits in long form. This means, each element of each orbit is listed."
 END

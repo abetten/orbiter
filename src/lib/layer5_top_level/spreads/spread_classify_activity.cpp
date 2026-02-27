@@ -140,7 +140,7 @@ void spread_classify_activity::perform_activity(
 		int nb_orbits;
 		int case_nb;
 
-		nb_orbits = Spread_classify->gen->nb_orbits_at_level(Spread_classify->starter_size);
+		nb_orbits = Spread_classify->gen->get_Poo()->nb_orbits_at_level(Spread_classify->starter_size);
 
 		if (f_v) {
 			cout << "spread_classify_activity::perform_activity nb_orbits = " << nb_orbits << endl;

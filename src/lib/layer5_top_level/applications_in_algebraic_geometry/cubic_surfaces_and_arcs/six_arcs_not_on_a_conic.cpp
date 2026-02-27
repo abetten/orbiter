@@ -113,7 +113,7 @@ void six_arcs_not_on_a_conic::init(
 	}
 
 
-	nb_orbits = Gen->gen->nb_orbits_at_level(level);
+	nb_orbits = Gen->gen->get_Poo()->nb_orbits_at_level(level);
 
 	if (f_v) {
 		cout << "six_arcs_not_on_a_conic::init "
@@ -144,7 +144,7 @@ void six_arcs_not_on_a_conic::init(
 		}
 
 		
-		Gen->gen->get_set_by_level(level, h, Arc6);
+		Gen->gen->get_Poo()->get_set_by_level(level, h, Arc6);
 		
 		
 		long int **Pts_on_conic;
@@ -261,11 +261,11 @@ void six_arcs_not_on_a_conic::report_latex(
 	for (h = 0; h < nb_arcs_not_on_conic; h++) {
 		data_structures_groups::set_and_stabilizer *R;
 
-		R = Gen->gen->get_set_and_stabilizer(
+		R = Gen->gen->get_Poo()->get_set_and_stabilizer(
 				6 /* level */,
 				Not_on_conic_idx[h] /* orbit_at_level */,
 				0 /* verbose_level */);
-		Gen->gen->orbit_length(
+		Gen->gen->get_Poo()->orbit_length(
 				Not_on_conic_idx[h] /* node */,
 				6 /* level */, ol);
 		D.add_in_place(Ol, ol);
@@ -290,7 +290,7 @@ void six_arcs_not_on_a_conic::report_specific_arc_basic(
 	data_structures_groups::set_and_stabilizer *The_arc;
 	algebra::ring_theory::longinteger_object go;
 
-	The_arc = Gen->gen->get_set_and_stabilizer(
+	The_arc = Gen->gen->get_Poo()->get_set_and_stabilizer(
 			6 /* level */,
 			Not_on_conic_idx[arc_idx],
 			0 /* verbose_level */);
@@ -322,7 +322,7 @@ void six_arcs_not_on_a_conic::report_specific_arc(
 	data_structures_groups::set_and_stabilizer *The_arc;
 	algebra::ring_theory::longinteger_object go;
 
-	The_arc = Gen->gen->get_set_and_stabilizer(
+	The_arc = Gen->gen->get_Poo()->get_set_and_stabilizer(
 			6 /* level */,
 			Not_on_conic_idx[arc_idx],
 			0 /* verbose_level */);

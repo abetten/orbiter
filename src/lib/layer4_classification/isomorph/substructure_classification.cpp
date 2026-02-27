@@ -179,7 +179,7 @@ void substructure_classification::compute_nb_starter(
 {
 	int f_v = (verbose_level >= 1);
 
-	nb_starter = gen->nb_orbits_at_level(level);
+	nb_starter = gen->get_Poo()->nb_orbits_at_level(level);
 	if (f_v) {
 		cout << "substructure_classification::compute_nb_starter finished, "
 				"number of starters = " << nb_starter << endl;
@@ -775,7 +775,7 @@ void substructure_classification::create_level_database(
 
 	Elt = NEW_int(gen->get_A()->elt_size_in_int);
 	f = gen->first_node_at_level(level);
-	nb_nodes = gen->nb_orbits_at_level(level);
+	nb_nodes = gen->get_Poo()->nb_orbits_at_level(level);
 
 	if (f_vv) {
 		cout << "f=" << f << endl;
@@ -914,7 +914,7 @@ void substructure_classification::create_level_database(
 					}
 
 
-					J = gen->find_poset_orbit_node_for_set(
+					J = gen->get_Poo()->find_poset_orbit_node_for_set(
 							level + 1,
 							set2, false /* f_tolerant */, 0);
 					v.m_ii(idx++, J);

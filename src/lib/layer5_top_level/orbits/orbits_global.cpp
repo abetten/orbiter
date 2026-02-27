@@ -757,9 +757,9 @@ void orbits_global::orbits_on_subsets(
 		cout << "orbits_global::orbits_on_subsets "
 				"subset_size=" << subset_size << endl;
 	}
-	poset_classification::poset_with_group_action *Poset;
+	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset;
 
-	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
+	Poset = NEW_OBJECT(layer3_group_actions::combinatorics_with_groups::poset_with_group_action);
 
 	if (f_v) {
 		cout << "orbits_global::orbits_on_subsets "
@@ -801,11 +801,14 @@ void orbits_global::orbits_on_subsets(
 			Subgroup_gens,
 			verbose_level);
 
+	poset_classification::poset_classification_global Poset_classification_global;
+
 	if (f_v) {
 		cout << "orbits_global::orbits_on_subsets "
 				"before Poset->orbits_on_k_sets_compute" << endl;
 	}
-	PC = Poset->orbits_on_k_sets_compute(
+	PC = Poset_classification_global.orbits_on_k_sets_compute(
+			Poset,
 			Control,
 			subset_size,
 			verbose_level);
@@ -1354,7 +1357,7 @@ void orbits_global::linear_codes_with_bounded_minimum_distance(
 		cout << "orbits_global::linear_codes_with_bounded_minimum_distance" << endl;
 	}
 
-	poset_classification::poset_with_group_action *Poset;
+	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset;
 
 
 	Control->f_depth = true;
@@ -1368,7 +1371,7 @@ void orbits_global::linear_codes_with_bounded_minimum_distance(
 				<< LG->A2->f_has_strong_generators << endl;
 	}
 
-	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
+	Poset = NEW_OBJECT(layer3_group_actions::combinatorics_with_groups::poset_with_group_action);
 
 	if (f_v) {
 		cout << "orbits_global::linear_codes_with_bounded_minimum_distance "

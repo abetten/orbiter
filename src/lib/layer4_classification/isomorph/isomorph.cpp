@@ -566,7 +566,7 @@ void isomorph::read_everything_including_classification(
 		cout << "isomorph::read_everything_including_classification "
 				"before gen->recreate_schreier_vectors_up_to_level" << endl;
 	}
-	Sub->gen->recreate_schreier_vectors_up_to_level(
+	Sub->gen->get_Poo()->recreate_schreier_vectors_up_to_level(
 			level - 1,
 			verbose_level);
 	if (f_v) {

@@ -241,7 +241,7 @@ void polar::init2(
 
 
 
-	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
+	Poset = NEW_OBJECT(layer3_group_actions::combinatorics_with_groups::poset_with_group_action);
 	Poset->init_subspace_lattice(A, A,
 			gens,
 			VS,
@@ -292,12 +292,12 @@ void polar::compute_orbits(
 				"after poset_classification_main" << endl;
 	}
 	first_node = Gen->first_node_at_level(depth);
-	nb_orbits = Gen->nb_orbits_at_level(depth);
+	nb_orbits = Gen->get_Poo()->nb_orbits_at_level(depth);
 
 	int i;
 	nb_elements = 0;
 	for (i = 0; i < nb_orbits; i++) {
-		nb_elements += Gen->orbit_length_as_int(i, depth);
+		nb_elements += Gen->get_Poo()->orbit_length_as_int(i, depth);
 	}
 	if (f_v) {
 		cout << "polar::compute_orbits "
@@ -335,8 +335,8 @@ void polar::compute_cosets(
 	node2 = Gen->first_node_at_level(depth) + orbit_idx;
 	O2 = Gen->get_node(node2);
 
-	Gen->stabilizer_order(0, go1);
-	Gen->stabilizer_order(node2, go2);
+	Gen->get_Poo()->stabilizer_order(0, go1);
+	Gen->get_Poo()->stabilizer_order(node2, go2);
 	D.integral_division(go1, go2, index, rem, 0);
 
 	index_int = index.as_int();
@@ -377,7 +377,7 @@ void polar::compute_cosets(
 		if (f_v) {
 			cout << "Coset " << c << endl;
 		}
-		Gen->coset_unrank(depth, orbit_idx, c, Elt1, 0/*verbose_level*/);
+		Gen->get_Poo()->coset_unrank(depth, orbit_idx, c, Elt1, 0/*verbose_level*/);
 
 		if (f_vvv) {
 			cout << "Left coset " << c << " is represented by" << endl;
@@ -412,7 +412,7 @@ void polar::compute_cosets(
 			cout << "Coset " << c << " Rank=" << Rank << endl;
 		}
 		
-		cc = Gen->coset_rank(depth, orbit_idx, Elt1, 0/*verbose_level*/);
+		cc = Gen->get_Poo()->coset_rank(depth, orbit_idx, Elt1, 0/*verbose_level*/);
 		if (cc != c) {
 			cout << "error in polar::compute_cosets" << endl;
 			cout << "cc != c" << endl;
@@ -467,8 +467,8 @@ void polar::dual_polar_graph(
 	node2 = Gen->first_node_at_level(depth) + orbit_idx;
 	O2 = Gen->get_node(node2);
 
-	Gen->stabilizer_order(0, go1);
-	Gen->stabilizer_order(node2, go2);
+	Gen->get_Poo()->stabilizer_order(0, go1);
+	Gen->get_Poo()->stabilizer_order(node2, go2);
 	D.integral_division(go1, go2, index, rem, 0);
 
 	index_int = index.as_int();
@@ -524,7 +524,7 @@ void polar::dual_polar_graph(
 		if (false) {
 			cout << "Coset " << c << endl;
 		}
-		Gen->coset_unrank(depth, orbit_idx, c, Elt1, 0/*verbose_level*/);
+		Gen->get_Poo()->coset_unrank(depth, orbit_idx, c, Elt1, 0/*verbose_level*/);
 
 		if (false) {
 			cout << "Left coset " << c << " is represented by" << endl;
@@ -710,7 +710,7 @@ void polar::show_stabilizer(
 
 	Elt = NEW_int(A->elt_size_in_int);	
 
-	Gen->get_stabilizer_generators(Strong_gens,  
+	Gen->get_Poo()->get_stabilizer_generators(Strong_gens,
 		depth, orbit_idx, 0 /* verbose_level*/);
 	//Gen->get_stabilizer(gens, tl, depth, orbit_idx, verbose_level);
 
@@ -1163,20 +1163,20 @@ void polar::get_orbit_length(
 		int orbit_idx,
 		algebra::ring_theory::longinteger_object &length)
 {
-	Gen->orbit_length(orbit_idx, depth, length);
+	Gen->get_Poo()->orbit_length(orbit_idx, depth, length);
 }
 
 int polar::get_orbit_length_as_int(
 		int orbit_idx)
 {
-	return Gen->orbit_length_as_int(orbit_idx, depth);
+	return Gen->get_Poo()->orbit_length_as_int(orbit_idx, depth);
 }
 
 void polar::orbit_element_unrank(
 		int orbit_idx,
 		long int rank, long int *set, int verbose_level)
 {
-	return Gen->orbit_element_unrank(depth,
+	return Gen->get_Poo()->orbit_element_unrank(depth,
 			orbit_idx, rank, set, verbose_level);
 }
 
@@ -1184,7 +1184,7 @@ void polar::orbit_element_rank(
 		int &orbit_idx,
 		long int &rank, long int *set, int verbose_level)
 {
-	return Gen->orbit_element_rank(depth,
+	return Gen->get_Poo()->orbit_element_rank(depth,
 			orbit_idx, rank, set, verbose_level);
 }
 

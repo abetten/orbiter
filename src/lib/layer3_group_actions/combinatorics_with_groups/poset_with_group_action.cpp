@@ -5,14 +5,14 @@
 
 #include "layer1_foundations/foundations.h"
 #include "layer2_discreta/discreta.h"
-#include "layer3_group_actions/group_actions.h"
-#include "classification.h"
+#include "group_actions.h"
 
 using namespace std;
 
+
 namespace orbiter {
-namespace layer4_classification {
-namespace poset_classification {
+namespace layer3_group_actions {
+namespace combinatorics_with_groups {
 
 
 static int callback_test_independence_condition(
@@ -157,7 +157,8 @@ void poset_with_group_action::add_independence_condition(
 					"Orbit_based_testing->init" << endl;
 		}
 		Orbit_based_testing->init(
-			NULL /* poset_classification *PC */,
+			this,
+			//NULL /* poset_classification *PC */,
 			n,
 			verbose_level);
 	}
@@ -197,7 +198,8 @@ void poset_with_group_action::add_testing(
 					"Orbit_based_testing->init" << endl;
 		}
 		Orbit_based_testing->init(
-			NULL /* poset_classification *PC */,
+				this,
+			//NULL /* poset_classification *PC */,
 			n,
 			verbose_level);
 	}
@@ -238,7 +240,8 @@ void poset_with_group_action::add_testing_without_group(
 					"Orbit_based_testing->init" << endl;
 		}
 		Orbit_based_testing->init(
-			NULL /* poset_classification *PC */,
+			this,
+			//NULL /* poset_classification *PC */,
 			n,
 			verbose_level);
 	}
@@ -339,108 +342,128 @@ long int poset_with_group_action::rank_point(
 	return rk;
 }
 
-void poset_with_group_action::orbits_on_k_sets(
-		poset_classification_control *Control,
-		int k, long int *&orbit_reps,
-		int &nb_orbits, int verbose_level)
+void poset_with_group_action::unrank_basis(
+		int *Basis, long int *S, int len)
 {
-	int f_v = (verbose_level >= 1);
-	poset_classification *Gen;
+	int i;
 
-	if (f_v) {
-		cout << "poset_with_group_action::orbits_on_k_sets" << endl;
-	}
-
-	Gen = orbits_on_k_sets_compute(Control,
-		k, verbose_level);
-	if (f_v) {
-		cout << "poset_with_group_action::orbits_on_k_sets "
-				"done with orbits_on_k_sets_compute" << endl;
-	}
-
-	Gen->get_orbit_representatives(k, nb_orbits,
-			orbit_reps, verbose_level);
-
-
-	if (f_v) {
-		cout << "poset_with_group_action::orbits_on_k_sets "
-				"we found "
-				<< nb_orbits << " orbits on " << k << "-sets" << endl;
-	}
-
-	FREE_OBJECT(Gen);
-	if (f_v) {
-		cout << "poset_with_group_action::orbits_on_k_sets done" << endl;
+	for (i = 0; i < len; i++) {
+		unrank_point(Basis + i * VS->dimension, S[i]);
 	}
 }
 
-poset_classification *poset_with_group_action::orbits_on_k_sets_compute(
-		poset_classification_control *Control,
-		int k, int verbose_level)
+void poset_with_group_action::rank_basis(
+		int *Basis, long int *S, int len)
 {
-	int f_v = (verbose_level >= 1);
-	poset_classification *Gen;
+	int i;
 
-
-	if (f_v) {
-		cout << "poset_with_group_action::orbits_on_k_sets_compute" << endl;
+	for (i = 0; i < len; i++) {
+		S[i] = rank_point(Basis + i * VS->dimension);
 	}
-	Gen = NEW_OBJECT(poset_classification);
-
-
-	if (f_v) {
-		cout << "poset_with_group_action::orbits_on_k_sets_compute "
-				"before Gen->initialize_and_allocate_root_node" << endl;
-	}
-	Gen->initialize_and_allocate_root_node(
-			Control,
-			this,
-			k /* sz */,
-			verbose_level - 1);
-	if (f_v) {
-		cout << "poset_with_group_action::orbits_on_k_sets_compute "
-				"after Gen->initialize_and_allocate_root_node" << endl;
-	}
-
-	if (f_v) {
-		cout << "poset_with_group_action::orbits_on_k_sets_compute generators = ";
-		Strong_gens->print_generators_tex(cout);
-		Strong_gens->print_generators(cout, 0 /* verbose_level */);
-	}
-
-
-	other::orbiter_kernel_system::os_interface Os;
-	int schreier_depth = k;
-	int f_use_invariant_subset_if_available = true;
-	int f_debug = false;
-	int t0 = Os.os_ticks();
-
-	if (f_v) {
-		cout << "poset_with_group_action::orbits_on_k_sets_compute "
-				"before Gen->poset_classification_main" << endl;
-	}
-	Gen->poset_classification_main(t0,
-		schreier_depth,
-		f_use_invariant_subset_if_available,
-		f_debug,
-		verbose_level - 1);
-	if (f_v) {
-		cout << "poset_with_group_action::orbits_on_k_sets_compute "
-				"after Gen->poset_classification_main" << endl;
-	}
-
-
-	if (f_v) {
-		cout << "poset_with_group_action::orbits_on_k_sets_compute done" << endl;
-	}
-	return Gen;
 }
+
+
 
 void poset_with_group_action::invoke_print_function(
 		std::ostream &ost, int sz, long int *set)
 {
 	(*print_function)(ost, sz, set, print_function_data);
 }
+
+
+int poset_with_group_action::is_contained(
+		long int *set1, int sz1, long int *set2, int sz2,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_contained;
+	int i, rk1, rk2;
+	other::data_structures::sorting Sorting;
+
+	if (f_v) {
+		cout << "poset_with_group_action::is_contained" << endl;
+	}
+	if (f_vv) {
+		cout << "set1: ";
+		Lint_vec_print(cout, set1, sz1);
+		cout << " ; ";
+		cout << "set2: ";
+		Lint_vec_print(cout, set2, sz2);
+		cout << endl;
+	}
+	if (sz1 > sz2) {
+		f_contained = false;
+	}
+	else {
+		if (f_subspace_lattice) {
+			int *B1, *B2;
+			int dim = VS->dimension;
+
+			B1 = NEW_int(sz1 * dim);
+			B2 = NEW_int((sz1 + sz2) * dim);
+
+			for (i = 0; i < sz1; i++) {
+				unrank_point(B1 + i * dim, set1[i]);
+			}
+			for (i = 0; i < sz2; i++) {
+				unrank_point(B2 + i * dim, set2[i]);
+			}
+
+			rk1 = VS->F->Linear_algebra->Gauss_easy(B1, sz1, dim);
+			if (rk1 != sz1) {
+				cout << "poset_with_group_action::is_contained "
+						"rk1 != sz1" << endl;
+				exit(1);
+			}
+
+			rk2 = VS->F->Linear_algebra->Gauss_easy(B2, sz2, dim);
+			if (rk2 != sz2) {
+				cout << "poset_with_group_action::is_contained "
+						"rk2 != sz2" << endl;
+				exit(1);
+			}
+			Int_vec_copy(B1,
+					B2 + sz2 * dim,
+					sz1 * dim);
+			rk2 = VS->F->Linear_algebra->Gauss_easy(B2, sz1 + sz2, dim);
+			if (rk2 > sz2) {
+				f_contained = false;
+			}
+			else {
+				f_contained = true;
+			}
+
+			FREE_int(B1);
+			FREE_int(B2);
+		}
+		else {
+			f_contained = Sorting.lint_vec_sort_and_test_if_contained(
+					set1, sz1, set2, sz2);
+		}
+	}
+	return f_contained;
+}
+
+
+void poset_with_group_action::invoke_early_test_func(
+		long int *the_set, int lvl,
+		long int *candidates,
+		int nb_candidates,
+		long int *good_candidates,
+		int &nb_good_candidates,
+		int verbose_level)
+{
+	early_test_func(
+			the_set, lvl,
+			candidates,
+			nb_candidates,
+			good_candidates,
+			nb_good_candidates,
+			verbose_level - 2);
+
+}
+
 
 //##############################################################################
 // global functions:

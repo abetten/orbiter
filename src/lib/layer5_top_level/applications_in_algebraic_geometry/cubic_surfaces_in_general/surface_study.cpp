@@ -1605,7 +1605,7 @@ static void move_point_set(
 		cout << "move_point_set" << endl;
 		}
 	poset_classification::poset_classification_control *Control;
-	poset_classification::poset_with_group_action *Poset;
+	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset;
 	poset_classification::poset_classification *gen;
 	//char prefix[1000];
 	//int f_W = false;
@@ -1625,7 +1625,7 @@ static void move_point_set(
 		}
 
 	Control = NEW_OBJECT(poset_classification::poset_classification_control);
-	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
+	Poset = NEW_OBJECT(layer3_group_actions::combinatorics_with_groups::poset_with_group_action);
 	Poset->init_subset_lattice(
 			Universe->A, A2,
 			Universe->Strong_gens,
@@ -1684,7 +1684,7 @@ static void move_point_set(
 
 
 
-	new_stab = gen->get_set_and_stabilizer(
+	new_stab = gen->get_Poo()->get_set_and_stabilizer(
 			nb_pts,
 			idx /* orbit_at_level */,
 			verbose_level);

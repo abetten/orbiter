@@ -698,7 +698,7 @@ public:
 	group_constructions::direct_product *P;
 
 	poset_classification::poset_classification *Gen;
-	poset_classification::poset_with_group_action *Poset_search;
+	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset_search;
 
 
 	orbits::orbits_on_pairs *Orbits_on_pairs;
@@ -1424,7 +1424,7 @@ public:
 	int f_play_it_safe;
 
 	poset_classification::poset_classification_control *Control;
-	poset_classification::poset_with_group_action *Poset;
+	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset;
 		// subset lattice for action A_on_orbits
 	poset_classification::poset_classification *PC;
 		// Classification of subsets in the action A_on_orbits
@@ -1540,7 +1540,7 @@ public:
 	int *degree;
 
 	poset_classification::poset_classification_control *Control;
-	poset_classification::poset_with_group_action *Poset;
+	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset;
 	poset_classification::poset_classification *gen;
 
 	int nb_needed;
@@ -1734,7 +1734,7 @@ public:
 	// a_given_length_multiple_orbits
 	poset_classification::poset_classification *PC;
 	poset_classification::poset_classification_control *Control;
-	poset_classification::poset_with_group_action *Poset;
+	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset;
 
 
 	int orbit_length2;

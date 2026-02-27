@@ -150,7 +150,7 @@ void classify_cubic_curves::test_orbits(
 		cout << "classify_cubic_curves::test_orbits" << endl;
 		cout << "verbose_level = " << verbose_level << endl;
 	}
-	nb_orbits_on_sets = Arc_gen->gen->nb_orbits_at_level(9);
+	nb_orbits_on_sets = Arc_gen->gen->get_Poo()->nb_orbits_at_level(9);
 
 	//Pts_on_curve = NEW_lint(CC->P->N_points);
 	//singular_Pts = NEW_lint(CC->P->N_points);
@@ -167,7 +167,7 @@ void classify_cubic_curves::test_orbits(
 			cout << "classify_cubic_curves::test_orbits orbit "
 				<< i << " / " << nb_orbits_on_sets << ":" << endl;
 		}
-		Arc_gen->gen->get_set_by_level(9, i, S);
+		Arc_gen->gen->get_Poo()->get_set_by_level(9, i, S);
 		if (f_vv) {
 			cout << "set: ";
 			Lint_vec_print(cout, S, 5);
@@ -334,12 +334,12 @@ void classify_cubic_curves::downstep(
 		algebra::ring_theory::longinteger_object go;
 		long int dataset[19];
 
-		R = Arc_gen->gen->get_set_and_stabilizer(
+		R = Arc_gen->gen->get_Poo()->get_set_and_stabilizer(
 				9 /* level */,
 				i /* orbit_at_level */,
 				0 /* verbose_level */);
 
-		Arc_gen->gen->orbit_length(
+		Arc_gen->gen->get_Poo()->orbit_length(
 				i /* node */, 9 /* level */, ol);
 
 		R->Strong_gens->group_order(go);
@@ -768,7 +768,7 @@ void classify_cubic_curves::do_classify(
 				"after downstep" << endl;
 		cout << "we found " << Flag_orbits->nb_flag_orbits
 				<< " flag orbits out of "
-				<< Arc_gen->gen->nb_orbits_at_level(9)
+				<< Arc_gen->gen->get_Poo()->nb_orbits_at_level(9)
 				<< " orbits" << endl;
 	}
 

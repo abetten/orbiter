@@ -10,7 +10,9 @@ MODULES = \
 	fixed_objects_in_PG.o \
 	flag_orbits_incidence_structure.o \
 	group_action_on_combinatorial_object.o \
+	orbit_based_testing.o \
 	orbit_type_repository.o \
+	poset_with_group_action.o \
 	translation_plane_via_andre_model.o
 
 

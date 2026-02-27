@@ -53,7 +53,61 @@ void create_graph::init(
 
 	f_has_CG = false;
 
-	if (description->f_load) {
+
+	if (description->f_adjacency_matrix) {
+		if (f_v) {
+			cout << "create_graph::init f_adjacency_matrix " << description->adjacency_matrix_label << endl;
+		}
+
+		long int *adj;
+		int *M;
+		int sz;
+
+		Get_vector_or_set(description->adjacency_matrix_label, adj, sz);
+
+
+		M = NEW_int(sz);
+		Lint_vec_copy_to_int(adj, M, sz);
+
+		algebra::number_theory::number_theory_domain NT;
+
+		int *primes;
+		int *exponents;
+		int len;
+		int i, j, nb_vertices;
+
+		len = NT.factor_int(sz, primes, exponents);
+
+		for (i = 0; i < len; i++) {
+			if (ODD(exponents[i])) {
+				cout << "create_graph::init the size of the matrix must be a square" << endl;
+				exit(1);
+			}
+		}
+		nb_vertices = 1;
+		for (i = 0; i < len; i++) {
+			for (j = 0; j < exponents[i] >> 1; i++) {
+				nb_vertices *= primes[i];
+			}
+		}
+		if (f_v) {
+			cout << "create_graph::init nb_vertices = " << nb_vertices << endl;
+		}
+
+
+		Adj = M;
+		N = nb_vertices;
+
+		FREE_lint(adj);
+
+
+		label = "Adj_" + description->adjacency_matrix_label;
+		label_tex = "{\\rm Adj_" + description->adjacency_matrix_label + "}";
+
+
+	}
+
+	else if (description->f_load) {
 		if (f_v) {
 			cout << "create_graph::init f_load" << endl;
 		}

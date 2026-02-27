@@ -23,6 +23,8 @@ create_graph_description::create_graph_description()
 
 	// TABLES/create_graph_1.tex
 
+	f_adjacency_matrix = false;
+	//std::string adjacency_matrix_label;
 
 	f_load = false;
 	//fname = NULL;
@@ -155,14 +157,20 @@ int create_graph_description::read_arguments(
 
 		graph_modification_description M;
 
-		if (ST.stringcmp(argv[i], "-load") == 0) {
+		if (ST.stringcmp(argv[i], "-adjacency_matrix") == 0) {
+			f_adjacency_matrix = true;
+			adjacency_matrix_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-adjacency_matrix " << adjacency_matrix_label << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-load") == 0) {
 			f_load = true;
 			fname.assign(argv[++i]);
 			if (f_v) {
 				cout << "-load " << fname << endl;
 			}
 		}
-
 		else if (ST.stringcmp(argv[i], "-load_csv_no_border") == 0) {
 			f_load_csv_no_border = true;
 			load_csv_no_border_fname.assign(argv[++i]);
@@ -447,6 +455,9 @@ int create_graph_description::read_arguments(
 
 void create_graph_description::print()
 {
+	if (f_adjacency_matrix) {
+		cout << "-adjacency_matrix " << adjacency_matrix_label << endl;
+	}
 	if (f_load) {
 		cout << "-load " << fname << endl;
 	}

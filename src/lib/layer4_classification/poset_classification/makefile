@@ -8,8 +8,11 @@ LFLAGS = -lm
 MODULES = \
 	classification_base_case.o \
 	extension.o \
-	orbit_based_testing.o \
 	orbit_tracer.o \
+	pc_combinatorics.o \
+	pc_convert_data_structure.o \
+	pc_latex_interface.o \
+	pc_tree_interface.o \
 	poset_classification_activity_description.o \
 	poset_classification_activity.o \
 	poset_classification_classify.o \
@@ -20,7 +23,6 @@ MODULES = \
 	poset_classification_init.o \
 	poset_classification_io.o \
 	poset_classification_report_options.o \
-	poset_classification_report.o \
 	poset_classification_trace.o \
 	poset_classification.o \
 	poset_of_orbits.o \
@@ -31,7 +33,6 @@ MODULES = \
 	poset_orbit_node_upstep_subspace_action.o \
 	poset_orbit_node_upstep.o \
 	poset_orbit_node.o \
-	poset_with_group_action.o \
 	upstep_work_subspace_action.o \
 	upstep_work_trace.o \
 	upstep_work.o 

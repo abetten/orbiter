@@ -171,7 +171,7 @@ void classify_trihedral_pairs::classify_orbits_on_trihedra(
 				"computing orbits on 3-subsets of points (type 1):" << endl;
 	}
 
-	Poset1 = NEW_OBJECT(poset_classification::poset_with_group_action);
+	Poset1 = NEW_OBJECT(layer3_group_actions::combinatorics_with_groups::poset_with_group_action);
 	Poset1->init_subset_lattice(A, A, gens_type1,
 			verbose_level);
 
@@ -193,7 +193,7 @@ void classify_trihedral_pairs::classify_orbits_on_trihedra(
 		cout << "classify_trihedral_pairs::classify_orbits_on_trihedra "
 				"computing orbits on 3-subsets of points (type 1) done. "
 				"We found "
-			<< orbits_on_trihedra_type1->nb_orbits_at_level(3)
+			<< orbits_on_trihedra_type1->get_Poo()->nb_orbits_at_level(3)
 			<< " orbits on 3-subsets" << endl;
 	}
 
@@ -202,7 +202,7 @@ void classify_trihedral_pairs::classify_orbits_on_trihedra(
 				"computing orbits on 3-subsets of points (type 2):" << endl;
 	}
 	
-	Poset2 = NEW_OBJECT(poset_classification::poset_with_group_action);
+	Poset2 = NEW_OBJECT(layer3_group_actions::combinatorics_with_groups::poset_with_group_action);
 	Poset2->init_subset_lattice(A, A, gens_type2,
 			verbose_level);
 
@@ -223,7 +223,7 @@ void classify_trihedral_pairs::classify_orbits_on_trihedra(
 		cout << "classify_trihedral_pairs::classify_orbits_on_trihedra "
 				"computing orbits on 3-subsets of points (type 2) done. "
 				"We found "
-			<< orbits_on_trihedra_type2->nb_orbits_at_level(3)
+			<< orbits_on_trihedra_type2->get_Poo()->nb_orbits_at_level(3)
 			<< " orbits on 3-subsets" << endl;
 	}
 
@@ -288,7 +288,7 @@ void classify_trihedral_pairs::list_orbits_on_trihedra_type1(
 {
 	int i, l;
 
-	l = orbits_on_trihedra_type1->nb_orbits_at_level(3);
+	l = orbits_on_trihedra_type1->get_Poo()->nb_orbits_at_level(3);
 
 	//ost << "\\clearpage" << endl;
 	ost << "\\subsection*{Classification of Double Triplets of "
@@ -322,11 +322,11 @@ void classify_trihedral_pairs::list_orbits_on_trihedra_type1(
 		for (i = 0; i < l; i++) {
 			data_structures_groups::set_and_stabilizer *R;
 
-			R = orbits_on_trihedra_type1->get_set_and_stabilizer(
+			R = orbits_on_trihedra_type1->get_Poo()->get_set_and_stabilizer(
 					3 /* level */,
 					i /* orbit_at_level */,
 					0 /* verbose_level */);
-			orbits_on_trihedra_type1->orbit_length(
+			orbits_on_trihedra_type1->get_Poo()->orbit_length(
 					i /* node */,
 					3 /* level */,
 					ol);
@@ -351,7 +351,7 @@ void classify_trihedral_pairs::list_orbits_on_trihedra_type2(
 {
 	int i, l;
 
-	l = orbits_on_trihedra_type2->nb_orbits_at_level(3);
+	l = orbits_on_trihedra_type2->get_Poo()->nb_orbits_at_level(3);
 
 	//ost << "\\clearpage" << endl;
 	ost << "\\subsection*{Classification of Double Triplets of "
@@ -386,11 +386,11 @@ void classify_trihedral_pairs::list_orbits_on_trihedra_type2(
 		for (i = 0; i < l; i++) {
 			data_structures_groups::set_and_stabilizer *R;
 
-			R = orbits_on_trihedra_type2->get_set_and_stabilizer(
+			R = orbits_on_trihedra_type2->get_Poo()->get_set_and_stabilizer(
 					3 /* level */,
 					i /* orbit_at_level */,
 					0 /* verbose_level */);
-			orbits_on_trihedra_type2->orbit_length(
+			orbits_on_trihedra_type2->get_Poo()->orbit_length(
 					i /* node */,
 					3 /* level */,
 					ol);
@@ -828,8 +828,8 @@ void classify_trihedral_pairs::classify(
 				"before after classify_orbits_on_trihedra" << endl;
 	}
 
-	nb_orbits_type1 = orbits_on_trihedra_type1->nb_orbits_at_level(3);
-	nb_orbits_type2 = orbits_on_trihedra_type2->nb_orbits_at_level(3);
+	nb_orbits_type1 = orbits_on_trihedra_type1->get_Poo()->nb_orbits_at_level(3);
+	nb_orbits_type2 = orbits_on_trihedra_type2->get_Poo()->nb_orbits_at_level(3);
 	nb_orbits_ordered_total = nb_orbits_type1 + nb_orbits_type2;
 	if (f_v) {
 		cout << "nb_orbits_type1 = " << nb_orbits_type1 << endl;
@@ -902,12 +902,12 @@ void classify_trihedral_pairs::downstep(
 		algebra::ring_theory::longinteger_object ol;
 		algebra::ring_theory::longinteger_object go;
 
-		R = orbits_on_trihedra_type1->get_set_and_stabilizer(
+		R = orbits_on_trihedra_type1->get_Poo()->get_set_and_stabilizer(
 				3 /* level */,
 				i /* orbit_at_level */,
 				0 /* verbose_level */);
 
-		orbits_on_trihedra_type1->orbit_length(
+		orbits_on_trihedra_type1->get_Poo()->orbit_length(
 				i /* node */,
 				3 /* level */,
 				ol);
@@ -942,11 +942,11 @@ void classify_trihedral_pairs::downstep(
 		algebra::ring_theory::longinteger_object ol;
 		algebra::ring_theory::longinteger_object go;
 
-		R = orbits_on_trihedra_type2->get_set_and_stabilizer(
+		R = orbits_on_trihedra_type2->get_Poo()->get_set_and_stabilizer(
 				3 /* level */, i /* orbit_at_level */,
 				0 /* verbose_level */);
 
-		orbits_on_trihedra_type2->orbit_length(
+		orbits_on_trihedra_type2->get_Poo()->orbit_length(
 				i /* node */, 3 /* level */, ol);
 
 		R->Strong_gens->group_order(go);

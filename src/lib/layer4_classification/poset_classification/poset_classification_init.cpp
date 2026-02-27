@@ -114,7 +114,7 @@ poset_classification::~poset_classification()
 
 void poset_classification::init_internal(
 	poset_classification_control *PC_control,
-	poset_with_group_action *Poset,
+	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset,
 	int sz,
 	int verbose_level)
 {
@@ -177,9 +177,11 @@ void poset_classification::init_internal(
 				"A2->degree=" << Poset->A2->degree << endl;
 	}
 
+#if 0
 	if (Poset->Orbit_based_testing) {
 		Poset->Orbit_based_testing->PC = this;
 	}
+#endif
 
 	other::orbiter_kernel_system::os_interface Os;
 
@@ -304,7 +306,7 @@ void poset_classification::init_internal(
 
 void poset_classification::initialize_and_allocate_root_node(
 	poset_classification_control *PC_control,
-	poset_with_group_action *Poset,
+	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset,
 	int depth,
 	int verbose_level)
 {
@@ -358,7 +360,7 @@ void poset_classification::initialize_and_allocate_root_node(
 
 void poset_classification::initialize_with_base_case(
 	poset_classification_control *PC_control,
-	poset_with_group_action *Poset,
+	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset,
 	int depth, 
 	classification_base_case *Base_case,
 	int verbose_level)

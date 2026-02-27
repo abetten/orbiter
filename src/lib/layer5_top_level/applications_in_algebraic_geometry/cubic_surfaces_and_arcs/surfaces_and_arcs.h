@@ -79,7 +79,7 @@ public:
 	actions::action *A_on_arc;
 
 	int arc_idx;
-	poset_classification::poset_with_group_action *Poset;
+	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset;
 	poset_classification::poset_classification_control *Control;
 	poset_classification::poset_classification *Orbits_on_pairs;
 
@@ -170,8 +170,8 @@ public:
 	groups::strong_generators *gens_type1;
 	groups::strong_generators *gens_type2;
 
-	poset_classification::poset_with_group_action *Poset1;
-	poset_classification::poset_with_group_action *Poset2;
+	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset1;
+	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset2;
 	poset_classification::poset_classification *orbits_on_trihedra_type1;
 	poset_classification::poset_classification *orbits_on_trihedra_type2;
 

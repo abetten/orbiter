@@ -445,7 +445,7 @@ void isomorph_worker::read_solutions(
 		int i;
 
 
-		nb_files = Iso->Sub->gen->nb_orbits_at_level(
+		nb_files = Iso->Sub->gen->get_Poo()->nb_orbits_at_level(
 				Iso->level); // Iso->nb_starter;
 		fname_array = new string[nb_files];
 		List_of_cases = NEW_int(nb_files);
@@ -622,7 +622,7 @@ void isomorph_worker::isomorph_testing(
 		cout << "isomorph_worker::isomorph_testing "
 				"before Iso->gen->recreate_schreier_vectors_up_to_level" << endl;
 	}
-	Iso->Sub->gen->recreate_schreier_vectors_up_to_level(Iso->level - 1,
+	Iso->Sub->gen->get_Poo()->recreate_schreier_vectors_up_to_level(Iso->level - 1,
 			verbose_level - 1);
 	if (f_v) {
 		cout << "isomorph_worker::isomorph_testing "

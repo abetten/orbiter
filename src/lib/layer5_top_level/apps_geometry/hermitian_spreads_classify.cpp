@@ -332,7 +332,7 @@ void hermitian_spreads_classify::read_arguments(
 	other::data_structures::string_tools ST;
 
 	Control = NEW_OBJECT(poset_classification::poset_classification_control);
-	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
+	Poset = NEW_OBJECT(layer3_group_actions::combinatorics_with_groups::poset_with_group_action);
 	gen = NEW_OBJECT(poset_classification::poset_classification);
 
 #if 0
@@ -448,15 +448,8 @@ void hermitian_spreads_classify::compute(
 	if (f_v) {
 		cout << "hermitian_spreads_classify::compute done with poset_classification_main" << endl;
 	}
-	length = gen->nb_orbits_at_level(depth);
+	length = gen->get_Poo()->nb_orbits_at_level(depth);
 
-#if 0
-	int f_sideways = false;
-
-	gen->draw_poset(gen->get_problem_label_with_path(), depth, 0 /* data1 */,
-			f_embedded, f_sideways, 100, verbose_level);
-	gen->print_data_structure_tex(depth, verbose_level);
-#endif
 
 	if (f_v) {
 		cout << "hermitian_spreads_classify::compute "

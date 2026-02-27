@@ -122,7 +122,7 @@ int upstep_work::upstep_subspace_action(
 	embedding = NEW_int(n);
 	changed_space = NEW_int(n * big_n);
 	
-	gen->unrank_basis(ambient_space, gen->get_S(), n);
+	gen->get_poset()->unrank_basis(ambient_space, gen->get_S(), n);
 
 	if (f_vv) {
 		cout << "upstep_work::upstep_subspace_action "
@@ -362,7 +362,7 @@ int upstep_work::upstep_subspace_action(
 
 		// initialize set[0] for the tracing
 		// (keep gen->S as it is):
-		gen->rank_basis(changed_space, gen->get_set_i(0), n);
+		gen->get_poset()->rank_basis(changed_space, gen->get_set_i(0), n);
 
 		if (f_vvv) {
 			cout << "upstep_work::upstep_subspace_action "
