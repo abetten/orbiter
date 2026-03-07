@@ -393,15 +393,19 @@ std::string orbiter_symbol_table::stringify_type(
 	}
 
 
-	// group of 2:
+	// group of 3:
 	// t_isomorph_arguments,
 	// t_classify_cubic_surfaces,
+	// t_plesken_ring
 
 	else if (t == t_isomorph_arguments) {
 		s = "t_isomorph_arguments";
 	}
 	else if (t == t_classify_cubic_surfaces) {
 		s = "t_classify_cubic_surfaces";
+	}
+	else if (t == t_plesken_ring) {
+		s = "t_plesken_ring";
 	}
 
 	else {

@@ -1094,6 +1094,50 @@ public:
 };
 
 
+
+// #############################################################################
+// lint_matrix.cpp:
+// #############################################################################
+
+
+//! matrices over lint
+
+
+class lint_matrix {
+public:
+
+	long int *M;
+	int m;
+	int n;
+
+	int *perm_inv;
+	int *perm;
+
+	lint_matrix();
+	~lint_matrix();
+	void allocate(
+			int m, int n);
+	void allocate_and_initialize_with_zero(
+			int m, int n);
+	void allocate_and_init(
+			int m, int n, long int *Mtx);
+	long int &s_ij(
+			int i, int j);
+	int &s_m();
+	int &s_n();
+	void print();
+	void write_csv(
+			std::string &fname, int verbose_level);
+	void write_csv_vectorized(
+			std::string &fname, int verbose_level);
+	void write_index_set_csv(
+			std::string &fname, int verbose_level);
+
+};
+
+
+
+
 // #############################################################################
 // lint_vec.cpp:
 // #############################################################################

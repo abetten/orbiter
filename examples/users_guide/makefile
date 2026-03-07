@@ -42,12 +42,12 @@ MAGMA_PATH=""
 MAGMA_EXE=$(MAGMA_PATH)magma
 #MAGMA_EXE=echo
 
-#OPEN=open
-OPEN=echo
+OPEN=open
+#OPEN=echo
 
 
-#PDFLATEX=pdflatex
-PDFLATEX=echo
+PDFLATEX=pdflatex
+#PDFLATEX=echo
 
 ###############################################################################
 # End of configuration part
@@ -9931,10 +9931,6 @@ Op_6_2_with_group:
 	$(PDFLATEX) O_1_6_2_report.tex 
 	$(OPEN) O_1_6_2_report.pdf
 
-# problem:
-# error message:
-#stabilizer_chain_base_data::allocate_base_data degree is too large
-
 
 Op_6_8:
 	$(ORBITER) -v 2 \
@@ -11070,7 +11066,7 @@ test_8_1:
 
 
 orbits_PGL_4_2_on_points_draw_tree:
-	$(ORBITER) -v 4 \
+	$(ORBITER) -v 8 \
 		-define Do -draw_options -embedded -end \
 		-define G -linear_group -PGL 4 2 -end \
 		-define Orb -orbits -group G \
@@ -11084,11 +11080,29 @@ orbits_PGL_4_2_on_points_draw_tree:
 		-end \
 		-with Orb -do -orbits_activity \
 			-draw_tree 0 Do \
+		-end \
+		-with Orb -do -orbits_activity \
+			-schreier_poset 0 PGL_4_2_on_points \
 		-end
+	$(ORBITER) -v 3 \
+		-draw_layered_graph \
+			PGL_4_2_on_points_poset.layered_graph \
+			-place \
+		-radius 500 -embedded \
+			-line_width 1.1 -x_stretch 1.4 -scale 0.25 \
+		-end
+	pdflatex PGL_4_2_on_points_poset_draw.tex
+	open PGL_4_2_on_points_poset_draw.pdf
+	pdflatex PGL_4_2_on_points_poset_draw_direct.tex
+	open PGL_4_2_on_points_poset_draw_direct.pdf
 	#$(PDFLATEX) PGL_4_2_orbits_report.tex
 	#$(OPEN) PGL_4_2_orbits_report.pdf
-	$(PDFLATEX) PGL_4_2_orbit_0_tree.tex
-	$(OPEN) PGL_4_2_orbit_0_tree.pdf
+	#$(PDFLATEX) PGL_4_2_orbit_0_tree.tex
+	#$(OPEN) PGL_4_2_orbit_0_tree.pdf
+
+#-spanning_tree 
+#PGL_4_2_on_points_poset.layered_graph
+
 
 
 
@@ -11114,6 +11128,7 @@ orbits_PGL_4_2_on_points_export_trees:
 	$(ORBITER) -v 3 \
 		-draw_layered_graph \
 			orbit_PGL_4_2_0.layered_graph \
+			-place \
 		-radius 500 -spanning_tree -embedded \
 			-line_width 1.1 -x_stretch 1.4 -scale 0.25 \
 		-end
@@ -11168,6 +11183,7 @@ T3r1_orbits_draw:
 	$(ORBITER) -v 3 \
 		-draw_layered_graph \
 			GL_2_2_wreath_Sym3_res27_0.layered_graph \
+			-place \
 		-radius 500 -spanning_tree -embedded \
 			-line_width 1.1 -x_stretch 1.4 -scale 0.25 \
 		-end
@@ -11351,6 +11367,7 @@ T4r1_orbits_draw:
 	$(ORBITER) -v 3 \
 		-draw_layered_graph \
 			orbit_GL_2_2_wreath_Sym4_res__on_rank_one_tensors_0.layered_graph \
+			-place \
 		-radius 400 -spanning_tree -embedded \
 			-line_width 1.1 -x_stretch 2.5 -scale 0.15 \
 		-end
@@ -11371,6 +11388,7 @@ T4r1_orbits_4:
 		-define Orb -orbits \
 			-group G \
 			-group_action G \
+			-generators G \
 			-on_subsets 4 Control \
 		-end \
 		-define ro \
@@ -11434,6 +11452,7 @@ poset_of_4subsets:
 		-define Orb -orbits \
 			-group G \
 			-group_action G \
+			-generators G \
 			-on_subsets 4 Control \
 		-end \
 		-define ro \
@@ -11454,6 +11473,7 @@ poset_of_4subsets_draw:
 	$(ORBITER) -v 3 \
 		-draw_layered_graph \
 			poset_4_poset_lvl_4.layered_graph \
+			-place \
 			-radius 300 -embedded -line_width 1.1 \
 			-y_stretch 0.9 -scale 0.25 \
 		-end
@@ -11474,6 +11494,7 @@ poset_of_5subsets:
 		-define Orb -orbits \
 			-group G \
 			-group_action G \
+			-generators G \
 			-on_subsets 5 Control \
 		-end \
 		-define ro \
@@ -11493,6 +11514,7 @@ poset_of_5subsets_draw:
 	$(ORBITER) -v 3 \
 		-draw_layered_graph \
 			poset_5_poset_lvl_5.layered_graph \
+			-place \
 			-radius 300 -embedded \
 			-line_width 1.1 -y_stretch 0.9 \
 			-scale 0.25 \
@@ -11519,6 +11541,7 @@ Symmetric_4_on_pairs_poset:
 		-define Orb -orbits \
 			-group G \
 			-group_action G_on_2subsets \
+			-generators G \
 			-on_subsets 6 Control \
 		-end \
 		-define ro \
@@ -11634,6 +11657,7 @@ PG_2_2_subsets:
 		-define Orb -orbits \
 			-group G \
 			-group_action G \
+			-generators G \
 			-on_subsets 7 Control \
 		-end \
 		-define ro \
@@ -11680,6 +11704,7 @@ PG_3_2_subsets:
 		-define Orb -orbits \
 			-group G \
 			-group_action G \
+			-generators G \
 			-on_subsets 15 Control \
 		-end \
 		-define ro \
@@ -11709,6 +11734,7 @@ PGL_3_2_singer:
 		-define Orb -orbits \
 			-group G \
 			-group_action G \
+			-generators G \
 			-on_subsets 7 Control \
 		-end \
 		-define ro \
@@ -11742,6 +11768,7 @@ PGL_3_2_on_lines:
 		-define Orb -orbits \
 			-group G \
 			-group_action G_on_lines \
+			-generators G \
 			-on_subsets 7 Control \
 		-end \
 		-define ro \
@@ -11772,6 +11799,7 @@ PGL_2_5_on_subsets:
 		-define Orb -orbits \
 			-group G \
 			-group_action G \
+			-generators G \
 			-on_subsets 6 Control \
 		-end \
 		-define ro \
@@ -11800,6 +11828,7 @@ PGL_2_7_on_subsets:
 		-define Orb -orbits \
 			-group G \
 			-group_action G \
+			-generators G \
 			-on_subsets 8 Control \
 		-end \
 		-define ro \
@@ -11828,6 +11857,7 @@ PGGL_2_8_on_subsets:
 		-define Orb -orbits \
 			-group G \
 			-group_action G \
+			-generators G \
 			-on_subsets 9 Control \
 		-end \
 		-define ro \
@@ -11857,6 +11887,7 @@ PGGL_2_9_on_subsets:
 		-define Orb -orbits \
 			-group G \
 			-group_action G \
+			-generators G \
 			-on_subsets 10 Control \
 		-end \
 		-define ro \
@@ -11886,6 +11917,7 @@ PGL_2_11_on_subsets:
 		-define Orb -orbits \
 			-group G \
 			-group_action G \
+			-generators G \
 			-on_subsets 12 Control \
 		-end \
 		-define ro \
@@ -11916,6 +11948,7 @@ PGGL_2_16_on_subsets:
 		-define Orb -orbits \
 			-group G \
 			-group_action G \
+			-generators G \
 			-on_subsets 10 Control \
 		-end \
 		-define ro \
@@ -11945,6 +11978,7 @@ PGGL_2_32_on_subsets:
 		-define Orb -orbits \
 			-group G \
 			-group_action G \
+			-generators G \
 			-on_subsets 8 Control \
 		-end \
 		-define ro \
@@ -11974,6 +12008,7 @@ PG_3_4_subsets:
 		-define Orb -orbits \
 			-group G \
 			-group_action G \
+			-generators G \
 			-on_subsets 5 Control \
 		-end \
 		-define ro \
@@ -12002,6 +12037,7 @@ PGGL_2_9_orbits:
 		-define Orb -orbits \
 			-group G \
 			-group_action G \
+			-generators G \
 			-on_subsets 5 Control \
 		-end \
 		-define ro \
@@ -12035,6 +12071,7 @@ PGO_5_2_on_subsets:
 		-define Orb -orbits \
 			-group G \
 			-group_action G \
+			-generators G \
 			-on_subsets 15 Control \
 		-end \
 		-define ro \
@@ -12060,7 +12097,6 @@ SECTION_ORBITS_ON_SUBSPACES:
 
 
 test_8_4:
-	make PGL_5_3_wedge_subspace_orbits
 	make subspaces_Op_4_2
 	make PGL_4_2_on_subspaces
 	make PGL_4_2_singer_on_subspaces
@@ -12070,40 +12106,22 @@ test_8_4:
 	make Op_6_11_orbits_on_subspaces
 	make Op_8_2_orbits_on_subspaces
 	make PGO_7_2_on_subspaces
+	make PGL_5_3_wedge_subspace_orbits
 
 
 
-PGL_5_3_wedge_subspace_orbits:
-	$(ORBITER) -v 3 \
-		-define Do -draw_options \
-			-radius 75 -embedded -nodes_empty \
-		-end \
-		-define G -linear_group -PGL 5 3 -end \
-		-define G2 -modified_group -from G \
-			-on_wedge_product \
-		-end \
-		-define Control -poset_classification_control \
-			-problem_label PGL_5_3_wedge -W -depth 5 \
-		-end \
-		-define Orb -orbits \
-			-group G \
-			-group_action G2 \
-			-on_subspaces 5 Control \
-		-end \
-		-with Orb -do -orbits_activity \
-			-draw_tree 0 Do \
-		-end 
-	$(PDFLATEX) PGL_5_3_wedge_tree_lvl_5.tex
-	$(OPEN) PGL_5_3_wedge_tree_lvl_5.pdf
+
 
 
 
 
 subspaces_Op_4_2:
-	$(ORBITER) -v 5 \
+	$(ORBITER) -v 10 \
 		-orbiter_path $(ORBITER_EXE_PATH) \
 		-define Do -draw_options \
 			-radius 200 -line_width 0.3 \
+			-poset_orbits_x_stretch 750 \
+			-embedded \
 		-end \
 		-define Control -poset_classification_control \
 			-problem_label Op_4_2 -W -depth 4 \
@@ -12112,6 +12130,7 @@ subspaces_Op_4_2:
 		-define Orb -orbits \
 			-group G \
 			-group_action G \
+			-generators G \
 			-on_subspaces 4 Control \
 		-end \
 		-define ro \
@@ -12122,13 +12141,28 @@ subspaces_Op_4_2:
 		-with Orb -do -orbits_activity \
 			-report "" \
 			-report_options ro \
-		-end 
+		-end \
+		-define PC_Activity -poset_classification_activity \
+			-draw_full_poset Do \
+		-end \
+		-with Orb -do -orbits_activity \
+			-poset_classification_activity PC_Activity \
+		-end
+	$(ORBITER) -v 3 \
+		-draw_layered_graph \
+			Op_4_2_poset_full_lvl_4.layered_graph \
+		-radius 150 -embedded \
+			-line_width 0.2 -x_stretch 1.4 -scale 0.5 \
+		-end
+	$(PDFLATEX) Op_4_2_poset_full_lvl_4_draw.tex
+	$(OPEN) Op_4_2_poset_full_lvl_4_draw.pdf
 	$(PDFLATEX) Op_4_2_poset.tex
 	$(OPEN) Op_4_2_poset.pdf
+	#$(PDFLATEX) Op_4_2_poset_full_lvl_4.tex
+	#$(OPEN) Op_4_2_poset_full_lvl_4.pdf
+	#$(PDFLATEX) Op_4_2_poset_full_lvl_4_draw.tex
+	#$(OPEN) Op_4_2_poset_full_lvl_4_draw.pdf
 
-# find orbit of size 6:
-
-# the_set_orbit_under_PGL_4_2_Subgroup_double_six_stab_720_OnWedge.csv
 
 
 PGL_4_2_on_subspaces:
@@ -12145,6 +12179,7 @@ PGL_4_2_on_subspaces:
 		-define Orb -orbits \
 			-group G \
 			-group_action G \
+			-generators G \
 			-on_subspaces 4 Control \
 		-end \
 		-define ro \
@@ -12176,6 +12211,7 @@ PGL_4_2_singer_on_subspaces:
 		-define Orb -orbits \
 			-group G \
 			-group_action G \
+			-generators G \
 			-on_subspaces 4 Control \
 		-end \
 		-define ro \
@@ -12207,6 +12243,7 @@ PGL_8_2_singer_on_subspaces:
 		-define Orb -orbits \
 			-group G \
 			-group_action G \
+			-generators G \
 			-on_subspaces 8 Control \
 		-end \
 		-define ro \
@@ -12231,6 +12268,9 @@ PGL_8_2_singer_on_subspaces:
 Op_6_2_orbits_on_subspaces:
 	$(ORBITER) -v 5 \
 		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
 		-define Control -poset_classification_control \
 			-problem_label Op_6_2 -W \
 			-depth 6 \
@@ -12239,8 +12279,20 @@ Op_6_2_orbits_on_subspaces:
 		-define Orb -orbits \
 			-group G \
 			-group_action G \
+			-generators G \
 			-on_subspaces 6 Control \
-		-end
+		-end \
+		-define ro \
+			-poset_classification_report_options \
+				-draw_poset -type_ordinary \
+			-draw_options Do \
+		-end \
+		-with Orb -do -orbits_activity \
+			-report "" \
+			-report_options ro \
+		-end 
+	$(PDFLATEX) Op_6_2_poset.tex
+	$(OPEN) Op_6_2_poset.pdf
 
 
 
@@ -12255,6 +12307,7 @@ Op_6_3_orbits_on_subspaces:
 		-define Orb -orbits \
 			-group G \
 			-group_action G \
+			-generators G \
 			-on_subspaces 6 Control \
 		-end
 
@@ -12273,6 +12326,7 @@ Op_6_11_orbits_on_subspaces:
 		-define Orb -orbits \
 			-group G \
 			-group_action G \
+			-generators G \
 			-on_subspaces 6 Control \
 		-end
 
@@ -12293,6 +12347,7 @@ Op_8_2_orbits_on_subspaces:
 		-define Orb -orbits \
 			-group G \
 			-group_action G \
+			-generators G \
 			-on_subspaces 8 Control \
 		-end \
 		-define ro \
@@ -12321,8 +12376,35 @@ PGO_7_2_on_subspaces:
 		-define Orb -orbits \
 			-group G \
 			-group_action G \
+			-generators G \
 			-on_subspaces 7 Control \
 		-end
+
+
+PGL_5_3_wedge_subspace_orbits:
+	$(ORBITER) -v 3 \
+		-define Do -draw_options \
+			-radius 75 -embedded -nodes_empty \
+		-end \
+		-define G -linear_group -PGL 5 3 -end \
+		-define G2 -modified_group -from G \
+			-on_wedge_product \
+		-end \
+		-define Control -poset_classification_control \
+			-problem_label PGL_5_3_wedge -W -depth 5 \
+		-end \
+		-define Orb -orbits \
+			-group G \
+			-group_action G2 \
+			-generators G \
+			-on_subspaces 5 Control \
+		-end \
+		-with Orb -do -orbits_activity \
+			-draw_tree 0 Do \
+		-end 
+	$(PDFLATEX) PGL_5_3_wedge_tree_lvl_5.tex
+	$(OPEN) PGL_5_3_wedge_tree_lvl_5.pdf
+
 
 
 
@@ -12351,6 +12433,7 @@ C6_on_partition:
 		-define Orb -orbits \
 			-group G \
 			-group_action G \
+			-generators G \
 			-on_partition 2 Control \
 		-end
 
@@ -12366,6 +12449,7 @@ PGL_2_17_on_partition:
 		-define Orb -orbits \
 			-group G \
 			-group_action G \
+			-generators G \
 			-on_partition 6 Control \
 		-end
 
@@ -12794,6 +12878,7 @@ cubic_curves_PG_2_9:
 cubic_curves_PG_2_9_draw:
 	$(ORBITER) -v 3 \
 		-draw_layered_graph cc_9_poset_lvl_9.layered_graph \
+			-place \
 			-radius 300 -embedded -line_width 1.1 \
 			-y_stretch 0.9 -scale 0.25 \
 		-end
@@ -14832,6 +14917,7 @@ PG_2_13_orbits_on_lines:
 		-define Orb -orbits \
 			-group G \
 			-group_action G_on_lines \
+			-generators G \
 			-on_subsets 4 Control \
 		-end \
 		-with Orb -do -orbits_activity \
@@ -16084,6 +16170,7 @@ nonlinear_code_n7_d4_classify:
 		-define Orb -orbits \
 			-group G \
 			-group_action G \
+			-generators G \
 			-on_subsets 10 Control \
 		-end \
 		-define ro \
@@ -18526,6 +18613,7 @@ codes_8_4_4_draw:
 	$(ORBITER) -v 3 \
 		-draw_layered_graph \
 			codes_8_4_4_poset_lvl_8.layered_graph \
+			-place \
 			-radius 250 -embedded -line_width 1.0 \
 			-y_stretch 1.0 -scale 0.5 \
 		-end
@@ -18620,6 +18708,7 @@ codes_24_12_8_draw:
 	$(ORBITER) -v 3 \
 		-draw_layered_graph \
 			codes_24_12_8_poset_lvl_24.layered_graph \
+			-place \
 			-radius 100 -spanning_tree -embedded \
 			-line_width 0.5 -x_stretch 1.4 \
 			-scale 0.25 -nodes_empty \
@@ -20090,9 +20179,10 @@ SECTION_CREATING_GRAPHS:
 
 
 test_13_1:
+	make make_graph_from_adjacency_matrix
+	make make_triangle_graph
 	make Cycle_graph_5
 	make Cycle_graph_13
-	make make_triangle_graph
 	make Chain_232
 	make Paley_13_graph
 	make Paley_13_graph_complement
@@ -20119,6 +20209,24 @@ test_13_1:
 	make Higman_Sims_graph
 
 
+make_graph_from_adjacency_matrix:
+	$(ORBITER) -v 6 \
+		-define triangle -vector -dense "0,1,1, 1,0,1, 1,1,0" -end \
+		-define G -graph \
+			-adjacency_matrix \
+			triangle \
+		-end
+
+
+make_triangle_graph:
+	echo $(TRIANGLE_GRAPH) >triangle_graph.csv
+	$(ORBITER) -v 6 \
+		-define G -graph \
+			-load_csv_no_border \
+			triangle_graph.csv \
+		-end
+
+
 Cycle_graph_5:
 	$(ORBITER) -v 2 \
 		-define Gamma -graph \
@@ -20127,6 +20235,9 @@ Cycle_graph_5:
 		-with Gamma -do \
 			-graph_theoretic_activity -export_csv \
 		-end
+
+
+
 
 
 Cycle_graph_13:
@@ -20140,14 +20251,6 @@ Cycle_graph_13:
 
 
 
-
-make_triangle_graph:
-	echo $(TRIANGLE_GRAPH) >triangle_graph.csv
-	$(ORBITER) -v 6 \
-		-define G -graph \
-			-load_csv_no_border \
-			triangle_graph.csv \
-		-end
 
 
 
@@ -20351,7 +20454,9 @@ Higman_Sims_graph:
 		-subgroup_by_generators "M24" "244823040" 12 \
 			$(GOLAY_24_CODE_AUT_GENS) \
 		-end \
-		-define M24_perm -modified_group -from G -restricted_action code \\_on\\_code -end \
+		-define M24_perm -modified_group -from G \\
+			-restricted_action code \\_on\\_code \
+		-end \
 		-define M22_perm -modified_group -from M24_perm \
 			-set_stabilizer 0,1 Control2 \
 		-end \
@@ -20449,6 +20554,10 @@ test_13_2:
 	make Paulus_1_aut
 	make Paulus_15_aut
 	make PG_3_2_packing_make_group_and_test
+	make Petersen_graph_distance_poset
+	make Petersen_graph_distance_poset_draw
+	make Petersen_test_if_distance_regular
+	make Cayley_Sym5_distance_poset
 
 
 triangle_graph_properties:
@@ -20926,8 +21035,60 @@ PG_3_2_packing_make_group_and_test:
 			-test_automorphism_property_of_group G \
 		-end \
 
+Petersen_graph_distance_poset:
+	$(ORBITER) -v 2 \
+		-define Gamma -graph -Johnson 5 2 0 -end \
+		-with Gamma -do \
+			-graph_theoretic_activity -create_distance_poset 0 \
+		-end
+
+Petersen_graph_distance_poset_draw:
+	$(ORBITER) -v 3 \
+		-draw_layered_graph \
+			Johnson_5_2_0_distance_poset.layered_graph \
+			-place \
+			-radius 250 -embedded \
+			-nodes \
+			-line_width 1.1 -x_stretch 1.4 -scale 0.25 \
+		-end
+	$(PDFLATEX) Johnson_5_2_0_distance_poset_draw.tex
+	$(OPEN) Johnson_5_2_0_distance_poset_draw.pdf
 
 
+#Johnson_5_2_0_distance_poset.layered_graph
+
+Petersen_test_if_distance_regular:
+	$(ORBITER) -v 2 \
+		-define Gamma -graph -Johnson 5 2 0 -end \
+		-test_if_distance_regular_graph \
+		Johnson_5_2_0_distance_poset.layered_graph
+
+
+
+Cayley_Sym5_distance_poset:
+	$(ORBITER) -v 2 \
+		-define Do -draw_options -xin 1000000 -yin 1000000 \
+			-embedded -radius 10000 -nodes_empty -end \
+		-define S -vector -dense \
+			"1,0,2,3,4, 0,2,1,3,4, 0,1,3,2,4, 0,1,2,4,3" -end \
+		-define G -permutation_group -symmetric_group 5 \
+		-end \
+		-define Gamma -graph \
+			-Cayley_graph G S \
+		-end \
+		-with Gamma -do \
+			-graph_theoretic_activity -create_distance_poset 0 \
+		-end
+	$(ORBITER) -v 3 \
+		-draw_layered_graph \
+			Cayley_graph_Sym_5_distance_poset.layered_graph \
+			-place \
+			-radius 250 -embedded \
+			-nodes \
+			-line_width 0.4 -x_stretch 1.4 -scale 0.25 \
+		-end
+	$(PDFLATEX) Cayley_graph_Sym_5_distance_poset_draw.tex
+	$(OPEN) Cayley_graph_Sym_5_distance_poset_draw.pdf
 
 
 ###############################################################################
@@ -21111,8 +21272,10 @@ SECTION_DESIGN_THEORY:
 
 
 test_14_1:
+	make design_PG_2_2
 	make design_PG_2_3
 	make design_PG_2_4
+	make design_elliptic_semiplane_Baker1978
 	make wreath_product_designs_n4_k2_inc.txt
 	make wreath_product_designs_n8_k6_inc.txt
 	make design_20
@@ -21133,7 +21296,11 @@ design_PG_2_2:
 		-with D -do \
 			-design_activity \
 				-export_blocks \
-		-end \
+		-end
+	$(ORBITER) -v 8 \
+		-csv_file_latex 1 PG_2_q2_blocks.csv 
+	pdflatex PG_2_q2_blocks.tex
+	open PG_2_q2_blocks.pdf
 
 
 design_PG_2_3:
@@ -21309,8 +21476,8 @@ SECTION_ASSUMING_SYMMETRY:
 test_14_2:
 	make KM_cyclic_7
 	make KM_PGGL_2_32
-	#make KM_PGGL_2_32_solve
-	#make KM_PSL_3_5
+	#make KM_PGGL_2_32_solve # too slow
+	#make KM_PSL_3_5 # too slow
 	make C5_KM_2_3
 	make C5_KM_1_3
 	make C5_concatenate
@@ -21378,7 +21545,10 @@ KM_PGGL_2_32:
 			-draw_options Do \
 		-end \
 		-define G -linear_group -PGGL 2 32 -end \
-		-define Orb -orbits -group G \
+		-define Orb -orbits \
+			-group G \
+			-group_action G \
+			-generators G \
 			-on_subsets 8 Control \
 		-end \
 		-with Orb -do -orbits_activity \
@@ -21387,6 +21557,7 @@ KM_PGGL_2_32:
 		-define ro \
 			-poset_classification_report_options \
 				-draw_poset -type_ordinary \
+				-draw_options Do \
 		-end \
 		-with Orb -do -orbits_activity \
 			-report "" \
@@ -21414,6 +21585,7 @@ KM_PGGL_2_32_solve:
 			-diophant_activity -solve_mckay \
 		-end
 
+# this takes a long time
 
 
 
@@ -21430,7 +21602,10 @@ KM_PSL_3_5:
 			-draw_options Do \
 		-end \
 		-define G -linear_group -PSL 3 5 -end \
-		-define Orb -orbits -group G \
+		-define Orb -orbits \
+			-group G \
+			-group_action G \
+			-generators G \
 			-on_subsets 10 Control \
 		-end \
 		-with Orb -do -orbits_activity \
@@ -21439,6 +21614,7 @@ KM_PSL_3_5:
 		-define ro \
 			-poset_classification_report_options \
 				-draw_poset -type_ordinary \
+				-draw_options Do \
 		-end \
 		-with Orb -do -orbits_activity \
 			-report "" \
@@ -21459,6 +21635,7 @@ KM_PSL_3_5:
 			-diophant_activity -solve_mckay \
 		-end
 
+# this takes a long time
 
 
 
@@ -21477,7 +21654,10 @@ C5_KM_2_3:
 			-problem_label C5 -W -depth 3 \
 			-draw_options Do \
 		-end \
-		-define Orb -orbits -group G \
+		-define Orb -orbits \
+			-group G \
+			-group_action G \
+			-generators G \
 			-on_subsets 3 Control \
 		-end \
 		-with Orb -do -orbits_activity \
@@ -21501,7 +21681,10 @@ C5_KM_1_3:
 			-problem_label C5 -W -depth 3 \
 			-draw_options Do \
 		-end \
-		-define Orb -orbits -group G \
+		-define Orb -orbits \
+			-group G \
+			-group_action G \
+			-generators G \
 			-on_subsets 3 Control \
 		-end \
 		-with Orb -do -orbits_activity \
@@ -21560,18 +21743,25 @@ C5_design_classify:
 		-with C -do \
 		-combinatorial_object_activity \
 			-canonical_form \
+				-save_ago \
+				-save_transversal \
+				-nauty_control -end \
 			-end \
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \
 			-post_processing \
 		-end \
+		-define Doinc -draw_incidence_structure_options \
+			-width 60 -width_10 6 -end \
 		-with C -do \
 		-combinatorial_object_activity \
 			-report \
 				-show_incidence_matrices \
+				-incidence_draw_options Doinc \
 			-end \
-		-end
+		-end \
+		-print_symbols
 	$(PDFLATEX) C5_config_classification.tex
 	$(OPEN) C5_config_classification.pdf
 
@@ -21595,7 +21785,7 @@ Witt_design_on_22_points:
 		-define code -vector \
 			-dense $(GOLAY_24_CODE_PROJECTIVE) \
 		-end \
-		-define Do -draw_options -embedded -sideways -radius 50 \
+		-define Do_embedded -draw_options -embedded -sideways -radius 50 \
 			-scale 0.5 -line_width 0.3 \
 		-end \
 		-define Control2 -poset_classification_control \
@@ -21622,14 +21812,14 @@ Witt_design_on_22_points:
 		-group_theoretic_activity \
 			-report Do \
 		-end \
-		-define Do -draw_options -embedded -sideways -radius 50 \
-			-scale 0.5 -line_width 0.3 \
-		-end \
 		-define Control -poset_classification_control \
 			-problem_label M22 -W -depth 6 \
 			-draw_options Do \
 		-end \
-		-define Orb -orbits -group M22 \
+		-define Orb -orbits \
+			-group M22 \
+			-group_action M22 \
+			-generators M22 \
 			-on_subsets 6 Control \
 		-end \
 		-with Orb -do -orbits_activity \
@@ -21638,6 +21828,7 @@ Witt_design_on_22_points:
 		-define ro \
 			-poset_classification_report_options \
 				-draw_poset -type_ordinary \
+				-draw_options Do_embedded \
 		-end \
 		-with Orb -do -orbits_activity \
 			-report "" \
@@ -21648,7 +21839,7 @@ Witt_design_on_22_points:
 		-end \
 		-with D -do \
 			-design_activity \
-				-export_inc \
+				-export_incidence_matrix \
 		-end \
 		-with D -do \
 			-design_activity \
@@ -22896,6 +23087,7 @@ create_translation_plane_9b:
 	$(ORBITER) -v 3 \
 		-draw_layered_graph \
 			orbit_PGL_5_3_on_andre_3.layered_graph \
+			-place \
 			-radius 250 -spanning_tree -embedded -nodes_empty \
 			-line_width 1.1 -x_stretch 2.4 -scale 0.15 \
 		-end
@@ -27286,6 +27478,7 @@ Sym_6_Schreier_tree_draw:
 	$(ORBITER) -v 3 \
 		-draw_layered_graph \
 			images_tree.layered_graph \
+			-place \
 			-embedded \
 			-nodes_empty \
 			-spanning_tree \

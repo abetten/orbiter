@@ -1221,7 +1221,7 @@ void symbol_definition::read_definition(
 		f_poset_classification_activity = true;
 
 		Poset_classification_activity =
-				NEW_OBJECT(poset_classification::poset_classification_activity_description);
+				NEW_OBJECT(orbits::poset_classification_activity_description);
 		if (f_v) {
 			cout << "reading -poset_classification_activity" << endl;
 		}

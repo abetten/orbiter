@@ -1722,6 +1722,9 @@ public:
 	void init_classify_cubic_surfaces(
 			std::string &label,
 			void *V, int verbose_level);
+	void init_plesken_ring(
+			std::string &label,
+			void *V, int verbose_level);
 	void print();
 };
 

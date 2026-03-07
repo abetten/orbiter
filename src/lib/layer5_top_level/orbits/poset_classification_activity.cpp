@@ -6,16 +6,13 @@
  */
 
 
-#include "layer1_foundations/foundations.h"
-#include "layer2_discreta/discreta.h"
-#include "layer3_group_actions/group_actions.h"
-#include "classification.h"
+#include "orbiter.h"
 
 using namespace std;
 
 namespace orbiter {
-namespace layer4_classification {
-namespace poset_classification {
+namespace layer5_applications {
+namespace orbits {
 
 poset_classification_activity::poset_classification_activity()
 {
@@ -32,7 +29,7 @@ poset_classification_activity::~poset_classification_activity()
 
 void poset_classification_activity::init(
 		poset_classification_activity_description *Descr,
-		poset_classification *PC,
+		poset_classification::poset_classification *PC,
 		int actual_size,
 		int verbose_level)
 {
@@ -52,6 +49,8 @@ void poset_classification_activity::init(
 
 
 void poset_classification_activity::perform_work(
+		int &nb_output,
+		other::orbiter_kernel_system::orbiter_symbol_table_entry *&Output,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -67,7 +66,7 @@ void poset_classification_activity::perform_work(
 					"f_report" << endl;
 		}
 
-		pc_latex_interface Pc_latex_interface;
+		poset_classification::pc_latex_interface Pc_latex_interface;
 
 		Pc_latex_interface.init(
 				PC,
@@ -88,7 +87,7 @@ void poset_classification_activity::perform_work(
 					"f_export_level_to_cpp" << endl;
 		}
 
-		poset_classification_global PCG;
+		poset_classification::poset_classification_global PCG;
 
 		PCG.init(
 				PC,
@@ -114,7 +113,7 @@ void poset_classification_activity::perform_work(
 					"f_export_history_to_cpp" << endl;
 		}
 
-		poset_classification_global PCG;
+		poset_classification::poset_classification_global PCG;
 
 		PCG.init(
 				PC,
@@ -149,7 +148,7 @@ void poset_classification_activity::perform_work(
 		Draw_options = Get_draw_options(Descr->write_tree_draw_options);
 
 
-		pc_tree_interface Pc_tree_interface;
+		poset_classification::pc_tree_interface Pc_tree_interface;
 
 		Pc_tree_interface.init(
 				PC,
@@ -191,7 +190,7 @@ void poset_classification_activity::perform_work(
 			}
 #endif
 
-			poset_classification_global PCG;
+			poset_classification::poset_classification_global PCG;
 
 			PCG.init(
 					PC,
@@ -219,7 +218,7 @@ void poset_classification_activity::perform_work(
 		//int f_save_stab = true;
 		//int f_show_whole_orbit = false;
 
-		poset_classification_global PCG;
+		poset_classification::poset_classification_global PCG;
 
 		PCG.init(
 				PC,
@@ -259,7 +258,7 @@ void poset_classification_activity::perform_work(
 					"preparing level spreadsheet" << endl;
 		}
 
-		pc_convert_data_structure Pc_convert_data_structure;
+		poset_classification::pc_convert_data_structure Pc_convert_data_structure;
 
 		Pc_convert_data_structure.init(
 				PC,
@@ -401,10 +400,81 @@ void poset_classification_activity::perform_work(
 					"after draw_full_poset" << endl;
 		}
 	}
+
+	if (Descr->f_plesken_ring) {
+		if (f_v) {
+			cout << "poset_classification_activity::perform_work "
+					"f_plesken_ring" << endl;
+		}
+
+		poset_classification::pc_combinatorics Pc_combinatorics;
+
+		Pc_combinatorics.init(
+				PC,
+				0 /* verbose_level*/);
+
+#if 0
+		int *Pup;
+		int *Pdown;
+		int N;
+
+
+		if (f_v) {
+			cout << "poset_classification_activity::perform_work "
+					"before Pc_combinatorics.Plesken_matrices" << endl;
+		}
+		Pc_combinatorics.Plesken_matrices(
+				Pup,
+				Pdown,
+				N,
+				verbose_level);
+		if (f_v) {
+			cout << "poset_classification_activity::perform_work "
+					"after Pc_combinatorics.Plesken_matrices" << endl;
+		}
+#endif
+
+		layer5_applications::apps_combinatorics::plesken_ring *Plesken_ring;
+
+		Plesken_ring = NEW_OBJECT(layer5_applications::apps_combinatorics::plesken_ring);
+
+		if (f_v) {
+			cout << "poset_classification_activity::perform_work "
+					"before Plesken_ring->init" << endl;
+		}
+		Plesken_ring->init(
+				PC,
+				verbose_level);
+		if (f_v) {
+			cout << "poset_classification_activity::perform_work "
+					"after Plesken_ring->init" << endl;
+		}
+
+
+		other::orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+
+		Symb = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
+		Symb->init_plesken_ring(
+				PC->get_problem_label(), Plesken_ring, verbose_level);
+		if (f_v) {
+			cout << "symbol_definition::definition_of_orthogonal_space "
+					"before add_symbol_table_entry" << endl;
+		}
+		//Sym->Orbiter_top_level_session->add_symbol_table_entry(
+		//		define_label, Symb, verbose_level);
+
+		nb_output = 1;
+		Output = Symb;
+
+
+		//FREE_int(Pup);
+		//FREE_int(Pdown);
+
+	}
 	if (Descr->f_make_relations_with_flag_orbits) {
 
 
-		pc_convert_data_structure Pc_convert_data_structure;
+		poset_classification::pc_convert_data_structure Pc_convert_data_structure;
 
 		Pc_convert_data_structure.init(
 				PC,
@@ -434,7 +504,7 @@ void poset_classification_activity::perform_work(
 			cout << "poset_classification_activity::perform_work "
 					"f_print_data_structure" << endl;
 		}
-		pc_latex_interface Pc_latex_interface;
+		poset_classification::pc_latex_interface Pc_latex_interface;
 
 		Pc_latex_interface.init(
 				PC,
@@ -453,7 +523,7 @@ void poset_classification_activity::perform_work(
 					"f_test_multi_edge_in_decomposition_matrix" << endl;
 		}
 
-		pc_combinatorics Pc_combinatorics;
+		poset_classification::pc_combinatorics Pc_combinatorics;
 
 		Pc_combinatorics.init(
 				PC,
@@ -476,7 +546,7 @@ void poset_classification_activity::perform_work(
 	if (Descr->recognize.size()) {
 		int h;
 
-		poset_classification_global PCG;
+		poset_classification::poset_classification_global PCG;
 
 		PCG.init(
 				PC,
@@ -486,7 +556,8 @@ void poset_classification_activity::perform_work(
 
 			PCG.recognize(
 					Descr->recognize[h],
-					h, Descr->recognize.size(),
+					h,
+					Descr->recognize.size(),
 					verbose_level);
 		}
 	}
@@ -498,7 +569,7 @@ void poset_classification_activity::perform_work(
 					<< Descr->pair_relations_within_orbit_idx << endl;
 		}
 
-		pc_combinatorics Pc_combinatorics;
+		poset_classification::pc_combinatorics Pc_combinatorics;
 
 		Pc_combinatorics.init(
 				PC,

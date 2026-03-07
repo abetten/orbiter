@@ -1010,6 +1010,24 @@ void orbiter_symbol_table_entry::init_classify_cubic_surfaces(
 	}
 }
 
+void orbiter_symbol_table_entry::init_plesken_ring(
+		std::string &label,
+		void *V, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_plesken_ring" << endl;
+	}
+	orbiter_symbol_table_entry::label.assign(label);
+	type = t_object;
+	object_type = t_plesken_ring;
+	ptr = V;
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_plesken_ring done" << endl;
+	}
+}
+
 
 
 
@@ -1295,12 +1313,13 @@ void orbiter_symbol_table_entry::print()
 		}
 
 
-		// group of 2:
+		// group of 3:
 
 #if 0
-		// group of 2:
+		// group of 3:
 		t_isomorph_arguments
 		t_classify_cubic_surfaces
+		t_plesken
 #endif
 
 		else if (object_type == t_isomorph_arguments) {
@@ -1308,6 +1327,9 @@ void orbiter_symbol_table_entry::print()
 		}
 		else if (object_type == t_classify_cubic_surfaces) {
 			cout << "classify_cubic_surfaces" << endl;
+		}
+		else if (object_type == t_plesken_ring) {
+			cout << "plesken_ring" << endl;
 		}
 
 	}

@@ -267,6 +267,7 @@ ORBITER_MODULES= \
 		layer1_foundations/other/data_structures/int_matrix.o \
 		layer1_foundations/other/data_structures/int_vec.o \
 		layer1_foundations/other/data_structures/int_vector.o \
+		layer1_foundations/other/data_structures/lint_matrix.o \
 		layer1_foundations/other/data_structures/lint_vec.o \
 		layer1_foundations/other/data_structures/page_storage.o \
 		layer1_foundations/other/data_structures/partitionstack.o \
@@ -501,8 +502,6 @@ ORBITER_MODULES= \
 		layer4_classification/poset_classification/pc_convert_data_structure.o \
 		layer4_classification/poset_classification/pc_latex_interface.o \
 		layer4_classification/poset_classification/pc_tree_interface.o \
-		layer4_classification/poset_classification/poset_classification_activity_description.o \
-		layer4_classification/poset_classification/poset_classification_activity.o \
 		layer4_classification/poset_classification/poset_classification.o \
 		layer4_classification/poset_classification/poset_classification_classify.o \
 		layer4_classification/poset_classification/poset_classification_control.o \
@@ -621,6 +620,9 @@ ORBITER_MODULES= \
 		layer5_top_level/apps_combinatorics/large_set_was_activity.o \
 		layer5_top_level/apps_combinatorics/large_set_was_description.o \
 		layer5_top_level/apps_combinatorics/large_set_was.o \
+		layer5_top_level/apps_combinatorics/plesken_ring_activity_description.o \
+		layer5_top_level/apps_combinatorics/plesken_ring_activity.o \
+		layer5_top_level/apps_combinatorics/plesken_ring.o \
 		layer5_top_level/apps_combinatorics/variety_with_TDO_and_TDA.o \
 		layer5_top_level/apps_geometry/arc_generator_description.o \
 		layer5_top_level/apps_geometry/arc_generator.o \
@@ -673,6 +675,8 @@ ORBITER_MODULES= \
 		layer5_top_level/orbits/orbits_on_pairs.o \
 		layer5_top_level/orbits/orbits_on_polynomials.o \
 		layer5_top_level/orbits/orbits_on_subspaces.o \
+		layer5_top_level/orbits/poset_classification_activity_description.o \
+		layer5_top_level/orbits/poset_classification_activity.o \
 		layer5_top_level/orthogonal_geometry_applications/blt_set_activity_description.o \
 		layer5_top_level/orthogonal_geometry_applications/blt_set_activity.o \
 		layer5_top_level/orthogonal_geometry_applications/blt_set_classify_activity_description.o \

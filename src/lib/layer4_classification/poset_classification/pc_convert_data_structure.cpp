@@ -364,6 +364,7 @@ void pc_convert_data_structure::make_factor_poset(
 		int data1, double x_stretch,
 		layer1_foundations::combinatorics::graph_theory::factor_poset *&Factor_poset,
 		int type_of_poset,
+		int f_poset_with_horizontal_lines,
 		int verbose_level)
 // Draws the full poset: each element of each orbit is drawn.
 // The orbits are indicated by grouping the elements closer together.
@@ -492,6 +493,7 @@ void pc_convert_data_structure::make_factor_poset(
 			Factor_poset,
 			All_orbits,
 			type_of_poset,
+			f_poset_with_horizontal_lines,
 			verbose_level - 2);
 	if (f_vv) {
 		cout << "pc_convert_data_structure::make_factor_poset "
@@ -528,6 +530,7 @@ void pc_convert_data_structure::make_full_poset_graph_edges(
 		layer1_foundations::combinatorics::graph_theory::factor_poset *Factor_poset,
 		other::data_structures::set_of_sets *All_orbits,
 		int type_of_poset,
+		int f_poset_with_horizontal_lines,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -587,6 +590,18 @@ void pc_convert_data_structure::make_full_poset_graph_edges(
 			ol1 = Factor_poset->Orbit_len[lvl][po];
 			//
 			n1 = PC->get_Poo()->first_node_at_level(lvl) + po;
+
+
+			if (f_poset_with_horizontal_lines) {
+
+				Factor_poset->LG->add_edge(lvl,
+					Factor_poset->Fst_element_per_orbit[lvl][po] + 0,
+					lvl,
+					Factor_poset->Fst_element_per_orbit[lvl][po] + ol1 - 1,
+					0, // edge_color
+					0 /*verbose_level*/);
+
+			}
 
 
 			int *Down_orbits;

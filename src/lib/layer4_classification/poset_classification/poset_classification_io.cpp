@@ -185,13 +185,6 @@ void poset_classification::print_statistic_on_callbacks()
 }
 
 
-void poset_classification::prepare_fname_data_file(
-		std::string &fname,
-		std::string &fname_base, int depth_completed)
-{
-	fname = fname_base + "_" + std::to_string(depth_completed) + ".data";
-}
-
 void poset_classification::print_representatives_at_level(
 		int lvl)
 {
@@ -337,6 +330,13 @@ void poset_classification::print_fusion_nodes(
 			}
 		}
 	}
+}
+
+void poset_classification::prepare_fname_data_file(
+		std::string &fname,
+		std::string &fname_base, int depth_completed)
+{
+	fname = fname_base + "_" + std::to_string(depth_completed) + ".data";
 }
 
 
@@ -1207,23 +1207,6 @@ void poset_classification::make_fname_lvl_reps_file(
 }
 
 
-
-#if 0
-void poset_classification::log_current_node(
-		std::ostream &f, int size)
-{
-	//longinteger_object go;
-	int i;
-	
-
-	f << size << " ";
-	for (i = 0; i < size; i++) {
-		f << set_S[i] << " ";
-	}
-	f << endl;
-
-}
-#endif
 
 
 

@@ -212,6 +212,8 @@ public:
 			orbits_create *OC,
 			int verbose_level);
 	void perform_activity(
+			int &nb_output,
+			other::orbiter_kernel_system::orbiter_symbol_table_entry *&Output,
 			int verbose_level);
 	void do_report(
 			std::string &options,
@@ -240,7 +242,10 @@ public:
 	void do_schreier_poset(
 			std::string &prefix, int orbit_idx, int verbose_level);
 	void do_poset_classification_activity(
-			std::string &activity_label, int verbose_level);
+			std::string &activity_label,
+			int &nb_output,
+			other::orbiter_kernel_system::orbiter_symbol_table_entry *&Output,
+			int verbose_level);
 
 };
 
@@ -729,6 +734,132 @@ public:
 
 
 };
+
+
+
+
+// #############################################################################
+// poset_classification_activity_description.cpp
+// #############################################################################
+
+
+//! description on an activity for the poset classification after it has been computed
+
+
+class poset_classification_activity_description {
+
+public:
+
+	// TABLES/poset_classification_activity.tex
+
+	int f_report;
+	poset_classification::poset_classification_report_options *report_options;
+
+	int f_export_level_to_cpp;
+	int export_level_to_cpp_level;
+	int f_export_history_to_cpp;
+	int export_history_to_cpp_level;
+
+
+	int f_write_tree; // create a tree
+	std::string write_tree_draw_options;
+
+	int f_find_node_by_stabilizer_order;
+	int find_node_by_stabilizer_order;
+
+
+	int f_draw_poset;
+	std::string draw_poset_draw_options;
+
+	int f_draw_full_poset;
+	std::string draw_full_poset_draw_options;
+
+	int f_plesken_ring;
+
+
+	int f_print_data_structure;
+
+	int f_list;
+	int f_list_all;
+	int f_table_of_nodes;
+	int f_make_relations_with_flag_orbits;
+
+	int f_level_summary_csv;
+	int f_orbit_reps_csv;
+
+
+	int f_node_label_is_group_order;
+	int f_node_label_is_element;
+
+	int f_show_orbit_decomposition;
+	int f_show_stab;
+	int f_save_stab;
+	int f_show_whole_orbits;
+
+
+
+	int f_export_schreier_trees;
+	int f_draw_schreier_trees;
+	std::string schreier_tree_prefix;
+			// comes after problem_label_with_path
+
+	int f_test_multi_edge_in_decomposition_matrix;
+
+
+
+	std::vector<std::string> recognize;
+
+	int f_pair_relations_within_orbit;
+	int pair_relations_within_orbit_idx;
+
+	int f_export_orbits_long;
+
+	poset_classification_activity_description();
+	~poset_classification_activity_description();
+	int read_arguments(
+		int argc, std::string *argv,
+		int verbose_level);
+	void print();
+
+};
+
+
+// #############################################################################
+// poset_classification_activity.cpp
+// #############################################################################
+
+
+//! an activity for the poset classification after it has been computed
+
+
+class poset_classification_activity {
+
+public:
+
+	poset_classification_activity_description *Descr;
+	poset_classification::poset_classification *PC;
+	int actual_size;
+
+
+	poset_classification_activity();
+	~poset_classification_activity();
+	void init(
+			poset_classification_activity_description *Descr,
+			poset_classification::poset_classification *PC,
+			int actual_size,
+			int verbose_level);
+	void perform_work(
+			int &nb_output,
+			other::orbiter_kernel_system::orbiter_symbol_table_entry *&Output,
+			int verbose_level);
+
+
+
+
+
+};
+
+
 
 
 

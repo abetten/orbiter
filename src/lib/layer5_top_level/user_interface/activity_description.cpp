@@ -116,6 +116,8 @@ activity_description::activity_description()
 	f_combo_activity = false;
 	Combo_activity_description = NULL;
 
+	f_plesken_ring_activity = false;
+	Plesken_ring_activity_description = NULL;
 
 }
 
@@ -802,7 +804,28 @@ void activity_description::read_arguments(
 			}
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-plesken_ring_activity") == 0) {
+		f_plesken_ring_activity = true;
+		Plesken_ring_activity_description =
+				NEW_OBJECT(apps_combinatorics::plesken_ring_activity_description);
+		if (f_v) {
+			cout << "reading -plesken_ring_activity" << endl;
+		}
+		i += Plesken_ring_activity_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
 
+		i++;
+
+		if (f_v) {
+			cout << "-plesken_ring_activity" << endl;
+			Plesken_ring_activity_description->print();
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+		}
+	}
 
 
 	else {
@@ -1019,7 +1042,7 @@ void activity_description::worker(
 			cout << "activity_description::worker f_BLT_set_classify_activity" << endl;
 		}
 
-		do_BLT_set_classify_activity(verbose_level);
+		do_BLT_set_classify_activity(nb_output, Output, verbose_level);
 	}
 	else if (f_spread_classify_activity) {
 
@@ -1059,7 +1082,7 @@ void activity_description::worker(
 			cout << "activity_description::worker f_orbits_activity" << endl;
 		}
 
-		do_orbits_activity(verbose_level);
+		do_orbits_activity(nb_output, Output, verbose_level);
 	}
 	else if (f_variety_activity) {
 
@@ -1084,6 +1107,14 @@ void activity_description::worker(
 		}
 
 		do_combo_activity(nb_output, Output, verbose_level);
+	}
+	else if (f_plesken_ring_activity) {
+
+		if (f_v) {
+			cout << "activity_description::worker f_plesken_ring_activity" << endl;
+		}
+
+		do_plesken_ring_activity(nb_output, Output, verbose_level);
 	}
 
 
@@ -1243,6 +1274,10 @@ void activity_description::print()
 	else if (f_combo_activity) {
 		cout << "-combo_activity" << endl;
 		Combo_activity_description->print();
+	}
+	else if (f_plesken_ring_activity) {
+		cout << "-plesken_ring_activity" << endl;
+		Plesken_ring_activity_description->print();
 	}
 	else {
 		cout << "activity_description::print unknown type of activity" << endl;
@@ -2574,6 +2609,8 @@ void activity_description::do_symbolic_object_activity(
 }
 
 void activity_description::do_BLT_set_classify_activity(
+		int &nb_output,
+		other::orbiter_kernel_system::orbiter_symbol_table_entry *&Output,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2613,7 +2650,7 @@ void activity_description::do_BLT_set_classify_activity(
 			cout << "activity_description::do_BLT_set_classify_activity "
 					"before Activity.perform_activity" << endl;
 		}
-		Activity.perform_activity(verbose_level);
+		Activity.perform_activity(nb_output, Output, verbose_level);
 		if (f_v) {
 			cout << "activity_description::do_BLT_set_classify_activity "
 					"after Activity.perform_activity" << endl;
@@ -2857,6 +2894,8 @@ void activity_description::do_action_on_forms_activity(
 
 
 void activity_description::do_orbits_activity(
+		int &nb_output,
+		other::orbiter_kernel_system::orbiter_symbol_table_entry *&Output,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2896,7 +2935,7 @@ void activity_description::do_orbits_activity(
 			cout << "activity_description::do_orbits_activity "
 					"before Activity.perform_activity" << endl;
 		}
-		Activity.perform_activity(verbose_level);
+		Activity.perform_activity(nb_output, Output, verbose_level);
 		if (f_v) {
 			cout << "activity_description::do_orbits_activity "
 					"after Activity.perform_activity" << endl;
@@ -3147,6 +3186,73 @@ void activity_description::do_combo_activity(
 
 }
 
+
+
+void activity_description::do_plesken_ring_activity(
+		int &nb_output,
+		other::orbiter_kernel_system::orbiter_symbol_table_entry *&Output,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "activity_description::do_plesken_ring_activity "
+				"activity for the following objects:";
+		Sym->print_with();
+	}
+
+
+
+	int *Idx;
+
+	Sym->Orbiter_top_level_session->find_symbols(Sym->with_labels, Idx);
+
+	if (Sym->with_labels.size() < 1) {
+		cout << "activity requires at least one input" << endl;
+		exit(1);
+	}
+
+
+	apps_combinatorics::plesken_ring *Plesken_ring;
+
+
+
+	Plesken_ring = (apps_combinatorics::plesken_ring *)
+			Sym->Orbiter_top_level_session->get_object(Idx[0]);
+
+
+
+	other::orbiter_kernel_system::activity_output *AO;
+	{
+
+		apps_combinatorics::plesken_ring_activity Activity;
+
+		Activity.init(
+				Plesken_ring_activity_description,
+				Plesken_ring,
+				verbose_level);
+
+
+		if (f_v) {
+			cout << "activity_description::do_plesken_ring_activity "
+					"before Activity.perform_activity" << endl;
+		}
+		Activity.perform_activity(nb_output, Output, verbose_level);
+		if (f_v) {
+			cout << "activity_description::do_plesken_ring_activity "
+					"after Activity.perform_activity" << endl;
+		}
+
+
+	}
+
+	FREE_int(Idx);
+
+	if (f_v) {
+		cout << "activity_description::do_plesken_ring_activity done" << endl;
+	}
+
+}
 
 
 

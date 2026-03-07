@@ -42,6 +42,47 @@ void pc_combinatorics::init(
 
 }
 
+void pc_combinatorics::compute_incidence_matrix_stack(
+		other::data_structures::lint_matrix **&Matrix_stack,
+		int k,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "pc_combinatorics::compute_incidence_matrix_stack" << endl;
+	}
+
+	int h;
+
+	Matrix_stack = (other::data_structures::lint_matrix **) NEW_pvoid(k);
+
+	for (h = 0; h < k; h++) {
+
+		if (f_v) {
+			cout << "pc_combinatorics::compute_incidence_matrix_stack "
+					"level " << h << " / " << k
+					<< " before Kramer_Mesner_matrix_neighboring" << endl;
+		}
+		Kramer_Mesner_matrix_neighboring(
+				h,
+				Matrix_stack[h],
+				verbose_level - 2);
+
+		if (f_v) {
+			cout << "pc_combinatorics::compute_incidence_matrix_stack "
+					"matrix level " << h << " computed" << endl;
+		}
+	}
+
+
+	if (f_v) {
+		cout << "pc_combinatorics::compute_incidence_matrix_stack done" << endl;
+	}
+}
+
+
 void pc_combinatorics::compute_Kramer_Mesner_matrix(
 		int t, int k,
 		int verbose_level)
@@ -56,13 +97,29 @@ void pc_combinatorics::compute_Kramer_Mesner_matrix(
 
 
 	// compute Stack of neighboring Kramer Mesner matrices
-	long int **pM;
-	int *Nb_rows, *Nb_cols;
+
+	other::data_structures::lint_matrix **Matrix_stack;
+
+
+	if (f_v) {
+		cout << "pc_combinatorics::compute_Kramer_Mesner_matrix "
+				"before compute_incidence_matrix_stack" << endl;
+	}
+	compute_incidence_matrix_stack(
+			Matrix_stack,
+			k,
+			verbose_level);
+	if (f_v) {
+		cout << "pc_combinatorics::compute_Kramer_Mesner_matrix "
+				"after compute_incidence_matrix_stack" << endl;
+	}
+
+
+#if 0
 	int h;
 
-	pM = NEW_plint(k);
-	Nb_rows = NEW_int(k);
-	Nb_cols = NEW_int(k);
+	Matrix_stack = (other::data_structures::lint_matrix **) NEW_pvoid(k);
+
 	for (h = 0; h < k; h++) {
 
 		if (f_v) {
@@ -71,63 +128,39 @@ void pc_combinatorics::compute_Kramer_Mesner_matrix(
 					<< " before Kramer_Mesner_matrix_neighboring" << endl;
 		}
 		Kramer_Mesner_matrix_neighboring(
-				h, pM[h], Nb_rows[h], Nb_cols[h],
+				h,
+				Matrix_stack[h],
 				verbose_level - 2);
 
 		if (f_v) {
 			cout << "pc_combinatorics::compute_Kramer_Mesner_matrix "
 					"matrix level " << h << " computed" << endl;
-	#if 0
-			int j;
-			for (i = 0; i < Nb_rows[h]; i++) {
-				for (j = 0; j < Nb_cols[h]; j++) {
-					cout << pM[h][i * Nb_cols[h] + j];
-					if (j < Nb_cols[h]) {
-						cout << ",";
-					}
-				}
-				cout << endl;
-			}
-	#endif
 		}
 	}
+#endif
 
-	long int *Mtk;
-	int nb_r, nb_c;
+	other::data_structures::lint_matrix *Mtk;
 
 
 	if (f_v) {
 		cout << "pc_combinatorics::compute_Kramer_Mesner_matrix "
 				"before Mtk_from_MM" << endl;
 	}
-	Mtk_from_MM(pM, Nb_rows, Nb_cols,
+	Mtk_from_Matrix_stack(
+			Matrix_stack,
 			t, k,
 			Mtk,
-			nb_r, nb_c,
 			verbose_level);
 	if (f_v) {
 		cout << "pc_combinatorics::compute_Kramer_Mesner_matrix "
 				"after Mtk_from_MM" << endl;
 		cout << "pc_combinatorics::compute_Kramer_Mesner_matrix "
 				"M_{" << t << "," << k << "} "
-				"has size " << nb_r << " x " << nb_c << "." << endl;
-
-#if 0
-		int j;
-		for (i = 0; i < nb_r; i++) {
-			for (j = 0; j < nb_c; j++) {
-				cout << Mtk[i * nb_c + j];
-				if (j < nb_c - 1) {
-					cout << ",";
-				}
-			}
-			cout << endl;
-		}
-#endif
+				"has size " << Mtk->m << " x " << Mtk->n << "." << endl;
 
 	}
 
-	long int *Mtk_inf;
+	other::data_structures::lint_matrix *Mtk_inf;
 
 
 	if (f_v) {
@@ -144,58 +177,146 @@ void pc_combinatorics::compute_Kramer_Mesner_matrix(
 
 
 	other::orbiter_kernel_system::file_io Fio;
-	int i;
 
 	string fname;
 
 	fname = PC->get_problem_label() + "_KM_" + std::to_string(t) + "_" + std::to_string(k) + ".csv";
 
-	Fio.Csv_file_support->lint_matrix_write_csv(
-			fname, Mtk, nb_r, nb_c);
+	Mtk->write_csv(
+			fname, verbose_level);
 
-	//Mtk.print(cout);
-	cout << "Written file " << fname << " of size "
+
+	if (f_v) {
+		cout << "pc_combinatorics::compute_Kramer_Mesner_matrix Written file " << fname << " of size "
 			<< Fio.file_size(fname) << endl;
-
+	}
 
 	fname = PC->get_problem_label() + "_KM_inf_" + std::to_string(t) + "_" + std::to_string(k) + ".csv";
 
-	Fio.Csv_file_support->lint_matrix_write_csv(
-			fname, Mtk_inf, nb_r, nb_c);
+	Mtk_inf->write_csv(
+			fname, verbose_level);
 
-	//Mtk.print(cout);
-	cout << "Written file " << fname << " of size "
+
+	if (f_v) {
+		cout << "pc_combinatorics::compute_Kramer_Mesner_matrix Written file " << fname << " of size "
 			<< Fio.file_size(fname) << endl;
+	}
 
 
 
 	if (f_v) {
 		cout << "pc_combinatorics::compute_Kramer_Mesner_matrix "
-				"computing Kramer Mesner matrices done" << endl;
+				"computing Kramer-Mesner matrices done" << endl;
 	}
+
+	int i;
+
 	for (i = 0; i < k; i++) {
-		FREE_lint(pM[i]);
+		FREE_OBJECT(Matrix_stack[i]);
 	}
-	FREE_plint(pM);
-	FREE_lint(Mtk);
-	FREE_lint(Mtk_inf);
+	FREE_pvoid((void **) Matrix_stack);
+	FREE_OBJECT(Mtk);
+	FREE_OBJECT(Mtk_inf);
 
 	if (f_v) {
 		cout << "pc_combinatorics::compute_Kramer_Mesner_matrix done" << endl;
 	}
 }
 
+
+void pc_combinatorics::Plesken_matrices(
+		other::data_structures::lint_matrix **&Matrix_stack,
+		int *&Pup,
+		int *&Pdown,
+		int &N,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "pc_combinatorics::Plesken_matrices" << endl;
+	}
+
+
+	int k;
+
+	k = PC->get_depth();
+
+	if (f_v) {
+		cout << "pc_combinatorics::compute_Kramer_Mesner_matrix "
+				"before compute_incidence_matrix_stack" << endl;
+	}
+	compute_incidence_matrix_stack(
+			Matrix_stack,
+			k,
+			verbose_level);
+	if (f_v) {
+		cout << "pc_combinatorics::compute_Kramer_Mesner_matrix "
+				"after compute_incidence_matrix_stack" << endl;
+	}
+
+
+
+	int N2;
+
+	if (f_v) {
+		cout << "pc_combinatorics::Plesken_matrices before Plesken_matrix_up" << endl;
+	}
+
+	Plesken_matrix_up(
+			k,
+			Matrix_stack,
+			Pup, N, verbose_level - 2);
+
+	if (f_v) {
+		cout << "pc_combinatorics::Plesken_matrices after Plesken_matrix_up" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "pc_combinatorics::Plesken_matrices Pup = " << endl;
+		Int_matrix_print(Pup, N, N);
+	}
+
+	if (f_v) {
+		cout << "pc_combinatorics::Plesken_matrices before Plesken_matrix_down" << endl;
+	}
+
+	Plesken_matrix_down(
+			k,
+			Matrix_stack,
+			Pdown, N2, verbose_level - 2);
+
+	if (f_v) {
+		cout << "pc_combinatorics::Plesken_matrices after Plesken_matrix_down" << endl;
+	}
+
+	if (N2 != N) {
+		cout << "pc_combinatorics::Plesken_matrices N2 != N" << endl;
+		exit(1);
+	}
+
+	if (f_v) {
+		cout << "pc_combinatorics::Plesken_matrices Pdown = " << endl;
+		Int_matrix_print(Pdown, N, N);
+	}
+
+	if (f_v) {
+		cout << "pc_combinatorics::Plesken_matrices done" << endl;
+	}
+}
+
 void pc_combinatorics::Plesken_matrix_up(
 		int depth,
+		other::data_structures::lint_matrix **Matrix_stack,
 		int *&P, int &N, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *Nb;
 	int *Fst;
-	int *Pij;
+	//int *Pij;
 	int i, j;
-	int N1, N2;
-	int a, b, cnt;
+	//int N1, N2;
 
 	if (f_v) {
 		cout << "pc_combinatorics::Plesken_matrix_up" << endl;
@@ -213,34 +334,161 @@ void pc_combinatorics::Plesken_matrix_up(
 	for (i = 0; i <= depth; i++) {
 		for (j = 0; j <= depth; j++) {
 
+#if 0
 			Plesken_submatrix_up(
 					i, j, Pij, N1, N2, verbose_level - 1);
+#endif
 
-			for (a = 0; a < N1; a++) {
-				for (b = 0; b < N2; b++) {
-					cnt = Pij[a * N2 + b];
+
+
+			other::data_structures::lint_matrix *Mij;
+
+
+			if (f_v) {
+				cout << "pc_combinatorics::Plesken_matrix_up "
+						"before Mtk_from_Matrix_stack" << endl;
+			}
+			Mtk_from_Matrix_stack(
+					Matrix_stack,
+					i, j,
+					Mij,
+					verbose_level);
+			if (f_v) {
+				cout << "pc_combinatorics::Plesken_matrix_up "
+						"after Mtk_from_MM" << endl;
+				cout << "pc_combinatorics::Plesken_matrix_up "
+						"M_{" << i << "," << j << "} "
+						"has size " << Mij->m << " x " << Mij->n << "." << endl;
+
+			}
+
+
+
+
+			int a, b;
+			long int cnt;
+
+
+
+			for (a = 0; a < Mij->m; a++) {
+				for (b = 0; b < Mij->n; b++) {
+					//cnt = Pij[a * N2 + b];
+					cnt = Mij->s_ij(a, b);
 					P[(Fst[i] + a) * N + Fst[j] + b] = cnt;
 				}
 			}
-			FREE_int(Pij);
+			//FREE_int(Pij);
+			FREE_OBJECT(Mij);
 		}
 	}
+
+	FREE_int(Nb);
+	FREE_int(Fst);
+
 	if (f_v) {
 		cout << "pc_combinatorics::Plesken_matrix_up done" << endl;
 	}
 }
 
+
+
+
 void pc_combinatorics::Plesken_matrix_down(
 		int depth,
+		other::data_structures::lint_matrix **Matrix_stack,
+		int *&P, int &N, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "pc_combinatorics::Plesken_matrix_down" << endl;
+	}
+
+	int *Nb;
+	int *Fst;
+	int i, j;
+
+	N = 0;
+	Nb = NEW_int(depth + 1);
+	Fst = NEW_int(depth + 2);
+	Fst[0] = 0;
+	for (i = 0; i <= depth; i++) {
+		Nb[i] = PC->get_Poo()->nb_orbits_at_level(i);
+		Fst[i + 1] = Fst[i] + Nb[i];
+		N += Nb[i];
+	}
+	P = NEW_int(N * N);
+	for (i = 0; i <= depth; i++) {
+		for (j = 0; j <= depth; j++) {
+
+
+			other::data_structures::lint_matrix *Mij;
+
+
+			if (f_v) {
+				cout << "pc_combinatorics::Plesken_matrix_down "
+						"before Mtk_from_Matrix_stack" << endl;
+			}
+			Mtk_from_Matrix_stack(
+					Matrix_stack,
+					i, j,
+					Mij,
+					verbose_level);
+			if (f_v) {
+				cout << "pc_combinatorics::Plesken_matrix_down "
+						"after Mtk_from_Matrix_stack" << endl;
+				cout << "pc_combinatorics::Plesken_matrix_down "
+						"M_{" << i << "," << j << "} "
+						"has size " << Mij->m << " x " << Mij->n << "." << endl;
+
+			}
+
+			other::data_structures::lint_matrix *M_inf;
+
+			Asup_to_Ainf(
+					i, j,
+					Mij,
+					M_inf,
+					verbose_level);
+
+
+			int a, b;
+			long int cnt;
+
+			for (a = 0; a < M_inf->m; a++) {
+				for (b = 0; b < M_inf->n; b++) {
+					cnt = M_inf->s_ij(a, b);
+					P[(Fst[i] + a) * N + Fst[j] + b] = cnt;
+				}
+			}
+
+			FREE_OBJECT(Mij);
+			FREE_OBJECT(M_inf);
+			//FREE_int(Pij);
+		}
+	}
+
+	FREE_int(Nb);
+	FREE_int(Fst);
+
+	if (f_v) {
+		cout << "pc_combinatorics::Plesken_matrix_down done" << endl;
+	}
+}
+
+
+#if 0
+void pc_combinatorics::Plesken_matrix_down(
+		int depth,
+		other::data_structures::lint_matrix **Matrix_stack,
 		int *&P, int &N, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *Nb;
 	int *Fst;
-	int *Pij;
+	//int *Pij;
 	int i, j;
-	int N1, N2;
-	int a, b, cnt;
+	//int N1, N2;
 
 	if (f_v) {
 		cout << "pc_combinatorics::Plesken_matrix_down" << endl;
@@ -258,8 +506,34 @@ void pc_combinatorics::Plesken_matrix_down(
 	for (i = 0; i <= depth; i++) {
 		for (j = 0; j <= depth; j++) {
 
+
+			other::data_structures::lint_matrix *Mij;
+
+
+			if (f_v) {
+				cout << "pc_combinatorics::Plesken_matrix_down "
+						"before Mtk_from_MM" << endl;
+			}
+			Mtk_from_Matrix_stack(
+					Matrix_stack,
+					i, j,
+					Mij,
+					verbose_level);
+			if (f_v) {
+				cout << "pc_combinatorics::Plesken_matrix_down "
+						"after Mtk_from_MM" << endl;
+				cout << "pc_combinatorics::Plesken_matrix_down "
+						"M_{" << i << "," << j << "} "
+						"has size " << Mij->m << " x " << Mij->n << "." << endl;
+
+			}
+
+
+
+#if 0
 			Plesken_submatrix_down(i, j,
 					Pij, N1, N2, verbose_level - 1);
+#endif
 
 			for (a = 0; a < N1; a++) {
 				for (b = 0; b < N2; b++) {
@@ -267,14 +541,16 @@ void pc_combinatorics::Plesken_matrix_down(
 					P[(Fst[i] + a) * N + Fst[j] + b] = cnt;
 				}
 			}
-			FREE_int(Pij);
+			//FREE_int(Pij);
 		}
 	}
 	if (f_v) {
 		cout << "pc_combinatorics::Plesken_matrix_down done" << endl;
 	}
 }
+#endif
 
+#if 0
 void pc_combinatorics::Plesken_submatrix_up(
 		int i, int j,
 		int *&Pij, int &N1, int &N2, int verbose_level)
@@ -477,10 +753,13 @@ int pc_combinatorics::count_incidences_down(
 	}
 	return cnt;
 }
+#endif
 
 void pc_combinatorics::Asup_to_Ainf(
 		int t, int k,
-		long int *M_sup, long int *&M_inf, int verbose_level)
+		other::data_structures::lint_matrix *M_sup,
+		other::data_structures::lint_matrix *&M_inf,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	algebra::ring_theory::longinteger_domain D;
@@ -501,7 +780,11 @@ void pc_combinatorics::Asup_to_Ainf(
 	Nk = PC->get_Poo()->nb_orbits_at_level(k);
 	PC->get_Poo()->get_stabilizer_order(0, 0, go);
 
-	M_inf = NEW_lint(Nt * Nk);
+
+	M_inf = NEW_OBJECT(other::data_structures::lint_matrix);
+
+	M_inf->allocate_and_initialize_with_zero(
+			Nt, Nk);
 
 	if (f_v) {
 		cout << "pc_combinatorics::Asup_to_Ainf go=" << go << endl;
@@ -544,7 +827,7 @@ void pc_combinatorics::Asup_to_Ainf(
 	}
 	for (i = 0; i < Nt; i++) {
 		for (j = 0; j < Nk; j++) {
-			a = M_sup[i * Nk + j];
+			a = M_sup->s_ij(i, j);
 			aa.create(a);
 			D.mult(ol_t[i], aa, bb);
 			D.integral_division(bb, ol_k[j], cc, rem, 0);
@@ -559,7 +842,7 @@ void pc_combinatorics::Asup_to_Ainf(
 				exit(1);
 			}
 			c = cc.as_lint();
-			M_inf[i * Nk + j] = c;
+			M_inf->s_ij(i, j) = c;
 		}
 	}
 	if (f_v) {
@@ -647,8 +930,9 @@ void pc_combinatorics::test_for_multi_edge_in_classification_graph(
 }
 
 void pc_combinatorics::Kramer_Mesner_matrix_neighboring(
-		int level, long int *&M,
-		int &nb_rows, int &nb_cols, int verbose_level)
+		int level,
+		other::data_structures::lint_matrix *&M,
+		int verbose_level)
 // we assume that we don't use implicit fusion nodes
 {
 	int f_v = (verbose_level >= 1);
@@ -669,6 +953,9 @@ void pc_combinatorics::Kramer_Mesner_matrix_neighboring(
 		cout << "pc_combinatorics::Kramer_Mesner_matrix_neighboring "
 				"f2=" << f2 << endl;
 	}
+
+	int nb_rows, nb_cols;
+
 	nb_rows = PC->get_Poo()->nb_orbits_at_level(level);
 	if (f_v) {
 		cout << "pc_combinatorics::Kramer_Mesner_matrix_neighboring "
@@ -688,11 +975,19 @@ void pc_combinatorics::Kramer_Mesner_matrix_neighboring(
 		exit(1);
 	}
 
-	M = NEW_lint(nb_rows * nb_cols);
+	M = NEW_OBJECT(other::data_structures::lint_matrix);
 
+
+	//M = NEW_lint(nb_rows * nb_cols);
+	M->allocate_and_initialize_with_zero(
+			nb_rows, nb_cols);
+
+	//Lint_vec_zero(M, nb_rows * nb_cols);
+#if 0
 	for (i = 0; i < nb_rows * nb_cols; i++) {
 		M[i] = 0;
 	}
+#endif
 
 
 	if (f_v) {
@@ -723,7 +1018,7 @@ void pc_combinatorics::Kramer_Mesner_matrix_neighboring(
 				len = O->get_E(k)->get_orbit_len();
 				J = O->get_E(k)->get_data();
 				j = J - f2;
-				M[i * nb_cols + j] += len;
+				M->s_ij(i, j) += len;
 			}
 			if (O->get_E(k)->get_type() == EXTENSION_TYPE_FUSION) {
 				if (f_vv) {
@@ -794,7 +1089,7 @@ void pc_combinatorics::Kramer_Mesner_matrix_neighboring(
 				J = gen->find_poset_orbit_node_for_set(level + 1, gen->S0, 0);
 #endif
 				j = J - f2;
-				M[i * nb_cols + j] += len;
+				M->s_ij(i, j) += len;
 			}
 		}
 	}
@@ -814,7 +1109,8 @@ void pc_combinatorics::Mtk_via_Mtr_Mrk(
 // $M_{tk} = {{k - t} \choose {k - r}} \cdot M_{t,r} \cdot M_{r,k}$.
 {
 	int f_v = (verbose_level >= 1);
-	int i, j, h, a, b, c, s = 0;
+	int i, j, h;
+	long int a, b, c, s = 0;
 	combinatorics::other_combinatorics::combinatorics_domain C;
 
 	if (f_v) {
@@ -882,11 +1178,12 @@ void pc_combinatorics::Mtk_via_Mtr_Mrk(
 	if (f_v) {
 		cout << "pc_combinatorics::Mtk_via_Mtr_Mrk matrix "
 				"M_{" << t << "," << k << "} "
-						"of format " << nb_r3 << " x " << nb_c3
+						"of size " << nb_r3 << " x " << nb_c3
 						<< " has been computed" << endl;
 		}
 }
 
+#if 0
 void pc_combinatorics::Mtk_from_MM(
 		long int **pM,
 	int *Nb_rows, int *Nb_cols,
@@ -967,7 +1264,124 @@ void pc_combinatorics::Mtk_from_MM(
 				"t = " << t << ", k = " << k << " done" << endl;
 	}
 }
+#endif
 
+void pc_combinatorics::Mtk_from_Matrix_stack(
+		other::data_structures::lint_matrix **Matrix_stack,
+	int t, int k,
+	other::data_structures::lint_matrix *&Mtk,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j;
+
+	if (f_v) {
+		cout << "pc_combinatorics::Mtk_from_Matrix_stack "
+				"t = " << t << ", k = " << k << endl;
+	}
+
+	long int *T;
+	int Tr, Tc;
+
+	if (k == t) {
+		//cout << "pc_combinatorics::Mtk_from_Matrix_stack "
+		//		"k == t" << endl;
+		//exit(1);
+
+		int c;
+
+		Tr = PC->get_Poo()->nb_orbits_at_level(t);
+		Tc = Tr;
+		T = NEW_lint(Tr * Tr);
+
+		// make the identity matrix:
+
+		for (i = 0; i < Tr; i++) {
+			for (j = 0; j < Tc; j++) {
+				if (i == j) {
+					c = 1;
+				}
+				else {
+					c = 0;
+				}
+				T[i * Tc + j] = c;
+			}
+		}
+
+	}
+	else if (k < t) {
+
+		// make the zero matrix:
+
+		Tr = PC->get_Poo()->nb_orbits_at_level(t);
+		Tc = PC->get_Poo()->nb_orbits_at_level(k);
+		T = NEW_lint(Tr * Tc);
+		Lint_vec_zero(T, Tr * Tc);
+
+	}
+	else {
+
+		long int *T2;
+		int T2r, T2c;
+
+		Tr = Matrix_stack[t]->m;
+		Tc = Matrix_stack[t]->n;
+
+		T = NEW_lint(Tr * Tc);
+		for (i = 0; i < Tr; i++) {
+			for (j = 0; j < Tc; j++) {
+				T[i * Tc + j] = Matrix_stack[t]->s_ij(i, j);
+			}
+		}
+		if (f_v) {
+			cout << "pc_combinatorics::Mtk_from_Matrix_stack "
+					"Tr=" << Tr << " Tc=" << Tc << endl;
+		}
+
+		if (t + 1 < k) {
+			for (i = t + 2; i <= k; i++) {
+
+				if (f_v) {
+					cout << "pc_combinatorics::Mtk_from_Matrix_stack "
+							"i = " << i << " calling Mtk_via_Mtr_Mrk" << endl;
+				}
+
+				Mtk_via_Mtr_Mrk(
+						t, i - 1, i,
+					T, Matrix_stack[i - 1]->M, T2,
+					Tr, Tc,
+					Matrix_stack[i - 1]->m,
+					Matrix_stack[i - 1]->n,
+					T2r, T2c,
+					verbose_level - 1);
+
+				FREE_lint(T);
+				T = T2;
+				Tr = T2r;
+				Tc = T2c;
+				T2 = NULL;
+			}
+		}
+		else {
+		}
+	}
+
+	Mtk = NEW_OBJECT(other::data_structures::lint_matrix);
+
+	Mtk->allocate_and_init(Tr, Tc, T);
+
+	FREE_lint(T);
+
+	if (f_v) {
+		cout << "pc_combinatorics::Mtk_from_Matrix_stack "
+				"nb_r=" << Mtk->m << " nb_c=" << Mtk->n << endl;
+	}
+
+	if (f_v) {
+		cout << "pc_combinatorics::Mtk_from_Matrix_stack "
+				"t = " << t << ", k = " << k << " done" << endl;
+	}
+}
 
 void pc_combinatorics::pair_relations_within_orbit(
 		int lvl, int po, int *&M, int &ol, int verbose_level)

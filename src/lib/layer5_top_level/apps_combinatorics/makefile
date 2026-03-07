@@ -32,6 +32,9 @@ MODULES = \
 	large_set_was_activity.o \
 	large_set_was_description.o \
 	large_set_was.o \
+	plesken_ring_activity_description.o \
+	plesken_ring_activity.o \
+	plesken_ring.o \
 	variety_with_TDO_and_TDA.o
 
 

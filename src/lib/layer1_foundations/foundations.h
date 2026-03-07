@@ -695,6 +695,7 @@ namespace other {
 		class int_matrix;
 		class int_vec;
 		class int_vector;
+		class lint_matrix;
 		class lint_vec;
 		class page_storage;
 		class partitionstack;
@@ -851,9 +852,10 @@ namespace other {
 			t_combo_with_group,
 
 
-			// group of 2:
+			// group of 3:
 			t_isomorph_arguments,
 			t_classify_cubic_surfaces,
+			t_plesken_ring,
 
 		};
 		// please maintain:

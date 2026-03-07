@@ -149,6 +149,9 @@ public:
 	apps_combinatorics::combo_activity_description *Combo_activity_description;
 
 
+	int f_plesken_ring_activity;
+	apps_combinatorics::plesken_ring_activity_description *Plesken_ring_activity_description;
+
 
 	activity_description();
 	~activity_description();
@@ -219,6 +222,8 @@ public:
 	void do_symbolic_object_activity(
 			int verbose_level);
 	void do_BLT_set_classify_activity(
+			int &nb_output,
+			other::orbiter_kernel_system::orbiter_symbol_table_entry *&Output,
 			int verbose_level);
 	void do_spread_classify_activity(
 			int verbose_level);
@@ -229,6 +234,8 @@ public:
 	void do_action_on_forms_activity(
 			int verbose_level);
 	void do_orbits_activity(
+			int &nb_output,
+			other::orbiter_kernel_system::orbiter_symbol_table_entry *&Output,
 			int verbose_level);
 	void do_variety_activity(
 			int verbose_level);
@@ -238,6 +245,10 @@ public:
 			other::orbiter_kernel_system::orbiter_symbol_table_entry *&Output,
 			int verbose_level);
 	void do_combo_activity(
+			int &nb_output,
+			other::orbiter_kernel_system::orbiter_symbol_table_entry *&Output,
+			int verbose_level);
+	void do_plesken_ring_activity(
 			int &nb_output,
 			other::orbiter_kernel_system::orbiter_symbol_table_entry *&Output,
 			int verbose_level);
@@ -1359,7 +1370,7 @@ public:
 	apps_geometry::arc_generator_description
 		*get_object_of_type_arc_generator_control(
 				std::string &label);
-	poset_classification::poset_classification_activity_description
+	orbits::poset_classification_activity_description
 		*get_object_of_type_poset_classification_activity(
 				std::string &label);
 	void get_vector_or_set(std::string &label,
@@ -1614,7 +1625,7 @@ public:
 		*Arc_generator_control;
 
 	int f_poset_classification_activity;
-	poset_classification::poset_classification_activity_description
+	orbits::poset_classification_activity_description
 		*Poset_classification_activity;
 
 	int f_crc_code;

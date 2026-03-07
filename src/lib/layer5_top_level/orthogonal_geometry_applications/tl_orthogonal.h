@@ -153,6 +153,8 @@ public:
 			orthogonal_space_with_action *OA,
 			int verbose_level);
 	void perform_activity(
+			int &nb_output,
+			other::orbiter_kernel_system::orbiter_symbol_table_entry *&Output,
 			int verbose_level);
 
 };
@@ -250,6 +252,8 @@ public:
 			int verbose_level);
 	void do_poset_classification_activity(
 			std::string &activity_label,
+			int &nb_output,
+			other::orbiter_kernel_system::orbiter_symbol_table_entry *&Output,
 			int verbose_level);
 	void create_graphs(
 		int orbit_at_level_r, int orbit_at_level_m,

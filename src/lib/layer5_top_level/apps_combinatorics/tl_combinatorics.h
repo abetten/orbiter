@@ -1802,6 +1802,139 @@ int large_set_was_classify_test_pair_of_orbits(
 		void *extra_data);
 
 
+// #############################################################################
+// plesken_ring_activity_description.cpp
+// #############################################################################
+
+//! description of an activity for a plesken_ring
+
+
+class plesken_ring_activity_description {
+public:
+
+	int f_report;
+	std::string report_draw_options_label;
+
+	int f_evaluate_join;
+	std::string evaluate_join_ring_label;
+	std::string evaluate_join_formula_label;
+
+	int f_evaluate_meet;
+	std::string evaluate_meet_ring_label;
+	std::string evaluate_meet_formula_label;
+
+	plesken_ring_activity_description();
+	~plesken_ring_activity_description();
+	int read_arguments(
+			int argc, std::string *argv,
+		int verbose_level);
+	void print();
+
+
+};
+
+
+// #############################################################################
+// plesken_ring_activity.cpp
+// #############################################################################
+
+//! an activity for a plesken_ring
+
+
+class plesken_ring_activity {
+public:
+
+	plesken_ring_activity_description *Descr;
+	apps_combinatorics::plesken_ring *Plesken_ring;
+
+	plesken_ring_activity();
+	~plesken_ring_activity();
+	void init(
+			plesken_ring_activity_description *Descr,
+			apps_combinatorics::plesken_ring *Plesken_ring,
+			int verbose_level);
+	void perform_activity(
+			int &nb_output,
+			other::orbiter_kernel_system::orbiter_symbol_table_entry *&Output,
+			int verbose_level);
+
+
+};
+
+
+
+// #############################################################################
+// plesken_ring.cpp
+// #############################################################################
+
+//! plesken ring associated with a poset action
+
+class plesken_ring {
+public:
+
+	poset_classification::poset_classification *PC;
+
+	other::data_structures::lint_matrix **Matrix_stack;
+	int matrix_stack_size; // PC->get_depth()
+
+
+	int *Pup;
+	int *Pdown;
+	int N;
+
+	int *Pup_inv;
+	int *Pdown_inv;
+
+	int *output2;
+
+	plesken_ring();
+	~plesken_ring();
+	void init(
+			poset_classification::poset_classification *PC,
+			int verbose_level);
+	void RREF_elimination_above(
+			int *A, int *B, int n,
+			int verbose_level);
+	void do_report(
+			other::graphics::draw_options *Draw_options,
+			int verbose_level);
+	void do_report2(
+			std::ostream &ost,
+			other::graphics::draw_options *Draw_options,
+			int verbose_level);
+	void row_sum(
+			int *M, int *v);
+	void col_sum(
+			int *M, int *v);
+	void mult_matrix(
+			int *A, int *B, int *C);
+	void evaluate_expression(
+			int f_sup,
+			algebra::ring_theory::homogeneous_polynomial_domain *Ring,
+			algebra::expression_parser::symbolic_object_builder *Object,
+			int verbose_level);
+	void syntax_tree_evaluate(
+			int f_sup,
+			algebra::expression_parser::syntax_tree *tree,
+			std::map<std::string, int> &symbol_table,
+			int *output,
+			int verbose_level);
+	void syntax_tree_node_evaluate(
+			int f_sup,
+			algebra::expression_parser::syntax_tree_node *node,
+			std::map<std::string, int> &symbol_table,
+			int *output,
+			int verbose_level);
+	long int power(
+			long int a, long int n);
+	void syntax_tree_node_terminal_evaluate(
+			int f_sup,
+			algebra::expression_parser::syntax_tree_node_terminal *Terminal,
+			std::map<std::string, int> &symbol_table,
+			int *output,
+			int verbose_level);
+
+};
 
 
 

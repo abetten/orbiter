@@ -6,16 +6,13 @@
  */
 
 
-#include "layer1_foundations/foundations.h"
-#include "layer2_discreta/discreta.h"
-#include "layer3_group_actions/group_actions.h"
-#include "classification.h"
+#include "orbiter.h"
 
 using namespace std;
 
 namespace orbiter {
-namespace layer4_classification {
-namespace poset_classification {
+namespace layer5_applications {
+namespace orbits {
 
 poset_classification_activity_description::poset_classification_activity_description()
 {
@@ -41,7 +38,8 @@ poset_classification_activity_description::poset_classification_activity_descrip
 	f_draw_full_poset = false;
 	//std::string draw_full_poset_draw_options;
 
-	f_plesken = false;
+	f_plesken_ring = false;
+
 	f_print_data_structure = false;
 	f_list = false;
 	f_list_all = false;
@@ -96,7 +94,7 @@ int poset_classification_activity_description::read_arguments(
 		if (ST.stringcmp(argv[i], "-report") == 0) {
 			f_report = true;
 
-			report_options = NEW_OBJECT(poset_classification_report_options);
+			report_options = NEW_OBJECT(poset_classification::poset_classification_report_options);
 			if (f_v) {
 				cout << "-report " << endl;
 			}
@@ -161,10 +159,10 @@ int poset_classification_activity_description::read_arguments(
 				cout << "-draw_full_poset " << draw_full_poset_draw_options << endl;
 			}
 		}
-		else if (ST.stringcmp(argv[i], "-plesken") == 0) {
-			f_plesken = true;
+		else if (ST.stringcmp(argv[i], "-plesken_ring") == 0) {
+			f_plesken_ring = true;
 			if (f_v) {
-				cout << "-plesken " << endl;
+				cout << "-plesken_ring " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-print_data_structure") == 0) {
@@ -329,8 +327,8 @@ void poset_classification_activity_description::print()
 	if (f_draw_full_poset) {
 		cout << "-draw_full_poset " << draw_full_poset_draw_options << endl;
 	}
-	if (f_plesken) {
-		cout << "-plesken" << endl;
+	if (f_plesken_ring) {
+		cout << "-plesken_ring" << endl;
 	}
 	if (f_print_data_structure) {
 		cout << "-print_data_structure" << endl;

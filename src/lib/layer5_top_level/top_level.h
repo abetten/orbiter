@@ -187,6 +187,9 @@ namespace apps_combinatorics {
 	class large_set_was_activity;
 	class large_set_was_description;
 	class large_set_was;
+	class plesken_ring_activity_description;
+	class plesken_ring_activity;
+	class plesken_ring;
 	class variety_with_TDO_and_TDA;
 
 }
@@ -275,6 +278,8 @@ namespace orbits {
 	class orbits_on_pairs;
 	class orbits_on_polynomials;
 	class orbits_on_subspaces;
+	class poset_classification_activity_description;
+	class poset_classification_activity;
 
 }
 

@@ -649,7 +649,7 @@ apps_geometry::arc_generator_description
 }
 
 
-poset_classification::poset_classification_activity_description
+orbits::poset_classification_activity_description
 	*orbiter_top_level_session::get_object_of_type_poset_classification_activity(
 			std::string &label)
 {
@@ -666,7 +666,7 @@ poset_classification::poset_classification_activity_description
 				"object type != t_poset_classification_activity" << endl;
 		exit(1);
 	}
-	return (poset_classification::poset_classification_activity_description *) get_object(idx);
+	return (orbits::poset_classification_activity_description *) get_object(idx);
 }
 
 

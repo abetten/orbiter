@@ -55,7 +55,6 @@ void poset_classification::draw_poset_full(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	//combinatorics::graph_theory::layered_graph *LG;
 
 	if (f_v) {
 		cout << "poset_classification::draw_poset_full "
@@ -105,6 +104,7 @@ void poset_classification::draw_poset_full(
 	Pc_convert_data_structure.make_factor_poset(
 			depth, data, x_stretch, Factor_poset,
 			type_of_poset,
+			LG_Draw_options->f_poset_with_horizontal_lines,
 			verbose_level - 2);
 	if (f_v) {
 		cout << "poset_classification::draw_poset_full "
@@ -144,7 +144,6 @@ void poset_classification::draw_poset_full(
 				"after Factor_poset->LG->draw_with_options" << endl;
 	}
 
-	//FREE_OBJECT(LG);
 
 	if (f_v) {
 		cout << "poset_classification::draw_poset_full "

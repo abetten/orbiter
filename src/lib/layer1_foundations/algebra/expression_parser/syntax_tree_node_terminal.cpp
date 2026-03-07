@@ -167,6 +167,7 @@ void syntax_tree_node_terminal::print_graphviz(
 	}
 
 }
+
 int syntax_tree_node_terminal::evaluate(
 		std::map<std::string, std::string> &symbol_table,
 		algebra::field_theory::finite_field *F,

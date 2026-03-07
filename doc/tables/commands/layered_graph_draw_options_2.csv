@@ -13,4 +13,5 @@ ROW,C1,C2,C3
 1,"\verb'-place' "," ","Layout the graph. "
 1,"\verb'-poset_type_Asup' "," ","Draw poset in supremum style. "
 1,"\verb'-poset_type_Ainf' "," ","Draw poset in infimum style. "
+1,"\verb'-poset_with_horizontal_lines' "," ","Draw horizontal lines to indicate orbits. "
 END

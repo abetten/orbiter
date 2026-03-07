@@ -56,6 +56,8 @@ void blt_set_classify_activity::init(
 
 
 void blt_set_classify_activity::perform_activity(
+		int &nb_output,
+		other::orbiter_kernel_system::orbiter_symbol_table_entry *&Output,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -103,6 +105,7 @@ void blt_set_classify_activity::perform_activity(
 		}
 		BLT_classify->do_poset_classification_activity(
 				Descr->poset_classification_activity_label,
+				nb_output, Output,
 				verbose_level);
 		if (f_v) {
 			cout << "blt_set_classify_activity::perform_activity "

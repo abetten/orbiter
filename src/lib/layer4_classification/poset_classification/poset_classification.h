@@ -210,15 +210,28 @@ public:
 	void init(
 			poset_classification *PC,
 			int verbose_level);
+	void compute_incidence_matrix_stack(
+			other::data_structures::lint_matrix **&Matrix_stack,
+			int k,
+			int verbose_level);
 	void compute_Kramer_Mesner_matrix(
 			int t, int k,
 			int verbose_level);
+	void Plesken_matrices(
+			other::data_structures::lint_matrix **&Matrix_stack,
+			int *&Pup,
+			int *&Pdown,
+			int &N,
+			int verbose_level);
 	void Plesken_matrix_up(
 			int depth,
+			other::data_structures::lint_matrix **Matrix_stack,
 		int *&P, int &N, int verbose_level);
 	void Plesken_matrix_down(
 			int depth,
-		int *&P, int &N, int verbose_level);
+			other::data_structures::lint_matrix **Matrix_stack,
+			int *&P, int &N, int verbose_level);
+#if 0
 	void Plesken_submatrix_up(
 			int i, int j,
 		int *&Pij, int &N1, int &N2, int verbose_level);
@@ -231,15 +244,19 @@ public:
 	int count_incidences_down(
 			int lvl1,
 		int po1, int lvl2, int po2, int verbose_level);
+#endif
 	void Asup_to_Ainf(
 			int t, int k,
-		long int *M_sup, long int *&M_inf,
+			other::data_structures::lint_matrix *M_sup,
+			other::data_structures::lint_matrix *&M_inf,
 		int verbose_level);
 	void test_for_multi_edge_in_classification_graph(
 		int depth, int verbose_level);
 	void Kramer_Mesner_matrix_neighboring(
-			int level, long int *&M,
-			int &nb_rows, int &nb_cols, int verbose_level);
+			int level,
+			other::data_structures::lint_matrix *&M,
+			//long int *&M, int &nb_rows, int &nb_cols,
+			int verbose_level);
 	void Mtk_via_Mtr_Mrk(
 			int t, int r, int k,
 			long int *Mtr, long int *Mrk, long int *&Mtk,
@@ -248,11 +265,18 @@ public:
 			int verbose_level);
 	// Computes $M_{tk}$ via a recursion formula:
 	// $M_{tk} = {{k - t} \choose {k - r}} \cdot M_{t,r} \cdot M_{r,k}$.
+#if 0
 	void Mtk_from_MM(
 			long int **pM,
 		int *Nb_rows, int *Nb_cols,
 		int t, int k,
 		long int *&Mtk, int &nb_r, int &nb_c,
+		int verbose_level);
+#endif
+	void Mtk_from_Matrix_stack(
+			other::data_structures::lint_matrix **Matrix_stack,
+		int t, int k,
+		other::data_structures::lint_matrix *&Mtk,
 		int verbose_level);
 	void pair_relations_within_orbit(
 			int lvl, int po, int *&M, int &ol,
@@ -290,6 +314,7 @@ public:
 		int data1, double x_stretch,
 		layer1_foundations::combinatorics::graph_theory::factor_poset *&Factor_poset,
 		int type_of_poset,
+		int f_poset_with_horizontal_lines,
 		int verbose_level);
 		// Draws the full poset: each element of each orbit is drawn.
 		// The orbits are indicated by grouping the elements closer together.
@@ -299,6 +324,7 @@ public:
 			layer1_foundations::combinatorics::graph_theory::factor_poset *Factor_poset,
 			other::data_structures::set_of_sets *All_orbits,
 			int type_of_poset,
+			int f_poset_with_horizontal_lines,
 			int verbose_level);
 	void make_full_poset_graph_vertex_labels(
 			layer1_foundations::combinatorics::graph_theory::factor_poset *Factor_poset,
@@ -454,125 +480,6 @@ public:
 
 
 
-
-// #############################################################################
-// poset_classification_activity_description.cpp
-// #############################################################################
-
-
-//! description on an activity for the poset classification after it has been computed
-
-
-class poset_classification_activity_description {
-
-public:
-
-	// TABLES/poset_classification_activity.tex
-
-	int f_report;
-	poset_classification_report_options *report_options;
-
-	int f_export_level_to_cpp;
-	int export_level_to_cpp_level;
-	int f_export_history_to_cpp;
-	int export_history_to_cpp_level;
-
-
-	int f_write_tree; // create a tree
-	std::string write_tree_draw_options;
-
-	int f_find_node_by_stabilizer_order;
-	int find_node_by_stabilizer_order;
-
-
-	int f_draw_poset;
-	std::string draw_poset_draw_options;
-
-	int f_draw_full_poset;
-	std::string draw_full_poset_draw_options;
-
-	int f_plesken;
-
-
-	int f_print_data_structure;
-
-	int f_list;
-	int f_list_all;
-	int f_table_of_nodes;
-	int f_make_relations_with_flag_orbits;
-
-	int f_level_summary_csv;
-	int f_orbit_reps_csv;
-
-
-	int f_node_label_is_group_order;
-	int f_node_label_is_element;
-
-	int f_show_orbit_decomposition;
-	int f_show_stab;
-	int f_save_stab;
-	int f_show_whole_orbits;
-
-
-
-	int f_export_schreier_trees;
-	int f_draw_schreier_trees;
-	std::string schreier_tree_prefix;
-			// comes after problem_label_with_path
-
-	int f_test_multi_edge_in_decomposition_matrix;
-
-
-
-	std::vector<std::string> recognize;
-
-	int f_pair_relations_within_orbit;
-	int pair_relations_within_orbit_idx;
-
-	int f_export_orbits_long;
-
-	poset_classification_activity_description();
-	~poset_classification_activity_description();
-	int read_arguments(
-		int argc, std::string *argv,
-		int verbose_level);
-	void print();
-
-};
-
-
-// #############################################################################
-// poset_classification_activity.cpp
-// #############################################################################
-
-
-//! an activity for the poset classification after it has been computed
-
-
-class poset_classification_activity {
-
-public:
-
-	poset_classification_activity_description *Descr;
-	poset_classification *PC;
-	int actual_size;
-
-
-	poset_classification_activity();
-	~poset_classification_activity();
-	void init(
-			poset_classification_activity_description *Descr,
-			poset_classification *PC,
-			int actual_size,
-			int verbose_level);
-	void perform_work(
-			int verbose_level);
-
-
-
-
-
-};
 
 
 // #############################################################################
@@ -951,9 +858,6 @@ public:
 	void print();
 	void print_statistic_on_callbacks_bare();
 	void print_statistic_on_callbacks();
-	void prepare_fname_data_file(
-			std::string &fname,
-			std::string &fname_base, int depth_completed);
 	void print_representatives_at_level(
 			int lvl);
 	void print_lex_rank(
@@ -973,6 +877,11 @@ public:
 			std::ostream &ost, int lvl);
 	void print_fusion_nodes(
 			int depth);
+
+
+	void prepare_fname_data_file(
+			std::string &fname,
+			std::string &fname_base, int depth_completed);
 	void read_data_file(
 			int &depth_completed,
 		std::string &fname, int verbose_level);
@@ -1022,10 +931,6 @@ public:
 	void make_fname_lvl_reps_file(
 			std::string &fname,
 			std::string &fname_base, int lvl);
-#if 0
-	void log_current_node(
-			std::ostream &f, int size);
-#endif
 
 	void create_schreier_tree_fname_mask_base(
 			std::string &fname_mask);
@@ -1104,6 +1009,7 @@ public:
 	long int find_node_for_subspace_by_rank(
 			long int *set, int len,
 		int verbose_level);
+
 
 };
 

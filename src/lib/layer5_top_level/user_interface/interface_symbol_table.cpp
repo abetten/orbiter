@@ -183,6 +183,7 @@ void interface_symbol_table::read_arguments(
 		}
 		read_with(argc, argv, i, verbose_level);
 #endif
+		cout << "-assign finished, next command is " << argv[i] << " at i=" << i << endl;
 
 	}
 
@@ -196,6 +197,7 @@ void interface_symbol_table::read_arguments(
 
 	else if (ST.stringcmp(argv[i], "-with") == 0) {
 		read_with(argc, argv, i, verbose_level);
+		cout << "-with finished, next command is " << argv[i] << " at i=" << i << endl;
 	}
 
 	if (f_v) {

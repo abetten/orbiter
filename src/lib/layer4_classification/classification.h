@@ -81,8 +81,6 @@ namespace orbiter {
 			class pc_convert_data_structure;
 			class pc_latex_interface;
 			class pc_tree_interface;
-			class poset_classification_activity_description;
-			class poset_classification_activity;
 			class poset_classification;
 			class poset_classification_control;
 			class poset_classification_global;

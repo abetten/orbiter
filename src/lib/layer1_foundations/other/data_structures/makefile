@@ -20,6 +20,7 @@ MODULES = \
 	int_matrix.o \
 	int_vec.o \
 	int_vector.o \
+	lint_matrix.o \
 	lint_vec.o \
 	page_storage.o \
 	partitionstack.o \

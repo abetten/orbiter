@@ -13,8 +13,6 @@ MODULES = \
 	pc_convert_data_structure.o \
 	pc_latex_interface.o \
 	pc_tree_interface.o \
-	poset_classification_activity_description.o \
-	poset_classification_activity.o \
 	poset_classification_classify.o \
 	poset_classification_control.o \
 	poset_classification_draw.o \

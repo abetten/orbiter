@@ -54,6 +54,8 @@ void orbits_activity::init(
 
 
 void orbits_activity::perform_activity(
+		int &nb_output,
+		other::orbiter_kernel_system::orbiter_symbol_table_entry *&Output,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -230,7 +232,10 @@ void orbits_activity::perform_activity(
 			cout << "orbits_activity::perform_activity before do_poset_classification_activity" << endl;
 		}
 		do_poset_classification_activity(
-				Descr->poset_classification_activity_label, verbose_level);
+				Descr->poset_classification_activity_label,
+				nb_output,
+				Output,
+				verbose_level);
 		if (f_v) {
 			cout << "orbits_activity::perform_activity after do_poset_classification_activity" << endl;
 		}
@@ -2065,7 +2070,10 @@ void orbits_activity::do_schreier_poset(
 }
 
 void orbits_activity::do_poset_classification_activity(
-		std::string &activity_label, int verbose_level)
+		std::string &activity_label,
+		int &nb_output,
+		other::orbiter_kernel_system::orbiter_symbol_table_entry *&Output,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2095,13 +2103,13 @@ void orbits_activity::do_poset_classification_activity(
 					"depth = " << On_subsets->get_depth() << endl;
 		}
 
-		poset_classification::poset_classification_activity_description *Activity_description;
+		orbits::poset_classification_activity_description *Activity_description;
 
 		Activity_description =
 				Get_object_of_type_poset_classification_activity(activity_label);
 
 
-		poset_classification::poset_classification_activity Activity;
+		orbits::poset_classification_activity Activity;
 
 		if (f_v) {
 			cout << "orbits_activity::do_poset_classification_activity "
@@ -2122,6 +2130,8 @@ void orbits_activity::do_poset_classification_activity(
 					"before Activity.perform_work" << endl;
 		}
 		Activity.perform_work(
+				nb_output,
+				Output,
 				verbose_level);
 		if (f_v) {
 			cout << "orbits_activity::do_poset_classification_activity "
@@ -2144,13 +2154,13 @@ void orbits_activity::do_poset_classification_activity(
 					"depth = " << On_Subspaces->orbits_on_subspaces_PC->get_depth() << endl;
 		}
 
-		poset_classification::poset_classification_activity_description *Activity_description;
+		orbits::poset_classification_activity_description *Activity_description;
 
 		Activity_description =
 				Get_object_of_type_poset_classification_activity(activity_label);
 
 
-		poset_classification::poset_classification_activity Activity;
+		orbits::poset_classification_activity Activity;
 
 		if (f_v) {
 			cout << "orbits_activity::do_poset_classification_activity "
@@ -2171,6 +2181,8 @@ void orbits_activity::do_poset_classification_activity(
 					"before Activity.perform_work" << endl;
 		}
 		Activity.perform_work(
+				nb_output,
+				Output,
 				verbose_level);
 		if (f_v) {
 			cout << "orbits_activity::do_poset_classification_activity "

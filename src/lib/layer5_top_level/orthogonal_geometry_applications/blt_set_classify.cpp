@@ -271,6 +271,8 @@ void blt_set_classify::compute_starter(
 
 void blt_set_classify::do_poset_classification_activity(
 		std::string &activity_label,
+		int &nb_output,
+		other::orbiter_kernel_system::orbiter_symbol_table_entry *&Output,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -279,13 +281,13 @@ void blt_set_classify::do_poset_classification_activity(
 		cout << "blt_set_classify::do_poset_classification_activity" << endl;
 	}
 
-	poset_classification::poset_classification_activity_description *Activity_description;
+	orbits::poset_classification_activity_description *Activity_description;
 
 	Activity_description =
 			Get_object_of_type_poset_classification_activity(activity_label);
 
 
-	poset_classification::poset_classification_activity Activity;
+	orbits::poset_classification_activity Activity;
 
 	if (f_v) {
 		cout << "blt_set_classify::do_poset_classification_activity "
@@ -306,6 +308,8 @@ void blt_set_classify::do_poset_classification_activity(
 				"before Activity.perform_work" << endl;
 	}
 	Activity.perform_work(
+			nb_output,
+			Output,
 			verbose_level);
 	if (f_v) {
 		cout << "blt_set_classify::do_poset_classification_activity "

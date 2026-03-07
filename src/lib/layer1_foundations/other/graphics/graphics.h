@@ -419,6 +419,7 @@ public:
 
 	int f_poset_type_Asup;
 	int f_poset_type_Ainf;
+	int f_poset_with_horizontal_lines;
 
 	draw_options();
 	~draw_options();

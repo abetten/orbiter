@@ -87,6 +87,7 @@ draw_options::draw_options()
 
 	f_poset_type_Asup = false;
 	f_poset_type_Ainf = false;
+	f_poset_with_horizontal_lines = false;
 
 }
 
@@ -298,6 +299,12 @@ int draw_options::read_arguments(
 				cout << "-poset_type_Ainf " << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-poset_with_horizontal_lines") == 0) {
+			f_poset_with_horizontal_lines = true;
+			if (f_v) {
+				cout << "-poset_with_horizontal_lines " << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
 				cout << "-end" << endl;
@@ -408,6 +415,9 @@ void draw_options::print()
 	if (f_poset_type_Ainf) {
 		cout << "-poset_type_Ainf " << endl;
 	}
+	if (f_poset_with_horizontal_lines) {
+		cout << "-poset_with_horizontal_lines " << endl;
+	}
 }
 
 std::string draw_options::stringify()
@@ -510,10 +520,13 @@ std::string draw_options::stringify()
 		s += " -place ";
 	}
 	if (f_poset_type_Asup) {
-		s += "-poset_type_Asup ";
+		s += " -poset_type_Asup ";
 	}
 	if (f_poset_type_Ainf) {
-		s += "-poset_type_Ainf ";
+		s += " -poset_type_Ainf ";
+	}
+	if (f_poset_with_horizontal_lines) {
+		s += " -f_poset_with_horizontal_lines ";
 	}
 
 	return s;
