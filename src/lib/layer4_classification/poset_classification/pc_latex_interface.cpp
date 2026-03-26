@@ -123,7 +123,7 @@ void pc_latex_interface::report(
 		}
 
 
-		PC->get_A2()->report(
+		PC->get_A2()->Action_latex_interface->report(
 				ost,
 				false /* f_sims */, NULL,
 				false /* f_strong_gens */, NULL,
@@ -1013,13 +1013,13 @@ void pc_latex_interface::report_orbit(
 
 	if (f_v) {
 		cout << "pc_latex_interface::report_orbit "
-				"before Poset->A2->latex_point_set" << endl;
+				"before Poset->A2->Action_latex_interface->latex_point_set" << endl;
 	}
-	PC->get_poset()->A2->latex_point_set(
+	PC->get_poset()->A2->Action_latex_interface->latex_point_set(
 			ost, rep, level, 0 /* verbose_level*/);
 	if (f_v) {
 		cout << "pc_latex_interface::report_orbit "
-				"after Poset->A2->latex_point_set" << endl;
+				"after Poset->A2->Action_latex_interface->latex_point_set" << endl;
 	}
 
 

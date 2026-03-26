@@ -39,6 +39,9 @@ design_create_description::design_create_description()
 	f_from_incidence_matrix = false;
 	//std::string from_incidence_matrix_label;
 
+	f_from_graph = false;
+	//std::string from_graph_label;
+
 	f_list_of_base_blocks = false;
 	//std::string list_of_base_blocks_group_label;
 	//std::string list_of_base_blocks_fname;
@@ -146,7 +149,13 @@ int design_create_description::read_arguments(
 				cout << "-from_incidence_matrix " << from_incidence_matrix_label << endl;
 			}
 		}
-
+		else if (ST.stringcmp(argv[i], "-from_graph") == 0) {
+			f_from_graph = true;
+			from_graph_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-from_graph " << from_graph_label << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-list_of_base_blocks") == 0) {
 			f_list_of_base_blocks = true;
 			list_of_base_blocks_group_label.assign(argv[++i]);
@@ -298,6 +307,9 @@ void design_create_description::print()
 	}
 	if (f_from_incidence_matrix) {
 		cout << "-from_incidence_matrix " << from_incidence_matrix_label << endl;
+	}
+	if (f_from_graph) {
+		cout << "-from_graph " << from_graph_label << endl;
 	}
 	if (f_list_of_base_blocks) {
 		cout << "-list_of_base_blocks"

@@ -20,439 +20,7 @@ namespace layer3_group_actions {
 namespace actions {
 
 
-void action::report(
-		std::ostream &ost,
-		int f_sims, groups::sims *S,
-		int f_strong_gens, groups::strong_generators *SG,
-		other::graphics::draw_options *LG_Draw_options,
-		int verbose_level)
-// reports the sims object from the arguments
-{
-	int f_v = (verbose_level >= 1);
 
-	if (f_v) {
-		cout << "action::report" << endl;
-		cout << "action::report verbose_level = " << verbose_level << endl;
-	}
-
-	ost << "\\section*{The Action}" << endl;
-
-
-	if (f_v) {
-		cout << "action::report "
-				"before report_group_name_and_degree" << endl;
-	}
-	report_group_name_and_degree(
-			ost,
-			verbose_level - 1);
-	if (f_v) {
-		cout << "action::report "
-				"after report_group_name_and_degree" << endl;
-	}
-
-	if (f_strong_gens) {
-
-		algebra::ring_theory::longinteger_object go;
-
-		SG->group_order(go);
-		ost << "Group order = " << go << "\\\\" << endl;
-
-	}
-
-#if 0
-	if (label_tex.length() == 0) {
-		cout << "action::report the group has no tex-name" << endl;
-		exit(1);
-	}
-	ost << "Group action $" << label_tex
-			<< "$ of degree " << degree << "\\\\" << endl;
-#endif
-
-
-	if (f_v) {
-		cout << "action::report before report_what_we_act_on" << endl;
-	}
-	report_what_we_act_on(
-			ost,
-			verbose_level - 1);
-	if (f_v) {
-		cout << "action::report after report_what_we_act_on" << endl;
-	}
-
-	if (is_matrix_group()) {
-		ost << "The group is a matrix group.\\\\" << endl;
-
-#if 0
-		field_theory::finite_field *F;
-		groups::matrix_group *M;
-
-		M = get_matrix_group();
-		F = M->GFq;
-
-		{
-			geometry::projective_space *P;
-
-			P = NEW_OBJECT(geometry::projective_space);
-
-			P->projective_space_init(M->n - 1, F, true, verbose_level);
-
-			ost << "The base action is on projective space ${\\rm PG}(" << M->n - 1 << ", " << F->q << ")$\\\\" << endl;
-
-			P->Reporting->report_summary(ost);
-
-
-
-			FREE_OBJECT(P);
-		}
-#endif
-
-
-	}
-
-	if (type_G == wreath_product_t) {
-		group_constructions::wreath_product *W;
-
-		W = G.wreath_product_group;
-		if (f_v) {
-			cout << "action::report before W->report" << endl;
-		}
-		W->report(ost, verbose_level - 1);
-		if (f_v) {
-			cout << "action::report after W->report" << endl;
-		}
-	}
-
-	ost << "\\subsection*{Base and Stabilizer Chain}" << endl;
-
-	if (f_sims) {
-		if (f_v) {
-			cout << "action::report we have sims, printing group order" << endl;
-		}
-		algebra::ring_theory::longinteger_object go;
-
-		S->group_order(go);
-		ost << "Group order " << go << "\\\\" << endl;
-		ost << "tl=$";
-		//int_vec_print(ost, S->orbit_len, base_len());
-		for (int t = 0; t < S->A->base_len(); t++) {
-			ost << S->get_orbit_length(t);
-			if (t < S->A->base_len()) {
-				ost << ", ";
-			}
-		}
-		ost << "$\\\\" << endl;
-		if (f_v) {
-			cout << "action::report printing group order done" << endl;
-		}
-	}
-
-	if (Stabilizer_chain) {
-		if (f_v) {
-			cout << "action::report Stabilizer_chain is allocated" << endl;
-		}
-		if (base_len()) {
-			ost << "action::report\\\\" << endl;
-
-			report_base(
-					ost,
-					verbose_level);
-
-#if 0
-			ost << "Base of length " << base_len() << ": $";
-			Lint_vec_print(ost, get_base(), base_len());
-			ost << "$\\\\" << endl;
-
-			int i;
-			ost << "Base = \\\\" << endl;
-			for (i = 0; i < base_len(); i++) {
-				string s1;
-
-				s1 = Group_element->stringify_point(base_i(i), verbose_level - 1);
-				ost << i << " : " << base_i(i) << " = $(" << s1 << ")$\\\\" << endl;
-			}
-#endif
-
-		}
-		if (f_strong_gens) {
-			ost << "{\\small\\arraycolsep=2pt" << endl;
-			SG->print_generators_tex(ost);
-			ost << "}" << endl;
-		}
-		else {
-			ost << "Does not have strong generators.\\\\" << endl;
-		}
-	}
-	if (f_sims) {
-		if (f_v) {
-			cout << "action::report before S->report" << endl;
-		}
-		S->report(ost, label, LG_Draw_options, verbose_level - 2);
-		if (f_v) {
-			cout << "action::report after S->report" << endl;
-		}
-	}
-	if (Stabilizer_chain && base_len() > 0) {
-		if (f_v) {
-			cout << "action::report we have Stabilizer_chain" << endl;
-		}
-		if (f_strong_gens) {
-
-			if (f_v) {
-				cout << "action::report we have f_strong_gens" << endl;
-			}
-
-			action_global Global;
-
-			if (f_v) {
-				cout << "action::report "
-						"before Global.report_strong_generators" << endl;
-			}
-			Global.report_strong_generators(
-					ost,
-					SG,
-					this,
-					verbose_level);
-			if (f_v) {
-				cout << "action::report "
-						"after Global.report_strong_generators" << endl;
-			}
-
-
-		}
-	}
-	if (f_v) {
-		cout << "action::report done" << endl;
-	}
-}
-
-
-void action::report_base(
-		std::ostream &ost,
-		int verbose_level)
-{
-	ost << "Base of length " << base_len() << ": $";
-	Lint_vec_print(ost, get_base(), base_len());
-	ost << "$\\\\" << endl;
-
-	int i;
-	ost << "Base = \\\\" << endl;
-	for (i = 0; i < base_len(); i++) {
-		string s1;
-
-		s1 = Group_element->stringify_point(base_i(i), verbose_level - 1);
-		ost << i << " : " << base_i(i) << " = $(" << s1 << ")$\\\\" << endl;
-	}
-
-}
-void action::report_group_name_and_degree(
-		std::ostream &ost,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "action::report_group_name_and_degree" << endl;
-	}
-
-	if (label_tex.length() == 0) {
-		cout << "action::report_group_name_and_degree "
-				"the group has no tex-name" << endl;
-		exit(1);
-	}
-	ost << "Group action $" << label_tex
-			<< "$ of degree " << degree << "\\\\" << endl;
-
-
-}
-
-void action::report_type_of_action(
-		std::ostream &ost,
-		int verbose_level)
-{
-	std::string txt;
-	std::string tex;
-	action_global AcGl;
-
-	AcGl.get_symmetry_group_type_text(txt, tex, type_G);
-
-
-	ost << "The action is of type " << tex << "\\\\" << endl;
-
-	ost << "\\bigskip" << endl;
-
-}
-
-void action::report_what_we_act_on(
-		std::ostream &ost,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "action::report_what_we_act_on" << endl;
-	}
-
-
-	if (f_v) {
-		cout << "action::report_what_we_act_on "
-				"before report_type_of_action" << endl;
-	}
-	report_type_of_action(ost, verbose_level);
-	if (f_v) {
-		cout << "action::report_what_we_act_on "
-				"after report_type_of_action" << endl;
-	}
-
-	if (is_matrix_group()) {
-
-		if (f_v) {
-			cout << "action::report_what_we_act_on "
-					"is_matrix_group is true" << endl;
-		}
-		algebra::field_theory::finite_field *F;
-		algebra::basic_algebra::matrix_group *M;
-
-		M = get_matrix_group();
-		F = M->GFq;
-
-#if 0
-		{
-			geometry::projective_space *P;
-
-			P = NEW_OBJECT(geometry::projective_space);
-
-			P->projective_space_init(M->n - 1, F, true, verbose_level);
-
-			ost << "\\section*{The Group Acts on Projective Space ${\\rm PG}(" << M->n - 1 << ", " << F->q << ")$}" << endl;
-
-			P->Reporting->report(ost, O, verbose_level);
-
-
-
-			FREE_OBJECT(P);
-		}
-#endif
-
-		if (type_G == action_on_orthogonal_t) {
-
-			if (G.AO->f_on_points) {
-				ost << "acting on points only\\\\" << endl;
-				ost << "Number of points = "
-						<< G.AO->O->Hyperbolic_pair->nb_points << "\\\\" << endl;
-			}
-			else if (G.AO->f_on_lines) {
-				ost << "acting on lines only\\\\" << endl;
-				ost << "Number of lines = "
-						<< G.AO->O->Hyperbolic_pair->nb_lines << "\\\\" << endl;
-			}
-			else if (G.AO->f_on_points_and_lines) {
-				ost << "acting on points and lines\\\\" << endl;
-				ost << "Number of points = "
-						<< G.AO->O->Hyperbolic_pair->nb_points << "\\\\" << endl;
-				ost << "Number of lines = "
-						<< G.AO->O->Hyperbolic_pair->nb_lines << "\\\\" << endl;
-			}
-
-			G.AO->O->Quadratic_form->report_quadratic_form(
-					ost, 0 /* verbose_level */);
-
-			ost << "Tactical decomposition induced by a hyperbolic pair:\\\\" << endl;
-			G.AO->O->report_schemes_easy(ost);
-
-			G.AO->O->report_points(ost, 0 /* verbose_level */);
-
-			G.AO->O->report_lines(ost, 0 /* verbose_level */);
-
-		}
-
-		if (M->f_projective) {
-
-			ost << "Group Action $" << label_tex
-					<< "$ on Projective Space ${\\rm PG}"
-							"(" << M->n - 1 << ", " << F->q << ")$\\\\" << endl;
-
-		}
-		else if (M->f_affine) {
-
-			ost << "Group Action $" << label_tex
-					<< "$ on Affine Space ${\\rm AG}"
-							"(" << M->n << ", " << F->q << ")$\\\\" << endl;
-
-		}
-		else if (M->f_general_linear) {
-
-			ost << "Group Action $" << label_tex
-					<< "$ on Affine Space ${\\rm AG}"
-							"(" << M->n << ", " << F->q << ")$\\\\" << endl;
-
-		}
-
-#if 0
-		ost << "The finite field ${\\mathbb F}_{" << F->q << "}$:\\\\" << endl;
-
-		F->Io->cheat_sheet(ost, verbose_level);
-
-		ost << endl << "\\bigskip" << endl << endl;
-#endif
-
-	}
-	else {
-		if (f_v) {
-			cout << "action::report_what_we_act_on is_matrix_group is false" << endl;
-		}
-	}
-
-#if 0
-	if (degree < 1000) {
-		ost << "The group acts on the following set of size " << degree << ":\\\\" << endl;
-
-		if (ptr->ptr_unrank_point) {
-			if (f_v) {
-				cout << "action::report_what_we_act_on before latex_all_points" << endl;
-			}
-			latex_all_points(ost);
-			if (f_v) {
-				cout << "action::report_what_we_act_on after latex_all_points" << endl;
-			}
-		}
-		else {
-			ost << "we don't have an unrank point function\\\\" << endl;
-		}
-	}
-#endif
-
-
-
-	if (f_v) {
-		cout << "action::report_what_we_act_on done" << endl;
-	}
-}
-
-
-
-void action::list_elements_as_permutations_vertically(
-		data_structures_groups::vector_ge *gens,
-		ostream &ost)
-{
-	int i, j, a, len;
-
-	len = gens->len;
-	for (j = 0; j < len; j++) {
-		ost << " & \\alpha_{" << j << "}";
-	}
-	ost << "\\\\" << endl;
-	for (i = 0; i < degree; i++) {
-		ost << setw(3) << i;
-		for (j = 0; j < len; j++) {
-			a = Group_element->element_image_of(
-					i,
-					gens->ith(j),
-					0 /* verbose_level */);
-			ost << " & " << setw(3) << a;
-		}
-		ost << "\\\\" << endl;
-	}
-}
 
 void action::print_symmetry_group_type(
 		std::ostream &ost)
@@ -490,10 +58,12 @@ void action::print_info()
 
 	string s_type;
 	string s_base;
+	string s_tl;
 	string s_go;
 
 	s_type = AG.stringify_symmetry_group_type(type_G);
 	s_base = stringify_base();
+	s_tl = stringify_tl();
 
 	if (f_has_sims) {
 		s_go = Sims->stringify_group_order();
@@ -508,11 +78,13 @@ void action::print_info()
 	s_sub = stringify_subaction_labels();
 
 	cout << "ACTION " << label << " : " << label_tex
-			<< " degree=" << degree << " of type " << s_type
-			<< " : " << s_base
-			<< " : " << s_go
-			<< " : " << ptr->label
+			<< " degree = " << degree << " of type " << s_type
+			<< " : base = (" << s_base << ")"
+			<< " : tl = (" << s_tl << ")"
+			<< " : go = " << s_go
+			<< " : label = " << ptr->label
 			<< " : sub = " << s_sub << endl;
+
 
 #if 0
 	//print_symmetry_group_type(cout);
@@ -536,28 +108,6 @@ void action::print_info()
 
 }
 
-void action::report_basic_orbits(
-		std::ostream &ost)
-{
-
-	if (Stabilizer_chain) {
-#if 0
-		int i;
-		ost << "The base has length " << base_len() << "\\\\" << endl;
-		ost << "The basic orbits are: \\\\" << endl;
-		for (i = 0; i < base_len(); i++) {
-			ost << "Basic orbit " << i << " is orbit of " << base_i(i)
-				<< " of length " << transversal_length_i(i) << "\\\\" << endl;
-		}
-#endif
-		Stabilizer_chain->report_basic_orbits(
-				ost);
-
-	}
-	else {
-		cout << "action " << label << " does not have a base" << endl;
-	}
-}
 
 void action::print_base()
 {
@@ -593,7 +143,24 @@ std::string action::stringify_base()
 					s += ", ";
 				}
 			}
-			s += " tl=";
+		}
+	}
+	else {
+		s = " - ";
+	}
+	return s;
+}
+
+std::string action::stringify_tl()
+{
+	string s;
+
+	if (Stabilizer_chain) {
+		if (base_len() == 0) {
+			s =  "N/A";
+		}
+		else {
+			int i;
 			for (i = 0; i < base_len(); i++) {
 				s += std::to_string(transversal_length_i(i));
 				if (i < base_len() - 1) {
@@ -607,6 +174,7 @@ std::string action::stringify_base()
 	}
 	return s;
 }
+
 
 void action::print_base(
 		std::ostream &ost)
@@ -653,147 +221,6 @@ void action::print_bare_base(
 	}
 }
 
-void action::latex_all_points(
-		std::ostream &ost)
-{
-	int i;
-	int *v;
-
-
-	if (ptr->ptr_unrank_point == NULL) {
-		cout << "action::latex_all_points ptr->ptr_unrank_point == NULL" << endl;
-		return;
-	}
-	v = NEW_int(low_level_point_size);
-#if 0
-	cout << "action::latex_all_points "
-			"low_level_point_size=" << low_level_point_size <<  endl;
-	ost << "{\\renewcommand*{\\arraystretch}{1.5}" << endl;
-	ost << "$$" << endl;
-	ost << "\\begin{array}{|c|c|}" << endl;
-	ost << "\\hline" << endl;
-	ost << "i & P_{i}\\\\" << endl;
-	ost << "\\hline" << endl;
-	ost << "\\hline" << endl;
-	for (i = 0; i < degree; i++) {
-		unrank_point(i, v);
-		ost << i << " & ";
-		int_vec_print(ost, v, low_level_point_size);
-		ost << "\\\\" << endl;
-		if (((i + 1) % 10) == 0) {
-			ost << "\\hline" << endl;
-			ost << "\\end{array}" << endl;
-			if (((i + 1) % 50) == 0) {
-				ost << "$$" << endl;
-				ost << "$$" << endl;
-			}
-			else {
-				ost << ", \\;" << endl;
-			}
-			ost << "\\begin{array}{|c|c|}" << endl;
-			ost << "\\hline" << endl;
-			ost << "i & P_{i}\\\\" << endl;
-			ost << "\\hline" << endl;
-			ost << "\\hline" << endl;
-		}
-	}
-	ost << "\\hline" << endl;
-	ost << "\\end{array}" << endl;
-	ost << "$$}%" << endl;
-	cout << "action::latex_all_points done" << endl;
-#else
-	if (low_level_point_size < 10) {
-		ost << "\\begin{multicols}{2}" << endl;
-	}
-	ost << "\\noindent" << endl;
-	for (i = 0; i < degree; i++) {
-		Group_element->unrank_point(i, v);
-		ost << i << " = ";
-		Int_vec_print(ost, v, low_level_point_size);
-		ost << "\\\\" << endl;
-	}
-	if (low_level_point_size < 10) {
-		ost << "\\end{multicols}" << endl;
-	}
-
-#endif
-
-	FREE_int(v);
-}
-
-void action::latex_point_set(
-		std::ostream &ost,
-		long int *set, int sz, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int i;
-	int *v;
-
-	if (f_v) {
-		cout << "action::print_points "
-				"low_level_point_size=" << low_level_point_size <<  endl;
-	}
-	v = NEW_int(low_level_point_size);
-#if 0
-	ost << "{\\renewcommand*{\\arraystretch}{1.5}" << endl;
-	ost << "$$" << endl;
-	ost << "\\begin{array}{|c|c|}" << endl;
-	ost << "\\hline" << endl;
-	ost << "i & P_{i} \\\\" << endl;
-	ost << "\\hline" << endl;
-	ost << "\\hline" << endl;
-	for (i = 0; i < sz; i++) {
-		unrank_point(set[i], v);
-		ost << i << " & ";
-		ost << set[i] << " = ";
-		int_vec_print(ost, v, low_level_point_size);
-		ost << "\\\\" << endl;
-		if (((i + 1) % 10) == 0) {
-			ost << "\\hline" << endl;
-			ost << "\\end{array}" << endl;
-			if (((i + 1) % 50) == 0) {
-				ost << "$$" << endl;
-				ost << "$$" << endl;
-			}
-			else {
-				ost << ", \\;" << endl;
-			}
-			ost << "\\begin{array}{|c|c|}" << endl;
-			ost << "\\hline" << endl;
-			ost << "i & P_{i}\\\\" << endl;
-			ost << "\\hline" << endl;
-			ost << "\\hline" << endl;
-		}
-	}
-	ost << "\\hline" << endl;
-	ost << "\\end{array}" << endl;
-	ost << "$$}%" << endl;
-#else
-
-
-	if (ptr->ptr_unrank_point) {
-		if (low_level_point_size < 10) {
-			ost << "\\begin{multicols}{2}" << endl;
-		}
-		ost << "\\noindent" << endl;
-		for (i = 0; i < sz; i++) {
-			Group_element->unrank_point(set[i], v);
-			ost << i << " : ";
-			ost << set[i] << " = ";
-			Int_vec_print(ost, v, low_level_point_size);
-			ost << "\\\\" << endl;
-		}
-		if (low_level_point_size < 10) {
-			ost << "\\end{multicols}" << endl;
-		}
-	}
-#endif
-
-	FREE_int(v);
-	if (f_v) {
-		cout << "action::print_points done" << endl;
-	}
-}
 
 
 void action::print_group_order(
@@ -853,48 +280,6 @@ void action::print_vector_as_permutation(
 }
 
 
-void action::write_set_of_elements_latex_file(
-		std::string &fname,
-		std::string &title, int *Elt, int nb_elts)
-{
-	{
-		ofstream ost(fname);
-		algebra::number_theory::number_theory_domain NT;
-
-		string author, extra_praeamble;
-
-		other::l1_interfaces::latex_interface L;
-
-		L.head(ost,
-				false /* f_book*/,
-				true /* f_title */,
-				title, author,
-				false /* f_toc */,
-				false /* f_landscape */,
-				true /* f_12pt */,
-				true /* f_enlarged_page */,
-				true /* f_pagenumbers */,
-				extra_praeamble /* extra_praeamble */);
-
-
-		int i;
-
-		for (i = 0; i < nb_elts; i++) {
-			ost << "$$" << endl;
-			Group_element->element_print_latex(Elt + i * elt_size_in_int, ost);
-			ost << "$$" << endl;
-		}
-
-		L.foot(ost);
-
-
-	}
-
-	other::orbiter_kernel_system::file_io Fio;
-
-	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-
-}
 
 void action::export_to_orbiter(
 		std::string &fname, std::string &label,
@@ -997,44 +382,6 @@ void action::export_to_orbiter_as_bsgs(
 }
 
 
-#if 0
-void action::print_one_element_tex(
-		std::ostream &ost,
-		int *Elt, int f_with_permutation)
-{
-	ost << "$$" << endl;
-	Group_element->element_print_latex(Elt, ost);
-	ost << "$$" << endl;
-
-	if (f_with_permutation) {
-		Group_element->element_print_as_permutation(Elt, ost);
-		ost << "\\\\" << endl;
-
-		int *perm;
-		int h, j;
-
-		perm = NEW_int(degree);
-
-		Group_element->compute_permutation(
-				Elt,
-				perm, 0 /* verbose_level */);
-
-		for (h = 0; h < degree; h++) {
-			j = perm[h];
-
-			ost << j;
-			if (j < degree) {
-				ost << ", ";
-			}
-		}
-		ost << "\\\\" << endl;
-
-		FREE_int(perm);
-
-	}
-
-}
-#endif
 
 
 }}}

@@ -3,7 +3,10 @@ all: ;
 
 clean: ;
 	cd src; $(MAKE) clean
-	#cd RUN; $(MAKE) clean
+	- rm bin/*.out
+
+clean5: ;
+	cd src; $(MAKE) clean5
 	- rm bin/*.out
 
 install: ;

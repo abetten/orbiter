@@ -1821,7 +1821,18 @@ action *induced_action::restricted_action(
 	A->f_has_subaction = true;
 	A->subaction = A_old;
 	ABR = NEW_OBJECT(induced_actions::action_by_restriction);
-	ABR->init(nb_points, points, verbose_level);
+
+
+	if (f_v) {
+		cout << "induced_action::restricted_action "
+				"before ABR->init" << endl;
+	}
+	ABR->init(nb_points, points, verbose_level - 2);
+	if (f_v) {
+		cout << "induced_action::restricted_action "
+				"after ABR->init" << endl;
+	}
+
 	A->type_G = action_by_restriction_t;
 	A->G.ABR = ABR;
 	A->f_allocated = true;
@@ -1839,7 +1850,18 @@ action *induced_action::restricted_action(
 				"calling allocate_base_data" << endl;
 	}
 	A->Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
+
+
+	if (f_v) {
+		cout << "induced_action::restricted_action "
+				"before A->Stabilizer_chain->allocate_base_data" << endl;
+	}
 	A->Stabilizer_chain->allocate_base_data(A_old, 0, verbose_level);
+	if (f_v) {
+		cout << "induced_action::restricted_action "
+				"before A->Stabilizer_chain->allocate_base_data" << endl;
+	}
+
 	//A->allocate_base_data(0);
 
 

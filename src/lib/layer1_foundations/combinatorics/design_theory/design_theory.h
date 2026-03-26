@@ -71,6 +71,8 @@ public:
 			int verbose_level);
 	void make_design_from_incidence_matrix(
 			std::string &label, int verbose_level);
+	void make_design_from_graph(
+			std::string &label, int verbose_level);
 	void do_export_flags(
 			int verbose_level);
 	void do_export_incidence_matrix_csv(
@@ -111,6 +113,10 @@ public:
 			int *&Inc, int &V, int &B,
 			int verbose_level);
 	void make_design_from_incidence_matrix(
+		int *&Inc, int &v, int &b, int &k,
+		std::string &label,
+		int verbose_level);
+	void make_design_from_graph(
 		int *&Inc, int &v, int &b, int &k,
 		std::string &label,
 		int verbose_level);

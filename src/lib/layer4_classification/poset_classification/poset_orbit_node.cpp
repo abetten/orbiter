@@ -148,10 +148,18 @@ void poset_orbit_node::init_root_node(
 		cout << "poset_orbit_node::init_root_node "
 				"in action " << gen->get_poset()->A2->label << endl;
 	}
+	if (f_v) {
+		cout << "poset_orbit_node::init_root_node "
+				"before store_strong_generators" << endl;
+	}
 	store_strong_generators(gen, gen->get_poset()->Strong_gens, verbose_level);
 		// stores the strong generators into
 		// the poset_orbit_node structure,
 		// copies transversal_length into tl
+	if (f_v) {
+		cout << "poset_orbit_node::init_root_node "
+				"after store_strong_generators" << endl;
+	}
 	if (f_v) {
 		cout << "poset_orbit_node::init_root_node done" << endl;
 	}
@@ -922,6 +930,8 @@ void poset_orbit_node::print_set(
 		cout << " = " << go << "}";
 		cout << " in action ";
 		cout << gen->get_A2()->label << endl;
+
+
 	}
 
 	//gen->print_lex_rank(set, size);

@@ -786,6 +786,9 @@ groups::strong_generators *orbit_of_equations::stabilizer_orbit_rep(
 
 	if (f_v) {
 		cout << "orbit_of_equations::stabilizer_orbit_rep" << endl;
+		cout << "orbit_of_equations::stabilizer_orbit_rep A = ";
+		A->print_info();
+		cout << endl;
 	}
 
 	if (f_v) {

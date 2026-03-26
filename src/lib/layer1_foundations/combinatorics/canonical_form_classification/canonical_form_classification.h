@@ -67,6 +67,7 @@ public:
 	int b;
 	int f_partition;
 	int *partition; // [v + b], do not free !
+	int f_inc_representation_of_graph;
 
 		// if t_LS
 		int design_k;
@@ -268,8 +269,6 @@ public:
 
 
 
-
-
 // #############################################################################
 // classification_of_objects_description.cpp
 // #############################################################################
@@ -317,6 +316,95 @@ public:
 	void print();
 
 };
+
+
+
+// #############################################################################
+// classification_of_objects.cpp
+// #############################################################################
+
+
+
+
+//! classification of combinatorial objects using a graph-theoretic approach; uses the slow class classify_bitvectors; used in combinatorial_object_stream, objects_after_classification
+
+
+class classification_of_objects {
+
+public:
+
+	classification_of_objects_description *Descr;
+
+	int f_projective_space;
+	geometry::projective_geometry::projective_space *P;
+
+	// input:
+
+	combinatorics::canonical_form_classification::data_input_stream *IS;
+
+
+	// output:
+
+	combinatorics::canonical_form_classification::data_input_stream_output *Output;
+
+#if 0
+	classify_bitvectors *CB;
+
+	long int *Ago; // [IS->nb_objects_to_test]
+	int *F_reject; // [IS->nb_objects_to_test]
+
+
+	// the classification:
+
+	int nb_orbits; // number of isomorphism types
+
+	int *Idx_transversal; // [nb_orbits]
+
+	long int *Ago_transversal; // [nb_orbits]
+
+	any_combinatorial_object **OWCF_transversal; // [nb_orbits]
+
+	other::l1_interfaces::nauty_output **NO_transversal; // [nb_orbits]
+
+
+	other::data_structures::tally *T_Ago;
+
+#endif
+
+
+	classification_of_objects();
+	~classification_of_objects();
+	void perform_classification(
+			classification_of_objects_description *Descr,
+			int f_projective_space,
+			geometry::projective_geometry::projective_space *P,
+			combinatorics::canonical_form_classification::data_input_stream *IS,
+			int verbose_level);
+	void classify_objects_using_nauty(
+		int verbose_level);
+	void process_any_object(
+			combinatorics::canonical_form_classification::any_combinatorial_object *OwCF,
+			int input_idx, long int &ago, int &f_reject,
+			other::l1_interfaces::nauty_output *&NO,
+			combinatorics::canonical_form_classification::encoded_combinatorial_object *&Enc,
+			int verbose_level);
+	int process_object(
+			combinatorics::canonical_form_classification::any_combinatorial_object *OwCF,
+		long int &ago,
+		int &iso_idx_if_found,
+		other::l1_interfaces::nauty_output *&NO,
+		combinatorics::canonical_form_classification::encoded_combinatorial_object *&Enc,
+		int verbose_level);
+	// returns f_found, which is true if the object is already in the list
+	std::string get_label();
+	std::string get_label_tex();
+
+
+};
+
+
+
+
 
 // #############################################################################
 // objects_report_options.cpp
@@ -367,89 +455,6 @@ public:
 
 };
 
-
-// #############################################################################
-// classification_of_objects.cpp
-// #############################################################################
-
-
-
-
-//! classification of combinatorial objects using a graph-theoretic approach; uses the slow class classify_bitvectors; used in combinatorial_object_stream, objects_after_classification
-
-
-class classification_of_objects {
-
-public:
-
-	classification_of_objects_description *Descr;
-
-	int f_projective_space;
-	geometry::projective_geometry::projective_space *P;
-
-	// input:
-
-	data_input_stream *IS;
-
-
-	// output:
-
-	data_input_stream_output *Output;
-
-#if 0
-	classify_bitvectors *CB;
-
-	long int *Ago; // [IS->nb_objects_to_test]
-	int *F_reject; // [IS->nb_objects_to_test]
-
-
-	// the classification:
-
-	int nb_orbits; // number of isomorphism types
-
-	int *Idx_transversal; // [nb_orbits]
-
-	long int *Ago_transversal; // [nb_orbits]
-
-	any_combinatorial_object **OWCF_transversal; // [nb_orbits]
-
-	other::l1_interfaces::nauty_output **NO_transversal; // [nb_orbits]
-
-
-	other::data_structures::tally *T_Ago;
-
-#endif
-
-
-	classification_of_objects();
-	~classification_of_objects();
-	void perform_classification(
-			classification_of_objects_description *Descr,
-			int f_projective_space,
-			geometry::projective_geometry::projective_space *P,
-			data_input_stream *IS,
-			int verbose_level);
-	void classify_objects_using_nauty(
-		int verbose_level);
-	void process_any_object(
-			any_combinatorial_object *OwCF,
-			int input_idx, long int &ago, int &f_reject,
-			other::l1_interfaces::nauty_output *&NO,
-			encoded_combinatorial_object *&Enc,
-			int verbose_level);
-	int process_object(
-			any_combinatorial_object *OwCF,
-		long int &ago,
-		int &iso_idx_if_found,
-		other::l1_interfaces::nauty_output *&NO,
-		encoded_combinatorial_object *&Enc,
-		int verbose_level);
-	// returns f_found, which is true if the object is already in the list
-	std::string get_label();
-	std::string get_label_tex();
-
-
-};
 
 
 // #############################################################################
@@ -666,6 +671,7 @@ public:
 	enum data_input_stream_type input_type;
 	std::string input_string;
 	std::string input_string2;
+	std::string input_string3;
 
 	// for t_data_input_stream_file_of_designs:
 	int input_data1; // N_points
@@ -694,7 +700,7 @@ public:
 	void init_file_of_packings(
 			std::string &a);
 	void init_file_of_packings_through_spread_table(
-			std::string &a, std::string &b, int q);
+			std::string &a, std::string &fname_spread_table, std::string &col_label, int q);
 	void init_file_of_designs_through_block_orbits(
 			std::string &a, std::string &b, int v, int k);
 	void init_file_of_designs_through_blocks(
@@ -884,7 +890,7 @@ public:
 
 	int nb_objects_to_test;
 
-	std::vector<void *> Objects;
+	std::vector<void *> Objects; // void pointer has type any_combinatorial_object *Any_combo
 
 	data_input_stream();
 	~data_input_stream();

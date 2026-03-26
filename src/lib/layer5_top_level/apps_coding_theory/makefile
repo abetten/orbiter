@@ -7,8 +7,6 @@ LFLAGS = -lm
 
 MODULES = \
 	code_modification_description.o \
-	coding_theoretic_activity_description.o \
-	coding_theoretic_activity.o \
 	crc_process_description.o \
 	crc_process.o \
 	create_code_description.o \

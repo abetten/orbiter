@@ -1,0 +1,304 @@
+/*
+ * blt_set_classify_activity.cpp
+ *
+ *  Created on: Aug 2, 2022
+ *      Author: betten
+ */
+
+
+
+
+
+#include "orbiter.h"
+
+using namespace std;
+
+
+
+namespace orbiter {
+namespace layer5_applications {
+namespace user_interface {
+namespace activities_layer5 {
+
+
+blt_set_classify_activity::blt_set_classify_activity()
+{
+	Record_birth();
+	Descr = NULL;
+	BLT_classify = NULL;
+	OA = NULL;
+}
+
+blt_set_classify_activity::~blt_set_classify_activity()
+{
+	Record_death();
+}
+
+void blt_set_classify_activity::init(
+		blt_set_classify_activity_description *Descr,
+		orthogonal_geometry_applications::blt_set_classify *BLT_classify,
+		orthogonal_geometry_applications::orthogonal_space_with_action *OA,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "blt_set_classify_activity::init" << endl;
+	}
+
+	blt_set_classify_activity::Descr = Descr;
+	blt_set_classify_activity::BLT_classify = BLT_classify;
+	blt_set_classify_activity::OA = OA;
+
+
+
+	if (f_v) {
+		cout << "blt_set_classify_activity::init done" << endl;
+	}
+}
+
+
+void blt_set_classify_activity::perform_activity(
+		int &nb_output,
+		other::orbiter_kernel_system::orbiter_symbol_table_entry *&Output,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "blt_set_classify_activity::perform_activity" << endl;
+	}
+
+	if (Descr->f_compute_starter) {
+
+		if (f_v) {
+			cout << "blt_set_classify_activity::perform_activity "
+					"f_compute_starter" << endl;
+		}
+
+		if (f_v) {
+			cout << "blt_set_classify_activity::perform_activity "
+					"before BLT_classify->compute_starter" << endl;
+		}
+		BLT_classify->compute_starter(
+				Descr->starter_control,
+				verbose_level);
+		if (f_v) {
+			cout << "blt_set_classify_activity::perform_activity "
+					"after BLT_classify->compute_starter" << endl;
+		}
+
+		if (f_v) {
+			cout << "blt_set_classify_activity::perform_activity "
+					"f_BLT_set_starter done" << endl;
+		}
+
+	}
+
+	else if (Descr->f_poset_classification_activity) {
+
+		if (f_v) {
+			cout << "blt_set_classify_activity::perform_activity "
+					"f_poset_classification_activity" << endl;
+		}
+
+		if (f_v) {
+			cout << "blt_set_classify_activity::perform_activity "
+					"before BLT_classify->do_poset_classification_activity" << endl;
+		}
+		BLT_classify->do_poset_classification_activity(
+				Descr->poset_classification_activity_label,
+				nb_output, Output,
+				verbose_level);
+		if (f_v) {
+			cout << "blt_set_classify_activity::perform_activity "
+					"after BLT_classify->do_poset_classification_activity" << endl;
+		}
+
+		if (f_v) {
+			cout << "blt_set_classify_activity::perform_activity "
+					"f_poset_classification_activity done" << endl;
+		}
+
+	}
+
+
+	else if (Descr->f_create_graphs) {
+
+		if (f_v) {
+			cout << "blt_set_classify_activity::perform_activity "
+					"f_create_graphs" << endl;
+		}
+
+
+		if (f_v) {
+			cout << "blt_set_classify_activity::perform_activity "
+					"before BLT_classify->create_graphs" << endl;
+		}
+
+
+		BLT_classify->create_graphs(
+				Descr->split_r,
+				Descr->split_m,
+				BLT_classify->starter_size - 1,
+				true /* f_lexorder_test */,
+				false /* f_eliminate_graphs_if_possible */,
+				verbose_level);
+
+		if (f_v) {
+			cout << "blt_set_classify_activity::perform_activity "
+					"after BLT_classify->create_graphs" << endl;
+		}
+
+		if (f_v) {
+			cout << "blt_set_classify_activity::perform_activity "
+					"f_BLT_set_graphs done" << endl;
+		}
+
+	}
+
+
+	else if (Descr->f_isomorph) {
+
+		if (f_v) {
+			cout << "blt_set_classify_activity::perform_activity "
+					"f_isomorph" << endl;
+		}
+
+
+		if (f_v) {
+			cout << "blt_set_classify_activity::perform_activity "
+					"before Isomorph_arguments->init" << endl;
+		}
+
+		layer4_classification::isomorph::isomorph_arguments *Isomorph_arguments;
+
+		Isomorph_arguments = (layer4_classification::isomorph::isomorph_arguments *)
+						Get_isomorph_arguments_opaque(Descr->isomorph_label);
+
+
+		layer4_classification::solvers_package::exact_cover_arguments *ECA = NULL;
+
+		ECA = NEW_OBJECT(layer4_classification::solvers_package::exact_cover_arguments);
+
+
+		layer4_classification::isomorph::isomorph_context *Isomorph_context = NULL;
+
+		Isomorph_context = NEW_OBJECT(layer4_classification::isomorph::isomorph_context);
+
+		if (f_v) {
+			cout << "blt_set_classify_activity::perform_activity before Isomorph_context->init" << endl;
+		}
+
+
+		Isomorph_context->init(
+				Isomorph_arguments,
+				BLT_classify->A,
+				BLT_classify->A /* A2 */,
+				BLT_classify->gen,
+				BLT_classify->target_size,
+				BLT_classify->Control,
+				ECA,
+				NULL /*void (*callback_report)(isomorph *Iso, void *data, int verbose_level)*/,
+				NULL /*void (*callback_subset_orbits)(isomorph *Iso, void *data, int verbose_level)*/,
+				NULL /* void *callback_data */,
+				verbose_level);
+
+#if 0
+		Descr->Isomorph_arguments->init(
+				BLT_classify->A,
+				BLT_classify->A /* A2 */,
+				BLT_classify->gen,
+				BLT_classify->target_size,
+				BLT_classify->Control,
+				ECA,
+				NULL /*void (*callback_report)(isomorph *Iso, void *data, int verbose_level)*/,
+				NULL /*void (*callback_subset_orbits)(isomorph *Iso, void *data, int verbose_level)*/,
+				NULL /* void *callback_data */,
+				verbose_level);
+#endif
+
+		if (f_v) {
+			cout << "blt_set_classify_activity::perform_activity "
+					"after Isomorph_context->init" << endl;
+		}
+
+		//int size;
+
+		//size = BLT_classify->q + 1;
+
+		if (BLT_classify->Worker == NULL) {
+
+
+			//isomorph_worker *Worker;
+
+			BLT_classify->Worker = NEW_OBJECT(isomorph::isomorph_worker);
+
+			if (f_v) {
+				cout << "blt_set_classify_activity::perform_activity "
+						"before Worker->init" << endl;
+			}
+
+
+
+			BLT_classify->Worker->init(
+					Isomorph_context,
+					BLT_classify->starter_size /* level */,
+					verbose_level);
+
+			if (f_v) {
+				cout << "blt_set_classify_activity::perform_activity "
+						"after Worker->init" << endl;
+			}
+		}
+		else {
+
+			if (f_v) {
+				cout << "blt_set_classify_activity::perform_activity "
+						"BLT_classify->Worker exists" << endl;
+			}
+
+			BLT_classify->Worker->Isomorph_context = Isomorph_context;
+
+		}
+
+
+		if (f_v) {
+			cout << "blt_set_classify_activity::perform_activity "
+					"before Worker->execute" << endl;
+		}
+
+		BLT_classify->Worker->execute(
+				Isomorph_context, verbose_level);
+
+		if (f_v) {
+			cout << "blt_set_classify_activity::perform_activity "
+					"after Worker->execute" << endl;
+		}
+
+
+		if (f_v) {
+			cout << "blt_set_classify_activity::perform_activity "
+					"f_isomorph done" << endl;
+		}
+
+		//FREE_OBJECT(Worker);
+
+	}
+
+
+
+
+	if (f_v) {
+		cout << "blt_set_classify_activity::perform_activity done" << endl;
+	}
+
+}
+
+
+
+
+}}}}
+
+
+

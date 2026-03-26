@@ -209,6 +209,131 @@ void graphical_output::draw_layered_graph_from_file(
 	}
 }
 
+void graphical_output::draw_factor_poset_from_file(
+		std::string &fname,
+		draw_options *Opt,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "graphical_output::draw_factor_poset_from_file "
+				"fname=" << fname << endl;
+	}
+	combinatorics::graph_theory::factor_poset *Factor_poset;
+	orbiter_kernel_system::file_io Fio;
+
+	Factor_poset = NEW_OBJECT(combinatorics::graph_theory::factor_poset);
+	if (Fio.file_size(fname) <= 0) {
+		cout << "graphical_output::draw_factor_poset_from_file "
+				"file " << fname << " does not exist" << endl;
+		exit(1);
+	}
+	Factor_poset->read_file(fname, verbose_level - 1);
+
+	if (f_v) {
+		cout << "graphical_output::draw_factor_poset_from_file "
+				"Layered graph read from file" << endl;
+	}
+
+	Factor_poset->print_nb_orbits_per_level();
+
+
+#if 0
+	int data1;
+
+
+	data1 = Factor_poset->data1;
+
+	if (f_v) {
+		cout << "graphical_output::draw_factor_poset_from_file "
+				"data1=" << data1 << endl;
+	}
+#endif
+
+	if (Opt->f_place) {
+		if (f_v) {
+			cout << "graphical_output::draw_factor_poset_from_file "
+					"-place" << endl;
+		}
+		if (Opt->f_y_stretch) {
+			Factor_poset->LG->place_with_y_stretch(
+					Opt->y_stretch, verbose_level - 1);
+		}
+		if (Opt->f_spanning_tree) {
+			// create updated x coordinates
+			Factor_poset->LG->create_spanning_tree(
+					true /* f_place_x */, verbose_level);
+		}
+	#if 0
+		if (Opt->f_numbering_on) {
+			// create depth first ranks at each node:
+			LG->create_spanning_tree(
+					false /* f_place_x */, verbose_level);
+		}
+	#endif
+
+		if (Opt->f_x_stretch) {
+			Factor_poset->LG->scale_x_coordinates(
+					Opt->x_stretch, verbose_level);
+		}
+	}
+	else {
+		if (f_v) {
+			cout << "graphical_output::draw_factor_poset_from_file "
+					"use -place if you want to layout the graph" << endl;
+		}
+	}
+
+	string fname_out;
+	data_structures::string_tools ST;
+
+	fname_out = fname;
+	ST.chop_off_extension(fname_out);
+	fname_out += "_draw";
+
+
+	string fname_full;
+
+	fname_full = fname_out + ".mp";
+
+	if (f_v) {
+		cout << "graphical_output::draw_factor_poset_from_file "
+				"before Factor_poset->draw_with_options" << endl;
+	}
+	Factor_poset->draw_with_options(
+			fname_out, Opt,
+			verbose_level - 10);
+	if (f_v) {
+		cout << "graphical_output::draw_factor_poset_from_file "
+				"after Factor_poset->draw_with_options" << endl;
+	}
+
+	int n;
+	double avg;
+	n = Factor_poset->LG->nb_nodes();
+	avg = Factor_poset->LG->average_word_length();
+	if (f_v) {
+		cout << "graphical_output::draw_factor_poset_from_file "
+				"number of nodes = " << n << endl;
+		cout << "graphical_output::draw_layered_graph_from_file "
+				"average word length = " << avg << endl;
+	}
+
+
+	if (f_v) {
+		cout << "graphical_output::draw_factor_poset_from_file "
+				"Written file " << fname_full
+				<< " of size " << Fio.file_size(fname_full) << endl;
+	}
+
+	FREE_OBJECT(Factor_poset);
+
+	if (f_v) {
+		cout << "graphical_output::draw_factor_poset_from_file done" << endl;
+	}
+}
+
 void graphical_output::do_domino_portrait(
 		int D, int s,
 		std::string &photo_label,

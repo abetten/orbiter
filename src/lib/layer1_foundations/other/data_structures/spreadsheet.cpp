@@ -961,9 +961,51 @@ void spreadsheet::reallocate_table_add_row()
 
 int spreadsheet::find_column(
 		std::string &column_label)
+// if the label ends in ..., we perform prefix match
 {
+	int l;
+
+	l = column_label.length();
+	if (l > 3) {
+		if (column_label.substr(l - 3, l) == "...") {
+			string beginning;
+
+			beginning = column_label.substr(0, l - 3);
+			return find_by_column_relaxed(beginning.c_str());
+		}
+	}
 	return find_by_column(column_label.c_str());
 }
+
+int spreadsheet::find_by_column_relaxed(
+		const char *join_by)
+{
+	int j, t, c; //, h;
+
+	for (j = 0; j < nb_cols; j++) {
+		t = Table[0 * nb_cols + j];
+		if (t >= 0) {
+			c = strncmp(tokens[t], join_by, strlen(join_by));
+			//c = strcmp(tokens[t], join_by);
+#if 0
+			cout << "comparing '" << tokens[t] << "' with '"
+					<< join_by << "' yields " << c << endl;
+			for (h = 0; h < (int)strlen(join_by); h++) {
+				cout << h << " : " << tokens[t][h] << " : "
+						<< join_by[h] << endl;
+			}
+#endif
+			if (c == 0) {
+				return j;
+			}
+		}
+	}
+	cout << "spreadsheet::find_by_column_relaxed column '" << join_by << "' not found" << endl;
+	cout << "The first row of the table is:" << endl;
+	print_table_row_detailed(0, cout);
+	exit(1);
+}
+
 
 int spreadsheet::find_by_column(
 		const char *join_by)
@@ -1011,7 +1053,7 @@ int spreadsheet::find_by_column(
 			}
 		}
 	}
-	cout << "by column not found, label='" << join_by << "'" << endl;
+	cout << "spreadsheet::find_by_column column '" << join_by << "' not found" << endl;
 	cout << "The first row of the table is:" << endl;
 	print_table_row_detailed(0, cout);
 	//print_table(cout);

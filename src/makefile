@@ -6,6 +6,11 @@ clean:
 	cd lib; $(MAKE) clean
 	cd apps; $(MAKE) clean
 
+clean5: 
+	cd lib; $(MAKE) clean5
+	cd apps; $(MAKE) clean
+
+
 cleana: 
 	cd lib; $(MAKE) cleana
 

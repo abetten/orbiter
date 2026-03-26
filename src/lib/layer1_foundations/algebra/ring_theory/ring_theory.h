@@ -783,6 +783,69 @@ std::ostream& operator<<(
 
 
 
+// #############################################################################
+// module_over_Z.cpp:
+// #############################################################################
+
+//! a Z module
+
+class module_over_Z {
+public:
+
+
+	module_over_Z();
+	~module_over_Z();
+	void matrix_multiply_over_Z_low_level(
+			int *A1, int *A2, int m1, int n1, int m2, int n2,
+			int *A3, int verbose_level);
+	void multiply_2by2_from_the_left(
+			other::data_structures::int_matrix *M,
+			int i, int j,
+		int aii, int aij,
+		int aji, int ajj, int verbose_level);
+	void multiply_2by2_from_the_right(
+			other::data_structures::int_matrix *M,
+			int i, int j,
+		int aii, int aij,
+		int aji, int ajj, int verbose_level);
+	int clean_column_below(
+			other::data_structures::int_matrix *M,
+			other::data_structures::int_matrix *P,
+			other::data_structures::int_matrix *Pv,
+			int i, int j, int verbose_level);
+	int clean_column_above(
+			other::data_structures::int_matrix *M,
+			other::data_structures::int_matrix *P,
+			other::data_structures::int_matrix *Pv,
+			int i, int j, int verbose_level);
+	int clean_row(
+			other::data_structures::int_matrix *M,
+			other::data_structures::int_matrix *Q,
+			other::data_structures::int_matrix *Qv,
+			int i, int verbose_level);
+	void smith_normal_form(
+			other::data_structures::int_matrix *M,
+			other::data_structures::int_matrix *&P,
+			other::data_structures::int_matrix *&Pv,
+			other::data_structures::int_matrix *&Q,
+			other::data_structures::int_matrix *&Qv,
+			int verbose_level);
+	void smith_normal_form_from_the_left_only(
+			other::data_structures::int_matrix *M,
+			other::data_structures::int_matrix *&P,
+			other::data_structures::int_matrix *&Pv,
+			int verbose_level);
+	void apply(
+			int *input, int *output, int *perm,
+			int module_dimension_m, int module_dimension_n,
+			int *module_basis,
+			int *v1, int *v2, int verbose_level);
+
+};
+
+
+
+
 
 
 // #############################################################################
@@ -893,70 +956,6 @@ public:
 
 
 
-
-// #############################################################################
-// polynomial_ring_activity_description.cpp
-// #############################################################################
-
-
-//! description of a polynomial ring activity
-
-class polynomial_ring_activity_description {
-public:
-
-
-	// used as -ring_theoretic_activity
-
-
-	// TABLES/polynomial_ring_activity.tex
-
-
-	int f_cheat_sheet;
-
-	int f_export_partials;
-
-	int f_ideal;
-	std::string ideal_label_txt;
-	std::string ideal_label_tex;
-	std::string ideal_point_set_label;
-
-	int f_apply_transformation;
-	std::string apply_transformation_space_label;
-	std::string apply_transformation_Eqn_in_label;
-	std::string apply_transformation_vector_ge_label;
-
-	int f_set_variable_names;
-	std::string set_variable_names_txt;
-	std::string set_variable_names_tex;
-
-	int f_print_equation;
-	std::string print_equation_input;
-
-	int f_parse_equation_wo_parameters;
-	std::string parse_equation_wo_parameters_name_of_formula;
-	std::string parse_equation_wo_parameters_name_of_formula_tex;
-	std::string parse_equation_wo_parameters_equation_text;
-
-	int f_parse_equation;
-	std::string parse_equation_name_of_formula;
-	std::string parse_equation_name_of_formula_tex;
-	std::string parse_equation_equation_text;
-	std::string parse_equation_equation_parameters;
-	std::string parse_equation_equation_parameter_values;
-
-	int f_table_of_monomials_write_csv;
-	std::string table_of_monomials_write_csv_label;
-
-
-
-	polynomial_ring_activity_description();
-	~polynomial_ring_activity_description();
-	int read_arguments(
-		int argc, std::string *argv,
-		int verbose_level);
-	void print();
-
-};
 
 // #############################################################################
 // polynomial_ring_description.cpp
@@ -1208,6 +1207,11 @@ public:
 			int verbose_level);
 	void do_export_partials(
 			ring_theory::homogeneous_polynomial_domain *Poly,
+			int verbose_level);
+	void multiply_int_matrices(
+			other::data_structures::int_matrix *A,
+			other::data_structures::int_matrix *B,
+			other::data_structures::int_matrix *&C,
 			int verbose_level);
 
 };

@@ -43,15 +43,15 @@ void projective_space_global::analyze_del_Pezzo_surface(
 
 
 	int idx;
-	idx = user_interface::The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->find_symbol(label);
+	idx = user_interface::core_system::The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->find_symbol(label);
 
 	if (idx < 0) {
 		cout << "could not find symbol " << label << endl;
 		exit(1);
 	}
-	user_interface::The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->get_object(idx);
+	user_interface::core_system::The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->get_object(idx);
 
-	if (user_interface::The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->Table[idx].type != other::orbiter_kernel_system::t_object) {
+	if (user_interface::core_system::The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->Table[idx].type != other::orbiter_kernel_system::t_object) {
 		cout << "symbol table entry must be of type t_object" << endl;
 		exit(1);
 	}

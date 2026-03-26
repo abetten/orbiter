@@ -507,7 +507,7 @@ void modified_group_create::create_restricted_action(
 			points, nb_points,
 			Descr->restricted_action_set_text /* label_of_set */,
 			Descr->restricted_action_set_text_tex /* label_of_set */,
-			verbose_level);
+			verbose_level - 2);
 	if (f_v) {
 		cout << "modified_group_create::create_restricted_action "
 				"after A_previous->Induced_action->restricted_action" << endl;

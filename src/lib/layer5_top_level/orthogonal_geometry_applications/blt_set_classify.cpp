@@ -281,13 +281,13 @@ void blt_set_classify::do_poset_classification_activity(
 		cout << "blt_set_classify::do_poset_classification_activity" << endl;
 	}
 
-	orbits::poset_classification_activity_description *Activity_description;
+	user_interface::activities_layer5::poset_classification_activity_description *Activity_description;
 
 	Activity_description =
 			Get_object_of_type_poset_classification_activity(activity_label);
 
 
-	orbits::poset_classification_activity Activity;
+	user_interface::activities_layer5::poset_classification_activity Activity;
 
 	if (f_v) {
 		cout << "blt_set_classify::do_poset_classification_activity "

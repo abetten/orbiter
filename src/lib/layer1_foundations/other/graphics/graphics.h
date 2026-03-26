@@ -171,6 +171,10 @@ public:
 	int f_input_csv_file;
 	std::string input_csv_file_name;
 
+	int f_input_csv_file_column;
+	std::string input_csv_file_column_name;
+	std::string input_csv_file_column_label;
+
 	int f_secondary_input_csv_file;
 	std::string secondary_input_csv_file_name;
 
@@ -189,6 +193,12 @@ public:
 	int bit_depth;
 
 	int f_grayscale;
+
+	int f_indent;
+	int indent_100;
+
+	int f_color_offset;
+	int color_offset;
 
 
 	// not a command line argument:
@@ -580,6 +590,10 @@ public:
 	graphical_output();
 	~graphical_output();
 	void draw_layered_graph_from_file(
+			std::string &fname,
+			draw_options *Opt,
+			int verbose_level);
+	void draw_factor_poset_from_file(
 			std::string &fname,
 			draw_options *Opt,
 			int verbose_level);

@@ -1601,6 +1601,8 @@ void orthogonal::intersection_with_subspace(
 	}
 }
 
+
+
 }}}}
 
 

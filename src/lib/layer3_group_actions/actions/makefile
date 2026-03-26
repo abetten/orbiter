@@ -12,6 +12,7 @@ MODULES = \
 	action_induce.o \
 	action_init.o \
 	action_io.o \
+	action_latex_interface.o \
 	action_pointer_table.o \
 	backtrack.o \
 	group_element.o \

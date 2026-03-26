@@ -258,6 +258,55 @@ void design_theory_global::make_design_from_incidence_matrix(
 	}
 }
 
+void design_theory_global::make_design_from_graph(
+	int *&Inc, int &v, int &b, int &k,
+	std::string &label,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "design_theory_global::make_design_from_graph" << endl;
+	}
+
+	combinatorics::graph_theory::colored_graph *Gamma;
+
+	Gamma = Get_graph(label);
+
+	v = Gamma->nb_points;
+	b = v;
+
+	int regularity;
+
+	if (!Gamma->test_if_regular(
+				regularity,
+				verbose_level)) {
+		cout << "design_theory_global::make_design_from_graph "
+				"the graph is not regular" << endl;
+		exit(1);
+	}
+
+	k = regularity;
+
+	Inc = NEW_int(v * b);
+	Int_vec_zero(Inc, v * b);
+
+	int i, j;
+
+	for (j = 0; j < b; j++) {
+		for (i = 0; i < v; i++) {
+			if (Gamma->is_adjacent(i, j)) {
+				Inc[i * b + j] = 1;
+			}
+		}
+	}
+
+	if (f_v) {
+		cout << "design_theory_global::make_design_from_graph done" << endl;
+	}
+}
+
+
 void design_theory_global::compute_incidence_matrix(
 		int v, int b, int k, long int *Blocks_coded,
 		int *&M, int verbose_level)

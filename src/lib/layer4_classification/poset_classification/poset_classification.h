@@ -255,7 +255,6 @@ public:
 	void Kramer_Mesner_matrix_neighboring(
 			int level,
 			other::data_structures::lint_matrix *&M,
-			//long int *&M, int &nb_rows, int &nb_cols,
 			int verbose_level);
 	void Mtk_via_Mtr_Mrk(
 			int t, int r, int k,
@@ -278,8 +277,9 @@ public:
 		int t, int k,
 		other::data_structures::lint_matrix *&Mtk,
 		int verbose_level);
-	void pair_relations_within_orbit(
+	void pairwise_join_and_identify(
 			int lvl, int po, int *&M, int &ol,
+			int f_do_element_idx, long int *&Element_idx,
 			int verbose_level);
 
 };
@@ -514,6 +514,7 @@ public:
 	int f_recover;
 	std::string recover_fname;
 
+	// ToDo: undocumented:
 	int f_extend;
 	int extend_from, extend_to;
 	int extend_r, extend_m;
@@ -561,14 +562,17 @@ public:
 	poset_classification *test_max_line_intersections_PC;
 
 
+	// ToDo: not implemented:
 	int f_has_invariant_subset_for_root_node;
 	int *invariant_subset_for_root_node;
 	int invariant_subset_for_root_node_size;
 
 
+	// ToDo: not implemented:
 	int f_do_group_extension_in_upstep;
 		// is true by default
 
+	// ToDo: not implemented:
 	int f_allowed_to_show_group_elements;
 	int downstep_orbits_print_max_orbits;
 	int downstep_orbits_print_max_points_per_orbit;
@@ -1454,6 +1458,9 @@ public:
 			int *&Orbit_first,
 			int &nb_orbits_total,
 			int &nb_sets_total,
+			int verbose_level);
+	other::data_structures::lint_matrix *get_all_orbit_elements(
+			int lvl, int po,
 			int verbose_level);
 	void get_all_orbits_expanded_table(
 			other::data_structures::set_of_sets *&All_orbits,

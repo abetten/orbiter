@@ -215,6 +215,7 @@ void data_input_stream_output::after_classification(
 		}
 
 		save_transversal(verbose_level);
+			// saves Idx_transversal
 
 	}
 

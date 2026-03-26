@@ -24,6 +24,10 @@ draw_bitmap_control::draw_bitmap_control()
 	f_input_csv_file = false;
 	//std::string input_csv_file_name;
 
+	f_input_csv_file_column = false;
+	//std::string input_csv_file_column_name;
+	//std::string input_csv_file_column_label;
+
 	f_secondary_input_csv_file = false;
 	//std::string secondary_input_csv_file_name;
 
@@ -43,6 +47,12 @@ draw_bitmap_control::draw_bitmap_control()
 	bit_depth = 8;
 
 	f_grayscale = false;
+
+	f_indent = false;
+	indent_100 = 0;
+
+	f_color_offset = false;
+	color_offset = 0;
 
 	// not a command line argument
 	f_input_matrix = false;
@@ -78,6 +88,14 @@ int draw_bitmap_control::read_arguments(
 			input_csv_file_name.assign(argv[++i]);
 			if (f_v) {
 				cout << "-input_csv_file " << input_csv_file_name << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-input_csv_file_column") == 0) {
+			f_input_csv_file_column = true;
+			input_csv_file_column_name.assign(argv[++i]);
+			input_csv_file_column_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-input_csv_file_column " << input_csv_file_column_name << " " << input_csv_file_column_label << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-secondary_input_csv_file") == 0) {
@@ -129,6 +147,21 @@ int draw_bitmap_control::read_arguments(
 				cout << "-grayscale " << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-indent") == 0) {
+			f_indent = true;
+			indent_100 = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-indent " << indent_100 << endl;
+			}
+		}
+
+		else if (ST.stringcmp(argv[i], "-color_offset") == 0) {
+			f_color_offset = true;
+			color_offset = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-color_offset " << color_offset << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			break;
@@ -152,6 +185,9 @@ void draw_bitmap_control::print()
 	if (f_input_csv_file) {
 		cout << "-input_csv_file " << input_csv_file_name << endl;
 	}
+	if (f_input_csv_file_column) {
+		cout << "-input_csv_file_column " << input_csv_file_column_name << " " << input_csv_file_column_label << endl;
+	}
 	if (f_secondary_input_csv_file) {
 		cout << "-secondary_input_csv_file " << secondary_input_csv_file_name << endl;
 	}
@@ -172,6 +208,12 @@ void draw_bitmap_control::print()
 	}
 	if (f_grayscale) {
 		cout << "-grayscale " << endl;
+	}
+	if (f_indent) {
+		cout << "-indent " << indent_100 << endl;
+	}
+	if (f_color_offset) {
+		cout << "-color_offset " << color_offset << endl;
 	}
 }
 

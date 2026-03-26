@@ -256,9 +256,15 @@ public:
 	void lint_matrix_read_csv_data_column(
 			std::string &fname,
 		long int *&M, int &m, int &n, int col_idx, int verbose_level);
+	void lint_matrix_read_csv_data_column_by_label(
+			std::string &fname,
+		long int *&M, int &m, int &n, std::string &col_label, int verbose_level);
 	void lint_matrix_read_csv(
 			std::string &fname,
 		long int *&M, int &m, int &n, int verbose_level);
+	other::data_structures::lint_matrix *read_lint_matrix_csv(
+			std::string &fname,
+		int verbose_level);
 	void double_matrix_read_csv(
 			std::string &fname, double *&M,
 		int &m, int &n, int verbose_level);

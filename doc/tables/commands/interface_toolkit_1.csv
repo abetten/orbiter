@@ -12,6 +12,7 @@ ROW,C1,C2,C3
 1,"\verb'-csv_file_select_rows_complement' "," fname $R$ ","Selects rows listed in $R$ from the csv-file fname. "
 1,"\verb'-csv_file_split_rows_modulo' "," fname $n$ ","Splits the rows from the csv-file fname modulo $n$. "
 1,"\verb'-csv_file_select_cols' "," fname $R$ ","Selects columns listed in $R$ from the csv-file fname. "
+1,"\verb'-csv_file_select_cols_by_label' "," fname suffix $R$ ","Selects columns listed in $R$ from the csv-file fname. Appends the givven suffix to the output file name. "
 1,"\verb'-csv_file_select_rows_and_cols' "," fname $R$ $C$ ","Selects rows listed in $R$ and columns listed in $C$ from the csv-file fname. "
 1,"\verb'-csv_file_sort_each_row' "," fname  ","Sorts each individual row in the given csv file, thinking of the entries as a set. "
 1,"\verb'-csv_file_sort_rows' "," fname  ","Sorts the rows in the given csv file. "

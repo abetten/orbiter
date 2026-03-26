@@ -6,8 +6,6 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
-	diophant_activity_description.o \
-	diophant_activity.o \
 	diophant_create.o \
 	diophant_description.o \
 	diophant.o \

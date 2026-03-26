@@ -14,8 +14,6 @@ MODULES = \
 	combinatorial_object_with_properties.o \
 	input_objects_of_type_variety.o \
 	objects_after_classification.o \
-	variety_activity_description.o \
-	variety_activity.o \
 	variety_compute_canonical_form.o \
 	variety_object_with_action.o \
 	variety_stabilizer_compute.o

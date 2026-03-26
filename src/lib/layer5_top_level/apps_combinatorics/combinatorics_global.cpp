@@ -29,7 +29,6 @@ combinatorics_global::~combinatorics_global()
 }
 
 void combinatorics_global::create_design_table(
-		//design_create *DC,
 		combinatorics::design_theory::design_object *Design_object,
 		std::string &problem_label,
 		design_tables *&T,

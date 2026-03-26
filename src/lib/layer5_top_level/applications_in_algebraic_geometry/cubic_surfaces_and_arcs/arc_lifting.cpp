@@ -55,7 +55,7 @@ arc_lifting::~arc_lifting()
 
 
 void arc_lifting::create_surface_and_group(
-		cubic_surfaces_in_general::surface_with_action *Surf_A,
+		applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_with_action *Surf_A,
 	long int *Arc6, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

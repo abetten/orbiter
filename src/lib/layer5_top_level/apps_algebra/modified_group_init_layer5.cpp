@@ -643,8 +643,19 @@ void modified_group_init_layer5::modified_group_create_stabilizer_of_variety(
 
 	// Strong_gens should be in the new action.
 
+	// ToDo:
+	// No, Strong_gens should be in the old action!
+
 	Modified_group_create->f_has_strong_generators = true;
-	Modified_group_create->Strong_gens = Modified_group_create->A_modified->Strong_gens->create_copy(verbose_level - 4);
+
+	Modified_group_create->Strong_gens = Strong_gens_temp->create_copy(verbose_level - 4);
+
+	//Modified_group_create->Strong_gens = Modified_group_create->A_modified->Strong_gens->create_copy(verbose_level - 4);
+
+
+
+
+	// old;
 	//Strong_gens = AG->class_data->Conjugacy_class[orbit_index]->gens->create_copy(verbose_level - 4);
 
 

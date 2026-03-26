@@ -189,6 +189,44 @@ void classes_of_elements_expanded::init(
 }
 
 
+other::data_structures::set_of_sets_lint *classes_of_elements_expanded::get_classes_as_set_of_sets(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "classes_of_elements_expanded::get_classes_as_set_of_sets" << endl;
+	}
+
+	other::data_structures::set_of_sets_lint *SoS;
+
+	SoS = NEW_OBJECT(other::data_structures::set_of_sets_lint);
+
+	int *Size;
+	int i;
+
+	Size = NEW_int(nb_idx);
+
+	for (i = 0; i < nb_idx; i++) {
+		Size[i] = Orbit_of_elements[i]->orbit_length;
+	}
+
+	SoS->init_basic(
+			expand_by_go,
+			nb_idx, Size, verbose_level);
+
+	for (i = 0; i < nb_idx; i++) {
+		Lint_vec_copy(Orbit_of_elements[i]->Table_of_elements, SoS->Sets[i], Size[i]);
+	}
+
+	if (f_v) {
+		cout << "classes_of_elements_expanded::get_classes_as_set_of_sets done" << endl;
+	}
+
+	return SoS;
+
+}
+
 void classes_of_elements_expanded::report(
 		std::string &label,
 		std::string &label_tex,

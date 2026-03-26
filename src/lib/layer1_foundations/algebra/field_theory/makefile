@@ -6,8 +6,6 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
-	finite_field_activity_description.o \
-	finite_field_activity.o \
 	finite_field_description.o \
 	finite_field_implementation_by_tables.o \
 	finite_field_implementation_wo_tables.o \

@@ -260,46 +260,6 @@ int orbiter_session::read_arguments(
 				cout << "-v " << verbose_level << endl;
 			}
 		}
-#if 0
-		else if (ST.stringcmp(argv[i], "-draw_options") == 0) {
-			f_draw_options = true;
-
-			draw_options = NEW_OBJECT(graphics::layered_graph_draw_options);
-			//cout << "-draw_options " << endl;
-			i += draw_options->read_arguments(argc - (i + 1),
-				argv + i + 1, 0 /*verbose_level*/);
-
-			if (f_v) {
-				cout << "done reading -draw_options " << endl;
-				cout << "i = " << i << endl;
-				cout << "argc = " << argc << endl;
-				if (i < argc) {
-					cout << "next argument is " << argv[i] << endl;
-				}
-				cout << "-f_draw_options " << endl;
-				draw_options->print();
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-draw_incidence_structure_description") == 0) {
-			f_draw_incidence_structure_description = true;
-
-			Draw_incidence_structure_description = NEW_OBJECT(graphics::draw_incidence_structure_description);
-			//cout << "-draw_incidence_structure_description " << endl;
-			i += Draw_incidence_structure_description->read_arguments(argc - (i + 1),
-				argv + i + 1, 0 /*verbose_level*/);
-
-			if (f_v) {
-				cout << "done reading -draw_incidence_structure_description " << endl;
-				cout << "i = " << i << endl;
-				cout << "argc = " << argc << endl;
-				if (i < argc) {
-					cout << "next argument is " << argv[i] << endl;
-				}
-				cout << "-draw_incidence_structure_description " << endl;
-			}
-		}
-#endif
-
 
 		else if (ST.stringcmp(argv[i], "-list_arguments") == 0) {
 			f_list_arguments = true;

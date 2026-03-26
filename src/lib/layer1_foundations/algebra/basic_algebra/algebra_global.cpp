@@ -2137,7 +2137,13 @@ void algebra_global::create_Nth_roots_and_write_report(
 }
 
 void algebra_global::smith_normal_form(
-		int *A, int m, int n, std::string &label, int verbose_level)
+		int *A, int m, int n, std::string &label,
+		other::data_structures::int_matrix *&M,
+		other::data_structures::int_matrix *&P,
+		other::data_structures::int_matrix *&Pv,
+		other::data_structures::int_matrix *&Q,
+		other::data_structures::int_matrix *&Qv,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2145,12 +2151,8 @@ void algebra_global::smith_normal_form(
 		cout << "algebra_global::smith_normal_form" << endl;
 	}
 
-	other::data_structures::int_matrix *M;
-	other::data_structures::int_matrix *P;
-	other::data_structures::int_matrix *Pv;
-	other::data_structures::int_matrix *Q;
-	other::data_structures::int_matrix *Qv;
-	algebra::basic_algebra::module Mod;
+
+	algebra::ring_theory::module_over_Z Module;
 
 	M = NEW_OBJECT(other::data_structures::int_matrix);
 	M->allocate_and_init(m, n, A);
@@ -2182,15 +2184,15 @@ void algebra_global::smith_normal_form(
 
 	if (f_v) {
 		cout << "algebra_global::smith_normal_form "
-				"before Mod.smith_normal_form" << endl;
+				"before Module.smith_normal_form" << endl;
 	}
 
-	Mod.smith_normal_form(
+	Module.smith_normal_form(
 			M, P, Pv, Q, Qv, verbose_level);
 
 	if (f_v) {
 		cout << "algebra_global::smith_normal_form "
-				"after Mod.smith_normal_form" << endl;
+				"after Module.smith_normal_form" << endl;
 	}
 
 	if (f_v) {
@@ -2280,6 +2282,126 @@ void algebra_global::smith_normal_form(
 
 
 }
+
+
+void algebra_global::smith_normal_form_from_the_left_only(
+		int *A, int m, int n, std::string &label,
+		other::data_structures::int_matrix *&M,
+		other::data_structures::int_matrix *&P,
+		other::data_structures::int_matrix *&Pv,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global::smith_normal_form_from_the_left_only" << endl;
+	}
+
+
+	algebra::ring_theory::module_over_Z Module;
+
+	M = NEW_OBJECT(other::data_structures::int_matrix);
+	M->allocate_and_init(m, n, A);
+
+
+	if (f_v) {
+		cout << "algebra_global::smith_normal_form_from_the_left_only M=" << endl;
+		M->print();
+	}
+
+
+	other::orbiter_kernel_system::file_io Fio;
+	string fname;
+
+	fname = label + "_SNF_M_original.csv";
+
+	M->write_csv(fname, verbose_level);
+
+	if (f_v) {
+		cout << "M:" << endl;
+		Int_matrix_print(M->M, M->m, M->n);
+	}
+
+	if (f_v) {
+		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "algebra_global::smith_normal_form "
+				"before Module.smith_normal_form_from_the_left_only" << endl;
+	}
+
+	Module.smith_normal_form_from_the_left_only(
+			M, P, Pv, verbose_level);
+
+	if (f_v) {
+		cout << "algebra_global::smith_normal_form "
+				"after Module.smith_normal_form_from_the_left_only" << endl;
+	}
+
+	if (f_v) {
+		cout << "algebra_global::smith_normal_form_from_the_left_only M=" << endl;
+		M->print();
+	}
+
+
+
+	fname = label + "_SNF.csv";
+
+	M->write_csv(fname, verbose_level);
+
+	if (f_v) {
+		cout << "SNF:" << endl;
+		Int_matrix_print(M->M, M->m, M->n);
+	}
+
+	if (f_v) {
+		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
+
+
+
+	// write P and Pv:
+
+	fname = label + "_SNF_P.csv";
+
+	P->write_csv(fname, verbose_level);
+
+	if (f_v) {
+		cout << "SNF_P:" << endl;
+		Int_matrix_print(P->M, P->m, P->n);
+	}
+
+	if (f_v) {
+		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
+
+	fname = label + "_SNF_Pv.csv";
+
+	Pv->write_csv(fname, verbose_level);
+
+	if (f_v) {
+		cout << "SNF_Pv:" << endl;
+		Int_matrix_print(Pv->M, Pv->m, Pv->n);
+	}
+
+	if (f_v) {
+		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
+
+
+
+
+
+	if (f_v) {
+		cout << "algebra_global::smith_normal_form_from_the_left_only" << endl;
+	}
+
+
+}
+
 
 void algebra_global::scan_equation_in_pairs_in_characteristic_p(
 		int *eqn, int eqn_sz, int characteristic_p,

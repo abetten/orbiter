@@ -689,7 +689,7 @@ public:
 // #############################################################################
 
 
-//! a factor poset is a poset whose nodes have been lumped together, for instance by orbits of a group.
+//! a poset whose nodes have been lumped together, for instance by orbits of a group.
 
 
 
@@ -699,10 +699,12 @@ public:
 
 	int nb_layers;
 	int *Nb_elements;
-	int *Fst;
-	int *Nb_orbits;
-	int **Fst_element_per_orbit;
-	int **Orbit_len;
+		// Nb_elements[i] = sum of Orbit_len[i][j], j = 0..Nb_orbits[i]-1
+	int *Fst; // [nb_layers + 1]
+		// Fst[i] is the index of the first element in level i
+	int *Nb_orbits; // [nb_layers]
+	int **Fst_element_per_orbit; // [nb_layers][Nb_orbits[i] + 1]
+	int **Orbit_len; // [nb_layers][Nb_orbits[i]]
 
 	combinatorics::graph_theory::layered_graph *LG;
 
@@ -716,6 +718,31 @@ public:
 			int data1,
 			double x_stretch,
 			int verbose_level);
+	void print_nb_orbits_per_level();
+	void write_memory_object(
+			other::orbiter_kernel_system::memory_object *m,
+			int verbose_level);
+	void read_memory_object(
+			other::orbiter_kernel_system::memory_object *m,
+			int verbose_level);
+	void write_file(
+			std::string &fname,
+			int verbose_level);
+	void read_file(
+			std::string &fname,
+			int verbose_level);
+	void draw_with_options(
+			std::string &fname,
+			other::graphics::draw_options *O,
+			int verbose_level);
+	void draw_orbit_info(
+			other::graphics::draw_options *O,
+			other::graphics::mp_graphics *G,
+			int verbose_level);
+	void coordinates(
+			int layer, int orbit,
+			int x_max, int y_max, int f_rotated,
+			int &x, int &y);
 
 };
 
@@ -741,6 +768,14 @@ public:
 	int nb_nodes;
 	graph_node *Nodes;
 	double y_coordinate;
+
+	// added 3/9/2026:
+	int f_has_grouping;
+	int nb_groups;
+	int *group_start; // [nb_groups + 1]
+	double *group_x; // [nb_groups]
+	double *group_dx; // [nb_groups]
+	int nb_elements;
 
 	graph_layer();
 	~graph_layer();

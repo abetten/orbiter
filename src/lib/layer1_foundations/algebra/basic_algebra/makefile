@@ -10,11 +10,11 @@ MODULES = \
 	a_domain.o \
 	algebra_global.o \
 	generators_symplectic_group.o \
+	group_diagram.o \
 	group_generators_domain.o \
 	heisenberg.o \
 	matrix_group_element.o \
 	matrix_group.o \
-	module.o \
 	null_polarity_generator.o \
 	rank_checker.o
 

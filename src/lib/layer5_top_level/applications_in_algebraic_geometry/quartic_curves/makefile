@@ -6,8 +6,6 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
-	quartic_curve_activity_description.o \
-	quartic_curve_activity.o \
 	quartic_curve_create_description.o \
 	quartic_curve_create.o \
 	quartic_curve_domain_with_action.o \

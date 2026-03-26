@@ -89,6 +89,7 @@ void algebra_global_with_action::element_processing(
 		}
 
 	}
+#if 0
 	else if (element_processing_descr->f_apply_isomorphism_wedge_product_4to6) {
 		if (f_v) {
 			cout << "algebra_global_with_action::element_processing "
@@ -131,6 +132,7 @@ void algebra_global_with_action::element_processing(
 
 
 	}
+#endif
 #if 0
 	else if (element_processing_descr->f_products_of_pairs) {
 		if (f_v) {
@@ -178,16 +180,16 @@ void algebra_global_with_action::element_processing(
 
 		if (f_v) {
 			cout << "algebra_global_with_action::element_processing "
-					"before Any_group->conjugate" << endl;
+					"before Any_group->conjugate_and_write_to_file" << endl;
 		}
-		Any_group->conjugate(
+		Any_group->conjugate_and_write_to_file(
 				element_processing_descr->input_label,
 				element_processing_descr->conjugate_data,
 				Elements,
 				verbose_level);
 		if (f_v) {
 			cout << "algebra_global_with_action::element_processing "
-					"after Any_group->conjugate" << endl;
+					"after Any_group->conjugate_and_write_to_file" << endl;
 		}
 
 
@@ -2804,6 +2806,417 @@ void algebra_global_with_action::element_ranks_in_overgroup(
 		cout << "algebra_global_with_action::element_ranks_in_overgroup done" << endl;
 	}
 
+
+}
+
+void algebra_global_with_action::diagram_of_elements(
+		groups::any_group *AG,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::diagram_of_elements" << endl;
+	}
+
+
+	algebra::basic_algebra::group_diagram *Group_diagram;
+
+	Group_diagram = NEW_OBJECT(algebra::basic_algebra::group_diagram);
+
+	int base_len;
+	int i;
+	long int *transversal_length;
+
+
+	//groups::strong_generators *Subgroup_gens;
+	//groups::sims *Subgroup_sims;
+
+
+
+	base_len = AG->Subgroup_sims->my_base_len; //base_len();
+
+	transversal_length = NEW_lint(base_len);
+
+	for (i = 0; i < base_len; i++) {
+		transversal_length[i] = AG->Subgroup_sims->get_orbit_length(i); //transversal_length_i(i);
+	}
+
+	Group_diagram->init(
+			AG->label,
+			transversal_length, base_len,
+			verbose_level);
+
+
+
+
+	groups::sims *Sims;
+	if (AG->Subgroup_sims == NULL) {
+		cout << "algebra_global_with_action::diagram_of_elements "
+				"Subgroup_sims == NULL" << endl;
+		exit(1);
+	}
+
+	Sims = AG->Subgroup_sims;
+
+	classes_of_elements_expanded *Classes_of_elements_expanded;
+	data_structures_groups::vector_ge *Reps;
+
+	algebra_global_with_action Algebra_global_with_action;
+
+	int expand_by_go = Sims->group_order_lint();
+
+	if (f_v) {
+		cout << "algebra_global_with_action::diagram_of_elements "
+				"before Algebra_global_with_action.get_classses_expanded" << endl;
+	}
+	Algebra_global_with_action.get_classses_expanded(
+			Sims,
+			AG,
+			expand_by_go,
+			Classes_of_elements_expanded,
+			Reps,
+			verbose_level - 2);
+	if (f_v) {
+		cout << "algebra_global_with_action::diagram_of_elements "
+				"after Algebra_global_with_action.get_classses_expanded" << endl;
+	}
+
+	other::data_structures::set_of_sets_lint *Classes;
+
+	if (f_v) {
+		cout << "algebra_global_with_action::diagram_of_elements "
+				"before Classes_of_elements_expanded->get_classes_as_set_of_sets" << endl;
+	}
+	Classes = Classes_of_elements_expanded->get_classes_as_set_of_sets(
+				verbose_level - 2);
+	if (f_v) {
+		cout << "algebra_global_with_action::diagram_of_elements "
+				"after Classes_of_elements_expanded->get_classes_as_set_of_sets" << endl;
+	}
+
+
+	int j, len;
+	long int a;
+	long int *Coloring;
+	long int pos_i, pos_j;
+
+	Coloring = NEW_lint(Group_diagram->nb_rows * Group_diagram->nb_cols);
+
+
+
+	for (i = 0; i < Classes->nb_sets; i++) {
+		len = Classes->Set_size[i];
+		for (j = 0; j < len; j++) {
+			a = Classes->Sets[i][j];
+
+			Group_diagram->place_element_by_rank(
+					a, pos_i, pos_j);
+			Coloring[pos_i * Group_diagram->nb_cols + pos_j] = i;
+
+		}
+	}
+
+
+	string fname;
+
+	fname = AG->label + "_class_diagram.csv";
+
+	other::orbiter_kernel_system::file_io Fio;
+
+	std::string col_heading;
+
+	col_heading = "Class";
+
+	Fio.Csv_file_support->lint_matrix_write_csv_tabulated(
+			fname, col_heading,
+			Coloring, Group_diagram->nb_rows, Group_diagram->nb_cols, verbose_level);
+
+	if (f_v) {
+		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
+
+
+	FREE_OBJECT(Group_diagram);
+	FREE_lint(transversal_length);
+	FREE_lint(Coloring);
+
+}
+
+void algebra_global_with_action::find_overgroup_wrapper(
+		groups::any_group *AG,
+		groups::any_group *Subgroup,
+		int order_of_overgroup,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::find_overgroup_wrapper" << endl;
+	}
+
+
+	//algebra_global_with_action Algebra_global_with_action;
+
+
+	classes_of_subgroups_expanded *Classes_of_subgroups_expanded;
+	std::vector<int> Class_idx;
+	std::vector<int> Class_idx_subgroup_idx;
+
+
+	if (f_v) {
+		cout << "algebra_global_with_action::find_overgroup_wrapper "
+				"before find_overgroup" << endl;
+	}
+	find_overgroup(
+			AG,
+			Subgroup,
+			order_of_overgroup,
+			Classes_of_subgroups_expanded,
+			Class_idx, Class_idx_subgroup_idx,
+			verbose_level);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::find_overgroup_wrapper "
+				"after find_overgroup" << endl;
+	}
+
+	int i, len, idx1, idx2;
+	int *Elt1;
+
+	len = Class_idx.size();
+
+	cout << "We found " << len << " overgroups:" << endl;
+
+	Elt1 = NEW_int(AG->A->elt_size_in_int);
+
+	for (i = 0; i < len; i++) {
+		idx1 = Class_idx[i];
+		idx2 = Class_idx_subgroup_idx[i];
+
+		cout << i << " : " << idx1 << " : " << idx2 << endl;
+
+		Classes_of_subgroups_expanded->Orbit_of_subgroups[idx1]->Orbits_P->coset_rep(idx2);
+
+		// result is in cosetrep
+		// determines an element in the group
+		// that moves the orbit representative
+		// to the j-th element in the orbit.
+
+		int *cosetrep;
+
+		cosetrep = Classes_of_subgroups_expanded->Orbit_of_subgroups[idx1]->Orbits_P->cosetrep;
+
+		AG->A->Group_element->element_move(cosetrep, Elt1, 0 /* verbose_level */);
+
+		std::vector<int> path;
+
+		Classes_of_subgroups_expanded->Orbit_of_subgroups[idx1]->Orbits_P->get_path(
+				path,
+				idx2);
+
+		cout << "path=";
+		Int_vec_stl_print(cout, path);
+		cout << endl;
+
+		groups::strong_generators *gens;
+		data_structures_groups::vector_ge *gens_conj;
+
+		//gens = Classes_of_subgroups_expanded->Orbit_of_subgroups[idx1]->Orbits_P->gens;
+
+		int h;
+
+		h = Classes_of_subgroups_expanded->Idx[idx1];
+
+		gens = Classes_of_subgroups_expanded->Classes->Conjugacy_class[h]->gens;
+
+		gens_conj = NEW_OBJECT(data_structures_groups::vector_ge);
+
+
+#if 0
+		gens_conj->init_conjugate_sasv_of(
+				gens, Elt1,
+				verbose_level);
+#else
+		gens_conj->init_conjugate_svas_of(
+				gens->gens, Elt1,
+				verbose_level);
+#endif
+
+		cout << "generating set for the orbit representative:" << endl;
+		gens->gens->print_quick(cout);
+
+		cout << "cosetrep:" << endl;
+		AG->A->Group_element->element_print_quick(cosetrep, cout);
+		cout << endl;
+
+		cout << "generating set for the overgroup:" << endl;
+		gens_conj->print_quick(cout);
+
+		int *Elt;
+		int j;
+
+		cout << "generating set:" << endl;
+		for (j = 0; j < gens_conj->len; j++) {
+
+			Elt = gens_conj->ith(j);
+
+			AG->A->Group_element->print_for_make_element(
+					cout, Elt);
+			cout << endl;
+		}
+
+
+
+	}
+
+	FREE_int(Elt1);
+	FREE_OBJECT(Classes_of_subgroups_expanded)
+
+	if (f_v) {
+		cout << "algebra_global_with_action::find_overgroup_wrapper done" << endl;
+	}
+}
+
+void algebra_global_with_action::find_permutation_subgroup(
+		groups::any_group *AG,
+		groups::sims *Sims,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::find_permutation_subgroup" << endl;
+	}
+
+	std::vector<long int> Generator_ranks;
+
+	if (f_v) {
+		cout << "algebra_global_with_action::find_permutation_subgroup "
+				"before Sims->permutation_subgroup" << endl;
+	}
+	Sims->permutation_subgroup(
+			Generator_ranks,
+			verbose_level);
+	if (f_v) {
+		cout << "algebra_global_with_action::find_permutation_subgroup "
+				"after Sims->permutation_subgroup" << endl;
+	}
+
+	cout << "algebra_global_with_action::find_permutation_subgroup "
+			"generators for the permutation subgroup:" << endl;
+	Lint_vec_stl_print_fully(cout, Generator_ranks);
+	cout << endl;
+
+
+	data_structures_groups::vector_ge *Elts;
+
+	//int *Elt_data;
+	//int m, n;
+
+	AG->element_unrank_STL_lint(
+			Generator_ranks,
+			Elts,
+			verbose_level);
+
+
+	string fname;
+
+	fname = AG->label + "_permutation_subgroup_generators.csv";
+
+	other::orbiter_kernel_system::file_io Fio;
+
+#if 0
+	int f_override_action = false;
+	Elts->report_elements_coded(
+			fname_base,
+			f_override_action, NULL /* A_special */,
+			verbose_level);
+#endif
+
+	Elts->save_csv(
+			fname, verbose_level);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::find_permutation_subgroup "
+				"written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+
+
+#if 0
+
+	string fname_out;
+
+	fname_out = AG->label + "_perm_subgrp_gens.csv";
+
+
+	Fio.Csv_file_support->write_STL_lint_vec(
+			fname_out,
+			Generator_ranks,
+			verbose_level);
+
+#endif
+
+	if (f_v) {
+		cout << "algebra_global_with_action::find_permutation_subgroup done" << endl;
+	}
+
+}
+
+
+void algebra_global_with_action::compute_subgroup_lattice_wrapper(
+		groups::any_group *AG,
+		groups::sims *Sims,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::compute_subgroup_lattice_wrapper" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "algebra_global_with_action::compute_subgroup_lattice_wrapper "
+				"before AG->get_subgroup_lattice" << endl;
+	}
+
+	AG->get_subgroup_lattice(
+			Sims,
+			AG->class_data,
+			verbose_level - 2);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::compute_subgroup_lattice_wrapper "
+				"after AG->get_subgroup_lattice" << endl;
+	}
+
+	if (f_v) {
+		cout << "algebra_global_with_action::compute_subgroup_lattice_wrapper "
+				"before class_data->report" << endl;
+	}
+	AG->class_data->report(
+			Sims,
+			AG->label,
+			AG->label_tex,
+			verbose_level - 2);
+	if (f_v) {
+		cout << "algebra_global_with_action::compute_subgroup_lattice_wrapper "
+				"after class_data->report" << endl;
+	}
+
+	if (f_v) {
+		cout << "algebra_global_with_action::compute_subgroup_lattice_wrapper "
+				"before class_data->export_csv" << endl;
+	}
+	AG->class_data->export_csv(
+			Sims,
+			verbose_level - 2);
+	if (f_v) {
+		cout << "algebra_global_with_action::compute_subgroup_lattice_wrapper "
+				"after class_data->export_csv" << endl;
+	}
 
 }
 

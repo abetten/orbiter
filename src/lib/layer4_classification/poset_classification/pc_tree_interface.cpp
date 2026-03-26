@@ -328,6 +328,7 @@ void pc_tree_interface::draw_tree_low_level1(
 	int max_set_size;
 	long int *set0;
 	long int *set1;
+	actions::action_global Action_global;
 
 
 	max_set_size = PC->get_Poo()->get_max_set_size();
@@ -456,8 +457,11 @@ void pc_tree_interface::draw_tree_low_level1(
 
 					//Poset->A2->element_retrieve(hdl, Elt1, false);
 
-					PC->get_poset()->A2->map_a_set_based_on_hdl(
-							set0, set1, depth + 1, PC->get_poset()->A, hdl, 0);
+					Action_global.map_a_set_based_on_hdl(
+							set0, set1,
+							depth + 1,
+							PC->get_poset()->A, PC->get_poset()->A2,
+							hdl, 0);
 
 					Sorting.lint_vec_heapsort(set1, depth + 1);
 

@@ -89,156 +89,6 @@ public:
 
 };
 
-// #############################################################################
-// spread_activity_description.cpp
-// #############################################################################
-
-//! description of an activity for an object of type spread
-
-
-
-class spread_activity_description {
-
-public:
-
-	// TABLES/spread_activity.tex
-
-	int f_report;
-
-	spread_activity_description();
-	~spread_activity_description();
-	int read_arguments(
-			int argc, std::string *argv,
-		int verbose_level);
-	void print();
-
-
-};
-
-
-
-// #############################################################################
-// spread_activity.cpp
-// #############################################################################
-
-//! an activity for an object of type spread
-
-
-
-class spread_activity {
-
-public:
-
-	spread_activity_description *Descr;
-	spread_create *Spread_create;
-	geometry::finite_geometries::spread_domain *SD;
-
-	actions::action *A;
-		// PGGL(n,q)
-	actions::action *A2;
-		// action of A on grassmannian
-		// of k-subspaces of V(n,q)
-	induced_actions::action_on_grassmannian *AG;
-
-	actions::action *AGr;
-
-
-	spread_activity();
-	~spread_activity();
-	void init(
-			spread_activity_description *Descr,
-			spread_create *Spread_create,
-			int verbose_level);
-	void perform_activity(
-			int verbose_level);
-	void report(
-			int verbose_level);
-	void report2(
-			std::ostream &ost, int verbose_level);
-
-};
-
-
-
-
-
-
-
-// #############################################################################
-// spread_classify_activity_description.cpp
-// #############################################################################
-
-//! description of an activity regarding the classification of spreads
-
-
-
-class spread_classify_activity_description {
-
-public:
-
-
-	// TABLES/spread_classify_activity.tex
-
-	int f_compute_starter;
-
-	int f_prepare_lifting_single_case;
-	int prepare_lifting_single_case_case_number;
-
-	int f_prepare_lifting_all_cases;
-
-	int f_split;
-	int split_r;
-	int split_m;
-
-	int f_isomorph;
-	std::string isomorph_label;
-
-	int f_build_db;
-	int f_read_solutions;
-	int f_compute_orbits;
-	int f_isomorph_testing;
-	int f_isomorph_report;
-
-
-	spread_classify_activity_description();
-	~spread_classify_activity_description();
-	int read_arguments(
-			int argc, std::string *argv,
-		int verbose_level);
-	void print();
-
-};
-
-
-// #############################################################################
-// spread_classify_activity.cpp
-// #############################################################################
-
-//! an activity regarding the classification of spreads
-
-
-
-class spread_classify_activity {
-
-public:
-
-	spread_classify_activity_description *Descr;
-	spread_classify *Spread_classify;
-
-	spread_classify_activity();
-	~spread_classify_activity();
-	void init(
-			spread_classify_activity_description *Descr,
-			spread_classify *Spread_classify,
-			int verbose_level);
-	void perform_activity(
-			int verbose_level);
-	void create_context(
-			std::string &isomorph_label,
-			layer4_classification::isomorph::isomorph_context *&Isomorph_context,
-			int verbose_level);
-
-};
 
 
 
@@ -419,9 +269,6 @@ public:
 };
 
 
-
-
-
 // #############################################################################
 // spread_create_description.cpp
 // #############################################################################
@@ -538,6 +385,10 @@ public:
 
 
 
+
+
+
+
 // #############################################################################
 // spread_lifting.cpp
 // #############################################################################
@@ -619,106 +470,6 @@ public:
 			int verbose_level);
 	void create_dummy_graph(
 			int verbose_level);
-
-};
-
-
-// #############################################################################
-// spread_table_activity_description.cpp
-// #############################################################################
-
-//! description of an activity for a spread table
-
-
-class spread_table_activity_description {
-public:
-
-	// TABLES/spread_table_activity.csv
-
-	int f_find_spread;
-	std::string find_spread_text;
-
-	int f_find_spread_and_dualize;
-	std::string find_spread_and_dualize_text;
-
-	int f_dualize_packing;
-	std::string dualize_packing_text;
-
-	int f_print_spreads;
-	std::string print_spreads_idx_text;
-
-	int f_export_spreads_to_csv;
-	std::string export_spreads_to_csv_fname;
-	std::string export_spreads_to_csv_idx_text;
-
-
-	int f_find_spreads_containing_two_lines;
-	int find_spreads_containing_two_lines_line1;
-	int find_spreads_containing_two_lines_line2;
-
-	int f_find_spreads_containing_one_line;
-	int find_spreads_containing_one_line_line_idx;
-
-	int f_isomorphism_type_of_spreads;
-	std::string isomorphism_type_of_spreads_list;
-
-
-	int f_dualize_packings;
-	std::string dualize_packings_fname_in;
-	std::string dualize_packings_fname_out;
-	std::string dualize_packings_col_label;
-
-
-	spread_table_activity_description();
-	~spread_table_activity_description();
-	int read_arguments(
-		int argc, std::string *argv,
-		int verbose_level);
-	void print();
-
-};
-
-
-// #############################################################################
-// spread_table_activity.cpp
-// #############################################################################
-
-//! an activity for a spread table
-
-
-class spread_table_activity {
-public:
-
-	spread_table_activity_description *Descr;
-
-	spreads::spread_table_with_selection *Spread_table_with_selection;
-
-	//packings::packing_classify *P;
-	// why is this here?
-
-
-	spread_table_activity();
-	~spread_table_activity();
-	void init(
-			spreads::spread_table_activity_description *Descr,
-			spreads::spread_table_with_selection *Spread_table_with_selection,
-			int verbose_level);
-	void perform_activity(
-			int verbose_level);
-	void export_spreads_to_csv(
-			std::string &fname,
-			int *spread_idx, int nb, int verbose_level);
-	void packings_dualize(
-			std::string &fname_in, std::string &fname_out, std::string &col_label,
-			int verbose_level);
-	void dualize_packings(
-			long int *Packing_in, int nb_packings, int packing_sz,
-			long int *&Dual_packings,
-			int verbose_level);
-	void report_spreads(
-			int *spread_idx, int nb, int verbose_level);
-	void report_spread2(
-			std::ostream &ost, int spread_idx, int verbose_level);
 
 };
 
@@ -845,65 +596,6 @@ public:
 			int i, int j);
 
 };
-
-// #############################################################################
-// translation_plane_activity_description.cpp
-// #############################################################################
-
-//! description of an activity regarding a translation plane
-
-
-
-class translation_plane_activity_description {
-
-public:
-
-	// TABLES/translation_plane_activity.tex
-
-	int f_export_incma;
-
-	int f_p_rank;
-	int p_rank_p;
-
-	int f_report;
-
-	translation_plane_activity_description();
-	~translation_plane_activity_description();
-	int read_arguments(
-			int argc, std::string *argv,
-		int verbose_level);
-	void print();
-
-};
-
-
-// #############################################################################
-// translation_plane_activity.cpp
-// #############################################################################
-
-//! an activity regarding a translation plane
-
-
-
-class translation_plane_activity {
-
-public:
-
-	translation_plane_activity_description *Descr;
-	combinatorics_with_groups::translation_plane_via_andre_model *TP;
-
-
-	translation_plane_activity();
-	~translation_plane_activity();
-	void init(
-			translation_plane_activity_description *Descr,
-			combinatorics_with_groups::translation_plane_via_andre_model *TP,
-			int verbose_level);
-	void perform_activity(
-			int verbose_level);
-
-};
-
 
 
 

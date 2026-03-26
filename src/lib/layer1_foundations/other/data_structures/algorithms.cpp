@@ -1007,7 +1007,7 @@ void algorithms::matrix_multiply_over_Z(
 	n3 = n2;
 	A3 = NEW_int(m3 * n3);
 
-	algebra::basic_algebra::module Mod;
+	algebra::ring_theory::module_over_Z Mod;
 
 	Mod.matrix_multiply_over_Z_low_level(
 			A1, A2, m1, n1, m2, n2,

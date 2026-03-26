@@ -360,7 +360,7 @@ void pc_convert_data_structure::make_flag_orbits_on_relations(
 
 
 void pc_convert_data_structure::make_factor_poset(
-		int depth, //combinatorics::graph_theory::layered_graph *&LG,
+		int depth,
 		int data1, double x_stretch,
 		layer1_foundations::combinatorics::graph_theory::factor_poset *&Factor_poset,
 		int type_of_poset,
@@ -462,7 +462,6 @@ void pc_convert_data_structure::make_factor_poset(
 
 
 
-	//int lvl, po, po2, so, n1, n2, ol1, ol2, el1, el2, h;
 
 	Factor_poset = NEW_OBJECT(layer1_foundations::combinatorics::graph_theory::factor_poset);
 
@@ -1417,6 +1416,7 @@ void pc_convert_data_structure::make_level_graph(
 	int nb_layers = 4;
 	long int *the_set;
 	long int *the_set2;
+	actions::action_global Action_global;
 
 	if (f_v) {
 		cout << "pc_convert_data_structure::make_level_graph "
@@ -1644,8 +1644,13 @@ void pc_convert_data_structure::make_level_graph(
 
 						//Poset->A->element_retrieve(E->get_data(), Elt1, 0);
 
-						PC->get_poset()->A2->map_a_set_based_on_hdl(
-								the_set, the_set2, lvl + 1, PC->get_poset()->A, E->get_data(), 0);
+						Action_global.map_a_set_based_on_hdl(
+								the_set,
+								the_set2,
+								lvl + 1,
+								PC->get_poset()->A, PC->get_poset()->A2,
+								E->get_data(),
+								0);
 
 						LG->add_node_vec_data(
 								l + 2, f + so, the_set2, lvl + 1,
@@ -1685,6 +1690,7 @@ void pc_convert_data_structure::make_poset_graph_detailed(
 	int nb_layers = 3 * max_depth + 1;
 	long int *the_set;
 	long int *the_set2;
+	actions::action_global Action_global;
 
 	if (f_v) {
 		cout << "pc_convert_data_structure::make_poset_graph_detailed "
@@ -1942,15 +1948,22 @@ void pc_convert_data_structure::make_poset_graph_detailed(
 					else if (E->get_type() == EXTENSION_TYPE_FUSION) {
 
 						//Poset->A->element_retrieve(E->get_data(), Elt1, 0);
-						PC->get_poset()->A2->map_a_set_based_on_hdl(
-								the_set, the_set2, L + 1,
-								PC->get_poset()->A, E->get_data(), 0);
+						Action_global.map_a_set_based_on_hdl(
+								the_set,
+								the_set2,
+								L + 1,
+								PC->get_poset()->A,
+								PC->get_poset()->A2,
+								E->get_data(),
+								0);
 						LG->add_node_vec_data(
 								3 * L + 2, f + so,
-								the_set2, L + 1, 0 /* verbose_level */);
+								the_set2, L + 1,
+								0 /* verbose_level */);
 						LG->set_distinguished_element_index(
 								3 * L + 2,
-								f + so, L, 0 /* verbose_level */);
+								f + so, L,
+								0 /* verbose_level */);
 					}
 				}
 				f += PC->get_Poo()->node_get_nb_of_extensions(n);

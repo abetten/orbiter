@@ -38,7 +38,7 @@ polynomial_ring_activity::~polynomial_ring_activity()
 }
 
 void polynomial_ring_activity::init(
-		algebra::ring_theory::polynomial_ring_activity_description *Descr,
+		user_interface::activities_layer1::polynomial_ring_activity_description *Descr,
 		algebra::ring_theory::homogeneous_polynomial_domain *HPD,
 		int verbose_level)
 {

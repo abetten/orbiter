@@ -766,6 +766,7 @@ void substructure_classification::create_level_database(
 	//char *elt;
 	int *Elt;
 	other::data_structures::sorting Sorting;
+	actions::action_global Action_global;
 
 	if (f_v) {
 		cout << "substructure_classification::create_level_database "
@@ -900,9 +901,11 @@ void substructure_classification::create_level_database(
 					//gen->get_A()->element_retrieve(O->get_E(j)->get_data(), gen->get_Elt1(), false);
 
 
-					gen->get_A2()->map_a_set_based_on_hdl(
-							set1, set2, level + 1, gen->get_A(),
-							O->get_E(j)->get_data(), 0);
+					Action_global.map_a_set_based_on_hdl(
+							set1, set2,
+							level + 1, gen->get_A(), gen->get_A2(),
+							O->get_E(j)->get_data(),
+							0);
 					Sorting.lint_vec_heapsort(set2, level + 1);
 
 					if (f_vv /*f_vv && (i % print_mod) == 0*/) {

@@ -6,8 +6,6 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
-	action_on_forms_activity_description.o \
-	action_on_forms_activity.o \
 	action_on_forms_description.o \
 	action_on_forms.o \
 	algebra_global_with_action.o \
@@ -15,15 +13,11 @@ MODULES = \
 	classes_of_elements_expanded.o \
 	classes_of_subgroups_expanded.o \
 	element_processing_description.o \
-	group_theoretic_activity_description.o \
-	group_theoretic_activity.o \
 	modified_group_init_layer5.o \
 	orbit_of_elements.o \
 	orbit_of_subgroups.o \
 	polynomial_ring_activity.o \
 	rational_normal_form.o \
-	vector_ge_activity_description.o \
-	vector_ge_activity.o \
 	vector_ge_builder.o \
 	young.o 
 

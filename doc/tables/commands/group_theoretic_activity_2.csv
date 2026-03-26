@@ -8,10 +8,13 @@ ROW,C1,C2,C3
 1,"\verb'-normalizer_of_cyclic_subgroup' ","  ","Computes the normalizer of a cyclic group, see Section~\ref{sec:group:magma}."
 1,"\verb'-classes' ","  ","Computes the conjugacy classes of elements, see Section~\ref{sec:group:magma}."
 1,"\verb'-split_by_classes' "," fname column "," Splits the sets from the given csv file in the given column accoding to the different conjugacy classes of the group."
+1,"\verb'-identify_elements_by_class' "," fname column go supergroup"," Identifies the conjugacy class of each of the elements in the given column in the given file."
+1,"\verb'-find_subgroup' "," go"," Finds all subgroups of the given order and produces a latex report."
 1,"\verb'-conjugacy_class_of' "," label $g$ "," Computes the conjugacy class of $g$. "
 1,"\verb'-isomorphism_Klein_quadric' "," fname "," "
 1,"\verb'-print_elements' "," ","Produces a printout of all group elements. "
 1,"\verb'-print_elements_tex' "," ","Produces a latex report of all group elements. "
+1,"\verb'-make_element_tree' "," ","Produces the tree of all group elements. "
 1,"\verb'-vector_ge_print_elements_tex' "," vector ","Produces a latex report of all group elements in the vector object. "
 1,"\verb'-save_elements_csv' "," fname ","Writes the elements of the group to the given csv file."
 1,"\verb'-export_inversion_graphs' "," fname ","Exports the inversion graphs associated to the group elements to the given file."
@@ -21,4 +24,3 @@ ROW,C1,C2,C3
 1,"\verb'-move_a_b' "," a b ","Determine a group element mapping a to b. Computes the stabilizer of b in the given group $G$ (the group for which the activity is applied). "
 1,"\verb'-rational_normal_form' "," element ","Computes the rational normal form of the given group element (must be a matrix group). "
 END
-f_split_by_classes

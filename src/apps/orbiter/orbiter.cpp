@@ -56,10 +56,10 @@ std::string do_orbiter_session(
 	if (f_v) {
 		cout << "do_orbiter_session" << endl;
 	}
-	user_interface::orbiter_top_level_session Top_level_session;
+	user_interface::core_system::orbiter_top_level_session Top_level_session;
 
 
-	user_interface::The_Orbiter_top_level_session = &Top_level_session;
+	user_interface::core_system::The_Orbiter_top_level_session = &Top_level_session;
 
 
 	if (f_v) {

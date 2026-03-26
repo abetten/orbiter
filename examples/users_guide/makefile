@@ -7745,6 +7745,7 @@ SECTION_GROUP_THEORETIC_ACTIVITIES_BASED_ON_MAGMA:
 
 
 test_5_6:
+	make Symmetric_4_diagram_of_conjugacy_classes
 	make PSP_4_4_export_magma
 	make PGGL_2_4_export_magma
 	make Hirschfeld_stab_export_magma
@@ -7770,6 +7771,23 @@ test_5_6:
 	#make PGOm_6_2_Class_2A_centralizer_recover
 
 
+Symmetric_4_diagram_of_conjugacy_classes:
+	$(ORBITER) -v 3 \
+		-define G -permutation_group -symmetric_group 4 -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-diagram \
+		-end
+	$(ORBITER) -v 2 \
+		-draw_matrix \
+			-input_csv_file_column Sym_4_class_diagram.csv Class \
+			-box_width 50 \
+			-bit_depth 24 \
+			-indent 15 \
+			-color_offset 1 \
+		-end
+	magick Sym_4_class_diagram_draw.bmp Sym_4_class_diagram_draw.pdf
+	open Sym_4_class_diagram_draw.pdf
 
 
 PSP_4_4_export_magma:
@@ -19012,6 +19030,7 @@ PG_3_5_assume_31_read:
 			-file_of_packings_through_spread_table \
 				H31_packings.csv \
 				SPREAD_TABLES_5_REG/spread_25_spreads.csv \
+				SpreadRep \
 				5 \
 		-end
 
@@ -23555,6 +23574,7 @@ PG_3_3_assume_5_packings_classify:
 			-file_of_packings_through_spread_table \
 				H5_packings.csv \
 				SPREAD_TABLES_3/spread_9_table.csv \
+				SpreadRep \
 				3 \
 		-end \
 		-define F -finite_field -q 3 -end \
@@ -24179,13 +24199,17 @@ Paley_13_cliques_classify:
 
 
 Paley_13_cliques_all:
-	$(ORBITER) -v 10 \
+	$(ORBITER) -v 2 \
 		-define F -finite_field -q 13 -end \
 		-define Gamma -graph -Paley F -end \
 		-with Gamma -do \
 		-graph_theoretic_activity \
 			-find_cliques -target_size 3 \
 		-end
+
+
+#colored_graph_cliques::all_cliques_black_and_white after CG->all_cliques_of_size_k_ignore_colors, nb_cliques = 26
+
 
 
 Neumaier_16_cliques_all:

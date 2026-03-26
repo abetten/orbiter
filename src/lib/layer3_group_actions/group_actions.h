@@ -29,6 +29,7 @@ namespace actions {
 
 	class action;
 	class action_global;
+	class action_latex_interface;
 	class action_pointer_table;
 	class known_groups;
 	class group_element;

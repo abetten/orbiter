@@ -22,7 +22,7 @@ void third();
 
 int main()
 {
-	orbiter::layer5_applications::user_interface::orbiter_top_level_session Orbiter;
+	orbiter::layer5_applications::user_interface::core_system::orbiter_top_level_session Orbiter;
 
 	first();
 	second();

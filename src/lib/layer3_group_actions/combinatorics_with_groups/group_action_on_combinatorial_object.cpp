@@ -97,6 +97,9 @@ void group_action_on_combinatorial_object::init(
 	if (f_v) {
 		cout << "group_action_on_combinatorial_object::init "
 				"after Any_Combo->encode_incma" << endl;
+		cout << "group_action_on_combinatorial_object::init "
+				"Enc = " << endl;
+		Enc->print_incma();
 	}
 
 	if (f_v) {
@@ -611,54 +614,145 @@ void group_action_on_combinatorial_object::export_INP_with_flag_orbits(
 		int idx;
 		int orbit_idx;
 
-		Inc = NEW_int(Enc->nb_rows * Enc->nb_cols);
-		Inc_flag_orbits = NEW_int(Enc->nb_rows * Enc->nb_cols);
-		nb_orbits_on_flags = Flags->Orb->Sch->Forest->nb_orbits;
-		for (i = 0; i < Enc->nb_rows; i++) {
-			i0 = i;
-			for (j = 0; j < Enc->nb_cols; j++) {
-				j0 = j;
-				if (Enc->get_incidence_ij(i0, j0)) {
-					idx = Flags->find_flag(i0, j0 + Enc->nb_rows);
-					orbit_idx = Flags->Orb->Sch->Forest->orbit_number(idx);
-					Inc_flag_orbits[i * Enc->nb_cols + j] = orbit_idx + 1;
-					Inc[i * Enc->nb_cols + j] = 1;
-				}
-				else {
-					idx = Anti_Flags->find_flag(i0, j0 + Enc->nb_rows);
-					orbit_idx = Anti_Flags->Orb->Sch->Forest->orbit_number(idx);
-					Inc_flag_orbits[i * Enc->nb_cols + j] = nb_orbits_on_flags + orbit_idx + 1;
-					Inc[i * Enc->nb_cols + j] = 0;
+		if (f_v) {
+			cout << "group_action_on_combinatorial_object::export_INP_with_flag_orbits Enc=" << endl;
+			Enc->print_incma();
+		}
+
+		if (Any_Combo->f_inc_representation_of_graph) {
+			int N2 = Enc->nb_cols;
+			int N;
+
+			for (N = 0; ; N++) {
+				if ((N * (N - 1)) >> 1 == N2) {
+					break;
 				}
 			}
+
+			if (f_v) {
+				cout << "group_action_on_combinatorial_object::export_INP_with_flag_orbits "
+						"detected a graph object N=" << N << endl;
+				cout << "nb_rows = " << Enc->nb_rows << endl;
+				cout << "nb_cols = " << Enc->nb_cols << endl;
+			}
+
+			Inc = NEW_int(N * N);
+			Inc_flag_orbits = NEW_int(N * N);
+			Int_vec_zero(Inc, N * N);
+			Int_vec_zero(Inc_flag_orbits, N * N);
+			int block[2];
+			int cnt, a, b;
+			int idx1, idx2;
+			int orbit_idx1, orbit_idx2;
+
+			for (j = 0; j < Enc->nb_cols; j++) {
+				cnt = 0;
+				for (i = 0; i < Enc->nb_rows - 2; i++) {
+					if (Enc->get_incidence_ij(i, j)) {
+						block[cnt++] = i;
+					}
+				}
+				if (cnt != 2) {
+					cout << "group_action_on_combinatorial_object::export_INP_with_flag_orbits "
+							"cnt != 2" << endl;
+					cout << "cnt = " << cnt << endl;
+					exit(1);
+				}
+				a = block[0];
+				b = block[1];
+
+				idx1 = Flags->find_flag(a, Enc->nb_rows + j);
+				orbit_idx1 = Flags->Orb->Sch->Forest->orbit_number(idx1);
+				idx2 = Flags->find_flag(b, Enc->nb_rows + j);
+				orbit_idx2 = Flags->Orb->Sch->Forest->orbit_number(idx2);
+				Inc_flag_orbits[a * N + b] = orbit_idx1 + 1;
+				Inc_flag_orbits[b * N + a] = orbit_idx2 + 1;
+
+				if (Enc->get_incidence_ij(N, j)) {
+					// It is an edge
+					Inc[a * N + b] = 1;
+					Inc[b * N + a] = 1;
+				}
+				else {
+					// it is a non edge
+					Inc[a * N + b] = 0;
+					Inc[b * N + a] = 0;
+				}
+
+			}
+
+			fname = label_txt + "_INP.csv";
+
+			Fio.Csv_file_support->int_matrix_write_csv(
+					fname, Inc, N, N);
+			if (f_v) {
+				cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+			}
+
+			fname = label_txt + "_INP_flag_orbits.csv";
+
+			Fio.Csv_file_support->int_matrix_write_csv(
+					fname, Inc_flag_orbits, N, N);
+			if (f_v) {
+				cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+			}
+
+			FREE_int(Inc);
+			FREE_int(Inc_flag_orbits);
+
+
+		}
+		else {
+			Inc = NEW_int(Enc->nb_rows * Enc->nb_cols);
+			Inc_flag_orbits = NEW_int(Enc->nb_rows * Enc->nb_cols);
+			nb_orbits_on_flags = Flags->Orb->Sch->Forest->nb_orbits;
+			for (i = 0; i < Enc->nb_rows; i++) {
+				i0 = i;
+				for (j = 0; j < Enc->nb_cols; j++) {
+					j0 = j;
+					if (Enc->get_incidence_ij(i0, j0)) {
+						idx = Flags->find_flag(i0, j0 + Enc->nb_rows);
+						orbit_idx = Flags->Orb->Sch->Forest->orbit_number(idx);
+						Inc_flag_orbits[i * Enc->nb_cols + j] = orbit_idx + 1;
+						Inc[i * Enc->nb_cols + j] = 1;
+					}
+					else {
+						idx = Anti_Flags->find_flag(i0, j0 + Enc->nb_rows);
+						orbit_idx = Anti_Flags->Orb->Sch->Forest->orbit_number(idx);
+						Inc_flag_orbits[i * Enc->nb_cols + j] = nb_orbits_on_flags + orbit_idx + 1;
+						Inc[i * Enc->nb_cols + j] = 0;
+					}
+				}
+			}
+			fname = label_txt + "_INP.csv";
+
+			Fio.Csv_file_support->int_matrix_write_csv(
+					fname, Inc, Enc->nb_rows, Enc->nb_cols);
+			if (f_v) {
+				cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+			}
+
+			fname = label_txt + "_INP_flag_orbits.csv";
+
+			Fio.Csv_file_support->int_matrix_write_csv(
+					fname, Inc_flag_orbits, Enc->nb_rows, Enc->nb_cols);
+			if (f_v) {
+				cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+			}
+
+			FREE_int(Inc);
+			FREE_int(Inc_flag_orbits);
 		}
 
-		fname = label_txt + "_INP.csv";
-
-		Fio.Csv_file_support->int_matrix_write_csv(
-				fname, Inc, Enc->nb_rows, Enc->nb_cols);
-		if (f_v) {
-			cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-		}
-
-		fname = label_txt + "_INP_flag_orbits.csv";
-
-		Fio.Csv_file_support->int_matrix_write_csv(
-				fname, Inc_flag_orbits, Enc->nb_rows, Enc->nb_cols);
-		if (f_v) {
-			cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-		}
-
-		FREE_int(Inc);
-		FREE_int(Inc_flag_orbits);
 
 	}
 	else {
 
-		if (f_v) {
+		//if (f_v) {
 			cout << "group_action_on_combinatorial_object::export_INP_with_flag_orbits "
 					"flag_orbits have not been computed" << endl;
-		}
+			exit(1);
+		//}
 
 		int *Inc2;
 

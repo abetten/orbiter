@@ -25,6 +25,7 @@ data_input_stream_description_element::data_input_stream_description_element()
 	input_type = t_data_input_stream_unknown;
 	//std::string input_string;
 	//std::string input_string2;
+	//std::string input_string3;
 	input_data1 = 0;
 	input_data2 = 0;
 	input_data3 = 0;
@@ -76,6 +77,7 @@ void data_input_stream_description_element::print()
 		cout << "-file_of_packings_through_spread_table "
 			<< input_string
 			<< " " << input_string2
+			<< " " << input_string3
 			<< " " << input_data1
 			<< endl;
 	}
@@ -286,12 +288,13 @@ void data_input_stream_description_element::init_file_of_packings(std::string &a
 }
 
 void data_input_stream_description_element::init_file_of_packings_through_spread_table(
-		std::string &a, std::string &b, int q)
+		std::string &a, std::string &fname_spread_table, std::string &col_label, int q)
 {
 	input_type = t_data_input_stream_file_of_packings_through_spread_table;
 
 	input_string.assign(a);
-	input_string2.assign(b);
+	input_string2.assign(fname_spread_table);
+	input_string3.assign(col_label);
 	input_data1 = q;
 }
 

@@ -803,8 +803,8 @@ class int_matrix {
 public:
 
 	int *M;
-	int m;
-	int n;
+	int m; // # of rows
+	int n; // # of columns
 
 	int *perm_inv;
 	int *perm;
@@ -821,6 +821,8 @@ public:
 			int i, int j);
 	int &s_m();
 	int &s_n();
+	void make_identity_matrix(
+			int verbose_level);
 	void print();
 	void sort_rows(
 			int verbose_level);
@@ -1106,7 +1108,7 @@ public:
 class lint_matrix {
 public:
 
-	long int *M;
+	long int *Data;
 	int m;
 	int n;
 
@@ -1121,6 +1123,7 @@ public:
 			int m, int n);
 	void allocate_and_init(
 			int m, int n, long int *Mtx);
+	other::data_structures::lint_matrix *transpose();
 	long int &s_ij(
 			int i, int j);
 	int &s_m();
@@ -2241,6 +2244,9 @@ public:
 	void reallocate_table_add_row();
 	int find_column(
 			std::string &column_label);
+	// if the label ends in ..., we perform prefix match
+	int find_by_column_relaxed(
+			const char *join_by);
 	int find_by_column(
 			const char *join_by);
 	void tokenize(

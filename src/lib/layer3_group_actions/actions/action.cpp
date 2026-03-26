@@ -35,6 +35,8 @@ action::action()
 	Group_element = NEW_OBJECT(group_element);
 	Group_element->init(this, verbose_level);
 
+	Action_latex_interface = NEW_OBJECT(action_latex_interface);
+	Action_latex_interface->init(this, verbose_level);
 }
 
 action::~action()
@@ -82,6 +84,8 @@ void action::null()
 	low_level_point_size = 0;
 
 	ptr = NULL;
+
+	Action_latex_interface = NULL;
 
 	f_allocated = false;
 	f_has_subaction = false;
@@ -397,6 +401,10 @@ void action::freeself()
 		FREE_OBJECT(ptr);
 	}
 
+	if (Action_latex_interface) {
+		FREE_OBJECT(Action_latex_interface);
+	}
+
 
 	if (f_v) {
 		cout << "action::freeself "
@@ -515,34 +523,6 @@ long int &action::orbit_inv_ij(
 
 
 // #############################################################################
-
-
-
-void action::map_a_set_based_on_hdl(
-		long int *set,
-		long int *image_set,
-		int n, action *A_base, int hdl,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int *Elt;
-
-	if (f_v) {
-		cout << "action::map_a_set_based_on_hdl" << endl;
-	}
-	Elt = NEW_int(elt_size_in_int);
-
-	A_base->Group_element->element_retrieve(hdl, Elt, false);
-
-	Group_element->map_a_set(set,
-		image_set, n, Elt, verbose_level);
-
-	FREE_int(Elt);
-	if (f_v) {
-		cout << "action::map_a_set_based_on_hdl done" << endl;
-	}
-}
-
 
 
 
@@ -680,78 +660,6 @@ void action::strong_generators_at_depth(
 	gen.len = n;
 }
 
-#if 0
-void action::compute_point_stabilizer_chain(
-		data_structures_groups::vector_ge &gen,
-		groups::sims *S, int *sequence, int len,
-		int verbose_level)
-// unused code
-// S points to len + 1 many sims objects
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	int f_vvv = (verbose_level >= 3);
-	int i;
-	
-	if (f_v) {
-		cout << "action::compute_point_stabilizer_chain for sequence ";
-		Int_vec_print(cout, sequence, len);
-		cout << endl;
-	}
-	for (i = 0; i <= len; i++) {
-		S[i].init(this, verbose_level - 2);
-	}
-	S[0].init_generators(gen, 0);
-	S[0].compute_base_orbits(0 /*verbose_level - 1*/);
-	if (f_vv) {
-		cout << "automorphism group has order ";
-		S[0].print_group_order(cout);
-		cout << endl;
-		if (f_vvv) {
-			cout << "generators:" << endl;
-			S[0].print_generators();
-		}
-	}
-	
-	for (i = 0; i < len; i++) {
-		if (f_vv) {
-			cout << "computing stabilizer of " << i 
-				<< "-th point in the sequence" << endl;
-		}
-		S[i].point_stabilizer_stabchain_with_action(
-				this,
-			S[i + 1], sequence[i], 0 /*verbose_level - 2*/);
-		if (f_vv) {
-			cout << "stabilizer of " << i << "-th point "
-					<< sequence[i] << " has order ";
-			S[i + 1].print_group_order(cout);
-			cout << endl;
-			if (f_vvv) {
-				cout << "generators:" << endl;
-				S[i + 1].print_generators();
-			}
-		}
-	}
-	if (f_v) {
-		cout << "action::compute_point_stabilizer_chain for sequence ";
-		Int_vec_print(cout, sequence, len);
-		cout << " finished" << endl;
-		cout << "i : order of i-th stabilizer" << endl;
-		for (i = 0; i <= len; i++) {
-			cout << i << " : ";
-			S[i].print_group_order(cout);
-			cout << endl;
-		}
-		if (f_vv) {
-			for (i = 0; i <= len; i++) {
-				cout << i << " : ";
-				cout << "generators:" << endl;
-				S[i].print_generators();
-			}
-		}
-	}
-}
-#endif
 
 void action::compute_stabilizer_orbits(
 		other::data_structures::partitionstack *&Staborbits,

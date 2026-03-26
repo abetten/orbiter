@@ -27,6 +27,15 @@ static std::vector<int> get_color(
 		int bit_depth, int max_value, int loopCount, int f_invert_colors, int verbose_level);
 static void fillBitmap(
 		BMP &image, int i, int j, std::vector<int> color);
+static void draw_rectangle_indented(
+		BMP &image,
+		int I, int J, int width, int indent,
+		std::vector<int> &back_color,
+		std::vector<int> &color);
+static void draw_rectangle(
+		BMP &image,
+		int I, int J, int width,
+		std::vector<int> &color);
 
 
 
@@ -55,11 +64,15 @@ void easy_BMP_interface::draw_bitmap(
 	}
 	orbiter_kernel_system::file_io Fio;
 
+	string fname_in = "bitmatrix.csv";
+
 
 	if (C->f_input_csv_file) {
 
+		fname_in = C->input_csv_file_name;
+
 		Fio.Csv_file_support->int_matrix_read_csv(
-				C->input_csv_file_name,
+				fname_in,
 				C->M, C->m, C->n,
 				verbose_level);
 
@@ -84,7 +97,45 @@ void easy_BMP_interface::draw_bitmap(
 		}
 
 	}
+	else if (C->f_input_csv_file_column) {
+
+		if (f_v) {
+			cout << "-input_csv_file_column " << C->input_csv_file_column_name << " " << C->input_csv_file_column_label << endl;
+		}
+
+		fname_in = C->input_csv_file_column_name;
+
+		Fio.Csv_file_support->read_column_as_table_of_int(
+				fname_in, C->input_csv_file_column_label,
+				C->M, C->m, C->n,
+				verbose_level);
+
+		if (C->f_secondary_input_csv_file) {
+
+
+			int m, n;
+
+
+			Fio.Csv_file_support->int_matrix_read_csv(
+					C->secondary_input_csv_file_name,
+					C->M2, m, n,
+					verbose_level);
+			if (m != C->m) {
+				cout << "secondary matrix must have the same size as the primary input matrix" << endl;
+				exit(1);
+			}
+			if (n != C->n) {
+				cout << "secondary matrix must have the same size as the primary input matrix" << endl;
+				exit(1);
+			}
+		}
+
+
+	}
+
 	else if (C->f_input_object) {
+
+		fname_in = C->input_object_label + ".csv"; // add extension because is will be cut off later
 
 		Get_matrix(C->input_object_label,
 				C->M, C->m, C->n);
@@ -129,13 +180,8 @@ void easy_BMP_interface::draw_bitmap(
 
 	string fname_out;
 
-	if (C->f_input_csv_file) {
-		fname_out.assign(C->input_csv_file_name);
-	}
-	else {
-		fname_out.assign("bitmatrix.csv");
+	fname_out.assign(fname_in);
 
-	}
 	ST.replace_extension_with(fname_out, "_draw.bmp");
 
 	//int bit_depth = 8;
@@ -205,20 +251,39 @@ void easy_BMP_interface::draw_bitmap(
 	if (C->f_secondary_input_csv_file) {
 		indent = C->box_width >> 2;
 	}
+	else {
+		//indent = 0;
+		indent = (int)((C->box_width * (double)C->indent_100) / 100);
+	}
 	if (f_v) {
 		cout << "indent=" << indent << endl;
 	}
 
+	std::vector<int> color_background;
 	std::vector<int> color_white;
 
 	if (C->f_grayscale) {
-		color_white = get_color_grayscale(C->bit_depth, max_value, 0, C->f_invert_colors, 0);
+		color_background = get_color_grayscale(C->bit_depth, max_value, 0, C->f_invert_colors, 0);
 	}
 	else {
-		color_white = get_color(C->bit_depth, max_value, 0, C->f_invert_colors, 0);
+		color_background = get_color(C->bit_depth, max_value, 0, C->f_invert_colors, 0);
+	}
+
+	int color_offset = 0;
+
+	if (C->f_color_offset) {
+		color_offset = C->color_offset;
+	}
+
+	if (C->f_grayscale) {
+		color_white = get_color_grayscale(C->bit_depth, max_value, 0 + color_offset, C->f_invert_colors, 0);
+	}
+	else {
+		color_white = get_color(C->bit_depth, max_value, 0 + color_offset, C->f_invert_colors, 0);
 	}
 
 	if (f_v) {
+		cout << "color_background=" << color_background[0] << "," << color_background[1] << "," << color_background[2] << endl;
 		cout << "color_white=" << color_white[0] << "," << color_white[1] << "," << color_white[2] << endl;
 	}
 
@@ -234,7 +299,7 @@ void easy_BMP_interface::draw_bitmap(
 			if ((cnt % N100) == 0) {
 				cout << "we are at " << ((double) cnt / (double) N) * 100. << " %" << endl;
 			}
-			d = C->M[i * width + j];
+			d = C->M[i * width + j] + color_offset;
 			//std::vector<int> color = getColor(M[idx_x * width + idx_z]);
 			std::vector<int> color;
 
@@ -257,6 +322,7 @@ void easy_BMP_interface::draw_bitmap(
 
 				if (C->f_secondary_input_csv_file) {
 					if (C->M2[i * width + j] == 0) {
+#if 0
 						for (u = 0; u < C->box_width; u++) {
 							for (v = 0; v < C->box_width; v++) {
 								if (u < indent || u >= C->box_width - indent || v < indent || v >= C->box_width - indent) {
@@ -267,21 +333,45 @@ void easy_BMP_interface::draw_bitmap(
 								}
 							}
 						}
+#endif
+						draw_rectangle_indented(
+								image,
+								I, J, C->box_width, indent,
+								color_background,
+								color);
 					}
 					else {
+#if 0
 						for (u = 0; u < C->box_width; u++) {
 							for (v = 0; v < C->box_width; v++) {
 								fillBitmap(image, J + v, I + u, color);
 							}
 						}
+						draw_rectangle(
+								image,
+								I, J, C->box_width,
+								color);
+#endif
+						draw_rectangle_indented(
+								image,
+								I, J, C->box_width, indent,
+								color_background,
+								color);
 					}
 				}
 				else {
+#if 0
 					for (u = 0; u < C->box_width; u++) {
 						for (v = 0; v < C->box_width; v++) {
 							fillBitmap(image, J + v, I + u, color);
 						}
 					}
+#endif
+					draw_rectangle_indented(
+							image,
+							I, J, C->box_width, indent,
+							color_background,
+							color);
 				}
 
 			}
@@ -301,10 +391,14 @@ void easy_BMP_interface::draw_bitmap(
 
 
 		if (C->f_grayscale) {
-			color = get_color_grayscale(C->bit_depth, max_value, max_value, C->f_invert_colors, 0);
+			color = get_color_grayscale(
+					C->bit_depth, max_value, max_value, C->f_invert_colors,
+					0);
 		}
 		else {
-			color = get_color(C->bit_depth, max_value, 1, C->f_invert_colors, 0);
+			color = get_color(
+					C->bit_depth, max_value, 1, C->f_invert_colors,
+					0);
 
 		}
 
@@ -372,6 +466,7 @@ void easy_BMP_interface::draw_bitmap(
 	}
 
 }
+
 
 void easy_BMP_interface::random_noise_in_bitmap_file(
 		std::string fname_input,
@@ -924,6 +1019,44 @@ void fillBitmap(
 	image(i, j)->Blue = color[2];
 };
 
+static void draw_rectangle_indented(
+		BMP &image,
+		int I, int J, int width, int indent,
+		std::vector<int> &back_color,
+		std::vector<int> &color)
+{
+
+	int u, v;
+
+	for (u = 0; u < width; u++) {
+		for (v = 0; v < width; v++) {
+			if (u < indent || u >= width - indent || v < indent || v >= width - indent) {
+				fillBitmap(image, J + v, I + u, back_color);
+			}
+			else {
+				fillBitmap(image, J + v, I + u, color);
+			}
+		}
+	}
+
+}
+
+static void draw_rectangle(
+		BMP &image,
+		int I, int J, int width,
+		std::vector<int> &color)
+{
+
+	int u, v;
+
+
+	for (u = 0; u < width; u++) {
+		for (v = 0; v < width; v++) {
+			fillBitmap(image, J + v, I + u, color);
+		}
+	}
+
+}
 
 }}}}
 

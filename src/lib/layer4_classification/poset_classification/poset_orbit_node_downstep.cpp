@@ -50,6 +50,19 @@ void poset_orbit_node::compute_flag_orbits(
 		}
 	}
 
+
+	if (tl) {
+		// check if the stabilizer is corrupt:
+		int i;
+		for (i = 0; i < gen->get_A()->base_len(); i++) {
+			if (tl[i] == 0) {
+				cout << "poset_orbit_node::compute_flag_orbits tl[i] == 0, error" << endl;
+				exit(1);
+			}
+		}
+	}
+
+
 	if (f_v) {
 		cout << "poset_orbit_node::compute_flag_orbits "
 				"before schreier_forest" << endl;

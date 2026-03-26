@@ -6841,7 +6841,7 @@ void action_global::report(
 					"before A->report_what_we_act_on" << endl;
 		}
 
-		A->report_what_we_act_on(
+		A->Action_latex_interface->report_what_we_act_on(
 				ost,
 				verbose_level - 2);
 
@@ -6892,10 +6892,10 @@ void action_global::report(
 
 		if (f_v) {
 			cout << "action_global::report "
-					"before A->report" << endl;
+					"before A->Action_latex_interface->report" << endl;
 		}
 
-		A->report(
+		A->Action_latex_interface->report(
 				ost, true /*f_sims*/, Sims,
 				true /* f_strong_gens */, Strong_gens,
 				LG_Draw_options,
@@ -6903,14 +6903,14 @@ void action_global::report(
 
 		if (f_v) {
 			cout << "action_global::report "
-					"after A->report" << endl;
+					"after A->Action_latex_interface->report" << endl;
 		}
 
 		if (f_v) {
 			cout << "action_global::report before A->report_basic_orbits" << endl;
 		}
 
-		A->report_basic_orbits(ost);
+		A->Action_latex_interface->report_basic_orbits(ost);
 
 		if (f_v) {
 			cout << "action_global::report after A->report_basic_orbits" << endl;
@@ -7777,16 +7777,19 @@ void action_global::order_of_products_of_pairs(
 }
 
 
-void action_global::apply_isomorphism_wedge_product_4to6(
+void action_global::apply_isomorphism_wedge_product_4to6_and_write_file(
 		actions::action *A_wedge,
 		data_structures_groups::vector_ge *vec_in,
 		std::string &label_in,
 		int verbose_level)
+// can be invoked in two different ways:
+// vector_ge_activity or group_theoretic_activity with element_processing
+// update: group_theoretic_activity with element_processing has been disabled
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "action_global::apply_isomorphism_wedge_product_4to6" << endl;
+		cout << "action_global::apply_isomorphism_wedge_product_4to6_and_write_file" << endl;
 	}
 
 	int *Elt_out;
@@ -7802,7 +7805,7 @@ void action_global::apply_isomorphism_wedge_product_4to6(
 
 
 	if (A_wedge->type_G != action_on_wedge_product_t) {
-		cout << "action_global::apply_isomorphism_wedge_product_4to6 "
+		cout << "action_global::apply_isomorphism_wedge_product_4to6_and_write_file "
 				"the action is not of wedge product type" << endl;
 		exit(1);
 	}
@@ -7851,7 +7854,7 @@ void action_global::apply_isomorphism_wedge_product_4to6(
 		for (i = 0; i < vec_in->len; i++) {
 
 			if (f_v) {
-				cout << "action_global::apply_isomorphism_wedge_product_4to6 "
+				cout << "action_global::apply_isomorphism_wedge_product_4to6_and_write_file "
 						"i = " << i << " / " << vec_in->len << endl;
 			}
 
@@ -7864,7 +7867,7 @@ void action_global::apply_isomorphism_wedge_product_4to6(
 			//		Elt, Elt_out, verbose_level);
 
 			if (f_v) {
-				cout << "action_global::apply_isomorphism_wedge_product_4to6 "
+				cout << "action_global::apply_isomorphism_wedge_product_4to6_and_write_file "
 						"i = " << i << " / " << vec_in->len
 						<< " before wedge_product" << endl;
 			}
@@ -7873,7 +7876,7 @@ void action_global::apply_isomorphism_wedge_product_4to6(
 					AW->n, AW->wedge_dimension,
 					0 /* verbose_level */);
 			if (f_v) {
-				cout << "action_global::apply_isomorphism_wedge_product_4to6 "
+				cout << "action_global::apply_isomorphism_wedge_product_4to6_and_write_file "
 						"i = " << i << " / " << vec_in->len
 						<< " after wedge_product" << endl;
 			}
@@ -7888,7 +7891,7 @@ void action_global::apply_isomorphism_wedge_product_4to6(
 
 #if 0
 			if (f_v) {
-				cout << "action_global::apply_isomorphism_wedge_product_4to6 "
+				cout << "action_global::apply_isomorphism_wedge_product_4to6_and_write_file "
 						"i = " << i << " / " << vec_in->len
 						<< " before A6->Group_element->make_element" << endl;
 			}
@@ -7896,7 +7899,7 @@ void action_global::apply_isomorphism_wedge_product_4to6(
 					vec_out->ith(i), Elt_out,
 					0 /* verbose_level */);
 			if (f_v) {
-				cout << "action_global::apply_isomorphism_wedge_product_4to6 "
+				cout << "action_global::apply_isomorphism_wedge_product_4to6_and_write_file "
 						"i = " << i << " / " << vec_in->len
 						<< " after A6->Group_element->make_element" << endl;
 			}
@@ -7923,7 +7926,7 @@ void action_global::apply_isomorphism_wedge_product_4to6(
 		//FREE_int(data);
 
 		if (f_v) {
-			cout << "vector_ge::save_csv Written file " << fname
+			cout << "action_global::apply_isomorphism_wedge_product_4to6_and_write_file Written file " << fname
 					<< " of size " << Fio.file_size(fname) << endl;
 		}
 
@@ -7938,7 +7941,7 @@ void action_global::apply_isomorphism_wedge_product_4to6(
 			fname, verbose_level - 1);
 
 	if (f_v) {
-		cout << "action_global::apply_isomorphism_wedge_product_4to6 "
+		cout << "action_global::apply_isomorphism_wedge_product_4to6_and_write_file "
 				"Written file " << fname << " of size "
 					<< Fio.file_size(fname) << endl;
 	}
@@ -7951,9 +7954,162 @@ void action_global::apply_isomorphism_wedge_product_4to6(
 
 
 	if (f_v) {
-		cout << "action_global::apply_isomorphism_wedge_product_4to6 done" << endl;
+		cout << "action_global::apply_isomorphism_wedge_product_4to6_and_write_file done" << endl;
 	}
 }
+
+
+void action_global::conjugate_and_write_to_file(
+		actions::action *A,
+		std::string &label_of_elements,
+		int *conjugate_data,
+		data_structures_groups::vector_ge *Elements,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "action_global::conjugate_and_write_to_file" << endl;
+	}
+
+
+	//other::orbiter_kernel_system::file_io Fio;
+
+
+
+	int *S;
+	int *Sv;
+	int *Elt1;
+	int *Elt2;
+	int *Elt3;
+	int *Output_table;
+	algebra::ring_theory::longinteger_object go;
+
+	int nb_rows, nb_cols;
+	std::string *Table;
+	std::string *Col_headings;
+
+	nb_cols = 2;
+	nb_rows = Elements->len;
+	Table = new std::string [nb_rows * nb_cols];
+	Col_headings = new std::string [nb_cols];
+
+	Col_headings[0] = "Row";
+	Col_headings[1] = "Element";
+
+
+
+	S = NEW_int(A->elt_size_in_int);
+	Sv = NEW_int(A->elt_size_in_int);
+	Elt2 = NEW_int(A->elt_size_in_int);
+	Elt3 = NEW_int(A->elt_size_in_int);
+
+
+	int nb_elements;
+
+	nb_elements = Elements->len;
+
+	Output_table = NEW_int(nb_elements * A->make_element_size);
+
+	A->Group_element->make_element(
+			S, conjugate_data, verbose_level);
+
+	A->Group_element->element_invert(S, Sv, verbose_level);
+
+
+	{
+		int i;
+
+
+
+		for (i = 0; i < nb_elements; i++) {
+
+			Elt1 = Elements->ith(i);
+
+			A->Group_element->element_mult(Sv, Elt1, Elt2, 0);
+			A->Group_element->element_mult(Elt2, S, Elt3, 0);
+
+			A->Group_element->code_for_make_element(
+					Output_table + i * A->make_element_size, Elt3);
+
+			Table[nb_cols * i + 0] = std::to_string(i);
+			Table[nb_cols * i + 1] = "\"" + Int_vec_stringify(Output_table + i * A->make_element_size, A->make_element_size) + "\"";
+
+
+		}
+
+
+	}
+
+
+	other::orbiter_kernel_system::file_io Fio;
+	string fname;
+
+	fname = label_of_elements + "_conjugate.csv";
+
+
+	Fio.Csv_file_support->write_table_of_strings_with_col_headings(
+			fname,
+			nb_rows, nb_cols, Table,
+			Col_headings,
+			verbose_level);
+
+
+	//FREE_int(data);
+
+	if (f_v) {
+		cout << "action_global::apply_isomorphism_wedge_product_4to6_and_write_file Written file " << fname
+				<< " of size " << Fio.file_size(fname) << endl;
+	}
+
+
+	delete [] Col_headings;
+	delete [] Table;
+
+	FREE_int(S);
+	FREE_int(Sv);
+	FREE_int(Elt2);
+	FREE_int(Elt3);
+	FREE_int(Output_table);
+
+
+
+	if (f_v) {
+		cout << "action_global::conjugate_and_write_to_file done" << endl;
+	}
+}
+
+
+
+
+
+void action_global::map_a_set_based_on_hdl(
+		long int *set,
+		long int *image_set,
+		int set_size,
+		actions::action *A_base, actions::action *A_induced,
+		int hdl,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int *Elt;
+
+	if (f_v) {
+		cout << "action_global::map_a_set_based_on_hdl" << endl;
+	}
+	Elt = NEW_int(A_base->elt_size_in_int);
+
+	A_base->Group_element->element_retrieve(hdl, Elt, false);
+
+	A_induced->Group_element->map_a_set(set,
+		image_set, set_size, Elt, verbose_level);
+
+	FREE_int(Elt);
+	if (f_v) {
+		cout << "action_global::map_a_set_based_on_hdl done" << endl;
+	}
+}
+
 
 
 

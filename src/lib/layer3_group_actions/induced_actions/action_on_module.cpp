@@ -263,7 +263,7 @@ void action_on_module::compute_image_int_low_level(
 	}
 
 
-	algebra::basic_algebra::module Module;
+	algebra::ring_theory::module_over_Z Module;
 
 	Module.apply(
 			input, output, perm,

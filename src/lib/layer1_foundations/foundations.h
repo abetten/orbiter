@@ -262,11 +262,12 @@ namespace algebra {
 		class a_domain;
 		class algebra_global;
 		class generators_symplectic_group;
+		class group_diagram;
 		class group_generators_domain;
 		class heisenberg;
 		class matrix_group_element;
 		class matrix_group;
-		class module;
+		class module_over_Z;
 		class null_polarity_generator;
 		class rank_checker;
 	}
@@ -278,8 +279,6 @@ namespace algebra {
 		// expression_parser:
 		class formula_vector;
 		class formula;
-		class symbolic_object_activity_description;
-		class symbolic_object_activity;
 		class symbolic_object_builder_description;
 		class symbolic_object_builder;
 		class syntax_tree_node_terminal;
@@ -293,8 +292,6 @@ namespace algebra {
 	namespace field_theory {
 
 		// finite_fields:
-		class finite_field_activity_description;
-		class finite_field_activity;
 		class finite_field_description;
 		class finite_field_io;
 		class finite_field_properties;
@@ -349,7 +346,6 @@ namespace algebra {
 		class partial_derivative;
 		class polynomial_double_domain;
 		class polynomial_double;
-		class polynomial_ring_activity_description;
 		class polynomial_ring_description;
 		class ring_theory_global;
 		class table_of_irreducible_polynomials;
@@ -504,8 +500,6 @@ namespace combinatorics {
 
 	namespace solvers {
 
-		class diophant_activity_description;
-		class diophant_activity;
 		class diophant_create;
 		class diophant_description;
 		class diophant;

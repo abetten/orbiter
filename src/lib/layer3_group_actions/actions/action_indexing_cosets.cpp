@@ -158,7 +158,9 @@ void action::coset_unrank(
 	}
 
 	U_orb.orbits_on_invariant_subset_fast(orbit_len, orbit, verbose_level - 2);
+
 	nb_U_orbits_on_subset = U_orb.Forest->nb_orbits;
+
 	if (f_v) {
 		cout << "U-orbits: ";
 		U_orb.Forest->print_orbit_length_distribution(cout);
@@ -171,10 +173,12 @@ void action::coset_unrank(
 	
 	rank0 = 0;
 	for (k = 0; k < nb_U_orbits_on_subset; k++) {
+
 		len = U_orb.Forest->orbit_len[k];
 		b.create(len);
 		D.mult(G0_order, b, c);
 		D.integral_division(c, U_order, d, rem, 0);
+
 		if (!rem.is_zero()) {
 			cout << "action::coset_unrank: remainder is not zero, "
 					"something is wrong" << endl;
@@ -276,8 +280,8 @@ void action::coset_unrank(
 			}
 			Group_element->element_move(Elt2, Elt, 0);
 			
-			delete Gk;
-			delete Uk; 
+			FREE_OBJECT(Gk);
+			FREE_OBJECT(Uk);
 			goto done2;
 		}
 		rank0 += nb;
@@ -613,8 +617,8 @@ long int action::coset_rank(
 			cout << "rank=" << rank << endl;
 		}
 
-		delete Gk;
-		delete Uk;
+		FREE_OBJECT(Gk);
+		FREE_OBJECT(Uk);
 	}
 
 	FREE_int(orbit);

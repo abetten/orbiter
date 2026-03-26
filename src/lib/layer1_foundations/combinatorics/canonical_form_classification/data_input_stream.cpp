@@ -256,9 +256,11 @@ int data_input_stream::count_number_of_objects_to_test(
 
 			string fname;
 			string spread_table;
+			string col_label;
 
 			fname = Descr->Input[input_idx].input_string;
 			spread_table = Descr->Input[input_idx].input_string2;
+			col_label = Descr->Input[input_idx].input_string3;
 
 			if (f_v) {
 				cout << "input sets of packings from file "
@@ -276,8 +278,6 @@ int data_input_stream::count_number_of_objects_to_test(
 			SoS = NEW_OBJECT(other::data_structures::set_of_sets);
 
 			int underlying_set_size = 0;
-
-			string col_label;
 
 			if (f_v) {
 				cout << "data_input_stream::count_number_of_objects_to_test "
@@ -1277,20 +1277,30 @@ void data_input_stream::read_objects(
 			long int *Spread_table;
 			int nb_spreads;
 			int spread_size;
+			string col_label;
 
 			fname_solutions = Descr->Input[input_idx].input_string;
 			fname_spread_table = Descr->Input[input_idx].input_string2;
+			col_label = Descr->Input[input_idx].input_string3;
 			if (f_v) {
 				cout << "data_input_stream::read_objects "
 						"Reading spread table from file "
 					<< fname_spread_table << endl;
 			}
 
-			int col_idx = 2;
+			//int col_idx = 2;
 
+#if 0
 			Fio.Csv_file_support->lint_matrix_read_csv_data_column(
 					fname_spread_table,
 					Spread_table, nb_spreads, spread_size, col_idx, verbose_level);
+#endif
+
+			Fio.Csv_file_support->lint_matrix_read_csv_data_column_by_label(
+					fname_spread_table,
+					Spread_table, nb_spreads, spread_size, col_label, verbose_level);
+
+
 
 #if 0
 

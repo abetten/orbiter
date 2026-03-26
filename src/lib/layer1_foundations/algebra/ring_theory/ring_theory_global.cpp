@@ -4139,6 +4139,48 @@ void ring_theory_global::do_export_partials(
 }
 
 
+void ring_theory_global::multiply_int_matrices(
+		other::data_structures::int_matrix *A,
+		other::data_structures::int_matrix *B,
+		other::data_structures::int_matrix *&C,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "ring_theory_global::multiply_int_matrices" << endl;
+	}
+
+	int i, j, k;
+	int m, n, o;
+	int c;
+
+	m = A->m;
+	n = A->n;
+
+	if (B->m != n) {
+		cout << "ring_theory_global::multiply_int_matrices B->m != n" << endl;
+		exit(1);
+	}
+	o = B->n;
+
+	C = NEW_OBJECT(other::data_structures::int_matrix);
+	C->allocate(m, o);
+	for (i = 0; i < m; i++) {
+		for (j = 0; j < o; j++) {
+			c = 0;
+			for (k = 0; k < n; k++) {
+				c += A->s_ij(i, k) * B->s_ij(k, j);
+			}
+			C->s_ij(i, j) = c;
+		}
+	}
+
+	if (f_v) {
+		cout << "ring_theory_global::multiply_int_matrices done" << endl;
+	}
+}
+
 }}}}
 
 

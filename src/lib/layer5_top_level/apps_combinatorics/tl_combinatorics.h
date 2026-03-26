@@ -88,156 +88,6 @@ public:
 
 
 
-// #############################################################################
-// combinatorial_object_activity_description.cpp
-// #############################################################################
-
-
-//! description of an activity for a combinatorial object
-
-class combinatorial_object_activity_description {
-public:
-
-
-	// TABLE/combinatorial_object_activity.csv
-
-	// options that apply to GOC = geometric_object_create
-
-	int f_save;
-
-	int f_save_as;
-	std::string save_as_fname;
-
-	int f_extract_subset;
-	std::string extract_subset_set;
-	std::string extract_subset_fname;
-
-	int f_line_type_old;
-
-	int f_line_type;
-
-	int f_conic_type;
-	int conic_type_threshold;
-
-	int f_non_conical_type;
-
-	int f_ideal;
-	std::string ideal_ring_label;
-
-
-	// options that apply to IS = data_input_stream
-
-	int f_canonical_form_PG;
-	std::string canonical_form_PG_PG_label;
-
-	int f_canonical_form_PG_has_PA;
-	projective_geometry::projective_space_with_action
-		*Canonical_form_PG_PA;
-
-	combinatorics::canonical_form_classification::classification_of_objects_description
-		*Canonical_form_PG_Descr;
-
-	int f_canonical_form;
-	combinatorics::canonical_form_classification::classification_of_objects_description
-		*Canonical_form_Descr;
-
-	int f_post_processing;
-
-	int f_get_combo_with_group;
-	int get_combo_with_group_idx;
-
-	int f_report;
-	combinatorics::canonical_form_classification::objects_report_options
-		*Objects_report_options;
-
-	int f_draw_incidence_matrices;
-	std::string draw_incidence_matrices_prefix;
-	std::string draw_incidence_matrices_options_label;
-
-	int f_test_distinguishing_property;
-	std::string test_distinguishing_property_graph;
-
-	int f_covering_type;
-	std::string covering_type_orbits;
-	int covering_type_size;
-
-	int f_filter_by_Steiner_property;
-
-	int f_compute_frequency;
-	std::string compute_frequency_graph;
-
-	int f_unpack_from_restricted_action;
-	std::string unpack_from_restricted_action_prefix;
-	std::string unpack_from_restricted_action_group_label;
-
-	int f_line_covering_type;
-	std::string line_covering_type_prefix;
-	std::string line_covering_type_projective_space;
-	std::string line_covering_type_lines;
-
-	int f_activity;
-	user_interface::activity_description *Activity_description;
-
-	int f_algebraic_degree;
-	std::string algebraic_degree_PG_label;
-
-	// ToDo undocumented:
-	int f_polynomial_representation;
-	std::string polynomial_representation_PG_label;
-
-	combinatorial_object_activity_description();
-	~combinatorial_object_activity_description();
-	int read_arguments(
-		int argc, std::string *argv,
-		int verbose_level);
-	void print();
-
-};
-
-// #############################################################################
-// combinatorial_object_activity.cpp
-// #############################################################################
-
-
-//! perform an activity for a combinatorial object
-
-class combinatorial_object_activity {
-public:
-	combinatorial_object_activity_description *Descr;
-
-	int f_has_geometric_object;
-	geometry::other_geometry::geometric_object_create *GOC;
-
-	int f_has_combo;
-	apps_combinatorics::combinatorial_object_stream *Combo;
-
-	int nb_output;
-	other::orbiter_kernel_system::orbiter_symbol_table_entry *Output;
-
-
-	combinatorial_object_activity();
-	~combinatorial_object_activity();
-	void init_geometric_object_create(
-			combinatorial_object_activity_description *Descr,
-			geometry::other_geometry::geometric_object_create *GOC,
-			int verbose_level);
-	void init_combo(
-			combinatorial_object_activity_description *Descr,
-			apps_combinatorics::combinatorial_object_stream *Combo,
-			int verbose_level);
-	void perform_activity(
-			other::orbiter_kernel_system::activity_output *&AO,
-			int verbose_level);
-	void perform_activity_geometric_object(
-			other::orbiter_kernel_system::activity_output *&AO,
-			int verbose_level);
-	void perform_activity_combo(
-			other::orbiter_kernel_system::activity_output *&AO,
-			int verbose_level);
-
-};
-
-
 
 
 // #############################################################################
@@ -272,6 +122,12 @@ public:
 					*Data_input_stream_description,
 			int verbose_level);
 
+	void do_canonical_form_and_write_files(
+			combinatorics::canonical_form_classification::classification_of_objects_description
+					*Canonical_form_Descr,
+					int f_projective_space,
+					projective_geometry::projective_space_with_action *PA,
+					int verbose_level);
 	void do_canonical_form(
 			combinatorics::canonical_form_classification::classification_of_objects_description
 					*Canonical_form_Descr,
@@ -334,11 +190,11 @@ public:
 			projective_geometry::projective_space_with_action *PA,
 			int verbose_level);
 	void do_activity(
-			user_interface::activity_description *Activity_description,
+			user_interface::core_system::activity_description *Activity_description,
 			other::orbiter_kernel_system::activity_output *&AO,
 			int verbose_level);
 	void do_graph_theoretic_activity(
-			apps_graph_theory::graph_theoretic_activity_description
+			user_interface::activities_layer5::graph_theoretic_activity_description
 					*Graph_theoretic_activity_description,
 					other::orbiter_kernel_system::activity_output *&AO,
 			int verbose_level);
@@ -369,7 +225,6 @@ public:
 	combinatorics_global();
 	~combinatorics_global();
 	void create_design_table(
-			//design_create *DC,
 			combinatorics::design_theory::design_object *Design_object,
 			std::string &problem_label,
 			design_tables *&T,
@@ -403,66 +258,6 @@ public:
 
 
 
-// #############################################################################
-// combo_activity_description.cpp
-// #############################################################################
-
-
-//! description of an activity for a combinatorial object with group
-
-class combo_activity_description {
-public:
-
-
-	// TABLE/combo_activity.tex
-
-	int f_report;
-	combinatorics::canonical_form_classification::objects_report_options
-		*Objects_report_options;
-
-	int f_get_group;
-
-	combo_activity_description();
-	~combo_activity_description();
-	int read_arguments(
-		int argc, std::string *argv,
-		int verbose_level);
-	void print();
-
-};
-
-
-
-// #############################################################################
-// combo_activity.cpp
-// #############################################################################
-
-
-//! perform an activity for a combinatorial object with group
-
-class combo_activity {
-public:
-	combo_activity_description *Descr;
-
-	canonical_form::combinatorial_object_with_properties **pOwP;
-	int nb_objects;
-
-	int nb_output;
-	other::orbiter_kernel_system::orbiter_symbol_table_entry *Output;
-
-
-	combo_activity();
-	~combo_activity();
-	void init(
-			combo_activity_description *Descr,
-			canonical_form::combinatorial_object_with_properties **pOwP,
-			int nb_objects,
-			int verbose_level);
-	void perform_activity(
-			other::orbiter_kernel_system::activity_output *&AO,
-			int verbose_level);
-
-};
 
 
 
@@ -810,136 +605,6 @@ public:
 
 
 
-// #############################################################################
-// design_activity_description.cpp
-// #############################################################################
-
-//! to describe an activity for a design
-
-
-
-class design_activity_description {
-
-public:
-
-	// TABLES/design_activity.tex
-
-	int f_load_table;
-	std::string load_table_label;
-	std::string load_table_group;
-
-
-	std::string load_table_H_label;
-	std::string load_table_H_group_order;
-	std::string load_table_H_gens;
-	int load_table_selected_orbit_length;
-
-
-	int f_canonical_form;
-	combinatorics::canonical_form_classification::classification_of_objects_description
-		*Canonical_form_Descr;
-
-	int f_extract_solutions_by_index_csv;
-	int f_extract_solutions_by_index_txt;
-	std::string extract_solutions_by_index_label;
-	std::string extract_solutions_by_index_group;
-	std::string extract_solutions_by_index_fname_solutions_in;
-	std::string extract_solutions_by_index_col_label;
-	std::string extract_solutions_by_index_fname_solutions_out;
-	std::string extract_solutions_by_index_prefix;
-
-	int f_export_flags;
-	int f_export_incidence_matrix;
-
-	int f_export_incidence_matrix_latex;
-	std::string export_incidence_matrix_latex_draw_options;
-
-	int f_intersection_matrix;
-	int f_save;
-	int f_export_blocks;
-	int f_row_sums;
-	int f_tactical_decomposition;
-
-	int f_orbits_on_blocks;
-	int orbits_on_blocks_sz;
-	std::string orbits_on_blocks_control;
-
-	int f_one_point_extension;
-	int one_point_extension_pair_orbit_idx;
-	std::string one_point_extension_control;
-
-	design_activity_description();
-	~design_activity_description();
-	int read_arguments(
-			int argc, std::string *argv,
-		int verbose_level);
-	void print();
-
-};
-
-
-// #############################################################################
-// design_activity.cpp
-// #############################################################################
-
-//! an activity for a design
-
-
-
-class design_activity {
-
-public:
-	design_activity_description *Descr;
-
-
-	design_activity();
-	~design_activity();
-	void perform_activity(
-			design_activity_description *Descr,
-			combinatorics::design_theory::design_object *Design_object,
-			int verbose_level);
-	void do_extract_solutions_by_index(
-			design_create *DC,
-			std::string &label,
-			std::string &group_label,
-			std::string &fname_in,
-			std::string &col_label,
-			std::string &fname_out,
-			std::string &prefix_text,
-			int f_csv_format,
-			int verbose_level);
-	// does not need DC. This should be an activity for the design_table
-	void do_create_table(
-			design_create *DC,
-			std::string &label,
-			std::string &group_label,
-			int verbose_level);
-	void do_load_table(
-			design_create *DC,
-			std::string &label,
-			std::string &group_label,
-			std::string &H_label,
-			std::string &H_go_text,
-			std::string &H_generators_data,
-			int selected_orbit_length,
-			int verbose_level);
-	void do_canonical_form(
-			combinatorics::canonical_form_classification::classification_of_objects_description
-				*Canonical_form_Descr,
-			int verbose_level);
-#if 0
-	void do_export_inc(
-			design_create *DC,
-			int verbose_level);
-#endif
-	void do_pair_orbits_on_blocks(
-			design_create *DC,
-			std::string &control_label,
-			int *&Pair_orbits, int &degree,
-			int verbose_level);
-
-};
-
 
 
 // #############################################################################
@@ -975,6 +640,9 @@ public:
 
 	int f_from_incidence_matrix;
 	std::string from_incidence_matrix_label;
+
+	int f_from_graph;
+	std::string from_graph_label;
 
 	int f_list_of_base_blocks;
 	std::string list_of_base_blocks_group_label;
@@ -1457,50 +1125,6 @@ public:
 
 
 
-// #############################################################################
-// large_set_activity_description.cpp
-// #############################################################################
-
-//! description of an activity for a spread table
-
-
-class large_set_activity_description {
-public:
-
-
-
-	large_set_activity_description();
-	~large_set_activity_description();
-	int read_arguments(
-		int argc, std::string *argv,
-		int verbose_level);
-
-};
-
-
-// #############################################################################
-// large_set_activity.cpp
-// #############################################################################
-
-//! an activity for a spread table
-
-
-class large_set_activity {
-public:
-
-	large_set_activity_description *Descr;
-	large_set_was *LSW;
-
-
-
-	large_set_activity();
-	~large_set_activity();
-	void perform_activity(
-			large_set_activity_description *Descr,
-			large_set_was *LSW, int verbose_level);
-
-};
-
 
 
 // #############################################################################
@@ -1552,7 +1176,7 @@ public:
 	~large_set_classify();
 	void init(
 			design_create *DC,
-			design_tables *T,
+			design_tables *Design_tables,
 			int verbose_level);
 	void create_action_and_poset(
 			int verbose_level);
@@ -1577,76 +1201,6 @@ public:
 
 
 
-
-
-// #############################################################################
-// large_set_was_activity_description.cpp
-// #############################################################################
-
-//! description of an activity for a large set search with assumed symmetry
-
-
-class large_set_was_activity_description {
-public:
-
-	// TABLES/large_set_was_activity.tex
-
-	int f_normalizer_on_orbits_of_a_given_length;
-	int normalizer_on_orbits_of_a_given_length_length;
-	int normalizer_on_orbits_of_a_given_length_nb_orbits;
-	poset_classification::poset_classification_control
-		*normalizer_on_orbits_of_a_given_length_control;
-
-	int f_create_graph_on_orbits_of_length;
-	std::string create_graph_on_orbits_of_length_fname;
-	int create_graph_on_orbits_of_length_length;
-
-	int f_create_graph_on_orbits_of_length_based_on_N_orbits;
-	std::string create_graph_on_orbits_of_length_based_on_N_orbits_fname_mask;
-	int create_graph_on_orbits_of_length_based_on_N_orbits_length;
-	int create_graph_on_orbits_of_length_based_on_N_nb_N_orbits_preselected;
-	int create_graph_on_orbits_of_length_based_on_N_orbits_r;
-	int create_graph_on_orbits_of_length_based_on_N_orbits_m;
-
-	int f_read_solution_file;
-	int read_solution_file_orbit_length;
-	std::string read_solution_file_name;
-
-
-
-	large_set_was_activity_description();
-	~large_set_was_activity_description();
-	int read_arguments(
-		int argc, std::string *argv,
-		int verbose_level);
-	void print();
-
-};
-
-
-// #############################################################################
-// large_set_was_activity.cpp
-// #############################################################################
-
-//! an activity for a large set search with assumed symmetry
-
-
-class large_set_was_activity {
-public:
-
-	large_set_was_activity_description *Descr;
-	large_set_was *LSW;
-
-
-	large_set_was_activity();
-	~large_set_was_activity();
-	void perform_activity(
-			large_set_was_activity_description *Descr,
-			large_set_was *LSW, int verbose_level);
-	void do_normalizer_on_orbits_of_a_given_length(
-			int select_orbits_of_length_length, int verbose_level);
-
-};
 
 
 
@@ -1801,65 +1355,6 @@ int large_set_was_classify_test_pair_of_orbits(
 		long int *orbit2, int orbit_length2,
 		void *extra_data);
 
-
-// #############################################################################
-// plesken_ring_activity_description.cpp
-// #############################################################################
-
-//! description of an activity for a plesken_ring
-
-
-class plesken_ring_activity_description {
-public:
-
-	int f_report;
-	std::string report_draw_options_label;
-
-	int f_evaluate_join;
-	std::string evaluate_join_ring_label;
-	std::string evaluate_join_formula_label;
-
-	int f_evaluate_meet;
-	std::string evaluate_meet_ring_label;
-	std::string evaluate_meet_formula_label;
-
-	plesken_ring_activity_description();
-	~plesken_ring_activity_description();
-	int read_arguments(
-			int argc, std::string *argv,
-		int verbose_level);
-	void print();
-
-
-};
-
-
-// #############################################################################
-// plesken_ring_activity.cpp
-// #############################################################################
-
-//! an activity for a plesken_ring
-
-
-class plesken_ring_activity {
-public:
-
-	plesken_ring_activity_description *Descr;
-	apps_combinatorics::plesken_ring *Plesken_ring;
-
-	plesken_ring_activity();
-	~plesken_ring_activity();
-	void init(
-			plesken_ring_activity_description *Descr,
-			apps_combinatorics::plesken_ring *Plesken_ring,
-			int verbose_level);
-	void perform_activity(
-			int &nb_output,
-			other::orbiter_kernel_system::orbiter_symbol_table_entry *&Output,
-			int verbose_level);
-
-
-};
 
 
 

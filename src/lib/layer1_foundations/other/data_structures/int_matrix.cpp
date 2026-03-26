@@ -106,6 +106,28 @@ int &int_matrix::s_n()
 	return n;
 }
 
+void int_matrix::make_identity_matrix(
+		int verbose_level)
+{
+	int i, j;
+
+	if (m != n) {
+		cout << "int_matrix::make_identity_matrix the matrix is not square" << endl;
+		exit(1);
+	}
+	for (i = 0; i < m; i++) {
+		for (j = 0; j < m; j++) {
+			if (i == j) {
+				M[i * m + j] = 1;
+			}
+			else {
+				M[i * m + j] = 0;
+			}
+		}
+	}
+
+}
+
 void int_matrix::print()
 {
 	Int_matrix_print(M, m, n);

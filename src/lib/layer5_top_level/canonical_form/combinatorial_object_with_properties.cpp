@@ -392,6 +392,9 @@ void combinatorial_object_with_properties::latex_report(
 	if (Report_options->f_export_flag_orbits) {
 
 		export_flag_orbits(ost, Report_options, verbose_level - 2);
+
+		// calls GA_on_CO->export_INP_with_flag_orbits
+		// and GA_on_CO->export_TDA_with_flag_orbits
 	}
 
 	if (Report_options->f_show_TDO) {

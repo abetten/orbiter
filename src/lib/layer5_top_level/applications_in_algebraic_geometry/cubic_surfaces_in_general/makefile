@@ -6,8 +6,6 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
-	cubic_surface_activity_description.o \
-	cubic_surface_activity.o \
 	surface_clebsch_map.o \
 	surface_create_description.o \
 	surface_create.o \

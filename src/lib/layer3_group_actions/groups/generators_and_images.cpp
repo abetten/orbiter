@@ -1201,7 +1201,7 @@ void generators_and_images::list_elements_as_permutations_vertically(
 				"allowed if f_images_only is true" << endl;
 		exit(1);
 	}
-	A->list_elements_as_permutations_vertically(&gens, ost);
+	A->Action_latex_interface->list_elements_as_permutations_vertically(&gens, ost);
 }
 
 

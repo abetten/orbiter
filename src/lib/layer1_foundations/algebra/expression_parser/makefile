@@ -8,8 +8,6 @@ LFLAGS = -lm
 MODULES = \
 	formula_vector.o \
 	formula.o \
-	symbolic_object_activity_description.o \
-	symbolic_object_activity.o \
 	symbolic_object_builder_description.o \
 	symbolic_object_builder.o \
 	syntax_tree_latex.o \

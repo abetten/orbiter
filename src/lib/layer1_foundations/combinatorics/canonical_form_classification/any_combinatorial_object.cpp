@@ -46,6 +46,8 @@ any_combinatorial_object::any_combinatorial_object()
 	f_partition = false;
 	partition = NULL;
 
+	f_inc_representation_of_graph = false;
+
 	design_k = 0;
 	design_sz = 0;
 	SoS = NULL;
@@ -1602,7 +1604,7 @@ void any_combinatorial_object::init_graph_by_object(
 		cout << "any_combinatorial_object::init_graph_by_object" << endl;
 	}
 
-	int N, nb_edges;
+	int N, nb_edges, nb_non_edges;
 
 	if (f_v) {
 		cout << "any_combinatorial_object::init_graph_by_object "
@@ -1619,34 +1621,86 @@ void any_combinatorial_object::init_graph_by_object(
 				"nb_edges = " << nb_edges << endl;
 	}
 
+	int N2;
 	long int *flags;
 	int data_sz;
 	int i, j, k;
 
-	data_sz = nb_edges * 2;
+	N2 = (N * (N - 1)) >> 1;
+
+	nb_non_edges = N2 - nb_edges;
+
+	data_sz = N2 * 2 + N2;
 	flags = NEW_lint(data_sz);
 	k = 0;
+
+	int *Inc;
+	int nb_rows, nb_cols;
+	int cur1, cur2;
+	int f;
+
+	nb_rows = N + 2;
+	nb_cols = N2;
+
+	Inc = NEW_int(nb_rows * nb_cols);
+	Int_vec_zero(Inc, nb_rows * nb_cols);
+
+	cur1 = 0;
+	cur2 = 0;
 	for (i = 0; i < N; i++) {
 		for (j = i + 1; j < N; j++) {
 			if (CG->is_adjacent(i, j)) {
-				flags[2 * k + 0] = i * nb_edges + k;
-				flags[2 * k + 1] = j * nb_edges + k;
-				k++;
+				Inc[i * nb_cols + cur1] = 1;
+				Inc[j * nb_cols + cur1] = 1;
+				//flags[2 * k + 0] = i * nb_edges + k;
+				//flags[2 * k + 1] = j * nb_edges + k;
+				//k++;
+				cur1++;
+			}
+			else {
+				Inc[i * nb_cols + nb_edges + cur2] = 1;
+				Inc[j * nb_cols + nb_edges + cur2] = 1;
+				cur2++;
 			}
 		}
 	}
-	if (k != nb_edges) {
+	if (cur1 + cur2 != N2) {
 		cout << "any_combinatorial_object::init_graph_by_object "
-				"k != nb_edges" << endl;
+				"cur1 + cur2 != N2" << endl;
 		exit(1);
 	}
+	for (j = 0; j < nb_edges; j++) {
+		Inc[(N + 0) * nb_cols + j] = 1;
+	}
+	for (j = 0; j < nb_non_edges; j++) {
+		Inc[(N + 1) * nb_cols + nb_edges + j] = 1;
+	}
+	k = 0;
+	for (i = 0; i < nb_rows; i++) {
+		for (j = 0; j < nb_cols; j++) {
+			f = i * nb_cols + j;
+			if (Inc[f]) {
+				flags[k++] = f;
+			}
+		}
+	}
+	if (k != data_sz) {
+		cout << "any_combinatorial_object::init_graph_by_object "
+				"k != data_sz" << endl;
+		exit(1);
+	}
+
+	FREE_int(Inc);
+
+	f_inc_representation_of_graph = true;
+
 	any_combinatorial_object::P = NULL;
 	type = t_INC;
 	any_combinatorial_object::set = NEW_lint(data_sz);
 	Lint_vec_copy(flags, any_combinatorial_object::set, data_sz);
 	any_combinatorial_object::sz = data_sz;
-	any_combinatorial_object::v = N;
-	any_combinatorial_object::b = nb_edges;
+	any_combinatorial_object::v = nb_rows;
+	any_combinatorial_object::b = nb_cols;
 
 	if (f_v) {
 		cout << "any_combinatorial_object::init_graph_by_object "
@@ -2528,6 +2582,11 @@ void any_combinatorial_object::encode_packing(
 		cout << "any_combinatorial_object::encode_packing "
 				"partition:" << endl;
 		Enc->print_partition();
+#if 0
+		cout << "any_combinatorial_object::encode_packing "
+				"Enc = " << endl;
+		Enc->print_incma();
+#endif
 	}
 	if (f_v) {
 		cout << "any_combinatorial_object::encode_packing "
@@ -2764,11 +2823,13 @@ void any_combinatorial_object::encode_multi_matrix(
 	Enc->partition[nb_rows + m + n - 1] = 0;
 	Enc->partition[N - 1] = 0;
 
+#if 0
 	if (f_v) {
 		cout << "any_combinatorial_object::encode_multi_matrix "
 				"Enc=" << endl;
 		Enc->print_incma();
 	}
+#endif
 
 	if (f_vvv) {
 		cout << "any_combinatorial_object::encode_multi_matrix "

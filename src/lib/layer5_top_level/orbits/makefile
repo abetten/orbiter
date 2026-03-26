@@ -8,16 +8,12 @@ LFLAGS = -lm
 MODULES = \
 	classify_cubic_surfaces_description.o \
 	orbit_cascade.o \
-	orbits_activity_description.o \
-	orbits_activity.o \
 	orbits_create_description.o \
 	orbits_create.o \
 	orbits_global.o \
 	orbits_on_pairs.o \
 	orbits_on_polynomials.o \
-	orbits_on_subspaces.o \
-	poset_classification_activity_description.o \
-	poset_classification_activity.o
+	orbits_on_subspaces.o
 
 
 all : $(MODULES)

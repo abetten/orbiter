@@ -309,16 +309,6 @@ void design_object::make_design_from_incidence_matrix(
 
 	f_has_incma = true;
 
-#if 0
-	int *block; // [k]
-
-	int v;
-	int b;
-	int nb_inc;
-	int f_has_incma;
-	int *incma; // [v * b]
-#endif
-
 	prefix = label;
 	label_txt = label;
 	label_tex = label;
@@ -327,6 +317,49 @@ void design_object::make_design_from_incidence_matrix(
 		cout << "design_object::make_design_from_incidence_matrix done" << endl;
 	}
 }
+
+void design_object::make_design_from_graph(
+		std::string &label, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "design_object::make_design_from_graph" << endl;
+	}
+
+
+	combinatorics::design_theory::design_theory_global Design_theory_global;
+
+
+	if (f_v) {
+		cout << "design_object::make_design_from_graph "
+				"before Design_theory_global.make_design_from_graph" << endl;
+	}
+	Design_theory_global.make_design_from_graph(
+			incma, v, b, k,
+			label,
+			verbose_level - 1);
+	if (f_v) {
+		cout << "design_object::make_design_from_graph "
+				"after Design_theory_global.make_design_from_graph" << endl;
+	}
+
+	block = NEW_int(k);
+	nb_inc = k * b;
+
+	f_has_set = false;
+
+	f_has_incma = true;
+
+	prefix = label;
+	label_txt = label;
+	label_tex = label;
+
+	if (f_v) {
+		cout << "design_object::make_design_from_graph done" << endl;
+	}
+}
+
 
 void design_object::do_export_flags(
 		int verbose_level)

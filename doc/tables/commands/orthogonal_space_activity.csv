@@ -9,6 +9,7 @@ ROW,C1,C2,C3
 1,"\verb'-perp'  "," $L$ ","Determine the common perp of a set of points. The point ranks are given in the list $L$.  "
 1,"\verb'-export_point_line_incidence_matrix'  ","  ","Create a csv file with the point line incidence matrix of the space.  "
 1,"\verb'-intersect_with_subspace'  "," $M$ ","Find the points in the intersection of the quadric with the subspace whose generating matrix has label $M$. "
+1,"\verb'-intersect_with_subspace_given_by_base'  "," $base$ ","Find the points in the intersection of the quadric with the subspace whose base elements are given by means of their Orbiter ranks. "
 1,"\verb'-table_of_blt_sets'  "," "," Export a table of BLT-sets. We must be in an $Q^4(q)$ space.  "
 1,"\verb'-create_orthogonal_reflection'  "," points "," Create the orthogonal reflections associated with the given set of points, encoded as a vector. The points must be off the quadric. The points are given as point ranks in projective space. "
 1,"\verb'-create_perp_of_points'  "," points "," For each point p in the given set of points, compute the set of points q on the quadric which are perpendicular to p. The input set of points is coded in the underlying projective geometry. The output points are coded as points on the quadric.  "

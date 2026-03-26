@@ -1068,47 +1068,47 @@ int group_generators_domain::index_POmega_in_PO(
 	if (epsilon == 0) {
 		if (EVEN(q)) {
 			return 1;
-			}
+		}
 		else {
 			return 2;
-			}
 		}
+	}
 	if (epsilon == 1) {
 		if (EVEN(q)) {
 			return 2;
-			}
+		}
 		else {
 			if (DOUBLYEVEN(q - 1)) {
 				return 4;
-				}
+			}
 			else {
 				if (EVEN(m)) {
 					return 4;
-					}
+				}
 				else {
 					return 2;
-					}
 				}
 			}
 		}
+	}
 	if (epsilon == -1) {
 		if (EVEN(q)) {
 			return 2;
-			}
+		}
 		else {
 			if (DOUBLYEVEN(q - 1)) {
 				return 2;
-				}
+			}
 			else {
 				if (EVEN(m + 1)) {
 					return 2;
-					}
+				}
 				else {
 					return 4;
-					}
 				}
 			}
 		}
+	}
 #if 0
 	if (epsilon == -1) {
 		cout << "index_POmega_in_PO epsilon = -1 not "

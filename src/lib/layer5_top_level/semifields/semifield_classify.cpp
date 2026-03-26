@@ -529,7 +529,7 @@ void semifield_classify::report(
 
 	ost << "\\section*{The Group}" << endl;
 
-	A0_linear->report(ost, true /* f_sims */, G,
+	A0_linear->Action_latex_interface->report(ost, true /* f_sims */, G,
 			true /* f_strong_gens */, A0_linear->Strong_gens,
 			draw_options,
 			verbose_level);

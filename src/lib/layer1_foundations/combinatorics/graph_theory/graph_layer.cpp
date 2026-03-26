@@ -27,6 +27,12 @@ graph_layer::graph_layer()
 	nb_nodes = 0;
 	Nodes = NULL;
 	y_coordinate = 0;
+	f_has_grouping = false;
+	nb_groups = 0;
+	group_start = NULL;
+	group_x = NULL;
+	group_dx = NULL;
+	nb_elements = 0;
 }
 
 
@@ -35,6 +41,17 @@ graph_layer::~graph_layer()
 	Record_death();
 	if (Nodes) {
 		FREE_OBJECTS(Nodes);
+	}
+	if (f_has_grouping) {
+		if (group_start) {
+			FREE_int(group_start);
+		}
+		if (group_x) {
+			delete [] group_x;
+		}
+		if (group_dx) {
+			delete [] group_dx;
+		}
 	}
 }
 
@@ -67,6 +84,7 @@ void graph_layer::place(
 	for (i = 0; i < nb_nodes; i++) {
 		Nodes[i].x_coordinate = i * dx + dx2;
 	}
+	f_has_grouping = false;
 	
 }
 
@@ -76,30 +94,40 @@ void graph_layer::place_with_grouping(
 // x_stretch is less than 1.
 {
 	int f_v = (verbose_level >= 1);
-	int *group_start;
-	double *group_x;
-	double *group_dx;
-	int i, j, nb_elements;
+
 
 	if (f_v) {
 		cout << "graph_layer::place_with_grouping "
 				"nb_groups=" << nb_groups << endl;
 	}
+	f_has_grouping = true;
+	graph_layer::nb_groups = nb_groups;
+
+	//int *group_start;
+	//double *group_x;
+	//double *group_dx;
+	int i, j; //, nb_elements;
+
 	group_start = NEW_int(nb_groups + 1);
 	group_dx = new double[nb_groups + 1];
 	group_x = new double[nb_groups + 1];
+
 	group_start[0] = 0;
 	for (j = 0; j < nb_groups; j++) {
 		group_start[j + 1] = group_start[j] + group_size[j];
 	}
+
 	nb_elements = group_start[nb_groups];
+
 	for (j = 0; j < nb_groups; j++) {
 		group_dx[j] = group_size[j] / (double) nb_elements;
 	}
+
 	for (j = 0; j < nb_groups; j++) {
 		group_x[j] = (double) group_start[j] / (double) nb_elements
 				+ (double) group_dx[j] * .5;
 	}
+
 	for (j = 0; j < nb_groups; j++) {
 		if (f_v) {
 			cout << "j=" << j << " / " << nb_groups
@@ -115,9 +143,9 @@ void graph_layer::place_with_grouping(
 	(((double)i + .5) * group_dx[j] / (double) group_size[j]) * x_stretch;
 		}
 	}
-	FREE_int(group_start);
-	delete [] group_dx;
-	delete [] group_x;
+	//FREE_int(group_start);
+	//delete [] group_dx;
+	//delete [] group_x;
 	if (f_v) {
 		cout << "graph_layer::place_with_grouping done" << endl;
 	}
@@ -152,6 +180,23 @@ void graph_layer::write_memory_object(
 		Nodes[i].write_memory_object(m, verbose_level - 1);
 	}
 	m->write_double(y_coordinate);
+
+	m->write_int(f_has_grouping);
+
+	if (f_has_grouping) {
+		m->write_int(nb_groups);
+		for (i = 0; i <= nb_groups; i++) {
+			m->write_int(group_start[i]);
+		}
+		for (i = 0; i < nb_groups; i++) {
+			m->write_double(group_x[i]);
+		}
+		for (i = 0; i < nb_groups; i++) {
+			m->write_double(group_dx[i]);
+		}
+		m->write_int(nb_elements);
+	}
+
 	if (f_v) {
 		cout << "graph_layer::write_memory_object finished, "
 				"data size (in chars) = " << m->used_length << endl;
@@ -179,6 +224,25 @@ void graph_layer::read_memory_object(
 		Nodes[i].read_memory_object(m, verbose_level - 1);
 	}
 	m->read_double(&y_coordinate);
+
+	m->read_int(&f_has_grouping);
+	if (f_has_grouping) {
+		m->read_int(&nb_groups);
+		group_start = NEW_int(nb_groups + 1);
+		group_x = new double[nb_groups];
+		group_dx = new double[nb_groups];
+		for (i = 0; i <= nb_groups; i++) {
+			m->read_int(&group_start[i]);
+		}
+		for (i = 0; i < nb_groups; i++) {
+			m->read_double(&group_x[i]);
+		}
+		for (i = 0; i < nb_groups; i++) {
+			m->read_double(&group_dx[i]);
+		}
+		m->read_int(&nb_elements);
+	}
+
 	if (f_v) {
 		cout << "graph_layer::read_memory_object finished" << endl;
 	}

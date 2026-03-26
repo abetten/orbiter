@@ -454,7 +454,7 @@ void tensor_classify::report(
 
 
 		fp << "\\section{The Group}" << endl;
-		A->report(fp, A->f_has_sims, A->Sims, A->f_has_strong_generators, A->Strong_gens,
+		A->Action_latex_interface->report(fp, A->f_has_sims, A->Sims, A->f_has_strong_generators, A->Strong_gens,
 				draw_options,
 				verbose_level);
 

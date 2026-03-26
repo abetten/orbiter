@@ -28,7 +28,7 @@ namespace data_structures {
 lint_matrix::lint_matrix()
 {
 	Record_birth();
-	M = NULL;
+	Data = NULL;
 	m = 0;
 	n = 0;
 	perm_inv = NULL;
@@ -38,8 +38,8 @@ lint_matrix::lint_matrix()
 lint_matrix::~lint_matrix()
 {
 	Record_death();
-	if (M) {
-		FREE_lint(M);
+	if (Data) {
+		FREE_lint(Data);
 	}
 	if (perm) {
 		FREE_int(perm);
@@ -52,10 +52,10 @@ lint_matrix::~lint_matrix()
 void lint_matrix::allocate(
 		int m, int n)
 {
-	if (M) {
-		FREE_lint(M);
+	if (Data) {
+		FREE_lint(Data);
 	}
-	M = NEW_lint(m * n);
+	Data = NEW_lint(m * n);
 	lint_matrix::m = m;
 	lint_matrix::n = n;
 }
@@ -63,11 +63,11 @@ void lint_matrix::allocate(
 void lint_matrix::allocate_and_initialize_with_zero(
 		int m, int n)
 {
-	if (M) {
-		FREE_lint(M);
+	if (Data) {
+		FREE_lint(Data);
 	}
-	M = NEW_lint(m * n);
-	Lint_vec_zero(M, m * n);
+	Data = NEW_lint(m * n);
+	Lint_vec_zero(Data, m * n);
 	lint_matrix::m = m;
 	lint_matrix::n = n;
 }
@@ -78,16 +78,36 @@ void lint_matrix::allocate_and_init(
 	//if (M) {
 	//	FREE_int(M);
 	//	}
-	M = NEW_lint(m * n);
+	Data = NEW_lint(m * n);
 	lint_matrix::m = m;
 	lint_matrix::n = n;
-	Lint_vec_copy(Mtx, M, m * n);
+	Lint_vec_copy(Mtx, Data, m * n);
+}
+
+other::data_structures::lint_matrix *lint_matrix::transpose()
+{
+	lint_matrix *Mt;
+
+	Mt = NEW_OBJECT(lint_matrix);
+	Mt->allocate(
+			n, m);
+
+	int i, j;
+
+	for (i = 0; i < n; i++) {
+		for (j = 0; j < m; j++) {
+			Mt->s_ij(i, j) = s_ij(j, i);
+		}
+	}
+
+
+	return Mt;
 }
 
 long int &lint_matrix::s_ij(
 		int i, int j)
 {
-	return M[i * n + j];
+	return Data[i * n + j];
 }
 
 int &lint_matrix::s_m()
@@ -102,7 +122,7 @@ int &lint_matrix::s_n()
 
 void lint_matrix::print()
 {
-	Lint_matrix_print(M, m, n);
+	Lint_matrix_print(Data, m, n);
 }
 
 
@@ -118,7 +138,7 @@ void lint_matrix::write_csv(
 
 
 	Fio.Csv_file_support->lint_matrix_write_csv(
-			fname, M, m, n);
+			fname, Data, m, n);
 
 	if (f_v) {
 		cout << "lint_matrix::write_csv Written file " << fname << " of size "
@@ -156,7 +176,7 @@ void lint_matrix::write_csv_vectorized(
 
 
 		Table[i * nb_cols + 1] =
-				"\"" + Lint_vec_stringify(M + i * n, n) + "\"";
+				"\"" + Lint_vec_stringify(Data + i * n, n) + "\"";
 	}
 
 	std::string Col_headings[2];
@@ -219,7 +239,7 @@ void lint_matrix::write_index_set_csv(
 
 		sz = 0;
 		for (j = 0; j < n; j++) {
-			if (M[i * n + j]) {
+			if (Data[i * n + j]) {
 				index_set[sz++] = j;
 			}
 		}

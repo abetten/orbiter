@@ -7,33 +7,21 @@ LFLAGS = -lm
 
 MODULES = \
 	boolean_function_classify.o \
-	combinatorial_object_activity_description.o \
-	combinatorial_object_activity.o \
 	combinatorial_object_stream.o \
 	combinatorics_global.o \
-	combo_activity_description.o \
-	combo_activity.o \
 	dd_lifting.o \
 	dd_search_singletons.o \
 	delandtsheer_doyen_description.o \
 	delandtsheer_doyen.o \
-	design_activity_description.o \
-	design_activity.o \
 	design_create_description.o \
 	design_create.o \
 	design_tables.o \
 	difference_set_in_heisenberg_group.o \
 	hadamard_classify.o \
 	hall_system_classify.o \
-	large_set_activity_description.o \
-	large_set_activity.o \
 	large_set_classify.o \
-	large_set_was_activity_description.o \
-	large_set_was_activity.o \
 	large_set_was_description.o \
 	large_set_was.o \
-	plesken_ring_activity_description.o \
-	plesken_ring_activity.o \
 	plesken_ring.o \
 	variety_with_TDO_and_TDA.o
 

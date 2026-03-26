@@ -2,6 +2,7 @@ ROW,C1,C2,C3
 0,"tab:bitmap",,
 1,"Creating a Bitmap Graphics",,
 1,"\verb'-input_csv_file' "," csv-file  ","Specify the input csv file. "
+1,"\verb'-input_csv_file_column' "," csv-file column-label ","Specify the input csv file and the column from which to pull the data. "
 1,"\verb'-secondary_input_csv_file' "," csv-file  ","Specify a secondary input csv file (optional). "
 1,"\verb'-input_object' "," l  ","Specify input to be Orbiter object l. "
 1,"\verb'-partition' "," $w$ $R$ $C$  ","Specify a partition $R$ of rows and $C$ of columns. Use separating lines of with $w$. "
@@ -9,4 +10,6 @@ ROW,C1,C2,C3
 1,"\verb'-bit_depth' "," $d$  ","Use  color bit depth of $d$ bits ($d=8$ or $d=24$). "
 1,"\verb'-invert_colors' ","   ","Use an inverted color scheme. "
 1,"\verb'-grayscale' ","   ","Use a grayscale color set. "
+1,"\verb'-indent' "," i  ","Shrink the width and height of a box to achieve padding. The value for indentation is i, which is given in percent. The color white is used for padding. "
+1,"\verb'-color_offset' "," i  ","Apply the given offset to the choice of colors. This is useful to distinguish the colors in the matrix from the color used for padding. "
 END

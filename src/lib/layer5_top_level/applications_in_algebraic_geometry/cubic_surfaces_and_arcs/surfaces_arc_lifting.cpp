@@ -917,7 +917,7 @@ void surfaces_arc_lifting::report2(
 
 	//ost << "\\section{The Group}" << endl << endl;
 
-	A4->report(ost, false /* f_sims */, NULL /* sims *S */,
+	A4->Action_latex_interface->report(ost, false /* f_sims */, NULL /* sims *S */,
 				false /* f_strong_gens */, NULL /* strong_generators *SG */,
 				draw_options,
 				verbose_level);
@@ -1003,7 +1003,7 @@ void surfaces_arc_lifting::report2(
 	report_surfaces_in_detail(ost, verbose_level);
 
 
-	A4->report_what_we_act_on(ost, /*draw_options,*/ verbose_level);
+	A4->Action_latex_interface->report_what_we_act_on(ost, /*draw_options,*/ verbose_level);
 
 
 

@@ -343,6 +343,8 @@ void objects_after_classification::latex_report(
 		L.head_easy_and_enlarged(ost);
 
 
+		// produce a latex table of isomorphism types:
+
 		Classification_of_objects->Output->report_summary_of_iso_types(
 				ost, verbose_level);
 

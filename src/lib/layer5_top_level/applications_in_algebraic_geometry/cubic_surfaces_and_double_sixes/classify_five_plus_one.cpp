@@ -501,7 +501,7 @@ void classify_five_plus_one::report(
 	}
 	//ost << "\\section*{The groups}" << endl;
 	ost << "\\section*{The semilinear group}" << endl;
-	A->report(
+	A->Action_latex_interface->report(
 			ost,
 			A->f_has_sims,
 			A->Sims,
@@ -509,13 +509,13 @@ void classify_five_plus_one::report(
 			A->Strong_gens,
 			draw_options,
 			verbose_level);
-	A->latex_all_points(ost);
+	A->Action_latex_interface->latex_all_points(ost);
 
 	if (f_v) {
 		cout << "classify_five_plus_one::report reporting orthogonal group" << endl;
 	}
 	ost << "\\section*{The orthogonal group}" << endl;
-	A2->report(
+	A2->Action_latex_interface->report(
 			ost,
 			A2->f_has_sims,
 			A2->Sims,
@@ -524,14 +524,14 @@ void classify_five_plus_one::report(
 			draw_options,
 			verbose_level);
 	if (A2->degree < 100) {
-		A2->latex_all_points(ost);
+		A2->Action_latex_interface->latex_all_points(ost);
 	}
 
 	if (f_v) {
 		cout << "classify_five_plus_one::report reporting line stabilizer" << endl;
 	}
 	ost << "\\section*{The group stabilizing the fixed line}" << endl;
-	A_on_neighbors->report(
+	A_on_neighbors->Action_latex_interface->report(
 			ost,
 			A_on_neighbors->f_has_sims,
 			A_on_neighbors->Sims,
@@ -539,7 +539,7 @@ void classify_five_plus_one::report(
 			A_on_neighbors->Strong_gens,
 			draw_options,
 			verbose_level);
-	A_on_neighbors->latex_all_points(ost);
+	A_on_neighbors->Action_latex_interface->latex_all_points(ost);
 
 	ost << "{\\small\\arraycolsep=2pt" << endl;
 	SG_line_stab->print_generators_tex(ost);

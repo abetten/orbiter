@@ -327,44 +327,25 @@ void design_create::init(
 					"after Design_object->make_design_from_incidence_matrix" << endl;
 		}
 
-#if 0
-		combinatorics::design_theory::design_theory_global Design_theory_global;
+	}
 
+	else if (Descr->f_from_graph) {
+		if (f_v) {
+			cout << "design_create::init "
+					"-from_incidence_matrix " << Descr->from_incidence_matrix_label << endl;
+		}
 
 		if (f_v) {
 			cout << "design_create::init "
-					"before Design_theory_global.make_design_from_incidence_matrix" << endl;
+					"before Design_object->make_design_from_graph" << endl;
 		}
-		Design_theory_global.make_design_from_incidence_matrix(
-				incma, v, b, k,
-				Descr->from_incidence_matrix_label,
+		Design_object->make_design_from_graph(
+				Descr->from_graph_label,
 				verbose_level - 1);
 		if (f_v) {
 			cout << "design_create::init "
-					"after Design_theory_global.make_design_from_incidence_matrix" << endl;
+					"after Design_object->make_design_from_graph" << endl;
 		}
-
-		block = NEW_int(k);
-		nb_inc = k * b;
-
-		f_has_set = false;
-
-		f_has_incma = true;
-
-#if 0
-		int *block; // [k]
-
-		int v;
-		int b;
-		int nb_inc;
-		int f_has_incma;
-		int *incma; // [v * b]
-#endif
-
-		prefix = Descr->from_incidence_matrix_label;
-		label_txt = Descr->from_incidence_matrix_label;
-		label_tex = Descr->from_incidence_matrix_label;
-#endif
 
 	}
 

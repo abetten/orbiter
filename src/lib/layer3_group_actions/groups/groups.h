@@ -216,7 +216,7 @@ public:
 			std::string &label_of_elements,
 			data_structures_groups::vector_ge *Elements,
 			int verbose_level);
-	void conjugate(
+	void conjugate_and_write_to_file(
 			std::string &label_of_elements,
 			std::string &conjugate_data,
 			data_structures_groups::vector_ge *Elements,
@@ -1308,6 +1308,7 @@ public:
 		// previously called generator_depth
 	void group_order(
 			algebra::ring_theory::longinteger_object &go);
+	long int group_order_lint();
 	std::string stringify_group_order();
 	void group_order_verbose(
 			algebra::ring_theory::longinteger_object &go,
@@ -1315,7 +1316,6 @@ public:
 	void subgroup_order_verbose(
 			algebra::ring_theory::longinteger_object &go,
 			int level, int verbose_level);
-	long int group_order_lint();
 	int is_trivial_group();
 	int last_moved_base_point();
 		// j == -1 means the group is trivial

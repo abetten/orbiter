@@ -49,7 +49,7 @@ public:
 	arc_lifting();
 	~arc_lifting();
 	void create_surface_and_group(
-			cubic_surfaces_in_general::surface_with_action *Surf_A,
+			applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_with_action *Surf_A,
 			long int *Arc6,
 		int verbose_level);
 	void create_web_of_cubic_curves(
@@ -606,11 +606,6 @@ public:
 
 	surfaces_arc_lifting_definition_node *D;
 
-	//vector_ge *coset_reps;
-	//int nb_coset_reps;
-
-	//strong_generators *Flag_stab_gens;
-	//longinteger_object Flag_stab_go;
 
 	int f;
 

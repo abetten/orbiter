@@ -274,7 +274,19 @@ public:
 			field_theory::finite_field *F,
 			int n, int verbose_level);
 	void smith_normal_form(
-			int *A, int m, int n, std::string &label, int verbose_level);
+			int *A, int m, int n, std::string &label,
+			other::data_structures::int_matrix *&M,
+			other::data_structures::int_matrix *&P,
+			other::data_structures::int_matrix *&Pv,
+			other::data_structures::int_matrix *&Q,
+			other::data_structures::int_matrix *&Qv,
+			int verbose_level);
+	void smith_normal_form_from_the_left_only(
+			int *A, int m, int n, std::string &label,
+			other::data_structures::int_matrix *&M,
+			other::data_structures::int_matrix *&P,
+			other::data_structures::int_matrix *&Pv,
+			int verbose_level);
 	void scan_equation_in_pairs_in_characteristic_p(
 			int *eqn, int eqn_sz, int characteristic_p,
 			std::string &coefficients_text,
@@ -334,6 +346,49 @@ public:
 			int *u1, int *u2);
 };
 
+
+
+// #############################################################################
+// group_diagram.cpp:
+// #############################################################################
+
+//! diagram of a the elements of a group
+
+
+class group_diagram {
+public:
+
+	std::string label;
+
+	int base_len;
+	long int *transversal_length;
+
+	long int *multiplyer_even;
+	long int *multiplyer_odd;
+
+	long int nb_rows;
+	long int nb_cols;
+
+	long int go;
+	long int *Position; // [nb_rows * nb_cols]
+
+	int *v; // [base_len]
+
+	group_diagram();
+	~group_diagram();
+
+	void init(
+			std::string &label,
+			long int *transversal_length, int base_len,
+			int verbose_level);
+	void make_path(
+			long int rk, int *path);
+	void place_element_by_rank(
+			long int rk, long int &i, long int &j);
+	void place_element(
+			int *path, long int &i, long int &j);
+
+};
 
 
 // #############################################################################
@@ -870,57 +925,6 @@ public:
 			int &size, int &nb_gens, int verbose_level);
 };
 
-
-
-// #############################################################################
-// module.cpp:
-// #############################################################################
-
-//! a Z module
-
-class module {
-public:
-
-
-	module();
-	~module();
-	void matrix_multiply_over_Z_low_level(
-			int *A1, int *A2, int m1, int n1, int m2, int n2,
-			int *A3, int verbose_level);
-	void multiply_2by2_from_the_left(
-			other::data_structures::int_matrix *M,
-			int i, int j,
-		int aii, int aij,
-		int aji, int ajj, int verbose_level);
-	void multiply_2by2_from_the_right(
-			other::data_structures::int_matrix *M,
-			int i, int j,
-		int aii, int aij,
-		int aji, int ajj, int verbose_level);
-	int clean_column(
-			other::data_structures::int_matrix *M,
-			other::data_structures::int_matrix *P,
-			other::data_structures::int_matrix *Pv,
-			int i, int verbose_level);
-	int clean_row(
-			other::data_structures::int_matrix *M,
-			other::data_structures::int_matrix *Q,
-			other::data_structures::int_matrix *Qv,
-			int i, int verbose_level);
-	void smith_normal_form(
-			other::data_structures::int_matrix *M,
-			other::data_structures::int_matrix *&P,
-			other::data_structures::int_matrix *&Pv,
-			other::data_structures::int_matrix *&Q,
-			other::data_structures::int_matrix *&Qv,
-			int verbose_level);
-	void apply(
-			int *input, int *output, int *perm,
-			int module_dimension_m, int module_dimension_n,
-			int *module_basis,
-			int *v1, int *v2, int verbose_level);
-
-};
 
 
 

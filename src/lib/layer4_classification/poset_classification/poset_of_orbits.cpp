@@ -122,9 +122,15 @@ void poset_of_orbits::init(
 	nb_poset_orbit_nodes_used = 0;
 	nb_poset_orbit_nodes_allocated = 0;
 
+	if (f_v) {
+		cout << "poset_of_orbits::init before init_poset_orbit_node" << endl;
+	}
 	init_poset_orbit_node(
 			nb_poset_orbit_nodes,
 			verbose_level);
+	if (f_v) {
+		cout << "poset_of_orbits::init after init_poset_orbit_node" << endl;
+	}
 
 	if (f_v) {
 		cout << "poset_of_orbits::init done" << endl;
@@ -633,7 +639,7 @@ void poset_of_orbits::init_root_node(
 			cout << "poset_of_orbits::init_root_node "
 					"before root[0].init_root_node" << endl;
 		}
-		root[0].init_root_node(PC, verbose_level - 1);
+		root[0].init_root_node(PC, verbose_level);
 		if (f_v) {
 			cout << "poset_of_orbits::init_root_node "
 					"after root[0].init_root_node" << endl;
@@ -3155,8 +3161,6 @@ void poset_of_orbits::get_all_orbits_expanded(
 	}
 
 	int lvl, po, ol, el, node;
-	//int *Nb_orbits;
-	//int nb_orbits_total;
 
 	Nb_orbits = NEW_int(PC->get_depth() + 1);
 
@@ -3225,7 +3229,8 @@ void poset_of_orbits::get_all_orbits_expanded(
 
 			for (el = 0; el < ol; el++) {
 				if (false) {
-					cout << "unrank " << lvl << ", " << po
+					cout << "poset_of_orbits::get_all_orbits_expanded "
+							"unrank " << lvl << ", " << po
 							<< ", " << el << endl;
 				}
 
@@ -3235,7 +3240,8 @@ void poset_of_orbits::get_all_orbits_expanded(
 						0 /* verbose_level */);
 
 				if (false) {
-					cout << "set=";
+					cout << "poset_of_orbits::get_all_orbits_expanded "
+							"set=";
 					Lint_vec_print(cout, Set, lvl);
 					cout << endl;
 				}
@@ -3253,6 +3259,65 @@ void poset_of_orbits::get_all_orbits_expanded(
 		cout << "poset_of_orbits::get_all_orbits_expanded done" << endl;
 	}
 }
+
+other::data_structures::lint_matrix *poset_of_orbits::get_all_orbit_elements(
+		int lvl, int po,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "poset_of_orbits::get_all_orbit_elements" << endl;
+	}
+
+
+	int ol, el;
+
+	ol = orbit_length_as_int(po, lvl);
+
+	other::data_structures::lint_matrix *M;
+
+
+	M = NEW_OBJECT(other::data_structures::lint_matrix);
+	M->allocate(
+		ol, lvl);
+
+	long int *Set;
+
+
+	Set = NEW_lint(lvl);
+
+
+	for (el = 0; el < ol; el++) {
+		if (false) {
+			cout << "poset_of_orbits::get_all_orbit_elements "
+					"unrank " << lvl << ", " << po
+					<< ", " << el << endl;
+		}
+
+
+		orbit_element_unrank(lvl, po, el, Set,
+				0 /* verbose_level */);
+
+		if (false) {
+			cout << "poset_of_orbits::get_all_orbit_elements set=";
+			Lint_vec_print(cout, Set, lvl);
+			cout << endl;
+		}
+
+		Lint_vec_copy(Set, M->Data + el * lvl, lvl);
+
+	}
+
+	FREE_lint(Set);
+
+	if (f_v) {
+		cout << "poset_of_orbits::get_all_orbit_elements done" << endl;
+	}
+	return M;
+
+}
+
 
 void poset_of_orbits::get_all_orbits_expanded_table(
 		other::data_structures::set_of_sets *&All_orbits,

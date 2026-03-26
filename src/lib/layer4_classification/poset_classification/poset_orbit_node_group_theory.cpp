@@ -25,6 +25,7 @@ void poset_orbit_node::store_strong_generators(
 
 	if (f_v) {
 		cout << "poset_orbit_node::store_strong_generators" << endl;
+		cout << "poset_orbit_node::store_strong_generators base_len = " << gen->get_A()->base_len() << endl;
 	}
 	int i;
 
@@ -53,6 +54,11 @@ void poset_orbit_node::store_strong_generators(
 		Int_vec_copy(Strong_gens->tl, tl, gen->get_A()->base_len());
 		if (f_v) {
 			cout << "poset_orbit_node::store_strong_generators tl has length " << gen->get_A()->base_len() << endl;
+		}
+		if (f_v) {
+			cout << "poset_orbit_node::store_strong_generators tl = ";
+			Int_vec_print(cout, tl, gen->get_A()->base_len());
+			cout << endl;
 		}
 	}
 	if (f_v) {

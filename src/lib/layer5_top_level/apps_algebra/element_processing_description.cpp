@@ -27,13 +27,13 @@ element_processing_description::element_processing_description()
 
 	f_print = false;
 
-	f_apply_isomorphism_wedge_product_4to6 = false;
+	//f_apply_isomorphism_wedge_product_4to6 = false;
 
 	f_with_permutation = false;
 
 	f_with_fix_structure = false;
 
-	f_order_of_products_of_pairs = false;
+	//f_order_of_products_of_pairs = false;
 
 	f_conjugate = false;
 	//std::string conjugate_data;
@@ -75,12 +75,14 @@ int element_processing_description::read_arguments(
 				cout << "-print " << endl;
 			}
 		}
+#if 0
 		else if (ST.stringcmp(argv[i], "-apply_isomorphism_wedge_product_4to6") == 0) {
 			f_apply_isomorphism_wedge_product_4to6 = true;
 			if (f_v) {
 				cout << "-apply_isomorphism_wedge_product_4to6 " << endl;
 			}
 		}
+#endif
 		else if (ST.stringcmp(argv[i], "-with_permutation") == 0) {
 			f_with_permutation = true;
 			if (f_v) {
@@ -93,12 +95,14 @@ int element_processing_description::read_arguments(
 				cout << "-with_fix_structure " << endl;
 			}
 		}
+#if 0
 		else if (ST.stringcmp(argv[i], "-order_of_products_of_pairs") == 0) {
 			f_order_of_products_of_pairs = true;
 			if (f_v) {
 				cout << "-order_of_products_of_pairs " << endl;
 			}
 		}
+#endif
 		else if (ST.stringcmp(argv[i], "-conjugate") == 0) {
 			f_conjugate = true;
 			conjugate_data.assign(argv[++i]);
@@ -142,18 +146,22 @@ void element_processing_description::print()
 	if (f_print) {
 		cout << "-print " << endl;
 	}
+#if 0
 	if (f_apply_isomorphism_wedge_product_4to6) {
 		cout << "-apply_isomorphism_wedge_product_4to6 " << endl;
 	}
+#endif
 	if (f_with_permutation) {
 		cout << "-with_permutation " << endl;
 	}
 	if (f_with_fix_structure) {
 		cout << "-with_fix_structure " << endl;
 	}
+#if 0
 	if (f_order_of_products_of_pairs) {
 		cout << "-order_of_products_of_pairs " << endl;
 	}
+#endif
 	if (f_conjugate) {
 		cout << "-conjugate " << conjugate_data << endl;
 	}

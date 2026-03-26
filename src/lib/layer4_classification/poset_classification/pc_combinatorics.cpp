@@ -1183,88 +1183,6 @@ void pc_combinatorics::Mtk_via_Mtr_Mrk(
 		}
 }
 
-#if 0
-void pc_combinatorics::Mtk_from_MM(
-		long int **pM,
-	int *Nb_rows, int *Nb_cols,
-	int t, int k,
-	long int *&Mtk, int &nb_r, int &nb_c,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int i, j;
-
-	if (f_v) {
-		cout << "pc_combinatorics::Mtk_from_MM "
-				"t = " << t << ", k = " << k << endl;
-	}
-	if (k == t) {
-		cout << "pc_combinatorics::Mtk_from_MM "
-				"k == t" << endl;
-		exit(1);
-	}
-
-	long int *T;
-	long int *T2;
-	int Tr, Tc;
-	int T2r, T2c;
-
-	Tr = Nb_rows[t];
-	Tc = Nb_cols[t];
-
-	T = NEW_lint(Tr * Tc);
-	for (i = 0; i < Tr; i++) {
-		for (j = 0; j < Tc; j++) {
-			T[i * Tc + j] = pM[t][i * Tc + j];
-		}
-	}
-	if (f_v) {
-		cout << "pc_combinatorics::Mtk_from_MM "
-				"Tr=" << Tr << " Tc=" << Tc << endl;
-	}
-
-	if (t + 1 < k) {
-		for (i = t + 2; i <= k; i++) {
-
-			if (f_v) {
-				cout << "pc_combinatorics::Mtk_from_MM "
-						"i = " << i << " calling Mtk_via_Mtr_Mrk" << endl;
-			}
-
-			Mtk_via_Mtr_Mrk(
-					t, i - 1, i,
-				T, pM[i - 1], T2,
-				Tr, Tc, Nb_rows[i - 1], Nb_cols[i - 1], T2r, T2c,
-				verbose_level - 1);
-
-			FREE_lint(T);
-			T = T2;
-			Tr = T2r;
-			Tc = T2c;
-			T2 = NULL;
-		}
-		Mtk = T;
-		nb_r = Tr;
-		nb_c = Tc;
-	}
-	else {
-		Mtk = T;
-		nb_r = Tr;
-		nb_c = Tc;
-	}
-
-
-	if (f_v) {
-		cout << "pc_combinatorics::Mtk_from_MM "
-				"nb_r=" << nb_r << " nb_c=" << nb_c << endl;
-	}
-
-	if (f_v) {
-		cout << "pc_combinatorics::Mtk_from_MM "
-				"t = " << t << ", k = " << k << " done" << endl;
-	}
-}
-#endif
 
 void pc_combinatorics::Mtk_from_Matrix_stack(
 		other::data_structures::lint_matrix **Matrix_stack,
@@ -1348,7 +1266,7 @@ void pc_combinatorics::Mtk_from_Matrix_stack(
 
 				Mtk_via_Mtr_Mrk(
 						t, i - 1, i,
-					T, Matrix_stack[i - 1]->M, T2,
+					T, Matrix_stack[i - 1]->Data, T2,
 					Tr, Tc,
 					Matrix_stack[i - 1]->m,
 					Matrix_stack[i - 1]->n,
@@ -1383,50 +1301,90 @@ void pc_combinatorics::Mtk_from_Matrix_stack(
 	}
 }
 
-void pc_combinatorics::pair_relations_within_orbit(
-		int lvl, int po, int *&M, int &ol, int verbose_level)
+void pc_combinatorics::pairwise_join_and_identify(
+		int lvl, int po, int *&M, int &ol,
+		int f_do_element_idx, long int *&Element_idx,
+		int verbose_level)
+// this is for the subspace setting
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 
 	if (f_v) {
-		cout << "pc_combinatorics::pair_relations_within_orbit "
+		cout << "pc_combinatorics::pairwise_join_and_identify "
 				"lvl=" << lvl << " po=" << po << endl;
 	}
-	long int *set1;
-	long int *set2;
+
+	if (!PC->get_poset()->f_subset_lattice) {
+		cout << "pc_combinatorics::pairwise_join_and_identify "
+				"we must be in the subspace setting" << endl;
+		exit(1);
+	}
+
+
 	long int *set3;
 	long int *set4;
 	long int *set5;
 	int *Elt_transporter;
-	int i, j;
-	int orbit_idx;
+	int *basis;
 
-	set1 = NEW_lint(lvl);
-	set2 = NEW_lint(lvl);
+	//set1 = NEW_lint(lvl);
+	//set2 = NEW_lint(lvl);
 	set3 = NEW_lint(2 * lvl);
 	set4 = NEW_lint(2 * lvl);
 	set5 = NEW_lint(2 * lvl);
 	Elt_transporter = NEW_int(PC->get_poset()->A->elt_size_in_int);
-
-	int *basis;
-
 	basis = NEW_int(2 * lvl * PC->get_poset()->VS->dimension);
 
 
+	long int *set1;
+	long int *set2;
+	int i, j;
+	int orbit_idx;
 	int po1;
 
 	ol = PC->get_Poo()->orbit_length_as_int(po, lvl);
+
+	if (f_v) {
+		cout << "pc_combinatorics::pairwise_join_and_identify "
+				"orbit length = " << ol << endl;
+	}
 
 	M = NEW_int(ol * ol);
 
 	Int_vec_zero(M, ol * ol);
 
+
+	if (f_do_element_idx) {
+
+		Element_idx = NEW_lint(ol * ol);
+		Lint_vec_mone(Element_idx, ol * ol);
+	}
+
+	other::data_structures::lint_matrix *Elements;
+
+	if (f_v) {
+		cout << "pc_combinatorics::pairwise_join_and_identify "
+				"before get_all_orbit_elements" << endl;
+	}
+	Elements = PC->get_Poo()->get_all_orbit_elements(
+			lvl, po,
+			verbose_level);
+	if (f_v) {
+		cout << "pc_combinatorics::pairwise_join_and_identify "
+				"after get_all_orbit_elements" << endl;
+	}
+
+
 	for (i = 0; i < ol; i++) {
 
+#if 0
 		PC->get_Poo()->orbit_element_unrank(
 				lvl, po, i /*el1 */, set1,
 				0 /* verbose_level */);
+#endif
+
+		set1 = Elements->Data + i * lvl;
 
 		if (f_vv) {
 			cout << "set1 " << i << " / " << ol << "=";
@@ -1436,10 +1394,13 @@ void pc_combinatorics::pair_relations_within_orbit(
 
 		for (j = i + 1; j < ol; j++) {
 
-
+#if 0
 			PC->get_Poo()->orbit_element_unrank(
 					lvl, po, j, set2,
 					0 /* verbose_level */);
+#endif
+
+			set2 = Elements->Data + j * lvl;
 
 			if (f_vv) {
 				cout << "set2 " << j << " / " << ol << "=";
@@ -1453,8 +1414,8 @@ void pc_combinatorics::pair_relations_within_orbit(
 
 			int rk;
 
-			if (f_v) {
-				cout << "pc_combinatorics::pair_relations_within_orbit for set ";
+			if (f_vv) {
+				cout << "pc_combinatorics::pairwise_join_and_identify for set ";
 				Lint_vec_print(cout, set3, 2 * lvl);
 				cout << endl;
 			}
@@ -1466,46 +1427,87 @@ void pc_combinatorics::pair_relations_within_orbit(
 			PC->get_poset()->rank_basis(basis, set4, rk);
 
 			if (f_vv) {
-				cout << "pc_combinatorics::pair_relations_within_orbit "
+				cout << "pc_combinatorics::pairwise_join_and_identify "
 						"rk = " << rk << endl;
 			}
 
 
-			po1 = PC->trace_set(
-					set4,
-					rk, rk,
-					set5, Elt_transporter,
-					verbose_level);
+			long int element_rank = -1;
+
+			if (f_do_element_idx) {
+
+
+
+				if (f_vv) {
+					cout << "pc_combinatorics::pairwise_join_and_identify "
+							"before orbit_element_rank" << endl;
+				}
+				PC->get_Poo()->orbit_element_rank(
+					rk,
+					po1, element_rank, set4,
+					verbose_level - 2);
+				if (f_vv) {
+					cout << "pc_combinatorics::pairwise_join_and_identify "
+							"after orbit_element_rank" << endl;
+				}
+
+				Element_idx[i * ol + j] = element_rank;
+				Element_idx[j * ol + i] = element_rank;
+
+			}
+			else {
+
+				if (f_vv) {
+					cout << "pc_combinatorics::pairwise_join_and_identify "
+							"before trace_set" << endl;
+				}
+				po1 = PC->trace_set(
+						set4,
+						rk, rk,
+						set5, Elt_transporter,
+						verbose_level - 2);
+				if (f_vv) {
+					cout << "pc_combinatorics::pairwise_join_and_identify "
+							"after trace_set" << endl;
+				}
+
+
+			}
 
 			if (f_vv) {
-				cout << "pc_combinatorics::pair_relations_within_orbit "
+				cout << "pc_combinatorics::pairwise_join_and_identify "
 						"po1 = " << po1 << endl;
 			}
 
 			orbit_idx = PC->get_Poo()->first_node_at_level(rk) + po1;
 
 			if (f_vv) {
-				cout << "pc_combinatorics::pair_relations_within_orbit "
+				cout << "pc_combinatorics::pairwise_join_and_identify "
 						"po1 = " << po1 << " orbit_idx = " << orbit_idx << endl;
+			}
+			if (f_do_element_idx) {
+				cout << "pc_combinatorics::pairwise_join_and_identify "
+						"element_rank = " << element_rank << endl;
+
 			}
 
 			M[i * ol + j] = orbit_idx;
 			M[j * ol + i] = orbit_idx;
-
 		}
 	}
 
 
-	FREE_lint(set1);
-	FREE_lint(set2);
+	//FREE_lint(set1);
+	//FREE_lint(set2);
 	FREE_lint(set3);
 	FREE_lint(set4);
 	FREE_lint(set5);
-	FREE_int(basis);
 	FREE_int(Elt_transporter);
+	FREE_int(basis);
+	FREE_OBJECT(Elements);
 
 	if (f_v) {
-		cout << "pc_combinatorics::pair_relations_within_orbit "
+		cout << "pc_combinatorics::pairwise_join_and_identify "
 				"lvl=" << lvl << " po=" << po << " done" << endl;
 	}
 }

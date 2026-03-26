@@ -61,61 +61,6 @@ public:
 
 
 
-// #############################################################################
-// packing_classify_activity_description.cpp
-// #############################################################################
-
-//! description of an activity for an object of type classification of packings in PG(3,q)
-
-class packing_classify_activity_description {
-
-public:
-
-	// packing_classify.csv
-
-	int f_report;
-
-	int f_classify;
-	std::string classify_control_label;
-
-	int f_make_graph_of_disjoint_spreads;
-
-	int f_export_group_on_spreads;
-
-	packing_classify_activity_description();
-	~packing_classify_activity_description();
-	int read_arguments(
-		int argc, std::string *argv,
-		int verbose_level);
-	void print();
-
-
-};
-
-
-// #############################################################################
-// packing_classify_activity.cpp
-// #############################################################################
-
-//! performs an activity for an object of type classification of packings in PG(3,q)
-
-class packing_classify_activity {
-
-public:
-
-	packing_classify_activity_description *Descr;
-	packing_classify *Packing_classify;
-
-	packing_classify_activity();
-	~packing_classify_activity();
-	void init(
-			packing_classify_activity_description *Descr,
-			packing_classify *Packing_classify,
-			int verbose_level);
-	void perform_activity(
-			int verbose_level);
-
-};
 
 
 
@@ -452,58 +397,6 @@ public:
 
 
 
-// #############################################################################
-// packing_was_activity_description.cpp
-// #############################################################################
-
-//! description of an activity involving a packing_was
-
-class packing_was_activity_description {
-public:
-
-	// TABLES/packing_was_activity.tex
-
-	int f_report;
-
-	int f_export_reduced_spread_orbits;
-	std::string export_reduced_spread_orbits_fname_base;
-
-	int f_create_graph_on_mixed_orbits;
-	std::string create_graph_on_mixed_orbits_orbit_lengths;
-
-
-	packing_was_activity_description();
-	~packing_was_activity_description();
-	int read_arguments(
-		int argc, std::string *argv,
-		int verbose_level);
-	void print();
-
-};
-
-
-// #############################################################################
-// packing_was_activity.cpp
-// #############################################################################
-
-//! an activity involving a packing_was
-
-class packing_was_activity {
-public:
-
-	packing_was_activity_description *Descr;
-	packing_was *PW;
-
-	packing_was_activity();
-	~packing_was_activity();
-	void init(
-			packing_was_activity_description *Descr,
-			packing_was *PW,
-			int verbose_level);
-	void perform_activity(
-			int verbose_level);
-};
-
 
 
 // #############################################################################
@@ -549,58 +442,6 @@ public:
 			int argc, std::string *argv,
 		int verbose_level);
 	void print();
-
-};
-
-// #############################################################################
-// packing_was_fixpoints_activity_description.cpp
-// #############################################################################
-
-//! description of an activity after the fixed points have been selected in the construction of packings in PG(3,q) with assumed symmetry
-
-class packing_was_fixpoints_activity_description {
-public:
-
-	// TABLES/packing_was_fixpoints_activity.tex
-
-	int f_report;
-
-	int f_print_packing;
-	std::string print_packing_text;
-
-	int f_compare_files_of_packings;
-	std::string compare_files_of_packings_fname1;
-	std::string compare_files_of_packings_fname2;
-
-	packing_was_fixpoints_activity_description();
-	~packing_was_fixpoints_activity_description();
-	int read_arguments(
-		int argc, std::string *argv,
-		int verbose_level);
-	void print();
-
-};
-
-// #############################################################################
-// packing_was_fixpoints_activity.cpp
-// #############################################################################
-
-//! an activity after the fixed points have been selected in the construction of packings in PG(3,q) with assumed symmetry
-
-class packing_was_fixpoints_activity {
-public:
-
-	packing_was_fixpoints_activity_description *Descr;
-	packing_was_fixpoints *PWF;
-
-	packing_was_fixpoints_activity();
-	~packing_was_fixpoints_activity();
-	void init(
-			packing_was_fixpoints_activity_description *Descr,
-			packing_was_fixpoints *PWF,
-			int verbose_level);
-	void perform_activity(
-			int verbose_level);
 
 };
 

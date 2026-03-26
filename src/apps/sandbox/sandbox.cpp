@@ -44,8 +44,8 @@ int main()
 	int verbose_level = 2;
 	int f_v = (verbose_level >= 1);
 
-	orbiter::layer5_applications::user_interface::orbiter_top_level_session Top_level_session;
-	orbiter::layer5_applications::user_interface::The_Orbiter_top_level_session = &Top_level_session;
+	orbiter::layer5_applications::user_interface::core_system::orbiter_top_level_session Top_level_session;
+	orbiter::layer5_applications::user_interface::core_system::The_Orbiter_top_level_session = &Top_level_session;
 
 
 	double *X, *Y;
@@ -120,8 +120,8 @@ int main()
 #endif
 
 #if 0
-	orbiter::layer5_applications::user_interface::orbiter_top_level_session Top_level_session;
-	orbiter::layer5_applications::user_interface::The_Orbiter_top_level_session = &Top_level_session;
+	orbiter::layer5_applications::user_interface::core_system::orbiter_top_level_session Top_level_session;
+	orbiter::layer5_applications::user_interface::core_system::The_Orbiter_top_level_session = &Top_level_session;
 
 
 	std::string *Col_headings;
@@ -160,8 +160,8 @@ int main()
 	int verbose_level = 2;
 	int f_v = (verbose_level >= 1);
 
-	orbiter::layer5_applications::user_interface::orbiter_top_level_session Top_level_session;
-	orbiter::layer5_applications::user_interface::The_Orbiter_top_level_session = &Top_level_session;
+	orbiter::layer5_applications::user_interface::core_system::orbiter_top_level_session Top_level_session;
+	orbiter::layer5_applications::user_interface::core_system::The_Orbiter_top_level_session = &Top_level_session;
 
 	algebra::field_theory::finite_field *F0, *F1;
 
@@ -251,8 +251,8 @@ int main()
 	int verbose_level = 2;
 	int f_v = (verbose_level >= 1);
 
-	orbiter::layer5_applications::user_interface::orbiter_top_level_session Top_level_session;
-	orbiter::layer5_applications::user_interface::The_Orbiter_top_level_session = &Top_level_session;
+	orbiter::layer5_applications::user_interface::core_system::orbiter_top_level_session Top_level_session;
+	orbiter::layer5_applications::user_interface::core_system::The_Orbiter_top_level_session = &Top_level_session;
 
 	algebra::field_theory::finite_field *F;
 
@@ -486,8 +486,8 @@ int main()
 
 
 #if 0
-	orbiter::layer5_applications::user_interface::orbiter_top_level_session Top_level_session;
-	orbiter::layer5_applications::user_interface::The_Orbiter_top_level_session = &Top_level_session;
+	orbiter::layer5_applications::user_interface::core_system::orbiter_top_level_session Top_level_session;
+	orbiter::layer5_applications::user_interface::core_system::The_Orbiter_top_level_session = &Top_level_session;
 
 	other::orbiter_kernel_system::file_io Fio;
 	std::string fname;
@@ -627,8 +627,8 @@ int main()
 	int i, q;
 	int nb;
 
-	orbiter::layer5_applications::user_interface::orbiter_top_level_session Top_level_session;
-	orbiter::layer5_applications::user_interface::The_Orbiter_top_level_session = &Top_level_session;
+	orbiter::layer5_applications::user_interface::core_system::orbiter_top_level_session Top_level_session;
+	orbiter::layer5_applications::user_interface::core_system::The_Orbiter_top_level_session = &Top_level_session;
 	combinatorics::knowledge_base::knowledge_base K;
 
 	for (i = 0; i < sizeof(List) / sizeof(int); i++) {
@@ -642,8 +642,8 @@ int main()
 	int n = 7;
 	int *v;
 
-	orbiter::layer5_applications::user_interface::orbiter_top_level_session Top_level_session;
-	orbiter::layer5_applications::user_interface::The_Orbiter_top_level_session = &Top_level_session;
+	orbiter::layer5_applications::user_interface::core_system::orbiter_top_level_session Top_level_session;
+	orbiter::layer5_applications::user_interface::core_system::The_Orbiter_top_level_session = &Top_level_session;
 	geometry::other_geometry::geometry_global Gg;
 
 	v = NEW_int(n);

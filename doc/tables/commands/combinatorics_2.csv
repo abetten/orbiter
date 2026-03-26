@@ -1,12 +1,13 @@
 ROW,C1,C2,C3
 0,"tab:combi:2",,
 1,"Combinatorics (Part 2)",,
+1,"\verb'-read_solutions_and_tally' "," fname sz ","Reads solutions from the given file. "
 1,"\verb'-make_elementary_symmetric_functions' "," $n$ $k_{\max}$ ","Computes all elementary symmetric functions in $n$ variables of degree $k$ with $1 \le k \le k_{\max}$"
 1,"\verb'-make_elementary_symmetric_function' "," $n$ $k$ ","Computes the elementary symmetric function in $n$ variables of degree $k.$"
 1,"\verb'-Dedekind_numbers' "," $n_{\min}$  $n_{\max}$ $q_{\min}$  $q_{\max}$ ","Computes the Dedekind numbers $D_{n,q}$ for $n_{\min} \le n \le n_{\max}$ and $q_{\min} \le q \le q_{\max}$"
 1,"\verb'-q_binomial' "," n k q ","Computes the $q$-binomial n,k,q. "
 1,"\verb'-rank_k_subset' "," $n$ $k$ $L$  "," Computes the ranks of $k$-subsets chosen from an $n$-set. $L$ is a list of $k$-sets taken from an $n$-set. "
-1,"\verb'-geometry_builder' ","   ","See Section~\ref{sec:configurations}."
+1,"\verb'-geometry_builder' "," params  ","For parameters, see Section~\ref{sec:configurations}."
 1,"\verb'-union' "," file input-file output-file  "," Perform the union of sets given in files. "
 1,"\verb'-dot_product_of_columns' "," file  "," Perform the dot product of all columns of the matrix in the given file. "
 1,"\verb'-dot_product_of_rows' "," file  "," Perform the dot product of all rows of the matrix in the given file. "
@@ -14,7 +15,6 @@ ROW,C1,C2,C3
 1,"\verb'-rowspan_over_R' "," matrix  "," Compute a basis of the rowspan of the given matrix over R. "
 1,"\verb'-read_widor' "," file  "," Create a tactical decomposition from a file in Widor format. "
 1,"\verb'-Kaempfer' ","   "," Invoke Kaempfer's TDO-refinement algorithm. "
-1,"\verb'-domino_portrait' "," $D$ $s$ fname  "," Computes a domino portrait for a graphics file in r/g/b format using double-$D$ domino sets. "
-1,"\verb'-test_if_distance_regular_graph' "," fname  "," Tests wether the layered graph whose file name is give is distance regular. "
+1,"\verb'-domino_portrait' "," $D$ $s$ fname options "," Computes a domino portrait for a graphics file in r/g/b format using double-$D$ domino sets. "
+1,"\verb'-test_if_distance_regular_graph' "," fname  "," Tests whether the layered graph in the given file is distance regular. If so, compute the parameters. "
 END
-1,"\verb'-character_table_symmetric_group' "," $n$  ","Computes the character table of  $\Sym(n)$ using the algorithm of Burnside. "

@@ -43,7 +43,7 @@ memory_object::~memory_object()
 	Record_death();
 	if (data) {
 		FREE_char(data);
-		}
+	}
 }
 
 void memory_object::init(
@@ -55,16 +55,16 @@ void memory_object::init(
 	
 	if (f_v) {
 		cout << "memory_object::init" << endl;
-		}
+	}
 	alloc(length, verbose_level - 1);
 	for (i = 0; i < length; i++) {
 		data[i] = initial_data[i];
-		}
+	}
 	used_length = length;
 	cur_pointer = 0;
 	if (f_v) {
 		cout << "memory_object::init done" << endl;
-		}
+	}
 }
 
 void memory_object::alloc(
@@ -76,7 +76,7 @@ void memory_object::alloc(
 	if (f_v) {
 		cout << "memory_object::alloc "
 				"length=" << length << endl;
-		}
+	}
 	//freeself();
 
 	data = NEW_char(length);
@@ -84,14 +84,14 @@ void memory_object::alloc(
 		cout << "memory_object::alloc "
 				"out of memory" << endl;
 		exit(1);
-		}
+	}
 	alloc_length = length;
 	//used_length = length;
 	//cur_pointer = 0;
 
 	if (f_v) {
 		cout << "memory_object::alloc done" << endl;
-		}
+	}
 }
 
 void memory_object::append(
@@ -140,7 +140,7 @@ void memory_object::realloc(
 		cout << "memory_object::realloc "
 				"old_length=" << used_length <<
 				" new_length=" << new_length << endl;
-		}
+	}
 	old_data = data;
 	old_length = used_length;
 	old_cur_pointer = cur_pointer;
@@ -148,7 +148,7 @@ void memory_object::realloc(
 		cout << "memory_object::realloc error: "
 				"new_length < old_length" << endl;
 		exit(1);
-		}
+	}
 	if (new_length < 2 * old_length) {
 		new_length = 2 * old_length;
 			// this is so that we don't get bogged down
@@ -160,17 +160,17 @@ void memory_object::realloc(
 		cout << "memory_object::realloc "
 				"old_length=" << used_length <<
 				" adjusted new_length=" << new_length << endl;
-		}
+	}
 	data = NULL;
 	alloc(new_length, verbose_level - 1);
 	for (i = 0; 
 		i < MINIMUM(old_length, new_length); 
 		i++) {
 		data[i] = old_data[i];
-		}
+	}
 	for (i = old_length; i < new_length; i++) {
 		data[i] = 0;
-		}
+	}
 	FREE_char(old_data);
 	cur_pointer = old_cur_pointer;
 
@@ -178,10 +178,10 @@ void memory_object::realloc(
 	if (f_v) {
 		cout << "memory_object::realloc done "
 				" used_length=" << used_length << endl;
-		}
+	}
 	if (f_v) {
 		cout << "memory_object::realloc done" << endl;
-		}
+	}
 }
 
 void memory_object::write_char(
@@ -206,7 +206,7 @@ void memory_object::read_char(
 		cout << "used_length=" << used_length << endl;
 		cout << "l1=" << l1 << endl;
 		exit(1);
-		}
+	}
 	cp = data + cur_p;
 	*c = *cp;
 	cur_pointer++;
@@ -220,7 +220,7 @@ void memory_object::write_string(
 	l = strlen(p);
 	for (i = 0; i < l; i++) {
 		write_char(p[i]);
-		}
+	}
 	write_char(0);
 }
 
@@ -232,7 +232,7 @@ void memory_object::write_string(
 	l = p.length();
 	for (i = 0; i < l; i++) {
 		write_char(p[i]);
-		}
+	}
 	write_char(0);
 }
 
@@ -262,12 +262,12 @@ void memory_object::read_string(
 			FREE_char(q);
 			q = q1;
 			alloc_length = new_alloc_length;
-			}
+		}
 		q[used_length++] = c;
 		if (c == 0) {
 			break;
-			}
 		}
+	}
 	// now used_length = strlen(q) + 1
 
 	// copy the result over. This gets rid of the overhead:
@@ -480,8 +480,8 @@ int memory_object::multiplicity_of_character(
 	for (i = 0; i < used_length; i++) {
 		if (data[i] == c) {
 			l++;
-			}
 		}
+	}
 	return l;
 }
 

@@ -13,6 +13,7 @@
 using namespace std;
 
 
+
 namespace orbiter {
 namespace layer1_foundations {
 namespace combinatorics {
@@ -65,7 +66,7 @@ void classification_of_objects::perform_classification(
 		classification_of_objects_description *Descr,
 		int f_projective_space,
 		geometry::projective_geometry::projective_space *P,
-		data_input_stream *IS,
+		combinatorics::canonical_form_classification::data_input_stream *IS,
 		int verbose_level)
 // called from
 // layer5_applications::apps_combinatorics::combinatorial_object_stream::do_canonical_form
@@ -87,7 +88,7 @@ void classification_of_objects::perform_classification(
 
 	//CB = NEW_OBJECT(classify_bitvectors);
 
-	Output = NEW_OBJECT(data_input_stream_output);
+	Output = NEW_OBJECT(combinatorics::canonical_form_classification::data_input_stream_output);
 
 	if (f_v) {
 		cout << "classification_of_objects::perform_classification "
@@ -486,11 +487,11 @@ void classification_of_objects::process_any_object(
 
 
 int classification_of_objects::process_object(
-		any_combinatorial_object *OwCF,
+		combinatorics::canonical_form_classification::any_combinatorial_object *OwCF,
 	long int &ago,
 	int &iso_idx_if_found,
 	other::l1_interfaces::nauty_output *&NO,
-	encoded_combinatorial_object *&Enc,
+	combinatorics::canonical_form_classification::encoded_combinatorial_object *&Enc,
 	int verbose_level)
 // returns f_found, which is true if the object is rejected
 {

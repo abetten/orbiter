@@ -113,9 +113,11 @@ void poset_classification::draw_poset_full(
 
 	string base_name;
 	string fname1;
+	string fname2;
 
 	base_name = fname_base + "_poset_full_lvl_" + std::to_string(depth) + suffix;
 	fname1 = base_name + ".layered_graph";
+	fname2 = base_name + ".factor_poset";
 	
 	if (f_v) {
 		cout << "poset_classification::draw_poset_full "
@@ -128,6 +130,22 @@ void poset_classification::draw_poset_full(
 		cout << "poset_classification::draw_poset_full "
 				"after LG->write_file" << endl;
 	}
+
+
+
+	if (f_v) {
+		cout << "poset_classification::draw_poset_full "
+				"before Factor_poset->write_file" << endl;
+	}
+
+	Factor_poset->write_file(fname2, 0 /*verbose_level*/);
+
+	if (f_v) {
+		cout << "poset_classification::draw_poset_full "
+				"after Factor_poset->write_file" << endl;
+	}
+
+
 
 
 	if (f_v) {

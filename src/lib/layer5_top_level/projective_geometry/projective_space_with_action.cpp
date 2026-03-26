@@ -786,7 +786,7 @@ void projective_space_with_action::canonical_form_of_code(
 
 
 
-	apps_combinatorics::combinatorial_object_activity_description COAD;
+	user_interface::activities_layer5::combinatorial_object_activity_description COAD;
 
 
 	COAD.f_canonical_form_PG = true;
@@ -814,7 +814,7 @@ void projective_space_with_action::canonical_form_of_code(
 			verbose_level);
 
 
-	apps_combinatorics::combinatorial_object_activity COA;
+	user_interface::activities_layer5::combinatorial_object_activity COA;
 
 	COA.init_combo(&COAD,
 			Combo,
@@ -914,10 +914,10 @@ void projective_space_with_action::cheat_sheet(
 
 			if (f_v) {
 				cout << "projective_space_with_action::cheat_sheet "
-						"before A->report" << endl;
+						"before A->Action_latex_interface->report" << endl;
 			}
 
-			A->report(
+			A->Action_latex_interface->report(
 					ost, A->f_has_sims, A->Sims,
 					A->f_has_strong_generators, A->Strong_gens,
 					O,
@@ -925,7 +925,7 @@ void projective_space_with_action::cheat_sheet(
 
 			if (f_v) {
 				cout << "projective_space_with_action::cheat_sheet "
-						"after A->report" << endl;
+						"after A->Action_latex_interface->report" << endl;
 			}
 
 

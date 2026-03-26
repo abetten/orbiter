@@ -105,7 +105,7 @@ large_set_classify::~large_set_classify()
 
 void large_set_classify::init(
 		design_create *DC,
-		design_tables *T,
+		design_tables *Design_tables,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -115,8 +115,8 @@ void large_set_classify::init(
 	}
 
 	large_set_classify::DC = DC;
-	large_set_classify::Design_table = T;
-	design_size = T->design_size;
+	large_set_classify::Design_table = Design_tables;
+	design_size = Design_tables->design_size;
 	nb_points = DC->A->degree;
 	nb_lines = DC->A2->degree;
 	size_of_large_set = nb_lines / design_size;
@@ -147,11 +147,10 @@ void large_set_classify::init(
 		if (f_v) {
 			cout << "large_set_classify::init we are not computing colors" << endl;
 		}
-
 	}
 
 	if (f_v) {
-		cout << "large_set_classify::init_designs "
+		cout << "large_set_classify::init "
 				"creating graph" << endl;
 	}
 
@@ -239,7 +238,8 @@ void large_set_classify::create_action_and_poset(
 				"before gen->initialize_and_allocate_root_node" << endl;
 	}
 
-	gen->initialize_and_allocate_root_node(Control, Poset,
+	gen->initialize_and_allocate_root_node(
+			Control, Poset,
 		search_depth,
 		verbose_level - 1);
 

@@ -193,14 +193,15 @@ int data_input_stream_description::read_arguments(
 				"-file_of_packings_through_spread_table") == 0) {
 
 			data_input_stream_description_element E;
-			string a, b;
+			string a, fname_spread_table, col_label;
 			int q;
 
 			a.assign(argv[++i]);
-			b.assign(argv[++i]);
+			fname_spread_table.assign(argv[++i]);
+			col_label.assign(argv[++i]);
 			q = ST.strtoi(argv[++i]);
 
-			E.init_file_of_packings_through_spread_table(a, b, q);
+			E.init_file_of_packings_through_spread_table(a, fname_spread_table, col_label, q);
 			Input.push_back(E);
 
 			if (f_v) {

@@ -59,8 +59,6 @@ namespace applications_in_algebraic_geometry {
 	namespace cubic_surfaces_and_double_sixes {
 
 		// surfaces/surfaces_and_double_sixes:
-		class classification_of_cubic_surfaces_with_double_sixes_activity_description;
-		class classification_of_cubic_surfaces_with_double_sixes_activity;
 		class classify_double_sixes;
 		class classify_five_plus_one;
 		class identify_cubic_surface;
@@ -74,8 +72,6 @@ namespace applications_in_algebraic_geometry {
 	namespace cubic_surfaces_in_general {
 
 		// surfaces/surfaces_general:
-		class cubic_surface_activity_description;
-		class cubic_surface_activity;
 		class surface_clebsch_map;
 		class surface_create_description;
 		class surface_create;
@@ -92,8 +88,6 @@ namespace applications_in_algebraic_geometry {
 	namespace quartic_curves {
 
 		// surfaces/quartic curves
-		class quartic_curve_activity_description;
-		class quartic_curve_activity;
 		class quartic_curve_create_description;
 		class quartic_curve_create;
 		class quartic_curve_domain_with_action;
@@ -114,8 +108,6 @@ namespace applications_in_algebraic_geometry {
 namespace apps_algebra {
 
 	// algebra_and_number_theory
-	class action_on_forms_activity_description;
-	class action_on_forms_activity;
 	class action_on_forms_description;
 	class action_on_forms;
 	class algebra_global_with_action;
@@ -123,15 +115,11 @@ namespace apps_algebra {
 	class classes_of_elements_expanded;
 	class classes_of_subgroups_expanded;
 	class element_processing_description;
-	class group_theoretic_activity_description;
-	class group_theoretic_activity;
 	class modified_group_init_layer5;
 	class orbit_of_elements;
 	class orbit_of_subgroups;
 	class polynomial_ring_activity;
 	class rational_normal_form;
-	class vector_ge_activity_description;
-	class vector_ge_activity;
 	class vector_ge_builder;
 	class young;
 
@@ -145,8 +133,6 @@ namespace apps_algebra {
 namespace apps_coding_theory {
 
 	class code_modification_description;
-	class coding_theoretic_activity_description;
-	class coding_theoretic_activity;
 	class crc_process_description;
 	class crc_process;
 	class create_code_description;
@@ -162,33 +148,21 @@ namespace apps_combinatorics {
 
 	// combinatorics
 	class boolean_function_classify;
-	class combinatorial_object_activity_description;
-	class combinatorial_object_activity;
 	class combinatorial_object_stream;
 	class combinatorics_global;
-	class combo_activity_description;
-	class combo_activity;
 	class dd_lifting;
 	class dd_search_singletons;
 	class delandtsheer_doyen_description;
 	class delandtsheer_doyen;
-	class design_activity_description;
-	class design_activity;
 	class design_create_description;
 	class design_create;
 	class design_tables;
 	class difference_set_in_heisenberg_group;
 	class hadamard_classify;
 	class hall_system_classify;
-	class large_set_activity_description;
-	class large_set_activity;
 	class large_set_classify;
-	class large_set_was_activity_description;
-	class large_set_was_activity;
 	class large_set_was_description;
 	class large_set_was;
-	class plesken_ring_activity_description;
-	class plesken_ring_activity;
 	class plesken_ring;
 	class variety_with_TDO_and_TDA;
 
@@ -228,13 +202,9 @@ namespace apps_graph_theory {
 	class cayley_graph_search;
 	class create_graph_description;
 	class create_graph;
-	class graph_classification_activity_description;
-	class graph_classification_activity;
 	class graph_classify_description;
 	class graph_classify;
 	class graph_modification_description;
-	class graph_theoretic_activity_description;
-	class graph_theoretic_activity;
 	class graph_theory_apps;
 
 }
@@ -253,8 +223,6 @@ namespace canonical_form {
 	class combinatorial_object_with_properties;
 	class input_objects_of_type_variety;
 	class objects_after_classification;
-	class variety_activity_description;
-	class variety_activity;
 	class variety_compute_canonical_form;
 	class variety_object_with_action;
 	class variety_stabilizer_compute;
@@ -270,16 +238,12 @@ namespace orbits {
 
 	class classify_cubic_surfaces_description;
 	class orbit_cascade;
-	class orbits_activity_description;
-	class orbits_activity;
 	class orbits_create_description;
 	class orbits_create;
 	class orbits_global;
 	class orbits_on_pairs;
 	class orbits_on_polynomials;
 	class orbits_on_subspaces;
-	class poset_classification_activity_description;
-	class poset_classification_activity;
 
 }
 
@@ -290,10 +254,6 @@ namespace orthogonal_geometry_applications {
 
 
 	// orthogonal
-	class blt_set_activity_description;
-	class blt_set_activity;
-	class blt_set_classify_activity_description;
-	class blt_set_classify_description;
 	class blt_set_classify;
 	class BLT_set_create_description;
 	class BLT_set_create;
@@ -301,8 +261,6 @@ namespace orthogonal_geometry_applications {
 	class blt_set_group_properties;
 	class blt_set_with_action;
 	class flock_from_blt_set;
-	class orthogonal_space_activity_description;
-	class orthogonal_space_activity;
 	class orthogonal_space_with_action_description;
 	class orthogonal_space_with_action;
 	class table_of_blt_sets;
@@ -317,17 +275,11 @@ namespace packings {
 
 	// packings:
 	class invariants_packing;
-	class packing_classify_activity_description;
-	class packing_classify_activity;
 	class packing_classify;
 	class packing_invariants;
 	class packing_long_orbits_description;
 	class packing_long_orbits;
-	class packing_was_activity_description;
-	class packing_was_activity;
 	class packing_was_description;
-	class packing_was_fixpoints_activity_description;
-	class packing_was_fixpoints_activity;
 	class packing_was_fixpoints;
 	class packing_was;
 	class packings_global;
@@ -341,8 +293,6 @@ namespace packings {
 namespace projective_geometry {
 
 	// projective_space.h:
-	class projective_space_activity_description;
-	class projective_space_activity;
 	class projective_space_globals;
 	class projective_space_with_action_description;
 	class projective_space_with_action;
@@ -380,20 +330,12 @@ namespace spreads {
 
 	// spreads:
 	class recoordinatize;
-	class spread_activity_description;
-	class spread_activity;
-	class spread_classify_activity_description;
-	class spread_classify_activity;
 	class spread_classify_description;
 	class spread_classify;
 	class spread_create_description;
 	class spread_create;
 	class spread_lifting;
-	class spread_table_activity_description;
-	class spread_table_activity;
 	class spread_table_with_selection;
-	class translation_plane_activity_description;
-	class translation_plane_activity;
 
 }
 
@@ -403,19 +345,110 @@ namespace spreads {
 
 namespace user_interface {
 
-	// interfaces
-	class activity_description;
-	class interface_algebra;
-	class interface_coding_theory;
-	class interface_combinatorics;
-	class interface_cryptography;
-	class interface_povray;
-	class interface_projective;
-	class interface_symbol_table;
-	class interface_toolkit;
-	class orbiter_command;
-	class orbiter_top_level_session;
-	class symbol_definition;
+	//! starting point for global commands
+
+	namespace activities {
+
+		class interface_algebra;
+		class interface_coding_theory;
+		class interface_combinatorics;
+		class interface_cryptography;
+		class interface_povray;
+		class interface_projective;
+		class interface_symbol_table;
+		class interface_toolkit;
+
+	}
+
+
+	//! starting point for commands related to objects form layer 1
+
+	namespace activities_layer1 {
+
+		class diophant_activity_description;
+		class diophant_activity;
+		class finite_field_activity_description;
+		class finite_field_activity;
+		class polynomial_ring_activity_description;
+		class symbolic_object_activity_description;
+		class symbolic_object_activity;
+
+	}
+
+	//! starting point for commands related to objects form layer 5
+
+	namespace activities_layer5 {
+
+		class action_on_forms_activity_description;
+		class action_on_forms_activity;
+		class blt_set_activity_description;
+		class blt_set_activity;
+		class blt_set_classify_activity_description;
+		class blt_set_classify_description;
+		class classification_of_cubic_surfaces_with_double_sixes_activity_description;
+		class classification_of_cubic_surfaces_with_double_sixes_activity;
+		class coding_theoretic_activity_description;
+		class coding_theoretic_activity;
+		class combinatorial_object_activity_description;
+		class combinatorial_object_activity;
+		class combo_activity_description;
+		class combo_activity;
+		class cubic_surface_activity_description;
+		class cubic_surface_activity;
+		class design_activity_description;
+		class design_activity;
+		class graph_classification_activity_description;
+		class graph_classification_activity;
+		class graph_theoretic_activity_description;
+		class graph_theoretic_activity;
+		class group_theoretic_activity_description;
+		class group_theoretic_activity;
+		class large_set_activity_description;
+		class large_set_activity;
+		class large_set_was_activity_description;
+		class large_set_was_activity;
+		class orbits_activity_description;
+		class orbits_activity;
+		class orthogonal_space_activity_description;
+		class orthogonal_space_activity;
+		class packing_classify_activity_description;
+		class packing_classify_activity;
+		class packing_was_activity_description;
+		class packing_was_activity;
+		class packing_was_fixpoints_activity_description;
+		class packing_was_fixpoints_activity;
+		class plesken_ring_activity_description;
+		class plesken_ring_activity;
+		class poset_classification_activity_description;
+		class poset_classification_activity;
+		class projective_space_activity_description;
+		class projective_space_activity;
+		class quartic_curve_activity_description;
+		class quartic_curve_activity;
+		class spread_activity_description;
+		class spread_activity;
+		class spread_classify_activity_description;
+		class spread_classify_activity;
+		class spread_table_activity_description;
+		class spread_table_activity;
+		class translation_plane_activity_description;
+		class translation_plane_activity;
+		class variety_activity_description;
+		class variety_activity;
+		class vector_ge_activity_description;
+		class vector_ge_activity;
+
+	}
+
+	//! the command line parser, symbol table and user interface
+
+	namespace core_system {
+
+		class activity_description;
+		class orbiter_command;
+		class orbiter_top_level_session;
+		class symbol_definition;
+	}
 
 }
 
@@ -427,29 +460,29 @@ namespace user_interface {
 
 
 
-#define Get_vector_or_set(label, set, sz) user_interface::The_Orbiter_top_level_session->get_vector_or_set(label, set, sz, 0)
-#define Get_any_group(label) user_interface::The_Orbiter_top_level_session->get_any_group(label)
+#define Get_vector_or_set(label, set, sz) user_interface::core_system::The_Orbiter_top_level_session->get_vector_or_set(label, set, sz, 0)
+#define Get_any_group(label) user_interface::core_system::The_Orbiter_top_level_session->get_any_group(label)
 
-#define Get_object_of_type_spread(label) user_interface::The_Orbiter_top_level_session->get_object_of_type_spread(label)
-#define Get_poset_classification_control(label) user_interface::The_Orbiter_top_level_session->get_poset_classification_control(label)
-#define Get_poset_classification_report_options(label) user_interface::The_Orbiter_top_level_session->get_poset_classification_report_options(label)
+#define Get_object_of_type_spread(label) user_interface::core_system::The_Orbiter_top_level_session->get_object_of_type_spread(label)
+#define Get_poset_classification_control(label) user_interface::core_system::The_Orbiter_top_level_session->get_poset_classification_control(label)
+#define Get_poset_classification_report_options(label) user_interface::core_system::The_Orbiter_top_level_session->get_poset_classification_report_options(label)
 
 
-#define Get_object_of_type_arc_generator_control(label) user_interface::The_Orbiter_top_level_session->get_object_of_type_arc_generator_control(label)
-#define Get_object_of_type_poset_classification_activity(label) user_interface::The_Orbiter_top_level_session->get_object_of_type_poset_classification_activity(label)
-#define Get_object_of_type_vector_ge(label) user_interface::The_Orbiter_top_level_session->get_object_of_type_vector_ge(label)
-#define Get_projective_space(label) user_interface::The_Orbiter_top_level_session->get_object_of_type_projective_space(label)
-#define Get_spread_table(label) user_interface::The_Orbiter_top_level_session->get_object_of_type_spread_table(label)
-#define Get_packing_classify(label) user_interface::The_Orbiter_top_level_session->get_packing_classify(label)
-#define Get_object_of_cubic_surface(label) user_interface::The_Orbiter_top_level_session->get_object_of_type_cubic_surface(label)
-#define Get_object_of_type_code(label) user_interface::The_Orbiter_top_level_session->get_object_of_type_code(label)
-#define Get_object_of_type_graph(label) user_interface::The_Orbiter_top_level_session->get_object_of_type_graph(label)
-#define Get_orthogonal_space(label) user_interface::The_Orbiter_top_level_session->get_orthogonal_space(label)
-#define Get_orbits(label) user_interface::The_Orbiter_top_level_session->get_orbits(label)
-#define Get_variety(label) user_interface::The_Orbiter_top_level_session->get_variety(label)
-#define Get_combo_with_group(label) user_interface::The_Orbiter_top_level_session->get_combo_with_group(label)
-#define Get_isomorph_arguments(label) user_interface::The_Orbiter_top_level_session->get_isomorph_arguments(label)
-#define Get_classify_cubic_surfaces(label) user_interface::The_Orbiter_top_level_session->get_classify_cubic_surfaces(label)
+#define Get_object_of_type_arc_generator_control(label) user_interface::core_system::The_Orbiter_top_level_session->get_object_of_type_arc_generator_control(label)
+#define Get_object_of_type_poset_classification_activity(label) user_interface::core_system::The_Orbiter_top_level_session->get_object_of_type_poset_classification_activity(label)
+#define Get_object_of_type_vector_ge(label) user_interface::core_system::The_Orbiter_top_level_session->get_object_of_type_vector_ge(label)
+#define Get_projective_space(label) user_interface::core_system::The_Orbiter_top_level_session->get_object_of_type_projective_space(label)
+#define Get_spread_table(label) user_interface::core_system::The_Orbiter_top_level_session->get_object_of_type_spread_table(label)
+#define Get_packing_classify(label) user_interface::core_system::The_Orbiter_top_level_session->get_packing_classify(label)
+#define Get_object_of_cubic_surface(label) user_interface::core_system::The_Orbiter_top_level_session->get_object_of_type_cubic_surface(label)
+#define Get_object_of_type_code(label) user_interface::core_system::The_Orbiter_top_level_session->get_object_of_type_code(label)
+#define Get_object_of_type_graph(label) user_interface::core_system::The_Orbiter_top_level_session->get_object_of_type_graph(label)
+#define Get_orthogonal_space(label) user_interface::core_system::The_Orbiter_top_level_session->get_orthogonal_space(label)
+#define Get_orbits(label) user_interface::core_system::The_Orbiter_top_level_session->get_orbits(label)
+#define Get_variety(label) user_interface::core_system::The_Orbiter_top_level_session->get_variety(label)
+#define Get_combo_with_group(label) user_interface::core_system::The_Orbiter_top_level_session->get_combo_with_group(label)
+#define Get_isomorph_arguments(label) user_interface::core_system::The_Orbiter_top_level_session->get_isomorph_arguments(label)
+#define Get_classify_cubic_surfaces(label) user_interface::core_system::The_Orbiter_top_level_session->get_classify_cubic_surfaces(label)
 
 
 }}
@@ -471,7 +504,10 @@ namespace user_interface {
 #include "projective_geometry/projective_space.h"
 #include "semifields/semifields.h"
 #include "spreads/spreads.h"
-#include "user_interface/interfaces.h"
+#include "user_interface/activities/activities.h"
+#include "user_interface/activities_layer1/activities_layer1.h"
+#include "user_interface/activities_layer5/activities_layer5.h"
+#include "user_interface/core_system/core_system.h"
 
 
 

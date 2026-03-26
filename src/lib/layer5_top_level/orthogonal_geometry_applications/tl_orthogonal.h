@@ -15,149 +15,10 @@ namespace orthogonal_geometry_applications {
 
 
 
-// #############################################################################
-// blt_set_activity_description.cpp
-// #############################################################################
-
-//! description of an activity for a BLT-set
 
 
 
-class blt_set_activity_description {
 
-public:
-
-	// TABLES/blt_set_activity.tex
-
-	int f_report;
-
-	int f_export_gap;
-
-	int f_create_flock;
-	int create_flock_point_idx;
-
-	int f_BLT_test;
-
-	int f_export_set_in_PG;
-
-	int f_plane_invariant;
-
-	blt_set_activity_description();
-	~blt_set_activity_description();
-	int read_arguments(
-			int argc, std::string *argv,
-		int verbose_level);
-	void print();
-
-};
-
-
-
-// #############################################################################
-// blt_set_activity.cpp
-// #############################################################################
-
-//! an activity regarding a BLT-sets
-
-
-
-class blt_set_activity {
-
-public:
-
-	blt_set_activity_description *Descr;
-
-	BLT_set_create *BC;
-
-	blt_set_activity();
-	~blt_set_activity();
-	void init(
-			blt_set_activity_description *Descr,
-			orthogonal_geometry_applications::BLT_set_create *BC,
-			int verbose_level);
-	void perform_activity(
-			int verbose_level);
-
-};
-
-
-
-// #############################################################################
-// blt_set_classify_activity_description.cpp
-// #############################################################################
-
-//! description of an activity regarding the classification of BLT-sets
-
-
-
-class blt_set_classify_activity_description {
-
-public:
-
-	// TABLES/blt_set_classify_activity.tex
-
-	int f_compute_starter;
-	poset_classification::poset_classification_control *starter_control;
-
-	int f_poset_classification_activity;
-	std::string poset_classification_activity_label;
-
-	int f_create_graphs;
-
-	int f_split;
-	int split_r;
-	int split_m;
-
-	int f_isomorph;
-	std::string isomorph_label;
-
-	int f_build_db;
-	int f_read_solutions;
-	int f_compute_orbits;
-	int f_isomorph_testing;
-	int f_isomorph_report;
-
-
-	blt_set_classify_activity_description();
-	~blt_set_classify_activity_description();
-	int read_arguments(
-			int argc, std::string *argv,
-		int verbose_level);
-	void print();
-
-};
-
-
-
-// #############################################################################
-// blt_set_classify_activity.cpp
-// #############################################################################
-
-//! an activity regarding the classification of BLT-sets
-
-
-
-class blt_set_classify_activity {
-
-public:
-
-	blt_set_classify_activity_description *Descr;
-	blt_set_classify *BLT_classify;
-	orthogonal_space_with_action *OA;
-
-	blt_set_classify_activity();
-	~blt_set_classify_activity();
-	void init(
-			blt_set_classify_activity_description *Descr,
-			blt_set_classify *BLT_classify,
-			orthogonal_space_with_action *OA,
-			int verbose_level);
-	void perform_activity(
-			int &nb_output,
-			other::orbiter_kernel_system::orbiter_symbol_table_entry *&Output,
-			int verbose_level);
-
-};
 
 
 
@@ -575,111 +436,6 @@ public:
 };
 
 
-// #############################################################################
-// orthogonal_space_activity_description.cpp
-// #############################################################################
-
-//! description of an activity associated with an orthogonal space
-
-
-class orthogonal_space_activity_description {
-public:
-
-	// TABLES/orthogonal_space_activity.csv
-
-	int f_cheat_sheet_orthogonal;
-	std::string cheat_sheet_orthogonal_draw_options_label;
-
-	int f_print_points;
-	std::string print_points_label;
-
-	int f_print_lines;
-	std::string print_lines_label;
-
-	int f_unrank_line_through_two_points;
-	std::string unrank_line_through_two_points_p1;
-	std::string unrank_line_through_two_points_p2;
-
-	int f_lines_on_point;
-	long int lines_on_point_rank;
-
-	int f_perp;
-	std::string perp_text;
-
-	// undocumented:
-	int f_set_stabilizer;
-	int set_stabilizer_intermediate_set_size;
-	std::string set_stabilizer_fname_mask;
-	int set_stabilizer_nb;
-	std::string set_stabilizer_column_label;
-	std::string set_stabilizer_fname_out;
-
-	int f_export_point_line_incidence_matrix;
-
-	int f_intersect_with_subspace;
-	std::string intersect_with_subspace_label;
-
-	int f_table_of_blt_sets;
-
-	int f_create_orthogonal_reflection;
-	std::string create_orthogonal_reflection_points;
-
-	int f_create_perp_of_points;
-	std::string create_perp_of_points_points;
-
-	int f_create_Siegel_transformation;
-	std::string create_Siegel_transformation_u;
-	std::string create_Siegel_transformation_v;
-
-	int f_make_all_Siegel_transformations;
-
-	int f_create_orthogonal_reflection_6_and_4;
-	std::string create_orthogonal_reflection_6_and_4_points;
-	std::string create_orthogonal_reflection_6_and_4_A4;
-
-
-	orthogonal_space_activity_description();
-	~orthogonal_space_activity_description();
-	int read_arguments(
-		int argc, std::string *argv,
-		int verbose_level);
-	void print();
-
-
-};
-
-// #############################################################################
-// orthogonal_space_activity.cpp
-// #############################################################################
-
-//! an activity associated with an orthogonal space
-
-
-class orthogonal_space_activity {
-public:
-
-	orthogonal_space_activity_description *Descr;
-
-	orthogonal_space_with_action *OA;
-
-	orthogonal_space_activity();
-	~orthogonal_space_activity();
-	void init(
-			orthogonal_space_activity_description *Descr,
-			orthogonal_space_with_action *OA,
-			int verbose_level);
-	void perform_activity(
-			int verbose_level);
-	void set_stabilizer(
-			orthogonal_space_with_action *OA,
-			int intermediate_subset_size,
-			std::string &fname_mask, int nb, std::string &column_label,
-			std::string &fname_out,
-			int verbose_level);
-
-
-};
-
 
 // #############################################################################
 // orthogonal_space_with_action_description.cpp
@@ -779,6 +535,10 @@ public:
 			actions::action *A4,
 			data_structures_groups::vector_ge *&vec6,
 			data_structures_groups::vector_ge *&vec4,
+			int verbose_level);
+	void intersection_with_subspace_basis_as_points(
+			long int *Base_rk, int sz,
+			long int *&the_points, int &nb_points,
 			int verbose_level);
 
 };

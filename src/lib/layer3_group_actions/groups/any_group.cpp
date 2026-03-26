@@ -2416,6 +2416,7 @@ void any_group::apply_isomorphism_wedge_product_4to6(
 		std::string &label_of_elements,
 		data_structures_groups::vector_ge *vec_in,
 		int verbose_level)
+// called from algebra_global_with_action::element_processing
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2423,6 +2424,15 @@ void any_group::apply_isomorphism_wedge_product_4to6(
 		cout << "any_group::apply_isomorphism_wedge_product_4to6" << endl;
 	}
 
+	actions::action_global Action_global;
+
+	Action_global.apply_isomorphism_wedge_product_4to6_and_write_file(
+			vec_in->A /* *A_wedge */,
+			vec_in,
+			label_of_elements,
+			verbose_level);
+
+#if 0
 	int *Elt_out;
 
 
@@ -2444,12 +2454,13 @@ void any_group::apply_isomorphism_wedge_product_4to6(
 		exit(1);
 	}
 
+
 	data_structures_groups::vector_ge *vec_out;
 
 	vec_out = NEW_OBJECT(data_structures_groups::vector_ge);
 
 
-	vec_out->init(A, verbose_level);
+	vec_out->init(A, verbose_level); // ToDo problem because elt_size_in_int is too small!
 	vec_out->allocate(vec_in->len, 0 /* verbose_level */);
 
 
@@ -2461,6 +2472,11 @@ void any_group::apply_isomorphism_wedge_product_4to6(
 
 		for (i = 0; i < vec_in->len; i++) {
 
+
+			if (f_v) {
+				cout << "any_group::apply_isomorphism_wedge_product_4to6 "
+						"i=" << i << " / " << vec_in->len << endl;
+			}
 
 
 			induced_actions::action_on_wedge_product *AW = A->G.AW;
@@ -2503,6 +2519,7 @@ void any_group::apply_isomorphism_wedge_product_4to6(
 	FREE_int(Elt_out);
 	FREE_OBJECT(vec_out);
 
+#endif
 
 
 	if (f_v) {
@@ -2648,16 +2665,17 @@ void any_group::products_of_pairs(
 
 
 
-void any_group::conjugate(
+void any_group::conjugate_and_write_to_file(
 		std::string &label_of_elements,
 		std::string &conjugate_data,
 		data_structures_groups::vector_ge *Elements,
 		int verbose_level)
+
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "any_group::conjugate" << endl;
+		cout << "any_group::conjugate_and_write_to_file" << endl;
 	}
 
 
@@ -2721,7 +2739,7 @@ void any_group::conjugate(
 			fname, Output_table, nb_elements, A->make_element_size);
 
 	if (f_v) {
-		cout << "any_group::conjugate "
+		cout << "any_group::conjugate_and_write_to_file "
 				"Written file " << fname << " of size "
 					<< Fio.file_size(fname) << endl;
 	}
@@ -2736,7 +2754,7 @@ void any_group::conjugate(
 
 
 	if (f_v) {
-		cout << "any_group::conjugate done" << endl;
+		cout << "any_group::conjugate_and_write_to_file done" << endl;
 	}
 }
 

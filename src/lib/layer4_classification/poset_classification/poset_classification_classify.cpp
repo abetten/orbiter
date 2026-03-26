@@ -48,12 +48,16 @@ void poset_classification::compute_orbits_on_subsets(
 
 	if (f_v) {
 		cout << "poset_classification::compute_orbits_on_subsets "
-				"calling initialize_and_allocate_root_node" << endl;
+				"before initialize_and_allocate_root_node" << endl;
 	}
 	initialize_and_allocate_root_node(
 			PC_control,
 		Poset,
-		target_depth, verbose_level - 1);
+		target_depth, verbose_level);
+	if (f_v) {
+		cout << "poset_classification::compute_orbits_on_subsets "
+				"after initialize_and_allocate_root_node" << endl;
+	}
 
 
 	//init_poset_orbit_node(nb_poset_orbit_nodes, verbose_level - 1);

@@ -2400,7 +2400,7 @@ void orbits_on_something::report(
 			//ost << "$$" << endl;
 			ost << "\\\\" << endl;
 
-			A->latex_point_set(ost, Orb, orbit_length, 0 /* verbose_level */);
+			A->Action_latex_interface->latex_point_set(ost, Orb, orbit_length, 0 /* verbose_level */);
 		}
 		FREE_lint(Orb);
 	}

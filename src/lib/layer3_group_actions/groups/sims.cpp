@@ -969,6 +969,13 @@ void sims::group_order(
 	//cout << "sims::group_order after D.multiply_up" << endl;
 }
 
+long int sims::group_order_lint()
+{
+	algebra::ring_theory::longinteger_object go;
+	group_order(go);
+	return go.as_lint();
+}
+
 std::string sims::stringify_group_order()
 {
 	std::string s;
@@ -1032,13 +1039,6 @@ void sims::subgroup_order_verbose(
 	}
 }
 
-long int sims::group_order_lint()
-{
-	algebra::ring_theory::longinteger_object go;
-
-	group_order(go);
-	return go.as_lint();
-}
 
 int sims::is_trivial_group()
 {

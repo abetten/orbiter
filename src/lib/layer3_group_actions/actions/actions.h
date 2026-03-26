@@ -188,6 +188,7 @@ public:
 	action_pointer_table *ptr;
 
 
+	action_latex_interface *Action_latex_interface;
 	
 
 	/** a label for the group */
@@ -220,13 +221,6 @@ public:
 			int i, int j);
 
 	
-	void map_a_set_based_on_hdl(
-			long int *set,
-			long int *image_set,
-			int n, action *A_base, int hdl,
-			int verbose_level);
-	void print_all_elements();
-
 	void init_sims_only(
 			groups::sims *G, int verbose_level);
 	void compute_strong_generators_from_sims(
@@ -247,12 +241,6 @@ public:
 			int depth,
 			data_structures_groups::vector_ge &gen,
 			int verbose_level);
-#if 0
-	void compute_point_stabilizer_chain(
-			data_structures_groups::vector_ge &gen,
-			groups::sims *S, int *sequence, int len,
-		int verbose_level);
-#endif
 	void compute_stabilizer_orbits(
 			other::data_structures::partitionstack *&Staborbits,
 			int verbose_level);
@@ -372,46 +360,18 @@ public:
 
 
 	// action_io.cpp:
-	void report(
-			std::ostream &ost, int f_sims, groups::sims *S,
-			int f_strong_gens, groups::strong_generators *SG,
-			other::graphics::draw_options *LG_Draw_options,
-			int verbose_level);
-	// reports the sims object from the arguments
-	void report_base(
-			std::ostream &ost,
-			int verbose_level);
-	void report_group_name_and_degree(
-			std::ostream &ost,
-			int verbose_level);
-	void report_type_of_action(
-			std::ostream &ost,
-			int verbose_level);
-	void report_what_we_act_on(
-			std::ostream &ost,
-			int verbose_level);
 
-
-	void list_elements_as_permutations_vertically(
-			data_structures_groups::vector_ge *gens,
-			std::ostream &ost);
 	void print_symmetry_group_type(
 			std::ostream &ost);
 	std::string stringify_subaction_labels();
 	void print_info();
-	void report_basic_orbits(
-			std::ostream &ost);
 	void print_base();
 	std::string stringify_base();
+	std::string stringify_tl();
 	void print_base(
 			std::ostream &ost);
 	void print_bare_base(
 			std::ofstream &ost);
-	void latex_all_points(
-			std::ostream &ost);
-	void latex_point_set(
-			std::ostream &ost,
-			long int *set, int sz, int verbose_level);
 	void print_group_order(
 			std::ostream &ost);
 	void print_group_order_long(
@@ -420,9 +380,6 @@ public:
 			data_structures_groups::vector_ge &v);
 	void print_vector_as_permutation(
 			data_structures_groups::vector_ge &v);
-	void write_set_of_elements_latex_file(
-			std::string &fname,
-			std::string &title, int *Elt, int nb_elts);
 	void export_to_orbiter(
 			std::string &fname, std::string &label,
 			groups::strong_generators *SG, int verbose_level);
@@ -431,11 +388,6 @@ public:
 			std::string &label,
 			std::string &label_tex,
 			groups::strong_generators *SG, int verbose_level);
-#if 0
-	void print_one_element_tex(
-			std::ostream &ost,
-			int *Elt, int f_with_permutation);
-#endif
 
 
 	// in backtrack.cpp
@@ -450,6 +402,7 @@ public:
 		long int &backtrack_nodes,
 		int f_get_automorphism_group, groups::sims &Aut,
 		int verbose_level);
+
 };
 
 
@@ -950,11 +903,25 @@ public:
 			data_structures_groups::vector_ge *Elements,
 			std::string &label,
 			int verbose_level);
-	void apply_isomorphism_wedge_product_4to6(
+	void apply_isomorphism_wedge_product_4to6_and_write_file(
 			actions::action *A_wedge,
 			data_structures_groups::vector_ge *vec_in,
 			std::string &label_in,
 			int verbose_level);
+	void conjugate_and_write_to_file(
+			actions::action *A,
+			std::string &label_of_elements,
+			int *conjugate_data,
+			data_structures_groups::vector_ge *Elements,
+			int verbose_level);
+	void map_a_set_based_on_hdl(
+			long int *set,
+			long int *image_set,
+			int set_size,
+			actions::action *A_base, actions::action *A_induced,
+			int hdl,
+			int verbose_level);
+
 
 };
 
@@ -964,6 +931,55 @@ void callback_choose_random_generator_orthogonal(
 	// for use in action_init.cpp
 
 
+// #############################################################################
+// action_latex_interface.cpp
+// #############################################################################
+
+
+//! latex interface for the action class
+
+class action_latex_interface {
+
+public:
+	actions::action *A;
+
+	action_latex_interface();
+	~action_latex_interface();
+	void init(
+			actions::action *A, int verbose_level);
+	void report(
+			std::ostream &ost, int f_sims, groups::sims *S,
+			int f_strong_gens, groups::strong_generators *SG,
+			other::graphics::draw_options *LG_Draw_options,
+			int verbose_level);
+	// reports the sims object from the arguments
+	void report_base(
+			std::ostream &ost,
+			int verbose_level);
+	void report_group_name_and_degree(
+			std::ostream &ost,
+			int verbose_level);
+	void report_type_of_action(
+			std::ostream &ost,
+			int verbose_level);
+	void report_what_we_act_on(
+			std::ostream &ost,
+			int verbose_level);
+	void list_elements_as_permutations_vertically(
+			data_structures_groups::vector_ge *gens,
+			std::ostream &ost);
+	void report_basic_orbits(
+			std::ostream &ost);
+	void latex_all_points(
+			std::ostream &ost);
+	void latex_point_set(
+			std::ostream &ost,
+			long int *set, int sz, int verbose_level);
+	void write_set_of_elements_latex_file(
+			std::string &fname,
+			std::string &title, int *Elt, int nb_elts);
+
+};
 
 
 // #############################################################################

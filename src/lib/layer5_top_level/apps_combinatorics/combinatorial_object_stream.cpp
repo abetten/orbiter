@@ -79,7 +79,65 @@ void combinatorial_object_stream::init(
 
 }
 
+void combinatorial_object_stream::do_canonical_form_and_write_files(
+		combinatorics::canonical_form_classification::classification_of_objects_description
+				*Canonical_form_Descr,
+				int f_projective_space,
+				projective_geometry::projective_space_with_action *PA,
+				int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
 
+	if (f_v) {
+		cout << "combinatorial_object_stream::do_canonical_form_and_write_files" << endl;
+	}
+
+	if (f_v) {
+		cout << "combinatorial_object_stream::do_canonical_form_and_write_files "
+				"before do_canonical_form" << endl;
+	}
+	do_canonical_form(
+			Canonical_form_Descr,
+			f_projective_space, PA,
+			verbose_level);
+	if (f_v) {
+		cout << "combinatorial_object_stream::do_canonical_form_and_write_files "
+				"after do_canonical_form" << endl;
+	}
+
+	string fname_base;
+
+	fname_base = Classification_of_objects->IS->Descr->label_txt;
+
+	if (f_v) {
+		cout << "combinatorial_object_stream::do_canonical_form_and_write_files "
+				"before write_canonical_form_data" << endl;
+	}
+	write_canonical_form_data(
+			fname_base,
+			verbose_level);
+	if (f_v) {
+		cout << "combinatorial_object_stream::do_canonical_form_and_write_files "
+				"after write_canonical_form_data" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "combinatorial_object_stream::do_canonical_form_and_write_files "
+				"before write_canonical_form_data_non_trivial_group" << endl;
+	}
+	write_canonical_form_data_non_trivial_group(
+			fname_base,
+			verbose_level);
+	if (f_v) {
+		cout << "combinatorial_object_stream::do_canonical_form_and_write_files "
+				"after write_canonical_form_data_non_trivial_group" << endl;
+	}
+
+	if (f_v) {
+		cout << "combinatorial_object_stream::do_canonical_form_and_write_files done" << endl;
+	}
+}
 
 void combinatorial_object_stream::do_canonical_form(
 		combinatorics::canonical_form_classification::classification_of_objects_description
@@ -1350,7 +1408,7 @@ void combinatorial_object_stream::line_type(
 
 
 void combinatorial_object_stream::do_activity(
-		user_interface::activity_description *Activity_description,
+		user_interface::core_system::activity_description *Activity_description,
 		other::orbiter_kernel_system::activity_output *&AO,
 		int verbose_level)
 // front end for graph theoretic activities
@@ -1384,7 +1442,7 @@ void combinatorial_object_stream::do_activity(
 }
 
 void combinatorial_object_stream::do_graph_theoretic_activity(
-		apps_graph_theory::graph_theoretic_activity_description
+		user_interface::activities_layer5::graph_theoretic_activity_description
 				*Graph_theoretic_activity_description,
 				other::orbiter_kernel_system::activity_output *&AO,
 		int verbose_level)
@@ -1400,7 +1458,7 @@ void combinatorial_object_stream::do_graph_theoretic_activity(
 	//AO->nb_rows = IS->Objects.size();
 
 	{
-		apps_graph_theory::graph_theoretic_activity Activity;
+		user_interface::activities_layer5::graph_theoretic_activity Activity;
 
 
 		Activity.feedback_headings(
@@ -1460,7 +1518,7 @@ void combinatorial_object_stream::do_graph_theoretic_activity(
 		}
 
 		{
-			apps_graph_theory::graph_theoretic_activity Activity;
+			user_interface::activities_layer5::graph_theoretic_activity Activity;
 
 			std::vector<std::string> feedback;
 

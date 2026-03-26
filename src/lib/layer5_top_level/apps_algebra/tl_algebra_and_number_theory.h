@@ -16,79 +16,6 @@ namespace layer5_applications {
 namespace apps_algebra {
 
 
-// #############################################################################
-// action_on_forms_activity_description.cpp
-// #############################################################################
-
-
-//! description of an action on forms
-
-
-class action_on_forms_activity_description {
-
-public:
-
-	// ToDo: undocumented
-
-
-	int f_algebraic_normal_form;
-	std::string algebraic_normal_form_input;
-
-	int f_orbits_on_functions;
-	std::string orbits_on_functions_input;
-
-	int f_associated_set_in_plane;
-	std::string associated_set_in_plane_input;
-
-	int f_differential_uniformity;
-	std::string differential_uniformity_input;
-
-
-	action_on_forms_activity_description();
-	~action_on_forms_activity_description();
-	int read_arguments(
-		int argc, std::string *argv,
-		int verbose_level);
-	void print();
-
-};
-
-
-
-// #############################################################################
-// action_on_forms_activity.cpp
-// #############################################################################
-
-
-//! perform an activity associated with an action on forms
-
-class action_on_forms_activity {
-public:
-	action_on_forms_activity_description *Descr;
-
-	apps_algebra::action_on_forms *AF;
-
-
-
-	action_on_forms_activity();
-	~action_on_forms_activity();
-	void init(
-			action_on_forms_activity_description *Descr,
-			apps_algebra::action_on_forms *AF,
-			int verbose_level);
-	void perform_activity(
-			int verbose_level);
-	void do_algebraic_normal_form(
-			int verbose_level);
-	void do_orbits_on_functions(
-			int verbose_level);
-	void do_associated_set_in_plane(
-			int verbose_level);
-	void do_differential_uniformity(
-			int verbose_level);
-
-};
-
 
 
 // #############################################################################
@@ -328,6 +255,22 @@ public:
 			groups::strong_generators *subgroup_gens,
 			groups::sims *&Sims_P, long int *&Elements_P, long int &go_P,
 			int verbose_level);
+	void diagram_of_elements(
+			groups::any_group *AG,
+			int verbose_level);
+	void find_overgroup_wrapper(
+			groups::any_group *AG,
+			groups::any_group *Subgroup,
+			int order_of_overgroup,
+			int verbose_level);
+	void find_permutation_subgroup(
+			groups::any_group *AG,
+			groups::sims *Sims,
+			int verbose_level);
+	void compute_subgroup_lattice_wrapper(
+			groups::any_group *AG,
+			groups::sims *Sims,
+			int verbose_level);
 
 
 };
@@ -459,6 +402,8 @@ public:
 			std::string &label,
 			std::string &label_latex,
 			int verbose_level);
+	other::data_structures::set_of_sets_lint *get_classes_as_set_of_sets(
+			int verbose_level);
 	void report(
 			std::string &label,
 			std::string &label_tex,
@@ -543,13 +488,15 @@ public:
 
 	int f_print;
 
-	int f_apply_isomorphism_wedge_product_4to6;
+	// ToDo: delete in documentation
+	//int f_apply_isomorphism_wedge_product_4to6;
 
 	int f_with_permutation;
 
 	int f_with_fix_structure;
 
-	int f_order_of_products_of_pairs;
+	// ToDo: delete in documentation
+	//int f_order_of_products_of_pairs;
 
 #if 0
 	// ToDo: undocumented
@@ -575,380 +522,6 @@ public:
 };
 
 
-
-// #############################################################################
-// group_theoretic_activity_description.cpp
-// #############################################################################
-
-
-//! description of an activity associated with a group
-
-class group_theoretic_activity_description {
-public:
-
-	// TABLES/group_theoretic_activity_1.tex
-
-
-	int f_report;
-	std::string report_draw_options;
-
-	int f_order_invariant;
-
-	int f_group_table;
-	std::string group_table_draw_options;
-
-	int f_sylow;
-
-
-	int f_generators;
-
-	int f_elements;
-
-	// ToDo: undocumented
-	int f_elements_by_class;
-	int elements_by_class_order;
-	int elements_by_class_id;
-
-
-	int f_select_elements;
-	std::string select_elements_ranks;
-
-	int f_export_group_table;
-
-	int f_random_element;
-	std::string random_element_label;
-
-
-	int f_permutation_representation_of_element;
-	std::string permutation_representation_element_text;
-
-	int f_apply;
-	std::string apply_input;
-	std::string apply_element;
-
-	// ToDo: undocumented
-	int f_apply_to_set;
-	std::string apply_to_set_input;
-	std::string apply_to_set_element;
-
-	// ToDo: this should become a vector_ge_activity
-	int f_element_processing;
-	element_processing_description *element_processing_descr;
-
-	int f_multiply;
-	std::string multiply_a;
-	std::string multiply_b;
-
-	int f_inverse;
-	std::string inverse_a;
-
-	int f_consecutive_powers;
-	std::string consecutive_powers_a_text;
-	std::string consecutive_powers_exponent_text;
-
-	int f_raise_to_the_power;
-	std::string raise_to_the_power_a_text;
-	std::string raise_to_the_power_exponent_text;
-
-	int f_export_orbiter;
-
-	int f_export_gap;
-
-	int f_export_magma;
-
-
-	int f_search_element_of_order;
-	int search_element_order;
-
-	int f_find_standard_generators;
-	int find_standard_generators_order_a;
-	int find_standard_generators_order_b;
-	int find_standard_generators_order_ab;
-
-	int f_find_standard_generators_M24;
-
-	int f_element_rank;
-	std::string element_rank_data;
-
-	int f_element_unrank;
-	std::string element_unrank_data;
-
-
-
-
-	// TABLES/group_theoretic_activity_2.tex
-
-	int f_find_singer_cycle;
-
-
-	int f_classes_based_on_normal_form;
-
-
-	// Magma:
-	int f_normalizer;
-
-
-	// Magma:
-	int f_centralizer_of_element;
-	std::string centralizer_of_element_label;
-	std::string centralizer_of_element_data;
-
-
-#if 0
-	int f_orbits_on_group_elements_under_conjugation;
-	std::string orbits_on_group_elements_under_conjugation_fname;
-	std::string orbits_on_group_elements_under_conjugation_transporter_fname;
-#endif
-
-	// Magma:
-	int f_normalizer_of_cyclic_subgroup;
-	std::string normalizer_of_cyclic_subgroup_label;
-	std::string normalizer_of_cyclic_subgroup_data;
-
-	// Magma:
-	int f_classes;
-
-	int f_split_by_classes;
-	std::string split_by_classes_fname;
-	std::string split_by_classes_column;
-
-	int f_identify_elements_by_class;
-	std::string identify_elements_by_class_fname;
-	std::string identify_elements_by_class_column;
-	int identify_elements_by_class_expand_go;
-	std::string identify_elements_by_class_supergroup;
-
-
-
-	// undocumented (too specialized):
-	int f_find_subgroup;
-	int find_subgroup_order;
-
-
-	//int f_test_if_geometric;
-	//int test_if_geometric_depth;
-
-	int f_conjugacy_class_of;
-	std::string conjugacy_class_of_label;
-	std::string conjugacy_class_of_data;
-
-	int f_isomorphism_Klein_quadric;
-	std::string isomorphism_Klein_quadric_fname;
-
-	int f_print_elements;
-	int f_print_elements_tex;
-	int f_make_element_tree;
-
-	int f_vector_ge_print_elements_tex;
-	std::string vector_ge_print_elements_tex_label;
-
-	int f_save_elements_csv;
-	std::string save_elements_csv_fname;
-
-	int f_export_inversion_graphs;
-	std::string export_inversion_graphs_fname;
-
-	int f_evaluate_word;
-	std::string evaluate_word_word;
-	std::string evaluate_word_gens;
-
-	int f_multiply_all_elements_in_lex_order;
-
-
-	int f_stats;
-	std::string stats_fname_base;
-
-	int f_move_a_to_b;
-	int move_a_to_b_a;
-	int move_a_to_b_b;
-
-
-	int f_rational_normal_form;
-	std::string rational_normal_form_input;
-
-
-	// TABLES/group_theoretic_activity_3.tex
-
-
-	int f_find_conjugating_element;
-	std::string find_conjugating_element_element_from;
-	std::string find_conjugating_element_element_to;
-
-
-	int f_group_of_automorphisms_by_images_of_generators;
-	std::string group_of_automorphisms_by_images_of_generators_label;
-	std::string group_of_automorphisms_by_images_of_generators_elements;
-	std::string group_of_automorphisms_by_images_of_generators_images;
-
-
-
-	// this should become a vector_ge_activity:
-	int f_order_of_products;
-	std::string order_of_products_elements;
-
-	int f_reverse_isomorphism_exterior_square;
-
-	int f_reverse_isomorphism_exterior_square_vector_of_ge;
-	std::string reverse_isomorphism_exterior_square_vector_of_ge_label;
-
-	int f_is_subgroup_of;
-	int f_coset_reps;
-
-
-	// orbit stuff:
-
-	int f_subgroup_lattice;
-
-	int f_subgroup_lattice_load;
-	std::string subgroup_lattice_load_fname;
-
-	int f_subgroup_lattice_draw_by_orbits;
-	std::string subgroup_lattice_draw_by_orbits_draw_options;
-
-	int f_subgroup_lattice_draw_by_groups;
-	std::string subgroup_lattice_draw_by_groups_draw_options;
-
-
-
-	// TABLES/group_theoretic_activity_4.tex
-
-
-
-	int f_subgroup_lattice_intersection_orbit_orbit;
-	int subgroup_lattice_intersection_orbit_orbit_orbit1;
-	int subgroup_lattice_intersection_orbit_orbit_orbit2;
-
-	int f_subgroup_lattice_find_overgroup_in_orbit;
-	int subgroup_lattice_find_overgroup_in_orbit_orbit_global1;
-	int subgroup_lattice_find_overgroup_in_orbit_group1;
-	int subgroup_lattice_find_overgroup_in_orbit_orbit_global2;
-
-	int f_subgroup_lattice_create_flag_transitive_geometry_with_partition;
-	int subgroup_lattice_create_flag_transitive_geometry_with_partition_P_orbit;
-	int subgroup_lattice_create_flag_transitive_geometry_with_partition_Q_orbit;
-	int subgroup_lattice_create_flag_transitive_geometry_with_partition_R_orbit;
-	int subgroup_lattice_create_flag_transitive_geometry_with_partition_R_group;
-	int subgroup_lattice_create_flag_transitive_geometry_with_partition_intersection_size;
-
-	int f_subgroup_lattice_create_coset_geometry;
-	int subgroup_lattice_create_coset_geometry_P_orb_global;
-	int subgroup_lattice_create_coset_geometry_P_group;
-	int subgroup_lattice_create_coset_geometry_Q_orb_global;
-	int subgroup_lattice_create_coset_geometry_Q_group;
-	int subgroup_lattice_create_coset_geometry_intersection_size;
-
-
-	int f_subgroup_lattice_identify_subgroup;
-	std::string subgroup_lattice_identify_subgroup_subgroup_label;
-
-	int f_create_flag_transitive_geometry;
-	std::string create_flag_transitive_geometry_P;
-	std::string create_flag_transitive_geometry_Q;
-
-#if 0
-	int f_orbit_of;
-	int orbit_of_point_idx;
-
-	int f_orbits_on_set_system_from_file;
-	std::string orbits_on_set_system_from_file_fname;
-	int orbits_on_set_system_first_column;
-	int orbits_on_set_system_number_of_columns;
-
-	int f_orbit_of_set_from_file;
-	std::string orbit_of_set_from_file_fname;
-#endif
-
-	// classification stuff:
-
-
-	// classification of optimal linear codes using poset classification
-	int f_linear_codes;
-	std::string linear_codes_control;
-	int linear_codes_minimum_distance;
-	int linear_codes_target_size;
-
-
-	int f_tensor_permutations;
-
-	int f_classify_ovoids;
-	apps_geometry::ovoid_classify_description *Ovoid_classify_description;
-
-	//int f_classify_cubic_curves;
-
-	int f_representation_on_polynomials;
-	std::string representation_on_polynomials_ring;
-
-	// GAP:
-	int f_canonical_image_GAP;
-	std::string canonical_image_GAP_input_set;
-
-	int f_canonical_image;
-	std::string canonical_image_input_set;
-
-
-	// TABLES/group_theoretic_activity_5.tex
-
-
-	int f_subgroup_lattice_magma;
-
-	int f_find_overgroup;
-	int find_overgroup_order;
-	std::string find_overgroup_of;
-
-
-	int f_identify_subgroups_from_file;
-	std::string identify_subgroups_from_file_fname;
-	std::string identify_subgroups_from_file_col_label;
-	int identify_subgroups_from_expand_go;
-
-	// ToDo undocumented
-	int f_permutation_subgroup;
-
-
-	group_theoretic_activity_description();
-	~group_theoretic_activity_description();
-	int read_arguments(
-		int argc, std::string *argv,
-		int verbose_level);
-	void print();
-
-};
-
-
-// #############################################################################
-// group_theoretic_activity.cpp
-// #############################################################################
-
-
-//! perform an activity associated with a linear group
-
-class group_theoretic_activity {
-public:
-	group_theoretic_activity_description *Descr;
-
-	groups::any_group *AG;
-
-	groups::any_group *AG_secondary; // used in is_subgroup_of, coset_reps
-
-
-	int nb_output;
-	other::orbiter_kernel_system::orbiter_symbol_table_entry *Output;
-
-
-	group_theoretic_activity();
-	~group_theoretic_activity();
-	void init_group(
-			group_theoretic_activity_description *Descr,
-			groups::any_group *AG,
-			int verbose_level);
-	void init_secondary_group(
-			group_theoretic_activity_description *Descr,
-			groups::any_group *AG_secondary,
-			int verbose_level);
-	void perform_activity(
-			int verbose_level);
-
-};
 
 
 
@@ -1096,7 +669,7 @@ public:
 	// used as -ring_theoretic_activity
 
 
-	algebra::ring_theory::polynomial_ring_activity_description *Descr;
+	user_interface::activities_layer1::polynomial_ring_activity_description *Descr;
 
 	algebra::ring_theory::homogeneous_polynomial_domain *HPD;
 
@@ -1108,7 +681,7 @@ public:
 	polynomial_ring_activity();
 	~polynomial_ring_activity();
 	void init(
-			algebra::ring_theory::polynomial_ring_activity_description *Descr,
+			user_interface::activities_layer1::polynomial_ring_activity_description *Descr,
 			algebra::ring_theory::homogeneous_polynomial_domain *HPD,
 			int verbose_level);
 	void perform_activity(
@@ -1182,109 +755,6 @@ public:
 
 
 
-// #############################################################################
-// vector_ge_activity_description.cpp
-// #############################################################################
-
-
-
-//! description of an activity associated with a vector of group elements
-
-
-class vector_ge_activity_description {
-
-public:
-
-	// TABLES/vector_ge_activity.csv
-
-	int f_report;
-
-	int f_report_with_options;
-	std::string report_options;
-
-	int f_report_elements_coded;
-
-	int f_export_GAP;
-
-	int f_transform_variety;
-	std::string transform_variety_label;
-
-	int f_multiply;
-
-	int f_conjugate;
-
-	int f_conjugate_inverse;
-
-	int f_select_subset;
-	std::string select_subset_vector_label;
-
-	int f_field_reduction;
-	int field_reduction_subfield_index;
-
-	int f_rational_canonical_form;
-	// returns two vectors:
-	// the rational canonical forms and the base change matrices
-
-	int f_products_of_pairs;
-
-	int f_order_of_products_of_pairs;
-
-	int f_apply_isomorphism_wedge_product_4to6;
-
-	// ToDo not yet documented
-	int f_filter_subfield;
-	int subfield_index;
-
-
-	vector_ge_activity_description();
-	~vector_ge_activity_description();
-	int read_arguments(
-		int argc, std::string *argv,
-		int verbose_level);
-	void print();
-
-};
-
-
-// #############################################################################
-// vector_ge_activity.cpp
-// #############################################################################
-
-
-
-//! an activity associated with a vector of group elements
-
-
-class vector_ge_activity {
-
-public:
-
-	vector_ge_activity_description *Descr;
-
-	int nb_objects;
-
-	std::vector<std::string> *with_labels;
-
-	apps_algebra::vector_ge_builder **VB; // [nb_objects]
-
-	data_structures_groups::vector_ge **vec; // [nb_objects]
-
-	int nb_output;
-	other::orbiter_kernel_system::orbiter_symbol_table_entry *Output; // [nb_output]
-
-	vector_ge_activity();
-	~vector_ge_activity();
-	void init(
-			vector_ge_activity_description *Descr,
-			apps_algebra::vector_ge_builder **VB,
-			int nb_objects,
-			std::vector<std::string> &with_labels,
-			int verbose_level);
-	void perform_activity(
-			int verbose_level);
-
-
-};
 
 
 // #############################################################################
