@@ -1232,7 +1232,7 @@ void spread_table_with_selection::compute_free_points2(
 }
 
 void spread_table_with_selection::compute_live_blocks2(
-		solvers_package::exact_cover *EC,
+		layer4_classification::solvers_package::exact_cover *EC,
 		int starter_case,
 	long int *&live_blocks2, int &nb_live_blocks2,
 	long int *points_covered_by_starter,

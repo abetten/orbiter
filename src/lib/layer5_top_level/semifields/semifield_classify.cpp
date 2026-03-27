@@ -189,7 +189,7 @@ semifield_classify::~semifield_classify()
 void semifield_classify::init(
 		projective_geometry::projective_space_with_action *PA,
 		int k,
-		poset_classification::poset_classification_control *Control,
+		layer4_classification::poset_classification::poset_classification_control *Control,
 		std::string &level_two_prefix,
 		std::string &level_three_prefix,
 		int verbose_level)
@@ -682,7 +682,7 @@ void semifield_classify::report(
 
 
 void semifield_classify::init_poset_classification(
-		poset_classification::poset_classification_control *Control,
+		layer4_classification::poset_classification::poset_classification_control *Control,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1494,7 +1494,7 @@ void semifield_classify::make_fname_candidates_at_level_two_orbit_by_type(
 void semifield_classify::compute_orbit_of_subspaces(
 	long int *input_data,
 	groups::strong_generators *stabilizer_gens,
-	orbits_schreier::orbit_of_subspaces *&Orb,
+	layer4_classification::orbits_schreier::orbit_of_subspaces *&Orb,
 	int verbose_level)
 // allocates an orbit_of_subspaces data structure in Orb
 {

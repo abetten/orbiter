@@ -56,7 +56,7 @@ public:
 	algebra::ring_theory::longinteger_object pt_stab_order;
 		// order of stabilizer of the set of rational points
 
-	orbits_schreier::orbit_of_equations *Orb;
+	layer4_classification::orbits_schreier::orbit_of_equations *Orb;
 
 	groups::strong_generators *Stab_gens_variety;
 		// stabilizer of the variety obtained by doing an orbit algorithm
@@ -320,7 +320,7 @@ public:
 			canonical_form::variety_object_with_action *Input_Vo,
 			canonical_form::classification_of_varieties_nauty *Classification_of_varieties_nauty,
 			std::string &fname_base,
-			poset_classification::poset_classification_report_options *Report_options,
+			layer4_classification::poset_classification::poset_classification_report_options *Report_options,
 			int verbose_level);
 
 
@@ -456,7 +456,7 @@ public:
 	std::string stringify_csv_header_line_nauty(
 			int verbose_level);
 	void report(
-			poset_classification::poset_classification_report_options *Report_options,
+			layer4_classification::poset_classification::poset_classification_report_options *Report_options,
 			int verbose_level);
 	void report_iso_types(
 			std::ostream &ost, int verbose_level);
@@ -997,7 +997,7 @@ public:
 		// the set stabilizer of the set of rational points of the variety
 		// this is not the stabilizer of the variety!
 
-	orbits_schreier::orbit_of_equations *Orb;
+	layer4_classification::orbits_schreier::orbit_of_equations *Orb;
 		// orbit under the set stabilizer
 
 	groups::strong_generators *Stab_gens_variety;

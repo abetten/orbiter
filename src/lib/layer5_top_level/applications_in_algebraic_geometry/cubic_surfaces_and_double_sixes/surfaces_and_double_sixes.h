@@ -71,9 +71,9 @@ public:
 	actions::action *A_on_neighbors;
 		// restricted action A2 on the set Neighbors[]
 
-	poset_classification::poset_classification_control *Control;
+	layer4_classification::poset_classification::poset_classification_control *Control;
 	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset;
-	poset_classification::poset_classification *Five_plus_one;
+	layer4_classification::poset_classification::poset_classification *Five_plus_one;
 		// orbits on five-plus-one configurations
 
 	int *Pts_for_partial_ovoid_test; // [5*6]
@@ -83,7 +83,7 @@ public:
 	~classify_five_plus_one();
 	void init(
 			projective_geometry::projective_space_with_action *PA,
-			poset_classification::poset_classification_control
+			layer4_classification::poset_classification::poset_classification_control
 				*Control,
 			int verbose_level);
 	void classify_partial_ovoids(
@@ -105,7 +105,7 @@ public:
 			std::ostream &ost,
 			other::graphics::draw_options
 				*draw_options,
-			poset_classification::poset_classification_report_options
+				layer4_classification::poset_classification::poset_classification_report_options
 				*Opt,
 			int verbose_level);
 
@@ -141,9 +141,9 @@ public:
 
 
 
-	invariant_relations::flag_orbits *Flag_orbits;
+	layer4_classification::invariant_relations::flag_orbits *Flag_orbits;
 
-	invariant_relations::classification_step *Double_sixes;
+	layer4_classification::invariant_relations::classification_step *Double_sixes;
 
 
 	classify_double_sixes();
@@ -297,9 +297,9 @@ public:
 
 	// classification of cubic surfaces:
 
-	invariant_relations::flag_orbits *Flag_orbits;
+	layer4_classification::invariant_relations::flag_orbits *Flag_orbits;
 
-	invariant_relations::classification_step *Surfaces;
+	layer4_classification::invariant_relations::classification_step *Surfaces;
 
 
 	// created by post_process():
@@ -311,7 +311,7 @@ public:
 	~surface_classify_wedge();
 	void init(
 			projective_geometry::projective_space_with_action *PA,
-		poset_classification::poset_classification_control
+			layer4_classification::poset_classification::poset_classification_control
 			*Control,
 		int verbose_level);
 	void do_classify_double_sixes(
@@ -365,7 +365,7 @@ public:
 			std::ostream &ost,
 			int f_print_orbits, std::string &fname_mask,
 			other::graphics::draw_options *draw_options,
-			poset_classification::poset_classification_report_options *Opt,
+			layer4_classification::poset_classification::poset_classification_report_options *Opt,
 			int max_nb_elements_printed,
 			int verbose_level);
 	void create_report_double_sixes(

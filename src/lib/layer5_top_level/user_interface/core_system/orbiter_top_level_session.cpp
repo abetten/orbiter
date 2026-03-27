@@ -20,7 +20,7 @@ namespace user_interface {
 namespace core_system {
 
 
-orbiter_top_level_session *The_Orbiter_top_level_session; // global top level Orbiter session
+layer5_applications::user_interface::core_system::orbiter_top_level_session *The_Orbiter_top_level_session; // global top level Orbiter session
 
 
 
@@ -91,370 +91,60 @@ orbiter_top_level_session::~orbiter_top_level_session()
 	}
 }
 
-void orbiter_top_level_session::execute_command_line(
-		int argc, const char **argv, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
 
-	if (f_v) {
-		cout << "orbiter_top_level_session::execute_command_line" << endl;
-		cout << "A user's guide is available here: " << endl;
-		cout << "https://www.math.colostate.edu/~betten/orbiter/users_guide.pdf" << endl;
-		cout << "The sources are available here: " << endl;
-		cout << "https://github.com/abetten/orbiter" << endl;
-		cout << "An example makefile with many commands from the user's guide is here: " << endl;
-		cout << "https://github.com/abetten/orbiter/tree/master/examples/users_guide/makefile" << endl;
-#ifdef SYSTEMUNIX
-		cout << "SYSTEMUNIX is defined" << endl;
-#endif
-#ifdef SYSTEMWINDOWS
-		cout << "SYSTEMWINDOWS is defined" << endl;
-#endif
-#ifdef SYSTEM_IS_MACINTOSH
-		cout << "SYSTEM_IS_MACINTOSH is defined" << endl;
-#endif
-		cout << "sizeof(int)=" << sizeof(int) << endl;
-		cout << "sizeof(long int)=" << sizeof(long int) << endl;
-	}
-
-	std::string *Argv;
-	other::data_structures::string_tools ST;
-	int i;
-
-	//cout << "before ST.convert_arguments, argc=" << argc << endl;
-
-	ST.convert_arguments(argc, argv, Argv);
-		// argc has changed!
-
-	//cout << "after ST.convert_arguments, argc=" << argc << endl;
-
-	//cout << "before Top_level_session.startup_and_read_arguments" << endl;
-	i = startup_and_read_arguments(
-			argc, Argv, 1, verbose_level - 1);
-	//cout << "after Top_level_session.startup_and_read_arguments" << endl;
-
-
-
-	int session_verbose_level;
-
-	session_verbose_level = Orbiter_session->verbose_level;
-
-	if (f_v) {
-		cout << "session_verbose_level = " << session_verbose_level << endl;
-	}
-
-
-	//int f_v = (verbose_level > 1);
-
-	if (f_v) {
-		cout << "orbiter_top_level_session::execute_command_line "
-				"before handle_everything" << endl;
-		//cout << "argc=" << argc << endl;
-	}
-
-
-	handle_everything(
-			argc, Argv, i, session_verbose_level);
-
-	if (f_v) {
-		cout << "orbiter_top_level_session::execute_command_line "
-				"after handle_everything" << endl;
-	}
-
-	if (f_v) {
-		cout << "orbiter_top_level_session::execute_command_line "
-				"done" << endl;
-	}
-}
-
-int orbiter_top_level_session::startup_and_read_arguments(
-		int argc,
-		std::string *argv, int i0, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "orbiter_top_level_session::startup_and_read_arguments" << endl;
-	}
-
-	int i;
-
-	if (f_v) {
-		cout << "orbiter_top_level_session::startup_and_read_arguments "
-			"before Orbiter_session->read_arguments" << endl;
-	}
-
-	i = Orbiter_session->read_arguments(argc, argv, i0, verbose_level);
-
-
-	if (f_v) {
-		cout << "orbiter_top_level_session::startup_and_read_arguments done" << endl;
-	}
-	return i;
-}
-
-void orbiter_top_level_session::handle_everything(
-		int argc, std::string *Argv, int i, int verbose_level)
+void orbiter_top_level_session::finish_session(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (false) {
-		cout << "orbiter_top_level_session::handle_everything" << endl;
-	}
-	if (Orbiter_session->f_list_arguments) {
-		int j;
-
-		cout << "argument list:" << endl;
-		for (j = 0; j < argc; j++) {
-			cout << j << " : " << Argv[j] << endl;
-		}
+		cout << "orbiter_top_level_session::finish_session" << endl;
 	}
 
-
-	if (Orbiter_session->f_fork && !Orbiter_session->f_parse_commands_only) {
+	if (Orbiter_session->f_memory_debug) {
 		if (f_v) {
-			cout << "before Orbiter_session->fork" << endl;
-		}
-		Orbiter_session->fork(argc, Argv, verbose_level);
-		if (f_v) {
-			cout << "after Orbiter_session->fork" << endl;
-		}
-	}
-	else {
-		if (Orbiter_session->f_seed && !Orbiter_session->f_parse_commands_only) {
-			other::orbiter_kernel_system::os_interface Os;
-
-			if (f_v) {
-				cout << "seeding random number generator with "
-						<< Orbiter_session->the_seed << endl;
-			}
-			srand(Orbiter_session->the_seed);
-			Os.random_integer(1000);
-		}
-		if (Orbiter_session->f_memory_debug) {
-			other::orbiter_kernel_system::Orbiter->f_memory_debug = true;
+			cout << "orbiter_top_level_session::finish_session memory_debug "
+					"before global_mem_object_registry.dump" << endl;
 		}
 
-		// main dispatch:
 
 		if (f_v) {
-			cout << "orbiter_top_level_session::handle_everything memory_debug "
-					"before parse_and_execute" << endl;
+			cout << "orbiter_top_level_session::finish_session memory_debug "
+					"before global_mem_object_registry->dump" << endl;
+		}
+		other::orbiter_kernel_system::Orbiter->global_mem_object_registry->dump();
+		if (f_v) {
+			cout << "orbiter_top_level_session::finish_session memory_debug "
+					"after global_mem_object_registry->dump" << endl;
 		}
 
-		parse_and_execute(argc, Argv, i, verbose_level);
+		string fname;
+
+		fname = "orbiter_memory_dump.csv";
 
 		if (f_v) {
-			cout << "orbiter_top_level_session::handle_everything memory_debug "
-					"after parse_and_execute" << endl;
+			cout << "orbiter_top_level_session::finish_session memory_debug "
+					"before global_mem_object_registry->dump_to_csv_file" << endl;
+		}
+		other::orbiter_kernel_system::Orbiter->global_mem_object_registry->dump_to_csv_file(fname);
+		if (f_v) {
+			cout << "orbiter_top_level_session::finish_session memory_debug "
+					"after global_mem_object_registry->dump_to_csv_file" << endl;
 		}
 
-
-		// finish:
-
-		if (Orbiter_session->f_memory_debug) {
-			if (f_v) {
-				cout << "orbiter_top_level_session::handle_everything memory_debug "
-						"before global_mem_object_registry.dump" << endl;
-			}
-
-
-			if (f_v) {
-				cout << "orbiter_top_level_session::handle_everything memory_debug "
-						"before global_mem_object_registry->dump" << endl;
-			}
-			other::orbiter_kernel_system::Orbiter->global_mem_object_registry->dump();
-			if (f_v) {
-				cout << "orbiter_top_level_session::handle_everything memory_debug "
-						"after global_mem_object_registry->dump" << endl;
-			}
-
-			string fname;
-
-			fname = "orbiter_memory_dump.csv";
-
-			if (f_v) {
-				cout << "orbiter_top_level_session::handle_everything memory_debug "
-						"before global_mem_object_registry->dump_to_csv_file" << endl;
-			}
-			other::orbiter_kernel_system::Orbiter->global_mem_object_registry->dump_to_csv_file(fname);
-			if (f_v) {
-				cout << "orbiter_top_level_session::handle_everything memory_debug "
-						"after global_mem_object_registry->dump_to_csv_file" << endl;
-			}
-
-			if (f_v) {
-				cout << "orbiter_top_level_session::handle_everything memory_debug "
-						"before global_mem_object_registry->sort_by_location_and_get_frequency" << endl;
-			}
-			other::orbiter_kernel_system::Orbiter->global_mem_object_registry->sort_by_location_and_get_frequency(verbose_level);
-			if (f_v) {
-				cout << "orbiter_top_level_session::handle_everything memory_debug "
-						"after global_mem_object_registry.dump" << endl;
-			}
+		if (f_v) {
+			cout << "orbiter_top_level_session::finish_session memory_debug "
+					"before global_mem_object_registry->sort_by_location_and_get_frequency" << endl;
+		}
+		other::orbiter_kernel_system::Orbiter->global_mem_object_registry->sort_by_location_and_get_frequency(verbose_level);
+		if (f_v) {
+			cout << "orbiter_top_level_session::finish_session memory_debug "
+					"after global_mem_object_registry.dump" << endl;
 		}
 	}
-	if (f_v) {
-		cout << "orbiter_top_level_session::handle_everything done" << endl;
-	}
-
-}
-
-void orbiter_top_level_session::parse_and_execute(
-		int argc, std::string *Argv, int i, int verbose_level)
-{
-	//verbose_level = 1;
-	int f_v = (verbose_level >= 1);
-	int f_vv = false;
 
 	if (false) {
-		cout << "orbiter_top_level_session::parse_and_execute, "
-				"parsing the orbiter dash code" << endl;
-	}
-
-
-	vector<void *> program;
-
-	if (f_vv) {
-		cout << "orbiter_top_level_session::parse_and_execute before parse" << endl;
-	}
-	parse(argc, Argv, i, program, verbose_level);
-	if (f_vv) {
-		cout << "orbiter_top_level_session::parse_and_execute after parse" << endl;
-	}
-
-	if (f_v) {
-		cout << "orbiter_top_level_session::parse_and_execute, "
-				"we have parsed the following orbiter dash code program:" << endl;
-	}
-	for (i = 0; i < program.size(); i++) {
-
-		orbiter_command *OC;
-
-		OC = (orbiter_command *) program[i];
-
-		cout << "Command " << i << ":" << endl;
-		OC->print();
-	}
-
-	if (f_v) {
-		cout << "################################################################################################" << endl;
-	}
-
-	if (Orbiter_session->f_parse_commands_only) {
-		cout << "not executing the commands because of option -parse_commands_only" << endl;
-	}
-	else {
-		if (f_v) {
-			cout << "Executing commands:" << endl;
-		}
-		for (i = 0; i < program.size(); i++) {
-
-			orbiter_command *OC;
-
-			OC = (orbiter_command *) program[i];
-
-			if (f_v) {
-				cout << "################################################################################################" << endl;
-				cout << "Executing command " << i << ":" << endl;
-				OC->print();
-				cout << "################################################################################################" << endl;
-			}
-
-			OC->execute(verbose_level);
-
-		}
-		if (f_v) {
-			cout << "Executing commands done" << endl;
-		}
-	}
-
-
-
-	if (f_v) {
-		cout << "orbiter_top_level_session::parse_and_execute done" << endl;
-	}
-}
-
-void orbiter_top_level_session::parse(
-		int argc, std::string *Argv,
-		int &i, std::vector<void *> &program, int verbose_level)
-{
-	int cnt = 0;
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	int i_prev = -1;
-
-	if (f_v) {
-		cout << "orbiter_top_level_session::parse "
-				"parsing the orbiter dash code" << endl;
-	}
-
-	while (i < argc) {
-		if (f_vv) {
-			cout << "orbiter_top_level_session::parse "
-					"cnt = " << cnt << ", i = " << i << endl;
-			if (i < argc) {
-				if (f_vv) {
-					cout << "orbiter_top_level_session::parse i=" << i
-							<< ", next argument is " << Argv[i] << endl;
-				}
-			}
-		}
-		if (i_prev == i) {
-			cout << "orbiter_top_level_session::parse "
-					"we seem to be stuck in a look" << endl;
-			exit(1);
-		}
-		i_prev = i;
-		if (f_v) {
-			cout << "orbiter_top_level_session::parse "
-					"i = " << i << endl;
-		}
-
-		orbiter_command *OC;
-
-		OC = NEW_OBJECT(orbiter_command);
-		if (f_vv) {
-			cout << "orbiter_top_level_session::parse "
-					"before OC->parse" << endl;
-		}
-		OC->parse(this, argc, Argv, i, verbose_level);
-		if (f_vv) {
-			cout << "orbiter_top_level_session::parse "
-					"after OC->parse" << endl;
-		}
-		if (f_vv) {
-			cout << "orbiter_top_level_session::parse "
-					"command " << program.size() << " starting at token " << i << " is:" << endl;
-			OC->print();
-		}
-
-		program.push_back(OC);
-
-#if 0
-		if (f_v) {
-			cout << "orbiter_top_level_session::parse "
-					"before OC->execute" << endl;
-		}
-		OC->execute(verbose_level);
-		if (f_v) {
-			cout << "orbiter_top_level_session::parse "
-					"after OC->execute" << endl;
-		}
-#endif
-
-
-
-
-		//cout << "Command is unrecognized " << Argv[i] << endl;
-		//exit(1);
-		cnt++;
-	}
-
-	if (f_v) {
-		cout << "orbiter_top_level_session::parse "
-				"parsing the orbiter dash code done" << endl;
+		cout << "orbiter_top_level_session::finish_session done" << endl;
 	}
 }
 
@@ -527,7 +217,7 @@ groups::any_group
 	return (groups::any_group *) get_object(idx);
 }
 
-projective_geometry::projective_space_with_action
+layer5_applications::projective_geometry::projective_space_with_action
 	*orbiter_top_level_session::get_object_of_type_projective_space(
 			std::string &label)
 {
@@ -650,7 +340,7 @@ apps_geometry::arc_generator_description
 }
 
 
-user_interface::activities_layer5::poset_classification_activity_description
+layer5_applications::orbits::poset_classification_activity_description
 	*orbiter_top_level_session::get_object_of_type_poset_classification_activity(
 			std::string &label)
 {
@@ -667,7 +357,7 @@ user_interface::activities_layer5::poset_classification_activity_description
 				"object type != t_poset_classification_activity" << endl;
 		exit(1);
 	}
-	return (user_interface::activities_layer5::poset_classification_activity_description *) get_object(idx);
+	return (layer5_applications::orbits::poset_classification_activity_description *) get_object(idx);
 }
 
 
@@ -1000,7 +690,7 @@ canonical_form::combinatorial_object_with_properties
 }
 
 
-isomorph::isomorph_arguments
+layer4_classification::isomorph::isomorph_arguments
 	*orbiter_top_level_session::get_isomorph_arguments(
 			std::string &label)
 {

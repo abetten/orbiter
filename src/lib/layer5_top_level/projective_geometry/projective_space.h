@@ -157,13 +157,13 @@ public:
 	projective_space_with_action *PA2;
 
 	// if n == 3
-	applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_with_action
+	layer5_applications::applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_with_action
 		*Surf_A;
 
 
 	// if n == 2:
 	geometry::algebraic_geometry::quartic_curve_domain *Dom;
-	applications_in_algebraic_geometry::quartic_curves::quartic_curve_domain_with_action
+	layer5_applications::applications_in_algebraic_geometry::quartic_curves::quartic_curve_domain_with_action
 		*QCDA;
 
 
@@ -203,12 +203,14 @@ public:
 			std::string &label,
 			group_constructions::linear_group_description * subgroup_Descr,
 			int verbose_level);
+#if 0
 	void canonical_form_of_code(
 			std::string &label_txt,
 			int *genma, int m, int n,
 			combinatorics::canonical_form_classification::classification_of_objects_description
 				*Canonical_form_codes_Descr,
 			int verbose_level);
+#endif
 	void cheat_sheet(
 			other::graphics::draw_options *O,
 			int verbose_level);
@@ -221,7 +223,7 @@ public:
 			int verbose_level);
 	void do_spread_classify(
 			int k,
-			poset_classification::poset_classification_control
+			layer4_classification::poset_classification::poset_classification_control
 				*Control,
 			int verbose_level);
 	void report_decomposition_by_group(

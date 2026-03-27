@@ -16,7 +16,6 @@ MODULES = \
 	modified_group_init_layer5.o \
 	orbit_of_elements.o \
 	orbit_of_subgroups.o \
-	polynomial_ring_activity.o \
 	rational_normal_form.o \
 	vector_ge_builder.o \
 	young.o 

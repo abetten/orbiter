@@ -632,7 +632,8 @@ void arc_generator::compute_line_type(
 }
 
 void arc_generator::lifting_prepare_function_new(
-		solvers_package::exact_cover *E, int starter_case,
+		layer4_classification::solvers_package::exact_cover *E,
+		int starter_case,
 	long int *candidates, int nb_candidates,
 	groups::strong_generators *Strong_gens,
 	combinatorics::solvers::diophant *&Dio, long int *&col_labels,
@@ -846,7 +847,7 @@ void arc_generator::lifting_prepare_function_new(
 
 
 void arc_generator::report(
-		isomorph::isomorph &Iso,
+		layer4_classification::isomorph::isomorph &Iso,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -909,7 +910,8 @@ void arc_generator::report(
 }
 
 void arc_generator::report_do_the_work(
-		std::ostream &ost, isomorph::isomorph &Iso,
+		std::ostream &ost,
+		layer4_classification::isomorph::isomorph &Iso,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1224,7 +1226,8 @@ void arc_generator::report_do_the_work(
 }
 
 void arc_generator::report_decompositions(
-		isomorph::isomorph &Iso, std::ostream &ost, int orbit,
+		layer4_classification::isomorph::isomorph &Iso,
+		std::ostream &ost, int orbit,
 	long int *data, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1252,7 +1255,7 @@ void arc_generator::report_decompositions(
 }
 
 void arc_generator::report_stabilizer(
-		isomorph::isomorph &Iso,
+		layer4_classification::isomorph::isomorph &Iso,
 		std::ostream &ost, int orbit, int verbose_level)
 {
 	groups::sims *Stab;

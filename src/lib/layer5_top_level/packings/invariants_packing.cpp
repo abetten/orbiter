@@ -90,7 +90,7 @@ invariants_packing::~invariants_packing()
 }
 
 void invariants_packing::init(
-		isomorph::isomorph *Iso,
+		layer4_classification::isomorph::isomorph *Iso,
 		packing_classify *P, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -261,7 +261,7 @@ void invariants_packing::init(
 }
 
 void invariants_packing::compute_dual_packings(
-		isomorph::isomorph *Iso, int verbose_level)
+		layer4_classification::isomorph::isomorph *Iso, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -333,7 +333,7 @@ void invariants_packing::compute_dual_packings(
 }
 
 void invariants_packing::make_table(
-		isomorph::isomorph *Iso, std::ostream &ost,
+		layer4_classification::isomorph::isomorph *Iso, std::ostream &ost,
 	int f_only_self_dual, int f_only_not_self_dual, 
 	int verbose_level)
 {

@@ -712,7 +712,7 @@ void projective_space_with_action::do_cheat_sheet_for_decomposition_by_subgroup(
 
 
 
-
+#if 0
 void projective_space_with_action::canonical_form_of_code(
 		std::string &label_txt,
 		int *genma, int m, int n,
@@ -856,7 +856,7 @@ void projective_space_with_action::canonical_form_of_code(
 	}
 
 }
-
+#endif
 
 
 void projective_space_with_action::cheat_sheet(
@@ -1221,7 +1221,7 @@ void projective_space_with_action::report(
 
 void projective_space_with_action::do_spread_classify(
 		int k,
-		poset_classification::poset_classification_control
+		layer4_classification::poset_classification::poset_classification_control
 			*Control,
 		int verbose_level)
 {

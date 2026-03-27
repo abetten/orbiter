@@ -1043,9 +1043,9 @@ void algebra_global_with_action::automorphism_by_generator_images(
 
 void algebra_global_with_action::create_permutation(
 		actions::action *A,
-		groups::strong_generators *Subgroup_gens,
-		groups::sims *Subgroup_sims,
-		orbits_schreier::orbit_of_sets *Orb,
+		layer3_group_actions::groups::strong_generators *Subgroup_gens,
+		layer3_group_actions::groups::sims *Subgroup_sims,
+		layer4_classification::orbits_schreier::orbit_of_sets *Orb,
 		data_structures_groups::vector_ge *Elements_ge,
 		int *Images, int n, int h,
 		int *Elt,

@@ -91,7 +91,8 @@ surfaces_arc_lifting_trace::~surfaces_arc_lifting_trace()
 }
 
 
-void surfaces_arc_lifting_trace::init(surfaces_arc_lifting_upstep *Up,
+void surfaces_arc_lifting_trace::init(
+		surfaces_arc_lifting_upstep *Up,
 		int seventytwo_case_idx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

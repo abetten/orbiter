@@ -746,8 +746,8 @@ void orbits_global::orbits_on_subsets(
 		actions::action *A_base,
 		actions::action *A_action,
 		groups::strong_generators *Subgroup_gens,
-		poset_classification::poset_classification_control *Control,
-		poset_classification::poset_classification *&PC,
+		layer4_classification::poset_classification::poset_classification_control *Control,
+		layer4_classification::poset_classification::poset_classification *&PC,
 		int subset_size,
 		int verbose_level)
 {
@@ -887,7 +887,7 @@ void orbits_global::orbits_of_one_subset(
 void orbits_global::orbits_on_poset_post_processing(
 		actions::action *A_base,
 		actions::action *A_action,
-		poset_classification::poset_classification *PC,
+		layer4_classification::poset_classification::poset_classification *PC,
 		int depth,
 		int verbose_level)
 {
@@ -1348,7 +1348,7 @@ void orbits_global::linear_codes_with_bounded_minimum_distance(
 		poset_classification::poset_classification_control *Control,
 		group_constructions::linear_group *LG,
 		int d, int target_depth,
-		poset_classification::poset_classification *&PC,
+		layer4_classification::poset_classification::poset_classification *&PC,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1447,7 +1447,7 @@ void orbits_global::linear_codes_with_bounded_minimum_distance(
 
 void orbits_global::do_orbits_on_subspaces(
 		groups::any_group *Any_group,
-		poset_classification::poset_classification_control *Control,
+		layer4_classification::poset_classification::poset_classification_control *Control,
 		orbits::orbits_on_subspaces *&OoS,
 		int depth, int verbose_level)
 {
@@ -1614,7 +1614,7 @@ void orbits_global::do_linear_codes(
 		std::string &control_label,
 		int minimum_distance,
 		int target_size,
-		poset_classification::poset_classification *&PC,
+		layer4_classification::poset_classification::poset_classification *&PC,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

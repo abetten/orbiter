@@ -5,7 +5,7 @@
 // started: 4/3/2020
 //
 
-#include "orbiter.h"
+#include "orbiter_user_interface.h"
 
 using namespace std;
 using namespace orbiter;
@@ -66,7 +66,10 @@ std::string do_orbiter_session(
 		cout << "do_orbiter_session "
 				"before Top_level_session.execute_command_line" << endl;
 	}
-	Top_level_session.execute_command_line(
+	//Top_level_session.execute_command_line(
+	//		argc, argv, verbose_level);
+	orbiter::layer6_user_interface::control_everything::orbiter_execute_command_line(
+			&Top_level_session,
 			argc, argv, verbose_level);
 	if (f_v) {
 		cout << "do_orbiter_session "

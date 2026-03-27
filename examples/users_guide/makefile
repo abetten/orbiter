@@ -42,12 +42,12 @@ MAGMA_PATH=""
 MAGMA_EXE=$(MAGMA_PATH)magma
 #MAGMA_EXE=echo
 
-OPEN=open
-#OPEN=echo
+#OPEN=open
+OPEN=echo
 
 
-PDFLATEX=pdflatex
-#PDFLATEX=echo
+#PDFLATEX=pdflatex
+PDFLATEX=echo
 
 ###############################################################################
 # End of configuration part

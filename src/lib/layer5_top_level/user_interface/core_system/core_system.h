@@ -16,304 +16,6 @@ namespace core_system {
 
 
 
-// #############################################################################
-// activity_description.cpp
-// #############################################################################
-
-//! description of an activity for an orbiter symbol
-
-
-class activity_description {
-
-public:
-
-	user_interface::activities::interface_symbol_table *Sym;
-
-
-	int f_finite_field_activity;
-	user_interface::activities_layer1::finite_field_activity_description
-		*Finite_field_activity_description;
-
-	int f_polynomial_ring_activity;
-	user_interface::activities_layer1::polynomial_ring_activity_description
-		*Polynomial_ring_activity_description;
-
-	int f_projective_space_activity;
-	user_interface::activities_layer5::projective_space_activity_description
-		*Projective_space_activity_description;
-
-	int f_orthogonal_space_activity;
-	user_interface::activities_layer5::orthogonal_space_activity_description
-		*Orthogonal_space_activity_description;
-
-	int f_group_theoretic_activity;
-	user_interface::activities_layer5::group_theoretic_activity_description
-		*Group_theoretic_activity_description;
-
-	int f_coding_theoretic_activity;
-	user_interface::activities_layer5::coding_theoretic_activity_description
-		*Coding_theoretic_activity_description;
-
-	int f_cubic_surface_activity;
-	user_interface::activities_layer5::cubic_surface_activity_description
-		*Cubic_surface_activity_description;
-
-	int f_quartic_curve_activity;
-	user_interface::activities_layer5::quartic_curve_activity_description
-		*Quartic_curve_activity_description;
-
-	int f_blt_set_activity;
-	user_interface::activities_layer5::blt_set_activity_description
-		*Blt_set_activity_description;
-
-	int f_combinatorial_object_activity;
-	user_interface::activities_layer5::combinatorial_object_activity_description
-		*Combinatorial_object_activity_description;
-
-	int f_graph_theoretic_activity;
-	user_interface::activities_layer5::graph_theoretic_activity_description
-		*Graph_theoretic_activity_description;
-
-	int f_classification_of_cubic_surfaces_with_double_sixes_activity;
-	user_interface::activities_layer5::classification_of_cubic_surfaces_with_double_sixes_activity_description
-		*Classification_of_cubic_surfaces_with_double_sixes_activity_description;
-
-	int f_spread_table_activity;
-	user_interface::activities_layer5::spread_table_activity_description
-		*Spread_table_activity_description;
-
-	int f_packing_classify_activity_description;
-	user_interface::activities_layer5::packing_classify_activity_description *Packing_classify_activity_description;
-
-	int f_packing_with_symmetry_assumption_activity;
-	user_interface::activities_layer5::packing_was_activity_description
-		*Packing_was_activity_description;
-
-	int f_packing_fixed_points_activity;
-	user_interface::activities_layer5::packing_was_fixpoints_activity_description
-		*Packing_was_fixpoints_activity_description;
-
-	int f_graph_classification_activity;
-	user_interface::activities_layer5::graph_classification_activity_description
-		*Graph_classification_activity_description;
-
-	int f_diophant_activity;
-	user_interface::activities_layer1::diophant_activity_description
-		*Diophant_activity_description;
-
-	int f_design_activity;
-	user_interface::activities_layer5::design_activity_description
-		*Design_activity_description;
-
-	// ToDo: not documented
-	int f_large_set_activity;
-	user_interface::activities_layer5::large_set_activity_description
-		*Large_set_activity_description;
-
-	int f_large_set_was_activity;
-	user_interface::activities_layer5::large_set_was_activity_description
-		*Large_set_was_activity_description;
-
-	int f_symbolic_object_activity;
-	user_interface::activities_layer1::symbolic_object_activity_description
-		*Symbolic_object_activity_description;
-
-	int f_BLT_set_classify_activity;
-	user_interface::activities_layer5::blt_set_classify_activity_description
-		*Blt_set_classify_activity_description;
-
-	int f_spread_classify_activity;
-	user_interface::activities_layer5::spread_classify_activity_description
-		*Spread_classify_activity_description;
-
-	int f_spread_activity;
-	user_interface::activities_layer5::spread_activity_description
-		*Spread_activity_description;
-
-	int f_translation_plane_activity;
-	user_interface::activities_layer5::translation_plane_activity_description
-		*Translation_plane_activity_description;
-
-	int f_action_on_forms_activity;
-	user_interface::activities_layer5::action_on_forms_activity_description
-		*Action_on_forms_activity_description;
-
-	int f_orbits_activity;
-	user_interface::activities_layer5::orbits_activity_description
-		*Orbits_activity_description;
-
-	int f_variety_activity;
-	user_interface::activities_layer5::variety_activity_description
-		*Variety_activity_description;
-
-	int f_vector_ge_activity;
-	user_interface::activities_layer5::vector_ge_activity_description
-		*Vector_ge_activity_description;
-
-	int f_combo_activity;
-	user_interface::activities_layer5::combo_activity_description *Combo_activity_description;
-
-
-	// ToDo: not documented
-	int f_plesken_ring_activity;
-	user_interface::activities_layer5::plesken_ring_activity_description *Plesken_ring_activity_description;
-
-
-	activity_description();
-	~activity_description();
-	void read_arguments(
-			int argc, std::string *argv, int &i,
-			int verbose_level);
-	void worker(
-			std::vector<std::string> &with_labels,
-			int &nb_output,
-			other::orbiter_kernel_system::orbiter_symbol_table_entry *&Output,
-			int verbose_level);
-	void print();
-	void do_finite_field_activity(
-			other::orbiter_kernel_system::activity_output *&AO,
-			int verbose_level);
-	void do_ring_theoretic_activity(
-			int &nb_output,
-			other::orbiter_kernel_system::orbiter_symbol_table_entry *&Output,
-			int verbose_level);
-	void do_projective_space_activity(
-			int verbose_level);
-	void do_orthogonal_space_activity(
-			int verbose_level);
-	void do_group_theoretic_activity(
-			int &nb_output,
-			other::orbiter_kernel_system::orbiter_symbol_table_entry *&Output,
-			int verbose_level);
-	void do_coding_theoretic_activity(
-			int verbose_level);
-	void do_cubic_surface_activity(
-			int &nb_output,
-			other::orbiter_kernel_system::orbiter_symbol_table_entry *&Output,
-			other::orbiter_kernel_system::activity_output *&AO,
-			int verbose_level);
-	void do_quartic_curve_activity(
-			int &nb_output,
-			other::orbiter_kernel_system::orbiter_symbol_table_entry *&Output,
-			other::orbiter_kernel_system::activity_output *&AO,
-			int verbose_level);
-	void do_blt_set_activity(
-			int verbose_level);
-	void do_combinatorial_object_activity(
-			int &nb_output,
-			other::orbiter_kernel_system::orbiter_symbol_table_entry *&Output,
-			other::orbiter_kernel_system::activity_output *&AO,
-			int verbose_level);
-	void do_graph_theoretic_activity(
-			int verbose_level);
-	void do_classification_of_cubic_surfaces_with_double_sixes_activity(
-			int verbose_level);
-	void do_spread_table_activity(
-			int verbose_level);
-	void do_packing_classify_activity(
-			int verbose_level);
-	void do_packing_was_activity(
-			int verbose_level);
-	void do_packing_fixed_points_activity(
-			int verbose_level);
-	void do_graph_classification_activity(
-			int verbose_level);
-	void do_diophant_activity(
-			int verbose_level);
-	void do_design_activity(
-			int verbose_level);
-	void do_large_set_activity(
-			int verbose_level);
-	void do_large_set_was_activity(
-			int verbose_level);
-	void do_symbolic_object_activity(
-			int verbose_level);
-	void do_BLT_set_classify_activity(
-			int &nb_output,
-			other::orbiter_kernel_system::orbiter_symbol_table_entry *&Output,
-			int verbose_level);
-	void do_spread_classify_activity(
-			int verbose_level);
-	void do_spread_activity(
-			int verbose_level);
-	void do_translation_plane_activity(
-			int verbose_level);
-	void do_action_on_forms_activity(
-			int verbose_level);
-	void do_orbits_activity(
-			int &nb_output,
-			other::orbiter_kernel_system::orbiter_symbol_table_entry *&Output,
-			int verbose_level);
-	void do_variety_activity(
-			int verbose_level);
-	void do_vector_ge_activity(
-			std::vector<std::string> &with_labels,
-			int &nb_output,
-			other::orbiter_kernel_system::orbiter_symbol_table_entry *&Output,
-			int verbose_level);
-	void do_combo_activity(
-			int &nb_output,
-			other::orbiter_kernel_system::orbiter_symbol_table_entry *&Output,
-			int verbose_level);
-	void do_plesken_ring_activity(
-			int &nb_output,
-			other::orbiter_kernel_system::orbiter_symbol_table_entry *&Output,
-			int verbose_level);
-
-};
-
-
-
-// #############################################################################
-// orbiter_command.cpp
-// #############################################################################
-
-
-
-//! a single command in the Orbiter dash code language
-
-
-class orbiter_command {
-
-public:
-
-	orbiter_top_level_session *Orbiter_top_level_session;
-
-
-	int f_algebra;
-	user_interface::activities::interface_algebra *Algebra;
-
-	int f_coding_theory;
-	user_interface::activities::interface_coding_theory *Coding_theory;
-
-	int f_combinatorics;
-	user_interface::activities::interface_combinatorics *Combinatorics;
-
-	int f_cryptography;
-	user_interface::activities::interface_cryptography *Cryptography;
-
-	int f_povray;
-	user_interface::activities::interface_povray *Povray;
-
-	int f_projective;
-	user_interface::activities::interface_projective *Projective;
-
-	int f_symbol_table;
-	user_interface::activities::interface_symbol_table *Symbol_table;
-
-	int f_toolkit;
-	user_interface::activities::interface_toolkit *Toolkit;
-
-	orbiter_command();
-	~orbiter_command();
-	void parse(
-			orbiter_top_level_session *Orbiter_top_level_session,
-			int argc, std::string *Argv, int &i, int verbose_level);
-	void execute(
-			int verbose_level);
-	void print();
-
-};
 
 
 // #############################################################################
@@ -333,18 +35,28 @@ public:
 
 	orbiter_top_level_session();
 	~orbiter_top_level_session();
+#if 0
 	void execute_command_line(
 			int argc, const char **argv, int verbose_level);
+	// called from do_orbiter_session in the front-end orbiter.cpp
 	int startup_and_read_arguments(
 			int argc,
 			std::string *argv, int i0, int verbose_level);
 	void handle_everything(
 			int argc, std::string *Argv, int i, int verbose_level);
+	// called from execute_command_line
+#endif
+	void finish_session(
+			int verbose_level);
+#if 0
 	void parse_and_execute(
 			int argc, std::string *Argv, int i, int verbose_level);
+	// called from handle_everything
 	void parse(
 			int argc, std::string *Argv, int &i,
 			std::vector<void * > &program, int verbose_level);
+	// called from parse_and_execute
+#endif
 	void *get_object(
 			int idx);
 	layer1_foundations::other::orbiter_kernel_system::symbol_table_object_type get_object_type(
@@ -360,7 +72,7 @@ public:
 			int verbose_level);
 	groups::any_group *get_any_group(
 			std::string &label);
-	projective_geometry::projective_space_with_action
+	layer5_applications::projective_geometry::projective_space_with_action
 		*get_object_of_type_projective_space(
 			std::string &label);
 	spreads::spread_table_with_selection
@@ -369,18 +81,21 @@ public:
 	packings::packing_classify
 		*get_packing_classify(
 				std::string &label);
-	poset_classification::poset_classification_control
+	layer4_classification::poset_classification::poset_classification_control
 		*get_poset_classification_control(
 				std::string &label);
-	poset_classification::poset_classification_report_options
+	layer4_classification::poset_classification::poset_classification_report_options
 		*get_poset_classification_report_options(
 				std::string &label);
 	apps_geometry::arc_generator_description
 		*get_object_of_type_arc_generator_control(
 				std::string &label);
-	user_interface::activities_layer5::poset_classification_activity_description
+
+	layer5_applications::orbits::poset_classification_activity_description
 		*get_object_of_type_poset_classification_activity(
 				std::string &label);
+
+
 	void get_vector_or_set(std::string &label,
 			long int *&Pts, int &nb_pts, int verbose_level);
 	apps_algebra::vector_ge_builder
@@ -413,7 +128,7 @@ public:
 	canonical_form::combinatorial_object_with_properties
 		*get_combo_with_group(
 				std::string &label);
-	isomorph::isomorph_arguments
+	layer4_classification::isomorph::isomorph_arguments
 		*get_isomorph_arguments(
 				std::string &label);
 	orbits::classify_cubic_surfaces_description
@@ -434,13 +149,15 @@ geometry::projective_geometry::projective_space *get_projective_space_low_level_
 // symbol_definition.cpp
 // #############################################################################
 
-//! definition of an orbiter symbol
+//! definition of an orbiter object and addition to the symbol table
 
 
 class symbol_definition {
 
 public:
-	user_interface::activities::interface_symbol_table *Sym;
+	//user_interface::activities::interface_symbol_table *Sym;
+
+	layer5_applications::user_interface::core_system::orbiter_top_level_session *Orbiter_top_level_session;
 
 
 	std::string define_label;
@@ -613,11 +330,11 @@ public:
 		*Orbits_create_description;
 
 	int f_poset_classification_control;
-	poset_classification::poset_classification_control
+	layer4_classification::poset_classification::poset_classification_control
 		*Poset_classification_control;
 
 	int f_poset_classification_report_options;
-	poset_classification::poset_classification_report_options
+	layer4_classification::poset_classification::poset_classification_report_options
 		*Poset_classification_report_options;
 
 	int f_draw_options;
@@ -633,7 +350,7 @@ public:
 		*Arc_generator_control;
 
 	int f_poset_classification_activity;
-	user_interface::activities_layer5::poset_classification_activity_description
+	layer5_applications::orbits::poset_classification_activity_description
 		*Poset_classification_activity;
 
 	int f_crc_code;
@@ -646,7 +363,7 @@ public:
 	geometry::algebraic_geometry::variety_description *Variety_description;
 
 	int f_isomorph_arguments;
-	isomorph::isomorph_arguments *Isomorph_arguments;
+	layer4_classification::isomorph::isomorph_arguments *Isomorph_arguments;
 
 	int f_classify_cubic_surfaces;
 	orbits::classify_cubic_surfaces_description *Classify_cubic_surfaces_description;
@@ -655,7 +372,7 @@ public:
 	symbol_definition();
 	~symbol_definition();
 	void read_definition(
-			user_interface::activities::interface_symbol_table *Sym,
+			layer5_applications::user_interface::core_system::orbiter_top_level_session *Orbiter_top_level_session,
 			int argc, std::string *argv, int &i,
 			int verbose_level);
 	void perform_definition(
@@ -783,7 +500,7 @@ public:
 
 
 
-extern user_interface::core_system::orbiter_top_level_session
+extern layer5_applications::user_interface::core_system::orbiter_top_level_session
 	*The_Orbiter_top_level_session;
 	// global top level Orbiter session
 

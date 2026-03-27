@@ -1406,7 +1406,7 @@ void combinatorial_object_stream::line_type(
 	}
 }
 
-
+#if 0
 void combinatorial_object_stream::do_activity(
 		user_interface::core_system::activity_description *Activity_description,
 		other::orbiter_kernel_system::activity_output *&AO,
@@ -1549,6 +1549,7 @@ void combinatorial_object_stream::do_graph_theoretic_activity(
 		cout << "combinatorial_object_stream::do_graph_theoretic_activity done" << endl;
 	}
 }
+#endif
 
 
 void combinatorial_object_stream::do_algebraic_degree(

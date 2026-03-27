@@ -172,7 +172,7 @@ void tensor_classify::init(
 
 void tensor_classify::classify_poset(
 		int depth,
-		poset_classification::poset_classification_control *Control,
+		layer4_classification::poset_classification::poset_classification_control *Control,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

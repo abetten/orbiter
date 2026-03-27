@@ -86,15 +86,15 @@ public:
 
 	int q;
 
-	poset_classification::poset_classification_control *Control;
+	layer4_classification::poset_classification::poset_classification_control *Control;
 	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset;
-	poset_classification::poset_classification *gen;
+	layer4_classification::poset_classification::poset_classification *gen;
 	int nb_points_on_quadric;
 
 
 	int target_size;
 
-	isomorph::isomorph_worker *Worker;
+	layer4_classification::isomorph::isomorph_worker *Worker;
 
 
 	blt_set_classify();
@@ -109,7 +109,7 @@ public:
 			int starter_size,
 			int verbose_level);
 	void compute_starter(
-			poset_classification::poset_classification_control *Control,
+			layer4_classification::poset_classification::poset_classification_control *Control,
 			int verbose_level);
 	void do_poset_classification_activity(
 			std::string &activity_label,
@@ -135,14 +135,14 @@ public:
 		int verbose_level);
 
 	void lifting_prepare_function_new(
-			solvers_package::exact_cover *E, int starter_case,
+			layer4_classification::solvers_package::exact_cover *E, int starter_case,
 		long int *candidates, int nb_candidates,
 		groups::strong_generators *Strong_gens,
 		combinatorics::solvers::diophant *&Dio, long int *&col_labels,
 		int &f_ruled_out,
 		int verbose_level);
 	void report_from_iso(
-			isomorph::isomorph &Iso, int verbose_level);
+			layer4_classification::isomorph::isomorph &Iso, int verbose_level);
 	void report(
 			data_structures_groups::orbit_transversal *T,
 			int verbose_level);

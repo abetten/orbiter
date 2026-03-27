@@ -13,7 +13,9 @@ MODULES = \
 	orbits_global.o \
 	orbits_on_pairs.o \
 	orbits_on_polynomials.o \
-	orbits_on_subspaces.o
+	orbits_on_subspaces.o \
+	poset_classification_activity_description.o \
+	poset_classification_activity.o
 
 
 all : $(MODULES)

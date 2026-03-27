@@ -69,7 +69,7 @@ plesken_ring::~plesken_ring()
 
 
 void plesken_ring::init(
-		poset_classification::poset_classification *PC,
+		layer4_classification::poset_classification::poset_classification *PC,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

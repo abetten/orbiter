@@ -80,8 +80,8 @@ public:
 
 	int arc_idx;
 	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset;
-	poset_classification::poset_classification_control *Control;
-	poset_classification::poset_classification *Orbits_on_pairs;
+	layer4_classification::poset_classification::poset_classification_control *Control;
+	layer4_classification::poset_classification::poset_classification *Orbits_on_pairs;
 
 	int nb_orbits_on_pairs;
 
@@ -172,18 +172,18 @@ public:
 
 	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset1;
 	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset2;
-	poset_classification::poset_classification *orbits_on_trihedra_type1;
-	poset_classification::poset_classification *orbits_on_trihedra_type2;
+	layer4_classification::poset_classification::poset_classification *orbits_on_trihedra_type1;
+	layer4_classification::poset_classification::poset_classification *orbits_on_trihedra_type2;
 
 	int nb_orbits_type1;
 	int nb_orbits_type2;
 	int nb_orbits_ordered_total;
 
-	invariant_relations::flag_orbits *Flag_orbits;
+	layer4_classification::invariant_relations::flag_orbits *Flag_orbits;
 
 	int nb_orbits_trihedral_pairs;
 
-	invariant_relations::classification_step *Trihedral_pairs;
+	layer4_classification::invariant_relations::classification_step *Trihedral_pairs;
 
 
 
@@ -194,8 +194,8 @@ public:
 			int verbose_level);
 
 	void classify_orbits_on_trihedra(
-			poset_classification::poset_classification_control *Control1,
-			poset_classification::poset_classification_control *Control2,
+			layer4_classification::poset_classification::poset_classification_control *Control1,
+			layer4_classification::poset_classification::poset_classification_control *Control2,
 			int verbose_level);
 	void report_summary(
 			std::ostream &ost);
@@ -219,8 +219,8 @@ public:
 			int p1, int p2, int p3,
 		int &type, int *transporter, int verbose_level);
 	void classify(
-			poset_classification::poset_classification_control *Control1,
-			poset_classification::poset_classification_control *Control2,
+			layer4_classification::poset_classification::poset_classification_control *Control1,
+			layer4_classification::poset_classification::poset_classification_control *Control2,
 			int verbose_level);
 	void downstep(
 			int verbose_level);
@@ -685,7 +685,7 @@ public:
 	int nb_flag_orbits;
 
 	// classification of surfaces:
-	invariant_relations::flag_orbits *Flag_orbits;
+	layer4_classification::invariant_relations::flag_orbits *Flag_orbits;
 
 	int *flag_orbit_fst; // [Six_arcs->nb_arcs_not_on_conic]
 	int *flag_orbit_len; // [Six_arcs->nb_arcs_not_on_conic]
@@ -694,7 +694,7 @@ public:
 	int *flag_orbit_on_pairs_idx; // [Flag_orbits->nb_flag_orbits]
 	int *flag_orbit_on_partition_idx; // [Flag_orbits->nb_flag_orbits]
 
-	invariant_relations::classification_step *Surfaces;
+	layer4_classification::invariant_relations::classification_step *Surfaces;
 
 	surfaces_arc_lifting();
 	~surfaces_arc_lifting();

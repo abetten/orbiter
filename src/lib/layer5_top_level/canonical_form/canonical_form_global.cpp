@@ -446,7 +446,7 @@ void canonical_form_global::report_and_orbit_transversal(
 		canonical_form::variety_object_with_action *Input_Vo,
 		canonical_form::classification_of_varieties_nauty *Classification_of_varieties_nauty,
 		std::string &fname_base,
-		poset_classification::poset_classification_report_options *Report_options,
+		layer4_classification::poset_classification::poset_classification_report_options *Report_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

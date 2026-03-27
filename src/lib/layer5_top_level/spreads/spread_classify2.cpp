@@ -23,7 +23,7 @@ namespace spreads {
 
 
 void spread_classify::print_isomorphism_type(
-		isomorph::isomorph *Iso,
+		layer4_classification::isomorph::isomorph *Iso,
 	int iso_cnt, groups::sims *Stab, groups::schreier &Orb,
 	long int *data, int verbose_level)
 // called from callback_print_isomorphism_type()
@@ -95,7 +95,7 @@ void spread_classify::print_isomorphism_type(
 
 
 void spread_classify::print_isomorphism_type2(
-		isomorph::isomorph *Iso,
+		layer4_classification::isomorph::isomorph *Iso,
 		std::ostream &ost,
 		int iso_cnt, groups::sims *Stab, groups::schreier &Orb,
 		long int *data, int verbose_level)
@@ -553,7 +553,7 @@ void spread_classify::klein(
 
 
 void spread_classify::report2(
-		isomorph::isomorph &Iso, int verbose_level)
+		layer4_classification::isomorph::isomorph &Iso, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	string fname;
@@ -600,7 +600,7 @@ void spread_classify::report2(
 }
 
 void spread_classify::report3(
-		isomorph::isomorph &Iso,
+		layer4_classification::isomorph::isomorph &Iso,
 		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1078,7 +1078,7 @@ void spread_classify::report3(
 
 
 void spread_classify::all_cooperstein_thas_quotients(
-		isomorph::isomorph &Iso, int verbose_level)
+		layer4_classification::isomorph::isomorph &Iso, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int h;
@@ -1123,7 +1123,7 @@ void spread_classify::all_cooperstein_thas_quotients(
 
 
 void spread_classify::cooperstein_thas_quotients(
-		isomorph::isomorph &Iso,
+		layer4_classification::isomorph::isomorph &Iso,
 		std::ofstream &f, int h, int &cnt,
 		int verbose_level)
 {
@@ -1335,7 +1335,8 @@ void spread_classify::cooperstein_thas_quotients(
 }
 
 void spread_classify::orbit_info_short(
-		std::ostream &ost, isomorph::isomorph &Iso,
+		std::ostream &ost,
+		layer4_classification::isomorph::isomorph &Iso,
 		int h, int verbose_level)
 {
 	int rep, first, /*c,*/ id;
@@ -1394,7 +1395,7 @@ void spread_classify::orbit_info_short(
 
 
 void spread_classify::report_stabilizer(
-		isomorph::isomorph &Iso,
+		layer4_classification::isomorph::isomorph &Iso,
 		std::ostream &ost, int orbit, int verbose_level)
 {
 	groups::sims *Stab;

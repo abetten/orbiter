@@ -131,7 +131,7 @@ surface_classify_wedge::~surface_classify_wedge()
 
 void surface_classify_wedge::init(
 		projective_geometry::projective_space_with_action *PA,
-	poset_classification::poset_classification_control
+		layer4_classification::poset_classification::poset_classification_control
 		*Control,
 	int verbose_level)
 {

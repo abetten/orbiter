@@ -944,7 +944,8 @@ public:
 	vector_space();
 	~vector_space();
 	void init(
-			algebra::field_theory::finite_field *F, int dimension,
+			algebra::field_theory::finite_field *F,
+			int dimension,
 			int verbose_level);
 	void init_rank_functions(
 		long int (*rank_point_func)(int *v, void *data),

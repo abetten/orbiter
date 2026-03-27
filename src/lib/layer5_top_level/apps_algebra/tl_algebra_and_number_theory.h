@@ -165,9 +165,9 @@ public:
 	// output: Perms[m * go]
 	void create_permutation(
 			actions::action *A,
-			groups::strong_generators *Subgroup_gens,
-			groups::sims *Subgroup_sims,
-			orbits_schreier::orbit_of_sets *Orb,
+			layer3_group_actions::groups::strong_generators *Subgroup_gens,
+			layer3_group_actions::groups::sims *Subgroup_sims,
+			layer4_classification::orbits_schreier::orbit_of_sets *Orb,
 			data_structures_groups::vector_ge *Elements_ge,
 			int *Images, int n, int h,
 			int *Elt,
@@ -596,7 +596,7 @@ public:
 	int *Element;
 	long int Element_rk;
 	long int *Elements_P;
-	orbits_schreier::orbit_of_sets *Orbits_P;
+	layer4_classification::orbits_schreier::orbit_of_sets *Orbits_P;
 
 	int orbit_length;
 	long int *Table_of_elements; // sorted
@@ -636,7 +636,7 @@ public:
 	long int go_P;
 	groups::sims *Sims_P;
 	long int *Elements_P;
-	orbits_schreier::orbit_of_sets *Orbits_P;
+	layer4_classification::orbits_schreier::orbit_of_sets *Orbits_P;
 
 
 
@@ -654,40 +654,6 @@ public:
 
 
 
-
-// #############################################################################
-// polynomial_ring_activity.cpp
-// #############################################################################
-
-
-//! a polynomial ring activity
-
-class polynomial_ring_activity {
-public:
-
-
-	// used as -ring_theoretic_activity
-
-
-	user_interface::activities_layer1::polynomial_ring_activity_description *Descr;
-
-	algebra::ring_theory::homogeneous_polynomial_domain *HPD;
-
-
-	int nb_output;
-	other::orbiter_kernel_system::orbiter_symbol_table_entry *Output;
-
-
-	polynomial_ring_activity();
-	~polynomial_ring_activity();
-	void init(
-			user_interface::activities_layer1::polynomial_ring_activity_description *Descr,
-			algebra::ring_theory::homogeneous_polynomial_domain *HPD,
-			int verbose_level);
-	void perform_activity(
-			int verbose_level);
-
-};
 
 
 // #############################################################################

@@ -323,8 +323,8 @@ void surface_domain_high_level::do_classify_surfaces_through_arcs_and_two_lines(
 
 void surface_domain_high_level::do_classify_surfaces_through_arcs_and_trihedral_pairs(
 		projective_geometry::projective_space_with_action *PA,
-		poset_classification::poset_classification_control *Control1,
-		poset_classification::poset_classification_control *Control2,
+		layer4_classification::poset_classification::poset_classification_control *Control1,
+		layer4_classification::poset_classification::poset_classification_control *Control2,
 		other::graphics::draw_options *Draw_options,
 		std::string &Control_six_arcs_label,
 		int f_test_nb_Eckardt_points, int nb_E,

@@ -24,7 +24,7 @@ class invariants_packing {
 public:
 	spreads::spread_classify *T;
 	packing_classify *P;
-	isomorph::isomorph *Iso;
+	layer4_classification::isomorph::isomorph *Iso;
 		// the classification of packings
 
 
@@ -47,12 +47,12 @@ public:
 	invariants_packing();
 	~invariants_packing();
 	void init(
-			isomorph::isomorph *Iso,
+			layer4_classification::isomorph::isomorph *Iso,
 			packing_classify *P, int verbose_level);
 	void compute_dual_packings(
-			isomorph::isomorph *Iso, int verbose_level);
+			layer4_classification::isomorph::isomorph *Iso, int verbose_level);
 	void make_table(
-			isomorph::isomorph *Iso, std::ostream &ost,
+			layer4_classification::isomorph::isomorph *Iso, std::ostream &ost,
 		int f_only_self_dual,
 		int f_only_not_self_dual,
 		int verbose_level);
@@ -104,9 +104,9 @@ public:
 
 	int *degree;
 
-	poset_classification::poset_classification_control *Control;
+	layer4_classification::poset_classification::poset_classification_control *Control;
 	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset;
-	poset_classification::poset_classification *gen;
+	layer4_classification::poset_classification::poset_classification *gen;
 
 	int nb_needed;
 
@@ -121,7 +121,7 @@ public:
 			int f_lexorder_test,
 			int verbose_level);
 	void init2(
-			poset_classification::poset_classification_control *Control,
+			layer4_classification::poset_classification::poset_classification_control *Control,
 			int verbose_level);
 	void init_P3_and_P5_and_Gr(
 			geometry::projective_geometry::projective_space *P3,
@@ -132,7 +132,7 @@ public:
 	void compute(
 			int search_depth, int verbose_level);
 	void lifting_prepare_function_new(
-			solvers_package::exact_cover *E,
+			layer4_classification::solvers_package::exact_cover *E,
 			int starter_case,
 		long int *candidates, int nb_candidates,
 		groups::strong_generators *Strong_gens,
@@ -152,7 +152,7 @@ public:
 
 	// packing2.cpp
 	void compute_klein_invariants(
-			isomorph::isomorph *Iso,
+			layer4_classification::isomorph::isomorph *Iso,
 			int f_split, int split_r, int split_m,
 			int verbose_level);
 	void klein_invariants_fname(
@@ -164,46 +164,46 @@ public:
 		long int *data, int data_size,
 		int verbose_level);
 	void report(
-			isomorph::isomorph *Iso, int verbose_level);
+			layer4_classification::isomorph::isomorph *Iso, int verbose_level);
 	void report_whole(
-			isomorph::isomorph *Iso,
+			layer4_classification::isomorph::isomorph *Iso,
 			std::ostream &ost, int verbose_level);
 	void report_title_page(
-			isomorph::isomorph *Iso,
+			layer4_classification::isomorph::isomorph *Iso,
 			std::ostream &ost, int verbose_level);
 	void report_packings_by_ago(
-			isomorph::isomorph *Iso,
+			layer4_classification::isomorph::isomorph *Iso,
 			std::ostream &ost,
 		invariants_packing *inv,
 		other::data_structures::tally &C_ago,
 		int verbose_level);
 	void report_isomorphism_type(
-			isomorph::isomorph *Iso,
+			layer4_classification::isomorph::isomorph *Iso,
 			std::ostream &ost,
 		int orbit, invariants_packing *inv,
 		int verbose_level);
 	void report_packing_as_table(
-			isomorph::isomorph *Iso, std::ostream &ost,
+			layer4_classification::isomorph::isomorph *Iso, std::ostream &ost,
 		int orbit,
 		invariants_packing *inv, long int *list_of_lines,
 		int verbose_level);
 	void report_klein_invariants(
-			isomorph::isomorph *Iso, std::ostream &ost,
+			layer4_classification::isomorph::isomorph *Iso, std::ostream &ost,
 		int orbit, invariants_packing *inv,
 		int verbose_level);
 	void report_stabilizer(
-			isomorph::isomorph &Iso,
+			layer4_classification::isomorph::isomorph &Iso,
 			std::ostream &ost, int orbit,
 			int verbose_level);
 	void report_stabilizer_in_action(
-			isomorph::isomorph &Iso,
+			layer4_classification::isomorph::isomorph &Iso,
 			std::ostream &ost, int orbit,
 			int verbose_level);
 	void report_stabilizer_in_action_gap(
-			isomorph::isomorph &Iso,
+			layer4_classification::isomorph::isomorph &Iso,
 			int orbit, int verbose_level);
 	void report_extra_stuff(
-			isomorph::isomorph *Iso, std::ostream &ost,
+			layer4_classification::isomorph::isomorph *Iso, std::ostream &ost,
 			int verbose_level);
 };
 
@@ -419,10 +419,10 @@ public:
 	std::string spread_tables_prefix;
 
 	int f_exact_cover;
-	solvers_package::exact_cover_arguments *ECA;
+	layer4_classification::solvers_package::exact_cover_arguments *ECA;
 
 	int f_isomorph;
-	isomorph::isomorph_arguments *IA;
+	layer4_classification::isomorph::isomorph_arguments *IA;
 
 	int f_H;
 	std::string H_label;
@@ -473,7 +473,7 @@ public:
 	combinatorics::graph_theory::colored_graph *fixpoint_graph;
 	layer3_group_actions::combinatorics_with_groups::poset_with_group_action
 		*Poset_fixpoint_cliques;
-	poset_classification::poset_classification
+	layer4_classification::poset_classification::poset_classification
 		*fixpoint_clique_gen;
 
 	int fixpoint_clique_size;
@@ -491,7 +491,7 @@ public:
 	void init(
 			packing_was *PW,
 			int fixpoint_clique_size,
-			poset_classification::poset_classification_control
+			layer4_classification::poset_classification::poset_classification_control
 				*Control,
 			int verbose_level);
 	void setup_file_names(
@@ -502,7 +502,7 @@ public:
 			int verbose_level);
 	void compute_cliques_on_fixpoint_graph(
 			int clique_size,
-			poset_classification::poset_classification_control
+			layer4_classification::poset_classification::poset_classification_control
 				*Control,
 			int verbose_level);
 	// initializes the orbit transversal Fixp_cliques
@@ -510,7 +510,7 @@ public:
 	// (either by computing it or reading it from file)
 	void compute_cliques_on_fixpoint_graph_from_scratch(
 			int clique_size,
-			poset_classification::poset_classification_control
+			layer4_classification::poset_classification::poset_classification_control
 				*Control,
 			int verbose_level);
 	// compute cliques on fixpoint graph using A_on_fixpoints

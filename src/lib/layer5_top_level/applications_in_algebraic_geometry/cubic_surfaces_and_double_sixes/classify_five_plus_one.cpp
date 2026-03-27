@@ -83,7 +83,7 @@ classify_five_plus_one::~classify_five_plus_one()
 
 void classify_five_plus_one::init(
 		projective_geometry::projective_space_with_action *PA,
-	poset_classification::poset_classification_control
+		layer4_classification::poset_classification::poset_classification_control
 		*Control,
 	int verbose_level)
 {
@@ -484,7 +484,7 @@ void classify_five_plus_one::report(
 		std::ostream &ost,
 		other::graphics::draw_options
 			*draw_options,
-		poset_classification::poset_classification_report_options
+			layer4_classification::poset_classification::poset_classification_report_options
 			*Opt,
 		int verbose_level)
 {

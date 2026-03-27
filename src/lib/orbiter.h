@@ -42,4 +42,15 @@
 #include "layer4_classification/classification.h"
 #include "layer5_top_level/top_level.h"
 
+using namespace std;
+
+using namespace orbiter::layer1_foundations;
+using namespace orbiter::layer2_discreta;
+using namespace orbiter::layer3_group_actions;
+using namespace orbiter::layer4_classification;
+using namespace orbiter::layer5_applications;
+
+
+
+
 #endif

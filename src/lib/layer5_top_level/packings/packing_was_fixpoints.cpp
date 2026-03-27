@@ -51,7 +51,7 @@ packing_was_fixpoints::~packing_was_fixpoints()
 void packing_was_fixpoints::init(
 		packing_was *PW,
 		int fixpoint_clique_size,
-		poset_classification::poset_classification_control
+		layer4_classification::poset_classification::poset_classification_control
 			*Control,
 		int verbose_level)
 {
@@ -235,7 +235,7 @@ void packing_was_fixpoints::action_on_fixpoints(
 
 void packing_was_fixpoints::compute_cliques_on_fixpoint_graph(
 		int clique_size,
-		poset_classification::poset_classification_control
+		layer4_classification::poset_classification::poset_classification_control
 			*Control,
 		int verbose_level)
 // initializes the orbit transversal Fixp_cliques
@@ -391,7 +391,7 @@ void packing_was_fixpoints::compute_cliques_on_fixpoint_graph(
 
 void packing_was_fixpoints::compute_cliques_on_fixpoint_graph_from_scratch(
 		int clique_size,
-		poset_classification::poset_classification_control
+		layer4_classification::poset_classification::poset_classification_control
 			*Control,
 		int verbose_level)
 // compute cliques on fixpoint graph using A_on_fixpoints

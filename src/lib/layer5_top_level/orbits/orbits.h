@@ -8,6 +8,7 @@
 #ifndef SRC_LIB_LAYER5_TOP_LEVEL_ORBITS_ORBITS_H_
 #define SRC_LIB_LAYER5_TOP_LEVEL_ORBITS_ORBITS_H_
 
+
 namespace orbiter {
 namespace layer5_applications {
 namespace orbits {
@@ -66,9 +67,9 @@ public:
 
 	groups::any_group *G;
 
-	poset_classification::poset_classification_control *Control;
+	layer4_classification::poset_classification::poset_classification_control *Control;
 	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Primary_poset;
-	poset_classification::poset_classification *Orbits_on_primary_poset;
+	layer4_classification::poset_classification::poset_classification *Orbits_on_primary_poset;
 
 	int number_primary_orbits;
 	groups::strong_generators **stabilizer_gens;
@@ -79,7 +80,7 @@ public:
 	actions::action **A_restricted;
 	layer3_group_actions::combinatorics_with_groups::poset_with_group_action **Secondary_poset;
 		// [number_primary_orbits]
-	poset_classification::poset_classification **orbits_secondary_poset;
+	layer4_classification::poset_classification::poset_classification **orbits_secondary_poset;
 		// [number_primary_orbits]
 
 	int *nb_orbits_secondary;
@@ -88,11 +89,11 @@ public:
 		// [number_primary_orbits]
 	int nb_orbits_secondary_total;
 
-	invariant_relations::flag_orbits *Flag_orbits;
+	layer4_classification::invariant_relations::flag_orbits *Flag_orbits;
 
 	int nb_orbits_reduced;
 
-	invariant_relations::classification_step *Partition_orbits;
+	layer4_classification::invariant_relations::classification_step *Partition_orbits;
 		// [nb_orbits_reduced]
 
 
@@ -249,7 +250,7 @@ public:
 	groups::orbits_on_something *Orb;
 
 	int f_has_On_subsets;
-	poset_classification::poset_classification *On_subsets;
+	layer4_classification::poset_classification::poset_classification *On_subsets;
 
 	int f_has_On_Subspaces;
 	orbits_on_subspaces *On_Subspaces;
@@ -368,8 +369,8 @@ public:
 			actions::action *A_base,
 			actions::action *A_action,
 			groups::strong_generators *Subgroup_gens,
-			poset_classification::poset_classification_control *Control,
-			poset_classification::poset_classification *&PC,
+			layer4_classification::poset_classification::poset_classification_control *Control,
+			layer4_classification::poset_classification::poset_classification *&PC,
 			int subset_size,
 			int verbose_level);
 	void orbits_of_one_subset(
@@ -383,7 +384,7 @@ public:
 	void orbits_on_poset_post_processing(
 			actions::action *A_base,
 			actions::action *A_action,
-			poset_classification::poset_classification *PC,
+			layer4_classification::poset_classification::poset_classification *PC,
 			int depth,
 			int verbose_level);
 #if 0
@@ -394,14 +395,14 @@ public:
 			int verbose_level);
 #endif
 	void linear_codes_with_bounded_minimum_distance(
-			poset_classification::poset_classification_control *Control,
+			layer4_classification::poset_classification::poset_classification_control *Control,
 			group_constructions::linear_group *LG,
 			int d, int target_depth,
-			poset_classification::poset_classification *&PC,
+			layer4_classification::poset_classification::poset_classification *&PC,
 			int verbose_level);
 	void do_orbits_on_subspaces(
 			groups::any_group *Any_group,
-			poset_classification::poset_classification_control *Control,
+			layer4_classification::poset_classification::poset_classification_control *Control,
 			orbits::orbits_on_subspaces *&OoS,
 			int depth, int verbose_level);
 	void do_tensor_classify(
@@ -417,7 +418,7 @@ public:
 			std::string &control_label,
 			int minimum_distance,
 			int target_size,
-			poset_classification::poset_classification *&PC,
+			layer4_classification::poset_classification::poset_classification *&PC,
 			int verbose_level);
 	void do_classify_ovoids(
 			groups::any_group *Any_group,
@@ -453,9 +454,9 @@ public:
 
 	int V; // A0->degree
 
-	poset_classification::poset_classification_control *Control;
+	layer4_classification::poset_classification::poset_classification_control *Control;
 	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset;
-	poset_classification::poset_classification *Poset_classification;
+	layer4_classification::poset_classification::poset_classification *Poset_classification;
 
 	// orbits on pairs:
 	int *pair_orbit; // [V * V]
@@ -520,7 +521,7 @@ public:
 
 	// initialized by orbit_of_one_polynomial:
 	int f_has_Orb;
-	orbits_schreier::orbit_of_equations *Orb;
+	layer4_classification::orbits_schreier::orbit_of_equations *Orb;
 
 	std::string fname_base;
 	std::string fname_csv;
@@ -579,7 +580,7 @@ public:
 	// local data for orbits on subspaces:
 	layer3_group_actions::combinatorics_with_groups::poset_with_group_action
 		*orbits_on_subspaces_Poset;
-	poset_classification::poset_classification
+	layer4_classification::poset_classification::poset_classification
 		*orbits_on_subspaces_PC;
 	algebra::linear_algebra::vector_space *orbits_on_subspaces_VS;
 	int *orbits_on_subspaces_M;
@@ -590,7 +591,7 @@ public:
 	~orbits_on_subspaces();
 	void init(
 			groups::any_group *Group,
-			poset_classification::poset_classification_control *Control,
+			layer4_classification::poset_classification::poset_classification_control *Control,
 			int depth,
 			int verbose_level);
 
@@ -598,6 +599,129 @@ public:
 };
 
 
+
+
+
+// #############################################################################
+// poset_classification_activity_description.cpp
+// #############################################################################
+
+
+//! description on an activity for the poset classification after it has been computed
+
+
+class poset_classification_activity_description {
+
+public:
+
+	// TABLES/poset_classification_activity.tex
+
+	int f_report;
+	layer4_classification::poset_classification::poset_classification_report_options *report_options;
+
+	int f_export_level_to_cpp;
+	int export_level_to_cpp_level;
+	int f_export_history_to_cpp;
+	int export_history_to_cpp_level;
+
+
+	int f_write_tree; // create a tree
+	std::string write_tree_draw_options;
+
+	int f_find_node_by_stabilizer_order;
+	int find_node_by_stabilizer_order;
+
+
+	int f_draw_poset;
+	std::string draw_poset_draw_options;
+
+	int f_draw_full_poset;
+	std::string draw_full_poset_draw_options;
+
+	int f_plesken_ring;
+
+
+	int f_print_data_structure;
+
+	int f_list;
+	int f_list_all;
+	int f_table_of_nodes;
+	int f_make_relations_with_flag_orbits;
+
+	int f_level_summary_csv;
+	int f_orbit_reps_csv;
+
+
+	int f_node_label_is_group_order;
+	int f_node_label_is_element;
+
+	int f_show_orbit_decomposition;
+	int f_show_stab;
+	int f_save_stab;
+	int f_show_whole_orbits;
+
+
+
+	int f_export_schreier_trees;
+	int f_draw_schreier_trees;
+	std::string schreier_tree_prefix;
+			// comes after problem_label_with_path
+
+	int f_test_multi_edge_in_decomposition_matrix;
+
+
+
+	std::vector<std::string> recognize;
+
+	int f_pair_relations_within_orbit;
+	int pair_relations_within_orbit_idx;
+
+	int f_export_orbits_long;
+
+	poset_classification_activity_description();
+	~poset_classification_activity_description();
+	int read_arguments(
+		int argc, std::string *argv,
+		int verbose_level);
+	void print();
+
+};
+
+
+// #############################################################################
+// poset_classification_activity.cpp
+// #############################################################################
+
+
+//! an activity for the poset classification after it has been computed
+
+
+class poset_classification_activity {
+
+public:
+
+	poset_classification_activity_description *Descr;
+	layer4_classification::poset_classification::poset_classification *PC;
+	int actual_size;
+
+
+	poset_classification_activity();
+	~poset_classification_activity();
+	void init(
+			poset_classification_activity_description *Descr,
+			layer4_classification::poset_classification::poset_classification *PC,
+			int actual_size,
+			int verbose_level);
+	void perform_work(
+			int &nb_output,
+			other::orbiter_kernel_system::orbiter_symbol_table_entry *&Output,
+			int verbose_level);
+
+
+
+
+
+};
 
 
 

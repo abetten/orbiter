@@ -209,7 +209,7 @@ void blt_set_classify::init_basic(
 
 
 void blt_set_classify::compute_starter(
-		poset_classification::poset_classification_control *Control,
+		layer4_classification::poset_classification::poset_classification_control *Control,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -281,13 +281,13 @@ void blt_set_classify::do_poset_classification_activity(
 		cout << "blt_set_classify::do_poset_classification_activity" << endl;
 	}
 
-	user_interface::activities_layer5::poset_classification_activity_description *Activity_description;
+	orbits::poset_classification_activity_description *Activity_description;
 
 	Activity_description =
 			Get_object_of_type_poset_classification_activity(activity_label);
 
 
-	user_interface::activities_layer5::poset_classification_activity Activity;
+	orbits::poset_classification_activity Activity;
 
 	if (f_v) {
 		cout << "blt_set_classify::do_poset_classification_activity "
@@ -904,7 +904,7 @@ int blt_set_classify::create_graph(
 
 
 void blt_set_classify::lifting_prepare_function_new(
-		solvers_package::exact_cover *E, int starter_case,
+		layer4_classification::solvers_package::exact_cover *E, int starter_case,
 	long int *candidates, int nb_candidates,
 	groups::strong_generators *Strong_gens,
 	combinatorics::solvers::diophant *&Dio, long int *&col_labels,
@@ -1063,7 +1063,7 @@ void blt_set_classify::lifting_prepare_function_new(
 
 
 void blt_set_classify::report_from_iso(
-		isomorph::isomorph &Iso, int verbose_level)
+		layer4_classification::isomorph::isomorph &Iso, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

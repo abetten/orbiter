@@ -84,7 +84,7 @@ public:
 
 	arc_generator_description *Descr;
 	projective_geometry::projective_space_with_action *PA;
-	poset_classification::poset_classification_control *Control;
+	layer4_classification::poset_classification::poset_classification_control *Control;
 
 	int nb_points_total;
 	int nb_affine_lines;
@@ -104,7 +104,7 @@ public:
 	int *line_type; // [PA->P->N_lines]
 
 		
-	poset_classification::poset_classification *gen;
+	layer4_classification::poset_classification::poset_classification *gen;
 
 
 	
@@ -145,7 +145,7 @@ public:
 	void compute_line_type(
 			long int *set, int len, int verbose_level);
 	void lifting_prepare_function_new(
-			solvers_package::exact_cover *E,
+			layer4_classification::solvers_package::exact_cover *E,
 		int starter_case, 
 		long int *candidates, int nb_candidates,
 		groups::strong_generators *Strong_gens,
@@ -156,16 +156,18 @@ public:
 		// versus candidate points
 		// extended by external lines versus candidate points
 	void report(
-			isomorph::isomorph &Iso,
+			layer4_classification::isomorph::isomorph &Iso,
 			int verbose_level);
 	void report_do_the_work(
-			std::ostream &ost, isomorph::isomorph &Iso,
+			std::ostream &ost, layer4_classification::isomorph::isomorph &Iso,
 			int verbose_level);
 	void report_decompositions(
-			isomorph::isomorph &Iso, std::ostream &ost, int orbit,
+			layer4_classification::isomorph::isomorph &Iso,
+			std::ostream &ost, int orbit,
 		long int *data, int verbose_level);
 	void report_stabilizer(
-			isomorph::isomorph &Iso, std::ostream &ost, int orbit,
+			layer4_classification::isomorph::isomorph &Iso,
+			std::ostream &ost, int orbit,
 		int verbose_level);
 };
 
@@ -203,7 +205,7 @@ public:
 	int *v;
 	groups::schreier *Sch;
 	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset;
-	poset_classification::poset_classification *Gen;
+	layer4_classification::poset_classification::poset_classification *Gen;
 	geometry::projective_geometry::projective_space *P;
 
 	actions::action *A2; // action on the lines
@@ -272,8 +274,8 @@ public:
 			int len,
 			long int *S, void *data, int verbose_level);
 
-	poset_classification::poset_classification *gen;
-	poset_classification::poset_classification_control *Control;
+	layer4_classification::poset_classification::poset_classification *gen;
+	layer4_classification::poset_classification::poset_classification_control *Control;
 	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset;
 
 	int nb_orbits;
@@ -358,13 +360,13 @@ public:
 
 
 
-	invariant_relations::flag_orbits *Flag_orbits;
+	layer4_classification::invariant_relations::flag_orbits *Flag_orbits;
 
 	int *Po;
 
 	int nb_orbits_on_curves;
 
-	invariant_relations::classification_step *Curves;
+	layer4_classification::invariant_relations::classification_step *Curves;
 
 
 
@@ -475,9 +477,9 @@ public:
 	actions::action *A2;
 	actions::action *A2r;
 
-	poset_classification::poset_classification_control *Control;
+	layer4_classification::poset_classification::poset_classification_control *Control;
 	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset;
-	poset_classification::poset_classification *gen;
+	layer4_classification::poset_classification::poset_classification *gen;
 
 
 	hermitian_spreads_classify();
@@ -549,9 +551,9 @@ public:
 	actions::action *A_PGLQ; // PGL(m,Q)
 
 	algebra::linear_algebra::vector_space *VS;
-	poset_classification::poset_classification_control *Control1;
+	layer4_classification::poset_classification::poset_classification_control *Control1;
 	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset1;
-	poset_classification::poset_classification *Gen;
+	layer4_classification::poset_classification::poset_classification *Gen;
 	int vector_space_dimension; // = n
 
 	// the generators:
@@ -583,13 +585,13 @@ public:
 	int secondary_nb_candidates;
 	int secondary_schreier_depth;
 
-	poset_classification::poset_classification_control *Control_stab;
+	layer4_classification::poset_classification::poset_classification_control *Control_stab;
 	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset_stab;
-	poset_classification::poset_classification *Gen_stab;
+	layer4_classification::poset_classification::poset_classification *Gen_stab;
 
-	poset_classification::poset_classification_control *Control2;
+	layer4_classification::poset_classification::poset_classification_control *Control2;
 	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset2;
-	poset_classification::poset_classification *Gen2;
+	layer4_classification::poset_classification::poset_classification *Gen2;
 	int *is_allowed;
 
 	linear_set_classify();
@@ -796,13 +798,13 @@ class ovoid_classify {
 public:
 
 	ovoid_classify_description *Descr;
-	poset_classification::poset_classification_control *Control;
+	layer4_classification::poset_classification::poset_classification_control *Control;
 	group_constructions::linear_group *LG;
 
 	int m; // Witt index
 
 	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset;
-	poset_classification::poset_classification *gen;
+	layer4_classification::poset_classification::poset_classification *gen;
 
 
 	actions::action *A;
@@ -902,9 +904,9 @@ public:
 	int *base_cols; // [n]
 
 	algebra::linear_algebra::vector_space *VS;
-	poset_classification::poset_classification_control *Control;
+	layer4_classification::poset_classification::poset_classification_control *Control;
 	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset;
-	poset_classification::poset_classification *Gen;
+	layer4_classification::poset_classification::poset_classification *Gen;
 
 	int schreier_depth;
 	int f_use_invariant_subset_if_available;
@@ -993,9 +995,9 @@ class search_blocking_set {
 public:
 	geometry::other_geometry::incidence_structure *Inc; // do not free
 	actions::action *A; // do not free
-	poset_classification::poset_classification_control *Control;
+	layer4_classification::poset_classification::poset_classification_control *Control;
 	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset;
-	poset_classification::poset_classification *gen;
+	layer4_classification::poset_classification::poset_classification *gen;
 
 	other::data_structures::fancy_set *Line_intersections; // [Inc->nb_cols]
 	long int *blocking_set;
@@ -1120,9 +1122,9 @@ public:
 	algebra::ring_theory::longinteger_object go;
 	group_constructions::wreath_product *W;
 	algebra::linear_algebra::vector_space *VS;
-	poset_classification::poset_classification_control *Control;
+	layer4_classification::poset_classification::poset_classification_control *Control;
 	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset;
-	poset_classification::poset_classification *Gen;
+	layer4_classification::poset_classification::poset_classification *Gen;
 	int vector_space_dimension;
 	int *v; // [vector_space_dimension]
 
@@ -1133,7 +1135,7 @@ public:
 			int verbose_level);
 	void classify_poset(
 			int depth,
-			poset_classification::poset_classification_control *Control,
+			layer4_classification::poset_classification::poset_classification_control *Control,
 			int verbose_level);
 	void create_restricted_action_on_rank_one_tensors(
 			int verbose_level);

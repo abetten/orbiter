@@ -120,7 +120,7 @@ public:
 	std::string poset_classification_control_label;
 
 	int f_poset_classification_control_pointer;
-	poset_classification::poset_classification_control *Control;
+	layer4_classification::poset_classification::poset_classification_control *Control;
 
 	int f_output_prefix;
 	std::string output_prefix;
@@ -174,16 +174,16 @@ public:
 	induced_actions::action_on_grassmannian *AG;
 
 	recoordinatize *R;
-	poset_classification::classification_base_case *Base_case;
+	layer4_classification::poset_classification::classification_base_case *Base_case;
 
 	// if f_recoordinatize is true:
 	long int *Starter;
 	int Starter_size;
 	groups::strong_generators *Starter_Strong_gens;
 
-	poset_classification::poset_classification_control *Control;
+	layer4_classification::poset_classification::poset_classification_control *Control;
 	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset;
-	poset_classification::poset_classification *gen;
+	layer4_classification::poset_classification::poset_classification *gen;
 
 	std::string prefix;
 
@@ -195,7 +195,7 @@ public:
 		// or R->nb_live_points if f_recoordinatize
 
 
-	isomorph::isomorph_worker *Isomorph_worker;
+	layer4_classification::isomorph::isomorph_worker *Isomorph_worker;
 
 
 
@@ -231,12 +231,12 @@ public:
 
 	// spread_classify2.cpp
 	void print_isomorphism_type(
-			isomorph::isomorph *Iso,
+			layer4_classification::isomorph::isomorph *Iso,
 		int iso_cnt, groups::sims *Stab, groups::schreier &Orb,
 		long int *data, int verbose_level);
 		// called from callback_print_isomorphism_type()
 	void print_isomorphism_type2(
-			isomorph::isomorph *Iso,
+			layer4_classification::isomorph::isomorph *Iso,
 			std::ostream &ost,
 			int iso_cnt, groups::sims *Stab, groups::schreier &Orb,
 			long int *data, int verbose_level);
@@ -250,20 +250,21 @@ public:
 		other::data_structures::tally *&C,
 		int verbose_level);
 	void report2(
-			isomorph::isomorph &Iso, int verbose_level);
+			layer4_classification::isomorph::isomorph &Iso, int verbose_level);
 	void report3(
-			isomorph::isomorph &Iso,
+			layer4_classification::isomorph::isomorph &Iso,
 			std::ostream &ost, int verbose_level);
 	void all_cooperstein_thas_quotients(
-			isomorph::isomorph &Iso, int verbose_level);
+			layer4_classification::isomorph::isomorph &Iso, int verbose_level);
 	void cooperstein_thas_quotients(
-			isomorph::isomorph &Iso, std::ofstream &f,
+			layer4_classification::isomorph::isomorph &Iso, std::ofstream &f,
 		int h, int &cnt, int verbose_level);
 	void orbit_info_short(
-			std::ostream &ost, isomorph::isomorph &Iso,
+			std::ostream &ost,
+			layer4_classification::isomorph::isomorph &Iso,
 			int h, int verbose_level);
 	void report_stabilizer(
-			isomorph::isomorph &Iso,
+			layer4_classification::isomorph::isomorph &Iso,
 			std::ostream &ost, int orbit,
 		int verbose_level);
 };
@@ -583,7 +584,7 @@ public:
 	// i.e., the lines that are not
 	// yet part of the partial packing
 	void compute_live_blocks2(
-			solvers_package::exact_cover *EC,
+			layer4_classification::solvers_package::exact_cover *EC,
 			int starter_case,
 		long int *&live_blocks2, int &nb_live_blocks2,
 		long int *points_covered_by_starter,

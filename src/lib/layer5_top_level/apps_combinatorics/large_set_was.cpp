@@ -186,7 +186,7 @@ void large_set_was::init(
 void large_set_was::do_normalizer_on_orbits_of_a_given_length(
 		int orbit_length,
 		int nb_of_orbits_to_choose,
-		poset_classification::poset_classification_control *Control,
+		layer4_classification::poset_classification::poset_classification_control *Control,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -377,7 +377,7 @@ void large_set_was::do_normalizer_on_orbits_of_a_given_length_single_orbit(
 void large_set_was::do_normalizer_on_orbits_of_a_given_length_multiple_orbits(
 		int orbit_length,
 		int nb_of_orbits_to_choose,
-		poset_classification::poset_classification_control *Control,
+		layer4_classification::poset_classification::poset_classification_control *Control,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

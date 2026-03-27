@@ -6,8 +6,6 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
-	activity_description.o \
-	orbiter_command.o \
 	orbiter_top_level_session.o \
 	symbol_definition.o
 

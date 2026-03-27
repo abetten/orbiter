@@ -156,8 +156,8 @@ void classify_trihedral_pairs::init(
 
 
 void classify_trihedral_pairs::classify_orbits_on_trihedra(
-		poset_classification::poset_classification_control *Control1,
-		poset_classification::poset_classification_control *Control2,
+		layer4_classification::poset_classification::poset_classification_control *Control1,
+		layer4_classification::poset_classification::poset_classification_control *Control2,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -808,8 +808,8 @@ void classify_trihedral_pairs::identify_three_planes(
 
 
 void classify_trihedral_pairs::classify(
-		poset_classification::poset_classification_control *Control1,
-		poset_classification::poset_classification_control *Control2,
+		layer4_classification::poset_classification::poset_classification_control *Control1,
+		layer4_classification::poset_classification::poset_classification_control *Control2,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

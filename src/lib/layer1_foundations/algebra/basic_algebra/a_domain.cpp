@@ -51,7 +51,7 @@ void a_domain::init_integer_fractions(
 
 	if (f_v) {
 		cout << "a_domain::init_integer_fractions" << endl;
-		}
+	}
 	kind = domain_integer_fractions;
 	size_of_instance_in_int = 2;
 }

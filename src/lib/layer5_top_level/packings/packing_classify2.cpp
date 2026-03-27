@@ -18,7 +18,7 @@ namespace packings {
 
 
 void packing_classify::compute_klein_invariants(
-		isomorph::isomorph *Iso,
+		layer4_classification::isomorph::isomorph *Iso,
 		int f_split, int split_r, int split_m,
 		int verbose_level)
 {
@@ -228,7 +228,7 @@ void packing_classify::compute_and_save_klein_invariants(
 
 
 void packing_classify::report(
-		isomorph::isomorph *Iso, int verbose_level)
+		layer4_classification::isomorph::isomorph *Iso, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -263,7 +263,7 @@ void packing_classify::report(
 }
 
 void packing_classify::report_whole(
-		isomorph::isomorph *Iso,
+		layer4_classification::isomorph::isomorph *Iso,
 		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -338,7 +338,7 @@ void packing_classify::report_whole(
 }
 
 void packing_classify::report_title_page(
-		isomorph::isomorph *Iso,
+		layer4_classification::isomorph::isomorph *Iso,
 		std::ostream &ost,
 		int verbose_level)
 {
@@ -367,7 +367,7 @@ void packing_classify::report_title_page(
 }
 
 void packing_classify::report_packings_by_ago(
-		isomorph::isomorph *Iso,
+		layer4_classification::isomorph::isomorph *Iso,
 		std::ostream &ost,
 	invariants_packing *inv,
 	other::data_structures::tally &C_ago, int verbose_level)
@@ -445,7 +445,7 @@ void packing_classify::report_packings_by_ago(
 
 
 void packing_classify::report_isomorphism_type(
-		isomorph::isomorph *Iso,
+		layer4_classification::isomorph::isomorph *Iso,
 		std::ostream &ost,
 	int orbit, invariants_packing *inv,
 	int verbose_level)
@@ -609,7 +609,7 @@ void packing_classify::report_isomorphism_type(
 }
 
 void packing_classify::report_packing_as_table(
-		isomorph::isomorph *Iso, std::ostream &ost,
+		layer4_classification::isomorph::isomorph *Iso, std::ostream &ost,
 	int orbit,
 	invariants_packing *inv, long int *list_of_lines,
 	int verbose_level)
@@ -705,7 +705,7 @@ void packing_classify::report_packing_as_table(
 }
 
 void packing_classify::report_klein_invariants(
-		isomorph::isomorph *Iso, std::ostream &ost,
+		layer4_classification::isomorph::isomorph *Iso, std::ostream &ost,
 	int orbit, invariants_packing *inv,
 	int verbose_level)
 {
@@ -759,7 +759,7 @@ void packing_classify::report_klein_invariants(
 }
 
 void packing_classify::report_stabilizer(
-		isomorph::isomorph &Iso,
+		layer4_classification::isomorph::isomorph &Iso,
 		std::ostream &ost, int orbit,
 		int verbose_level)
 {
@@ -794,7 +794,7 @@ void packing_classify::report_stabilizer(
 }
 
 void packing_classify::report_stabilizer_in_action(
-		isomorph::isomorph &Iso,
+		layer4_classification::isomorph::isomorph &Iso,
 		std::ostream &ost, int orbit,
 		int verbose_level)
 {
@@ -836,7 +836,7 @@ void packing_classify::report_stabilizer_in_action(
 }
 
 void packing_classify::report_stabilizer_in_action_gap(
-		isomorph::isomorph &Iso, int orbit,
+		layer4_classification::isomorph::isomorph &Iso, int orbit,
 		int verbose_level)
 {
 	groups::sims *Stab;
@@ -893,7 +893,7 @@ void packing_classify::report_stabilizer_in_action_gap(
 }
 
 void packing_classify::report_extra_stuff(
-		isomorph::isomorph *Iso, std::ostream &ost,
+		layer4_classification::isomorph::isomorph *Iso, std::ostream &ost,
 		int verbose_level)
 {
 	ost << "\\chapter{The Field GF$(" << q << ")$}" << endl << endl;

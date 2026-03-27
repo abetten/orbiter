@@ -171,7 +171,7 @@ void packing_classify::init(
 }
 
 void packing_classify::init2(
-		poset_classification::poset_classification_control *Control,
+		layer4_classification::poset_classification::poset_classification_control *Control,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -354,7 +354,7 @@ void packing_classify::compute(
 }
 
 void packing_classify::lifting_prepare_function_new(
-		solvers_package::exact_cover *E,
+		layer4_classification::solvers_package::exact_cover *E,
 		int starter_case,
 	long int *candidates, int nb_candidates,
 	groups::strong_generators *Strong_gens,

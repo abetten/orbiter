@@ -73,7 +73,7 @@ semifield_classify_with_substructure::~semifield_classify_with_substructure()
 void semifield_classify_with_substructure::init(
 		semifield_classify_description *Descr,
 		projective_geometry::projective_space_with_action *PA,
-		poset_classification::poset_classification_control *Control,
+		layer4_classification::poset_classification::poset_classification_control *Control,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

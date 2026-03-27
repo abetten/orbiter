@@ -849,7 +849,7 @@ std::string classification_of_varieties_nauty::stringify_csv_header_line_nauty(
 
 
 void classification_of_varieties_nauty::report(
-		poset_classification::poset_classification_report_options *Report_options,
+		layer4_classification::poset_classification::poset_classification_report_options *Report_options,
 		int verbose_level)
 {
 

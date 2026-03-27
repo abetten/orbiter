@@ -189,6 +189,9 @@ public:
 			std::string &prefix,
 			projective_geometry::projective_space_with_action *PA,
 			int verbose_level);
+
+#if 0
+	// ToDo:
 	void do_activity(
 			user_interface::core_system::activity_description *Activity_description,
 			other::orbiter_kernel_system::activity_output *&AO,
@@ -198,6 +201,9 @@ public:
 					*Graph_theoretic_activity_description,
 					other::orbiter_kernel_system::activity_output *&AO,
 			int verbose_level);
+#endif
+
+
 	void do_algebraic_degree(
 			projective_geometry::projective_space_with_action *PA,
 			int *&Algebraic_degree, std::string *&Reduced_equation,
@@ -478,7 +484,7 @@ public:
 	int *row_sum; // [Xsize]
 	int *col_sum; // [Ysize]
 
-	poset_classification::poset_classification_control *Search_control;
+	layer4_classification::poset_classification::poset_classification_control *Search_control;
 
 	algebra::basic_algebra::matrix_group *M1;
 	algebra::basic_algebra::matrix_group *M2;
@@ -492,7 +498,7 @@ public:
 	algebra::ring_theory::longinteger_object go;
 	group_constructions::direct_product *P;
 
-	poset_classification::poset_classification *Gen;
+	layer4_classification::poset_classification::poset_classification *Gen;
 	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset_search;
 
 
@@ -942,7 +948,7 @@ public:
 	int nb_short_orbits;
 	int nb_long_orbits;
 
-	poset_classification::poset_classification *gen;
+	layer4_classification::poset_classification::poset_classification *gen;
 
 
 
@@ -988,7 +994,7 @@ public:
 
 	int *v;
 
-	poset_classification::poset_classification *gen;
+	layer4_classification::poset_classification::poset_classification *gen;
 	int nb_orbits;
 
 	void init(
@@ -1091,10 +1097,10 @@ public:
 		// on the orbit of the reflection group.
 	int f_play_it_safe;
 
-	poset_classification::poset_classification_control *Control;
+	layer4_classification::poset_classification::poset_classification_control *Control;
 	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset;
 		// subset lattice for action A_on_orbits
-	poset_classification::poset_classification *PC;
+	layer4_classification::poset_classification::poset_classification *PC;
 		// Classification of subsets in the action A_on_orbits
 
 
@@ -1163,9 +1169,9 @@ public:
 	other::data_structures::bitvector *Bitvec;
 	int *degree;
 
-	poset_classification::poset_classification_control *Control;
+	layer4_classification::poset_classification::poset_classification_control *Control;
 	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset;
-	poset_classification::poset_classification *gen;
+	layer4_classification::poset_classification::poset_classification *gen;
 
 	int nb_needed;
 
@@ -1286,8 +1292,8 @@ public:
 
 	// used in do_normalizer_on_orbits_of_
 	// a_given_length_multiple_orbits
-	poset_classification::poset_classification *PC;
-	poset_classification::poset_classification_control *Control;
+	layer4_classification::poset_classification::poset_classification *PC;
+	layer4_classification::poset_classification::poset_classification_control *Control;
 	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset;
 
 
@@ -1308,7 +1314,7 @@ public:
 	void do_normalizer_on_orbits_of_a_given_length(
 			int orbit_length,
 			int nb_of_orbits_to_choose,
-			poset_classification::poset_classification_control *Control,
+			layer4_classification::poset_classification::poset_classification_control *Control,
 			int verbose_level);
 	void do_normalizer_on_orbits_of_a_given_length_single_orbit(
 			int orbit_length,
@@ -1316,7 +1322,7 @@ public:
 	void do_normalizer_on_orbits_of_a_given_length_multiple_orbits(
 			int orbit_length,
 			int nb_of_orbits_to_choose,
-			poset_classification::poset_classification_control *Control,
+			layer4_classification::poset_classification::poset_classification_control *Control,
 			int verbose_level);
 	void create_graph_on_orbits_of_length(
 			std::string &fname, int orbit_length,
@@ -1367,7 +1373,7 @@ int large_set_was_classify_test_pair_of_orbits(
 class plesken_ring {
 public:
 
-	poset_classification::poset_classification *PC;
+	layer4_classification::poset_classification::poset_classification *PC;
 
 	other::data_structures::lint_matrix **Matrix_stack;
 	int matrix_stack_size; // PC->get_depth()
@@ -1385,7 +1391,7 @@ public:
 	plesken_ring();
 	~plesken_ring();
 	void init(
-			poset_classification::poset_classification *PC,
+			layer4_classification::poset_classification::poset_classification *PC,
 			int verbose_level);
 	void RREF_elimination_above(
 			int *A, int *B, int n,

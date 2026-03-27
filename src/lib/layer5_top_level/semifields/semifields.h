@@ -86,7 +86,7 @@ public:
 
 	projective_geometry::projective_space_with_action *PA;
 	algebra::basic_algebra::matrix_group *Mtx;
-	poset_classification::poset_classification_control *Control;
+	layer4_classification::poset_classification::poset_classification_control *Control;
 
 
 	int *identify_semifields_from_file_Po;
@@ -119,7 +119,7 @@ public:
 	long int *Non_unique_cases_go;
 
 
-	invariant_relations::classification_step *Semifields;
+	layer4_classification::invariant_relations::classification_step *Semifields;
 
 
 	semifield_classify_with_substructure();
@@ -127,7 +127,7 @@ public:
 	void init(
 			semifield_classify_description *Descr,
 			projective_geometry::projective_space_with_action *PA,
-			poset_classification::poset_classification_control *Control,
+			layer4_classification::poset_classification::poset_classification_control *Control,
 			int verbose_level);
 	void read_data(
 			int verbose_level);
@@ -204,9 +204,9 @@ public:
 
 
 	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset;
-	poset_classification::poset_classification_control *Control;
+	layer4_classification::poset_classification::poset_classification_control *Control;
 
-	poset_classification::poset_classification *Gen;
+	layer4_classification::poset_classification::poset_classification *Gen;
 	groups::sims *Symmetry_group;
 
 
@@ -231,7 +231,7 @@ public:
 	void init(
 			projective_geometry::projective_space_with_action *PA,
 			int k,
-			poset_classification::poset_classification_control *Control,
+			layer4_classification::poset_classification::poset_classification_control *Control,
 			std::string &level_two_prefix,
 			std::string &level_three_prefix,
 			int verbose_level);
@@ -242,7 +242,7 @@ public:
 			other::graphics::draw_options *draw_options,
 			int verbose_level);
 	void init_poset_classification(
-			poset_classification::poset_classification_control *Control,
+			layer4_classification::poset_classification::poset_classification_control *Control,
 			int verbose_level);
 	void compute_orbits(
 			int depth, int verbose_level);
@@ -306,7 +306,7 @@ public:
 	void compute_orbit_of_subspaces(
 		long int *input_data,
 		groups::strong_generators *stabilizer_gens,
-		orbits_schreier::orbit_of_subspaces *&Orb,
+		layer4_classification::orbits_schreier::orbit_of_subspaces *&Orb,
 		int verbose_level);
 	// allocates an orbit_of_subspaces data structure in Orb
 	void init_desired_pivots(
@@ -742,7 +742,7 @@ public:
 	int *Len;
 	int nb_orbits_at_level_3;
 	int nb_orb_total; // = sum_i Nb_orb[i]
-	orbits_schreier::orbit_of_subspaces ***All_Orbits;
+	layer4_classification::orbits_schreier::orbit_of_subspaces ***All_Orbits;
 		// [nb_non_unique_cases_with_non_trivial_group]
 	int *Nb_orb; // [nb_non_unique_cases_with_non_trivial_group]
 		// Nb_orb[i] is the number of orbits in All_Orbits[i]
@@ -757,7 +757,7 @@ public:
 		// where Orbit_idx[i][j] = b
 	int *Fo_first; // [nb_orbits_at_level_3]
 	int nb_flag_orbits;
-	invariant_relations::flag_orbits *Flag_orbits;
+	layer4_classification::invariant_relations::flag_orbits *Flag_orbits;
 		// [nb_flag_orbits]
 	long int *data1;
 	long int *data2;

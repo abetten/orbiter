@@ -73,8 +73,8 @@ public:
 	actions::action *Aut;
 	actions::action *A2;
 	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset;
-	poset_classification::poset_classification_control *Control;
-	poset_classification::poset_classification *gen;
+	layer4_classification::poset_classification::poset_classification_control *Control;
+	layer4_classification::poset_classification::poset_classification *gen;
 
 
 	void init(
@@ -367,7 +367,7 @@ public:
 	int f_regular;
 
 	int f_control;
-	poset_classification::poset_classification_control *Control;
+	layer4_classification::poset_classification::poset_classification_control *Control;
 
 	int regularity;
 
@@ -412,7 +412,7 @@ public:
 	graph_classify_description *Descr;
 
 	layer3_group_actions::combinatorics_with_groups::poset_with_group_action *Poset;
-	poset_classification::poset_classification *gen;
+	layer4_classification::poset_classification::poset_classification *gen;
 
 	actions::action *A_base; // symmetric group on n vertices
 	actions::action *A_on_edges; // action on pairs
