@@ -23,18 +23,6 @@ design_create::design_create()
 
 	Design_object = NULL;
 
-#if 0
-	//std::string prefix;
-	//std::string label_txt;
-	//std::string label_tex;
-#endif
-
-#if 0
-	q = 0;
-	F = NULL;
-	k = 0;
-#endif
-
 	A_base = NULL;
 	A = NULL;
 	A2 = NULL;
@@ -43,32 +31,11 @@ design_create::design_create()
 
 	degree = 0;
 
-#if 0
-	f_has_set = false;
-	set = NULL;
-	sz = 0;
-#endif
-
 	f_has_group = false;
 	Sg = NULL;
 
-#if 0
-	f_has_block_partition = false;
-	block_partition_class_size = 0;
-#endif
-
 	PA = NULL;
 	P = NULL;
-
-#if 0
-	block = NULL;
-
-	v = 0;
-	b = 0;
-	nb_inc = 0;
-	f_has_incma = false;
-	incma = NULL;
-#endif
 
 }
 
@@ -80,28 +47,12 @@ design_create::~design_create()
 		FREE_OBJECT(Design_object);
 	}
 
-#if 0
-	if (F) {
-		FREE_OBJECT(F);
-	}
-	if (set) {
-		FREE_lint(set);
-	}
-#endif
 	if (Sg) {
 		FREE_OBJECT(Sg);
 	}
 	if (PA) {
 		FREE_OBJECT(PA);
 	}
-#if 0
-	if (block) {
-		FREE_int(block);
-	}
-	if (incma) {
-		FREE_int(incma);
-	}
-#endif
 }
 
 void design_create::init(
@@ -203,43 +154,6 @@ void design_create::init(
 			}
 
 
-#if 0
-			combinatorics::design_theory::design_theory_global Design_theory_global;
-
-
-			if (f_v) {
-				cout << "design_create::init "
-						"before Design_theory_global.make_Baker_elliptic_semiplane_1978" << endl;
-			}
-			Design_theory_global.make_Baker_elliptic_semiplane_1978(incma, v, b, verbose_level - 1);
-			if (f_v) {
-				cout << "design_create::init "
-						"after Design_theory_global.make_Baker_elliptic_semiplane_1978" << endl;
-			}
-
-
-			k = 7;
-			block = NEW_int(k);
-			nb_inc = k * b;
-
-			f_has_set = false;
-
-			f_has_incma = true;
-
-#if 0
-			int *block; // [k]
-
-			int v;
-			int b;
-			int nb_inc;
-			int f_has_incma;
-			int *incma; // [v * b]
-#endif
-
-			prefix = "Baker1978";
-			label_txt = "Baker1978";
-			label_tex = "Baker1978";
-#endif
 
 		}
 		else if (ST.stringcmp(Descr->sporadic_name, "Mathon_1987") == 0) {
@@ -258,43 +172,6 @@ void design_create::init(
 						"after Design_object->make_Mathon_elliptic_semiplane_1987" << endl;
 			}
 
-#if 0
-			combinatorics::design_theory::design_theory_global Design_theory_global;
-
-
-			if (f_v) {
-				cout << "design_create::init "
-						"before Design_theory_global.make_Mathon_elliptic_semiplane_1987" << endl;
-			}
-			Design_theory_global.make_Mathon_elliptic_semiplane_1987(incma, v, b, verbose_level - 1);
-			if (f_v) {
-				cout << "design_create::init "
-						"after Design_theory_global.make_Mathon_elliptic_semiplane_1987" << endl;
-			}
-
-
-			k = 12;
-			block = NEW_int(k);
-			nb_inc = k * b;
-
-			f_has_set = false;
-
-			f_has_incma = true;
-
-#if 0
-			int *block; // [k]
-
-			int v;
-			int b;
-			int nb_inc;
-			int f_has_incma;
-			int *incma; // [v * b]
-#endif
-
-			prefix = "Mathon1987";
-			label_txt = "Mathon1987";
-			label_tex = "Mathon1987";
-#endif
 
 		}
 
@@ -717,7 +594,7 @@ void design_create::init(
 				Descr->list_of_blocks_from_file_fname,
 				Descr->list_of_blocks_from_file_column,
 				SoS,
-				verbose_level);
+				verbose_level - 2);
 		if (f_v) {
 			cout << "design_create::init "
 					"after Fio.Csv_file_support->read_column_as_set_of_sets" << endl;
@@ -755,6 +632,7 @@ void design_create::init(
 		for (h = 0; h < Design_object->b; h++) {
 			s = SoS->Set_size[h];
 			nb_inc += s;
+			Design_object->k = s;
 			for (u = 0; u < s; u++) {
 				i = SoS->Sets[h][u];
 				Design_object->incma[i * Design_object->b + h] = 1;
@@ -1509,108 +1387,6 @@ void design_create::compute_incidence_matrix_from_set_of_codes(
 	}
 
 }
-
-#if 0
-void design_create::compute_incidence_matrix_from_blocks(
-		int *blocks, int nb_blocks, int k,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "design_create::compute_incidence_matrix_from_blocks" << endl;
-	}
-
-	if (f_v) {
-		cout << "design_create::compute_incidence_matrix_from_blocks blocks = " << endl;
-		Int_matrix_print(blocks, nb_blocks, k);
-		cout << endl;
-	}
-
-	b = nb_blocks;
-	int i, j, h;
-
-	incma = NEW_int(v * b);
-	Int_vec_zero(incma, v * b);
-
-	for (j = 0; j < nb_blocks; j++) {
-		for (h = 0; h < k; h++) {
-			i = blocks[j * k + h];
-			incma[i * b + j] = 1;
-		}
-	}
-
-	nb_inc = nb_blocks * k;
-
-	f_has_incma = true;
-
-	if (f_v) {
-		cout << "design_create::compute_incidence_matrix_from_blocks "
-				"The incidence matrix is:" << endl;
-		if (v + b > 50) {
-			cout << "design_create::compute_incidence_matrix_from_blocks "
-					"too large to print" << endl;
-		}
-		else {
-			Int_matrix_print(incma, v, b);
-		}
-	}
-
-	if (f_v) {
-		cout << "design_create::compute_incidence_matrix_from_blocks done" << endl;
-	}
-
-
-}
-
-
-void design_create::compute_blocks_from_incidence_matrix(
-		long int *&blocks, int &nb_blocks, int &block_sz,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "design_create::compute_blocks_from_incidence_matrix" << endl;
-	}
-
-	nb_blocks = b;
-	block_sz = k;
-	int i, j, h;
-
-	blocks = NEW_lint(b * block_sz);
-
-	for (j = 0; j < b; j++) {
-		h = 0;
-		for (i = 0; i < v; i++) {
-			if (incma[i * b + j]) {
-				blocks[j * k + h++] = i;
-			}
-		}
-		if (h != k) {
-			cout << "the number of entries in the column "
-					"which are one does not match" << endl;
-			cout << "h = " << h << endl;
-			cout << "k = " << k << endl;
-			exit(1);
-		}
-	}
-
-	if (f_v) {
-		cout << "design_create::compute_blocks_from_incidence_matrix "
-				"blocks = " << endl;
-		Lint_matrix_print(blocks, nb_blocks, k);
-		cout << endl;
-	}
-
-
-
-	if (f_v) {
-		cout << "design_create::compute_blocks_from_incidence_matrix done" << endl;
-	}
-
-}
-#endif
 
 
 

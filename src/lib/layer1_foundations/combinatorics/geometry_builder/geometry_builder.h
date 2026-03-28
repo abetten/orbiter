@@ -251,6 +251,7 @@ public:
 	int forget_ivhbar_in_last_isot;
 
 	std::string inc_file_name;
+	// from the user input option -fname_GEO
 
 	// record the search tree in text files for later processing:
 	std::string fname_search_tree;

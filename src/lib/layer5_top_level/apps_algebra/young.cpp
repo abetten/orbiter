@@ -59,94 +59,94 @@ young::~young()
 
 	if (f_v) {
 		cout << "young::~young" << endl;
-		}
+	}
 
 	if (f_v) {
 		cout << "young::~young before delete Sch" << endl;
-		}
+	}
 	if (Sch) {
 		delete Sch;
-		}
+	}
 	if (f_v) {
 		cout << "young::~young before delete SG" << endl;
-		}
+	}
 	if (SG) {
 		delete SG;
-		}
+	}
 	if (class_size) {
 		FREE_int(class_size);
-		}
+	}
 	if (class_rep) {
 		FREE_int(class_rep);
-		}
+	}
 	if (f_v) {
 		cout << "young::~young before delete D" << endl;
-		}
+	}
 	if (D) {
 		delete D;
-		}
+	}
 	if (col_parts) {
 		FREE_int(col_parts);
-		}
+	}
 	if (Tableau) {
 		FREE_int(Tableau);
-		}
+	}
 	if (Row_partition) {
 		delete Row_partition;
-		}
+	}
 	if (Col_partition) {
 		delete Col_partition;
-		}
+	}
 	if (f_v) {
 		cout << "young::~young before delete gens1" << endl;
-		}
+	}
 	if (gens1) {
 		delete gens1;
-		}
+	}
 	if (gens2) {
 		delete gens2;
-		}
+	}
 	if (f_v) {
 		cout << "young::~young before delete S1" << endl;
-		}
+	}
 	if (S1) {
 		delete S1;
-		}
+	}
 	if (S2) {
 		delete S2;
-		}
+	}
 
 
 	if (f_v) {
 		cout << "young::~young before delete A" << endl;
-		}
+	}
 	if (A) {
 		delete A;
-		}
+	}
 	if (Elt) {
 		FREE_int(Elt);
-		}
+	}
 	if (v) {
 		FREE_int(v);
-		}
+	}
 
 	if (f_v) {
 		cout << "young::~young before delete Aconj" << endl;
-		}
+	}
 	if (Aconj) {
 		delete Aconj;
-		}
+	}
 #if 0
 	if (f_v) {
 		cout << "young::~young before delete ABC" << endl;
-		}
+	}
 	if (ABC) {
 		delete ABC;
-		}
+	}
 #endif
 	if (f_v) {
 		cout << "young::~young done" << endl;
-		}
+	}
 }
 
 void young::init(
@@ -221,7 +221,7 @@ void young::create_module(
 
 	if (f_v) {
 		cout << "young::create_module" << endl;
-		}
+	}
 
 	int sz;
 
@@ -236,7 +236,7 @@ void young::create_module(
 	Base = NEW_int(goi * sz * D->size_of_instance_in_int);
 	for (j = 0; j < sz; j++) {
 		M1[0 * sz + j] = h_alpha[j];
-		}
+	}
 
 	int *elt4, *elt5;
 
@@ -250,23 +250,23 @@ void young::create_module(
 		group_ring_element_mult(A, S, h_alpha, elt4, elt5);
 		for (j = 0; j < sz; j++) {
 			M1[i * sz + j] = elt5[j];
-			}
 		}
+	}
 
 
 	if (false) {
 		cout << "M1=" << endl;
 		Int_matrix_print(M1, goi, sz);
-		}
+	}
 
 	for (i = 0; i < goi * sz; i++) {
 		D->make_integer(D->offset(Base, i), M1[i], 0 /* verbose_level*/);
-		}
+	}
 
 	if (f_v) {
 		cout << "A basis is:" << endl;
 		D->print_matrix(Base, goi, sz);
-		}
+	}
 
 	int f_special = false;
 	int f_complete = true;
@@ -276,7 +276,7 @@ void young::create_module(
 
 	if (f_v) {
 		cout << "Calling Gauss_echelon_form:" << endl;
-		}
+	}
 
 	rk = D->Gauss_echelon_form(Base, f_special, f_complete, base_cols, 
 		f_P, NULL, goi, sz, goi, 0 /*verbose_level*/);
@@ -285,13 +285,13 @@ void young::create_module(
 		cout << "rk=" << rk << endl;
 		cout << "Basis=" << endl;
 		D->print_matrix(Base, rk, sz);
-		}
+	}
 
 	if (f_v) {
 		cout << "base_cols=" << endl;
 		Int_vec_print(cout, base_cols, rk);
 		cout << endl;
-		}
+	}
 
 	
 	FREE_int(M1);
@@ -300,7 +300,7 @@ void young::create_module(
 	
 	if (f_v) {
 		cout << "young::create_module done" << endl;
-		}
+	}
 }
 
 void young::create_representations(
@@ -314,7 +314,7 @@ void young::create_representations(
 
 	if (f_v) {
 		cout << "young::create_representations" << endl;
-		}
+	}
 	int ii, idx, c;
 
 	int *Mtx;
@@ -341,31 +341,31 @@ void young::create_representations(
 		for (i = 0; i < rk; i++) {
 			for (j = 0; j < sz; j++) {
 				elt3[j] = D->as_int(D->offset(Base, i * sz + j), 0);
-				}
+			}
 			group_ring_element_zero(A, S, elt4);
 			elt4[h] = 1;
 			group_ring_element_mult(A, S, elt3, elt4, elt5);
 
 			for (ii = 0; ii < rk * sz; ii++) {
 				D->copy(D->offset(Base, ii), D->offset(M4, ii), 0);
-				}
+			}
 			for (j = 0; j < sz; j++) {
 				D->make_integer(D->offset(M4, rk * sz + j),
 						elt5[j], 0 /* verbose_level*/);
-				}
+			}
 			
 			
 			if (f_v3) {
 				cout << "The extended matrix is:" << endl;
 				D->print_matrix(M4, rk + 1, sz);
-				}
+			}
 			
 
 			for (ii = 0; ii < rk; ii++) {
 				idx = base_cols[ii];
 				D->copy(D->offset(M4, rk * sz + idx),
 						D->offset(Mtx, i * rk + ii), 0);
-				}
+			}
 			
 			for (ii = 0; ii < rk; ii++) {
 				idx = base_cols[ii];
@@ -376,21 +376,21 @@ void young::create_representations(
 					cout << "Row " << i << " basis vector " << ii
 							<< " has been subtracted" << endl;
 					D->print_matrix(M4, rk + 1, sz);
-					}
-
 				}
+
+			}
 			if (!D->is_zero_vector(D->offset(M4, rk * sz), sz,
 					0 /* verbose_level */)) {
 				cout << "The vector does not lie in the span of the "
 						"basis, something is wrong" << endl;
 				exit(1);
-				}
+			}
 
 			if (f_v3) {
 				cout << "Row " << i << " has been computed" << endl;
-				}
+			}
 			
-			} // next i
+		} // next i
 
 
 		cout << "Conjugacy class " << c << " is represented "
@@ -403,7 +403,7 @@ void young::create_representations(
 		cout << endl;
 
 			
-		} // next c
+	} // next c
 	
 
 	FREE_int(elt3);
@@ -413,7 +413,7 @@ void young::create_representations(
 
 	if (f_v) {
 		cout << "young::create_representations done" << endl;
-		}
+	}
 }
 
 void young::create_representation(
@@ -428,7 +428,7 @@ void young::create_representation(
 
 	if (f_v) {
 		cout << "young::create_representation" << endl;
-		}
+	}
 	int ii;
 
 	int *M4;
@@ -446,24 +446,24 @@ void young::create_representation(
 	for (i = 0; i < rk; i++) {
 		for (j = 0; j < sz; j++) {
 			elt3[j] = D->as_int(D->offset(Base, i * sz + j), 0);
-			}
+		}
 		group_ring_element_zero(A, S, elt4);
 		elt4[group_elt] = 1;
 		group_ring_element_mult(A, S, elt3, elt4, elt5);
 
 		for (ii = 0; ii < rk * sz; ii++) {
 			D->copy(D->offset(Base, ii), D->offset(M4, ii), 0);
-			}
+		}
 		for (j = 0; j < sz; j++) {
 			D->make_integer(D->offset(M4, rk * sz + j), elt5[j],
 					0 /* verbose_level*/);
-			}
+		}
 		
 		
 		if (f_v3) {
 			cout << "The extended matrix is:" << endl;
 			D->print_matrix(M4, rk + 1, sz);
-			}
+		}
 		
 		D->mult_matrix(D->offset(M4, rk * sz), Base_inv,
 				D->offset(Mtx, i * rk), 1, rk, rk, 0);
@@ -480,29 +480,29 @@ void young::create_representation(
 				cout << "Row " << i << " basis vector " << ii
 						<< " has been subtracted" << endl;
 				D->print_matrix(M4, rk + 1, sz);
-				}
-
 			}
+
+		}
 		if (!D->is_zero_vector(D->offset(M4, rk * sz), sz,
 				0 /* verbose_level */)) {
 			cout << "The vector does not lie in the span of the "
 					"basis, something is wrong" << endl;
 			exit(1);
-			}
+		}
 #endif
 
 		if (f_v3) {
 			cout << "Row " << i << " has been computed" << endl;
-			}
+		}
 		
-		} // next i
+	} // next i
 
 	if (f_v) {
 		cout << "The element " << group_elt << " is represented "
 				"by the matrix:" << endl;
 		D->print_matrix(Mtx, rk, rk);
 		cout << endl;
-		}
+	}
 
 	
 
@@ -512,7 +512,7 @@ void young::create_representation(
 
 	if (f_v) {
 		cout << "young::create_representation done" << endl;
-		}
+	}
 }
 
 void young::young_symmetrizer(
@@ -709,7 +709,7 @@ void young::compute_generators(
 
 	if (f_v) {
 		cout << "young::compute_generators" << endl;
-		}
+	}
 
 	int nb_gens1, nb_gens2;
 
@@ -718,22 +718,22 @@ void young::compute_generators(
 		a = row_parts[i];
 		if (a > 1) {
 			nb_gens1 += a - 1;
-			}
 		}
+	}
 	if (f_v) {
 		cout << "nb_gens1 = " << nb_gens1 << endl;
-		}
+	}
 
 	nb_gens2 = 0;	
 	for (i = 0; i < l2; i++) {
 		a = col_parts[i];
 		if (a > 1) {
 			nb_gens2 += a - 1;
-			}
 		}
+	}
 	if (f_v) {
 		cout << "nb_gens2 = " << nb_gens2 << endl;
-		}
+	}
 
 	gens1 = NEW_OBJECT(data_structures_groups::vector_ge);
 	gens2 = NEW_OBJECT(data_structures_groups::vector_ge);
@@ -751,21 +751,21 @@ void young::compute_generators(
 			for (j = 1; j < a; j++, h++) {
 				for (u = 0; u < n; u++) {
 					v[u] = u;
-					}
+				}
 				s = Row_partition->Sets[i][0];
 				t = Row_partition->Sets[i][j];
 				v[s] = t;
 				v[t] = s;
 				A->Group_element->make_element(Elt, v, 0 /* verbose_level */);
 				A->Group_element->element_move(Elt, gens1->ith(h), 0);
-				}
 			}
 		}
+	}
 	if (f_v) {
 		cout << "go1=" << go1 << endl;
 		cout << "Generators for row stabilizer:" << endl;
 		gens1->print(cout);
-		}
+	}
 
 	gens2->init(A, verbose_level - 2);
 	gens2->allocate(nb_gens2, verbose_level - 2);
@@ -778,25 +778,25 @@ void young::compute_generators(
 			for (j = 1; j < a; j++, h++) {
 				for (u = 0; u < n; u++) {
 					v[u] = u;
-					}
+				}
 				s = Col_partition->Sets[i][0];
 				t = Col_partition->Sets[i][j];
 				v[s] = t;
 				v[t] = s;
 				A->Group_element->make_element(Elt, v, 0 /* verbose_level */);
 				A->Group_element->element_move(Elt, gens2->ith(h), 0);
-				}
 			}
 		}
+	}
 	if (f_v) {
 		cout << "go2=" << go2 << endl;
 		cout << "Generators for col stabilizer:" << endl;
 		gens2->print(cout);
-		}
+	}
 	
 	if (f_v) {
 		cout << "young::compute_generators done" << endl;
-		}
+	}
 
 }
 
@@ -816,7 +816,7 @@ void young::Maschke(
 
 	if (f_v) {
 		cout << "young::Maschke" << endl;
-		}
+	}
 
 	n = dim_of_module;
 	k = dim_of_submodule;
@@ -827,13 +827,13 @@ void young::Maschke(
 		cout << "young::Maschke n=" << n << endl;
 		cout << "young::Maschke k=" << k << endl;
 		cout << "young::Maschke r=" << r << endl;
-		}
+	}
 
 
 	if (f_v) {
 		cout << "young::Maschke checking if submodule "
 				"is invariant" << endl;
-		}
+	}
 	for (h = 0; h < goi; h++) {
 		A = Rep + h * sz;
 		for (i = 0; i < dim_of_submodule; i++) {
@@ -842,13 +842,13 @@ void young::Maschke(
 					cout << "The submodule is not invariant "
 							"under the action" << endl;
 					exit(1);
-					}
 				}
 			}
 		}
+	}
 	if (f_v) {
 		cout << "young::Maschke submodule is invariant, OK" << endl;
-		}
+	}
 
 	g = NEW_int(D->size_of_instance_in_int);
 	gv = NEW_int(D->size_of_instance_in_int);
@@ -865,7 +865,7 @@ void young::Maschke(
 		cout << "-1/g=";
 		D->print(gv);
 		cout << endl;
-		}
+	}
 
 	D->make_zero_vector(Mu, r * k, 0);
 
@@ -873,7 +873,7 @@ void young::Maschke(
 		cout << "Mu (beginning) = " << endl;
 		D->print_matrix(Mu, r, k);
 		cout << endl;
-		}
+	}
 
 
 	for (h = 0; h < goi; h++) {
@@ -882,7 +882,7 @@ void young::Maschke(
 
 		if (f_v) {
 			cout << "h=" << h << " / " << goi << " hv=" << hv << endl;
-			}
+		}
 		A = Rep + h * sz;
 		Av = Rep + hv * sz;
 
@@ -891,27 +891,27 @@ void young::Maschke(
 			for (j = 0; j < r; j++) {
 				D->copy(D->offset(Av, (k + i) * n + k + j),
 						D->offset(Tau, i * r + j), 0);
-				}
 			}
+		}
 
 		if (f_vv) {
 			cout << "Tau(hv) = " << endl;
 			D->print_matrix(Tau, r, r);
 			cout << endl;
-			}
+		}
 
 		// get Theta(h):
 		for (i = 0; i < r; i++) {
 			for (j = 0; j < k; j++) {
 				D->copy(D->offset(A, (k + i) * n + j),
 						D->offset(Theta, i * k + j), 0);
-				}
 			}
+		}
 		if (f_vv) {
 			cout << "Theta(h) = " << endl;
 			D->print_matrix(Theta, r, k);
 			cout << endl;
-			}
+		}
 
 		// multiply Tau and Theta:
 
@@ -922,7 +922,7 @@ void young::Maschke(
 			cout << "TauTheta = " << endl;
 			D->print_matrix(TauTheta, r, k);
 			cout << endl;
-			}
+		}
 		
 		// add to Mu:
 		
@@ -933,9 +933,9 @@ void young::Maschke(
 			cout << "Mu (partial sum) = " << endl;
 			D->print_matrix(Mu, r, k);
 			cout << endl;
-			}
-
 		}
+
+	}
 
 	D->matrix_mult_apply_scalar(Mu, gv, r, k,
 			0 /* verbose_level */);
@@ -944,7 +944,7 @@ void young::Maschke(
 		cout << "Mu = " << endl;
 		D->print_matrix(Mu, r, k);
 		cout << endl;
-		}
+	}
 
 
 	FREE_int(g);
@@ -957,7 +957,7 @@ void young::Maschke(
 
 	if (f_v) {
 		cout << "young::Maschke done" << endl;
-		}
+	}
 }
 
 long int young::group_ring_element_size(
@@ -1036,8 +1036,8 @@ void young::group_ring_element_mult(
 			c = a * b;
 			k = S->mult_by_rank(i, j, 0 /* verbose_level */);
 			elt3[k] += c;
-			}
 		}
+	}
 }
 
 

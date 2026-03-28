@@ -693,7 +693,8 @@ void design_theory_global::create_linear_space_from_latin_square(
 
 void design_theory_global::report_large_set(
 		std::ostream &ost, long int *coding, int nb_designs,
-		int design_v, int design_k, int design_sz, int verbose_level)
+		int design_v, int design_k, int design_sz,
+		int verbose_level)
 {
 
 	combinatorics::other_combinatorics::combinatorics_domain Combi;
@@ -728,7 +729,8 @@ void design_theory_global::report_large_set(
 
 void design_theory_global::report_large_set_compact(
 		std::ostream &ost, long int *coding, int nb_designs,
-		int design_v, int design_k, int design_sz, int verbose_level)
+		int design_v, int design_k, int design_sz,
+		int verbose_level)
 {
 
 	combinatorics::other_combinatorics::combinatorics_domain Combi;

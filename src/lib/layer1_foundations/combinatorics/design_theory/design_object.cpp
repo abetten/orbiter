@@ -431,6 +431,70 @@ void design_object::do_export_flags(
 	}
 }
 
+void design_object::do_export_incidence_matrix_as_flags_csv(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "design_object::do_export_incidence_matrix_as_flags_csv" << endl;
+	}
+
+	string fname;
+
+	fname = label_txt + "_flags.csv";
+
+	if (f_v) {
+		cout << "design_object::do_export_incidence_matrix_as_flags_csv "
+				"fname=" << fname << endl;
+	}
+
+	other::orbiter_kernel_system::file_io Fio;
+
+
+	std::string col_heading;
+
+	col_heading = "flags";
+
+	long int *Flags;
+	int nb_flags;
+	int h, nb_f;
+
+	nb_flags = 0;
+
+	for (h = 0; h < v * b; h++) {
+		if (incma[h]) {
+			nb_flags++;
+		}
+	}
+
+	Flags = NEW_lint(nb_flags);
+
+	nb_f = 0;
+	for (h = 0; h < v * b; h++) {
+		if (incma[h]) {
+			Flags[nb_f++] = h;
+		}
+	}
+
+	Fio.Csv_file_support->lint_matrix_write_csv_tabulated(
+			fname, col_heading, Flags, 1, nb_flags, verbose_level -2);
+
+
+	FREE_lint(Flags);
+
+	if (f_v) {
+		cout << "Written file " << fname
+				<< " of size " << Fio.file_size(fname) << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "design_object::do_export_incidence_matrix_as_flags_csv done" << endl;
+	}
+}
+
 
 
 
@@ -455,8 +519,18 @@ void design_object::do_export_incidence_matrix_csv(
 	other::orbiter_kernel_system::file_io Fio;
 
 
+	std::string col_heading;
+
+	col_heading = "flags";
+
+	Fio.Csv_file_support->int_matrix_write_csv_tabulated(
+			fname, col_heading, incma, v, b, verbose_level -2);
+
+#if 0
 	Fio.Csv_file_support->int_matrix_write_csv(
 			fname, incma, v, b);
+#endif
+
 	if (f_v) {
 		cout << "Written file " << fname
 				<< " of size " << Fio.file_size(fname) << endl;

@@ -905,6 +905,7 @@ public:
 
 	int f_export_flags;
 	int f_export_incidence_matrix;
+	int f_export_incidence_matrix_as_flags;
 
 	int f_export_incidence_matrix_latex;
 	std::string export_incidence_matrix_latex_draw_options;

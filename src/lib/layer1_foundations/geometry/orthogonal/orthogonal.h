@@ -83,6 +83,8 @@ public:
 	// creates a grassmann G43.
 	void create_extension_fields(
 		int verbose_level);
+	// Creates the extension field of degree 2 and 3 over GF(q), F2 and F3, respectively.
+	// Also creates the associated polynomial rings poly2 and poly3
 	long int intersection_of_hyperplanes(
 			long int plane_rk1, long int plane_rk2,
 			int verbose_level);

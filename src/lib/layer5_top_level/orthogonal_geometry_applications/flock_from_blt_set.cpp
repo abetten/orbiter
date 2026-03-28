@@ -80,6 +80,7 @@ void flock_from_blt_set::init(
 		int point_idx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	int f_v5 = (verbose_level >= 5);
 
 	if (f_v) {
 		cout << "flock_from_blt_set::init" << endl;
@@ -122,7 +123,7 @@ void flock_from_blt_set::init(
 		BLT_set->Blt_set_domain_with_action->Blt_set_domain->G53->unrank_lint_here(
 				B, plane, 0 /*verbose_level*/);
 
-		if (f_v) {
+		if (f_v5) {
 			cout << "flock_from_blt_set::init " << i << " / "
 					<< target_size << " B:" << endl;
 			Int_matrix_print(B, 3, 5);
@@ -145,7 +146,7 @@ void flock_from_blt_set::init(
 			}
 		}
 
-		if (f_v) {
+		if (f_v5) {
 			cout << "flock_from_blt_set::init " << i << " / "
 					<< target_size << " C:" << endl;
 			Int_matrix_print(C, 3, 4);
@@ -167,7 +168,7 @@ void flock_from_blt_set::init(
 		Int_vec_copy(
 				D + 3 * 4, E, 4);
 
-		if (f_v) {
+		if (f_v5) {
 			cout << "flock_from_blt_set::init " << i << " / "
 					<< target_size << " E:" << endl;
 			Int_matrix_print(E, 1, 4);
@@ -177,7 +178,7 @@ void flock_from_blt_set::init(
 			PG_element_normalize_from_a_given_position(
 				E, 1, 4, 1);
 
-		if (f_v) {
+		if (f_v5) {
 			cout << "flock_from_blt_set::init " << i << " / "
 					<< target_size << " E:" << endl;
 			Int_matrix_print(E, 1, 4);
@@ -188,7 +189,7 @@ void flock_from_blt_set::init(
 		F[1] = E[3]; // bi
 		F[2] = E[0]; // ci
 
-		if (f_v) {
+		if (f_v5) {
 			cout << "flock_from_blt_set::init " << i << " / "
 					<< target_size << " F:" << endl;
 			Int_matrix_print(F, 1, 3);
@@ -200,7 +201,7 @@ void flock_from_blt_set::init(
 
 		Flock_affine[j] = Gg.AG_element_rank(q, F, 1, 3);
 
-		if (f_v) {
+		if (f_v5) {
 			cout << "flock_from_blt_set::init " << i << " / "
 					<< target_size
 					<< " Flock_affine=" << endl;
@@ -247,12 +248,16 @@ void flock_from_blt_set::init(
 
 	if (f_v) {
 		cout << "flock_from_blt_set::init Flock:" << endl;
-		BLT_set->Blt_set_domain_with_action->Blt_set_domain->G53->print_set(
+		if (f_v5) {
+			BLT_set->Blt_set_domain_with_action->Blt_set_domain->G53->print_set(
 				Flock, q);
+		}
 
 		cout << "flock_from_blt_set::init Flock_reduced:" << endl;
-		BLT_set->Blt_set_domain_with_action->Blt_set_domain->G43->print_set(
+		if (f_v5) {
+			BLT_set->Blt_set_domain_with_action->Blt_set_domain->G43->print_set(
 				Flock_reduced, q);
+		}
 
 		cout << "flock_from_blt_set::init ABC:" << endl;
 		Int_matrix_print(ABC, q, 3);
@@ -270,25 +275,50 @@ void flock_from_blt_set::init(
 	}
 
 
-	int *outcome;
-	int N;
+
+	{
+		int *outcome;
+		int N;
+
+		if (f_v) {
+			cout << "flock_from_blt_set::init "
+					"before BLT_set->Blt_set_domain_with_action->Blt_set_domain->test_flock_condition" << endl;
+		}
+
+		BLT_set->Blt_set_domain_with_action->Blt_set_domain->test_flock_condition(
+				BLT_set->Blt_set_domain_with_action->Blt_set_domain->F,
+				ABC, outcome, N, verbose_level - 2);
+
+		if (f_v) {
+			cout << "flock_from_blt_set::init "
+					"after BLT_set->Blt_set_domain_with_action->Blt_set_domain->test_flock_condition" << endl;
+		}
 
 
-	BLT_set->Blt_set_domain_with_action->Blt_set_domain->test_flock_condition(
-			BLT_set->Blt_set_domain_with_action->Blt_set_domain->F,
-			ABC, outcome, N, verbose_level);
+		other::data_structures::tally T;
 
+		T.init(outcome, N, false, 0);
 
-	other::data_structures::tally T;
+		if (f_v) {
+			cout << "flock_from_blt_set::init outcome : ";
+			T.print_first(false /*f_backwards*/);
+			cout << endl;
+		}
 
-	T.init(outcome, N, false, 0);
-	cout << "outcome : ";
-	T.print_first(false /*f_backwards*/);
-	cout << endl;
+		FREE_int(outcome);
+	}
+	if (f_v) {
+		cout << "flock_from_blt_set::init after FREE_int(outcome)" << endl;
+	}
 
-	FREE_int(outcome);
+	if (BLT_set->Blt_set_domain_with_action->PF == NULL) {
+		cout << "flock_from_blt_set::init PF == NULL" << endl;
+		cout << "please us option -create_extension_fields when you create -orthogonal_space" << endl;
+		exit(1);
+	}
 
 	degree = BLT_set->Blt_set_domain_with_action->PF->max_degree;
+
 	if (f_v) {
 		cout << "flock_from_blt_set::init degree = " << degree << endl;
 		cout << "flock_from_blt_set::init q = " << q << endl;

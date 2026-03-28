@@ -217,7 +217,7 @@ void geometry_builder::init_description(
 
 	if (Descr->f_fname_GEO) {
 
-		gg->inc_file_name.assign(Descr->fname_GEO);
+		gg->inc_file_name = Descr->fname_GEO;
 
 
 		if (f_v) {

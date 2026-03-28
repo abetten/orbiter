@@ -75,6 +75,8 @@ public:
 			std::string &label, int verbose_level);
 	void do_export_flags(
 			int verbose_level);
+	void do_export_incidence_matrix_as_flags_csv(
+			int verbose_level);
 	void do_export_incidence_matrix_csv(
 			int verbose_level);
 	void do_export_incidence_matrix_latex(
@@ -157,10 +159,12 @@ public:
 			int verbose_level);
 	void report_large_set(
 			std::ostream &ost, long int *coding, int nb_designs,
-			int design_v, int design_k, int design_sz, int verbose_level);
+			int design_v, int design_k, int design_sz,
+			int verbose_level);
 	void report_large_set_compact(
 			std::ostream &ost, long int *coding, int nb_designs,
-			int design_v, int design_k, int design_sz, int verbose_level);
+			int design_v, int design_k, int design_sz,
+			int verbose_level);
 
 };
 

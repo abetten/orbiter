@@ -1389,7 +1389,7 @@ void activity_description::do_ring_theoretic_activity(
 	Sym->Orbiter_top_level_session->find_symbols(Sym->with_labels, Idx);
 
 	if (Sym->with_labels.size() < 1) {
-		cout << "-finite_field_activity requires at least one input" << endl;
+		cout << "-ring_theoretic_activity requires at least one input" << endl;
 		exit(1);
 	}
 	algebra::ring_theory::homogeneous_polynomial_domain *HPD;
@@ -1402,7 +1402,7 @@ void activity_description::do_ring_theoretic_activity(
 
 #if 0
 	if (Sym->with_labels.size() == 2) {
-		cout << "-finite_field_activity has two inputs" << endl;
+		cout << "-ring_theoretic_activity has two inputs" << endl;
 		FA.F_secondary = (field_theory::finite_field *) Sym->Orbiter_top_level_session->get_object(Idx[1]);
 	}
 #endif
@@ -1443,7 +1443,7 @@ void activity_description::do_projective_space_activity(
 	Sym->Orbiter_top_level_session->find_symbols(Sym->with_labels, Idx);
 
 	if (Sym->with_labels.size() < 1) {
-		cout << "-finite_field_activity requires at least one input" << endl;
+		cout << "-projective_space_activity requires at least one input" << endl;
 		exit(1);
 	}
 	projective_geometry::projective_space_with_action *PA;
@@ -1494,7 +1494,7 @@ void activity_description::do_orthogonal_space_activity(
 	Sym->Orbiter_top_level_session->find_symbols(Sym->with_labels, Idx);
 
 	if (Sym->with_labels.size() < 1) {
-		cout << "-finite_field_activity requires at least one input" << endl;
+		cout << "-orthogonal_space_activity requires at least one input" << endl;
 		exit(1);
 	}
 	orthogonal_geometry_applications::orthogonal_space_with_action *OA;
@@ -1726,7 +1726,7 @@ void activity_description::do_cubic_surface_activity(
 	Sym->Orbiter_top_level_session->find_symbols(Sym->with_labels, Idx);
 
 	if (Sym->with_labels.size() < 1) {
-		cout << "-group_theoretic_activity requires at least one input" << endl;
+		cout << "-cubic_surface_activity requires at least one input" << endl;
 		exit(1);
 	}
 
@@ -2087,7 +2087,8 @@ void activity_description::do_classification_of_cubic_surfaces_with_double_sixes
 	Sym->Orbiter_top_level_session->find_symbols(Sym->with_labels, Idx);
 
 	if (Sym->with_labels.size() < 1) {
-		cout << "activity requires at least one input" << endl;
+		cout << "activity_description::do_classification_of_cubic_surfaces_with_double_sixes_activity "
+				"this activity requires at least one input" << endl;
 		exit(1);
 	}
 
@@ -2169,7 +2170,8 @@ void activity_description::do_spread_table_activity(
 	Sym->Orbiter_top_level_session->find_symbols(Sym->with_labels, Idx);
 
 	if (Sym->with_labels.size() < 1) {
-		cout << "activity requires at least one input" << endl;
+		cout << "activity_description::do_spread_table_activity "
+				"this activity requires at least one input" << endl;
 		exit(1);
 	}
 
@@ -2224,7 +2226,8 @@ void activity_description::do_packing_classify_activity(
 	Sym->Orbiter_top_level_session->find_symbols(Sym->with_labels, Idx);
 
 	if (Sym->with_labels.size() < 1) {
-		cout << "activity requires at least one input" << endl;
+		cout << "activity_description::do_packing_classify_activity "
+				"this activity requires at least one input" << endl;
 		exit(1);
 	}
 
@@ -2275,7 +2278,8 @@ void activity_description::do_packing_was_activity(
 	Sym->Orbiter_top_level_session->find_symbols(Sym->with_labels, Idx);
 
 	if (Sym->with_labels.size() < 1) {
-		cout << "activity requires at least one input" << endl;
+		cout << "activity_description::do_packing_was_activity "
+				"this activity requires at least one input" << endl;
 		exit(1);
 	}
 
@@ -2328,7 +2332,8 @@ void activity_description::do_packing_fixed_points_activity(
 	Sym->Orbiter_top_level_session->find_symbols(Sym->with_labels, Idx);
 
 	if (Sym->with_labels.size() < 1) {
-		cout << "activity requires at least one input" << endl;
+		cout << "activity_description::do_packing_fixed_points_activity "
+				"this activity requires at least one input" << endl;
 		exit(1);
 	}
 
@@ -2380,7 +2385,8 @@ void activity_description::do_graph_classification_activity(
 	Sym->Orbiter_top_level_session->find_symbols(Sym->with_labels, Idx);
 
 	if (Sym->with_labels.size() < 1) {
-		cout << "activity requires at least one input" << endl;
+		cout << "activity_description::do_graph_classification_activity "
+				"this activity requires at least one input" << endl;
 		exit(1);
 	}
 
@@ -2431,7 +2437,8 @@ void activity_description::do_diophant_activity(
 	Sym->Orbiter_top_level_session->find_symbols(Sym->with_labels, Idx);
 
 	if (Sym->with_labels.size() < 1) {
-		cout << "activity requires at least one input" << endl;
+		cout << "activity_description::do_diophant_activity "
+				"this activity requires at least one input" << endl;
 		exit(1);
 	}
 
@@ -2475,6 +2482,13 @@ void activity_description::do_design_activity(
 	}
 
 
+	if (Sym->with_labels.size() < 1) {
+		cout << "activity_description::do_design_activity "
+				"this activity requires at least one input" << endl;
+		exit(1);
+	}
+
+
 	combinatorics::design_theory::design_object *Design_object;
 
 	Design_object = Get_design(Sym->with_labels[0]);
@@ -2483,11 +2497,6 @@ void activity_description::do_design_activity(
 	int *Idx;
 
 	Sym->Orbiter_top_level_session->find_symbols(Sym->with_labels, Idx);
-
-	if (Sym->with_labels.size() < 1) {
-		cout << "activity requires at least one input" << endl;
-		exit(1);
-	}
 
 	apps_combinatorics::design_create *DC;
 
@@ -2554,7 +2563,8 @@ void activity_description::do_large_set_activity(
 	Sym->Orbiter_top_level_session->find_symbols(Sym->with_labels, Idx);
 
 	if (Sym->with_labels.size() < 1) {
-		cout << "activity requires at least one input" << endl;
+		cout << "activity_description::do_large_set_activity "
+				"this activity requires at least one input" << endl;
 		exit(1);
 	}
 
@@ -2606,7 +2616,8 @@ void activity_description::do_large_set_was_activity(
 	Sym->Orbiter_top_level_session->find_symbols(Sym->with_labels, Idx);
 
 	if (Sym->with_labels.size() < 1) {
-		cout << "activity requires at least one input" << endl;
+		cout << "activity_description::do_large_set_was_activity "
+				"this activity requires at least one input" << endl;
 		exit(1);
 	}
 
@@ -2656,7 +2667,8 @@ void activity_description::do_symbolic_object_activity(
 	Sym->Orbiter_top_level_session->find_symbols(Sym->with_labels, Idx);
 
 	if (Sym->with_labels.size() < 1) {
-		cout << "activity requires at least one input" << endl;
+		cout << "activity_description::do_symbolic_object_activity "
+				"this activity requires at least one input" << endl;
 		exit(1);
 	}
 
@@ -2713,7 +2725,8 @@ void activity_description::do_BLT_set_classify_activity(
 	Sym->Orbiter_top_level_session->find_symbols(Sym->with_labels, Idx);
 
 	if (Sym->with_labels.size() < 1) {
-		cout << "activity requires at least one input" << endl;
+		cout << "activity_description::do_BLT_set_classify_activity "
+				"this activity requires at least one input" << endl;
 		exit(1);
 	}
 
@@ -2769,7 +2782,8 @@ void activity_description::do_spread_classify_activity(
 	Sym->Orbiter_top_level_session->find_symbols(Sym->with_labels, Idx);
 
 	if (Sym->with_labels.size() < 1) {
-		cout << "activity requires at least one input" << endl;
+		cout << "activity_description::do_spread_classify_activity "
+				"this activity requires at least one input" << endl;
 		exit(1);
 	}
 
@@ -2825,7 +2839,8 @@ void activity_description::do_spread_activity(
 	Sym->Orbiter_top_level_session->find_symbols(Sym->with_labels, Idx);
 
 	if (Sym->with_labels.size() < 1) {
-		cout << "activity requires at least one input" << endl;
+		cout << "activity_description::do_spread_activity "
+				"this activity requires at least one input" << endl;
 		exit(1);
 	}
 
@@ -2882,7 +2897,8 @@ void activity_description::do_translation_plane_activity(
 	Sym->Orbiter_top_level_session->find_symbols(Sym->with_labels, Idx);
 
 	if (Sym->with_labels.size() < 1) {
-		cout << "activity requires at least one input" << endl;
+		cout << "activity_description::do_translation_plane_activity "
+				"this activity requires at least one input" << endl;
 		exit(1);
 	}
 
@@ -2939,7 +2955,8 @@ void activity_description::do_action_on_forms_activity(
 	Sym->Orbiter_top_level_session->find_symbols(Sym->with_labels, Idx);
 
 	if (Sym->with_labels.size() < 1) {
-		cout << "activity requires at least one input" << endl;
+		cout << "activity_description::do_action_on_forms_activity "
+				"this activity requires at least one input" << endl;
 		exit(1);
 	}
 
@@ -2998,7 +3015,8 @@ void activity_description::do_orbits_activity(
 	Sym->Orbiter_top_level_session->find_symbols(Sym->with_labels, Idx);
 
 	if (Sym->with_labels.size() < 1) {
-		cout << "activity requires at least one input" << endl;
+		cout << "activity_description::do_orbits_activity "
+				"this activity requires at least one input" << endl;
 		exit(1);
 	}
 
@@ -3063,7 +3081,8 @@ void activity_description::do_variety_activity(
 	}
 
 	if (Sym->with_labels.size() < 1) {
-		cout << "activity requires at least one input" << endl;
+		cout << "activity_description::do_variety_activity "
+				"this activity requires at least one input" << endl;
 		exit(1);
 	}
 
@@ -3131,7 +3150,8 @@ void activity_description::do_vector_ge_activity(
 	Sym->Orbiter_top_level_session->find_symbols(Sym->with_labels, Idx);
 
 	if (Sym->with_labels.size() < 1) {
-		cout << "activity requires at least one input" << endl;
+		cout << "activity_description::do_vector_ge_activity "
+				"this activity requires at least one input" << endl;
 		exit(1);
 	}
 
@@ -3214,7 +3234,8 @@ void activity_description::do_combo_activity(
 	Sym->Orbiter_top_level_session->find_symbols(Sym->with_labels, Idx);
 
 	if (Sym->with_labels.size() < 1) {
-		cout << "activity requires at least one input" << endl;
+		cout << "activity_description::do_combo_activity "
+				"this activity requires at least one input" << endl;
 		exit(1);
 	}
 
@@ -3293,7 +3314,8 @@ void activity_description::do_plesken_ring_activity(
 	Sym->Orbiter_top_level_session->find_symbols(Sym->with_labels, Idx);
 
 	if (Sym->with_labels.size() < 1) {
-		cout << "activity requires at least one input" << endl;
+		cout << "activity_description::do_plesken_ring_activity "
+				"this activity requires at least one input" << endl;
 		exit(1);
 	}
 

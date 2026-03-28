@@ -414,27 +414,6 @@ void poset_classification_activity::perform_work(
 				PC,
 				0 /* verbose_level*/);
 
-#if 0
-		int *Pup;
-		int *Pdown;
-		int N;
-
-
-		if (f_v) {
-			cout << "poset_classification_activity::perform_work "
-					"before Pc_combinatorics.Plesken_matrices" << endl;
-		}
-		Pc_combinatorics.Plesken_matrices(
-				Pup,
-				Pdown,
-				N,
-				verbose_level);
-		if (f_v) {
-			cout << "poset_classification_activity::perform_work "
-					"after Pc_combinatorics.Plesken_matrices" << endl;
-		}
-#endif
-
 		layer5_applications::apps_combinatorics::plesken_ring *Plesken_ring;
 
 		Plesken_ring = NEW_OBJECT(layer5_applications::apps_combinatorics::plesken_ring);

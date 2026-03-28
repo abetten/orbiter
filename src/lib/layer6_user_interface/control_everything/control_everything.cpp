@@ -146,7 +146,8 @@ void orbiter_handle_everything(
 	}
 
 
-	if (The_Orbiter_top_level_session->Orbiter_session->f_fork && !The_Orbiter_top_level_session->Orbiter_session->f_parse_commands_only) {
+	if (The_Orbiter_top_level_session->Orbiter_session->f_fork &&
+			!The_Orbiter_top_level_session->Orbiter_session->f_parse_commands_only) {
 		if (f_v) {
 			cout << "before Orbiter_session->fork" << endl;
 		}
@@ -156,7 +157,8 @@ void orbiter_handle_everything(
 		}
 	}
 	else {
-		if (The_Orbiter_top_level_session->Orbiter_session->f_seed && !The_Orbiter_top_level_session->Orbiter_session->f_parse_commands_only) {
+		if (The_Orbiter_top_level_session->Orbiter_session->f_seed &&
+				!The_Orbiter_top_level_session->Orbiter_session->f_parse_commands_only) {
 			other::orbiter_kernel_system::os_interface Os;
 
 			if (f_v) {
@@ -293,6 +295,7 @@ void orbiter_parse(
 		int argc, std::string *Argv,
 		int &i, std::vector<void *> &program, int verbose_level)
 // called from parse_and_execute
+// program is a vector of pointers of type orbiter_command
 {
 	int cnt = 0;
 	int f_v = (verbose_level >= 1);
@@ -333,7 +336,10 @@ void orbiter_parse(
 			cout << "orbiter_top_level_session::parse "
 					"before OC->parse" << endl;
 		}
-		OC->parse(The_Orbiter_top_level_session, argc, Argv, i, verbose_level);
+		OC->parse(
+				The_Orbiter_top_level_session,
+				argc, Argv, i,
+				verbose_level);
 		if (f_vv) {
 			cout << "orbiter_top_level_session::parse "
 					"after OC->parse" << endl;

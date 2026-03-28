@@ -209,6 +209,8 @@ void blt_set_domain::init_blt_set_domain(
 
 void blt_set_domain::create_extension_fields(
 	int verbose_level)
+// Creates the extension field of degree 2 and 3 over GF(q), F2 and F3, respectively.
+// Also creates the associated polynomial rings poly2 and poly3
 {
 	int f_v = (verbose_level >= 1);
 	algebra::number_theory::number_theory_domain NT;
@@ -222,7 +224,8 @@ void blt_set_domain::create_extension_fields(
 	F2 = NEW_OBJECT(algebra::field_theory::finite_field);
 
 
-	F2->finite_field_init_small_order(Q2,
+	F2->finite_field_init_small_order(
+			Q2,
 			false /* f_without_tables */,
 			true /* f_compute_related_fields */,
 			verbose_level);
@@ -236,7 +239,8 @@ void blt_set_domain::create_extension_fields(
 		cout << "blt_set_domain::create_extension_fields "
 				"before Poly2->init" << endl;
 	}
-	Poly2->init(F2, 2, max_degree,
+	Poly2->init(
+			F2, 2, max_degree,
 				t_PART,
 				verbose_level);
 	if (f_v) {
@@ -250,7 +254,8 @@ void blt_set_domain::create_extension_fields(
 	F3 = NEW_OBJECT(algebra::field_theory::finite_field);
 
 
-	F3->finite_field_init_small_order(Q3,
+	F3->finite_field_init_small_order(
+			Q3,
 			false /* f_without_tables */,
 			true /* f_compute_related_fields */,
 			verbose_level);
@@ -263,7 +268,8 @@ void blt_set_domain::create_extension_fields(
 		cout << "blt_set_domain::create_extension_fields "
 				"before Poly3->init" << endl;
 	}
-	Poly3->init(F3, 2, max_degree,
+	Poly3->init(
+			F3, 2, max_degree,
 				t_PART,
 				verbose_level);
 	if (f_v) {

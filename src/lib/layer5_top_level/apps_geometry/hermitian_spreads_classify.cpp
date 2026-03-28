@@ -520,7 +520,8 @@ static void HS_early_test_func_callback(
 		Lint_vec_print(cout, S, len);
 		cout << endl;
 	}
-	HS->early_test_func(S, len,
+	HS->early_test_func(
+			S, len,
 		candidates, nb_candidates,
 		good_candidates, nb_good_candidates,
 		verbose_level - 2);

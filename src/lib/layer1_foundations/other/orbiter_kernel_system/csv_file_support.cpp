@@ -220,6 +220,91 @@ void csv_file_support::lint_matrix_write_csv(
 	}
 }
 
+
+void csv_file_support::int_matrix_write_csv_tabulated(
+		std::string &fname, std::string &col_heading,
+		int *M, int m, int n, int verbose_level)
+{
+
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "csv_file_support::int_matrix_write_csv_tabulated "
+				"writing file " << fname << endl;
+	}
+
+	int nb_rows = m;
+	int nb_cols = 2;
+
+
+	string *Table;
+
+	Table = new string [nb_rows * nb_cols];
+
+
+	int i;
+
+	if (false) {
+		cout << "csv_file_support::int_matrix_write_csv_tabulated "
+				"m = " << m << endl;
+		cout << "csv_file_support::int_matrix_write_csv_tabulated "
+				"n = " << n << endl;
+	}
+
+
+	for (i = 0; i < nb_rows; i++) {
+
+
+		Table[i * nb_cols + 0] = std::to_string(i);
+		Table[i * nb_cols + 1] = "\"" + Int_vec_stringify(M + i * n, n) + "\"";
+
+		if (false) {
+			cout << "csv_file_support::int_matrix_write_csv_tabulated "
+					"row i=" << i << " : " << Table[i * nb_cols + 1] << endl;
+		}
+
+	}
+	other::orbiter_kernel_system::file_io Fio;
+
+
+	std::string *Col_headings;
+
+	Col_headings = new string [nb_cols];
+
+	Col_headings[0] = "row";
+	Col_headings[1] = col_heading;
+
+
+	if (f_v) {
+		cout << "csv_file_support::int_matrix_write_csv_tabulated "
+				"writing file " << fname << endl;
+	}
+
+	Fio.Csv_file_support->write_table_of_strings_with_col_headings(
+			fname,
+			nb_rows, nb_cols, Table,
+			Col_headings,
+			verbose_level);
+
+	if (f_v) {
+		cout << "csv_file_support::int_matrix_write_csv_tabulated "
+				"written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+
+	delete [] Table;
+	delete [] Col_headings;
+
+
+	if (f_v) {
+		cout << "csv_file_support::int_matrix_write_csv_tabulated "
+				"done" << endl;
+	}
+
+}
+
+
+
 void csv_file_support::lint_matrix_write_csv_tabulated(
 		std::string &fname, std::string &col_heading,
 		long int *M, int m, int n, int verbose_level)
@@ -3533,7 +3618,7 @@ void csv_file_support::read_column_as_set_of_sets(
 // previously read_column_and_parse
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = false; //(verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 
 	if (f_v) {
 		cout << "csv_file_support::read_column_as_set_of_sets "

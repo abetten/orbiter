@@ -62,29 +62,6 @@ public:
 		// stabilizer of the variety obtained by doing an orbit algorithm
 
 
-#if 0
-	// variety_stabilizer_compute:
-	projective_geometry::ring_with_action *Ring_with_action;
-
-	//canonical_form_of_variety *Variety;
-	variety_object_with_action *Variety_object_with_action;
-
-	int nb_rows, nb_cols;
-	data_structures::bitvector *Canonical_form;
-
-	l1_interfaces::nauty_output *NO;
-
-
-	groups::strong_generators *Set_stab;
-		// the set stabilizer of the set of rational points of the variety
-		// this is not the stabilizer of the variety!
-
-	orbits_schreier::orbit_of_equations *Orb;
-		// orbit under the set stabilizer
-
-	groups::strong_generators *Stab_gens_variety;
-		// the stabilizer of the original variety
-#endif
 
 
 	automorphism_group_of_variety();

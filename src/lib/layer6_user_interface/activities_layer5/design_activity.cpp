@@ -157,6 +157,13 @@ void design_activity::perform_activity(
 		Design_object->do_export_incidence_matrix_csv(
 				verbose_level);
 	}
+	else if (Descr->f_export_incidence_matrix_as_flags) {
+		if (f_v) {
+			cout << "design_activity::perform_activity f_export_incidence_matrix_as_flags" << endl;
+		}
+		Design_object->do_export_incidence_matrix_as_flags_csv(
+				verbose_level);
+	}
 	else if (Descr->f_export_incidence_matrix_latex) {
 		if (f_v) {
 			cout << "design_activity::perform_activity "

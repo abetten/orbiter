@@ -16,7 +16,8 @@ namespace layer5_applications {
 namespace apps_combinatorics {
 
 
-static void large_set_early_test_function(long int *S, int len,
+static void large_set_early_test_function(
+		long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level);
@@ -60,22 +61,6 @@ large_set_classify::large_set_classify()
 
 	nb_needed = 0;
 
-#if 0
-	Design_table_reduced = NULL;
-	Design_table_reduced_idx = NULL;
-	nb_reduced = 0;
-	nb_remaining_colors = 0;
-	reduced_design_color_table = NULL;
-
-	A_reduced = NULL;
-	Orbits_on_reduced = NULL;
-	color_of_reduced_orbits = NULL;
-
-	OoS = NULL;
-	selected_type_idx = 0;
-#endif
-
-	//null();
 }
 
 large_set_classify::~large_set_classify()
@@ -90,17 +75,6 @@ large_set_classify::~large_set_classify()
 	if (design_color_table) {
 		FREE_int(design_color_table);
 	}
-#if 0
-	if (Design_table_reduced) {
-		FREE_lint(Design_table_reduced);
-	}
-	if (Design_table_reduced_idx) {
-		FREE_lint(Design_table_reduced_idx);
-	}
-	if (OoS) {
-		FREE_OBJECT(OoS);
-	}
-#endif
 }
 
 void large_set_classify::init(
@@ -167,7 +141,7 @@ void large_set_classify::init(
 
 	if (f_v) {
 		cout << "large_set_classify::init done" << endl;
-		}
+	}
 }
 
 void large_set_classify::create_action_and_poset(
@@ -342,7 +316,7 @@ void large_set_classify::read_classification_single_case(
 	if (f_v) {
 		cout << "reading all orbit representatives from "
 				"file " << fname_classification_at_level << endl;
-		}
+	}
 
 	//Rep = NEW_OBJECT(data_structures_groups::set_and_stabilizer);
 
@@ -377,7 +351,7 @@ void large_set_classify::read_classification_single_case(
 
 	if (f_v) {
 		cout << "large_set_classify::read_classification_single_case done" << endl;
-		}
+	}
 }
 
 void large_set_classify::compute_colors(
@@ -827,7 +801,8 @@ int large_set_compute_color_of_reduced_orbits_callback(schreier *Sch,
 #endif
 
 
-static void large_set_early_test_function(long int *S, int len,
+static void large_set_early_test_function(
+		long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level)
@@ -872,7 +847,7 @@ static void large_set_early_test_function(long int *S, int len,
 	}
 	if (f_v) {
 		cout << "large_set_early_test_function done" << endl;
-		}
+	}
 }
 
 

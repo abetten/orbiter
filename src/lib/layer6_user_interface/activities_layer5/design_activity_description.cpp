@@ -46,6 +46,7 @@ design_activity_description::design_activity_description()
 
 	f_export_flags = false;
 	f_export_incidence_matrix = false;
+	f_export_incidence_matrix_as_flags = false;
 	f_export_incidence_matrix_latex = false;
 	std::string export_incidence_matrix_latex_draw_options;
 
@@ -169,6 +170,12 @@ int design_activity_description::read_arguments(
 			f_export_incidence_matrix = true;
 			if (f_v) {
 				cout << "-export_incidence_matrix " << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-export_incidence_matrix_as_flags") == 0) {
+			f_export_incidence_matrix_as_flags = true;
+			if (f_v) {
+				cout << "-export_incidence_matrix_as_flags " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-export_incidence_matrix_latex") == 0) {
@@ -295,6 +302,9 @@ void design_activity_description::print()
 	}
 	if (f_export_incidence_matrix) {
 		cout << "-export_incidence_matrix " << endl;
+	}
+	if (f_export_incidence_matrix_as_flags) {
+		cout << "-export_incidence_matrix_as_flags " << endl;
 	}
 	if (f_export_incidence_matrix_latex) {
 		cout << "-export_incidence_matrix_latex "

@@ -102,16 +102,16 @@ void blt_set_group_properties::init_orbits_on_points(
 
 	if (f_v) {
 		cout << "blt_set_with_action::init_orbits_on_points action "
-				"on points:" << endl;
+				"on points. Before Blt_set_with_action->A->Induced_action->restricted_action" << endl;
 	}
 	A_on_points = Blt_set_with_action->A->Induced_action->restricted_action(
 			Blt_set_with_action->Inv->the_set_in_orthogonal,
 			Blt_set_with_action->Blt_set_domain_with_action->Blt_set_domain->target_size,
 			label_of_set, label_of_set_tex,
-			0 /*verbose_level*/);
+			verbose_level - 1);
 	if (f_v) {
 		cout << "blt_set_with_action::init_orbits_on_points action "
-				"on points done" << endl;
+				"on points. After Blt_set_with_action->A->Induced_action->restricted_action" << endl;
 	}
 
 

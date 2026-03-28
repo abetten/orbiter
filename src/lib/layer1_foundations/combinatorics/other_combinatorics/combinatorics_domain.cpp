@@ -2437,8 +2437,8 @@ void combinatorics_domain::Dedekind_numbers(
 	std::string *Row_headers;
 	std::string *Col_headers;
 
-	height = q_max - q_min + 1;
-	width = n_max - n_min + 1;
+	height = n_max - n_min + 1;
+	width = q_max - q_min + 1;
 	Row_headers = new string[height];
 	Col_headers = new string[width];
 	Table = new string[height * width];
@@ -2463,6 +2463,9 @@ void combinatorics_domain::Dedekind_numbers(
 			j = q - q_min;
 
 			algebra::ring_theory::longinteger_object Dnk;
+			if (f_v) {
+				cout << "combinatorics_domain::Dedekind_numbers n = " << n << " q=" << q << " before D.Dedekind_number" << endl;
+			}
 
 			//cout << "computing n=" << n << " q=" << q << endl;
 			D.Dedekind_number(Dnq, n, q, verbose_level);

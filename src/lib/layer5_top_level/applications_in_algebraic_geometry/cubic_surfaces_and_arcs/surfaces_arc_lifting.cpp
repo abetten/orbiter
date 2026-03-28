@@ -836,6 +836,8 @@ void surfaces_arc_lifting::report(
 	if (!Control->f_draw_options) {
 		cout << "surfaces_arc_lifting::report please use "
 				"-draw_option in poset_classification_control" << endl;
+		cout << "Control_six_arcs_label = " << Control_six_arcs_label << endl;
+		Control->print();
 		exit(1);
 	}
 
@@ -917,29 +919,49 @@ void surfaces_arc_lifting::report2(
 
 	//ost << "\\section{The Group}" << endl << endl;
 
-	A4->Action_latex_interface->report(ost, false /* f_sims */, NULL /* sims *S */,
+	if (f_v) {
+		cout << "surfaces_arc_lifting::report2 before A4->Action_latex_interface->report" << endl;
+	}
+	A4->Action_latex_interface->report(
+				ost, false /* f_sims */, NULL /* sims *S */,
 				false /* f_strong_gens */, NULL /* strong_generators *SG */,
 				draw_options,
 				verbose_level);
+	if (f_v) {
+		cout << "surfaces_arc_lifting::report2 after A4->Action_latex_interface->report" << endl;
+	}
 
 
 	//ost << "\\section{The Classification of Cubic Surfaces with 27 Lines "
 	//		"over the field ${\\mathbb F}_{" << q << "}$}" << endl << endl;
 
 
-	Surfaces->print_latex(ost,
+	if (f_v) {
+		cout << "surfaces_arc_lifting::report2 before Surfaces->print_latex" << endl;
+	}
+	Surfaces->print_latex(
+			ost,
 		title, true /* f_print_stabilizer_gens */,
 		true /* f_has_print_function */,
 		callback_surfaces_arc_lifting_report /* void (*print_function)(std::ostream &ost, int i,
 				classification_step *Step, void *print_function_data) */,
 		this /* void *print_function_data */);
+	if (f_v) {
+		cout << "surfaces_arc_lifting::report2 after Surfaces->print_latex" << endl;
+	}
 
 	ost << "\\bigskip" << endl << endl;
 
 
 	ost << "\\section{Six-Arcs}" << endl << endl;
 
+	if (f_v) {
+		cout << "surfaces_arc_lifting::report2 before Six_arcs->report_latex" << endl;
+	}
 	Six_arcs->report_latex(ost);
+	if (f_v) {
+		cout << "surfaces_arc_lifting::report2 after Six_arcs->report_latex" << endl;
+	}
 
 
 
@@ -1015,6 +1037,10 @@ void surfaces_arc_lifting::report2(
 	report_flag_orbits_in_detail(ost, max_nb_elements_printed, verbose_level);
 
 
+
+#if 0
+	// ToDo:
+
 	ost << "\\section{Six-Arcs in Detail}" << endl << endl;
 
 	poset_classification::poset_classification_report_options Opt;
@@ -1030,7 +1056,7 @@ void surfaces_arc_lifting::report2(
 			0 /* verbose_level */);
 
 	Pc_latex_interface.report2(ost, 0 /* verbose_level */);
-
+#endif
 
 
 	ost << "\\section{Basics}" << endl << endl;

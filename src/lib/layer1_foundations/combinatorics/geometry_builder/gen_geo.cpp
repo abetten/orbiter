@@ -210,6 +210,7 @@ void gen_geo::generate_geometries_and_process(
 	it = inc->iso_type_at_line[V - 1];
 
 
+#if 0
 	if (GB->Descr->f_save_canonical_forms) {
 
 		if (f_v) {
@@ -218,9 +219,10 @@ void gen_geo::generate_geometries_and_process(
 
 		int f_identify_duals_if_possible = true;
 
-		it->save_to_csv(inc_file_name, f_identify_duals_if_possible, verbose_level);
+		it->save_to_csv(csv_file_name, f_identify_duals_if_possible, verbose_level);
 
 	}
+#endif
 
 	if (GB->Descr->f_output_to_inc_file) {
 
@@ -255,6 +257,23 @@ void gen_geo::generate_geometries_and_process(
 
 		fname = inc_file_name + ".sage";
 		it->write_sage_file(fname, verbose_level);
+
+		other::orbiter_kernel_system::file_io Fio;
+
+		cout << "gen_geo::generate_geometries_and_process "
+				"Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
+	if (GB->Descr->f_save_canonical_forms) {
+
+		cout << "gen_geo::generate_geometries_and_process f_save_canonical_forms" << endl;
+
+		int f_identify_duals_if_possible = true;
+
+		it->save_to_csv(inc_file_name, f_identify_duals_if_possible, verbose_level);
+
+		string fname;
+
+		fname = inc_file_name + "_canonical_forms.csv";
 
 		other::orbiter_kernel_system::file_io Fio;
 

@@ -629,8 +629,10 @@ void graph_theory_apps::common_neighbors(
 
 	if (f_v) {
 		cout << "graph_theory_apps::common_neighbors" << endl;
-		cout << "graph_theory_apps::test_automorphism_property_of_group nb = " << nb << endl;
-		cout << "graph_theory_apps::test_automorphism_property_of_group common_neighbors_set = " << common_neighbors_set << endl;
+		cout << "graph_theory_apps::test_automorphism_property_of_group "
+				"nb = " << nb << endl;
+		cout << "graph_theory_apps::test_automorphism_property_of_group "
+				"common_neighbors_set = " << common_neighbors_set << endl;
 	}
 
 	if (nb != 1) {
@@ -663,7 +665,8 @@ void graph_theory_apps::common_neighbors(
 		verbose_level);
 
 	if (f_v) {
-		cout << "graph_theory_apps::common_neighbors number of common neighbors is " << Neighbors->k << endl;
+		cout << "graph_theory_apps::common_neighbors number "
+				"of common neighbors is " << Neighbors->k << endl;
 		cout << "graph_theory_apps::common_neighbors =";
 		Neighbors->print();
 		cout << endl;
@@ -686,8 +689,10 @@ void graph_theory_apps::test_automorphism_property_of_group(
 
 	if (f_v) {
 		cout << "graph_theory_apps::test_automorphism_property_of_group" << endl;
-		cout << "graph_theory_apps::test_automorphism_property_of_group nb = " << nb << endl;
-		cout << "graph_theory_apps::test_automorphism_property_of_group group_label = " << group_label << endl;
+		cout << "graph_theory_apps::test_automorphism_property_of_group "
+				"nb = " << nb << endl;
+		cout << "graph_theory_apps::test_automorphism_property_of_group "
+				"group_label = " << group_label << endl;
 	}
 
 	if (nb != 1) {
@@ -730,7 +735,8 @@ void graph_theory_apps::test_automorphism_property_of_group(
 
 		if (f_v) {
 			cout << "graph_theory_apps::test_automorphism_property_of_group "
-					"number of generators of group = " << Subgroup_gens->gens->len << endl;
+					"number of generators of group = "
+					<< Subgroup_gens->gens->len << endl;
 		}
 
 		for (h = 0; h < Subgroup_gens->gens->len; h++) {

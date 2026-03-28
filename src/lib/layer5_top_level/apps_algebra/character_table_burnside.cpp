@@ -197,7 +197,7 @@ void character_table_burnside::do_it(
 		cout << "Did not find a matrix with the right number "
 				"of distinct eigenvalues" << endl;
 		exit(1);
-		}
+	}
 
 
 	if (f_v) {
@@ -394,10 +394,10 @@ void character_table_burnside::do_it(
 				a = Distribution[t * nb_classes + j];
 				if (a == 0) {
 					continue;
-					}
-				S[t] += a * character_table[i * nb_classes + j];
 				}
+				S[t] += a * character_table[i * nb_classes + j];
 			}
+		}
 		cout << "S=";
 		Int_vec_print(cout, S + 1, t_max);
 		cout << endl;
@@ -470,7 +470,7 @@ void character_table_burnside::do_it(
 	FREE_int(Distribution);
 	for (i = 0; i < nb_gens; i++) {
 		FREE_int(Gens[i]);
-		}
+	}
 	FREE_pint(Gens);
 
 
@@ -509,11 +509,11 @@ void character_table_burnside::create_matrix(
 
 	if (f_v) {
 		cout << "character_table_burnside::create_matrix" << endl;
-		}
+	}
 	n = character_degree[i];
 	if (f_v) {
 		cout << "n=" << n << endl;
-		}
+	}
 	M.m_mn_n(n + 1, n + 1);
 
 	M.elements_to_unipoly();
@@ -527,7 +527,7 @@ void character_table_burnside::create_matrix(
 		M.s_ij(0, n - j) = p;
 		}
 
-		}
+	}
 	for (ii = 1; ii <= n; ii++) {
 
 		cout << "ii=" << ii << endl;
@@ -538,19 +538,19 @@ void character_table_burnside::create_matrix(
 			p.one();
 			if (j == 0) {
 				p.m_ii(0, ii);
-				}
+			}
 			else {
 				p.m_ii(0, S[j]);
-				}
+			}
 			cout << "j=" << j << " p=" << p << endl;
 
 			M.s_ij(ii, ii - j) = p;
-			}
 		}
+	}
 
 	if (f_v) {
 		cout << "character_table_burnside::create_matrix done" << endl;
-		}
+	}
 }
 
 
@@ -610,7 +610,7 @@ void character_table_burnside::compute_character_degrees(
 
 	if (f_v) {
 		cout << "character_table_burnside::compute_character_degrees" << endl;
-		}
+	}
 
 	character_degree = NEW_int(nb_classes);
 	A = NEW_int(D->size_of_instance_in_int);
@@ -641,7 +641,7 @@ void character_table_burnside::compute_character_degrees(
 			D->mult(B, Cv, E, 0);
 
 			D->add_apply(S, E, 0);
-			}
+		}
 
 		D->inverse(S, Sv, 0);
 
@@ -655,14 +655,14 @@ void character_table_burnside::compute_character_degrees(
 		if (d * d != f) {
 			cout << "f is not a perfect square" << endl;
 			exit(1);
-			}
+		}
 
 		if (f_vv) {
 			cout << "i=" << i << " d=" << d << endl;
-			}
+		}
 
 		character_degree[i] = d;
-		}
+	}
 	FREE_int(A);
 	FREE_int(B);
 	FREE_int(C);
@@ -674,7 +674,7 @@ void character_table_burnside::compute_character_degrees(
 	FREE_int(F);
 	if (f_v) {
 		cout << "character_table_burnside::compute_character_degrees done" << endl;
-		}
+	}
 }
 
 void character_table_burnside::compute_omega(
@@ -690,7 +690,7 @@ void character_table_burnside::compute_omega(
 
 	if (f_v) {
 		cout << "character_table_burnside::compute_omega" << endl;
-		}
+	}
 	Omega = NEW_int(nb_classes * nb_classes * D->size_of_instance_in_int);
 	M = NEW_int(nb_classes * nb_classes * D->size_of_instance_in_int);
 	base_cols = NEW_int(nb_classes);
@@ -701,21 +701,21 @@ void character_table_burnside::compute_omega(
 		if (f_v) {
 			cout << "eigenvalue " << h << " / " << nb_mu
 					<< " is " << x << ":" << endl;
-			}
+		}
 		for (i = 0; i < nb_classes; i++) {
 			for (j = 0; j < nb_classes; j++) {
 				a = N0[i * nb_classes + j];
 				if (i == j) {
 					a -= x;
-					}
-				D->make_integer(D->offset(M, i * nb_classes + j), a, 0);
 				}
+				D->make_integer(D->offset(M, i * nb_classes + j), a, 0);
 			}
+		}
 		if (f_vv) {
 			cout << "before get_image_and_kernel:" << endl;
 			D->print_matrix(M, nb_classes, nb_classes);
 			//double_matrix_print(M, nb_classes, nb_classes);
-			}
+		}
 
 		D->get_image_and_kernel(M, nb_classes, rk, verbose_level);
 
@@ -728,12 +728,12 @@ void character_table_burnside::compute_omega(
 			D->print_matrix(M, nb_classes, nb_classes);
 
 			cout << "after get_image_and_kernel, rk=" << rk << endl;
-			}
+		}
 
 		if (rk != nb_classes - 1) {
 			cout << "rk != nb_classes - 1" << endl;
 			exit(1);
-			}
+		}
 
 		int *b, *c;
 
@@ -749,35 +749,35 @@ void character_table_burnside::compute_omega(
 		for (i = 0; i < nb_classes; i++) {
 			D->mult_apply(D->offset(M,
 					(nb_classes - 1) * nb_classes + i), c, 0);
-			}
+		}
 
 		if (f_vv) {
 			cout << "after rescaling:" << endl;
 			D->print_matrix(M, nb_classes, nb_classes);
-			}
+		}
 		for (i = 0; i < nb_classes; i++) {
 			D->copy(D->offset(M, (nb_classes - 1) * nb_classes + i),
 					D->offset(Omega, i * nb_classes + h), 0);
-			}
+		}
 		FREE_int(b);
 		FREE_int(c);
 
 
 
 
-		}
+	}
 
 
 	if (f_vv) {
 		cout << "Omega:" << endl;
 		D->print_matrix(Omega, nb_classes, nb_classes);
-		}
+	}
 
 	FREE_int(M);
 	FREE_int(base_cols);
 	if (f_v) {
 		cout << "character_table_burnside::compute_omega done" << endl;
-		}
+	}
 }
 
 int character_table_burnside::compute_r0(
@@ -789,7 +789,7 @@ int character_table_burnside::compute_r0(
 
 	if (f_v) {
 		cout << "character_table_burnside::compute_r0" << endl;
-		}
+	}
 	r0 = -1;
 
 	for (r = 0; r < nb_classes; r++) {
@@ -802,7 +802,7 @@ int character_table_burnside::compute_r0(
 
 		if (f_vv) {
 			cout << "N_" << r << ":" << endl;
-			}
+		}
 
 		integral_eigenvalues(N + r * nb_classes * nb_classes, nb_classes,
 			Lambda,
@@ -825,12 +825,12 @@ int character_table_burnside::compute_r0(
 					<< " distinct integer roots, they are: " << endl;
 			for (i = 0; i < nb_mu; i++) {
 				cout << Mu[i] << " with multiplicity " << Mu_mult[i] << endl;
-				}
 			}
+		}
 
 		if (nb_mu == nb_classes) {
 			r0 = r;
-			}
+		}
 
 
 		FREE_int(Lambda);
@@ -838,10 +838,10 @@ int character_table_burnside::compute_r0(
 		FREE_int(Mu_mult);
 
 
-		}
+	}
 	if (f_v) {
 		cout << "character_table_burnside::compute_r0 done" << endl;
-		}
+	}
 	return r0;
 }
 
@@ -857,7 +857,7 @@ void character_table_burnside::compute_multiplication_constants_center_of_group_
 
 	if (f_v) {
 		cout << "character_table_burnside::compute_multiplication_constants_center_of_group_ring" << endl;
-		}
+	}
 
 	N = NEW_int(nb_classes * nb_classes * nb_classes);
 	Int_vec_zero(N, nb_classes * nb_classes * nb_classes);
@@ -890,14 +890,14 @@ void character_table_burnside::compute_multiplication_constants_center_of_group_
 
 					if (idx == tf) {
 						N[r * nb_classes * nb_classes + s * nb_classes + t]++;
-						}
 					}
 				}
 			}
 		}
+	}
 	if (f_v) {
 		cout << "character_table_burnside::compute_multiplication_constants_center_of_group_ring done" << endl;
-		}
+	}
 }
 
 void character_table_burnside::compute_Distribution_table(
@@ -920,7 +920,7 @@ void character_table_burnside::compute_Distribution_table(
 
 	if (f_v) {
 		cout << "character_table_burnside::compute_Distribution_table" << endl;
-		}
+	}
 	Elt1 = NEW_int(A->elt_size_in_int);
 	Elt2 = NEW_int(A->elt_size_in_int);
 
@@ -931,13 +931,13 @@ void character_table_burnside::compute_Distribution_table(
 
 	for (t = 1; t <= t_max; t++) {
 		Nb[t] = NT.i_power_j(nb_gens, t);
-		}
+	}
 
 	if (f_v) {
 		cout << "Nb : ";
 		Int_vec_print(cout, Nb + 1, t_max);
 		cout << endl;
-		}
+	}
 
 	for (t = 1; t <= t_max; t++) {
 		cout << "t=" << t << " Nb[t]=" << Nb[t] << endl;
@@ -948,7 +948,7 @@ void character_table_burnside::compute_Distribution_table(
 				cout << "h=" << h << " Choice=";
 				Int_vec_print(cout, Choice, t);
 				cout << endl;
-				}
+			}
 
 			multiply_word(A, Gens, Choice, t, Elt1, Elt2, verbose_level);
 
@@ -965,16 +965,16 @@ void character_table_burnside::compute_Distribution_table(
 				A->Group_element->element_print(Elt1, cout);
 				cout << " has rank " << i << " and belongs to class " << j;
 				cout << endl;
-				}
+			}
 
 			Distribution[t * nb_classes + j]++;
-			}
+		}
 
 		if (f_v) {
 			cout << "after t=" << t << " Distribution:" << endl;
 			Int_matrix_print(Distribution, t + 1, nb_classes);
-			}
 		}
+	}
 
 	FREE_int(Choice);
 	FREE_int(Nb);
@@ -983,7 +983,7 @@ void character_table_burnside::compute_Distribution_table(
 
 	if (f_v) {
 		cout << "character_table_burnside::compute_Distribution_table done" << endl;
-		}
+	}
 }
 
 
@@ -998,7 +998,7 @@ void character_table_burnside::multiply_word(
 	for (i = 1; i < t; i++) {
 		A->Group_element->element_mult(Elt1, Gens[Choice[i]], Elt2, 0);
 		A->Group_element->element_move(Elt2, Elt1, 0);
-		}
+	}
 }
 
 void character_table_burnside::create_generators(
@@ -1012,12 +1012,12 @@ void character_table_burnside::create_generators(
 
 	if (f_v) {
 		cout << "character_table_burnside::create_generators" << endl;
-		}
+	}
 	nb_gens = n - 1;
 	Elt = NEW_pint(nb_gens);
 	for (i = 0; i < nb_gens; i++) {
 		Elt[i] = NEW_int(A->elt_size_in_int);
-		}
+	}
 	v = NEW_int(n);
 
 
@@ -1025,28 +1025,28 @@ void character_table_burnside::create_generators(
 		for (i = 0; i < nb_gens; i++) {
 			for (j = 0; j < n; j++) {
 				v[j] = j;
-				}
+			}
 			v[0] = i + 1;
 			v[i + 1] = 0;
 			A->Group_element->make_element(Elt[i], v, 0 /* verbose_level */);
-			}
 		}
+	}
 	else {
 		for (i = 0; i < nb_gens; i++) {
 			for (j = 0; j < n; j++) {
 				v[j] = j;
-				}
+			}
 			v[i] = i + 1;
 			v[i + 1] = i;
 			A->Group_element->make_element(Elt[i], v, 0 /* verbose_level */);
-			}
 		}
+	}
 	cout << "generators:" << endl;
 	for (i = 0; i < nb_gens; i++) {
 		cout << "generator " << i << ":" << endl;
 		A->Group_element->element_print(Elt[i], cout);
 		cout << endl;
-		}
+	}
 
 	FREE_int(v);
 
@@ -1071,28 +1071,28 @@ void character_table_burnside::integral_eigenvalues(
 
 	if (f_v) {
 		cout << "character_table_burnside::integral_eigenvalues" << endl;
-		}
+	}
 	characteristic_poly(M, n, charpoly, 0 /*verbose_level*/);
 	if (f_v) {
 		cout << "characteristic polynomial:" << charpoly << endl;
-		}
+	}
 
 	deg = charpoly.degree();
 	if (f_v) {
 		cout << "has degree " << deg << endl;
-		}
+	}
 
 	A = NEW_int(deg + 1);
 	B = NEW_int(deg + 1);
 
 	for (i = 0; i <= deg; i++) {
 		A[i] = charpoly.s_ii(i);
-		}
+	}
 	if (f_v) {
 		cout << "coeffs : ";
 		Int_vec_print(cout, A, deg + 1);
 		cout << endl;
-		}
+	}
 
 
 	Lambda = NEW_int(deg);
@@ -1106,23 +1106,23 @@ void character_table_burnside::integral_eigenvalues(
 		for (i = deg - 1; i >= 0; i--) {
 			a *= x;
 			a += A[i];
-			}
+		}
 		if (a == 0) {
 			if (f_v) {
 				cout << "Found integer root " << x << endl;
-				}
+			}
 			Lambda[nb_lambda++] = x;
 			if (nb_mu && Mu[nb_mu - 1] == x) {
 				if (f_v) {
 					cout << "The root is a multiple root" << endl;
-					}
-				Mu_mult[nb_mu - 1]++;
 				}
+				Mu_mult[nb_mu - 1]++;
+			}
 			else {
 				Mu[nb_mu] = x;
 				Mu_mult[nb_mu] = 1;
 				nb_mu++;
-				}
+			}
 
 			for (i = deg - 1; i >= 0; i--) {
 				B[i] = A[i + 1];
@@ -1130,26 +1130,26 @@ void character_table_burnside::integral_eigenvalues(
 				if (i == 0 && A[0]) {
 					cout << "division unsuccessful" << endl;
 					exit(1);
-					}
 				}
+			}
 			Int_vec_copy(B, A, deg);
 			deg--;
 			if (f_v) {
 				cout << "after dividing off, the polynomial is: ";
 				Int_vec_print(cout, A, deg + 1);
 				cout << endl;
-				}
+			}
 
 			x--; // try x again
-			}
 		}
+	}
 
 
 	if (f_v) {
 		cout << "after dividing off integer roots, the polynomial is: ";
 		Int_vec_print(cout, A, deg + 1);
 		cout << endl;
-		}
+	}
 
 	if (f_v) {
 		cout << "We found " << nb_lambda << " integer roots, they are: " << endl;
@@ -1158,8 +1158,8 @@ void character_table_burnside::integral_eigenvalues(
 		cout << "We found " << nb_mu << " distinct integer roots, they are: " << endl;
 		for (i = 0; i < nb_mu; i++) {
 			cout << Mu[i] << " with multiplicity " << Mu_mult[i] << endl;
-			}
 		}
+	}
 
 	FREE_int(A);
 	FREE_int(B);
@@ -1177,19 +1177,19 @@ void character_table_burnside::characteristic_poly(
 
 	if (f_v) {
 		cout << "character_table_burnside::characteristic_poly" << endl;
-		}
+	}
 	M.m_mn(size, size);
 	k = 0;
 	for (i = 0; i < size; i++) {
 		for (j = 0; j < size; j++) {
 			a = N[k++];
 			M.m_iji(i, j, a);
-			}
 		}
+	}
 	if (f_vv) {
 		cout << "M=" << endl;
 		cout << M << endl;
-		}
+	}
 
 
 	M.elements_to_unipoly();
@@ -1225,7 +1225,7 @@ void character_table_burnside::characteristic_poly(
 
 	if (f_v) {
 		cout << "characteristic polynomial:" << charpoly << endl;
-		}
+	}
 	//deg = charpoly.degree();
 	//cout << "has degree " << deg << endl;
 
@@ -1234,17 +1234,17 @@ void character_table_burnside::characteristic_poly(
 		b = charpoly.s_ii(i);
 		if (b > q2) {
 			b -= q;
-			}
+		}
 		//c = Fq.mult(b, lv);
 		charpoly.m_ii(i, b);
-		}
+	}
 
 	cout << "characteristic polynomial:" << charpoly << endl;
 #endif
 
 	if (f_v) {
 		cout << "character_table_burnside::characteristic_poly done" << endl;
-		}
+	}
 }
 
 
@@ -1270,51 +1270,51 @@ int character_table_burnside::double_Gauss(
 
 	if (f_v) {
 		cout << "character_table_burnside::double_Gauss" << endl;
-		}
+	}
 	i = 0;
 	for (j = 0; j < n; j++) {
 		if (f_vv) {
 			cout << "j=" << j << endl;
 			double_matrix_print(A, m, n);
-			}
+		}
 		// search for pivot element:
 		idx = -1;
 		for (k = i; k < m; k++) {
 			if (idx == -1) {
 				p = A[k * n + j];
 				idx = k;
-				}
+			}
 			else {
 				if (double_abs(A[k * n + j]) > double_abs(p)) {
 					p = A[k * n + j];
 					idx = k;
-					}
 				}
-			} // next k
+			}
+		} // next k
 		if (f_v) {
 			cout << "column " << i << " pivot is " << p << " in row " << idx << endl;
-			}
+		}
 
 		if (idx == -1 || double_abs(p) < 0.00001) { // no pivot found
 			if (f_v) {
 				cout << "no pivot found" << endl;
-				}
-			continue; // increase j, leave i constant
 			}
+			continue; // increase j, leave i constant
+		}
 		else {
 			k = idx;
 			// pivot element found:
 			if (k != i) {
 				for (jj = j; jj < n; jj++) {
 					double_swap(A[i * n + jj], A[k * n + jj]);
-					}
 				}
 			}
+		}
 
 		if (f_vv) {
 			cout << "row " << i << " pivot in row " << k << " colum " << j << endl;
 			double_matrix_print(A, m, n);
-			}
+		}
 
 		base_cols[i] = j;
 		//if (false) {
@@ -1324,41 +1324,41 @@ int character_table_burnside::double_Gauss(
 		pivot = A[i * n + j];
 		if (f_vv) {
 			cout << "pivot=" << pivot << endl;
-			}
+		}
 		//pivot_inv = inv_table[pivot];
 		pivot_inv = 1. / pivot;
 		if (f_vv) {
 			cout << "pivot=" << pivot << " pivot_inv=" << pivot_inv << endl;
-			}
+		}
 		// make pivot to 1:
 		for (jj = j; jj < n; jj++) {
 			A[i * n + jj] *= pivot_inv;
-			}
+		}
 		if (f_vv) {
 			cout << "pivot=" << pivot << " pivot_inv=" << pivot_inv
 				<< " made to one: " << A[i * n + j] << endl;
 			double_matrix_print(A, m, n);
-			}
+		}
 
 
 		// do the gaussian elimination:
 
 		if (f_vv) {
 			cout << "doing elimination in column " << j << " from row " << i + 1 << " to row " << m - 1 << ":" << endl;
-			}
+		}
 		for (k = i + 1; k < m; k++) {
 			if (f_vv) {
 				cout << "k=" << k << endl;
-				}
+			}
 			z = A[k * n + j];
 			if (double_abs(z) < 0.0000000001) {
 				continue;
-				}
+			}
 			f = z;
 			//A[k * n + j] = 0;
 			if (f_vv) {
 				cout << "eliminating row " << k << endl;
-				}
+			}
 			for (jj = j; jj < n; jj++) {
 				a = A[i * n + jj];
 				b = A[k * n + jj];
@@ -1367,20 +1367,20 @@ int character_table_burnside::double_Gauss(
 				//      b - z * pivot_inv * a  if f_special
 				c = b - f * a;
 				A[k * n + jj] = c;
-				}
+			}
 			if (f_vv) {
 				double_matrix_print(A, m, n);
-				}
 			}
+		}
 		i++;
-		} // next j
+	} // next j
 	rank = i;
 
 
 	for (i = rank - 1; i >= 0; i--) {
 		if (f_v) {
 			cout << "."; cout.flush();
-			}
+		}
 		j = base_cols[i];
 		a = A[i * n + j];
 
@@ -1389,7 +1389,7 @@ int character_table_burnside::double_Gauss(
 			z = A[k * n + j];
 			if (z == 0) {
 				continue;
-				}
+			}
 			//A[k * n + j] = 0;
 			for (jj = j; jj < n; jj++) {
 				a = A[i * n + jj];
@@ -1397,9 +1397,9 @@ int character_table_burnside::double_Gauss(
 				c = - z * a;
 				c += b;
 				A[k * n + jj] = c;
-				}
-			} // next k
-		} // next i
+			}
+		} // next k
+	} // next i
 
 	return rank;
 }
@@ -1412,9 +1412,9 @@ void character_table_burnside::double_matrix_print(
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {
 			cout << setw(10) << A[i * n + j] << " ";
-			}
-		cout << endl;
 		}
+		cout << endl;
+	}
 }
 
 double character_table_burnside::double_abs(
@@ -1422,10 +1422,10 @@ double character_table_burnside::double_abs(
 {
 	if (x < 0) {
 		return - x;
-		}
+	}
 	else {
 		return x;
-		}
+	}
 }
 
 void character_table_burnside::kernel_columns(
@@ -1439,9 +1439,9 @@ void character_table_burnside::kernel_columns(
 		if (j < nb_base_cols && i == base_cols[j]) {
 			j++;
 			continue;
-			}
-		kernel_cols[k++] = i;
 		}
+		kernel_cols[k++] = i;
+	}
 }
 
 void character_table_burnside::matrix_get_kernel(

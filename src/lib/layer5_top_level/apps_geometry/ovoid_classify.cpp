@@ -156,13 +156,13 @@ void ovoid_classify::init(
 	if (f_vv) {
 		cout << "The finite field is:" << endl;
 		O->F->Io->print();
-		}
+	}
 
 	if (f_v) {
 		cout << "nb_points=" << O->Hyperbolic_pair->nb_points << endl;
 		cout << "nb_lines=" << O->Hyperbolic_pair->nb_lines << endl;
 		cout << "alpha=" << O->Hyperbolic_pair->alpha << endl;
-		}
+	}
 
 	Pts = NEW_int(N * Descr->d);
 	Candidates = NEW_int(N * Descr->d);
@@ -175,22 +175,22 @@ void ovoid_classify::init(
 
 	if (f_max_depth) {
 		depth = max_depth;
-		}
+	}
 	else {
 		if (epsilon == 1) {
 			depth = NT.i_power_j(q, m - 1) + 1;
-			}
+		}
 		else if (epsilon == -1) {
 			depth = NT.i_power_j(q, m + 1) + 1;
-			}
+		}
 		else if (epsilon == 0) {
 			depth = NT.i_power_j(q, m) + 1;
-			}
+		}
 		else {
 			cout << "epsilon must be 0, 1, or -1" << endl;
 			exit(1);
-			}
 		}
+	}
 
 	//Control->f_depth = true;
 	//Control->depth = depth;
@@ -198,7 +198,7 @@ void ovoid_classify::init(
 
 	if (f_v) {
 		cout << "depth = " << depth << endl;
-		}
+	}
 #endif
 	
 	Poset = NEW_OBJECT(layer3_group_actions::combinatorics_with_groups::poset_with_group_action);
@@ -229,7 +229,7 @@ void ovoid_classify::init(
 	if (Descr->epsilon == 1 && Descr->d == 6) {
 		if (f_v) {
 			cout << "allocating Klein correspondence" << endl;
-			}
+		}
 		K = NEW_OBJECT(geometry::projective_geometry::klein_correspondence);
 
 		if (f_v) {
@@ -327,30 +327,30 @@ void ovoid_classify::early_test_func(
 						<< candidates[i] << ": ";
 				Int_vec_print(cout, u, Descr->d);
 				cout << endl;
-				}
 			}
 		}
+	}
 	for (i = 0; i < len; i++) {
 		O->Hyperbolic_pair->unrank_point(
 				Pts + i * Descr->d, 1, S[i], 0/*verbose_level - 4*/);
-		}
+	}
 	for (i = 0; i < nb_candidates; i++) {
 		O->Hyperbolic_pair->unrank_point(
 				Candidates + i * Descr->d, 1, candidates[i],
 				0/*verbose_level - 4*/);
-		}
+	}
 
 	if (len == 0) {
 		Lint_vec_copy(candidates, good_candidates, nb_candidates);
 		nb_good_candidates = nb_candidates;
-		}
+	}
 	else {
 		nb_good_candidates = 0;
 
 		if (f_vv) {
 			cout << "ovoid_classify::early_test_func "
 					"before testing" << endl;
-			}
+		}
 		for (j = 0; j < nb_candidates; j++) {
 
 
@@ -358,7 +358,7 @@ void ovoid_classify::early_test_func(
 				cout << "ovoid_generator::early_test_func "
 						"testing " << j << " / "
 						<< nb_candidates << endl;
-				}
+			}
 
 			v1 = Pts + (len - 1) * Descr->d;
 			v2 = Candidates + j * Descr->d;
@@ -370,9 +370,9 @@ void ovoid_classify::early_test_func(
 
 			if (fxy) {
 				good_candidates[nb_good_candidates++] = candidates[j];
-				}
-			} // next j
-		} // else
+			}
+		} // next j
+	} // else
 }
 
 void ovoid_classify::print(

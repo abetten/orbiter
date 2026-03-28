@@ -487,7 +487,7 @@ void combinatorial_object_activity::perform_activity_combo(
 					"before Combo->do_canonical_form_and_write_files" << endl;
 		}
 		Combo->do_canonical_form_and_write_files(
-				Descr->Canonical_form_PG_Descr,
+				Descr->Canonical_form_Descr,
 				false /* f_projective_space */, NULL,
 				verbose_level);
 		if (f_v) {

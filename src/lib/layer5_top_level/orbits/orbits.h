@@ -175,14 +175,14 @@ public:
 
 
 
-	// undocumented:
+	// ToDo: undocumented:
 	int f_classify_semifields;
 	std::string classify_semifields_PA;
 	std::string classify_semifields_control;
 	semifields::semifield_classify_description
 		*Classify_semifields_description;
 
-	// undocumented:
+	// ToDo: undocumented:
 	int f_on_boolean_functions;
 	std::string on_boolean_functions_PA;
 

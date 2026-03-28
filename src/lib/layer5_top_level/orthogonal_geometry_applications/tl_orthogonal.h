@@ -16,13 +16,6 @@ namespace orthogonal_geometry_applications {
 
 
 
-
-
-
-
-
-
-
 // #############################################################################
 // blt_set_classify_description.cpp
 // #############################################################################
@@ -461,6 +454,7 @@ public:
 	std::string label_txt;
 	int f_label_tex;
 	std::string label_tex;
+
 	int f_without_group;
 
 	int f_create_extension_fields; // n == 5, BLT-sets

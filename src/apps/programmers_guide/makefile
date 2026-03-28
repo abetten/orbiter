@@ -33,4 +33,5 @@ install:
 
 clean:
 	- rm *.o *.a *.out *~
+	- rm GF_2.tex
 

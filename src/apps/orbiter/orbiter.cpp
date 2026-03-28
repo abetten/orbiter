@@ -64,7 +64,7 @@ std::string do_orbiter_session(
 
 	if (f_v) {
 		cout << "do_orbiter_session "
-				"before Top_level_session.execute_command_line" << endl;
+				"before execute_command_line" << endl;
 	}
 	//Top_level_session.execute_command_line(
 	//		argc, argv, verbose_level);
@@ -73,7 +73,7 @@ std::string do_orbiter_session(
 			argc, argv, verbose_level);
 	if (f_v) {
 		cout << "do_orbiter_session "
-				"after Top_level_session.execute_command_line" << endl;
+				"after execute_command_line" << endl;
 	}
 
 
