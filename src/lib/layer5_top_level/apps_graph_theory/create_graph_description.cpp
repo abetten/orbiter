@@ -52,6 +52,9 @@ create_graph_description::create_graph_description()
 	f_cycle = false;
 	cycle_n = 0;
 
+	f_double_cover = false;
+	double_cover_N = 0;
+
 	f_inversion_graph = false;
 	//std::string inversion_graph_text;
 
@@ -227,6 +230,13 @@ int create_graph_description::read_arguments(
 			cycle_n = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-cycle " << cycle_n << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-double_cover") == 0) {
+			f_double_cover = true;
+			double_cover_N = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-double_cover " << double_cover_N << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-inversion_graph") == 0) {
@@ -483,6 +493,9 @@ void create_graph_description::print()
 	}
 	if (f_cycle) {
 		cout << "-cycle " << cycle_n << endl;
+	}
+	if (f_double_cover) {
+		cout << "-double_cover " << double_cover_N << endl;
 	}
 	if (f_inversion_graph) {
 		cout << "-inversion_graph " << inversion_graph_text << endl;

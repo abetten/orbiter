@@ -662,6 +662,63 @@ void graph_theory_domain::make_cycle_graph(
 
 }
 
+void graph_theory_domain::make_double_cover(
+		int *Adj_in, int n,
+		int *&Adj_out, int &N,
+		int verbose_level)
+// Builds the double cover Gamma' of a graph Gamma = (V,E) with |V| = n.
+// Gamma' has 2n+1 vertices: two copies of V (indices 0..n-1 and n..2n-1)
+// plus one extra vertex v = 2n.
+// Each vertex is duplicated together with all of its adjacencies: the two
+// copies carry the SAME internal edges as Gamma, and in addition every edge
+// {a,b} is placed between the copies as well. Equivalently the adjacency of
+// the two copies is the 2x2 block [[A,A],[A,A]]. Under this rule the two
+// images u0,u1 of a vertex u have identical open neighbourhoods, i.e. they
+// are twins. The extra vertex v is made adjacent to copy 0 only; this is what
+// breaks all of those twins, so that Gamma' is twin-free.
+{
+	int f_v = (verbose_level >= 1);
+	int i, j;
+
+	if (f_v) {
+		cout << "graph_theory_domain::make_double_cover "
+				"n=" << n << endl;
+	}
+
+	N = 2 * n + 1;
+
+	Adj_out = NEW_int(N * N);
+	Int_vec_zero(Adj_out, N * N);
+
+	// duplicate each edge {i,j} of Gamma into all four n x n blocks:
+	// within copy 0, within copy 1, and both crossing directions.
+	for (i = 0; i < n; i++) {
+		for (j = 0; j < n; j++) {
+			if (Adj_in[i * n + j]) {
+				// within copy 0
+				Adj_out[i * N + j] = 1;
+				// within copy 1
+				Adj_out[(n + i) * N + (n + j)] = 1;
+				// crossing 0 -> 1
+				Adj_out[i * N + (n + j)] = 1;
+				// crossing 1 -> 0
+				Adj_out[(n + i) * N + j] = 1;
+			}
+		}
+	}
+
+	// extra vertex v = 2n adjacent to copy 0 only (breaks the twins)
+	for (i = 0; i < n; i++) {
+		Adj_out[(2 * n) * N + i] = 1;
+		Adj_out[i * N + (2 * n)] = 1;
+	}
+
+	if (f_v) {
+		cout << "graph_theory_domain::make_double_cover done, "
+				"N=" << N << endl;
+	}
+}
+
 void graph_theory_domain::make_inversion_graph(
 		int *&Adj, int &N,
 		int *perm, int n, int verbose_level)

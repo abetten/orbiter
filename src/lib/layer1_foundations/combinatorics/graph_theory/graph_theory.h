@@ -975,6 +975,10 @@ public:
 	void make_cycle_graph(
 			int *&Adj, int &N,
 			int n, int verbose_level);
+	void make_double_cover(
+			int *Adj_in, int n,
+			int *&Adj_out, int &N,
+			int verbose_level);
 	void make_inversion_graph(
 			int *&Adj, int &N,
 			int *perm, int n, int verbose_level);
