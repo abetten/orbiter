@@ -4,7 +4,7 @@
 
 
 
-ORBITER_PATH=~/orbiter
+ORBITER_PATH=../..
 
 #ORBITER_PATH=/s/hipft-logger/b/nobackup/abetten/orbiter
 #ORBITER_PATH=/scratch/betten/COMPILE/orbiter
@@ -15179,6 +15179,12 @@ quartic_curve_13_0_report:
 			-end
 	#$(PDFLATEX) quartic_curve_catalogue_q13_iso0_report.tex
 	#$(OPEN) quartic_curve_catalogue_q13_iso0_report.pdf
+
+quartic_curve_13_0_normal_form_bitmap: 
+	$(ORBITER) -v 1 \
+		-define F -finite_field -q 13 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define C -quartic_curve -space P -by_normal_form '3,2,10,4,2,3' -bitmap -end
 
 # 170, 111, 140, 2
 
