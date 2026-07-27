@@ -65,6 +65,9 @@ void easy_BMP_interface::draw_bitmap(
 	orbiter_kernel_system::file_io Fio;
 
 	string fname_in = "bitmatrix.csv";
+	if (!C->input_csv_file_name.empty()) {
+		fname_in = C->input_csv_file_name;
+	}
 
 
 	if (C->f_input_csv_file) {
