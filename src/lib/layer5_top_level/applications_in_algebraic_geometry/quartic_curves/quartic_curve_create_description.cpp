@@ -74,6 +74,8 @@ quartic_curve_create_description::quartic_curve_create_description()
 	//std::string override_group_gens;
 
 
+	f_bitmap = false;
+
 	//std::vector<std::string> transform_coeffs;
 	//std::vector<int> f_inverse_transform;
 
@@ -242,6 +244,12 @@ int quartic_curve_create_description::read_arguments(
 					<< " " << f_inverse_transform[transform_coeffs.size() - 1] << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-bitmap") == 0) {
+			f_bitmap = true;
+			if (f_v) {
+				cout << "-bitmap" << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
 				cout << "-end" << endl;
@@ -330,6 +338,10 @@ void quartic_curve_create_description::print()
 		else {
 			cout << "-transform " << transform_coeffs[i] << endl;
 		}
+	}
+
+	if (f_bitmap) {
+		cout << "-bitmap" << endl;
 	}
 
 }

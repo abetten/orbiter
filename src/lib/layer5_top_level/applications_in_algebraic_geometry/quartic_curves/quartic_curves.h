@@ -89,7 +89,7 @@ public:
 	std::vector<std::string> transform_coeffs;
 	std::vector<int> f_inverse_transform;
 
-
+	int f_bitmap;
 
 	quartic_curve_create_description();
 	~quartic_curve_create_description();
@@ -217,6 +217,8 @@ public:
 	void export_something(
 			std::string &what, int verbose_level);
 	void do_report(
+			int verbose_level);
+	void do_bitmap(
 			int verbose_level);
 	void report(
 			std::ostream &ost, int verbose_level);

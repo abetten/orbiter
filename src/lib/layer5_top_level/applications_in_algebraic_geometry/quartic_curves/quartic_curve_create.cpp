@@ -143,6 +143,10 @@ void quartic_curve_create::create_quartic_curve(
 	F->Projective_space_basic->PG_element_normalize_from_front(
 			QO->Variety_object->eqn, 1, 15);
 
+	if (Quartic_curve_descr->f_bitmap) {
+		do_bitmap(verbose_level);
+	}
+
 	if (f_v) {
 		cout << "quartic_curve_create::create_quartic_curve done" << endl;
 	}
@@ -2019,6 +2023,29 @@ void quartic_curve_create::do_report(
 		cout << "quartic_curve_create::do_report done" << endl;
 	}
 
+}
+
+void quartic_curve_create::do_bitmap(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "quartic_curve_create::do_bitmap" << endl;
+	}
+
+	string fname_base = "quartic_curve_" + label_txt + "_incma";
+
+	if (QO && QO->QP && QO->QP->Kovalevski) {
+		QCDA->Dom->do_bitmap(fname_base, QO->QP->Kovalevski, verbose_level);
+	}
+	else {
+		cout << "quartic_curve_create::do_bitmap no Kovalevski object found" << endl;
+	}
+
+	if (f_v) {
+		cout << "quartic_curve_create::do_bitmap done" << endl;
+	}
 }
 
 
