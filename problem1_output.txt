@@ -1,0 +1,2102 @@
+src/apps/orbiter/orbiter.out -v 2 \
+  -define Gamma0 -graph -complete 1 -end \
+  -with Gamma0 -do -graph_theoretic_activity -properties -automorphism_group -eigenvalues -end \
+  -define Gamma1 -graph -double_cover Gamma0 -end \
+  -with Gamma1 -do -graph_theoretic_activity -properties -automorphism_group -eigenvalues -end \
+  -define Gamma2 -graph -double_cover Gamma1 -end \
+  -with Gamma2 -do -graph_theoretic_activity -properties -automorphism_group -eigenvalues -end \
+  -define Gamma3 -graph -double_cover Gamma2 -end \
+  -with Gamma3 -do -graph_theoretic_activity -properties -automorphism_group -eigenvalues -end \
+  -define Gamma4 -graph -double_cover Gamma3 -end \
+  -with Gamma4 -do -graph_theoretic_activity -properties -automorphism_group -eigenvalues -end \
+  -define Gamma5 -graph -double_cover Gamma4 -end \
+  -with Gamma5 -do -graph_theoretic_activity -properties -automorphism_group -eigenvalues -end \
+  -define Gamma6 -graph -double_cover Gamma5 -end \
+  -with Gamma6 -do -graph_theoretic_activity -properties -automorphism_group -eigenvalues -end \
+  -define Gamma7 -graph -double_cover Gamma6 -end \
+  -with Gamma7 -do -graph_theoretic_activity -properties -automorphism_group -eigenvalues -end
+Welcome to Orbiter! Your build number is 3352.
+do_orbiter_session
+orbiter_top_level_session::orbiter_top_level_session before new orbiter_session
+orbiter_session::orbiter_session
+orbiter_session::orbiter_session done
+orbiter_top_level_session::orbiter_top_level_session after new orbiter_session
+do_orbiter_session before execute_command_line
+orbiter_top_level_session::execute_command_line
+A user's guide is available here: 
+https://www.math.colostate.edu/~betten/orbiter/users_guide.pdf
+The sources are available here: 
+https://github.com/abetten/orbiter
+An example makefile with many commands from the user's guide is here: 
+https://github.com/abetten/orbiter/tree/master/examples/users_guide/makefile
+SYSTEMUNIX is defined
+sizeof(int)=4
+sizeof(long int)=8
+session_verbose_level = 2
+orbiter_top_level_session::execute_command_line before handle_everything
+orbiter_top_level_session::handle_everything memory_debug before parse_and_execute
+orbiter_top_level_session::parse parsing the orbiter dash code
+orbiter_top_level_session::parse cnt = 0, i = 3
+orbiter_top_level_session::parse i=3, next argument is -define
+orbiter_top_level_session::parse i = 3
+orbiter_top_level_session::parse before OC->parse
+orbiter_command::parse
+interface_symbol_table::init
+interface_symbol_table::done
+orbiter_command::parse recognizing keyword from Interface_symbol_table
+interface_symbol_table::read_arguments
+interface_symbol_table::read_arguments the next argument is -define
+interface_symbol_table::read_arguments before Symbol_definition->read_definition
+symbol_definition::read_definition i=3 argc=115
+symbol_definition::read_definition define_label=Gamma0
+-define Gamma0
+symbol_definition::read_definition reading -graph
+create_graph_description::read_arguments
+-complete 1
+graph_modification_description::check_and_parse_argument
+next argument is -end
+graph_modification_description::read_arguments done
+-end
+create_graph_description::read_arguments done
+-graph
+i = 9
+argc = 115
+next argument is -with
+-graph 
+-complete 1
+symbol_definition::read_definition done
+interface_symbol_table::read_arguments after Symbol_definition->read_definition
+interface_symbol_table::read_arguments done
+orbiter_command::parse after Interface_symbol_table.read_arguments, i=9
+orbiter_top_level_session::parse after OC->parse
+orbiter_top_level_session::parse command 0 starting at token 9 is:
+-define Gamma0 
+-graph -complete 1
+orbiter_top_level_session::parse cnt = 1, i = 9
+orbiter_top_level_session::parse i=9, next argument is -with
+orbiter_top_level_session::parse i = 9
+orbiter_top_level_session::parse before OC->parse
+orbiter_command::parse
+interface_symbol_table::init
+interface_symbol_table::done
+orbiter_command::parse recognizing keyword from Interface_symbol_table
+interface_symbol_table::read_arguments
+interface_symbol_table::read_arguments the next argument is -with
+interface_symbol_table::read_with
+activity_description::read_arguments
+reading -graph_theoretic_activity
+graph_theoretic_activity_description::read_arguments
+-properties 
+-automorphism_group 
+-eigenvalues 
+-end
+graph_theoretic_activity_description::read_arguments done
+-graph_theoretic_activity
+-automorphism_group 
+-properties 
+-eigenvalues 
+i = 17
+argc = 115
+next argument is -define
+activity_description::read_arguments done
+interface_symbol_table::read_with done
+-with finished, next command is -define at i=17
+interface_symbol_table::read_arguments done
+orbiter_command::parse after Interface_symbol_table.read_arguments, i=17
+orbiter_top_level_session::parse after OC->parse
+orbiter_top_level_session::parse command 1 starting at token 17 is:
+-with Gamma0
+-do 
+-graph_theoretic_activity -automorphism_group 
+-properties 
+-eigenvalues 
+orbiter_top_level_session::parse cnt = 2, i = 17
+orbiter_top_level_session::parse i=17, next argument is -define
+orbiter_top_level_session::parse i = 17
+orbiter_top_level_session::parse before OC->parse
+orbiter_command::parse
+interface_symbol_table::init
+interface_symbol_table::done
+orbiter_command::parse recognizing keyword from Interface_symbol_table
+interface_symbol_table::read_arguments
+interface_symbol_table::read_arguments the next argument is -define
+interface_symbol_table::read_arguments before Symbol_definition->read_definition
+symbol_definition::read_definition i=17 argc=115
+symbol_definition::read_definition define_label=Gamma1
+-define Gamma1
+symbol_definition::read_definition reading -graph
+create_graph_description::read_arguments
+-double_cover Gamma0
+graph_modification_description::check_and_parse_argument
+next argument is -end
+graph_modification_description::read_arguments done
+-end
+create_graph_description::read_arguments done
+-graph
+i = 23
+argc = 115
+next argument is -with
+-graph 
+-double_cover Gamma0
+symbol_definition::read_definition done
+interface_symbol_table::read_arguments after Symbol_definition->read_definition
+interface_symbol_table::read_arguments done
+orbiter_command::parse after Interface_symbol_table.read_arguments, i=23
+orbiter_top_level_session::parse after OC->parse
+orbiter_top_level_session::parse command 2 starting at token 23 is:
+-define Gamma1 
+-graph -double_cover Gamma0
+orbiter_top_level_session::parse cnt = 3, i = 23
+orbiter_top_level_session::parse i=23, next argument is -with
+orbiter_top_level_session::parse i = 23
+orbiter_top_level_session::parse before OC->parse
+orbiter_command::parse
+interface_symbol_table::init
+interface_symbol_table::done
+orbiter_command::parse recognizing keyword from Interface_symbol_table
+interface_symbol_table::read_arguments
+interface_symbol_table::read_arguments the next argument is -with
+interface_symbol_table::read_with
+activity_description::read_arguments
+reading -graph_theoretic_activity
+graph_theoretic_activity_description::read_arguments
+-properties 
+-automorphism_group 
+-eigenvalues 
+-end
+graph_theoretic_activity_description::read_arguments done
+-graph_theoretic_activity
+-automorphism_group 
+-properties 
+-eigenvalues 
+i = 31
+argc = 115
+next argument is -define
+activity_description::read_arguments done
+interface_symbol_table::read_with done
+-with finished, next command is -define at i=31
+interface_symbol_table::read_arguments done
+orbiter_command::parse after Interface_symbol_table.read_arguments, i=31
+orbiter_top_level_session::parse after OC->parse
+orbiter_top_level_session::parse command 3 starting at token 31 is:
+-with Gamma1
+-do 
+-graph_theoretic_activity -automorphism_group 
+-properties 
+-eigenvalues 
+orbiter_top_level_session::parse cnt = 4, i = 31
+orbiter_top_level_session::parse i=31, next argument is -define
+orbiter_top_level_session::parse i = 31
+orbiter_top_level_session::parse before OC->parse
+orbiter_command::parse
+interface_symbol_table::init
+interface_symbol_table::done
+orbiter_command::parse recognizing keyword from Interface_symbol_table
+interface_symbol_table::read_arguments
+interface_symbol_table::read_arguments the next argument is -define
+interface_symbol_table::read_arguments before Symbol_definition->read_definition
+symbol_definition::read_definition i=31 argc=115
+symbol_definition::read_definition define_label=Gamma2
+-define Gamma2
+symbol_definition::read_definition reading -graph
+create_graph_description::read_arguments
+-double_cover Gamma1
+graph_modification_description::check_and_parse_argument
+next argument is -end
+graph_modification_description::read_arguments done
+-end
+create_graph_description::read_arguments done
+-graph
+i = 37
+argc = 115
+next argument is -with
+-graph 
+-double_cover Gamma1
+symbol_definition::read_definition done
+interface_symbol_table::read_arguments after Symbol_definition->read_definition
+interface_symbol_table::read_arguments done
+orbiter_command::parse after Interface_symbol_table.read_arguments, i=37
+orbiter_top_level_session::parse after OC->parse
+orbiter_top_level_session::parse command 4 starting at token 37 is:
+-define Gamma2 
+-graph -double_cover Gamma1
+orbiter_top_level_session::parse cnt = 5, i = 37
+orbiter_top_level_session::parse i=37, next argument is -with
+orbiter_top_level_session::parse i = 37
+orbiter_top_level_session::parse before OC->parse
+orbiter_command::parse
+interface_symbol_table::init
+interface_symbol_table::done
+orbiter_command::parse recognizing keyword from Interface_symbol_table
+interface_symbol_table::read_arguments
+interface_symbol_table::read_arguments the next argument is -with
+interface_symbol_table::read_with
+activity_description::read_arguments
+reading -graph_theoretic_activity
+graph_theoretic_activity_description::read_arguments
+-properties 
+-automorphism_group 
+-eigenvalues 
+-end
+graph_theoretic_activity_description::read_arguments done
+-graph_theoretic_activity
+-automorphism_group 
+-properties 
+-eigenvalues 
+i = 45
+argc = 115
+next argument is -define
+activity_description::read_arguments done
+interface_symbol_table::read_with done
+-with finished, next command is -define at i=45
+interface_symbol_table::read_arguments done
+orbiter_command::parse after Interface_symbol_table.read_arguments, i=45
+orbiter_top_level_session::parse after OC->parse
+orbiter_top_level_session::parse command 5 starting at token 45 is:
+-with Gamma2
+-do 
+-graph_theoretic_activity -automorphism_group 
+-properties 
+-eigenvalues 
+orbiter_top_level_session::parse cnt = 6, i = 45
+orbiter_top_level_session::parse i=45, next argument is -define
+orbiter_top_level_session::parse i = 45
+orbiter_top_level_session::parse before OC->parse
+orbiter_command::parse
+interface_symbol_table::init
+interface_symbol_table::done
+orbiter_command::parse recognizing keyword from Interface_symbol_table
+interface_symbol_table::read_arguments
+interface_symbol_table::read_arguments the next argument is -define
+interface_symbol_table::read_arguments before Symbol_definition->read_definition
+symbol_definition::read_definition i=45 argc=115
+symbol_definition::read_definition define_label=Gamma3
+-define Gamma3
+symbol_definition::read_definition reading -graph
+create_graph_description::read_arguments
+-double_cover Gamma2
+graph_modification_description::check_and_parse_argument
+next argument is -end
+graph_modification_description::read_arguments done
+-end
+create_graph_description::read_arguments done
+-graph
+i = 51
+argc = 115
+next argument is -with
+-graph 
+-double_cover Gamma2
+symbol_definition::read_definition done
+interface_symbol_table::read_arguments after Symbol_definition->read_definition
+interface_symbol_table::read_arguments done
+orbiter_command::parse after Interface_symbol_table.read_arguments, i=51
+orbiter_top_level_session::parse after OC->parse
+orbiter_top_level_session::parse command 6 starting at token 51 is:
+-define Gamma3 
+-graph -double_cover Gamma2
+orbiter_top_level_session::parse cnt = 7, i = 51
+orbiter_top_level_session::parse i=51, next argument is -with
+orbiter_top_level_session::parse i = 51
+orbiter_top_level_session::parse before OC->parse
+orbiter_command::parse
+interface_symbol_table::init
+interface_symbol_table::done
+orbiter_command::parse recognizing keyword from Interface_symbol_table
+interface_symbol_table::read_arguments
+interface_symbol_table::read_arguments the next argument is -with
+interface_symbol_table::read_with
+activity_description::read_arguments
+reading -graph_theoretic_activity
+graph_theoretic_activity_description::read_arguments
+-properties 
+-automorphism_group 
+-eigenvalues 
+-end
+graph_theoretic_activity_description::read_arguments done
+-graph_theoretic_activity
+-automorphism_group 
+-properties 
+-eigenvalues 
+i = 59
+argc = 115
+next argument is -define
+activity_description::read_arguments done
+interface_symbol_table::read_with done
+-with finished, next command is -define at i=59
+interface_symbol_table::read_arguments done
+orbiter_command::parse after Interface_symbol_table.read_arguments, i=59
+orbiter_top_level_session::parse after OC->parse
+orbiter_top_level_session::parse command 7 starting at token 59 is:
+-with Gamma3
+-do 
+-graph_theoretic_activity -automorphism_group 
+-properties 
+-eigenvalues 
+orbiter_top_level_session::parse cnt = 8, i = 59
+orbiter_top_level_session::parse i=59, next argument is -define
+orbiter_top_level_session::parse i = 59
+orbiter_top_level_session::parse before OC->parse
+orbiter_command::parse
+interface_symbol_table::init
+interface_symbol_table::done
+orbiter_command::parse recognizing keyword from Interface_symbol_table
+interface_symbol_table::read_arguments
+interface_symbol_table::read_arguments the next argument is -define
+interface_symbol_table::read_arguments before Symbol_definition->read_definition
+symbol_definition::read_definition i=59 argc=115
+symbol_definition::read_definition define_label=Gamma4
+-define Gamma4
+symbol_definition::read_definition reading -graph
+create_graph_description::read_arguments
+-double_cover Gamma3
+graph_modification_description::check_and_parse_argument
+next argument is -end
+graph_modification_description::read_arguments done
+-end
+create_graph_description::read_arguments done
+-graph
+i = 65
+argc = 115
+next argument is -with
+-graph 
+-double_cover Gamma3
+symbol_definition::read_definition done
+interface_symbol_table::read_arguments after Symbol_definition->read_definition
+interface_symbol_table::read_arguments done
+orbiter_command::parse after Interface_symbol_table.read_arguments, i=65
+orbiter_top_level_session::parse after OC->parse
+orbiter_top_level_session::parse command 8 starting at token 65 is:
+-define Gamma4 
+-graph -double_cover Gamma3
+orbiter_top_level_session::parse cnt = 9, i = 65
+orbiter_top_level_session::parse i=65, next argument is -with
+orbiter_top_level_session::parse i = 65
+orbiter_top_level_session::parse before OC->parse
+orbiter_command::parse
+interface_symbol_table::init
+interface_symbol_table::done
+orbiter_command::parse recognizing keyword from Interface_symbol_table
+interface_symbol_table::read_arguments
+interface_symbol_table::read_arguments the next argument is -with
+interface_symbol_table::read_with
+activity_description::read_arguments
+reading -graph_theoretic_activity
+graph_theoretic_activity_description::read_arguments
+-properties 
+-automorphism_group 
+-eigenvalues 
+-end
+graph_theoretic_activity_description::read_arguments done
+-graph_theoretic_activity
+-automorphism_group 
+-properties 
+-eigenvalues 
+i = 73
+argc = 115
+next argument is -define
+activity_description::read_arguments done
+interface_symbol_table::read_with done
+-with finished, next command is -define at i=73
+interface_symbol_table::read_arguments done
+orbiter_command::parse after Interface_symbol_table.read_arguments, i=73
+orbiter_top_level_session::parse after OC->parse
+orbiter_top_level_session::parse command 9 starting at token 73 is:
+-with Gamma4
+-do 
+-graph_theoretic_activity -automorphism_group 
+-properties 
+-eigenvalues 
+orbiter_top_level_session::parse cnt = 10, i = 73
+orbiter_top_level_session::parse i=73, next argument is -define
+orbiter_top_level_session::parse i = 73
+orbiter_top_level_session::parse before OC->parse
+orbiter_command::parse
+interface_symbol_table::init
+interface_symbol_table::done
+orbiter_command::parse recognizing keyword from Interface_symbol_table
+interface_symbol_table::read_arguments
+interface_symbol_table::read_arguments the next argument is -define
+interface_symbol_table::read_arguments before Symbol_definition->read_definition
+symbol_definition::read_definition i=73 argc=115
+symbol_definition::read_definition define_label=Gamma5
+-define Gamma5
+symbol_definition::read_definition reading -graph
+create_graph_description::read_arguments
+-double_cover Gamma4
+graph_modification_description::check_and_parse_argument
+next argument is -end
+graph_modification_description::read_arguments done
+-end
+create_graph_description::read_arguments done
+-graph
+i = 79
+argc = 115
+next argument is -with
+-graph 
+-double_cover Gamma4
+symbol_definition::read_definition done
+interface_symbol_table::read_arguments after Symbol_definition->read_definition
+interface_symbol_table::read_arguments done
+orbiter_command::parse after Interface_symbol_table.read_arguments, i=79
+orbiter_top_level_session::parse after OC->parse
+orbiter_top_level_session::parse command 10 starting at token 79 is:
+-define Gamma5 
+-graph -double_cover Gamma4
+orbiter_top_level_session::parse cnt = 11, i = 79
+orbiter_top_level_session::parse i=79, next argument is -with
+orbiter_top_level_session::parse i = 79
+orbiter_top_level_session::parse before OC->parse
+orbiter_command::parse
+interface_symbol_table::init
+interface_symbol_table::done
+orbiter_command::parse recognizing keyword from Interface_symbol_table
+interface_symbol_table::read_arguments
+interface_symbol_table::read_arguments the next argument is -with
+interface_symbol_table::read_with
+activity_description::read_arguments
+reading -graph_theoretic_activity
+graph_theoretic_activity_description::read_arguments
+-properties 
+-automorphism_group 
+-eigenvalues 
+-end
+graph_theoretic_activity_description::read_arguments done
+-graph_theoretic_activity
+-automorphism_group 
+-properties 
+-eigenvalues 
+i = 87
+argc = 115
+next argument is -define
+activity_description::read_arguments done
+interface_symbol_table::read_with done
+-with finished, next command is -define at i=87
+interface_symbol_table::read_arguments done
+orbiter_command::parse after Interface_symbol_table.read_arguments, i=87
+orbiter_top_level_session::parse after OC->parse
+orbiter_top_level_session::parse command 11 starting at token 87 is:
+-with Gamma5
+-do 
+-graph_theoretic_activity -automorphism_group 
+-properties 
+-eigenvalues 
+orbiter_top_level_session::parse cnt = 12, i = 87
+orbiter_top_level_session::parse i=87, next argument is -define
+orbiter_top_level_session::parse i = 87
+orbiter_top_level_session::parse before OC->parse
+orbiter_command::parse
+interface_symbol_table::init
+interface_symbol_table::done
+orbiter_command::parse recognizing keyword from Interface_symbol_table
+interface_symbol_table::read_arguments
+interface_symbol_table::read_arguments the next argument is -define
+interface_symbol_table::read_arguments before Symbol_definition->read_definition
+symbol_definition::read_definition i=87 argc=115
+symbol_definition::read_definition define_label=Gamma6
+-define Gamma6
+symbol_definition::read_definition reading -graph
+create_graph_description::read_arguments
+-double_cover Gamma5
+graph_modification_description::check_and_parse_argument
+next argument is -end
+graph_modification_description::read_arguments done
+-end
+create_graph_description::read_arguments done
+-graph
+i = 93
+argc = 115
+next argument is -with
+-graph 
+-double_cover Gamma5
+symbol_definition::read_definition done
+interface_symbol_table::read_arguments after Symbol_definition->read_definition
+interface_symbol_table::read_arguments done
+orbiter_command::parse after Interface_symbol_table.read_arguments, i=93
+orbiter_top_level_session::parse after OC->parse
+orbiter_top_level_session::parse command 12 starting at token 93 is:
+-define Gamma6 
+-graph -double_cover Gamma5
+orbiter_top_level_session::parse cnt = 13, i = 93
+orbiter_top_level_session::parse i=93, next argument is -with
+orbiter_top_level_session::parse i = 93
+orbiter_top_level_session::parse before OC->parse
+orbiter_command::parse
+interface_symbol_table::init
+interface_symbol_table::done
+orbiter_command::parse recognizing keyword from Interface_symbol_table
+interface_symbol_table::read_arguments
+interface_symbol_table::read_arguments the next argument is -with
+interface_symbol_table::read_with
+activity_description::read_arguments
+reading -graph_theoretic_activity
+graph_theoretic_activity_description::read_arguments
+-properties 
+-automorphism_group 
+-eigenvalues 
+-end
+graph_theoretic_activity_description::read_arguments done
+-graph_theoretic_activity
+-automorphism_group 
+-properties 
+-eigenvalues 
+i = 101
+argc = 115
+next argument is -define
+activity_description::read_arguments done
+interface_symbol_table::read_with done
+-with finished, next command is -define at i=101
+interface_symbol_table::read_arguments done
+orbiter_command::parse after Interface_symbol_table.read_arguments, i=101
+orbiter_top_level_session::parse after OC->parse
+orbiter_top_level_session::parse command 13 starting at token 101 is:
+-with Gamma6
+-do 
+-graph_theoretic_activity -automorphism_group 
+-properties 
+-eigenvalues 
+orbiter_top_level_session::parse cnt = 14, i = 101
+orbiter_top_level_session::parse i=101, next argument is -define
+orbiter_top_level_session::parse i = 101
+orbiter_top_level_session::parse before OC->parse
+orbiter_command::parse
+interface_symbol_table::init
+interface_symbol_table::done
+orbiter_command::parse recognizing keyword from Interface_symbol_table
+interface_symbol_table::read_arguments
+interface_symbol_table::read_arguments the next argument is -define
+interface_symbol_table::read_arguments before Symbol_definition->read_definition
+symbol_definition::read_definition i=101 argc=115
+symbol_definition::read_definition define_label=Gamma7
+-define Gamma7
+symbol_definition::read_definition reading -graph
+create_graph_description::read_arguments
+-double_cover Gamma6
+graph_modification_description::check_and_parse_argument
+next argument is -end
+graph_modification_description::read_arguments done
+-end
+create_graph_description::read_arguments done
+-graph
+i = 107
+argc = 115
+next argument is -with
+-graph 
+-double_cover Gamma6
+symbol_definition::read_definition done
+interface_symbol_table::read_arguments after Symbol_definition->read_definition
+interface_symbol_table::read_arguments done
+orbiter_command::parse after Interface_symbol_table.read_arguments, i=107
+orbiter_top_level_session::parse after OC->parse
+orbiter_top_level_session::parse command 14 starting at token 107 is:
+-define Gamma7 
+-graph -double_cover Gamma6
+orbiter_top_level_session::parse cnt = 15, i = 107
+orbiter_top_level_session::parse i=107, next argument is -with
+orbiter_top_level_session::parse i = 107
+orbiter_top_level_session::parse before OC->parse
+orbiter_command::parse
+interface_symbol_table::init
+interface_symbol_table::done
+orbiter_command::parse recognizing keyword from Interface_symbol_table
+interface_symbol_table::read_arguments
+interface_symbol_table::read_arguments the next argument is -with
+interface_symbol_table::read_with
+activity_description::read_arguments
+reading -graph_theoretic_activity
+graph_theoretic_activity_description::read_arguments
+-properties 
+-automorphism_group 
+-eigenvalues 
+-end
+graph_theoretic_activity_description::read_arguments done
+-graph_theoretic_activity
+-automorphism_group 
+-properties 
+-eigenvalues 
+i = 115
+argc = 115
+activity_description::read_arguments done
+interface_symbol_table::read_with done
+-with finished, next command is THE_END at i=115
+interface_symbol_table::read_arguments done
+orbiter_command::parse after Interface_symbol_table.read_arguments, i=115
+orbiter_top_level_session::parse after OC->parse
+orbiter_top_level_session::parse command 15 starting at token 115 is:
+-with Gamma7
+-do 
+-graph_theoretic_activity -automorphism_group 
+-properties 
+-eigenvalues 
+orbiter_top_level_session::parse parsing the orbiter dash code done
+orbiter_top_level_session::parse_and_execute, we have parsed the following orbiter dash code program:
+Command 0:
+-define Gamma0 
+-graph -complete 1
+Command 1:
+-with Gamma0
+-do 
+-graph_theoretic_activity -automorphism_group 
+-properties 
+-eigenvalues 
+Command 2:
+-define Gamma1 
+-graph -double_cover Gamma0
+Command 3:
+-with Gamma1
+-do 
+-graph_theoretic_activity -automorphism_group 
+-properties 
+-eigenvalues 
+Command 4:
+-define Gamma2 
+-graph -double_cover Gamma1
+Command 5:
+-with Gamma2
+-do 
+-graph_theoretic_activity -automorphism_group 
+-properties 
+-eigenvalues 
+Command 6:
+-define Gamma3 
+-graph -double_cover Gamma2
+Command 7:
+-with Gamma3
+-do 
+-graph_theoretic_activity -automorphism_group 
+-properties 
+-eigenvalues 
+Command 8:
+-define Gamma4 
+-graph -double_cover Gamma3
+Command 9:
+-with Gamma4
+-do 
+-graph_theoretic_activity -automorphism_group 
+-properties 
+-eigenvalues 
+Command 10:
+-define Gamma5 
+-graph -double_cover Gamma4
+Command 11:
+-with Gamma5
+-do 
+-graph_theoretic_activity -automorphism_group 
+-properties 
+-eigenvalues 
+Command 12:
+-define Gamma6 
+-graph -double_cover Gamma5
+Command 13:
+-with Gamma6
+-do 
+-graph_theoretic_activity -automorphism_group 
+-properties 
+-eigenvalues 
+Command 14:
+-define Gamma7 
+-graph -double_cover Gamma6
+Command 15:
+-with Gamma7
+-do 
+-graph_theoretic_activity -automorphism_group 
+-properties 
+-eigenvalues 
+################################################################################################
+Executing commands:
+################################################################################################
+Executing command 0:
+-define Gamma0 
+-graph -complete 1
+################################################################################################
+orbiter_command::execute
+orbiter_command::execute before Symbol_table->worker
+interface_symbol_table::worker
+interface_symbol_table::worker f_define
+symbol_definition::perform_definition
+symbol_definition::perform_definition before definition_of_graph
+symbol_definition::definition_of_graph
+symbol_definition::definition_of_graph before Gr->init
+create_graph::init
+create_graph::init before create_complete
+create_graph::create_complete
+create_graph::create_complete done
+create_graph::init after create_complete
+create_graph::init before CG->init_from_adjacency_no_colors
+colored_graph::init_from_adjacency_no_colors
+nb_points=1
+colored_graph::init_adjacency
+nb_points=1
+nb_colors=1
+colored_graph::init_from_bitvector
+nb_points=1
+nb_colors=1
+nb_colors_per_vertex=1
+colored_graph::init_from_bitvector colored_graph::label = complete_1
+colored_graph::init_from_bitvector colored_graph::label_tex = K_{1}
+colored_graph::init_from_bitvector
+colored_graph::init_adjacency
+colored_graph::init_from_adjacency_no_colors done
+create_graph::init after CG->init_from_adjacency_no_colors
+create_graph::init created colored graph with one color
+create_graph::init label = complete_1
+create_graph::init done
+symbol_definition::definition_of_graph after Gr->init
+Gr->N=1
+Gr->label=complete_1
+Gr->f_has_CG=1
+Gr->CG->nb_points = 1
+symbol_definition::definition_of_graph we created a graph on 1 points, called complete_1
+orbiter_symbol_table_entry::init_graph
+orbiter_symbol_table_entry::init_graph done
+symbol_definition::definition_of_graph before add_symbol_table_entry
+orbiter_top_level_session::add_symbol_table_entry label = Gamma0
+orbiter_symbol_table::add_symbol_table_entry
+orbiter_symbol_table::add_symbol_table_entry done
+orbiter_top_level_session::add_symbol_table_entry done
+symbol_definition::definition_of_graph done
+symbol_definition::perform_definition after definition_of_graph
+interface_symbol_table::worker done
+orbiter_command::execute after Symbol_table->worker
+orbiter_command::execute done
+################################################################################################
+Executing command 1:
+-with Gamma0
+-do 
+-graph_theoretic_activity -automorphism_group 
+-properties 
+-eigenvalues 
+################################################################################################
+orbiter_command::execute
+orbiter_command::execute before Symbol_table->worker
+interface_symbol_table::worker
+interface_symbol_table::worker f_activity
+interface_symbol_table::worker before Activity_description->worker
+activity_description::worker
+activity_description::worker verbose_level = 2
+activity_description::worker number of inputs = 1
+Gamma0
+activity_description::worker f_graph_theoretic_activity
+activity_description::do_graph_theoretic_activity activity for the following objects:Gamma0
+activity_description::do_graph_theoretic_activity graphs = complete_1
+graph_theoretic_activity::init
+graph_theoretic_activity::init, labels = complete_1
+graph_theoretic_activity::init done
+activity_description::do_graph_theoretic_activity before Activity.perform_activity
+graph_theoretic_activity::perform_activity
+graph_theoretic_activity::perform_activity f_automorphism_group
+graph_theoretic_activity::perform_activity before GTA.automorphism_group_bw
+graph_theory_apps::automorphism_group_bw
+graph_theory_apps::automorphism_group_bw before Nauty.create_automorphism_group_of_colored_graph_ignoring_colors
+nauty_interface_for_graphs::create_automorphism_group_of_colored_graph_ignoring_colors
+nauty_interface_for_graphs::create_automorphism_group_of_colored_graph_ignoring_colors before create_automorphism_group_of_graph_bitvec
+nauty_interface_for_graphs::create_automorphism_group_of_graph_bitvec
+nauty_interface_for_graphs::create_automorphism_group_and_canonical_labeling_of_graph before NO->nauty_output_allocate
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling creating partition
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling before nauty_interface_graph_bitvec
+nauty_interface::nauty_interface_graph_bitvec
+nauty_interface::nauty_interface_graph_bitvec calling nauty (densenauty)
+nauty_interface::nauty_interface_graph_bitvec after nauty (densenauty)
+nauty_interface::nauty_interface_graph_bitvec after nauty
+base_length=0
+transversal_length=(  )
+nauty_interface::nauty_interface_graph_bitvec done
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling: The group order is = 1 = (  )
+nb_backtrack1 = 1
+nb_backtrack2 = 0
+nb_backtrack3 = 0
+nb_backtrack4 = 1
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling: labeling:
+skipped
+
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling: Base:
+(  )
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling: generators:
+skipped
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling before A->Known_groups->init_permutation_group_from_nauty_output
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling after A->Known_groups->init_permutation_group_from_nauty_output
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling: created action ACTION Perm_1 : Perm\_1 degree = 1 of type perm_group_t : base = (base of length zero) : tl = (N/A) : go = 1 =  : label = function_pointers_permutation_group : sub = Perm_1
+
+nauty_interface_for_graphs::create_automorphism_group_of_graph_bitvec done
+nauty_interface_for_graphs::create_automorphism_group_of_colored_graph_ignoring_colors after create_automorphism_group_of_graph_bitvec
+nauty_interface_for_graphs::create_automorphism_group_of_colored_graph_ignoring_colors done
+graph_theory_apps::automorphism_group_bw after Nauty.create_automorphism_group_of_colored_graph_ignoring_colors
+graph_theory_apps::automorphism_group_bw before report_automorphism_group
+graph_theory_apps::report_automorphism_group
+action_global::get_orbits_on_points_as_characteristic_vector
+action_global::get_orbits_on_points_as_characteristic_vector before all_point_orbits
+action_global::get_orbits_on_points_as_characteristic_vector after all_point_orbits
+action_global::get_orbits_on_points_as_characteristic_vector done
+graph_theory_apps::automorphism_group after report
+written file complete_1_report.tex of size 8446
+graph_theory_apps::report_automorphism_group done
+graph_theory_apps::automorphism_group_bw after report_automorphism_group
+graph_theory_apps::automorphism_group_bw label = complete_1
+graph_theory_apps::automorphism_group_bw degree = 1
+graph_theory_apps::automorphism_group_bw before Aut->export_to_orbiter_as_bsgs
+action::export_to_orbiter_as_bsgs
+action::export_to_orbiter_as_bsgs before SG->export_to_orbiter_as_bsgs
+strong_generators::export_to_orbiter_as_bsgs
+strong_generators::export_to_orbiter_as_bsgs go = 1
+strong_generators::export_to_orbiter_as_bsgs number of generators = 0
+strong_generators::export_to_orbiter_as_bsgs degree = 1
+strong_generators::export_to_orbiter_as_bsgs writing csv file
+strong_generators::export_to_orbiter_as_bsgs writing csv file done
+Written file complete_1_group.makefile of size 185
+strong_generators::export_to_orbiter_as_bsgs
+action::export_to_orbiter_as_bsgs after SG->export_to_orbiter_as_bsgs
+action::export_to_orbiter_as_bsgs
+graph_theory_apps::automorphism_group_bw after Aut->export_to_orbiter_as_bsgs
+graph_theory_apps::automorphism_group_bw written file complete_1_group.makefile of size 185
+graph_theory_apps::automorphism_group_bw done
+graph_theoretic_activity::perform_activity after GTA.automorphism_group_bw
+feedback:1
+graph_theoretic_activity::perform_activity done
+activity_description::do_graph_theoretic_activity after Activity.perform_activity
+activity_description::do_graph_theoretic_activity done
+activity_description::worker no activity_output
+activity_description::worker done
+interface_symbol_table::worker after Activity_description->worker
+interface_symbol_table::worker nb_output = 32766
+interface_symbol_table::worker done
+orbiter_command::execute after Symbol_table->worker
+orbiter_command::execute done
+################################################################################################
+Executing command 2:
+-define Gamma1 
+-graph -double_cover Gamma0
+################################################################################################
+orbiter_command::execute
+orbiter_command::execute before Symbol_table->worker
+interface_symbol_table::worker
+interface_symbol_table::worker f_define
+symbol_definition::perform_definition
+symbol_definition::perform_definition before definition_of_graph
+symbol_definition::definition_of_graph
+symbol_definition::definition_of_graph before Gr->init
+create_graph::init
+create_graph::init f_double_cover
+create_graph::create_double_cover
+create_graph::create_double_cover done
+create_graph::init before CG->init_from_adjacency_no_colors
+colored_graph::init_from_adjacency_no_colors
+nb_points=3
+colored_graph::init_adjacency
+nb_points=3
+nb_colors=1
+colored_graph::init_from_bitvector
+nb_points=3
+nb_colors=1
+nb_colors_per_vertex=1
+colored_graph::init_from_bitvector colored_graph::label = double_cover_complete_1
+colored_graph::init_from_bitvector colored_graph::label_tex = {\rm double\_cover\_{complete_1}}
+colored_graph::init_from_bitvector
+colored_graph::init_adjacency
+colored_graph::init_from_adjacency_no_colors done
+create_graph::init after CG->init_from_adjacency_no_colors
+create_graph::init created colored graph with one color
+create_graph::init label = double_cover_complete_1
+create_graph::init done
+symbol_definition::definition_of_graph after Gr->init
+Gr->N=3
+Gr->label=double_cover_complete_1
+Gr->f_has_CG=1
+Gr->CG->nb_points = 3
+symbol_definition::definition_of_graph we created a graph on 3 points, called double_cover_complete_1
+orbiter_symbol_table_entry::init_graph
+orbiter_symbol_table_entry::init_graph done
+symbol_definition::definition_of_graph before add_symbol_table_entry
+orbiter_top_level_session::add_symbol_table_entry label = Gamma1
+orbiter_symbol_table::add_symbol_table_entry
+orbiter_symbol_table::add_symbol_table_entry done
+orbiter_top_level_session::add_symbol_table_entry done
+symbol_definition::definition_of_graph done
+symbol_definition::perform_definition after definition_of_graph
+interface_symbol_table::worker done
+orbiter_command::execute after Symbol_table->worker
+orbiter_command::execute done
+################################################################################################
+Executing command 3:
+-with Gamma1
+-do 
+-graph_theoretic_activity -automorphism_group 
+-properties 
+-eigenvalues 
+################################################################################################
+orbiter_command::execute
+orbiter_command::execute before Symbol_table->worker
+interface_symbol_table::worker
+interface_symbol_table::worker f_activity
+interface_symbol_table::worker before Activity_description->worker
+activity_description::worker
+activity_description::worker verbose_level = 2
+activity_description::worker number of inputs = 1
+Gamma1
+activity_description::worker f_graph_theoretic_activity
+activity_description::do_graph_theoretic_activity activity for the following objects:Gamma1
+activity_description::do_graph_theoretic_activity graphs = double_cover_complete_1
+graph_theoretic_activity::init
+graph_theoretic_activity::init, labels = double_cover_complete_1
+graph_theoretic_activity::init done
+activity_description::do_graph_theoretic_activity before Activity.perform_activity
+graph_theoretic_activity::perform_activity
+graph_theoretic_activity::perform_activity f_automorphism_group
+graph_theoretic_activity::perform_activity before GTA.automorphism_group_bw
+graph_theory_apps::automorphism_group_bw
+graph_theory_apps::automorphism_group_bw before Nauty.create_automorphism_group_of_colored_graph_ignoring_colors
+nauty_interface_for_graphs::create_automorphism_group_of_colored_graph_ignoring_colors
+nauty_interface_for_graphs::create_automorphism_group_of_colored_graph_ignoring_colors before create_automorphism_group_of_graph_bitvec
+nauty_interface_for_graphs::create_automorphism_group_of_graph_bitvec
+nauty_interface_for_graphs::create_automorphism_group_and_canonical_labeling_of_graph before NO->nauty_output_allocate
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling creating partition
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling before nauty_interface_graph_bitvec
+nauty_interface::nauty_interface_graph_bitvec
+nauty_interface::nauty_interface_graph_bitvec calling nauty (densenauty)
+nauty_interface::nauty_interface_graph_bitvec after nauty (densenauty)
+nauty_interface::nauty_interface_graph_bitvec after nauty
+base_length=1
+transversal_length=( 2 )
+nauty_interface::nauty_interface_graph_bitvec done
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling: The group order is = 2 = ( 2 )
+nb_backtrack1 = 2
+nb_backtrack2 = 1
+nb_backtrack3 = 1
+nb_backtrack4 = 1
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling: labeling:
+skipped
+
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling: Base:
+( 1 )
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling: generators:
+skipped
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling before A->Known_groups->init_permutation_group_from_nauty_output
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling after A->Known_groups->init_permutation_group_from_nauty_output
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling: created action ACTION Perm_3 : Perm\_3 degree = 3 of type perm_group_t : base = (1) : tl = (2) : go = 2 = 2 : label = function_pointers_permutation_group : sub = Perm_3
+
+nauty_interface_for_graphs::create_automorphism_group_of_graph_bitvec done
+nauty_interface_for_graphs::create_automorphism_group_of_colored_graph_ignoring_colors after create_automorphism_group_of_graph_bitvec
+nauty_interface_for_graphs::create_automorphism_group_of_colored_graph_ignoring_colors done
+graph_theory_apps::automorphism_group_bw after Nauty.create_automorphism_group_of_colored_graph_ignoring_colors
+graph_theory_apps::automorphism_group_bw before report_automorphism_group
+graph_theory_apps::report_automorphism_group
+action_global::get_orbits_on_points_as_characteristic_vector
+action_global::get_orbits_on_points_as_characteristic_vector before all_point_orbits
+action_global::get_orbits_on_points_as_characteristic_vector after all_point_orbits
+action_global::get_orbits_on_points_as_characteristic_vector done
+graph_theory_apps::automorphism_group after report
+written file double_cover_complete_1_report.tex of size 8501
+graph_theory_apps::report_automorphism_group done
+graph_theory_apps::automorphism_group_bw after report_automorphism_group
+graph_theory_apps::automorphism_group_bw label = double_cover_complete_1
+graph_theory_apps::automorphism_group_bw degree = 3
+graph_theory_apps::automorphism_group_bw before Aut->export_to_orbiter_as_bsgs
+action::export_to_orbiter_as_bsgs
+action::export_to_orbiter_as_bsgs before SG->export_to_orbiter_as_bsgs
+strong_generators::export_to_orbiter_as_bsgs
+strong_generators::export_to_orbiter_as_bsgs go = 2
+strong_generators::export_to_orbiter_as_bsgs number of generators = 1
+strong_generators::export_to_orbiter_as_bsgs degree = 3
+strong_generators::export_to_orbiter_as_bsgs computing generator 0 / 1
+strong_generators::export_to_orbiter_as_bsgs writing csv file
+strong_generators::export_to_orbiter_as_bsgs writing csv file done
+Written file double_cover_complete_1_group.makefile of size 253
+strong_generators::export_to_orbiter_as_bsgs
+action::export_to_orbiter_as_bsgs after SG->export_to_orbiter_as_bsgs
+action::export_to_orbiter_as_bsgs
+graph_theory_apps::automorphism_group_bw after Aut->export_to_orbiter_as_bsgs
+graph_theory_apps::automorphism_group_bw written file double_cover_complete_1_group.makefile of size 253
+graph_theory_apps::automorphism_group_bw done
+graph_theoretic_activity::perform_activity after GTA.automorphism_group_bw
+feedback:2
+graph_theoretic_activity::perform_activity done
+activity_description::do_graph_theoretic_activity after Activity.perform_activity
+activity_description::do_graph_theoretic_activity done
+activity_description::worker no activity_output
+activity_description::worker done
+interface_symbol_table::worker after Activity_description->worker
+interface_symbol_table::worker nb_output = 32766
+interface_symbol_table::worker done
+orbiter_command::execute after Symbol_table->worker
+orbiter_command::execute done
+################################################################################################
+Executing command 4:
+-define Gamma2 
+-graph -double_cover Gamma1
+################################################################################################
+orbiter_command::execute
+orbiter_command::execute before Symbol_table->worker
+interface_symbol_table::worker
+interface_symbol_table::worker f_define
+symbol_definition::perform_definition
+symbol_definition::perform_definition before definition_of_graph
+symbol_definition::definition_of_graph
+symbol_definition::definition_of_graph before Gr->init
+create_graph::init
+create_graph::init f_double_cover
+create_graph::create_double_cover
+create_graph::create_double_cover done
+create_graph::init before CG->init_from_adjacency_no_colors
+colored_graph::init_from_adjacency_no_colors
+nb_points=7
+colored_graph::init_adjacency
+nb_points=7
+nb_colors=1
+colored_graph::init_from_bitvector
+nb_points=7
+nb_colors=1
+nb_colors_per_vertex=1
+colored_graph::init_from_bitvector colored_graph::label = double_cover_double_cover_complete_1
+colored_graph::init_from_bitvector colored_graph::label_tex = {\rm double\_cover\_{double_cover_complete_1}}
+colored_graph::init_from_bitvector
+colored_graph::init_adjacency
+colored_graph::init_from_adjacency_no_colors done
+create_graph::init after CG->init_from_adjacency_no_colors
+create_graph::init created colored graph with one color
+create_graph::init label = double_cover_double_cover_complete_1
+create_graph::init done
+symbol_definition::definition_of_graph after Gr->init
+Gr->N=7
+Gr->label=double_cover_double_cover_complete_1
+Gr->f_has_CG=1
+Gr->CG->nb_points = 7
+symbol_definition::definition_of_graph we created a graph on 7 points, called double_cover_double_cover_complete_1
+orbiter_symbol_table_entry::init_graph
+orbiter_symbol_table_entry::init_graph done
+symbol_definition::definition_of_graph before add_symbol_table_entry
+orbiter_top_level_session::add_symbol_table_entry label = Gamma2
+orbiter_symbol_table::add_symbol_table_entry
+orbiter_symbol_table::add_symbol_table_entry done
+orbiter_top_level_session::add_symbol_table_entry done
+symbol_definition::definition_of_graph done
+symbol_definition::perform_definition after definition_of_graph
+interface_symbol_table::worker done
+orbiter_command::execute after Symbol_table->worker
+orbiter_command::execute done
+################################################################################################
+Executing command 5:
+-with Gamma2
+-do 
+-graph_theoretic_activity -automorphism_group 
+-properties 
+-eigenvalues 
+################################################################################################
+orbiter_command::execute
+orbiter_command::execute before Symbol_table->worker
+interface_symbol_table::worker
+interface_symbol_table::worker f_activity
+interface_symbol_table::worker before Activity_description->worker
+activity_description::worker
+activity_description::worker verbose_level = 2
+activity_description::worker number of inputs = 1
+Gamma2
+activity_description::worker f_graph_theoretic_activity
+activity_description::do_graph_theoretic_activity activity for the following objects:Gamma2
+activity_description::do_graph_theoretic_activity graphs = double_cover_double_cover_complete_1
+graph_theoretic_activity::init
+graph_theoretic_activity::init, labels = double_cover_double_cover_complete_1
+graph_theoretic_activity::init done
+activity_description::do_graph_theoretic_activity before Activity.perform_activity
+graph_theoretic_activity::perform_activity
+graph_theoretic_activity::perform_activity f_automorphism_group
+graph_theoretic_activity::perform_activity before GTA.automorphism_group_bw
+graph_theory_apps::automorphism_group_bw
+graph_theory_apps::automorphism_group_bw before Nauty.create_automorphism_group_of_colored_graph_ignoring_colors
+nauty_interface_for_graphs::create_automorphism_group_of_colored_graph_ignoring_colors
+nauty_interface_for_graphs::create_automorphism_group_of_colored_graph_ignoring_colors before create_automorphism_group_of_graph_bitvec
+nauty_interface_for_graphs::create_automorphism_group_of_graph_bitvec
+nauty_interface_for_graphs::create_automorphism_group_and_canonical_labeling_of_graph before NO->nauty_output_allocate
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling creating partition
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling before nauty_interface_graph_bitvec
+nauty_interface::nauty_interface_graph_bitvec
+nauty_interface::nauty_interface_graph_bitvec calling nauty (densenauty)
+nauty_interface::nauty_interface_graph_bitvec after nauty (densenauty)
+nauty_interface::nauty_interface_graph_bitvec after nauty
+base_length=2
+transversal_length=( 2, 2 )
+nauty_interface::nauty_interface_graph_bitvec done
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling: The group order is = 4 = ( 2, 2 )
+nb_backtrack1 = 3
+nb_backtrack2 = 3
+nb_backtrack3 = 3
+nb_backtrack4 = 1
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling: labeling:
+skipped
+
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling: Base:
+( 1, 4 )
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling: generators:
+skipped
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling before A->Known_groups->init_permutation_group_from_nauty_output
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling after A->Known_groups->init_permutation_group_from_nauty_output
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling: created action ACTION Perm_7 : Perm\_7 degree = 7 of type perm_group_t : base = (1, 4) : tl = (2, 2) : go = 4 = 2 * 2 : label = function_pointers_permutation_group : sub = Perm_7
+
+nauty_interface_for_graphs::create_automorphism_group_of_graph_bitvec done
+nauty_interface_for_graphs::create_automorphism_group_of_colored_graph_ignoring_colors after create_automorphism_group_of_graph_bitvec
+nauty_interface_for_graphs::create_automorphism_group_of_colored_graph_ignoring_colors done
+graph_theory_apps::automorphism_group_bw after Nauty.create_automorphism_group_of_colored_graph_ignoring_colors
+graph_theory_apps::automorphism_group_bw before report_automorphism_group
+graph_theory_apps::report_automorphism_group
+action_global::get_orbits_on_points_as_characteristic_vector
+action_global::get_orbits_on_points_as_characteristic_vector before all_point_orbits
+action_global::get_orbits_on_points_as_characteristic_vector after all_point_orbits
+action_global::get_orbits_on_points_as_characteristic_vector done
+graph_theory_apps::automorphism_group after report
+written file double_cover_double_cover_complete_1_report.tex of size 8590
+graph_theory_apps::report_automorphism_group done
+graph_theory_apps::automorphism_group_bw after report_automorphism_group
+graph_theory_apps::automorphism_group_bw label = double_cover_double_cover_complete_1
+graph_theory_apps::automorphism_group_bw degree = 7
+graph_theory_apps::automorphism_group_bw before Aut->export_to_orbiter_as_bsgs
+action::export_to_orbiter_as_bsgs
+action::export_to_orbiter_as_bsgs before SG->export_to_orbiter_as_bsgs
+strong_generators::export_to_orbiter_as_bsgs
+strong_generators::export_to_orbiter_as_bsgs go = 4
+strong_generators::export_to_orbiter_as_bsgs number of generators = 2
+strong_generators::export_to_orbiter_as_bsgs degree = 7
+strong_generators::export_to_orbiter_as_bsgs computing generator 0 / 2
+strong_generators::export_to_orbiter_as_bsgs computing generator 1 / 2
+strong_generators::export_to_orbiter_as_bsgs writing csv file
+strong_generators::export_to_orbiter_as_bsgs writing csv file done
+Written file double_cover_double_cover_complete_1_group.makefile of size 307
+strong_generators::export_to_orbiter_as_bsgs
+action::export_to_orbiter_as_bsgs after SG->export_to_orbiter_as_bsgs
+action::export_to_orbiter_as_bsgs
+graph_theory_apps::automorphism_group_bw after Aut->export_to_orbiter_as_bsgs
+graph_theory_apps::automorphism_group_bw written file double_cover_double_cover_complete_1_group.makefile of size 307
+graph_theory_apps::automorphism_group_bw done
+graph_theoretic_activity::perform_activity after GTA.automorphism_group_bw
+feedback:4
+graph_theoretic_activity::perform_activity done
+activity_description::do_graph_theoretic_activity after Activity.perform_activity
+activity_description::do_graph_theoretic_activity done
+activity_description::worker no activity_output
+activity_description::worker done
+interface_symbol_table::worker after Activity_description->worker
+interface_symbol_table::worker nb_output = 32766
+interface_symbol_table::worker done
+orbiter_command::execute after Symbol_table->worker
+orbiter_command::execute done
+################################################################################################
+Executing command 6:
+-define Gamma3 
+-graph -double_cover Gamma2
+################################################################################################
+orbiter_command::execute
+orbiter_command::execute before Symbol_table->worker
+interface_symbol_table::worker
+interface_symbol_table::worker f_define
+symbol_definition::perform_definition
+symbol_definition::perform_definition before definition_of_graph
+symbol_definition::definition_of_graph
+symbol_definition::definition_of_graph before Gr->init
+create_graph::init
+create_graph::init f_double_cover
+create_graph::create_double_cover
+create_graph::create_double_cover done
+create_graph::init before CG->init_from_adjacency_no_colors
+colored_graph::init_from_adjacency_no_colors
+nb_points=15
+colored_graph::init_adjacency
+nb_points=15
+nb_colors=1
+colored_graph::init_from_bitvector
+nb_points=15
+nb_colors=1
+nb_colors_per_vertex=1
+colored_graph::init_from_bitvector colored_graph::label = double_cover_double_cover_double_cover_complete_1
+colored_graph::init_from_bitvector colored_graph::label_tex = {\rm double\_cover\_{double_cover_double_cover_complete_1}}
+colored_graph::init_from_bitvector
+colored_graph::init_adjacency
+colored_graph::init_from_adjacency_no_colors done
+create_graph::init after CG->init_from_adjacency_no_colors
+create_graph::init created colored graph with one color
+create_graph::init label = double_cover_double_cover_double_cover_complete_1
+create_graph::init done
+symbol_definition::definition_of_graph after Gr->init
+Gr->N=15
+Gr->label=double_cover_double_cover_double_cover_complete_1
+Gr->f_has_CG=1
+Gr->CG->nb_points = 15
+symbol_definition::definition_of_graph we created a graph on 15 points, called double_cover_double_cover_double_cover_complete_1
+orbiter_symbol_table_entry::init_graph
+orbiter_symbol_table_entry::init_graph done
+symbol_definition::definition_of_graph before add_symbol_table_entry
+orbiter_top_level_session::add_symbol_table_entry label = Gamma3
+orbiter_symbol_table::add_symbol_table_entry
+orbiter_symbol_table::add_symbol_table_entry done
+orbiter_top_level_session::add_symbol_table_entry done
+symbol_definition::definition_of_graph done
+symbol_definition::perform_definition after definition_of_graph
+interface_symbol_table::worker done
+orbiter_command::execute after Symbol_table->worker
+orbiter_command::execute done
+################################################################################################
+Executing command 7:
+-with Gamma3
+-do 
+-graph_theoretic_activity -automorphism_group 
+-properties 
+-eigenvalues 
+################################################################################################
+orbiter_command::execute
+orbiter_command::execute before Symbol_table->worker
+interface_symbol_table::worker
+interface_symbol_table::worker f_activity
+interface_symbol_table::worker before Activity_description->worker
+activity_description::worker
+activity_description::worker verbose_level = 2
+activity_description::worker number of inputs = 1
+Gamma3
+activity_description::worker f_graph_theoretic_activity
+activity_description::do_graph_theoretic_activity activity for the following objects:Gamma3
+activity_description::do_graph_theoretic_activity graphs = double_cover_double_cover_double_cover_complete_1
+graph_theoretic_activity::init
+graph_theoretic_activity::init, labels = double_cover_double_cover_double_cover_complete_1
+graph_theoretic_activity::init done
+activity_description::do_graph_theoretic_activity before Activity.perform_activity
+graph_theoretic_activity::perform_activity
+graph_theoretic_activity::perform_activity f_automorphism_group
+graph_theoretic_activity::perform_activity before GTA.automorphism_group_bw
+graph_theory_apps::automorphism_group_bw
+graph_theory_apps::automorphism_group_bw before Nauty.create_automorphism_group_of_colored_graph_ignoring_colors
+nauty_interface_for_graphs::create_automorphism_group_of_colored_graph_ignoring_colors
+nauty_interface_for_graphs::create_automorphism_group_of_colored_graph_ignoring_colors before create_automorphism_group_of_graph_bitvec
+nauty_interface_for_graphs::create_automorphism_group_of_graph_bitvec
+nauty_interface_for_graphs::create_automorphism_group_and_canonical_labeling_of_graph before NO->nauty_output_allocate
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling creating partition
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling before nauty_interface_graph_bitvec
+nauty_interface::nauty_interface_graph_bitvec
+nauty_interface::nauty_interface_graph_bitvec calling nauty (densenauty)
+nauty_interface::nauty_interface_graph_bitvec after nauty (densenauty)
+nauty_interface::nauty_interface_graph_bitvec after nauty
+base_length=4
+transversal_length=( 2, 2, 2, 2 )
+nauty_interface::nauty_interface_graph_bitvec done
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling: The group order is = 16 = ( 2, 2, 2, 2 )
+nb_backtrack1 = 5
+nb_backtrack2 = 10
+nb_backtrack3 = 10
+nb_backtrack4 = 1
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling: labeling:
+skipped
+
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling: Base:
+( 1, 8, 4, 11 )
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling: generators:
+skipped
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling before A->Known_groups->init_permutation_group_from_nauty_output
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling after A->Known_groups->init_permutation_group_from_nauty_output
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling: created action ACTION Perm_15 : Perm\_15 degree = 15 of type perm_group_t : base = (1, 8, 4, 11) : tl = (2, 2, 2, 2) : go = 16 = 2 * 2 * 2 * 2 : label = function_pointers_permutation_group : sub = Perm_15
+
+nauty_interface_for_graphs::create_automorphism_group_of_graph_bitvec done
+nauty_interface_for_graphs::create_automorphism_group_of_colored_graph_ignoring_colors after create_automorphism_group_of_graph_bitvec
+nauty_interface_for_graphs::create_automorphism_group_of_colored_graph_ignoring_colors done
+graph_theory_apps::automorphism_group_bw after Nauty.create_automorphism_group_of_colored_graph_ignoring_colors
+graph_theory_apps::automorphism_group_bw before report_automorphism_group
+graph_theory_apps::report_automorphism_group
+action_global::get_orbits_on_points_as_characteristic_vector
+action_global::get_orbits_on_points_as_characteristic_vector before all_point_orbits
+action_global::get_orbits_on_points_as_characteristic_vector after all_point_orbits
+action_global::get_orbits_on_points_as_characteristic_vector done
+graph_theory_apps::automorphism_group after report
+written file double_cover_double_cover_double_cover_complete_1_report.tex of size 8918
+graph_theory_apps::report_automorphism_group done
+graph_theory_apps::automorphism_group_bw after report_automorphism_group
+graph_theory_apps::automorphism_group_bw label = double_cover_double_cover_double_cover_complete_1
+graph_theory_apps::automorphism_group_bw degree = 15
+graph_theory_apps::automorphism_group_bw before Aut->export_to_orbiter_as_bsgs
+action::export_to_orbiter_as_bsgs
+action::export_to_orbiter_as_bsgs before SG->export_to_orbiter_as_bsgs
+strong_generators::export_to_orbiter_as_bsgs
+strong_generators::export_to_orbiter_as_bsgs go = 16
+strong_generators::export_to_orbiter_as_bsgs number of generators = 4
+strong_generators::export_to_orbiter_as_bsgs degree = 15
+strong_generators::export_to_orbiter_as_bsgs computing generator 0 / 4
+strong_generators::export_to_orbiter_as_bsgs computing generator 1 / 4
+strong_generators::export_to_orbiter_as_bsgs computing generator 2 / 4
+strong_generators::export_to_orbiter_as_bsgs computing generator 3 / 4
+strong_generators::export_to_orbiter_as_bsgs writing csv file
+strong_generators::export_to_orbiter_as_bsgs writing csv file done
+Written file double_cover_double_cover_double_cover_complete_1_group.makefile of size 366
+strong_generators::export_to_orbiter_as_bsgs
+action::export_to_orbiter_as_bsgs after SG->export_to_orbiter_as_bsgs
+action::export_to_orbiter_as_bsgs
+graph_theory_apps::automorphism_group_bw after Aut->export_to_orbiter_as_bsgs
+graph_theory_apps::automorphism_group_bw written file double_cover_double_cover_double_cover_complete_1_group.makefile of size 366
+graph_theory_apps::automorphism_group_bw done
+graph_theoretic_activity::perform_activity after GTA.automorphism_group_bw
+feedback:16
+graph_theoretic_activity::perform_activity done
+activity_description::do_graph_theoretic_activity after Activity.perform_activity
+activity_description::do_graph_theoretic_activity done
+activity_description::worker no activity_output
+activity_description::worker done
+interface_symbol_table::worker after Activity_description->worker
+interface_symbol_table::worker nb_output = 32766
+interface_symbol_table::worker done
+orbiter_command::execute after Symbol_table->worker
+orbiter_command::execute done
+################################################################################################
+Executing command 8:
+-define Gamma4 
+-graph -double_cover Gamma3
+################################################################################################
+orbiter_command::execute
+orbiter_command::execute before Symbol_table->worker
+interface_symbol_table::worker
+interface_symbol_table::worker f_define
+symbol_definition::perform_definition
+symbol_definition::perform_definition before definition_of_graph
+symbol_definition::definition_of_graph
+symbol_definition::definition_of_graph before Gr->init
+create_graph::init
+create_graph::init f_double_cover
+create_graph::create_double_cover
+create_graph::create_double_cover done
+create_graph::init before CG->init_from_adjacency_no_colors
+colored_graph::init_from_adjacency_no_colors
+nb_points=31
+colored_graph::init_adjacency
+nb_points=31
+nb_colors=1
+colored_graph::init_from_bitvector
+nb_points=31
+nb_colors=1
+nb_colors_per_vertex=1
+colored_graph::init_from_bitvector colored_graph::label = double_cover_double_cover_double_cover_double_cover_complete_1
+colored_graph::init_from_bitvector colored_graph::label_tex = {\rm double\_cover\_{double_cover_double_cover_double_cover_complete_1}}
+colored_graph::init_from_bitvector
+colored_graph::init_adjacency
+colored_graph::init_from_adjacency_no_colors done
+create_graph::init after CG->init_from_adjacency_no_colors
+create_graph::init created colored graph with one color
+create_graph::init label = double_cover_double_cover_double_cover_double_cover_complete_1
+create_graph::init done
+symbol_definition::definition_of_graph after Gr->init
+Gr->N=31
+Gr->label=double_cover_double_cover_double_cover_double_cover_complete_1
+Gr->f_has_CG=1
+Gr->CG->nb_points = 31
+symbol_definition::definition_of_graph we created a graph on 31 points, called double_cover_double_cover_double_cover_double_cover_complete_1
+orbiter_symbol_table_entry::init_graph
+orbiter_symbol_table_entry::init_graph done
+symbol_definition::definition_of_graph before add_symbol_table_entry
+orbiter_top_level_session::add_symbol_table_entry label = Gamma4
+orbiter_symbol_table::add_symbol_table_entry
+orbiter_symbol_table::add_symbol_table_entry done
+orbiter_top_level_session::add_symbol_table_entry done
+symbol_definition::definition_of_graph done
+symbol_definition::perform_definition after definition_of_graph
+interface_symbol_table::worker done
+orbiter_command::execute after Symbol_table->worker
+orbiter_command::execute done
+################################################################################################
+Executing command 9:
+-with Gamma4
+-do 
+-graph_theoretic_activity -automorphism_group 
+-properties 
+-eigenvalues 
+################################################################################################
+orbiter_command::execute
+orbiter_command::execute before Symbol_table->worker
+interface_symbol_table::worker
+interface_symbol_table::worker f_activity
+interface_symbol_table::worker before Activity_description->worker
+activity_description::worker
+activity_description::worker verbose_level = 2
+activity_description::worker number of inputs = 1
+Gamma4
+activity_description::worker f_graph_theoretic_activity
+activity_description::do_graph_theoretic_activity activity for the following objects:Gamma4
+activity_description::do_graph_theoretic_activity graphs = double_cover_double_cover_double_cover_double_cover_complete_1
+graph_theoretic_activity::init
+graph_theoretic_activity::init, labels = double_cover_double_cover_double_cover_double_cover_complete_1
+graph_theoretic_activity::init done
+activity_description::do_graph_theoretic_activity before Activity.perform_activity
+graph_theoretic_activity::perform_activity
+graph_theoretic_activity::perform_activity f_automorphism_group
+graph_theoretic_activity::perform_activity before GTA.automorphism_group_bw
+graph_theory_apps::automorphism_group_bw
+graph_theory_apps::automorphism_group_bw before Nauty.create_automorphism_group_of_colored_graph_ignoring_colors
+nauty_interface_for_graphs::create_automorphism_group_of_colored_graph_ignoring_colors
+nauty_interface_for_graphs::create_automorphism_group_of_colored_graph_ignoring_colors before create_automorphism_group_of_graph_bitvec
+nauty_interface_for_graphs::create_automorphism_group_of_graph_bitvec
+nauty_interface_for_graphs::create_automorphism_group_and_canonical_labeling_of_graph before NO->nauty_output_allocate
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling creating partition
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling before nauty_interface_graph_bitvec
+nauty_interface::nauty_interface_graph_bitvec
+nauty_interface::nauty_interface_graph_bitvec calling nauty (densenauty)
+nauty_interface::nauty_interface_graph_bitvec after nauty (densenauty)
+nauty_interface::nauty_interface_graph_bitvec after nauty
+base_length=8
+transversal_length=( 2, 2, 2, 2, 2, 2, 2, 2 )
+nauty_interface::nauty_interface_graph_bitvec done
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling: The group order is = 256 = ( 2, 2, 2, 2, 2, 2, 2, 2 )
+nb_backtrack1 = 9
+nb_backtrack2 = 36
+nb_backtrack3 = 36
+nb_backtrack4 = 1
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling: labeling:
+skipped
+
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling: Base:
+( 1, 16, 4, 8, 23, 19, 11, 26 )
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling: generators:
+skipped
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling before A->Known_groups->init_permutation_group_from_nauty_output
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling after A->Known_groups->init_permutation_group_from_nauty_output
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling: created action ACTION Perm_31 : Perm\_31 degree = 31 of type perm_group_t : base = (1, 16, 4, 8, 23, 19, 11, 26) : tl = (2, 2, 2, 2, 2, 2, 2, 2) : go = 256 = 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 : label = function_pointers_permutation_group : sub = Perm_31
+
+nauty_interface_for_graphs::create_automorphism_group_of_graph_bitvec done
+nauty_interface_for_graphs::create_automorphism_group_of_colored_graph_ignoring_colors after create_automorphism_group_of_graph_bitvec
+nauty_interface_for_graphs::create_automorphism_group_of_colored_graph_ignoring_colors done
+graph_theory_apps::automorphism_group_bw after Nauty.create_automorphism_group_of_colored_graph_ignoring_colors
+graph_theory_apps::automorphism_group_bw before report_automorphism_group
+graph_theory_apps::report_automorphism_group
+action_global::get_orbits_on_points_as_characteristic_vector
+action_global::get_orbits_on_points_as_characteristic_vector before all_point_orbits
+action_global::get_orbits_on_points_as_characteristic_vector after all_point_orbits
+action_global::get_orbits_on_points_as_characteristic_vector done
+graph_theory_apps::automorphism_group after report
+written file double_cover_double_cover_double_cover_double_cover_complete_1_report.tex of size 10269
+graph_theory_apps::report_automorphism_group done
+graph_theory_apps::automorphism_group_bw after report_automorphism_group
+graph_theory_apps::automorphism_group_bw label = double_cover_double_cover_double_cover_double_cover_complete_1
+graph_theory_apps::automorphism_group_bw degree = 31
+graph_theory_apps::automorphism_group_bw before Aut->export_to_orbiter_as_bsgs
+action::export_to_orbiter_as_bsgs
+action::export_to_orbiter_as_bsgs before SG->export_to_orbiter_as_bsgs
+strong_generators::export_to_orbiter_as_bsgs
+strong_generators::export_to_orbiter_as_bsgs go = 256
+strong_generators::export_to_orbiter_as_bsgs number of generators = 8
+strong_generators::export_to_orbiter_as_bsgs degree = 31
+strong_generators::export_to_orbiter_as_bsgs computing generator 0 / 8
+strong_generators::export_to_orbiter_as_bsgs computing generator 1 / 8
+strong_generators::export_to_orbiter_as_bsgs computing generator 2 / 8
+strong_generators::export_to_orbiter_as_bsgs computing generator 3 / 8
+strong_generators::export_to_orbiter_as_bsgs computing generator 4 / 8
+strong_generators::export_to_orbiter_as_bsgs computing generator 5 / 8
+strong_generators::export_to_orbiter_as_bsgs computing generator 6 / 8
+strong_generators::export_to_orbiter_as_bsgs computing generator 7 / 8
+strong_generators::export_to_orbiter_as_bsgs writing csv file
+strong_generators::export_to_orbiter_as_bsgs writing csv file done
+Written file double_cover_double_cover_double_cover_double_cover_complete_1_group.makefile of size 431
+strong_generators::export_to_orbiter_as_bsgs
+action::export_to_orbiter_as_bsgs after SG->export_to_orbiter_as_bsgs
+action::export_to_orbiter_as_bsgs
+graph_theory_apps::automorphism_group_bw after Aut->export_to_orbiter_as_bsgs
+graph_theory_apps::automorphism_group_bw written file double_cover_double_cover_double_cover_double_cover_complete_1_group.makefile of size 431
+graph_theory_apps::automorphism_group_bw done
+graph_theoretic_activity::perform_activity after GTA.automorphism_group_bw
+feedback:256
+graph_theoretic_activity::perform_activity done
+activity_description::do_graph_theoretic_activity after Activity.perform_activity
+activity_description::do_graph_theoretic_activity done
+activity_description::worker no activity_output
+activity_description::worker done
+interface_symbol_table::worker after Activity_description->worker
+interface_symbol_table::worker nb_output = 32766
+interface_symbol_table::worker done
+orbiter_command::execute after Symbol_table->worker
+orbiter_command::execute done
+################################################################################################
+Executing command 10:
+-define Gamma5 
+-graph -double_cover Gamma4
+################################################################################################
+orbiter_command::execute
+orbiter_command::execute before Symbol_table->worker
+interface_symbol_table::worker
+interface_symbol_table::worker f_define
+symbol_definition::perform_definition
+symbol_definition::perform_definition before definition_of_graph
+symbol_definition::definition_of_graph
+symbol_definition::definition_of_graph before Gr->init
+create_graph::init
+create_graph::init f_double_cover
+create_graph::create_double_cover
+create_graph::create_double_cover done
+create_graph::init before CG->init_from_adjacency_no_colors
+colored_graph::init_from_adjacency_no_colors
+nb_points=63
+colored_graph::init_adjacency
+nb_points=63
+nb_colors=1
+colored_graph::init_from_bitvector
+nb_points=63
+nb_colors=1
+nb_colors_per_vertex=1
+colored_graph::init_from_bitvector colored_graph::label = double_cover_double_cover_double_cover_double_cover_double_cover_complete_1
+colored_graph::init_from_bitvector colored_graph::label_tex = {\rm double\_cover\_{double_cover_double_cover_double_cover_double_cover_complete_1}}
+colored_graph::init_from_bitvector
+colored_graph::init_adjacency
+colored_graph::init_from_adjacency_no_colors done
+create_graph::init after CG->init_from_adjacency_no_colors
+create_graph::init created colored graph with one color
+create_graph::init label = double_cover_double_cover_double_cover_double_cover_double_cover_complete_1
+create_graph::init done
+symbol_definition::definition_of_graph after Gr->init
+Gr->N=63
+Gr->label=double_cover_double_cover_double_cover_double_cover_double_cover_complete_1
+Gr->f_has_CG=1
+Gr->CG->nb_points = 63
+symbol_definition::definition_of_graph we created a graph on 63 points, called double_cover_double_cover_double_cover_double_cover_double_cover_complete_1
+orbiter_symbol_table_entry::init_graph
+orbiter_symbol_table_entry::init_graph done
+symbol_definition::definition_of_graph before add_symbol_table_entry
+orbiter_top_level_session::add_symbol_table_entry label = Gamma5
+orbiter_symbol_table::add_symbol_table_entry
+orbiter_symbol_table::add_symbol_table_entry done
+orbiter_top_level_session::add_symbol_table_entry done
+symbol_definition::definition_of_graph done
+symbol_definition::perform_definition after definition_of_graph
+interface_symbol_table::worker done
+orbiter_command::execute after Symbol_table->worker
+orbiter_command::execute done
+################################################################################################
+Executing command 11:
+-with Gamma5
+-do 
+-graph_theoretic_activity -automorphism_group 
+-properties 
+-eigenvalues 
+################################################################################################
+orbiter_command::execute
+orbiter_command::execute before Symbol_table->worker
+interface_symbol_table::worker
+interface_symbol_table::worker f_activity
+interface_symbol_table::worker before Activity_description->worker
+activity_description::worker
+activity_description::worker verbose_level = 2
+activity_description::worker number of inputs = 1
+Gamma5
+activity_description::worker f_graph_theoretic_activity
+activity_description::do_graph_theoretic_activity activity for the following objects:Gamma5
+activity_description::do_graph_theoretic_activity graphs = double_cover_double_cover_double_cover_double_cover_double_cover_complete_1
+graph_theoretic_activity::init
+graph_theoretic_activity::init, labels = double_cover_double_cover_double_cover_double_cover_double_cover_complete_1
+graph_theoretic_activity::init done
+activity_description::do_graph_theoretic_activity before Activity.perform_activity
+graph_theoretic_activity::perform_activity
+graph_theoretic_activity::perform_activity f_automorphism_group
+graph_theoretic_activity::perform_activity before GTA.automorphism_group_bw
+graph_theory_apps::automorphism_group_bw
+graph_theory_apps::automorphism_group_bw before Nauty.create_automorphism_group_of_colored_graph_ignoring_colors
+nauty_interface_for_graphs::create_automorphism_group_of_colored_graph_ignoring_colors
+nauty_interface_for_graphs::create_automorphism_group_of_colored_graph_ignoring_colors before create_automorphism_group_of_graph_bitvec
+nauty_interface_for_graphs::create_automorphism_group_of_graph_bitvec
+nauty_interface_for_graphs::create_automorphism_group_and_canonical_labeling_of_graph before NO->nauty_output_allocate
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling creating partition
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling before nauty_interface_graph_bitvec
+nauty_interface::nauty_interface_graph_bitvec
+nauty_interface::nauty_interface_graph_bitvec calling nauty (densenauty)
+nauty_interface::nauty_interface_graph_bitvec after nauty (densenauty)
+nauty_interface::nauty_interface_graph_bitvec after nauty
+base_length=16
+transversal_length=( 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 )
+nauty_interface::nauty_interface_graph_bitvec done
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling: The group order is = 65536 = ( 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 )
+nb_backtrack1 = 17
+nb_backtrack2 = 136
+nb_backtrack3 = 136
+nb_backtrack4 = 1
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling: labeling:
+skipped
+
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling: Base:
+( 1, 32, 8, 16, 4, 35, 39, 47, 23, 11, 19, 54, 42, 50, 26, 57 )
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling: generators:
+skipped
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling before A->Known_groups->init_permutation_group_from_nauty_output
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling after A->Known_groups->init_permutation_group_from_nauty_output
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling: created action ACTION Perm_63 : Perm\_63 degree = 63 of type perm_group_t : base = (1, 32, 8, 16, 4, 35, 39, 47, 23, 11, 19, 54, 42, 50, 26, 57) : tl = (2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2) : go = 65536 = 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 : label = function_pointers_permutation_group : sub = Perm_63
+
+nauty_interface_for_graphs::create_automorphism_group_of_graph_bitvec done
+nauty_interface_for_graphs::create_automorphism_group_of_colored_graph_ignoring_colors after create_automorphism_group_of_graph_bitvec
+nauty_interface_for_graphs::create_automorphism_group_of_colored_graph_ignoring_colors done
+graph_theory_apps::automorphism_group_bw after Nauty.create_automorphism_group_of_colored_graph_ignoring_colors
+graph_theory_apps::automorphism_group_bw before report_automorphism_group
+graph_theory_apps::report_automorphism_group
+action_global::get_orbits_on_points_as_characteristic_vector
+action_global::get_orbits_on_points_as_characteristic_vector before all_point_orbits
+action_global::get_orbits_on_points_as_characteristic_vector after all_point_orbits
+action_global::get_orbits_on_points_as_characteristic_vector done
+graph_theory_apps::automorphism_group after report
+written file double_cover_double_cover_double_cover_double_cover_double_cover_complete_1_report.tex of size 15646
+graph_theory_apps::report_automorphism_group done
+graph_theory_apps::automorphism_group_bw after report_automorphism_group
+graph_theory_apps::automorphism_group_bw label = double_cover_double_cover_double_cover_double_cover_double_cover_complete_1
+graph_theory_apps::automorphism_group_bw degree = 63
+graph_theory_apps::automorphism_group_bw before Aut->export_to_orbiter_as_bsgs
+action::export_to_orbiter_as_bsgs
+action::export_to_orbiter_as_bsgs before SG->export_to_orbiter_as_bsgs
+strong_generators::export_to_orbiter_as_bsgs
+strong_generators::export_to_orbiter_as_bsgs go = 65536
+strong_generators::export_to_orbiter_as_bsgs number of generators = 16
+strong_generators::export_to_orbiter_as_bsgs degree = 63
+strong_generators::export_to_orbiter_as_bsgs computing generator 0 / 16
+strong_generators::export_to_orbiter_as_bsgs computing generator 1 / 16
+strong_generators::export_to_orbiter_as_bsgs computing generator 2 / 16
+strong_generators::export_to_orbiter_as_bsgs computing generator 3 / 16
+strong_generators::export_to_orbiter_as_bsgs computing generator 4 / 16
+strong_generators::export_to_orbiter_as_bsgs computing generator 5 / 16
+strong_generators::export_to_orbiter_as_bsgs computing generator 6 / 16
+strong_generators::export_to_orbiter_as_bsgs computing generator 7 / 16
+strong_generators::export_to_orbiter_as_bsgs computing generator 8 / 16
+strong_generators::export_to_orbiter_as_bsgs computing generator 9 / 16
+strong_generators::export_to_orbiter_as_bsgs computing generator 10 / 16
+strong_generators::export_to_orbiter_as_bsgs computing generator 11 / 16
+strong_generators::export_to_orbiter_as_bsgs computing generator 12 / 16
+strong_generators::export_to_orbiter_as_bsgs computing generator 13 / 16
+strong_generators::export_to_orbiter_as_bsgs computing generator 14 / 16
+strong_generators::export_to_orbiter_as_bsgs computing generator 15 / 16
+strong_generators::export_to_orbiter_as_bsgs writing csv file
+strong_generators::export_to_orbiter_as_bsgs writing csv file done
+Written file double_cover_double_cover_double_cover_double_cover_double_cover_complete_1_group.makefile of size 510
+strong_generators::export_to_orbiter_as_bsgs
+action::export_to_orbiter_as_bsgs after SG->export_to_orbiter_as_bsgs
+action::export_to_orbiter_as_bsgs
+graph_theory_apps::automorphism_group_bw after Aut->export_to_orbiter_as_bsgs
+graph_theory_apps::automorphism_group_bw written file double_cover_double_cover_double_cover_double_cover_double_cover_complete_1_group.makefile of size 510
+graph_theory_apps::automorphism_group_bw done
+graph_theoretic_activity::perform_activity after GTA.automorphism_group_bw
+feedback:65536
+graph_theoretic_activity::perform_activity done
+activity_description::do_graph_theoretic_activity after Activity.perform_activity
+activity_description::do_graph_theoretic_activity done
+activity_description::worker no activity_output
+activity_description::worker done
+interface_symbol_table::worker after Activity_description->worker
+interface_symbol_table::worker nb_output = 32766
+interface_symbol_table::worker done
+orbiter_command::execute after Symbol_table->worker
+orbiter_command::execute done
+################################################################################################
+Executing command 12:
+-define Gamma6 
+-graph -double_cover Gamma5
+################################################################################################
+orbiter_command::execute
+orbiter_command::execute before Symbol_table->worker
+interface_symbol_table::worker
+interface_symbol_table::worker f_define
+symbol_definition::perform_definition
+symbol_definition::perform_definition before definition_of_graph
+symbol_definition::definition_of_graph
+symbol_definition::definition_of_graph before Gr->init
+create_graph::init
+create_graph::init f_double_cover
+create_graph::create_double_cover
+create_graph::create_double_cover done
+create_graph::init before CG->init_from_adjacency_no_colors
+colored_graph::init_from_adjacency_no_colors
+nb_points=127
+colored_graph::init_adjacency
+nb_points=127
+nb_colors=1
+colored_graph::init_from_bitvector
+nb_points=127
+nb_colors=1
+nb_colors_per_vertex=1
+colored_graph::init_from_bitvector colored_graph::label = double_cover_double_cover_double_cover_double_cover_double_cover_double_cover_complete_1
+colored_graph::init_from_bitvector colored_graph::label_tex = {\rm double\_cover\_{double_cover_double_cover_double_cover_double_cover_double_cover_complete_1}}
+colored_graph::init_from_bitvector
+colored_graph::init_adjacency
+colored_graph::init_from_adjacency_no_colors done
+create_graph::init after CG->init_from_adjacency_no_colors
+create_graph::init created colored graph with one color
+create_graph::init label = double_cover_double_cover_double_cover_double_cover_double_cover_double_cover_complete_1
+create_graph::init done
+symbol_definition::definition_of_graph after Gr->init
+Gr->N=127
+Gr->label=double_cover_double_cover_double_cover_double_cover_double_cover_double_cover_complete_1
+Gr->f_has_CG=1
+Gr->CG->nb_points = 127
+symbol_definition::definition_of_graph we created a graph on 127 points, called double_cover_double_cover_double_cover_double_cover_double_cover_double_cover_complete_1
+orbiter_symbol_table_entry::init_graph
+orbiter_symbol_table_entry::init_graph done
+symbol_definition::definition_of_graph before add_symbol_table_entry
+orbiter_top_level_session::add_symbol_table_entry label = Gamma6
+orbiter_symbol_table::add_symbol_table_entry
+orbiter_symbol_table::add_symbol_table_entry done
+orbiter_top_level_session::add_symbol_table_entry done
+symbol_definition::definition_of_graph done
+symbol_definition::perform_definition after definition_of_graph
+interface_symbol_table::worker done
+orbiter_command::execute after Symbol_table->worker
+orbiter_command::execute done
+################################################################################################
+Executing command 13:
+-with Gamma6
+-do 
+-graph_theoretic_activity -automorphism_group 
+-properties 
+-eigenvalues 
+################################################################################################
+orbiter_command::execute
+orbiter_command::execute before Symbol_table->worker
+interface_symbol_table::worker
+interface_symbol_table::worker f_activity
+interface_symbol_table::worker before Activity_description->worker
+activity_description::worker
+activity_description::worker verbose_level = 2
+activity_description::worker number of inputs = 1
+Gamma6
+activity_description::worker f_graph_theoretic_activity
+activity_description::do_graph_theoretic_activity activity for the following objects:Gamma6
+activity_description::do_graph_theoretic_activity graphs = double_cover_double_cover_double_cover_double_cover_double_cover_double_cover_complete_1
+graph_theoretic_activity::init
+graph_theoretic_activity::init, labels = double_cover_double_cover_double_cover_double_cover_double_cover_double_cover_complete_1
+graph_theoretic_activity::init done
+activity_description::do_graph_theoretic_activity before Activity.perform_activity
+graph_theoretic_activity::perform_activity
+graph_theoretic_activity::perform_activity f_automorphism_group
+graph_theoretic_activity::perform_activity before GTA.automorphism_group_bw
+graph_theory_apps::automorphism_group_bw
+graph_theory_apps::automorphism_group_bw before Nauty.create_automorphism_group_of_colored_graph_ignoring_colors
+nauty_interface_for_graphs::create_automorphism_group_of_colored_graph_ignoring_colors
+nauty_interface_for_graphs::create_automorphism_group_of_colored_graph_ignoring_colors before create_automorphism_group_of_graph_bitvec
+nauty_interface_for_graphs::create_automorphism_group_of_graph_bitvec
+nauty_interface_for_graphs::create_automorphism_group_and_canonical_labeling_of_graph before NO->nauty_output_allocate
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling creating partition
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling before nauty_interface_graph_bitvec
+nauty_interface::nauty_interface_graph_bitvec
+nauty_interface::nauty_interface_graph_bitvec calling nauty (densenauty)
+nauty_interface::nauty_interface_graph_bitvec after nauty (densenauty)
+nauty_interface::nauty_interface_graph_bitvec after nauty
+base_length=32
+transversal_length=( 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 )
+nauty_interface::nauty_interface_graph_bitvec done
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling: The group order is = 4294967296 = ( 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 )
+nb_backtrack1 = 33
+nb_backtrack2 = 528
+nb_backtrack3 = 528
+nb_backtrack4 = 1
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling: labeling:
+skipped
+
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling: Base:
+( 1, 64, 32, 8, 16, 4, 71, 79, 95, 67, 47, 35, 39, 23, 11, 19, 110, 74, 82, 98, 86, 102, 54, 50, 42, 26, 113, 117, 89, 105, 57, 120 )
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling: generators:
+skipped
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling before A->Known_groups->init_permutation_group_from_nauty_output
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling after A->Known_groups->init_permutation_group_from_nauty_output
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling: created action ACTION Perm_127 : Perm\_127 degree = 127 of type perm_group_t : base = (1, 64, 32, 8, 16, 4, 71, 79, 95, 67, 47, 35, 39, 23, 11, 19, 110, 74, 82, 98, 86, 102, 54, 50, 42, 26, 113, 117, 89, 105, 57, 120) : tl = (2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2) : go = 4294967296 = 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 : label = function_pointers_permutation_group : sub = Perm_127
+
+nauty_interface_for_graphs::create_automorphism_group_of_graph_bitvec done
+nauty_interface_for_graphs::create_automorphism_group_of_colored_graph_ignoring_colors after create_automorphism_group_of_graph_bitvec
+nauty_interface_for_graphs::create_automorphism_group_of_colored_graph_ignoring_colors done
+graph_theory_apps::automorphism_group_bw after Nauty.create_automorphism_group_of_colored_graph_ignoring_colors
+graph_theory_apps::automorphism_group_bw before report_automorphism_group
+graph_theory_apps::report_automorphism_group
+action_global::get_orbits_on_points_as_characteristic_vector
+action_global::get_orbits_on_points_as_characteristic_vector before all_point_orbits
+action_global::get_orbits_on_points_as_characteristic_vector after all_point_orbits
+action_global::get_orbits_on_points_as_characteristic_vector done
+graph_theory_apps::automorphism_group after report
+written file double_cover_double_cover_double_cover_double_cover_double_cover_double_cover_complete_1_report.tex of size 38869
+graph_theory_apps::report_automorphism_group done
+graph_theory_apps::automorphism_group_bw after report_automorphism_group
+graph_theory_apps::automorphism_group_bw label = double_cover_double_cover_double_cover_double_cover_double_cover_double_cover_complete_1
+graph_theory_apps::automorphism_group_bw degree = 127
+graph_theory_apps::automorphism_group_bw before Aut->export_to_orbiter_as_bsgs
+action::export_to_orbiter_as_bsgs
+action::export_to_orbiter_as_bsgs before SG->export_to_orbiter_as_bsgs
+strong_generators::export_to_orbiter_as_bsgs
+strong_generators::export_to_orbiter_as_bsgs go = 4294967296
+strong_generators::export_to_orbiter_as_bsgs number of generators = 32
+strong_generators::export_to_orbiter_as_bsgs degree = 127
+strong_generators::export_to_orbiter_as_bsgs computing generator 0 / 32
+strong_generators::export_to_orbiter_as_bsgs computing generator 1 / 32
+strong_generators::export_to_orbiter_as_bsgs computing generator 2 / 32
+strong_generators::export_to_orbiter_as_bsgs computing generator 3 / 32
+strong_generators::export_to_orbiter_as_bsgs computing generator 4 / 32
+strong_generators::export_to_orbiter_as_bsgs computing generator 5 / 32
+strong_generators::export_to_orbiter_as_bsgs computing generator 6 / 32
+strong_generators::export_to_orbiter_as_bsgs computing generator 7 / 32
+strong_generators::export_to_orbiter_as_bsgs computing generator 8 / 32
+strong_generators::export_to_orbiter_as_bsgs computing generator 9 / 32
+strong_generators::export_to_orbiter_as_bsgs computing generator 10 / 32
+strong_generators::export_to_orbiter_as_bsgs computing generator 11 / 32
+strong_generators::export_to_orbiter_as_bsgs computing generator 12 / 32
+strong_generators::export_to_orbiter_as_bsgs computing generator 13 / 32
+strong_generators::export_to_orbiter_as_bsgs computing generator 14 / 32
+strong_generators::export_to_orbiter_as_bsgs computing generator 15 / 32
+strong_generators::export_to_orbiter_as_bsgs computing generator 16 / 32
+strong_generators::export_to_orbiter_as_bsgs computing generator 17 / 32
+strong_generators::export_to_orbiter_as_bsgs computing generator 18 / 32
+strong_generators::export_to_orbiter_as_bsgs computing generator 19 / 32
+strong_generators::export_to_orbiter_as_bsgs computing generator 20 / 32
+strong_generators::export_to_orbiter_as_bsgs computing generator 21 / 32
+strong_generators::export_to_orbiter_as_bsgs computing generator 22 / 32
+strong_generators::export_to_orbiter_as_bsgs computing generator 23 / 32
+strong_generators::export_to_orbiter_as_bsgs computing generator 24 / 32
+strong_generators::export_to_orbiter_as_bsgs computing generator 25 / 32
+strong_generators::export_to_orbiter_as_bsgs computing generator 26 / 32
+strong_generators::export_to_orbiter_as_bsgs computing generator 27 / 32
+strong_generators::export_to_orbiter_as_bsgs computing generator 28 / 32
+strong_generators::export_to_orbiter_as_bsgs computing generator 29 / 32
+strong_generators::export_to_orbiter_as_bsgs computing generator 30 / 32
+strong_generators::export_to_orbiter_as_bsgs computing generator 31 / 32
+strong_generators::export_to_orbiter_as_bsgs writing csv file
+strong_generators::export_to_orbiter_as_bsgs writing csv file done
+Written file double_cover_double_cover_double_cover_double_cover_double_cover_double_cover_complete_1_group.makefile of size 622
+strong_generators::export_to_orbiter_as_bsgs
+action::export_to_orbiter_as_bsgs after SG->export_to_orbiter_as_bsgs
+action::export_to_orbiter_as_bsgs
+graph_theory_apps::automorphism_group_bw after Aut->export_to_orbiter_as_bsgs
+graph_theory_apps::automorphism_group_bw written file double_cover_double_cover_double_cover_double_cover_double_cover_double_cover_complete_1_group.makefile of size 622
+graph_theory_apps::automorphism_group_bw done
+graph_theoretic_activity::perform_activity after GTA.automorphism_group_bw
+feedback:4294967296
+graph_theoretic_activity::perform_activity done
+activity_description::do_graph_theoretic_activity after Activity.perform_activity
+activity_description::do_graph_theoretic_activity done
+activity_description::worker no activity_output
+activity_description::worker done
+interface_symbol_table::worker after Activity_description->worker
+interface_symbol_table::worker nb_output = 32766
+interface_symbol_table::worker done
+orbiter_command::execute after Symbol_table->worker
+orbiter_command::execute done
+################################################################################################
+Executing command 14:
+-define Gamma7 
+-graph -double_cover Gamma6
+################################################################################################
+orbiter_command::execute
+orbiter_command::execute before Symbol_table->worker
+interface_symbol_table::worker
+interface_symbol_table::worker f_define
+symbol_definition::perform_definition
+symbol_definition::perform_definition before definition_of_graph
+symbol_definition::definition_of_graph
+symbol_definition::definition_of_graph before Gr->init
+create_graph::init
+create_graph::init f_double_cover
+create_graph::create_double_cover
+create_graph::create_double_cover done
+create_graph::init before CG->init_from_adjacency_no_colors
+colored_graph::init_from_adjacency_no_colors
+nb_points=255
+colored_graph::init_adjacency
+nb_points=255
+nb_colors=1
+colored_graph::init_from_bitvector
+nb_points=255
+nb_colors=1
+nb_colors_per_vertex=1
+colored_graph::init_from_bitvector colored_graph::label = double_cover_double_cover_double_cover_double_cover_double_cover_double_cover_double_cover_complete_1
+colored_graph::init_from_bitvector colored_graph::label_tex = {\rm double\_cover\_{double_cover_double_cover_double_cover_double_cover_double_cover_double_cover_complete_1}}
+colored_graph::init_from_bitvector
+colored_graph::init_adjacency
+colored_graph::init_from_adjacency_no_colors done
+create_graph::init after CG->init_from_adjacency_no_colors
+create_graph::init created colored graph with one color
+create_graph::init label = double_cover_double_cover_double_cover_double_cover_double_cover_double_cover_double_cover_complete_1
+create_graph::init done
+symbol_definition::definition_of_graph after Gr->init
+Gr->N=255
+Gr->label=double_cover_double_cover_double_cover_double_cover_double_cover_double_cover_double_cover_complete_1
+Gr->f_has_CG=1
+Gr->CG->nb_points = 255
+symbol_definition::definition_of_graph we created a graph on 255 points, called double_cover_double_cover_double_cover_double_cover_double_cover_double_cover_double_cover_complete_1
+orbiter_symbol_table_entry::init_graph
+orbiter_symbol_table_entry::init_graph done
+symbol_definition::definition_of_graph before add_symbol_table_entry
+orbiter_top_level_session::add_symbol_table_entry label = Gamma7
+orbiter_symbol_table::add_symbol_table_entry
+orbiter_symbol_table::add_symbol_table_entry done
+orbiter_top_level_session::add_symbol_table_entry done
+symbol_definition::definition_of_graph done
+symbol_definition::perform_definition after definition_of_graph
+interface_symbol_table::worker done
+orbiter_command::execute after Symbol_table->worker
+orbiter_command::execute done
+################################################################################################
+Executing command 15:
+-with Gamma7
+-do 
+-graph_theoretic_activity -automorphism_group 
+-properties 
+-eigenvalues 
+################################################################################################
+orbiter_command::execute
+orbiter_command::execute before Symbol_table->worker
+interface_symbol_table::worker
+interface_symbol_table::worker f_activity
+interface_symbol_table::worker before Activity_description->worker
+activity_description::worker
+activity_description::worker verbose_level = 2
+activity_description::worker number of inputs = 1
+Gamma7
+activity_description::worker f_graph_theoretic_activity
+activity_description::do_graph_theoretic_activity activity for the following objects:Gamma7
+activity_description::do_graph_theoretic_activity graphs = double_cover_double_cover_double_cover_double_cover_double_cover_double_cover_double_cover_complete_1
+graph_theoretic_activity::init
+graph_theoretic_activity::init, labels = double_cover_double_cover_double_cover_double_cover_double_cover_double_cover_double_cover_complete_1
+graph_theoretic_activity::init done
+activity_description::do_graph_theoretic_activity before Activity.perform_activity
+graph_theoretic_activity::perform_activity
+graph_theoretic_activity::perform_activity f_automorphism_group
+graph_theoretic_activity::perform_activity before GTA.automorphism_group_bw
+graph_theory_apps::automorphism_group_bw
+graph_theory_apps::automorphism_group_bw before Nauty.create_automorphism_group_of_colored_graph_ignoring_colors
+nauty_interface_for_graphs::create_automorphism_group_of_colored_graph_ignoring_colors
+nauty_interface_for_graphs::create_automorphism_group_of_colored_graph_ignoring_colors before create_automorphism_group_of_graph_bitvec
+nauty_interface_for_graphs::create_automorphism_group_of_graph_bitvec
+nauty_interface_for_graphs::create_automorphism_group_and_canonical_labeling_of_graph before NO->nauty_output_allocate
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling creating partition
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling before nauty_interface_graph_bitvec
+nauty_interface::nauty_interface_graph_bitvec
+nauty_interface::nauty_interface_graph_bitvec calling nauty (densenauty)
+nauty_interface::nauty_interface_graph_bitvec after nauty (densenauty)
+nauty_interface::nauty_interface_graph_bitvec after nauty
+base_length=64
+transversal_length=( 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, ...2, 2, 2 )
+nauty_interface::nauty_interface_graph_bitvec done
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling: The group order is = 18446744073709551616 = ( 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, ...2, 2, 2 )
+nb_backtrack1 = 65
+nb_backtrack2 = 2080
+nb_backtrack3 = 2080
+nb_backtrack4 = 1
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling: labeling:
+skipped
+
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling: Base:
+( 1, 128, 8, 16, 4, 32, 64, 143, 159, 191, 131, 135, 95, 11, 19, 35, 67, 47, 79, 23, 39, 71, 146, 222, 162, 194, 174, 206, 150, 166, 198, 138, 102, 98, 110, 50, 82, 54, 86, 26, 42, 74, 237, 225, 177, 209, 229, 181, 213, 153, ...216, 120, 247 )
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling: generators:
+skipped
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling before A->Known_groups->init_permutation_group_from_nauty_output
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling after A->Known_groups->init_permutation_group_from_nauty_output
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling: created action ACTION Perm_255 : Perm\_255 degree = 255 of type perm_group_t : base = (1, 128, 8, 16, 4, 32, 64, 143, 159, 191, 131, 135, 95, 11, 19, 35, 67, 47, 79, 23, 39, 71, 146, 222, 162, 194, 174, 206, 150, 166, 198, 138, 102, 98, 110, 50, 82, 54, 86, 26, 42, 74, 237, 225, 177, 209, 229, 181, 213, 153, 169, 201, 105, 117, 113, 57, 89, 240, 244, 232, 184, 216, 120, 247) : tl = (2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2) : go = 18446744073709551616 = 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 : label = function_pointers_permutation_group : sub = Perm_255
+
+nauty_interface_for_graphs::create_automorphism_group_of_graph_bitvec done
+nauty_interface_for_graphs::create_automorphism_group_of_colored_graph_ignoring_colors after create_automorphism_group_of_graph_bitvec
+nauty_interface_for_graphs::create_automorphism_group_of_colored_graph_ignoring_colors done
+graph_theory_apps::automorphism_group_bw after Nauty.create_automorphism_group_of_colored_graph_ignoring_colors
+graph_theory_apps::automorphism_group_bw before report_automorphism_group
+graph_theory_apps::report_automorphism_group
+action_global::get_orbits_on_points_as_characteristic_vector
+action_global::get_orbits_on_points_as_characteristic_vector before all_point_orbits
+action_global::get_orbits_on_points_as_characteristic_vector after all_point_orbits
+action_global::get_orbits_on_points_as_characteristic_vector done
+graph_theory_apps::automorphism_group after report
+written file double_cover_double_cover_double_cover_double_cover_double_cover_double_cover_double_cover_complete_1_report.tex of size 143087
+graph_theory_apps::report_automorphism_group done
+graph_theory_apps::automorphism_group_bw after report_automorphism_group
+graph_theory_apps::automorphism_group_bw label = double_cover_double_cover_double_cover_double_cover_double_cover_double_cover_double_cover_complete_1
+graph_theory_apps::automorphism_group_bw degree = 255
+graph_theory_apps::automorphism_group_bw before Aut->export_to_orbiter_as_bsgs
+action::export_to_orbiter_as_bsgs
+action::export_to_orbiter_as_bsgs before SG->export_to_orbiter_as_bsgs
+strong_generators::export_to_orbiter_as_bsgs
+strong_generators::export_to_orbiter_as_bsgs go = 18446744073709551616
+strong_generators::export_to_orbiter_as_bsgs number of generators = 64
+strong_generators::export_to_orbiter_as_bsgs degree = 255
+strong_generators::export_to_orbiter_as_bsgs computing generator 0 / 64
+strong_generators::export_to_orbiter_as_bsgs computing generator 1 / 64
+strong_generators::export_to_orbiter_as_bsgs computing generator 2 / 64
+strong_generators::export_to_orbiter_as_bsgs computing generator 3 / 64
+strong_generators::export_to_orbiter_as_bsgs computing generator 4 / 64
+strong_generators::export_to_orbiter_as_bsgs computing generator 5 / 64
+strong_generators::export_to_orbiter_as_bsgs computing generator 6 / 64
+strong_generators::export_to_orbiter_as_bsgs computing generator 7 / 64
+strong_generators::export_to_orbiter_as_bsgs computing generator 8 / 64
+strong_generators::export_to_orbiter_as_bsgs computing generator 9 / 64
+strong_generators::export_to_orbiter_as_bsgs computing generator 10 / 64
+strong_generators::export_to_orbiter_as_bsgs computing generator 11 / 64
+strong_generators::export_to_orbiter_as_bsgs computing generator 12 / 64
+strong_generators::export_to_orbiter_as_bsgs computing generator 13 / 64
+strong_generators::export_to_orbiter_as_bsgs computing generator 14 / 64
+strong_generators::export_to_orbiter_as_bsgs computing generator 15 / 64
+strong_generators::export_to_orbiter_as_bsgs computing generator 16 / 64
+strong_generators::export_to_orbiter_as_bsgs computing generator 17 / 64
+strong_generators::export_to_orbiter_as_bsgs computing generator 18 / 64
+strong_generators::export_to_orbiter_as_bsgs computing generator 19 / 64
+strong_generators::export_to_orbiter_as_bsgs computing generator 20 / 64
+strong_generators::export_to_orbiter_as_bsgs computing generator 21 / 64
+strong_generators::export_to_orbiter_as_bsgs computing generator 22 / 64
+strong_generators::export_to_orbiter_as_bsgs computing generator 23 / 64
+strong_generators::export_to_orbiter_as_bsgs computing generator 24 / 64
+strong_generators::export_to_orbiter_as_bsgs computing generator 25 / 64
+strong_generators::export_to_orbiter_as_bsgs computing generator 26 / 64
+strong_generators::export_to_orbiter_as_bsgs computing generator 27 / 64
+strong_generators::export_to_orbiter_as_bsgs computing generator 28 / 64
+strong_generators::export_to_orbiter_as_bsgs computing generator 29 / 64
+strong_generators::export_to_orbiter_as_bsgs computing generator 30 / 64
+strong_generators::export_to_orbiter_as_bsgs computing generator 31 / 64
+strong_generators::export_to_orbiter_as_bsgs computing generator 32 / 64
+strong_generators::export_to_orbiter_as_bsgs computing generator 33 / 64
+strong_generators::export_to_orbiter_as_bsgs computing generator 34 / 64
+strong_generators::export_to_orbiter_as_bsgs computing generator 35 / 64
+strong_generators::export_to_orbiter_as_bsgs computing generator 36 / 64
+strong_generators::export_to_orbiter_as_bsgs computing generator 37 / 64
+strong_generators::export_to_orbiter_as_bsgs computing generator 38 / 64
+strong_generators::export_to_orbiter_as_bsgs computing generator 39 / 64
+strong_generators::export_to_orbiter_as_bsgs computing generator 40 / 64
+strong_generators::export_to_orbiter_as_bsgs computing generator 41 / 64
+strong_generators::export_to_orbiter_as_bsgs computing generator 42 / 64
+strong_generators::export_to_orbiter_as_bsgs computing generator 43 / 64
+strong_generators::export_to_orbiter_as_bsgs computing generator 44 / 64
+strong_generators::export_to_orbiter_as_bsgs computing generator 45 / 64
+strong_generators::export_to_orbiter_as_bsgs computing generator 46 / 64
+strong_generators::export_to_orbiter_as_bsgs computing generator 47 / 64
+strong_generators::export_to_orbiter_as_bsgs computing generator 48 / 64
+strong_generators::export_to_orbiter_as_bsgs computing generator 49 / 64
+strong_generators::export_to_orbiter_as_bsgs computing generator 50 / 64
+strong_generators::export_to_orbiter_as_bsgs computing generator 51 / 64
+strong_generators::export_to_orbiter_as_bsgs computing generator 52 / 64
+strong_generators::export_to_orbiter_as_bsgs computing generator 53 / 64
+strong_generators::export_to_orbiter_as_bsgs computing generator 54 / 64
+strong_generators::export_to_orbiter_as_bsgs computing generator 55 / 64
+strong_generators::export_to_orbiter_as_bsgs computing generator 56 / 64
+strong_generators::export_to_orbiter_as_bsgs computing generator 57 / 64
+strong_generators::export_to_orbiter_as_bsgs computing generator 58 / 64
+strong_generators::export_to_orbiter_as_bsgs computing generator 59 / 64
+strong_generators::export_to_orbiter_as_bsgs computing generator 60 / 64
+strong_generators::export_to_orbiter_as_bsgs computing generator 61 / 64
+strong_generators::export_to_orbiter_as_bsgs computing generator 62 / 64
+strong_generators::export_to_orbiter_as_bsgs computing generator 63 / 64
+strong_generators::export_to_orbiter_as_bsgs writing csv file
+strong_generators::export_to_orbiter_as_bsgs writing csv file done
+Written file double_cover_double_cover_double_cover_double_cover_double_cover_double_cover_double_cover_complete_1_group.makefile of size 812
+strong_generators::export_to_orbiter_as_bsgs
+action::export_to_orbiter_as_bsgs after SG->export_to_orbiter_as_bsgs
+action::export_to_orbiter_as_bsgs
+graph_theory_apps::automorphism_group_bw after Aut->export_to_orbiter_as_bsgs
+graph_theory_apps::automorphism_group_bw written file double_cover_double_cover_double_cover_double_cover_double_cover_double_cover_double_cover_complete_1_group.makefile of size 812
+graph_theory_apps::automorphism_group_bw done
+graph_theoretic_activity::perform_activity after GTA.automorphism_group_bw
+feedback:18446744073709551616
+graph_theoretic_activity::perform_activity done
+activity_description::do_graph_theoretic_activity after Activity.perform_activity
+activity_description::do_graph_theoretic_activity done
+activity_description::worker no activity_output
+activity_description::worker done
+interface_symbol_table::worker after Activity_description->worker
+interface_symbol_table::worker nb_output = 32766
+interface_symbol_table::worker done
+orbiter_command::execute after Symbol_table->worker
+orbiter_command::execute done
+Executing commands done
+orbiter_top_level_session::parse_and_execute done
+orbiter_top_level_session::handle_everything memory_debug after parse_and_execute
+orbiter_top_level_session::handle_everything memory_debug before finish_session
+orbiter_top_level_session::handle_everything memory_debug after finish_session
+orbiter_top_level_session::handle_everything done
+orbiter_top_level_session::execute_command_line after handle_everything
+orbiter_top_level_session::execute_command_line done
+do_orbiter_session after execute_command_line
+orbiter_top_level_session::~orbiter_top_level_session
+orbiter_top_level_session::~orbiter_top_level_session before delete Orbiter_session
+orbiter_session::~orbiter_session
+nb_times_finite_field_created=0
+nb_times_projective_space_created=0
+nb_times_action_created=8
+nb_calls_to_densenauty=8
+orbiter_session::~orbiter_session done
+orbiter_top_level_session::~orbiter_top_level_session after delete Orbiter_session
+orbiter_top_level_session::~orbiter_top_level_session done
+The Orbiter session is finished.
+User time: 0.130000 of a second, dt=13 tps = 100
