@@ -262,7 +262,17 @@ void create_graph::init(
 		}
 
 	}
-
+	else if (description->f_complete) {
+		if (f_v) {
+			cout << "create_graph::init before create_complete" << endl;
+		}
+		create_complete(
+				description->complete_n,
+				verbose_level);
+		if (f_v) {
+			cout << "create_graph::init after create_complete" << endl;
+		}
+	}
 	else if (description->f_edge_list) {
 
 		combinatorics::other_combinatorics::combinatorics_domain Combi;
@@ -2133,6 +2143,29 @@ void create_graph::create_double_cover(
 	label_tex = "{\\rm double\\_cover\\_{" + G->label + "}}";
 	if (f_v) {
 		cout << "create_graph::create_double_cover done" << endl;
+	}
+}
+
+void create_graph::create_complete(
+		int n, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	if (f_v) {
+		cout << "create_graph::create_complete" << endl;
+	}
+	N = n;
+	Adj = NEW_int(N * N);
+	Int_vec_zero(Adj, N * N);
+	for (int i = 0; i < N; i++) {
+		for (int j = i + 1; j < N; j++) {
+			Adj[i * N + j] = 1;
+			Adj[j * N + i] = 1;
+		}
+	}
+	label = "complete_" + std::to_string(n);
+	label_tex = "K_{" + std::to_string(n) + "}";
+	if (f_v) {
+		cout << "create_graph::create_complete done" << endl;
 	}
 }
 

@@ -139,6 +139,9 @@ public:
 	int f_load_dimacs;
 	std::string load_dimacs_fname;
 
+	int f_complete;
+	int complete_n;
+
 	int f_load_Brouwer;
 	std::string load_Brouwer_fname;
 
@@ -312,6 +315,8 @@ public:
 	void create_Winnie_Li(
 			std::string &label_Fq, int index,
 			int verbose_level);
+	void create_complete(
+			int n, int verbose_level);
 	void create_Grassmann(
 			int n, int k, std::string &label_Fq,
 			int r, int verbose_level);
