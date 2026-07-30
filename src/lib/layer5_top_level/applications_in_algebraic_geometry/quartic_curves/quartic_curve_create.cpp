@@ -143,9 +143,6 @@ void quartic_curve_create::create_quartic_curve(
 	F->Projective_space_basic->PG_element_normalize_from_front(
 			QO->Variety_object->eqn, 1, 15);
 
-	if (Quartic_curve_descr->f_bitmap) {
-		do_bitmap(verbose_level);
-	}
 
 	if (f_v) {
 		cout << "quartic_curve_create::create_quartic_curve done" << endl;

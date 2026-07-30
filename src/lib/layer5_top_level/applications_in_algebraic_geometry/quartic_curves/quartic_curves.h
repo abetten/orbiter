@@ -89,7 +89,6 @@ public:
 	std::vector<std::string> transform_coeffs;
 	std::vector<int> f_inverse_transform;
 
-	int f_bitmap;
 
 	quartic_curve_create_description();
 	~quartic_curve_create_description();

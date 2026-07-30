@@ -15184,7 +15184,8 @@ quartic_curve_13_0_normal_form_bitmap:
 	$(ORBITER) -v 1 \
 		-define F -finite_field -q 13 -end \
 		-define P -projective_space -n 2 -field F -v 0 -end \
-		-define C -quartic_curve -space P -by_normal_form '3,2,10,4,2,3' -bitmap -end
+		-define C -quartic_curve -space P -by_normal_form '3,2,10,4,2,3' -end \
+		-with C -do -quartic_curve_activity -draw_bitmap -end
 
 # 170, 111, 140, 2
 
