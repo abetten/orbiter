@@ -591,17 +591,45 @@ void symbolic_object_activity::evaluate_affine(
 				0 /*verbose_level*/);
 
 
-
 	}
 
 
-	cout << "nb_variables=" << nb_variables << endl;
-	cout << "q=" << q << endl;
-	cout << "N=" << N << endl;
 
-	cout << "symbolic_object_activity::evaluate_affine Values_out:" << endl;
-	Int_vec_print(cout, Values_out, N);
-	cout << endl;
+	if (f_v) {
+		cout << "nb_variables=" << nb_variables << endl;
+		cout << "q=" << q << endl;
+		cout << "N=" << N << endl;
+
+		cout << "symbolic_object_activity::evaluate_affine Values_out:" << endl;
+		Int_vec_print(cout, Values_out, N);
+		cout << endl;
+	}
+
+
+
+	string fname;
+
+	fname = f->label + "_evaluation.csv";
+
+	other::orbiter_kernel_system::file_io Fio;
+
+	std::string col_heading;
+
+	col_heading = "evaluation";
+
+	Fio.Csv_file_support->int_matrix_write_csv_tabulated(
+			fname, col_heading,
+			Values_out, 1, N, verbose_level);
+
+	if (f_v) {
+		cout << "symbolic_object_activity::evaluate_affine "
+				"Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
+
+
+
+
+
 
 	if (true) {
 

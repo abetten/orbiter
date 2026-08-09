@@ -590,6 +590,7 @@ public:
 	void do_inverse_isomorphism_klein_quadric(
 			algebra::field_theory::finite_field *F,
 			std::string &inverse_isomorphism_klein_quadric_matrix_A6,
+			int f_lex_ordering,
 			int verbose_level);
 	// creates klein_correspondence and orthogonal_geometry::orthogonal objects
 	void do_rank_points_in_PG(

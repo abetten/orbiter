@@ -1518,6 +1518,9 @@ void poset_classification::export_something_worker(
 		std::string &export_something_extra,
 		std::string &fname,
 		int verbose_level)
+// recognized keywords are:
+// orbit_reps
+// set_orbits
 {
 	int f_v = (verbose_level >= 1);
 

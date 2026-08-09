@@ -545,10 +545,6 @@ public:
 		int verbose_level);
 	int is_cycle(
 			int nb_e, long int *edges, int verbose_level);
-#if 0
-	void find_subgraph(
-			std::string &subgraph_label, int verbose_level);
-#endif
 	void find_subgraph_E6(
 			std::vector<std::vector<int> > &Solutions,
 			int verbose_level);
@@ -636,7 +632,7 @@ public:
 	void eigenvalues(
 			double *&E, int verbose_level);
 	void Laplace_eigenvalues(
-			double *&E, int verbose_level);
+			double *&L, int verbose_level);
 	void distance_from_vertex(
 			int given_vertex,
 			int *&Distance,
@@ -1045,10 +1041,22 @@ public:
 			int f_write_cliques, std::string &fname_cliques,
 			int verbose_level);
 #endif
+	void eigenvalues_save_csv(
+			combinatorics::graph_theory::colored_graph *CG,
+			double *E, double *L,
+			int verbose_level);
+	void eigenvalues_report(
+			combinatorics::graph_theory::colored_graph *CG,
+			double *E, double *L, double energy,
+			int verbose_level);
+	void eigenvalues_compute(
+			combinatorics::graph_theory::colored_graph *CG,
+			double *&E, double *&L, double &energy,
+			int verbose_level);
 	void eigenvalues(
 			combinatorics::graph_theory::colored_graph *CG,
 			int verbose_level);
-	void eigenvalue_report(
+	void eigenvalues_report(
 			combinatorics::graph_theory::colored_graph *CG,
 			int verbose_level);
 

@@ -1121,6 +1121,17 @@ public:
 	int find_small_generating_set_desired_size;
 	int find_small_generating_set_max_attempts;
 
+	int f_proportion_of_generating_sets_of_size_k;
+	int proportion_of_generating_sets_of_size_k_k;
+
+	// ToDo: undocumented
+	int f_proportion_of_generating_sets_of_size_k_using_orbits;
+	int proportion_of_generating_sets_of_size_k_using_orbits_k;
+	std::string proportion_of_generating_sets_of_size_k_using_orbits_fname;
+	std::string proportion_of_generating_sets_of_size_k_using_orbits_col_label_reps;
+	std::string proportion_of_generating_sets_of_size_k_using_orbits_col_label_orbit_length;
+
+
 	int f_find_singer_cycle;
 
 
@@ -1230,9 +1241,11 @@ public:
 	std::string order_of_products_elements;
 
 	int f_reverse_isomorphism_exterior_square;
+	int reverse_isomorphism_exterior_square_f_lex_ordering;
 
 	int f_reverse_isomorphism_exterior_square_vector_of_ge;
 	std::string reverse_isomorphism_exterior_square_vector_of_ge_label;
+	int reverse_isomorphism_exterior_square_vector_of_ge_f_lex_ordering;
 
 	int f_is_subgroup_of;
 	int f_coset_reps;
@@ -1504,7 +1517,7 @@ public:
 
 	int f_properties;
 	int f_eigenvalues;
-	int f_eigenvalue_report;
+	int f_eigenvalues_report;
 
 	int f_draw;
 	std::string draw_options;

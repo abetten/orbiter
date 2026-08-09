@@ -967,6 +967,8 @@ void orthogonal_group::create_random_orthogonal_reflection(
 
 void orthogonal_group::make_orthogonal_reflection(
 		int *M, int *z, int verbose_level)
+// this function uses the Gram matrix of the underlying orthogonal geometry
+// this means that f_lex_ordering is false
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);

@@ -767,6 +767,7 @@ public:
 	std::ostream& print_not_scientific(
 			std::ostream& ost);
 	int log10();
+	int log2();
 	int output_width();
 	void print_width(
 			std::ostream& ost, int width);

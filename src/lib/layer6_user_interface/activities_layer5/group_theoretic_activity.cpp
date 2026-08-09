@@ -891,6 +891,98 @@ int group_theoretic_activity::perform_activity_part2(
 		}
 	}
 
+	if (Descr->f_proportion_of_generating_sets_of_size_k) {
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"f_proportion_of_generating_sets_of_size_k" << endl;
+			cout << "group_theoretic_activity::perform_activity proportion_of_generating_sets_of_size_k_k = " << Descr->proportion_of_generating_sets_of_size_k_k << endl;
+		}
+
+
+		long int nb_win, nb_total, goi;
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before AG->proportion_of_generating_sets_of_size_k" << endl;
+		}
+		AG->proportion_of_generating_sets_of_size_k(
+				Descr->proportion_of_generating_sets_of_size_k_k,
+				nb_win, nb_total, goi,
+				verbose_level);
+
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after AG->proportion_of_generating_sets_of_size_k" << endl;
+			cout << "group_theoretic_activity::perform_activity "
+					"nb_win = " << nb_win << endl;
+			cout << "group_theoretic_activity::perform_activity "
+					"nb_total = " << nb_total << endl;
+			cout << "group_theoretic_activity::perform_activity "
+					"goi = " << goi << endl;
+			cout << "group_theoretic_activity::perform_activity "
+					"rate = " << (double) nb_win / (double) nb_total << endl;
+		}
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"f_proportion_of_generating_sets_of_size_k done" << endl;
+		}
+	}
+
+
+	if (Descr->f_proportion_of_generating_sets_of_size_k_using_orbits) {
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"f_proportion_of_generating_sets_of_size_k_using_orbits" << endl;
+			cout << "group_theoretic_activity::perform_activity k = " << Descr->proportion_of_generating_sets_of_size_k_using_orbits_k << endl;
+		}
+
+
+		long int nb_orbits, nb_good_orbits, nb_win, nb_total, goi;
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before AG->proportion_of_generating_sets_of_size_k_using_orbits" << endl;
+		}
+		AG->proportion_of_generating_sets_of_size_k_using_orbits(
+				Descr->proportion_of_generating_sets_of_size_k_using_orbits_k,
+				Descr->proportion_of_generating_sets_of_size_k_using_orbits_fname,
+				Descr->proportion_of_generating_sets_of_size_k_using_orbits_col_label_reps,
+				Descr->proportion_of_generating_sets_of_size_k_using_orbits_col_label_orbit_length,
+				nb_orbits,
+				nb_good_orbits,
+				nb_win,
+				nb_total,
+				goi,
+				verbose_level);
+
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after AG->proportion_of_generating_sets_of_size_k_using_orbits" << endl;
+			cout << "group_theoretic_activity::perform_activity "
+					"nb_orbits = " << nb_orbits << endl;
+			cout << "group_theoretic_activity::perform_activity "
+					"nb_good_orbits = " << nb_good_orbits << endl;
+			cout << "group_theoretic_activity::perform_activity "
+					"nb_win = " << nb_win << endl;
+			cout << "group_theoretic_activity::perform_activity "
+					"nb_total = " << nb_total << endl;
+			cout << "group_theoretic_activity::perform_activity "
+					"goi = " << goi << endl;
+			cout << "group_theoretic_activity::perform_activity "
+					"rate = " << (double) nb_win / (double) nb_total << endl;
+		}
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"f_proportion_of_generating_sets_of_size_k done" << endl;
+		}
+	}
+
 	else if (Descr->f_find_singer_cycle) {
 
 		if (f_v) {
@@ -1457,13 +1549,15 @@ int group_theoretic_activity::perform_activity_part2(
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
 					"f_reverse_isomorphism_exterior_square" << endl;
+			cout << "group_theoretic_activity::perform_activity "
+					"f_lex_ordering = " << Descr->reverse_isomorphism_exterior_square_f_lex_ordering << endl;
 		}
 
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
 					"before AG->do_reverse_isomorphism_exterior_square" << endl;
 		}
-		AG->do_reverse_isomorphism_exterior_square(verbose_level);
+		AG->do_reverse_isomorphism_exterior_square(Descr->reverse_isomorphism_exterior_square_f_lex_ordering, verbose_level);
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
 					"after AG->do_reverse_isomorphism_exterior_square" << endl;
@@ -1475,6 +1569,8 @@ int group_theoretic_activity::perform_activity_part2(
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
 					"f_reverse_isomorphism_exterior_square_vector_of_ge" << endl;
+			cout << "group_theoretic_activity::perform_activity "
+					"f_lex_ordering = " << Descr->reverse_isomorphism_exterior_square_vector_of_ge_f_lex_ordering << endl;
 		}
 
 
@@ -1490,7 +1586,10 @@ int group_theoretic_activity::perform_activity_part2(
 			cout << "group_theoretic_activity::perform_activity "
 					"before AG->do_reverse_isomorphism_exterior_square" << endl;
 		}
-		AG->do_reverse_isomorphism_exterior_square_vector_ge(vec, verbose_level);
+		AG->do_reverse_isomorphism_exterior_square_vector_ge(
+				vec,
+				Descr->reverse_isomorphism_exterior_square_vector_of_ge_f_lex_ordering,
+				verbose_level);
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
 					"after AG->do_reverse_isomorphism_exterior_square" << endl;

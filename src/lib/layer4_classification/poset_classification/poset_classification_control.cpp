@@ -812,6 +812,8 @@ void poset_classification_control::init_root_node_invariant_subset(
 
 
 
+// ToDo: warning: global function
+
 void poset_classification_control_preferred_choice_function(
 		int pt, int &pt_pref,
 		groups::schreier *Sch,

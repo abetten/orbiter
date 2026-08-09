@@ -531,6 +531,7 @@ public:
 	int f_has_small_generating_set;
 	data_structures_groups::vector_ge *generating_set_small;
 	algebra::ring_theory::longinteger_object target_go;
+	int target_go_log2;
 
 	// initialized by init:
 	int f_has_Sch;
@@ -566,11 +567,13 @@ public:
 	void init_bitvector_first(
 			group_constructions::linear_group *LG,
 			algebra::ring_theory::homogeneous_polynomial_domain *HPD,
+			data_structures_groups::vector_ge *generating_set,
 			int print_interval,
 			int verbose_level);
 	int init_bitvector_continue(
 			group_constructions::linear_group *LG,
 			algebra::ring_theory::homogeneous_polynomial_domain *HPD,
+			data_structures_groups::vector_ge *generating_set,
 			int print_interval,
 			int idx_of_last_orbit,
 			int verbose_level);

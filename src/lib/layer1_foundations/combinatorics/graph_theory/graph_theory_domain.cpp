@@ -457,7 +457,8 @@ void graph_theory_domain::draw_bitmatrix(
 
 		G.init(fname_base, Draw_options, verbose_level - 1);
 
-		G.draw_bitmatrix2(f_dots,
+		G.draw_bitmatrix2(
+				f_dots,
 				f_partition,
 				nb_row_parts, row_part_first,
 				nb_col_parts, col_part_first,
@@ -1931,53 +1932,21 @@ void graph_theory_domain::all_cliques_of_given_size(
 }
 #endif
 
-void graph_theory_domain::eigenvalues(
+void graph_theory_domain::eigenvalues_save_csv(
 		combinatorics::graph_theory::colored_graph *CG,
+		double *E, double *L,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "graph_theory_domain::eigenvalues" << endl;
-	}
-	double *E;
-	double *L;
-	int i;
-
-	if (f_v) {
-		cout << "graph_theory_domain::eigenvalues before CG->eigenvalues" << endl;
-	}
-	CG->eigenvalues(E, verbose_level - 2);
-	if (f_v) {
-		cout << "graph_theory_domain::eigenvalues after CG->eigenvalues" << endl;
-	}
-	if (f_v) {
-		cout << "graph_theory_domain::eigenvalues before CG->Laplace_eigenvalues" << endl;
-	}
-	CG->Laplace_eigenvalues(L, verbose_level - 2);
-	if (f_v) {
-		cout << "graph_theory_domain::eigenvalues after CG->Laplace_eigenvalues" << endl;
-	}
-
-	cout << "The eigenvalues are:" << endl;
-	for (i = 0; i < CG->nb_points; i++) {
-		cout << i << " : " << E[i] << endl;
-	}
-
-	double energy = 0;
-	for (i = 0; i < CG->nb_points; i++) {
-		energy += ABS(E[i]);
-	}
-	cout << "The energy is " << energy << endl;
-
-	cout << "The Laplace eigenvalues are:" << endl;
-	for (i = 0; i < CG->nb_points; i++) {
-		cout << i << " : " << L[i] << endl;
+		cout << "graph_theory_domain::eigenvalues_save_csv" << endl;
 	}
 
 	std::string *Table;
 	std::string *Col_headings;
 	int nb_rows, nb_cols;
+	int i;
 
 	nb_rows = CG->nb_points;
 	nb_cols = 3;
@@ -2009,126 +1978,135 @@ void graph_theory_domain::eigenvalues(
 	delete [] Table;
 	delete [] Col_headings;
 
-	cout << "graph_theory_domain::eigenvalues "
+	if (f_v) {
+		cout << "graph_theory_domain::eigenvalues_save_csv "
 			"written file " << fname << " of size "
 			<< Fio.file_size(fname) << endl;
-
-
-#if 0
-
-	{
-		string fname;
-
-		string title, author, extra_praeamble;
-
-		title = "Eigenvalues of graph"; //\\verb'" + CG->label_tex + "'";
-
-		fname = CG->label + "_eigenvalues.tex";
-
-		{
-			ofstream ost(fname);
-			other::l1_interfaces::latex_interface Li;
-
-			Li.head(ost,
-					false /* f_book*/,
-					true /* f_title */,
-					title, author,
-					false /* f_toc */,
-					false /* f_landscape */,
-					true /* f_12pt */,
-					true /* f_enlarged_page */,
-					true /* f_pagenumbers */,
-					extra_praeamble /* extra_praeamble */);
-
-
-			if (f_v) {
-				cout << "graph_theory_domain::perform_activity before report" << endl;
-			}
-			//report(ost, verbose_level);
-
-			ost << "$$" << endl;
-			ost << "\\begin{array}{|r|r|r|}" << endl;
-			ost << "\\hline" << endl;
-			ost << " i  & \\lambda_i & \\theta_i \\\\" << endl;
-			ost << "\\hline" << endl;
-			ost << "\\hline" << endl;
-			for (i = 0; i < CG->nb_points; i++) {
-				ost << i;
-				ost << " & ";
-				ost << E[CG->nb_points - 1 - i];
-				ost << " & ";
-				ost << L[CG->nb_points - 1 - i];
-				ost << "\\\\" << endl;
-				ost << "\\hline" << endl;
-			}
-			ost << "\\end{array}" << endl;
-			ost << "$$" << endl;
-
-			ost << "The energy is " << energy << "\\\\" << endl;
-			ost << "Eigenvalues: $\\lambda_i$\\\\" << endl;
-			ost << "Laplace eigenvalues: $\\theta_i$\\\\" << endl;
-
-			if (f_v) {
-				cout << "graph_theory_domain::perform_activity after report" << endl;
-			}
-
-
-			Li.foot(ost);
-
-		}
-		other::orbiter_kernel_system::file_io Fio;
-
-		cout << "graph_theory_domain::perform_activity "
-				"written file " << fname << " of size "
-				<< Fio.file_size(fname) << endl;
 	}
-#endif
-
-
-
-
-	delete [] E;
-
-	if (f_v) {
-		cout << "graph_theory_domain::eigenvalues done" << endl;
-	}
-
 }
 
-void graph_theory_domain::eigenvalue_report(
+
+void graph_theory_domain::eigenvalues_report(
 		combinatorics::graph_theory::colored_graph *CG,
+		double *E, double *L, double energy,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "graph_theory_domain::eigenvalue_report" << endl;
+		cout << "graph_theory_domain::eigenvalues_report" << endl;
 	}
-	double *E;
-	double *L;
-	int i;
+
+	string fname;
+
+	string title, author, extra_praeamble;
+
+	title = "Eigenvalues of graph"; //\\verb'" + CG->label_tex + "'";
+
+	fname = CG->label + "_eigenvalues.tex";
+
+	{
+		ofstream ost(fname);
+		other::l1_interfaces::latex_interface Li;
+
+		Li.head(ost,
+				false /* f_book*/,
+				true /* f_title */,
+				title, author,
+				false /* f_toc */,
+				false /* f_landscape */,
+				true /* f_12pt */,
+				true /* f_enlarged_page */,
+				true /* f_pagenumbers */,
+				extra_praeamble /* extra_praeamble */);
+
+
+		if (f_v) {
+			cout << "graph_theory_domain::eigenvalues_report before report" << endl;
+		}
+		//report(ost, verbose_level);
+
+		int i;
+
+		ost << "$$" << endl;
+		ost << "\\begin{array}{|r|r|r|}" << endl;
+		ost << "\\hline" << endl;
+		ost << " i  & \\lambda_i & \\theta_i \\\\" << endl;
+		ost << "\\hline" << endl;
+		ost << "\\hline" << endl;
+		for (i = 0; i < CG->nb_points; i++) {
+			ost << i;
+			ost << " & ";
+			ost << E[CG->nb_points - 1 - i];
+			ost << " & ";
+			ost << L[CG->nb_points - 1 - i];
+			ost << "\\\\" << endl;
+			ost << "\\hline" << endl;
+		}
+		ost << "\\end{array}" << endl;
+		ost << "$$" << endl;
+
+		cout << "The energy is " << energy << endl;
+
+		ost << "The energy is " << energy << "\\\\" << endl;
+		ost << "Eigenvalues: $\\lambda_i$\\\\" << endl;
+		ost << "Laplace eigenvalues: $\\theta_i$\\\\" << endl;
+
+		if (f_v) {
+			cout << "graph_theory_domain::eigenvalues_report after report" << endl;
+		}
+
+
+		Li.foot(ost);
+
+	}
+	other::orbiter_kernel_system::file_io Fio;
+
+	cout << "graph_theory_domain::eigenvalues_report "
+			"written file " << fname << " of size "
+			<< Fio.file_size(fname) << endl;
+
+}
+
+void graph_theory_domain::eigenvalues_compute(
+		combinatorics::graph_theory::colored_graph *CG,
+		double *&E, double *&L, double &energy,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "graph_theory_domain::eigenvalue_report before CG->eigenvalues" << endl;
+		cout << "graph_theory_domain::eigenvalues_compute" << endl;
+	}
+
+	if (f_v) {
+		cout << "graph_theory_domain::eigenvalues_compute "
+				"before CG->eigenvalues" << endl;
 	}
 	CG->eigenvalues(E, verbose_level - 2);
 	if (f_v) {
-		cout << "graph_theory_domain::eigenvalue_report after CG->eigenvalues" << endl;
+		cout << "graph_theory_domain::eigenvalues_compute "
+				"after CG->eigenvalues" << endl;
 	}
 	if (f_v) {
-		cout << "graph_theory_domain::eigenvalue_report before CG->Laplace_eigenvalues" << endl;
+		cout << "graph_theory_domain::eigenvalues_compute "
+				"before CG->Laplace_eigenvalues" << endl;
 	}
 	CG->Laplace_eigenvalues(L, verbose_level - 2);
 	if (f_v) {
-		cout << "graph_theory_domain::eigenvalue_report after CG->Laplace_eigenvalues" << endl;
+		cout << "graph_theory_domain::eigenvalues_compute "
+				"after CG->Laplace_eigenvalues" << endl;
 	}
+
+	int i;
 
 	cout << "The eigenvalues are:" << endl;
 	for (i = 0; i < CG->nb_points; i++) {
 		cout << i << " : " << E[i] << endl;
 	}
 
-	double energy = 0;
+
+	energy = 0;
 	for (i = 0; i < CG->nb_points; i++) {
 		energy += ABS(E[i]);
 	}
@@ -2139,87 +2117,119 @@ void graph_theory_domain::eigenvalue_report(
 		cout << i << " : " << L[i] << endl;
 	}
 
-
-#if 1
-
-	{
-		string fname;
-
-		string title, author, extra_praeamble;
-
-		title = "Eigenvalues of graph"; //\\verb'" + CG->label_tex + "'";
-
-		fname = CG->label + "_eigenvalues.tex";
-
-		{
-			ofstream ost(fname);
-			other::l1_interfaces::latex_interface Li;
-
-			Li.head(ost,
-					false /* f_book*/,
-					true /* f_title */,
-					title, author,
-					false /* f_toc */,
-					false /* f_landscape */,
-					true /* f_12pt */,
-					true /* f_enlarged_page */,
-					true /* f_pagenumbers */,
-					extra_praeamble /* extra_praeamble */);
-
-
-			if (f_v) {
-				cout << "graph_theory_domain::eigenvalue_report before report" << endl;
-			}
-			//report(ost, verbose_level);
-
-			ost << "$$" << endl;
-			ost << "\\begin{array}{|r|r|}" << endl;
-			ost << "\\hline" << endl;
-			ost << " i  & \\lambda_i  \\\\" << endl;
-			ost << "\\hline" << endl;
-			ost << "\\hline" << endl;
-			for (i = 0; i < CG->nb_points; i++) {
-				ost << i;
-				ost << " & ";
-				ost << E[CG->nb_points - 1 - i];
-				//ost << " & ";
-				//ost << L[CG->nb_points - 1 - i];
-				ost << "\\\\" << endl;
-				ost << "\\hline" << endl;
-			}
-			ost << "\\end{array}" << endl;
-			ost << "$$" << endl;
-
-			ost << "The energy is " << energy << "\\\\" << endl;
-			ost << "Eigenvalues: $\\lambda_i$\\\\" << endl;
-			ost << "Laplace eigenvalues: $\\theta_i$\\\\" << endl;
-
-			if (f_v) {
-				cout << "graph_theory_domain::eigenvalue_report after report" << endl;
-			}
-
-
-			Li.foot(ost);
-
-		}
-		other::orbiter_kernel_system::file_io Fio;
-
-		cout << "graph_theory_domain::eigenvalue_report "
-				"written file " << fname << " of size "
-				<< Fio.file_size(fname) << endl;
+	if (f_v) {
+		cout << "graph_theory_domain::eigenvalues_compute done" << endl;
 	}
-#endif
+}
+
+void graph_theory_domain::eigenvalues(
+		combinatorics::graph_theory::colored_graph *CG,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "graph_theory_domain::eigenvalues" << endl;
+	}
+	double *E;
+	double *L;
+	double energy;
+
+
+	if (f_v) {
+		cout << "graph_theory_domain::eigenvalues "
+				"before eigenvalues_compute" << endl;
+	}
+	eigenvalues_compute(
+			CG,
+			E, L, energy,
+			verbose_level);
+	if (f_v) {
+		cout << "graph_theory_domain::eigenvalues "
+				"after eigenvalues_compute" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "graph_theory_domain::eigenvalues "
+				"before eigenvalues_save_csv" << endl;
+	}
+	eigenvalues_save_csv(
+			CG,
+			E, L,
+			verbose_level);
+	if (f_v) {
+		cout << "graph_theory_domain::eigenvalues "
+				"after eigenvalues_save_csv" << endl;
+	}
 
 
 
 
 	delete [] E;
+	delete [] L;
 
 	if (f_v) {
-		cout << "graph_theory_domain::eigenvalue_report done" << endl;
+		cout << "graph_theory_domain::eigenvalues done" << endl;
 	}
 
 }
+
+void graph_theory_domain::eigenvalues_report(
+		combinatorics::graph_theory::colored_graph *CG,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "graph_theory_domain::eigenvalues_report" << endl;
+	}
+	double *E;
+	double *L;
+	double energy;
+
+
+	if (f_v) {
+		cout << "graph_theory_domain::eigenvalues_report "
+				"before eigenvalues_compute" << endl;
+	}
+	eigenvalues_compute(
+			CG,
+			E, L, energy,
+			verbose_level);
+	if (f_v) {
+		cout << "graph_theory_domain::eigenvalues_report "
+				"after eigenvalues_compute" << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "graph_theory_domain::eigenvalues_report "
+				"before eigenvalues_report" << endl;
+	}
+	eigenvalues_report(
+			CG,
+			E, L, energy,
+			verbose_level);
+	if (f_v) {
+		cout << "graph_theory_domain::eigenvalues_report "
+				"after eigenvalues_report" << endl;
+	}
+
+
+
+
+	delete [] E;
+	delete [] L;
+
+	if (f_v) {
+		cout << "graph_theory_domain::eigenvalues_report done" << endl;
+	}
+
+}
+
+
 
 
 

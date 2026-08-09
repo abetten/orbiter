@@ -467,6 +467,9 @@ public:
 //! classification of 0/1 matrices using canonical forms; slow because it does not use a hash table; used in classification_of_objects / data_input_stream_output, classification_of_varieties_nauty
 
 
+// used by classification_of_varieties_nauty
+
+
 class classify_bitvectors {
 public:
 

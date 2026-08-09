@@ -1147,7 +1147,7 @@ void graph_theoretic_activity::perform_activity(
 
 
 	}
-	else if (Descr->f_eigenvalue_report) {
+	else if (Descr->f_eigenvalues_report) {
 
 		if (f_v) {
 			cout << "graph_theoretic_activity::perform_activity "
@@ -1158,12 +1158,12 @@ void graph_theoretic_activity::perform_activity(
 
 		if (f_v) {
 			cout << "graph_theoretic_activity::perform_activity "
-					"before GT.eigenvalue_report" << endl;
+					"before GT.eigenvalues_report" << endl;
 		}
-		GT.eigenvalue_report(CG[0], verbose_level);
+		GT.eigenvalues_report(CG[0], verbose_level);
 		if (f_v) {
 			cout << "graph_theoretic_activity::perform_activity "
-					"after GT.eigenvalue_report" << endl;
+					"after GT.eigenvalues_report" << endl;
 		}
 
 

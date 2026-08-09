@@ -412,7 +412,7 @@ public:
 	void exterior_square(
 			int *An, int *An2, int n, int verbose_level);
 	void exterior_square_4x4(
-			int *A4, int *A6, int verbose_level);
+			int *A4, int *A6, int f_lex_ordering, int verbose_level);
 	void lift_to_Klein_quadric(
 			int *A4, int *A6, int verbose_level);
 

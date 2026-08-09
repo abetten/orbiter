@@ -595,6 +595,12 @@ void vector_ge::report_elements(
 							cout << "vector_ge::report_elements f_permutation = true" << endl;
 						}
 					}
+					else if (val == "off" /*ST.stringcmp(val, "on") == 0*/) {
+						f_permutation = false;
+						if (f_v) {
+							cout << "vector_ge::report_elements f_permutation = false" << endl;
+						}
+					}
 					else {
 						cout << "vector_ge::report_elements unknown value of option "
 								<< label << " value " << val << endl;
@@ -675,9 +681,13 @@ void vector_ge::report_elements(
 				A1->Group_element->element_print_latex(Elt, ost);
 				ost << "$" << endl;
 
-				ost << "$" << endl;
-				A1->Group_element->element_print_as_permutation(Elt, ost);
-				ost << "$" << endl;
+				if (f_permutation) {
+					ost << "$" << endl;
+					A1->Group_element->element_print_as_permutation(Elt, ost);
+					ost << "$" << endl;
+				}
+
+
 #if 0
 				A1->print_one_element_tex(
 						ost,
@@ -1743,7 +1753,9 @@ groups::schreier *vector_ge::compute_all_point_orbits_schreier_with_print_interv
 
 
 void vector_ge::reverse_isomorphism_exterior_square(
+		int f_lex_ordering,
 		int verbose_level)
+// creates objects of type geometry::orthogonal_geometry::orthogonal and geometry::projective_geometry::klein_correspondence
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -1751,6 +1763,7 @@ void vector_ge::reverse_isomorphism_exterior_square(
 
 	if (f_v) {
 		cout << "vector_ge::reverse_isomorphism_exterior_square" << endl;
+		cout << "vector_ge::reverse_isomorphism_exterior_square f_lex_ordering = " << f_lex_ordering << endl;
 	}
 
 	geometry::projective_geometry::klein_correspondence *K;
@@ -1761,10 +1774,26 @@ void vector_ge::reverse_isomorphism_exterior_square(
 	F = A->matrix_group_finite_field();
 
 	O = NEW_OBJECT(geometry::orthogonal_geometry::orthogonal);
-	O->init(1 /* epsilon */, 6 /* n */, F, verbose_level);
+	if (f_v) {
+		cout << "vector_ge::reverse_isomorphism_exterior_square "
+				"before O->init" << endl;
+	}
+	O->init(1 /* epsilon */, 6 /* n */, F, 0/*verbose_level*/);
+	if (f_v) {
+		cout << "vector_ge::reverse_isomorphism_exterior_square "
+				"after O->init" << endl;
+	}
 
 	K = NEW_OBJECT(geometry::projective_geometry::klein_correspondence);
-	K->init(F, O, verbose_level);
+	if (f_v) {
+		cout << "vector_ge::reverse_isomorphism_exterior_square "
+				"before K->init" << endl;
+	}
+	K->init(F, O, 0 /*verbose_level*/);
+	if (f_v) {
+		cout << "vector_ge::reverse_isomorphism_exterior_square "
+				"after K->init" << endl;
+	}
 
 
 	for (i = 0; i < len; i++) {
@@ -1779,7 +1808,15 @@ void vector_ge::reverse_isomorphism_exterior_square(
 
 		int f_has_polarity;
 
-		K->reverse_isomorphism_with_polarity(ith(i), A4, f_has_polarity, verbose_level - 2);
+		if (f_v) {
+			cout << "vector_ge::reverse_isomorphism_exterior_square "
+					"generator " << i << " / " << len << ": before K->reverse_isomorphism_with_polarity" << endl;
+		}
+		K->reverse_isomorphism_with_polarity(ith(i), A4, f_lex_ordering, f_has_polarity, verbose_level - 2);
+		if (f_v) {
+			cout << "vector_ge::reverse_isomorphism_exterior_square "
+					"generator " << i << " / " << len << ": afterx K->reverse_isomorphism_with_polarity" << endl;
+		}
 
 		if (f_v) {
 			cout << "vector_ge::reverse_isomorphism_exterior_square "

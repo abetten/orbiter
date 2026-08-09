@@ -389,31 +389,24 @@ public:
 			int verbose_level);
 
 	void report(
-			//poset_classification_report_options *Opt,
 			int verbose_level);
 	void report2(
 			std::ostream &ost,
-			//poset_classification_report_options *Opt,
 			int verbose_level);
 	void report_orbits_in_detail(
 			std::ostream &ost,
-			//poset_classification_report_options *Opt,
 			int verbose_level);
 	void report_number_of_orbits_at_level(
 			std::ostream &ost,
-			//poset_classification_report_options *Opt,
 			int verbose_level);
 	void report_orbits_summary(
 			std::ostream &ost,
-			//poset_classification_report_options *Opt,
 			int verbose_level);
 	void report_poset_of_orbits(
 			std::ostream &ost,
-			//poset_classification_report_options *Opt,
 			int verbose_level);
 	void report_orbit(
 			int level, int orbit_at_level,
-			//poset_classification_report_options *Opt,
 			std::ostream &ost, int verbose_level);
 	void print_data_structure_tex(
 			int depth, int verbose_level);
@@ -608,6 +601,10 @@ public:
 		int verbose_level);
 
 };
+
+
+// ToDo: warning: global function
+
 
 void poset_classification_control_preferred_choice_function(
 		int pt, int &pt_pref,
@@ -854,7 +851,7 @@ public:
 			int size, int cur, int prev,
 		int nb_ext_cur, int nb_fuse_cur);
 	void print_progress(
-			double progress);
+		double progress);
 	void print_progress_by_level(
 			int lvl);
 	void print_orbit_numbers(
@@ -873,7 +870,7 @@ public:
 			int prev_level,
 		int prev, int cur_extension);
 	void print_level_extension_coset_info(
-			int prev_level,
+		int prev_level,
 		int prev, int cur_extension, int coset, int nb_cosets);
 	void print_node(
 			int node);

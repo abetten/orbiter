@@ -121,6 +121,17 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	find_small_generating_set_max_attempts = 1000;
 
 
+	f_proportion_of_generating_sets_of_size_k = false;
+	proportion_of_generating_sets_of_size_k_k = 0;
+
+
+	f_proportion_of_generating_sets_of_size_k_using_orbits = false;
+	proportion_of_generating_sets_of_size_k_using_orbits_k = 0;
+	//std::string proportion_of_generating_sets_of_size_k_using_orbits_fname;
+	//std::string proportion_of_generating_sets_of_size_k_using_orbits_col_label_reps;
+	//std::string proportion_of_generating_sets_of_size_k_using_orbits_col_label_orbit_length;
+
+
 	f_find_singer_cycle = false;
 
 	f_classes_based_on_normal_form = false;
@@ -234,10 +245,12 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	//order_of_products_elements = NULL;
 
 	f_reverse_isomorphism_exterior_square = false;
+	reverse_isomorphism_exterior_square_f_lex_ordering = false;
 
 
 	f_reverse_isomorphism_exterior_square_vector_of_ge = false;
 	//std::string reverse_isomorphism_exterior_square_vector_of_ge_label;
+	reverse_isomorphism_exterior_square_vector_of_ge_f_lex_ordering = false;
 
 
 	f_is_subgroup_of = false;
@@ -597,6 +610,30 @@ int group_theoretic_activity_description::read_arguments(
 			}
 		}
 
+		else if (ST.stringcmp(argv[i], "-proportion_of_generating_sets_of_size_k") == 0) {
+			f_proportion_of_generating_sets_of_size_k = true;
+			proportion_of_generating_sets_of_size_k_k = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-proportion_of_generating_sets_of_size_k " << proportion_of_generating_sets_of_size_k_k << endl;
+			}
+		}
+
+		else if (ST.stringcmp(argv[i], "-proportion_of_generating_sets_of_size_k_using_orbits") == 0) {
+			f_proportion_of_generating_sets_of_size_k_using_orbits = true;
+			proportion_of_generating_sets_of_size_k_using_orbits_k = ST.strtoi(argv[++i]);
+			proportion_of_generating_sets_of_size_k_using_orbits_fname.assign(argv[++i]);
+			proportion_of_generating_sets_of_size_k_using_orbits_col_label_reps.assign(argv[++i]);
+			proportion_of_generating_sets_of_size_k_using_orbits_col_label_orbit_length.assign(argv[++i]);
+			if (f_v) {
+				cout << "-proportion_of_generating_sets_of_size_k_using_orbits "
+						<< proportion_of_generating_sets_of_size_k_using_orbits_k
+						<< " " << proportion_of_generating_sets_of_size_k_using_orbits_fname
+						<< " " << proportion_of_generating_sets_of_size_k_using_orbits_col_label_reps
+						<< " " << proportion_of_generating_sets_of_size_k_using_orbits_col_label_orbit_length
+						<< endl;
+			}
+		}
+
 
 		else if (ST.stringcmp(argv[i], "-find_singer_cycle") == 0) {
 			f_find_singer_cycle = true;
@@ -882,16 +919,20 @@ int group_theoretic_activity_description::read_arguments(
 		}
 		else if (ST.stringcmp(argv[i], "-reverse_isomorphism_exterior_square") == 0) {
 			f_reverse_isomorphism_exterior_square = true;
+			reverse_isomorphism_exterior_square_f_lex_ordering = ST.strtoi(argv[++i]);
 			if (f_v) {
-				cout << "-reverse_isomorphism_exterior_square " << endl;
+				cout << "-reverse_isomorphism_exterior_square " << reverse_isomorphism_exterior_square_f_lex_ordering << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-reverse_isomorphism_exterior_square_vector_of_ge") == 0) {
 			f_reverse_isomorphism_exterior_square_vector_of_ge = true;
 			reverse_isomorphism_exterior_square_vector_of_ge_label.assign(argv[++i]);
+			reverse_isomorphism_exterior_square_vector_of_ge_f_lex_ordering = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-reverse_isomorphism_exterior_square_vector_of_ge "
-						<< reverse_isomorphism_exterior_square_vector_of_ge_label << endl;
+						<< reverse_isomorphism_exterior_square_vector_of_ge_label
+						<< " " << reverse_isomorphism_exterior_square_vector_of_ge_f_lex_ordering
+						<< endl;
 			}
 		}
 
@@ -1205,6 +1246,9 @@ int group_theoretic_activity_description::read_arguments(
 
 void group_theoretic_activity_description::print()
 {
+
+	//  1
+
 	if (f_report) {
 		cout << "-report " << report_draw_options << endl;
 	}
@@ -1306,6 +1350,17 @@ void group_theoretic_activity_description::print()
 	if (f_find_small_generating_set) {
 		cout << "-find_small_generating_set " << find_small_generating_set_desired_size
 			<< " " << find_small_generating_set_max_attempts << endl;
+	}
+	if (f_proportion_of_generating_sets_of_size_k) {
+		cout << "-proportion_of_generating_sets_of_size_k " << proportion_of_generating_sets_of_size_k_k << endl;
+	}
+	if (f_proportion_of_generating_sets_of_size_k_using_orbits) {
+		cout << "-proportion_of_generating_sets_of_size_k_using_orbits "
+				<< proportion_of_generating_sets_of_size_k_using_orbits_k
+				<< " " << proportion_of_generating_sets_of_size_k_using_orbits_fname
+				<< " " << proportion_of_generating_sets_of_size_k_using_orbits_col_label_reps
+				<< " " << proportion_of_generating_sets_of_size_k_using_orbits_col_label_orbit_length
+				<< endl;
 	}
 	if (f_find_singer_cycle) {
 		cout << "-find_singer_cycle " << endl;
@@ -1457,7 +1512,7 @@ void group_theoretic_activity_description::print()
 		cout << "-order_of_products " << order_of_products_elements << endl;
 	}
 	if (f_reverse_isomorphism_exterior_square) {
-		cout << "-reverse_isomorphism_exterior_square " << endl;
+		cout << "-reverse_isomorphism_exterior_square " << reverse_isomorphism_exterior_square_f_lex_ordering << endl;
 	}
 	if (f_reverse_isomorphism_exterior_square_vector_of_ge) {
 		cout << "-reverse_isomorphism_exterior_square_vector_of_ge "

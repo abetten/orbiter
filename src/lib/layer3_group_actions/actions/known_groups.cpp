@@ -1058,8 +1058,10 @@ void known_groups::init_permutation_group_from_generators(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int i;
-	combinatorics::other_combinatorics::combinatorics_domain Combi;
+
+	if (f_v) {
+		cout << "known_groups::init_permutation_group_from_generators " << endl;
+	}
 
 	if (f_v) {
 		cout << "known_groups::init_permutation_group_from_generators "
@@ -1080,6 +1082,9 @@ void known_groups::init_permutation_group_from_generators(
 		Lint_vec_print(cout, given_base, given_base_length);
 		cout << endl;
 	}
+
+	int i;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	A->label = "Perm_" + std::to_string(degree);
 	A->label_tex = "Perm\\_" + std::to_string(degree);
@@ -1414,6 +1419,73 @@ void known_groups::init_cyclic_group(
 	}
 }
 
+
+void known_groups::init_dihedral_group(
+		int degree, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "known_groups::init_dihedral_group" << endl;
+	}
+
+	int nb_gens, *gens;
+	int given_base_length;
+	long int *given_base;
+	//int i;
+	algebra::ring_theory::longinteger_object go;
+
+	go.create(degree * 2);
+
+	A->make_element_size = degree;
+
+
+	algebra::basic_algebra::group_generators_domain Group_generators_domain;
+
+	if (f_v) {
+		cout << "known_groups::init_dihedral_group "
+				"before Group_generators_domain.generators_dihedral_group" << endl;
+	}
+	Group_generators_domain.generators_dihedral_group(
+			degree,
+			nb_gens, gens, verbose_level - 2);
+	if (f_v) {
+		cout << "known_groups::init_dihedral_group "
+				"after Group_generators_domain.generators_dihedral_group" << endl;
+	}
+
+	given_base_length = 2;
+	given_base = NEW_lint(given_base_length);
+	given_base[0] = 0;
+	given_base[1] = 1;
+
+
+
+	if (f_v) {
+		cout << "known_groups::init_dihedral_group "
+				"before init_permutation_group_from_generators" << endl;
+	}
+	init_permutation_group_from_generators(
+			degree,
+		true, go,
+		nb_gens, gens,
+		given_base_length, given_base,
+		true /* f_given_base */,
+		verbose_level);
+	if (f_v) {
+		cout << "known_groups::init_dihedral_group "
+				"after init_permutation_group_from_generators" << endl;
+	}
+	FREE_int(gens);
+	FREE_lint(given_base);
+
+	A->label = "D_" + std::to_string(degree);
+	A->label_tex = "{\\rm D}_{" + std::to_string(degree) + "}";
+
+	if (f_v) {
+		cout << "known_groups::init_dihedral_group done" << endl;
+	}
+}
 
 
 

@@ -4098,6 +4098,7 @@ void strong_generators::report_fixed_objects_in_PG(
 }
 
 void strong_generators::reverse_isomorphism_exterior_square(
+		int f_lex_ordering,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -4111,7 +4112,7 @@ void strong_generators::reverse_isomorphism_exterior_square(
 				"before gens->reverse_isomorphism_exterior_square" << endl;
 	}
 
-	gens->reverse_isomorphism_exterior_square(verbose_level);
+	gens->reverse_isomorphism_exterior_square(f_lex_ordering, verbose_level);
 
 	if (f_v) {
 		cout << "strong_generators::reverse_isomorphism_exterior_square "

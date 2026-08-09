@@ -1354,6 +1354,428 @@ void any_group::do_find_subgroups(
 	}
 }
 
+void any_group::proportion_of_generating_sets_of_size_k(
+		int k,
+		long int &nb_win,
+		long int &nb_total,
+		long int &goi,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "any_group::proportion_of_generating_sets_of_size_k" << endl;
+	}
+
+	nb_win = 0;
+	nb_total = 0;
+
+
+	algebra::ring_theory::longinteger_domain D;
+	groups::sims *Sims;
+	//groups::strong_generators *SG;
+
+	//SG = get_strong_generators();
+
+
+	Sims = get_sims();
+	//Sims = SG->create_sims(verbose_level);
+
+
+	algebra::ring_theory::longinteger_object target_go;
+
+	Sims->group_order(target_go);
+
+	combinatorics::other_combinatorics::combinatorics_domain Combinatorics_domain;
+
+	int *set;
+	long int n, rk, N;
+
+	n = target_go.as_lint();
+
+	N = Combinatorics_domain.binomial_lint(
+			n, k);
+
+	nb_total = N;
+
+	set = NEW_int(k);
+
+	for (rk = 0; rk < N; rk++) {
+
+		Combinatorics_domain.unrank_k_subset(
+			rk, set, n, k);
+
+		if (f_v) {
+			cout << "any_group::proportion_of_generating_sets_of_size_k attempt " << rk << " / " << N << endl;
+		}
+
+		data_structures_groups::vector_ge *gens;
+
+		gens = NEW_OBJECT(data_structures_groups::vector_ge);
+
+		gens->init(A, 0/*verbose_level*/);
+		gens->allocate(k, 0/*verbose_level*/);
+
+		int i;
+
+		for (i = 0; i < k; i++) {
+
+			Sims->element_unrank_lint(
+					set[i], gens->ith(i), verbose_level - 2);
+
+		}
+
+
+		algebra::ring_theory::longinteger_object go;
+		groups::sims *S;
+
+		A->generate_group_without_target_go(gens, S, verbose_level - 2);
+
+
+		S->group_order(go);
+
+		if (D.compare(
+				go, target_go) == 0) {
+
+			if (f_v) {
+				cout << "any_group::proportion_of_generating_sets_of_size_k success "
+						"success: iteration " << rk << " we found a generating set of size " << k << endl;
+				cout << "any_group::proportion_of_generating_sets_of_size_k success "
+						"go = " << go << endl;
+				cout << "any_group::proportion_of_generating_sets_of_size_k success "
+						"target_go = " << target_go << endl;
+				cout << "any_group::proportion_of_generating_sets_of_size_k success "
+						"generating subset: ";
+				Int_vec_print(cout, set, k);
+				cout << endl;
+				for (i = 0; i < k; i++) {
+
+					Sims->element_unrank_lint(
+							set[i], gens->ith(i), verbose_level - 2);
+
+				}
+				for (i = 0; i < k; i++) {
+
+					A->Group_element->element_print_quick(
+							gens->ith(i), cout);
+					cout << endl;
+
+				}
+
+			}
+
+			nb_win++;
+		}
+
+
+		FREE_OBJECT(S);
+		FREE_OBJECT(gens);
+
+	}
+
+	FREE_int(set);
+	//FREE_OBJECT(Sims);
+
+
+	if (f_v) {
+		cout << "any_group::proportion_of_generating_sets_of_size_k done" << endl;
+	}
+}
+
+
+void any_group::proportion_of_generating_sets_of_size_k_using_orbits(
+		int k,
+		std::string &fname_orbits,
+		std::string &column_label_representatives,
+		std::string &column_label_orbit_length,
+		long int &nb_orbits,
+		long int &nb_good_orbits,
+		long int &nb_win,
+		long int &nb_total,
+		long int &goi,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "any_group::proportion_of_generating_sets_of_size_k_using_orbits" << endl;
+		cout << "any_group::proportion_of_generating_sets_of_size_k_using_orbits k = " << k << endl;
+		cout << "any_group::proportion_of_generating_sets_of_size_k_using_orbits fname_orbits = " << fname_orbits << endl;
+	}
+
+	nb_win = 0;
+	nb_good_orbits = 0;
+	nb_total = 0;
+
+	long int nb_total_seen = 0;
+
+
+	algebra::ring_theory::longinteger_domain D;
+	groups::sims *Sims;
+	//groups::strong_generators *SG;
+
+	//SG = get_strong_generators();
+
+
+	Sims = get_sims();
+	//Sims = SG->create_sims(verbose_level);
+
+
+	algebra::ring_theory::longinteger_object target_go;
+
+	Sims->group_order(target_go);
+
+	other::orbiter_kernel_system::file_io Fio;
+	std::string *col_label;
+	std::string *Table;
+	int m, nb_cols;
+
+	Fio.Csv_file_support->read_table_of_strings(
+			fname_orbits, col_label,
+			Table, m, nb_cols,
+			verbose_level);
+
+
+	nb_orbits = m;
+
+
+	if (f_v) {
+		cout << "any_group::proportion_of_generating_sets_of_size_k_using_orbits Number of orbits = " << nb_orbits << endl;
+	}
+
+
+	combinatorics::other_combinatorics::combinatorics_domain Combinatorics_domain;
+
+	long int n;
+	int row;
+	int idx_reps = -1, j;
+	int idx_OL = -1;
+
+	for (j = 0; j < nb_cols; j++) {
+		if (col_label[j] == column_label_representatives) {
+			idx_reps = j;
+			break;
+		}
+	}
+	if (idx_reps == -1) {
+		cout << "any_group::proportion_of_generating_sets_of_size_k_using_orbits could not find column " << column_label_representatives << endl;
+		exit(1);
+	}
+
+	for (j = 0; j < nb_cols; j++) {
+		if (col_label[j] == column_label_orbit_length) {
+			idx_OL = j;
+			break;
+		}
+	}
+	if (idx_OL == -1) {
+		cout << "any_group::proportion_of_generating_sets_of_size_k_using_orbits could not find column " << column_label_orbit_length << endl;
+		exit(1);
+	}
+
+	n = target_go.as_lint();
+
+	nb_total = Combinatorics_domain.binomial_lint(n, k);
+
+	//nb_total = N;
+
+	other::data_structures::string_tools String_tools;
+
+
+	nb_good_orbits = 0;
+
+	int *F_orbit_is_good;
+
+	F_orbit_is_good = NEW_int(nb_orbits);
+	Int_vec_zero(F_orbit_is_good, nb_orbits);
+
+
+	for (row = 0; row < nb_orbits; row++) {
+
+		//Combinatorics_domain.unrank_k_subset(rk, set, n, k);
+
+		if (f_v) {
+			cout << "any_group::proportion_of_generating_sets_of_size_k_using_orbits orbit " << row << " / " << nb_orbits
+					<< " nb_good_orbits = " << nb_good_orbits
+					<< " nb_win = " << nb_win
+					<< endl;
+		}
+
+		int *set;
+		int sz;
+
+
+
+		data_structures_groups::vector_ge *gens;
+
+		gens = NEW_OBJECT(data_structures_groups::vector_ge);
+
+		gens->init(A, 0/*verbose_level*/);
+		gens->allocate(k, 0/*verbose_level*/);
+
+
+
+		std::string reps;
+
+		String_tools.drop_quotes(
+				Table[row * nb_cols + idx_reps], reps);
+
+		Int_vec_scan(reps, set, sz);
+
+		if (sz != k) {
+			cout << "any_group::proportion_of_generating_sets_of_size_k_using_orbits sz != k" << endl;
+			cout << "any_group::proportion_of_generating_sets_of_size_k_using_orbits sz = " << sz << endl;
+			cout << "any_group::proportion_of_generating_sets_of_size_k_using_orbits k = " << k << endl;
+			exit(1);
+		}
+
+
+		int i;
+
+		for (i = 0; i < k; i++) {
+
+			Sims->element_unrank_lint(
+					set[i], gens->ith(i), verbose_level - 2);
+
+		}
+
+		algebra::ring_theory::longinteger_object go;
+		groups::sims *S;
+
+		A->generate_group_without_target_go(gens, S, verbose_level - 2);
+
+
+		S->group_order(go);
+
+		if (D.compare(
+				go, target_go) == 0) {
+
+			if (f_v) {
+				cout << "any_group::proportion_of_generating_sets_of_size_k_using_orbits success "
+						"success: orbit " << row << " / " << nb_orbits << " is a generating set of size " << k << " nb_good_orbits=" << nb_good_orbits << endl;
+				cout << "any_group::proportion_of_generating_sets_of_size_k_using_orbits success "
+						"go = " << go << endl;
+				cout << "any_group::proportion_of_generating_sets_of_size_k_using_orbits success "
+						"target_go = " << target_go << endl;
+				cout << "any_group::proportion_of_generating_sets_of_size_k_using_orbits success "
+						"generating subset: ";
+				Int_vec_print(cout, set, k);
+				cout << endl;
+
+				for (i = 0; i < k; i++) {
+
+					Sims->element_unrank_lint(
+							set[i], gens->ith(i), verbose_level - 2);
+
+				}
+				for (i = 0; i < k; i++) {
+
+					A->Group_element->element_print_quick(
+							gens->ith(i), cout);
+					cout << endl;
+
+				}
+
+			}
+
+			F_orbit_is_good[row] = true;
+
+			nb_good_orbits++;
+
+			nb_win += std::stoi(Table[row * nb_cols + idx_OL]);
+		}
+
+		nb_total_seen += std::stoi(Table[row * nb_cols + idx_OL]);
+
+		FREE_int(set);
+
+		FREE_OBJECT(S);
+		FREE_OBJECT(gens);
+
+	}
+
+	if (nb_total_seen != nb_total) {
+		cout << "any_group::proportion_of_generating_sets_of_size_k_using_orbits nb_total_seen != nb_total" << endl;
+		exit(1);
+	}
+
+	cout << "Number of good orbits = " << nb_good_orbits << endl;
+	cout << "The good orbits are: " << endl;
+
+
+	{
+		string fname_out;
+
+		fname_out = fname_orbits;
+
+		String_tools.chop_off_extension(fname_out);
+
+		fname_out += "_pair_generators.csv";
+
+		ofstream ost(fname_out);
+
+		int nb;
+
+		nb = 0;
+
+		ost << "Row,OrbitIdx,Reps,OrbitLength" << endl;
+
+		for (row = 0; row < nb_orbits; row++) {
+			if (F_orbit_is_good[row]) {
+
+				ost << nb << "," << row << ",";
+
+				string reps;
+
+				String_tools.drop_quotes(
+						Table[row * nb_cols + idx_reps], reps);
+
+				ost << "\"" << reps << "\"" << ",";
+				ost << std::stoi(Table[row * nb_cols + idx_OL]);
+				ost << endl;
+
+				nb++;
+			}
+		}
+		ost << "END" << endl;
+
+	}
+
+
+	{
+		string fname_out;
+
+		fname_out = fname_orbits;
+
+		String_tools.chop_off_extension(fname_out);
+
+		fname_out += "_pair_generating.csv";
+
+		ofstream ost(fname_out);
+
+
+		ost << "Row,PairGenerating" << endl;
+
+		for (row = 0; row < nb_orbits; row++) {
+
+			ost << row << "," << F_orbit_is_good[row] << endl;
+
+		}
+		ost << "END" << endl;
+
+	}
+
+
+	//FREE_OBJECT(Sims);
+
+
+	if (f_v) {
+		cout << "any_group::proportion_of_generating_sets_of_size_k_using_orbits done" << endl;
+	}
+}
+
+
+
 int any_group::find_small_generating_set(
 		int desired_size,
 		int max_attempts,
@@ -1857,7 +2279,7 @@ void any_group::random_element(
 
 	if (f_v) {
 		//cout << "group order G = " << G->group_order_int() << endl;
-		cout << "group order H = " << H->group_order_lint() << endl;
+		cout << "any_group::random_element group order H = " << H->group_order_lint() << endl;
 	}
 
 	int *Elt;
@@ -1906,54 +2328,58 @@ void any_group::random_element(
 
 	if (f_v) {
 
-		cout << "Element :" << endl;
+		cout << "any_group::random_element Element :" << endl;
 		A1->Group_element->element_print(Elt, cout);
 		cout << endl;
 
-		cout << "coded: ";
+		cout << "any_group::random_element coded: ";
 		Int_vec_print(cout, data, A1->make_element_size);
 		cout << endl;
+	}
 
-		cout << "Element as permutation:" << endl;
+	if (f_v) {
+		cout << "any_group::random_element Element as permutation:" << endl;
 
 
 		A1->Group_element->element_print_as_permutation(Elt, cout);
 		cout << endl;
-
-		int *perm;
-
-		perm = NEW_int(A1->degree);
-
-		A1->Group_element->compute_permutation(
-				Elt,
-				perm, 0 /*verbose_level*/);
-		cout << "In list notation:" << endl;
-		Int_vec_print(cout, perm, A1->degree);
-		cout << endl;
-
-		s_perm = Int_vec_stringify(perm, A1->degree);
-
-		A1->Group_element->cycle_type(
-				Elt,
-				cycles, nb_cycles,
-				0 /* verbose_level */);
-
-		s_cycle_type = Int_vec_stringify(cycles, nb_cycles);
-
-
-		sign = A1->Group_element->element_signum_of_permutation(
-				Elt);
-
-		ord = A1->Group_element->element_order(
-				Elt);
-
 	}
+
+	int *perm;
+
+	perm = NEW_int(A1->degree);
+
+	A1->Group_element->compute_permutation(
+			Elt,
+			perm, 0 /*verbose_level*/);
+
+
+	cout << "In list notation:" << endl;
+	Int_vec_print(cout, perm, A1->degree);
+	cout << endl;
+
+	s_perm = Int_vec_stringify(perm, A1->degree);
+
+	A1->Group_element->cycle_type(
+			Elt,
+			cycles, nb_cycles,
+			0 /* verbose_level */);
+
+	s_cycle_type = Int_vec_stringify(cycles, nb_cycles);
+
+
+	sign = A1->Group_element->element_signum_of_permutation(
+			Elt);
+
+	ord = A1->Group_element->element_order(
+			Elt);
+
 
 	algebra::ring_theory::longinteger_object a;
 	H->element_rank(a, Elt);
 
 	if (f_v) {
-		cout << "The rank of the element is " << a << endl;
+		cout << "any_group::random_element The rank of the element is " << a << endl;
 	}
 
 
@@ -2292,6 +2718,7 @@ void any_group::automorphism_by_generator_images_save(
 
 
 void any_group::do_reverse_isomorphism_exterior_square(
+		int f_lex_ordering,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2308,7 +2735,7 @@ void any_group::do_reverse_isomorphism_exterior_square(
 					"nice generators are:" << endl;
 			LG->nice_gens->print(cout);
 		}
-		LG->nice_gens->reverse_isomorphism_exterior_square(verbose_level);
+		LG->nice_gens->reverse_isomorphism_exterior_square(f_lex_ordering, verbose_level);
 	}
 	else {
 		if (f_v) {
@@ -2317,7 +2744,7 @@ void any_group::do_reverse_isomorphism_exterior_square(
 			LG->Strong_gens->print_generators_in_latex_individually(
 					cout, verbose_level - 1);
 		}
-		LG->Strong_gens->reverse_isomorphism_exterior_square(verbose_level);
+		LG->Strong_gens->reverse_isomorphism_exterior_square(f_lex_ordering, verbose_level);
 	}
 
 	if (f_v) {
@@ -2328,6 +2755,7 @@ void any_group::do_reverse_isomorphism_exterior_square(
 
 void any_group::do_reverse_isomorphism_exterior_square_vector_ge(
 		data_structures_groups::vector_ge *vec,
+		int f_lex_ordering,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2342,7 +2770,7 @@ void any_group::do_reverse_isomorphism_exterior_square_vector_ge(
 				"before vec->reverse_isomorphism_exterior_square" << endl;
 	}
 
-	vec->reverse_isomorphism_exterior_square(verbose_level);
+	vec->reverse_isomorphism_exterior_square(f_lex_ordering, verbose_level);
 
 	if (f_v) {
 		cout << "any_group::do_reverse_isomorphism_exterior_square_vector_ge "
@@ -2380,6 +2808,34 @@ groups::strong_generators *any_group::get_strong_generators()
 		exit(1);
 	}
 	return SG;
+}
+
+
+groups::sims *any_group::get_sims()
+{
+	int f_v = false;
+	groups::sims *S;
+
+	if (Subgroup_sims) {
+		if (f_v) {
+			cout << "any_group::get_sims using Subgroup_sims" << endl;
+		}
+		S = Subgroup_sims;
+	}
+#if 0
+	else if (A->f_has_strong_generators) {
+		if (f_v) {
+			cout << "any_group::get_strong_generators "
+					"using A_base->Strong_gens" << endl;
+		}
+		SG = A->Strong_gens;
+	}
+#endif
+	else {
+		cout << "any_group::get_sims Subgroup_sims is not available" << endl;
+		exit(1);
+	}
+	return S;
 }
 
 

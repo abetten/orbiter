@@ -1737,7 +1737,7 @@ void linear_algebra::exterior_square(
 
 
 void linear_algebra::exterior_square_4x4(
-		int *A4, int *A6, int verbose_level)
+		int *A4, int *A6, int f_lex_ordering, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1757,14 +1757,32 @@ void linear_algebra::exterior_square_4x4(
 		Int_matrix_print(A4, n, n);
 	}
 
-	int Pairs[] = {
-			0,1,
-			2,3,
-			0,2,
-			1,3,
-			0,3,
-			1,2
-	};
+	int Pairs[12];
+
+	if (f_lex_ordering) {
+		int Pairs_init[] = {
+				0,1,
+				0,2,
+				0,3,
+				1,2,
+				1,3,
+				2,3
+		};
+		Int_vec_copy(Pairs_init, Pairs, 12);
+
+	}
+	else {
+		int Pairs_init[] = {
+				0,1,
+				2,3,
+				0,2,
+				1,3,
+				0,3,
+				1,2
+		};
+		Int_vec_copy(Pairs_init, Pairs, 12);
+
+	}
 
 
 	// (i,j) = row index

@@ -83,7 +83,6 @@ void pc_latex_interface::init(
 
 
 void pc_latex_interface::report(
-		//poset_classification_report_options *Opt,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -161,7 +160,6 @@ void pc_latex_interface::report(
 
 void pc_latex_interface::report2(
 		std::ostream &ost,
-		//poset_classification_report_options *Opt,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -324,7 +322,6 @@ void pc_latex_interface::report2(
 
 void pc_latex_interface::report_orbits_in_detail(
 		std::ostream &ost,
-		//poset_classification_report_options *Opt,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -384,7 +381,6 @@ void pc_latex_interface::report_orbits_in_detail(
 
 void pc_latex_interface::report_number_of_orbits_at_level(
 		std::ostream &ost,
-		//poset_classification_report_options *Opt,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -454,7 +450,6 @@ void pc_latex_interface::report_number_of_orbits_at_level(
 
 void pc_latex_interface::report_orbits_summary(
 		std::ostream &ost,
-		//poset_classification_report_options *Opt,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -712,7 +707,6 @@ void pc_latex_interface::report_orbits_summary(
 
 void pc_latex_interface::report_poset_of_orbits(
 		std::ostream &ost,
-		//poset_classification_report_options *Opt,
 		int verbose_level)
 {
 
@@ -846,7 +840,6 @@ void pc_latex_interface::report_poset_of_orbits(
 
 void pc_latex_interface::report_orbit(
 		int level, int orbit_at_level,
-		//poset_classification_report_options *Opt,
 		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

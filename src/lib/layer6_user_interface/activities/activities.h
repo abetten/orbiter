@@ -839,6 +839,12 @@ class interface_toolkit {
 	std::vector<std::string> prepare_tables_for_users_guide_fname;
 
 	// undocumented:
+	int f_prepare_tables_general;
+	std::string prepare_tables_general_fnames;
+	std::string prepare_tables_general_col_captions;
+	std::string prepare_tables_general_latex_columns;
+
+	// undocumented:
 	int f_prepare_general_tables_for_users_guide;
 	std::vector<std::string> prepare_general_tables_for_users_guide_fname;
 

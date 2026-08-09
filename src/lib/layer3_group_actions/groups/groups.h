@@ -151,6 +151,32 @@ public:
 	void do_find_subgroups(
 			int order_of_subgroup,
 			int verbose_level);
+	void proportion_of_generating_sets_of_size_k(
+			int k,
+			long int &nb_win,
+			long int &nb_total,
+			long int &goi,
+			int verbose_level);
+	void proportion_of_generating_sets_of_size_k_using_orbits(
+			int k,
+			std::string &fname_orbits,
+			std::string &column_label_representatives,
+			std::string &column_label_orbit_length,
+			long int &nb_orbits,
+			long int &nb_good_orbits,
+			long int &nb_win,
+			long int &nb_total,
+			long int &goi,
+			int verbose_level);
+	void proportion_of_generating_sets_of_size_k_using_orbits(
+			int k,
+			std::string &fname_orbits,
+			long int &nb_orbits,
+			long int &nb_good_orbits,
+			long int &nb_win,
+			long int &nb_total,
+			long int &goi,
+			int verbose_level);
 	int find_small_generating_set(
 			int desired_size,
 			int max_attempts,
@@ -193,11 +219,14 @@ public:
 			int *Perms, long int go,
 			int verbose_level);
 	void do_reverse_isomorphism_exterior_square(
+			int f_lex_ordering,
 			int verbose_level);
 	void do_reverse_isomorphism_exterior_square_vector_ge(
 			data_structures_groups::vector_ge *vec,
+			int f_lex_ordering,
 			int verbose_level);
 	groups::strong_generators *get_strong_generators();
+	groups::sims *get_sims();
 	int is_subgroup_of(
 			any_group *AG_secondary, int verbose_level);
 	void set_of_coset_representatives(
@@ -2108,6 +2137,7 @@ public:
 			geometry::projective_geometry::projective_space *P,
 			int verbose_level);
 	void reverse_isomorphism_exterior_square(
+			int f_lex_ordering,
 			int verbose_level);
 	void get_gens_data(
 			int *&data, int &sz, int verbose_level);

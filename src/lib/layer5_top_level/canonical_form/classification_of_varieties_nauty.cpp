@@ -1243,11 +1243,11 @@ void classification_of_varieties_nauty::generate_source_code(
 
 			idx = Orbit_input_idx[orbit_index];
 
-			long int *Lines;
+			//long int *Lines;
 			int nb_lines;
 
 			nb_lines = Input->Vo[idx]->Variety_object->Line_sets->Set_size[0];
-			Lines = Input->Vo[idx]->Variety_object->Line_sets->Sets[0];
+			//Lines = Input->Vo[idx]->Variety_object->Line_sets->Sets[0];
 
 			Nb_lines[orbit_index] = nb_lines;
 			Lines_first[orbit_index] = lines_first;

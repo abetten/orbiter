@@ -147,13 +147,13 @@ public:
 };
 
 
+
+
+
+
 // #############################################################################
 // orbit_of_sets.cpp
 // #############################################################################
-
-
-
-
 
 
 //! orbit of sets using a Schreier tree; useful for objects which can be encoded as sets of a fixed size; the set size may be one
@@ -202,6 +202,9 @@ public:
 		// we use a multimap because the hash values are not unique
 		// two sets may have the same hash value.
 		// map cannot handle that.
+		//
+
+		// perhaps the second component should be long int?
 
 	orbit_of_sets();
 	~orbit_of_sets();

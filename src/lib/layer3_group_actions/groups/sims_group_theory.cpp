@@ -2268,6 +2268,8 @@ void sims::dimino(
 	int new_gen,
 	int *group, int &group_sz,
 	int verbose_level)
+// subgroup[goi], gens[goi], cosets[goi], group[goi] must be previously allocated
+// where goi is the order of the group
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -2292,17 +2294,18 @@ void sims::dimino(
 			}
 
 			c = mult_by_rank(cosets[i], gens[j]);
-			if (f_vv) {
+
+			if (false) {
 				cout << "sims::dimino coset rep " << i << " times generator "
 						<< j << " is " << c << endl;
 			}
 			if (Sorting.int_vec_search(group, group_sz, c, idx)) {
-				if (f_vv) {
+				if (false) {
 					cout << "sims::dimino already there" << endl;
 				}
 				continue;
 			}
-			if (f_vv) {
+			if (false) {
 				cout << "sims::dimino new coset rep" << endl;
 			}
 			new_coset_rep = c;
@@ -2312,14 +2315,15 @@ void sims::dimino(
 				group[group_sz++] = c;
 			}
 			Sorting.int_vec_heapsort(group, group_sz);
-			if (f_vv) {
-				cout << "sims::dimino new group size = " << group_sz << endl;
+			if (false) {
+				cout << "sims::dimino new group order = " << group_sz << endl;
 			}
 			cosets[nb_cosets++] = new_coset_rep;
 		}
-	}
-	if (f_vv) {
-		cout << "sims::dimino, the group order has been updated to " << group_sz << endl;
+		if (f_vv) {
+			cout << "sims::dimino coset " << i << " / " << nb_cosets
+					<< " the group order has been updated to " << group_sz << endl;
+		}
 	}
 
 	if (f_v) {

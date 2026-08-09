@@ -63,6 +63,9 @@ draw_options::draw_options()
 	f_no_vertices = false;
 	f_show_colors = false;
 
+	f_node_color = false;
+	node_color_value = 1;
+
 	f_select_layers = false;
 	//select_layers = NULL;
 	nb_layer_select = 0;
@@ -260,6 +263,13 @@ int draw_options::read_arguments(
 				cout << "-show_colors " << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-node_color") == 0) {
+			f_node_color = true;
+			node_color_value = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-node_color " << node_color_value << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-select_layers") == 0) {
 			f_select_layers = true;
 			select_layers.assign(argv[++i]);
@@ -397,6 +407,9 @@ void draw_options::print()
 	}
 	if (f_show_colors) {
 		cout << "show_colors" << endl;
+	}
+	if (f_node_color) {
+		cout << "-node_color " << node_color_value << endl;
 	}
 	if (f_select_layers) {
 		cout << "select_layers=" << select_layers << endl;

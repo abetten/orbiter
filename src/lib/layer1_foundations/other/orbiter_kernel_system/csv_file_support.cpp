@@ -2586,6 +2586,7 @@ void csv_file_support::prepare_tables_for_users_guide(
 	}
 }
 
+
 void csv_file_support::prepare_general_tables_for_users_guide(
 		std::vector<std::string> &tbl_fname,
 		int verbose_level)
@@ -2826,7 +2827,198 @@ void csv_file_support::prepare_table_for_users_guide(
 }
 
 
+void csv_file_support::prepare_tables_general(
+		std::string &fnames,
+		std::string &col_captions,
+		std::string &latex_columns,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
 
+	if (f_v) {
+		cout << "csv_file_support::prepare_tables_general" << endl;
+	}
+
+	other::data_structures::string_tools ST;
+	std::vector<std::string> tbl_fname;
+
+	ST.parse_comma_separated_list(
+			fnames, tbl_fname,
+			0 /*verbose_level*/);
+
+	if (f_v) {
+		cout << "csv_file_support::prepare_tables_general "
+				"the list of files has size " << tbl_fname.size() << endl;
+		cout << "csv_file_support::prepare_tables_general "
+				"the list of files has size "
+				"after parsing, the file list is:" << endl;
+		int i;
+		for (i = 0; i < tbl_fname.size(); i++) {
+			cout << i << " : " << tbl_fname[i] << endl;
+		}
+	}
+
+
+	int h;
+
+	for (h = 0; h < tbl_fname.size(); h++) {
+		prepare_table_tcolorbox(
+				tbl_fname[h],
+				col_captions,
+				latex_columns,
+				verbose_level);
+	}
+	if (f_v) {
+		cout << "csv_file_support::prepare_tables_general done" << endl;
+	}
+}
+
+
+void csv_file_support::prepare_table_tcolorbox(
+		std::string &fname_csv,
+		std::string &col_captions,
+		std::string &latex_columns,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "csv_file_support::prepare_table_tcolorbox" << endl;
+	}
+
+	other::data_structures::string_tools ST;
+	std::vector<std::string> tbl_col_captions;
+
+	ST.parse_comma_separated_list(
+			col_captions, tbl_col_captions,
+			0 /*verbose_level*/);
+
+	if (f_v) {
+		cout << "csv_file_support::prepare_table_tcolorbox "
+				"the list of files has size " << tbl_col_captions.size() << endl;
+		cout << "csv_file_support::prepare_table_tcolorbox "
+				"the list of files has size "
+				"after parsing, the file list is:" << endl;
+		int i;
+		for (i = 0; i < tbl_col_captions.size(); i++) {
+			cout << i << " : " << tbl_col_captions[i] << endl;
+		}
+	}
+
+
+	//data_structures::string_tools ST;
+
+	std::string *col_label;
+	std::string *Table;
+	int m, n;
+
+	if (f_v) {
+		cout << "csv_file_support::prepare_table_tcolorbox "
+				"before read_table_of_strings_and_drop_quotes" << endl;
+	}
+
+	read_table_of_strings_and_drop_quotes(
+			fname_csv, col_label,
+			Table, m, n,
+			verbose_level);
+
+	if (f_v) {
+		cout << "csv_file_support::prepare_table_tcolorbox "
+				"after read_table_of_strings_and_drop_quotes" << endl;
+	}
+	if (f_v) {
+		cout << "csv_file_support::prepare_table_tcolorbox "
+				"found table of size " << m << " x " << n << endl;
+	}
+
+
+	delete [] col_label;
+
+
+	if (tbl_col_captions.size() != n) {
+		cout << "csv_file_support::prepare_table_tcolorbox "
+				"number of columns does not match" << endl;
+		cout << "tbl_col_captions.size()=" << tbl_col_captions.size() << endl;
+		cout << "n=" << n << endl;
+		exit(1);
+	}
+
+	std::string label;
+	std::string title;
+
+
+	label = Table[0 * n + 0];
+	title = Table[1 * n + 0];
+	if (f_v) {
+		cout << "csv_file_support::prepare_table_tcolorbox label = " << label << endl;
+		cout << "csv_file_support::prepare_table_tcolorbox title = " << title << endl;
+	}
+
+	string latex_columns_ug;
+	string header_ug;
+
+
+	latex_columns_ug = latex_columns; // "p{8cm}|X|X|";
+
+	int i;
+	header_ug = tbl_col_captions[0];
+	for (i = 1; i < tbl_col_captions.size(); i++) {
+		header_ug += " & " + tbl_col_captions[i];
+	}
+
+
+	int h0;
+
+	h0 = 2;
+
+
+
+	{
+		string fname_out;
+
+		fname_out = fname_csv;
+		ST.chop_off_extension(fname_out);
+		fname_out += "_tcolorbox.tex";
+
+		ofstream ost(fname_out);
+		int h, j;
+
+		//ost << "\\begin{table}" << endl;
+
+
+		ost << "\\begin{tcolorbox}[tabularx={" << latex_columns_ug << "},enhanced,fonttitle=\\bfseries\\large,fontupper=\\normalsize\\sffamily," << endl;
+			ost << "colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white," << endl;
+			ost << "coltitle=black,title=" << title << "]" << endl;
+			ost << "\\hline" << endl;
+			ost << header_ug << "\\\\" << endl;
+
+		ost << "\\hline" << endl;
+		ost << "\\hline" << endl;
+
+		for (h = h0; h < m; h++) {
+			for (j = 0; j < n; j++) {
+				ost << Table[h * n + j];
+				if (j < n - 1) {
+					ost << " & ";
+				}
+			}
+			ost << "\\\\" << endl;
+			ost << "\\hline" << endl;
+		}
+		ost << "\\end{tcolorbox}" << endl;
+
+
+		//ost << "\\caption{\\label{" << label << "}" << title << "}" << endl;
+		//ost << "\\end{table}" << endl;
+
+	}
+
+
+
+	if (f_v) {
+		cout << "csv_file_support::prepare_table_tcolorbox done" << endl;
+	}
+}
 
 
 void csv_file_support::read_csv_file_and_tally(

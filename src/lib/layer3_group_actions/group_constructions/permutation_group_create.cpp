@@ -65,6 +65,15 @@ void permutation_group_create::permutation_group_init(
 				"initializing group" << endl;
 	}
 
+#if 0
+	symmetric_group_t,
+	cyclic_group_t,
+	elementary_abelian_group_t,
+	identity_group_t,
+	dihedral_group_t,
+	bsgs_t,
+#endif
+
 
 	if (Descr->type == symmetric_group_t) {
 
@@ -182,6 +191,37 @@ void permutation_group_create::permutation_group_init(
 					"initializing identity_group_t done" << endl;
 		}
 	}
+
+
+	else if (Descr->type == dihedral_group_t) {
+
+		if (f_v) {
+			cout << "permutation_group_create::permutation_group_init "
+					"initializing dihedral_group_t" << endl;
+		}
+
+		A_initial = NEW_OBJECT(actions::action);
+
+		A_initial->Known_groups->init_dihedral_group(
+				Descr->degree, verbose_level);
+
+		if (f_v) {
+			cout << "permutation_group_create::permutation_group_init generators:" << endl;
+			A_initial->Strong_gens->print_generators_in_latex_individually(cout, verbose_level - 1);
+			A_initial->Strong_gens->print_generators_in_source_code(verbose_level - 1);
+			A_initial->print_base();
+			A_initial->print_info();
+		}
+
+		label.assign(A_initial->label);
+		label_tex.assign(A_initial->label_tex);
+
+		if (f_v) {
+			cout << "permutation_group_create::permutation_group_init "
+					"initializing dihedral_group_t done" << endl;
+		}
+	}
+
 
 	else if (Descr->type == bsgs_t) {
 

@@ -128,6 +128,12 @@ interface_toolkit::interface_toolkit()
 	f_prepare_tables_for_users_guide = false;
 	//std::vector<std::string> prepare_tables_for_users_guide_fname;
 
+	f_prepare_tables_general = false;
+	//std::string prepare_tables_general_fnames;
+	//std::string prepare_tables_general_col_captions;
+	//std::string prepare_tables_general_latex_columns;
+
+
 	f_prepare_general_tables_for_users_guide = false;
 	//std::vector<std::string> prepare_general_tables_for_users_guide_fname;
 
@@ -398,6 +404,9 @@ void interface_toolkit::print_help(
 	else if (ST.stringcmp(argv[i], "-prepare_tables_for_users_guide") == 0) {
 		cout << "-prepare_tables_for_users_guide <fname> <fname_1> ... <fname_n> -end" << endl;
 	}
+	else if (ST.stringcmp(argv[i], "-prepare_tables_general") == 0) {
+		cout << "-prepare_tables_general <fname> list_of_files_cs column_captions_cs latex_columns -end" << endl;
+	}
 	else if (ST.stringcmp(argv[i], "-prepare_general_tables_for_users_guide") == 0) {
 		cout << "-prepare_general_tables_for_users_guide <fname> <fname_1> ... <fname_n> -end" << endl;
 	}
@@ -600,6 +609,9 @@ int interface_toolkit::recognize_keyword(
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-prepare_general_tables_for_users_guide") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-prepare_tables_general") == 0) {
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-grade_statistic_from_csv") == 0) {
@@ -1036,6 +1048,21 @@ void interface_toolkit::read_arguments(
 				cout << " " << prepare_tables_for_users_guide_fname[j];
 			}
 			cout << endl;
+		}
+	}
+	else if (ST.stringcmp(argv[i], "-prepare_tables_general") == 0) {
+		f_prepare_tables_general = true;
+
+
+		prepare_tables_general_fnames.assign(argv[++i]);
+		prepare_tables_general_col_captions.assign(argv[++i]);
+		prepare_tables_general_latex_columns.assign(argv[++i]);
+
+		if (f_v) {
+			cout << "-prepare_tables_general " << prepare_tables_general_fnames
+					<< " " << prepare_tables_general_col_captions
+					<< " " << prepare_tables_general_latex_columns
+					<< endl;
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-prepare_general_tables_for_users_guide") == 0) {
@@ -1738,6 +1765,12 @@ void interface_toolkit::print()
 		cout << endl;
 
 	}
+	if (f_prepare_tables_general) {
+		cout << "-prepare_tables_general " << prepare_tables_general_fnames
+				<< " " << prepare_tables_general_col_captions
+				<< " " << prepare_tables_general_latex_columns
+				<< endl;
+	}
 	if (f_prepare_general_tables_for_users_guide) {
 		int j;
 
@@ -2354,6 +2387,21 @@ int interface_toolkit::worker2(
 
 		Fio.Csv_file_support->prepare_tables_for_users_guide(
 				prepare_tables_for_users_guide_fname,
+				verbose_level);
+	}
+	else if (f_prepare_tables_general) {
+
+		if (f_v) {
+			cout << "interface_toolkit::worker "
+					"f_prepare_tables_for_users_guide" << endl;
+		}
+
+		other::orbiter_kernel_system::file_io Fio;
+
+		Fio.Csv_file_support->prepare_tables_general(
+				prepare_tables_general_fnames,
+				prepare_tables_general_col_captions,
+				prepare_tables_general_latex_columns,
 				verbose_level);
 	}
 

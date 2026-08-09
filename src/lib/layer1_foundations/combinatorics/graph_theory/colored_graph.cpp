@@ -1204,12 +1204,13 @@ void colored_graph::save_DIMACS(
 	}
 }
 
-#if 0
-p edge 4 3
-e 1 2
-e 2 3
-e 3 4
-#endif
+
+// Dimacs format example (remove the // at the beginning of every line):
+//p edge 4 3
+//e 1 2
+//e 2 3
+//e 3 4
+
 
 void colored_graph::load(
 		std::string &fname, int verbose_level)
@@ -1300,7 +1301,7 @@ void colored_graph::draw_on_circle_2(
 	int *Px1, *Py1;
 	double phi = 360. / (double) n;
 	double rad1 = 5000; // a big circle for the vertices
-	double rad2 = 6000; // a bigger circle for the labels
+	double rad2 = 7000; // a bigger circle for the labels
 	other::orbiter_kernel_system::numerics Num;
 	
 	Px = NEW_int(n);
@@ -1315,14 +1316,12 @@ void colored_graph::draw_on_circle_2(
 	for (i = 0; i < n; i++) {
 		Num.on_circle_int(Px, Py, i,
 				((int)(90. + (double)i * phi)) % 360, rad1);
-		//cout << "i=" << i << " Px=" << Px[i]
-		// << " Py=" << Py[i] << endl;
 	}
 
 	if (!Draw_options->f_nodes_empty) {
 		int rad_big;
 
-		rad_big = (int)((double)rad1 * 1.1);
+		rad_big = (int)((double)rad1 * 1.2);
 		cout << "rad_big=" << rad_big << endl;
 		for (i = 0; i < n; i++) {
 			Num.on_circle_int(Px1, Py1, i,
@@ -1355,12 +1354,17 @@ void colored_graph::draw_on_circle_2(
 
 		int c;
 
-		if (nb_colors) {
+		if (nb_colors > 1) {
 			c = point_color[i];
 			// to start with red, use 2 + point_color[i];
 		}
 		else {
-			c = 1;
+			if (Draw_options->f_node_color) {
+				c = Draw_options->node_color_value;
+			}
+			else {
+				c = 1;
+			}
 		}
 		// draw solid:
 		G.sf_interior(1);
@@ -2009,110 +2013,6 @@ void colored_graph::common_neighbors(
 
 
 
-#if 0
-colored_graph
-*colored_graph::compute_neighborhood_subgraph_with_additional_test_function(
-	int pt,
-	fancy_set *&vertex_subset, fancy_set *&color_subset, 
-	int (*test_function)(colored_graph *CG, int test_point,
-			int pt, void *test_function_data, int verbose_level),
-	void *test_function_data, 
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	colored_graph *S;
-	int *color_in_graph;
-	int *color_in_subgraph;
-	long int i, j, l, len, ii, jj;
-	int c, idx;
-	int nb_points_subgraph;
-	uchar *bitvec;
-	sorting Sorting;
-
-	if (f_v) {
-		cout << "colored_graph::compute_neighborhood_subgraph_with_"
-				"additional_test_function of point " << pt << endl;
-	}
-	if (f_v) {
-		cout << "The graph has " << nb_points << " vertices and "
-				<< nb_colors << " colors" << endl;
-	}
-	S = NEW_OBJECT(colored_graph);
-	vertex_subset = NEW_OBJECT(fancy_set);
-	color_subset = NEW_OBJECT(fancy_set);
-	color_in_graph = NEW_int(nb_points);
-	color_in_subgraph = NEW_int(nb_points * nb_colors_per_vertex);
-
-	vertex_subset->init(nb_points, 0 /* verbose_level */);
-	color_subset->init(nb_colors, 0 /* verbose_level */);
-	
-	for (i = 0; i < nb_points; i++) {
-		if (i == pt) {
-			continue;
-		}
-		if (is_adjacent(i, pt)) {
-
-			if ((*test_function)(this, i, pt, test_function_data,
-					0 /*verbose_level*/)) {
-				for (j = 0; j < nb_colors_per_vertex; j++) {
-					c = point_color[i * nb_colors_per_vertex + j];
-					color_in_graph[vertex_subset->k * nb_colors_per_vertex + j] = c;
-					color_subset->add_element(c);
-				}
-				vertex_subset->add_element(i);
-			}
-		}
-	}
-
-
-	nb_points_subgraph = vertex_subset->k;
-
-	color_subset->sort();
-
-	if (f_v) {
-		cout << "The subgraph has " << nb_points_subgraph
-				<< " vertices and " << color_subset->k
-				<< " colors" << endl;
-	}
-
-	for (i = 0; i < nb_points_subgraph; i++) {
-		c = color_in_graph[i];
-		if (!Sorting.lint_vec_search(color_subset->set,
-				color_subset->k, c, idx, 0)) {
-			cout << "error, did not find color" << endl;
-			exit(1);
-		}
-		color_in_subgraph[i] = idx;
-	}
-	
-	l = ((long int) nb_points_subgraph * (long int) (nb_points_subgraph - 1)) >> 1;
-	len = (l + 7) >> 3;
-	bitvec = NEW_uchar(len);
-	for (i = 0; i < len; i++) {
-		bitvec[i] = 0;
-	}
-	S->init(nb_points_subgraph, color_subset->k, nb_colors_per_vertex,
-			color_in_subgraph, bitvec, true,
-			verbose_level);
-	for (i = 0; i < nb_points_subgraph; i++) {
-		ii = vertex_subset->set[i];
-		for (j = i + 1; j < nb_points_subgraph; j++) {
-			jj = vertex_subset->set[j];
-			if (is_adjacent(ii, jj)) {
-				S->set_adjacency(i, j, 1);
-				S->set_adjacency(j, i, 1);
-			}
-		}
-	}
-	FREE_int(color_in_graph);
-	FREE_int(color_in_subgraph);
-	if (f_v) {
-		cout << "colored_graph::compute_neighborhood_subgraph_"
-				"with_additional_test_function done" << endl;
-	}
-	return S;
-}
-#endif
 
 
 void colored_graph::export_to_magma(
@@ -2614,164 +2514,6 @@ int colored_graph::is_cycle(
 }
 
 
-
-
-
-#if 0
-void colored_graph::create_Levi_graph_from_incidence_matrix(
-	int *M, int nb_rows, int nb_cols,
-	int f_point_labels, long int *point_labels,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	//uchar *bitvector_adjacency;
-	long int L, bitvector_length;
-	long int k;
-	int i, j, r, c;
-	int N;
-	combinatorics_domain Combi;
-
-	if (f_v) {
-		cout << "colored_graph::create_Levi_graph_from_incidence_matrix" << endl;
-	}
-	N = nb_rows + nb_cols;
-	L = ((long int) N * ((long int) N - 1)) >> 1;
-
-	//bitvector_length_in_bits = L;
-	bitvector_length = (L + 7) >> 3;
-	bitvector_adjacency = NEW_uchar(bitvector_length);
-	for (i = 0; i < bitvector_length; i++) {
-		bitvector_adjacency[i] = 0;
-	}
-
-
-	for (r = 0; r < nb_rows; r++) {
-		i = r;
-		for (c = 0; c < nb_cols; c++) {
-			if (M[r * nb_cols + c]) {
-				j = nb_rows + c;
-				k = Combi.ij2k_lint(i, j, N);
-				bitvector_m_ii(bitvector_adjacency, k, 1);
-			}
-		}
-	}
-
-	if (f_point_labels) {
-		init_with_point_labels(N, 1 /* nb_colors */, 1 /* nb_colors_per_vertex */,
-			NULL /*point_color*/, Bitvec_adjacency,
-			true, point_labels, verbose_level - 2);
-			// the adjacency becomes part of the colored_graph object
-	}
-	else {
-		init(N, 1 /* nb_colors */, 1 /* nb_colors_per_vertex */,
-			NULL /*point_color*/, bitvector_adjacency,
-			true, verbose_level - 2);
-			// the adjacency becomes part of the colored_graph object
-	}
-
-	if (f_v) {
-		cout << "colored_graph::create_Levi_graph_from_incidence_matrix "
-				"done" << endl;
-	}
-}
-#endif
-
-
-
-#if 0
-void colored_graph::find_subgraph(
-		std::string &subgraph_label, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	other::data_structures::string_tools ST;
-
-	if (f_v) {
-		cout << "colored_graph::find_subgraph" << endl;
-	}
-
-	if (ST.stringcmp(subgraph_label, "E6") == 0) {
-		if (f_v) {
-			cout << "colored_graph::find_subgraph "
-					"before find_subgraph_E6" << endl;
-		}
-		find_subgraph_E6(verbose_level);
-		if (f_v) {
-			cout << "colored_graph::find_subgraph "
-					"after find_subgraph_E6" << endl;
-		}
-	}
-	else {
-		string first_letter;
-
-		first_letter = subgraph_label.substr(0,1);
-
-		if (ST.stringcmp(first_letter, "A") == 0) {
-			if (f_v) {
-				cout << "colored_graph::find_subgraph "
-						"first letter is A" << endl;
-			}
-			string remainder;
-
-			remainder = subgraph_label.substr(1);
-
-			int n;
-
-			n = ST.strtoi(remainder);
-
-			if (f_v) {
-				cout << "colored_graph::find_subgraph "
-						"n = " << n << endl;
-			}
-
-
-			std::vector<std::vector<int>> Solutions;
-
-			if (f_v) {
-				cout << "colored_graph::find_subgraph "
-						"before find_subgraph_An" << endl;
-			}
-			find_subgraph_An(
-					n,
-					Solutions,
-					verbose_level);
-
-			if (f_v) {
-				cout << "colored_graph::find_subgraph "
-						"after find_subgraph_An" << endl;
-			}
-			if (f_v) {
-				cout << "colored_graph::find_subgraph "
-						"Number of subgraphs of type An = " << Solutions.size() << endl;
-			}
-
-			other::orbiter_kernel_system::file_io Fio;
-			std::string fname;
-
-			fname = label + "_all_" + subgraph_label + ".csv";
-
-			Fio.Csv_file_support->vector_matrix_write_csv_compact(
-					fname,
-					Solutions);
-
-			if (f_v) {
-				cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-			}
-
-
-
-		}
-		else {
-			cout << "colored_graph::find_subgraph "
-					"subgraph label is not recognized" << endl;
-			exit(1);
-		}
-	}
-	if (f_v) {
-		cout << "colored_graph::find_subgraph done" << endl;
-	}
-}
-#endif
 
 void colored_graph::find_subgraph_E6(
 		std::vector<std::vector<int> > &Solutions,
@@ -4208,7 +3950,7 @@ void colored_graph::eigenvalues(
 }
 
 void colored_graph::Laplace_eigenvalues(
-		double *&E, int verbose_level)
+		double *&L, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -4243,16 +3985,16 @@ void colored_graph::Laplace_eigenvalues(
 		Int_matrix_print(Adj, nb_points, nb_points);
 	}
 
-	E = new double[nb_points];
+	L = new double[nb_points];
 
 	other::l1_interfaces::eigen_interface Eigen;
 
-	Eigen.orbiter_eigenvalues(Adj, nb_points, E, verbose_level - 2);
+	Eigen.orbiter_eigenvalues(Adj, nb_points, L, verbose_level - 2);
 
 	FREE_int(Adj);
 	FREE_int(D);
 
-	//delete [] E;
+	//delete [] L;
 
 	if (f_v) {
 		cout << "colored_graph::Laplace_eigenvalues done" << endl;

@@ -343,6 +343,31 @@ int longinteger_object::log10()
 }
 
 
+int longinteger_object::log2()
+{
+	longinteger_domain D;
+	longinteger_object a, b;
+	int h, r;
+
+	assign_to(a);
+	h = 0;
+	while (true) {
+
+		D.integral_division_by_int(
+			a,
+			2, b, r);
+		h++;
+		if (b.is_zero()) {
+			break;
+		}
+
+		b.assign_to(a);
+
+	}
+	return h;
+}
+
+
 int longinteger_object::output_width()
 {
 	int h;

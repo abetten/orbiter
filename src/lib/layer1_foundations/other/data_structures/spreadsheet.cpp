@@ -1492,7 +1492,14 @@ void spreadsheet::join_with(
 
 
 
+	if (f_vv) {
+		cout << "spreadsheet::join_with step 1" << endl;
+	}
+
 	for (i2 = 1; i2 < S2->nb_rows; i2++) {
+		if (f_vv) {
+			cout << "spreadsheet::join_with i2=" << i2 << endl;
+		}
 		char *T2;
 		t2 = S2->Table[i2 * S2->nb_cols + by2];
 		if (t2 == -1) {
@@ -1502,29 +1509,41 @@ void spreadsheet::join_with(
 		if (strlen(T2) == 0) {
 			continue;
 		}
+		if (f_vv) {
+			cout << "spreadsheet::join_with looking for " << T2 << endl;
+		}
 		for (i1 = 1; i1 < nb_rows; i1++) {
 			if (Table[i1 * nb_cols + by1] == -1) {
 				continue;
 			}
 			//cout << "i1=" << i1 << " label="
 			//<< tokens[Table[i1 * nb_cols + by1]] << endl;
+			if (false) {
+				cout << "spreadsheet::join_with before ST.strcmp_with_or_without" << endl;
+			}
 			if (ST.strcmp_with_or_without(
 					tokens[Table[i1 * nb_cols + by1]], T2) == 0) {
 				break;
 			}
 		}
 		if (i1 == nb_rows) {
-			cout << "spreadsheet::join_with adding a row corresponding to " << T2 << endl;
+			if (f_vv) {
+				cout << "spreadsheet::join_with adding a row corresponding to " << T2 << endl;
+			}
 			reallocate_table_add_row();
 			add_token(T2);
 			Table[i1 * nb_cols + by1] = nb_tokens - 1;
 		}
 	}
 
+	if (f_vv) {
+		cout << "spreadsheet::join_with step 2" << endl;
+	}
+
 
 	for (j2 = 0; j2 < S2->nb_cols; j2++) {
 		if (f_vv) {
-			cout << "j2=" << j2 << endl;
+			cout << "spreadsheet::join_with j2=" << j2 << endl;
 		}
 		if (j2 == by2) {
 			continue;
@@ -1568,11 +1587,11 @@ void spreadsheet::join_with(
 		
 		for (i2 = 1; i2 < S2->nb_rows; i2++) {
 			if (f_v3) {
-				cout << "i2=" << i2 << endl;
+				cout << "spreadsheet::join_with i2=" << i2 << endl;
 			}
 			tt2 = S2->Table[i2 * S2->nb_cols + j2];
 			if (f_v3) {
-				cout << "tt2=" << tt2 << endl;
+				cout << "spreadsheet::join_with tt2=" << tt2 << endl;
 			}
 			if (tt2 == -1) {
 				continue;

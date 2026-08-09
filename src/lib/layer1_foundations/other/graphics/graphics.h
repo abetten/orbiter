@@ -393,6 +393,9 @@ public:
 
 	int f_show_colors; // indicate the color in the subscript of the vertex label
 
+	int f_node_color; // Turn on node coloring if the graph has no colors.
+	int node_color_value;
+
 	int f_select_layers;
 	std::string select_layers; // Draw layers whose index is given in the list $S$ only.
 	int nb_layer_select;
@@ -1197,6 +1200,7 @@ public:
 			int nb_dimensions, int verbose_level);
 };
 
+
 // #############################################################################
 // parametric_curve.cpp
 // #############################################################################
@@ -1233,6 +1237,7 @@ public:
 			int verbose_level);
 
 };
+
 
 // #############################################################################
 // plot_tools.cpp

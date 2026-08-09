@@ -393,6 +393,7 @@ void orbit_of_sets::setup_root_node(
 
 void orbit_of_sets::reallocate(
 		long int *&Q, int Q_len, int verbose_level)
+// reallocates Sets, Extra, and Q.
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -555,8 +556,8 @@ void orbit_of_sets::get_table_of_orbits_and_hash_values(
 		h = Data.lint_vec_hash(Sets[i], sz);
 
 		Table[i * set_size + 0] = h;
-		for (j = 1; j < set_size; j++) {
-			Table[i * set_size + j] = Sets[i][j - 1];
+		for (j = 0; j < sz; j++) {
+			Table[i * set_size + 1 + j] = Sets[i][j];
 		}
 	}
 	if (f_v) {

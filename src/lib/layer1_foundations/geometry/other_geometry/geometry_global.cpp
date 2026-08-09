@@ -1208,6 +1208,7 @@ int geometry_global::packing_number_via_maxfit(
 void geometry_global::do_inverse_isomorphism_klein_quadric(
 		algebra::field_theory::finite_field *F,
 		std::string &inverse_isomorphism_klein_quadric_matrix_A6,
+		int f_lex_ordering,
 		int verbose_level)
 // creates klein_correspondence and orthogonal_geometry::orthogonal objects
 {
@@ -1253,7 +1254,7 @@ void geometry_global::do_inverse_isomorphism_klein_quadric(
 		cout << "geometry_global::do_inverse_isomorphism_klein_quadric "
 				"before reverse_isomorphism_with_polarity" << endl;
 	}
-	Klein->reverse_isomorphism_with_polarity(A6, A4, f_has_polarity, verbose_level);
+	Klein->reverse_isomorphism_with_polarity(A6, A4, f_lex_ordering, f_has_polarity, verbose_level);
 	if (f_v) {
 		cout << "geometry_global::do_inverse_isomorphism_klein_quadric "
 				"after reverse_isomorphism_with_polarity" << endl;

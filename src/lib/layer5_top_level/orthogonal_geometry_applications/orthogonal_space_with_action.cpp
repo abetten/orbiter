@@ -763,6 +763,9 @@ void orthogonal_space_with_action::create_orthogonal_reflections_6x6_and_4x4(
 
 	}
 
+	int f_lex_ordering = false;
+
+
 	vec6 = NEW_OBJECT(data_structures_groups::vector_ge);
 
 	if (f_v) {
@@ -821,7 +824,10 @@ void orthogonal_space_with_action::create_orthogonal_reflections_6x6_and_4x4(
 
 		//K->reverse_isomorphism(vec6->ith(i), Data4 + i * sz4, verbose_level);
 		K->reverse_isomorphism_with_polarity(
-				vec6->ith(i), Data4 + i * sz4, f_has_polarity,
+				vec6->ith(i),
+				Data4 + i * sz4,
+				f_lex_ordering,
+				f_has_polarity,
 				verbose_level);
 
 		if (f_semilinear) {

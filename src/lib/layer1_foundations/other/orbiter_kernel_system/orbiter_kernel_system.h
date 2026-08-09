@@ -345,6 +345,16 @@ public:
 			std::string &fname,
 			int f_general,
 			int verbose_level);
+	void prepare_tables_general(
+			std::string &fnames,
+			std::string &col_captions,
+			std::string &latex_columns,
+			int verbose_level);
+	void prepare_table_tcolorbox(
+			std::string &fname_csv,
+			std::string &col_captions,
+			std::string &latex_columns,
+			int verbose_level);
 	void read_csv_file_and_tally(
 			std::string &fname, int verbose_level);
 	void tally_column(

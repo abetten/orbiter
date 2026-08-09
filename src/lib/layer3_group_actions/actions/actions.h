@@ -1223,6 +1223,8 @@ public:
 			int degree, int verbose_level);
 	void init_cyclic_group(
 			int degree, int verbose_level);
+	void init_dihedral_group(
+			int degree, int verbose_level);
 	void init_elementary_abelian_group(
 			int order, int verbose_level);
 	void init_identity_group(

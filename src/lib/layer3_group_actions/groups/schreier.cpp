@@ -459,11 +459,13 @@ void schreier::compute_first_point_orbit(
 	}
 
 
-	int pt, pt_loc, cur;
+	int pt;
+	// int pt_loc;
+	int cur;
 
 	pt = 0;
 
-	pt_loc = Forest->orbit_inv[pt];
+	//pt_loc = Forest->orbit_inv[pt];
 
 	cur = Forest->orbit_first[Forest->nb_orbits];
 
@@ -608,7 +610,8 @@ int schreier::compute_next_point_orbit(
 
 
 	int ret;
-	int pt, pt_loc, cur, pt0;
+	int pt, pt_loc, cur;
+	//int pt0;
 
 	for (pt = 0; pt < Generators_and_images->degree; pt++) {
 

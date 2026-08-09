@@ -988,12 +988,13 @@ void klein_correspondence::identify_external_lines_and_spreads(
 }
 
 void klein_correspondence::reverse_isomorphism_with_polarity(
-		int *A6, int *A4, int &f_has_polarity, int verbose_level)
+		int *A6, int *A4, int f_lex_ordering, int &f_has_polarity, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "klein_correspondence::reverse_isomorphism_with_polarity" << endl;
+		cout << "klein_correspondence::reverse_isomorphism_with_polarity f_lex_ordering = " << f_lex_ordering << endl;
 	}
 
 	int f_success;
@@ -1003,7 +1004,9 @@ void klein_correspondence::reverse_isomorphism_with_polarity(
 				"before reverse_isomorphism" << endl;
 	}
 	reverse_isomorphism(
-			A6, A4, f_success, verbose_level);
+			A6, A4,
+			f_lex_ordering, f_success,
+			verbose_level);
 	if (f_v) {
 		cout << "klein_correspondence::reverse_isomorphism_with_polarity "
 				"after reverse_isomorphism" << endl;
@@ -1062,7 +1065,7 @@ void klein_correspondence::reverse_isomorphism_with_polarity(
 					"before reverse_isomorphism" << endl;
 		}
 		reverse_isomorphism(
-				B6, A4, f_success, verbose_level);
+				B6, A4, f_lex_ordering, f_success, verbose_level);
 		if (f_v) {
 			cout << "klein_correspondence::reverse_isomorphism_with_polarity "
 					"after reverse_isomorphism" << endl;
@@ -1087,7 +1090,8 @@ void klein_correspondence::reverse_isomorphism_with_polarity(
 
 
 void klein_correspondence::reverse_isomorphism(
-		int *A6, int *A4, int &f_success, int verbose_level)
+		int *A6, int *A4, int f_lex_ordering, int &f_success,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int A6_copy[36];
@@ -1104,6 +1108,7 @@ void klein_correspondence::reverse_isomorphism(
 
 	if (f_v) {
 		cout << "klein_correspondence::reverse_isomorphism" << endl;
+		cout << "klein_correspondence::reverse_isomorphism f_lex_ordering=" << f_lex_ordering << endl;
 	}
 
 	if (f_v) {
@@ -1113,35 +1118,113 @@ void klein_correspondence::reverse_isomorphism(
 	}
 
 
-#if 0
-	// 12,34:
-	exterior_square_to_line(A6, X, 0 /* verbose_level*/);
-	exterior_square_to_line(A6 + 5 * 6, X + 8, 0 /* verbose_level*/);
+	if (f_lex_ordering) {
 
-	// 13,24
-	exterior_square_to_line(A6 + 1 * 6, Y, 0 /* verbose_level*/);
-	exterior_square_to_line(A6 + 4 * 6, Y + 8, 0 /* verbose_level*/);
+		// 12,34:
+		exterior_square_to_line(A6, X, f_lex_ordering, 0 /* verbose_level*/);
+		exterior_square_to_line(A6 + 5 * 6, X + 8, f_lex_ordering, 0 /* verbose_level*/);
 
-	// 14,23
-	exterior_square_to_line(A6 + 2 * 6, Z, 0 /* verbose_level*/);
-	exterior_square_to_line(A6 + 3 * 6, Z + 8, 0 /* verbose_level*/);
-#else
+		// 13,24
+		exterior_square_to_line(A6 + 1 * 6, Y, f_lex_ordering, 0 /* verbose_level*/);
+		exterior_square_to_line(A6 + 4 * 6, Y + 8, f_lex_ordering, 0 /* verbose_level*/);
 
-	int f_ordering_lex = false;
+		// 14,23
+		exterior_square_to_line(A6 + 2 * 6, Z, f_lex_ordering, 0 /* verbose_level*/);
+		exterior_square_to_line(A6 + 3 * 6, Z + 8, f_lex_ordering, 0 /* verbose_level*/);
+
+		// now:
+		//
+		//  A =
+	 	// a b 0 0
+		// c d 0 0
+		// 0 0 e f
+		// 0 0 g h
+		// * X
+		//
+		// and
+		//
+		// i1 i2 0  0
+		// i3 i4 0  0
+		// 0  0  i5 i6
+		// 0  0  i7 i8
+		// * Y
+		// =
+		// A_13 \atop A_24
+		// =
+		// a b 0 0
+		// 0 0 e f
+		// c d 0 0
+		// 0 0 g h
+		// * X
+		//
+		// and
+		//
+		// j1 j2 0  0
+		// j3 j4 0  0
+		// 0  0  j5 j6
+		// 0  0  j7 j8
+		// * Z
+		// = A_14 \atop A_23
+		// =
+		// a b 0 0
+		// 0 0 g h
+		// c d 0 0
+		// 0 0 e f
+		// * X
+
+		// therefore:
+		// i1 i2 0  0
+		// i3 i4 0  0
+		// 0  0  i5 i6
+		// 0  0  i7 i8
+		// =
+		// a b 0 0
+		// 0 0 e f
+		// c d 0 0
+		// 0 0 g h
+		// * X * Y^-1
+
+		// Let us write
+		// X * Y^-1
+		// =
+		// y0 y1 y2 y3
+		// y4 y5 y6 y7
+		// y8 y9 y10 y11
+		// y12 y13 y14 y15
+
+		// Comparing coefficients in the 8 places where the matrix
+		// on the LHS has zero, we get the following 8 equations:
+		//
+		// 0 = a * y2 + b * y6
+		// 0 = a * y3 + b * y7
+		// 0 = e * y10 + f * y14
+		// 0 = e * y11 + f * y15
+		// 0 = c * y0 + d * y4
+		// 0 = c * y1 + d * y5
+		// 0 = g * y8 + h * y12
+		// 0 = g * y9 + h * y13
 
 
-	// 12,34:
-	exterior_square_to_line(A6, X, f_ordering_lex, 0 /* verbose_level*/);
-	exterior_square_to_line(A6 + 1 * 6, X + 8, f_ordering_lex, 0 /* verbose_level*/);
+		// similar 8 equations hold for X*Z^-1
 
-	// 13,24
-	exterior_square_to_line(A6 + 2 * 6, Y, f_ordering_lex, 0 /* verbose_level*/);
-	exterior_square_to_line(A6 + 3 * 6, Y + 8, f_ordering_lex, 0 /* verbose_level*/);
+	}
+	else {
 
-	// 14,23
-	exterior_square_to_line(A6 + 4 * 6, Z, f_ordering_lex, 0 /* verbose_level*/);
-	exterior_square_to_line(A6 + 5 * 6, Z + 8, f_ordering_lex, 0 /* verbose_level*/);
-#endif
+	//int f_ordering_lex = false;
+
+
+		// 12,34:
+		exterior_square_to_line(A6, X, f_lex_ordering, 0 /* verbose_level*/);
+		exterior_square_to_line(A6 + 1 * 6, X + 8, f_lex_ordering, 0 /* verbose_level*/);
+
+		// 13,24
+		exterior_square_to_line(A6 + 2 * 6, Y, f_lex_ordering, 0 /* verbose_level*/);
+		exterior_square_to_line(A6 + 3 * 6, Y + 8, f_lex_ordering, 0 /* verbose_level*/);
+
+		// 14,23
+		exterior_square_to_line(A6 + 4 * 6, Z, f_lex_ordering, 0 /* verbose_level*/);
+		exterior_square_to_line(A6 + 5 * 6, Z + 8, f_lex_ordering, 0 /* verbose_level*/);
+	}
 
 	if (f_v) {
 		cout << "klein_correspondence::reverse_isomorphism "
@@ -1174,7 +1257,10 @@ void klein_correspondence::reverse_isomorphism(
 		Int_matrix_print(Zv, 4, 4);
 	}
 
-	F->Linear_algebra->mult_matrix_matrix(X, Yv, XYv, 4, 4, 4, 0 /* verbose_level*/);
+	// XYv := X * Yv
+	F->Linear_algebra->mult_matrix_matrix(
+			X, Yv, XYv, 4, 4, 4,
+			0 /* verbose_level*/);
 
 	if (f_v) {
 		cout << "klein_correspondence::reverse_isomorphism "
@@ -1182,7 +1268,10 @@ void klein_correspondence::reverse_isomorphism(
 		Int_matrix_print(XYv, 4, 4);
 	}
 
-	F->Linear_algebra->mult_matrix_matrix(X, Zv, XZv, 4, 4, 4, 0 /* verbose_level*/);
+	// XZv := X * Zv
+	F->Linear_algebra->mult_matrix_matrix(
+			X, Zv, XZv, 4, 4, 4,
+			0 /* verbose_level*/);
 
 	if (f_v) {
 		cout << "klein_correspondence::reverse_isomorphism "
@@ -1198,22 +1287,22 @@ void klein_correspondence::reverse_isomorphism(
 
 	Int_vec_zero(M, 16 * 8);
 
-	M[0 * 8 + 0] = XYv[0 * 4 + 2];
-	M[0 * 8 + 1] = XYv[1 * 4 + 2];
-	M[1 * 8 + 0] = XYv[0 * 4 + 3];
-	M[1 * 8 + 1] = XYv[1 * 4 + 3];
-	M[2 * 8 + 4] = XYv[2 * 4 + 2];
-	M[2 * 8 + 5] = XYv[3 * 4 + 2];
-	M[3 * 8 + 4] = XYv[2 * 4 + 3];
-	M[3 * 8 + 5] = XYv[3 * 4 + 3];
-	M[4 * 8 + 2] = XYv[0 * 4 + 0];
-	M[4 * 8 + 3] = XYv[1 * 4 + 0];
-	M[5 * 8 + 2] = XYv[0 * 4 + 1];
-	M[5 * 8 + 3] = XYv[1 * 4 + 1];
-	M[6 * 8 + 6] = XYv[2 * 4 + 0];
-	M[6 * 8 + 7] = XYv[3 * 4 + 0];
-	M[7 * 8 + 6] = XYv[2 * 4 + 1];
-	M[7 * 8 + 7] = XYv[3 * 4 + 1];
+	M[0 * 8 + 0] = XYv[0 * 4 + 2]; // 2
+	M[0 * 8 + 1] = XYv[1 * 4 + 2]; // 6
+	M[1 * 8 + 0] = XYv[0 * 4 + 3]; // 3
+	M[1 * 8 + 1] = XYv[1 * 4 + 3]; // 7
+	M[2 * 8 + 4] = XYv[2 * 4 + 2]; // 10
+	M[2 * 8 + 5] = XYv[3 * 4 + 2]; // 14
+	M[3 * 8 + 4] = XYv[2 * 4 + 3]; // 11
+	M[3 * 8 + 5] = XYv[3 * 4 + 3]; // 15
+	M[4 * 8 + 2] = XYv[0 * 4 + 0]; // 0
+	M[4 * 8 + 3] = XYv[1 * 4 + 0]; // 4
+	M[5 * 8 + 2] = XYv[0 * 4 + 1]; // 1
+	M[5 * 8 + 3] = XYv[1 * 4 + 1]; // 5
+	M[6 * 8 + 6] = XYv[2 * 4 + 0]; // 8
+	M[6 * 8 + 7] = XYv[3 * 4 + 0]; // 12
+	M[7 * 8 + 6] = XYv[2 * 4 + 1]; // 9
+	M[7 * 8 + 7] = XYv[3 * 4 + 1]; // 13
 
 	M[8 * 8 + 0] = XZv[0 * 4 + 2];
 	M[8 * 8 + 1] = XZv[1 * 4 + 2];
@@ -1245,7 +1334,7 @@ void klein_correspondence::reverse_isomorphism(
 	int base_cols[8];
 
 	rk = F->Linear_algebra->Gauss_simple(
-			M, 16, 8, base_cols, verbose_level);
+			M, 16, 8, base_cols, 0 /*verbose_level */);
 
 	if (f_v) {
 		cout << "klein_correspondence::reverse_isomorphism "
@@ -1271,7 +1360,8 @@ void klein_correspondence::reverse_isomorphism(
 
 	F->Linear_algebra->matrix_get_kernel(
 			M, 16, 8, base_cols, rk,
-		kernel_m, kernel_n, K, 0 /* verbose_level */);
+			kernel_m, kernel_n, K,
+			0 /* verbose_level */);
 
 
 	if (f_v) {
@@ -1315,6 +1405,14 @@ void klein_correspondence::reverse_isomorphism(
 
 
 		Int_vec_zero(D, 16);
+
+		// create the matrix
+		// a b 0 0
+		// c d 0 0
+		// 0 0 e f
+		// 0 0 g h
+		//
+
 		D[0 * 4 + 0] = a;
 		D[0 * 4 + 1] = b;
 		D[1 * 4 + 0] = c;
@@ -1330,7 +1428,10 @@ void klein_correspondence::reverse_isomorphism(
 			Int_matrix_print(D, 4, 4);
 		}
 
-		F->Linear_algebra->mult_matrix_matrix(D, X, A4, 4, 4, 4, 0 /* verbose_level*/);
+		F->Linear_algebra->mult_matrix_matrix(
+				D, X, A4,
+				4, 4, 4,
+				0 /* verbose_level*/);
 
 		if (f_v) {
 			cout << "klein_correspondence::reverse_isomorphism "
@@ -1339,13 +1440,18 @@ void klein_correspondence::reverse_isomorphism(
 		}
 
 
+		if (f_v) {
+			cout << "klein_correspondence::reverse_isomorphism "
+					"next, we will check the result" << endl;
+		}
+
 		int A6b[36];
 
 		//F->Linear_algebra->exterior_square(A4, A6b, 4, 0 /* verbose_level*/);
 
 
 		F->Linear_algebra->exterior_square_4x4(
-				A4, A6b, 0 /* verbose_level*/);
+				A4, A6b, f_lex_ordering, 0 /* verbose_level*/);
 
 
 		//F->lift_to_Klein_quadric(A4, A6b, 0 /* verbose_level*/);

@@ -955,6 +955,8 @@ public:
 	void make_orthogonal_reflection(
 			int *M, int *z,
 		int verbose_level);
+	// this function uses the Gram matrix of the underlying orthogonal geometry
+	// this means that f_lex_ordering is false
 	void make_all_Siegel_Transformations(
 			int verbose_level);
 	void make_all_valid_pairs_for_Siegel_Transformations(

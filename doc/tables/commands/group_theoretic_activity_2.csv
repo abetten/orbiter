@@ -2,6 +2,7 @@ ROW,C1,C2,C3
 0,"tab:grouptasks2",,
 1,"Group theoretic activities (Part 2)",,
 1,"\verb'-find_small_generating_set' "," sz nb ","Find a generating set of the group consisting of sz generators using a randomized algorithm. Give up after nb trials. "
+1,"\verb'-proportion_of_generating_sets_of_size_k' "," k ","Find the proportion of subsets of size k which generate the group. "
 1,"\verb'-find_singer_cycle' ","  ","Finds all Singer cycles whose matrix is a companion matrix. "
 1,"\verb'-classes_based_on_normal_form' "," "," "
 1,"\verb'-normalizer' ","  ","See Section~\ref{sec:group:magma}."

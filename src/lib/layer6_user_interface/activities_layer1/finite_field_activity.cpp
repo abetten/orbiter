@@ -1245,6 +1245,8 @@ void finite_field_activity::perform_activity(
 		}
 		geometry::other_geometry::geometry_global GG;
 
+		int f_lex_ordering = false;
+
 		if (f_v) {
 			cout << "finite_field_activity::perform_activity "
 					"before GG.do_inverse_isomorphism_klein_quadric" << endl;
@@ -1252,6 +1254,7 @@ void finite_field_activity::perform_activity(
 		GG.do_inverse_isomorphism_klein_quadric(
 				F,
 				Descr->inverse_isomorphism_klein_quadric_matrix_A6,
+				f_lex_ordering,
 				verbose_level);
 		if (f_v) {
 			cout << "finite_field_activity::perform_activity "

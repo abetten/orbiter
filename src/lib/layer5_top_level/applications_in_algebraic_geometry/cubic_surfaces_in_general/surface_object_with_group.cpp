@@ -1193,6 +1193,8 @@ void surface_object_with_group::recognize_Fabcd(
 	}
 
 
+	// make a transformation to map the first 4 points
+	// of the arc to the standard frame in PG(2,q):
 
 
 	algebra::linear_algebra::linear_algebra_global LA;
