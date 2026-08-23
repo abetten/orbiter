@@ -1,0 +1,31 @@
+\begin{table}[t]
+\tbl{\label{tab:session}}
+{\begin{tcolorbox}[tabularx={p{3cm}|p{2cm}|p{6.3cm}|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black,title=Orbiter session commands]
+\hline
+Command & Arguments & Purpose \\
+\hline
+\hline
+\verb'-v'  &  $v$  &  Set verbosity to $v$. Larger values of $v$ lead to more text output. $v=0$ gives minimal to no output. \\
+\hline
+\verb'-list_arguments'  &   & Print the command line arguments. \\
+\hline
+\verb'-seed'  &  $s$  &  Seed the pseudo random number generator with the integer value $s$. \\
+\hline
+\verb'-memory_debug'  &    &  Turn on dynamic memory debugging.\\
+\hline
+\verb'-override_polynomial'  &  poly  &  Specify the override polynomial for the creation on finite fields. See Section~\ref{sec:extension:fields}. \\
+\hline
+\verb'-orbiter_path'  &  $p$  & Set the orbiter path to $p$. This is useful in case the Orbiter session has to clone or fork new Orbiter sessions. In most cases, the orbiter path will end with a forward slash ``\verb'/'.'' \\
+\hline
+\verb'-magma_path'  &  $p$  &  Set the magma path to $p$. This is useful in case the Orbiter session has to create a magma process.\\
+\hline
+\verb'-fork'  &  $L$ $M$ $s$ $u$ $d$  &  Fork new Orbiter sessions in parallel. The new sessions will be indexed by the values $i=s+kd$, where $k=0,1,\ldots$ subject to $i < u.$ Every occurence of the string $L$ in the argument list is replaced by the resulting value of the loop variable $i$. The forked process will write to a file. The filename is obtained from $M$ by replacing \%d with the value of $i$ (similar to a printf command in C programming). All of the command line arguments after the \verb'fork' command are passed through to the new Orbiter session, with all arguments $L$ replaced by the integer value of the loop counter. The number of Orbiter sessions forked is $(u-s)/d.$ The orbiter path is considered when starting the forked sessions.\\
+\hline
+\verb'-parse_commands_only'  &   &  Parse the commands only. Do not execute the Orbiter code. \\
+\hline
+\verb'-show_births_and_deaths_stats'  &   &  Show information about the number of class instantiations and destructions at the end of the run. \\
+\hline
+\end{tcolorbox}}
+\end{table}

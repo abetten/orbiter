@@ -1,0 +1,28 @@
+orbits_PGL_4_2_on_points_export_trees:
+	$(ORBITER) -v 4 \
+		-define Do -draw_options -embedded -end \
+		-define G -linear_group -PGL 4 2 -end \
+		-define Orb -orbits -group G \
+			-on_points \
+		-end \
+		-define ro \
+			-poset_classification_report_options \
+				-draw_poset -type_ordinary \
+				-draw_options Do \
+		-end \
+		-with Orb -do -orbits_activity \
+			-report "" \
+			-report_options ro \
+		-end \
+		-with Orb -do -orbits_activity \
+			-export_trees \
+		-end
+	$(ORBITER) -v 3 \
+		-draw_layered_graph \
+			orbit_PGL_4_2_0.layered_graph \
+			-place \
+		-radius 500 -spanning_tree -embedded \
+			-line_width 1.1 -x_stretch 1.4 -scale 0.25 \
+		-end
+	$(PDFLATEX) orbit_PGL_4_2_0_draw.tex
+	$(OPEN) orbit_PGL_4_2_0_draw.pdf

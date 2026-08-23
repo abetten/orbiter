@@ -1,0 +1,9 @@
+Sym_3_elements:
+	$(ORBITER) -v 3 \
+		-define G -permutation_group -symmetric_group 3 -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-print_elements_tex \
+		-end
+	$(PDFLATEX) Sym_3_elements.tex
+	$(OPEN) Sym_3_elements.pdf

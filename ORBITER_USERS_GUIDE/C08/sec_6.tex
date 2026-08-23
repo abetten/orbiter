@@ -1,0 +1,69 @@
+
+In $\PG(n,q)$, an arc is a set of points, no $n+1$ in a hyperplane.
+A cap is set of points, no three collinear.
+Here, we restrict our attention to arcs in $\PG(2,q).$  
+Arcs in higher dimensional projective spaces 
+are equivalent to MDS codes 
+and will be treated in Section~\ref{sec:coding}.
+Our main examples will be the construction of the Lunelli-Sce hyperoval in $\PG(2,16)$ 
+(cf.~\cite{LunelliSce58})
+and the Pellegrino cap in $\AG(4,3).$ 
+The uniqueness of this cap was proven by Hill~\cite{Hill83}.
+
+\bigskip
+
+
+A $(k,d)$-arc in a projective plane $\pi$ 
+is a set $S$ of $k$ points 
+such that any line intersects $S$ in at most $d$ 
+points. 
+Two arcs $S_1$ and $S_2$ 
+are equivalent if there is a projectivity 
+$\Phi$ such that $\Phi(A) = B.$ 
+The problem of classifying arcs 
+is the problem of determining the orbits of the projectivity group on arcs. 
+At times, 
+we consider the larger group of collineations. 
+In that case, the problem of classifying arcs is the 
+problem of determining the orbits of the collineation group on arcs. 
+Table~\ref{tab:arcs} list the commands available to classify arcs.
+\orbitertableofcommands{arc_generator}
+Here is an example. 
+A hyperoval in a finite plane $\PG(2,2^e)$ is a $(2^e + 2,2)$-arc. 
+It is an interesting but difficult problem to classify the hyperovals in finite 
+projective planes under the appropriate group action.
+For small planes, computer search with Orbiter can help.
+The command 
+
+\sourcecode{hyperoval_16_classify}
+
+performs the classification of hyperovals in $\PG(2,16).$ 
+There are exactly two hyperovals in this plane. 
+Orbiter also finds the stabilizers of these arcs. 
+They have orders $16320$ and $144,$ respectively.
+The two hyperovals are the regular hyperoval and the Lunelli-Sce hyperoval. 
+Here is the relevant output from the Orbiter report 
+(in the output, the Lunelli-Sce hyperoval is orbit 0, and the 
+regular hyperoval is orbit 1):
+\orbiteroutput{GRAPHICS/LATEX/arc_Lunelli_Sce}
+
+
+
+
+
+\bigskip
+
+In the theory of cubic surfaces, 
+we are interested in non-conical arcs of size 6. 
+Here, non-conical means that the set of points does not lie on a conic.
+Cubic surfaces are associated with non-conical arcs of size 6 
+(in a many-to-one relationship when considering isomorphism classes).
+The following example demonstrates 
+how non-conical 6-arcs can be classified in Orbiter:
+
+\sourcecode{nc_arcs_16}
+
+The number of Eckardt points of the surface can be recovered from properties of the arc.
+For this reason, it is interesting to classify arcs so that the associated 
+cubic surface has a fixed number of Eckardt points.
+

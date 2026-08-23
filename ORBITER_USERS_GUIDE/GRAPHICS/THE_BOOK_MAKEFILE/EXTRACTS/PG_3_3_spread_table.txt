@@ -1,0 +1,15 @@
+PG_3_3_spread_table:
+	- mkdir SPREAD_TABLES_3
+	$(ORBITER) -v 5 \
+		-define Control -poset_classification_control \
+			-problem_label spreads_PG_3_3 \
+			-W \
+		-end \
+		-define F -finite_field -q 3 -end \
+		-define P3 -projective_space -n 3 -field F -v 0 -end \
+		-define P5 -projective_space -n 5 -field F -v 0 -end \
+		-define T -spread_table -space P3 -rk 2 \
+			-iso_types "0,1" \
+			-path "SPREAD_TABLES_3/" \
+			-control Control \
+			-end \

@@ -1,0 +1,27 @@
+quartic_curve_q9_1_clean2:
+	$(ORBITER) -v 3 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 -nodes_empty \
+		-end \
+		-define F -finite_field -q 9 -print_as_exponentials -end \
+		-define P2 -projective_space -n 2 -field F -end \
+		-define P3 -projective_space -n 3 -field F -end \
+		-define S9_1 -cubic_surface -space P3 -catalogue 1 \
+			-select_double_six "c12,c23,a4,c13,a5,a6,b3,b1,c56,b2,c46,c45" \
+			-transform_inverse "6,4,6,1, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0" \
+			-transform_inverse "1,0,0,0, 0,1,0,5, 0,0,1,1, 0,0,0,1, 0" \
+			-transform "1,0,0,0, 0,0,1,0, 1,1,5,0, 0,0,0,1, 0" \
+			-transform "1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,8,1, 0" \
+			-end \
+		-with S9_1 -do \
+		-cubic_surface_activity \
+			-report Do \
+		-end \
+		-define C -quartic_curve -space P2 -from_cubic_surface S9_1 0 -end \
+		-with C -do \
+			-quartic_curve_activity \
+				-report \
+			-end
+	$(PDFLATEX) surface_catalogue_q9_iso1_report.tex
+	$(PDFLATEX) quartic_curve_surface_catalogue_q9_iso1_pt_orb_0_report.tex
+	$(OPEN) quartic_curve_surface_catalogue_q9_iso1_pt_orb_0_report.pdf

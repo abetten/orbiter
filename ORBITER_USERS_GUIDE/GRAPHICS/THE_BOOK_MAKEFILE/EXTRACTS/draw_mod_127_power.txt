@@ -1,0 +1,13 @@
+draw_mod_127_power:
+	$(ORBITER) -v 2 \
+		-define Do -draw_options -radius 50 -scale 0.4 -embedded -line_width 0.3 -end \
+		-draw_mod_n \
+			"mod_n=on" \
+			-n 127 \
+			-dont_label_nodes \
+			-file mod_127 \
+			-power_cycle 3 \
+			-draw_options Do \
+		-end
+	$(PDFLATEX) mod_127_draw.tex
+	$(OPEN) mod_127_draw.pdf

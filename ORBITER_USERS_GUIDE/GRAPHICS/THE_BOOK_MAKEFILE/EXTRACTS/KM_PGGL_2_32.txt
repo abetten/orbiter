@@ -1,0 +1,37 @@
+KM_PGGL_2_32:
+	$(ORBITER) -v 3 \
+		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define Do -draw_options -embedded -sideways -radius 50 \
+			-scale 0.5 -line_width 0.3 \
+		-end \
+		-define Control -poset_classification_control \
+			-problem_label KM_PGGL_2_32 \
+			-W -depth 8 \
+			-draw_options Do \
+		-end \
+		-define G -linear_group -PGGL 2 32 -end \
+		-define Orb -orbits \
+			-group G \
+			-group_action G \
+			-generators G \
+			-on_subsets 8 Control \
+		-end \
+		-with Orb -do -orbits_activity \
+			-Kramer_Mesner_matrix 7 8 \
+		-end \
+		-define ro \
+			-poset_classification_report_options \
+				-draw_poset -type_ordinary \
+				-draw_options Do \
+		-end \
+		-with Orb -do -orbits_activity \
+			-report "" \
+			-report_options ro \
+		-end 
+	$(ORBITER) -v 2 -draw_matrix \
+		-input_csv_file KM_PGGL_2_32_KM_7_8.csv \
+		-box_width 20 -bit_depth 24 \
+		-partition 3 32 97 -end
+	$(PDFLATEX) KM_PGGL_2_32_poset_lvl_8.tex
+	$(OPEN) KM_PGGL_2_32_poset_lvl_8.pdf
+	$(OPEN) KM_PGGL_2_32_KM_7_8_draw.bmp

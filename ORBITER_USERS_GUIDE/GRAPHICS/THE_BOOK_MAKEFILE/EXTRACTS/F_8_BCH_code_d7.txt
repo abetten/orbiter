@@ -1,0 +1,9 @@
+F_8_BCH_code_d7:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 8 -override_polynomial 11 -end \
+		-define C -code -field F \
+			-BCH 21 7 \
+		-end \
+		-with C -do -coding_theoretic_activity -report -end
+	$(PDFLATEX) BCH_n21_d7_code_n21_k11_q8.tex
+	$(OPEN) BCH_n21_d7_code_n21_k11_q8.pdf

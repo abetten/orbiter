@@ -1,0 +1,259 @@
+\documentclass[10pt]{book}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{latexsym}
+%\usepackage{epsfig}
+\usepackage{array}
+%\usepackage{enumitem}
+\usepackage{fullpage}
+\usepackage{tikz} 
+\usepackage{enumerate} 
+\usepackage{url} 
+%\usepackage{maplestd2e}
+\usepackage{multicol}
+\usepackage{longtable}
+\usepackage{rotating}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\pagestyle{headings}
+
+%\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{mathtools}
+\usepackage{maple}
+\usepackage[utf8]{inputenc}
+%\usepackage[svgnames]{xcolor}
+%\usepackage{amsmath}
+\usepackage{breqn}
+%\usepackage{textcomp}
+
+\setlength{\headheight}{0.4in}
+\setlength{\headsep}{0.2in}
+%\setlength{\topmargin}{0.2in}
+\setlength{\topmargin}{-.25in}
+\setlength{\textheight}{9in}
+\oddsidemargin 0pt
+\setlength{\textwidth}{6.5in}
+
+%\def\ds{\displaystyle}
+\usepackage[framemethod=TikZ]{mdframed}
+\sloppy
+
+\usepackage{array,tabularx}
+\usepackage{colortbl}
+%\usepackage[table]{xcolor} 
+
+
+\mdfdefinestyle{MyFrame}{%
+    linecolor=black,
+    outerlinewidth=2pt,
+    roundcorner=20pt,
+    innertopmargin=\baselineskip,
+    innerbottommargin=\baselineskip,
+    innerrightmargin=20pt,
+    innerleftmargin=20pt%,
+    %backgroundcolor=gray!30!white
+	}
+
+
+\usepackage{listings}
+\usepackage[most]{tcolorbox}
+\usepackage{inconsolata}
+
+\tcbuselibrary{breakable}
+
+
+
+%\newcolumntype{Y}{>{\raggedright\arraybackslash}X}% see tabularx
+
+
+\renewcommand*{\arraystretch}{1.2}
+
+\newcommand\setTBstruts{\def\T{\rule{0pt}{2.6ex}}%
+\def\B{\rule[-1.2ex]{0pt}{0pt}}}
+%\newcommand{\proof}{\noindent \mbox{\em Proof.\hspace*{3mm}}}
+
+\title{Group Theory}
+
+\author{Anton Betten}
+
+
+\parindent=0pt
+
+%\input{macro_talk.tex}
+\newcommand{\bbF}{{\mathbb F}}
+\newcommand{\bbZ}{{\mathbb Z}}
+\newcommand{\bbR}{{\mathbb R}}
+\newcommand{\bbQ}{{\mathbb Q}}
+\newcommand{\bbC}{{\mathbb C}}
+\def\PG{{\rm PG}}
+\def\AG{{\rm AG}}
+\newcommand{\bI}{{\bf I}}
+\newcommand{\id}{{\rm id}}
+\newcommand{\Stab}{{\rm Stab}}
+\newcommand{\Orb}{{\rm Orb}}
+\newcommand{\Hu}{{\rm Hu}}
+\newcommand{\Fix}{{\rm Fix}}
+\newcommand{\Sym}{{\rm Sym}}
+\newcommand{\Alt}{{\rm Alt}}
+\newcommand{\PSL}{{\rm PSL}}
+\newcommand{\PGL}{{\rm PGL}}
+\newcommand{\PSSL}{{\rm P}\Sigma{\rm L}}
+\newcommand{\PGGL}{{\rm P}\Gamma{\rm L}}
+\newcommand{\PGGO}{{\rm P}\Gamma{\rm O}}
+\newcommand{\SL}{{\rm SL}}
+\newcommand{\GL}{{\rm GL}}
+\newcommand{\SSL}{{\rm \Sigma L}}
+\newcommand{\GGL}{{\rm \Gamma L}}
+\newcommand{\ASL}{{\rm ASL}}
+\newcommand{\AGL}{{\rm AGL}}
+\newcommand{\ASSL}{{\rm A\Sigma L}}
+\newcommand{\AGGL}{{\rm A\Gamma L}}
+\newcommand{\PSU}{{\rm PSU}}
+\newcommand{\PGO}{{\rm PGO}}
+\newcommand{\Sp}{{\rm Sp}}
+\newcommand{\PSp}{{\rm PSp}}
+\newcommand{\rows}{{\rm rows}}
+\newcommand{\cols}{{\rm cols}}
+\newcommand{\diag}{{\rm diag}}
+\newcommand{\be}{{\bf e}}
+\newcommand{\bv}{{\bf v}}
+\newcommand{\bw}{{\bf w}}
+\newcommand{\bx}{{\bf x}}
+\newcommand{\by}{{\bf y}}
+\newcommand{\bz}{{\bf z}}
+\newcommand{\bP}{{\bf P}}
+\newcommand{\bone}{{\bf 1}}
+\newcommand{\bzero}{{\bf 0}}
+\newcommand{\cC}{{\cal C}}
+\newcommand{\cF}{{\cal F}}
+\def\Hom{{\rm Hom}}
+\def\Mat{{\rm Mat}}
+\def\Aut{{\rm Aut}}
+\def\SHom{{\rm SHom}}
+\def\Ker{{\rm Ker}}
+\def\Image{{\rm Image}}
+\def\Inn{{\rm Inn}}
+\def\conj{{\rm conj}}
+\newcommand{\ba}{{\bf a}}
+\newcommand{\bb}{{\bf b}}
+\newcommand{\bc}{{\bf c}}
+\newcommand{\cB}{{\cal B}}
+\newcommand{\cP}{{\cal P}}
+\newcommand{\cL}{{\cal L}}
+\def\la{{\langle}}
+\def\ra{{\rangle}}
+\newcommand{\frakP}{{\mathfrak P}}
+
+\newcounter{ExampleCounter}
+
+\newcommand{\sourcecodepath}{GRAPHICS/THE_MAKEFILE/EXTRACTS/}
+
+\newcommand{\orbitertableofcommands}[1]{\input GRAPHICS/TABLES/COMMANDS/#1_ug.tex}
+
+%\newcommand{\orbitertableofcommandstodo}[1]{\input GRAPHICS/TABLES/TODO/#1.tex}
+
+\newcommand{\orbitertableofextracommands}[1]{\input GRAPHICS/TABLES/GENERAL/#1_ug.tex}
+
+
+
+\newcommand{\redbox}[2]{\begin{tcolorbox}[colback=red!5!white,colframe=red!75!black,breakable,title=#1]
+{#2 }
+\end{tcolorbox}}
+
+
+\newcommand{\sourcecode}[1]{\begin{tcolorbox}[colback=red!5!white,colframe=red!75!black,breakable,title=Code Snippet \stepcounter{ExampleCounter}\arabic{ExampleCounter}] 
+{\tt \input \sourcecodepath#1.tex }
+\end{tcolorbox}}
+
+
+\newcommand{\sourcecodevariable}[1]{\begin{tcolorbox}[colback=blue!5!white,colframe=blue!75!black,breakable,title=Code Snippet \stepcounter{ExampleCounter}\arabic{ExampleCounter}] 
+{\tt \input \sourcecodepath#1.tex }
+\end{tcolorbox}}
+
+
+\newcommand{\sourcecodesmall}[1]{\begin{tcolorbox}[colback=red!5!white,colframe=red!75!black,breakable,title=Code Snippet \stepcounter{ExampleCounter}\arabic{ExampleCounter}] 
+{\tt \small \input \sourcecodepath#1.tex }
+\end{tcolorbox}}
+
+\newcommand{\sourcecodevariablesmall}[1]{\begin{tcolorbox}[colback=blue!5!white,colframe=blue!75!black,breakable,title=Code Snippet \stepcounter{ExampleCounter}\arabic{ExampleCounter}] 
+{\tt \small \input \sourcecodepath#1.tex }
+\end{tcolorbox}}
+
+
+
+\newcommand{\orbitertableheader}{tabularx={X|p{2cm}|X|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black}
+
+%\tcbset{enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+%  colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+%  coltitle=black,center title}
+
+
+
+
+
+\newcommand{\orbiteroutput}[1]{\begin{mdframed}[style=MyFrame]
+\input #1.tex
+\end{mdframed}}
+
+
+\newcommand{\orbiteroutputwith}[3]{\begin{mdframed}[style=MyFrame]
+{\bf #1:} \\
+\input #2.tex
+#3
+\end{mdframed}}
+
+
+
+
+\begin{document}
+
+\bibliographystyle{plain}
+\setTBstruts
+
+
+\maketitle
+
+%\tableofcontents
+
+%\clearpage
+
+%\addcontentsline{toc}{chapter}{\listtablename}
+%\listoftables
+
+%\clearpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Introduction}
+\label{chapter:introduction}
+
+
+\input G01/chapter.tex
+
+
+
+%\section{Contributors}
+%\label{sec:contributors}
+
+
+%\input sec_contributors.tex
+
+
+
+%\bigskip
+
+%\clearpage
+
+
+%\section{References}
+\addcontentsline{toc}{section}{References}
+
+\bibliography{anton}
+
+
+\end{document}
+
+

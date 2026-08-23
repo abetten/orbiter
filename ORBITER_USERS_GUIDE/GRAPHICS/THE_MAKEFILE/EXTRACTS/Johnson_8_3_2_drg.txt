@@ -1,0 +1,6 @@
+Johnson_8_3_2_drg:
+	$(ORBITER) -v 2 \
+		-define Gamma -graph -Johnson 8 3 2 -end \
+		-with Gamma -do -graph_theoretic_activity \
+			-test_if_distance_regular 0 \
+		-end

@@ -1,0 +1,14 @@
+symbolic_CRC_alfa_draw_trees:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 256 -end \
+		-define M -symbolic_object \
+			-field F \
+			-text $(BCH_POLYNOMIAL_ALFA_F256) \
+		-end \
+		-define Mx -symbolic_object \
+			-field F \
+			-expand M \
+			-write_trees_during_expand \
+		-end
+		$(PDFLATEX) Mx_0_efsxsfscsc.tex
+		$(OPEN) Mx_0_efsxsfscsc.pdf

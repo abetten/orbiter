@@ -1,0 +1,13 @@
+octic_monomials:
+	$(ORBITER) -v 4 \
+		-define A -vector -format 1 -dense "1,1,1,1" -end \
+		-define D -diophant \
+			-label octic_monomials \
+			-coefficient_matrix A \
+			-RHS "mult=1,EQ=9" \
+			-x_min_global 0 -x_max_global 8 \
+		-end \
+		-with D -do \
+			-diophant_activity -solve_mckay \
+		-end
+	sort -r octic_monomials_sol.csv >octic_monomials_sorted.csv

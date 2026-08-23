@@ -1,0 +1,19 @@
+Cayley_Sym4_star_eigenvalues_and_draw:
+	$(ORBITER) -v 2 \
+		-define Do -draw_options -xin 1000000 -yin 1000000 -embedded -end \
+		-define S -vector -dense "1,0,2,3, 2,1,0,3, 3,1,2,0" -end \
+		-define G -permutation_group -symmetric_group 4 \
+		-end \
+		-define Gamma -graph \
+			-Cayley_graph G S \
+		-end \
+		-with Gamma -do \
+		-graph_theoretic_activity -eigenvalues -end \
+		-with Gamma -do \
+		-graph_theoretic_activity -eigenvalue_report -end \
+		-with Gamma -do \
+		-graph_theoretic_activity -draw Do -end
+	$(PDFLATEX) Cayley_graph_Sym_4_draw.tex
+	$(OPEN) Cayley_graph_Sym_4_draw.pdf
+	$(PDFLATEX) Cayley_graph_Sym_4_eigenvalues.tex
+	$(OPEN) Cayley_graph_Sym_4_eigenvalues.pdf

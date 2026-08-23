@@ -1,0 +1,12 @@
+Symmetric_4:
+	$(ORBITER) -v 3 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define G -permutation_group -symmetric_group 4 -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end
+	$(PDFLATEX) Sym_4_report.tex
+	$(OPEN) Sym_4_report.pdf

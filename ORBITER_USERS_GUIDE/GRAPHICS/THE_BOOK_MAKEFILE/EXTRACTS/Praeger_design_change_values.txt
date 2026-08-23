@@ -1,0 +1,8 @@
+Praeger_design_change_values:
+	$(ORBITER) -v 3 \
+		-orbiter_path $(ORBITER_PATH) \
+		-change_values \
+			AGGL_1_81_Subgroup_G_3240_AGGL_1_81_Subgroup_G_3240_subgroup_by_lattice_43_AGGL_1_81_Subgroup_G_3240_subgroup_by_lattice_44_intersection_size.csv \
+			Praeger_6.csv \
+			3,6,8 \
+			0,1,0

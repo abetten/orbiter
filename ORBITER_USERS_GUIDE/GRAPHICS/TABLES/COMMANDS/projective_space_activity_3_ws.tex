@@ -1,0 +1,39 @@
+\begin{table}[t]
+\tbl{\label{tab:projective:space:activities:3}}
+{\begin{tcolorbox}[tabularx={p{3cm}|p{2cm}|p{6.3cm}|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black,title=Projective Space Activities (Part 3)]
+\hline
+Command & Arguments & Purpose \\
+\hline
+\hline
+\verb'-lines_on_point_but_within_a_plane'  &  pt-rk plane-rk   & Compute the lines through a given point contained in a given plane. \\
+\hline
+\verb'-union_of_lines'  &  lines   & Compute the union of points on the given lines. Duplicates will be removed. \\
+\hline
+\verb'-rank_lines_in_PG'  &  $M$   & Rank lines. The generating systems for the lines are given in rows of the matrix $M$. \\
+\hline
+\verb'-unrank_lines_in_PG'  &  $v$   & Unrank lines. The ranks are given in the vector $v$. \\
+\hline
+\verb'-points_on_lines'  &  $L$   & Create the ranks of points on the given line $L$. \\
+\hline
+\verb'-move_two_lines_in_' \verb'hyperplane_stabilizer'  &  $l1$ $l2$ $m1$ $m2$   & Find the unique transvection fixing the hyperplane at infinity moving $l1$ and $l2$ to $m1$ and $m2.$ \\
+\hline
+\verb'-move_two_lines_in_' \verb'hyperplane_stabilizer_text'  &  $l1$ $l2$ $m1$ $m2$   &  Find the unique transvection fixing the hyperplane at infinity moving $l1$ and $l2$ to $m1$ and $m2.$ \\
+\hline
+\verb'-planes_through_line'  &  $l$   & Find all planes through the line $l$. \\
+\hline
+\verb'-restricted_incidence_matrix'  &  $t1$ $t2$ $R$ $C$ fname   & Compute the restricted incidence matrix between objects $R$ of type $t1$ and objects $C$ of type $t2$. Write output to the given file in csv format. \\
+\hline
+\verb'-plane_intersection_type'  &  $t$ input  & Compute the plane intersection type of the lines given in input. Use a threshold of $t$ to filter planes. Only planes which contain at least $t$ of the given lines are considered. \\
+\hline
+\verb'-plane_intersection_type_' \verb'of_klein_image'  &  $t$ input  & Compute the plane intersection type of the Klein image of the lines given in input. Use a threshold of $t$ to filter planes. Only planes which intersect in at least $t$ points on the Klein quadric are considered. \\
+\hline
+\verb'-report_Grassmannian'  &  $k$   & Produce a report on the Grassmannian of $k$-simensional subspaces. \\
+\hline
+\verb'-report_fixed_objects'  &  data fname   & Produce a report about the fixed points of the group element given by data in the action on objects of various types of the projective space. Writes a latex report using the given file name. \\
+\hline
+\verb'-evaluation_matrix'  &  ring   &  Computes the matrix whose $(i,j)$ entry is the value of the $i$-th monomial of the given ring on (a fixed representative of) the $j$-th projective point. \\
+\hline
+\end{tcolorbox}}
+\end{table}

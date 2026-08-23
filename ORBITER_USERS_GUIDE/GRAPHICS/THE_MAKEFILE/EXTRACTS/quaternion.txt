@@ -1,0 +1,25 @@
+quaternion:
+	$(ORBITER) -v 2 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define G -linear_group -SL 2 3 \
+		-subgroup_by_generators "quaternion" "8" 3 \
+			"1,1,1,2, 2,1,1,1, 0,2,1,0" \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-group_table Do \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-print_elements_tex \
+		-end
+	$(PDFLATEX) SL_2_3_Subgroup_quaternion_8_report.tex
+	$(OPEN) SL_2_3_Subgroup_quaternion_8_report.pdf
+	$(PDFLATEX) SL_2_3_Subgroup_quaternion_8_group_table_report.tex
+	$(OPEN) SL_2_3_Subgroup_quaternion_8_group_table_report.pdf

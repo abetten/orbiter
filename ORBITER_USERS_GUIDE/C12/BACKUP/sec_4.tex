@@ -1,0 +1,241 @@
+A partial linear space is a set system on a fixed set $V$. 
+We write $\cL=(V,\cB),$ 
+where $\cB$ is a set of distinct subsets of $V$, called lines. 
+The members of $V \cup \cB$ are called elements. 
+For two elements $x,y$, we say that $x$ is incident with $y$, written $xIy$, 
+if either $x \in y$ or $y \in x.$
+We require that any line has at least two points 
+and that any two points are contained in at most one line. 
+A {\em decomposition} of a linear space 
+is a partition $\Pi= (C_1,\ldots,C_n)$ of $V \cup \cB$ 
+such that each $C_i$ either is a subset of $V$ or a subset of $\cB.$
+A decomposition is called {\em tactical} if for all $i,$ the incidence number 
+$$
+\iota(C_i,C_j) = \# \{y \in C_j, xIy\}
+$$
+does not depend on the choice of $x \in C_i.$
+Any linear space has a tactical decomposition, 
+as the discrete partition (every element is in its own class) 
+is tactical. 
+Let $\Aut(\cL)$ be the automorphism group of the linear space, 
+which is the subgroup of 
+$\Sym(V)$ which preserves incidence. 
+For $\alpha \in \Aut(\cL),$ we say that 
+the decomposition $\Pi$ preserves $\alpha$ if $\alpha$ fixes every class of $\Pi.$ 
+For $A \le  \Aut(\cL),$ we say that $\Pi$ preserves $A$ 
+if $\Pi$ preserves every element $\alpha \in A.$
+Mostly, we are interested in those decompositions $\Pi$ which preserve $\Aut(\cL).$
+In light of this, 
+the discrete decomposition is not that interesting. 
+
+\bigskip
+
+
+Any linear space has a coarsest tactical decomposition 
+that preserves its automorphism group: 
+The orbit partition of the automorphism group acting on $V \cup \cB$ will do. 
+Up to ordering of the classes, the coarsest tactical refinement is unique.
+Computing the orbit decomposition is challenging 
+as it involves computing the automorphism group. 
+Computationally, there are easier ways to get to admissible decompositions. 
+One way is by means of successive refinements. 
+If a class $C_i$ does not have the property that $\iota(C_i,C_j)$ is well-defined 
+for all $x \in C_i,$ then a refinement of $C_i$ will do. 
+The coarsest refinement of $C_i$ has the property that 
+if $C_i$ preserves some group $A$ then the refinement will do, too.
+This shows that there is an algorithm to compute 
+a tactical decompostion of any given linear space $\cP.$ 
+Simply start with the decomposition of two classes, 
+one the set of points and one the set of blocks, and refine. 
+The output may or may not be equal to the decomposition 
+arising from the orbit partition of $\Aut(\cL).$
+
+\bigskip
+
+Let us consider the opposite question. 
+Given a tactical decomposition, 
+can we classify the linear spaces which admit a given tactical decomposition.
+The \verb'-geometry_builder' option can help. 
+Table~\ref{tab:geometry:builder} shows the options for the geometry builder.
+\orbitertableofcommands{geometry_builder}
+
+
+\bigskip
+
+The command 
+
+\sourcecode{geo_10_3}
+
+classifies the configuations $10_3$. 
+It uses isomorphism tests after $4,$ $5,$ $6,$ $7,$ $8,$ $9$ and $10$ points.
+The positions of the tests is defined using a set called \verb'Test_lines'. 
+The set of test lines is defined using a loop command.
+The command shows that 
+there are exactly 10 configurations of this kind. 
+One of them is the Desargues configuration. 
+Four different output files can be written.
+Each contains all geometries, but the file format is different.
+\begin{enumerate}
+\item
+The option \verb'-output_to_inc_file'
+writes \verb'10_3.inc'. 
+The file contains the incidences in increasing order. 
+The position in the incidence matrix is given.
+Apart from the header and footer, each row in the file describes exactly one geometry.
+The incidences are given in numeric form. 
+Each incidence is the numerical position of the point/block pair in the 
+incidence matrix. 
+The position is the numbering of the matrix entries 
+in the incidence matrix in row-major ordering, 
+starting with zero for the top left entry. 
+The index of the incidence in row $i$ (zero-based) 
+and column $j$  is $b\cdot i + j,$ 
+where $b$ is the number of blocks in the geometry.
+The header consists of one row, containing the number of points, 
+the number of lines, and the number of incidences.
+The footer consists of two rows. 
+A single $-1$ indicates the beginning of the footer.
+The second row in the footer summarizes the automorphism group orders of the germetries.
+Here is an example:
+The file \verb'10_3.inc' lists the 10 configurations $10_3$:
+\orbiteroutput{GRAPHICS/LATEX/conf_10_3_inc_file}
+\item
+The option \verb'-output_to_sage_file'
+writes \verb'10_3.sage'. 
+This file is meant to be read by Sage~\cite{SteinJoyner2005}.
+\item
+The option \verb'-output_to_blocks_file'
+writes \verb'10_3.blocks'. 
+Here is the content of the file \verb'10_3.blocks':
+\orbiteroutput{GRAPHICS/LATEX/conf_10_3_blocks_file}
+contains the blocks. 
+Each number represents the rank of a 3-subset corresponding to a block 
+in the lexicographic ordering of all 3-subsets. 
+\item
+The option \verb'-output_to_blocks_latex_file'
+writes \verb'10_3.blocks_long'. 
+The file 
+\verb'10_3.blocks_long' contains a list of all blocks 
+written out in a format ready for use in latex.
+\end{enumerate}
+
+\bigskip
+
+It is possible to create graphical representations of the search tree. 
+The additional option \verb'-search_tree' can be given, as shown in the following command:
+
+\sourcecode{geo_10_3_tree}
+
+The \verb'-search_tree' option causes Orbiter 
+to create a file containing the search tree. 
+The name of the file is derived from the file name given with the \verb'fname_GEO' option. 
+Here, the \verb'fname_GEO' option sets the output file to \verb'10_3'. The \verb'-search_tree'
+option then creates the file \verb'10_3_tree.txt'.
+Once the classification is completed,
+the \verb'-tree_draw' command can be used to create 
+a drawing of the search tree from the file just created.
+The vertex color represents the outcome of the isomorphism test. 
+A green node is accepted. A red node is rejected. 
+The search will continue for the green nodes only. 
+A green node at the bottom of the tree corresponds 
+to an isomorphism type of a geometry satisfying all the requirements. 
+In the example of the configurations $10_3$, there are 10 green nodes at the very bottom 
+of the search tree. 
+They represent the 10 isomorphism types of configurations $10_3$.
+The size of the tree can be determined by counting 
+the lines of the file \verb'10_3_tree.txt' and subtracting one:
+\orbiteroutput{GRAPHICS/LATEX/conf_10_3_wc}
+The word count command yields the following output:
+\orbiteroutput{GRAPHICS/LATEX/conf_10_3_wc_output}
+This means that there are 1471 lines in the file. 
+Hence the search tree has 1470 nodes.
+The resulting tree is shown below
+\orbiteroutput{GRAPHICS/WRAPPERS/conf_10_3_search_tree}
+
+
+\bigskip
+
+
+Any incidence structure defines a graph on its underlying set of points. 
+The vertices of the collinearity graph are the points of the incidence structure.
+Two vertices are adjacent if the incidence structure contains a block 
+which contains the associated points. 
+The distance between two points in the geometry 
+is the distance of the associated vertices in the collinearity graph. 
+The girth is the length of the shortest cycle. 
+Incidence structures with high girth are often interesting.
+Orbiter allows classifying incidence structures with a given girth.
+More specifically, Orbiter classifies 
+all incidence structures whose girth is at least a given number, 
+or proves that there are none.
+This is interesting because the girth can be used as a filter, 
+and classifying with a given girth may be 
+faster than classifying all incidence geometries.
+For instance, 
+the following example classifies 
+all cubic graphs on 10 vertices with girth at least 5:
+
+\sourcecode{geo_petersen}
+
+There is a unique graph with these properties. 
+It is the Petersen graph. 
+Its automorphism group is $\Sym(5)$ of order $120.$
+
+\bigskip
+
+Let us look at the girth of configurations.
+For instance, while there are $245342$ 
+isomorphism classes of configurations $15_3$, 
+only one of them has girth 4. 
+This is the Cremona Richmond configuration 
+with automorphism group $\Sym(6)$ of order 720. 
+It is associated to a cubic surface.
+Let us compare the classification with and without girth condition.
+The following command classifies all configurations $15_3$:
+
+\sourcecode{15_3.inc}
+
+The next command classifies the configurations $15_3$ with girth $4.$ 
+
+\sourcecode{geo_15_3_g4}
+
+
+\bigskip
+
+
+The next command classifies the configurations $40_4$ with girth $4.$ 
+Exactly two configuration arise, both with a group of order 51840. 
+Note the extra option \verb'-special_test_not_orderly' to speed up the search.
+
+\sourcecode{geo_40_4_g4}
+
+The search tree is shown below
+\orbiteroutput{GRAPHICS/WRAPPERS/conf_40_4_g4_search_tree}
+
+
+
+\bigskip
+
+The next command classifies the configurations $63_3$ with girth $6.$ 
+Exactly two configuration arise, both with a group of order 12096. 
+Note the extra option \verb'-special_test_orderly' to speed up the search.
+
+\sourcecode{geo_63_3_g6}
+
+The configuration is also known as the split Cayley hexagon.
+
+
+\bigskip
+
+The next command classifies the Latin squares of order $6.$ 
+
+\sourcecode{geo_LSQ6.inc}
+
+Up to isomorphism, there are exactly 12 such objects.
+
+
+\bigskip
+
+
+
+

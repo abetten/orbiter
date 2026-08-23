@@ -1,0 +1,24 @@
+PGO_5_2_graph_group:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define O -orthogonal_space 0 5 F -without_group -end \
+		-with O -do -orthogonal_space_activity \
+			-export_point_line_incidence_matrix \
+		-end
+	$(ORBITER) -v 3 \
+		-define Inc -vector -file O_5_2_incidence_matrix.csv -end \
+		-define Gamma -graph -collinearity_graph Inc -end \
+		-with Gamma -do \
+		-graph_theoretic_activity \
+			-automorphism_group \
+		-end \
+		-with Gamma -do \
+		-graph_theoretic_activity \
+			-eigenvalues \
+		-end \
+		-with Gamma -do \
+		-graph_theoretic_activity \
+			-eigenvalue_report \
+		-end
+	$(PDFLATEX) collinearity_graph_eigenvalues.tex
+	$(OPEN) collinearity_graph_eigenvalues.pdf

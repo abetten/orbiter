@@ -1,0 +1,67 @@
+orbiter
+|-- ORBITER
+|   |-- doc
+|   |-- examples
+|   |   |-- groups
+|   |       |-- orthogonal
+|   |-- src
+|       |-- apps
+|       |   |-- algebra
+|       |   |-- arcs
+|       |   |-- blt
+|       |   |-- codes
+|       |   |-- combinatorics
+|       |   |-- graph_classify
+|       |   |-- graph_theory
+|       |   |-- groups
+|       |   |-- linear_spaces
+|       |   |-- main
+|       |   |-- ovoid
+|       |   |-- packing
+|       |   |-- projective_space
+|       |   |-- regular_ls
+|       |   |-- semifield
+|       |   |-- solver
+|       |   |-- spread
+|       |   |-- subspace_orbits
+|       |   |-- surfaces
+|       |   |-- test
+|       |   |-- tools
+|       |-- contrib
+|       |-- lib
+|           |-- DISCRETA
+|           |-- classification
+|           |   |-- classify
+|           |   |-- poset_classification
+|           |   |-- set_stabilizer
+|           |-- foundations
+|           |   |-- BitSet
+|           |   |-- CUDA
+|           |   |   |-- Linalg
+|           |   |-- algebra_and_number_theory
+|           |   |-- coding_theory
+|           |   |-- combinatorics
+|           |   |-- data_structures
+|           |   |-- geometry
+|           |   |   |-- DATA
+|           |   |-- globals
+|           |   |-- graph_theory
+|           |   |   |-- Clique
+|           |   |-- graph_theory_nauty
+|           |   |-- graphics
+|           |   |-- io_and_os
+|           |   |-- solvers
+|           |   |-- statistics
+|           |-- group_actions
+|           |   |-- actions
+|           |   |-- data_structures
+|           |   |-- groups
+|           |   |-- induced_actions
+|           |-- top_level
+|               |-- algebra_and_number_theory
+|               |-- combinatorics
+|               |-- geometry
+|               |-- isomorph
+|               |-- orbits
+|               |-- solver
+|-- bin

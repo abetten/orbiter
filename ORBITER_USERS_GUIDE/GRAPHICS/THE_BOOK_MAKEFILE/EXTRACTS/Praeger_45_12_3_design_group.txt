@@ -1,0 +1,106 @@
+Praeger_45_12_3_design_group:
+	$(ORBITER) -v 4 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define F -finite_field -q 81 -compute_related_fields \
+			-override_polynomial 89 \
+		-end \
+		-define AGGL -linear_group -AGGL 1 F \
+			-end \
+		-define G -linear_group -AGGL 1 F \
+			-subgroup_by_generators G 3240 \
+			8 $(PRAEGER_DESIGN_45_12_3_GENS) \
+			-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end \
+		-define v -vector \
+			-dense $(PRAEGER_DESIGN_45_12_3_GENS) \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-subgroup_lattice_magma \
+		-end \
+		-define L -modified_group -from G \
+			-subgroup_by_lattice 43 \
+		-end \
+		-define R -modified_group -from G \
+			-subgroup_by_lattice 44 \
+		-end \
+		-with L -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end \
+		-with R -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-create_flag_transitive_geometry L R \
+		-end
+	$(ORBITER) -v 3 \
+		-orbiter_path $(ORBITER_PATH) \
+		-change_values \
+			AGGL_1_81_Subgroup_G_3240_AGGL_1_81_Subgroup_G_3240_subgroup_by_lattice_43_AGGL_1_81_Subgroup_G_3240_subgroup_by_lattice_44_intersection_size.csv \
+			Praeger_6.csv \
+			3,6,8 \
+			0,1,0
+	$(ORBITER) -v 8 \
+		-define Praeger_45 -vector \
+			-file Praeger_6.csv -format 45 \
+		-end \
+		-define D -design \
+			-from_incidence_matrix Praeger_45 \
+		-end \
+		-with D -do \
+			-design_activity \
+				-export_flags \
+		-end
+	$(ORBITER) -v 3 \
+		-define Doinc -draw_incidence_structure_options \
+			-width 60 -width_10 6 -end \
+		-define C -combinatorial_object \
+			-label Praeger Praeger \
+			-file_of_incidence_geometries \
+				Praeger_45_flags.txt 45 45 540 \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form \
+				-save_ago \
+				-save_transversal \
+				-nauty_control -nauty_log "praeger_design_nauty_log.txt" -end \
+			-end \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-post_processing \
+		-end \
+		-assign Object -from \
+		-with C -do \
+		-combinatorial_object_activity \
+			-get_combo_with_group 0 \
+		-end \
+		-with Object -do \
+			-combo_activity \
+				-report \
+					-export_flag_orbits \
+					-show_incidence_matrices \
+					-show_TDO \
+					-show_TDA \
+					-export_group_GAP \
+					-dont_show_incidence_matrices \
+					-incidence_draw_options Doinc \
+				-end \
+		-end \
+		-assign A -from \
+		-with Object -do \
+			-combo_activity \
+				-get_group \
+		-end \
+		-print_symbols
+	#$(PDFLATEX) Praeger_object0_report.tex
+	#$(OPEN) Praeger_object0_report.pdf

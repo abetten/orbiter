@@ -1,0 +1,10 @@
+Op_6_2_make_all_Siegel_transformations:
+	$(ORBITER) -v 2 \
+		-define Pts -vector \
+			-dense $(ORTHOGONAL_OP_6_2_POINTS_OFF) \
+		-end \
+		-define F -finite_field -q 2 -end \
+		-define O -orthogonal_space 1 6 F -end \
+		-with O -do -orthogonal_space_activity \
+			-make_all_Siegel_transformations \
+		-end

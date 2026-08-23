@@ -1,0 +1,31 @@
+\begin{table}[t]
+\tbl{\label{tab:diophant:activities}}
+{\begin{tcolorbox}[tabularx={p{3cm}|p{2cm}|p{6.3cm}|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black,title=Diophantine System Activities]
+\hline
+Command & Arguments & Purpose \\
+\hline
+\hline
+\verb'-print'  &    &  Print the system. \\
+\hline
+\verb'-solve_mckay'  &    &  Solve the system using McKay's possolve.\\
+\hline
+\verb'-solve_DLX'  &    &  Solve the system using Knuth's dancing links.\\
+\hline
+\verb'-solve_standard'  &    &  Solve the system using the standard solver.\\
+\hline
+\verb'-draw'  &  options  &  Produce a drawing of the coefficient matrix of the system. Here, options is the name of a draw options object.\\
+\hline
+\verb'-draw_as_bitmap'  &  $w$ $b$  &  Produce a bitmap drawing of the coefficient matrix of the system, using boxes of $w$ pixels with. Set the color bit-depth to $b$ ($b=8$ or $b=24$). The output is a bmp-file. \\
+\hline
+\verb'-perform_column_reductions'  &    & Eliminate variables which must be zero and write a reduced system.\\
+\hline
+\verb'-test_single_equation'  &    &  For each row of the system, compute the number of solutions of the system restricted to the nonzero coefficients. \\
+\hline
+\verb'-project_to_single_equation_and_solve'  &  $i$ $j$  &  Solve the system assuming the $j$th solution to the restricted system consisting of the $i$th row. \\
+\hline
+\verb'-project_to_two_equations_and_solve'  &  $i$ $j$ $r$ $m$  & Solve the system assuming any solution to the restricted system consisting of the $i$th and the $j$-th row  whose number is congruent to $r$ mod $m$. \\
+\hline
+\end{tcolorbox}}
+\end{table}

@@ -1,0 +1,12 @@
+F13_32:
+	$(ORBITER) -v 3 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 -nodes_empty \
+		-end \
+		-define F -finite_field -q 32 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define T3 -cubic_surface -space P -family_F13 2 -end \
+		-with T3 -do \
+		-cubic_surface_activity \
+			-report Do \
+		-end

@@ -1,0 +1,281 @@
+
+
+
+A $t$-spread of $\PG(n,q)$ is a set of disjoint 
+$\PG(t,q)$ that cover all of $\PG(n,q)$ pointwise. 
+$t$-spreads in $\PG(n,q)$ exist if and only if $t+1$ divides $n+1.$
+
+
+Table~\ref{tab:spreads:define} lists the Orbiter commands to create spreads.
+\orbitertableofcommands{spread_create}
+
+
+Table~\ref{tab:spreads:activity} lists the Orbiter spread activities.
+\orbitertableofcommands{spread_activity}
+
+
+
+Table~\ref{tab:spread:table} lists the Orbiter commands to create a table of spreads.
+\orbitertableofcommands{spread_table}
+
+Table~\ref{tab:spread:table:activity} lists the Orbiter activities for spread tables.
+\orbitertableofcommands{spread_table_activity}
+
+
+
+
+Table~\ref{tab:spreads:classify} list the Orbiter commands to create an object that can classify spreads.
+\orbitertableofcommands{spread_classify}
+
+
+Table~\ref{tab:spreads:classify:activity} 
+lists the Orbiter commands that apply to an object that can classify spreads.
+\orbitertableofcommands{spread_classify_activity}
+
+
+
+
+\bigskip
+
+The following two commands create the two spreads of order 9, 
+relying on the Orbiter knowledge base.
+
+\sourcecode{create_spread_9a}
+
+
+\sourcecode{create_spread_9b}
+
+The first spread is the Desarguesian spread, 
+with automorphism group of order 5760.
+The second spread is the Hall spread 
+with automorphism group of order 1920.
+
+\bigskip
+
+Spreads can be defined using spread sets. 
+A spread set is a set of $q^k$ matrices 
+of size $k \times k$ over $\bbF_q$ such that $A_i-A_j$ 
+is nonsingular for all $i \neq j.$ 
+Let us look at an example. 
+The spread due to Rao and Rao~\cite{RaoRao1976} 
+can be defined using the following makefile variable. 
+
+\sourcecodevariable{SPREAD_SET_27_RAO_RAO}
+
+Each line represents one matrix of the spread set, 
+with matrix entries being listed consecutively.
+The following command can be used to define the spread:
+
+\sourcecode{create_spread_Rao_Rao_27}
+
+
+
+
+\bigskip
+
+
+The following command creates the Desarguesian line-spread in $\PG(3,2)$: 
+% (so $s=2,$ $t=s-1=1$, $m=2$, $q=2$, and $Q=4$):
+
+\sourcecode{desarguesian_spread_in_PG_3_2}
+
+The cheat sheet contains the following spread:\\
+\orbiteroutput{GRAPHICS/LATEX/desarguesian_spread_PG_3_2}
+
+\bigskip
+
+The following command creates the Desarguesian plane-spread in $\PG(5,2)$:
+
+\sourcecode{desarguesian_spread_in_PG_5_2}
+
+\orbiteroutput{GRAPHICS/LATEX/desarguesian_spread_PG_5_2}
+
+\bigskip
+
+
+A spread table can be used to enumerate labeled spreads. 
+For instance, we can create all labeled spreads associated with one particular isomorphism type. 
+This means we can create spreads by orbits. We can choose the isomorphism type of spreads for which we want the orbits computed. 
+In the following example, we create the labeled spreads associated with the unique spread in $\PG(3,2).$ 
+There are exactly 56 spreads in the orbit:
+
+\sourcecode{PG_3_2_spread_table}
+
+The spreads are stored in a file 
+$$
+\verb'SPREAD_TABLES_2/spread_4_table.csv'
+$$
+Here, the integer 4 in the file name represents the order of the translation plane associated with the spreads. 
+
+
+%Apart from the second spread element, 
+%the left halves of the generator matrices of the subspaces in the Desarguesian spread 
+%are the elements of $\bbF_8$ in a matrix representation over $\bbF_2$.
+
+\bigskip
+
+Two $t$-spreads are isomorphic if there is a collineation which maps one to the other. 
+The classification problem for $t$-spreads 
+is the problem of determining a complete set of pairwise non-isomorphic 
+$t$-spreads. 
+Orbiter can be used to classify spreads for small parameters. 
+To enhance the algorithm, 
+the method of classification by substructure is used.
+Classification by substructure is a method to classify objects.
+In this method, we do not classify the whole poset. 
+Instead, we classify the substructures, and then move directly to the 
+desired objects, thereby skipping over intermediate objects.
+The jump over intermediate objects is facilitated 
+by combinatorial searching, 
+which may process nodes faster that classification with isomorph rejection. 
+The combinatorial search is facilitated by an auxiliary algorithm. 
+This auxiliary algorithm can be clique finding, exact cover, or any other computer science primitives. 
+Table~\ref{tab:isomorph} shows the commands available for classification by substructure.
+\orbitertableofcommands{isomorph}
+
+\bigskip
+
+Let us look at some examples. 
+
+
+
+\bigskip
+
+At first, we look at an example which is sufficiently small and can be 
+solved using the standard method. 
+Here, the standard method is poset classification algorithm for partial spreads.
+Suppose we want to classify the line spreads in $\PG(3,4)$ under the action of $\PGGL(4,4).$ 
+Under the Andr\'e, Bruck-Bose construction~\cite{Andre54,BruckBose64}, 
+these spreads correspond to translation planes of order $16$ with kernel $\bbF_4.$
+In order to classify the spreads of $\PG(3,4)$, we utilize poset classification, 
+as shown in the following command
+
+\sourcecode{classify_spreads_16_4}
+
+The algorithm computes the poset of orbits for the group $G =\PGGL(4,4)$ acting on 
+the poset of partial spreads in $\PG(3,4)$. 
+The poset of orbits is shown below:
+
+\orbiteroutput{GRAPHICS/WRAPPERS/spreads_16_4_draw}
+
+Up to isomorphism, there are exactly 
+three line-spreads in $\PG(3,4)$ (corresponding 
+to the three nodes at the bottom of the poset of orbits in the figure). 
+These three spreads are the Desarguesian spread, 
+the Hall spread, and the semifield spread, respectively. 
+Here is the relevant output taken from the latex report:
+\orbiteroutput{GRAPHICS/LATEX/partial_spreads_PG_3_4}
+The three spreads in $\PG(3,4)$ can be distinguished by their stabilizer orders.
+
+
+%Table~\ref{tab:spreads:3:4} lists the line spreads in $\PG(3,4)$ 
+%according to their orbiter catalogue number (OCN).
+
+%\input GRAPHICS/TABLES/spreads_in_PG_3_4
+%\orbitertableofextracommands{spreads_in_PG_3_4}
+
+\bigskip
+
+
+
+
+
+
+Let us illustrate the technique of classification by distinguished substructure.
+We consider spreads in $\PG(3,5)$. 
+These are sets of lines which partition the set of points. 
+The search poset is the set of partial spreads, 
+that is, the set of sets of pairwise disjoint lines. 
+We decide to pick as substructure the partial spreads consisting of five disjoint lines. 
+The number $s=5$ is somewhat arbitrary, chosen only because it seems to work best. 
+For each partial spreads of size $s$, the 
+lifting constructs all spreads of $\PG(3,5)$ 
+containing the chosen partial spread as a subset. 
+In a final step, we will perform an isomorph classification on the set of liftings. 
+This will furnish the desired classification of spreads of $\PG(3,5).$
+
+\bigskip
+
+Computationally, 
+the lifting process is the bottleneck in this procedure. 
+To enhance the performance of the lifting, 
+we use specialized algorithms from graph theory, based on cliques. 
+A clique in a graph is a complete subgraph, 
+i.e. a subset of the vertices such that any two 
+in the subset are adjacent.
+A variant of this is ranbow clique finding. 
+Here, we have a coloring of the vertices, 
+so that edges are only present between vertices of different color.
+The goal of rainbow clique finding 
+is to find cliques whose vertices represent all the different colors.  
+Many problems in the field of combinatorial designs can be attacked using rainbow cliques.
+
+\bigskip
+
+
+To illustrate the technique, let us discuss some examples.
+Regarding the substructure, 
+we choose the parameter $s=5.$ 
+This is based on some experimentation.
+The command 
+
+\sourcecode{classify_spreads_25_starter_lift_case_0}
+
+classifies the partial spreads of size $s=5$ and 
+prepares for the lifting of the first case only. 
+In order to prepare for the lifting, a graph is constructed which 
+describes the lines that can be added to the first partial spread. 
+The vertices of the graph are the lines 
+disjoint from the initial set of 5 lines in the partial spread. 
+Two vertices are joined by an edge if the associated lines are disjoint. 
+The vertices of the graph are colored according to the very first basis vector in the 
+generator matrix of the subspace in reduced row echelon form.
+In order to find the rainbow cliques in the graph, the command 
+
+\sourcecode{spreads_25_starter_0_cliques}
+
+can be used. 
+
+\bigskip
+
+The command 
+
+\sourcecode{classify_spreads_25_starter_lift_all_cases}
+
+recomputes the partial spreads of size $s=5$ and prepares for the lifting of all 
+orbit representatives (there are 28). 
+This leads to 28 graphs, each of which is 
+written to a file.
+The next command performs the rainbow clique finding in each of the 28 graphs:
+
+\sourcecode{spreads_25_starter_cliques}
+
+The resulting cliques are stored in files. 
+The command 
+
+\sourcecode{classify_spreads_25_isomorph}
+
+performs the final isomorph rejection on the spreads arising from the 
+rainbow cliques in all cases. 
+It results in a transversal of the isomorphism classes 
+of spreads of $\PG(3,5).$ 
+In total, 21 spreads are found. 
+This agrees with the results in the literature, 
+see~\cite{CzerwinskiOakden92}.
+
+
+
+
+
+
+\bigskip
+
+
+
+
+%Table~\ref{tab:spreads:7:2} lists the solid spreads in $\PG(7,2)$ 
+%according to their Orbiter catalogue number (OCN).
+
+%\input GRAPHICS/TABLES/spreads_in_PG_7_2
+%\orbitertableofextracommands{spreads_in_PG_7_2}
+

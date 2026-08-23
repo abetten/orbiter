@@ -1,0 +1,24 @@
+on_planes_restricted:
+	$(ORBITER) -v 2 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define planes -vector -dense "0,8,1,6,4,3,7,2,5" -end \
+		-define F -finite_field -q 8 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define G -linear_group -PGL 4 F \
+			-subgroup_by_generators "cyclic" \
+			9 1 "1,0,0,0, 0,1,0,0, 0,0,0,2, 0,0,1,1" \
+		-end \
+		-define G_on_planes -modified_group -from G \
+			-on_k_subspaces 3 \
+		-end \
+		-define Gr -modified_group -from G_on_planes \
+			-restricted_action planes planes \
+		-end \
+		-with Gr -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end
+	$(PDFLATEX) PGL_4_8_Gr_4_3_res_planes_report.tex
+	$(OPEN) PGL_4_8_Gr_4_3_res_planes_report.pdf

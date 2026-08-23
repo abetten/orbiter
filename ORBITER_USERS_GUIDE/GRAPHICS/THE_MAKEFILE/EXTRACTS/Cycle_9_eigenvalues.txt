@@ -1,0 +1,11 @@
+Cycle_9_eigenvalues:
+	$(ORBITER) -v 2 \
+		-define Gamma -graph \
+			-cycle 9 \
+		-end \
+		-with Gamma -do \
+		-graph_theoretic_activity -eigenvalues -end \
+		-with Gamma -do \
+		-graph_theoretic_activity -eigenvalue_report -end
+	$(PDFLATEX) Cycle_9_eigenvalues.tex
+	$(OPEN) Cycle_9_eigenvalues.pdf

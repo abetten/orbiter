@@ -1,0 +1,23 @@
+\begin{table}
+\begin{tcolorbox}[tabularx={X|p{2cm}|X|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black,title=Quartic Curve Activities]
+\hline
+Command & Arguments & Purpose \\
+\hline
+\hline
+\verb'-report' & & Produce a latex report about the curve. \\
+\hline
+\verb'-export_something' & type & Exports data of the quartic curve to a file. The type of data to be exported must be specified according to Table~\ref{tab:quartic:curve:export}. \\
+\hline
+\verb'-create_surface' & & Create a cubic surface from the curve. \\
+\hline
+\verb'-extract_orbit_on_bitangents_' \verb'by_length' & $l$ & Extract the bitangents in the unique orbit of length $l$. If there is no orbit of length $l$, or if there are multiple orbits of length $l$, an error is raised. \\
+\hline
+\verb'-extract_specific_orbit_on_' \verb'bitangents_by_length' & $l$ $i$ & Extract the $i$th orbit on bitangents of length $l$. \\
+\hline
+\verb'-extract_specific_orbit_on_' \verb'kovalevski_points_by_length' & $l$ $i$ & Extract the $i$th orbit on Kovalevski points of length $l$. \\
+\hline
+\end{tcolorbox}
+\caption{\label{tab:quartic:curves:activities}Quartic Curve Activities}
+\end{table}

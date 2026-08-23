@@ -1,0 +1,10 @@
+Berlekamp_matrix_2_3:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define v -vector -field F -dense "1,1,0,1" -end \
+		-with F -do \
+		-finite_field_activity \
+			-Berlekamp_matrix v \
+		-end
+	$(PDFLATEX) Berlekamp_matrix_q2_d3.tex
+	$(OPEN) Berlekamp_matrix_q2_d3.pdf

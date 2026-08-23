@@ -1,0 +1,11 @@
+HJ_d2_properties:
+	$(ORBITER) -v 6 \
+		-define G -graph \
+			-load_csv_no_border \
+			halljanko315.csv \
+			-distance_2 \
+		-end \
+		-with G -do \
+			-graph_theoretic_activity \
+			-properties \
+		-end

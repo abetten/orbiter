@@ -1,0 +1,31 @@
+HJ_group_and_orbits:
+	cp $(ORBITER_PATH)/examples/users_guide/halljanko315.csv .
+	$(ORBITER) -v 6 \
+		-define G -graph \
+			-load_csv_no_border \
+			halljanko315.csv \
+		-end \
+		-with G -do \
+			-graph_theoretic_activity -automorphism_group \
+		-end \
+		-with G -do \
+			-graph_theoretic_activity -properties \
+		-end
+	$(ORBITER) -v 2 \
+		-define Control -poset_classification_control \
+			-W \
+			-problem_label HJ_orbits \
+			-depth 2 \
+		-end \
+		-define gens -vector -file \
+			File_halljanko315_gens.csv -end \
+		-define G -permutation_group \
+			-bsgs halljanko315 "File\_halljanko315" \
+			315 1209600 "0,1,2" 5 gens \
+		-end \
+		-define Orb -orbits \
+			-group G \
+			-group_action G \
+			-generators G \
+			-on_subsets 2 Control \
+		-end

@@ -1,0 +1,6 @@
+search_primitive_poly_q5_deg3:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 5 -end \
+		-with F -do \
+		-finite_field_activity \
+		-get_primitive_polynomial 3 -end

@@ -1,0 +1,5 @@
+Chinese_remainders_C2:
+	$(ORBITER) -v 2 \
+		-define R -vector -dense "2,3" -end \
+		-define M -vector -dense "2147483647,5915587277" -end \
+		-Chinese_remainders R M

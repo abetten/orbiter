@@ -1,0 +1,20 @@
+Ree_27:
+	$(ORBITER) -v 2 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define F -finite_field -q 27 \
+			-override_polynomial "34" \
+		-end \
+		-define g1 -vector -field F -format 7 \
+			-dense $(Ree_gen1) -end \
+		-define g2 -vector -field F -format 7 \
+			-dense $(Ree_gen2) -end \
+		-define gens -vector -concatenate g1,g2 -end \
+		-define G -linear_group -PGL 7 F \
+			-subgroup_by_generators "Ree_27" "10073444472" 2 gens \
+			-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end

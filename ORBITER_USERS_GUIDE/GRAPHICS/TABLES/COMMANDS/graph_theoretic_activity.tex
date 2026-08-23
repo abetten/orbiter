@@ -1,0 +1,75 @@
+\begin{table}
+\begin{tcolorbox}[tabularx={X|p{2cm}|X|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black,title=Graph Theoretic Activities]
+\hline
+Command & Arguments & Purpose \\
+\hline
+\hline
+\verb'-find_cliques' & options  & 
+Find all cliques. 
+See Section~\ref{sec:graphtheory:cliques}. \\
+\hline
+\verb'-test_SRG_property' &   & 
+Test whether a graph is strongly regular. \\
+\hline
+\verb'-test_Neumaier_property' & $s$  & 
+Test whether a graph is Neumaier w.r.t. cliques of size $s$. \\
+\hline
+\verb'-find_subgraph' & type  & 
+Finds all labelings of a Dynkin diagram of a given type. 
+This needs two graphs. The vertices correspond to the involutions. 
+The first graph is the pairs whose product has order 2. 
+The second graph is the pairs whose product has order 3. 
+\\
+\hline
+\verb'-export_magma' &   & 
+Export to Magma~\cite{Magma}. \\
+\hline
+\verb'-export_maple' &   & 
+Export to Maple~\cite{Maple}. \\
+\hline
+\verb'-export_csv' &   & 
+Export to csv-file. \\
+\hline
+\verb'-export_graphviz' &   & 
+Export to graphviz-file. \\
+\hline
+\verb'-print' &   & 
+Print the graph. \\
+\hline
+\verb'-sort_by_colors' &   & 
+Sort the vertices by color classes. \\
+\hline
+\verb'-split' & file  & 
+Split the graph into subgraphs. \\
+\hline
+\verb'-split_by_starters' & file  & 
+Split the graph into subgraphs according to starters. \\
+\hline
+\verb'-split_by_clique' & label clique  & 
+Compute the neighborhood graph of the given clique. \\
+\hline
+\verb'-save' &   & 
+Save the graph to file in binary format. \\
+\hline
+\verb'-automorphism_group' &   & 
+Compute the automorphism group and write a report. 
+See Section~\ref{sec:canonical:form:objects:graphs}. \\
+\hline
+\verb'-automorphism_group_' \verb'colored_graph' &   & 
+Compute the automorphism group of a vertex colored graph and write a report. 
+See Section~\ref{sec:canonical:form:objects:graphs}. \\
+\hline
+\verb'-properties' &   & 
+Compute properties of the graph. \\
+\hline
+\verb'-eigenvalues' &   & 
+Compute the eigenvalues of the graph. \\
+\hline
+\verb'-draw' &   & 
+Draw the graph. \\
+\hline
+\end{tcolorbox}
+\caption{\label{tab:graphactivities}Graph Theoretic Activities}
+\end{table}

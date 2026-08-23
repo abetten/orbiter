@@ -1,0 +1,63 @@
+\begin{table}[t]
+\tbl{\label{tab:grouptasks}}
+{\begin{tcolorbox}[tabularx={p{3cm}|p{2cm}|p{6.3cm}|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black,title=Group theoretic activities (Part 1)]
+\hline
+Command & Arguments & Purpose \\
+\hline
+\hline
+\verb'-report'  &  options  & Produce a latex report for the group. Considers the given draw options. \\
+\hline
+\verb'-order_invariant'  &    & Produce a latex report for the order invariant of the group. \\
+\hline
+\verb'-group_table'  &  options  &  Produce a latex report for the group table. Considers the given draw options. \\
+\hline
+\verb'-sylow'  &   &  Produce a latex report for the sylow subgroups. \\
+\hline
+\verb'-generators'  &    & Returns the generators of the group as a vector of group elements. \\
+\hline
+\verb'-elements'  &    & Returns the elements of the group as a vector of group elements. \\
+\hline
+\verb'-elements_by_class'  &  order i  & Returns the elements of the i-th class whose elements have the given order.  \\
+\hline
+\verb'-select_elements'  &  list  & Returns the elements of the group whose ranks are given in the list as a vector of group elements. \\
+\hline
+\verb'-export_group_table'  &   & Export the group table as csv-file. \\
+\hline
+\verb'-random_element'  &  label  & Creates a random element. Writes the element to file in coded form. \\
+\hline
+\verb'-permutation_representation_' \verb'of_element'  & $g$  &  Compute the permutation representation of $g$ \\
+\hline
+\verb'-apply'  &  $a$ $g$  & Applies the group element $g$ to the element $a$. \\
+\hline
+\verb'-apply_to_set'  &  $a$ $g$  & Applies the group element $g$ to the set $a$. The object $a$ must be a vector or a matrix. The image set will be sorted. \\
+\hline
+\verb'-element_processing'  &  options  & Perform an activity for a sequence of group elements. For options, see Table~\ref{tab:grouptasks:elementprocessing}.  \\
+\hline
+\verb'-multiply'  &  $s_1$ $s_2$  & Multiplies group elements $s_1$ and $s_2$, assuming the elements are given in coded form. Produces a latex report. \\
+\hline
+\verb'-inverse'  &  $s$  & Computes the inverse of $s$, which is given in coded form. Produces a latex report. \\
+\hline
+\verb'-consecutive_powers'  &  $s$ $n$  & Computes all powers $s^i$ for $i=1,\ldots,n.$ $s$ is given in coded form. Produces a latex report. \\
+\hline
+\verb'-raise_to_the_power'  &  $s$ $n$  & Computes the $n$-th power of $s$, which is given in coded form. Produces a latex report. \\
+\hline
+\verb'-export_orbiter'  &    & Exports the group to Orbiter. \\
+\hline
+\verb'-export_gap'  &    & Exports the group to GAP~\cite{GAP}. \\
+\hline
+\verb'-export_magma'  &    & Exports the group to Magma~\cite{Magma}. \\
+\hline
+\verb'-search_element_of_order'  &  $i$  & Finds all elements of order $i$ in the group ($i \in {\mathbb N}$). \\
+\hline
+\verb'-find_standard_generators'  &  $a$ $b$ $c$  &  Finds all pairs of elements $x,y$ in $G$ such that $|x| = a,$ $|y|=b$, and $|xy|=c$. Such pairs are called standard generators. \\
+\hline
+\verb'-find_standard_generators_M24'  &   &  Finds a pair of standard generators for $M_{24}$. \\
+\hline
+\verb'-element_rank'  &  $s$  &  Determines the rank of the group element $s$ in the given group. $s$ is given in coded form.\\
+\hline
+\verb'-element_unrank'  &  $r$  &  Produces the group element whose rank is $r$. \\
+\hline
+\end{tcolorbox}}
+\end{table}

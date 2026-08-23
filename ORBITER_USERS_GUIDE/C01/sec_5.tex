@@ -1,0 +1,227 @@
+The Orbiter directory is under the control of git, 
+whose purpose it is to keep the sources up-to-date. 
+The user should not make any changes in this directory, 
+as it might cause trouble with updating Orbiter through git. 
+It is recommended to create a separate directory for work, 
+{\em outside the Orbiter directory}. 
+For the following, we assume that a parallel directory work 
+has been created, so that the directory tree structure looks like this:
+$$
+\includegraphics[width=3cm]{GRAPHICS/OTHER/dir_tree.png}
+$$
+There is a large makefile in 
+$$
+\verb'orbiter/examples/users_guide'
+$$
+containing all commands from this user's guide 
+(listed in Appendix~\ref{chapter:makefile}). 
+It would be good to copy this makefile into the work directory.
+Then, all commands in this user's guide can be 
+executed immediately from within the work directory.
+This way, the orbiter directory stays clean, 
+so github will not complain during any future updates of Orbiter.
+
+
+\bigskip
+
+As there can be only one makefile per directory, 
+it is recommended to start separate directories for different projects. 
+For instance, there could be multiple work directores, 
+say work1, work2 and so forth. 
+Each work directory would have its own makefile.
+
+\bigskip
+
+A ``makefile'' can store command sequences.
+They could be calls to Orbiter, 
+or they could be other system commands.  
+To call execute a makefile command, 
+the make application is used. 
+
+
+\bigskip
+
+
+Makefiles are plain text files. 
+To edit a makefile, a text editor is required 
+(something like ``Notepad'' on Windows, 
+``vi'' or ``gedit'' on Linux or Macintosh). 
+A text editor is used to edit plain text files. 
+This is different from a word processing application like ``word.'' 
+Word processing applications store files 
+in a proprietary format (for instance, docx for Word). 
+Word processing applications are not useful to edit makefiles.
+
+\bigskip
+
+
+Working with makefile requires a terminal window. 
+The terminal is a application which runs a shell. 
+A shell is responsible for executing the commands that you type. 
+There are different shells, 
+each with slightly different syntactical rules. 
+However, most commands that 
+are typed are really calls of system application. 
+
+\bigskip
+
+
+Under Windows, there is the ``Cmd'' application. 
+On Macintosh, the application is called Terminal.
+Under Windows, it is necessary to run \verb'wsl.exe' 
+before any make command. 
+This invokes the ``Windows Subsystem Linux'' environment, 
+which is necessary since Orbiter is a 
+Linux project and not a native Windows application.
+
+\bigskip
+
+
+The terminal runs a command line processor called a shell. 
+The shell executes the commands that are typed. 
+When working with makefiles, 
+the shell executes the make command. 
+The make command is given exactly one argument, 
+which refers to a command sequence 
+in the makefile in the present directory.
+Make opens the makefile and searches 
+for an entry that matches the given command label. 
+Once found, make then executes 
+the appropriate command sequence from the makefile. 
+If there happen to be multiple entries with the same label, 
+make will execute the first one.
+If make is called without any argument, 
+the first label in the makefile will be executed.
+
+
+\bigskip
+
+
+The most important part of installation 
+is the tayloring of the makefile. 
+Specifically, we need to set the path to the Orbiter executable. 
+The Orbiter is
+$$
+\verb'orbiter/src/apps/orbiter/orbiter.out'.
+$$
+To get the makefile to work, 
+you need to edit the first makefile variable, 
+called 
+$$
+\verb'ORBITER_PATH'
+$$
+The \verb'ORBITER_PATH' variable should 
+point to the Orbiter directory.
+For instance, if you install Orbiter 
+in your home directory, your variable should be 
+$$
+\verb'ORBITER_PATH=~/orbiter'
+$$
+The tilda is the abbreviation of the home directory. 
+The shell will know where to find your home directory. 
+If you installed Orbiter somewhere else, 
+you would have to change the variable accordingly.
+To execute a command from 
+the makefile associated with this used's guide, 
+type 
+$$
+\verb'make test_orbiter_session'
+$$
+Remember, Windows users will instead type 
+$$
+\verb'wsl.exe make test_orbiter_session'
+$$
+If your \verb'ORBITER_PATH' is incorrect, 
+you may receive an error message of the form
+$$
+\verb'.../orbiter.out: No such file or directory'
+$$
+where the initial three dots are a placeholder. 
+The actual text that will appear depends on what you have in your 
+\verb'ORBITER_PATH'.
+By changing the \verb'ORBITER_PATH' 
+variable according to the place of Orbiter on your file system, 
+the error message will go away. 
+
+If everything goes as planned, 
+you should see a few lines of text produced by Orbiter. 
+The first line should be something like this:
+$$
+\verb'Welcome to Orbiter! Your build number is ...'
+$$
+Here, the final three dots are a placeholder 
+for the ``build number'' of your Orbiter installation. 
+You can use this number to compare it to 
+the number on the title of this user's guide 
+to detect potential version mismatches. 
+Of course, you should always try 
+to have the most recent version of Orbiter. 
+If your Orbiter version is dated, 
+follow the instruction 
+in Section~\ref{sec:updating:orbiter} 
+to update your Orbiter.
+You can find the ultimate build number by going 
+to Orbiter's source branch on GitHub and checking 
+the file 
+$$
+\verb'build_number'
+$$
+It contains the most recent version 
+number of the Orbiter sources. 
+
+
+
+ 
+\bigskip
+
+
+
+In order to find out what files a particular 
+Orbiter command has created, the shell command 
+$$
+\verb'ls -lrt'
+$$
+can be used. Remember, Windows users will type 
+$$
+\verb'wsl.exe ls -lrt'
+$$
+This command displays the list of files in the present directory 
+in the reverse order of creation. 
+So, the most recent files are at the bottom of the list. 
+Many Orbiter commands create tex-files, 
+which are meant to be processed by latex.
+Some commands create csv-files.
+The text output in the terminal 
+window may contain useful information also. 
+The text output can be collected into a file, 
+using the shell output redirection syntax.
+For instance, 
+$$
+\verb'make test_orbiter_session >log'
+$$
+would execute the \verb'test_orbiter_session' 
+command and collect the text output in the file \verb'log' 
+(Windows users, 
+remember to start the command with \verb'wsl.exe').
+
+
+\orbiteroutput{GRAPHICS/THE_MAKEFILE/EXTRACTS/test_orbiter_session_log}
+
+\bigskip
+
+Orbiter accepts a parameter for the verbosity. 
+A higher verbosity will make 
+Orbiter produce more console text output, 
+which may be useful to gain more 
+insight into the computations that Orbiter performs. 
+A high value of the verbosity 
+is particularly useful for debugging purposes. 
+A verbosity of 0 suppresses most console output.
+
+
+
+\bigskip
+
+
+
+

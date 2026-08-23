@@ -1,0 +1,22 @@
+McKean_povray:
+	$(ORBITER) -v 2 -povray \
+		-round 0 -nb_frames_default 30 \
+		-output_mask McKean_%d_%03d.pov \
+		-video_options -W 1024 -H 768 \
+		-global_picture_scale 1.5 \
+		-default_angle 80 \
+		-clipping_radius 4.4 \
+		-omit_bottom_plane \
+		-camera 0 "1,1,1" "-4.5,3.5,6" "0,0,0" \
+		-end \
+		-scene_objects \
+			-cubic_lex "0, 0, 1, 0, 0, -1, -2, 1, \
+2, 0, 0, 1, 1,-1, -1, -1, 0, 0, 0, 0" \
+			-group_of_things "0" \
+			-cubics 0 $(SURFACE_COLOR_SEETHROUGH) \
+		-scene_objects_end \
+		-povray_end
+	- rm -rf POV
+	mkdir POV
+	mv McKean_0_*.pov POV
+	mv makefile_animation POV

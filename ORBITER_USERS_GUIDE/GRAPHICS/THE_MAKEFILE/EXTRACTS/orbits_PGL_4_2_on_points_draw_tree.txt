@@ -1,0 +1,34 @@
+orbits_PGL_4_2_on_points_draw_tree:
+	$(ORBITER) -v 8 \
+		-define Do -draw_options -embedded -end \
+		-define G -linear_group -PGL 4 2 -end \
+		-define Orb -orbits -group G \
+			-on_points \
+		-end \
+		-with Orb -do -orbits_activity \
+			-report Do \
+		-end \
+		-with Orb -do -orbits_activity \
+			-export_something "orbit" 0 \
+		-end \
+		-with Orb -do -orbits_activity \
+			-draw_tree 0 Do \
+		-end \
+		-with Orb -do -orbits_activity \
+			-schreier_poset 0 PGL_4_2_on_points \
+		-end
+	$(ORBITER) -v 3 \
+		-draw_layered_graph \
+			PGL_4_2_on_points_poset.layered_graph \
+			-place \
+		-radius 500 -embedded \
+			-line_width 1.1 -x_stretch 1.4 -scale 0.25 \
+		-end
+	$(PDFLATEX) PGL_4_2_on_points_poset_draw.tex
+	$(OPEN) PGL_4_2_on_points_poset_draw.pdf
+	$(PDFLATEX) PGL_4_2_on_points_poset_draw_direct.tex
+	$(OPEN) PGL_4_2_on_points_poset_draw_direct.pdf
+	#$(PDFLATEX) PGL_4_2_orbits_report.tex
+	#$(OPEN) PGL_4_2_orbits_report.pdf
+	#$(PDFLATEX) PGL_4_2_orbit_0_tree.tex
+	#$(OPEN) PGL_4_2_orbit_0_tree.pdf

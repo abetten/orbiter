@@ -1,0 +1,33 @@
+LSQ_5_c:
+	$(ORBITER) -v 3 \
+		-define Doinc -draw_incidence_structure_options \
+			-width 60 -width_10 6 -end \
+		-define C -combinatorial_object \
+			-label LSQ_5 LSQ\_5 \
+			-file_of_incidence_geometries latin_square_order5_LSQ5A_flags.txt 15 28 90 \
+			-file_of_incidence_geometries latin_square_order5_LSQ5B_flags.txt 15 28 90 \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form \
+				-save_ago \
+				-max_TDO_depth 4 \
+				-nauty_control -nauty_log "LSQ5_nauty_log.txt" -end \
+			-end \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-post_processing \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-report \
+				-export_flag_orbits \
+				-show_TDO \
+				-show_TDA \
+				-dont_show_incidence_matrices \
+				-incidence_draw_options Doinc \
+			-end \
+		-end
+	$(PDFLATEX) LSQ_5_classification.tex
+	$(OPEN) LSQ_5_classification.pdf

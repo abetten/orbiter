@@ -1,0 +1,37 @@
+
+
+
+For very small values of $q$, the cubic surfaces over $\bbF_q$ can be classified using the 
+basic Schreier algorithm from Section~\ref{sec:orbit:algorithms}.
+Let us look at an example. 
+Suppose we want to classify all cubic surfaces in $\PG(3,2).$ 
+The non-singular ones have been classified by 
+Dickson~\cite{Dickson15}.
+Orbiter can be used to recreate this classification and to investigate these surfaces further.
+
+\bigskip
+
+
+In Section~\ref{sec:orbit:algorithms},  cubic surfaces in $\PG(3,2)$ 
+were classified using this Orbiter command:
+{\tt
+\input GRAPHICS/THE_MAKEFILE/EXTRACTS/orbits_cubic_curves_q2.tex
+}
+To investigate the properties of these surfaces, 
+the following two commands can be used:
+{\tt
+\input GRAPHICS/THE_MAKEFILE/EXTRACTS/poly_orbits_d3_n3_q2_F2.csv.tex
+}
+and
+{\tt
+\input GRAPHICS/THE_MAKEFILE/EXTRACTS/Dickson_q2_analyze.tex
+}
+To investigate the properties of these surfaces over the extension field $\bbF_4$, 
+the following two commands can be used:
+{\tt
+\input GRAPHICS/THE_MAKEFILE/EXTRACTS/poly_orbits_d3_n3_q2_F4.csv.tex
+}
+and
+{\tt
+\input GRAPHICS/THE_MAKEFILE/EXTRACTS/Dickson_q4_analyze.tex
+}

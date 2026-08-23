@@ -1,0 +1,13 @@
+Hamming_5_2_graph:
+	$(ORBITER) -v 2 \
+		-define G -graph -Hamming 5 2 -end \
+		-with G -do \
+		-graph_theoretic_activity -export_csv -end \
+		-with G -do \
+		-graph_theoretic_activity -export_graphviz -end \
+		-with G -do \
+		-graph_theoretic_activity -save -end
+	$(ORBITER) -v 2 -draw_matrix \
+		-input_csv_file Hamming_5_2.csv \
+		-box_width 8 -bit_depth 24 -partition 4 32 32 -end
+	dot -Tpng Hamming_5_2.gv >Hamming_5_2.png

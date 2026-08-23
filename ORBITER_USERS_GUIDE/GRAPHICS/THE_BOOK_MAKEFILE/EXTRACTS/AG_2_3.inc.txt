@@ -1,0 +1,9 @@
+AG_2_3.inc:
+	$(ORBITER) -v 2 \
+		-define Geo -geometry_builder \
+			-V 9 -B 12 \
+			-TDO 4 -fuse 1 \
+			-fname_GEO AG_2_3 \
+			-test 3,4,5,6,7,8,9 \
+			-output_to_inc_file \
+		-end

@@ -1,0 +1,16 @@
+PGL_4_3_classes:
+	$(ORBITER) -v 2 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define G -linear_group -PGL 4 3 -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-classes \
+		-end
+	$(PDFLATEX) PGL_4_3_report_classes_of_elements.tex
+	$(OPEN) PGL_4_3_report_classes_of_elements.pdf

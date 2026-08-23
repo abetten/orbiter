@@ -1,0 +1,17 @@
+PG_2_2_incidence_matrix:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-with P -do -projective_space_activity \
+			-export_point_line_incidence_matrix \
+		-end
+	$(ORBITER) -v 2 \
+		-define all_one -vector -repeat 1 7 -end \
+		-draw_matrix \
+			-input_csv_file PG_n2_q2_incidence_matrix.csv \
+			-box_width 20 -bit_depth 8 \
+			-partition 3 \
+				all_one all_one \
+		-end
+	$(OPEN) PG_n2_q2_incidence_matrix_draw.bmp
+	magick PG_n2_q2_incidence_matrix_draw.bmp PG_n2_q2_incidence_matrix_draw.png

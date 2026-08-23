@@ -1,0 +1,7 @@
+ROW,C1,C2,C3
+0,"tab:plesken:ring:activity",,
+1,"Activities for a Plesken Ring",,
+1,"\verb'-report' "," options  "," Produce a latex report. For options, see Table~\ref{tab:pc:report:options}. "
+1,"\verb'-evaluate_join' "," ring formula  "," Evaluate the given formula in the Plesken ring $A^\vee$. Use the given polynomial ring to map symbols to orbits.  "
+1,"\verb'-evaluate_meet' "," ring formula  "," Evaluate the given formula in the Plesken ring $A^\wedge$. Use the given polynomial ring to map symbols to orbits. "
+END

@@ -1,0 +1,14 @@
+Doily_disjoint_sets_graph_cliques_5:
+	echo $(DOILY) >doily.csv
+	$(ORBITER) -v 2 \
+		-define G -graph -disjoint_sets_graph \
+			doily.csv \
+		-end \
+		-with G -do \
+			-graph_theoretic_activity \
+			-find_cliques \
+				-target_size 5 \
+				-output_file doily_cliques_5 \
+			-end \
+		-end \
+		-print_symbols

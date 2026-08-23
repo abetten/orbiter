@@ -1,0 +1,18 @@
+code_n15_k6_d6_a_group:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define genma -vector -field F -format 6 \
+			-compact $(CODE_15_6_6_A) \
+		-end \
+		-define P -projective_space -n 5 -field F -v 0 -end \
+		-with P -do \
+		-projective_space_activity \
+			-canonical_form_of_code \
+				"n15_k6_d6_a" genma \
+				-save_ago \
+				-save_classification "n15_k6_d6_a" \
+				-nauty_control -end \
+			-end \
+		-end
+	$(PDFLATEX) n15_k6_d6_a_classification.tex
+	$(OPEN) n15_k6_d6_a_classification.pdf

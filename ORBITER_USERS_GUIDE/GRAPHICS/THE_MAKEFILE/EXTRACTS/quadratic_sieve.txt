@@ -1,0 +1,2 @@
+quadratic_sieve:
+	$(ORBITER) -v 5 -quadratic_sieve 31 500 1

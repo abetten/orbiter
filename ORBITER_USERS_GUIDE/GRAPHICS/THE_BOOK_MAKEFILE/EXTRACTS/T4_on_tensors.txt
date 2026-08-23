@@ -1,0 +1,30 @@
+T4_on_tensors:
+	$(ORBITER) -v 4 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define G \
+		-linear_group -GL_d_q_wr_Sym_n 2 2 4 \
+			-on_tensors -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end
+	$(PDFLATEX) GL_2_2_wreath_Sym4_report.tex
+	$(OPEN) GL_2_2_wreath_Sym4_report.pdf
+	
+	
+T4r1:
+	$(ORBITER) -v 4 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define G \
+		-linear_group -GL_d_q_wr_Sym_n 2 2 4 \
+			-on_rank_one_tensors -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end
+	$(PDFLATEX) GL_2_2_wreath_Sym4_report.tex
+	$(OPEN) GL_2_2_wreath_Sym4_report.pdf

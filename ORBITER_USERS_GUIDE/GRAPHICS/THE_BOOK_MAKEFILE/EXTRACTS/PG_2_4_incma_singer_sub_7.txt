@@ -1,0 +1,9 @@
+PG_2_4_incma_singer_sub_7:
+	$(ORBITER) -v 2 \
+		-draw_matrix \
+			-input_csv_file PG_2_4_singer_incma_subgroup_index_7.csv \
+			-box_width 20 -bit_depth 24 \
+			-partition 3 3,3,3,3,3,3,3 3,3,3,3,3,3,3 \
+		-end
+	$(OPEN) PG_2_4_singer_incma_subgroup_index_7_draw.bmp
+	magick PG_2_4_singer_incma_subgroup_index_7_draw.bmp PG_2_4_singer_incma_subgroup_index_7_draw.png

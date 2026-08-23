@@ -1,0 +1,32 @@
+PG_3_3_assume_5_read_solution:
+	$(ORBITER) -v 5 \
+		-define Control -poset_classification_control \
+			-problem_label spreads_PG_3_3 \
+			-W \
+		-end \
+		-define Control_Fix -poset_classification_control \
+			-problem_label N5_fixp_cliques \
+			-W \
+		-end \
+		-define F -finite_field -q 3 -end \
+		-define P3 -projective_space -n 3 -field F -v 0 -end \
+		-define P5 -projective_space -n 5 -field F -v 0 -end \
+		-define T -spread_table -space P3 -rk 2 \
+			-iso_types "0,1" \
+			-path "SPREAD_TABLES_3/" \
+			-control Control \
+			-end \
+		-define PC -packing_classify P3 P5 T \
+		-define PW -packing_with_symmetry_assumption PC \
+				-H "H5" -PGL 4 3 -subgroup_by_generators \
+					"5" 5 1 $(PGL_4_3_CLASS_5A_REP) -end \
+				-N "N5" -PGL 4 3 -subgroup_by_generators \
+					"N5" 160 3 $(PGL_4_3_CLASS_5A_N_GENS) -end \
+			-end \
+		-define PWF -packing_choose_fixed_points PW 3 Control_Fix \
+		-define Long -packing_long_orbits PWF \
+			-orbit_length 5 \
+			-list_of_cases_from_file N5_fixp_cliques.csv \
+			-read_solutions \
+			-end \
+		-print_symbols

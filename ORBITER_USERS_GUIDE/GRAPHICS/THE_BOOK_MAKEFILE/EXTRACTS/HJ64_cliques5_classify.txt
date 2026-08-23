@@ -1,0 +1,21 @@
+HJ64_cliques5_classify:
+	$(ORBITER) -v 6 \
+		-define Control -poset_classification_control \
+			-W \
+			-problem_label HJ64_cliques \
+			-clique_test Gamma \
+			-depth 5 \
+		-end \
+		-define Gamma -graph \
+			-load \
+			Group_Perm315_Orbital_3.colored_graph \
+		-end \
+		-define gens -vector \
+			-file halljanko315_gens.csv \
+		-end \
+		-define G -permutation_group \
+		-bsgs halljanko315 "File\_halljanko315" \
+			315 1209600 "0,1,42,95" 5 gens -end \
+		-define Orb -orbits -group G \
+			-on_subsets 5 Control \
+		-end

@@ -1,0 +1,12 @@
+Cyclic_6:
+	$(ORBITER) -v 3 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define G -permutation_group -cyclic_group 6 -end \
+		-with G -do \
+			-group_theoretic_activity \
+			-report Do \
+		-end
+	$(PDFLATEX) C_6_report.tex
+	$(OPEN) C_6_report.pdf

@@ -1,0 +1,18 @@
+SP_6_2_point_stab_subgroup:
+	$(ORBITER) -v 2 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define F -finite_field -q 2 -end \
+		-define G -linear_group -PGL 6 F \
+			-symplectic_group \
+		-end \
+		-define G0 -modified_group -from G \
+			-point_stabilizer 0 \
+		-end \
+		-with G0 -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end
+	$(PDFLATEX) PSp_6_2_Stab0_report.tex
+	$(OPEN) PSp_6_2_Stab0_report.pdf

@@ -1,0 +1,10 @@
+Paley_13_eigenvalues:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 13 -end \
+		-define Gamma -graph -Paley F -end \
+		-with Gamma -do \
+		-graph_theoretic_activity -eigenvalues -end \
+		-with Gamma -do \
+		-graph_theoretic_activity -eigenvalue_report -end
+	$(PDFLATEX) Paley_13_eigenvalues.tex
+	$(OPEN) Paley_13_eigenvalues.pdf

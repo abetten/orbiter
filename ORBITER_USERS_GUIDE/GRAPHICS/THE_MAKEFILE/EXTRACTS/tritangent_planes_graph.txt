@@ -1,0 +1,5 @@
+tritangent_planes_graph:
+	$(ORBITER) -v 2 \
+		-define Gamma \
+			-graph -tritangent_planes_disjointness_graph \
+		-end

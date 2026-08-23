@@ -1,0 +1,8 @@
+PGL_4_4_2A_rank:
+	$(ORBITER) -v 6 \
+		-define G -linear_group -PGGL 4 4 -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-element_rank \
+			"1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 1" \
+		-end

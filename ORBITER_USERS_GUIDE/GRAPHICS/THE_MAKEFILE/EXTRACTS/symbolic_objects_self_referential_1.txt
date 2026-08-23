@@ -1,0 +1,7 @@
+symbolic_objects_self_referential_1:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 2 -end \
+		-define x -symbolic_object \
+			-field F \
+			-text "x"\
+		-end

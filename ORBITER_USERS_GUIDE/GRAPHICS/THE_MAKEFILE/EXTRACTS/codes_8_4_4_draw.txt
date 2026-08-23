@@ -1,0 +1,10 @@
+codes_8_4_4_draw:
+	$(ORBITER) -v 3 \
+		-draw_layered_graph \
+			codes_8_4_4_poset_lvl_8.layered_graph \
+			-place \
+			-radius 250 -embedded -line_width 1.0 \
+			-y_stretch 1.0 -scale 0.5 \
+		-end
+	$(PDFLATEX) codes_8_4_4_poset_lvl_8_draw.tex
+	$(OPEN) codes_8_4_4_poset_lvl_8_draw.pdf

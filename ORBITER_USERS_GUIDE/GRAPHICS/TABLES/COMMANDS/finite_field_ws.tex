@@ -1,0 +1,21 @@
+\begin{table}[t]
+\tbl{\label{tab:finitefield:create}}
+{\begin{tcolorbox}[tabularx={p{3cm}|p{2cm}|p{6.3cm}|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black,title=Creating Finite Fields]
+\hline
+Command & Arguments & Purpose \\
+\hline
+\hline
+\verb'-q'  &  $q$  &   Specify the order of the field. Here, $q=p^k$  for some prime $p$ and some positive integer $k$.\\
+\hline
+\verb'-override_polynomial'  &  $n$   & Specify the polynomial used to create the finite field. The polynomial is given as integer, using the base $p$ representation. See Section~\ref{sec:extension:fields}.\\
+\hline
+\verb'-without_tables'  &    &   Create the field without precomputing the tables.\\
+\hline
+\verb'-compute_related_fields'  &    &   Compute information about all subfields.  \\
+\hline
+\verb'-symbol'  &  $s$  &   Use $s$ as a symbol for the primitive element during printing.  \\
+\hline
+\end{tcolorbox}}
+\end{table}

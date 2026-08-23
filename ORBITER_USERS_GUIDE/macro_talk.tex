@@ -1,0 +1,750 @@
+%\def\calS{\mathcal{S}}
+%\def\calP{\mathcal{P}}
+%\def\calL{\mathcal{L}}
+%\def\calC{\mathcal{C}}
+%\def\calB{\mathcal{B}}
+%\def\calD{\mathcal{D}}
+
+\newcommand{\bbO}{{\mathbb O}}
+\newcommand{\bbH}{{\mathbb H}}
+\newcommand{\bbC}{{\mathbb C}}
+\newcommand{\bbQ}{{\mathbb Q}}
+\newcommand{\bbN}{{\mathbb N}}
+\newcommand{\bbF}{{\mathbb F}}
+\newcommand{\bbR}{{\mathbb R}}
+\newcommand{\bbP}{{\mathbb P}}
+\newcommand{\bbZ}{{\mathbb Z}}
+\newcommand{\dist}{{\rm dist}}
+\newcommand{\canon}{{\rm canon}}
+\newcommand{\Up}{{\rm Up}}
+\newcommand{\Down}{{\rm Down}}
+\newcommand{\STS}{{\rm STS}}
+\newcommand{\Hom}{{\rm Hom}}
+\newcommand{\Row}{{\rm Row}}
+\newcommand{\PowMod}{{\rm PowMod}}
+\newcommand{\aff}{{\rm aff}}
+\newcommand{\Sp}{{\rm Sp}}
+\newcommand{\PSp}{{\rm PSp}}
+\newcommand{\PGO}{{\rm PGO}}
+%\newcommand{\Exp}{{\rm Exp}}
+%\newcommand{\Subexp}{{\rm Subexp}}
+
+
+\newcommand{\Interval}{{\rm Int}}
+
+\newcommand{\cA}{{\cal A}}
+\newcommand{\cB}{{\cal B}}
+\newcommand{\cC}{{\cal C}}
+\newcommand{\cD}{{\cal D}}
+\newcommand{\cE}{{\cal E}}
+\newcommand{\cF}{{\cal F}}
+\newcommand{\cG}{{\cal G}}
+\newcommand{\cH}{{\cal H}}
+\newcommand{\cI}{{\cal I}}
+\newcommand{\cJ}{{\cal J}}
+\newcommand{\cK}{{\cal K}}
+\newcommand{\cL}{{\cal L}}
+\newcommand{\cM}{{\cal M}}
+\newcommand{\cN}{{\cal N}}
+\newcommand{\cO}{{\cal O}}
+\newcommand{\cP}{{\cal P}}
+\newcommand{\cQ}{{\cal Q}}
+\newcommand{\cR}{{\cal R}}
+\newcommand{\cS}{{\cal S}}
+\newcommand{\cT}{{\cal T}}
+\newcommand{\cU}{{\cal U}}
+\newcommand{\cV}{{\cal V}}
+\newcommand{\cW}{{\cal W}}
+\newcommand{\cX}{{\cal X}}
+\newcommand{\cY}{{\cal Y}}
+\newcommand{\cZ}{{\cal Z}}
+
+\newcommand{\frakA}{{\mathfrak A}}
+\newcommand{\frakB}{{\mathfrak B}}
+\newcommand{\frakC}{{\mathfrak C}}
+\newcommand{\frakD}{{\mathfrak D}}
+\newcommand{\frakE}{{\mathfrak E}}
+\newcommand{\frakF}{{\mathfrak F}}
+\newcommand{\frakG}{{\mathfrak G}}
+\newcommand{\frakH}{{\mathfrak H}}
+\newcommand{\frakI}{{\mathfrak I}}
+\newcommand{\frakJ}{{\mathfrak J}}
+\newcommand{\frakK}{{\mathfrak K}}
+\newcommand{\frakL}{{\mathfrak L}}
+\newcommand{\frakM}{{\mathfrak M}}
+\newcommand{\frakN}{{\mathfrak N}}
+\newcommand{\frakO}{{\mathfrak O}}
+\newcommand{\frakP}{{\mathfrak P}}
+\newcommand{\frakQ}{{\mathfrak Q}}
+\newcommand{\frakR}{{\mathfrak R}}
+\newcommand{\frakS}{{\mathfrak S}}
+\newcommand{\frakT}{{\mathfrak T}}
+\newcommand{\frakU}{{\mathfrak U}}
+\newcommand{\frakV}{{\mathfrak V}}
+\newcommand{\frakW}{{\mathfrak W}}
+\newcommand{\frakX}{{\mathfrak X}}
+\newcommand{\frakY}{{\mathfrak Y}}
+\newcommand{\frakZ}{{\mathfrak Z}}
+
+\newcommand{\fraka}{{\mathfrak a}}
+\newcommand{\frakb}{{\mathfrak b}}
+\newcommand{\frakc}{{\mathfrak c}}
+\newcommand{\frakd}{{\mathfrak d}}
+\newcommand{\frake}{{\mathfrak e}}
+\newcommand{\frakf}{{\mathfrak f}}
+\newcommand{\frakg}{{\mathfrak g}}
+\newcommand{\frakh}{{\mathfrak h}}
+\newcommand{\fraki}{{\mathfrak i}}
+\newcommand{\frakj}{{\mathfrak j}}
+\newcommand{\frakk}{{\mathfrak k}}
+\newcommand{\frakl}{{\mathfrak l}}
+\newcommand{\frakm}{{\mathfrak m}}
+\newcommand{\frakn}{{\mathfrak n}}
+\newcommand{\frako}{{\mathfrak o}}
+\newcommand{\frakp}{{\mathfrak p}}
+\newcommand{\frakq}{{\mathfrak q}}
+\newcommand{\frakr}{{\mathfrak r}}
+\newcommand{\fraks}{{\mathfrak s}}
+\newcommand{\frakt}{{\mathfrak t}}
+\newcommand{\fraku}{{\mathfrak u}}
+\newcommand{\frakv}{{\mathfrak v}}
+\newcommand{\frakw}{{\mathfrak w}}
+\newcommand{\frakx}{{\mathfrak x}}
+\newcommand{\fraky}{{\mathfrak y}}
+\newcommand{\frakz}{{\mathfrak z}}
+
+\newcommand{\rmA}{{\rm A}}
+\newcommand{\rmB}{{\rm B}}
+\newcommand{\rmC}{{\rm C}}
+\newcommand{\rmD}{{\rm D}}
+\newcommand{\rmE}{{\rm E}}
+\newcommand{\rmF}{{\rm F}}
+\newcommand{\rmG}{{\rm G}}
+\newcommand{\rmH}{{\rm H}}
+\newcommand{\rmI}{{\rm I}}
+\newcommand{\rmJ}{{\rm J}}
+\newcommand{\rmK}{{\rm K}}
+\newcommand{\rmL}{{\rm L}}
+\newcommand{\rmM}{{\rm M}}
+\newcommand{\rmN}{{\rm N}}
+\newcommand{\rmO}{{\rm O}}
+\newcommand{\rmP}{{\rm P}}
+\newcommand{\rmQ}{{\rm Q}}
+\newcommand{\rmR}{{\rm R}}
+\newcommand{\rmS}{{\rm S}}
+\newcommand{\rmT}{{\rm T}}
+\newcommand{\rmU}{{\rm U}}
+\newcommand{\rmV}{{\rm V}}
+\newcommand{\rmW}{{\rm W}}
+\newcommand{\rmX}{{\rm X}}
+\newcommand{\rmY}{{\rm Y}}
+\newcommand{\rmZ}{{\rm Z}}
+
+\newcommand{\rma}{{\rm a}}
+\newcommand{\rmb}{{\rm b}}
+\newcommand{\rmc}{{\rm c}}
+\newcommand{\rmd}{{\rm d}}
+\newcommand{\rme}{{\rm e}}
+\newcommand{\rmf}{{\rm f}}
+\newcommand{\rmg}{{\rm g}}
+\newcommand{\rmh}{{\rm h}}
+\newcommand{\rmi}{{\rm i}}
+\newcommand{\rmj}{{\rm j}}
+\newcommand{\rmk}{{\rm k}}
+\newcommand{\rml}{{\rm l}}
+\newcommand{\rmm}{{\rm m}}
+\newcommand{\rmn}{{\rm n}}
+\newcommand{\rmo}{{\rm o}}
+\newcommand{\rmp}{{\rm p}}
+\newcommand{\rmq}{{\rm q}}
+\newcommand{\rmr}{{\rm r}}
+\newcommand{\rms}{{\rm s}}
+\newcommand{\rmt}{{\rm t}}
+\newcommand{\rmu}{{\rm u}}
+\newcommand{\rmv}{{\rm v}}
+\newcommand{\rmw}{{\rm w}}
+\newcommand{\rmx}{{\rm x}}
+\newcommand{\rmy}{{\rm y}}
+\newcommand{\rmz}{{\rm z}}
+
+
+\newcommand{\bA}{{\bf A}}
+\newcommand{\bB}{{\bf B}}
+\newcommand{\bC}{{\bf C}}
+\newcommand{\bD}{{\bf D}}
+\newcommand{\bE}{{\bf E}}
+\newcommand{\bF}{{\bf F}}
+\newcommand{\bG}{{\bf G}}
+\newcommand{\bH}{{\bf H}}
+\newcommand{\bI}{{\bf I}}
+\newcommand{\bJ}{{\bf J}}
+\newcommand{\bK}{{\bf K}}
+\newcommand{\bL}{{\bf L}}
+\newcommand{\bM}{{\bf M}}
+\newcommand{\bN}{{\bf N}}
+\newcommand{\bO}{{\bf O}}
+\newcommand{\bP}{{\bf P}}
+\newcommand{\bQ}{{\bf Q}}
+\newcommand{\bR}{{\bf R}}
+\newcommand{\bS}{{\bf S}}
+\newcommand{\bT}{{\bf T}}
+\newcommand{\bU}{{\bf U}}
+\newcommand{\bV}{{\bf V}}
+\newcommand{\bW}{{\bf W}}
+\newcommand{\bX}{{\bf X}}
+\newcommand{\bY}{{\bf Y}}
+\newcommand{\bZ}{{\bf Z}}
+
+\newcommand{\ba}{{\bf a}}
+\newcommand{\bb}{{\bf b}}
+\newcommand{\bc}{{\bf c}}
+\newcommand{\bd}{{\bf d}}
+\newcommand{\be}{{\bf e}}
+%\newcommand{\bf}{{\bf f}}
+\newcommand{\bg}{{\bf g}}
+\newcommand{\bh}{{\bf h}}
+\newcommand{\bi}{{\bf i}}
+\newcommand{\bj}{{\bf j}}
+\newcommand{\bk}{{\bf k}}
+\newcommand{\bl}{{\bf l}}
+\newcommand{\bm}{{\bf m}}
+\newcommand{\bn}{{\bf n}}
+\newcommand{\bo}{{\bf o}}
+\newcommand{\bp}{{\bf p}}
+\newcommand{\bq}{{\bf q}}
+\newcommand{\br}{{\bf r}}
+\newcommand{\bs}{{\bf s}}
+\newcommand{\bt}{{\bf t}}
+\newcommand{\bu}{{\bf u}}
+\newcommand{\bv}{{\bf v}}
+\newcommand{\bw}{{\bf w}}
+\newcommand{\bx}{{\bf x}}
+\newcommand{\by}{{\bf y}}
+\newcommand{\bz}{{\bf z}}
+
+
+
+\newcommand{\bfA}{{\bf A}}
+\newcommand{\bfB}{{\bf B}}
+\newcommand{\bfC}{{\bf C}}
+\newcommand{\bfD}{{\bf D}}
+\newcommand{\bfE}{{\bf E}}
+\newcommand{\bfF}{{\bf F}}
+\newcommand{\bfG}{{\bf G}}
+\newcommand{\bfH}{{\bf H}}
+\newcommand{\bfI}{{\bf I}}
+\newcommand{\bfJ}{{\bf J}}
+\newcommand{\bfK}{{\bf K}}
+\newcommand{\bfL}{{\bf L}}
+\newcommand{\bfM}{{\bf M}}
+\newcommand{\bfN}{{\bf N}}
+\newcommand{\bfO}{{\bf O}}
+\newcommand{\bfP}{{\bf P}}
+\newcommand{\bfQ}{{\bf Q}}
+\newcommand{\bfR}{{\bf R}}
+\newcommand{\bfS}{{\bf S}}
+\newcommand{\bfT}{{\bf T}}
+\newcommand{\bfU}{{\bf U}}
+\newcommand{\bfV}{{\bf V}}
+\newcommand{\bfW}{{\bf W}}
+\newcommand{\bfX}{{\bf X}}
+\newcommand{\bfY}{{\bf Y}}
+\newcommand{\bfZ}{{\bf Z}}
+
+\newcommand{\bfa}{{\bf a}}
+\newcommand{\bfb}{{\bf b}}
+\newcommand{\bfc}{{\bf c}}
+\newcommand{\bfd}{{\bf d}}
+\newcommand{\bfe}{{\bf e}}
+\newcommand{\bff}{{\bf f}}
+\newcommand{\bfg}{{\bf g}}
+\newcommand{\bfh}{{\bf h}}
+\newcommand{\bfi}{{\bf i}}
+\newcommand{\bfj}{{\bf j}}
+\newcommand{\bfk}{{\bf k}}
+\newcommand{\bfl}{{\bf l}}
+\newcommand{\bfm}{{\bf m}}
+\newcommand{\bfn}{{\bf n}}
+\newcommand{\bfo}{{\bf o}}
+\newcommand{\bfp}{{\bf p}}
+\newcommand{\bfq}{{\bf q}}
+\newcommand{\bfr}{{\bf r}}
+\newcommand{\bfs}{{\bf s}}
+\newcommand{\bft}{{\bf t}}
+\newcommand{\bfu}{{\bf u}}
+\newcommand{\bfv}{{\bf v}}
+\newcommand{\bfw}{{\bf w}}
+\newcommand{\bfx}{{\bf x}}
+\newcommand{\bfy}{{\bf y}}
+\newcommand{\bfz}{{\bf z}}
+
+
+\newcommand{\bone}{{\bf 1}}
+
+\newcommand{\calA}{{\mathcal A}}
+\newcommand{\calB}{{\mathcal B}}
+\newcommand{\calC}{{\mathcal C}}
+\newcommand{\calD}{{\mathcal D}}
+\newcommand{\calE}{{\mathcal E}}
+\newcommand{\calF}{{\mathcal F}}
+\newcommand{\calG}{{\mathcal G}}
+\newcommand{\calH}{{\mathcal H}}
+\newcommand{\calI}{{\mathcal I}}
+\newcommand{\calJ}{{\mathcal J}}
+\newcommand{\calK}{{\mathcal K}}
+\newcommand{\calL}{{\mathcal L}}
+\newcommand{\calM}{{\mathcal M}}
+\newcommand{\calN}{{\mathcal N}}
+\newcommand{\calO}{{\mathcal O}}
+\newcommand{\calP}{{\mathcal P}}
+\newcommand{\calQ}{{\mathcal Q}}
+\newcommand{\calR}{{\mathcal R}}
+\newcommand{\calS}{{\mathcal S}}
+\newcommand{\calT}{{\mathcal T}}
+\newcommand{\calU}{{\mathcal U}}
+\newcommand{\calV}{{\mathcal V}}
+\newcommand{\calW}{{\mathcal W}}
+\newcommand{\calX}{{\mathcal X}}
+\newcommand{\calY}{{\mathcal Y}}
+\newcommand{\calZ}{{\mathcal Z}}
+
+
+\newcommand{\GQ}{{\;{\rm GQ}\;}}
+\newcommand{\MOD}{{\;{\rm mod}\;}}
+\newcommand{\rk}{{{\rm rk}}}
+\newcommand{\nonsquare}{{\not\!\!\square}}
+\newcommand{\trace}{{\rm trace}}
+\newcommand{\Orbit}{{\rm Orbit}}
+\newcommand{\supp}{{\rm supp}}
+\newcommand{\wt}{{\rm wt}}
+\newcommand{\semireg}{{\rm semireg}}
+\newcommand{\can}{{\rm can}}
+\newcommand{\spec}{{\rm spec}}
+\def\la{{\langle}}
+\def\ra{{\rangle}}
+\def\tu{\tilde{u}}
+\def\tv{\tilde{v}}
+
+%\def\al{\alpha}
+%\def\be{\beta}
+%\def\ga{\gamma}
+%\def\de{\delta}
+%\def\la{\lambda}
+%\def\Om{\Omega}
+%\def\Ga{\Gamma}
+%\def\De{\Delta}
+%\def\Si{\Sigma}
+
+\def\ocmax{{\rm oc\_max}}
+\def\oc{{\rm oc}}
+\def\orbit{{\rm orbit}}
+\def\rmline{{\rm line}}
+\def\prev{{\rm prev}}
+\def\AG{{\rm AG}}
+\def\PG{{\rm PG}}
+\def\GF{{\rm GF}}
+\def\fix{{\rm fix}}
+\def\Soc{{\rm Soc}}
+\def\Aut{{\rm Aut}}
+\def\proof{{\bf Proof.\ }}
+\def\qed{{\it qed}\par\medskip}
+\newcommand{\id}{{\rm id}}
+\newcommand{\Stab}{{\rm Stab}}
+\newcommand{\Orb}{{\rm Orb}}
+\newcommand{\Hu}{{\rm Hu}}
+\newcommand{\Fix}{{\rm Fix}}
+\newcommand{\Sym}{{\rm Sym}}
+\newcommand{\Alt}{{\rm Alt}}
+\newcommand{\PSL}{{\rm PSL}}
+\newcommand{\PGL}{{\rm PGL}}
+\newcommand{\PSSL}{{\rm P}\Sigma{\rm L}}
+\newcommand{\PGGL}{{\rm P}\Gamma{\rm L}}
+\newcommand{\PGGO}{{\rm P}\Gamma{\rm O}}
+\newcommand{\SL}{{\rm SL}}
+\newcommand{\GL}{{\rm GL}}
+\newcommand{\SSL}{{\rm \Sigma L}}
+\newcommand{\GGL}{{\rm \Gamma L}}
+\newcommand{\ASL}{{\rm ASL}}
+\newcommand{\AGL}{{\rm AGL}}
+\newcommand{\ASSL}{{\rm A\Sigma L}}
+\newcommand{\AGGL}{{\rm A\Gamma L}}
+\newcommand{\PSU}{{\rm PSU}}
+\newcommand{\rows}{{\rm rows}}
+\newcommand{\cols}{{\rm cols}}
+\newcommand{\diag}{{\rm diag}}
+
+
+\newcommand{\PGGtwoL}{{\rm P{\Gamma}_2 L}}
+\newcommand{\PGGthreeL}{{\rm P\Gamma_3 L}}
+\newcommand{\PGGrL}{{\rm P}\Gamma_r {\rm L}}
+\newcommand{\PGGhL}{{\rm P}\Gamma_h {\rm L}}
+\newcommand{\PGGeL}{{\rm P}\Gamma_e {\rm L}}
+
+\newcommand{\bzero}{{\bf 0}}
+\newcommand{\Exp}{{\rm Exp}}
+\newcommand{\Subexp}{{\rm Subexp}}
+
+\def\strucfont{\sffamily\bfseries\fontsize{9.3pt}{12pt}\selectfont}
+
+
+
+% theorem 1:
+
+\newcommand{\rraa}{d^{2q+2}}
+\newcommand{\rrab}{c^{q+1}d^{q+1}}
+\newcommand{\rrac}{c^{2q+2}}
+\newcommand{\rrad}{c^qd^{q+2}}
+\newcommand{\rrae}{cd^{2q+1}}
+\newcommand{\rraf}{c^{2q}d^2}
+\newcommand{\rrag}{c^2d^{2q}}
+\newcommand{\rrah}{c^{2q+1}d}
+\newcommand{\rrai}{c^{q+2}d^q}
+
+\newcommand{\rrba}{4b^{q+1}d^{q+1}}
+\newcommand{\rrbb}{\begin{array}{c}a^{q+1}d^{q+1} \\+ a^qbcd^q \\+ ab^qc^qd \\+ b^{q+1}c^{q+1}\end{array} }
+\newcommand{\rrbc}{4a^{q+1}c^{q+1}}
+\newcommand{\rrbd}{\begin{array}{c}2a^qbd^{q+1} \\+ 2b^{q+1}c^qd\end{array} }
+\newcommand{\rrbe}{\begin{array}{c}2ab^qd^{q+1}\\+2b^{q+1}cd^q\end{array}}
+\newcommand{\rrbf}{4a^qbc^qd}
+\newcommand{\rrbg}{4ab^qcd^q}
+\newcommand{\rrbh}{\begin{array}{c}2a^qbc^{q+1}\\+2a^{q+1}c^qd\end{array}}
+\newcommand{\rrbi}{\begin{array}{c}2a^{q+1}cd^q\\+2ab^qc^{q+1}\end{array}} 
+
+\newcommand{\rrca}{b^{2q+2} }
+\newcommand{\rrcb}{a^{q+1}b^{q+1} }
+\newcommand{\rrcc}{a^{2q+2}}
+\newcommand{\rrcd}{a^qb^{q+2}}
+\newcommand{\rrce}{ab^{2q+1} }
+\newcommand{\rrcf}{a^{2q}b^2 }
+\newcommand{\rrcg}{a^2b^{2q} }
+\newcommand{\rrch}{a^{2q+1}b }
+\newcommand{\rrci}{a^{q+2}b^q }
+
+\newcommand{\rrda}{2b^qd^{q+2}  }
+\newcommand{\rrdb}{\begin{array}{c}a^qcd^{q+1}\\+b^qc^{q+1}d\end{array} }
+\newcommand{\rrdc}{2a^qc^{q+2}}
+\newcommand{\rrdd}{\begin{array}{c}a^qd^{q+2} \\+ b^qc^qd^2\end{array}}
+\newcommand{\rrde}{2b^qcd^{q+1}}
+\newcommand{\rrdf}{2a^qc^qd^2}
+\newcommand{\rrdg}{2b^qc^2d^q}
+\newcommand{\rrdh}{2a^qc^{q+1}d}
+\newcommand{\rrdi}{\begin{array}{c}a^qc^2d^q \\+ b^qc^{q+2}\end{array} }
+
+\newcommand{\rrea}{2bd^{2q+1} }
+\newcommand{\rreb}{\begin{array}{c}ac^qd^{q+1}\\+bc^{q+1}d^q\end{array} }
+\newcommand{\rrec}{2ac^{2q+1} }
+\newcommand{\rred}{2bc^qd^{q+1} }
+\newcommand{\rree}{\begin{array}{c}ad^{2q+1}\\+bcd^{2q}\end{array} }
+\newcommand{\rref}{2bc^{2q}d }
+\newcommand{\rreg}{2acd^{2q} }
+\newcommand{\rreh}{\begin{array}{c}ac^{2q}d \\+ bc^{2q+1}\end{array} }
+\newcommand{\rrei}{2ac^{q+1}d^q }
+
+\newcommand{\rrfa}{b^{2q}d^2 }
+\newcommand{\rrfb}{a^qb^qcd }
+\newcommand{\rrfc}{a^{2q}c^2}
+\newcommand{\rrfd}{a^qb^qd^2 }
+\newcommand{\rrfe}{b^{2q}cd }
+\newcommand{\rrff}{a^{2q}d^2 }
+\newcommand{\rrfg}{b^{2q}c^2 }
+\newcommand{\rrfh}{a^{2q}cd }
+\newcommand{\rrfi}{a^qb^qc^2 }
+
+\newcommand{\rrga}{b^2d^{2q} }
+\newcommand{\rrgb}{abc^qd^q }
+\newcommand{\rrgc}{a^2c^{2q} }
+\newcommand{\rrgd}{b^2c^qd^q }
+\newcommand{\rrge}{abd^{2q} }
+\newcommand{\rrgf}{b^2c^{2q} }
+\newcommand{\rrgg}{a^2d^{2q} }
+\newcommand{\rrgh}{abc^{2q} }
+\newcommand{\rrgi}{a^2c^qd^q }
+
+\newcommand{\rrha}{2b^{2q+1}d }
+\newcommand{\rrhb}{\begin{array}{c}a^{q+1}b^qd \\+ a^qb^{q+1}c\end{array} }
+\newcommand{\rrhc}{2a^{2q+1}c}
+\newcommand{\rrhd}{2a^qb^{q+1}d }
+\newcommand{\rrhe}{\begin{array}{c}ab^{2q}d\\+b^{2q+1}c\end{array} }
+\newcommand{\rrhf}{2a^{2q}bd }
+\newcommand{\rrhg}{2ab^{2q}c }
+\newcommand{\rrhh}{\begin{array}{c}a^{2q+1}d\\+a^{2q}bc\end{array} }
+\newcommand{\rrhi}{2a^{q+1}b^qc }
+
+\newcommand{\rria}{2b^{q+2}d^q}
+\newcommand{\rrib}{\begin{array}{c}a^{q+1}bd^q\\+ab^{q+1}c^q\end{array} }
+\newcommand{\rric}{2a^{q+2}c^q }
+\newcommand{\rrid}{\begin{array}{c}a^qb^2d^q\\+b^{q+2}c^q\end{array} }
+\newcommand{\rrie}{2ab^{q+1}d^q}
+\newcommand{\rrif}{2a^qb^2c^q}
+\newcommand{\rrig}{2a^2b^qd^q}
+\newcommand{\rrih}{2a^{q+1}bc^q}
+\newcommand{\rrii}{\begin{array}{c}a^{q+2}d^q\\+a^2b^qc^q\end{array} }
+
+
+\newcommand{\uuaa}{N_2(d^2)}
+\newcommand{\uuab}{4N_2(bd)}
+\newcommand{\uuac}{N_2(b^2)}
+\newcommand{\uuad}{2T_2(b^qd^{q+2}\gamma)}
+\newcommand{\uuae}{2T_2(bd^{2q+1}\delta)}
+\newcommand{\uuaf}{T_2(b^{2q}d^2\gamma)}
+\newcommand{\uuag}{T_2(b^2d^{2q}\delta)}
+\newcommand{\uuah}{2T_2(b^{2q+1}d\gamma)}
+\newcommand{\uuai}{2T_2(b^{q+2}d^q\delta)}
+
+\newcommand{\uuba}{N_2(cd)}
+\newcommand{\uubb}{\begin{array}{c}N_2(ad)\\+N_2(bc)\\+T_2(a^qbcd^q)\end{array}}
+\newcommand{\uubc}{N_2(ab)}
+\newcommand{\uubd}{\begin{array}{c}T_2(a^qcd^{q+1}\gamma)\\+T_2(b^qc^{q+1}d\gamma)\end{array}}
+\newcommand{\uube}{\begin{array}{c}T_2(ac^qd^{q+1}\delta)\\+T_2(bc^{q+1}d^q\delta)\end{array}}
+\newcommand{\uubf}{T_2(a^qb^qcd\gamma)}
+\newcommand{\uubg}{T_2(abc^qd^q\delta)}
+\newcommand{\uubh}{\begin{array}{c}T_2(a^{q+1}b^qd\gamma)\\+T_2(a^qb^{q+1}c\gamma)\end{array}}
+\newcommand{\uubi}{\begin{array}{c}T_2(ab^{q+1}c^q\delta)\\+T_2(a^{q+1}bd^q\delta)\end{array}}
+
+\newcommand{\uuca}{N_2(c^2)}
+\newcommand{\uucb}{4N_2(ac)}
+\newcommand{\uucc}{N_2(a^2)}
+\newcommand{\uucd}{2T_2(a^qc^{q+2}\gamma)}
+\newcommand{\uuce}{2T_2(ac^{2q+1}\delta)}
+\newcommand{\uucf}{T_2(a^{2q}c^2\gamma)}
+\newcommand{\uucg}{T_2(a^2c^{2q}\delta)}
+\newcommand{\uuch}{2T_2(a^{2q+1}c\gamma)}
+\newcommand{\uuci}{2T_2(a^{q+2}c^q\delta)}
+
+\newcommand{\uuda}{T_2(cd^{2q+1})}
+\newcommand{\uudb}{\begin{array}{c}2T_2(ab^qd^{q+1})\\+2T_2(b^{q+1}cd^q)\end{array}}
+\newcommand{\uudc}{T_2(ab^{2q+1})}
+\newcommand{\uudd}{\begin{array}{c}2T_2(b^qcd^{q+1}\gamma)\\+T_2(a^qd^{q+2}\gamma)\\+T_2(b^qc^qd^2\gamma)\end{array}}
+\newcommand{\uude}{\begin{array}{c}2T_2(bc^qd^{q+1}\delta)\\+T_2(ad^{2q+1}\delta)\\+T_2(bcd^{2q}\delta)\end{array}}
+\newcommand{\uudf}{\begin{array}{c}T_2(a^qb^qd^2\gamma) \\+ T_2(b^{2q}cd\gamma)\end{array}}
+\newcommand{\uudg}{\begin{array}{c}T_2(b^2c^qd^q\delta)\\+T_2(abd^{2q}\delta)\end{array}}
+\newcommand{\uudh}{\begin{array}{c}2T_2(a^qb^{q+1}d\gamma)\\+T_2(ab^{2q}d\gamma)\\+T_2(b^{2q+1}c\gamma)\end{array}}
+\newcommand{\uudi}{\begin{array}{c}2T_2(ab^{q+1}d^q\delta)\\+T_2(a^qb^2d^q\delta)\\+T_2(b^{q+2}c^q\delta)\end{array}}
+
+\newcommand{\uuea}{T_2(cd^{2q+1}\beta)}
+\newcommand{\uueb}{\begin{array}{c}2T_2(ab^qd^{q+1}\beta)\\+2T_2(b^{q+1}cd^q\beta)\end{array}}
+\newcommand{\uuec}{T_2(ab^{2q+1}\beta)}
+\newcommand{\uued}{\begin{array}{c}2T_2(b^qcd^{q+1}\beta\gamma)\\+T_2(a^qd^{q+2}\beta^q\gamma)\\+T_2(b^qc^qd^2\beta^q\gamma)\end{array}}
+\newcommand{\uuee}{\begin{array}{c}2T_2(bc^qd^{q+1}\beta^q\delta)\\+T_2(ad^{2q+1}\beta\delta)\\+T_2(bcd^{2q}\beta\delta)\end{array}}
+\newcommand{\uuef}{\begin{array}{c}T_2(a^qb^qd^2\beta^q\gamma)\\+T_2(b^{2q}cd\beta\gamma)\end{array}}
+\newcommand{\uueg}{\begin{array}{c}T_2(b^2c^qd^q\beta^q\delta)\\+T_2(abd^{2q}\beta\delta)\end{array}}
+\newcommand{\uueh}{\begin{array}{c}2T_2(a^qb^{q+1}d\beta^q\gamma)\\+T_2(ab^{2q}d\beta\gamma)\\+T_2(b^{2q+1}c\beta\gamma)\end{array}}
+\newcommand{\uuei}{\begin{array}{c}2T_2(ab^{q+1}d^q\beta\delta)\\+T_2(a^qb^2d^q\beta^q\delta)\\+T_2(b^{q+2}c^q\beta^q\delta)\end{array}}
+
+\newcommand{\uufa}{T_2(c^2d^{2q})}
+\newcommand{\uufb}{4T_2(ab^qcd^q)}
+\newcommand{\uufc}{T_2(a^2b^{2q})}
+\newcommand{\uufd}{\begin{array}{c}2T_2(a^qc^qd^2\gamma)\\+2T_2(b^qc^2d^q\gamma)\end{array}}
+\newcommand{\uufe}{\begin{array}{c}2T_2(bc^{2q}d\delta)\\+2T_2(acd^{2q}\delta)\end{array}}
+\newcommand{\uuff}{\begin{array}{c}T_2(a^{2q}d^2\gamma)\\+T_2(b^{2q}c^2\gamma)\end{array}}
+\newcommand{\uufg}{\begin{array}{c}T_2(a^2d^{2q}\delta)\\+T_2(b^2c^{2q}\delta)\end{array}}
+\newcommand{\uufh}{\begin{array}{c}2T_2(a^{2q}bd\gamma)\\+2T_2(ab^{2q}c\gamma)\end{array}}
+\newcommand{\uufi}{\begin{array}{c}2T_2(a^qb^2c^q\delta)\\+2T_2(a^2b^qd^q\delta)\end{array}}
+
+\newcommand{\uuga}{T_2(c^2d^{2q}\beta)}
+\newcommand{\uugb}{4T_2(ab^qcd^q\beta)}
+\newcommand{\uugc}{T_2(a^2b^{2q}\beta)}
+\newcommand{\uugd}{\begin{array}{c}2T_2(a^qc^qd^2\beta^q\gamma)\\+2T_2(b^qc^2d^q\beta\gamma)\end{array}}
+\newcommand{\uuge}{\begin{array}{c}2T_2(bc^{2q}d\beta^q\delta)\\+2T_2(acd^{2q}\beta\delta)\end{array}}
+\newcommand{\uugf}{\begin{array}{c}T_2(a^{2q}d^2\beta^q\gamma)\\+T_2(b^{2q}c^2\beta\gamma)\end{array}}
+\newcommand{\uugg}{\begin{array}{c}T_2(a^2d^{2q}\beta\delta)\\+T_2(b^2c^{2q}\beta^q\delta)\end{array}}
+\newcommand{\uugh}{\begin{array}{c}2T_2(a^{2q}bd\beta^q\gamma)\\+2T_2(ab^{2q}c\beta\gamma)\end{array}}
+\newcommand{\uugi}{\begin{array}{c}2T_2(a^qb^2c^q\beta^q\delta)\\+2T_2(a^2b^qd^q\beta\delta)\end{array}}
+
+\newcommand{\uuha}{T_2(c^{q+2}d^q)}
+\newcommand{\uuhb}{\begin{array}{c}2T_2(a^{q+1}cd^q)\\+2T_2(ab^qc^{q+1})\end{array}}
+\newcommand{\uuhc}{T_2(a^{q+2}b^q)}
+\newcommand{\uuhd}{\begin{array}{c}2T_2(a^qc^{q+1}d\gamma)\\+T_2(a^qc^2d^q\gamma)\\+T_2(b^qc^{q+2}\gamma)\end{array}}
+\newcommand{\uuhe}{\begin{array}{c}2T_2(ac^{q+1}d^q\delta)\\+T_2(ac^{2q}d\delta)\\+T_2(bc^{2q+1}\delta)\end{array}}
+\newcommand{\uuhf}{\begin{array}{c}T_2(a^{2q}cd\gamma)\\+T_2(a^qb^qc^2\gamma)\end{array}}
+\newcommand{\uuhg}{\begin{array}{c}T_2(abc^{2q}\delta)\\+T_2(a^2c^qd^q\delta)\end{array}}
+\newcommand{\uuhh}{\begin{array}{c}2T_2(a^{q+1}b^qc\gamma)\\+T_2(a^{2q+1}d\gamma)\\+T_2(a^{2q}bc\gamma)\end{array}}
+\newcommand{\uuhi}{\begin{array}{c}2T_2(a^{q+1}bc^q\delta)\\+T_2(a^{q+2}d^q\delta)\\+T_2(a^2b^qc^q\delta)\end{array}}
+
+\newcommand{\uuia}{T_2(c^{q+2}d^q\beta)}
+\newcommand{\uuib}{\begin{array}{c}2T_2(a^{q+1}cd^q\beta)\\+2T_2(ab^qc^{q+1}\beta)\end{array}}
+\newcommand{\uuic}{T_2(a^{q+2}b^q\beta)}
+\newcommand{\uuid}{\begin{array}{c}2T_2(a^qc^{q+1}d\beta^q\gamma)\\+T_2(a^qc^2d^q\beta\gamma)\\+T_2(b^qc^{q+2}\beta\gamma)\end{array}}
+\newcommand{\uuie}{\begin{array}{c}2T_2(ac^{q+1}d^q\beta\delta)\\+T_2(ac^{2q}d\beta^q\delta)\\+T_2(bc^{2q+1}\beta^q\delta)\end{array}}
+\newcommand{\uuif}{\begin{array}{c}T_2(a^{2q}cd\beta^q\gamma)\\+T_2(a^qb^qc^2\beta\gamma)\end{array}}
+\newcommand{\uuig}{\begin{array}{c}T_2(abc^{2q}\beta^q\delta)\\+T_2(a^2c^qd^q\beta\delta)\end{array}}
+\newcommand{\uuih}{\begin{array}{c}2T_2(a^{q+1}b^qc\beta\gamma)\\+T_2(a^{2q+1}d\beta^q\gamma)\\+T_2(a^{2q}bc\beta^q\gamma)\end{array}}
+\newcommand{\uuii}{\begin{array}{c}2T_2(a^{q+1}bc^q\beta^q\delta)\\+T_2(a^{q+2}d^q\beta\delta)\\+T_2(a^2b^qc^q\beta\delta)\end{array}}
+
+
+
+% theorem 2:
+
+
+\newcommand{\rrraa}{m_{ddd}}
+\newcommand{\rrrab}{m_{ccc}}
+\newcommand{\rrrac}{m_{ddc}}
+\newcommand{\rrrad}{m_{dcd}}
+\newcommand{\rrrae}{m_{cdd}}
+\newcommand{\rrraf}{m_{dcc}}
+\newcommand{\rrrag}{m_{ccd}}
+\newcommand{\rrrah}{m_{cdc}}
+
+\newcommand{\rrrba}{m_{bbb}}
+\newcommand{\rrrbb}{m_{aaa}}
+\newcommand{\rrrbc}{m_{bba}}
+\newcommand{\rrrbd}{m_{bab}}
+\newcommand{\rrrbe}{m_{abb}}
+\newcommand{\rrrbf}{m_{baa}}
+\newcommand{\rrrbg}{m_{aab}}
+\newcommand{\rrrbh}{m_{aba}}
+
+\newcommand{\rrrca}{m_{ddb}}
+\newcommand{\rrrcb}{m_{cca}}
+\newcommand{\rrrcc}{m_{dda}}
+\newcommand{\rrrcd}{m_{dcb}}
+\newcommand{\rrrce}{m_{cdb}}
+\newcommand{\rrrcf}{m_{dca}}
+\newcommand{\rrrcg}{m_{ccb}}
+\newcommand{\rrrch}{m_{cda}}
+
+\newcommand{\rrrda}{m_{ddb}}
+\newcommand{\rrrdb}{m_{cac}}
+\newcommand{\rrrdc}{m_{dbc}}
+\newcommand{\rrrdd}{m_{dad}}
+\newcommand{\rrrde}{m_{cbd}}
+\newcommand{\rrrdf}{m_{dac}}
+\newcommand{\rrrdg}{m_{cad}}
+\newcommand{\rrrdh}{m_{cbc}}
+
+\newcommand{\rrrea}{m_{bdd}}
+\newcommand{\rrreb}{m_{acc}}
+\newcommand{\rrrec}{m_{bdc}}
+\newcommand{\rrred}{m_{bcd}}
+\newcommand{\rrree}{m_{add}}
+\newcommand{\rrref}{m_{bcc}}
+\newcommand{\rrreg}{m_{acd}}
+\newcommand{\rrreh}{m_{adc}}
+
+\newcommand{\rrrfa}{m_{dbb}}
+\newcommand{\rrrfb}{m_{caa}}
+\newcommand{\rrrfc}{m_{dba}}
+\newcommand{\rrrfd}{m_{dab}}
+\newcommand{\rrrfe}{m_{cbb}}
+\newcommand{\rrrff}{m_{daa}}
+\newcommand{\rrrfg}{m_{cab}}
+\newcommand{\rrrfh}{m_{cba}}
+
+\newcommand{\rrrga}{m_{bbd}}
+\newcommand{\rrrgb}{m_{aac}}
+\newcommand{\rrrgc}{m_{bbc}}
+\newcommand{\rrrgd}{m_{bad}}
+\newcommand{\rrrge}{m_{abd}}
+\newcommand{\rrrgf}{m_{bac}}
+\newcommand{\rrrgg}{m_{aad}}
+\newcommand{\rrrgh}{m_{abc}}
+
+\newcommand{\rrrha}{m_{bdb}}
+\newcommand{\rrrhb}{m_{aca}}
+\newcommand{\rrrhc}{m_{bda}}
+\newcommand{\rrrhd}{m_{bcb}}
+\newcommand{\rrrhe}{m_{adb}}
+\newcommand{\rrrhf}{m_{bca}}
+\newcommand{\rrrhg}{m_{acb}}
+\newcommand{\rrrhh}{m_{ada}}
+
+
+
+\newcommand{\uuuaa}{N_3(d)}
+\newcommand{\uuuab}{N_3(b)}
+\newcommand{\uuuac}{T_3(m_{dbd}\gamma_3)}
+\newcommand{\uuuad}{T_3(m_{dbd}\gamma_4)}
+\newcommand{\uuuae}{T_3(m_{dbd}\gamma_5)}
+\newcommand{\uuuaf}{T_3(m_{bbd}\gamma_6)}
+\newcommand{\uuuag}{T_3(m_{bbd}\gamma_7)}
+\newcommand{\uuuah}{T_3(m_{bbd}\gamma_8)}
+
+\newcommand{\uuuba}{N_3(c)}
+\newcommand{\uuubb}{N_3(a)}
+\newcommand{\uuubc}{T_3(m_{cac}\gamma_3)}
+\newcommand{\uuubd}{T_3(m_{cac}\gamma_4)}
+\newcommand{\uuube}{T_3(m_{cac}\gamma_5)}
+\newcommand{\uuubf}{T_3(m_{aac}\gamma_6)}
+\newcommand{\uuubg}{T_3(m_{aac}\gamma_7)}
+\newcommand{\uuubh}{T_3(m_{aac}\gamma_8)}
+
+\newcommand{\uuuca}{T_3(m_{ddc})}
+\newcommand{\uuucb}{T_3(m_{bba})}
+\newcommand{\uuucc}{T_3(\eta_{1,1}\gamma_3)}
+\newcommand{\uuucd}{T_3(\eta_{1,1}\gamma_4)}
+\newcommand{\uuuce}{T_3(\eta_{1,1}\gamma_5)}
+\newcommand{\uuucf}{T_3(\eta_{2,1}\gamma_6)}
+\newcommand{\uuucg}{T_3(\eta_{2,1}\gamma_7)}
+\newcommand{\uuuch}{T_3(\eta_{2,1}\gamma_8)}
+
+\newcommand{\uuuda}{T_3(m_{ddc}\beta)}
+\newcommand{\uuudb}{T_3(m_{bba}\beta)}
+\newcommand{\uuudc}{T_3(\eta_{1,2}\gamma_3)}
+\newcommand{\uuudd}{T_3(\eta_{1,2}\gamma_4)}
+\newcommand{\uuude}{T_3(\eta_{1,2}\gamma_5)}
+\newcommand{\uuudf}{T_3(\eta_{2,2}\gamma_6)}
+\newcommand{\uuudg}{T_3(\eta_{2,2}\gamma_7)}
+\newcommand{\uuudh}{T_3(\eta_{2,2}\gamma_8)}
+
+\newcommand{\uuuea}{T_3(m_{ddc}\beta^2)}
+\newcommand{\uuueb}{T_3(m_{bba}\beta^2)}
+\newcommand{\uuuec}{T_3(\eta_{1,3}\gamma_3)}
+\newcommand{\uuued}{T_3(\eta_{1,3}\gamma_4)}
+\newcommand{\uuuee}{T_3(\eta_{1,3}\gamma_5)}
+\newcommand{\uuuef}{T_3(\eta_{2,3}\gamma_6)}
+\newcommand{\uuueg}{T_3(\eta_{2,3}\gamma_7)}
+\newcommand{\uuueh}{T_3(\eta_{2,3}\gamma_8)}
+
+\newcommand{\uuufa}{T_3(m_{dcc})}
+\newcommand{\uuufb}{T_3(m_{baa})}
+\newcommand{\uuufc}{T_3(\zeta_{1,1}\gamma_3)}
+\newcommand{\uuufd}{T_3(\zeta_{1,1}\gamma_4)}
+\newcommand{\uuufe}{T_3(\zeta_{1,1}\gamma_5)}
+\newcommand{\uuuff}{T_3(\zeta_{2,1}\gamma_6)}
+\newcommand{\uuufg}{T_3(\zeta_{2,1}\gamma_7)}
+\newcommand{\uuufh}{T_3(\zeta_{2,1}\gamma_8)}
+
+\newcommand{\uuuga}{T_3(m_{dcc}\beta_{11})}
+\newcommand{\uuugb}{T_3(m_{baa}\beta_{11})}
+\newcommand{\uuugc}{T_3(\zeta_{1,2}\gamma_3)}
+\newcommand{\uuugd}{T_3(\zeta_{1,2}\gamma_4)}
+\newcommand{\uuuge}{T_3(\zeta_{1,2}\gamma_5)}
+\newcommand{\uuugf}{T_3(\zeta_{2,2}\gamma_6)}
+\newcommand{\uuugg}{T_3(\zeta_{2,2}\gamma_7)}
+\newcommand{\uuugh}{T_3(\zeta_{2,2}\gamma_8)}
+
+\newcommand{\uuuha}{T_3(m_{dcc}\beta_{22})}
+\newcommand{\uuuhb}{T_3(m_{baa}\beta_{22})}
+\newcommand{\uuuhc}{T_3(\zeta_{1,3}\gamma_3)}
+\newcommand{\uuuhd}{T_3(\zeta_{1,3}\gamma_4)}
+\newcommand{\uuuhe}{T_3(\zeta_{1,3}\gamma_5)}
+\newcommand{\uuuhf}{T_3(\zeta_{2,3}\gamma_6)}
+\newcommand{\uuuhg}{T_3(\zeta_{2,3}\gamma_7)}
+\newcommand{\uuuhh}{T_3(\zeta_{2,3}\gamma_8)}
+
+
+
+\newcommand{\vvaa}{T_3(\beta_{21}-\beta_{12})}
+\newcommand{\vvab}{T_3(\beta_{2}-\beta_{20})}
+\newcommand{\vvac}{T_3(\beta_{10}-\beta_{1})}
+\newcommand{\vvba}{T_3(\beta_{31}-\beta_{22})}
+\newcommand{\vvbb}{T_3(\beta_{12}-\beta_{30})}
+\newcommand{\vvbc}{T_3(\beta_{20}-\beta_{11})}
+\newcommand{\vvca}{T_3(\beta_{41}-\beta_{32})}
+\newcommand{\vvcb}{T_3(\beta_{22}-\beta_{40})}
+\newcommand{\vvcc}{T_3(\beta_{30}-\beta_{21})}
+
+\newcommand{\vvvaa}{T_3(\beta_{231}-\beta_{132})}
+\newcommand{\vvvab}{T_3(\beta_{22}-\beta_{220})}
+\newcommand{\vvvac}{T_3(\beta_{110}-\beta_{11})}
+\newcommand{\vvvba}{T_3(\beta_{341}-\beta_{242})}
+\newcommand{\vvvbb}{T_3(\beta_{132}-\beta_{330})}
+\newcommand{\vvvbc}{T_3(\beta_{220}-\beta_{121})}
+\newcommand{\vvvca}{T_3(\beta_{451}-\beta_{352})}
+\newcommand{\vvvcb}{T_3(\beta_{242}-\beta_{440})}
+\newcommand{\vvvcc}{T_3(\beta_{330}-\beta_{231})}
+
+
+
+
+

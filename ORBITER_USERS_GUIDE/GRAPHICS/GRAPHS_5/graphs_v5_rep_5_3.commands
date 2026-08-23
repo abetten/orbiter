@@ -1,0 +1,34 @@
+% file: graphs_v5_rep_5_3.commands
+% created by Orbiter graphics interface
+% creation date: Sat Jul 30 08:11:07 +03 2022
+
+DeviceCoordinates 0 0 1000000 1000000
+UserCoordinates 0 0 10000 10000
+sl_thickness 100
+Polygon 2 8500 5000 6081 8328
+Polygon 2 8500 5000 2169 7057
+Polygon 2 8500 5000 2169 2943
+Polygon 2 6081 8328 2169 7057
+Polygon 2 2169 2943 6081 1672
+sf_interior 100
+Circle 850000, 500000, 30000
+sf_interior 0
+Circle 850000, 500000, 30000
+sf_interior 100
+Circle 608100, 832800, 30000
+sf_interior 0
+Circle 608100, 832800, 30000
+sf_interior 100
+Circle 216900, 705700, 30000
+sf_interior 0
+Circle 216900, 705700, 30000
+sf_interior 100
+Circle 216900, 294300, 30000
+sf_interior 0
+Circle 216900, 294300, 30000
+sf_interior 100
+Circle 608100, 167200, 30000
+sf_interior 0
+Circle 608100, 167200, 30000
+END_OF_FILE
+

@@ -1,0 +1,8 @@
+H_3_4:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 4 -end \
+		-with F -do -finite_field_activity \
+			-cheat_sheet_hermitian 3 \
+		-end
+	$(PDFLATEX) H_3_4.tex 
+	$(OPEN) H_3_4.pdf

@@ -1,0 +1,5 @@
+pseudoprime50:
+	$(ORBITER) -v 5 \
+		-seed 2531011 -find_pseudoprime 50 5 0 0
+	$(PDFLATEX) pseudoprime_50.tex
+	$(OPEN) pseudoprime_50.pdf

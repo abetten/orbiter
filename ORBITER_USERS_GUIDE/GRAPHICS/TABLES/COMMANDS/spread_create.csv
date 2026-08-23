@@ -1,0 +1,14 @@
+ROW,C1,C2,C3
+0,"tab:spreads:define",,
+1,"Creating a Spread",,
+1,"\verb'-kernel_field' "," $F$ "," Define the kernel of the spread. $F$ must be an object of type finite field."
+1,"\verb'-group' "," $G$ "," Define the group acting on the spread. Should be $\PGGL(2k,F)$. "
+1,"\verb'-group_on_subspaces' "," $G$ ","  "
+1,"\verb'-k' "," $k$ "," Set the dimension of the spread. "
+1,"\verb'-catalogue' "," $i$ "," Pull spread number $i$ from the catalogue of spreads associated with the given field and the given dimension. "
+1,"\verb'-family' "," $L$ ","Define a spread from a named family $L.$ So far, no family has been provided. "
+1,"\verb'-spread_set' "," label-txt label-tex $S$ ","Define a spread from the named spreadset $S$. The spreadset $S$ must be a vector object. It must contain $q^3k^2$ entries over $F.$ "
+1,"\verb'-transform' "," elt "," Apply the transformation given by the group element. "
+1,"\verb'-transform_inverse' "," elt "," Apply the inverse transformation given by the group element. "
+END
+

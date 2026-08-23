@@ -1,0 +1,8 @@
+surface_4_0_export_double_sixes:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 4 -end \
+		-define P -projective_space -n 3 -field F -end \
+		-with P -do \
+		-projective_space_activity \
+			-export_double_sixes \
+		-end \

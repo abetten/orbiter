@@ -1,0 +1,18 @@
+Op_6_2_Siegel_transformation_expand_class_2A:
+	$(ORBITER) -v 2 \
+		-define Pts -vector \
+			-dense $(ORTHOGONAL_OP_6_2_POINTS_OFF) \
+		-end \
+		-define F -finite_field -q 2 -end \
+		-define G -linear_group -PGOp 6 F -end \
+		-define Siegel -vector_ge \
+			-action G \
+			-read_csv O_1_6_2_Siegel_transformation.csv Element \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-conjugacy_class_of "Siegel" \
+			$(SIEGEL_TRANSFORM_UV_2A) \
+		-end
+	$(PDFLATEX) PGOp_6_2_Siegel_elements.tex
+	$(OPEN) PGOp_6_2_Siegel_elements.pdf

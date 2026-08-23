@@ -1,0 +1,10 @@
+GR_3_2_2:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-with P -do \
+		-projective_space_activity \
+			-report_Grassmannian 2 \
+		-end
+	$(PDFLATEX) Gr_3_2_2.tex 
+	$(OPEN) Gr_3_2_2.pdf

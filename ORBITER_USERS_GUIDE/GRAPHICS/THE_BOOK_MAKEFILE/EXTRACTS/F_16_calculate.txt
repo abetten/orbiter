@@ -1,0 +1,7 @@
+F_16_calculate:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 16 -end \
+		-define M -symbolic_object \
+			-field F \
+			-text "2*12" \
+		-end

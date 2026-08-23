@@ -1,0 +1,13 @@
+PG_3_5_packing_PWP_0_dualize:
+	$(ORBITER_PATH)orbiter.out -v 5 \
+		-define F -finite_field -q 5 -end \
+		-define P -projective_space 3 F -end \
+		-define T -spread_table -space P3 -rk 2 \
+			-iso_types "12" \
+			-path "SPREAD_TABLES_5_REG/" \
+			-control Control \
+			-end \
+		-with T -do \
+			-spread_table_activity \
+			-dualize_packing $(PENTTILA_WILLIAMS_PRINCE_REG_PACKING_0) \
+		-end 

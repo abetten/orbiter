@@ -1,0 +1,4 @@
+PGL_4_2_with_field:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define G -linear_group -PGL 4 F -end

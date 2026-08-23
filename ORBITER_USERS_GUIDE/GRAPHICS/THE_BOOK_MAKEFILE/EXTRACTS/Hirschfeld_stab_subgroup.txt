@@ -1,0 +1,20 @@
+Hirschfeld_stab_subgroup:
+	$(ORBITER) -v 9 \
+		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define G -linear_group -PGGL 4 4 \
+			-subgroup_by_generators "Hirschfeld_Stab" \
+			51840 6 $(HIRSCHFELD_STAB_GENERATORS) \
+			-end \
+		-define Gsp -modified_group -from G \
+			-create_special_subgroup \
+		-end \
+		-with Gsp -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end \
+		-define Orb -orbits -group Gsp \
+			-on_points \
+		-end

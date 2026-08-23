@@ -1,0 +1,11 @@
+Hirschfeld_Class_2A:
+	$(ORBITER) -v 9 \
+		-orbiter_path $(ORBITER_PATH) \
+		-define G -linear_group -PGGL 4 4 \
+			-subgroup_by_generators "Hirschfeld_Stab" \
+			51840 6 $(HIRSCHFELD_STAB_GENERATORS) \
+			-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-conjugacy_class_of "2A" $(CLASS_2A_REP) \
+		-end

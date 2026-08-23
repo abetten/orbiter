@@ -1,0 +1,18 @@
+PGL_7_2_classes:
+	$(ORBITER) -v 3 \
+		-define G \
+		-linear_group -PGL 7 2 \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-classes \
+		-end
+	$(MAGMA_EXE) PGL_7_2_classes.magma
+	$(ORBITER) -v 3 \
+		-define G \
+		-linear_group -PGL 7 2 \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-classes \
+		-end

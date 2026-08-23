@@ -1,0 +1,47 @@
+\begin{table}[t]
+\tbl{\label{tab:vector:builder}}
+{\begin{tcolorbox}[tabularx={p{3cm}|p{2cm}|p{6.3cm}|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black,title=Vector Builder Commands]
+\hline
+Command & Arguments & Purpose \\
+\hline
+\hline
+\verb'-field'  &  $F$  &  Assume that the vector entries are in the range $[0,q-1]$, where $q$ is the order of the field $F$. An error is raised if not. \\
+\hline
+\verb'-allow_negatives'  &   & Allow negative numbers when using finite fields. A negative number will be considered modulo the characteristic of the field. For instance, in the field $\bbF_5$, a -1 is considered equal to 4. \\
+\hline
+\verb'-dense'  &   &  Assume that the vector entries are given as a comma separated list (dense coding). \\
+\hline
+\verb'-compact'  &   &  Assume that the vector entries are given as a continueous list without commas or other any kind of whitespace. \\
+\hline
+\verb'-repeat'  &  pattern $n$  &  Repeat the given pattern $n$ times.\\
+\hline
+\verb'-format'  &  $r$  &  Assume that the data is a matrix with $r$ rows. \\
+\hline
+\verb'-file'  &  file  &  Read the data from the given csv-file. \\
+\hline
+\verb'-file_column'  &  file column  &  Read the data from the given column in the given csv-file. The entries must be integers or vectors of integers. The entries must all have the same size. \\
+\hline
+\verb'-union_of_column'  &  file column  &  Read the sets of integers from the given column in the given csv-file. Then forms the union of the sets. \\
+\hline
+\verb'-load_csv_no_border'  &  file  &  Read the data from the given file, assuming that there are no headers. \\
+\hline
+\verb'-load_csv_data_column'  &  file $c$  &  Read the data from column $c$ in the given csv-file. \\
+\hline
+\verb'-sparse'  &  data  &  Provide data in sparse form, i.e. as pairs value and position. \\
+\hline
+\verb'-flags'  &  nb\_rows nb\_cols flags  &  Specify an incidence matrix by size and by flags. \\
+\hline
+\verb'-concatenate'  &  list  &  Concatenate the given vectors. List is a comma separated list of vectors that have been created before. \\
+\hline
+\verb'-loop'  &  $s$ $u$ $d$  &  Create vector entries of the form $s + id<u,$ $i \in \bbZ.$  The upper bound $u$ itself will not be part of the sequence. \\
+\hline
+\verb'-index_of_support'  &  vec  &  Create the index set of support of the vector vec. This is the set of all $i$ such that vec[i] is nonzero. \\
+\hline
+\verb'-permutation_matrix'  &  list  &  Create the permutation matrix defined by the 0-based list of integers. \\
+\hline
+\verb'-permutation_matrix_inverse'  &  list  &  Create the inverse permutation matrix defined by the 0-based list of integers. \\
+\hline
+\end{tcolorbox}}
+\end{table}

@@ -1,0 +1,16 @@
+design_PG_2_2:
+	$(ORBITER) -v 8 \
+		-define F -finite_field -q 2 -end \
+		-define D -design -field F -family PG_2_q -end \
+		-with D -do \
+			-design_activity \
+				-export_flags \
+		-end \
+		-with D -do \
+			-design_activity \
+				-export_blocks \
+		-end
+	$(ORBITER) -v 8 \
+		-csv_file_latex 1 PG_2_q2_blocks.csv 
+	$(PDFLATEX) PG_2_q2_blocks.tex
+	$(OPEN) PG_2_q2_blocks.pdf

@@ -1,0 +1,12 @@
+RREF_RS_6_4_7:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 7 -end \
+		-define v -vector -field F -format 4 \
+			-compact $(CODE_RS_6_4_7) \
+		-end \
+		-with F -do \
+		-finite_field_activity \
+			-RREF v \
+		-end
+	$(PDFLATEX) v_rref.tex
+	$(OPEN) v_rref.pdf

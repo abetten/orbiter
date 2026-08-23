@@ -1,0 +1,112 @@
+% file: sims_0.commands
+% created by Orbiter graphics interface
+% creation date: Mon Nov 25 12:41:01 MST 2019
+
+DeviceCoordinates 0 0 300000 300000
+UserCoordinates 0 0 10000 10000
+Polygon 2 5000 9642 5000 8928
+Polygon 2 5000 8928 5000 8214
+Polygon 2 5000 8214 5000 7500
+Polygon 2 5000 7500 3181 6785
+Polygon 2 5000 7500 7727 6785
+Polygon 2 5000 7500 9545 6785
+Polygon 2 3181 6785 1590 6071
+Polygon 2 3181 6785 3712 6071
+Polygon 2 3181 6785 5303 6071
+Polygon 2 7727 6785 7045 6071
+Polygon 2 7727 6785 8409 6071
+Polygon 2 1590 6071 795 5357
+Polygon 2 1590 6071 2386 5357
+Polygon 2 5303 6071 5303 5357
+sf_interior 100
+Circle 150000, 289260, 9000
+sf_interior 0
+Circle 150000, 289260, 9000
+st_alignment 1, 1
+Text 150000, 289260, "{\scriptsize 0}"
+sf_interior 100
+Circle 150000, 267840, 9000
+sf_interior 0
+Circle 150000, 267840, 9000
+st_alignment 1, 1
+Text 150000, 267840, "{\scriptsize 1}"
+sf_interior 100
+Circle 150000, 246420, 9000
+sf_interior 0
+Circle 150000, 246420, 9000
+st_alignment 1, 1
+Text 150000, 246420, "{\scriptsize 2}"
+sf_interior 100
+Circle 150000, 225000, 9000
+sf_interior 0
+Circle 150000, 225000, 9000
+st_alignment 1, 1
+Text 150000, 225000, "{\scriptsize 3}"
+sf_interior 100
+Circle 95430, 203550, 9000
+sf_interior 0
+Circle 95430, 203550, 9000
+st_alignment 1, 1
+Text 95430, 203550, "{\scriptsize 9}"
+sf_interior 100
+Circle 231810, 203550, 9000
+sf_interior 0
+Circle 231810, 203550, 9000
+st_alignment 1, 1
+Text 231810, 203550, "{\scriptsize 10}"
+sf_interior 100
+Circle 286350, 203550, 9000
+sf_interior 0
+Circle 286350, 203550, 9000
+st_alignment 1, 1
+Text 286350, 203550, "{\scriptsize 12}"
+sf_interior 100
+Circle 47700, 182130, 9000
+sf_interior 0
+Circle 47700, 182130, 9000
+st_alignment 1, 1
+Text 47700, 182130, "{\scriptsize 11}"
+sf_interior 100
+Circle 111359, 182130, 9000
+sf_interior 0
+Circle 111359, 182130, 9000
+st_alignment 1, 1
+Text 111359, 182130, "{\scriptsize 13}"
+sf_interior 100
+Circle 159090, 182130, 9000
+sf_interior 0
+Circle 159090, 182130, 9000
+st_alignment 1, 1
+Text 159090, 182130, "{\scriptsize 6}"
+sf_interior 100
+Circle 211350, 182130, 9000
+sf_interior 0
+Circle 211350, 182130, 9000
+st_alignment 1, 1
+Text 211350, 182130, "{\scriptsize 14}"
+sf_interior 100
+Circle 252270, 182130, 9000
+sf_interior 0
+Circle 252270, 182130, 9000
+st_alignment 1, 1
+Text 252270, 182130, "{\scriptsize 7}"
+sf_interior 100
+Circle 23850, 160710, 9000
+sf_interior 0
+Circle 23850, 160710, 9000
+st_alignment 1, 1
+Text 23850, 160710, "{\scriptsize 4}"
+sf_interior 100
+Circle 71580, 160710, 9000
+sf_interior 0
+Circle 71580, 160710, 9000
+st_alignment 1, 1
+Text 71580, 160710, "{\scriptsize 8}"
+sf_interior 100
+Circle 159090, 160710, 9000
+sf_interior 0
+Circle 159090, 160710, 9000
+st_alignment 1, 1
+Text 159090, 160710, "{\scriptsize 5}"
+END_OF_FILE
+

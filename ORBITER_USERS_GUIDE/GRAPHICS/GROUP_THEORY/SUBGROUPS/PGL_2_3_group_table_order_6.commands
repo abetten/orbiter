@@ -1,0 +1,134 @@
+% file: PGL_2_3_group_table_order_6.commands
+% created by Orbiter graphics interface
+% creation date: Fri Nov  8 20:43:55 +03 2024
+
+DeviceCoordinates 0 0 10000 10000
+UserCoordinates 0 0 10000 10000
+Comment box outline
+Polygon 2 0 99996 0 -899964
+Polygon 2 0 -899964 999960 -899964
+Polygon 2 999960 -899964 999960 99996
+Polygon 2 999960 99996 0 99996
+sf_interior 100
+sf_color 1
+sl_thickness 10
+sf_interior 0
+sf_color 1
+st_alignment 1, 1
+Text -166660, 16666, "0"
+st_alignment 1, 1
+Text -166660, -149994, "1"
+st_alignment 1, 1
+Text -166660, -316654, "2"
+st_alignment 1, 1
+Text -166660, -483314, "3"
+st_alignment 1, 1
+Text -166660, -649974, "4"
+st_alignment 1, 1
+Text -166660, -816634, "5"
+st_alignment 1, 1
+Text 83330, 266656, "0"
+st_alignment 1, 1
+Text 249990, 266656, "1"
+st_alignment 1, 1
+Text 416650, 266656, "2"
+st_alignment 1, 1
+Text 583310, 266656, "3"
+st_alignment 1, 1
+Text 749970, 266656, "4"
+st_alignment 1, 1
+Text 916630, 266656, "5"
+sl_thickness 10
+sf_interior 100
+Comment 0_1
+sf_interior 100
+sf_color 1
+Comment 0_2
+sf_interior 100
+sf_color 2
+Comment 0_3
+sf_interior 100
+sf_color 3
+Comment 0_4
+sf_interior 100
+sf_color 4
+Comment 0_5
+sf_interior 100
+sf_color 5
+Comment 1_0
+sf_interior 100
+sf_color 1
+Comment 1_2
+sf_interior 100
+sf_color 3
+Comment 1_3
+sf_interior 100
+sf_color 2
+Comment 1_4
+sf_interior 100
+sf_color 5
+Comment 1_5
+sf_interior 100
+sf_color 4
+Comment 2_0
+sf_interior 100
+sf_color 2
+Comment 2_1
+sf_interior 100
+sf_color 4
+Comment 2_2
+sf_interior 100
+sf_color 5
+Comment 2_3
+sf_interior 100
+sf_color 1
+Comment 2_4
+sf_interior 100
+sf_color 3
+Comment 3_0
+sf_interior 100
+sf_color 3
+Comment 3_1
+sf_interior 100
+sf_color 5
+Comment 3_2
+sf_interior 100
+sf_color 4
+Comment 3_4
+sf_interior 100
+sf_color 2
+Comment 3_5
+sf_interior 100
+sf_color 1
+Comment 4_0
+sf_interior 100
+sf_color 4
+Comment 4_1
+sf_interior 100
+sf_color 2
+Comment 4_2
+sf_interior 100
+sf_color 1
+Comment 4_3
+sf_interior 100
+sf_color 5
+Comment 4_5
+sf_interior 100
+sf_color 3
+Comment 5_0
+sf_interior 100
+sf_color 5
+Comment 5_1
+sf_interior 100
+sf_color 3
+Comment 5_3
+sf_interior 100
+sf_color 4
+Comment 5_4
+sf_interior 100
+sf_color 1
+Comment 5_5
+sf_interior 100
+sf_color 2
+END_OF_FILE
+

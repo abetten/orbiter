@@ -1,0 +1,352 @@
+
+
+
+
+
+Let $E$ and $F$ be fields. 
+Recall that $E$ is an extension of $F$ if $F$ is a subfield of $E$.
+In this case, $E$ is a vector space over $F$, which we denote as $E/F.$
+The degree of $E/F$ is the dimension of $E/F$.
+An example of a field extension is a field of the form $E = F(\alpha)$, 
+where $\alpha$ is any element over $F.$
+Here, $F(\alpha)$ is the smallest field which contains $F$ and $\alpha.$
+If $\gamma \in E$ satisfies a polynomial equation with coefficients in $F,$ 
+then $\gamma$ is called algebraic over $F$.
+The minimum polynomial of an element $\gamma$ in $E$ over $F$ is the monic  
+polynomial in $F[X]$ of lowest degree which has $\gamma$ as a root. 
+A field extension $E/F$ is algebraic 
+if every element in $E$ is algebraic over $F$. 
+In particular, $F(\alpha)$ is algebraic over $F$ if $\alpha$ is. 
+The degree of $F(\alpha)/F$ is the degree 
+of the minimum polynomial of $\alpha$ over $F$.
+
+\bigskip
+
+
+In this section, we will consider algebraic extensions of finite fields. 
+If $F = \bbF_q$ is a field of order $q$, 
+then any algebraic extension $E$ 
+of $F$ has order $q^e$ where $e$ is the degree of $E$ over $F$.
+If $E = F(\alpha)$ is algebraic, 
+the degree of $E$ over $F$ 
+is the degree of the minimum polynomial of $E$ over $F$.
+If $F = \bbF_q$ and $E = F(\alpha)$ 
+is algebraic of degree $e$, then $|F| = q^e.$
+Every finite field $E$ is of this form, 
+where $F = \bbF_p$ and $p$ is the characteristic of $E$.
+So, any algebraic extension $E$ of 
+$F$ can be constructed as a polynomial factorring 
+of the ring $\bbF_p[X].$
+For a polynomial $m(X)$ we consider the ideal 
+$$
+\bI(m) = m(X)\bbF_p[X] = \{m(X)k(X) \mid k(X) \in \bbF_p[X] \} 
+$$
+of all polynomial multiples of $m(X).$
+Under the assumption that $m(X)$ 
+has degree $e > 1$ and is irreducible, 
+the residue class ring 
+$$
+\bbF_p[X]/ \bI(m)
+$$
+is a field with $q = p^e$ elements.
+Each residue class has a canonical representative. 
+The canonical representative is the unique element 
+in the residue class modulo $\bI(m)$
+which has degree less than $e$ and leading coefficient one. 
+
+\bigskip
+
+
+So, for instance, for $q = 4 = 2^2,$ 
+we can pick the irreducible polynomial 
+$m(X) = X^2+X+1$ over $\bbF_2.$ 
+We have four standard representatives modulo $\bI(m),$ namely
+$$
+\begin{array}{c}
+0, \\
+1, \\
+X, \\
+X + 1.\\
+\end{array}
+$$
+Together, these make up a complete set 
+of representatives of the residue classes modulo  $\bI(m),$ 
+and hence can be identified with the elements of $\bbF_4$:
+$$
+\bbF_4 = \{0, \; 1, \; X, \; X+1 \}.
+$$
+The addition of polynomials is as in $\bbF_2[X],$ so 
+$$
+\begin{array}{c|cccc}
+ & 0 & 1 & X & X + 1 \\
+\hline
+0 & 0 & 1 & X & X + 1\\
+1 & 1 & 0 & X+1 & X \\
+X & X & X + 1 & 0 & 1 \\
+X + 1 & X + 1 & X & 1 & 0 \\
+\end{array}
+$$
+To compute the multiplication table for the field $\bbF_4$.
+We can use polynomial arithmetic modulo $m(X):$
+It is clear how multiplication 
+by $0$ or $1$ works, so we need to focus on the 
+polynomials $X$ and $X+1$:
+$$
+\begin{array}{lllll}
+X &\cdot\; X &= X^2 &\equiv X + 1 &\mod X^2 + X + 1, \\
+X &\cdot\; (X+1) &= X^2+X &\equiv 1 &\mod X^2 + X + 1, \\
+(X+1) &\cdot\; X &= X^2+X &\equiv 1 &\mod X^2 + X + 1, \\
+(X+1) &\cdot\; (X+1) &= X^2+1 &\equiv X &\mod X^2 + X + 1, \\
+\end{array}
+$$
+The multiplication table of $\bbF_4$ is
+$$
+\begin{array}{c|cccc}
+ & 0 & 1 & X & X + 1 \\
+\hline
+0     & 0 & 0   & 0 & 0\\
+1     & 0 & 1   & X & X+1 \\
+X     & 0 & X   & X+1 & 1 \\
+X + 1 & 0 & X+1 & 1 & X \\
+\end{array}
+$$
+
+\bigskip
+
+Table~\ref{tab:finitefield:activities:more} 
+lists Orbiter activities for finite fields. 
+This extends Table~\ref{tab:finitefield:activities} in Section~\ref{sec:extension:fields}.  
+\orbitertableofcommands{finite_field_activities_2}
+
+
+\bigskip
+
+
+The isomorphism type of the resulting field 
+only depends on the order $q$ of the field, 
+and not on the choice of the polynomial. 
+However, for practical computations, the choice of the polynomial matters. 
+For instance, results can only be shared between 
+different computer algebra systems if the same polynomials are used.
+Orbiter has a large collection of polynomials built in. 
+Besides these, a polynomial can be specified.
+The polynomials that Orbiter offers are in fact primitive, which means that the 
+root $\alpha$ is a primitive element for the field $\bbF_q.$ 
+This just means that it is a generator of the multiplicative group. 
+So, any non-zero element in $\bbF_q$ 
+is a suitable power of $\alpha.$
+
+
+\bigskip
+
+If $\bbF_q$ is an extension of the prime field $\bbF_p$, 
+we use a different labeling.
+This time, we exploit the fact that $\bbF_q$ is a vector space over $\bbF_p.$
+Let $\alpha$ be a root of the irreducible polynomial 
+$m(X)\in \bbF_p[X]$ used to create the field. 
+Suppose that $q=p^e,$ i.e., the degree of $m(X)$  is $e$.
+An $\bbF_p$-basis for the vector space $\bbF_q$ over $\bbF_p$ is given by the powers 
+$\alpha^i,$ for $0 \le i < e.$ 
+Therefore, any element $\gamma$ of $\bbF_q$ 
+has a unique expression of the form 
+$$
+\gamma = \sum_{h=0}^{e-1} a_i \alpha^i, \quad  0 \le a_i < p  \;\mbox{for all} \; i.
+$$
+The associated integer rank of $\gamma$ 
+is obtained by replacing $\alpha$ by $p$ in this expression 
+and evaluating the expression over the integers. 
+So, the rank of $\gamma$ is 
+$$
+\sum_{h=0}^{e-1} a_i p^i.
+$$
+As $\gamma$ ranges over all field element in $\bbF_q,$ 
+the rank values take on every value in the interval $[0,q-1].$ 
+The ordering of elements of $\bbF_q$ according 
+to these ranks is called the lexicographical ordering. 
+The numerical rank of zero is $0$ and the numerical rank of one is $1$.
+The numerical rank of $\alpha,$ the primitive element, is $p.$
+The numerical ranks of the elements of 
+the prime subfield are exactly the elements of $[0,p-1].$
+
+\bigskip
+
+The primitive polynomials used by Orbiter to create small finite fields 
+are listed in Table~\ref{tab:primitive:polynomials}. 
+The relation is given using the Greek letter that 
+is used in orbiter cheat sheets for that particular field.
+
+\orbitertableofextracommands{table_of_irreducible_polynomials}
+
+\bigskip
+
+Let us look at a few examples. 
+The command 
+
+\sourcecode{F_4}
+
+creates a report for the field $\bbF_4.$
+
+\bigskip
+
+
+The command  
+
+\sourcecode{F_4_tables}
+
+creates the addition and multiplication tables for the field:
+\orbiteroutput{GRAPHICS/WRAPPERS/F4_tables_add_mult}
+
+
+\bigskip
+
+
+The command 
+
+\sourcecode{F_16}
+
+creates a cheat sheet for $\bbF_{16}.$
+\orbiteroutput{GRAPHICS/WRAPPERS/cheat_sheet_GF16}
+
+
+\bigskip
+
+The command  
+
+\sourcecode{F_16_tables}
+
+creates the addition and multiplication tables for the field:
+\orbiteroutput{GRAPHICS/WRAPPERS/cheat_sheet_GF16_add_mul_draw}
+
+
+\bigskip
+
+
+
+
+
+Unlike  GAP~\cite{GAP} and Magma~\cite{Magma},
+Orbiter does not use 
+Conway polynomials to create field extensions. 
+Instead, it  
+provides the option to override the polynomial used to create the finite field.
+For subfield relationships, the cheat sheet will indicate the irreducible polynomials 
+of all subfields for a given field.  
+The table below is taken from a cheat sheet for the field $\bbF_{64}$ 
+generated by the polynomial $X^{6} + X^{5} + 1$,  whose numerical rank is 97:
+\orbiteroutput{GRAPHICS/LATEX/subfields_of_GF64}
+
+\bigskip
+
+The lexicographic ordering has an interesting 
+side-effect for the ordering of elements in extension fields. 
+The elements of the prime subfield are always listed before 
+any other elements in the extension field. 
+For this reason, the addition and multiplication tables of the extension field contain the 
+respective table of the prime field in the upper left corner, 
+as shown below for the field $\bbF_9$:
+\orbiteroutput{GRAPHICS/WRAPPERS/GF_q9_tables_draw}
+Here, we omit the zero element in the multiplication table.
+
+
+\bigskip
+
+Orbiter uses primitive polynomials for creating extension fields. 
+Because of this, 
+the element $\alpha$ is always primitive. 
+Since the numerical rank of $\alpha$ is $p,$ this means that the rank $p$ 
+always represents a primitive element in an extension field.
+For the addition and multiplication tables of $\bbF_{9}$ 
+arranged with respect to powers of a primitive element, see below:
+\orbiteroutput{GRAPHICS/WRAPPERS/GF_q9_tables_reordered_draw}
+
+\bigskip
+
+
+The command  
+
+\sourcecode{nth_roots_63}
+
+creates the minimum polynomials of all elements in $\bbF_{64}^\times.$ 
+This corresponds to all irreducible polynomials over $\bbF_2$ 
+of degree dividing $6,$ apart from the polynomial $X.$
+\orbiteroutput{GRAPHICS/LATEX/Nth_roots_q2_n63}
+
+\bigskip
+
+The command  
+
+\sourcecode{F8_F2_field_reduction}
+
+performs field reduction on the elements $0,\ldots,7$ in $\bbF_8$ down to $\bbF_2.$ 
+Here is a graphical representation of the matrices arising this way:
+\orbiteroutput{GRAPHICS/WRAPPERS/field_reduction_F8_to_F2}
+
+
+
+\bigskip
+
+Let us discuss field embeddings in Orbiter. 
+This is important for working in field extensions, 
+as there is a restriction on the polynomials used to create the fields.
+Suppose we have fields $\bbF_q$ and $\bbF_Q$
+with
+$$
+\bbF_q \le \bbF_Q,
+$$
+i.e. 
+$$
+Q = q^e
+$$
+for some positive integer $e.$
+Suppose $\alpha$ is a primitive element 
+in $\bbF_Q$ and $\beta$ is a primitive element in $\bbF_q.$
+Then Orbiter assumes that  
+$$
+\beta = \alpha^{\frac{Q-1}{q-1}},
+$$
+where 
+$$
+\frac{Q-1}{q-1}
+$$
+is the index of $\bbF_q^\times$ 
+in the multiplicative group $\bbF_Q^\times.$ 
+With respect to this embedding, 
+the minimum polynomial of $\beta$ is determined. 
+Let us consider and example.
+The command  
+
+\sourcecode{F_4096}
+
+creates the field $\bbF_{2^{12}}$. 
+Orbiter chooses the polynomial 
+$$
+X^{12} + X^{6} + X^{4} + X + 1
+$$
+to create the field.
+This field has non-trivial subfields $\bbF_4$, $\bbF_8$, $\bbF_{16}$ and $\bbF_{64}.$
+The report shows the polynomials for the primitive elements of the subfields:
+\orbiteroutput{GRAPHICS/WRAPPERS/table_subfields_GF64}
+For each subfield, including the prime field, 
+Orbiter computes a subfield basis and the embedding of the elements in the subfield. 
+We use the convention that $d=\frac{Q-1}{q-1}.$
+Here is the output from the report:
+\orbiteroutput{GRAPHICS/WRAPPERS/subfields_GF64_detailed}
+
+
+
+
+\bigskip
+
+
+
+
+The command  
+
+\sourcecode{F_4489}
+
+creates the field $\bbF_{67^2}$. For the sake of speed, 
+the option \verb'-without_tables' is given to prevent the field tables from being computed. 
+
+
+\bigskip
+

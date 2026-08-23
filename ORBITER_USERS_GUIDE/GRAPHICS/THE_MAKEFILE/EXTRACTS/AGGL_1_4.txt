@@ -1,0 +1,5 @@
+AGGL_1_4:
+	$(ORBITER) -v 4 \
+		-define F -finite_field -q 4 -end \
+		-define AGGL -linear_group -AGGL 1 F \
+			-end

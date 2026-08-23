@@ -1,0 +1,136 @@
+Table~\ref{tab:coding:global} lists global Orbiter commands related to coding theory. 
+\orbitertableofcommands{global_coding_theory}
+
+\bigskip
+
+
+
+The command 
+
+\sourcecode{Allen_Gates_noise_1_percent}
+
+simulates random noise at the 1 percent level 
+applied to the file \verb'allen_Gates.bmp', see below
+\orbiteroutput{GRAPHICS/WRAPPERS/allen_Gates_1_percent}
+The original is on the top. 
+The effect of noise can be seen in the picture below.
+The picture 
+shows Paul Allen and Bill Gates in the early 1970s. 
+
+\bigskip
+
+The command
+
+\sourcecode{nonlinear_code_long_n7_k4}
+
+creates the code $\cC$ in $H(7,2)$ whose codewords are 
+$$
+{\bf w}_1 = 1100000, \; 
+{\bf w}_2 = 0111000, \; 
+{\bf w}_3  = 1101101, \; 
+{\bf w}_4  = 0011011.
+$$
+The command computes the distance matrix $(d_{ij})$ where 
+$d_{ij} = d({\bf w}_i,{\bf w}_j)$ 
+the distance between codeword ${\bf w}_i$ and codeword ${\bf w}_j$.
+Moreover, the command computes the external distances for all elements not in the code. 
+Here, for $\by \not\in \cC$ we have 
+$$
+d(\by,\cC) = \min \{ d(\by,{\bf w}) \mid {\bf w} \in \cC \}
+$$
+the external distance of $\by$ w.r.t. $\cC$.
+Both, the distance matrix and the external distance vector are written to csv files.
+
+\bigskip
+
+The command
+
+\sourcecode{nonlinear_code_n7_d4}
+
+creates the code $\cC$ in $H(7,2)$ whose codewords are 
+$$
+0,15,51,60,85,90,102,105.
+$$
+Again, the distance matrix and the external distances are computed and written to file.
+
+\bigskip
+
+
+The command
+
+\sourcecode{nonlinear_code_n7_d4_classify}
+
+classifies the codes in $H(7,2)$ whose codewords are at least $4$ apart.
+
+\bigskip
+
+
+
+
+The command
+
+\sourcecode{Hamming_space_4_2_distance_matrix}
+
+creates the distance matrix of the Hamming graph $H(n,q).$ 
+The data is written to the file \verb'Hamming_n4_q2.csv'. 
+The command
+
+\sourcecode{Hamming_space_4_2_distance_matrix_draw}
+
+produces the bitmap graphic \verb'Hamming_n4_q2_draw.bmp'
+shown below:
+\orbiteroutput{GRAPHICS/WRAPPERS/Hamming_n4_q2_draw}
+
+
+
+
+\bigskip
+
+
+The command
+
+\sourcecode{Hamming_code_macwilliams}
+
+creates the coefficient matrix of 
+the MacWilliams system for the $[7,4,2]$ Hamming code:
+\orbiteroutput{GRAPHICS/LATEX/code_MacWilliams_Hamming}
+
+
+
+\bigskip
+
+For examples concerning the bounds, see Section~\ref{sec:Bounds}.
+
+\bigskip
+
+
+
+Consider the $[5,2]_2$ code whose codewords are $\{0,7,25,30\}$.
+We start with a makefile variable:
+
+\sourcecodevariable{CODE_5_2_3_CODEWORDS}
+
+The following command creates the code 
+and draws the code diagram in Hamming space:
+
+\sourcecode{code_5_2_3_diagram}
+
+The Hamming graph $H(5,2)$ can be 
+created with the following command:
+
+\sourcecode{Hamming_5_2_graph}
+
+Using the unix dot program, 
+this command sequence creates the drawing of $H(5,2)$ 
+\orbiteroutput{GRAPHICS/WRAPPERS/hamming_H_5_2_drawing}
+
+\bigskip
+
+The command 
+
+\sourcecode{Sylvester_Hadamard_code_8}
+
+creates the code arising from a Sylvester-type Hadamard matrix of order 8. 
+
+\bigskip
+

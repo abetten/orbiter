@@ -1,0 +1,24 @@
+Golay24_make_aut_gens_classes:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 2 -end \
+		-define G -linear_group -PGL 12 2 \
+		-subgroup_by_generators "M24" "244823040" 12 \
+			$(GOLAY_24_CODE_AUT_GENS) \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-classes \
+		-end
+	$(MAGMA_EXE) M24_classes.magma
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 2 -end \
+		-define G -linear_group -PGL 12 2 \
+		-subgroup_by_generators "M24" "244823040" 12 \
+			$(GOLAY_24_CODE_AUT_GENS) \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-classes \
+		-end
+	$(PDFLATEX) PGL_12_2_Subgroup_M24_244823040_classes_out.tex
+	$(OPEN) PGL_12_2_Subgroup_M24_244823040_classes_out.pdf

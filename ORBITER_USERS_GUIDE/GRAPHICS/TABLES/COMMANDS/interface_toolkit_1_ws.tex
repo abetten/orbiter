@@ -1,0 +1,43 @@
+\begin{table}[t]
+\tbl{\label{tab:misc:1}}
+{\begin{tcolorbox}[tabularx={p{3cm}|p{2cm}|p{6.3cm}|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black,title=Miscellaneous Orbiter Commands (Part 1)]
+\hline
+Command & Arguments & Purpose \\
+\hline
+\hline
+\verb'-create_files_direct'  &  fname\_mask content\_mask list-of-labels  &  Create text files using a file name mask and a list of labels. The list of labels must terminate in \verb'-end'. The file will contain the text obtained after creating content through content\_mask. \\
+\hline
+\verb'-create_files'  &  descr  &  Create text files. \\
+\hline
+\verb'-save_matrix_csv'  &  label  &  Save matrix to a csv file. \\
+\hline
+\verb'-csv_file_tally'  &  fname  &  Tally a csv file. \\
+\hline
+\verb'-tally_column'  &  fname column  &  Tally the contents of the given column in the given csv file. The column contains integer vector data. The data has constant size. \\
+\hline
+\verb'-collect_stats'  &  fname\_mask fname\_out from last step  &  Gather data from a list of files. Specifically, count the number of rows in each file.\\
+\hline
+\verb'-csv_file_select_rows'  &  fname $R$  & Selects rows listed in $R$ from the csv-file fname. \\
+\hline
+\verb'-csv_file_select_rows_by_file'  &  fname $R$  & Selects rows listed in $R$ from the csv-file fname. \\
+\hline
+\verb'-csv_file_select_rows_complement'  &  fname $R$  & Selects rows listed in $R$ from the csv-file fname. \\
+\hline
+\verb'-csv_file_split_rows_modulo'  &  fname $n$  & Splits the rows from the csv-file fname modulo $n$. \\
+\hline
+\verb'-csv_file_select_cols'  &  fname $R$  & Selects columns listed in $R$ from the csv-file fname. \\
+\hline
+\verb'-csv_file_select_cols_by_label'  &  fname suffix $R$  & Selects columns listed in $R$ from the csv-file fname. Appends the givven suffix to the output file name. \\
+\hline
+\verb'-csv_file_select_rows_and_cols'  &  fname $R$ $C$  & Selects rows listed in $R$ and columns listed in $C$ from the csv-file fname. \\
+\hline
+\verb'-csv_file_sort_each_row'  &  fname   & Sorts each individual row in the given csv file, thinking of the entries as a set. \\
+\hline
+\verb'-csv_file_sort_rows'  &  fname   & Sorts the rows in the given csv file. \\
+\hline
+\verb'-csv_file_sort_rows_and_' \verb'remove_duplicates'  &  fname   & Sorts the rows in the given csv file. Removes duplicate rows. \\
+\hline
+\end{tcolorbox}}
+\end{table}

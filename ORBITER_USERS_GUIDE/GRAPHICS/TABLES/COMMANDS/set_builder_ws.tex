@@ -1,0 +1,27 @@
+\begin{table}[t]
+\tbl{\label{tab:set:builder}}
+{\begin{tcolorbox}[tabularx={p{3cm}|p{2cm}|p{6.3cm}|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black,title=Set Builder Commands]
+\hline
+Command & Arguments & Purpose \\
+\hline
+\hline
+\verb'-loop'  &  a b c  &  creates the set $\{k \mid k = a+ic, \; i \in \bbZ, \; a \le k < c\}$\\
+\hline
+\verb'-affine_function'  &  a b  &  Apply the affine function $ax+b$.\\
+\hline
+\verb'-set_builder'  &  set  &  Use a set as input to a construction.\\
+\hline
+\verb'-clone_with_affine_function'  &  a b  &  Apply the affine function $ax+b$ to the elements $x$ of a set specified using \verb'-set_builder'. \\
+\hline
+\verb'-affine_function'  &  a b  &  Apply the affine function $ax+b$ to the elements $x$ of a set specified using \verb'-set_builder'. \\
+\hline
+\verb'-here'  &  elements  &  Create the set from the given list of elements. The elements of the list are comma separated. \\
+\hline
+\verb'-file'  &  fname  &  Create a set from the elements listed in the given file. \\
+\hline
+\verb'-file_orbiter_format'  &  fname  &  Create a set from the elements listed in the given file. \\
+\hline
+\end{tcolorbox}}
+\end{table}

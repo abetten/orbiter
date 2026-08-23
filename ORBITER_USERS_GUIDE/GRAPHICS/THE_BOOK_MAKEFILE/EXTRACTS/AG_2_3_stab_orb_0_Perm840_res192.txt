@@ -1,0 +1,16 @@
+AG_2_3_stab_orb_0_Perm840_res192:
+	$(ORBITER) -v 2 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define gens -vector -file Perm_840_res_Set192_gens.csv -end \
+		-define G -permutation_group \
+		-bsgs Perm840_res192 "Perm840 {\rm res192}" \
+			192 432 "0,1,2,3,4,5,6,7,8" 4 gens \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end
+	$(PDFLATEX) Perm840_res192_report.tex
+	$(OPEN) Perm840_res192_report.pdf

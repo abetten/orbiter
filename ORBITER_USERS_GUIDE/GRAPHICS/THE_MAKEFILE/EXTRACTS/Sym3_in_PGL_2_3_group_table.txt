@@ -1,0 +1,21 @@
+Sym3_in_PGL_2_3_group_table:
+	$(ORBITER) -v 2 \
+		-define Do -draw_options \
+			-xout 10000 -yout 10000 \
+			-embedded -radius 50 \
+			-scale 0.1 -line_width 2 \
+		-end \
+		-define G -linear_group -PGL 2 3 \
+		-subgroup_by_generators "Sym3" "6" 2 \
+			"0,1,2,1, 0,1,1,0" \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-group_table Do \
+		-end
+	$(PDFLATEX) PGL_2_3_group_table_order_6.tex
+	$(OPEN) PGL_2_3_group_table_order_6.pdf

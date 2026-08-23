@@ -1,0 +1,69 @@
+Witt_design_on_22_points:
+	$(ORBITER) -v 2 \
+		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define code -vector \
+			-dense $(GOLAY_24_CODE_PROJECTIVE) \
+		-end \
+		-define Do_embedded -draw_options -embedded -sideways -radius 50 \
+			-scale 0.5 -line_width 0.3 \
+		-end \
+		-define Control2 -poset_classification_control \
+			-problem_label M24_pairs -W -depth 2 \
+			-draw_options Do \
+		-end \
+		-define F -finite_field -q 2 -end \
+		-define G -linear_group -PGL 12 2 \
+		-subgroup_by_generators "M24" "244823040" 12 \
+			$(GOLAY_24_CODE_AUT_GENS) \
+		-end \
+		-define M24_perm -modified_group \
+			-from G -restricted_action code \\_on\\_code \
+		-end \
+		-define M22_perm -modified_group \
+			-from M24_perm \
+			-set_stabilizer 0,1 Control2 \
+		-end \
+		-define pts -set -loop 2 22 1 -end \
+		-define M22 -modified_group -from M22_perm \
+			-restricted_action pts M22 \
+		-end \
+		-with M22 -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end \
+		-define Control -poset_classification_control \
+			-problem_label M22 -W -depth 6 \
+			-draw_options Do \
+		-end \
+		-define Orb -orbits \
+			-group M22 \
+			-group_action M22 \
+			-generators M22 \
+			-on_subsets 6 Control \
+		-end \
+		-with Orb -do -orbits_activity \
+			-Kramer_Mesner_matrix 3 6 \
+		-end \
+		-define ro \
+			-poset_classification_report_options \
+				-draw_poset -type_ordinary \
+				-draw_options Do_embedded \
+		-end \
+		-with Orb -do -orbits_activity \
+			-report "" \
+			-report_options ro \
+		-end \
+		-define D -design -orbit_on_sets \
+			Orb 6 1 \
+		-end \
+		-with D -do \
+			-design_activity \
+				-export_incidence_matrix \
+		-end \
+		-with D -do \
+			-design_activity \
+				-intersection_matrix \
+		-end

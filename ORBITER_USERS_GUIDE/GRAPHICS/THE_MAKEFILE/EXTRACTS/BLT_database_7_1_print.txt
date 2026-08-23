@@ -1,0 +1,9 @@
+BLT_database_7_1_print:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 7 -end \
+		-define O -orthogonal_space 0 5 F -without_group -end \
+		-define S -set -file_orbiter_format BLT_7_1.txt -end \
+		-with O -do -orthogonal_space_activity \
+			-print_points S -end
+	$(PDFLATEX) S_set_report.tex
+	$(OPEN) S_set_report.pdf

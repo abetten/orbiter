@@ -1,0 +1,64 @@
+Orbiter can produce graphical output in a variety of formats:
+\begin{enumerate}
+\item
+TikZ / Latex~\cite{tantau:2022}, see Table~\ref{tab:draw:incidence:structure},
+\item
+Metapost~\cite{metapost2010},
+\item
+Bitmap files (.bmp)~\cite{bitmap}, see Table~\ref{tab:bitmap},
+\item
+Povray, see Section~\ref{sec:povray},
+\item
+Gnuplot~\cite{gnuplot}, see Section~\ref{sec:gnuplot:interface}.
+\end{enumerate}
+
+
+\bigskip
+
+
+
+The poset classification algorithm from Sections~\ref{sec:subsetorbits} 
+and~\ref{sec:subspaceorbits} computes partially ordered sets. 
+The posets are created using the \verb'-draw_poset' option in 
+the poset classification control command package, see Table~\ref{tab:pc:options}. 
+The posets are stored in a file with extension \verb'.layered_graph'.
+These files can be drawn using the \verb'-draw_layered_graph' command.
+The commands in Table~\ref{tab:draw:options} and Table~\ref{tab:draw:options:b} 
+show ways in which to customize the drawings.
+\orbitertableofcommands{layered_graph_draw_options_1}
+\orbitertableofcommands{layered_graph_draw_options_2}
+Let us consider an example. 
+Suppose we are interested in the Schreier trees 
+of a permutation group represented in a stabilizer chain.
+We take $\PGL(4,2)$ in its action on the wedge product.
+The command
+
+\sourcecode{PGL_6_2_Wedge_4_2_detached_report.tex}
+
+produces a report.
+The following tree is taken from this report. It represents the  
+first basic orbit 
+in the stabilizer chain of the group in that action.
+
+\orbiteroutput{GRAPHICS/LATEX/orbits_PGL42_wedge_detached}
+
+
+\bigskip
+
+
+
+The command 
+
+\sourcecode{schreier_tree_graphical_output}
+
+draws the $6$th Schreier tree in the classification of orbits of $\PGL(4,2)$ on 
+homogeneous polynomials of degree 3 in 4 variables, 
+shown below
+
+\orbiteroutput{GRAPHICS/WRAPPERS/on_poly_schreier_tree_6_draw}
+
+The orbit has length $420.$ 
+
+\bigskip
+
+

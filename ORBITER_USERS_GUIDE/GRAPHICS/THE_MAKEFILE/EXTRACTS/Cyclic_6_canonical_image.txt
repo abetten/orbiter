@@ -1,0 +1,6 @@
+Cyclic_6_canonical_image:
+	$(ORBITER) -v 3 \
+		-define G -permutation_group -cyclic_group 6 -end \
+		-with G -do -group_theoretic_activity \
+			-canonical_image_GAP 3,5 \
+		-end

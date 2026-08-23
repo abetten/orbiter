@@ -1,0 +1,12 @@
+PGOm_6_2_Class_2A_centralizer:
+	$(ORBITER) -v 9 \
+		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define F -finite_field -q 2 -end \
+		-define G -linear_group -PGOm 6 F -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-centralizer_of_element \
+				"2Arep" $(PGOM_6_2_CLASS_2A_REP_CLEAN) \
+		-end
+	$(PDFLATEX) PGOm_6_2_elt_2Arep_centralizer.tex
+	$(OPEN) PGOm_6_2_elt_2Arep_centralizer.pdf

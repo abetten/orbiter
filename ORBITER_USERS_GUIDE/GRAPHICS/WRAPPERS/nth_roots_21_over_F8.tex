@@ -1,0 +1,108 @@
+\noindent Let $\alpha$ be a primitive element of GF$(64)$. 
+Let $\beta$ be a primitive $21$-th root in GF$(64)$, 
+so $\beta=\alpha^{3}.$ \\
+$\beta^{0} = 100000 =  1$\\
+$\beta^{1} = 000100 =  \alpha^{3}$\\
+$\beta^{2} = 100001 =  \alpha^{5} + 1$\\
+$\beta^{3} = 111101 =  \alpha^{5} + \alpha^{3} + \alpha^{2} + \alpha + 1$\\
+$\beta^{4} = 011111 =  \alpha^{5} + \alpha^{4} + \alpha^{3} + \alpha^{2} + \alpha$\\
+$\beta^{5} = 101010 =  \alpha^{4} + \alpha^{2} + 1$\\
+$\beta^{6} = 110100 =  \alpha^{3} + \alpha + 1$\\
+$\beta^{7} = 100111 =  \alpha^{5} + \alpha^{4} + \alpha^{3} + 1$\\
+$\beta^{8} = 101101 =  \alpha^{5} + \alpha^{3} + \alpha^{2} + 1$\\
+$\beta^{9} = 011101 =  \alpha^{5} + \alpha^{3} + \alpha^{2} + \alpha$\\
+$\beta^{10} = 011011 =  \alpha^{5} + \alpha^{4} + \alpha^{2} + \alpha$\\
+$\beta^{11} = 001011 =  \alpha^{5} + \alpha^{4} + \alpha^{2}$\\
+$\beta^{12} = 001001 =  \alpha^{5} + \alpha^{2}$\\
+$\beta^{13} = 111000 =  \alpha^{2} + \alpha + 1$\\
+$\beta^{14} = 000111 =  \alpha^{5} + \alpha^{4} + \alpha^{3}$\\
+$\beta^{15} = 101001 =  \alpha^{5} + \alpha^{2} + 1$\\
+$\beta^{16} = 111100 =  \alpha^{3} + \alpha^{2} + \alpha + 1$\\
+$\beta^{17} = 100110 =  \alpha^{4} + \alpha^{3} + 1$\\
+$\beta^{18} = 010100 =  \alpha^{3} + \alpha$\\
+$\beta^{19} = 100011 =  \alpha^{5} + \alpha^{4} + 1$\\
+$\beta^{20} = 001100 =  \alpha^{3} + \alpha^{2}$\\
+\bigskip
+
+\noindent Let $\gamma$ be a primitive $7$-th root in GF$(64)$, 
+so $\gamma=\alpha^{9}.$ \\
+$\gamma^{0} = 100000 = 1$\\
+$\gamma^{1} = 111101 = \alpha^{5} + \alpha^{3} + \alpha^{2} + \alpha + 1$\\
+$\gamma^{2} = 110100 = \alpha^{3} + \alpha + 1$\\
+$\gamma^{3} = 011101 = \alpha^{5} + \alpha^{3} + \alpha^{2} + \alpha$\\
+$\gamma^{4} = 001001 = \alpha^{5} + \alpha^{2}$\\
+$\gamma^{5} = 101001 = \alpha^{5} + \alpha^{2} + 1$\\
+$\gamma^{6} = 010100 = \alpha^{3} + \alpha$\\
+\bigskip
+
+\noindent The $q$-cyclotomic set for $q=8$ are:
+
+\noindent $\{$ 0 $\}$\\
+$\{$ 1, 8 $\}$\\
+$\{$ 2, 16 $\}$\\
+$\{$ 3 $\}$\\
+$\{$ 4, 11 $\}$\\
+$\{$ 5, 19 $\}$\\
+$\{$ 6 $\}$\\
+$\{$ 7, 14 $\}$\\
+$\{$ 9 $\}$\\
+$\{$ 10, 17 $\}$\\
+$\{$ 12 $\}$\\
+$\{$ 13, 20 $\}$\\
+$\{$ 15 $\}$\\
+$\{$ 18 $\}$\\
+\bigskip
+
+Subfield basis, a basis for GF$(8)$ inside GF$(64)$:
+$$
+\left[
+\begin{array}{*{6}{c}}
+1 & 0 & 0 & 0 & 0 & 0\\
+1 & 1 & 1 & 1 & 0 & 1\\
+1 & 1 & 0 & 1 & 0 & 0\\
+\end{array}
+\right]
+$$
+\bigskip
+
+The irreducible polynomials associated with the $21$-th roots over GF$(8)$ are:
+
+\bigskip
+
+
+{\renewcommand{\arraystretch}{1.5}
+$$
+\begin{array}{|r|r|l|l|l|}
+\hline
+i & r_i & {\rm Cyc}(r_i) & m_{\beta^{r_i}}(X) & m_{\beta^{r_i}}(X) \\
+\hline
+0 & 0 & ( 0 ) & (100000)  X^{0} + (100000)  X^{1} & X + 1\\
+\hline
+1 & 1 & ( 1, 8 ) & (011101)  X^{0} + (101001)  X^{1} + (100000)  X^{2} & X^{2} + 7X + 3\\
+\hline
+2 & 2 & ( 2, 16 ) & (010100)  X^{0} + (011101)  X^{1} + (100000)  X^{2} & X^{2} + 3X + 5\\
+\hline
+3 & 3 & ( 3 ) & (111101)  X^{0} + (100000)  X^{1} & X + 2\\
+\hline
+4 & 4 & ( 4, 11 ) & (101001)  X^{0} + (010100)  X^{1} + (100000)  X^{2} & X^{2} + 5X + 7\\
+\hline
+5 & 5 & ( 5, 19 ) & (111101)  X^{0} + (001001)  X^{1} + (100000)  X^{2} & X^{2} + 6X + 2\\
+\hline
+6 & 6 & ( 6 ) & (110100)  X^{0} + (100000)  X^{1} & X + 4\\
+\hline
+7 & 7 & ( 7, 14 ) & (100000)  X^{0} + (100000)  X^{1} + (100000)  X^{2} & X^{2} + X + 1\\
+\hline
+8 & 9 & ( 9 ) & (011101)  X^{0} + (100000)  X^{1} & X + 3\\
+\hline
+9 & 10 & ( 10, 17 ) & (110100)  X^{0} + (111101)  X^{1} + (100000)  X^{2} & X^{2} + 2X + 4\\
+\hline
+10 & 12 & ( 12 ) & (001001)  X^{0} + (100000)  X^{1} & X + 6\\
+\hline
+11 & 13 & ( 13, 20 ) & (001001)  X^{0} + (110100)  X^{1} + (100000)  X^{2} & X^{2} + 4X + 6\\
+\hline
+12 & 15 & ( 15 ) & (101001)  X^{0} + (100000)  X^{1} & X + 7\\
+\hline
+13 & 18 & ( 18 ) & (010100)  X^{0} + (100000)  X^{1} & X + 5\\
+\hline
+\end{array}
+$$}

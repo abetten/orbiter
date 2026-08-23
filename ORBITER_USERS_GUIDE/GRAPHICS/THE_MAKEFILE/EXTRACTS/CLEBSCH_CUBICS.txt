@@ -1,0 +1,104 @@
+CLEBSCH_CUBICS=\
+	push b push b mult push d push c push m mult add mult \
+	push b push c push d push d push m mult mult add mult \
+	push a push d push d push m add mult mult add add \
+	push a push c push m mult add mult \
+	store c001 \
+	push b push d mult \
+	push b push 1 push m push c mult add mult \
+	push d push a push 1 push m mult add mult add \
+	push m push a mult add push c add \
+	push c push m push a mult add \
+	mult mult \
+	store c002 \
+	push b \
+	push d push c push a push m mult add mult \
+	push c push a push m push 1 mult add mult add mult \
+	push a push d mult push c push 1 push m mult add mult \
+	push m mult add \
+	push a push c push m mult add mult \
+	store c011 \
+	push b push b push c mult mult \
+	push 1 push d push m mult add mult \
+	push a push b mult push c push d push d push m mult mult add mult \
+	push m mult add \
+	push a push d mult push c push d push m mult add mult add \
+	push a push c push m mult add mult \
+	store c012 \
+	push m \
+	push b push d push m mult add push c mult \
+	push d push b push 1 push m mult add mult push m mult add push a mult \
+	push b push c mult push d push 1 push m mult add mult add mult \
+	push b push d push m mult add mult \
+	store d001 \
+	push m \
+	push d push c push m mult add push a push a mult mult \
+	push c push c mult push d push m mult add push a mult add \
+	push m push b push c mult mult push c push 1 push m mult add mult add mult \
+	push b push d push m mult add mult \
+	store d011 \
+	push m \
+	push c push d mult push d push m mult add push a push a mult mult \
+	push c push c mult push d push m mult add push a push b push m mult mult mult add \
+	push b push d push c push m mult add mult push c push m mult mult add \
+	push b push d push m mult add mult mult \
+	store d012 \
+	push d push 1 push m mult add push a mult push m push b mult push 1 add push c mult add \
+	push b add push m push d mult add \
+	push a push c mult mult \
+	push b push d push m mult add mult \
+	store d112 \
+	push m \
+	push b push d push m mult add push c mult push d push b push 1 push m mult add mult \
+	push m mult add push a mult push b push c mult push d push 1 push m mult add mult add \
+	push b push d push m mult add mult mult \
+	store m002 \
+	push m \
+	push d push c push m mult add push a push a mult mult \
+	push c push c mult push d push m mult add push a mult add \
+	push b push c push m mult mult push c push 1 push m mult add mult add \
+	push b push d push m mult add mult mult \
+	store m012 \
+	push m\
+	push c push d mult push d push m mult add push a push a mult mult \
+	push m push c push c mult push d push m mult add push a push b mult mult mult add \
+	push m push b push d push c push m mult add push c mult mult mult add \
+	push b push d push m mult add mult mult \
+	store m022 \
+	push d push 1 push m mult add push a mult \
+	push m push b mult push 1 add push c mult add \
+	push b add push m push d mult add \
+	push a push c mult mult \
+	push b push d push m mult add mult \
+	store m122 \
+	push m push a mult push c add push d mult push c push a push 1 push m mult add mult add \
+	push b mult \
+	push m push a push d mult mult push c push 1 push m mult add mult add \
+	push b push d push m mult add mult \
+	store n002 \
+	push m \
+	push c push d push m mult add push b mult push m push d push c push 1 push m mult add mult mult add \
+	push a mult \
+	push b push c mult push d push 1 push m mult add mult add mult \
+	push a push b push c push m mult push d push m mult add add add mult \
+	store n012 \
+	push c push d push m mult add push b mult \
+	push m push d push c push 1 push m mult add mult mult add \
+	push a mult \
+	push b push c mult push d push 1 push m mult add mult add \
+	push a push d mult push m push b push c mult mult add mult \
+	store n022 \
+	push m \
+	push c push d push m mult add push b mult \
+	push m push d push c push 1 push m mult add mult mult add \
+	push a mult \
+	push b push c mult push d push 1 push m mult add mult add \
+	push m push a mult push c add mult mult \
+	store n112 \
+	push m \
+	push c push d push m mult add push b mult \
+	push m push d push c push 1 push m mult add mult mult add \
+	push a mult \
+	push b push c mult push d push 1 push m mult add mult add \
+	push a push d mult push m push b push c mult mult add mult mult \
+	store n122 

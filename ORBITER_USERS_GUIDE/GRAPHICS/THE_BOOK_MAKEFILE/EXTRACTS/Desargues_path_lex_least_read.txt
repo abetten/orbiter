@@ -1,0 +1,10 @@
+Desargues_path_lex_least_read:
+	echo $(DESARGUES_PATH_LEX_LEAST) >Desargues_path_lex_least.inc
+	$(ORBITER) -v 10 \
+		-draw_incidence_structure_description \
+			-width 60 -width_10 6 -end \
+		-define C -combinatorial_object \
+			-label Desargues_path_lex_least Desargues\_path\_lex\_least \
+			-file_of_incidence_geometries_by_row_ranks \
+				Desargues_path_lex_least.inc 10 10 3 \
+		-end

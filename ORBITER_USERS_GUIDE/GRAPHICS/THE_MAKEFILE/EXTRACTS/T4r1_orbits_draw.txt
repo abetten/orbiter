@@ -1,0 +1,10 @@
+T4r1_orbits_draw:
+	$(ORBITER) -v 3 \
+		-draw_layered_graph \
+			orbit_GL_2_2_wreath_Sym4_res__on_rank_one_tensors_0.layered_graph \
+			-place \
+		-radius 400 -spanning_tree -embedded \
+			-line_width 1.1 -x_stretch 2.5 -scale 0.15 \
+		-end
+	$(PDFLATEX) orbit_GL_2_2_wreath_Sym4_res__on_rank_one_tensors_0_draw.tex
+	$(OPEN) orbit_GL_2_2_wreath_Sym4_res__on_rank_one_tensors_0_draw.pdf

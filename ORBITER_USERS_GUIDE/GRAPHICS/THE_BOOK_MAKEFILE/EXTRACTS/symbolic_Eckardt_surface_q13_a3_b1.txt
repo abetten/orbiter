@@ -1,0 +1,23 @@
+symbolic_Eckardt_surface_q13_a3_b1:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 13 -end \
+		-define M -symbolic_object \
+			-field F \
+			-managed_variables "X0,X1,X2,X3" \
+			-text $(ECKARDT_SURFACE_EQN) \
+		-end \
+		-define L -symbolic_object \
+			-field F \
+			-text "3,1" \
+		-end \
+		-define M1 -symbolic_object \
+			-field F \
+			-substitute "a,b" M L \
+		-end \
+		-define M2 -symbolic_object \
+			-field F \
+			-expand M1 \
+			-write_trees_during_expand \
+		-end
+	$(PDFLATEX) M2.tex
+	$(OPEN) M2.pdf

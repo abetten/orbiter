@@ -1,0 +1,15 @@
+Hamming_graph_7_with_Hamming_code:
+	$(ORBITER) -v 2 \
+		-define G -graph -Hamming 7 2 \
+			-subset "_Hamming_code" "\\_with\\_Hamming\\_code" \
+			$(HAMMING_CODE_CODEWORDS) -end \
+		-with G -do \
+		-graph_theoretic_activity -export_csv -end \
+		-with G -do \
+		-graph_theoretic_activity -export_graphviz -end \
+		-with G -do \
+		-graph_theoretic_activity -save -end \
+		-with G -do \
+		-graph_theoretic_activity -automorphism_group -end
+	$(PDFLATEX) Hamming_7_2_Hamming_code_report.tex
+	$(OPEN) Hamming_7_2_Hamming_code_report.pdf

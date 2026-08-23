@@ -1,0 +1,23 @@
+\begin{table}
+\begin{tcolorbox}[tabularx={X|p{2cm}|X|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black,title=Finite Field Activities (Part II)]
+\hline
+Command & Arguments & Purpose \\
+\hline
+\hline
+\verb'-transversal'  &   $L1$ $L2$ $P$  & Computes the unique transversal to the lines $L1$ and $L2$ through the point $P$ in $\PG(3,q).$ The linese are given by a basis consisting of $8$ field elements.  \\
+\hline
+\verb'-intersection_of_two_lines'  &   $L1$ $L2$  & Computes the intersection of two lines in $\PG(3,q)$. The linese are given by a basis consisting of $8$ field elements.  \\
+\hline
+\verb'-rank_point_in_PG'  &   $P$  & Computes the orbiter point rank corresponding to the point $P$ in $\PG(n,q).$ $P$ is a label of a vector, which is the coefficient vector.  \\
+\hline
+\verb'-unrank_point_in_PG'  &   $r$  & Computes the coordinate vector of the Orbiter point in $\PG(n,q)$ corresponding to the Orbiter rank value $r$.  \\
+\hline
+\verb'-inverse_isomorphism_klein_quadric'  &  $L36$   &     \\
+\hline
+\verb'-NTT'  &   $k$ $n$  &   Computes the Number-theoretic transform for $n=2^k,$ which must divide $q-1$. \\
+\hline
+\end{tcolorbox}
+\caption{\label{tab:finite:field:activities:B}Finite Field Activities (Part II)}
+\end{table}

@@ -1,0 +1,16 @@
+LS_AG_2_3_disjoint_sets_graph_and_cliques:
+	$(ORBITER) -v 2 \
+		-define Gamma -graph \
+			-disjoint_sets_graph \
+			AG_2_3_design_table.csv \
+		-end \
+		-with Gamma -do \
+		-graph_theoretic_activity \
+			-save \
+		-end \
+		-with Gamma -do \
+		-graph_theoretic_activity \
+			-find_cliques -target_size 7 \
+				-output_file AG_2_3_design_table_cliques.csv \
+		-end \
+		-print_symbols

@@ -1,0 +1,11 @@
+coset_reps_read:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define G1 -linear_group -PGOp 6 F -end \
+		-define G2 -linear_group -PGL 6 F \
+			-symplectic_group \
+		-end \
+		-define CR -vector_ge -action G2 \
+			-read_csv \
+			PGOp_6_2_coset_reps.csv Element \
+		-end

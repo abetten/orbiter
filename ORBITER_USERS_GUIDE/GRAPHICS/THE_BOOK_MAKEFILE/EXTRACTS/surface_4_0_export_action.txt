@@ -1,0 +1,26 @@
+surface_4_0_export_action:
+	$(ORBITER) -v 3 \
+		-define Class2A -vector -file_column $(FILE_NAME_CLASS_2A) elements -end \
+		-define F -finite_field -q 4 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define S -cubic_surface -space P -catalogue 0 -end \
+		-define G -linear_group -PGGL 4 4 -end \
+		-define gens_ge -vector_ge \
+			-action G \
+			-vector_data Class2A \
+		-end \
+		-with S -do \
+		-cubic_surface_activity \
+			-export_something_with_group_element \
+			"action_on_tritangent_planes" gens_ge \
+		-end \
+		-with S -do \
+		-cubic_surface_activity \
+			-export_something_with_group_element \
+			"action_on_double_sixes" gens_ge \
+		-end \
+		-with S -do \
+		-cubic_surface_activity \
+			-export_something_with_group_element \
+			"action_on_lines" gens_ge \
+		-end

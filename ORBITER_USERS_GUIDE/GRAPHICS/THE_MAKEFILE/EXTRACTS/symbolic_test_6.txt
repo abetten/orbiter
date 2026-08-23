@@ -1,0 +1,21 @@
+symbolic_test_6:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 13 -end \
+		-define a -symbolic_object \
+			-field F \
+			-text "x" \
+		-end \
+		-define a -symbolic_object \
+			-field F \
+			-text "a^2" \
+		-end \
+		-define a -symbolic_object \
+			-field F \
+			-text "a^2" \
+		-end \
+		-define a -symbolic_object \
+			-field F \
+			-text "a^2" \
+		-end
+	$(PDFLATEX) a.tex
+	$(OPEN) a.pdf

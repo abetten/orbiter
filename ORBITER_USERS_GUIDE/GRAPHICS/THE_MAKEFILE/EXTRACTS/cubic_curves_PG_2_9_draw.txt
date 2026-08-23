@@ -1,0 +1,9 @@
+cubic_curves_PG_2_9_draw:
+	$(ORBITER) -v 3 \
+		-draw_layered_graph cc_9_poset_lvl_9.layered_graph \
+			-place \
+			-radius 300 -embedded -line_width 1.1 \
+			-y_stretch 0.9 -scale 0.25 \
+		-end
+	#$(PDFLATEX) cc_9_poset_lvl_9_draw.tex
+	#$(OPEN) cc_9_poset_lvl_9_draw.pdf

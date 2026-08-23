@@ -1,0 +1,36 @@
+Butler12_PSP_6_2_conjugate:
+	$(ORBITER) -v 10 \
+		-define F -finite_field -q 2 -end \
+		-define G -linear_group -PGL 6 F \
+			-symplectic_group \
+		-end \
+		-assign gens -from \
+		-with G -do \
+		-group_theoretic_activity \
+			-generators \
+		-end \
+		-define m1 -vector \
+			-permutation_matrix "0,2,4,1,3,5" \
+		-end \
+		-define m1t -vector \
+			-permutation_matrix_inverse "0,2,4,1,3,5" \
+		-end \
+		-define M1 -vector_ge \
+			-action G \
+			-vector_data m1 \
+		-end \
+		-define M1t -vector_ge \
+			-action G \
+			-vector_data m1t \
+		-end \
+		-assign gens2 -from \
+		-with gens -and M1t -do \
+		-vector_ge_activity \
+			-conjugate \
+		-end \
+		-with gens2 -do \
+		-vector_ge_activity \
+			-report \
+		-end
+	$(PDFLATEX) PGL_6_2_elements.tex
+	$(OPEN) PGL_6_2_elements.pdf

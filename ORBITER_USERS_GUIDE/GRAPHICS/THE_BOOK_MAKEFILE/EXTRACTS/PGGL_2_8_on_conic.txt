@@ -1,0 +1,14 @@
+PGGL_2_8_on_conic:
+	$(ORBITER) -v 4 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define G -linear_group \
+			-PGGL 2 8 -PGL2OnConic \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end
+	#$(PDFLATEX) PGGL_2_8_OnConic_2_8_report.tex
+	#$(OPEN) PGGL_2_8_OnConic_2_8_report.pdf

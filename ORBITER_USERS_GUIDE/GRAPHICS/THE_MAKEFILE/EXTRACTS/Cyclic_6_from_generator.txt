@@ -1,0 +1,16 @@
+Cyclic_6_from_generator:
+	$(ORBITER) -v 2 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define gens -vector -dense \
+			"1,2,3,4,5,0" \
+		-end \
+		-define G -permutation_group -symmetric_group 6 \
+			-subgroup_by_generators G1 6 1 gens -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end
+	$(PDFLATEX) Sym_6_Subgroup_G1_6_report.tex
+	$(OPEN) Sym_6_Subgroup_G1_6_report.pdf

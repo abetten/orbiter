@@ -1,0 +1,17 @@
+Golay23_code_words:
+	$(ORBITER) -v 2 \
+		-define v -vector -dense $(GOLAY_23_COLUMN_RANKS_PROJECTIVELY) -end \
+		-define F -finite_field -q 2 -end \
+		-define C -code -field F \
+			-projective_set 12 v -end \
+		-with C -and F -do -coding_theoretic_activity \
+			-export_magma Golay23.magma \
+		-end \
+		-with C -and F -do -coding_theoretic_activity \
+			-export_codewords Golay23_codewords.csv \
+		-end \
+		-with C -and F -do -coding_theoretic_activity \
+			-export_genma Golay23_genma.csv \
+		-end 
+	#$(PDFLATEX) code_n23_k12_q2.tex
+	#$(OPEN) code_n23_k12_q2.pdf

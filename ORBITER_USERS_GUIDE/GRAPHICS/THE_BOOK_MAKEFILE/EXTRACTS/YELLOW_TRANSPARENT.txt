@@ -1,0 +1,3 @@
+YELLOW_TRANSPARENT=\
+	"texture{ pigment{ color Yellow transmit 0.7 } \
+	finish {diffuse 0.9 phong 0.6} }"

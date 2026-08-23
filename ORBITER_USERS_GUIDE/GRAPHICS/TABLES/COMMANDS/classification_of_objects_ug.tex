@@ -1,0 +1,25 @@
+\begin{table}
+\begin{tcolorbox}[tabularx={X|p{2cm}|X|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black,title=Classification of Combinatorial Objects]
+\hline
+Command & Arguments & Purpose \\
+\hline
+\hline
+\verb'-save_classification'  &  prefix   &  Save classification when finished. \\
+\hline
+\verb'-max_TDO_depth'  &  $d$   &  Limit TDO depth to $d$ in the report.\\
+\hline
+\verb'-save_canonical_labeling'  &     &  Save the canonical labeling. \\
+\hline
+\verb'-save_ago'  &     &  Save the automorphism group orders to file.\\
+\hline
+\verb'-save_transversal'  &     &  Save the indices of the elements chosen for the transversal.\\
+\hline
+\verb'-filter_ago_at_least'  &   ago0  &  Filter out the objects whose automorphissm group order is at least ago0. At present, this option is only available for combinatorial objects of type incidence geometry. \\
+\hline
+\verb'-nauty_control'  &  options   &  Set options that control Nauty. See Table~\ref{tab:nauty:control}. \\
+\hline
+\end{tcolorbox}
+\caption{\label{tab:combi:classification}Classification of Combinatorial Objects}
+\end{table}

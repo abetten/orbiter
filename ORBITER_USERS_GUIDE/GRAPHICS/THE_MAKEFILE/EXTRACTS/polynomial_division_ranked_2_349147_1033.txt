@@ -1,0 +1,9 @@
+polynomial_division_ranked_2_349147_1033:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-with F -do \
+		-finite_field_activity \
+			-polynomial_division_ranked 349147 1033 \
+		-end
+	$(PDFLATEX) polynomial_division_349147_1033.tex
+	$(OPEN) polynomial_division_349147_1033.pdf

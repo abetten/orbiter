@@ -1,0 +1,7 @@
+Neumaier_16_test_SRG_property:
+	$(ORBITER) -v 10 \
+		-define Gamma -graph -Neumaier_graph_16 -end \
+		-with Gamma -do \
+		-graph_theoretic_activity \
+			-test_SRG_property \
+		-end

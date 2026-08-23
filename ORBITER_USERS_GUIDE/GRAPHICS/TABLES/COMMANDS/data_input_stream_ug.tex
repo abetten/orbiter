@@ -1,0 +1,39 @@
+\begin{table}
+\begin{tcolorbox}[tabularx={X|p{2cm}|X|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black,title=Defining Combinatorial Objects (Part 1)]
+\hline
+Command & Arguments & Purpose \\
+\hline
+\hline
+\verb'-label'  &  label-txt label-tex  & A label for the objects. \\
+\hline
+\verb'-set_of_points'  &  $S$  & A set $S$ consisting of points. \\
+\hline
+\verb'-set_of_lines'  &  $S$  & A set $S$ consisting of lines. \\
+\hline
+\verb'-set_of_points_and_lines'  &  $S_1$ $S_2$  & A set $S_1$ consisting of points and a second set $S_2$ consisting of lines.  \\
+\hline
+\verb'-set_of_packing'  &  $S$ $q$  & A set $S$ of packings of $\PG(3,q)$.\\
+\hline
+\verb'-file_of_points'  &  fname  & A set consisting of points read from file.\\
+\hline
+\verb'-file_of_points_csv'  &  fname col-header  & A csv-file containing sets of points in a specific column. The column header is given.\\
+\hline
+\verb'-file_of_lines'  &  fname  & A set consisting of lines read from file.\\
+\hline
+\verb'-file_of_packings'  &  fname  & A set consisting of packings read from file.\\
+\hline
+\verb'-file_of_packings_through_spread' \verb'_table'  &  spread-table fname-packings q   &  A file of packings of $\PG(3,q)$. This relies on the presence of a spread-table. \\
+\hline
+\verb'-file_of_designs_through_block' \verb'_orbits'  &  fname1 fname2 v k   & A set of designs (or configurations) built from a set of orbits on k-subsets. The file fname1 is a matrix of zero-one vectors, for instance the solutions of a Diophantine system (see Section~\ref{sec:diophant}). The file fname2 is a list of orbits of a group on k-subsets created using the -export\_something activity from Table~\ref{tab:orbits:activities} using the keyword set\_orbits. The design will be invariant under the group used to compute the k-orbits.\\
+\hline
+\verb'-file_of_designs_through_blocks'  &  fname column v b k   & A set of designs (or configurations) built from a set of k-subsets. The file fname is a csv file, and the blocks are listed as coded k-subsets in the given column.\\
+\hline
+\verb'-file_of_point_set'  &  fname  & A file containing sets of points. \\
+\hline
+\verb'-file_of_designs'  &  fname v b k c  &  A file containing designs or large sets. Here, $v$ is the number of points in the design, $b$ is the number of blocks, $k$ is the block size, and $c$ is the size of one class of the partition. \\
+\hline
+\end{tcolorbox}
+\caption{\label{tab:combinatorial:objects}Defining Combinatorial Objects (Part 1)}
+\end{table}

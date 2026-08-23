@@ -1,0 +1,145 @@
+\contentsline {chapter}{List of Tables}{7}{chapter*.1}%
+\contentsline {chapter}{\numberline {1}Introduction}{11}{chapter.1}%
+\contentsline {section}{\numberline {1.1}What is Orbiter}{11}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Acknowledgements}{12}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Installing Orbiter for the First Time}{13}{section.1.3}%
+\contentsline {section}{\numberline {1.4}Updating Orbiter}{16}{section.1.4}%
+\contentsline {section}{\numberline {1.5}The Work Directory, Makefiles and GitHub}{17}{section.1.5}%
+\contentsline {section}{\numberline {1.6}Typographic Conventions}{20}{section.1.6}%
+\contentsline {chapter}{\numberline {2}The Orbiter Language}{23}{chapter.2}%
+\contentsline {section}{\numberline {2.1}The Orbiter Session}{23}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Objects and Activities}{26}{section.2.2}%
+\contentsline {section}{\numberline {2.3}The Orbiter Dash Code Language}{30}{section.2.3}%
+\contentsline {section}{\numberline {2.4}Set Builder}{40}{section.2.4}%
+\contentsline {section}{\numberline {2.5}Vector Builders}{41}{section.2.5}%
+\contentsline {section}{\numberline {2.6}Vector of Group Elements}{48}{section.2.6}%
+\contentsline {section}{\numberline {2.7}Symbolic Objects}{50}{section.2.7}%
+\contentsline {chapter}{\numberline {3}Finite Fields}{71}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Prime Fields}{71}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Extension Fields}{77}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Linear Algebra Over Finite Fields}{89}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Advanced Topics in Finite Fields}{94}{section.3.4}%
+\contentsline {chapter}{\numberline {4}Projective Geometry}{103}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Finite Projective Spaces}{103}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Indexing Points and Lines}{109}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Incidence Matrices}{113}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Advanced Topics}{119}{section.4.4}%
+\contentsline {section}{\numberline {4.5}Geometric Objects}{130}{section.4.5}%
+\contentsline {chapter}{\numberline {5}Group Theory}{135}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Generic Permutation Groups}{135}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Matrix Groups}{147}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Subgroups}{171}{section.5.3}%
+\contentsline {section}{\numberline {5.4}New Actions from Old}{189}{section.5.4}%
+\contentsline {section}{\numberline {5.5}Group Theoretic Activities}{212}{section.5.5}%
+\contentsline {section}{\numberline {5.6}Group Theoretic Activities Based on Magma}{229}{section.5.6}%
+\contentsline {section}{\numberline {5.7}Group Theoretic Activities Based on GAP}{241}{section.5.7}%
+\contentsline {section}{\numberline {5.8}Group Theory, Advanced Topics}{245}{section.5.8}%
+\contentsline {section}{\numberline {5.9}Activities for Vectors of Group Elements}{254}{section.5.9}%
+\contentsline {chapter}{\numberline {6}Ring Theory}{263}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Univariate Polynomials Over Finite Fields}{263}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Multivariate Polynomial Rings}{272}{section.6.2}%
+\contentsline {chapter}{\numberline {7}Algebraic Geometry}{281}{chapter.7}%
+\contentsline {section}{\numberline {7.1}The Grassmannian}{281}{section.7.1}%
+\contentsline {section}{\numberline {7.2}The Klein Quadric and the Pl\"ucker Map}{284}{section.7.2}%
+\contentsline {section}{\numberline {7.3}Orthogonal Spaces}{285}{section.7.3}%
+\contentsline {section}{\numberline {7.4}Hermitian Varieties}{304}{section.7.4}%
+\contentsline {section}{\numberline {7.5}Algebraic Varieties}{306}{section.7.5}%
+\contentsline {section}{\numberline {7.6}Activities for Algebraic Varieties}{314}{section.7.6}%
+\contentsline {section}{\numberline {7.7}Mappings between Projective Spaces}{324}{section.7.7}%
+\contentsline {chapter}{\numberline {8}Orbit Algorithms}{327}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Schreier Trees}{327}{section.8.1}%
+\contentsline {section}{\numberline {8.2}Poset Classification}{335}{section.8.2}%
+\contentsline {section}{\numberline {8.3}Orbits on Subsets}{340}{section.8.3}%
+\contentsline {section}{\numberline {8.4}Orbits on Subspaces}{349}{section.8.4}%
+\contentsline {section}{\numberline {8.5}Orbits on Set-Partitions}{353}{section.8.5}%
+\contentsline {section}{\numberline {8.6}Arcs and Caps in Projective Spaces}{355}{section.8.6}%
+\contentsline {section}{\numberline {8.7}Cubic Curves}{359}{section.8.7}%
+\contentsline {chapter}{\numberline {9}Cubic Surfaces and Quartic Curves}{363}{chapter.9}%
+\contentsline {section}{\numberline {9.1}Generalities}{363}{section.9.1}%
+\contentsline {section}{\numberline {9.2}Creating Cubic Surfaces}{366}{section.9.2}%
+\contentsline {section}{\numberline {9.3}Cubic Surface Activities}{376}{section.9.3}%
+\contentsline {section}{\numberline {9.4}Classification of Cubic Surfaces}{384}{section.9.4}%
+\contentsline {section}{\numberline {9.5}Quartic Curves}{402}{section.9.5}%
+\contentsline {section}{\numberline {9.6}Classification of Quartic Curves}{419}{section.9.6}%
+\contentsline {section}{\numberline {9.7}Interface to GAP}{421}{section.9.7}%
+\contentsline {chapter}{\numberline {10}Applications}{423}{chapter.10}%
+\contentsline {section}{\numberline {10.1}Number Theory}{423}{section.10.1}%
+\contentsline {section}{\numberline {10.2}Representation Theory}{436}{section.10.2}%
+\contentsline {section}{\numberline {10.3}Cryptography}{438}{section.10.3}%
+\contentsline {chapter}{\numberline {11}Coding Theory}{447}{chapter.11}%
+\contentsline {section}{\numberline {11.1}Introduction}{447}{section.11.1}%
+\contentsline {section}{\numberline {11.2}Linear Codes}{455}{section.11.2}%
+\contentsline {section}{\numberline {11.3}Golay Codes}{466}{section.11.3}%
+\contentsline {section}{\numberline {11.4}CRC Codes}{467}{section.11.4}%
+\contentsline {section}{\numberline {11.5}Reed-Muller Codes}{476}{section.11.5}%
+\contentsline {section}{\numberline {11.6}BCH Codes}{484}{section.11.6}%
+\contentsline {section}{\numberline {11.7}Reed-Solomon Codes}{491}{section.11.7}%
+\contentsline {section}{\numberline {11.8}Twisted Tensor Product Codes}{496}{section.11.8}%
+\contentsline {section}{\numberline {11.9}Bounds}{498}{section.11.9}%
+\contentsline {section}{\numberline {11.10}Classification of Optimal Linear Codes}{500}{section.11.10}%
+\contentsline {chapter}{\numberline {12}Combinatorics}{503}{chapter.12}%
+\contentsline {section}{\numberline {12.1}Introduction}{503}{section.12.1}%
+\contentsline {section}{\numberline {12.2}Combinatorial Objects}{511}{section.12.2}%
+\contentsline {section}{\numberline {12.3}Activities for Geometric Objects}{520}{section.12.3}%
+\contentsline {section}{\numberline {12.4}Combinatorial Objects with Group}{523}{section.12.4}%
+\contentsline {section}{\numberline {12.5}Combinatorial Linear Spaces}{527}{section.12.5}%
+\contentsline {section}{\numberline {12.6}Classification of Configurations and Geometries}{530}{section.12.6}%
+\contentsline {section}{\numberline {12.7}Tactical Decompositions}{539}{section.12.7}%
+\contentsline {section}{\numberline {12.8}The Plesken Ring}{542}{section.12.8}%
+\contentsline {chapter}{\numberline {13}Graph Theory}{551}{chapter.13}%
+\contentsline {section}{\numberline {13.1}Creating Graphs}{551}{section.13.1}%
+\contentsline {section}{\numberline {13.2}Graph Theoretic Activities}{565}{section.13.2}%
+\contentsline {section}{\numberline {13.3}Classification of Graphs and Tournaments}{578}{section.13.3}%
+\contentsline {chapter}{\numberline {14}Design Theory}{583}{chapter.14}%
+\contentsline {section}{\numberline {14.1}Creating Designs}{583}{section.14.1}%
+\contentsline {section}{\numberline {14.2}Assuming Symmetry}{592}{section.14.2}%
+\contentsline {section}{\numberline {14.3}Design Theory -- Large Sets}{599}{section.14.3}%
+\contentsline {section}{\numberline {14.4}Design Theory -- Delandtsheer-Doyen}{604}{section.14.4}%
+\contentsline {section}{\numberline {14.5}Design Theory -- Flag transitive designs}{608}{section.14.5}%
+\contentsline {chapter}{\numberline {15}Finite Geometry}{613}{chapter.15}%
+\contentsline {section}{\numberline {15.1}Spreads}{613}{section.15.1}%
+\contentsline {section}{\numberline {15.2}Translation Planes}{629}{section.15.2}%
+\contentsline {section}{\numberline {15.3}Packings}{634}{section.15.3}%
+\contentsline {section}{\numberline {15.4}BLT-Sets}{642}{section.15.4}%
+\contentsline {chapter}{\numberline {16}Computer Science Primitives}{653}{chapter.16}%
+\contentsline {section}{\numberline {16.1}Clique Finding}{653}{section.16.1}%
+\contentsline {section}{\numberline {16.2}Rainbow Cliques}{658}{section.16.2}%
+\contentsline {section}{\numberline {16.3}Diophantine Systems}{661}{section.16.3}%
+\contentsline {chapter}{\numberline {17}Canonical Forms, Classification and Automorphism Groups}{665}{chapter.17}%
+\contentsline {section}{\numberline {17.1}Overview of Canonical Forms}{665}{section.17.1}%
+\contentsline {section}{\numberline {17.2}The Classification-By-Canonical-Form Algorithm}{668}{section.17.2}%
+\contentsline {section}{\numberline {17.3}Canonical Forms of Incidence Geometries}{685}{section.17.3}%
+\contentsline {section}{\numberline {17.4}Canonical Forms of Objects from Design Theory}{703}{section.17.4}%
+\contentsline {section}{\numberline {17.5}Canonical Forms of Linear Codes}{707}{section.17.5}%
+\contentsline {section}{\numberline {17.6}Canonical Forms of General Codes}{714}{section.17.6}%
+\contentsline {section}{\numberline {17.7}Canonical Forms of Graphs}{715}{section.17.7}%
+\contentsline {section}{\numberline {17.8}Canonical Forms of Quartic Curves}{721}{section.17.8}%
+\contentsline {chapter}{\numberline {18}More Applied Algebra}{725}{chapter.18}%
+\contentsline {section}{\numberline {18.1}The Automorphism Group of ${\rm Sym}(6)$}{725}{section.18.1}%
+\contentsline {chapter}{\numberline {19}Interfaces}{739}{chapter.19}%
+\contentsline {section}{\numberline {19.1}Graphical Output}{739}{section.19.1}%
+\contentsline {section}{\numberline {19.2}The Povray Interface}{744}{section.19.2}%
+\contentsline {section}{\numberline {19.3}Creating Animations}{757}{section.19.3}%
+\contentsline {section}{\numberline {19.4}Continuous Function Plotter}{758}{section.19.4}%
+\contentsline {section}{\numberline {19.5}The Gnuplot Interface}{762}{section.19.5}%
+\contentsline {chapter}{\numberline {20}Mathematical Data in Orbiter}{765}{chapter.20}%
+\contentsline {section}{\numberline {20.1}Cubic Surfaces}{765}{section.20.1}%
+\contentsline {section}{\numberline {20.2}BLT-Sets}{767}{section.20.2}%
+\contentsline {chapter}{\numberline {21}Miscellaneous}{769}{chapter.21}%
+\contentsline {section}{\numberline {21.1}Miscellaneous}{769}{section.21.1}%
+\contentsline {section}{\numberline {21.2}Limitations}{774}{section.21.2}%
+\contentsline {chapter}{\numberline {22}Orbiter on Windows}{777}{chapter.22}%
+\contentsline {section}{\numberline {22.1}Using Windows Subsystem Linux}{777}{section.22.1}%
+\contentsline {chapter}{\numberline {23}Templates}{787}{chapter.23}%
+\contentsline {section}{\numberline {23.1}Templates}{787}{section.23.1}%
+\contentsline {chapter}{\numberline {A}Orbiter Syntax Railroad Diagrams}{791}{appendix.A}%
+\contentsline {section}{\numberline {A.1}Syntax Diagrams}{791}{section.A.1}%
+\contentsline {chapter}{\numberline {B}Data on Cubic Surfaces}{819}{appendix.B}%
+\contentsline {section}{\numberline {B.1}Data on Cubic Surfaces}{819}{section.B.1}%
+\contentsline {chapter}{\numberline {C}Linux Background}{841}{appendix.C}%
+\contentsline {section}{\numberline {C.1}Command Sheet}{841}{section.C.1}%
+\contentsline {chapter}{\numberline {D}Testing}{843}{appendix.D}%
+\contentsline {section}{\numberline {D.1}Testing}{843}{section.D.1}%
+\contentsline {chapter}{\numberline {E}The Makefile}{849}{appendix.E}%
+\contentsline {section}{\numberline {E.1}The Makefile}{849}{section.E.1}%
+\contentsline {section}{References}{1370}{section.E.1}%

@@ -1,0 +1,34 @@
+subspaces_GOp_6_2_draw_Asup:
+	$(ORBITER) -v 5 \
+		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+			-poset_orbits_x_stretch 750 \
+			-embedded \
+			-poset_type_Asup \
+		-end \
+		-define Control -poset_classification_control \
+			-problem_label GOp_6_2 -W -depth 6 \
+		-end \
+		-define G -linear_group -PGL 6 2 -orthogonal 1 -end \
+		-define Orb -orbits \
+			-group G \
+			-group_action G \
+			-generators G \
+			-on_subspaces 6 Control \
+		-end \
+		-define PC_Activity -poset_classification_activity \
+			-draw_full_poset Do \
+		-end \
+		-with Orb -do -orbits_activity \
+			-poset_classification_activity PC_Activity \
+		-end \
+		-print_symbols
+	$(ORBITER) -v 3 \
+		-draw_layered_graph \
+			GOp_6_2_poset_full_lvl_6_Asup.layered_graph \
+		-radius 50 -embedded \
+			-line_width 0.2 -x_stretch 1.4 -scale 0.5 \
+		-end
+	$(PDFLATEX) GOp_6_2_poset_full_lvl_6_Asup_draw.tex
+	$(OPEN) GOp_6_2_poset_full_lvl_6_Asup_draw.pdf

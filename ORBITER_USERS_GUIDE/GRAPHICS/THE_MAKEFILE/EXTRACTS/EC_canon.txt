@@ -1,0 +1,46 @@
+EC_canon:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 11 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define Geo -geometric_object P \
+			-elliptic_curve 1 3 \
+		-end \
+		-define C -combinatorial_object \
+			-label EC EC \
+			-geometric_object Geo \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form_PG P \
+				-save_ago \
+				-save_transversal \
+				-max_TDO_depth 400 \
+				-nauty_control -nauty_log "EC_nauty_log.txt" -end \
+			-end \
+		-end \
+		-define Doinc -draw_incidence_structure_options \
+			-width 60 -width_10 6 \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-post_processing \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-report \
+				-export_flag_orbits \
+				-show_TDO \
+				-show_TDA \
+				-dont_show_incidence_matrices \
+				-export_group_GAP \
+				-incidence_draw_options Doinc \
+			-end \
+		-end
+	$(PDFLATEX) EC_classification.tex
+	$(OPEN) EC_classification.pdf
+	$(ORBITER) -v 2 -draw_matrix \
+		-input_csv_file EC_object_0_TDA_flag_orbits.csv \
+		-secondary_input_csv_file EC_object_0_TDA.csv \
+		-box_width 20 -bit_depth 24 \
+		-end
+	$(OPEN) EC_object_0_TDA_flag_orbits_draw.bmp

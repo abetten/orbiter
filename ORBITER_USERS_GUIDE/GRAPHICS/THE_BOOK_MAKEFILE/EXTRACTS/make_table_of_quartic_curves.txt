@@ -1,0 +1,5 @@
+make_table_of_quartic_curves:
+	$(ORBITER) -v 3 \
+		-make_table_of_quartic_curves
+	$(PDFLATEX) quartic_curves_report.tex
+	$(OPEN) quartic_curves_report.pdf

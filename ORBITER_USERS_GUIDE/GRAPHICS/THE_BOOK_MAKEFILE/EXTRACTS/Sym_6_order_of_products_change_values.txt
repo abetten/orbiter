@@ -1,0 +1,15 @@
+Sym_6_order_of_products_change_values:
+	$(ORBITER) -v 3 \
+		-orbiter_path $(ORBITER_PATH) \
+		-change_values \
+			Sym_6_class_2ABC_order_of_product_of_pairs.csv \
+			Sym_6_class_2ABC_order_3.csv \
+			1,2,3,4,5,6 \
+			0,0,1,0,0,0
+	$(ORBITER) -v 3 \
+		-orbiter_path $(ORBITER_PATH) \
+		-change_values \
+			Sym_6_class_2ABC_order_of_product_of_pairs.csv \
+			Sym_6_class_2ABC_order_2.csv \
+			1,2,3,4,5,6 \
+			0,1,0,0,0,0

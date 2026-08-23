@@ -1,0 +1,6 @@
+crc32_test:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 2 -end \
+		-with F -do -coding_theoretic_activity \
+			-crc32 "123456789" \
+		-end

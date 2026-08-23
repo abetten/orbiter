@@ -1,0 +1,190 @@
+
+
+It is sometimes necessary to control the finite field 
+that is used in the construction of a matrix group.
+For prime fields, this is not an issue. 
+For extension fields, the choice of polynomial does matter, as 
+the generators depend on specific choices made for the finite field. 
+Magma and GAP use Conway polynomials, which are difficult to compute.
+Orbiter has a built-in table of primitive polynomials. 
+As explained in Section~\ref{sec:extension:fields},
+Orbiter allows to specify the polynomial that should be used to create the finite field.
+The next example shows an instance where choosing 
+the polynomial is important. 
+We are recreating a group 
+from the electronic Atlas on finite simple groups~\cite{Atlas3}.
+
+\bigskip
+
+The electronic Atlas of finite simple groups~\cite{Atlas3} 
+lists generators for $U_3(3)$ as $3 \times 3$ matrices over the field $\bbF_9$
+using the following short Magma~\cite{Magma} program:
+
+\orbiteroutput{GRAPHICS/LATEX/U_3_3_magma}
+
+The generators are given using the Magma command \verb'CambridgeMatrix', 
+which allows for more efficient coding of field elements.
+The field elements are coded as base-3 integers (like in Orbiter) 
+with respect to the Magma version of $\bbF_9.$ 
+The polynomial for $\bbF_9$ can be determined using the 
+following Magma command: 
+%which can be typed into Magma (or 
+%the free Magma online calculator at~\cite{MagmaOnline}):
+
+\orbiteroutput{GRAPHICS/LATEX/magma_poly_F9}
+
+It results in
+\orbiteroutput{GRAPHICS/LATEX/magma_poly_F9_out}
+which is the Magma way of printing the polynomial $X^2+2X+2.$ 
+If $\alpha$ is a root of the polynomial over $\bbF_3$, then
+$$
+\alpha^2 = \alpha+1.
+$$
+The coefficient vector of 
+the polynomial is $(1,2,2).$ 
+As an integer written in base-3, we 
+obtain 
+$$
+1\cdot 3^2 + 2 \cdot 3 + 2 = 17.
+$$
+The desired subgroup can now be created using the command
+
+\sourcecode{U_3_3}
+
+Group theoretic activities 
+will be discussed in Section~\ref{sec:group:theoretic:activities}.
+
+\bigskip
+
+As an example of a large group, consider the Conway group ${\rm Co}_3.$ 
+Following~\cite{SuleimanWilson1997}, the group can be generated using two 
+matrices of dimension $22$ over $\bbF_2$. 
+We use the makefile variables to give each generator in compact form. 
+
+\sourcecodevariable{CONWAY_GEN1}
+
+
+\sourcecodevariable{CONWAY_GEN2}
+
+Then we define vectors for each of the generators. 
+We concatenate the two generators to 
+form one long vector, 
+which is passed to the \verb'-subgroup_by_generators' command.
+Finally, we create a report for the group.
+
+
+
+\sourcecode{Co3}
+
+
+
+\bigskip
+
+The next example creates the Ree group 
+in 7 dimensions over the field $\bbF_{27}$. 
+Again, we use makefile variables to specify the 
+two generators as $7 \times 7$ matrices over $\bbF_{27}$ 
+and concatenate them, 
+before passing them to the \verb'-subgroup_by_generators' command.
+
+\sourcecodevariable{Ree_gen1}
+
+
+\sourcecodevariable{Ree_gen2}
+
+
+\sourcecode{Ree_27}
+
+
+\bigskip
+
+
+Let us take a look at the Higman-Sims group. 
+It is a permutation group acting on 100 points. 
+More precisely, the group is related 
+to the automorphism group of a certain graph that arises from 
+the Witt design on 22 points. 
+For a construction of the design, see Section~\ref{sec:design:assuming:symmetry}.
+For a construction of the graph, see Section~\ref{sec:graphtheory}.
+
+\bigskip
+
+
+We use the following three makefile variables 
+(for the sake of space, the third one, \verb'HIGMAN_SIMS_GENS' is not shown), 
+
+%\sourcecodevariable{HIGMAN_SIMS_GENS}
+
+\sourcecodevariable{HIGMAN_SIMS_NB_GENS}
+
+\sourcecodevariable{HIGMAN_SIMS_GO}
+
+
+The following command creates the group in the permutation representation:
+
+
+
+\sourcecode{Higman_Sims_group}
+
+\bigskip
+
+
+The next command computes the conjugacy classes of elements:
+
+\sourcecode{Higman_Sims_group_classes}
+
+\bigskip
+
+We also compute the conjugacy classes of subgroups:
+
+\sourcecode{Higman_Sims_group_subgroup_lattice}
+
+\bigskip
+
+The next two commands define the representatives 
+for the two distinct conjugacy classes of subgroups of order 252000:
+
+\sourcecode{Higman_Sims_subgroup_176a}
+
+\sourcecode{Higman_Sims_subgroup_176b}
+
+
+The command to define a subgroup from 
+the previously computed lattice of subgroups performs 
+a shortening of the base. 
+Base points whose basic orbit is trivial are dropped.
+
+
+\bigskip
+
+
+
+It is sometimes desirable to change the underlying form of a classical group. 
+The following command creates generators for the group $\PSp(6,2)$ with respect to the form 
+$$
+\left[
+\begin{array}{cc}
+0 & I\\
+I & 0\\
+\end{array}
+\right].
+$$
+
+\sourcecode{Butler12_PSP_6_2_conjugate}
+
+
+
+\bigskip
+
+
+
+The following command creates the subfield subgroup of the Weyl Group of type $E_6$.
+
+\sourcecode{Hirschfeld_surface_get_subfield_subgroup}
+
+
+
+\bigskip
+
+
+

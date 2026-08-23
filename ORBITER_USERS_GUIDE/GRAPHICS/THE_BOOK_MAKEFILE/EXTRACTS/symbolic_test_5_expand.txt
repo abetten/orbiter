@@ -1,0 +1,15 @@
+symbolic_test_5_expand:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 13 -end \
+		-define M -symbolic_object \
+			-field F \
+			-text "(a+b)^3" \
+		-end \
+		-define M1 -symbolic_object \
+			-field F \
+			-expand M \
+		-end
+	$(PDFLATEX) M.tex
+	$(OPEN) M.pdf
+	$(PDFLATEX) M1.tex
+	$(OPEN) M1.pdf

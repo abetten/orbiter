@@ -1,0 +1,10 @@
+crc_encode_32:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 2 -end \
+		-define CRC32 -crc_code -type crc32 -block_length 771 -end \
+		-with F -do \
+			-coding_theoretic_activity \
+				-crc_encode_file_based \
+				$(CRC_FILE).$(CRC_FILE_EXTENSION) \
+				$(CRC_FILE)_crc32.bin CRC32 \
+		-end

@@ -1,0 +1,21 @@
+DD_PP4_design_orbit:
+	$(ORBITER) -v 4 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define G1 -linear_group -AGL 1 3 \
+			-end \
+		-define G2 -linear_group -AGL 1 7 \
+			-end \
+		-define G -modified_group -direct_product "G1,G2" \
+			"21" "1,1,1,1" \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end \
+		-define D -design -list_of_base_blocks \
+			G \
+			PP4_no_mask_cyclic21_cases.csv \
+			Starter \
+		-end

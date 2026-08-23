@@ -1,0 +1,8 @@
+F_512_vandermonde:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 512 -end \
+		-with F -do -finite_field_activity \
+			-Vandermonde_matrix \
+		-end
+	- rm Vandermonde_q512.csv
+	- rm Vandermonde_q512_inv.csv

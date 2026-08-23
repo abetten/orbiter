@@ -1,0 +1,11 @@
+ovoid_ST_q8:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 8 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define Geo -geometric_object P \
+			-ovoid_ST \
+		-end \
+		-define C -combinatorial_object \
+			-label ovoid_ST ovoid\_ST \
+			-geometric_object Geo \
+		-end

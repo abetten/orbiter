@@ -1,0 +1,51 @@
+\begin{table}
+\begin{tcolorbox}[tabularx={X|p{2cm}|X|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black,title=Creating Linear Spaces of Delandtsheer-Doyen Type]
+\hline
+Command & Arguments & Purpose \\
+\hline
+\hline
+\verb'-d1'  &  d1   &   Affine group parameter.  \\
+\hline
+\verb'-d2'  &  d2   &   Affine group parameter. \\
+\hline
+\verb'-q1'  &  q1   &   Affine group parameter. \\
+\hline
+\verb'-q2'  &  q2   &   Affine group parameter. \\
+\hline
+\verb'-group_label'  &  label   &   \\
+\hline
+\verb'-mask_label'  &  label   &   \\
+\hline
+\verb'-problem_label'  &  label   &   \\
+\hline
+\verb'-DDx'  &  x   &   Deladtsheer-Doyen parameter $x$. \\
+\hline
+\verb'-DDy'  &  y   &   Secondary Deladtsheer-Doyen parameter $y$. \\
+\hline
+\verb'-K'  &  k   &  Specify the size of the base-line to generate the linear space under the affine group. \\
+\hline
+\verb'-pair_search_control'  &  label   &  Options for the classification of pair orbits, see Tab.~\ref{tab:pc:options}.  \\
+\hline
+\verb'-search_control'  &   label  &  Options for the classification of the base lines by means of subsets, see Tab.~\ref{tab:pc:options}. The depth of the search for starters (partial base-lines) is set here, using the \verb'-depth' command. \\
+\hline
+\verb'-R'  &  nb\_row\_types row\_type   &   \\
+\hline
+\verb'-C'  &  nb\_col\_types col\_type   &   \\
+\hline
+\verb'-nb_orbits_on_blocks'  &  n   &   \\
+\hline
+\verb'-masktest'  &  options   &  Specify conditions on the mask, which is the pattern induced by the base-line when considering the grid structure. \\
+\hline
+\verb'-search_partial_base_lines'  &     & Search for partial base-lines. The size of the partial base-line is specified in the search\_control data structure, using the \verb'-depth' argument. Once the classification of partial base-lines is finished (of size $s$, say), the covering matrix of pair orbits is written. For each orbit on partial base-lines of size $s$, the ${s \choose 2}$ disjoint pair-orbits orbits covered by that representative are written. \\
+\hline
+\verb'-singletons'  &  sz   & Search for singletons. This requires that a classification of partial base-lines of size sz has been completed before. This command initiates the completion of the partial base-lines. \\
+\hline
+\verb'-subgroup'  &  gens order   &  Specify generators for the subgroup $G$ which acts line-transitive and point-imprimitive on the linear space. \\
+\hline
+\verb'-search_wrt_subgroup'  &     &   \\
+\hline
+\end{tcolorbox}
+\caption{\label{tab:delandtsheer:doyen}Creating Linear Spaces of Delandtsheer-Doyen Type}
+\end{table}

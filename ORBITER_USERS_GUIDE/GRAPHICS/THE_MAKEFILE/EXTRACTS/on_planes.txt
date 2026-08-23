@@ -1,0 +1,15 @@
+on_planes:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 8 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define G -linear_group -PGL 4 F -end \
+		-define G_on_planes -modified_group -from G \
+			-on_k_subspaces 3 \
+		-end \
+		-with G_on_planes -do \
+		-group_theoretic_activity \
+			-apply "0,8,1,6,4,3,7,2,5" \
+			"1,0,0,0, 0,1,0,0, 0,0,0,2, 0,0,1,1" \
+		-end
+	$(PDFLATEX) PGL_4_8_Gr_4_3_apply.tex
+	$(OPEN) PGL_4_8_Gr_4_3_apply.pdf

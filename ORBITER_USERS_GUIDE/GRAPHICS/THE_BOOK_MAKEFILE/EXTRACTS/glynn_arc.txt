@@ -1,0 +1,18 @@
+glynn_arc:
+	$(ORBITER) -v 5 \
+		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define Do -draw_options -embedded -radius 250 \
+			-line_width 1.0 -spanning_tree \
+		-end \
+		-define Control -poset_classification_control \
+			-problem_label glynn_arc \
+			-draw_options Do \
+		-end \
+		-define G \
+		-linear_group -PGGL 5 9 -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-linear_codes Control 6 10 \
+		-end
+	#$(PDFLATEX) glynn_arc_poset.tex
+	#$(OPEN) glynn_arc_poset.pdf

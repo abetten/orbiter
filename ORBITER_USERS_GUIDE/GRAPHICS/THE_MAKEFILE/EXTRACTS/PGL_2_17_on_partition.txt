@@ -1,0 +1,14 @@
+PGL_2_17_on_partition:
+	$(ORBITER) -v 5 \
+		-define Control -poset_classification_control \
+			-problem_label PGL_2_17 \
+			-depth 6 \
+			-W \
+		-end \
+		-define G -linear_group -PGL 2 17 -end \
+		-define Orb -orbits \
+			-group G \
+			-group_action G \
+			-generators G \
+			-on_partition 6 Control \
+		-end

@@ -1,0 +1,54 @@
+This is BibTeX, Version 0.99d (TeX Live 2023/Homebrew)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: users_guide.aux
+The style file: plain.bst
+Database file #1: anton.bib
+Warning--empty booktitle in LawPenttila03
+Warning--there's a number but no series in LawPenttila03
+Warning--empty publisher in LawPenttila03
+Warning--empty booktitle in Penttila98
+Warning--there's a number but no series in Penttila98
+Warning--empty publisher in Penttila98
+Warning--there's a number but no volume in Schmalz90
+You've used 76 entries,
+            2118 wiz_defined-function locations,
+            963 strings with 14868 characters,
+and the built_in function-call counts, 21859 in all, are:
+= -- 2153
+> -- 827
+< -- 15
++ -- 353
+- -- 258
+* -- 1367
+:= -- 3532
+add.period$ -- 219
+call.type$ -- 76
+change.case$ -- 328
+chr.to.int$ -- 0
+cite$ -- 83
+duplicate$ -- 831
+empty$ -- 1947
+format.name$ -- 258
+if$ -- 4612
+int.to.chr$ -- 0
+int.to.str$ -- 76
+missing$ -- 59
+newline$ -- 364
+num.names$ -- 146
+pop$ -- 498
+preamble$ -- 1
+purify$ -- 284
+quote$ -- 0
+skip$ -- 618
+stack$ -- 0
+substring$ -- 1422
+swap$ -- 148
+text.length$ -- 15
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 286
+warning$ -- 7
+while$ -- 234
+width$ -- 78
+write$ -- 764
+(There were 7 warnings)

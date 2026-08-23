@@ -1,0 +1,5 @@
+Dedekind_10_10:
+	$(ORBITER) -v 3 -Dedekind_numbers 2 10 2 10
+	$(ORBITER) -v 3 -csv_file_latex 1 Dedekind_2_10_2_10.csv
+	$(PDFLATEX) Dedekind_2_10_2_10.tex
+	$(OPEN) Dedekind_2_10_2_10.pdf

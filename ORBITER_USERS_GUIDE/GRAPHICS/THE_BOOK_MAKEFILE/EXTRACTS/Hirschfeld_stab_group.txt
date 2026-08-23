@@ -1,0 +1,16 @@
+Hirschfeld_stab_group:
+	$(ORBITER) -v 9 \
+		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define G -linear_group -PGGL 4 4 \
+			-subgroup_by_generators "Hirschfeld_Stab" \
+			51840 6 $(HIRSCHFELD_STAB_GENERATORS) \
+			-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end
+	$(PDFLATEX) PGGL_4_4_Subgroup_Hirschfeld_Stab_51840_report.tex
+	$(OPEN) PGGL_4_4_Subgroup_Hirschfeld_Stab_51840_report.pdf

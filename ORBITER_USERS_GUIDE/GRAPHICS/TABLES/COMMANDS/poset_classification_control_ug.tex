@@ -1,0 +1,45 @@
+\begin{table}
+\begin{tcolorbox}[tabularx={X|p{2cm}|X|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black,title=Options for Computing Posets]
+\hline
+Command & Arguments & Purpose \\
+\hline
+\hline
+\verb'-problem_label'  &  str    &  Use str as a prefix for files that are created. \\
+\hline
+\verb'-path'  &  $p$    &  Use path $p$ for files that are created. \\
+\hline
+\verb'-depth'  &  $d$   &  Set search depth to $d$. \\
+\hline
+\verb'-v'  &  $v$   &  Set verbosity to $v$. Larger numbers mean more output. \\
+\hline
+\verb'-gv'  &  $v$   &  Set verbosity for group theoretic operations to $v$. Larger numbers mean more output. \\
+\hline
+\verb'-recover'  &  fname   &  Recover from the given file. \\
+\hline
+\verb'-lex'  &     &  Use the lexicographic ordering to speed up the search. \\
+\hline
+\verb'-w'  &     &  Save orbits at level $d$ only. \\
+\hline
+\verb'-W'  &     &  Save orbits at all levels. \\
+\hline
+\verb'-write_data_files'  &     &  Save data to files. \\
+\hline
+\verb'-t'  &     &  Write a file containing the search tree at level $d$. \\
+\hline
+\verb'-T'  &     &  Write a file containing the search tree at all levels. \\
+\hline
+\verb'-draw_options'  &  options  &  Drawing options according to Table~\ref{tab:draw:options}.\\
+\hline
+\verb'-preferred_choice'  &  $n$ $a$ $b$  & At node $n$, choose $b$ instead of $a$ as orbit representative. This option can be repeated. \\
+\hline
+\verb'-clique_test'  &  graph   & Classify cliques in the given graph. \\
+\hline
+\verb'-test_mindist_nonlinear'  &  $d$   & Search for non-linear codes with minimum distance at least $d$. See Chapter~\ref{sec:coding}. \\
+\hline
+\verb'-test_max_line_intersections'  &     &  \\
+\hline
+\end{tcolorbox}
+\caption{\label{tab:pc:options}Options for Computing Posets}
+\end{table}

@@ -1,0 +1,28 @@
+PGL_4_4_classes_reps:
+	$(ORBITER) -v 3 \
+		-define G \
+		-linear_group -PGL 4 4 \
+		-end \
+		-assign reps -from \
+		-with G -do \
+		-group_theoretic_activity \
+			-classes \
+		-end \
+		-with reps -do \
+		-vector_ge_activity \
+			-report \
+		-end \
+		-assign RNF -and BaseChange -from \
+		-with reps -do \
+		-vector_ge_activity \
+			-rational_canonical_form \
+		-end \
+		-with RNF -do \
+		-vector_ge_activity \
+			-report_with_options "dense=on" \
+		-end \
+		-print_symbols
+	$(PDFLATEX) PGL_4_4_RNF_elements.tex
+	$(OPEN) PGL_4_4_RNF_elements.pdf
+	#$(PDFLATEX) PGL_4_4_reps_elements.tex
+	#$(OPEN) PGL_4_4_reps_elements.pdf

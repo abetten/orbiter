@@ -1,0 +1,39 @@
+lissajous_plot:
+	cp $(ORBITER_PATH)/examples/users_guide/coordinate_grid.csv .
+	$(ORBITER) -v 2 -povray \
+		-round 0 -nb_frames_default 1 \
+		-output_mask lissajous_%d_%03d.pov \
+		-video_options -W 1024 -H 768 \
+		-global_picture_scale 0.40 \
+		-default_angle 45 \
+		-clipping_radius 5 \
+		-omit_bottom_plane \
+		-camera 0 "0,-1,0" "0,0,12" "0,0,0" \
+		-rotate_about_z_axis \
+		-end \
+		-scene_objects \
+			-line_through_two_points_recentered_from_csv_file \
+			coordinate_grid.csv \
+			-group_of_things "0" \
+			-group_of_things "1" \
+			-group_of_things "2" \
+			-lines 0 0.09 "texture{ pigment{ color Yellow } }" \
+			-lines 1 0.09 "texture{ pigment{ color Yellow } }" \
+			-lines 2 0.09 "texture{ pigment{ color Yellow } }" \
+			-group_of_things_as_interval 3 39 \
+			-lines 3 0.02 "texture{ pigment{ color Black } }" \
+			-point_list_from_csv_file \
+			function_lissajous_N2000_points.csv \
+			-group_of_things_as_interval 0 6524\
+			-spheres 4 0.1 "texture{ pigment{ color Red } \
+finish { diffuse 0.9 phong 1}}" \
+			-plane_by_dual_coordinates "0,0,1,0" \
+			-group_of_things "0" \
+			-planes 5 "texture{ pigment{ color Blue*0.5 \
+transmit 0.5 } }" \
+		-scene_objects_end \
+		-povray_end
+	- rm -rf POV
+	mkdir POV
+	mv lissajous_0_*.pov POV
+	mv makefile_animation POV

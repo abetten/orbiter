@@ -1,0 +1,17 @@
+\begin{table}[t]
+\tbl{\label{tab:quadrics}}
+{\begin{tcolorbox}[tabularx={p{3cm}|p{2cm}|p{6.3cm}|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black,title=Types of Quadrics]
+\hline
+Type & Quadratic Form & \# Points\\
+\hline
+\hline
+\begin{tabular}{c}$Q^+(n,q)$\\ Hyperbolic ($n$ is odd) \end{tabular} &  $\displaystyle \sum_{i=0}^{\frac{n-1}{2} - 1} X_{2i}X_{2i+1}=0$  &  $\displaystyle \frac{(q^{(n+1)/2}-1)(q^{(n-1)/2}+1)}{q-1}$ \\
+\hline
+\begin{tabular}{c}$Q^-(n,q)$ \\ Elliptic ($n$ is odd) \end{tabular} &  $\displaystyle p(X_{n-1}, X_{n}) + \sum_{i=0}^{\frac{n-1}{2} - 1} X_{2i}X_{2i+1}=0$   & $\displaystyle \frac{(q^{(n+1)/2}+1)(q^{(n-1)/2}-1)}{q-1}$  \\
+\hline
+\begin{tabular}{c} $Q(n,q)$ \\ Parabolic ($n$ is even)  \end{tabular} &  $\displaystyle X_0^2 + \sum_{i=0}^{\frac{n}{2} - 1} X_{2i+1}X_{2i+2}=0$   &   $\displaystyle \frac{q^n-1}{q-1}$ \\
+\hline
+\end{tcolorbox}}
+\end{table}

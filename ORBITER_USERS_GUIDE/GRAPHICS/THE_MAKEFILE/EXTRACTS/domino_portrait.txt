@@ -1,0 +1,3 @@
+domino_portrait:
+	cp $(ORBITER_PATH)/examples/users_guide/Munch_3.? .
+	$(ORBITER) -v 3 -domino_portrait 7 4 Munch_3 -end

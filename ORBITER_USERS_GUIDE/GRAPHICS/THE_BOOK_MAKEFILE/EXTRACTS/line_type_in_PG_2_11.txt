@@ -1,0 +1,13 @@
+line_type_in_PG_2_11:
+	$(ORBITER) -v 3 \
+		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define F -finite_field -q 11 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define C -combinatorial_object \
+			-label random_sets random_sets \
+			-file_of_points random_k_subsets_n133_k5_nb20.csv \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-line_type_old \
+		-end

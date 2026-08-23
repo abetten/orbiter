@@ -1,0 +1,15 @@
+draw_mod_63_4_cyclotomic_3_6:
+	$(ORBITER) -v 2 \
+		-define Do -draw_options -radius 20 \
+			-line_width 0.1 -embedded -end \
+		-draw_mod_n \
+			"mod_n=on" \
+			-n 63 \
+			-file mod_63_4_cyclotomic_3_6 \
+			-label_nodes \
+			-cyclotomic_sets 4 "3,6" \
+			-cyclotomic_sets_thickness 50 \
+			-draw_options Do \
+		-end
+	$(PDFLATEX) mod_63_4_cyclotomic_3_6_draw.tex
+	$(OPEN) mod_63_4_cyclotomic_3_6_draw.pdf

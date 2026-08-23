@@ -1,0 +1,46 @@
+\begin{table}
+\begin{tcolorbox}[tabularx={X|p{2cm}|X|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black,title=Projective Space Activities (Part 4)]
+		\hline
+		Command & Arguments & Purpose \\
+		\hline
+		\hline
+		\verb'-classify_surfaces_with_double_sixes' & label control   & 
+		Classify cubic surfaces using the approach of double sixes. 
+		See Section~\ref{sec:cubicsurfaces:classification}.  \\
+		\hline
+		\verb'-classify_surfaces_through_' \verb'arcs_and_two_lines' &    &  
+		Classify cubic surfaces using the approach of six-arcs and two skew lines. 
+		See Section~\ref{sec:cubicsurfaces:classification}.  \\
+		\hline
+		\verb'-classify_surfaces_through_' \verb'arcs_and_trihedral_pairs' &    & 
+		See Section~\ref{sec:cubicsurfaces:classification}.  \\
+		\hline
+		\verb'-test_nb_Eckardt_points' &  $e$  & 
+		Restrict to $e$ Eckardt points. See Section~\ref{sec:cubicsurfaces:classification}. 
+		To be used in conjunction with 
+		\verb'-classify_surfaces_through_' \verb'arcs_and_trihedral_pairs'.  \\
+		\hline
+		\verb'-trihedra1_control' &   poset-control &  
+		For \verb'-classify_surfaces_through_' \verb'arcs_and_trihedral_pairs' \\
+		\hline
+		\verb'-trihedra2_control' & poset-control   &  
+		For \verb'-classify_surfaces_through_' \verb'arcs_and_trihedral_pairs' \\
+		\hline
+		\verb'-control_six_arcs' &  poset-control  &  
+		For \verb'-classify_surfaces_through_' \verb'arcs_and_trihedral_pairs' \\
+		\hline		
+		\verb'-six_arcs_not_on_conic' &    & 
+		Classify six-arcs not on a conic in a plane.   \\
+		\hline
+		\verb'-filter_by_nb_Eckardt_points' & $e$   &  
+		Filter for the number of Eckardt points to be equal to $e$. 
+		Used in conjunction with \verb'-six_arcs_not_on_conic'. \\
+		\hline
+		\verb'-classify_arcs' & descr  & 
+		Classify arcs. \\
+		\hline
+		\end{tcolorbox}
+	\caption{\label{tab:projective:space:activities:4}Projective Space Activities (Part 4)}
+\end{table}

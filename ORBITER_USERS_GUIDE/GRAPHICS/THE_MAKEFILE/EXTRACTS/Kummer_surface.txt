@@ -1,0 +1,20 @@
+Kummer_surface:
+	$(ORBITER) -v 2 -povray \
+		-round 0 -nb_frames_default 30 \
+		-output_mask Kummer_%d_%03d.pov \
+		-video_options -W 1024 -H 768 \
+		-global_picture_scale 0.9 \
+		-default_angle 75 \
+		-clipping_radius 2.4 \
+		-camera 0 "1,1,1" "-3,1,3" "0.12,0.12,0.12" \
+		-end \
+		-scene_objects \
+			-quartic_lex_35 $(KUMMER_QUARTIC_LEX_35) \
+			-group_of_things "0" \
+			-quartics 0 $(SURFACE_COLOR_SEETHROUGH) \
+		-scene_objects_end \
+		-povray_end
+	- rm -rf POV
+	mkdir POV
+	mv Kummer_0_*.pov POV
+	mv makefile_animation POV

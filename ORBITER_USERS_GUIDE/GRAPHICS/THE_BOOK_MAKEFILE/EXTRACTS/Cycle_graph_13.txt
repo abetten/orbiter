@@ -1,0 +1,8 @@
+Cycle_graph_13:
+	$(ORBITER) -v 2 \
+		-define Gamma -graph \
+			-cycle 13 \
+		-end \
+		-with Gamma -do \
+			-graph_theoretic_activity -export_csv \
+		-end

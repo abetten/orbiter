@@ -1,0 +1,86 @@
+Orbiter can plot functions using a built-in function tracker.
+The functions must be continuous apart from a finite number of poles.
+The function can have multiple components, each described using an expression. 
+Each expression is specified in Reverse Polish Notation (RPN).
+Consider an example. 
+A Lissajous curve is defined using coordinate functions of the form 
+$$
+x = r \sin\big(at + c\big), \quad
+y = r \sin\big(bt\big), \quad a,b,c,r \in \bbR.
+$$
+The terms 
+$$
+r \sin\big(at + c\big), \quad r \sin\big(bt\big)
+$$
+are the expressions of the two coordinate functions.
+RPN means that the operator is listed after the operands. 
+A stack data structure is used to hold temporary values. 
+Operators are pushed to the top of the stack using the push commands.
+A binary operator pops the two elements from the stack, performs the operation, 
+and pushes the resulting value back onto the stack. 
+For a unary operator, only one element is popped and replaced by the result.
+Here are some examples of expressions rewritten in RPN:
+\begin{align*}
+\sin(x) &\mapsto \; \mbox{push} \; x \; \sin,\\
+a+b & \mapsto \; \mbox{push} \; a \; \mbox{push} \; b \; \mbox{add},\\
+a\cdot b & \mapsto \; \mbox{push} \; a \; \mbox{push} \; b \; \mbox{mult}.
+\end{align*}
+The coordinate functions are enclosed between \verb'-code' and \verb'-code_end' commands. 
+Each coordinate function is described in RPN and terminated using a \verb'return' keyword.
+By the time the \verb'return' keyword is reached, the RPN expression must have exactly 
+one value on the stack which is considered the value of the expression.
+Constants are declared between the \verb'-const' and \verb'-const_end' keywords. 
+Likewise, variables are declared between the \verb'-var' and \verb'-var_end' keywords.
+Picking $a=3$, $b=2,$ $c = \pi/2$ and $r=7$, the function is computed using 
+
+\sourcecode{lissajous}
+
+The sequence
+$$
+\verb'push t push a mult push c add sin push r mult'
+$$
+is $r\sin(at+c)$ expressed in RPN.
+The constants are defined in the line 
+$$
+\verb'-const a 3 b 2 c 1.57 r 7 -const_end'
+$$
+The input variable is defined using the line 
+$$
+\verb'-var t -var_end'
+$$
+The sequence 
+$$
+\verb'-smooth_curve "lissajous" 0.07 2000 15 0 18.85'
+$$
+defines the name of the output file, the fact that two consecutive 
+points are never further than $\epsilon =0.07$ away, 
+the fact that points that are 15 or more away from the origin should be ignored, 
+and the fact that the variable $t$ loops over the range $[0,18.85]$ 
+with a default of $2000$ steps.
+The evaluator automatically reduces the step-size 
+if consecutive image points are more than $\epsilon$ apart.  
+The code to produce the plot is
+
+\sourcecode{lissajous_plot}
+
+The plot is shown below
+\orbiteroutput{GRAPHICS/WRAPPERS/lissajous_0_000_draw}
+
+
+
+\bigskip
+
+
+We can turn it into a 3D plot by using the $t$ value for the $z$ coordinate. 
+The 
+function is computed using the command 
+
+\sourcecode{lissajous_3d}
+
+The code to produce the 3D plot is
+
+\sourcecode{lissajous_3d_plot}
+
+The 3D curve is shown below
+\orbiteroutput{GRAPHICS/WRAPPERS/lissajous_3d_draw}
+

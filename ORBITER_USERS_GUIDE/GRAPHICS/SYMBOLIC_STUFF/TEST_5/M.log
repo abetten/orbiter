@@ -1,0 +1,683 @@
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Homebrew) (preloaded format=pdflatex 2023.6.22)  16 DEC 2023 17:10
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**M.tex
+(./M.tex
+LaTeX2e <2022-11-01> patch level 1
+L3 programming layer <2023-02-22>
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/latex/standalone/
+standalone.cls
+Document Class: standalone 2022/10/10 v1.3b Class to compile TeX sub-files stan
+dalone
+
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/latex/tools/shell
+esc.sty
+Package: shellesc 2019/11/08 v1.0c unified shell escape interface for LaTeX
+Package shellesc Info: Restricted shell escape enabled on input line 77.
+)
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/iftex/ifl
+uatex.sty
+Package: ifluatex 2019/10/25 v1.5 ifluatex legacy package. Use iftex instead.
+
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/iftex/ift
+ex.sty
+Package: iftex 2022/02/03 v1.0f TeX engine tests
+))
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/latex/xkeyval/xke
+yval.sty
+Package: xkeyval 2022/06/16 v2.9 package option processing (HA)
+
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/xkeyval/x
+keyval.tex
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/xkeyval/x
+kvutils.tex
+\XKV@toks=\toks16
+\XKV@tempa@toks=\toks17
+
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/xkeyval/k
+eyval.tex))
+\XKV@depth=\count185
+File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
+))
+\sa@internal=\count186
+\c@sapage=\count187
+
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/latex/standalone/
+standalone.cfg
+File: standalone.cfg 2022/10/10 v1.3b Default configuration file for 'standalon
+e' class
+)
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/latex/base/articl
+e.cls
+Document Class: article 2022/07/02 v1.4n Standard LaTeX document class
+
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/latex/base/size10
+.clo
+File: size10.clo 2022/07/02 v1.4n Standard LaTeX file (size option)
+)
+\c@part=\count188
+\c@section=\count189
+\c@subsection=\count190
+\c@subsubsection=\count191
+\c@paragraph=\count192
+\c@subparagraph=\count193
+\c@figure=\count194
+\c@table=\count195
+\abovecaptionskip=\skip48
+\belowcaptionskip=\skip49
+\bibindent=\dimen140
+)
+\sa@box=\box51
+)
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/latex/forest/fore
+st.sty
+Package: forest 2017/07/14 v2.1.5 Drawing (linguistic) trees
+
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/latex/pgf/fronten
+dlayer/tikz.sty
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/latex/pgf/basicla
+yer/pgf.sty
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/latex/pgf/utiliti
+es/pgfrcs.sty
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/utili
+ties/pgfutil-common.tex
+\pgfutil@everybye=\toks18
+\pgfutil@tempdima=\dimen141
+\pgfutil@tempdimb=\dimen142
+)
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/utili
+ties/pgfutil-latex.def
+\pgfutil@abb=\box52
+)
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/utili
+ties/pgfrcs.code.tex
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/pgf.r
+evision.tex)
+Package: pgfrcs 2023-01-15 v3.1.10 (3.1.10)
+))
+Package: pgf 2023-01-15 v3.1.10 (3.1.10)
+
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/latex/pgf/basicla
+yer/pgfcore.sty
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/latex/graphics/gr
+aphicx.sty
+Package: graphicx 2021/09/16 v1.2d Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/latex/graphics/gr
+aphics.sty
+Package: graphics 2022/03/10 v1.4e Standard LaTeX Graphics (DPC,SPQR)
+
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/latex/graphics/tr
+ig.sty
+Package: trig 2021/08/11 v1.11 sin cos tan (DPC)
+)
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/latex/graphics-cf
+g/graphics.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: pdftex.def on input line 107.
+
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/latex/graphics-de
+f/pdftex.def
+File: pdftex.def 2022/09/22 v1.2b Graphics/color driver for pdftex
+))
+\Gin@req@height=\dimen143
+\Gin@req@width=\dimen144
+)
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/latex/pgf/systeml
+ayer/pgfsys.sty
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/syste
+mlayer/pgfsys.code.tex
+Package: pgfsys 2023-01-15 v3.1.10 (3.1.10)
+
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/utili
+ties/pgfkeys.code.tex
+\pgfkeys@pathtoks=\toks19
+\pgfkeys@temptoks=\toks20
+
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/utili
+ties/pgfkeyslibraryfiltered.code.tex
+\pgfkeys@tmptoks=\toks21
+))
+\pgf@x=\dimen145
+\pgf@y=\dimen146
+\pgf@xa=\dimen147
+\pgf@ya=\dimen148
+\pgf@xb=\dimen149
+\pgf@yb=\dimen150
+\pgf@xc=\dimen151
+\pgf@yc=\dimen152
+\pgf@xd=\dimen153
+\pgf@yd=\dimen154
+\w@pgf@writea=\write3
+\r@pgf@reada=\read2
+\c@pgf@counta=\count196
+\c@pgf@countb=\count197
+\c@pgf@countc=\count198
+\c@pgf@countd=\count199
+\t@pgf@toka=\toks22
+\t@pgf@tokb=\toks23
+\t@pgf@tokc=\toks24
+\pgf@sys@id@count=\count266
+
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/syste
+mlayer/pgf.cfg
+File: pgf.cfg 2023-01-15 v3.1.10 (3.1.10)
+)
+Driver file for pgf: pgfsys-pdftex.def
+
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/syste
+mlayer/pgfsys-pdftex.def
+File: pgfsys-pdftex.def 2023-01-15 v3.1.10 (3.1.10)
+
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/syste
+mlayer/pgfsys-common-pdf.def
+File: pgfsys-common-pdf.def 2023-01-15 v3.1.10 (3.1.10)
+)))
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/syste
+mlayer/pgfsyssoftpath.code.tex
+File: pgfsyssoftpath.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgfsyssoftpath@smallbuffer@items=\count267
+\pgfsyssoftpath@bigbuffer@items=\count268
+)
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/syste
+mlayer/pgfsysprotocol.code.tex
+File: pgfsysprotocol.code.tex 2023-01-15 v3.1.10 (3.1.10)
+))
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/latex/xcolor/xcol
+or.sty
+Package: xcolor 2022/06/12 v2.14 LaTeX color extensions (UK)
+
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/latex/graphics-cf
+g/color.cfg
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package xcolor Info: Driver file: pdftex.def on input line 227.
+
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/latex/graphics/ma
+thcolor.ltx)
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1353.
+Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1357.
+Package xcolor Info: Model `RGB' extended on input line 1369.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1371.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1372.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1373.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1374.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1375.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1376.
+)
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/basic
+layer/pgfcore.code.tex
+Package: pgfcore 2023-01-15 v3.1.10 (3.1.10)
+
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/math/
+pgfmath.code.tex
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/math/
+pgfmathutil.code.tex)
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/math/
+pgfmathparser.code.tex
+\pgfmath@dimen=\dimen155
+\pgfmath@count=\count269
+\pgfmath@box=\box53
+\pgfmath@toks=\toks25
+\pgfmath@stack@operand=\toks26
+\pgfmath@stack@operation=\toks27
+)
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/math/
+pgfmathfunctions.code.tex)
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/math/
+pgfmathfunctions.basic.code.tex)
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/math/
+pgfmathfunctions.trigonometric.code.tex)
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/math/
+pgfmathfunctions.random.code.tex)
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/math/
+pgfmathfunctions.comparison.code.tex)
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/math/
+pgfmathfunctions.base.code.tex)
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/math/
+pgfmathfunctions.round.code.tex)
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/math/
+pgfmathfunctions.misc.code.tex)
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/math/
+pgfmathfunctions.integerarithmetics.code.tex)
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/math/
+pgfmathcalc.code.tex)
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/math/
+pgfmathfloat.code.tex
+\c@pgfmathroundto@lastzeros=\count270
+))
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/math/
+pgfint.code.tex)
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/basic
+layer/pgfcorepoints.code.tex
+File: pgfcorepoints.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgf@picminx=\dimen156
+\pgf@picmaxx=\dimen157
+\pgf@picminy=\dimen158
+\pgf@picmaxy=\dimen159
+\pgf@pathminx=\dimen160
+\pgf@pathmaxx=\dimen161
+\pgf@pathminy=\dimen162
+\pgf@pathmaxy=\dimen163
+\pgf@xx=\dimen164
+\pgf@xy=\dimen165
+\pgf@yx=\dimen166
+\pgf@yy=\dimen167
+\pgf@zx=\dimen168
+\pgf@zy=\dimen169
+)
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/basic
+layer/pgfcorepathconstruct.code.tex
+File: pgfcorepathconstruct.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgf@path@lastx=\dimen170
+\pgf@path@lasty=\dimen171
+)
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/basic
+layer/pgfcorepathusage.code.tex
+File: pgfcorepathusage.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgf@shorten@end@additional=\dimen172
+\pgf@shorten@start@additional=\dimen173
+)
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/basic
+layer/pgfcorescopes.code.tex
+File: pgfcorescopes.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgfpic=\box54
+\pgf@hbox=\box55
+\pgf@layerbox@main=\box56
+\pgf@picture@serial@count=\count271
+)
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/basic
+layer/pgfcoregraphicstate.code.tex
+File: pgfcoregraphicstate.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgflinewidth=\dimen174
+)
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/basic
+layer/pgfcoretransformations.code.tex
+File: pgfcoretransformations.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgf@pt@x=\dimen175
+\pgf@pt@y=\dimen176
+\pgf@pt@temp=\dimen177
+)
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/basic
+layer/pgfcorequick.code.tex
+File: pgfcorequick.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/basic
+layer/pgfcoreobjects.code.tex
+File: pgfcoreobjects.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/basic
+layer/pgfcorepathprocessing.code.tex
+File: pgfcorepathprocessing.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/basic
+layer/pgfcorearrows.code.tex
+File: pgfcorearrows.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgfarrowsep=\dimen178
+)
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/basic
+layer/pgfcoreshade.code.tex
+File: pgfcoreshade.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgf@max=\dimen179
+\pgf@sys@shading@range@num=\count272
+\pgf@shadingcount=\count273
+)
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/basic
+layer/pgfcoreimage.code.tex
+File: pgfcoreimage.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/basic
+layer/pgfcoreexternal.code.tex
+File: pgfcoreexternal.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgfexternal@startupbox=\box57
+)
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/basic
+layer/pgfcorelayers.code.tex
+File: pgfcorelayers.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/basic
+layer/pgfcoretransparency.code.tex
+File: pgfcoretransparency.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/basic
+layer/pgfcorepatterns.code.tex
+File: pgfcorepatterns.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/basic
+layer/pgfcorerdf.code.tex
+File: pgfcorerdf.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)))
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/modul
+es/pgfmoduleshapes.code.tex
+File: pgfmoduleshapes.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgfnodeparttextbox=\box58
+)
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/modul
+es/pgfmoduleplot.code.tex
+File: pgfmoduleplot.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/latex/pgf/compati
+bility/pgfcomp-version-0-65.sty
+Package: pgfcomp-version-0-65 2023-01-15 v3.1.10 (3.1.10)
+\pgf@nodesepstart=\dimen180
+\pgf@nodesepend=\dimen181
+)
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/latex/pgf/compati
+bility/pgfcomp-version-1-18.sty
+Package: pgfcomp-version-1-18 2023-01-15 v3.1.10 (3.1.10)
+))
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/latex/pgf/utiliti
+es/pgffor.sty
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/latex/pgf/utiliti
+es/pgfkeys.sty
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/utili
+ties/pgfkeys.code.tex))
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/latex/pgf/math/pg
+fmath.sty
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/math/
+pgfmath.code.tex))
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/utili
+ties/pgffor.code.tex
+Package: pgffor 2023-01-15 v3.1.10 (3.1.10)
+\pgffor@iter=\dimen182
+\pgffor@skip=\dimen183
+\pgffor@stack=\toks28
+\pgffor@toks=\toks29
+))
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/front
+endlayer/tikz/tikz.code.tex
+Package: tikz 2023-01-15 v3.1.10 (3.1.10)
+
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/libra
+ries/pgflibraryplothandlers.code.tex
+File: pgflibraryplothandlers.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgf@plot@mark@count=\count274
+\pgfplotmarksize=\dimen184
+)
+\tikz@lastx=\dimen185
+\tikz@lasty=\dimen186
+\tikz@lastxsaved=\dimen187
+\tikz@lastysaved=\dimen188
+\tikz@lastmovetox=\dimen189
+\tikz@lastmovetoy=\dimen190
+\tikzleveldistance=\dimen191
+\tikzsiblingdistance=\dimen192
+\tikz@figbox=\box59
+\tikz@figbox@bg=\box60
+\tikz@tempbox=\box61
+\tikz@tempbox@bg=\box62
+\tikztreelevel=\count275
+\tikznumberofchildren=\count276
+\tikznumberofcurrentchild=\count277
+\tikz@fig@count=\count278
+
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/modul
+es/pgfmodulematrix.code.tex
+File: pgfmodulematrix.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgfmatrixcurrentrow=\count279
+\pgfmatrixcurrentcolumn=\count280
+\pgf@matrix@numberofcolumns=\count281
+)
+\tikz@expandcount=\count282
+
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/front
+endlayer/tikz/libraries/tikzlibrarytopaths.code.tex
+File: tikzlibrarytopaths.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)))
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/front
+endlayer/tikz/libraries/tikzlibraryshapes.code.tex
+File: tikzlibraryshapes.code.tex 2023-01-15 v3.1.10 (3.1.10)
+
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/front
+endlayer/tikz/libraries/tikzlibraryshapes.geometric.code.tex
+File: tikzlibraryshapes.geometric.code.tex 2023-01-15 v3.1.10 (3.1.10)
+
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/libra
+ries/shapes/pgflibraryshapes.geometric.code.tex
+File: pgflibraryshapes.geometric.code.tex 2023-01-15 v3.1.10 (3.1.10)
+))
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/front
+endlayer/tikz/libraries/tikzlibraryshapes.misc.code.tex
+File: tikzlibraryshapes.misc.code.tex 2023-01-15 v3.1.10 (3.1.10)
+
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/libra
+ries/shapes/pgflibraryshapes.misc.code.tex
+File: pgflibraryshapes.misc.code.tex 2023-01-15 v3.1.10 (3.1.10)
+))
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/front
+endlayer/tikz/libraries/tikzlibraryshapes.symbols.code.tex
+File: tikzlibraryshapes.symbols.code.tex 2023-01-15 v3.1.10 (3.1.10)
+
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/libra
+ries/shapes/pgflibraryshapes.symbols.code.tex
+File: pgflibraryshapes.symbols.code.tex 2023-01-15 v3.1.10 (3.1.10)
+))
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/front
+endlayer/tikz/libraries/tikzlibraryshapes.arrows.code.tex
+File: tikzlibraryshapes.arrows.code.tex 2023-01-15 v3.1.10 (3.1.10)
+
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/libra
+ries/shapes/pgflibraryshapes.arrows.code.tex
+File: pgflibraryshapes.arrows.code.tex 2023-01-15 v3.1.10 (3.1.10)
+))
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/front
+endlayer/tikz/libraries/tikzlibraryshapes.callouts.code.tex
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/libra
+ries/shapes/pgflibraryshapes.callouts.code.tex))
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/front
+endlayer/tikz/libraries/tikzlibraryshapes.multipart.code.tex
+File: tikzlibraryshapes.multipart.code.tex 2023-01-15 v3.1.10 (3.1.10)
+
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/libra
+ries/shapes/pgflibraryshapes.multipart.code.tex
+File: pgflibraryshapes.multipart.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgfnodepartlowerbox=\box63
+\pgfnodeparttwobox=\box64
+\pgfnodepartthreebox=\box65
+\pgfnodepartfourbox=\box66
+\pgfnodeparttwentybox=\box67
+\pgfnodepartnineteenbox=\box68
+\pgfnodeparteighteenbox=\box69
+\pgfnodepartseventeenbox=\box70
+\pgfnodepartsixteenbox=\box71
+\pgfnodepartfifteenbox=\box72
+\pgfnodepartfourteenbox=\box73
+\pgfnodepartthirteenbox=\box74
+\pgfnodeparttwelvebox=\box75
+\pgfnodepartelevenbox=\box76
+\pgfnodeparttenbox=\box77
+\pgfnodepartninebox=\box78
+\pgfnodeparteightbox=\box79
+\pgfnodepartsevenbox=\box80
+\pgfnodepartsixbox=\box81
+\pgfnodepartfivebox=\box82
+)))
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/front
+endlayer/tikz/libraries/tikzlibraryfit.code.tex
+File: tikzlibraryfit.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/front
+endlayer/tikz/libraries/tikzlibrarycalc.code.tex
+File: tikzlibrarycalc.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/libra
+ries/pgflibraryintersections.code.tex
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/libra
+ries/pgflibraryfpu.code.tex)
+\pgf@intersect@solutions=\count283
+)
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/latex/pgfopts/pgf
+opts.sty
+Package: pgfopts 2014/07/10 v2.1a LaTeX package options with pgfkeys
+\pgfopts@list@add@a@toks=\toks30
+\pgfopts@list@add@b@toks=\toks31
+)
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/latex/etoolbox/et
+oolbox.sty
+Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
+\etb@tempcnta=\count284
+)
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/latex/elocalloc/e
+localloc.sty
+Package: elocalloc 2016/12/15 v0.03 local allocation for LaTeX 2015+ (DPC)
+)
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/latex/environ/env
+iron.sty
+Package: environ 2014/05/04 v0.3 A new way to define environments
+
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/latex/trimspaces/
+trimspaces.sty
+Package: trimspaces 2009/09/17 v1.1 Trim spaces around a token list
+)
+\@envbody=\toks32
+)
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/latex/l3packages/
+xparse/xparse.sty
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/latex/l3kernel/ex
+pl3.sty
+Package: expl3 2023-02-22 L3 programming layer (loader) 
+
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/latex/l3backend/l
+3backend-pdftex.def
+File: l3backend-pdftex.def 2023-01-16 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count285
+\l__pdf_internal_box=\box83
+))
+Package: xparse 2023-02-02 L3 Experimental document command parser
+)
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/latex/inlinedef/i
+nlinedef.sty
+Package: inlinedef 2008/07/10 v1.0 Inlined expansions within definitions
+\ID@toks=\toks33
+\ID@count=\count286
+)
+\ID@usercommands=\toks34
+\safeloop@depth=\count287
+\safeRKloop@depth=\count288
+\forest@temp@dimen=\dimen193
+\forest@temp@count=\count289
+\forest@n=\count290
+\forest@temp@global@count=\count291
+\forest@temp@toks=\toks35
+\forest@temparray@M=\count292
+\forest@temparray@N=\count293
+\forest@global@temparray@M=\count294
+\forest@global@temparray@N=\count295
+\forest@isnum@count=\count296
+\forest@isdim@nonintpart=\count297
+\forest@isdim@dimen=\dimen194
+\forest@sort@m=\count298
+\forest@sort@k=\count299
+\forest@sort@p=\count300
+\bracket@content=\toks36
+\bracket@afterthought=\toks37
+\forest@node@maxid=\count301
+\forest@process@left@M=\count302
+\forest@process@left@N=\count303
+\forest@process@right@M=\count304
+\forest@process@right@N=\count305
+\forest@process@saved@M=\count306
+\forest@process@saved@N=\count307
+\forest@process@result@M=\count308
+\forest@process@result@N=\count309
+\forest@process@n=\count310
+\forest@nodewalk@branch@toks=\toks38
+\forest@nodewalk@shortsteps@resolution=\toks39
+\forest@do@dynamics=\toks40
+\forest@box=\box84
+\forest@xg=\dimen195
+\forest@yg=\dimen196
+\forest@xs=\dimen197
+\forest@ys=\dimen198
+\forest@pi@toks=\toks41
+\forest@segment@toks=\toks42
+\forest@PIi@toks=\toks43
+\forest@PIii@toks=\toks44
+\forest@copy@in=\read3
+\forest@copy@out=\write4
+\forest@externalize@max@outer@n=\count311
+\forest@externalize@inner@n=\count312
+)
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/generic/pgf/libra
+ries/pgflibraryarrows.meta.code.tex
+File: pgflibraryarrows.meta.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgfarrowinset=\dimen199
+\pgfarrowlength=\dimen256
+\pgfarrowwidth=\dimen257
+\pgfarrowlinewidth=\dimen258
+) (./M.aux)
+\openout1 = `M.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 4.
+LaTeX Font Info:    ... okay on input line 4.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 4.
+LaTeX Font Info:    ... okay on input line 4.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 4.
+LaTeX Font Info:    ... okay on input line 4.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 4.
+LaTeX Font Info:    ... okay on input line 4.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 4.
+LaTeX Font Info:    ... okay on input line 4.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 4.
+LaTeX Font Info:    ... okay on input line 4.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 4.
+LaTeX Font Info:    ... okay on input line 4.
+
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/context/base/mkii
+/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count313
+\scratchdimen=\dimen259
+\scratchbox=\box85
+\nofMPsegments=\count314
+\nofMParguments=\count315
+\everyMPshowfont=\toks45
+\MPscratchCnt=\count316
+\MPscratchDim=\dimen260
+\MPnumerator=\count317
+\makeMPintoPDFobject=\count318
+\everyMPtoPDFconversion=\toks46
+)
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/latex/epstopdf-pk
+g/epstopdf-base.sty
+Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
+85.
+
+(/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/tex/latex/latexconfig
+/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
+)) (./M_body.tex
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 15.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 15.
+
+Overfull \hbox (1.80002pt too wide) in paragraph at lines 15--15
+ [][][] 
+ []
+
+) [1
+
+{/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/fonts/map/pdftex/updm
+ap/pdftex.map}] (./M.aux) ) 
+Here is how much of TeX's memory you used:
+ 23523 strings out of 476025
+ 580746 string characters out of 5779036
+ 1857388 words of memory out of 5000000
+ 43691 multiletter control sequences out of 15000+600000
+ 512592 words of font info for 33 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 131i,18n,124p,1605b,1276s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</opt/homebrew/Cellar/texlive/20230313_2/share/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb>
+Output written on M.pdf (1 page, 10480 bytes).
+PDF statistics:
+ 16 PDF objects out of 1000 (max. 8388607)
+ 10 compressed objects within 1 object stream
+ 0 named destinations out of 1000 (max. 500000)
+ 13 words of extra memory for PDF output out of 10000 (max. 10000000)
+

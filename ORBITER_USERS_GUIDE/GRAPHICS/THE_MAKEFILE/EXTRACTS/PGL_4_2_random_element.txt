@@ -1,0 +1,9 @@
+PGL_4_2_random_element:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define G -linear_group -PGL 4 F -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-random_element r1 \
+		-end \
+		-print_symbols

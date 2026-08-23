@@ -1,0 +1,6 @@
+CRC_F_16:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 16 -override_polynomial 19 -end \
+		-with F -do -finite_field_activity -cheat_sheet_GF -end
+	$(PDFLATEX) GF_16_poly19.tex
+	$(OPEN) GF_16_poly19.pdf

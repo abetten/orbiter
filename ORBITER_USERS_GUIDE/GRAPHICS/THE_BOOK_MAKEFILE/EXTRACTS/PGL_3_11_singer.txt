@@ -1,0 +1,12 @@
+PGL_3_11_singer:
+	$(ORBITER) -v 2 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define G -linear_group -PGL 3 11 -singer 19 -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end
+	$(PDFLATEX) PGL_3_11_Singer_3_11_19_report.tex
+	$(OPEN) PGL_3_11_Singer_3_11_19_report.pdf

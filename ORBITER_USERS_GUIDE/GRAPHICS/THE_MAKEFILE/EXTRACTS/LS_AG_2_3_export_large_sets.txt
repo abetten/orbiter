@@ -1,0 +1,14 @@
+LS_AG_2_3_export_large_sets:
+	$(ORBITER) -v 20 \
+		-define B -vector -dense $(AG_2_3_BLOCKS) -end \
+		-define D -design -list_of_blocks_coded 9 3 B -end \
+		-define Sym9 -permutation_group -symmetric_group 9 -end \
+		-define T -design_table D "AG_2_3" Sym9 -end \
+		-with D -do \
+		-design_activity \
+			-extract_solutions_by_index_csv "AG_2_3" Sym9 \
+				AG_2_3_design_table_cliques.csv \
+				"Solution" \
+				AG_2_3_large_sets.csv \
+				"" \
+		-end

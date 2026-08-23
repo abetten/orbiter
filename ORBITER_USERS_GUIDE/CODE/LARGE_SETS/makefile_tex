@@ -1,0 +1,4 @@
+all:
+	cp ~/DATA.19/MICHAEL/makefile .
+	~/bin/a2tex.out -numbers <makefile >makefile.tex
+

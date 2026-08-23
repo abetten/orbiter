@@ -1,0 +1,6 @@
+GV_n15_k6_d5:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define C -code -field F \
+			-Gilbert_Varshamov 15 6 5 \
+		-end

@@ -1,0 +1,12 @@
+draw_mod_251:
+	$(ORBITER) -v 2 \
+		-define Do -draw_options -nodes_empty -radius 10 -embedded -end \
+		-draw_mod_n \
+			"mod_n=on" \
+			-n 251 \
+			-file mod_251 \
+			-label_nodes \
+			-draw_options Do \
+		-end
+	$(PDFLATEX) mod_251_draw.tex
+	$(OPEN) mod_251_draw.pdf

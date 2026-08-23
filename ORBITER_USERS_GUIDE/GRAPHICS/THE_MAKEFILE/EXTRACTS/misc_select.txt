@@ -1,0 +1,12 @@
+misc_select:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 7  -end \
+		-with F -do -finite_field_activity \
+			-export_tables \
+		-end
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 7 -end \
+		-with F -do -finite_field_activity -cheat_sheet_GF -end
+	$(ORBITER) -v 4 -csv_file_select_rows_and_cols \
+		GF_q7_table_mul_r.csv \
+		"0,2,4" "0,2,4" 

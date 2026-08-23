@@ -1,0 +1,59 @@
+Orbiter can compute the orbits of a group on 
+the lattice of subspaces of a finite vector space.
+
+\bigskip
+
+
+
+The orthogonal group is the stabilizer of a non-degenerate quadric.  
+Suppose we want to classify the subspaces in $\PG(3,2)$ under 
+the action of the orthogonal group. 
+In $\PG(3,2),$ there are two distinct nondegenerate quadrics, 
+$Q^+(3,2)$ and $Q^-(3,2).$ 
+The $Q^+(3,2)$ quadric is a given by the equation 
+$$
+x_0x_1 + x_2x_3 = 0.
+$$
+The stabilizer of the quadric is the group $\PGO^+(4,2).$
+Suppose we want to classify the orbits of this group on the underlying space $\PG(3,2).$ 
+The command
+
+\sourcecode{subspaces_Op_4_2}
+
+produces a classification of all 
+subspaces of $\PG(3,2)$ under $\PGO^+(4,2).$ The poset of orbits is shown below.
+Each node represents one orbit on subspaces:
+
+\orbiteroutput{GRAPHICS/WRAPPERS/Op_4_3_orbits_drawing}
+
+The nodes show the ranks of points in $\PG(3,2)$ 
+as described in Section~\ref{sec:FPG}.
+It is also possible to expand the poset to the level of orbit elements. 
+The command also produces a detailed view of the poset, showing every subspace. 
+Orbits of subspaces are indicated by grouping the corresponding nodes 
+at a horizontal level:
+
+\orbiteroutput{GRAPHICS/WRAPPERS/Op_4_2_poset_full_lvl_4_draw}
+
+\bigskip
+
+
+Suppose we want to compute the orbits of the projective group 
+on the subspaces of the exterior algebra. 
+The following command creates $\PGL(5,3)$ 
+in the wedge action as in Section~\ref{sec:induced:actions}. 
+It then computes the orbits of 
+subspaces of the exterior algebra of dimension 5. 
+Because of the nature of the poset classification algorithm, 
+all orbits of dimension $i$ with $0 \le i \le 5$ are computed. 
+
+\sourcecode{PGL_5_3_wedge_subspace_orbits}
+
+The computation finds 81 orbits at level 5. 
+The lex-least spanning tree for the orbits is shown below:
+
+\orbiteroutput{GRAPHICS/WRAPPERS/PGL_5_3_OnWedge_tree_lvl_5}
+
+
+\bigskip
+

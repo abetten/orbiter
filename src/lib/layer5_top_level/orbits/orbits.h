@@ -159,6 +159,9 @@ public:
 	int f_on_polynomials;
 	std::string on_polynomials_ring;
 
+	int f_on_polynomials_memory_efficient;
+	std::string on_polynomials_memory_efficient_ring;
+
 	int f_on_polynomials_with_bitvector_first;
 	std::string on_polynomials_with_bitvector_first_ring;
 
@@ -559,6 +562,12 @@ public:
 			int print_interval,
 			int verbose_level);
 	void init_Schreier_with_generators(
+			group_constructions::linear_group *LG,
+			algebra::ring_theory::homogeneous_polynomial_domain *HPD,
+			data_structures_groups::vector_ge *generating_set,
+			int print_interval,
+			int verbose_level);
+	void init_memory_efficient(
 			group_constructions::linear_group *LG,
 			algebra::ring_theory::homogeneous_polynomial_domain *HPD,
 			data_structures_groups::vector_ge *generating_set,

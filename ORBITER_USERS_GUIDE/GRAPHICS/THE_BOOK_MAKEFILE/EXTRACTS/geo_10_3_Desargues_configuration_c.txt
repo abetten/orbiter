@@ -1,0 +1,46 @@
+geo_10_3_Desargues_configuration_c:
+	$(ORBITER) -v 10 \
+		-define Doinc -draw_incidence_structure_options \
+			-width 60 -width_10 6 \
+		-end \
+		-define Test_lines -set -loop 4 11 1 -end \
+		-define Geo -geometry_builder \
+			-V 10 -B 10 -TDO 3 -fuse 1 \
+			-fname_GEO 10_3 \
+			-test Test_lines \
+			-output_to_inc_file \
+		-end \
+		-define C -combinatorial_object \
+			-label 10_3 "{\rm 10\\_3}" \
+			-file_of_incidence_geometries 10_3.inc 10 10 30 \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form \
+				-save_ago \
+				-save_transversal \
+				-max_TDO_depth 10 \
+				-nauty_control -nauty_log "10_3_nauty_log.txt"  -end \
+			-end \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-post_processing \
+		-end \
+		-assign Object7 -from \
+		-with C -do \
+		-combinatorial_object_activity \
+			-get_combo_with_group 7 \
+		-end \
+		-with Object7 -do \
+			-combo_activity \
+				-report \
+					-show_TDO \
+					-show_TDA \
+					-dont_show_incidence_matrices \
+					-incidence_draw_options Doinc \
+				-end \
+		-end \
+		-print_symbols
+	$(PDFLATEX) 10_3_object7_report.tex
+	$(OPEN) 10_3_object7_report.pdf

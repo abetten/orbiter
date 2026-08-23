@@ -1,0 +1,16 @@
+geo_7_3_no_square_test_draw:
+	$(ORBITER) -v 10 \
+		-define Doinc -draw_incidence_structure_options \
+			-width 60 -width_10 6 -end \
+		-define C -combinatorial_object \
+			-label geo_7_3_nst geo_7_3_nst \
+			-file_of_incidence_geometries \
+				7_3_nst.inc 7 7 21 \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-draw_incidence_matrices \
+			7_3_nst Doinc \
+		-end
+	$(PDFLATEX) 7_3_nst_incma.tex
+	$(OPEN) 7_3_nst_incma.pdf

@@ -1,0 +1,8 @@
+symbolic_matrix_3x3:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 13 -end \
+		-define M -symbolic_object \
+			-field F \
+			-matrix 3 \
+			-text "a,b,c,d,e,f,g,h,i" \
+		-end

@@ -1,0 +1,7 @@
+quartic_curves_q13_filter_isomorphism_reps:
+	$(ORBITER) -v 3 \
+		-csv_file_filter \
+			quartic_curves_q13_classified.csv \
+			"F_Fst" \
+			"1" 
+	mv quartic_curves_q13_classified_f_F_Fst_1.csv quartic_curves_q13_iso.csv

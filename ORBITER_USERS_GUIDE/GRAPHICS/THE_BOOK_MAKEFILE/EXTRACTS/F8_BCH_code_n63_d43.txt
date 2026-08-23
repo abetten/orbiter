@@ -1,0 +1,9 @@
+F8_BCH_code_n63_d43:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 8 -override_polynomial 11 -end \
+		-define C -code -field F \
+			-BCH 63 43 \
+		-end \
+		-with C -do -coding_theoretic_activity -report -end
+	$(PDFLATEX) BCH_n63_d43_code_n63_k9_q8.tex
+	$(OPEN) BCH_n63_d43_code_n63_k9_q8.pdf

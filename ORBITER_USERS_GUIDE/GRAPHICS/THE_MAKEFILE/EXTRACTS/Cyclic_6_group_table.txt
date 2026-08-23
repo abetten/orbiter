@@ -1,0 +1,17 @@
+Cyclic_6_group_table:
+	$(ORBITER) -v 3 \
+		-define G -permutation_group -cyclic_group 6 -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-export_group_table \
+		-end
+	$(ORBITER) -v 2 \
+		-define all_one_r -vector -repeat 1 6 -end \
+		-define all_one_c -vector -repeat 1 6 -end \
+		-draw_matrix \
+			-input_csv_file C_6_group_table.csv \
+			-box_width 50 -bit_depth 24 \
+			-partition 3 all_one_r all_one_c \
+		-end
+	$(OPEN) C_6_group_table_draw.bmp
+	magick C_6_group_table_draw.bmp C_6_group_table_draw.png

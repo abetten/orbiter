@@ -1,0 +1,8 @@
+spreads_25_starter_0_cliques:
+	$(ORBITER) -v 2 \
+			-define G -graph -load spreads_25_graph_0.bin -end \
+			-with G -do \
+			-graph_theoretic_activity \
+				-find_cliques -rainbow -target_size 21 \
+				-output_file spreads_25_0_cliques.csv \
+			-end \

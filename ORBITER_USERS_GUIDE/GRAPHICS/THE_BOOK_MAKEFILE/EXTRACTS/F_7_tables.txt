@@ -1,0 +1,22 @@
+F_7_tables:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 7  -end \
+		-with F -do -finite_field_activity \
+			-export_tables \
+		-end
+	$(ORBITER) -v 3 \
+		-define all_one -vector -repeat 1 7 -end \
+		-draw_matrix \
+			-input_csv_file GF_q7_table_add.csv \
+			-box_width 40 \
+			-bit_depth 24 \
+			-partition 3 all_one all_one \
+		-end \
+		-draw_matrix \
+			-input_csv_file GF_q7_table_mul.csv \
+			-box_width 40 \
+			-bit_depth 24 \
+			-partition 3 all_one all_one \
+		-end
+	magick GF_q7_table_add_draw.bmp GF_q7_table_add_draw.png
+	magick GF_q7_table_mul_draw.bmp GF_q7_table_mul_draw.png

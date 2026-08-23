@@ -1,0 +1,13 @@
+surface_4_0_dot_products_columns:
+	$(ORBITER) -v 3 \
+		-define line_vs_trit -vector \
+			-file PG_3_4_lines_tritplanes_incma.csv \
+		-end \
+		-dot_product_of_columns line_vs_trit
+	$(ORBITER) -v 2 -draw_matrix \
+		-input_csv_file line_vs_trit_dot_products_columns.csv \
+		-box_width 32 -bit_depth 24 \
+		-partition 3 45 45 \
+		-end
+	magick line_vs_trit_dot_products_columns_draw.bmp \
+		line_vs_trit_dot_products_columns_draw.png

@@ -1,0 +1,17 @@
+AGGL_1_81:
+	$(ORBITER) -v 4 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define F -finite_field -q 81 \
+			-override_polynomial 89 \
+			-compute_related_fields \
+		-end \
+		-define AGGL -linear_group -AGGL 1 F \
+			-end \
+		-with AGGL -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end
+	$(PDFLATEX) AGGL_1_81_report.tex
+	$(OPEN) AGGL_1_81_report.pdf

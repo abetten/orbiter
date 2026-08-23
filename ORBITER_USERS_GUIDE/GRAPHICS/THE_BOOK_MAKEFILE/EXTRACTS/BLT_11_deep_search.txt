@@ -1,0 +1,15 @@
+BLT_11_deep_search:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 11 -end \
+		-define O -orthogonal_space 0 5 F -end \
+		-define C -BLT_set_classifier \
+			-orthogonal_space O -starter_size 12 \
+		-end \
+		-with C -do -BLT_set_classify_activity \
+			-compute_starter \
+				-problem_label BLT_q11 \
+				-W -depth 12 \
+			-end \
+		-end
+	#$(PDFLATEX) BLT_q11_poset.tex
+	#$(OPEN) BLT_q11_poset.pdf

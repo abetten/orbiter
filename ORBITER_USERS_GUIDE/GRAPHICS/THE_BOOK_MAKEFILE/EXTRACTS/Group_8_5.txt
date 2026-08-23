@@ -1,0 +1,24 @@
+Group_8_5:
+	$(ORBITER) -v 2 \
+		-define gens -vector -dense \
+			"2,3,1,0,6,7,5,4, 4,5,7,6,1,0,2,3" \
+		-end \
+		-define G -permutation_group -symmetric_group 8 \
+			-subgroup_by_generators G5 8 2 gens -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-export_group_table \
+		-end
+	$(ORBITER) -v 2 \
+		-define all_one_r -vector -repeat 1 8 -end \
+		-define all_one_c -vector -repeat 1 8 -end \
+		-draw_matrix \
+			-input_csv_file \
+				Sym_8_Subgroup_G5_8_group_table.csv \
+			-box_width 50 \
+			-bit_depth 24 \
+			-partition 3 all_one_r all_one_c \
+		-end
+	magick Sym_8_Subgroup_G5_8_group_table_draw.bmp \
+		Sym_8_Subgroup_G5_8_group_table_draw.png
+	$(OPEN) Sym_8_Subgroup_G5_8_group_table_draw.png

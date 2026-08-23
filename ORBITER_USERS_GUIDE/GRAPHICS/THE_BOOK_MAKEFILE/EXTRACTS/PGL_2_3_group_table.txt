@@ -1,0 +1,15 @@
+PGL_2_3_group_table:
+	$(ORBITER) -v 3 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define G -linear_group -PGL 2 3 -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end
+	$(PDFLATEX) PGL_2_3_report.tex
+	$(OPEN) PGL_2_3_report.pdf
+	#$(PDFLATEX) PGL_2_3_group_table_order_24.tex
+	#$(OPEN) PGL_2_3_group_table_order_24.pdf
+	#$(OPEN) PGL_2_3_report.pdf

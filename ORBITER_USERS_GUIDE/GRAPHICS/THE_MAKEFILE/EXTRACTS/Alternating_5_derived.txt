@@ -1,0 +1,15 @@
+Alternating_5_derived:
+	$(ORBITER) -v 3 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define Sym5 -permutation_group -symmetric_group 5 -end \
+		-define Alt5 -modified_group -from Sym5 \
+			-derived_subgroup \
+		-end \
+		-with Alt5 -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end
+	$(PDFLATEX) Sym_5_Derived_report.tex
+	$(OPEN) Sym_5_Derived_report.pdf

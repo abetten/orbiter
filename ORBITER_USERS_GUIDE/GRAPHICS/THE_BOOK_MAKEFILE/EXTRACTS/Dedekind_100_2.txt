@@ -1,0 +1,2 @@
+Dedekind_100_2:
+	$(ORBITER) -v 3 -Dedekind_numbers 2 100 2 2

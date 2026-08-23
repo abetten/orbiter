@@ -1,0 +1,14 @@
+CRC_F256_BCH_code_d7:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 256 -end \
+		-define C -code -field F \
+			-BCH 771 7 \
+		-end \
+		-with C -and F -do -coding_theoretic_activity \
+			-export_magma BCH_q8_n771_d7.magma \
+		-end \
+		-with C -and F -do -coding_theoretic_activity \
+			-report \
+		-end
+	$(PDFLATEX) BCH_n771_d7_code_n771_k759_q256.tex
+	$(OPEN) BCH_n771_d7_code_n771_k759_q256.pdf

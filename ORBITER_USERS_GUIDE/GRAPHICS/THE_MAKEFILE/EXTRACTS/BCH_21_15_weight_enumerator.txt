@@ -1,0 +1,13 @@
+BCH_21_15_weight_enumerator:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 4 -end \
+		-define v -vector -field F -format 15 \
+			-dense $(BCH_21_15_GENERATOR_MATRIX) \
+		-end \
+		-define C -code -field F \
+			-generator_matrix v \
+		-end \
+		-with C -do \
+		-coding_theoretic_activity \
+			-weight_enumerator \
+		-end

@@ -1,0 +1,39 @@
+MY_PATH=~/DEV.18
+SRC=$(MY_PATH)/GITHUB/orbiter/ORBITER/SRC
+SRC2=$(MY_PATH)/ORBITER2/SRC2
+
+OVOID_PATH=$(SRC)/APPS/OVOID
+TOOLS_PATH=$(SRC)/APPS/TOOLS
+
+
+Op42:
+	$(OVOID_PATH)/ovoid.out -v 2 -epsilon 1 -d 4 -q 2
+
+Om42:
+	$(OVOID_PATH)/ovoid.out -v 2 -epsilon -1 -d 4 -q 2
+
+Op62:
+	$(OVOID_PATH)/ovoid.out -v 2 -epsilon 1 -d 6 -q 2
+
+Om62:
+	$(OVOID_PATH)/ovoid.out -v 5 -epsilon -1 -n 5 -q 2 -draw_poset -embedded -W
+
+# order 25920, degree 27 = U_4(2) = Weyl group of type E_6 = Sp_4(2) = O_5(3)
+
+
+draw:
+	$(TOOLS_PATH)/layered_graph_main.out -v 4 \
+		-file ovoid_-1_6_2_poset_lvl_9.layered_graph \
+		-draw test \
+		-rad 25000 \
+		-xin 1000000 \
+		-yin 1000000 \
+		-xout 1000000 \
+		-yout 1000000 \
+		-embedded \
+		-scale .44 \
+		-line_width 1.0 \
+		-y_stretch 0.8 
+	pdflatex ovoid_-1_6_2_poset_lvl_9_draw.tex
+	open ovoid_-1_6_2_poset_lvl_9_draw.pdf
+

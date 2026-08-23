@@ -1,0 +1,8 @@
+symbolic_matrix1:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 13 -end \
+		-define M -symbolic_object \
+			-field F \
+			-matrix 4 \
+			-text $(VANDERMONDE_4X4_FORMULA) \
+		-end

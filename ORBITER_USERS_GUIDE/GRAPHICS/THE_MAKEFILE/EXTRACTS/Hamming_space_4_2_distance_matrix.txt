@@ -1,0 +1,6 @@
+Hamming_space_4_2_distance_matrix:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-with F -do -coding_theoretic_activity \
+			-Hamming_space_distance_matrix 4 \
+		-end

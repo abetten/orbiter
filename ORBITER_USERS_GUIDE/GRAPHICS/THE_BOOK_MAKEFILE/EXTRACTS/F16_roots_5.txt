@@ -1,0 +1,8 @@
+F16_roots_5:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 2 -end \
+		-with F -do -finite_field_activity \
+			-nth_roots 5 \
+		-end
+	$(PDFLATEX) Nth_roots_q2_n5.tex
+	$(OPEN) Nth_roots_q2_n5.pdf

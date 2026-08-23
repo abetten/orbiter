@@ -1,0 +1,6 @@
+vector_concatenate:
+	$(ORBITER) -v 2 \
+		-define a -vector -compact "1,2,3" -end \
+		-define b -vector -compact "4,5,6" -end \
+		-define c -vector -compact "7,8,9" -end \
+		-define abc -vector -concatenate a,b,c -end

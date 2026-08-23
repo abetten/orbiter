@@ -1,0 +1,3 @@
+Neumaier_graph_16:
+	$(ORBITER) -v 2 \
+		-define Gamma -graph -Neumaier_graph_16 -end \

@@ -1,0 +1,2 @@
+POLISHED_CHROME_WHITE=\
+	"texture{ Polished_Chrome pigment{quick_color White} }"

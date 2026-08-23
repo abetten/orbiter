@@ -1,0 +1,9 @@
+PGOm_6_2_Class_2A:
+	$(ORBITER) -v 9 \
+		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define F -finite_field -q 2 -end \
+		-define G -linear_group -PGOm 6 F -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-conjugacy_class_of "2A" $(PGOM_6_2_CLASS_2A_REP) \
+		-end

@@ -1,0 +1,8 @@
+Paley_13_cliques_all:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 13 -end \
+		-define Gamma -graph -Paley F -end \
+		-with Gamma -do \
+		-graph_theoretic_activity \
+			-find_cliques -target_size 3 \
+		-end

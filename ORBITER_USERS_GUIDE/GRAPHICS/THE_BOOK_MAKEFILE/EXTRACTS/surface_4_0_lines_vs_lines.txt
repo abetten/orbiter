@@ -1,0 +1,14 @@
+surface_4_0_lines_vs_lines:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 4 -end \
+		-define P -projective_space -n 3 -field F -end \
+		-with P -do \
+		-projective_space_activity \
+			-export_cubic_surface_line_vs_line_incidence_matrix \
+		-end
+	$(ORBITER) -v 2 -draw_matrix \
+		-input_csv_file PG_3_4_lines_vs_lines_incma.csv \
+		-box_width 32 -bit_depth 24 \
+		-partition 3 27 27 \
+		-end
+	magick PG_3_4_lines_vs_lines_incma_draw.bmp PG_3_4_lines_vs_lines_incma_draw.png

@@ -1,0 +1,25 @@
+symbolic_characteristic_polynomial_2x2_draw:
+	$(PDFLATEX) p1.tex
+	$(OPEN) p1.pdf
+	$(PDFLATEX) p1_0.tex
+	$(OPEN) p1_0.pdf
+	$(PDFLATEX) p1_0_e.tex
+	$(OPEN) p1_0_e.pdf
+	$(PDFLATEX) p1_0_ef.tex
+	$(OPEN) p1_0_ef.pdf
+	$(PDFLATEX) p1_0_efs.tex
+	$(OPEN) p1_0_efs.pdf
+	$(PDFLATEX) p1_0_efsx.tex
+	$(OPEN) p1_0_efsx.pdf
+	$(PDFLATEX) p1_0_efsxs.tex
+	$(OPEN) p1_0_efsxs.pdf
+	$(PDFLATEX) p1_0_efsxsf.tex
+	$(OPEN) p1_0_efsxsf.pdf
+	$(PDFLATEX) p1_0_efsxsfs.tex
+	$(OPEN) p1_0_efsxsfs.pdf
+	$(PDFLATEX) p1_0_efsxsfsc.tex
+	$(OPEN) p1_0_efsxsfsc.pdf
+	$(PDFLATEX) p1_0_efsxsfscs.tex
+	$(OPEN) p1_0_efsxsfscs.pdf
+	$(PDFLATEX) p1_0_efsxsfscsc.tex
+	$(OPEN) p1_0_efsxsfscsc.pdf

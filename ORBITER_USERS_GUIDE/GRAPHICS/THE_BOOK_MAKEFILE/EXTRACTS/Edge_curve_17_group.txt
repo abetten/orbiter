@@ -1,0 +1,27 @@
+Edge_curve_17_group:
+	$(ORBITER) -v 3 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define G -linear_group -PGL 3 17 \
+		-subgroup_by_generators "Stab_Edge" "24" 3 \
+			"1,0,0,0,13,0,0,0,4, \
+			1,0,0,0,0,16,0,16,0, \
+			0,1,16,2,4,4,15,4,4" \
+		-end \
+		-with G -do \
+			-group_theoretic_activity \
+				-group_table Do \
+		-end \
+		-with G -do \
+			-group_theoretic_activity \
+				-report Do \
+		-end \
+		-with G -do \
+			-group_theoretic_activity \
+				-print_elements_tex \
+		-end
+	$(PDFLATEX) PGL_3_17_Subgroup_Stab_Edge_24_group_table_report.tex
+	$(OPEN) PGL_3_17_Subgroup_Stab_Edge_24_group_table_report.pdf
+	$(PDFLATEX) PGL_3_17_Subgroup_Stab_Edge_24_report.tex
+	$(OPEN) PGL_3_17_Subgroup_Stab_Edge_24_report.pdf

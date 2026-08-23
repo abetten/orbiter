@@ -1,0 +1,41 @@
+\begin{table}
+\begin{tcolorbox}[tabularx={X|p{2cm}|X|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black,title=Drawing Options for Layered Graph Files (Part 2)]
+\hline
+Command & Arguments & Purpose \\
+\hline
+\hline
+\verb'-scale'  &  $s$   &  Use Tikz global scale-factor of $s$. Default value: $s=0.45$.\\
+\hline
+\verb'-line_width'  &  $s$   &  Set Tikz line width to $s$. Default value: $s=1.5$. \\
+\hline
+\verb'-rotated'  &     & Rotate the output.  \\
+\hline
+\verb'-upside_down'  &     &  Flip top and bottom.  \\
+\hline
+\verb'-nodes'  &     & Turn on node drawing.  \\
+\hline
+\verb'-nodes_empty'  &     & Do not label the nodes. Default value: off.\\
+\hline
+\verb'-no_vertices'  &     & Do not draw vertices.\\
+\hline
+\verb'-node_color'  &   $c$  & Set the color for nodes to $c$ (unless the graph already has vertex colors).\\
+\hline
+\verb'-select_layers'  &   $S$  & Draw layers whose index is given in the list $S$ only. \\
+\hline
+\verb'-paths_in_between'  &  $l_1$ $i_1$ $l_2$ $i_2$  & Draw all paths from node $(l_1,i_1)$ to node $(l_2,i_2)$. Here, $(l,i)$ is the $i$-th node at layer $l$ (counting from zero). Delete all other edges between layers $l_1$ and $l_2.$ \\
+\hline
+\verb'-poset_orbits_x_stretch'  &  f1000  & Specify a stretch factor for grouping of poset orbits in 1000th. \\
+\hline
+\verb'-place'  &   & Layout the graph. \\
+\hline
+\verb'-poset_type_Asup'  &   & Draw poset in supremum style. \\
+\hline
+\verb'-poset_type_Ainf'  &   & Draw poset in infimum style. \\
+\hline
+\verb'-poset_with_horizontal_lines'  &   & Draw horizontal lines to indicate orbits. \\
+\hline
+\end{tcolorbox}
+\caption{\label{tab:draw:options:b}Drawing Options for Layered Graph Files (Part 2)}
+\end{table}

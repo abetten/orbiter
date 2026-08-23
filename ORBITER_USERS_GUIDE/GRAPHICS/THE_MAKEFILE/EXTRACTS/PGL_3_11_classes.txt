@@ -1,0 +1,20 @@
+PGL_3_11_classes:
+	$(ORBITER) -v 3 \
+		-define G \
+		-linear_group -PGL 3 11 \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-classes \
+		-end
+	$(MAGMA_EXE) PGL_3_11_classes.magma
+	$(ORBITER) -v 3 \
+		-define G \
+		-linear_group -PGL 3 11 \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-classes \
+		-end
+	$(PDFLATEX) PGL_3_11_classes_out.tex
+	$(OPEN) PGL_3_11_classes_out.pdf

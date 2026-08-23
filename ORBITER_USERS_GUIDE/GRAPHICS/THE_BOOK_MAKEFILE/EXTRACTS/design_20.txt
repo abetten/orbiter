@@ -1,0 +1,9 @@
+design_20:
+	$(ORBITER) -v 8 \
+		-define D -design -list_of_blocks_coded 15 3 \
+		"61, 67, 72, 76, 129, 147, 152, 156, 197, 204, 215, 224, 249, 261, 267, 276, 296, 303, 309, 319" \
+		-end \
+		-with D -do \
+			-design_activity \
+				-export_flags \
+		-end

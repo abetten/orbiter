@@ -1,0 +1,3 @@
+random_k_subsets:
+	$(ORBITER) -v 4 \
+		-create_random_k_subsets 10 5 20

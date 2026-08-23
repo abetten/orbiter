@@ -1,0 +1,20 @@
+surface_q13_Eckardt:
+	$(ORBITER) -v 10 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define F -finite_field -q 13 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define S -cubic_surface -space P \
+			-arc_lifting_with_trihedral_pair "0,1,2,3,43,113" \
+		-end \
+		-with S -do \
+		-cubic_surface_activity \
+			-report Do \
+		-end \
+		-with S -do \
+		-cubic_surface_activity \
+			-export_something tritangent_planes \
+		-end
+	$(PDFLATEX) surface_arc_lifting_trihedral_q13_arc_0_1_2_3_43_113_report.tex
+	$(OPEN) surface_arc_lifting_trihedral_q13_arc_0_1_2_3_43_113_report.pdf

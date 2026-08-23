@@ -1,0 +1,3 @@
+Sarnak_graph_29_5:
+	$(ORBITER) -v 2 \
+		-define Gamma -graph -Sarnak 29 5 -end \

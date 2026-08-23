@@ -1,0 +1,21 @@
+blt_set_export_gap_all: 
+	$(ORBITER) -v 3 \
+		-define Q -vector -dense \
+			$(BLT_ORDER_Q) \
+		-end \
+		-define NB -vector -dense \
+			$(BLT_NUMBER_ISO) \
+		-end \
+		-loop_over i Q \
+			-define F%i -finite_field -q "%i[Q]" -end \
+			-define O%i -orthogonal_space 0 5 F%i -create_extension_fields -end \
+			-loop j 0 %i[NB] 1 \
+				-define BLT_%i_%j -BLT_set \
+					-space O%i -catalogue %j \
+				-end \
+				-with BLT_%i_%j -do -blt_set_activity \
+					-export_gap \
+				-end \
+			-end_loop j \
+		-end_loop_over i \
+		-print_symbols

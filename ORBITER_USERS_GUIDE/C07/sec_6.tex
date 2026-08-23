@@ -1,0 +1,203 @@
+
+
+Table~\ref{tab:variety:activities} lists the activities  
+for varieties.
+\orbitertableofcommands{variety_activity}
+
+\bigskip
+
+
+The following command continues the example of a conic in $\PG(2,13)$ from Section~\ref{sec:algebraic:varieties}.
+The command invokes the \verb'-report' activity for the variety to produce a latex report. 
+
+
+
+\sourcecode{conic_variety_q13_report}
+
+The report contains the list of points with their coordinates, as shown below:
+
+
+\orbiteroutput{GRAPHICS/LATEX/PG_2_13_conic}
+
+
+If the automorphism group has not yet been computed, the order is shown as -1.
+
+
+
+\bigskip
+
+
+
+Orbiter can compute the group of the variety, 
+using the algorithm from~\cite{AlazemiBetten2024}. 
+
+\bigskip
+
+
+Let us compute the group of the Klein quadric over the field $\bbF_2$. 
+This continues an earlier example 
+from Section~\ref{sec:algebraic:varieties}.
+
+
+\sourcecode{Op_6_2_group}
+
+The group of the Klein quadric over $\bbF_2$ is $\PGO^+(6,2)$ of order 40320. 
+It contains $\PGL(4,2)$ as a subgroup of index two.
+
+
+\bigskip
+
+
+
+We consider the quartic curve in $\PG(2,13)$ 
+from Section~\ref{sec:algebraic:varieties}, 
+given by the equation
+$$
+X_0^4 + 4X_1^4 + 9X_2^4 + X_0^2X_1^2 + 4X_0^2X_2^2 + 3X_1^2X_2^2=0.
+$$
+We encode the equation as a makefile variable:
+
+\sourcecodevariable{CURVE_Q13_F0_CLEAN2_EQUATION}
+
+
+Next, we invoke an activity to compute the group of the variety:
+
+\sourcecode{curve_q13_f0_clean2_variety_compute_group}
+
+The group turns out to be of order 24. 
+
+\bigskip
+
+In the next example, 
+we will compute the stabilizer 
+of the Barth sextic~\cite{Barth1996} 
+over a small finite field.
+The Barth sextic has 65 singular points, 
+which is the extreme value for this degree.
+The definition requires the golden ratio, 
+which involves $\sqrt{5}.$ 
+For $p= 11$, $5$ is a square, so 
+we can pick $\bbF_{11}$ as our base field.
+At first, we define the equation in algebraic form as a makefile variable:
+
+\sourcecodevariable{BARTH_EQUATION_GENERAL}
+
+
+Next, we create the object over the field $\bbF_{11}$ 
+and compute both the group and the set of singular points:
+
+
+\sourcecode{Barth_sextic_mod_11}
+
+
+\bigskip
+
+
+
+Next, we will compute the stabilizer of the Hirschfeld surface 
+from Section~\ref{sec:algebraic:varieties} over the field $\bbF_2$.
+The following command creates the variety and computes the stabilizer, 
+which is a group of order $720$:
+
+\sourcecode{Hirschfeld_q2_group}
+
+
+\bigskip
+
+
+The next example investigates a nonsingular cubic surface with 9 lines over the field $\bbF_4$.
+The variety is called Dickson36, since it appears as the 36th example in~\cite{Dickson15}.
+The automorphism group is computed as well. It is a group of order 216.
+A latex report is produced.
+
+\sourcecode{variety_Dickson36_9lines_q4_group}
+
+
+
+
+\bigskip
+
+
+
+In the next example, we test if two varieties are isomorphic. 
+We continue the example from Section~\ref{sec:ring:theory:multivariate}.
+The varieties are given as vector of coefficients:
+
+
+\sourcecodevariable{QC_Q27_FO159_COEFFS}
+
+\sourcecodevariable{QC_Q27_FO388_COEFFS}
+
+
+The following command performs isomorphism testing. 
+The curves are isomorphic, and an isomorphism is computed. 
+
+\sourcecode{quartic_curve_q27_fo159_fo338_test_isomorphism}
+
+Let us look at the command in some detail.
+To begin with, we create one variety object for each of the two curves.
+After that, we invoke the \verb'-test_isomorphism' command as an activity applied to the two varieties. 
+This command will construct a mapping from the second variety to the first 
+or prove that none exists. 
+In the example, the command will create the 
+isomorphism 
+that was already mentioned in Section~\ref{sec:ring:theory:multivariate}.
+The mapping is the point map, which means it takes the set of rational points of the second variety and maps it to the set of rational points of the first variety. 
+In order to map the second equation to the first, 
+the contragredient action is to be used. 
+
+
+
+
+
+\bigskip
+
+
+Here is another example of isomorphism testing:
+
+
+\sourcecodevariable{QC_Q9_COEFFS}
+
+\sourcecodevariable{QC_Q9_HERMITIAN_COEFFS}
+
+\sourcecode{quartic_curve_q9_hermitian_fo0_test_isomorphism}
+
+
+\bigskip
+
+
+We can specify the variety in algebraic form, as in the next example:
+
+
+\sourcecodevariable{QC_Q9_ORBITER_CATALOGUE_0_AF}
+
+\sourcecode{quartic_curve_q9_hermitian_and_OCN0_test_isomorphism}
+
+
+
+\bigskip
+
+
+Once an isomorphism is computed, we want to check it. 
+We apply the isomorphism to the equation to produce the other equation. 
+We use the quartic curve, 
+including the set of lines (the bitangents),  
+and the previously computed mapping, all stored as makefile variables:
+
+
+\sourcecodevariable{QUARTIC_CURVE_Q9_CLEAN}
+
+\sourcecodevariable{QC_Q9_CLEAN_LINES}
+
+\sourcecodevariable{QC_Q9_TRANSFORM_CLEAN_TO_HERMITIAN}
+
+And here is the command to create the transformed variety:
+
+
+\sourcecode{quartic_curve_q9_Hermitian_transform}
+
+
+\bigskip
+
+
+

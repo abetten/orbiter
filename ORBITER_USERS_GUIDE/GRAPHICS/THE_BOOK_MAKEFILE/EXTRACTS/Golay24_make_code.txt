@@ -1,0 +1,9 @@
+Golay24_make_code:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define v -vector \
+			-dense $(GOLAY_24_CODE_PROJECTIVE) \
+		-end \
+		-define C -code -field F \
+			-projective_set 12 v \
+		-end 

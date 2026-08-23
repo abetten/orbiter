@@ -1,0 +1,8 @@
+poly_gcd:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-with F -do \
+		-finite_field_activity \
+			-extended_gcd_for_polynomials \
+				"1,0,0,0,0,0,0,0,0,0,1" "1,0,1,1" \
+		-end

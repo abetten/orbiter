@@ -1,0 +1,3 @@
+vector_loop_odd_16:
+	$(ORBITER) -v 2 \
+		-define v -vector -loop 1 16 2 -end \

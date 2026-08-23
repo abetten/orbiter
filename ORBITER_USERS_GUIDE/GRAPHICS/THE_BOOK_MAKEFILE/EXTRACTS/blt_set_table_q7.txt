@@ -1,0 +1,8 @@
+blt_set_table_q7: 
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 7 -end \
+		-define O -orthogonal_space 0 5 F -create_extension_fields -end \
+		-with O -do \
+			-orthogonal_space_activity \
+				-table_of_blt_sets \
+		-end

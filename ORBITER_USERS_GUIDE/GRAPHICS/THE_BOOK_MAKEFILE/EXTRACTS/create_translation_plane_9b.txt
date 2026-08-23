@@ -1,0 +1,50 @@
+create_translation_plane_9b:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 3 -end \
+		-define G -linear_group -PGL 4 F -end \
+		-define G1 -linear_group -PGL 5 F -end \
+		-define S -spread -kernel_field F \
+			-group G -k 2 -catalogue 1 \
+			-end \
+		-define T -translation_plane S G G1 -end \
+		-with T -do -translation_plane_activity \
+			-export_incma \
+		-end \
+		-with T -do -translation_plane_activity \
+			-report \
+		-end \
+		-define A -linear_group -import_group_of_plane T -end \
+		-define Orb -orbits -group A \
+			-on_points \
+		-end \
+		-define Do -draw_options -embedded -sideways -radius 50 \
+			-scale 0.5 -line_width 0.3 \
+		-end \
+		-with Orb -do -orbits_activity \
+			-report Do \
+		-end \
+		-with Orb -do -orbits_activity \
+			-stabilizer 92 \
+		-end \
+		-with Orb -do -orbits_activity \
+			-export_trees \
+		-end
+	$(ORBITER) -v 2 \
+		-draw_matrix \
+			-input_csv_file plane_catalogue_q3_k2_1_incma.csv \
+			-box_width 6 -bit_depth 8 \
+			-partition 2 91 91 \
+		-end
+	$(ORBITER) -v 3 \
+		-draw_layered_graph \
+			orbit_PGL_5_3_on_andre_3.layered_graph \
+			-place \
+			-radius 250 -spanning_tree -embedded -nodes_empty \
+			-line_width 1.1 -x_stretch 2.4 -scale 0.15 \
+		-end
+	$(PDFLATEX) orbit_PGL_5_3_on_andre_3_draw.tex
+	$(OPEN) orbit_PGL_5_3_on_andre_3_draw.pdf
+	$(PDFLATEX) group_of_plane_plane_catalogue_q3_k2_1_orbits_report.tex
+	$(OPEN) group_of_plane_plane_catalogue_q3_k2_1_orbits_report.pdf
+	$(PDFLATEX) group_of_plane_plane_catalogue_q3_k2_1_stab_pt_92_report.tex
+	$(OPEN) group_of_plane_plane_catalogue_q3_k2_1_stab_pt_92_report.pdf

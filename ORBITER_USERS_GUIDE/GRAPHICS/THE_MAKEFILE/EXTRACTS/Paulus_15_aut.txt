@@ -1,0 +1,11 @@
+Paulus_15_aut:
+	$(ORBITER) -v 6 \
+		-define P25_15 -graph -load_Brouwer \
+				$(ORBITER_PATH)/examples/users_guide/PAULUS_ROSENFELD/P25_15.txt \
+		-end \
+		-with P25_15 -do \
+		-graph_theoretic_activity \
+			-automorphism_group \
+		-end
+	$(PDFLATEX) P25_15_report.tex
+	$(OPEN) P25_15_report.pdf

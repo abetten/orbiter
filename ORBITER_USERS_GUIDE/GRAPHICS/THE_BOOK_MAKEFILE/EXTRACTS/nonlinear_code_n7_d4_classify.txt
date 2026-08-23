@@ -1,0 +1,30 @@
+nonlinear_code_n7_d4_classify:
+	$(ORBITER) -v 5 \
+		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define Do -draw_options \
+			-radius 200 -embedded \
+		-end \
+		-define Control -poset_classification_control \
+			-problem_label codes_n7_d4 \
+			-depth 10 \
+			-test_mindist_nonlinear 4 \
+			-draw_options Do \
+			-W \
+		-end \
+		-define F -finite_field -q 2 -end \
+		-define G -linear_group -GL 7 F -monomial -end \
+		-define Orb -orbits \
+			-group G \
+			-group_action G \
+			-generators G \
+			-on_subsets 10 Control \
+		-end \
+		-define ro \
+			-poset_classification_report_options \
+				-draw_poset -type_ordinary \
+				-draw_options Do \
+		-end \
+		-with Orb -do -orbits_activity \
+			-report "" \
+			-report_options ro \
+		-end \

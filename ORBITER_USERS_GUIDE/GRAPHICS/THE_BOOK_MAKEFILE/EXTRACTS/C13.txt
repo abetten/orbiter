@@ -1,0 +1,28 @@
+C13:
+	$(ORBITER) -v 2 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define gens -vector -dense $(GEN_C13) -end \
+		-define G -permutation_group \
+			-bsgs C13 C_{13} 13 13 0 1 \
+				gens \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-export_orbiter \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-export_group_table \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-save_elements_csv "C13_elts.csv" \
+		-end
+	$(PDFLATEX) C13_report.tex
+	$(OPEN) C13_report.pdf

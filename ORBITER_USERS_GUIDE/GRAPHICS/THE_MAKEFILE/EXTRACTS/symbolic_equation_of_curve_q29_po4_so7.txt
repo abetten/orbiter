@@ -1,0 +1,23 @@
+symbolic_equation_of_curve_q29_po4_so7:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 29 -end \
+		-define f1 -symbolic_object \
+			-field F \
+			-text $(EQUATION_SURFACE_Q29_ISO4_ORB7_F1) \
+		-end \
+		-define f2 -symbolic_object \
+			-field F \
+			-text $(EQUATION_SURFACE_Q29_ISO4_ORB7_F2) \
+		-end \
+		-define f3 -symbolic_object \
+			-field F \
+			-text $(EQUATION_SURFACE_Q29_ISO4_ORB7_F3) \
+		-end \
+		-define curve -symbolic_object \
+			-field F \
+			-text "f2^2-4*f1*f3" \
+		-end \
+		-define curve_x -symbolic_object \
+			-field F \
+			-expand curve \
+		-end

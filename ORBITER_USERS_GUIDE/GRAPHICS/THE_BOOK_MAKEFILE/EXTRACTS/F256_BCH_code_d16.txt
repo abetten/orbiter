@@ -1,0 +1,11 @@
+F256_BCH_code_d16:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 256 -end \
+		-define C -code -field F \
+			-BCH 771 16 \
+		-end \
+		-with C -and F -do -coding_theoretic_activity \
+			-report \
+		-end
+	$(PDFLATEX) BCH_n771_d16_code_n771_k741_q256.tex
+	$(OPEN) BCH_n771_d16_code_n771_k741_q256.pdf

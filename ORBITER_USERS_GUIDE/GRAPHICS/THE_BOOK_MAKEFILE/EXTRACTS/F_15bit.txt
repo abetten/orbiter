@@ -1,0 +1,7 @@
+F_15bit:
+	$(ORBITER) -v 10 \
+		-define F -finite_field -q 32749 -without_tables -end \
+		-define v -vector -field F -allow_negatives \
+			-dense "-1,-1" -end \
+		-with F -do -finite_field_activity -product_of v -end
+	

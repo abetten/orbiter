@@ -1,0 +1,19 @@
+PG_3_5_assume_31_graph:
+	$(ORBITER) -v 5 \
+		-define Control -poset_classification_control \
+			-problem_label spreads_PG_3_5 \
+		-end \
+		-define F -finite_field -q 5 -end \
+		-define P3 -projective_space -n 3 -field F -v 0 -end \
+		-define P5 -projective_space -n 5 -field F -v 0 -end \
+		-define T -spread_table P3 2 "12" "SPREAD_TABLES_5_REG/" Control \
+		-define PC -packing_classify P3 P5 T \
+		-define PW -packing_with_symmetry_assumption PC \
+				-H "H31" $(PGL_4_5_SUBGROUP_31_ME) -end \
+				-N "N31" $(PGL_4_5_SUBGROUP_31_ME_NORMALIZER) -end \
+			-end \
+		-define PWF -packing_choose_fixed_points PW 0 -end \
+		-define L -packing_long_orbits PWF \
+			-orbit_length 31 -create_graphs \
+			-end \
+		-print_symbols

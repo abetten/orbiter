@@ -1,0 +1,11 @@
+code_n15_k6_d6_RREF:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define v -vector -format 6 -field F \
+			-compact $(CODE_GV_N15_K6) \
+		-end \
+		-with F -do -finite_field_activity \
+			-RREF v \
+		-end
+	#$(PDFLATEX) RREF_example_q2_6_15.tex
+	#$(OPEN) RREF_example_q2_6_15.pdf

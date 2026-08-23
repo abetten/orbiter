@@ -1,0 +1,17 @@
+parse_homogeneous_polynomial_with_parameters:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 17 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 3 \
+			-homogeneous_of_degree 4 \
+			-monomial_ordering_partition \
+			-variables "X,Y,Z" "X,Y,Z" \
+		-end \
+		-with R -do \
+			-ring_theoretic_activity \
+			-parse_equation \
+				"Edge_curve" "Edge\_curve" \
+				$(EDGE_CURVE_EQUATION_ALGEBRAIC) \
+				f 3 \
+		-end

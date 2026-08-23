@@ -1,0 +1,9 @@
+Hirschfeld_q4_from_set:
+	$(ORBITER) -v 4 \
+		-define H -set -here \
+			$(HIRSCHFELD_SURFACE_Q4_SET_OF_POINTS) \
+		-end \
+		-define C -combinatorial_object \
+			-label Hirschfeld_surface Hirschfeld\_surface \
+			-set_of_points H \
+		-end

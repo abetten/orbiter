@@ -1,0 +1,11 @@
+geo_10_3_orderly_mem_debug:
+	$(ORBITER) -v 2 \
+		-memory_debug 1 \
+		-define Test_lines -set -loop 4 10 1 -end \
+		-define Geo -geometry_builder \
+			-V 10 -B 10 -TDO 3 -fuse 1 \
+			-fname_GEO 10_3 \
+			-output_to_inc_file \
+			-test Test_lines \
+			-orderly \
+		-end

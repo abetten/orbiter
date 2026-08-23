@@ -1,0 +1,167 @@
+Table~\ref{tab:code:create} lists Orbiter commands to create codes. 
+\orbitertableofcommands{create_code}
+Tables~\ref{tab:finitefield:activities:coding1}-\ref{tab:finitefield:activities:coding3} 
+list coding theoretic activities in Orbiter. 
+\orbitertableofcommands{coding_theoretic_activity_1}
+\orbitertableofcommands{coding_theoretic_activity_2}
+\orbitertableofcommands{coding_theoretic_activity_3}
+Table~\ref{tab:code:modification} shows ways to create new codes from old.
+\orbitertableofcommands{code_modification}
+
+\bigskip
+
+
+
+
+The following command creates the first order Reed-Muller code in three variables:
+
+\sourcecode{RM_3_1}
+
+
+
+\bigskip
+
+Consider the linear code with generator matrix
+$$
+\left[
+\begin{array}{cccccc}
+1&1&1&1&0&0 \\
+1&1&0&0&1&0 \\
+1&0&1&0&0&1 \\
+\end{array}
+\right].
+$$
+The row vectors correspond to the integers 60, 50, 41 in binary. 
+We can use the following command to create the code:
+
+\sourcecode{code_6}
+
+The command also draws the code in the Hamming space.
+
+
+\bigskip
+
+
+Let us create the Hamming code.
+The dual of the Hamming code is the simplex code, 
+so we create the simplex code first.
+The following makefile variable is defined to hold the generator matrix of the simplex code:
+
+\sourcecodevariable{SIMPLEX_CODE_GENERATOR}
+
+The following command computes the nullspace of this matrix, 
+which is the Hamming code:
+
+\sourcecode{simplex_code}
+
+The following latex output is produced:
+\orbiteroutput{GRAPHICS/LATEX/code_simplex}
+
+\bigskip
+
+It is possible to create the Hamming code by taking the dual of the simplex code. 
+The following command does so:
+
+\sourcecode{Hamming_code}
+
+The command also exports the code to magma 
+by means of the magma file \verb'Hamming.magma', shown below:
+\orbiteroutput{GRAPHICS/WRAPPERS/Hamming_magma}
+
+
+\bigskip
+
+The next command creates the first order Reed-Muller code in $3$ variables. 
+All codewords are created.
+The codewords and the generator matrix are exported to files.
+
+\sourcecode{RM_3_1_and_codewords}
+
+We can create the code from scratch, using a generator matrix. 
+To do so, we use a makefile variable: 
+
+\sourcecodevariable{CODE_RM_3_1_GENMA}
+
+The following command creates the Reed-Muller code from its 
+generator matrix directly:
+
+\sourcecode{RM_3_1_from_generator_matrix}
+
+
+\bigskip
+
+
+Let us look at the Hamming code. 
+The following command creates the $[7,4]$ Hamming code.
+
+\sourcecode{Hamming_code_by_rows}
+
+A different way to create the same code is using the \verb'long_code' command:
+
+\sourcecode{Hamming_code_long}
+
+
+\bigskip
+
+
+The following command creates a diagram 
+for the Hamming code inside the Hamming space.
+
+\sourcecode{Hamming_code_diagram}
+
+Here is the output:
+\orbiteroutput{GRAPHICS/WRAPPERS/code_matrix_16_8_draw}
+
+
+\bigskip
+
+The next command creates the metric balls of radius one 
+centered at each of the 16 codewords of the Hamming code.
+At first, we define the numerical values 
+of the codewords of the Hamming code:
+
+\sourcecodevariable{HAMMING_CODE_CODEWORDS}
+
+Then we create the diagrams of all codewords. 
+We utilize a loop-over command 
+for the codewords and a loop command for the graphical output. 
+
+\sourcecode{Hamming_code_words}
+
+These metric balls form a partition of the Hamming space. 
+The partition can be shown in binary Hamming space:
+\orbiteroutput{GRAPHICS/WRAPPERS/Hamming_7_4_words}
+
+
+
+\bigskip
+
+
+
+Orbiter can compute the weight enumerator and the minimum distance of codes.
+Let us consider the Hamming code, for example.
+We use a makefile variable for the generator matrix: 
+
+\sourcecodevariable{HAMMING_CODE_GENERATOR}
+
+The next command computes the weight enumerator:
+
+\sourcecode{Hamming_weight_enumerator}
+
+We find that the weight enumerator is
+$$
+( 1, 0, 0, 7, 7, 0, 0, 1 ).
+$$
+The next command computes the minimum distance of the code:
+
+\sourcecode{Hamming_minimum_distance}
+
+The following command computes the minimum distance 
+of the Golay code of length $23$:
+
+\sourcecode{Golay23_minimum_distance}
+
+
+
+\bigskip
+

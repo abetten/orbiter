@@ -1,0 +1,29 @@
+\begin{table}[t]
+\tbl{\label{tab:polynomial:ring:activities}}
+{\begin{tcolorbox}[tabularx={p{3cm}|p{2cm}|p{6.3cm}|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black,title=Multivariate Polynomial Ring Activities]
+\hline
+Command & Arguments & Purpose \\
+\hline
+\hline
+\verb'-cheat_sheet'  &    &  Create a report about the polynomial ring. \\
+\hline
+\verb'-export_partials'  &    &  Export the matrix associated with the partial derivatives. \\
+\hline
+\verb'-ideal'  &  label\_txt label\_tex label\_set  &  Compute the ideal of the given set of points. \\
+\hline
+\verb'-apply_transformation'  &  P eqn elt  &  Apply the transformation given by the group element to the given equation. P is the underlying projective space. \\
+\hline
+\verb'-set_variable_names'  &  txt tex  &  Choose new variable names in text and tex format. \\
+\hline
+\verb'-print_equation'  &  equation  &  Print the given equation. \\
+\hline
+\verb'-parse_equation_wo_parameters'  &  label\_txt label\_tex eqn\_algebraic  &  Parse an equation given in algebraic form. \\
+\hline
+\verb'-parse_equation'  &  label\_txt label\_tex eqn\_algebraic params param\_val  &  Parse an equation given in algebraic form and perform parameter substitution. \\
+\hline
+\verb'-table_of_monomials_write_csv'  &  label  &  Produce a csv file with the list of monomials in the chosen ordering. \\
+\hline
+\end{tcolorbox}}
+\end{table}

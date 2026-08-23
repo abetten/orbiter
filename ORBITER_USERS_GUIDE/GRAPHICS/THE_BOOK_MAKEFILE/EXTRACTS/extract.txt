@@ -1,0 +1,4 @@
+extract:
+	$(ORBITER) -v 3 \
+		-extract_from_file makefile Cremona_map make_Cremona_map.txt
+	~/bin/a2tex.out -numbers -text_width 80 <make_Cremona_map.txt >make_Cremona_map.tex

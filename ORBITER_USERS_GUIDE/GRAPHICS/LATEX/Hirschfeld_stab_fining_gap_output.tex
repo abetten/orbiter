@@ -1,0 +1,29 @@
+\begin{verbatim}
+gap> LoadPackage("fining");
+true
+gap> mat1 := [[Z(4)^0,0*Z(4),0*Z(4),0*Z(4)],
+> [0*Z(4),Z(4)^0,0*Z(4),0*Z(4)],
+> [0*Z(4),0*Z(4),Z(4)^0,0*Z(4)],
+> [0*Z(4),0*Z(4),0*Z(4),Z(4)^0]];
+[ [ Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2) ], 
+[ 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2) ], 
+[ 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2) ], 
+[ 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0 ] ]
+gap> frob1 := FrobeniusAutomorphism(GF(4))^1;
+FrobeniusAutomorphism( GF(2^2) )
+gap> psi1 := ProjectiveSemilinearMap(mat1, frob1,GF(4));
+< a collineation: <cmat 4x4 over GF(2,2)>, F^2>
+...
+gap> gens := [psi1, psi2, psi3, psi4, psi5, psi6];
+[ < a collineation: <cmat 4x4 over GF(2,2)>, F^2>, 
+< a collineation: <cmat 4x4 over GF(2,2)>, F^0>, 
+< a collineation: <cmat 4x4 over GF(2,2)>, F^0>, 
+< a collineation: <cmat 4x4 over GF(2,2)>, F^2>, 
+< a collineation: <cmat 4x4 over GF(2,2)>, F^0>, 
+< a collineation: <cmat 4x4 over GF(2,2)>, F^0> ]
+gap> G := Group(gens);
+<projective collineation group with 6 generators>
+gap> Size(G);
+51840
+gap> 
+\end{verbatim}

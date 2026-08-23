@@ -1,0 +1,17 @@
+PGGL_2_4_classes_reps:
+	$(ORBITER) -v 3 \
+		-define G \
+		-linear_group -PGGL 2 4 \
+		-end \
+		-assign reps -from \
+		-with G -do \
+		-group_theoretic_activity \
+			-classes \
+		-end \
+		-with reps -do \
+		-vector_ge_activity \
+			-report \
+		-end \
+		-print_symbols
+	$(PDFLATEX) PGGL_2_4_reps_elements.tex
+	$(OPEN) PGGL_2_4_reps_elements.pdf

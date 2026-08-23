@@ -1,0 +1,14 @@
+code_5_2_3_diagram:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-with F -do -coding_theoretic_activity \
+			-general_code_binary 5 "code_5_2_3" \
+			$(CODE_5_2_3_CODEWORDS) \
+			-metric_balls 1 \
+		-end
+	$(ORBITER) -v 2 \
+		-draw_matrix \
+			-input_csv_file code_5_2_3_char_func_5_4.csv \
+			-box_width 25 -bit_depth 24 \
+			-partition 4 8 4 \
+		-end

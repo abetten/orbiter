@@ -1,0 +1,15 @@
+RM_3_1_and_codewords:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define C -code -field F \
+			-Reed_Muller 3 \
+		-end \
+		-with C -and F -do -coding_theoretic_activity \
+			-export_magma RM_3_1.magma \
+		-end \
+		-with C -and F -do -coding_theoretic_activity \
+			-export_codewords RM_3_1_codewords.csv \
+		-end \
+		-with C -and F -do -coding_theoretic_activity \
+			-export_genma RM_3_1_genma.csv \
+		-end 

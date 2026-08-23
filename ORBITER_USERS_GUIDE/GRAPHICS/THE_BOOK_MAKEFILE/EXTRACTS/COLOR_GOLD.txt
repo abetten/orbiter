@@ -1,0 +1,4 @@
+COLOR_GOLD=\
+	"texture{ pigment{ Gold } finish \
+	{ambient 0.4 diffuse 0.5 roughness 0.001 \
+	reflection 0.1 specular .8} }"

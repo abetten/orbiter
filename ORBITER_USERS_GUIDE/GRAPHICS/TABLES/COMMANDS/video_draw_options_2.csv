@@ -1,0 +1,16 @@
+ROW,C1,C2,C3
+0,"tab:povray2",,
+1,"Povray Interface (Part 2)",,
+1,"\verb'-clipping' "," $r$ $c$ "," In round $r$, set clipping radius to $c$. "
+1,"\verb'-text' "," $r$ $a$ text "," In round $r$, produce running text \verb'text'  with sustain value $a$. "
+1,"\verb'-label' "," $r$ $s$ $a$ $g$ text "," In round $r$, produce running text \verb'text' with start value $s$, sustain $s$ and gravity $g$.  "
+1,"\verb'-latex' "," $r$ $s$ $a$ praeamble $g$ text $l$ fname "," In round $r$, produce running latex text \verb'text' with start value $s$, sustain $s$ and gravity $g$. Put \verb'praeamble' in the latex source code. Use \verb'fname' for the latex file names (no extension). "
+1,"\verb'-global_picture_scale' "," $d$ "," Set scaling factor to $d$. "
+1,"\verb'-picture' "," $r$ $d$ fname options "," In round $r$, place picture \verb'fname' scaled by $d$ using options. "
+1,"\verb'-picture' "," $r$ $d$ fname options "," In round $r$, place picture \verb'fname' scaled by $d$ using options. "
+1,"\verb'-look_at' "," $L$ "," Override camera look-at value to $L$. $L$ is a three-dimensional vector. "
+1,"\verb'-default_angle' "," $a$ "," Set default camera angle to $a$. "
+1,"\verb'-clipping_radius' "," $f$ "," Set default clipping radius to $f$. "
+1,"\verb'-scale_factor' "," $s$ "," Set default scale factor to $s$. "
+1,"\verb'-line_radius' "," $s$ "," Set default line radius to $s$. "
+END

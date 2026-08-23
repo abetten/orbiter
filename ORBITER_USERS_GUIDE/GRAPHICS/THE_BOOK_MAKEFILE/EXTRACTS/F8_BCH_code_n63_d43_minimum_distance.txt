@@ -1,0 +1,10 @@
+F8_BCH_code_n63_d43_minimum_distance:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 8 -override_polynomial 11 -end \
+		-define v -vector -format 9 -field F \
+			-compact $(CODE_BCH_F8_N63_K9_D43_GENMA) \
+		-end \
+		-with F -do \
+		-coding_theoretic_activity \
+			-minimum_distance v \
+		-end

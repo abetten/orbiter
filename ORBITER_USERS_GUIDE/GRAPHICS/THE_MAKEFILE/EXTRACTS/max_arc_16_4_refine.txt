@@ -1,0 +1,6 @@
+max_arc_16_4_refine:
+	$(ORBITER) -v 4 -tdo_refinement \
+		-input_file max_arc_q16_r4.tdo -dual_is_linear_space -end
+	
+max_arc_16_4r_print:
+	$(ORBITER) -v 4 -tdo_print max_arc_q16_r4r.tdo 

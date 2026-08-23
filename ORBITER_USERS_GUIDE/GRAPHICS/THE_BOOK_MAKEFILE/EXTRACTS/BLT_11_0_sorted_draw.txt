@@ -1,0 +1,16 @@
+BLT_11_0_sorted_draw:
+	$(ORBITER) -v 2 \
+		-define Do -draw_options \
+			-radius 100 \
+			-scale 0.4 \
+			-line_width 1.0 -embedded \
+		-end \
+		-define G -graph \
+			-load BLT_q11_graph_5_0_sorted.bin \
+		-end \
+		-with G -do \
+		-graph_theoretic_activity \
+			-draw Do \
+		-end
+	$(PDFLATEX) BLT_q11_graph_5_0_sorted_draw.tex
+	$(OPEN) BLT_q11_graph_5_0_sorted_draw.pdf

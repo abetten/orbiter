@@ -1,0 +1,9 @@
+EC_bsgs:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 199 -end \
+		-with F -do \
+		-finite_field_activity \
+		-EC_bsgs 5 7 "147,164" 212 \
+		"172,158,45,195,50,22,10,103,55,33,50,22,\
+		145,105,31,74,73,155,67,60,25,6" \
+		-end

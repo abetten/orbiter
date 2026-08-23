@@ -1,0 +1,15 @@
+C6_on_partition:
+	$(ORBITER) -v 5 \
+		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define Control -poset_classification_control \
+			-problem_label C6 \
+			-depth 2 \
+			-W \
+		-end \
+		-define G -permutation_group -cyclic_group 6 -end \
+		-define Orb -orbits \
+			-group G \
+			-group_action G \
+			-generators G \
+			-on_partition 2 Control \
+		-end

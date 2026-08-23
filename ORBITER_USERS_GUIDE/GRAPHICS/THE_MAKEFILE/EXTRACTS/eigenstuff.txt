@@ -1,0 +1,4 @@
+eigenstuff:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 5 -end \
+		-eigenstuff F 4 "0,1,0,2,0,1,2,1,4,2,3,1,2,0,4,3" 

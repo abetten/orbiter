@@ -1,0 +1,74 @@
+This is the User's Guide of Orbiter. 
+Orbiter is a computer algebra system for the classification of combinatorial objects.
+It provides tools to construct, classify and investigate structures that are defined up to isomorphism. 
+For background on Orbiter, see~\cite{Betten2020}.
+
+
+\bigskip
+
+Orbiter is open source, and can be downloaded and installed from github.
+A C++ compiler environement similar to ``gnu gcc'' 
+and the tool ``make'' are required. 
+Compiler tools like ``bison'' and ``flex'' are required also. 
+Latex is recommended.
+
+\bigskip
+
+
+
+
+For the most recent version of this guide, 
+please visit 
+$$
+\verb'https://www.math.colostate.edu/~betten/orbiter/users_guide.pdf'
+$$
+For the github repository, see
+$$
+\verb'https://github.com/abetten/orbiter'
+$$
+The version number of Orbiter that 
+is required for this guide is indicated on the title page. 
+It is the git repository number. 
+
+\bigskip
+
+
+The examples in this guide are taken from a makefile. 
+The complete makefile is distributed with Orbiter 
+in the directory 
+$$
+\verb'examples/users_guide'
+$$
+There is no need to type the code. 
+You can copy it from the orbiter source tree to a local directory of your choosing. 
+Please do not run the makefile commands from the orbiter source tree. 
+This will most likely create files, which will cause some trouble later on when updating Orbiter.
+The Orbiter source tree should be read only, unless you know what you are doing.
+
+
+\bigskip
+
+
+
+Orbiter interfaces with latex to display outputs 
+of computations or to produce reports about objects. 
+For this reason, it is recommended to have a working latex package installed. 
+We will assume that pdflatex exists. 
+Some latex distributions come with a graphical user interface, 
+where the tex file needs to be selected instead. 
+
+\bigskip
+
+A few words about related software.
+Some of the commands rely on Magma. Magma is a commercial product. 
+There is, however, a free web interface, see~\cite{MagmaOnline}.
+At times, we will be mentioning Maple~\cite{Maple} and GAP~\cite{GAP}, 
+as well as the GAP package Fining~\cite{fining}. 
+The software package Nauty~\cite{Nauty2020} is important. 
+It has been integrated seemlessly into Orbiter, which means 
+we will be using it without notice. 
+For instance, all of Chapter~\ref{chapter:canonical:forms} relies on Nauty.
+
+
+
+

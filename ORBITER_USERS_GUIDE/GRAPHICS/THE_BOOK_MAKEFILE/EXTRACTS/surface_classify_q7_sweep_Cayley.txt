@@ -1,0 +1,37 @@
+surface_classify_q7_sweep_Cayley:
+	$(ORBITER) -v 5 \
+		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define F -finite_field -q 7 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define Control -poset_classification_control -W \
+			-problem_label "surf_q7" \
+		-end \
+		-define Classify -classify_cubic_surfaces \
+			-use_double_sixes \
+			-projective_space P \
+			-poset_classification_control Control \
+		-end \
+		-define Orb -orbits \
+			-on_cubic_surfaces Classify \
+		-end \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 -nodes_empty \
+		-end \
+		-define ro \
+			-poset_classification_report_options \
+				-draw_poset -type_ordinary \
+			-draw_options Do \
+		-end \
+		-with Orb -do -orbits_activity \
+			-report "5plus1=off,double_sixes=off,flag_orbits=off,show_group=off,report_options=ro" \
+		-end \
+		-with Orb -do \
+			-orbits_activity \
+			-export_source_code \
+		-end \
+		-with Orb -do \
+			-cubic_surfaces_after_classification_activity \
+			-sweep_Cayley \
+		-end
+	$(PDFLATEX) Surfaces_q7.tex 
+	$(OPEN) Surfaces_q7.pdf

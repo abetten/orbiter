@@ -1,0 +1,10 @@
+EC_points_199:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 199 -end \
+		-with F -do \
+		-finite_field_activity \
+		-EC_points "EC_5_7_q199" 5 7 -end
+	$(ORBITER) -v 2 \
+		-draw_matrix -input_csv_file EC_5_7_q199_points_xy.csv \
+		-box_width 10 -bit_depth 24 \
+		-partition 2 199 199 -end

@@ -1,0 +1,12 @@
+CRC_F16_BCH_write_code_for_division_Delta:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 16 -override_polynomial 19 -end \
+		-define A -vector -field F -sparse 52 "1,51,1,0" -end \
+		-define B -vector -field F -dense $(CRC_POLY_DELTA_DENSE) -end \
+		-with F -do \
+		-coding_theoretic_activity \
+			-write_code_for_division \
+			delta A B \
+		-end
+	g++ crc_delta.cpp -o crc_delta.out
+	./crc_delta.out

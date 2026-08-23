@@ -1,0 +1,25 @@
+tournament_classify_4:
+	$(ORBITER) -v 2 \
+		-define Do -draw_options \
+			-radius 400 \
+			-line_width 2 -scale 0.10 \
+		-end \
+		-define GC -graph_classification \
+			-n 4 -tournament \
+			-poset_classification_control \
+				-problem_label tournament_4 \
+				-depth 6 \
+				-draw_options Do \
+			-end \
+		-end \
+		-with GC -do \
+		-graph_classification_activity \
+			-draw_options Do \
+			-draw_graphs_at_level 6 \
+		-end \
+		-print_symbols
+	$(PDFLATEX) tournament_4_level_6_reps.tex
+	$(OPEN) tournament_4_level_6_reps.pdf
+	
+# error after
+#do_orbiter_session after execute_command_line

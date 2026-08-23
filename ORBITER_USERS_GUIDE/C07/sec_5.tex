@@ -1,0 +1,249 @@
+A set of points $V$ in $\PG(n,q)$ is algebraic if there is a set 
+of homogeneous polynomials $p_1,\ldots,p_r$
+whose roots over $\bbF_q$ are the given set. 
+In this case, we write $V = \bv(p_1,\ldots,p_r).$ 
+The set $V$ is also called the algebraic variety of $p_1,\ldots,p_r.$
+
+\bigskip
+
+Conversely, given a set of points $V$ in $\PG(n,q),$ 
+the ideal $I(V)$ is the set of homogeneous polynomials 
+in $\bbF_q[X_0,\ldots,X_n]$ which vanish on all of $V.$
+This set is an ideal in the polynomial ring. 
+In $\PG(n,q),$ every set is algebraic 
+of degree at most $(n+1)(q-1)$~\cite{GlynnHirschfeld95}. 
+The associated polynomial is unique and known as 
+the algebraic normal form of the set.
+
+
+\bigskip
+
+
+In order to work with algebraic sets, 
+multivariate polynomial rings are required. 
+
+
+\bigskip
+
+
+Table~\ref{tab:variety} lists the commands 
+for creating an algebraic variety.
+\orbitertableofcommands{variety}
+
+
+
+\bigskip
+
+
+A projective variety requires a projective space 
+and an associated ring of coordinate functions.
+The number of variables is one more than the projective dimension of the space.
+The variety can be given in two ways. 
+It can be given by an equation in algebraic form or 
+by a list of coefficients. 
+In the second case, the coefficients must be listed in the chosen monomial ordering of the ring.
+Once a variety is created, activities for varieties can be invoked. 
+
+
+\bigskip
+
+Suppose we want to create an algebraic variety. 
+To this end, we need to first create a finite field and a suitable polynomial ring. 
+Because we create projective variety, 
+we need to specify the graded component of the ring, i.e., 
+the degree of the homogeneous polynomial. 
+After that, we specify the (homogeneous) algebraic equation which defines the variety. 
+The degree of the equation must match the degree selected in the polynomial ring.
+It is assumed that one side of the equation is zero, 
+and only the non-zero side of the equation is given.
+The multiplication signs must be written and cannot be omitted.
+Here is an example:
+
+
+\bigskip
+
+We consider the conic 
+$$
+X_0^2-X_1X_2
+$$
+over the field $
+\bbF_{13}$.
+We write the equation as 
+$$
+\verb'X0^2-X1*X2'
+$$
+and invoke the following command:
+
+
+\sourcecode{conic_variety_q13}
+
+The command creates the field $\bbF_{13}$, the projective plane $\PG(2,13),$ 
+the degree-2 component of the 
+polynomial ring 
+$$
+\bbF_{13}[X_0,X_1,X_2],
+$$
+and then finally the conic $X_0^2-X_1X_2$.
+The variety is given the name \verb'conic'. 
+The name is useful should any output files be created (not in this example). 
+Using the ordering of monomials in the polynomial ring, 
+the equation is translated into a coefficient vector as follows:
+$$
+(1, 0, 0, 0, 0, 12).
+$$
+The conic has $14$ points. 
+Using Orbiter codes for projective points, the numbers are 
+$$
+1, 2, 3, 39, 57, 62, 68, 77, 134, 141, 150, 151, 175, 178.
+$$
+
+\bigskip
+
+
+In the next example, we consider the Klein quadric with equation
+$$
+X_0X_1 + X_2X_3 + X_4X_5 = 0.
+$$
+We encode the equation as a makefile variable:
+
+\sourcecodevariable{Op_6_eqn}
+
+The following command creates the associated algebraic variety:
+
+
+\sourcecode{Op_6_2_variety}
+
+
+
+\bigskip
+
+
+
+
+We consider the quartic curve in $\PG(2,13)$ given by the equation
+$$
+X_0^4 + 4X_1^4 + 9X_2^4 + X_0^2X_1^2 + 4X_0^2X_2^2 + 3X_1^2X_2^2=0.
+$$
+
+\sourcecodevariable{CURVE_Q13_F0_CLEAN2_EQUATION}
+
+The following command creates the algebraic variety.
+Since we are interested in a curve of degree 4, 
+we create the degree-4 component of the polynomial ring. 
+Finally, we create the variety $V$ over $F$, utilizing the projective 
+space $P$ and the ring $R$ and the makefile variable containing the equation. 
+For possible use later, we define a label of the variety, 
+one for ASCII text and one for latex output. 
+
+
+\sourcecode{curve_q13_f0}
+
+
+\bigskip
+
+
+In a similar vein, let us create the 
+Hirschfeld surface over $\bbF_2$ in projective three-space, 
+with equation 
+$$
+X^2W+XW^2+Y^2Z+YZ^2=0.
+$$
+We encode the equation in a makefile variable:
+
+
+
+\sourcecodevariable{HIRSCHFELD_EQUATION_XYZW}
+
+The following command creates the variety:
+
+
+\sourcecode{Hirschfeld_q2}
+
+
+\bigskip
+
+
+It is possible to transform a projective variety under a linear transformation. 
+There are two different strategies. 
+The first is by using a variety object. 
+The second is by applying the transformation directly to the equation, 
+without going through a variety object. 
+
+\bigskip
+
+Here are two examples which illustrate both strategies. 
+In the first example, we apply two transformations while we create the variety.
+At first, we create makefile variables for the equation in algebraic form, 
+for the precomputed set of points and bitangents, and for the two transformations.
+The transformations are given as matrices.
+
+
+\sourcecodevariable{CURVE_Q13_FLAG_1_EQN}
+
+\sourcecodevariable{CURVE_Q13_FLAG_1_POINTS}
+
+\sourcecodevariable{CURVE_Q13_FLAG_1_BITANGENTS}
+
+\sourcecodevariable{CURVE_Q13_FLAG_1_TRANS_1}
+
+\sourcecodevariable{CURVE_Q13_FLAG_1_TRANS_2}
+
+And now the command to create the variety:
+
+\sourcecode{quartic_curve_q13_f1_apply_transformation}
+
+
+This example will be continued in 
+Section~\ref{sec:cubic:surfaces:quartic:curves}.
+
+
+\bigskip
+
+
+
+In the second example, do not use a variety object. 
+Instead, we perform the transformation 
+directly on the equation, using a polynomial ring object. 
+We utilize two makefile variables. 
+The first is for the equation, 
+given by the list of coefficients in the partition ordering of monomials:
+
+
+\sourcecodevariable{QUARTIC_CURVE_Q13_FLAG_0_EQN_COEFFICIENTS}
+
+The second makefile variable defines the transformation matrix:
+
+\sourcecodevariable{QUARTIC_CURVE_Q13_FLAG_0_TRANS}
+
+Finally, the Orbiter command to perform the linear substitution of the equation:
+
+
+
+\sourcecode{quartic_curve_q13_f0_apply_transformation}
+
+
+The command creates a finite field, a projective space and an associate polynomial ring. 
+After that, the equation is defined by means of a dense coefficient vector in the partition ordering of monomials.
+After that, the coefficients of a transformation matrix are given, again using a dense vector. 
+Then the appropriate projective linear group is defined. 
+Using this group, the transformation is defined as a group element 
+from the vector of coefficients. 
+Finally, the \verb'-apply_transformation' 
+command is applied to the polynomial ring $R$ as a ring theoretic activity.
+
+
+\bigskip
+
+
+
+We can create a variety by giving the Orbiter rank of the equation. 
+In this case, the coefficient vector of the equation is identified with the homogeneous coordinates of a point in a projective space of suitable dimension. The following example creates a cubic curve:
+
+
+
+\sourcecode{cubic_eqn_q3_0}
+
+
+
+
+\bigskip

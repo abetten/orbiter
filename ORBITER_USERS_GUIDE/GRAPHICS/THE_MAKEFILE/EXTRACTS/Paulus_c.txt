@@ -1,0 +1,54 @@
+Paulus_c:
+	$(ORBITER) -v 6 \
+		-define Doinc -draw_incidence_structure_options \
+			-width 20 -width_10 2 -end \
+		-loop L 1 16 1 \
+			-define P25_%L -graph -load_Brouwer \
+				$(ORBITER_PATH)/examples/users_guide/PAULUS_ROSENFELD/P25_%L.txt \
+			-end \
+		-end_loop L \
+		-define C -combinatorial_object \
+			-label P25 P25 \
+			-graph_object P25_1 \
+			-graph_object P25_2 \
+			-graph_object P25_3 \
+			-graph_object P25_4 \
+			-graph_object P25_5 \
+			-graph_object P25_6 \
+			-graph_object P25_7 \
+			-graph_object P25_8 \
+			-graph_object P25_9 \
+			-graph_object P25_10 \
+			-graph_object P25_11 \
+			-graph_object P25_12 \
+			-graph_object P25_13 \
+			-graph_object P25_14 \
+			-graph_object P25_15 \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form \
+				-save_ago \
+				-save_transversal \
+				-max_TDO_depth 10 \
+				-nauty_control -end \
+			-end \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-post_processing \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-report \
+				-export_flag_orbits \
+				-show_TDO \
+				-show_TDA \
+				-export_labels \
+				-show_incidence_matrices \
+				-export_group_GAP \
+				-incidence_draw_options Doinc \
+			-end \
+		-end
+	$(PDFLATEX) P25_classification.tex
+	$(OPEN) P25_classification.pdf

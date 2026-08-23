@@ -1,0 +1,8 @@
+CRC_F16_roots_51:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 16 -override_polynomial 19 -end \
+		-with F -do -finite_field_activity \
+			-nth_roots 51 \
+		-end
+	$(PDFLATEX) Nth_roots_q16_n51.tex
+	$(OPEN) Nth_roots_q16_n51.pdf

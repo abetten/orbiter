@@ -1,0 +1,6 @@
+F_127:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 127 -end \
+		-with F -do -finite_field_activity \
+			-cheat_sheet_GF \
+		-end

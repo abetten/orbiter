@@ -1,0 +1,7 @@
+Family_general_F7:
+	$(ORBITER) -v 10 \
+		-define F -finite_field -q 7 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define S7_abcd_2_3_3_4 -cubic_surface \
+			-space P -family_general_abcd 2 3 3 4 \
+		-end

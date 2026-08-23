@@ -1,0 +1,34 @@
+geo_17_3_g4_c:
+	$(ORBITER) -v 2 \
+		-define Doinc -draw_incidence_structure_options \
+			-width 50 -width_10 5 -end \
+		-define C -combinatorial_object \
+			-label 17_3_g4 17\_3\_g4 \
+			-file_of_incidence_geometries 17_3_g4.inc 17 17 51 \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form \
+				-save_ago \
+				-nauty_control -nauty_log "geo_17_3_g4_nauty_log.txt" -end \
+			-end \
+		-end \
+		-define Doinc -draw_incidence_structure_options \
+			-width 40 -width_10 6 \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-post_processing \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-report \
+				-export_flag_orbits \
+				-show_TDO \
+				-show_TDA \
+				-show_incidence_matrices \
+				-incidence_draw_options Doinc \
+			-end \
+		-end
+	$(PDFLATEX) 17_3_g4_classification.tex
+	$(OPEN) 17_3_g4_classification.pdf

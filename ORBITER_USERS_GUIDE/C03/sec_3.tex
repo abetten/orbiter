@@ -1,0 +1,98 @@
+In Table~\ref{tab:linear:algebra}, 
+some finite field activities regarding linear algebra are shown.
+\orbitertableofcommands{finite_field_activities_linear_algebra}
+For instance, the command
+
+\sourcecode{RREF}
+
+computes the RREF form of the 
+matrix 
+$$
+\left[
+\begin{array}{ccccc}
+1&1&1&1&0\\
+1&1&0&0&1\\
+\end{array}
+\right]
+$$
+over $\bbF_2.$
+The output is the matrix 
+\orbiteroutput{GRAPHICS/WRAPPERS/rref_1}
+
+\bigskip
+
+The \verb'-RREF' command produces a latex log of the steps. 
+This can be used to follow the algorithm along. 
+For a somewhat longer example, 
+consider the Vandermonde matrix over the field $\bbF_7$.
+Suppose we want to compute the inverse matrix directly. 
+We can use the following command to do so. 
+Notice how we first create the matrix and an identity matrix next to it. 
+After that we apply the \verb'-RREF' command:
+
+\sourcecodevariable{V7_VANDERMONDE_EXTENDED}
+
+
+\sourcecode{RREF_V7}
+
+The following (shortened) output is produced. 
+Observe how the inverse matrix 
+appears in the second half once the \verb'-RREF' algorithm is finished: 
+\orbiteroutput{GRAPHICS/WRAPPERS/rref_long}
+The inverse matrix agrees with the output 
+obtained in Section~\ref{sec:finite:fields}.
+
+
+
+\bigskip
+
+
+Another task is computing the nullspace of a matrix.
+The command 
+
+\sourcecode{nullspace}
+
+computes the right nullspace of the matrix from the first example.
+The output is the matrix
+\orbiteroutput{GRAPHICS/WRAPPERS/rref_3}
+
+\bigskip
+
+
+Orbiter can compute eigenvalues 
+and eigenvectors of matrices over finite fields. 
+For instance, the command 
+
+\sourcecode{eigenstuff}
+
+computes all eigenvectors and eigenvalues of the matrix
+$$
+\left[
+\begin{array}{cccc}
+	0&1&0&2\\
+	0&1&2&1\\
+	4&2&3&1\\
+	2&0&4&3\\
+\end{array}
+\right]
+$$
+over $\bbF_5.$
+
+\bigskip
+
+Orbiter can produce a list of all conjugacy classes 
+of endomorphisms of $\bbF_q^d$ by means of their rational normal forms. 
+For instance
+
+\sourcecode{classes_GL_3_2}
+
+produces a list of all conjugacy classes of $\GL(3,2).$
+There are 6 of them.
+The report includes the order of 
+the centralizer and the order of the conjugacy class. 
+The order of the centralizer is computed 
+using Kung's formula~\cite{Kung81}.
+This command relies on the Orbiter catalogue of irreducible polynomials.
+For an introduction to the rational normal 
+form of endomorphisms, see~\cite{Lueneburg1987}.
+\orbiteroutput{GRAPHICS/WRAPPERS/conjugacy_classes_GL_3_2}

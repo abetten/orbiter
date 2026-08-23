@@ -1,0 +1,5 @@
+make_table_of_surfaces:
+	$(ORBITER) -v 3 \
+		-make_table_of_surfaces
+	$(PDFLATEX) surfaces_report.tex
+	$(OPEN) surfaces_report.pdf

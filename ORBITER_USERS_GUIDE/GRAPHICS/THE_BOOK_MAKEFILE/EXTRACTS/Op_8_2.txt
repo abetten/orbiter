@@ -1,0 +1,12 @@
+Op_8_2:
+	$(ORBITER) -v 2 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 -nodes_empty \
+		-end \
+		-define F -finite_field -q 2 -end \
+		-define O -orthogonal_space 1 8 F -without_group -end \
+		-with O -do -orthogonal_space_activity \
+			-cheat_sheet_orthogonal Do \
+		-end
+	$(PDFLATEX) O_1_8_2_report.tex 
+	$(OPEN) O_1_8_2_report.pdf

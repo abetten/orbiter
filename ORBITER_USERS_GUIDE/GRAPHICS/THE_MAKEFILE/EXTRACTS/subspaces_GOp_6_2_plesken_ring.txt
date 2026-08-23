@@ -1,0 +1,32 @@
+subspaces_GOp_6_2_plesken_ring:
+	$(ORBITER) -v 5 \
+		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+			-poset_orbits_x_stretch 750 \
+			-embedded \
+			-poset_type_Asup \
+		-end \
+		-define Control -poset_classification_control \
+			-problem_label GOp_6_2 -W -depth 6 \
+		-end \
+		-define G -linear_group -PGL 6 2 -orthogonal 1 -end \
+		-define Orb -orbits \
+			-group G \
+			-group_action G \
+			-generators G \
+			-on_subspaces 6 Control \
+		-end \
+		-define PC_Plesken -poset_classification_activity \
+			-plesken_ring \
+		-end \
+		-assign P -from \
+		-with Orb -do -orbits_activity \
+			-poset_classification_activity PC_Plesken \
+		-end \
+		-with P -do -plesken_ring_activity \
+			-report Do \
+		-end \
+		-print_symbols
+	$(PDFLATEX) GOp_6_2_plesken_ring.tex
+	$(OPEN) GOp_6_2_plesken_ring.pdf

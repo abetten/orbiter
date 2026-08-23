@@ -1,0 +1,70 @@
+% file: PGGL_2_8_OnConic_sims_0.commands
+% created by Orbiter graphics interface
+% creation date: Sat Dec 19 23:54:03 MST 2020
+
+DeviceCoordinates 0 0 1000000 1000000
+UserCoordinates 0 0 10000 10000
+Polygon 2 5000 9583 5000 8750
+Polygon 2 5000 8750 5000 7916
+Polygon 2 5000 7916 4166 7083
+Polygon 2 5000 7916 9166 7083
+Polygon 2 4166 7083 2083 6250
+Polygon 2 4166 7083 6250 6250
+Polygon 2 2083 6250 2083 5416
+Polygon 2 6250 6250 6250 5416
+sf_interior 100
+Circle 500000, 958300, 25000
+sf_interior 0
+Circle 500000, 958300, 25000
+st_alignment 1, 1
+Text 500000, 958300, "{\scriptsize 0}"
+sf_interior 100
+Circle 500000, 875000, 25000
+sf_interior 0
+Circle 500000, 875000, 25000
+st_alignment 1, 1
+Text 500000, 875000, "{\scriptsize 1}"
+sf_interior 100
+Circle 500000, 791600, 25000
+sf_interior 0
+Circle 500000, 791600, 25000
+st_alignment 1, 1
+Text 500000, 791600, "{\scriptsize 5}"
+sf_interior 100
+Circle 416600, 708300, 25000
+sf_interior 0
+Circle 416600, 708300, 25000
+st_alignment 1, 1
+Text 416600, 708300, "{\scriptsize 8}"
+sf_interior 100
+Circle 916600, 708300, 25000
+sf_interior 0
+Circle 916600, 708300, 25000
+st_alignment 1, 1
+Text 916600, 708300, "{\scriptsize 4}"
+sf_interior 100
+Circle 208300, 625000, 25000
+sf_interior 0
+Circle 208300, 625000, 25000
+st_alignment 1, 1
+Text 208300, 625000, "{\scriptsize 3}"
+sf_interior 100
+Circle 625000, 625000, 25000
+sf_interior 0
+Circle 625000, 625000, 25000
+st_alignment 1, 1
+Text 625000, 625000, "{\scriptsize 6}"
+sf_interior 100
+Circle 208300, 541600, 25000
+sf_interior 0
+Circle 208300, 541600, 25000
+st_alignment 1, 1
+Text 208300, 541600, "{\scriptsize 7}"
+sf_interior 100
+Circle 625000, 541600, 25000
+sf_interior 0
+Circle 625000, 541600, 25000
+st_alignment 1, 1
+Text 625000, 541600, "{\scriptsize 2}"
+END_OF_FILE
+

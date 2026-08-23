@@ -1,0 +1,19 @@
+surface_F9:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 9 -print_numerically -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 4 \
+			-homogeneous_of_degree 3 \
+			-monomial_ordering_lex \
+			-variables "X0,X1,X2,X3" "X_0,X_1,X_2,X_3" \
+			-end \
+		-define surface_F9 -symbolic_object \
+			-field F \
+			-text $(SURFACE_F9_1_EQN) \
+			-end \
+		-with P -do \
+		-projective_space_activity \
+			-projective_variety R surface_F9 "" \
+		-end

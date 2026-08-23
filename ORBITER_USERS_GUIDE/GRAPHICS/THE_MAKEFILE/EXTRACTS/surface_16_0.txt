@@ -1,0 +1,17 @@
+surface_16_0:
+	$(ORBITER) -v 3 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 -nodes_empty \
+		-end \
+		-define F -finite_field -q 16 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define S16_0 -cubic_surface -space P -catalogue 0 \
+			-transform "1,0,0,0,0,1,0,12,0,0,1,12,0,0,0,1,0" \
+			-transform "15,11,4,0,0,0,12,0,0,12,0,0,0,0,0,1,3" \
+		-end \
+		-with S16_0 -do \
+		-cubic_surface_activity \
+			-report Do \
+		-end
+	$(PDFLATEX) surface_catalogue_q16_iso0_report.tex
+	$(OPEN) surface_catalogue_q16_iso0_report.pdf

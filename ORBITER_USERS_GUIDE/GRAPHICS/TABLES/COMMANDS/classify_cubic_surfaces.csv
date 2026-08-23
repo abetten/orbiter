@@ -1,0 +1,7 @@
+ROW,C1,C2,C3
+0,"tab:classify:cubic:surfaces",,
+1,"Classifying Cubic Surfaces",,
+1,"\verb'-use_double_sixes' ",," Use the method of substructures based on double sixes. "
+1,"\verb'-projective_space' "," P "," Specify the projective space object P. "
+1,"\verb'-poset_classification_control' ", C ," Use the poset classification control object C. "
+END

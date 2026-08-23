@@ -1,0 +1,16 @@
+draw_cyclotomic_mod_21_q8:
+	$(ORBITER) -v 2 \
+		-define Do -draw_options \
+			-radius 100 \
+			-line_width 1.0 -embedded \
+		-end \
+		-draw_mod_n \
+			"mod_n=on" \
+			-n 21 \
+			-file mod_21_cyclotomic \
+			-cyclotomic_sets 8 "1,2,4,5,7,10,13" \
+			-label_nodes \
+			-draw_options Do \
+		-end
+	$(PDFLATEX) mod_21_cyclotomic_draw.tex
+	$(OPEN) mod_21_cyclotomic_draw.pdf

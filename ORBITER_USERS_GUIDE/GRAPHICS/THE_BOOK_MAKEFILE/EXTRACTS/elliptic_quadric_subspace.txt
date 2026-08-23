@@ -1,0 +1,10 @@
+elliptic_quadric_subspace:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 5 -end \
+		-define v -vector -format 4 \
+			-dense "1,3,0,0,0,0, 0,0,1,0,0,0, 0,0,0,1,0,0, 0,0,0,0,1,1" \
+		-end \
+		-define O -orthogonal_space 1 6 F -end \
+		-with O -do -orthogonal_space_activity \
+			-intersect_with_subspace v \
+		-end

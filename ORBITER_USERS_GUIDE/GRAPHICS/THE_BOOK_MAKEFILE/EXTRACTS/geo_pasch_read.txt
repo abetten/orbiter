@@ -1,0 +1,7 @@
+geo_pasch_read:
+	$(ORBITER) -v 10 \
+		-define C -combinatorial_object \
+			-label Pasch Pasch \
+			-file_of_incidence_geometries \
+				pasch.inc 6 4 12 \
+		-end

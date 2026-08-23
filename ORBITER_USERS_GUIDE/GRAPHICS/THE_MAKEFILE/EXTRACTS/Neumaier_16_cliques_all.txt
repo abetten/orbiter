@@ -1,0 +1,7 @@
+Neumaier_16_cliques_all:
+	$(ORBITER) -v 10 \
+		-define Gamma -graph -Neumaier_graph_16 -end \
+		-with Gamma -do \
+		-graph_theoretic_activity \
+			-find_cliques -target_size 4 \
+		-end

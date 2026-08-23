@@ -1,0 +1,3 @@
+COLOR_YELLOW_SEE_THROUGH=\
+	"texture{ pigment{ color Yellow transmit 0.5 } \
+	finish { diffuse 0.9 phong 1}}"

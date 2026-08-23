@@ -1,0 +1,11 @@
+BLT_13_cliques:
+	$(ORBITER) -v 2 \
+		-loop L 0 38 1 \
+			-define G -graph \
+				-load BLT_q13_graph_5_%L.bin \
+			-end \
+			-with G -do \
+			-graph_theoretic_activity \
+				-find_cliques -rainbow -target_size 9 \
+			-end \
+		-end_loop L

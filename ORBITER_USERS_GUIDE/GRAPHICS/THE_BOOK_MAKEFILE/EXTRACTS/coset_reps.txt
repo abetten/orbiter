@@ -1,0 +1,13 @@
+coset_reps:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define G1 -linear_group -PGOp 6 F -end \
+		-define G2 -linear_group -PGL 6 F \
+			-symplectic_group \
+		-end \
+		-with G1 -and G2 -do \
+		-group_theoretic_activity \
+			-coset_reps \
+		-end
+	$(PDFLATEX) PGOp_6_2_coset_reps.tex
+	$(OPEN) PGOp_6_2_coset_reps.pdf

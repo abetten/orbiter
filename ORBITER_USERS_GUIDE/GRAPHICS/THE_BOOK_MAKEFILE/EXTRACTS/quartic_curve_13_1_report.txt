@@ -1,0 +1,11 @@
+quartic_curve_13_1_report: 
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 13 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define C -quartic_curve -space P -catalogue 1 -end \
+		-with C -do \
+			-quartic_curve_activity \
+				-report \
+			-end
+	$(PDFLATEX) quartic_curve_catalogue_q13_iso1_report.tex
+	$(OPEN) quartic_curve_catalogue_q13_iso1_report.pdf

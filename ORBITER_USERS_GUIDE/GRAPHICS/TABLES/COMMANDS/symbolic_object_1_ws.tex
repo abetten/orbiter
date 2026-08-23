@@ -1,0 +1,47 @@
+\begin{table}[t]
+\tbl{\label{tab:symbolic:objects:1}}
+{\begin{tcolorbox}[tabularx={p{3cm}|p{2cm}|p{6.3cm}|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black,title=Creating Symbolic Objects I]
+\hline
+Command & Arguments & Purpose \\
+\hline
+\hline
+\verb'-label_txt'  &  label  &  Choose an ascii-label of the object. \\
+\hline
+\verb'-label_tex'  &  label  &  Choose a tex-label of the object. \\
+\hline
+\verb'-managed_variables'  &  list  &  A comma-separated list of managed variables may be given. The manage variables can later be matched to the variables of a polynomial ring. The other variables can be used as parameters. \\
+\hline
+\verb'-text'  &  text  & A comma separated sequence of algebraic expressions in text format. \\
+\hline
+\verb'-field'  &  $F$  &  The finite field of coefficients in the expression. \\
+\hline
+\verb'-ring'  &  $R$  &   \\
+\hline
+\verb'-file'  &  filename  &   \\
+\hline
+\verb'-matrix'  &  $r$  &  Consider the expression vector as a matrix with $r$ rows, read in row-major ordering. \\
+\hline
+\verb'-determinant'  &  $s$  &  Compute the symbolic determinant of the source object $s$. The object $s$ must be a square matrix. \\
+\hline
+\verb'-characteristic_polynomial'  &  $lambda$ $s$  &  Compute the characteristic polynomial of the square matrix $s$ using the variable $\lambda$. \\
+\hline
+\verb'-substitute'  &  $v$ $exp$ $t$  &  Substitute the values $v$ for the variables $t$ in the expressions given in $exp$. $v$ and $t$ must be vectors of the same length. \\
+\hline
+\verb'-simplify'  &  $s$  &  Simplify the object $s$. \\
+\hline
+\verb'-reduce_exponents'  &  $s$  &  Reduce exponents modulo $q-1$ if greater than or equal to $q$. Don't reduce $q-1$ to $0$. \\
+\hline
+\verb'-expand'  &  $s$  &  Expand the object $s$. \\
+\hline
+\verb'-right_nullspace'  &  $s$  &  Compute the right nullspace of the object $s$, which must be a fully numerical matrix. \\
+\hline
+\verb'-minor'  &  $s$ $i$ $j$  &  Compute the $(i,j)$-minor of the matrix object $s.$ $s$ must be a square matrix. \\
+\hline
+\verb'-symbolic_nullspace'  &  $s$  &   Compute the right nullspace of the object $s$, which must be a symbolic matrix. \\
+\hline
+\verb'-stack_matrices_vertically'  &  list  &  Stack the given matrices in the list vertically. The matrices must have the same number of columns. \\
+\hline
+\end{tcolorbox}}
+\end{table}

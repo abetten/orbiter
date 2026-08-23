@@ -1,0 +1,7 @@
+poly_mult_mod1:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 7 -end \
+		-with F -do \
+		-finite_field_activity \
+			-polynomial_mult_mod "1,2,3" "3,4,5" "6,0,0,1" \
+		-end

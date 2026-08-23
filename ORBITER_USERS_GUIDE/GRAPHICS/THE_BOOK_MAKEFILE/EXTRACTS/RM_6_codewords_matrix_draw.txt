@@ -1,0 +1,9 @@
+RM_6_codewords_matrix_draw:
+	$(ORBITER) -v 2 \
+		-draw_matrix \
+			-input_csv_file RM6_codewords.csv \
+			-box_width 25 -bit_depth 8 \
+			-partition 3 128 64 \
+		-end
+	magick RM6_codewords_draw.bmp RM6_codewords_draw.png
+	$(OPEN) RM6_codewords_draw.png

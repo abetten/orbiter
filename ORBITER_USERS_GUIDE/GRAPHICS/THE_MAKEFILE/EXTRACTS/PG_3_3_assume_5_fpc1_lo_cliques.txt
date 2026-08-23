@@ -1,0 +1,7 @@
+PG_3_3_assume_5_fpc1_lo_cliques:
+	$(ORBITER) -v 2 \
+		-define G -graph -load H5_fpc1_lo.graph -end \
+		-with G -do \
+			-graph_theoretic_activity \
+			-find_cliques -target_size 2 -output_file H5_fpc1_lo_cliques.csv -end \
+		-print_symbols

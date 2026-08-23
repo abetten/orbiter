@@ -1,0 +1,115 @@
+Table~\ref{tab:cubic:surface:activities} lists activities for a cubic surface object.
+\orbitertableofcommands{cubic_surface_activity}
+
+Table~\ref{tab:cubic:surface:export} lists options for exporting data.
+\orbitertableofextracommands{cubic_surface_export_options}
+
+\bigskip
+
+
+The following command creates the Hirschfeld surface over $\bbF_4$ 
+and produces a report for it:
+\sourcecode{surface_4_0_report}
+
+\bigskip
+
+
+We may decide to choose a nice labeling of lines. 
+For this, we utilize the \verb'-select_double_six' command. 
+This command can be repeated:
+\sourcecode{surface_4_0_clean_report}
+
+\bigskip
+
+
+The following command exports some data about the surface:
+\sourcecode{surface_4_0_export}
+The following data is exported: the set of points on and off the surface, 
+the set of lines, and the set of Hesse planes.
+
+
+\bigskip
+
+The following command creates the cubic surface over $\bbF_7$ 
+with catalogue number 0. It also writes a report 
+and exports the set of lines:
+
+\sourcecode{surface_7_0}
+
+
+\bigskip
+
+It is possible to apply a transformation, i.e., a change of coordinates.
+For instance, the following command produce 
+an equation of a cubic surface over $\bbF_{16}$.
+Starting from the surface with catalogue number 0, 
+two transformations are applied:
+
+\sourcecode{surface_16_0}
+
+
+
+\bigskip
+
+
+
+
+The following command creates the surface $\cF_{a,b,c,d}$ 
+with $(a,b,c,d)=(2,30,30,2)$ over $\bbF_{31}$ 
+from the previous section and produces a report:
+
+\sourcecode{surface_F_abcd_Eckardt_q31_by_symbolic_object_report}
+
+The report shows information about the surface like the number of points and lines 
+or the number of Eckardt points. 
+In this case, the surface has 6 Eckardt points. 
+
+
+\bigskip
+
+
+As described in the previous section, 
+it is possible to create a cubic surface at random. 
+The following command creates a random surface over the field $\bbF_{11}$. 
+Random means that each isomorphism type 
+of surface appears with equal probability. 
+Since surfaces may have different stabilizer orders, 
+this is different from 
+the equidistribution over all surfaces 
+with 27 lines for a given finite field.
+
+\sourcecode{surface_11_random_report}
+
+The following report will be produced:
+
+
+\orbiteroutput{GRAPHICS/LATEX/surface_random_q11_report}
+
+\bigskip
+
+
+It is possible to recognize a cubic surface as a member of the $\cF_{a,b,c,d}$ family.
+We can determine elements $a,b,c,d$ in $\bbF_q$ such that 
+$\cF_{a,b,c,d}$ is isomorphic to the given smooth surface. 
+This relies on the classification of non-conical $6$-arcs in 
+the associated projective plane $\PG(2,q)$. 
+The following command 
+shows how to classify the non-conical $6$-arcs in the plane 
+and how to recognize a surface. 
+In the example, we create the surface 
+over $\bbF_8$ with catalogue number 0:
+
+ 
+\sourcecode{surface_8_0_recognize_abcd}
+
+
+
+\bigskip
+
+
+
+
+
+
+
+

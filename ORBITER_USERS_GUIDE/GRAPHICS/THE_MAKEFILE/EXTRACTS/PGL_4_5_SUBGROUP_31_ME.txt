@@ -1,0 +1,3 @@
+PGL_4_5_SUBGROUP_31_ME=-PGL 4 5 \
+	-subgroup_by_generators "31" 31 1 \
+	"1,0,0,0, 0,3,4,3, 0,3,3,4, 0,3,2,3"

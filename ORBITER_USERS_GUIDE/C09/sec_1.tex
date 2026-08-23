@@ -1,0 +1,44 @@
+Orbiter can create, classify and investigate cubic surfaces over small finite fields. 
+In this section, some global commands associated with cubic surfaces will be shown. 
+Section~\ref{sec:cubicsurfaces:creation} demonstrates how cubic surfaces can be created in Orbiter.
+Section~\ref{sec:cubic:surfaces:quartic:curves} shows Orbiter commands related to quartic curves.
+Section~\ref{sec:cubicsurfaces:classification} discusses how cubic surfaces can be classified.
+Section~\ref{sec:cubicsurfaces:interface} covers the GAP interface for cubic surfaces.
+
+\bigskip
+
+The command 
+
+\sourcecode{surface_4_0_lines_vs_lines}
+
+exports the adjacency matrix of the graph of incident lines of a cubic surface. 
+The lines are ordered w.r.t. the Schlaefli labeling.
+The command invokes a projective space activity, 
+and hence creates a projective space first.
+The order of the field is irrelevant. 
+The command also produces a drawing of the adjacency matrix, shown below:
+\orbiteroutput{GRAPHICS/WRAPPERS/PG_3_4_lines_vs_lines_incma_draw}
+Using Schlaefli labels, the lines are ordered 
+$$
+a_1,\ldots,a_6,b_1,\ldots,b_6,c_{12},c_{13}, \ldots, c_{56}.
+$$
+
+\bigskip
+
+
+The command 
+
+\sourcecode{surface_4_0_lines_vs_tritangent_planes}
+
+exports the incidence matrix between lines and tritangent planes of a cubic surface. 
+The lines are ordered w.r.t. the Schlaefli labeling.
+The tritangent planes are ordered w.r.t. the Schlaefli labeling.
+The command invokes a projective space activity, 
+and hence creates a projective space first.
+The order of the field is irrelevant. 
+The command also produces a drawing of the incidence matrix, shown below:
+\orbiteroutput{GRAPHICS/WRAPPERS/PG_3_4_lines_tritplanes_incma_draw}
+
+\bigskip
+
+

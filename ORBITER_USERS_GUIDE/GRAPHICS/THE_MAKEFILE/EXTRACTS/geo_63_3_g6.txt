@@ -1,0 +1,14 @@
+geo_63_3_g6:
+	$(ORBITER) -v 1 \
+		-define Test_lines -set -loop 4 64 1 -end \
+		-define Geo -geometry_builder \
+			-V 63 -B 63 -TDO 3 \
+			-fuse 1 -fname_GEO 63_3_g6 \
+			-girth 6 \
+			-test Test_lines \
+			-special_test_not_orderly \
+			-output_to_sage_file \
+			-output_to_inc_file \
+			-search_tree \
+			-save_canonical_forms \
+		-end

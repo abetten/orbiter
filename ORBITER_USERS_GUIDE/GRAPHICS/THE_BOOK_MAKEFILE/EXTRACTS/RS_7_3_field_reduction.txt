@@ -1,0 +1,15 @@
+RS_7_3_field_reduction:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 8 -end \
+		-define C -code -field F -Reed_Solomon 7 3 -end \
+		-with F -do \
+		-finite_field_activity \
+		-field_reduction "RS_8_red_2" \
+			2 5 7 $(CODE_RS_F8_N7_K5_D3_GENMA) \
+		-end
+	$(ORBITER) -v 2 \
+		-draw_matrix -input_csv_file RS_8_red_2.csv \
+		-box_width 40 -bit_depth 24 \
+		-partition 4 "3,3,3,3,3" "3,3,3,3,3,3,3" -end
+	$(PDFLATEX) field_reduction_Q8_q2_5_7.tex
+	$(OPEN) field_reduction_Q8_q2_5_7.pdf

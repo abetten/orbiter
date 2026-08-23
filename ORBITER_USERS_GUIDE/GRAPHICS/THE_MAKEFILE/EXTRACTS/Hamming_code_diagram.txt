@@ -1,0 +1,17 @@
+Hamming_code_diagram:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define v -vector -dense $(HAMMING_CODE_ROWS_IN_BINARY_RANKS) -end \
+		-define C -code -field F \
+			-basis 7 v \
+		-end \
+		-with C -and F -do -coding_theoretic_activity \
+			-make_diagram \
+		-end
+	$(ORBITER) -v 2 \
+		-draw_matrix \
+			-input_csv_file by_basis_n7_k4_char_func_7_16.csv \
+			-box_width 25 -bit_depth 24 \
+			-partition 4 16 8 \
+		-end
+	$(OPEN) by_basis_n7_k4_char_func_7_16_draw.bmp

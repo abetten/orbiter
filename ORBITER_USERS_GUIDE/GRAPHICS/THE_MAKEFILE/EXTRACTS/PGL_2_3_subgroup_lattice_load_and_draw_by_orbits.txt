@@ -1,0 +1,15 @@
+PGL_2_3_subgroup_lattice_load_and_draw_by_orbits:
+	$(ORBITER) -v 3 \
+		-define Do -draw_options -embedded -end \
+		-define F -finite_field -q 3 -end \
+		-define G -linear_group -PGL 2 F -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-subgroup_lattice_load PGL_2_3_subgroup_lattice.csv \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-subgroup_lattice_draw_by_orbits Do \
+		-end
+	$(PDFLATEX) PGL_2_3_drawing_by_orbits.tex
+	$(OPEN) PGL_2_3_drawing_by_orbits.pdf

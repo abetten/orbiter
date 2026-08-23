@@ -1,0 +1,15 @@
+symbolic_object1_evaluate:
+	$(ORBITER) -v 3 \
+		-define Fq -finite_field -q 13 -end \
+		-define f -symbolic_object \
+			-field Fq \
+			-text "a+2*b^2*(x-y)+3*-(2*c^4+3*d-(a*b*c)^2)^3" \
+		-end \
+		-define assignment -symbolic_object \
+			-field Fq \
+			-text "1,2,3,4,5,6" \
+		-end \
+		-define eval -symbolic_object \
+			-field Fq \
+			-substitute "a,b,c,d,x,y" f assignment \
+		-end

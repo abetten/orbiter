@@ -1,0 +1,24 @@
+orbiter.out -v 2 -povray \
+	-round 0 -nb_frames_default 30 -output_mask endrass_octic_%d_%03d.pov \
+	-video_options -W 1024 -H 768  -global_picture_scale 0.75 -default_angle 75 -clipping_radius 3.7 -no_bottom_plane \
+	-camera 0 "1,1,1" "6,6,3" "0,0,0"  \
+	-rotate_about_111 \
+	-end \
+	-scene_objects \
+		-line_through_two_points_recentered_from_csv_file coordinate_grid.csv \
+		-group_of_things "0" \
+		-group_of_things "1" \
+		-group_of_things "2" \
+		-group_of_things_as_interval 3 39 \
+		-lines 0 0.15 "texture{ pigment{ color Red } finish { diffuse 0.9 phong 1}}" \
+		-lines 1 0.15 "texture{ pigment{ color Green } finish { diffuse 0.9 phong 1}}" \
+		-lines 2 0.15 "texture{ pigment{ color Blue } finish { diffuse 0.9 phong 1}}" \
+		-lines 3 0.05 "texture{ pigment{ color Black } finish { diffuse 0.9 phong 1}}" \
+		-octic_lex_165 "-93.2548,0,0,0,-309.019,0,0,527.529,0,395.647,0,0,0,0,0,0,0,0,0,0,-687.529,0,0,1582.59,0,1186.94,0,0,0,0,-1055.06,0,-1582.59,0,-593.47,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-309.019,0,0,1582.59,0,1186.94,0,0,0,0,-2110.12,0,-3165.17,0,-1186.94,0,0,0,0,0,0,874.039,0,1560.63,0,1677.92,0,343.362,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-93.2548,0,0,527.529,0,395.647,0,0,0,0,-1055.06,0,-1582.59,0,-593.47,0,0,0,0,0,0,874.039,0,1560.63,0,1677.92,0,343.362,0,0,0,0,0,0,0,0,-256,0,-468.077,0,-789.019,0,-525.726,0,0.941125" \
+		-plane_by_dual_coordinates "0,0,1,0" \
+		-group_of_things "0" \
+		-group_of_things "0" \
+		-octics 4 "texture{ pigment{ White*0.5 transmit 0.5 } finish {ambient 0.4 diffuse 0.5 roughness 0.001 reflection 0.1 specular .8} }" \
+		-planes 5 "texture{ pigment{ color Blue transmit 0.5 } finish { diffuse 0.9 phong 1}}" \
+	-scene_objects_end \
+	-povray_end

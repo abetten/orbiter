@@ -1,0 +1,47 @@
+\begin{table}[t]
+\tbl{\label{tab:orbits}}
+{\begin{tcolorbox}[tabularx={p{3cm}|p{2cm}|p{6.3cm}|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black,title=Computing Orbits]
+\hline
+Command & Arguments & Purpose \\
+\hline
+\hline
+\verb'-group'  &   G  &  Specify the group. The argument must be an object of type group. \\
+\hline
+\verb'-group_action'  &   G  &  Specify the action. The argument must be an object of type group. \\
+\hline
+\verb'-generators'  &   G  &  Specify the generators for the group or subgroup whose orbit we want. The argument must be an object of type group. This option is only required when poset classification is used (i.e., not for the Schreier algorithm). \\
+\hline
+\verb'-on_points'  &     &  Perform Schreier algorithm to compute the orbits of $G$ in the natural action and under the group included in the action. \\
+\hline
+\verb'-on_points_with_generators'  &  gens   &  Perform Schreier algorithm to compute the orbits of $G$ in the natural action and under the group given by a set of generators. \\
+\hline
+\verb'-on_subsets'  &  $k$ control  &  Consider the induced action on subsets of size $k$. This option will invoke the poset algorithm. \\
+\hline
+\verb'-of_one_subset'  &  set-label  &  Compute the orbit of the given set under the group $G$. This algorithm will build up the Schreier tree. The orbit will be saved to a csv file. \\
+\hline
+\verb'-on_subspaces'  &  $k$ control  &  Consider the induced action on subspaces of size $k$. We assume that the group action is linear. This option will invoke the poset algorithm. \\
+\hline
+\verb'-on_tensors'  &  $d$ control   &  Consider the orbits on the $d$-fold tensor product. \\
+\hline
+\verb'-on_partition'  &   $k$ control  &  Consider the action on partitions of type $k+k+k$. In this case, $3k$ must equal the degree of the defining action of $G$. \\
+\hline
+\verb'-on_polynomials'  &   R  &  Consider the action of $G$ on homogenous polynomials as defined in ring R. The action must be linear and the number of variables in R must match the degree of the matrix group. \\
+\hline
+\verb'-on_one_polynomial'  &   R equation  &  Consider the action of $G$ on polynomials of degree $d$ in $n$ variables. $G$ must be a matrix group. Here, the action must be linear on an $n$-dimensional space. \\
+\hline
+\verb'-on_cubic_curves'  &   options  &  Classify cubic curves by means of $(9,3)$-arcs. For valid options, see Tab.~\ref{tab:arcs}. \\
+\hline
+\verb'-on_cubic_surfaces'  &   P control  &  Classify cubic surfaces in the projective space P, using the given poset classification control options. \\
+\hline
+\verb'-on_srcs'  &   P control  &  Classify arcs in the projective space P, using the given arc classification control options. \\
+\hline
+\verb'-classification_by_canonical_form'  &   description  &  See Chapter~\ref{chapter:canonical:forms}. \\
+\hline
+\verb'-override_generators'  &   generators  &  Override the generators of the group. \\
+\hline
+\verb'-print_interval'  &   n  &  Set the print interval for the Schreier orbit algorithm to $n$. \\
+\hline
+\end{tcolorbox}}
+\end{table}

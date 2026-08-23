@@ -1,0 +1,14 @@
+draw_mod_255_cyclotomic_1_and_3:
+	$(ORBITER) -v 2 \
+		-define Do -draw_options -nodes_empty -radius 10 \
+			-line_width 0.4 -embedded -end \
+		-draw_mod_n \
+			"mod_n=on" \
+			-n 255 \
+			-file mod_255_cyclotomic_1_and_3 \
+			-label_nodes \
+			-cyclotomic_sets 2 "1,3" \
+			-draw_options Do \
+		-end
+	$(PDFLATEX) mod_255_cyclotomic_1_and_3_draw.tex
+	$(OPEN) mod_255_cyclotomic_1_and_3_draw.pdf

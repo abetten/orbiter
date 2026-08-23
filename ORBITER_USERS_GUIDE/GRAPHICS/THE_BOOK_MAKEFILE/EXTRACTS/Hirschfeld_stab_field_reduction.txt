@@ -1,0 +1,19 @@
+Hirschfeld_stab_field_reduction:
+	$(ORBITER) -v 4 \
+		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define G -linear_group -PGGL 4 4 \
+			-subgroup_by_generators "Hirschfeld_Stab" \
+			51840 6 $(HIRSCHFELD_STAB_GENERATORS) \
+		-end \
+		-define G0 -modified_group -from G \
+			-field_reduction \
+		-end \
+		-with G0 -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end
+	$(PDFLATEX) PGL_8_2_Field_Reduction_report.tex
+	$(OPEN) PGL_8_2_Field_Reduction_report.pdf

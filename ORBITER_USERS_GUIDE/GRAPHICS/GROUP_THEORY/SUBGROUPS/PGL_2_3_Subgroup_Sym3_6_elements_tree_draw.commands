@@ -1,0 +1,178 @@
+% file: PGL_2_3_Subgroup_Sym3_6_elements_tree_draw.commands
+% created by Orbiter graphics interface
+% creation date: Fri Nov  8 21:06:58 +03 2024
+
+DeviceCoordinates 0 0 1000000 600000
+UserCoordinates 0 0 10000 10000
+sl_thickness 30
+Polygon 2 5000 9000 1666 7000
+Polygon 2 1666 7000 833 5000
+Polygon 2 833 5000 833 3000
+Polygon 2 833 3000 833 1000
+Polygon 2 1666 7000 2499 5000
+Polygon 2 2499 5000 2499 3000
+Polygon 2 2499 3000 2499 1000
+Polygon 2 5000 9000 4999 7000
+Polygon 2 4999 7000 4166 5000
+Polygon 2 4166 5000 4166 3000
+Polygon 2 4166 3000 4166 1000
+Polygon 2 4999 7000 5832 5000
+Polygon 2 5832 5000 5832 3000
+Polygon 2 5832 3000 5832 1000
+Polygon 2 5000 9000 8333 7000
+Polygon 2 8333 7000 7499 5000
+Polygon 2 7499 5000 7499 3000
+Polygon 2 7499 3000 7499 1000
+Polygon 2 8333 7000 9166 5000
+Polygon 2 9166 5000 9166 3000
+Polygon 2 9166 3000 9166 1000
+sl_thickness 10
+sf_color 0
+sf_interior 100
+Circle 166600, 420000, 25000
+sf_interior 0
+Circle 166600, 420000, 25000
+st_alignment 1, 1
+Text 166600, 420000, "1"
+sf_color 0
+sf_interior 100
+Circle 83300, 300000, 25000
+sf_interior 0
+Circle 83300, 300000, 25000
+st_alignment 1, 1
+Text 83300, 300000, "2"
+sf_color 0
+sf_interior 100
+Circle 83300, 180000, 25000
+sf_interior 0
+Circle 83300, 180000, 25000
+st_alignment 1, 1
+Text 83300, 180000, "3"
+sf_color 0
+sf_interior 100
+Circle 83300, 60000, 25000
+sf_interior 0
+Circle 83300, 60000, 25000
+st_alignment 1, 1
+Text 83300, 60000, "4"
+sf_color 0
+sf_interior 100
+Circle 249900, 300000, 25000
+sf_interior 0
+Circle 249900, 300000, 25000
+st_alignment 1, 1
+Text 249900, 300000, "4"
+sf_color 0
+sf_interior 100
+Circle 249900, 180000, 25000
+sf_interior 0
+Circle 249900, 180000, 25000
+st_alignment 1, 1
+Text 249900, 180000, "3"
+sf_color 0
+sf_interior 100
+Circle 249900, 60000, 25000
+sf_interior 0
+Circle 249900, 60000, 25000
+st_alignment 1, 1
+Text 249900, 60000, "2"
+sf_color 0
+sf_interior 100
+Circle 499900, 420000, 25000
+sf_interior 0
+Circle 499900, 420000, 25000
+st_alignment 1, 1
+Text 499900, 420000, "2"
+sf_color 0
+sf_interior 100
+Circle 416600, 300000, 25000
+sf_interior 0
+Circle 416600, 300000, 25000
+st_alignment 1, 1
+Text 416600, 300000, "4"
+sf_color 0
+sf_interior 100
+Circle 416600, 180000, 25000
+sf_interior 0
+Circle 416600, 180000, 25000
+st_alignment 1, 1
+Text 416600, 180000, "3"
+sf_color 0
+sf_interior 100
+Circle 416600, 60000, 25000
+sf_interior 0
+Circle 416600, 60000, 25000
+st_alignment 1, 1
+Text 416600, 60000, "1"
+sf_color 0
+sf_interior 100
+Circle 583200, 300000, 25000
+sf_interior 0
+Circle 583200, 300000, 25000
+st_alignment 1, 1
+Text 583200, 300000, "1"
+sf_color 0
+sf_interior 100
+Circle 583200, 180000, 25000
+sf_interior 0
+Circle 583200, 180000, 25000
+st_alignment 1, 1
+Text 583200, 180000, "3"
+sf_color 0
+sf_interior 100
+Circle 583200, 60000, 25000
+sf_interior 0
+Circle 583200, 60000, 25000
+st_alignment 1, 1
+Text 583200, 60000, "4"
+sf_color 0
+sf_interior 100
+Circle 833300, 420000, 25000
+sf_interior 0
+Circle 833300, 420000, 25000
+st_alignment 1, 1
+Text 833300, 420000, "4"
+sf_color 0
+sf_interior 100
+Circle 749900, 300000, 25000
+sf_interior 0
+Circle 749900, 300000, 25000
+st_alignment 1, 1
+Text 749900, 300000, "1"
+sf_color 0
+sf_interior 100
+Circle 749900, 180000, 25000
+sf_interior 0
+Circle 749900, 180000, 25000
+st_alignment 1, 1
+Text 749900, 180000, "3"
+sf_color 0
+sf_interior 100
+Circle 749900, 60000, 25000
+sf_interior 0
+Circle 749900, 60000, 25000
+st_alignment 1, 1
+Text 749900, 60000, "2"
+sf_color 0
+sf_interior 100
+Circle 916600, 300000, 25000
+sf_interior 0
+Circle 916600, 300000, 25000
+st_alignment 1, 1
+Text 916600, 300000, "2"
+sf_color 0
+sf_interior 100
+Circle 916600, 180000, 25000
+sf_interior 0
+Circle 916600, 180000, 25000
+st_alignment 1, 1
+Text 916600, 180000, "3"
+sf_color 0
+sf_interior 100
+Circle 916600, 60000, 25000
+sf_interior 0
+Circle 916600, 60000, 25000
+st_alignment 1, 1
+Text 916600, 60000, "1"
+END_OF_FILE
+

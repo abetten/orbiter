@@ -1,0 +1,23 @@
+\begin{table}
+\begin{tcolorbox}[tabularx={X|p{2cm}|X|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black,title=Finding Cliques]
+\hline
+Command & Arguments & Purpose \\
+\hline
+\hline
+\verb'-rainbow'  &    &  Find all rainbow cliques. The size of the cliques is the number of vertex colors. \\
+\hline
+\verb'-target_size'  &  $s$   &  Find all cliques of size $s$. \\
+\hline
+\verb'-weighted'  &  $s$   &  Find weighted cliques. \\
+\hline
+\verb'-Sajeeb'  &     & Use the implementation by Sajeeb Chowdhury. \\
+\hline
+\verb'-output_file'  &   fname  &  Write cliques to the named file. \\
+\hline
+\verb'-restrictions'  &   $l$ $r$  $m$  & Restricted search: At level $l$, restrict to all branches congruent to $r$ modulo $m$. Here, $0 \le r < m.$ \\
+\hline
+\end{tcolorbox}
+\caption{\label{tab:graphcliques}Finding Cliques}
+\end{table}

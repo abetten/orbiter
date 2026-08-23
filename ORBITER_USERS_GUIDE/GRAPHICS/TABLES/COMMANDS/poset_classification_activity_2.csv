@@ -1,0 +1,8 @@
+ROW,C1,C2,C3
+0,"tab:pc:activity:2",,
+1,"Activities for Posets of Orbits (Part 2)",,
+1,"\verb'-test_multi_edge_in_' \verb'decomposition_matrix' ","   "," "
+1,"\verb'-recognize' "," set  "," Recognizes the given set in the poset of orbits. This option can be repeated."
+1,"\verb'-pair_relations_within_orbit' "," orbit  "," Computes the pairwise join of elements in the given orbit and identifies the orbit in the poset. Two matrices are written. In the first matrix, the $ij$-entry is the index of the orbit containing the join of orbit element $i$ and orbit element $j$. In the second matrix, the $ij$-entry is the orbit index of the join of orbit element $i$ and orbit element $j$ in its respective orbit. "
+1,"\verb'-export_orbits_long' ","   "," Exports all orbits in long form. For each orbit, each orbit element is listed as a set."
+END

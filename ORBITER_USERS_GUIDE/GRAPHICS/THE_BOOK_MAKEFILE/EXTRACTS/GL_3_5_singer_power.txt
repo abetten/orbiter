@@ -1,0 +1,10 @@
+GL_3_5_singer_power:
+	$(ORBITER) -v 6 -define G \
+		-linear_group -GL 3 5 -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-raise_to_the_power \
+			"0,1,0, 0,0,1, 3,0,4" 31 \
+		-end
+	$(PDFLATEX) GL_3_5_power.tex
+	$(OPEN) GL_3_5_power.pdf

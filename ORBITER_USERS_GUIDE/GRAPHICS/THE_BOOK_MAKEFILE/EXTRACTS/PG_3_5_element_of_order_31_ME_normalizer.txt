@@ -1,0 +1,11 @@
+PG_3_5_element_of_order_31_ME_normalizer:
+	$(ORBITER) -v 6 -define G \
+		-linear_group -PGL 4 5 -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-normalizer_of_cyclic_subgroup "31" \
+			"1,0,0,0, 0,3,4,3, 0,3,3,4, 0,3,2,3" \
+		-end
+	- mv normalizer_of_31_in_PGL_4_5.tex normalizer_of_31_ME_in_PGL_4_5.tex
+	$(PDFLATEX) normalizer_of_31_ME_in_PGL_4_5.tex
+	$(OPEN) normalizer_of_31_ME_in_PGL_4_5.pdf

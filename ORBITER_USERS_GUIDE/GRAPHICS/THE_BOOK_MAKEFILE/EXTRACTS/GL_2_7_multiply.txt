@@ -1,0 +1,9 @@
+GL_2_7_multiply:
+	$(ORBITER) -v 5 \
+		-define G -linear_group -GL 2 7 -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-multiply "0,1,2,3" "4,5,6,0" \
+		-end
+	$(PDFLATEX) GL_2_7_mult.tex
+	$(OPEN) GL_2_7_mult.pdf

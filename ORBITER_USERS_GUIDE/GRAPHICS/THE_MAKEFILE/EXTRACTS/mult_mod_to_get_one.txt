@@ -1,0 +1,10 @@
+mult_mod_to_get_one:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define M -vector -field F -sparse 33 $(CRC32_SPARSE) -end \
+		-define A -vector -field F -sparse 2 "1,1" -end \
+		-define B -vector -field F -sparse 33 $(INVERSE_SPARSE) -end \
+		-with F -do \
+		-finite_field_activity \
+			-polynomial_mult_mod A B M \
+		-end

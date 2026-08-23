@@ -1,0 +1,14 @@
+domino_portrait_input:
+	cp $(ORBITER_PATH)/examples/users_guide/Munch_3.? .
+	$(ORBITER) -v 2 \
+		-define all_one_r -vector -repeat 1 28 -end \
+		-define all_one_c -vector -repeat 1 32 -end \
+		-draw_matrix \
+			-grayscale \
+			-invert_colors \
+			-input_csv_file Munch_3_m.csv \
+			-box_width 20 -bit_depth 8 \
+			-partition 3 \
+				all_one_c all_one_r \
+		-end
+	$(OPEN) Munch_3_m_draw.bmp

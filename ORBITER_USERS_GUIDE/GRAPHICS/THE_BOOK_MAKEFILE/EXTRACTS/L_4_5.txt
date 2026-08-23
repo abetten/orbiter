@@ -1,0 +1,13 @@
+L_4_5:
+	$(ORBITER) -v 2 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define F -finite_field -q 5 -end \
+		-define G -linear_group -PSL 4 F -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end
+	$(PDFLATEX) PSL_4_5_report.tex
+	$(OPEN) PSL_4_5_report.pdf

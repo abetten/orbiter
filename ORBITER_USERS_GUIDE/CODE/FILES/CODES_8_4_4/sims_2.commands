@@ -1,0 +1,91 @@
+% file: sims_2.commands
+% created by Orbiter graphics interface
+% creation date: Mon Nov 25 12:41:01 MST 2019
+
+DeviceCoordinates 0 0 300000 300000
+UserCoordinates 0 0 10000 10000
+Polygon 2 5000 9500 5000 8500
+Polygon 2 5000 8500 3000 7500
+Polygon 2 5000 8500 7500 7500
+Polygon 2 5000 8500 9500 7500
+Polygon 2 3000 7500 1800 6499
+Polygon 2 3000 7500 4200 6499
+Polygon 2 3000 7500 5400 6499
+Polygon 2 7500 7500 6750 6499
+Polygon 2 7500 7500 8250 6499
+Polygon 2 1800 6499 900 5499
+Polygon 2 1800 6499 2700 5499
+sf_interior 100
+Circle 150000, 285000, 9000
+sf_interior 0
+Circle 150000, 285000, 9000
+st_alignment 1, 1
+Text 150000, 285000, "{\scriptsize 2}"
+sf_interior 100
+Circle 150000, 255000, 9000
+sf_interior 0
+Circle 150000, 255000, 9000
+st_alignment 1, 1
+Text 150000, 255000, "{\scriptsize 3}"
+sf_interior 100
+Circle 90000, 225000, 9000
+sf_interior 0
+Circle 90000, 225000, 9000
+st_alignment 1, 1
+Text 90000, 225000, "{\scriptsize 9}"
+sf_interior 100
+Circle 225000, 225000, 9000
+sf_interior 0
+Circle 225000, 225000, 9000
+st_alignment 1, 1
+Text 225000, 225000, "{\scriptsize 10}"
+sf_interior 100
+Circle 285000, 225000, 9000
+sf_interior 0
+Circle 285000, 225000, 9000
+st_alignment 1, 1
+Text 285000, 225000, "{\scriptsize 12}"
+sf_interior 100
+Circle 54000, 194970, 9000
+sf_interior 0
+Circle 54000, 194970, 9000
+st_alignment 1, 1
+Text 54000, 194970, "{\scriptsize 11}"
+sf_interior 100
+Circle 126000, 194970, 9000
+sf_interior 0
+Circle 126000, 194970, 9000
+st_alignment 1, 1
+Text 126000, 194970, "{\scriptsize 13}"
+sf_interior 100
+Circle 162000, 194970, 9000
+sf_interior 0
+Circle 162000, 194970, 9000
+st_alignment 1, 1
+Text 162000, 194970, "{\scriptsize 6}"
+sf_interior 100
+Circle 202500, 194970, 9000
+sf_interior 0
+Circle 202500, 194970, 9000
+st_alignment 1, 1
+Text 202500, 194970, "{\scriptsize 14}"
+sf_interior 100
+Circle 247500, 194970, 9000
+sf_interior 0
+Circle 247500, 194970, 9000
+st_alignment 1, 1
+Text 247500, 194970, "{\scriptsize 7}"
+sf_interior 100
+Circle 27000, 164970, 9000
+sf_interior 0
+Circle 27000, 164970, 9000
+st_alignment 1, 1
+Text 27000, 164970, "{\scriptsize 4}"
+sf_interior 100
+Circle 81000, 164970, 9000
+sf_interior 0
+Circle 81000, 164970, 9000
+st_alignment 1, 1
+Text 81000, 164970, "{\scriptsize 8}"
+END_OF_FILE
+

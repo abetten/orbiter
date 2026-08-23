@@ -1,0 +1,7 @@
+F_11_product_of_all_nonzero_elements:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 11 -end \
+		-define S -vector -field F -loop 1 11 1 -end \
+		-with F -do -finite_field_activity \
+			-product_of S \
+		-end

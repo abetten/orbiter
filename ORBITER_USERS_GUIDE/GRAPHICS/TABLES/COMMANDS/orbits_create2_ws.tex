@@ -1,0 +1,19 @@
+\begin{table}[t]
+\tbl{\label{tab:orbits:2}}
+{\begin{tcolorbox}[tabularx={p{3cm}|p{2cm}|p{6.3cm}|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black,title=Computing Orbits]
+\hline
+Command & Arguments & Purpose \\
+\hline
+\hline
+\verb'-group'  &   G  &  Specify the group. The argument must be an object of type group. \\
+\hline
+\verb'-group_action'  &   G  &  Specify the action. The argument must be an object of type group. \\
+\hline
+\verb'-generators'  &   G  &  Specify the generators for the group or subgroup whose orbits we wish to compute. The argument must be an object of type group. This option is only required when poset classification is used (i.e., not for the Schreier algorithm). \\
+\hline
+\verb'-print_interval'  &   n  &  Set the print interval for the Schreier orbit algorithm to $n$. \\
+\hline
+\end{tcolorbox}}
+\end{table}

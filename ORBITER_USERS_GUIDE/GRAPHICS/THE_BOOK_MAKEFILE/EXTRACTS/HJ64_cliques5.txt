@@ -1,0 +1,10 @@
+HJ64_cliques5:
+	$(ORBITER) -v 6 \
+		-define Gamma -graph \
+			-load \
+			Group_Perm315_Orbital_3.colored_graph \
+		-end \
+		-with Gamma -do \
+		-graph_theoretic_activity \
+			-find_cliques -target_size 5 -end \
+		-end

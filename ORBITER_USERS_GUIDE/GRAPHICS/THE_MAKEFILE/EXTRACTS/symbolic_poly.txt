@@ -1,0 +1,7 @@
+symbolic_poly:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 7 -end \
+		-define M -symbolic_object \
+			-field F \
+			-text "-X^2-X+1"\
+		-end \

@@ -1,0 +1,8 @@
+poly_division:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-with F -do \
+		-finite_field_activity \
+			-polynomial_division \
+			"1,0,0,0,0,0,0,0,0,0,1" "1,0,1,1" \
+		-end

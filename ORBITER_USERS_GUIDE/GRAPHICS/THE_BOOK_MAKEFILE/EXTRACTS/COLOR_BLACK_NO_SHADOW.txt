@@ -1,0 +1,2 @@
+COLOR_BLACK_NO_SHADOW=\
+	"texture{ pigment{Black} } no_shadow"

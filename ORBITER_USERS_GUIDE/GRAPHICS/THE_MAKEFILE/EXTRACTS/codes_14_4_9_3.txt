@@ -1,0 +1,17 @@
+codes_14_4_9_3:
+	$(ORBITER) -v 6 \
+		-define Do -draw_options \
+			-embedded -radius 250 \
+		-end \
+		-define Control -poset_classification_control \
+			-problem_label codes_14_4_9_3 \
+			-draw_options Do \
+		-end \
+		-define G \
+		-linear_group -PGL 10 3 -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-linear_codes Control 9 14 \
+		-end
+	#$(PDFLATEX) codes_14_4_9_3_poset_lvl_13.tex
+	#$(OPEN) codes_14_4_9_3_poset_lvl_13.pdf 

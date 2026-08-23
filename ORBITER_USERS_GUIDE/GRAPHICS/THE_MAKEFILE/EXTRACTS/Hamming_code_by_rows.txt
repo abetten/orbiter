@@ -1,0 +1,9 @@
+Hamming_code_by_rows:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define v -vector -dense $(HAMMING_CODE_ROWS_IN_BINARY_RANKS) -end \
+		-define C -code -field F \
+			-basis 7 v \
+		-end
+	#$(PDFLATEX) code_n7_k4_q2.tex
+	#$(OPEN) code_n7_k4_q2.pdf

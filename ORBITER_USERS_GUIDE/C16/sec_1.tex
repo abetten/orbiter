@@ -1,0 +1,112 @@
+A clique in a graph $\Gamma = (V,E)$ is a subset $S$ of the vertices 
+such that any two elements of $S$ are adjacent in $\Gamma.$
+Orbiter supports finding and classifying cliques in graphs.
+The command \verb'-find_cliques' from 
+Table~\ref{tab:graphactivities:1}-\ref{tab:graphactivities:2} 
+can be used to find all cliques in a graph.
+Additional options for this command are shown in 
+Table~\ref{tab:graphcliques}.
+\orbitertableofcommands{clique_finder_control}
+
+For instance, the cliques of size 3 in the graph 
+\verb'graph_v5_e7.colored_graph' 
+from Section~\ref{sec:graphtheory} 
+can all be found using the following command:
+
+\sourcecode{small_graph_cliques}
+
+
+\bigskip
+
+It is also possible to classify all cliques 
+under the automorphism group of the graph. 
+This is a multi-step process, though. 
+At first, the automorphism group of the graph has to be computed. 
+Then, poset classification can be invoked 
+to classify the cliques of a certain size. 
+Here is an example.
+We wish to classify the cliques in the Paley graph of order 13. 
+The first command creates the graph and computes the automorphism group:
+
+\sourcecode{Paley_13_aut}
+
+The command writes a file \verb'Paley_13_group.makefile'.
+The group is given using a base and strong generating set. 
+The base 
+consists of the two points $0,1.$ 
+Three strong generators with respect to this base are given in a csv file.
+Using this group, 
+the next command classifies all cliques 
+of size at most 5 in the Paley graph of order 13 
+under the action of the automorphism group. 
+It turns out that there are no 5-cliques, 
+and that the largest cliques have size 3. 
+The command shows that there is a unique orbit of 3-cliques:
+
+\sourcecode{Paley_13_cliques_classify}
+
+For comparison, the command 
+
+\sourcecode{Paley_13_cliques_all}
+
+finds all cliques of size 3. There are exactly 26 of them. 
+Because of the previous command, 
+we know that they are all equivalent under 
+the automorphism group of the graph.
+
+
+\bigskip
+
+Let us consider the orbital graph created in Section~\ref{sec:graphtheory}.
+We wish to study the 5-cliques. 
+We first determine the number of 5-cliques, 
+and then the number of orbits of 5-cliques under the automorphism group. 
+The following command computes all 5-cliques:
+
+\sourcecode{HJ64_cliques5}
+
+It turns out that there are exactly 1008 5-cliques.
+We can use the following command to classify these cliques 
+under the action of the automorphism group of the graph:
+
+\sourcecode{HJ64_cliques5_classify}
+
+It shows that all of the 1008 $5$-cliques lie in one orbit under the group. 
+The orbit representative picked by Orbiter is $\{0,8,31,110,283\}.$ 
+These numbers refer to the vertices of the graph. They are zero-based.
+The stabilizer of the clique has order 1200.
+
+
+\bigskip
+
+
+Let us look at the collinearity graph of $Q(4,2)$ one more time. 
+The following command computes the 
+cliques of size 3:
+
+\sourcecode{PGO_5_2_cliques}
+
+There are 15 cliques of size 3. They correspond to the lines in the geometry.
+
+\bigskip
+
+
+%In Section~\ref{sec:orthogonal}, we have created the 
+%generalized quadrangle $W(2)$ (the Doily).
+%We can search for disjoint sets in the generalized quadrangle $W(2)$ (the Doily).
+%For starters, here is the makefile variable to create the geometry:
+
+%\sourcecodevariable{DOILY}
+
+And here is the command to find all $5$-cliques in the graph of disjoint lines in the Doily:
+
+\sourcecode{Doily_disjoint_sets_graph_cliques_5}
+
+There are exactly $6$ cliques. 
+
+
+
+
+
+\bigskip
+

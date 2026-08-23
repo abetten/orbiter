@@ -1,0 +1,47 @@
+\begin{table}
+\begin{tcolorbox}[tabularx={X|p{2cm}|X|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black,title=Finite Field Activities]
+		\hline
+		Command & Arguments & Purpose \\
+		\hline
+		\hline
+		\verb'-cheat_sheet_GF' &  &  
+		Produce a cheat sheet in latex which shows information about the field, 
+		including addition and multiplication tables.  \\
+		\hline
+		\verb'-export_tables' &  &  Export addition and multiplication table to a csv-file.  \\
+		\hline
+		\verb'-polynomial_division' & $A$ $B$ &  Perform polynomial division: Divide $B$ into $A$. \\
+		\hline
+		\verb'-extended_gcd_for_polynomials' & $A$ $B$ &  
+		Compute the GCD of $G$ of two polynomials $A$ and $B$. 
+		Determine two polynomials $U$ and $V$ such that $G = UA+VB.$ \\
+		\hline
+		\verb'-polynomial_mult_mod' & $A$ $B$ $M$ &  
+		Perform modular polynomial multiplication. Compute $A \cdot B \mod M$. \\
+		\hline
+		\verb'-polynomial_power_mod' & $A$ $n$ $M$ &  
+		Perform modular polynomial exponentiation. Compute $A^n \mod M$. \\
+		\hline
+		\verb'-Berlekamp_matrix' &  $A$ &  Compute the Berlekamp matrix associated with the polynomial $A$.  \\
+		\hline
+		\verb'-polynomial_find_roots' & $A$  &  Computes the roots of the polynomial $A$.  \\
+		\hline
+		\verb'-product_of' & $v$ &  Compute the product of all field elements in the vector $v$.  \\
+		\hline
+		\verb'-sum_of' & $v$ &  Compute the sum of all field elements in the vector $v$.  \\
+		\hline
+		\verb'-negate' & $v$ &  Negate each field element in the vector $v$.  \\
+		\hline
+		\verb'-inverse' & $v$ &  Compute the multiplicative inverse of each field element in the vector $v$.  \\
+		\hline
+		\verb'-power_map' & $k$ $v$ &  Compute the $k$-th power of each field element in the vector $v$.  \\
+		\hline
+		\verb'-parse_and_evaluate' & label managed-vars formula parameters &  Parse the given formula with the given managed variables and evaluate at the given values of the parameters.  \\
+		\hline
+		\verb'-evaluate' & label parameters &  Parse the given formula and evaluate at the given values of the parameters.  \\
+		\hline
+		\end{tcolorbox}
+	\caption{\label{tab:finitefield:activities}Finite Field Activities}
+	\end{table}

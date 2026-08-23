@@ -1,0 +1,60 @@
+geo_10_3_c:
+	$(ORBITER) -v 2 \
+		-define Test_lines -set -loop 3 8 1 -end \
+		-define Geo -geometry_builder \
+			-V 10 -B 10 -TDO 3 \
+			-fuse 1 \
+			-fname_GEO 10_3 \
+			-output_to_inc_file \
+			-test Test_lines \
+		-end
+	$(ORBITER) -v 10 \
+		-define Doinc -draw_incidence_structure_options \
+			-width 60 -width_10 6 -end \
+		-define C -combinatorial_object \
+			-label geo_10_3 geo\_10\_3 \
+			-file_of_incidence_geometries 10_3.inc 10 10 30 \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form \
+				-save_ago \
+				-save_transversal \
+				-nauty_control -nauty_log "geo_10_3_nauty_log.txt" -end \
+			-end \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-post_processing \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-report \
+				-export_flag_orbits \
+				-show_incidence_matrices \
+				-export_group_GAP \
+				-incidence_draw_options Doinc \
+			-end \
+		-end
+	$(PDFLATEX) geo_10_3_classification.tex
+	$(OPEN) geo_10_3_classification.pdf
+	$(ORBITER) -v 2 \
+		-loop L 0 10 1 \
+			-draw_matrix \
+			-input_csv_file geo_10_3_object_%L_TDA_flag_orbits.csv \
+			-secondary_input_csv_file geo_10_3_object_%L_TDA.csv \
+			-box_width 16 -bit_depth 24 \
+			-end \
+		-end_loop L
+	$(ORBITER) -v 2 \
+		-loop L 0 10 1 \
+			-draw_matrix \
+			-input_csv_file geo_10_3_object_%L_INP_flag_orbits.csv \
+			-secondary_input_csv_file geo_10_3_object_%L_INP.csv \
+			-box_width 16 -bit_depth 24 \
+			-end \
+		-end_loop L
+	#magick font_[0-3].gif -delete 1 +append  seq_delete.gif
+	magick geo_10_3_object_[0-5]_TDA_flag_orbits_draw.bmp -frame 5 +append  a0.png
+	magick geo_10_3_object_[5-9]_TDA_flag_orbits_draw.bmp geo_10_3_object_9_TDA_flag_orbits_draw.bmp -frame 5  +append  a1.png
+	magick a0.png a1.png -frame 5 -append  10_3.png

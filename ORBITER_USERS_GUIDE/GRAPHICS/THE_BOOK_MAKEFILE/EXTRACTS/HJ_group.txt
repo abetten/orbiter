@@ -1,0 +1,15 @@
+HJ_group:
+	cp $(ORBITER_PATH)/examples/users_guide/halljanko315.csv .
+	$(ORBITER) -v 6 \
+		-define G -graph \
+			-load_csv_no_border \
+			halljanko315.csv \
+		-end \
+		-with G -do \
+			-graph_theoretic_activity -automorphism_group \
+		-end \
+		-with G -do \
+			-graph_theoretic_activity -properties \
+		-end
+	$(PDFLATEX) File_halljanko315_report.tex
+	$(OPEN) File_halljanko315_report.pdf

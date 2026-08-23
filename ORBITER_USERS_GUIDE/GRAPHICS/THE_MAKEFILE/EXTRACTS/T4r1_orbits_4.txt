@@ -1,0 +1,27 @@
+T4r1_orbits_4:
+	$(ORBITER) -v 4 \
+		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define Do -draw_options -end \
+		-define Control -poset_classification_control \
+			-problem_label T4r1 -W \
+			-draw_options Do \
+		-end \
+		-define G -linear_group -GL_d_q_wr_Sym_n 2 2 4 \
+			-on_rank_one_tensors -end \
+		-define Orb -orbits \
+			-group G \
+			-group_action G \
+			-generators G \
+			-on_subsets 4 Control \
+		-end \
+		-define ro \
+			-poset_classification_report_options \
+				-draw_poset -type_ordinary \
+				-draw_options Do \
+		-end \
+		-with Orb -do -orbits_activity \
+			-report "" \
+			-report_options ro \
+		-end 
+	$(PDFLATEX) T4r1_poset.tex
+	$(OPEN) T4r1_poset.pdf

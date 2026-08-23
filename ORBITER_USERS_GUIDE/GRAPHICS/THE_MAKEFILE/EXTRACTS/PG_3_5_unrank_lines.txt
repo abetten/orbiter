@@ -1,0 +1,11 @@
+PG_3_5_unrank_lines:
+	$(ORBITER) -v 2 \
+		-define v -vector \
+			-dense "0,36,72,108,144,805" \
+		-end \
+		-define F -finite_field -q 5 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-with P -do \
+		-projective_space_activity \
+			-unrank_lines_in_PG v \
+		-end

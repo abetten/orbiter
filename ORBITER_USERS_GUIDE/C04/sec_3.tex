@@ -1,0 +1,106 @@
+The projective spaces $\PG(2,q)$ 
+are examples of a more general structure called projective planes. 
+The $\PG(2,F)$, $F$ a field, are distinguished 
+in the class of projective planes 
+by the fact that the theorem of Desargues 
+always holds.
+They are called the desarguesian projective planes.
+Other classes of projective planes are the translation planes, 
+see Section~\ref{sec:translation:planes}. 
+
+
+\bigskip
+
+The points in the dearguesian projective plane $\PG(2,q)$ 
+have the coordinates $\bP(x,y,z),$ with $x,y,z\in \bbF_q,$ not all three zero. 
+We distingish one line called the line at infinity. 
+The points not on this line form an affine plane $\AG(2,q).$
+
+
+\bigskip
+
+
+
+The command 
+
+\sourcecode{PG_2_16}
+
+produces the drawing of $\PG(2,16)$ shown below
+\orbiteroutput{GRAPHICS/WRAPPERS/PG_2_16_incma_draw}
+
+The \verb'-nodes_empty' command is used to suppress the drawing of the nodes.
+The \verb'-xin 20000' and \verb'-yin 20000' 
+options double the input coordinate system 
+(recall from Table~\ref{tab:draw:options} 
+that the default values are 10000), 
+which has the effect that the text appears smaller relative to the 
+grid.
+
+
+\bigskip
+
+
+It is possible to export the incidence matrix of a projective space to a file.
+The following example creates $\PG(2,8)$ and exports the incidence matrix to a csv file. 
+After that, a graphical representation is produced.
+
+\sourcecode{PG_2_8_incidence_matrix}
+
+The incidence matrix is shown below
+\orbiteroutput{GRAPHICS/WRAPPERS/PG_n2_q8_incidence_matrix_draw}
+
+The rows and columns correspond to points and lines, 
+respectively, and are ordered according to their respective Orbiter ranks.
+
+
+
+\bigskip
+
+
+
+
+Projective spaces admit a cyclic group action on points and hyperplanes. 
+Such a group is often called a Singer cycle. 
+It is generated from a projectivity defined 
+by the companion matrix of an irreducible polynomial. 
+Let us look at an example. 
+The following command creates a Singer cycle of $\PG(2,4)$
+
+\sourcecode{PG_2_4_with_decomposition}
+
+The output is shown below:
+\orbiteroutput{GRAPHICS/LATEX/report_PG_2_4_singer}
+
+\bigskip
+
+The command produces a csv file containing 
+the cyclic incidence matrix, which can be 
+drawn using the follwing command:
+
+\sourcecode{PG_2_4_incma_cyclic}
+
+The cyclic incidence matrix is 
+\orbiteroutput{GRAPHICS/WRAPPERS/PG_2_4_incma_cyclic}
+
+
+\bigskip
+
+
+
+If the number of points is not a prime power, 
+the group acts imprimitively.
+By considering various subgroups of the Singer group, 
+tactical decompositions are created.
+For instance, for $\PG(2,4),$ with 21 points, 
+we can consider a subgroup the Singer cycle of order 3, which induces a 
+partition with 7 classes of size 3 on both points and lines:
+
+\sourcecode{PG_2_4_incma_singer_sub_3}
+
+The tactical decomposition of the incidence matrix is 
+\orbiteroutput{GRAPHICS/WRAPPERS/PG_2_4_incma_tactical}
+
+
+\bigskip
+
+

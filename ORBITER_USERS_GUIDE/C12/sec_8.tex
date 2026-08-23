@@ -1,0 +1,103 @@
+Table~\ref{tab:plesken:ring:activity} shows activities for objects of type Plesken-ring. 
+For background on Plesken rings, see~\cite{Plesken82}. 
+
+
+\orbitertableofcommands{plesken_ring_activity}
+
+
+
+\bigskip
+
+Consider the action of $\PGO^+(6,2)$ on the vector space $\bbF_2^6$ equipped with the quadratic form 
+$$
+X_0X_1+X_2X_3+X_4X_5.
+$$
+The command computes the poset of orbits and produces a report.
+The report contains the following drawing of the poset or orbits:
+
+\orbiteroutput{GRAPHICS/WRAPPERS/plesken_subspaces_GOp_6_2}
+
+
+The next command produces a full drawing of all elements of the poset, grouped by orbits. 
+Not all relations are drawn. 
+Only the relations relevant for the $P^\vee$ matrix are drawn.
+
+
+\sourcecode{subspaces_GOp_6_2}
+
+
+
+
+The next command produces a drawing of the poset 
+illustrating the $P^\vee$ constants for the Plesken ring:
+
+
+\sourcecode{subspaces_GOp_6_2_draw_Asup}
+
+
+\orbiteroutput{GRAPHICS/WRAPPERS/plesken_GOp_6_2_poset_full_lvl_6_Asup_draw}
+
+
+The next command creates the Plesken ring associated 
+to the poset action of $\PGO^+(6,2)$ on the orthogonal space:
+
+
+\sourcecode{subspaces_GOp_6_2_plesken_ring}
+
+The command produces a latex report for the Plesken ring. 
+The report contains the $P^\vee$ and $P^\wedge$ matrices.
+Here is the $P^\vee$ matrix. 
+
+
+\orbiteroutput{GRAPHICS/WRAPPERS/plesken_GOp_6_2_poset_Pvee}
+
+For convenience, the output includes the number of orbits and the rows sums and the column sums of 
+the $P^\vee$ matrix. The report contains the $P^\wedge$ matrix also. 
+
+\bigskip
+
+
+Finally, we wish to demonstrate the Plesken ring. 
+We will evaluate the product $X_6^2$ in the ring $P^\vee$.
+To do so, we need to define a suitable polynomial ring. 
+We use the field $\bbF_2$ as the field of coefficients. 
+This field only applies to the input formula. 
+The Plesken ring disregards 
+the finite field and evaluates over the integers $\bbZ$.
+Our input formula is $X_6^2$, which is the same when read over $\bbF_2$. 
+If our input formula had larger coefficients, we 
+should use a larger input field. 
+This is because the Orbiter parser for formulae 
+expects the constants to lie in a finite field $\bbF_q$
+and the value of the constant must be in the interval $[0,q-1]$. 
+
+
+\sourcecode{subspaces_GOp_6_2_plesken_ring_evaluate_join}
+
+The output of the command is 
+$$
+( 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 12, 2, 0, 0, 30, 0, 0, 0 )
+$$
+which shows that 
+$$
+X_6^2 = X_6+12X_{11}+2X_{12}+30X_{15}
+$$
+in the Plesken ring $P^\vee$ associated to the action of $\PGO^+(6,2)$ 
+on the underlying orthogonal space. 
+
+\bigskip
+
+The next command performs the pairwise join of all elements in orbit 6. 
+The command creates two matrices, which are witten as csv files.
+Let $a_1,\ldots,a_\ell$ be the elements of orbit 6. 
+The $ij$-entry in the first matrix in the index of the orbit containing $a_i \vee a_j.$
+The $ij$-entry in the second matrix in the index of $a_i \vee a_j$ inside the respective orbit.
+
+
+\sourcecode{subspaces_GOp_6_2_make_pair_relations}
+
+
+
+
+
+

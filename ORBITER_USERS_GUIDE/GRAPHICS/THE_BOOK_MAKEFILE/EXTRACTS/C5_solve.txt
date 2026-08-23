@@ -1,0 +1,14 @@
+C5_solve:
+	$(ORBITER) -v 4 \
+		-define A -vector -file C5_KM_combined.csv -end \
+		-define D -diophant \
+			-label "C5_KM_combined_system" \
+			-coefficient_matrix A \
+			-x_min_global 0 \
+			-x_max_global 1 \
+			-RHS "mult=3,EQ=5" \
+			-RHS "mult=21,LE=1" \
+		-end \
+		-with D -do \
+			-diophant_activity -solve_mckay \
+		-end

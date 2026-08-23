@@ -1,0 +1,27 @@
+Table~\ref{tab:set:builder} shows Orbiter commands to create sets.
+\orbitertableofcommands{set_builder}
+
+\bigskip
+
+Here is an example. 
+We create the set $S$ of the first six prime numbers $\{2,3,5,7,11,13\}$:
+
+\sourcecode{set_of_primes}
+
+
+\bigskip
+
+
+The next command creates the integer interval $[0,63]$. 
+We use the \verb'-loop' command to 
+save us from typing out all elements of the set. 
+The \verb'-loop' command has three arguments:
+the start value $s$, the upper bound $u$, and the increment $d$.
+The numbers created have the form $s+kd$, 
+$k=0,1,\ldots$ as long as they are less than $u$.
+
+\sourcecode{set_interval}
+
+\bigskip
+
+

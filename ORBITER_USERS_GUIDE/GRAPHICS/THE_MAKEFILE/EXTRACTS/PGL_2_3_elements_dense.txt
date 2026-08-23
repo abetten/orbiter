@@ -1,0 +1,18 @@
+PGL_2_3_elements_dense:
+	$(ORBITER) -v 2 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define G -linear_group -PGL 2 3 -end \
+		-assign elements -from \
+		-with G -do \
+		-group_theoretic_activity \
+			-elements \
+		-end \
+		-with elements -do \
+		-vector_ge_activity \
+			-report_with_options "dense=on" \
+		-end \
+		-print_symbols
+	$(PDFLATEX) PGL_2_3_elements.tex
+	$(OPEN) PGL_2_3_elements.pdf

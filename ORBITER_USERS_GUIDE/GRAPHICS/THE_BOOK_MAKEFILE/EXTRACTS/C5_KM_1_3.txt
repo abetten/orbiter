@@ -1,0 +1,26 @@
+C5_KM_1_3:
+	$(ORBITER) -v 3 \
+		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define gens -vector -dense $(GEN_C5) -end \
+		-define G -permutation_group -symmetric_group 15 \
+			-subgroup_by_generators "C5" 5 1 gens \
+		-end \
+		-define Do -draw_options -embedded -sideways -radius 50 \
+			-scale 0.5 -line_width 0.3 \
+		-end \
+		-define Control -poset_classification_control \
+			-problem_label C5 -W -depth 3 \
+			-draw_options Do \
+		-end \
+		-define Orb -orbits \
+			-group G \
+			-group_action G \
+			-generators G \
+			-on_subsets 3 Control \
+		-end \
+		-with Orb -do -orbits_activity \
+			-Kramer_Mesner_matrix 1 3 \
+		-end \
+		-with Orb -do -orbits_activity \
+			-export_something set_orbits 3 \
+		-end \

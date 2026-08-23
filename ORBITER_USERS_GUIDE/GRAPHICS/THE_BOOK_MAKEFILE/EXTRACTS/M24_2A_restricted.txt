@@ -1,0 +1,20 @@
+M24_2A_restricted:
+	$(ORBITER) -v 2 \
+		-define v -vector \
+			-dense $(GOLAY_24_CODE_PROJECTIVE) \
+		-end \
+		-define F -finite_field -q 2 -end \
+		-define G -linear_group -PGL 12 2 \
+			-subgroup_by_generators "M24_2A" "2" 1 \
+			$(M24_ELEMENT_2A) \
+		-end \
+		-define M24_2Ar -modified_group \
+			-from G \
+			-restricted_action v \\_on\\_code \
+		-end \
+		-with M24_2Ar -do \
+			-group_theoretic_activity \
+				-print_elements_tex  \
+		-end
+	$(PDFLATEX) PGL_12_2_res_v_elements.tex
+	$(OPEN) PGL_12_2_res_v_elements.pdf

@@ -1,0 +1,21 @@
+create_translation_plane_27_5_Rao_Rao:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 3 -end \
+		-define G -linear_group -PGL 6 F -end \
+		-define G1 -linear_group -PGL 7 F -end \
+		-define S -spread -kernel_field F \
+			-group G -k 3 -catalogue 5 \
+			-end \
+		-define T -translation_plane S G G1 -end \
+		-with T -do -translation_plane_activity \
+			-export_incma \
+		-end \
+		-with T -do -translation_plane_activity \
+			-report \
+		-end \
+		-define A -linear_group -import_group_of_plane T -end \
+		-define Orb -orbits -group A \
+			-on_points \
+		-end
+	$(PDFLATEX) plane_catalogue_q3_k3_5_report.tex
+	$(OPEN) plane_catalogue_q3_k3_5_report.pdf

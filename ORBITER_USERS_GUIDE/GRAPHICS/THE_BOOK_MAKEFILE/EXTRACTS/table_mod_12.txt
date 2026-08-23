@@ -1,0 +1,11 @@
+table_mod_12:
+	$(ORBITER) -v 2 \
+		-define M -vector -load_csv_no_border clock_mult_excel.csv -end \
+		-define all_one_r -vector -repeat 1 12 -end \
+		-define all_one_c -vector -repeat 1 12 -end \
+		-draw_matrix \
+		-input_object M \
+		-box_width 50 -bit_depth 24 \
+			-partition 3 \
+				all_one_r all_one_c \
+		-end

@@ -1,0 +1,7 @@
+Edge_qurve_q17_canonical_image:
+	$(ORBITER) -v 3 \
+		-define G -linear_group -PGL 3 17 -end \
+		-with G -do -group_theoretic_activity \
+			-canonical_image_GAP \
+			$(EDGE_CURVE_Q17_AS_POINTS) \
+		-end

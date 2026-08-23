@@ -1,0 +1,11 @@
+RM_3_algebraic_normal_form:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 2 -end \
+		-loop L 0 3 1 \
+			-define v%L -vector -field F \
+				-file RM_m3_distance_H_8_16_value%L.csv \
+			-end \
+			-with F -do -finite_field_activity \
+				-algebraic_normal_form 8 v%L \
+			-end \
+		-end_loop L

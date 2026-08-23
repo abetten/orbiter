@@ -1,0 +1,11 @@
+PGL_3_2_classes:
+	$(ORBITER) -v 3 \
+		-define G -linear_group -PGL 3 2 -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-classes_based_on_normal_form \
+		-end
+	$(PDFLATEX) PGL_3_2_classes_based_on_normal_forms_3_2.tex
+	$(OPEN) PGL_3_2_classes_based_on_normal_forms_3_2.pdf
+	#$(PDFLATEX) PGL_3_2_classes_out.tex
+	#$(OPEN) PGL_3_2_classes_out.pdf

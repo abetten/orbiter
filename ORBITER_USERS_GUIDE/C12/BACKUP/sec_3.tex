@@ -1,0 +1,55 @@
+Diophantine systems of equations and inequalities arise frequently in Combinatorics.
+In Table~\ref{tab:diophant}, Orbiter commands for creating and solving diophantine systems are shown.
+\orbitertableofcommands{diophant_create}
+In Table~\ref{tab:diophant:activities}, Orbiter activities for diophantine systems are shown.
+\orbitertableofcommands{diophant_activity}
+
+
+Consider the matrix 
+$$
+A= 
+\left[
+\begin{array}{cccccc}
+0&1&0&1&0&0\\
+0&0&1&0&1&0\\
+1&0&1&0&0&0\\
+0&1&0&1&0&1\\
+1&0&0&0&0&1\\
+1&0&1&0&0&0\\
+0&1&0&0&1&1\\
+\end{array}
+\right]
+$$
+Suppose we want to find all column vectors $\bx$ with entries in $0,1$ such that 
+$$
+A \bx = \bone
+$$
+where $\bone$ is the all-one column vector.
+Orbiter offers two algorithms to do this. 
+One is McKay's possolve, the other is Knuth's dancing links (DLX).
+In order to get started, we need to create a diophant object.
+In the following example, we use the makefile variable \verb'TEST_SYSTEM' for the 
+coefficient matrix. 
+
+\sourcecode{TEST_SYSTEM}
+
+The right hand side will be specified using the \verb'RHS' command below:
+
+\sourcecode{solve_test_system}
+
+
+There are two commands to solve a diophantine system: \verb'-solve_mckay' and \verb'-solve_DLX'. The latter is more restrictive, 
+as it allows only 0,1 variables.
+Here is the McKay solver:
+
+\sourcecode{McKay_test}
+
+The solutions are written to the file \verb'DLX_test.sol'. 
+And now the dancing links solver:
+
+\sourcecode{DLX_test}
+
+
+
+\bigskip
+

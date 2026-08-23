@@ -1,0 +1,29 @@
+Edge_curve_17_line_type:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 17 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 3 \
+			-homogeneous_of_degree 4 \
+			-monomial_ordering_partition \
+			-variables "X,Y,Z" "X,Y,Z" \
+		-end \
+		-assign Eqn -from \
+		-with R -do \
+			-ring_theoretic_activity \
+			-parse_equation \
+				"Edge_curve" "Edge\_curve" \
+				$(EDGE_CURVE_EQUATION_ALGEBRAIC) \
+				f 3 \
+		-end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define C -geometric_object P \
+			-projective_variety R \
+				"Edge_q17" "Edge\_q17" \
+				Eqn \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-line_type_old \
+		-end \
+		-print_symbols

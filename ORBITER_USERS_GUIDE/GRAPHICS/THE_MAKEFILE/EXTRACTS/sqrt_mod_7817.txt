@@ -1,0 +1,2 @@
+sqrt_mod_7817:
+		$(ORBITER) -v 2 -square_root_mod 2221 7817

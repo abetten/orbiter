@@ -1,0 +1,38 @@
+ovoid_q8_canon:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 8 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define Geo -geometric_object P \
+			-elliptic_quadric_ovoid \
+		-end \
+		-define C -combinatorial_object \
+			-label ovoid ovoid \
+			-geometric_object Geo \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form_PG P \
+				-save_ago \
+				-max_TDO_depth 4 \
+				-nauty_control -nauty_log "ovoid_q8_nauty_log.txt" -show_canonical_form  -end \
+			-end \
+		-end \
+		-define Doinc -draw_incidence_structure_options \
+			-width 40 -width_10 6 \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-post_processing \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-report \
+				-show_TDO \
+				-show_TDA \
+				-dont_show_incidence_matrices \
+				-export_group_GAP \
+				-incidence_draw_options Doinc \
+			-end \
+		-end
+	$(PDFLATEX) ovoid_classification.tex
+	$(OPEN) ovoid_classification.pdf

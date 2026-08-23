@@ -1,0 +1,30 @@
+graph_classify_5:
+	$(ORBITER) -v 2 \
+		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define Do -draw_options \
+			-radius 300 -nodes_empty \
+			-line_width 1.5  \
+			-scale 0.1 \
+		-end \
+		-define GC -graph_classification \
+			-n 5 \
+			-poset_classification_control \
+				-problem_label graphs_v5 \
+				-depth 10 \
+				-draw_options Do \
+			-end \
+		-end \
+		-with GC -do \
+		-graph_classification_activity \
+			-list_graphs_at_level 5 5 \
+		-end \
+		-with GC -do \
+		-graph_classification_activity \
+			-draw_options Do \
+			-draw_graphs_at_level 5 \
+		-end \
+		-print_symbols
+	$(PDFLATEX) graphs_v5_level_5_reps.tex
+	$(OPEN) graphs_v5_level_5_reps.pdf
+	#$(PDFLATEX) graphs_v5_poset.tex
+	#$(OPEN) graphs_v5_poset.pdf

@@ -1,0 +1,7 @@
+F_17_edge:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 17 -end \
+		-with F -do -finite_field_activity \
+			-cheat_sheet_GF -end
+	$(PDFLATEX) GF_17.tex
+	$(OPEN) GF_17.pdf

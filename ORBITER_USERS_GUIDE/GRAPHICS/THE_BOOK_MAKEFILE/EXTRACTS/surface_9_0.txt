@@ -1,0 +1,34 @@
+surface_9_0:
+	$(ORBITER) -v 3 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 -nodes_empty \
+		-end \
+		-define F -finite_field -q 9 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define P2 -projective_space -n 2 -field F -v 0 -end \
+		-define S -cubic_surface -space P -catalogue 0 -end \
+		-define Control -poset_classification_control \
+			-problem_label nc_arcs_q9 \
+			-W -depth 6 \
+		-end \
+		-define Arc_control -arc_generator_control \
+			-projective_space P2 \
+			-control Control \
+			-target_size 6 \
+			-d 2 \
+		-end \
+		-define Orb -orbits \
+			-on_arcs Arc_control \
+		-end \
+		-with S -do \
+		-cubic_surface_activity \
+			-report Do \
+		-end \
+		-with S -do \
+		-cubic_surface_activity \
+			-report_all_flag_orbits Orb \
+		-end \
+		-with S -do \
+		-cubic_surface_activity \
+			-export_something "lines" \
+		-end

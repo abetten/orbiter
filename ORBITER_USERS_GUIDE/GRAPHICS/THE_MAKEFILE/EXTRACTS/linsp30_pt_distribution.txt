@@ -1,0 +1,22 @@
+linsp30_pt_distribution:
+	$(ORBITER) -v 4 \
+		-define A -vector -format 6 -dense \
+			"1,1,1,1,1,1,0,0,5,2,5,2,1,5,3,7,10,1,10,1,0,10,3,21" \
+		-end \
+		-define D -diophant \
+			-label linsp30_pt_distribution \
+			-coefficient_matrix A \
+			-RHS "mult=1,EQ=30" \
+			-RHS "mult=1,EQ=7" \
+			-RHS "mult=1,EQ=135" \
+			-RHS "mult=1,EQ=96" \
+			-RHS "mult=1,LE=351" \
+			-RHS "mult=1,LE=276" \
+			-x_min_global 0 -x_max_global 30 \
+		-end \
+		-with D -do \
+			-diophant_activity -solve_mckay \
+		-end \
+		-with D -do \
+			-diophant_activity -draw_as_bitmap 20 8 \
+		-end

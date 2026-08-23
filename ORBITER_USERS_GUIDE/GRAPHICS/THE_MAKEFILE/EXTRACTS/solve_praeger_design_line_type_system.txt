@@ -1,0 +1,15 @@
+solve_praeger_design_line_type_system:
+	$(ORBITER) -v 4 \
+		-define A -vector -format 4 -dense $(PRAEGER_DESIGN_LINE_TYPE) -end \
+		-define D -diophant \
+			-label test_system \
+			-coefficient_matrix A \
+			-RHS "EQ=18" \
+			-RHS "EQ=55" \
+			-RHS "EQ=88" \
+			-RHS "EQ=57" \
+			-x_min_global 0 -x_max_global 57 \
+		-end \
+		-with D -do \
+			-diophant_activity -solve_mckay \
+		-end

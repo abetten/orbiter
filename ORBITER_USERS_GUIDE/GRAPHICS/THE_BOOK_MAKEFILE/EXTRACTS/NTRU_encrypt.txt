@@ -1,0 +1,9 @@
+NTRU_encrypt:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q $(NTRU_Q) -end \
+		-with F -do \
+		-finite_field_activity \
+		-NTRU_encrypt \
+		$(NTRU_N) $(NTRU_P) $(ALICE_PUBLIC_KEY) \
+		$(BOB_ONE_TIME_KEY) $(BOB_MESSAGE) \
+		-end

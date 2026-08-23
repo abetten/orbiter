@@ -1,0 +1,19 @@
+direct_product_AGL:
+	$(ORBITER) -v 4 \
+		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define G1 -linear_group -AGL 1 3 \
+			-end \
+		-define G2 -linear_group -AGL 1 7 \
+			-end \
+		-define G -modified_group -direct_product "G1,G2" \
+			"21" "1,1,1,1" \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end
+	$(PDFLATEX) product_AGL_1_3_AGL_1_7_report.tex
+	$(OPEN) product_AGL_1_3_AGL_1_7_report.pdf

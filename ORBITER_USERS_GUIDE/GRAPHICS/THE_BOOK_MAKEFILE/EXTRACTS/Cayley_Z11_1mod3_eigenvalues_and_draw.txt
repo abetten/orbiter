@@ -1,0 +1,19 @@
+Cayley_Z11_1mod3_eigenvalues_and_draw:
+	$(ORBITER) -v 2 \
+		-define Do -draw_options -xin 20000 \
+			-yin 20000 -embedded -radius 200 -end \
+		-define F -finite_field -q 11 -end \
+		-define S -vector -dense \
+			"1,1, 1,4, 1,7, 1,10" -end \
+		-define G -linear_group -AGL 1 F \
+			-subgroup_by_generators "Z11" 11 1 "1,1" \
+		-end \
+		-define Gamma -graph \
+			-Cayley_graph G S \
+		-end \
+		-with Gamma -do \
+		-graph_theoretic_activity -eigenvalues -end \
+		-with Gamma -do \
+		-graph_theoretic_activity -draw Do -end
+	$(PDFLATEX) Cayley_graph_AGL_1_11_draw.tex
+	$(OPEN) Cayley_graph_AGL_1_11_draw.pdf

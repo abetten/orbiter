@@ -1,0 +1,7 @@
+F2_get_primitive_poly_of_deg_10:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 2 -end \
+		-with F -do \
+		-finite_field_activity \
+			-get_primitive_polynomial 10 \
+		-end

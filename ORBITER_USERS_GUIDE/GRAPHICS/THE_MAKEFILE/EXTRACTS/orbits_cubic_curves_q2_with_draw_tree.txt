@@ -1,0 +1,24 @@
+orbits_cubic_curves_q2_with_draw_tree:
+	$(ORBITER) -v 4 \
+		-define Do -draw_options \
+			-yout 500000 -radius 150 -nodes_empty \
+			-line_width 0.5 -y_stretch 0.25 -embedded \
+		-end \
+		-define F -finite_field -q 2 -end \
+		-define G -linear_group -PGL 3 F -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 3 \
+			-homogeneous_of_degree 3 \
+			-monomial_ordering_partition \
+			-variables "X,Y,Z" "X,Y,Z" \
+		-end \
+		-define Orb -orbits -group G \
+			-print_interval 1000000 \
+			-on_polynomials R \
+		-end \
+		-with Orb -do -orbits_activity \
+			-draw_tree 6 Do \
+		-end
+	$(PDFLATEX) PGL_3_2_orbit_6_tree.tex
+	$(OPEN) PGL_3_2_orbit_6_tree.pdf

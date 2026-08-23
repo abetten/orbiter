@@ -1,0 +1,18 @@
+F8_over_F2_field_reduction:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 8 -end \
+		-loop L 0 8 1 \
+			-with F -do \
+			-finite_field_activity \
+				-field_reduction "F8_red_%L" 2 1 1 "%L" \
+			-end \
+		-end_loop L
+	$(ORBITER) -v 2 \
+		-loop L 0 8 1 \
+			-draw_matrix \
+				-input_csv_file F8_red_%L.csv \
+				-box_width 40 -bit_depth 24 \
+				-partition 4 3 3 \
+			-end \
+		-end_loop L
+	#$(PDFLATEX) field_reduction_Q8_q2_5_7.tex

@@ -1,0 +1,13 @@
+PGGL_2_9:
+	$(ORBITER) -v 2 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define G -linear_group -PGGL 2 9 -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end \
+		-print_symbols
+	$(PDFLATEX) PGGL_2_9_report.tex
+	$(OPEN) PGGL_2_9_report.pdf

@@ -1,0 +1,24 @@
+\begin{table}
+\begin{tcolorbox}[tabularx={X|p{2cm}|X|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black,title=Cryptographic Commands]
+		\hline
+		Command & Arguments & Purpose \\
+		\hline
+		\verb'-solovay_strassen' & $a$ $n$  & Performs $n$ Solovay / Strassen tests on the number $a$\\
+		\hline
+		\verb'-miller_rabin' & $a$ $n$  & Performs $n$ Miller / Rabin tests on the number $a$\\
+		\hline
+		\verb'-fermat' & $a$ $n$  & Performs $n$ Fermat tests on the number $a$\\
+		\hline
+		\verb'-find_pseudoprime' & $a$ $n_1$ $n_2$ $n_3$  & Computes a pseudoprime which survives $n_1$ Fermat tests, $n_2$ Miller Rabin tests, $n_3$ Solovay Strassen tests\\
+		\hline
+		\verb'-find_strong_pseudoprime' & $a$ $n_1$ $n_2$  & Computes a pseudoprime which survives $n_1$ Fermat tests and  $n_2$ Miller Rabin tests \\
+		\hline
+		\verb'-RSA_encrypt_text' & $d$ $n$ $b$ text & Using blocks of $b$ letters at a time, encrypt ``text'' using RSA with exponent $d$ modulo $n$\\
+		\hline
+		\verb'-RSA' & $d$ $n$  list-of-integers & encrypt the given sequence of integers using RSA with exponent $d$ modulo $n$\\
+		\hline
+\end{tcolorbox}
+\caption{\label{tab:crypto}Cryptographic Commands}
+\end{table}

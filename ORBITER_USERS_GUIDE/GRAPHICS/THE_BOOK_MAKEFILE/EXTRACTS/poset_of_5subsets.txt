@@ -1,0 +1,27 @@
+poset_of_5subsets:
+	$(ORBITER) -v 3 \
+		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define Do -draw_options -radius 150 -end \
+		-define Control -poset_classification_control \
+			-problem_label poset_5 \
+			-W -depth 5 \
+			-draw_options Do \
+		-end \
+		-define G -permutation_group -identity_group 5 -end \
+		-define Orb -orbits \
+			-group G \
+			-group_action G \
+			-generators G \
+			-on_subsets 5 Control \
+		-end \
+		-define ro \
+			-poset_classification_report_options \
+				-draw_poset -type_ordinary \
+			-draw_options Do \
+		-end \
+		-with Orb -do -orbits_activity \
+			-report "" \
+			-report_options ro \
+		-end 
+	$(PDFLATEX) poset_5_poset.tex
+	$(OPEN) poset_5_poset.pdf

@@ -1,0 +1,7 @@
+PGL_4_2_wd_reverse:
+	$(ORBITER) -v 3 \
+		-define G -linear_group -PGL 4 2 -wedge_detached -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-reverse_isomorphism_exterior_square \
+		-end

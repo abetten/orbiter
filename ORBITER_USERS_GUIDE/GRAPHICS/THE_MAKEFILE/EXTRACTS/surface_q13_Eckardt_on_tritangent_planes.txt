@@ -1,0 +1,45 @@
+surface_q13_Eckardt_on_tritangent_planes:
+	$(ORBITER) -v 2 \
+		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define F -finite_field -q 13 -end \
+		-define gens -vector -field F \
+			-dense $(SURFACE_Q13_STAB_GENS) \
+		-end \
+		-define TriP -set -file \
+			surface_arc_lifting_trihedral_q13_\
+arc_0_1_2_3_43_113_tritangent_planes.csv \
+		-end \
+		-define G -linear_group -PGL 4 F \
+			-subgroup_by_generators "stab" \
+				24 3 gens \
+			-end \
+		-define G_on_planes -modified_group -from G \
+			-on_k_subspaces 3 \
+		-end \
+		-define Gr -modified_group -from G_on_planes \
+			-restricted_action TriP TriP \
+		-end \
+		-with Gr -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end \
+		-define Orb -orbits -group Gr \
+			-on_points \
+		-end \
+		-with Orb -do -orbits_activity \
+			-report Do \
+		-end \
+		-with Orb -do -orbits_activity \
+			-draw_tree 0 Do \
+		-end \
+		-with Orb -do -orbits_activity \
+			-draw_tree 1 Do \
+		-end \
+		-with Orb -do -orbits_activity \
+			-stabilizer 36 \
+		-end
+	$(PDFLATEX) PGL_4_13_Gr_4_3_res_TriP_orbits_report.tex
+	$(OPEN) PGL_4_13_Gr_4_3_res_TriP_orbits_report.pdf

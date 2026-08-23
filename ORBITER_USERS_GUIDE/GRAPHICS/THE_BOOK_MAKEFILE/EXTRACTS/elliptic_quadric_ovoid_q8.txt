@@ -1,0 +1,11 @@
+elliptic_quadric_ovoid_q8:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 8 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define Geo -geometric_object P \
+			-elliptic_quadric_ovoid \
+		-end \
+		-define C -combinatorial_object \
+			-label ovoid ovoid \
+			-geometric_object Geo \
+		-end

@@ -1,0 +1,4 @@
+F_256_Rijndahl:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 256 -override_polynomial 283 -end \
+		-with F -do -finite_field_activity -cheat_sheet_GF -end

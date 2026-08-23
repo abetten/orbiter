@@ -1,0 +1,1 @@
+ECKARDT_SURFACE_EQN="a*X3^3-a*b^2*(X0^2+X1^2+X2^2)*X3+b^3*(a^2+1)*X0*X1*X2"

@@ -1,0 +1,3 @@
+smooth:
+	$(ORBITER) -v 2 \
+		-sift_smooth 100000 100 "2,3,5,7,11,13,17,19"

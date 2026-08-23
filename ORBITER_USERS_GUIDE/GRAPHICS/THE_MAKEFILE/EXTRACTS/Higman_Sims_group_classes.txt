@@ -1,0 +1,16 @@
+Higman_Sims_group_classes:
+	$(ORBITER) -v 2 \
+		-define gens -vector -dense \
+			$(HIGMAN_SIMS_GENS) \
+		-end \
+		-define G -permutation_group -symmetric_group 100 \
+			-subgroup_by_generators HS \
+				$(HIGMAN_SIMS_GO) \
+				$(HIGMAN_SIMS_NB_GENS) gens \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-classes \
+		-end
+	$(PDFLATEX) Sym_100_Subgroup_HS_44352000_classes_out.tex
+	$(OPEN) Sym_100_Subgroup_HS_44352000_classes_out.pdf

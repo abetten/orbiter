@@ -1,0 +1,416 @@
+% file: cc_4_aux_poset_lvl_9.commands
+% created by Orbiter graphics interface
+% creation date: Fri Dec 29 00:06:36 +03 2023
+
+DeviceCoordinates 0 0 1000000 1000000
+UserCoordinates 0 0 10000 10000
+Polygon 2 5000 9736 5000 9210
+Polygon 2 5000 9210 5000 8684
+Polygon 2 5000 8684 5000 8157
+Polygon 2 5000 8157 5000 7631
+Polygon 2 5000 7631 2500 7105
+Polygon 2 5000 7631 7500 7105
+Polygon 2 2500 7105 2500 6578
+Polygon 2 7500 7105 7500 6578
+Polygon 2 2500 6578 1666 6052
+Polygon 2 2500 6578 5000 6052
+Polygon 2 7500 6578 8333 6052
+Polygon 2 1666 6052 2500 5526
+Polygon 2 5000 6052 7500 5526
+Polygon 2 8333 6052 7500 5526
+Polygon 2 2500 5526 1000 5000
+Polygon 2 2500 5526 3000 5000
+Polygon 2 2500 5526 5000 5000
+Polygon 2 7500 5526 7000 5000
+Polygon 2 7500 5526 9000 5000
+Polygon 2 1000 5000 1666 4473
+Polygon 2 3000 5000 5000 4473
+Polygon 2 5000 5000 8333 4473
+Polygon 2 7000 5000 1666 4473
+Polygon 2 9000 5000 5000 4473
+Polygon 2 1666 4473 625 3947
+Polygon 2 1666 4473 1875 3947
+Polygon 2 1666 4473 3125 3947
+Polygon 2 5000 4473 4375 3947
+Polygon 2 5000 4473 5625 3947
+Polygon 2 5000 4473 6875 3947
+Polygon 2 8333 4473 8125 3947
+Polygon 2 8333 4473 9375 3947
+Polygon 2 625 3947 1000 3421
+Polygon 2 1875 3947 3000 3421
+Polygon 2 3125 3947 5000 3421
+Polygon 2 4375 3947 3000 3421
+Polygon 2 5625 3947 5000 3421
+Polygon 2 6875 3947 7000 3421
+Polygon 2 8125 3947 5000 3421
+Polygon 2 9375 3947 9000 3421
+Polygon 2 1000 3421 454 2894
+Polygon 2 1000 3421 1363 2894
+Polygon 2 3000 3421 2272 2894
+Polygon 2 3000 3421 3181 2894
+Polygon 2 3000 3421 4090 2894
+Polygon 2 5000 3421 5000 2894
+Polygon 2 5000 3421 5909 2894
+Polygon 2 5000 3421 6818 2894
+Polygon 2 7000 3421 7727 2894
+Polygon 2 7000 3421 8636 2894
+Polygon 2 9000 3421 9545 2894
+Polygon 2 454 2894 1000 2368
+Polygon 2 1363 2894 3000 2368
+Polygon 2 2272 2894 3000 2368
+Polygon 2 3181 2894 5000 2368
+Polygon 2 4090 2894 7000 2368
+Polygon 2 5000 2894 3000 2368
+Polygon 2 5909 2894 7000 2368
+Polygon 2 6818 2894 9000 2368
+Polygon 2 7727 2894 5000 2368
+Polygon 2 8636 2894 7000 2368
+Polygon 2 9545 2894 9000 2368
+Polygon 2 3000 2368 714 1842
+Polygon 2 5000 2368 2142 1842
+Polygon 2 5000 2368 3571 1842
+Polygon 2 7000 2368 5000 1842
+Polygon 2 7000 2368 6428 1842
+Polygon 2 7000 2368 7857 1842
+Polygon 2 9000 2368 9285 1842
+Polygon 2 714 1842 1666 1315
+Polygon 2 2142 1842 1666 1315
+Polygon 2 3571 1842 5000 1315
+Polygon 2 5000 1842 1666 1315
+Polygon 2 6428 1842 1666 1315
+Polygon 2 7857 1842 8333 1315
+Polygon 2 9285 1842 8333 1315
+Polygon 2 1666 1315 1250 789
+Polygon 2 5000 1315 3750 789
+Polygon 2 8333 1315 6250 789
+Polygon 2 8333 1315 8750 789
+Polygon 2 1250 789 1666 263
+Polygon 2 3750 789 5000 263
+Polygon 2 6250 789 1666 263
+Polygon 2 8750 789 8333 263
+sf_interior 100
+Circle 500000, 973600, 20000
+sf_interior 0
+Circle 500000, 973600, 20000
+st_alignment 1, 1
+Text 500000, 973600, "{\scriptsize -1}"
+sf_interior 100
+Circle 500000, 921000, 20000
+sf_interior 0
+Circle 500000, 921000, 20000
+sf_interior 100
+Circle 500000, 868400, 20000
+sf_interior 0
+Circle 500000, 868400, 20000
+st_alignment 1, 1
+Text 500000, 868400, "{\scriptsize 0}"
+sf_interior 100
+Circle 500000, 815700, 20000
+sf_interior 0
+Circle 500000, 815700, 20000
+sf_interior 100
+Circle 500000, 763100, 20000
+sf_interior 0
+Circle 500000, 763100, 20000
+st_alignment 1, 1
+Text 500000, 763100, "{\scriptsize 1}"
+sf_interior 100
+Circle 250000, 710500, 20000
+sf_interior 0
+Circle 250000, 710500, 20000
+sf_interior 100
+Circle 750000, 710500, 20000
+sf_interior 0
+Circle 750000, 710500, 20000
+sf_interior 100
+Circle 250000, 657800, 20000
+sf_interior 0
+Circle 250000, 657800, 20000
+st_alignment 1, 1
+Text 250000, 657800, "{\scriptsize 2}"
+sf_interior 100
+Circle 750000, 657800, 20000
+sf_interior 0
+Circle 750000, 657800, 20000
+st_alignment 1, 1
+Text 750000, 657800, "{\scriptsize 4}"
+sf_interior 100
+Circle 166600, 605200, 20000
+sf_interior 0
+Circle 166600, 605200, 20000
+sf_interior 100
+Circle 500000, 605200, 20000
+sf_interior 0
+Circle 500000, 605200, 20000
+sf_interior 100
+Circle 833300, 605200, 20000
+sf_interior 0
+Circle 833300, 605200, 20000
+sf_interior 100
+Circle 250000, 552600, 20000
+sf_interior 0
+Circle 250000, 552600, 20000
+st_alignment 1, 1
+Text 250000, 552600, "{\scriptsize 3}"
+sf_interior 100
+Circle 750000, 552600, 20000
+sf_interior 0
+Circle 750000, 552600, 20000
+st_alignment 1, 1
+Text 750000, 552600, "{\scriptsize 4}"
+sf_interior 100
+Circle 100000, 500000, 20000
+sf_interior 0
+Circle 100000, 500000, 20000
+sf_interior 100
+Circle 300000, 500000, 20000
+sf_interior 0
+Circle 300000, 500000, 20000
+sf_interior 100
+Circle 500000, 500000, 20000
+sf_interior 0
+Circle 500000, 500000, 20000
+sf_interior 100
+Circle 700000, 500000, 20000
+sf_interior 0
+Circle 700000, 500000, 20000
+sf_interior 100
+Circle 900000, 500000, 20000
+sf_interior 0
+Circle 900000, 500000, 20000
+sf_interior 100
+Circle 166600, 447300, 20000
+sf_interior 0
+Circle 166600, 447300, 20000
+st_alignment 1, 1
+Text 166600, 447300, "{\scriptsize 4}"
+sf_interior 100
+Circle 500000, 447300, 20000
+sf_interior 0
+Circle 500000, 447300, 20000
+st_alignment 1, 1
+Text 500000, 447300, "{\scriptsize 5}"
+sf_interior 100
+Circle 833300, 447300, 20000
+sf_interior 0
+Circle 833300, 447300, 20000
+st_alignment 1, 1
+Text 833300, 447300, "{\scriptsize 16}"
+sf_interior 100
+Circle 62500, 394700, 20000
+sf_interior 0
+Circle 62500, 394700, 20000
+sf_interior 100
+Circle 187500, 394700, 20000
+sf_interior 0
+Circle 187500, 394700, 20000
+sf_interior 100
+Circle 312500, 394700, 20000
+sf_interior 0
+Circle 312500, 394700, 20000
+sf_interior 100
+Circle 437500, 394700, 20000
+sf_interior 0
+Circle 437500, 394700, 20000
+sf_interior 100
+Circle 562500, 394700, 20000
+sf_interior 0
+Circle 562500, 394700, 20000
+sf_interior 100
+Circle 687500, 394700, 20000
+sf_interior 0
+Circle 687500, 394700, 20000
+sf_interior 100
+Circle 812500, 394700, 20000
+sf_interior 0
+Circle 812500, 394700, 20000
+sf_interior 100
+Circle 937500, 394700, 20000
+sf_interior 0
+Circle 937500, 394700, 20000
+sf_interior 100
+Circle 100000, 342100, 20000
+sf_interior 0
+Circle 100000, 342100, 20000
+st_alignment 1, 1
+Text 100000, 342100, "{\scriptsize 7}"
+sf_interior 100
+Circle 300000, 342100, 20000
+sf_interior 0
+Circle 300000, 342100, 20000
+st_alignment 1, 1
+Text 300000, 342100, "{\scriptsize 8}"
+sf_interior 100
+Circle 500000, 342100, 20000
+sf_interior 0
+Circle 500000, 342100, 20000
+st_alignment 1, 1
+Text 500000, 342100, "{\scriptsize 16}"
+sf_interior 100
+Circle 700000, 342100, 20000
+sf_interior 0
+Circle 700000, 342100, 20000
+st_alignment 1, 1
+Text 700000, 342100, "{\scriptsize 15}"
+sf_interior 100
+Circle 900000, 342100, 20000
+sf_interior 0
+Circle 900000, 342100, 20000
+st_alignment 1, 1
+Text 900000, 342100, "{\scriptsize 19}"
+sf_interior 100
+Circle 45400, 289400, 20000
+sf_interior 0
+Circle 45400, 289400, 20000
+sf_interior 100
+Circle 136300, 289400, 20000
+sf_interior 0
+Circle 136300, 289400, 20000
+sf_interior 100
+Circle 227200, 289400, 20000
+sf_interior 0
+Circle 227200, 289400, 20000
+sf_interior 100
+Circle 318100, 289400, 20000
+sf_interior 0
+Circle 318100, 289400, 20000
+sf_interior 100
+Circle 409000, 289400, 20000
+sf_interior 0
+Circle 409000, 289400, 20000
+sf_interior 100
+Circle 500000, 289400, 20000
+sf_interior 0
+Circle 500000, 289400, 20000
+sf_interior 100
+Circle 590900, 289400, 20000
+sf_interior 0
+Circle 590900, 289400, 20000
+sf_interior 100
+Circle 681800, 289400, 20000
+sf_interior 0
+Circle 681800, 289400, 20000
+sf_interior 100
+Circle 772700, 289400, 20000
+sf_interior 0
+Circle 772700, 289400, 20000
+sf_interior 100
+Circle 863600, 289400, 20000
+sf_interior 0
+Circle 863600, 289400, 20000
+sf_interior 100
+Circle 954500, 289400, 20000
+sf_interior 0
+Circle 954500, 289400, 20000
+sf_interior 100
+Circle 100000, 236800, 20000
+sf_interior 0
+Circle 100000, 236800, 20000
+st_alignment 1, 1
+Text 100000, 236800, "{\scriptsize 10}"
+sf_interior 100
+Circle 300000, 236800, 20000
+sf_interior 0
+Circle 300000, 236800, 20000
+st_alignment 1, 1
+Text 300000, 236800, "{\scriptsize 11}"
+sf_interior 100
+Circle 500000, 236800, 20000
+sf_interior 0
+Circle 500000, 236800, 20000
+st_alignment 1, 1
+Text 500000, 236800, "{\scriptsize 11}"
+sf_interior 100
+Circle 700000, 236800, 20000
+sf_interior 0
+Circle 700000, 236800, 20000
+st_alignment 1, 1
+Text 700000, 236800, "{\scriptsize 14}"
+sf_interior 100
+Circle 900000, 236800, 20000
+sf_interior 0
+Circle 900000, 236800, 20000
+st_alignment 1, 1
+Text 900000, 236800, "{\scriptsize 19}"
+sf_interior 100
+Circle 71400, 184200, 20000
+sf_interior 0
+Circle 71400, 184200, 20000
+sf_interior 100
+Circle 214200, 184200, 20000
+sf_interior 0
+Circle 214200, 184200, 20000
+sf_interior 100
+Circle 357100, 184200, 20000
+sf_interior 0
+Circle 357100, 184200, 20000
+sf_interior 100
+Circle 500000, 184200, 20000
+sf_interior 0
+Circle 500000, 184200, 20000
+sf_interior 100
+Circle 642800, 184200, 20000
+sf_interior 0
+Circle 642800, 184200, 20000
+sf_interior 100
+Circle 785700, 184200, 20000
+sf_interior 0
+Circle 785700, 184200, 20000
+sf_interior 100
+Circle 928500, 184200, 20000
+sf_interior 0
+Circle 928500, 184200, 20000
+sf_interior 100
+Circle 166600, 131500, 20000
+sf_interior 0
+Circle 166600, 131500, 20000
+st_alignment 1, 1
+Text 166600, 131500, "{\scriptsize 13}"
+sf_interior 100
+Circle 500000, 131500, 20000
+sf_interior 0
+Circle 500000, 131500, 20000
+st_alignment 1, 1
+Text 500000, 131500, "{\scriptsize 17}"
+sf_interior 100
+Circle 833300, 131500, 20000
+sf_interior 0
+Circle 833300, 131500, 20000
+st_alignment 1, 1
+Text 833300, 131500, "{\scriptsize 16}"
+sf_interior 100
+Circle 125000, 78900, 20000
+sf_interior 0
+Circle 125000, 78900, 20000
+sf_interior 100
+Circle 375000, 78900, 20000
+sf_interior 0
+Circle 375000, 78900, 20000
+sf_interior 100
+Circle 625000, 78900, 20000
+sf_interior 0
+Circle 625000, 78900, 20000
+sf_interior 100
+Circle 875000, 78900, 20000
+sf_interior 0
+Circle 875000, 78900, 20000
+sf_interior 100
+Circle 166600, 26300, 20000
+sf_interior 0
+Circle 166600, 26300, 20000
+st_alignment 1, 1
+Text 166600, 26300, "{\scriptsize 16}"
+sf_interior 100
+Circle 500000, 26300, 20000
+sf_interior 0
+Circle 500000, 26300, 20000
+st_alignment 1, 1
+Text 500000, 26300, "{\scriptsize 18}"
+sf_interior 100
+Circle 833300, 26300, 20000
+sf_interior 0
+Circle 833300, 26300, 20000
+st_alignment 1, 1
+Text 833300, 26300, "{\scriptsize 19}"
+END_OF_FILE
+

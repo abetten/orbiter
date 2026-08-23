@@ -1,0 +1,26 @@
+V_4_2_trivial:
+	$(ORBITER) -v 5 \
+		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define Do -draw_options \
+			-radius 200 -embedded \
+			-select_layers "1,2,3,4" \
+		-end \
+		-define Control -poset_classification_control \
+			-problem_label V_4_2_trivial \
+			-W -depth 3 \
+		-end \
+		-define G -linear_group -PGL 4 2 -identity_group -end \
+		-define Orb -orbits -group G \
+			-on_subspaces 4 Control \
+		-end \
+		-define ro \
+			-poset_classification_report_options \
+				-draw_poset -type_ordinary \
+			-draw_options Do \
+		-end \
+		-with Orb -do -orbits_activity \
+			-report "" \
+			-report_options ro \
+		-end 
+	$(PDFLATEX) V_4_2_trivial_poset.tex
+	$(OPEN) V_4_2_trivial_poset.pdf

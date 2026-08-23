@@ -1,0 +1,28 @@
+% file: PGO_5_2_sims_2.commands
+% created by Orbiter graphics interface
+% creation date: Mon Dec 21 16:40:00 MST 2020
+
+DeviceCoordinates 0 0 1000000 1000000
+UserCoordinates 0 0 10000 10000
+Polygon 2 5000 8750 2500 6250
+Polygon 2 5000 8750 7500 6250
+sf_interior 100
+Circle 500000, 875000, 20000
+sf_interior 0
+Circle 500000, 875000, 20000
+st_alignment 1, 1
+Text 500000, 875000, "{\scriptsize 2}"
+sf_interior 100
+Circle 250000, 625000, 20000
+sf_interior 0
+Circle 250000, 625000, 20000
+st_alignment 1, 1
+Text 250000, 625000, "{\scriptsize 12}"
+sf_interior 100
+Circle 750000, 625000, 20000
+sf_interior 0
+Circle 750000, 625000, 20000
+st_alignment 1, 1
+Text 750000, 625000, "{\scriptsize 5}"
+END_OF_FILE
+

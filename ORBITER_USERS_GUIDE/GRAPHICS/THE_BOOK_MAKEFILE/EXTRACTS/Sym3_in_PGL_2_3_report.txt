@@ -1,0 +1,40 @@
+Sym3_in_PGL_2_3_report:
+	$(ORBITER) -v 2 \
+		-define Do -draw_options -xout 1000000 -yout 1000000 \
+			-radius 250 \
+			-scale 0.5 -line_width 2 \
+		-end \
+		-define G -linear_group -PGL 2 3 \
+		-subgroup_by_generators "Sym3" "6" 2 \
+			"0,1,2,1, 0,1,1,0" \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-print_elements_tex \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-make_element_tree \
+		-end
+	$(ORBITER) -v 2 \
+		-define Do -draw_options \
+			-nodes \
+			-embedded -radius 250 \
+			-xin 10000 -yin 10000 \
+			-xout 1000000 -yout 600000 \
+			-scale 0.3 -line_width 1.0 \
+		-end \
+		-tree_draw \
+			-file PGL_2_3_Subgroup_Sym3_6_elements_tree.txt \
+			-draw_options Do \
+		-end
+	$(PDFLATEX) PGL_2_3_Subgroup_Sym3_6_report.tex
+	$(OPEN) PGL_2_3_Subgroup_Sym3_6_report.pdf
+	$(PDFLATEX) PGL_2_3_Subgroup_Sym3_6_elements.tex
+	$(OPEN) PGL_2_3_Subgroup_Sym3_6_elements.pdf
+	$(PDFLATEX) PGL_2_3_Subgroup_Sym3_6_elements_tree_draw.tex
+	$(OPEN) PGL_2_3_Subgroup_Sym3_6_elements_tree_draw.pdf

@@ -1,0 +1,19 @@
+PGL_8_2_classes:
+	$(ORBITER) -v 3 \
+		-define G \
+		-linear_group -PGL 8 2 \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-classes \
+		-end
+	$(ORBITER) -v 3 \
+		-define G \
+		-linear_group -PGL 8 2 \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-classes \
+		-end
+	$(PDFLATEX) PGL_8_2_classes_out.tex
+	$(OPEN) PGL_8_2_classes_out.pdf

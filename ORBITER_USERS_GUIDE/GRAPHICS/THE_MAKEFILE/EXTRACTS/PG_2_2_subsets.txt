@@ -1,0 +1,36 @@
+PG_2_2_subsets:
+	$(ORBITER) -v 3 \
+		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define Do -draw_options \
+			-radius 200 -embedded \
+		-end \
+		-define Control -poset_classification_control \
+			-problem_label PGL_3_2 \
+			-depth 7 \
+			-draw_options Do \
+		-end \
+		-define F -finite_field -q 2 -end \
+		-define G -linear_group -PGL 3 F -end \
+		-define Orb -orbits \
+			-group G \
+			-group_action G \
+			-generators G \
+			-on_subsets 7 Control \
+		-end \
+		-define ro \
+			-poset_classification_report_options \
+				-draw_poset -type_ordinary \
+				-draw_options Do \
+		-end \
+		-with Orb -do -orbits_activity \
+			-report "" \
+			-report_options ro \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-stats "PG_2_2_subsets" \
+		-end
+	$(PDFLATEX) PGL_3_2_poset_lvl_7.tex
+	$(OPEN) PGL_3_2_poset_lvl_7.pdf
+	$(PDFLATEX) PGL_3_2_poset.tex
+	$(OPEN) PGL_3_2_poset.pdf

@@ -1,0 +1,78 @@
+A set of points $V$ in $\PG(n,q)$ is algebraic if there is a set 
+of homogeneous polynomials $p_1,\ldots,p_r$
+whose roots over $\bbF_q$ are the given set. 
+In this case, we write $V = \bv(p_1,\ldots,p_r).$ 
+The set $V$ is often called the variety of $p_1,\ldots,p_r.$
+
+\bigskip
+
+Conversely, given a set of points $V$ in $\PG(n,q),$ 
+the ideal $I(V)$ is the set of homogeneous polynomials 
+in $\bbF_q[X_0,\ldots,X_n]$ which vanish on all of $V.$
+This set is an ideal in the polynomial ring. 
+In $\PG(n,q),$ every set is algebraic 
+of degree at most $(n+1)(q-1)$~\cite{GlynnHirschfeld95}. 
+The associated polynomial is unique and known as 
+the algebraic normal form of the set.
+
+
+\bigskip
+
+
+In order to work with algebraic sets, multivariate polynomial rings are required. 
+For details, see Section~\ref{sec:ring:theory:multivariate}.
+
+\bigskip
+
+
+Suppose we are interested in $\bbF_{11}$-rational points of 
+the elliptic curve $y^2= x^3+x+3.$
+We write $x^3+3-y^2+x = 0.$ 
+Homogenizing yields $X^3+3Z^3-Y^2Z+XZ = 0.$
+Using $X_0,X_1,X_2$ instead of $X,Y,Z$ yields
+$$
+X_0^3+3X_2^3 + 10X_1^2X_2  + X_0X_2^2 = 0.
+$$
+Using the indexing of monomials from 
+Table~\ref{tab:PG2monomials}, 
+we record the coefficient vector of the equation as sequence
+$$
+(1,0,3,0,0,0,10,1,0,0).
+$$
+The Orbiter command
+
+\sourcecode{EC_11_EQUATION}
+
+
+\sourcecode{EC_11.txt}
+
+creates the algebraic set associated to the cubic curve $y^2=x^3+x+3$ in $\PG(2,11).$ 
+It turns out that there are exactly $18$ 
+points over $\bbF_{11}.$ A picture is shown below:
+
+\orbiteroutput{GRAPHICS/WRAPPERS/EC_11_1_3}
+
+Suppose we want to create the Hirschfeld surface with equation
+$$
+X_0^2X_3 + X_1^2X_2 + X_1X_2^2 + X_0X_3^2=0.
+$$  
+Based on the partition ordering 
+of Figure~\ref{tab:PG3monomials}, 
+the equation is coded as coefficient vector
+$$
+(0,0,0,0,0,0,1,0,1,0, 0,1,0,1,0,0,0,0,0,0).
+$$
+The following command can be used to create the variety over $\bbF_4$:
+
+\sourcecode{HIRSCHFELD_SURFACE_EQUATION}
+
+
+\sourcecode{Hirschfeld_surface_q4.txt}
+
+A file called \verb'Hirschfeld_surface_q4.txt' is created. 
+The file contains the Orbiter 
+ranks of the $45$ points on the surface.
+
+
+\bigskip
+

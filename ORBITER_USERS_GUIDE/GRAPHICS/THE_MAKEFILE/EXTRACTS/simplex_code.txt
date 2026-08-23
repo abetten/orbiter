@@ -1,0 +1,14 @@
+simplex_code:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define v -vector -field F -format 3 \
+			-dense $(SIMPLEX_CODE_GENERATOR) \
+		-end \
+		-define C -code -field F \
+			-generator_matrix v \
+		-end \
+		-with C -do -coding_theoretic_activity \
+			-report \
+		-end
+	$(PDFLATEX) by_genma_n7_k3_code_n7_k3_q2.tex
+	$(OPEN) by_genma_n7_k3_code_n7_k3_q2.pdf

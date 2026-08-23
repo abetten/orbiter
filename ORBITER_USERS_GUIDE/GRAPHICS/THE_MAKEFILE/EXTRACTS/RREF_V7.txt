@@ -1,0 +1,11 @@
+RREF_V7:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 7 -end \
+		-define V7 -vector -format 7 \
+			-dense $(V7_VANDERMONDE_EXTENDED) \
+		-end \
+		-with F -do -finite_field_activity \
+			-RREF V7 \
+		-end
+	$(PDFLATEX) V7_rref.tex
+	$(OPEN) V7_rref.pdf

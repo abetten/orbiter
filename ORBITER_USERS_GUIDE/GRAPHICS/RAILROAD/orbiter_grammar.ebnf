@@ -1,0 +1,133 @@
+Grammar  ::= Program
+Program ::= ( Setup )*  CommandSequence
+Setup ::= Verbosity | ListArgs | ParseOnly | SeedRandomGen | MemoryDebug | OverridePoly | OrbiterPath | MagmaPath | Fork
+CommandSequence   ::= ( Command )*
+Command ::= Definition | Assignment | Activity | GlobalCmd
+Definition ::= '-define' Literal ObjectTypeAndArgs '-end' 
+Assignment ::= '-assign' Literal ( '-and' Literal )* '-from' Activity 
+Activity ::= '-with' Literal ( '-and' Literal )* '-do' ObjectActivity '-end' 
+
+ObjectTypeAndArgs ::= DataStructure | AlgebraObject | GeometryObject | CombinatoricsObject | CodingTheoryObject | OtherObject
+DataStructure ::= collection | set | vector | vector_ge
+
+AlgebraObject ::= finite_field | polynomial_ring | linear_group | permutation_group | group_modification | action_on_forms | orbits | poset_classification_control | poset_classification_report_options | poset_classification_activity
+
+GeometryObject ::= projective_space | orthogonal_space | BLT_set_classifier | spread_classifier | geometric_object | spread | cubic_surface | quartic_curve | BLT_set | translation_plane | spread_table | packing_classify | packing_was | packing_was_choose_fixed_points | packing_long_orbits | arc_generator_control | mapping | variety
+
+CombinatoricsObject ::= graph | graph_classification | design | design_table | large_set_was | combinatorial_object | geometry_builder
+
+CodingTheoryObject ::= code | crc_code
+
+OtherObject ::= diophant | symbolic_object
+
+
+ObjectActivity ::= AlgebraActivity | GeometryActivity | CombinatoricsActivity | CodingTheoryActivity | OtherActivity
+
+AlgebraActivity ::= finite_field_activity | polynomial_ring_activity | group_theoretic_activity | action_on_forms_activity | orbits_activity
+
+GeometryActivity ::= projective_space_activity | orthogonal_space_activity | cubic_surface_activity | quartic_curve_activity | blt_set_activity | variety_activity  | classification_of_cubic_surfaces_with_double_sixes_activity | spread_table_activity | packing_with_symmetry_assumption_activity | packing_fixed_points_activity | BLT_set_classify_activity | spread_classify_activity | spread_activity | translation_plane_activity 
+
+CombinatoricsActivity ::= combinatorial_object_activity | graph_theoretic_activity | graph_classification_activity | large_set_was_activity
+
+CodingTheoryActivity ::= coding_theoretic_activity | design_activity 
+
+OtherActivity ::= diophant_activity | symbolic_object_activity 
+
+
+finite_field ::= '-finite_field' ( specific_args_to_create )*
+polynomial_ring ::= '-polynomial_ring' ( specific_args_to_create )*
+projective_space ::= '-projective_space' ( specific_args_to_create )*
+orthogonal_space ::= '-orthogonal_space' ( specific_args_to_create )*
+BLT_set_classifier ::= '-BLT_set_classifier' ( specific_args_to_create )*
+spread_classifier ::= '-spread_classifier' ( specific_args_to_create )*
+linear_group ::= '-linear_group' ( specific_args_to_create )*
+permutation_group ::= '-permutation_group' ( specific_args_to_create )*
+group_modification ::= '-group_modification' ( specific_args_to_create )*
+geometric_object ::= '-geometric_object' ( specific_args_to_create )*
+collection ::= '-collection' ( specific_args_to_create )*
+graph ::= '-graph' ( specific_args_to_create )*
+code ::= '-code' ( specific_args_to_create )*
+spread ::= '-spread' ( specific_args_to_create )*
+cubic_surface ::= '-cubic_surface' ( specific_args_to_create )*
+quartic_curve ::= '-quartic_curve' ( specific_args_to_create )*
+BLT_set ::= '-BLT_set' ( specific_args_to_create )*
+translation_plane ::= '-translation_plane' ( specific_args_to_create )*
+spread_table ::= '-spread_table' ( specific_args_to_create )*
+packing_classify ::= '-packing_classify' ( specific_args_to_create )*
+packing_was ::= '-packing_was' ( specific_args_to_create )*
+packing_was_choose_fixed_points ::= '-packing_was_choose_fixed_points' ( specific_args_to_create )*
+packing_long_orbits ::= '-packing_long_orbits' ( specific_args_to_create )*
+graph_classification ::= '-graph_classification' ( specific_args_to_create )*
+diophant ::= '-diophant' ( specific_args_to_create )*
+design ::= '-design' ( specific_args_to_create )*
+design_table ::= '-design_table' ( specific_args_to_create )*
+large_set_was ::= '-large_set_was' ( specific_args_to_create )*
+set ::= '-set' ( specific_args_to_create )*
+vector ::= '-vector' ( specific_args_to_create )*
+symbolic_object ::= '-symbolic_object' ( specific_args_to_create )*
+combinatorial_object ::= '-combinatorial_object' ( specific_args_to_create )*
+geometry_builder ::= '-geometry_builder' ( specific_args_to_create )*
+vector_ge ::= '-vector_ge' ( specific_args_to_create )*
+action_on_forms ::= '-action_on_forms' ( specific_args_to_create )*
+orbits ::= '-orbits' ( specific_args_to_create )*
+poset_classification_control ::= '-poset_classification_control' ( specific_args_to_create )*
+poset_classification_report_options ::= '-poset_classification_report_options' ( specific_args_to_create )*
+draw_options ::= '-draw_options' ( specific_args_to_create )*
+draw_incidence_structure_options ::= '-draw_incidence_structure_options' ( specific_args_to_create )*
+arc_generator_control ::= '-arc_generator_control' ( specific_args_to_create )*
+poset_classification_activity ::= '-poset_classification_activity' ( specific_args_to_create )*
+crc_code ::= '-crc_code' ( specific_args_to_create )*
+mapping ::= '-mapping' ( specific_args_to_create )*
+variety ::= '-variety' ( specific_args_to_create )*
+
+
+
+
+finite_field_activity ::= '-finite_field_activity' ( specific_args )*
+polynomial_ring_activity ::= '-polynomial_ring_activity' ( specific_args )*
+projective_space_activity ::= '-projective_space_activity' ( specific_args )*
+orthogonal_space_activity ::= '-orthogonal_space_activity' ( specific_args )*
+group_theoretic_activity ::= '-group_theoretic_activity' ( specific_args )*
+coding_theoretic_activity ::= '-coding_theoretic_activity' ( specific_args )*
+cubic_surface_activity ::= '-cubic_surface_activity' ( specific_args )*
+quartic_curve_activity ::= '-quartic_curve_activity' ( specific_args )*
+blt_set_activity ::= '-blt_set_activity' ( specific_args )*
+combinatorial_object_activity ::= '-combinatorial_object_activity' ( specific_args )*
+graph_theoretic_activity ::= '-graph_theoretic_activity' ( specific_args )*
+classification_of_cubic_surfaces_with_double_sixes_activity ::= '-classification_of_cubic_surfaces_with_double_sixes_activity' ( specific_args )*
+spread_table_activity ::= '-spread_table_activity' ( specific_args )*
+packing_classify_activity ::= '-packing_classify_activity' ( specific_args )*
+packing_with_symmetry_assumption_activity ::= '-packing_with_symmetry_assumption_activity' ( specific_args )*
+packing_fixed_points_activity ::= '-packing_fixed_points_activity' ( specific_args )*
+graph_classification_activity ::= '-graph_classification_activity' ( specific_args )*
+diophant_activity ::= '-diophant_activity' ( specific_args )*
+design_activity ::= '-design_activity' ( specific_args )*
+large_set_was_activity ::= '-large_set_was_activity' ( specific_args )*
+symbolic_object_activity ::= '-symbolic_object_activity' ( specific_args )*
+BLT_set_classify_activity ::= '-BLT_set_classify_activity' ( specific_args )*
+spread_classify_activity ::= '-spread_classify_activity' ( specific_args )*
+spread_activity ::= '-spread_activity' ( specific_args )*
+translation_plane_activity ::= '-translation_plane_activity' ( specific_args )*
+action_on_forms_activity ::= '-action_on_forms_activity' ( specific_args )*
+orbits_activity ::= '-orbits_activity' ( specific_args )*
+variety_activity ::= '-variety_activity' ( specific_args )*
+
+
+
+Literal ::= [a-zA-Z_][0-9a-zA-Z_]*
+FilePath ::= [0-9a-zA-Z_/]+
+FileMask ::= [0-9a-zA-Z_/]+
+Integer ::= [0-9]+
+GlobalCmd ::= AlgebraGlobal | CodingTheoryGlobal | CombinatoricsGlobal | CryptographyGlobal | PovrayGlobal | ProjectiveGlobal | SymbolTableGlobal | ToolkitGlobal
+
+Verbosity ::= ( '-v' Integer )
+ListArgs ::= ( '-list_arguments' )
+ParseOnly ::= ( '-parse_commands_only' )
+SeedRandomGen ::= ( '-seed' Integer )
+MemoryDebug ::= ( '-memory_debug' Integer )
+OverridePoly ::= ( '-override_polynomial' Integer )
+OrbiterPath ::= ( '-orbiter_path' FilePath )
+MagmaPath ::= ( '-magma_path' FilePath )
+Fork ::= ( '-fork' Literal FileMask Integer Integer Integer )
+ToolkitGlobal ::= '-print_symbols'
+

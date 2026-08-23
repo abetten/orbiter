@@ -1,0 +1,22 @@
+Op_6_2_create_Siegel_transformation_2B:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define G -linear_group -PGOp 6 F -end \
+		-define O -orthogonal_space 1 6 F -end \
+		-with O -do -orthogonal_space_activity \
+			-create_Siegel_transformation "1,0,0,0,0,0" "0,0,1,0,0,0" \
+		-end \
+		-define G -linear_group -PGOp 6 F -end \
+		-define siegel1 -vector_ge \
+			-action G \
+			-read_csv O_1_6_2_Siegel_transformation.csv Element \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-element_processing \
+				-input siegel1 \
+				-print \
+			-end \
+		-end
+	$(PDFLATEX) siegel1_elements.tex
+	$(OPEN) siegel1_elements.pdf

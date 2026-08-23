@@ -1,0 +1,33 @@
+\begin{table}
+\begin{tcolorbox}[tabularx={X|p{2cm}|X|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black,title=Creating a Bitmap Graphics]
+\hline
+Command & Arguments & Purpose \\
+\hline
+\hline
+\verb'-input_csv_file'  &  csv-file   & Specify the input csv file. \\
+\hline
+\verb'-input_csv_file_column'  &  csv-file column-label  & Specify the input csv file and the column from which to pull the data. \\
+\hline
+\verb'-secondary_input_csv_file'  &  csv-file   & Specify a secondary input csv file (optional). \\
+\hline
+\verb'-input_object'  &  l   & Specify input to be Orbiter object l. \\
+\hline
+\verb'-partition'  &  $w$ $R$ $C$   & Specify a partition $R$ of rows and $C$ of columns. Use separating lines of with $w$. \\
+\hline
+\verb'-box_width'  &  $w$   & Use $w$ pixels per matrix entry. \\
+\hline
+\verb'-bit_depth'  &  $d$   & Use  color bit depth of $d$ bits ($d=8$ or $d=24$). \\
+\hline
+\verb'-invert_colors'  &     & Use an inverted color scheme. \\
+\hline
+\verb'-grayscale'  &     & Use a grayscale color set. \\
+\hline
+\verb'-indent'  &  i   & Shrink the width and height of a box to achieve padding. The value for indentation is i, which is given in percent. The color white is used for padding. \\
+\hline
+\verb'-color_offset'  &  i   & Apply the given offset to the choice of colors. This is useful to distinguish the colors in the matrix from the color used for padding. \\
+\hline
+\end{tcolorbox}
+\caption{\label{tab:bitmap}Creating a Bitmap Graphics}
+\end{table}

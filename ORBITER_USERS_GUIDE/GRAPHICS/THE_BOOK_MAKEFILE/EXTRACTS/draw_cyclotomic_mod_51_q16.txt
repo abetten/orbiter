@@ -1,0 +1,16 @@
+draw_cyclotomic_mod_51_q16:
+	$(ORBITER) -v 2 \
+		-define Do -draw_options \
+			-radius 100 \
+			-line_width 1.0 -embedded \
+		-end \
+		-draw_mod_n \
+			"mod_n=on" \
+			-n 51 \
+			-cyclotomic_sets 16 "1,2" \
+			-file cyclotomic_51 \
+			-label_nodes \
+			-draw_options Do \
+		-end
+	$(PDFLATEX) cyclotomic_51_draw.tex
+	$(OPEN) cyclotomic_51_draw.pdf

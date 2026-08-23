@@ -1,0 +1,63 @@
+% file: sims_3.commands
+% created by Orbiter graphics interface
+% creation date: Mon Nov 25 12:41:01 MST 2019
+
+DeviceCoordinates 0 0 300000 300000
+UserCoordinates 0 0 10000 10000
+Polygon 2 5000 9375 2857 8125
+Polygon 2 5000 9375 7142 8125
+Polygon 2 5000 9375 9285 8125
+Polygon 2 2857 8125 1904 6875
+Polygon 2 2857 8125 4761 6875
+Polygon 2 7142 8125 7142 6875
+Polygon 2 1904 6875 1904 5625
+sf_interior 100
+Circle 150000, 281250, 9000
+sf_interior 0
+Circle 150000, 281250, 9000
+st_alignment 1, 1
+Text 150000, 281250, "{\scriptsize 3}"
+sf_interior 100
+Circle 85710, 243750, 9000
+sf_interior 0
+Circle 85710, 243750, 9000
+st_alignment 1, 1
+Text 85710, 243750, "{\scriptsize 9}"
+sf_interior 100
+Circle 214259, 243750, 9000
+sf_interior 0
+Circle 214259, 243750, 9000
+st_alignment 1, 1
+Text 214259, 243750, "{\scriptsize 10}"
+sf_interior 100
+Circle 278550, 243750, 9000
+sf_interior 0
+Circle 278550, 243750, 9000
+st_alignment 1, 1
+Text 278550, 243750, "{\scriptsize 12}"
+sf_interior 100
+Circle 57120, 206250, 9000
+sf_interior 0
+Circle 57120, 206250, 9000
+st_alignment 1, 1
+Text 57120, 206250, "{\scriptsize 11}"
+sf_interior 100
+Circle 142830, 206250, 9000
+sf_interior 0
+Circle 142830, 206250, 9000
+st_alignment 1, 1
+Text 142830, 206250, "{\scriptsize 13}"
+sf_interior 100
+Circle 214259, 206250, 9000
+sf_interior 0
+Circle 214259, 206250, 9000
+st_alignment 1, 1
+Text 214259, 206250, "{\scriptsize 14}"
+sf_interior 100
+Circle 57120, 168750, 9000
+sf_interior 0
+Circle 57120, 168750, 9000
+st_alignment 1, 1
+Text 57120, 168750, "{\scriptsize 4}"
+END_OF_FILE
+

@@ -1,0 +1,21 @@
+Praeger_45_12_3_design:
+	$(ORBITER) -v 8 \
+		-define Praeger_45 -vector \
+			-file Praeger_6.csv -format 45 \
+		-end \
+		-define D -design \
+			-from_incidence_matrix Praeger_45 \
+		-end \
+		-with D -do \
+			-design_activity \
+				-export_flags \
+		-end \
+		-with D -do \
+			-design_activity \
+				-export_blocks \
+		-end \
+		-with D -do \
+			-design_activity \
+				-save \
+				-intersection_matrix \
+		-end

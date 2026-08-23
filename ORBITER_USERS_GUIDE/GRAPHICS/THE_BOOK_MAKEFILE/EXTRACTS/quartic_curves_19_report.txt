@@ -1,0 +1,25 @@
+quartic_curves_19_report: 
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 19 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-loop L 0 $(NB_QUARTIC_CURVES_Q19) 1 \
+		-define C -quartic_curve -space P -catalogue %L -end \
+		-with C -do \
+			-quartic_curve_activity \
+				-report \
+			-end \
+		-end_loop L
+		$(PDFLATEX) quartic_curve_catalogue_q19_iso0_report.tex
+		$(PDFLATEX) quartic_curve_catalogue_q19_iso1_report.tex
+		$(PDFLATEX) quartic_curve_catalogue_q19_iso2_report.tex
+		$(PDFLATEX) quartic_curve_catalogue_q19_iso3_report.tex
+		$(PDFLATEX) quartic_curve_catalogue_q19_iso4_report.tex
+		$(PDFLATEX) quartic_curve_catalogue_q19_iso5_report.tex
+		$(PDFLATEX) quartic_curve_catalogue_q19_iso6_report.tex
+		$(PDFLATEX) quartic_curve_catalogue_q19_iso7_report.tex
+		$(PDFLATEX) quartic_curve_catalogue_q19_iso8_report.tex
+		$(PDFLATEX) quartic_curve_catalogue_q19_iso9_report.tex
+		$(PDFLATEX) quartic_curve_catalogue_q19_iso10_report.tex
+		$(PDFLATEX) quartic_curve_catalogue_q19_iso11_report.tex
+		$(PDFLATEX) quartic_curve_catalogue_q19_iso12_report.tex
+		$(PDFLATEX) quartic_curve_catalogue_q19_iso13_report.tex

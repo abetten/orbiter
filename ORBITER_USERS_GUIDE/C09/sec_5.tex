@@ -1,0 +1,232 @@
+
+Cubic surfaces with 27 lines are associated with 
+quartic curves with 28 bitangents (see~\cite{Hirschfeld82}), 
+which in turn are associated with del Pezzo surfaces. 
+Orbiter can classify quartic curves based on a known classification of cubic surfaces.
+Orbiter also has a catalogue of quartic curves for small field sizes.
+
+\bigskip
+
+
+Table~\ref{tab:quartic:curves:create} 
+lists options to create a quartic curve object.
+\orbitertableofcommands{quartic_curve_create}
+
+
+\bigskip
+Table~\ref{tab:quartic:curves:activities} 
+lists activities for a quartic curve object.
+\orbitertableofcommands{quartic_curve_activity}
+
+
+Table~\ref{tab:quartic:curve:export} 
+lists options for exporting data.
+\orbitertableofextracommands{quartic_curve_export}
+
+
+
+
+\bigskip
+
+
+Suppose we want to create a quartic curve. 
+We can utilize the Orbiter catalogue 
+of isomorphism types of quartic curves.
+The following command creates the unique curve over the field $\bbF_9.$ 
+The curve is isomorphic to the Hermitian curve.
+
+\sourcecode{quartic_curve_9_0}
+
+
+\bigskip
+
+
+The following command creates the same curve and produces a report:
+
+\sourcecode{quartic_curve_9_0_report}
+
+\bigskip
+
+The report contains the following information:
+
+\bigskip
+
+\orbiteroutput{GRAPHICS/QUARTIC_CURVES/report_9_0}
+
+\bigskip
+
+
+The following command creates the same curve in the normal form. The normal form requires 6 parameters, 
+called $a,b,c,d,e,f.$ We choose 
+$$
+(a,b,c,d,e,f) = (6,3,4,6,2,5)
+$$
+to create the Hermitian curve.
+
+\sourcecode{quartic_curve_9_0_normal_form_report}
+
+\bigskip
+
+
+
+\bigskip
+
+
+The Edge curve over $\bbF_q$ has an equation of the form 
+$$
+X^4-Y^4-Z^4+2f^2Y^2Z^2+4fX^2YZ = 0,
+$$
+with $f$ a primitive element of $\bbF_q.$
+Over $\bbF_9$, since we can assume that Orbiter uses a primitive polynomials, 
+we use 3 as a coding 
+for the primitive element $\alpha$ in the field. 
+The following command creates the Edge curve:
+
+\sourcecode{quartic_curve_edge_q9}
+
+The report shows that 
+the curve is non-singular and has 8 rational points.
+
+\bigskip
+
+
+
+
+Orbiter can create quartic curves from cubic surfaces. 
+The following command creates all quartic curves 
+arising from points on no line of the cubic surface over $\bbF_7$:
+
+\sourcecode{surface_7_0_make_quartic_curves}
+
+\bigskip
+
+
+\sourcecode{quartic_curves_q7}
+
+
+\bigskip
+
+The next command creates all cubic surfaces arising from 
+the second isomorphism class of cubic surfaces over the field $\bbF_9$:
+
+\sourcecode{surface_9_1_make_quartic_curves}
+
+
+\bigskip
+
+
+
+
+
+
+Here we apply some transformations to get a nicer form of the equation of this quartic curve. 
+
+\sourcecode{quartic_curve_q9_1_clean2}
+
+
+
+\bigskip
+
+
+
+\bigskip
+
+
+Suppose we want to create reports on all quartic curves for a given value of $q$, 
+utilizing the Orbiter knowledge base of quartic curves.
+Here is an example, considering the quartic curves over $\bbF_{19}$. 
+We use a makefile variable to set the number of curves:
+
+\sourcecodevariable{NB_QUARTIC_CURVES_Q19}
+
+Now, we create each curve one-by-one and produce a report. 
+To do so, we utilize the loop command. 
+Once done, we translate the latex files:
+
+\sourcecode{quartic_curves_19_report}
+
+
+
+\bigskip
+
+In the next example, we will study the generation 
+of a quartic curve from a cubic surface. 
+The example is the quartic curve over $\bbF_9.$ 
+It is interesting, as it contains the maximum number of Kovalevski points, 
+which is 63 (a Kovalevski point is a point where 4 bitangents meet). 
+There are two cubic surfaces with 27 lines over $\bbF_9.$ 
+The first one has 10 Eckardt points, 
+whereas the second one has 9. 
+The quartic curve arises from the surface with 9 Eckardt points (OCN=1). 
+The surface has a unique point not on any line. 
+For this reason, we set the orbit number 
+on points not on lines to zero. Here is the command:
+
+\sourcecode{quartic_curve_q9_1}
+
+
+
+\bigskip
+
+
+
+Let us create all flag orbits of quartic curves associated with the cubic surface over $\bbF_{29}$ of catalogue number 29:
+
+
+
+\sourcecode{quartic_curves_q29_po4_export}
+
+
+
+\bigskip
+
+
+
+
+The following command creates a latex report of these flag orbits:
+
+\sourcecode{quartic_curves_q29_po4_flag_orbits_report}
+
+
+
+\bigskip
+
+
+
+
+Next, we create the quartic curve explicitly, 
+using the polynomials $f_1$ $f_2$ and $f_3$ 
+computed after moving the point of projection to $\bP(1,0,0,0)$. 
+To begin with, we define the polyniomials 
+as makefile variables:
+
+\sourcecodevariable{EQUATION_SURFACE_Q29_ISO4_ORB7_F1}
+
+\sourcecodevariable{EQUATION_SURFACE_Q29_ISO4_ORB7_F2}
+
+\sourcecodevariable{EQUATION_SURFACE_Q29_ISO4_ORB7_F3}
+
+
+Using the following command, we create the equation of the quartic curve as 
+$$
+f_2^2-4f_1f_3.
+$$
+The object will be a symbolic expression representing the equation of the quartic curve.
+
+
+\sourcecode{symbolic_equation_of_curve_q29_po4_so7}
+
+\bigskip
+
+
+Finally, we create a latex report on the quartic curve with catalogue 
+number 121 over the field $\bbF_{29}$:
+
+\sourcecode{quartic_curve_29_121}
+
+
+
+
+
+
+\bigskip

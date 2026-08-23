@@ -1,0 +1,13 @@
+draw_mod_31:
+	$(ORBITER) -v 2 \
+		-define Do -draw_options -embedded -radius 50 -line_width 0.3 -end \
+		-draw_mod_n \
+			"mod_n=on" \
+			-n 31 \
+			-file mod_31 \
+			-power_cycle 2 \
+			-label_nodes \
+			-draw_options Do \
+		-end
+	$(PDFLATEX) mod_31_draw.tex
+	$(OPEN) mod_31_draw.pdf

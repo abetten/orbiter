@@ -1,0 +1,8 @@
+Cayley_Sym4_star:
+	$(ORBITER) -v 2 \
+		-define S -vector -dense "1,0,2,3, 2,1,0,3, 3,1,2,0" -end \
+		-define G -permutation_group -symmetric_group 4 \
+		-end \
+		-define Gamma -graph \
+			-Cayley_graph G S \
+		-end 

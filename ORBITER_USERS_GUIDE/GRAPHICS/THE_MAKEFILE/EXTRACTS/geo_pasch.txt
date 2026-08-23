@@ -1,0 +1,10 @@
+geo_pasch:
+	$(ORBITER) -v 8 \
+		-define Test_lines -set -loop 1 7 1 -end \
+		-define Geo -geometry_builder \
+			-V 6 -B 4 -TDO 2 -fuse 1 \
+			-fname_GEO pasch \
+			-output_to_inc_file \
+			-test Test_lines \
+			-save_canonical_forms \
+		-end

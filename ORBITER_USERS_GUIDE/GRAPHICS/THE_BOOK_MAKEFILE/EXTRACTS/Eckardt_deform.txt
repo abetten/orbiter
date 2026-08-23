@@ -1,0 +1,25 @@
+Eckardt_deform:
+	$(ORBITER) -v 2 -povray \
+		-round 0 -nb_frames_default 93 \
+		-output_mask Eckardt_deform_%d_%03d.pov \
+		-video_options -W 1024 -H 768 \
+		-global_picture_scale 0.9 \
+		-default_angle 75 \
+		-clipping_radius 2.4 \
+		-camera 0 "1,1,1" "-3,1,3" "0.12,0.12,0.12" \
+		-end \
+		-scene_objects \
+			-Hilbert_Cohn_Vossen_surface \
+			-group_of_things "0" \
+			-deformation_of_cubic_lex 93 1.107148718 1.570796327 0 \
+				$(ECKARDT_CUBIC_DEFORM1_LEX) \
+				$(ECKARDT_CUBIC_DEFORM2_LEX) \
+			-group_of_things_as_interval 0 93 \
+			-group_is_animated 1 \
+			-cubics 1 $(SURFACE_COLOR_SEETHROUGH) \
+		-scene_objects_end \
+		-povray_end
+	- rm -rf POV
+	mkdir POV
+	mv Eckardt_deform_0_*.pov POV
+	mv makefile_animation POV

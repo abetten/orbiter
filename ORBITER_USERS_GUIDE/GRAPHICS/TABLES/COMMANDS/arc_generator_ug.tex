@@ -1,0 +1,31 @@
+\begin{table}
+\begin{tcolorbox}[tabularx={X|p{2cm}|X|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black,title=Classifying Arcs]
+\hline
+Command & Arguments & Purpose \\
+\hline
+\hline
+\verb'-control'  &  label  &  Set the label of the poset classification control object. \\
+\hline
+\verb'-projective_space'  &  P  &  Set the projective space to P. \\
+\hline
+\verb'-d'  &  $d$  &  Require that no more than $d$ points lie on a line. \\
+\hline
+\verb'-target_size'  &  $t$  &  Specify the size of the arc to be $t$. \\
+\hline
+\verb'-conic_test'  &   &  Require that no $6$ points of the arc lie on a conic. \\
+\hline
+\verb'-test_nb_Eckardt_points'  &  $n$  &  Require exactly $n$ Eckardt points. \\
+\hline
+\verb'-affine'  &   &  Classify arcs in the affine geometry, assuming that $x_0 = 0$ is the hyperplane at infinity. The condition that no more that $d$ point lie on a line applies to affine lines only. \\
+\hline
+\verb'-no_arc_testing'  &   &  Do not test the ``at most $d$ points per line'' condition. \\
+\hline
+\verb'-forbidden_point_set'  &  set  &  The arc must not contain any of the given points. \\
+\hline
+\verb'-override_group'  &  label  &  Override the group under which we classify. \\
+\hline
+\end{tcolorbox}
+\caption{\label{tab:arcs}Classifying Arcs}
+\end{table}

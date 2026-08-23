@@ -1,0 +1,59 @@
+\begin{table}
+\begin{tcolorbox}[tabularx={X|p{2cm}|X|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black,title=Isomorph Testing]
+		\hline
+		Command & Arguments & Purpose \\
+		\hline
+		\hline
+		\verb'-prefix_iso' & prefix & Set a prefix for files related to isomorph testing. \\
+		\hline
+		\verb'-prefix_with_directory' & prefix & Set a prefix for files related to isomorph testing. \\
+		\hline
+		\verb'-prefix_classify' & prefix & Set a prefix for files related to classification. \\
+		\hline
+		\verb'-solution_prefix' & prefix & Set a prefix for solution files. \\
+		\hline
+		\verb'-base_fname' & base & Set the main file name. \\
+		\hline
+		\verb'-use_database_for_starter' &  & Use database to store subobjects. \\
+		\hline
+		\verb'-implicit_fusion' &  & Use implicit fusion during the isomorphism testing. \\
+		\hline
+		\verb'-build_db' &  & Initialize the database. \\
+		\hline
+		\verb'-read_solutions' &  & Read solutions. \\
+		\hline
+		\verb'-list_of_cases' & fname & Read a list of cases from the given file. \\
+		\hline
+		\verb'-read_solutions_after_split' & m & Read the solution files after split modulo m. \\
+		\hline
+		\verb'-read_statistics_after_split' & m &  Read the statistics files after split modulo m. \\
+		\hline
+		\verb'-recognize' & label &  \\
+		\hline
+		\verb'-compute_orbits' &  & Compute the orbits of the stabilizer. These are the flag orbits. \\
+		\hline
+		\verb'-isomorph_testing' &  & Apply isomorphism testing to the flag orbits to produce the classification. \\
+		\hline
+		\verb'-classification_graph' &  & Compute the classification graph (after classification). \\
+		\hline
+		\verb'-event_file' & fname & Reuse a previously written event file during the classification. \\
+		\hline
+		\verb'-print_mod' & N & Set print internal to N.  \\
+		\hline
+		\verb'-isomorph_report' &  & Write a report on the classification. \\
+		\hline
+		\verb'-export_source_code' &  & Export the classification as C++ source code. \\
+		\hline
+		\verb'-subset_orbits' &  &  \\
+		\hline
+		\verb'-subset_orbits_file' & fname &  \\
+		\hline
+		\verb'-eliminate_graphs_if_possible' &  &  \\
+		\hline
+		\verb'-down_orbits' &  &  \\
+		\hline
+		\end{tcolorbox}
+	\caption{\label{tab:isomorph}Isomorph Testing}
+	\end{table}

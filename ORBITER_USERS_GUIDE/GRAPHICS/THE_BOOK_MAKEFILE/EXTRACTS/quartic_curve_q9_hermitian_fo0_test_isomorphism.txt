@@ -1,0 +1,29 @@
+quartic_curve_q9_hermitian_fo0_test_isomorphism:
+	$(ORBITER) -v 12 \
+		-define F -finite_field -q 9 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 3 \
+			-homogeneous_of_degree 4 \
+			-monomial_ordering_partition \
+			-variables "X0,X1,X2" "X_0,X_1,X_2" \
+		-end \
+		-define V0 -variety \
+			-label_txt curve_q9_fo0 \
+			-label_tex curve\_q9\_fo0 \
+			-projective_space P \
+			-ring R \
+			-equation_by_coefficients $(QC_Q9_COEFFS) \
+		-end \
+		-define VH -variety \
+			-label_txt curve_q9_Hermitian \
+			-label_tex curve\_q9\_Hermitian \
+			-projective_space P \
+			-ring R \
+			-equation_by_coefficients $(QC_Q9_HERMITIAN_COEFFS) \
+		-end \
+		-with VH -and V0 -do -variety_activity \
+			-test_isomorphism \
+			-nauty_control -nauty_log "quartic_curve_q9_nauty_log.txt" -end \
+		-end

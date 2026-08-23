@@ -1,0 +1,19 @@
+five_points_in_general:
+	$(ORBITER) -v 5 \
+		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define Do -draw_options \
+				-embedded -radius 250 \
+				-line_width 1.0 -spanning_tree \
+		-end \
+		-define Control -poset_classification_control \
+			-problem_label five_points_in_general \
+			-draw_options Do \
+		-end \
+		-define G \
+		-linear_group -PGL 4 2 -end \
+		-with G -do \
+		-group_theoretic_activity \
+		-linear_codes Control 4 5 \
+		-end
+	#$(PDFLATEX) five_points_in_general_poset.tex
+	#$(OPEN) five_points_in_general_poset.pdf

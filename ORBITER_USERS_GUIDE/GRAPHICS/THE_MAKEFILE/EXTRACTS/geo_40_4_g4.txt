@@ -1,0 +1,27 @@
+geo_40_4_g4:
+	$(ORBITER) -v 2 \
+		-define Test_lines -set -loop 0 41 1 -end \
+		-define Geo -geometry_builder \
+			-V 40 -B 40 -TDO 4 \
+			-fuse 1 \
+			-fname_GEO 40_4_g4 \
+			-girth 4 \
+			-search_tree \
+			-special_test_not_orderly \
+			-test Test_lines \
+			-output_to_sage_file \
+			-output_to_inc_file \
+			-save_canonical_forms \
+		-end
+	$(ORBITER) -v 2 \
+		-define Do -draw_options -embedded -radius 50 \
+			-xin 10000 -yin 10000 \
+			-xout 1000000 -yout 1000000 \
+			-nodes_empty \
+			-scale 0.5 -line_width 0.3 -end \
+		-tree_draw \
+			-file 40_4_g4_tree.txt \
+			-draw_options Do \
+		-end 
+	$(PDFLATEX) 40_4_g4_tree_draw.tex
+	$(OPEN) 40_4_g4_tree_draw.pdf

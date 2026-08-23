@@ -1,0 +1,14 @@
+RM_3_1:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define C -code -field F \
+			-Reed_Muller 3 \
+		-end \
+		-with C -and F -do -coding_theoretic_activity \
+			-export_magma RM_3_1.magma \
+		-end \
+		-with C -do -coding_theoretic_activity \
+			-report \
+		-end
+	$(PDFLATEX) RM_m3_code_n8_k4_q2.tex
+	$(OPEN) RM_m3_code_n8_k4_q2.pdf

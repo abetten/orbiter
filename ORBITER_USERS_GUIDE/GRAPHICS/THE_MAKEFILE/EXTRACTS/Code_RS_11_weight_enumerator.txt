@@ -1,0 +1,11 @@
+Code_RS_11_weight_enumerator:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 11 -end \
+		-define C -code -field F -Reed_Solomon 10 3 -end \
+		-with C -do -coding_theoretic_activity \
+			-export_magma RS_11_3.magma \
+		-end \
+		-with C -do \
+		-coding_theoretic_activity \
+			-weight_enumerator \
+		-end

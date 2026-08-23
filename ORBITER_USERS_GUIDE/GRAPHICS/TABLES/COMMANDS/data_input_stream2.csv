@@ -1,0 +1,18 @@
+ROW,C1,C2,C3
+0,"tab:combinatorial:objects2",,
+1,"Defining Combinatorial Objects (Part 2)",,
+1,"\verb'-file_of_incidence_geometries' "," fname $v$ $b$ $f$ ","A file of incidence geometries. The incidence structure is listed as set of flags. Here, $v$ is the number of points, $b$ is the number of blocks and $f$ is the number of flags. If point $i$ and block $j$ are incident, this corresponds to the value $ib+j$ being listed as a flag (recall that $i$ and $j$ are zero-based). "
+1,"\verb'-file_of_incidence_geometries_by' \verb'_row_ranks' "," fname $v$ $b$ $r$ ","A file describing incidence geometries defined by their row ranks. "
+1,"\verb'-incidence_geometry' "," fname $v$ $b$ $f$  ","An incidence geometry defined by a set of flags. Here, $v$ is the number of points, $b$ is the number of blocks and $f$ is the number of flags."
+1,"\verb'-incidence_geometry_by_row_ranks' "," fname $v$ $b$ $r$  ","An incidence geometry defined by row ranks."
+1,"\verb'-from_parallel_search' "," fname-mask nb\_cases cases\_fname ","   "
+1,"\verb'-orbiter_file' "," fname "," Orbiter file with orbit representatives created during poset classification.  "
+1,"\verb'-csv_file' "," fname column "," The given column in a csv-file.  "
+1,"\verb'-graph_by_adjacency_matrix' "," adjacencylist N "," A graph on N vertices whose adjacency matrix is given (upper triangle only).  "
+1,"\verb'-graph_by_adjacency_matrix_from_file' "," fname column N "," A set of graphs on N vertices whose adjacency matrices are given in the given column in the given file (upper triangle only).  "
+1,"\verb'-graph_object' "," label "," A graph object from the symbol table.  "
+1,"\verb'-design_object' "," label "," A design object from the symbol table.  "
+1,"\verb'-multi_matrix' "," s1 s2 "," s1 is a string of three integers m,n,max. s2 is the entries of an m x n matrix. max is an upper bound for the entries of the matrix.  "
+1,"\verb'-geometric_object' "," label "," A geometric object from the symbol table.  "
+1,"\verb'-Kaempfer_file' "," fname "," A set of tactical decompositions from a Kaempfer output file.  "
+END

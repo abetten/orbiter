@@ -1,0 +1,27 @@
+poly_orbits_d3_n3_q2.csv:
+	$(ORBITER) -v 4 \
+		-define Do -draw_options \
+			-yout 500000 -radius 15 -nodes_empty \
+			-line_width 0.5 -y_stretch 0.25 -embedded \
+		-end \
+		-define F -finite_field -q 2 -end \
+		-define G -linear_group -PGL 4 F -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 4 \
+			-homogeneous_of_degree 3 \
+			-monomial_ordering_partition \
+			-variables "X,Y,Z,W" "X,Y,Z,W" \
+		-end \
+		-define Orb -orbits -group G \
+			-print_interval 1000000 \
+			-on_polynomials R \
+		-end \
+		-with Orb -do -orbits_activity \
+			-report Do \
+		-end \
+		-with Orb -do -orbits_activity \
+			-draw_tree 6 Do \
+		-end
+	$(PDFLATEX) PGL_4_2_orbit_6_tree.tex
+	$(OPEN) PGL_4_2_orbit_6_tree.pdf

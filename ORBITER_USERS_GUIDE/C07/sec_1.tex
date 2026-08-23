@@ -1,0 +1,84 @@
+Let $V$ be a finite dimensional vector space and 
+let ${\mathfrak Gr}_k(V)$ be the Grassmannian 
+of $k$-dimensional subspaces 
+of $V.$ 
+If $\dim(V) = n,$ the notation ${\mathfrak Gr}_{n,k}$ is used for ${\frak Gr}_k(V).$ 
+If $V = \bbF_q^n,$ the notation ${\mathfrak Gr}_{n,k,q}$ 
+is used for ${\frak Gr}_k(V).$ 
+The order of the set ${\frak Gr}_{n,k,q}$ can be computed as
+$$
+\left[
+n \atop k
+\right]_q = 
+\prod_{i=0}^{k-1}\frac{q^{n-i}-1}{q^{k-i}-1},
+$$
+using the $q$-binomial coefficient.
+
+\bigskip
+
+Orbiter has an enumerator for the Grassmannian. 
+The purpose of this enumerator is to establish a bijection 
+between the Grassmannian and the integers in the interval 
+$
+[0,N-1],
+$ 
+where $N = \left[
+n \atop k
+\right]_q.$
+In order to do so, Orbiter picks a basis for each subspace. 
+By writing the elements of the basis in 
+the rows of a matrix, a $k\times n$ matrix is obtained. 
+In order to make the matrix unique, we assume it to be in RREF. 
+In coding theory, such a matrix is called a generator matrix.
+
+\bigskip
+
+
+The Orbiter cheat sheets for $\PG(n,q)$ 
+(see Section~\ref{sec:FPG}) 
+contain lists of all Grassmannians, provided they are not too big.
+It is also possible to create cheat sheets specifically for one Grassmannian.
+For instance, the command
+
+\sourcecode{GR_3_2_2}
+
+produces a list of 2-dimensional 
+subspaces of $\bbF_2^3,$ i.e. the lines of $\PG(2,2):$
+\orbiteroutput{GRAPHICS/LATEX/report_Gr_3_2_2}
+
+\bigskip
+
+The following command illustrates how to rank lines.
+In the example, we consider lines in $\PG(3,3).$
+The lines are given as vectors of length $8.$ 
+Three lines are given in \verb'v1' 
+and three lines are given in \verb'v2'.
+
+\sourcecode{PG_3_3_rank_lines}
+
+
+
+\bigskip
+
+In the next example, we unrank six lines in $\PG(3,5).$
+
+\sourcecode{PG_3_5_unrank_lines}
+
+
+\bigskip
+
+
+The following command produces a list of planes through a line. 
+In the example, the line is $0$. 
+The projective space is $\PG(3,8)$
+
+\sourcecode{planes_in_pencil}
+
+
+
+
+\bigskip
+
+
+
+

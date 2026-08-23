@@ -1,0 +1,26 @@
+Aut_Sym_6_subgroup_lattice_load_and_draw:
+	$(ORBITER) -v 3 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.5 \
+		-end \
+		-define gens -vector -dense $(AUT_SYM_6_GENS) -end \
+		-define G -permutation_group \
+			-bsgs AutSym6 "{\rm AutSym}(6)" \
+			$(AUT_SYM_6_DEGREE) \
+			$(AUT_SYM_6_GROUP_ORDER) \
+			$(AUT_SYM_6_BASE) \
+			$(AUT_SYM_6_NB_GENS) \
+			gens \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-subgroup_lattice_load AutSym6_subgroup_lattice.csv \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-subgroup_lattice_draw_by_orbits Do \
+		-end
+	#$(PDFLATEX) AutSym6_drawing.tex
+	#$(OPEN) AutSym6_drawing.pdf
+	$(PDFLATEX) AutSym6_drawing_by_orbits.tex
+	$(OPEN) AutSym6_drawing_by_orbits.pdf

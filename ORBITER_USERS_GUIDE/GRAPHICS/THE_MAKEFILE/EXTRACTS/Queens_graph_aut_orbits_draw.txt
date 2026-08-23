@@ -1,0 +1,14 @@
+Queens_graph_aut_orbits_draw:
+	$(ORBITER) -v 2 -reformat \
+		non_attacking_queens_graph_8_orbits.csv \
+		Queens_orbits_on_points_8x8.csv 8 
+	$(ORBITER) -v 2 \
+		-define all_one_r -vector -repeat 1 8 -end \
+		-define all_one_c -vector -repeat 1 8 -end \
+		-draw_matrix \
+		-input_csv_file Queens_orbits_on_points_8x8.csv \
+		-box_width 40 -bit_depth 24 \
+			-partition 1 \
+				all_one_r all_one_c \
+		-end
+	$(OPEN) Queens_orbits_on_points_8x8_draw.bmp

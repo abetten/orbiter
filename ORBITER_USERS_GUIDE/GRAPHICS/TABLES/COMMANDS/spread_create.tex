@@ -1,0 +1,34 @@
+\begin{table}
+\begin{tcolorbox}[tabularx={X|p{2cm}|X|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black,title=Creating a Spread]
+		\hline
+		Command & Arguments & Purpose \\
+		\hline
+		\hline
+		\verb'-kernel_field' & $F$ & Define the kernel of the spread. $F$ must be an object of type finite field.\\
+		\hline
+		\verb'-group' & $G$ & Define the group acting on the spread. Should be $\PGGL(2k,F)$. \\
+		\hline
+		\verb'-group_on_subspaces' & $G$ &  \\
+		\hline
+		\verb'-k' & $k$ & Set the dimension of the spread. \\
+		\hline
+		\verb'-catalogue' & $i$ & Pull spread number $i$ from the catalogue of spreads associated with the given field and the given dimension. \\
+		\hline
+		\verb'-family' & $L$ & 
+		Define a spread from a named family $L.$ 
+		So far, no family has been provided. \\
+		\hline
+		\verb'-spread_set' & label-txt label-tex $S$ & 
+		Define a spread from the named spreadset $S$. 
+		The spreadset $S$ must be a vector object. 
+		It must contain $q^3k^2$ entries over $F.$ \\
+		\hline
+		\verb'-transform' & elt & Apply the transformation given by the group element. \\
+		\hline
+		\verb'-transform_inverse' & elt & Apply the inverse transformation given by the group element. \\
+		\hline
+		\end{tcolorbox}
+	\caption{\label{tab:spreads:define}Creating a Spread}
+	\end{table}

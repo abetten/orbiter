@@ -1,0 +1,5 @@
+Petersen_test_if_distance_regular:
+	$(ORBITER) -v 2 \
+		-define Gamma -graph -Johnson 5 2 0 -end \
+		-test_if_distance_regular_graph \
+		Johnson_5_2_0_distance_poset.layered_graph

@@ -1,0 +1,15 @@
+PSP_4_4:
+	$(ORBITER) -v 5 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define F -finite_field -q 4 -end \
+		-define G -linear_group -PGL 4 F \
+			-symplectic_group \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end
+	$(PDFLATEX) PSp_4_4_report.tex
+	$(OPEN) PSp_4_4_report.pdf

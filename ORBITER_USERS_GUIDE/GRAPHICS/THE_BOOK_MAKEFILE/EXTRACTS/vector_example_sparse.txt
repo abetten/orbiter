@@ -1,0 +1,5 @@
+vector_example_sparse:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 5 -end \
+		-define v -vector -field F -format 4 -sparse 20 "1,0,1,19" -end \
+		-print_symbols

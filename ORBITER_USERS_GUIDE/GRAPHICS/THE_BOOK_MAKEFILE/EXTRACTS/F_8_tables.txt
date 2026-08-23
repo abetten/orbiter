@@ -1,0 +1,18 @@
+F_8_tables:
+	$(ORBITER) -v 3 \
+		-define all_one -vector -repeat 1 8 -end \
+		-define F -finite_field -q 8 -end \
+		-with F -do -finite_field_activity -export_tables -end \
+		-with F -do -finite_field_activity -cheat_sheet_GF -end \
+		-draw_matrix \
+			-input_csv_file GF_q8_table_add.csv \
+			-box_width 40 \
+			-bit_depth 24 \
+			-partition 3 all_one all_one \
+		-end \
+		-draw_matrix \
+			-input_csv_file GF_q8_table_mul.csv \
+			-box_width 40 \
+			-bit_depth 24 \
+			-partition 3 all_one all_one \
+		-end

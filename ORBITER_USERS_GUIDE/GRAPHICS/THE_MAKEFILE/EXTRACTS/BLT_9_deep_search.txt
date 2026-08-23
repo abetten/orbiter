@@ -1,0 +1,34 @@
+BLT_9_deep_search:
+	$(ORBITER) -v 2 \
+		-define Do -draw_options \
+			-xin 400000 \
+			-xout 3000000 \
+			-yout 3000000 \
+			-y_stretch 0.5 \
+		-end \
+		-define F -finite_field -q 9 -end \
+		-define O -orthogonal_space 0 5 F -end \
+		-define C -BLT_set_classifier \
+			-orthogonal_space O -starter_size 10 \
+		-end \
+		-define Activity -poset_classification_activity \
+			-report -draw_options Do -end \
+		-end \
+		-define Activity_export -poset_classification_activity \
+			-export_level_to_cpp 10 -end \
+		-with C -do -BLT_set_classify_activity \
+			-compute_starter \
+				-problem_label BLT_q9 \
+				-W -depth 10 \
+			-end \
+		-end \
+		-with C -do -BLT_set_classify_activity \
+			-poset_classification_activity \
+				Activity \
+		-end \
+		-with C -do -BLT_set_classify_activity \
+			-poset_classification_activity \
+				Activity_export \
+		-end
+	$(PDFLATEX) BLT_q9_poset.tex
+	$(OPEN) BLT_q9_poset.pdf

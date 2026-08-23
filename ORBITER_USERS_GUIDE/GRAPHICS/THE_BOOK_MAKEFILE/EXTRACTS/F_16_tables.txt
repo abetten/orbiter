@@ -1,0 +1,18 @@
+F_16_tables:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 16 -end \
+		-with F -do -finite_field_activity -export_tables -end
+	$(ORBITER) -v 3 \
+		-define all_one -vector -repeat 1 16 -end \
+		-draw_matrix \
+			-input_csv_file GF_q16_table_add.csv \
+			-box_width 40 -bit_depth 24 \
+			-partition 3 all_one all_one \
+		-end \
+		-draw_matrix \
+			-input_csv_file GF_q16_table_mul.csv \
+			-box_width 40 -bit_depth 24 \
+			-partition 3 all_one all_one \
+		-end
+	magick GF_q16_table_add_draw.bmp GF_q16_table_add_draw.png
+	magick GF_q16_table_mul_draw.bmp GF_q16_table_mul_draw.png

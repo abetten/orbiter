@@ -1,0 +1,7 @@
+sift_polynomials_deg4_q2:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-with F -do \
+		-finite_field_activity \
+			-sift_polynomials 16 32 \
+		-end

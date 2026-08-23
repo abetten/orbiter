@@ -1,0 +1,22 @@
+quartic_curve_q13_f1_apply_transformation:
+	$(ORBITER) -v 10 \
+		-define F -finite_field -q 13 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 3 \
+			-homogeneous_of_degree 4 \
+			-monomial_ordering_partition \
+			-variables "x1,x2,x3" "x_1,x_2,x_3" \
+		-end \
+		-define V_q13_f1 -variety \
+			-label_txt curve_q13_f1_clean2 \
+			-label_tex curve\_q13\_f1\_clean2 \
+			-projective_space P \
+			-ring R \
+			-equation_in_algebraic_form $(CURVE_Q13_FLAG_1_EQN) \
+			-points $(CURVE_Q13_FLAG_1_POINTS) \
+			-bitangents $(CURVE_Q13_FLAG_1_BITANGENTS) \
+			-transform $(CURVE_Q13_FLAG_1_TRANS_1) \
+			-transform $(CURVE_Q13_FLAG_1_TRANS_2) \
+		-end

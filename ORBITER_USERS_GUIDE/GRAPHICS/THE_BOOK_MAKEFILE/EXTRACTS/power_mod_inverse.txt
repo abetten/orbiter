@@ -1,0 +1,9 @@
+power_mod_inverse:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define M -vector -field F -sparse 33 $(CRC32_SPARSE) -end \
+		-define A -vector -field F -sparse 2 "1,1" -end \
+		-with F -do \
+		-finite_field_activity \
+			-polynomial_power_mod A $(TWO_TO_THE_32_MINUS_2) M \
+		-end

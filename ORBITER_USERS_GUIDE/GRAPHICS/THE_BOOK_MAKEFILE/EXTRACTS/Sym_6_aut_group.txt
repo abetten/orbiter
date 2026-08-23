@@ -1,0 +1,17 @@
+Sym_6_aut_group:
+	$(ORBITER) -v 3 \
+		-define images -vector -file_column \
+			File_Sym_6_class_2ABC_order_2_all_A5.csv "C0" \
+		-end \
+		-define G -permutation_group -symmetric_group 6 -end \
+		-define elements_of_order2_ge -vector_ge \
+			-action G \
+			-read_csv Sym_6_class_2ABC.csv "elements" \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-group_of_automorphisms_by_images_of_generators \
+			sym_6_aut_group \
+			elements_of_order2_ge \
+			images \
+		-end

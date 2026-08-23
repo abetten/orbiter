@@ -1,0 +1,28 @@
+Orbiter can be used to create animations. 
+This relies on the software \verb'ffmpeg'.
+In a first step, all frames (i.e. individual graphics files) are created using Orbiter's povray interface. 
+After that, the frames are used to create the animation. 
+In order to use \verb'ffmpeg', the frames should have a uniform file naming scheme, 
+using a consecutive numbering to arrange the files in order. 
+This is achieved by using a printf style mask, with \verb'%d' representing the number of the current frame.
+In order to do so, Orbiter can be used to copy and rename files. 
+A temporary directory can be used to collect the files.
+The Orbiter command \verb'prepare_frames' can be used. 
+For a list of commands, see Tables~\ref{tab:prepareframes}.
+\orbitertableofcommands{prepare_frames}
+For instance, the command 
+
+\sourcecode{monkey_video}
+
+creates a video \verb'monkey.mp4' from a set of 30 files. The individual 
+filenames are created using the printf format string \verb'monkey_0_%03d.png', 
+with an integer index that is drawn from the interval $[0,29].$ 
+The part that starts with a percent sign and ends with a ``d'' character
+defines the way in which the integer is formatted. 
+The number three before the ``d'' indicates 
+that three characters will be printed. 
+The zero indicates the use of leading zeros.
+So, the first file would be \verb'monkey_0_000.png' 
+and the very last file is \verb'monkey_0_029.png'. 
+The description of the printf format string can be found in the 
+documentation of the C standard library~\cite{KernighanRitchie78}.

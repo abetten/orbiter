@@ -1,0 +1,11 @@
+Petersen_graph_distance_poset_draw:
+	$(ORBITER) -v 3 \
+		-draw_layered_graph \
+			Johnson_5_2_0_distance_poset.layered_graph \
+			-place \
+			-radius 250 -embedded \
+			-nodes \
+			-line_width 1.1 -x_stretch 1.4 -scale 0.25 \
+		-end
+	$(PDFLATEX) Johnson_5_2_0_distance_poset_draw.tex
+	$(OPEN) Johnson_5_2_0_distance_poset_draw.pdf

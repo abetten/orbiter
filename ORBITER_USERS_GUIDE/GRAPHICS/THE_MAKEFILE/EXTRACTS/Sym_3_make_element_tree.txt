@@ -1,0 +1,20 @@
+Sym_3_make_element_tree:
+	$(ORBITER) -v 2 \
+		-define G -permutation_group -symmetric_group 3 -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-make_element_tree \
+		-end
+		-define Do -draw_options \
+			-nodes \
+			-embedded -radius 250 \
+			-xin 10000 -yin 10000 \
+			-xout 1000000 -yout 600000 \
+			-scale 0.3 -line_width 1.0 \
+		-end \
+		-tree_draw \
+			-file Sym_3_elements_tree.txt \
+			-draw_options Do \
+		-end
+	$(PDFLATEX) Sym_3_elements_tree_draw.tex
+	$(OPEN) Sym_3_elements_tree_draw.pdf

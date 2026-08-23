@@ -1,0 +1,204 @@
+% file: cc_4_poset_lvl_9.commands
+% created by Orbiter graphics interface
+% creation date: Fri Dec 29 00:06:36 +03 2023
+
+DeviceCoordinates 0 0 1000000 1000000
+UserCoordinates 0 0 10000 10000
+Polygon 2 5000 9500 5000 8500
+Polygon 2 5000 8500 5000 7500
+Polygon 2 5000 7500 2500 6499
+Polygon 2 5000 7500 7500 6499
+Polygon 2 2500 6499 2500 5499
+Polygon 2 2500 6499 7500 5499
+Polygon 2 7500 6499 7500 5499
+Polygon 2 2500 5499 1666 4500
+Polygon 2 2500 5499 5000 4500
+Polygon 2 2500 5499 8333 4500
+Polygon 2 7500 5499 1666 4500
+Polygon 2 7500 5499 5000 4500
+Polygon 2 1666 4500 1000 3500
+Polygon 2 1666 4500 3000 3500
+Polygon 2 1666 4500 5000 3500
+Polygon 2 5000 4500 3000 3500
+Polygon 2 5000 4500 5000 3500
+Polygon 2 5000 4500 7000 3500
+Polygon 2 8333 4500 5000 3500
+Polygon 2 8333 4500 9000 3500
+Polygon 2 1000 3500 1000 2499
+Polygon 2 1000 3500 3000 2499
+Polygon 2 3000 3500 3000 2499
+Polygon 2 3000 3500 5000 2499
+Polygon 2 3000 3500 7000 2499
+Polygon 2 5000 3500 3000 2499
+Polygon 2 5000 3500 7000 2499
+Polygon 2 5000 3500 9000 2499
+Polygon 2 7000 3500 5000 2499
+Polygon 2 7000 3500 7000 2499
+Polygon 2 9000 3500 9000 2499
+Polygon 2 3000 2499 1666 1499
+Polygon 2 5000 2499 1666 1499
+Polygon 2 5000 2499 5000 1499
+Polygon 2 7000 2499 1666 1499
+Polygon 2 7000 2499 1666 1499
+Polygon 2 7000 2499 8333 1499
+Polygon 2 9000 2499 8333 1499
+Polygon 2 1666 1499 1666 499
+Polygon 2 5000 1499 5000 499
+Polygon 2 8333 1499 1666 499
+Polygon 2 8333 1499 8333 499
+sf_interior 100
+Circle 500000, 950000, 20000
+sf_interior 0
+Circle 500000, 950000, 20000
+sf_interior 100
+Circle 500000, 850000, 20000
+sf_interior 0
+Circle 500000, 850000, 20000
+st_alignment 1, 1
+Text 500000, 850000, "{\scriptsize 0}"
+sf_interior 100
+Circle 500000, 750000, 20000
+sf_interior 0
+Circle 500000, 750000, 20000
+st_alignment 1, 1
+Text 500000, 750000, "{\scriptsize 1}"
+sf_interior 100
+Circle 250000, 649900, 20000
+sf_interior 0
+Circle 250000, 649900, 20000
+st_alignment 1, 1
+Text 250000, 649900, "{\scriptsize 2}"
+sf_interior 100
+Circle 750000, 649900, 20000
+sf_interior 0
+Circle 750000, 649900, 20000
+st_alignment 1, 1
+Text 750000, 649900, "{\scriptsize 4}"
+sf_interior 100
+Circle 250000, 549900, 20000
+sf_interior 0
+Circle 250000, 549900, 20000
+st_alignment 1, 1
+Text 250000, 549900, "{\scriptsize 3}"
+sf_interior 100
+Circle 750000, 549900, 20000
+sf_interior 0
+Circle 750000, 549900, 20000
+st_alignment 1, 1
+Text 750000, 549900, "{\scriptsize 4}"
+sf_interior 100
+Circle 166600, 450000, 20000
+sf_interior 0
+Circle 166600, 450000, 20000
+st_alignment 1, 1
+Text 166600, 450000, "{\scriptsize 4}"
+sf_interior 100
+Circle 500000, 450000, 20000
+sf_interior 0
+Circle 500000, 450000, 20000
+st_alignment 1, 1
+Text 500000, 450000, "{\scriptsize 5}"
+sf_interior 100
+Circle 833300, 450000, 20000
+sf_interior 0
+Circle 833300, 450000, 20000
+st_alignment 1, 1
+Text 833300, 450000, "{\scriptsize 16}"
+sf_interior 100
+Circle 100000, 350000, 20000
+sf_interior 0
+Circle 100000, 350000, 20000
+st_alignment 1, 1
+Text 100000, 350000, "{\scriptsize 7}"
+sf_interior 100
+Circle 300000, 350000, 20000
+sf_interior 0
+Circle 300000, 350000, 20000
+st_alignment 1, 1
+Text 300000, 350000, "{\scriptsize 8}"
+sf_interior 100
+Circle 500000, 350000, 20000
+sf_interior 0
+Circle 500000, 350000, 20000
+st_alignment 1, 1
+Text 500000, 350000, "{\scriptsize 16}"
+sf_interior 100
+Circle 700000, 350000, 20000
+sf_interior 0
+Circle 700000, 350000, 20000
+st_alignment 1, 1
+Text 700000, 350000, "{\scriptsize 15}"
+sf_interior 100
+Circle 900000, 350000, 20000
+sf_interior 0
+Circle 900000, 350000, 20000
+st_alignment 1, 1
+Text 900000, 350000, "{\scriptsize 19}"
+sf_interior 100
+Circle 100000, 249900, 20000
+sf_interior 0
+Circle 100000, 249900, 20000
+st_alignment 1, 1
+Text 100000, 249900, "{\scriptsize 10}"
+sf_interior 100
+Circle 300000, 249900, 20000
+sf_interior 0
+Circle 300000, 249900, 20000
+st_alignment 1, 1
+Text 300000, 249900, "{\scriptsize 11}"
+sf_interior 100
+Circle 500000, 249900, 20000
+sf_interior 0
+Circle 500000, 249900, 20000
+st_alignment 1, 1
+Text 500000, 249900, "{\scriptsize 11}"
+sf_interior 100
+Circle 700000, 249900, 20000
+sf_interior 0
+Circle 700000, 249900, 20000
+st_alignment 1, 1
+Text 700000, 249900, "{\scriptsize 14}"
+sf_interior 100
+Circle 900000, 249900, 20000
+sf_interior 0
+Circle 900000, 249900, 20000
+st_alignment 1, 1
+Text 900000, 249900, "{\scriptsize 19}"
+sf_interior 100
+Circle 166600, 149900, 20000
+sf_interior 0
+Circle 166600, 149900, 20000
+st_alignment 1, 1
+Text 166600, 149900, "{\scriptsize 13}"
+sf_interior 100
+Circle 500000, 149900, 20000
+sf_interior 0
+Circle 500000, 149900, 20000
+st_alignment 1, 1
+Text 500000, 149900, "{\scriptsize 17}"
+sf_interior 100
+Circle 833300, 149900, 20000
+sf_interior 0
+Circle 833300, 149900, 20000
+st_alignment 1, 1
+Text 833300, 149900, "{\scriptsize 16}"
+sf_interior 100
+Circle 166600, 49900, 20000
+sf_interior 0
+Circle 166600, 49900, 20000
+st_alignment 1, 1
+Text 166600, 49900, "{\scriptsize 16}"
+sf_interior 100
+Circle 500000, 49900, 20000
+sf_interior 0
+Circle 500000, 49900, 20000
+st_alignment 1, 1
+Text 500000, 49900, "{\scriptsize 18}"
+sf_interior 100
+Circle 833300, 49900, 20000
+sf_interior 0
+Circle 833300, 49900, 20000
+st_alignment 1, 1
+Text 833300, 49900, "{\scriptsize 19}"
+END_OF_FILE
+

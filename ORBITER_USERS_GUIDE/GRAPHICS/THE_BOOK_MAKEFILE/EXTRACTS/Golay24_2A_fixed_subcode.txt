@@ -1,0 +1,15 @@
+Golay24_2A_fixed_subcode:
+	$(ORBITER) -v 2 \
+		-define perm -vector \
+			-dense $(M24_2A_PERM) \
+		-end \
+		-define F -finite_field -q 2 -end \
+		-define v -vector \
+			-dense $(GOLAY_24_CODE_PROJECTIVE) \
+		-end \
+		-define C -code -field F \
+			-projective_set 12 v \
+		-end \
+		-with C -and F -do -coding_theoretic_activity \
+			-fixed_code perm \
+		-end 

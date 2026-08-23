@@ -1,0 +1,12 @@
+T3r1_orbits_draw:
+	$(ORBITER) -v 3 \
+		-draw_layered_graph \
+			GL_2_2_wreath_Sym3_res27_0.layered_graph \
+			-place \
+		-radius 500 -spanning_tree -embedded \
+			-line_width 1.1 -x_stretch 1.4 -scale 0.25 \
+		-end
+	#$(PDFLATEX) GL_2_2_wreath_Sym3_report.tex
+	#$(OPEN) GL_2_2_wreath_Sym3_report.pdf
+	$(PDFLATEX) GL_2_2_wreath_Sym3_res27_0_draw.tex
+	$(OPEN) GL_2_2_wreath_Sym3_res27_0_draw.pdf

@@ -1,0 +1,2 @@
+PR_915839_check:
+	$(ORBITER) -v 5 -power_mod 43085 49842 915839

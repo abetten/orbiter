@@ -1,0 +1,14 @@
+nonlinear_code_n7_d4:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define C -code -field F \
+			-nonlinear_code 7 \
+			"0,15,51,60,85,90,102,105" \
+		-end \
+		-with C -and F -do -coding_theoretic_activity \
+			-all_distances \
+		-end \
+		-with C -and F -do -coding_theoretic_activity \
+			-all_external_distances \
+		-end \
+		-tally_column nonlinear_code_n7_k8_all_external_distances.csv C0

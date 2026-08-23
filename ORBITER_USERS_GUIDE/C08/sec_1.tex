@@ -1,0 +1,151 @@
+
+Orbiter provides three different orbit algorithms: 
+\begin{enumerate}[(i)]
+\item
+Schreier trees, 
+\item
+poset classification, and 
+\item
+orderly generation using canonical forms. 
+\end{enumerate}
+The ``orbit'' Orbiter object provides a front end to all three orbit algorithms. 
+For background on Schreier trees, see~\cite{Butler91,Holt05,Seress03}.
+Poset based algorithms will be discussed in Section~\ref{sec:posetclassification}.
+Orderly generation using canonical forms is discussed in 
+Section~\ref{sec:canonical:form:objects:PG}.
+
+\bigskip
+
+
+To create an orbit object, the commands listed in 
+Tables~\ref{tab:orbits:1}-\ref{tab:orbits:2} can be used.
+\orbitertableofcommands{orbits_create1}
+\orbitertableofcommands{orbits_create2}
+Table~\ref{tab:orbits:activities} lists activities for an object of type orbit.
+\orbitertableofcommands{orbits_activity}
+
+
+
+
+\bigskip
+
+Consider the group $\PGL(4,2)$ in the natural action on the set of points of $\PG(3,2).$ 
+The action is transitive on the 15 points of $\PG(3,2).$ 
+The following example computes the Schreier tree for the action:
+
+\sourcecode{orbits_PGL_4_2_on_points_draw_tree}
+
+To draw the tree, the following command is used:
+
+\sourcecode{orbits_PGL_4_2_on_points_export_trees}
+
+The Schreier tree is shown below
+
+\orbiteroutput{GRAPHICS/WRAPPERS/PGL_4_2_schreier_tree_drawing}
+
+\bigskip
+
+
+The next command creates the projective plane of order $4$ 
+using a line-transitive group. 
+The design is the orbit of a certain set of size $5.$
+The group is created in product action. 
+The set results from a search for a special class of linear spaces 
+as described in Section~\ref{sec:design:DD}.
+
+
+\sourcecode{DD_PP4_orbit}
+
+\bigskip
+
+Consider the wreath product acting on rank-one tensors 
+from Section~\ref{sec:induced:actions}.
+The following command sequence computes the orbits, 
+exports the Schreier tree, and produces the drawing 
+
+\orbiteroutput{GRAPHICS/WRAPPERS/schreier_tree_wreath_drawing}
+
+\sourcecode{T3r1_orbits}
+
+
+\bigskip
+
+
+In the next example, we 
+compute the orbits of 
+the linear group $\PGL(3,2)$ on plane cubics: 
+
+\sourcecode{poly_orbits_d3_n2_q2_compute}
+
+The command produces a latex report about the orbits 
+and a csv-file containing additional data. 
+The csv-file is shown below, 
+as seen through a spreadsheet program.
+
+
+\orbiteroutput{GRAPHICS/WRAPPERS/poly_orbits_d3_n2_q2_table}
+
+
+The columns are 
+\begin{trivlist}
+\item
+Row -- the row in the table.
+\item
+OrbIdx -- The orbit index (same as Row).
+\item
+Go -- The order of the stabilizer of the variety in the group that was used to compute the orbits.
+\item
+EqnCode -- To Orbiter rank of the equation. 
+\item
+EqnVec -- The coefficients of the equation in vector form.
+\item
+EqnAf -- The equation of the variety written in algebraic form. 
+\item
+NbPts -- The number of $\bbF_q$-rational points of the variety.
+\item
+Pts -- The set of $\bbF_q$-rational points of the variety in Orbiter codes.
+\end{trivlist}
+
+
+\bigskip
+
+
+In the next example, we 
+compute the orbits of 
+the linear group $\PGL(4,2)$ 
+on homogeneous polynomials of degree 3 in 4 variables: 
+
+\sourcecode{poly_orbits_d3_n3_q2.csv}
+
+This command computes the orbits of 
+all cubic forms in 4 variables over the field $\bbF_2$, 
+confirming the work of Dickson~\cite{Dickson15} 
+and an enumerative result of Cooley~\cite{Cooley14}.
+
+
+\bigskip
+
+
+
+%The next example computes orbits in an induced action. 
+%Induced actions have been described in Section~\ref{sec:induced:actions}. 
+%One group can have many actions. 
+%In particular, Orbiter can work with induced actions without changing the representation of the 
+%group elements. 
+%This has the advantage that the stabilizers are expressed in terms of the original action. 
+%To consider an example, 
+%suppose we want to consider the action of the stabilizer of a conic on the points of the plane 
+%(this continues an example from Section~\ref{sec:induced:actions}). 
+%The following command can be used:
+%{\tt
+%\input GRAPHICS/THE_MAKEFILE/EXTRACTS/PGGL_2_8_on_conic_orbits.tex
+%}
+%The output shown below. 
+%First, the orbits are listed. Then for each orbit, the stabilizer is 
+%shown, together with the generators in the action on the plane.
+%For the sake of space, some of the output has been shortened.
+%The three orbits correspond to the conic, 
+%the nucleus and the remaining points of the plane.
+%\begin{mdframed}[style=MyFrame]
+%\input GRAPHICS/LATEX/arc_Lunelli_Sce.tex
+%\end{mdframed}

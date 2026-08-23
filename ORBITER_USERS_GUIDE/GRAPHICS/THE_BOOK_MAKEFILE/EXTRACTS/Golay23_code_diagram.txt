@@ -1,0 +1,10 @@
+Golay23_code_diagram:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define words -vector -file Golay23_codewords.csv -end \
+		-with F -do \
+		-coding_theoretic_activity \
+			-general_code_binary 23 "Golay_23" \
+			words \
+			-embellish 4 \
+		-end

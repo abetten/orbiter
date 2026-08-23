@@ -1,0 +1,18 @@
+hyperoval_4_classify:
+	$(ORBITER) -v 4 \
+		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define F -finite_field -q 4 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define Control -poset_classification_control \
+			-problem_label hyperoval_q4 \
+			-W -depth 6 \
+		-end \
+		-define Arc_control -arc_generator_control \
+			-projective_space P \
+			-control Control \
+			-target_size 6 \
+			-d 2 \
+		-end \
+		-define Orb -orbits \
+			-on_arcs Arc_control \
+		-end

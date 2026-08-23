@@ -1,0 +1,10 @@
+crc_encode_16:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 2 -end \
+		-define CRC16 -crc_code -type crc16 -block_length 771 -end \
+		-with F -do \
+			-coding_theoretic_activity \
+				-crc_encode_file_based \
+				$(CRC_FILE).$(CRC_FILE_EXTENSION) \
+				$(CRC_FILE)_crc16.bin CRC16 \
+		-end

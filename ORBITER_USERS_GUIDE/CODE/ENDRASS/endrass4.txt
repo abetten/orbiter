@@ -1,0 +1,12 @@
+orbiter.out -v 2 -povray \
+	-round 0 -nb_frames_default 30 -output_mask endrass_quartic_%d_%03d.pov \
+	-video_options -W 1024 -H 768  -global_picture_scale 0.05 -default_angle 75 -clipping_radius 3.7 -no_bottom_plane \
+	-camera 0 "1,1,1" "6,6,3" "0,0,0"  \
+	-rotate_about_111 \
+	-end \
+	-scene_objects \
+		-quartic_lex_35 "-93.2548,-309.019,527.529,395.647,-687.529,1582.59,1186.94,-1055.06,-1582.59,-593.47,-309.019,1582.59,1186.94,-2110.12,-3165.17,-1186.94,874.039,1560.63,1677.92,343.362,-93.2548,527.529,395.647,-1055.06,-1582.59,-593.47,874.039,1560.63,1677.92,343.362,-256,-468.077,-789.019,-525.726,0.941125" \
+		-group_of_things "0" \
+		-quartics 0 "texture{ pigment{ White*0.5 transmit 0.5 } finish {ambient 0.4 diffuse 0.5 roughness 0.001 reflection 0.1 specular .8} }" \
+	-scene_objects_end \
+	-povray_end

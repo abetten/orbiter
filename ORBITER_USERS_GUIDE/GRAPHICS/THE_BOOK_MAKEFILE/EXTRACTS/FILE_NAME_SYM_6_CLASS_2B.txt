@@ -1,0 +1,1 @@
+FILE_NAME_SYM_6_CLASS_2B="Sym_6_class_of_2B.csv"

@@ -1,0 +1,4 @@
+vector_example_all_one_11:
+	$(ORBITER) -v 2 \
+		-define v -vector -repeat 1 11 -end \
+		-print_symbols

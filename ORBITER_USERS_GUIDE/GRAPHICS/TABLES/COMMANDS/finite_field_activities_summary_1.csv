@@ -1,0 +1,12 @@
+ROW,C1,C2,C3
+0,"tab:finite:field:activities:A",,
+1,"Finite Field Activities (Part I)",,
+1,"\verb'-write_code_for_division' ","  fname $A$ $B$ ","  Write C++ source code for the polynomial division of $A$ by $B$. See Section~\ref{sec:CRC}."
+1,"\verb'-weight_enumerator' "," $A$  ","Computes the weight enumerator of the code whose generator matrix is $A$."
+1,"\verb'-Walsh_Hadamard_transform' "," fname $n$  ","Computes the Walsh-Hadamard transform for the $n$-variable boolean function in the given file. "
+1,"\verb'-algebraic_normal_form_of_' \verb'boolean_function' "," fname n  ","Computes the algebraic normal form for the $n$-variable boolean function in the given file. "
+1,"\verb'-algebraic_normal_form' "," n input  ","Computes the algebraic normal form for the $n$-variable function in the given file."
+1,"\verb'-apply_trace_function' "," fname   ","Applies the absolute trace function to the function in the given file. "
+1,"\verb'-apply_power_function' "," fname $d$  ","Applies the raise-to-the-power-$d$ function to the function in the given file. "
+1,"\verb'-identity_function' "," fname\_csv   ","Creates the identity function and stores in the given csv file. "
+END

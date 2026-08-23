@@ -1,0 +1,23 @@
+Neumaier_graph_25:
+	$(ORBITER) -v 10 \
+		-define Gamma -graph -Neumaier_graph_25 -end \
+		-with Gamma -do \
+		-graph_theoretic_activity \
+			-test_SRG_property \
+		-end \
+		-with Gamma -do \
+		-graph_theoretic_activity \
+			-eigenvalues \
+		-end \
+		-with Gamma -do \
+		-graph_theoretic_activity \
+			-find_cliques -target_size 5 -end \
+		-end \
+		-with Gamma -do \
+		-graph_theoretic_activity \
+			-automorphism_group \
+		-end \
+		-with Gamma -do \
+		-graph_theoretic_activity \
+			-test_Neumaier_property 5 \
+		-end

@@ -1,0 +1,8 @@
+nth_roots_63:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 2 -end \
+		-with F -do -finite_field_activity \
+			-nth_roots 63 \
+		-end
+	$(PDFLATEX) Nth_roots_q2_n63.tex
+	$(OPEN) Nth_roots_q2_n63.pdf

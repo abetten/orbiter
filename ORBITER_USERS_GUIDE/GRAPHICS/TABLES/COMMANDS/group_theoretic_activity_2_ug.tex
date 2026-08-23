@@ -1,0 +1,57 @@
+\begin{table}
+\begin{tcolorbox}[tabularx={X|p{2cm}|X|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black,title=Group theoretic activities (Part 2)]
+\hline
+Command & Arguments & Purpose \\
+\hline
+\hline
+\verb'-find_small_generating_set'  &  sz nb  & Find a generating set of the group consisting of sz generators using a randomized algorithm. Give up after nb trials. \\
+\hline
+\verb'-find_singer_cycle'  &    & Finds all Singer cycles whose matrix is a companion matrix. \\
+\hline
+\verb'-classes_based_on_normal_form'  &   &  \\
+\hline
+\verb'-normalizer'  &    & See Section~\ref{sec:group:magma}.\\
+\hline
+\verb'-centralizer_of_element'  &    & See Section~\ref{sec:group:magma}.\\
+\hline
+\verb'-normalizer_of_cyclic_subgroup'  &    & Computes the normalizer of a cyclic group, see Section~\ref{sec:group:magma}.\\
+\hline
+\verb'-classes'  &    & Computes the conjugacy classes of elements, see Section~\ref{sec:group:magma}.\\
+\hline
+\verb'-split_by_classes'  &  fname column  &  Splits the sets from the given csv file in the given column accoding to the different conjugacy classes of the group.\\
+\hline
+\verb'-identify_elements_by_class'  &  fname column go supergroup &  Identifies the conjugacy class of each of the elements in the given column in the given file.\\
+\hline
+\verb'-find_subgroup'  &  go &  Finds all subgroups of the given order and produces a latex report.\\
+\hline
+\verb'-conjugacy_class_of'  &  label $g$  &  Computes the conjugacy class of $g$. \\
+\hline
+\verb'-isomorphism_Klein_quadric'  &  fname  &  \\
+\hline
+\verb'-print_elements'  &   & Produces a printout of all group elements. \\
+\hline
+\verb'-print_elements_tex'  &   & Produces a latex report of all group elements. \\
+\hline
+\verb'-make_element_tree'  &   & Produces the tree of all group elements. \\
+\hline
+\verb'-vector_ge_print_elements_tex'  &  vector  & Produces a latex report of all group elements in the vector object. \\
+\hline
+\verb'-save_elements_csv'  &  fname  & Writes the elements of the group to the given csv file.\\
+\hline
+\verb'-export_inversion_graphs'  &  fname  & Exports the inversion graphs associated to the group elements to the given file.\\
+\hline
+\verb'-evaluate_word'  &  word gens  & Expresses a word in terms of the given set of generators. \\
+\hline
+\verb'-multiply_all_elements_in_lex_order'  &    & Multiplies all group elements together. The output depends on the chosen stabilizer chain.\\
+\hline
+\verb'-stats'  &  prefix  &  Report statistics on group operations. \\
+\hline
+\verb'-move_a_b'  &  a b  & Determine a group element mapping a to b. Computes the stabilizer of b in the given group $G$ (the group for which the activity is applied). \\
+\hline
+\verb'-rational_normal_form'  &  element  & Computes the rational normal form of the given group element (must be a matrix group). \\
+\hline
+\end{tcolorbox}
+\caption{\label{tab:grouptasks2}Group theoretic activities (Part 2)}
+\end{table}

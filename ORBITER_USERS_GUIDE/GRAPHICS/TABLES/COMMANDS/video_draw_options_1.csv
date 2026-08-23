@@ -1,0 +1,23 @@
+ROW,C1,C2,C3
+0,"tab:povray1",,
+1,"Povray Interface (Part 1)",,
+1,"\verb'-do_not_rotate' ","  "," No rotation. By default, the animation consists of a full rotation around a vertical axis."
+1,"\verb'-rotate_about_z_axis' ","  "," Rotate around $z$-axis. "
+1,"\verb'-rotate_about_111' ","  "," Rotate around $(1,1,1)$-axis (default). "
+1,"\verb'-rotate_about_custom_axis' "," axis "," Rotate around a custom axis. The axis is specified as a vector of length 3. "
+1,"\verb'-boundary_none' ","  "," Remove the clipping. "
+1,"\verb'-boundary_box' ","  "," Clip using a box shape. "
+1,"\verb'-boundary_sphere' ","  "," Clip using a sphere (default). "
+1,"\verb'-font_size' "," $s$  "," Set font size to $s.$ "
+1,"\verb'-stroke_width' "," $s$  "," Set text depth to $s$. "
+1,"\verb'-omit_bottom_plane' ","  "," Remove the bottom plane. "
+1,"\verb'-W' "," $w$ "," Set output dimension to $w$ pixels wide. "
+1,"\verb'-H' "," $h$ "," Set output dimension to $h$ pixels height. "
+1,"\verb'-nb_frames' "," $n$ "," Set number of frames to $n$. One revolution around the axis is split into $n$ frames. "
+1,"\verb'-zoom' "," $r$ $a_s$ $a_t$ $c_s$ $c_t$ "," Set zoom angle and clipping with in round $r$ to change from $a_s$ to $a_t$ and from $c_s$ to $c_t$, respectively. "
+1,"\verb'-pan' "," $r$ $F$ $T$ $C$ "," In round $r$, pan the camera from location $F$ to location $T$ in a rotational movement with center at $C$. Each of $F,T,C$ are three dimensional coordinates."
+1,"\verb'-pan_reverse' "," $r$ $F$ $T$ $C$ "," Same as \verb'-pan', but camera movement is in opposite order. "
+1,"\verb'-no_background' ","  "," Remove background. "
+1,"\verb'-no_bottom_plane' "," $r$ "," Remove bottom plane in round $r$. "
+1,"\verb'-camera' "," $r$ $S$ $C$ $L$ "," In round $r$, set camera location at $C$, sky at $S$ and pointing towards $L$. Each of $S,C,L$ are three-dimensional coordinate vectors. "
+END

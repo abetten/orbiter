@@ -1,0 +1,346 @@
+Orbiter commands are given in a language called Orbiter dash code. 
+Here, we give a brief intoduction into this language. 
+We start with syntax diagrams. 
+For a complete list of syntax diagrams of the Orbiter language, 
+see Appendix~\ref{sec:syntax:diagrams}.
+
+
+
+Every Orbiter Program follows the syntax derived from Grammar below:
+
+
+
+\orbiteroutputwith{{Grammar}}{GRAPHICS/RAILROAD/WRAPPER/rr_Grammar}{}
+
+A Grammar is a Program:
+
+
+\orbiteroutputwith{{Program}}{GRAPHICS/RAILROAD/WRAPPER/rr_Program}{}
+
+A program has a setup phase and a sequence of commands. 
+The setup phase happens only once, 
+at the beginning of the program. 
+
+\orbiteroutputwith{{Setup}}{GRAPHICS/RAILROAD/WRAPPER/rr_Setup}{}
+
+
+Some of the setup commands require additional parameters. 
+Here are three of these types of commands:
+
+\bigskip
+
+The verbosity is a parameter that determines how much 
+text output should be produced on the console. 
+Higher values of the verbosity lead to more text output. 
+A verbosity value of 0 leads to minimal text output.
+To set the verbosity, 
+the  \verb'-v' command is given in the setup. 
+It expects the verbosity as an additional integer. 
+ 
+
+\orbiteroutputwith{{Verbosity}}{GRAPHICS/RAILROAD/WRAPPER/rr_Verbosity}{}
+
+\bigskip
+
+
+An integer is given as a string of numerical characters:
+
+
+\orbiteroutputwith{{Integer}}{GRAPHICS/RAILROAD/WRAPPER/rr_Integer}{}
+
+
+\bigskip
+
+
+Some of the algorithms in Orbiter are randomized. This means that the output depends on a set of chosen 
+pseudo random numbers. The generator for pseudo random numbers relies on a state, which is just an integer. 
+Given a certain state, the pseudo random numbers are deterministic. In order to set the state of the random number 
+generator, the \verb'-seed' command can be used:
+
+\orbiteroutputwith{{SeedRandomGen}}{GRAPHICS/RAILROAD/WRAPPER/rr_SeedRandomGen}{}
+
+Orbiter relies on the C++ memory management system to store Objects and temporary data. 
+One of the issues with memory management systems is that objects need to be freed once they become obsolete. 
+It is a programming mistake to not free unused objects. Such a mistake is called a memory leak. 
+Orbiter  can help find  memory leaks. To do so, the parameter \verb'memory_debug' can be set to a positive number. 
+Unfortunately, setting the \verb'memory_debug' value can slow down the code quite a bit. 
+So, this is not something that is recommended for the beginning user. 
+Here is the syntax to set the \verb'memory_debug' parameter:
+
+\orbiteroutputwith{{MemoryDebug}}{GRAPHICS/RAILROAD/WRAPPER/rr_MemoryDebug}{}
+
+
+
+\bigskip
+
+Let us go back to the main Orbiter program. 
+After the initial setup, an Orbiter program consists of a command sequence.
+The command sequence consists of one or more commands.
+
+\orbiteroutputwith{{CommandSequence}}{GRAPHICS/RAILROAD/WRAPPER/rr_CommandSequence}{}
+
+
+An Orbiter command can be one of the following types:
+\begin{itemize}
+\item 
+a definition of a new Orbiter object,
+\item
+an assignment of an Object resulting from an activity, 
+\item
+an activity for an existing Orbiter object.
+\item
+a global command which does not apply to a specific object.
+\end{itemize}
+
+\orbiteroutputwith{{Command}}{GRAPHICS/RAILROAD/WRAPPER/rr_Command}{}
+
+
+A definition defines a new Orbiter object and stores it 
+in the symbol table, using a specified name. 
+The name is given as a literal in the following syntax diagram.
+A literal is simply a string of symbols (letter, digit or underscore), 
+but it must start with a character. 
+
+
+
+
+
+
+\orbiteroutputwith{{Definition}}{GRAPHICS/RAILROAD/WRAPPER/rr_Definition}{}
+
+
+
+\bigskip
+
+
+A literal is a string of text and digits, 
+possibly including the underscore character. 
+It cannot start with a digit:
+
+
+\orbiteroutputwith{{Literal}}{GRAPHICS/RAILROAD/WRAPPER/rr_Literal}{}
+
+
+\bigskip
+
+
+
+Because Orbiter has a large number of Objects, 
+the syntax diagrams group them into six major categories.  
+
+
+\orbiteroutputwith{{ObjectTypeAndArgs}}{GRAPHICS/RAILROAD/WRAPPER/rr_ObjectTypeAndArgs}{}
+
+The six major object categories are
+\begin{enumerate}
+\item
+DataStructure, 
+\item
+AlgebraObject, 
+\item
+GeometryObject, 
+\item
+CombinatoricsObject, 
+\item
+CodingTheoryObject and 
+\item
+OtherObject.
+\end{enumerate}
+
+
+The objects in the category data structure are mainly for storage. 
+We can have a set, a collection, a vector of integers (which includes a matrix of integers), 
+or a vector of group elements:
+
+
+\orbiteroutputwith{{DataStructure}}{GRAPHICS/RAILROAD/WRAPPER/rr_DataStructure}{}
+
+
+
+Let us just look at the objects that arise in the Algebra category, 
+and leave the other types for later:
+ 
+\orbiteroutputwith{{AlgebraObject}}{GRAPHICS/RAILROAD/WRAPPER/rr_AlgebraObject}{}
+
+
+
+%\orbiteroutputwith{{GeometryObject}}{GRAPHICS/RAILROAD/WRAPPER/rr_GeometryObject}{}
+
+%\orbiteroutputwith{{CombinatoricsObject}}{GRAPHICS/RAILROAD/WRAPPER/rr_CombinatoricsObject}{}
+
+%\orbiteroutputwith{{CodingTheoryObject}}{GRAPHICS/RAILROAD/WRAPPER/rr_CodingTheoryObject}{}
+
+%\orbiteroutputwith{{OtherObject}}{GRAPHICS/RAILROAD/WRAPPER/rr_OtherObject}{}
+
+
+The AlgebraObject can be of several kinds:
+\begin{enumerate}
+\item
+finite\_field,
+\item
+polynomial\_ring,
+\item
+linear\_group,
+\item
+permutation\_group,
+\item
+group\_modification,
+\item
+action\_on\_forms,
+\item
+orbits,
+\item
+poset\_classification\_control,
+\item
+poset\_classification\_report\_options,
+\item
+poset\_classification\_activity.
+\end{enumerate}
+
+Let us look at only the first type of object, called \verb'finite_field'.
+This object provides a specific finite field $\bbF_q.$
+Of course, $q$ must be a prime power. 
+There are some limitations:
+The value of $q$ cannot be too large, otherwise the system will run out of memory. 
+For more on limitations, see Section~\ref{sec:limitations}.
+
+\bigskip
+
+
+The creation of a finite field object allows for several optional arguments. 
+These optional arguments will be discussed 
+in full detail in Chapter~\ref{chapter:finite:fields}.
+
+\orbiteroutputwith{{finite\_field}}{GRAPHICS/RAILROAD/WRAPPER/rr_finite_field}{}
+
+
+
+An assigment defines one or more new Orbiter objects and stores them 
+in the symbol table, using a specified name. 
+But this time, the objects that are assigned result from an activity.
+
+
+
+
+
+
+\orbiteroutputwith{{Assignment}}{GRAPHICS/RAILROAD/WRAPPER/rr_Assignment}{}
+
+An assignment must be followed by an activity.
+
+
+\bigskip
+
+
+Activities are things we can do with Orbiter objects.
+They apply to one or more existing objects, which reside in the symbol table.
+Depending on the type of object, there is a list of activities that are available. 
+An activity is a task that applies to the selected objects. 
+The object is selected using the \verb'-with' command. 
+If necessary, additional objects can be selected 
+using the \verb'-and' clause. After that, the \verb'do' command signifies that an activity 
+is going to be selected. 
+The type of activity is specified first. 
+After that, optional commands specific to the activity may be given. 
+The whole command sequence is terminated  
+with a final \verb'-end' command:  
+
+\orbiteroutputwith{{Activity}}{GRAPHICS/RAILROAD/WRAPPER/rr_Activity}{}
+
+Different types of activities are available. 
+The type of activity must match the type of object that was selected first.
+There are many different types of activities. For this reason, 
+the activities are grouped into categories, 
+just like the corresponding objects.
+
+
+\orbiteroutputwith{{ObjectActivity}}{GRAPHICS/RAILROAD/WRAPPER/rr_ObjectActivity}{}
+
+
+For instance, here are the activities related to algebra objects:
+
+\orbiteroutputwith{{AlgebraActivity}}{GRAPHICS/RAILROAD/WRAPPER/rr_AlgebraActivity}{}
+
+
+The activities related to the other types of objects can be found in Appendix~\ref{sec:syntax:diagrams}.
+
+
+%\orbiteroutputwith{{GeometryActivity}}{GRAPHICS/RAILROAD/WRAPPER/rr_GeometryActivity}{}
+
+%\orbiteroutputwith{{CombinatoricsActivity}}{GRAPHICS/RAILROAD/WRAPPER/rr_CombinatoricsActivity}{}
+
+%\orbiteroutputwith{{CodingTheoryActivity}}{GRAPHICS/RAILROAD/WRAPPER/rr_CodingTheoryActivity}{}
+
+%\orbiteroutputwith{{OtherActivity}}{GRAPHICS/RAILROAD/WRAPPER/rr_OtherActivity}{}
+
+
+
+
+
+\bigskip
+
+
+
+Finally, there are the global commands. 
+They do not require an object or an activity. 
+
+\orbiteroutputwith{{GlobalCmd}}{GRAPHICS/RAILROAD/WRAPPER/rr_GlobalCmd}{}
+
+Global commands come in several categories:
+
+\begin{enumerate}
+\item
+AlgebraGlobal  (see Table~\ref{tab:global:algebra})
+\item
+NumberTheoryGlobal  (see Tables~\ref{tab:basic:number:theory},\ref{tab:nt})
+\item
+CodingTheoryGlobal (see Table~\ref{tab:coding:global})
+\item
+CombinatoricsGlobal (see Tables~\ref{tab:crypto},\ref{tab:crypto2})
+\item
+CryptographyGlobal (see Tables~\ref{tab:combi},\ref{tab:combi:2})
+\item
+PovrayGlobal  (see Table~\ref{tab:interface:povray})
+\item
+ProjectiveGlobal (see Table~\ref{tab:projective})
+\item
+SymbolTableGlobal
+\item
+ToolkitGlobal  (see Tables~\ref{tab:misc:1},\ref{tab:misc:2})
+\end{enumerate}
+
+
+
+\bigskip
+
+
+
+
+
+
+
+Let us now consider some simple examples of working with objects. 
+Suppose we want to create the finite field $\bbF_2$ with two elements.  
+The command 
+
+\sourcecode{object_F_2}
+
+creates the finite field $\bbF_2$ as object $F$. 
+For more details, see Section~\ref{sec:finite:fields}.
+The command
+
+\sourcecode{object_PG_3_2}
+
+creates the projective space $\PG(3,2).$
+This is the three-dimensional space over the field $\bbF_2$.
+The \verb'-projective_space' command requires additional options to 
+set the dimension $n$ and the field $\bbF_q$ in $\PG(n,q)$.
+The \verb'-n' command sets the dimension $n$. 
+The \verb'-field' command can be used to specify a
+particular field. 
+The \verb'-q' command can be used to create a generic field $\bbF_q.$
+
+\bigskip
+
+
+

@@ -1,0 +1,182 @@
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {2.1}{\ignorespaces Orbiter session commands}}{25}{table.2.1}%
+\contentsline {table}{\numberline {2.2}{\ignorespaces Orbiter Objects (Part I)}}{26}{table.2.2}%
+\contentsline {table}{\numberline {2.3}{\ignorespaces Orbiter Objects (Part II)}}{27}{table.2.3}%
+\contentsline {table}{\numberline {2.4}{\ignorespaces Orbiter Activities (Part 1)}}{28}{table.2.4}%
+\contentsline {table}{\numberline {2.5}{\ignorespaces Orbiter Activities (Part 2)}}{29}{table.2.5}%
+\contentsline {table}{\numberline {2.6}{\ignorespaces Set Builder Commands}}{40}{table.2.6}%
+\contentsline {table}{\numberline {2.7}{\ignorespaces Vector Builder Commands}}{42}{table.2.7}%
+\contentsline {table}{\numberline {2.8}{\ignorespaces Vector of Integers Activities}}{47}{table.2.8}%
+\contentsline {table}{\numberline {2.9}{\ignorespaces Vector of Group Elements Builder Commands}}{48}{table.2.9}%
+\contentsline {table}{\numberline {2.10}{\ignorespaces Creating Symbolic Objects I}}{51}{table.2.10}%
+\contentsline {table}{\numberline {2.11}{\ignorespaces Creating Symbolic Objects II}}{52}{table.2.11}%
+\contentsline {table}{\numberline {2.12}{\ignorespaces Activities for Symbolic Objects}}{53}{table.2.12}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {3.1}{\ignorespaces Creating Finite Fields}}{72}{table.3.1}%
+\contentsline {table}{\numberline {3.2}{\ignorespaces Finite Field Activities}}{73}{table.3.2}%
+\contentsline {table}{\numberline {3.3}{\ignorespaces More Finite Field Activities}}{78}{table.3.3}%
+\contentsline {table}{\numberline {3.4}{\ignorespaces Orbiter Primitive Polynomials}}{79}{table.3.4}%
+\contentsline {table}{\numberline {3.5}{\ignorespaces Finite Field Activities Pertaining to Linear Algebra}}{89}{table.3.5}%
+\contentsline {table}{\numberline {3.6}{\ignorespaces Finite Field Activities (Part I)}}{94}{table.3.6}%
+\contentsline {table}{\numberline {3.7}{\ignorespaces Finite Field Activities (Part II)}}{95}{table.3.7}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {4.1}{\ignorespaces Options for Creating a Projective Space}}{103}{table.4.1}%
+\contentsline {table}{\numberline {4.2}{\ignorespaces Ranking Points in Small Projective Spaces}}{109}{table.4.2}%
+\contentsline {table}{\numberline {4.3}{\ignorespaces Ranking Lines in Small Projective Spaces}}{111}{table.4.3}%
+\contentsline {table}{\numberline {4.4}{\ignorespaces Projective Space Activities (Part 1)}}{120}{table.4.4}%
+\contentsline {table}{\numberline {4.5}{\ignorespaces Projective Space Activities (Part 2)}}{121}{table.4.5}%
+\contentsline {table}{\numberline {4.6}{\ignorespaces Projective Space Activities (Part 3)}}{122}{table.4.6}%
+\contentsline {table}{\numberline {4.7}{\ignorespaces Projective Space Activities (Part 4)}}{123}{table.4.7}%
+\contentsline {table}{\numberline {4.8}{\ignorespaces Global Commands for Projective Geometry}}{123}{table.4.8}%
+\contentsline {table}{\numberline {4.9}{\ignorespaces Geometric Objects (Part 1)}}{131}{table.4.9}%
+\contentsline {table}{\numberline {4.10}{\ignorespaces Geometric Objects (Part 2)}}{132}{table.4.10}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {5.1}{\ignorespaces Creating a Generic Permutation Group}}{136}{table.5.1}%
+\contentsline {table}{\numberline {5.2}{\ignorespaces Creating a Matrix Group (Part 1)}}{147}{table.5.2}%
+\contentsline {table}{\numberline {5.3}{\ignorespaces Creating a Matrix Group (Part 2)}}{148}{table.5.3}%
+\contentsline {table}{\numberline {5.4}{\ignorespaces Basic actions}}{150}{table.5.4}%
+\contentsline {table}{\numberline {5.5}{\ignorespaces Creating Subgroups}}{171}{table.5.5}%
+\contentsline {table}{\numberline {5.6}{\ignorespaces Group Modifications}}{190}{table.5.6}%
+\contentsline {table}{\numberline {5.7}{\ignorespaces Creating Special Actions}}{200}{table.5.7}%
+\contentsline {table}{\numberline {5.8}{\ignorespaces Group theoretic activities (Part 1)}}{213}{table.5.8}%
+\contentsline {table}{\numberline {5.9}{\ignorespaces Group theoretic activities (Part 2)}}{214}{table.5.9}%
+\contentsline {table}{\numberline {5.10}{\ignorespaces Group theoretic activities (Part 3)}}{215}{table.5.10}%
+\contentsline {table}{\numberline {5.11}{\ignorespaces Group theoretic activities (Part 4)}}{216}{table.5.11}%
+\contentsline {table}{\numberline {5.12}{\ignorespaces Group theoretic activities (Part 5)}}{217}{table.5.12}%
+\contentsline {table}{\numberline {5.13}{\ignorespaces Element Processing Options}}{217}{table.5.13}%
+\contentsline {table}{\numberline {5.14}{\ignorespaces Group Theoretic Activities Based on Magma}}{229}{table.5.14}%
+\contentsline {table}{\numberline {5.15}{\ignorespaces Group Theoretic Activities Based on GAP}}{241}{table.5.15}%
+\contentsline {table}{\numberline {5.16}{\ignorespaces Vector of Group Elements Activities}}{255}{table.5.16}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {6.1}{\ignorespaces Finite Field Activities Related to Polynomials}}{264}{table.6.1}%
+\contentsline {table}{\numberline {6.2}{\ignorespaces Creating Multivariate Polynomial Rings}}{272}{table.6.2}%
+\contentsline {table}{\numberline {6.3}{\ignorespaces Multivariate Polynomial Ring Activities}}{273}{table.6.3}%
+\contentsline {table}{\numberline {6.4}{\ignorespaces Monomial Ordering of Partition Type in the Plane}}{274}{table.6.4}%
+\contentsline {table}{\numberline {6.5}{\ignorespaces Monomial Ordering of Partition Type in Three-Space}}{275}{table.6.5}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {7.1}{\ignorespaces Types of Quadrics}}{285}{table.7.1}%
+\contentsline {table}{\numberline {7.2}{\ignorespaces Creating an Orthogonal Space}}{285}{table.7.2}%
+\contentsline {table}{\numberline {7.3}{\ignorespaces Orthogonal Space Activities}}{288}{table.7.3}%
+\contentsline {table}{\numberline {7.4}{\ignorespaces Creating Varieties}}{306}{table.7.4}%
+\contentsline {table}{\numberline {7.5}{\ignorespaces Variety Activities}}{314}{table.7.5}%
+\contentsline {table}{\numberline {7.6}{\ignorespaces Mappings Between Projective Spaces}}{325}{table.7.6}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {8.1}{\ignorespaces Computing Orbits}}{328}{table.8.1}%
+\contentsline {table}{\numberline {8.2}{\ignorespaces Computing Orbits}}{329}{table.8.2}%
+\contentsline {table}{\numberline {8.3}{\ignorespaces Orbit Based Activities}}{329}{table.8.3}%
+\contentsline {table}{\numberline {8.4}{\ignorespaces Options for Computing Posets}}{337}{table.8.4}%
+\contentsline {table}{\numberline {8.5}{\ignorespaces Activities for Posets of Orbits (Part 1)}}{338}{table.8.5}%
+\contentsline {table}{\numberline {8.6}{\ignorespaces Activities for Posets of Orbits (Part 2)}}{339}{table.8.6}%
+\contentsline {table}{\numberline {8.7}{\ignorespaces Poset Classification Report Options}}{339}{table.8.7}%
+\contentsline {table}{\numberline {8.8}{\ignorespaces Classifying Arcs}}{355}{table.8.8}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {9.1}{\ignorespaces Creating a Cubic Surface (Part 1)}}{366}{table.9.1}%
+\contentsline {table}{\numberline {9.2}{\ignorespaces Creating a Cubic Surface (Part 2)}}{367}{table.9.2}%
+\contentsline {table}{\numberline {9.3}{\ignorespaces Creating a Cubic Surface (Part 3)}}{368}{table.9.3}%
+\contentsline {table}{\numberline {9.4}{\ignorespaces Cubic Surface Activities}}{377}{table.9.4}%
+\contentsline {table}{\numberline {9.5}{\ignorespaces Options for Exporting Data: Cubic Surfaces}}{378}{table.9.5}%
+\contentsline {table}{\numberline {9.6}{\ignorespaces Classifying Cubic Surfaces}}{384}{table.9.6}%
+\contentsline {table}{\numberline {9.7}{\ignorespaces Activity for Cubic Surfaces After Classification}}{385}{table.9.7}%
+\contentsline {table}{\numberline {9.8}{Orbit Representatives}}{388}{table.9.8}%
+\contentsline {table}{\numberline {9.9}{\ignorespaces Creating Quartic Curves}}{402}{table.9.9}%
+\contentsline {table}{\numberline {9.10}{\ignorespaces Quartic Curve Activities}}{403}{table.9.10}%
+\contentsline {table}{\numberline {9.11}{\ignorespaces Options for Exporting Data: Quartic Curves}}{403}{table.9.11}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {10.1}{\ignorespaces Global Algebra Commands}}{424}{table.10.1}%
+\contentsline {table}{\numberline {10.2}{\ignorespaces Basic Number Theory Commands}}{425}{table.10.2}%
+\contentsline {table}{\numberline {10.3}{\ignorespaces Number Theoretic Commands}}{426}{table.10.3}%
+\contentsline {table}{\numberline {10.4}{\ignorespaces Representation Theory Activities}}{436}{table.10.4}%
+\contentsline {table}{\numberline {10.5}{\ignorespaces Cryptographic Commands}}{438}{table.10.5}%
+\contentsline {table}{\numberline {10.6}{\ignorespaces Finite Field Activities for Cryptography}}{439}{table.10.6}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {11.1}{\ignorespaces Global Coding Theoretic Commands}}{448}{table.11.1}%
+\contentsline {table}{\numberline {11.2}{\ignorespaces Creating Codes}}{456}{table.11.2}%
+\contentsline {table}{\numberline {11.3}{\ignorespaces Coding Theoretic Activities (Part 1)}}{457}{table.11.3}%
+\contentsline {table}{\numberline {11.4}{\ignorespaces Coding Theoretic Activities (Part 2)}}{458}{table.11.4}%
+\contentsline {table}{\numberline {11.5}{\ignorespaces Coding Theoretic Activities (Part 3)}}{459}{table.11.5}%
+\contentsline {table}{\numberline {11.6}{\ignorespaces Code Modifications}}{459}{table.11.6}%
+\contentsline {table}{\numberline {11.7}{\ignorespaces Defining a CRC-process}}{467}{table.11.7}%
+\contentsline {table}{\numberline {11.8}{\ignorespaces Options for CRC-Codes}}{467}{table.11.8}%
+\contentsline {table}{\numberline {11.9}{\ignorespaces Defining a CRC-Code}}{467}{table.11.9}%
+\contentsline {table}{\numberline {11.10}{\ignorespaces Options for Drawing Modulo N Objects}}{484}{table.11.10}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {12.1}{\ignorespaces Combinatorics (Part 1)}}{504}{table.12.1}%
+\contentsline {table}{\numberline {12.2}{\ignorespaces Combinatorics (Part 2)}}{505}{table.12.2}%
+\contentsline {table}{\numberline {12.3}{\ignorespaces Defining Combinatorial Objects (Part 1)}}{512}{table.12.3}%
+\contentsline {table}{\numberline {12.4}{\ignorespaces Defining Combinatorial Objects (Part 2)}}{513}{table.12.4}%
+\contentsline {table}{\numberline {12.5}{\ignorespaces Activities for Combinatorial Objects}}{521}{table.12.5}%
+\contentsline {table}{\numberline {12.6}{\ignorespaces Options for Reporting After Classification}}{522}{table.12.6}%
+\contentsline {table}{\numberline {12.7}{\ignorespaces Activities for Combinatorial Objects with Group}}{523}{table.12.7}%
+\contentsline {table}{\numberline {12.8}{\ignorespaces Constructing and Classifying Geometries}}{531}{table.12.8}%
+\contentsline {table}{\numberline {12.9}{\ignorespaces Refining Tactical Decompositions}}{539}{table.12.9}%
+\contentsline {table}{\numberline {12.10}{\ignorespaces Activities for a Plesken Ring}}{542}{table.12.10}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {13.1}{\ignorespaces Creating Graphs (Part 1)}}{552}{table.13.1}%
+\contentsline {table}{\numberline {13.2}{\ignorespaces Creating Graphs (Part 2)}}{553}{table.13.2}%
+\contentsline {table}{\numberline {13.3}{\ignorespaces Graph Modifiers}}{558}{table.13.3}%
+\contentsline {table}{\numberline {13.4}{\ignorespaces Graph Theoretic Activities (Part 1)}}{566}{table.13.4}%
+\contentsline {table}{\numberline {13.5}{\ignorespaces Graph Theoretic Activities (Part 2)}}{567}{table.13.5}%
+\contentsline {table}{\numberline {13.6}{\ignorespaces Classifying Graphs}}{578}{table.13.6}%
+\contentsline {table}{\numberline {13.7}{\ignorespaces Activities after Graph Classification}}{578}{table.13.7}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {14.1}{\ignorespaces Creating Designs}}{584}{table.14.1}%
+\contentsline {table}{\numberline {14.2}{\ignorespaces Design Activities}}{585}{table.14.2}%
+\contentsline {table}{\numberline {14.3}{\ignorespaces Latin Squares of Order 5}}{589}{table.14.3}%
+\contentsline {table}{\numberline {14.4}{\ignorespaces Creating Large Sets with Assumed Symmetry}}{599}{table.14.4}%
+\contentsline {table}{\numberline {14.5}{\ignorespaces Large Set Activity}}{599}{table.14.5}%
+\contentsline {table}{\numberline {14.6}{\ignorespaces Creating Linear Spaces of Delandtsheer-Doyen Type}}{605}{table.14.6}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {15.1}{\ignorespaces Creating a Spread}}{614}{table.15.1}%
+\contentsline {table}{\numberline {15.2}{\ignorespaces Spread Activities}}{614}{table.15.2}%
+\contentsline {table}{\numberline {15.3}{\ignorespaces Creating a Spread Table}}{615}{table.15.3}%
+\contentsline {table}{\numberline {15.4}{\ignorespaces Activities for Spread Tables}}{615}{table.15.4}%
+\contentsline {table}{\numberline {15.5}{\ignorespaces Classification of Spreads}}{616}{table.15.5}%
+\contentsline {table}{\numberline {15.6}{\ignorespaces Activities for the Classification of Spreads}}{616}{table.15.6}%
+\contentsline {table}{\numberline {15.7}{\ignorespaces Isomorph Testing}}{621}{table.15.7}%
+\contentsline {table}{\numberline {15.8}{\ignorespaces Activities for Translation Planes}}{629}{table.15.8}%
+\contentsline {table}{\numberline {15.9}{\ignorespaces Creating Packings with Assumed Symmetry}}{634}{table.15.9}%
+\contentsline {table}{\numberline {15.10}{\ignorespaces Classification of Packings}}{635}{table.15.10}%
+\contentsline {table}{\numberline {15.11}{\ignorespaces Activities for Packings}}{635}{table.15.11}%
+\contentsline {table}{\numberline {15.12}{\ignorespaces Activities for Packings with Fixpoints}}{635}{table.15.12}%
+\contentsline {table}{\numberline {15.13}{\ignorespaces Creating Packings from Long Orbits}}{635}{table.15.13}%
+\contentsline {table}{\numberline {15.14}{\ignorespaces Creating BLT-Sets}}{642}{table.15.14}%
+\contentsline {table}{\numberline {15.15}{\ignorespaces Families of BLT-sets}}{642}{table.15.15}%
+\contentsline {table}{\numberline {15.16}{\ignorespaces BLT-Set Activity}}{643}{table.15.16}%
+\contentsline {table}{\numberline {15.17}{\ignorespaces Classifying BLT-Sets}}{643}{table.15.17}%
+\contentsline {table}{\numberline {15.18}{\ignorespaces Activities for the Classification of BLT-sets}}{643}{table.15.18}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {16.1}{\ignorespaces Finding Cliques}}{653}{table.16.1}%
+\contentsline {table}{\numberline {16.2}{\ignorespaces Creating Diophantine Systems}}{662}{table.16.2}%
+\contentsline {table}{\numberline {16.3}{\ignorespaces Diophantine System Activities}}{663}{table.16.3}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {17.1}{\ignorespaces Classification by Canonical Form}}{666}{table.17.1}%
+\contentsline {table}{\numberline {17.2}{\ignorespaces Classification of Combinatorial Objects}}{667}{table.17.2}%
+\contentsline {table}{\numberline {17.3}{\ignorespaces Nauty Control Options}}{667}{table.17.3}%
+\contentsline {table}{\numberline {17.4}{\ignorespaces Creating a Bitmap Graphics}}{686}{table.17.4}%
+\contentsline {table}{\numberline {17.5}{\ignorespaces Options for Drawing Incidence Structures}}{686}{table.17.5}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {19.1}{\ignorespaces Drawing Options for Layered Graph Files (Part 1)}}{740}{table.19.1}%
+\contentsline {table}{\numberline {19.2}{\ignorespaces Drawing Options for Layered Graph Files (Part 2)}}{741}{table.19.2}%
+\contentsline {table}{\numberline {19.3}{\ignorespaces Povray Interface}}{744}{table.19.3}%
+\contentsline {table}{\numberline {19.4}{\ignorespaces Povray Job Options}}{744}{table.19.4}%
+\contentsline {table}{\numberline {19.5}{\ignorespaces Povray Interface (Part 1)}}{745}{table.19.5}%
+\contentsline {table}{\numberline {19.6}{\ignorespaces Povray Interface (Part 2)}}{746}{table.19.6}%
+\contentsline {table}{\numberline {19.7}{\ignorespaces Scene Elements (Part 1)}}{747}{table.19.7}%
+\contentsline {table}{\numberline {19.8}{\ignorespaces Scene Elements (Part 2)}}{748}{table.19.8}%
+\contentsline {table}{\numberline {19.9}{\ignorespaces Scene Object Types}}{749}{table.19.9}%
+\contentsline {table}{\numberline {19.10}{\ignorespaces Preparing Frames for an Animation}}{757}{table.19.10}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {21.1}{\ignorespaces Miscellaneous Orbiter Commands (Part 1)}}{770}{table.21.1}%
+\contentsline {table}{\numberline {21.2}{\ignorespaces Miscellaneous Orbiter Commands (Part 2)}}{771}{table.21.2}%
+\contentsline {table}{\numberline {21.3}{\ignorespaces Miscellaneous Orbiter Commands (Part 3)}}{772}{table.21.3}%
+\contentsline {table}{\numberline {21.4}{\ignorespaces Options for Drawing Trees}}{773}{table.21.4}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }

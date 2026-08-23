@@ -1,0 +1,153 @@
+In Tables~\ref{tab:combi} and~\ref{tab:combi:2},  
+global Orbiter commands for Combinatorics are summarized.
+\orbitertableofcommands{combinatorics_1}
+\orbitertableofcommands{combinatorics_2}
+
+\bigskip
+
+
+
+The command 
+
+\sourcecode{random_permutation_12}
+
+creates a random permutation in $\Sym(12).$ 
+The permutation is written to the csv file named in the command. 
+The command seeds the pseudo-random number generator with a number (here, the first few digits of $\pi$), 
+just to put the random number generator into a state different from the zero state. 
+On some systems, this may prevent that the sequence of random numbers starts with 0. 
+
+
+\bigskip
+
+
+
+
+
+The command 
+
+\sourcecode{Sym_10_conj_classes}
+
+produces a list of the conjugacy classes of $\Sym(10).$ 
+The list is written to a csv file. 
+
+
+\bigskip
+
+
+The next command computes the character table of the symmetric group $\Sym(4)$:
+
+\sourcecode{Char_Sym_4}
+
+The command produces the following output:
+\orbiteroutput{GRAPHICS/LATEX/character_table_sym_4}
+
+\bigskip
+
+
+Orbiter often uses the lexicographic order to arrange things. 
+Consider the $k$-subsets of an $n$-set. 
+The following example creates the $3$-subsets of a $6$-set 
+in lexicographic order. 
+A tree representation is produced. 
+The leaves of the tree represent the subsets:
+\sourcecode{all_subsets_6_3}
+Here is the tree:
+\orbiteroutput{GRAPHICS/LATEX/all_k_subsets_n6_k3_draw}
+
+
+\bigskip
+
+
+The following command illustrates how to create random $k$-subsets of a set of size $n$.
+In the example, we create $20$ $5$-subsets of a $10$-element set:
+
+\sourcecode{random_k_subsets}
+
+
+
+\bigskip
+
+Using the lexicographic order, 
+the $k$-subsets of an $n$-element set are ranked.
+The following command computes the ranks 
+of a number of $3$-subsets of a $10$-element set:
+
+\sourcecode{rank_k_subsets_test}
+
+
+
+\bigskip
+
+Orbiter can create the Sylvester type Hadamard matrix 
+of size $2^n$ (also called the Walsh matrix). 
+The following command creates the matrix of size 
+$2^4 \times 2^4$ and produces a graphical representation:
+
+\sourcecode{Walsh_matrix_4}
+
+
+
+\bigskip
+
+The following command creates the matrix of Dedekind numbers of order at most 10:
+
+\sourcecode{Dedekind_10_10}
+
+The following table is produced:
+\orbiteroutput{GRAPHICS/LATEX/Dedekind_2_10_2_10}
+
+
+
+\bigskip
+
+The following command computes the $q$-binomial
+$$
+\left[
+{8 \atop 3}
+\right]_2
+$$
+
+\sourcecode{q_binomial_8_3_2}
+
+
+\bigskip
+
+
+
+The following command creates the elementary symmetric functions in $4$ variables.
+
+\sourcecode{elementary_symmetric_functions_4}
+
+The output is:
+\orbiteroutput{GRAPHICS/WRAPPERS/elementary_symmetric_functions_4}
+
+\bigskip
+
+Orbiter can compute Domino portraits. 
+To do so, we need an input file in r/g/b format 
+of size $(D+1)s \times Ds,$ where $D=7$ for double-six dominos.
+
+\sourcecode{domino_portrait}
+
+The portrait is shown 
+below
+\orbiteroutput{GRAPHICS/WRAPPERS/domino_Munch}
+It is possible to compare the domino portrait 
+with a grayscale version of the input image.
+The following command creates a grayscale image of the input file 
+that was written during the previous command.
+
+\sourcecode{domino_portrait_input}
+
+The grayscale version of the input file is 
+
+\orbiteroutput{GRAPHICS/WRAPPERS/domino_Munch_3_draw}
+
+
+
+
+
+\bigskip
+
+

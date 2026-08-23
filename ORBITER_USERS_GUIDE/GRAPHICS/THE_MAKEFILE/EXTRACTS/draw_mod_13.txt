@@ -1,0 +1,13 @@
+draw_mod_13:
+	$(ORBITER) -v 2 \
+		-define Do -draw_options -embedded -end \
+		-draw_mod_n \
+			"mod_n=on" \
+			-n 13 \
+			-file mod_13 \
+			-power_cycle 2 \
+			-label_nodes \
+			-draw_options Do \
+		-end
+	$(PDFLATEX) mod_13_draw.tex
+	$(OPEN) mod_13_draw.pdf

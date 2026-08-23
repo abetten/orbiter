@@ -69,6 +69,66 @@ void orbit_transversal::init_from_schreier(
 
 }
 
+
+void orbit_transversal::init_from_orbit_reps(
+		actions::action *default_action,
+		actions::action *induced_action,
+		std::vector<long int> &orbit_reps,
+		std::vector<long int> &orbit_lengths,
+		algebra::ring_theory::longinteger_object &full_group_order,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbit_transversal::init_from_orbit_reps" << endl;
+	}
+
+	A = default_action;
+	A2 = induced_action;
+	nb_orbits = (int)orbit_reps.size();
+
+	if (f_v) {
+		cout << "orbit_transversal::init_from_orbit_reps "
+				"nb_orbits = " << nb_orbits << endl;
+	}
+
+	Reps = NEW_OBJECTS(set_and_stabilizer, nb_orbits);
+
+	algebra::ring_theory::longinteger_domain D;
+
+	for (int i = 0; i < nb_orbits; i++) {
+		long int *Set = NEW_lint(1);
+		Set[0] = orbit_reps[i];
+
+		// Orbit-stabilizer theorem: |Stab| = |G| / |Orbit|
+		algebra::ring_theory::longinteger_object stab_order;
+		int remainder;
+		D.integral_division_by_int(
+			full_group_order, (int)orbit_lengths[i],
+			stab_order, remainder);
+
+		// Create trivial strong generators with the correct group order
+		groups::strong_generators *SG;
+		SG = NEW_OBJECT(groups::strong_generators);
+		SG->init(default_action);
+		SG->init_trivial_group(default_action, verbose_level - 2);
+
+		Reps[i].init_everything(
+			default_action, induced_action,
+			Set, 1 /* set_sz */,
+			SG, verbose_level - 2);
+
+		// Set the target group order for this orbit rep
+		stab_order.assign_to(Reps[i].target_go);
+	}
+
+	if (f_v) {
+		cout << "orbit_transversal::init_from_orbit_reps done" << endl;
+	}
+}
+
+
 void orbit_transversal::read_from_file(
 		actions::action *A,
 		actions::action *A2,

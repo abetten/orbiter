@@ -1,0 +1,7 @@
+ROW,C1,C2,C3
+0,"tab:translationplane:activity",,
+1,"Activities for Translation Planes",,
+1,"\verb'-export_incma' ","  "," Export the incidence matrix to file. "
+1,"\verb'-p_rank' "," p "," Compute the p-rank of the incidence matrix for the given prime $p$. "
+1,"\verb'-report' "," "," Produce a latex report. "
+END

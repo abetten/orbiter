@@ -1,0 +1,68 @@
+\begin{table}
+\begin{tcolorbox}[tabularx={X|p{2cm}|X|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black,title=Group theoretic activities (Part 3)]
+\hline
+Command & Arguments & Purpose \\
+\hline
+\hline
+\verb'-order_of_products' &  $g_1 \ldots g_n$ & 
+Computes the orders of all products $g_ig_j$, $1 \le i,j \le n.$ 
+Writes a table with these orders to file.
+ \\
+\hline
+\verb'-reverse_isomorphism_exterior_square' &  & 
+Given a set of generators of a subgroup of $\PGO^+(6,q)$ as $6\times 6$ matrixes, 
+the command computes the inverse image of the generators in $\PGL(4,q)$ (if possible).
+ \\
+\hline
+\verb'-is_subgroup_of' &  & 
+This function is applied to two groups, say $G_1$ and $G_2$, 
+using the syntax \verb'-with G1 -and G2'. 
+It tests if $G_1$ is a subgroup of $G_2$. \\
+\hline
+\verb'-coset_reps' &  & 
+This function is applied to two groups, say $G_1$ and $G_2$, 
+using the syntax \verb'-with G1 -and G2'. 
+It assumes that $G_1$ is a subgroup of $G_2$. 
+The command produces a set of coset representatives for $G_1$ in $G_2$. \\
+\hline
+\verb'-subgroup_lattice' &  & 
+Computes the subgroup lattice of the given group. 
+A csv file containing the subgroup lattice is written . \\
+\hline
+\verb'-subgroup_lattice_load' & fname & 
+Reads a previously computed subgroup lattice from the csv file.  \\
+\hline
+\verb'-subgroup_lattice_draw_by_orbits' & & 
+Produces a drawing of the subgroup lattice in terms of the conjugacy classes of subgroups. 
+Each node represents one conjugacy class of subgroups. \\
+\hline
+\verb'-subgroup_lattice_draw_by_groups' & & 
+Produces a drawing of the subgroup lattice in terms of subgroups. 
+Each node represents one single subgroup.  \\
+\hline
+\verb'-linear_codes' & control $d$ $n_{\max}$ & 
+Classify linear codes with prescribed minimum distance $d$. 
+Assumes that the group is $\PGL(r,q)$ or $\PGGL(r,q).$ 
+For each $n \le n_{\max}$, the $[n,k, \ge d]$ 
+codes are classified with $n-k=r$. 
+See Section~\ref{sec:coding}. 
+ \\
+\hline
+\verb'-tensor_permutations' &  & 
+Computes the permutation representation of the generators of the wreath product. 
+ \\
+\hline
+\verb'-classify_ovoids' & descr & 
+ \\
+\hline
+\verb'-representation_on_polynomials' & R & 
+Computes the representation of the built-in generating set of the present group 
+in the action on homogeneous polynomials as defined in the ring R. 
+This function assumes a linear group.
+ \\
+\hline
+\end{tcolorbox}
+\caption{\label{tab:grouptasks3}Group theoretic activities (Part 3)}
+\end{table}

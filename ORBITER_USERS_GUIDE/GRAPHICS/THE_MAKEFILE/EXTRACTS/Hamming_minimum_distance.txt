@@ -1,0 +1,10 @@
+Hamming_minimum_distance:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define v -vector -field F -format 4 \
+			-dense $(HAMMING_CODE_GENERATOR) \
+		-end \
+		-with F -do \
+		-coding_theoretic_activity \
+			-minimum_distance v \
+		-end

@@ -1,0 +1,11 @@
+linsp30_pt_types:
+	$(ORBITER) -v 4 \
+		-define A -vector -format 1 -dense "6,4,3" -end \
+		-define D -diophant \
+			-label linsp30_pt_types \
+			-coefficient_matrix A \
+			-RHS "mult=1,EQ=29" -x_bounds "0,1,0,27,0,24" \
+		-end \
+		-with D -do \
+			-diophant_activity -solve_mckay \
+		-end

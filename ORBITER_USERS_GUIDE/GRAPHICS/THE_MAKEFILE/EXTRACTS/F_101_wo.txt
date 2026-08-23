@@ -1,0 +1,8 @@
+F_101_wo:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 101 -without_tables -end \
+		-with F -do -finite_field_activity \
+			-cheat_sheet_GF \
+		-end
+	$(PDFLATEX) GF_101.tex
+	$(OPEN) GF_101.pdf

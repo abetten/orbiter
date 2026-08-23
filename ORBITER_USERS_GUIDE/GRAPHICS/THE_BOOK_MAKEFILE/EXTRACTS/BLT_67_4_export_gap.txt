@@ -1,0 +1,10 @@
+BLT_67_4_export_gap:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 67 -end \
+		-define O -orthogonal_space 0 5 F -end \
+		-define BLT -BLT_set \
+			-space O -catalogue 4 \
+		-end \
+		-with BLT -do -blt_set_activity \
+			-export_gap \
+		-end

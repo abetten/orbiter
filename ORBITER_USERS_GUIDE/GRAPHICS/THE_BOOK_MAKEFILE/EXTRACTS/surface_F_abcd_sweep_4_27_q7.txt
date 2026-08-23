@@ -1,0 +1,22 @@
+surface_F_abcd_sweep_4_27_q7:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 7 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 4 \
+			-homogeneous_of_degree 3 \
+			-monomial_ordering_partition \
+			-variables "X0,X1,X2,X3" "X_0,X_1,X_2,X_3" \
+			-end \
+		-with P -do \
+		-projective_space_activity \
+		-sweep_4_27 sweep_4_27_q7 \
+			-space P \
+			-by_equation R "F_abcd" \
+			"\DF_{a,b,c,d}\D" "X0,X1,X2,X3" \
+			$(F_abcd_eqn_no_exponents) \
+			"a=2,b=3,c=4,d=5" \
+			"\Da=2,b=3,c=4,d=5\D" \
+		-end \
+		-end \

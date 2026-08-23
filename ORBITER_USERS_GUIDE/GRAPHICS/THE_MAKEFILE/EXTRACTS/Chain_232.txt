@@ -1,0 +1,7 @@
+Chain_232:
+	$(ORBITER) -v 2 \
+		-define P1 -vector -dense 2,3,2 -end \
+		-define P2 -vector -dense 2,3,2 -end \
+		-define Gamma -graph \
+			-chain_graph P1 P2 \
+		-end

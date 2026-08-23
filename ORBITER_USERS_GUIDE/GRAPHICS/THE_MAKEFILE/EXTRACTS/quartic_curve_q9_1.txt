@@ -1,0 +1,13 @@
+quartic_curve_q9_1:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 9 -end \
+		-define P2 -projective_space -n 2 -field F -end \
+		-define P3 -projective_space -n 3 -field F -end \
+		-define S9_1 -cubic_surface -space P3 -catalogue 1 -end \
+		-define C -quartic_curve -space P2 -from_cubic_surface S9_1 0 -end \
+		-with C -do \
+			-quartic_curve_activity \
+				-report \
+			-end
+	$(PDFLATEX) quartic_curve_surface_catalogue_q9_iso1_pt_orb_0_report.tex
+	$(OPEN) quartic_curve_surface_catalogue_q9_iso1_pt_orb_0_report.pdf

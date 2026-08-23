@@ -1,0 +1,9 @@
+poly_division2:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define A -vector -field F -sparse 11 "1,0,1,10" -end \
+		-define B -vector -field F -dense "1,0,1,1" -end \
+		-with F -do \
+		-finite_field_activity \
+			-polynomial_division A B \
+		-end

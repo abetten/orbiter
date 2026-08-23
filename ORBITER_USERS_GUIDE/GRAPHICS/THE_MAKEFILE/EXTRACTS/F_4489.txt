@@ -1,0 +1,3 @@
+F_4489:
+	$(ORBITER) -v 4 \
+		-define F -finite_field -q 4489 -without_tables -end \

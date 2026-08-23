@@ -1,0 +1,4 @@
+Winnie_Li_graph_q16_index2:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 16 -end \
+		-define Gamma -graph -Winnie_Li F 2 -end \

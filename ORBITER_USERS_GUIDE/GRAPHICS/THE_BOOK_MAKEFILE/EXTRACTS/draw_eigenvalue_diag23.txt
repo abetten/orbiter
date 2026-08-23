@@ -1,0 +1,13 @@
+draw_eigenvalue_diag23:
+	$(ORBITER) -v 2 \
+		-draw_options \
+			-radius 10 \
+			-line_width 1.5 -embedded \
+		-end \
+		-draw_mod_n -n 20 \
+			-file ev_diag23 \
+			-eigenvalues 2 0 0 3 \
+			-label_nodes \
+		-end
+	$(PDFLATEX) ev_diag23_draw.tex
+	$(OPEN) ev_diag23_draw.pdf

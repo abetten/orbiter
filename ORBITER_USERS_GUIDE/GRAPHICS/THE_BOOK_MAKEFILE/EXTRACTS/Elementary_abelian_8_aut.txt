@@ -1,0 +1,19 @@
+Elementary_abelian_8_aut:
+	$(ORBITER) -v 3 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define G -permutation_group -elementary_abelian_group 8 -end \
+		-with G -do \
+			-group_theoretic_activity \
+				-report Do \
+		-end \
+		-define A -modified_group -from G \
+			-automorphism_group \
+		-end \
+		-with A -do \
+			-group_theoretic_activity \
+				-report Do \
+		-end
+	$(PDFLATEX) E_8_aut_report.tex
+	$(OPEN) E_8_aut_report.pdf

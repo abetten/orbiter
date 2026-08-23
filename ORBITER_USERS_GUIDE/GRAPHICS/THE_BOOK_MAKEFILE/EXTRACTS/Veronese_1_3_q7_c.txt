@@ -1,0 +1,35 @@
+Veronese_1_3_q7_c: 
+	$(ORBITER) -v 6 \
+		-define C -combinatorial_object \
+			-label veronese_1_3_q7 veronese\_1\_3\_q7 \
+			-set_of_points "3, 0, 4, 268, 336, 184, 224, 364" \
+		-end \
+		-define F -finite_field -q 7 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form_PG P \
+				-save_ago \
+				-max_TDO_depth 4 \
+				-nauty_control -nauty_log "Veronese_1_3_q7_nauty_log.txt" -end \
+			-end \
+		-end \
+		-define Doinc -draw_incidence_structure_options \
+			-width 40 -width_10 6 \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-post_processing \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-report \
+				-show_TDO \
+				-show_TDA \
+				-dont_show_incidence_matrices \
+				-export_group_GAP \
+				-incidence_draw_options Doinc \
+			-end \
+		-end
+	$(PDFLATEX) veronese_1_3_q7_classification.tex
+	$(OPEN) veronese_1_3_q7_classification.pdf

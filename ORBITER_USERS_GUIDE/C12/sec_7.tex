@@ -1,0 +1,62 @@
+Table~\ref{tab:tdo:refine} lists the Orbiter commands for decomposition refinement.
+\orbitertableofcommands{tdo_refinement}
+
+\bigskip
+
+Suppose we want to study projective planes of order $16.$ 
+It is a linear space with $16^2+16+1=273$ points and equally many lines. 
+Each point lies on $17$ lines and each line contains $17$ points. 
+Any two points lie on exactly one line 
+and any two lines intersect in exactly one point.
+
+\bigskip
+
+We decide to 
+study maximal arcs of degree $4$ in this plane 
+(the degree has to divide the order of the plane).
+A maximal arc of degree $d$ is a set of points 
+so that each line intersects in either $d$ or zero points.
+A line which intersects in $d$ points is called a secant.  
+A line which intersects in no point is called an external line.
+The command 
+
+\sourcecode{max_arc_16_4_start}
+
+creates a decomposition stack for the parameters of the arc and writes the file \verb'max_arc_q16_r4.stack' 
+\orbiteroutput{GRAPHICS/LATEX/max_arc_1}
+This is a point-tactical decomposition with 2 point-classes and 2 block-classes. 
+The point classes are associated with the rows. 
+The block-classes are associated with the columns. 
+The first row and column indicates the size of the classes.
+The entries $a_{ij}$ count the number of blocks in the column class $j$ 
+that are incident with a given point in the $i$th row  class.
+The fuse information at the bottom (\verb'1 1') 
+is a partition of the row classes which indicates the ancestor decomposition which was column tactical.
+The next step is to convert the stack file to a tdo file.
+The command
+
+\sourcecode{max_arc_16_4_convert_stack_tdo}
+
+does that. 
+It creates the file \verb'max_arc_q16_r4.tdo'. It also 
+prints the decomposition stack:
+\orbiteroutput{GRAPHICS/LATEX/max_arc_2}
+Next, we can compute all coarsest column-tactical refinements of the decomposition. 
+To this end, the command 
+
+\sourcecode{max_arc_16_4_refine}
+
+is used. 
+Because the incidence structure is a projective plane, 
+the dual is a linear space also. 
+Hence the option \verb'-dual_is_linear_space' can be used, which is helpful to reduce possibilities. 
+As it turns out, there is exactly one refinement, and it is tactical. 
+The file \verb'max_arc_q16_r4r.tdo' is produced. 
+Note the added letter \verb'r' at the end of the file name (r for refinement).
+We can use the following command to display the decomposition stack in the file:
+
+\sourcecode{max_arc_16_4r_print}
+
+This produces the following output:
+\orbiteroutput{GRAPHICS/LATEX/max_arc_3}
+

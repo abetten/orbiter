@@ -1,0 +1,8 @@
+2C_orbit_under_PGGL_4_4_elements_coded.csv: 
+	$(ORBITER) -v 6 \
+		-define G -linear_group -PGGL 4 4 -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-conjugacy_class_of \
+			"2C" "1,0,0,0, 1,1,0,0, 0,0,1,0, 0,0,1,1, 0" \
+		-end

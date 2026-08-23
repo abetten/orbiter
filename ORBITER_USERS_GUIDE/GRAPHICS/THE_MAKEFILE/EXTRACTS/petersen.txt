@@ -1,0 +1,3 @@
+petersen:
+	$(ORBITER) -v 2 \
+		-define G -graph -Johnson 5 2 0 -end

@@ -1,0 +1,9 @@
+F2_BCH_code_n21:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 2 -end \
+		-define C -code -field F \
+			-BCH 21 3 \
+		-end \
+		-with C -do -coding_theoretic_activity -report -end
+	$(PDFLATEX) BCH_n21_d3_code_n21_k15_q2.tex
+	$(OPEN) BCH_n21_d3_code_n21_k15_q2.pdf

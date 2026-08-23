@@ -1,0 +1,15 @@
+Sym_6_generators:
+	$(ORBITER) -v 3 \
+		-define G -permutation_group -symmetric_group 6 -end \
+		-assign gens -from \
+		-with G -do \
+		-group_theoretic_activity \
+			-generators \
+		-end \
+		-with gens -do \
+		-vector_ge_activity \
+			-report \
+		-end \
+		-print_symbols
+	$(PDFLATEX) Sym_6_gens_elements.tex
+	$(OPEN) Sym_6_gens_elements.pdf

@@ -1,0 +1,20 @@
+create_translation_plane_25_14_rank:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 5 -end \
+		-define G -linear_group -PGL 4 F -end \
+		-define G1 -linear_group -PGL 5 F -end \
+		-define S -spread -kernel_field F \
+			-group G -k 2 -catalogue 14 \
+			-end \
+		-define T -translation_plane S G G1 -end \
+		-with T -do -translation_plane_activity \
+			-export_incma \
+		-end
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define v -vector -field F  \
+			-file plane_catalogue_q5_k2_14_incma.csv \
+		-end \
+		-with F -do -finite_field_activity \
+			-RREF v \
+		-end

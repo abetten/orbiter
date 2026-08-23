@@ -1,0 +1,5 @@
+trihedral_pair_graph:
+	$(ORBITER) -v 2 \
+		-define Gamma \
+			-graph -trihedral_pair_disjointness_graph \
+		-end

@@ -1,0 +1,6 @@
+PR_2_1000:
+	$(ORBITER) -v 1 -smallest_primitive_root_interval 2 1000
+	$(ORBITER) -v 1 -csv_file_latex 1 \
+		primitive_element_table_2_1000.csv
+	$(PDFLATEX) primitive_element_table_2_1000.tex
+	$(OPEN) primitive_element_table_2_1000.pdf

@@ -1,0 +1,3 @@
+random_k_subsets_PG_2_11:
+	$(ORBITER) -v 4 \
+		-create_random_k_subsets 133 5 20

@@ -1,0 +1,9 @@
+tritangent_planes_graph_eigenvalues:
+	$(ORBITER) -v 2 \
+		-define Gamma \
+			-graph -tritangent_planes_disjointness_graph \
+		-end \
+		-with Gamma -do \
+		-graph_theoretic_activity -eigenvalues -end \
+		-with Gamma -do \
+		-graph_theoretic_activity -eigenvalue_report -end

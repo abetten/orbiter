@@ -1,0 +1,11 @@
+Sym_6_class_2ABC_order_of_pairs:
+	$(ORBITER) -v 3 \
+		-orbiter_path $(ORBITER_PATH) \
+		-define G -permutation_group -symmetric_group 6 -end \
+		-define Sym_6_class_2ABC -vector_ge \
+			-action G \
+			-read_csv Sym_6_class_2ABC.csv elements \
+		-end \
+		-with Sym_6_class_2ABC -do -vector_ge_activity \
+			-order_of_products_of_pairs \
+		-end \

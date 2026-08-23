@@ -1,0 +1,19 @@
+tetra_group:
+	$(ORBITER) -v 3 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define G -linear_group -GL 3 3 \
+		-subgroup_by_generators "tetra" "12" 2 \
+			"0,1,0,0,0,1,1,0,0, 0,0,1,2,0,0,0,2,0" \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-print_elements_tex \
+		-end
+	$(PDFLATEX) GL_3_3_Subgroup_tetra_12_report.tex
+	$(OPEN) GL_3_3_Subgroup_tetra_12_report.pdf

@@ -1,0 +1,16 @@
+BLT_database_67_4:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 67 -end \
+		-define P -projective_space -n 4 -field F -v 0 -end \
+		-define Obj -geometric_object P \
+			-BLT_database 4 \
+		-end \
+		-with Obj -do -combinatorial_object_activity -save \
+		-end \
+		-define O -orthogonal_space 0 5 F -without_group -end \
+		-define BLT_67_4 -set -file_orbiter_format BLT_67_4.txt -end \
+		-with O -do -orthogonal_space_activity \
+			-print_points BLT_67_4 \
+		-end
+	$(PDFLATEX) BLT_67_4_set_report.tex
+	$(OPEN) BLT_67_4_set_report.pdf

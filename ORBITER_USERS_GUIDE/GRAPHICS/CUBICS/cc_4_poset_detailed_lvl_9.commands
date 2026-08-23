@@ -1,0 +1,574 @@
+% file: cc_4_poset_detailed_lvl_9.commands
+% created by Orbiter graphics interface
+% creation date: Fri Dec 29 00:06:36 +03 2023
+
+DeviceCoordinates 0 0 1000000 1000000
+UserCoordinates 0 0 10000 10000
+Polygon 2 5000 9821 5000 9464
+Polygon 2 5000 9464 5000 9107
+Polygon 2 5000 9107 5000 8750
+Polygon 2 5000 8750 5000 8392
+Polygon 2 5000 8392 5000 8035
+Polygon 2 5000 8035 5000 7678
+Polygon 2 5000 7678 2500 7321
+Polygon 2 5000 7678 7500 7321
+Polygon 2 2500 7321 2500 6964
+Polygon 2 7500 7321 7500 6964
+Polygon 2 2500 6964 2500 6607
+Polygon 2 7500 6964 7500 6607
+Polygon 2 2500 6607 1666 6250
+Polygon 2 2500 6607 5000 6250
+Polygon 2 7500 6607 8333 6250
+Polygon 2 1666 6250 1666 5892
+Polygon 2 5000 6250 5000 5892
+Polygon 2 8333 6250 8333 5892
+Polygon 2 1666 5892 2500 5535
+Polygon 2 5000 5892 7500 5535
+Polygon 2 8333 5892 7500 5535
+Polygon 2 2500 5535 1000 5178
+Polygon 2 2500 5535 3000 5178
+Polygon 2 2500 5535 5000 5178
+Polygon 2 7500 5535 7000 5178
+Polygon 2 7500 5535 9000 5178
+Polygon 2 1000 5178 1000 4821
+Polygon 2 3000 5178 3000 4821
+Polygon 2 5000 5178 5000 4821
+Polygon 2 7000 5178 7000 4821
+Polygon 2 9000 5178 9000 4821
+Polygon 2 1000 4821 1666 4464
+Polygon 2 3000 4821 5000 4464
+Polygon 2 5000 4821 8333 4464
+Polygon 2 7000 4821 1666 4464
+Polygon 2 9000 4821 5000 4464
+Polygon 2 1666 4464 625 4107
+Polygon 2 1666 4464 1875 4107
+Polygon 2 1666 4464 3125 4107
+Polygon 2 5000 4464 4375 4107
+Polygon 2 5000 4464 5625 4107
+Polygon 2 5000 4464 6875 4107
+Polygon 2 8333 4464 8125 4107
+Polygon 2 8333 4464 9375 4107
+Polygon 2 625 4107 625 3750
+Polygon 2 1875 4107 1875 3750
+Polygon 2 3125 4107 3125 3750
+Polygon 2 4375 4107 4375 3750
+Polygon 2 5625 4107 5625 3750
+Polygon 2 6875 4107 6875 3750
+Polygon 2 8125 4107 8125 3750
+Polygon 2 9375 4107 9375 3750
+Polygon 2 625 3750 1000 3392
+Polygon 2 1875 3750 3000 3392
+Polygon 2 3125 3750 5000 3392
+Polygon 2 4375 3750 3000 3392
+Polygon 2 5625 3750 5000 3392
+Polygon 2 6875 3750 7000 3392
+Polygon 2 8125 3750 5000 3392
+Polygon 2 9375 3750 9000 3392
+Polygon 2 1000 3392 454 3035
+Polygon 2 1000 3392 1363 3035
+Polygon 2 3000 3392 2272 3035
+Polygon 2 3000 3392 3181 3035
+Polygon 2 3000 3392 4090 3035
+Polygon 2 5000 3392 5000 3035
+Polygon 2 5000 3392 5909 3035
+Polygon 2 5000 3392 6818 3035
+Polygon 2 7000 3392 7727 3035
+Polygon 2 7000 3392 8636 3035
+Polygon 2 9000 3392 9545 3035
+Polygon 2 454 3035 454 2678
+Polygon 2 1363 3035 1363 2678
+Polygon 2 2272 3035 2272 2678
+Polygon 2 3181 3035 3181 2678
+Polygon 2 4090 3035 4090 2678
+Polygon 2 5000 3035 5000 2678
+Polygon 2 5909 3035 5909 2678
+Polygon 2 6818 3035 6818 2678
+Polygon 2 7727 3035 7727 2678
+Polygon 2 8636 3035 8636 2678
+Polygon 2 9545 3035 9545 2678
+Polygon 2 454 2678 1000 2321
+Polygon 2 1363 2678 3000 2321
+Polygon 2 2272 2678 3000 2321
+Polygon 2 3181 2678 5000 2321
+Polygon 2 4090 2678 7000 2321
+Polygon 2 5000 2678 3000 2321
+Polygon 2 5909 2678 7000 2321
+Polygon 2 6818 2678 9000 2321
+Polygon 2 7727 2678 5000 2321
+Polygon 2 8636 2678 7000 2321
+Polygon 2 9545 2678 9000 2321
+Polygon 2 3000 2321 714 1964
+Polygon 2 5000 2321 2142 1964
+Polygon 2 5000 2321 3571 1964
+Polygon 2 7000 2321 5000 1964
+Polygon 2 7000 2321 6428 1964
+Polygon 2 7000 2321 7857 1964
+Polygon 2 9000 2321 9285 1964
+Polygon 2 714 1964 714 1607
+Polygon 2 2142 1964 2142 1607
+Polygon 2 3571 1964 3571 1607
+Polygon 2 5000 1964 5000 1607
+Polygon 2 6428 1964 6428 1607
+Polygon 2 7857 1964 7857 1607
+Polygon 2 9285 1964 9285 1607
+Polygon 2 714 1607 1666 1250
+Polygon 2 2142 1607 1666 1250
+Polygon 2 3571 1607 5000 1250
+Polygon 2 5000 1607 1666 1250
+Polygon 2 6428 1607 1666 1250
+Polygon 2 7857 1607 8333 1250
+Polygon 2 9285 1607 8333 1250
+Polygon 2 1666 1250 1250 892
+Polygon 2 5000 1250 3750 892
+Polygon 2 8333 1250 6250 892
+Polygon 2 8333 1250 8750 892
+Polygon 2 1250 892 1250 535
+Polygon 2 3750 892 3750 535
+Polygon 2 6250 892 6250 535
+Polygon 2 8750 892 8750 535
+Polygon 2 1250 535 1666 178
+Polygon 2 3750 535 5000 178
+Polygon 2 6250 535 1666 178
+Polygon 2 8750 535 8333 178
+sf_interior 100
+Circle 500000, 982100, 18000
+sf_interior 0
+Circle 500000, 982100, 18000
+sf_interior 100
+Circle 500000, 946400, 18000
+sf_interior 0
+Circle 500000, 946400, 18000
+sf_interior 100
+Circle 500000, 910700, 18000
+sf_interior 0
+Circle 500000, 910700, 18000
+sf_interior 100
+Circle 500000, 875000, 18000
+sf_interior 0
+Circle 500000, 875000, 18000
+sf_interior 100
+Circle 500000, 839200, 18000
+sf_interior 0
+Circle 500000, 839200, 18000
+sf_interior 100
+Circle 500000, 803500, 18000
+sf_interior 0
+Circle 500000, 803500, 18000
+sf_interior 100
+Circle 500000, 767800, 18000
+sf_interior 0
+Circle 500000, 767800, 18000
+sf_interior 100
+Circle 250000, 732100, 18000
+sf_interior 0
+Circle 250000, 732100, 18000
+sf_interior 100
+Circle 750000, 732100, 18000
+sf_interior 0
+Circle 750000, 732100, 18000
+sf_interior 100
+Circle 250000, 696400, 18000
+sf_interior 0
+Circle 250000, 696400, 18000
+sf_interior 100
+Circle 750000, 696400, 18000
+sf_interior 0
+Circle 750000, 696400, 18000
+sf_interior 100
+Circle 250000, 660700, 18000
+sf_interior 0
+Circle 250000, 660700, 18000
+sf_interior 100
+Circle 750000, 660700, 18000
+sf_interior 0
+Circle 750000, 660700, 18000
+sf_interior 100
+Circle 166600, 625000, 18000
+sf_interior 0
+Circle 166600, 625000, 18000
+sf_interior 100
+Circle 500000, 625000, 18000
+sf_interior 0
+Circle 500000, 625000, 18000
+sf_interior 100
+Circle 833300, 625000, 18000
+sf_interior 0
+Circle 833300, 625000, 18000
+sf_interior 100
+Circle 166600, 589200, 18000
+sf_interior 0
+Circle 166600, 589200, 18000
+sf_interior 100
+Circle 500000, 589200, 18000
+sf_interior 0
+Circle 500000, 589200, 18000
+sf_interior 100
+Circle 833300, 589200, 18000
+sf_interior 0
+Circle 833300, 589200, 18000
+sf_interior 100
+Circle 250000, 553500, 18000
+sf_interior 0
+Circle 250000, 553500, 18000
+sf_interior 100
+Circle 750000, 553500, 18000
+sf_interior 0
+Circle 750000, 553500, 18000
+sf_interior 100
+Circle 100000, 517800, 18000
+sf_interior 0
+Circle 100000, 517800, 18000
+sf_interior 100
+Circle 300000, 517800, 18000
+sf_interior 0
+Circle 300000, 517800, 18000
+sf_interior 100
+Circle 500000, 517800, 18000
+sf_interior 0
+Circle 500000, 517800, 18000
+sf_interior 100
+Circle 700000, 517800, 18000
+sf_interior 0
+Circle 700000, 517800, 18000
+sf_interior 100
+Circle 900000, 517800, 18000
+sf_interior 0
+Circle 900000, 517800, 18000
+sf_interior 100
+Circle 100000, 482100, 18000
+sf_interior 0
+Circle 100000, 482100, 18000
+sf_interior 100
+Circle 300000, 482100, 18000
+sf_interior 0
+Circle 300000, 482100, 18000
+sf_interior 100
+Circle 500000, 482100, 18000
+sf_interior 0
+Circle 500000, 482100, 18000
+sf_interior 100
+Circle 700000, 482100, 18000
+sf_interior 0
+Circle 700000, 482100, 18000
+sf_interior 100
+Circle 900000, 482100, 18000
+sf_interior 0
+Circle 900000, 482100, 18000
+sf_interior 100
+Circle 166600, 446400, 18000
+sf_interior 0
+Circle 166600, 446400, 18000
+sf_interior 100
+Circle 500000, 446400, 18000
+sf_interior 0
+Circle 500000, 446400, 18000
+sf_interior 100
+Circle 833300, 446400, 18000
+sf_interior 0
+Circle 833300, 446400, 18000
+sf_interior 100
+Circle 62500, 410700, 18000
+sf_interior 0
+Circle 62500, 410700, 18000
+sf_interior 100
+Circle 187500, 410700, 18000
+sf_interior 0
+Circle 187500, 410700, 18000
+sf_interior 100
+Circle 312500, 410700, 18000
+sf_interior 0
+Circle 312500, 410700, 18000
+sf_interior 100
+Circle 437500, 410700, 18000
+sf_interior 0
+Circle 437500, 410700, 18000
+sf_interior 100
+Circle 562500, 410700, 18000
+sf_interior 0
+Circle 562500, 410700, 18000
+sf_interior 100
+Circle 687500, 410700, 18000
+sf_interior 0
+Circle 687500, 410700, 18000
+sf_interior 100
+Circle 812500, 410700, 18000
+sf_interior 0
+Circle 812500, 410700, 18000
+sf_interior 100
+Circle 937500, 410700, 18000
+sf_interior 0
+Circle 937500, 410700, 18000
+sf_interior 100
+Circle 62500, 375000, 18000
+sf_interior 0
+Circle 62500, 375000, 18000
+sf_interior 100
+Circle 187500, 375000, 18000
+sf_interior 0
+Circle 187500, 375000, 18000
+sf_interior 100
+Circle 312500, 375000, 18000
+sf_interior 0
+Circle 312500, 375000, 18000
+sf_interior 100
+Circle 437500, 375000, 18000
+sf_interior 0
+Circle 437500, 375000, 18000
+sf_interior 100
+Circle 562500, 375000, 18000
+sf_interior 0
+Circle 562500, 375000, 18000
+sf_interior 100
+Circle 687500, 375000, 18000
+sf_interior 0
+Circle 687500, 375000, 18000
+sf_interior 100
+Circle 812500, 375000, 18000
+sf_interior 0
+Circle 812500, 375000, 18000
+sf_interior 100
+Circle 937500, 375000, 18000
+sf_interior 0
+Circle 937500, 375000, 18000
+sf_interior 100
+Circle 100000, 339200, 18000
+sf_interior 0
+Circle 100000, 339200, 18000
+sf_interior 100
+Circle 300000, 339200, 18000
+sf_interior 0
+Circle 300000, 339200, 18000
+sf_interior 100
+Circle 500000, 339200, 18000
+sf_interior 0
+Circle 500000, 339200, 18000
+sf_interior 100
+Circle 700000, 339200, 18000
+sf_interior 0
+Circle 700000, 339200, 18000
+sf_interior 100
+Circle 900000, 339200, 18000
+sf_interior 0
+Circle 900000, 339200, 18000
+sf_interior 100
+Circle 45400, 303500, 18000
+sf_interior 0
+Circle 45400, 303500, 18000
+sf_interior 100
+Circle 136300, 303500, 18000
+sf_interior 0
+Circle 136300, 303500, 18000
+sf_interior 100
+Circle 227200, 303500, 18000
+sf_interior 0
+Circle 227200, 303500, 18000
+sf_interior 100
+Circle 318100, 303500, 18000
+sf_interior 0
+Circle 318100, 303500, 18000
+sf_interior 100
+Circle 409000, 303500, 18000
+sf_interior 0
+Circle 409000, 303500, 18000
+sf_interior 100
+Circle 500000, 303500, 18000
+sf_interior 0
+Circle 500000, 303500, 18000
+sf_interior 100
+Circle 590900, 303500, 18000
+sf_interior 0
+Circle 590900, 303500, 18000
+sf_interior 100
+Circle 681800, 303500, 18000
+sf_interior 0
+Circle 681800, 303500, 18000
+sf_interior 100
+Circle 772700, 303500, 18000
+sf_interior 0
+Circle 772700, 303500, 18000
+sf_interior 100
+Circle 863600, 303500, 18000
+sf_interior 0
+Circle 863600, 303500, 18000
+sf_interior 100
+Circle 954500, 303500, 18000
+sf_interior 0
+Circle 954500, 303500, 18000
+sf_interior 100
+Circle 45400, 267800, 18000
+sf_interior 0
+Circle 45400, 267800, 18000
+sf_interior 100
+Circle 136300, 267800, 18000
+sf_interior 0
+Circle 136300, 267800, 18000
+sf_interior 100
+Circle 227200, 267800, 18000
+sf_interior 0
+Circle 227200, 267800, 18000
+sf_interior 100
+Circle 318100, 267800, 18000
+sf_interior 0
+Circle 318100, 267800, 18000
+sf_interior 100
+Circle 409000, 267800, 18000
+sf_interior 0
+Circle 409000, 267800, 18000
+sf_interior 100
+Circle 500000, 267800, 18000
+sf_interior 0
+Circle 500000, 267800, 18000
+sf_interior 100
+Circle 590900, 267800, 18000
+sf_interior 0
+Circle 590900, 267800, 18000
+sf_interior 100
+Circle 681800, 267800, 18000
+sf_interior 0
+Circle 681800, 267800, 18000
+sf_interior 100
+Circle 772700, 267800, 18000
+sf_interior 0
+Circle 772700, 267800, 18000
+sf_interior 100
+Circle 863600, 267800, 18000
+sf_interior 0
+Circle 863600, 267800, 18000
+sf_interior 100
+Circle 954500, 267800, 18000
+sf_interior 0
+Circle 954500, 267800, 18000
+sf_interior 100
+Circle 100000, 232100, 18000
+sf_interior 0
+Circle 100000, 232100, 18000
+sf_interior 100
+Circle 300000, 232100, 18000
+sf_interior 0
+Circle 300000, 232100, 18000
+sf_interior 100
+Circle 500000, 232100, 18000
+sf_interior 0
+Circle 500000, 232100, 18000
+sf_interior 100
+Circle 700000, 232100, 18000
+sf_interior 0
+Circle 700000, 232100, 18000
+sf_interior 100
+Circle 900000, 232100, 18000
+sf_interior 0
+Circle 900000, 232100, 18000
+sf_interior 100
+Circle 71400, 196400, 18000
+sf_interior 0
+Circle 71400, 196400, 18000
+sf_interior 100
+Circle 214200, 196400, 18000
+sf_interior 0
+Circle 214200, 196400, 18000
+sf_interior 100
+Circle 357100, 196400, 18000
+sf_interior 0
+Circle 357100, 196400, 18000
+sf_interior 100
+Circle 500000, 196400, 18000
+sf_interior 0
+Circle 500000, 196400, 18000
+sf_interior 100
+Circle 642800, 196400, 18000
+sf_interior 0
+Circle 642800, 196400, 18000
+sf_interior 100
+Circle 785700, 196400, 18000
+sf_interior 0
+Circle 785700, 196400, 18000
+sf_interior 100
+Circle 928500, 196400, 18000
+sf_interior 0
+Circle 928500, 196400, 18000
+sf_interior 100
+Circle 71400, 160700, 18000
+sf_interior 0
+Circle 71400, 160700, 18000
+sf_interior 100
+Circle 214200, 160700, 18000
+sf_interior 0
+Circle 214200, 160700, 18000
+sf_interior 100
+Circle 357100, 160700, 18000
+sf_interior 0
+Circle 357100, 160700, 18000
+sf_interior 100
+Circle 500000, 160700, 18000
+sf_interior 0
+Circle 500000, 160700, 18000
+sf_interior 100
+Circle 642800, 160700, 18000
+sf_interior 0
+Circle 642800, 160700, 18000
+sf_interior 100
+Circle 785700, 160700, 18000
+sf_interior 0
+Circle 785700, 160700, 18000
+sf_interior 100
+Circle 928500, 160700, 18000
+sf_interior 0
+Circle 928500, 160700, 18000
+sf_interior 100
+Circle 166600, 125000, 18000
+sf_interior 0
+Circle 166600, 125000, 18000
+sf_interior 100
+Circle 500000, 125000, 18000
+sf_interior 0
+Circle 500000, 125000, 18000
+sf_interior 100
+Circle 833300, 125000, 18000
+sf_interior 0
+Circle 833300, 125000, 18000
+sf_interior 100
+Circle 125000, 89200, 18000
+sf_interior 0
+Circle 125000, 89200, 18000
+sf_interior 100
+Circle 375000, 89200, 18000
+sf_interior 0
+Circle 375000, 89200, 18000
+sf_interior 100
+Circle 625000, 89200, 18000
+sf_interior 0
+Circle 625000, 89200, 18000
+sf_interior 100
+Circle 875000, 89200, 18000
+sf_interior 0
+Circle 875000, 89200, 18000
+sf_interior 100
+Circle 125000, 53500, 18000
+sf_interior 0
+Circle 125000, 53500, 18000
+sf_interior 100
+Circle 375000, 53500, 18000
+sf_interior 0
+Circle 375000, 53500, 18000
+sf_interior 100
+Circle 625000, 53500, 18000
+sf_interior 0
+Circle 625000, 53500, 18000
+sf_interior 100
+Circle 875000, 53500, 18000
+sf_interior 0
+Circle 875000, 53500, 18000
+sf_interior 100
+Circle 166600, 17800, 18000
+sf_interior 0
+Circle 166600, 17800, 18000
+sf_interior 100
+Circle 500000, 17800, 18000
+sf_interior 0
+Circle 500000, 17800, 18000
+sf_interior 100
+Circle 833300, 17800, 18000
+sf_interior 0
+Circle 833300, 17800, 18000
+END_OF_FILE
+

@@ -1,0 +1,7 @@
+wreath_product_designs_n8_k6_inc.txt:
+	$(ORBITER) -v 8 \
+		-define D -design -wreath_product_designs 8 6 -end \
+		-with D -do \
+			-design_activity \
+				-export_flags \
+		-end

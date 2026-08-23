@@ -1,0 +1,49 @@
+TFC_24_3_c:
+	echo $(FILE_24_3_TFC_INC) >24_3_TFC.inc
+	$(ORBITER) -v 20 \
+		-define C -combinatorial_object \
+			-label 24_3_TFC 24\_3\_TFC \
+			-file_of_incidence_geometries 24_3_TFC.inc 24 24 72 \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form \
+			-save_ago \
+			-nauty_control -nauty_log "TFC_24_3_nauty_log.txt" -end \
+			-end \
+		-end \
+		-define Doinc -draw_incidence_structure_options \
+			-width 40 -width_10 6 \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-post_processing \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-report \
+				-export_flag_orbits \
+				-show_TDO \
+				-show_TDA \
+				-show_incidence_matrices \
+				-incidence_draw_options Doinc \
+			-end \
+		-end
+	$(PDFLATEX) 24_3_TFC_classification.tex
+	$(OPEN) 24_3_TFC_classification.pdf
+	$(ORBITER) -v 2 -draw_matrix \
+		-input_csv_file 24_3_TFC_object_2_TDA_flag_orbits.csv \
+		-secondary_input_csv_file 24_3_TFC_object_2_TDA.csv \
+		-box_width 40 -bit_depth 24 \
+		-end
+	$(OPEN) 24_3_TFC_object_2_TDA_flag_orbits_draw.bmp
+	$(ORBITER) -v 2 \
+		-define Do -draw_options -embedded -radius 150 \
+			-nodes_empty \
+			-scale 0.5 -line_width 0.3 -end \
+		-tree_draw \
+			-file TFC_24_3_nauty_log.txt \
+			-draw_options Do \
+		-end
+	$(PDFLATEX) TFC_24_3_nauty_log_draw.tex
+	$(OPEN) TFC_24_3_nauty_log_draw.pdf

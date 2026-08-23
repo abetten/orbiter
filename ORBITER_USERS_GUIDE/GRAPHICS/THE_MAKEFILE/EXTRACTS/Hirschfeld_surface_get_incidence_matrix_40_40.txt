@@ -1,0 +1,10 @@
+Hirschfeld_surface_get_incidence_matrix_40_40:
+	$(ORBITER) -v 3 \
+		-define points -vector -dense $(HIRSCHFELD_SURFACE_POINTS_OFF) -end \
+		-define planes -vector -dense $(HIRSCHFELD_SURFACE_HESSE_PLANES) -end \
+		-define F -finite_field -q 4 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-with P -do \
+		-projective_space_activity \
+			-restricted_incidence_matrix 1 3 points planes "H_incma_40_40" \
+		-end

@@ -1,0 +1,91 @@
+Fix a set of size $v$ and an integer $k$ with $1 <k < v.$ 
+Is it possible to partition the set of 
+$k$-subsets of $v$ into designs, all with the same parameters? 
+If so, the resulting set of designs is called a large set (of designs).
+So, a large set of designs is a set of designs, all of the same types, 
+on a fixed $v$-element set 
+whose block sets are pairwise disjoint and partition the set of 
+$k$-subsets. 
+Let us see how Orbiter can help construct and classify small large sets.
+
+
+Tables~\ref{tab:largeset:was:create} shows Orbiter 
+commands to construct large sets with assumed symmetry group.
+\orbitertableofcommands{large_set_was}
+Table~\ref{tab:largeset:was:activity} lists Orbiter activities for 
+objects of type large-set-with-assumed-symmetry.
+\orbitertableofcommands{large_set_was_activity}
+
+\bigskip
+
+Suppose we consider $\AG(2,3)$, 
+the affine plane of order 3. 
+It is a configuration with 9 points, 12 lines, 4 lines on each point and 3 points on each line.
+To see whether or not it is unique, 
+we use the following command:
+
+\sourcecode{AG_2_3.inc}
+
+The command produces the file \verb'AG_2_3.inc', which contains the following lines:
+\orbiteroutput{GRAPHICS/LATEX/file_AG_2_3}
+This shows that the design is unique, 
+and has an automorphism group of order $432$.
+From now on, we will encode blocks as integers, 
+using the ranking of $k$-subsets.
+The coding of the $\AG(2,3)$ design is stored in a makefile variable:
+
+\sourcecodevariable{AG_2_3_BLOCKS}
+
+
+Next, we create a table of all designs $\AG(2,3),$ 
+as orbit under the group $\Sym(9).$
+The number of designs is $|\Sym(9)|/432 = 362880/432 = 840.$
+The following command creates a table of these designs:
+
+\sourcecode{LS_AG_2_3_design_table_create}
+
+
+Next, we compute the induced action of the group of $\AG(2,3)$ on the designs in the table:
+
+\sourcecode{AG_2_3_on_designs}
+
+We need the designs that are disjoint from the original design. 
+For this, we define a makefile variable:
+
+
+\sourcecodevariable{LARGE_SET_AG_2_3_NEIGHBOR_SET}
+
+And now we compute the stabilizer of the first design, 
+which of course is still the affine group $\AGL(2,3)$ of order 432.
+
+
+\sourcecode{AG_2_3_stab_orb_0}
+
+Now, we compute the permutation representation of $\AGL(2,3)$ 
+on the 192 designs that are disjoint from the original design:
+
+\sourcecode{AG_2_3_stab_orb_0_Perm840_res192}
+
+Next, we create the graph whose vertices are the 192 designs. 
+Two designs are adjacent on the graph if the blocks are distinct as sets. 
+In order to create the large sets of $\AGL(2,3)$, 
+we also compute the cliques of size 12 in this graph:
+
+\sourcecode{LS_AG_2_3_disjoint_sets_graph_and_cliques}
+
+
+We find 15360 cliques. 
+The next command creates the associated large sets and writes them to file:
+
+\sourcecode{LS_AG_2_3_export_large_sets}
+
+
+It remains to classify the resulting 15360 large sets up to isomorphism. 
+This final step 
+will be discussed in Section~\ref{sec:canonical:form:objects:design:theory}.
+
+
+
+
+
+

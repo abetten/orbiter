@@ -1,0 +1,39 @@
+\begin{table}[t]
+\tbl{\label{tab:quartic:curves:create}}
+{\begin{tcolorbox}[tabularx={p{3cm}|p{2cm}|p{6.3cm}|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black,title=Creating Quartic Curves]
+\hline
+Command & Arguments & Purpose \\
+\hline
+\hline
+\verb'-space'  &  P  &  Specify the 2-dimensional projective space P $=\PG(2,q)$. \\
+\hline
+\verb'-label_txt'  &  label  &  Override the ascii label of the curve. \\
+\hline
+\verb'-label_tex'  &  label  &  Override the latex label of the curve. \\
+\hline
+\verb'-label_for_summary'  &  label  &  Override the ascii label of the curve, to be used in summary commands. \\
+\hline
+\verb'-catalogue'  &  OCN  &  Create the quartic curve from the Orbiter catalogue with the given Orbiter catalogue number.\\
+\hline
+\verb'-by_coefficients'  &  coeffs  &  Create a quartic curve given the coefficients of the equation. \\
+\hline
+\verb'-by_normal_form'  &  abcdef  &  Create a quartic curve in the 6-parameter normal form. \\
+\hline
+\verb'-by_equation'  &  eqn  &  Create a quartic curve from an equation. \\
+\hline
+\verb'-by_symbolic_object'  &  R equation  &  Create a quartic curve from an equation using the polynomial ring $R$. The equation is given as a symbolic object. \\
+\hline
+\verb'-from_cubic_surface'  &  $S$ $i$  &  Create the quartic curve from $i$th orbit of the automorphism group of the surface $S$ on points not on lines ($i$ is zero based). \\
+\hline
+\verb'-from_variety'  &  V  &  Create the quartic curve defined by the variety V. \\
+\hline
+\verb'-override_group'  &  descr  &  Override the automorphism group of the curve by the given group. \\
+\hline
+\verb'-transform'  &  elt  &  Apply the transformation given by the group element. \\
+\hline
+\verb'-transform_inverse'  &  elt  &  Apply the inverse transformation given by the group element. \\
+\hline
+\end{tcolorbox}}
+\end{table}

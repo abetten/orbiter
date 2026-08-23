@@ -1,0 +1,13 @@
+AGGL_2_27:
+	$(ORBITER) -v 2 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define F -finite_field -q 27 -compute_related_fields -end \
+		-define G -linear_group -AGGL 2 F -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end
+	$(PDFLATEX) AGGL_2_27_report.tex
+	$(OPEN) AGGL_2_27_report.pdf

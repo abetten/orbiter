@@ -1,0 +1,7 @@
+Paley_13_graph:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 13 -end \
+		-define Gamma -graph -Paley F -end \
+		-with Gamma -do \
+			-graph_theoretic_activity -export_csv \
+		-end

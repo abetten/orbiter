@@ -1,0 +1,13 @@
+create_translation_plane_27_Rao_Rao:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 3 -end \
+		-define SS -vector -dense $(SPREAD_SET_27_RAO_RAO) -end \
+		-define G -linear_group -PGL 6 F -end \
+		-define G1 -linear_group -PGL 7 F -end \
+		-define S -spread -kernel_field F \
+			-group G -k 3 -spread_set "Rao_Rao" "Rao\_Rao" SS \
+			-end \
+		-define T -translation_plane S G G1 -end \
+		-with T -do -translation_plane_activity \
+			-export_incma \
+		-end

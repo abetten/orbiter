@@ -1,0 +1,16 @@
+PGOp_6_2_linear:
+	$(ORBITER) -v 2 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define F -finite_field -q 2 -end \
+		-define G -linear_group -PGL 6 F \
+			-subgroup_by_generators PGOp_6_2 \
+				40320 10 $(PGOp_6_2_GENS) \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end
+	$(PDFLATEX) PGL_6_2_Subgroup_PGOp_6_2_40320_report.tex
+	$(OPEN) PGL_6_2_Subgroup_PGOp_6_2_40320_report.pdf

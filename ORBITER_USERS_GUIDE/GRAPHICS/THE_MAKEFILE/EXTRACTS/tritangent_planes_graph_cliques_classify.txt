@@ -1,0 +1,27 @@
+tritangent_planes_graph_cliques_classify:
+	$(ORBITER) -v 4 \
+		-define Control -poset_classification_control \
+			-W \
+			-problem_label tri \
+			-clique_test Gamma \
+			-depth 9 \
+		-end \
+		-define gens -vector -file \
+			tritangent_planes_disjointness_gens.csv \
+		-end \
+		-define G -permutation_group \
+		-bsgs tritangent_planes_disjointness \
+			"tritangent\_planes\_disjointness" 45 51840 \
+			"0,3,12,24" 6 gens -end \
+		-define Gamma \
+			-graph -tritangent_planes_disjointness_graph \
+		-end \
+		-define Orb -orbits \
+			-group G \
+			-group_action G \
+			-generators G \
+			-on_subsets 9 Control \
+		-end \
+		-with Orb -do -orbits_activity \
+			-recognize "4,9,11,14,21,26,30,35,40" \
+		-end

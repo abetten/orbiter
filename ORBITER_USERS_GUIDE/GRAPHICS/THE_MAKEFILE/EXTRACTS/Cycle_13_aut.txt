@@ -1,0 +1,8 @@
+Cycle_13_aut:
+	$(ORBITER) -v 2 \
+		-define Gamma -graph -cycle 13 -end \
+		-with Gamma -do \
+			-graph_theoretic_activity -automorphism_group \
+		-end
+	$(PDFLATEX) Cycle_13_report.tex
+	$(OPEN) Cycle_13_report.pdf

@@ -1,0 +1,10 @@
+JK_graph_sts_13:
+	$(ORBITER) -v 2 \
+		-define Gamma -graph -load_dimacs \
+			../JUNTTILA_KASKI/benchmarks/srg/sts-13 \
+		-end \
+		-with Gamma -do \
+		-graph_theoretic_activity -save -end \
+		-with Gamma -do \
+		-graph_theoretic_activity -automorphism_group -end
+	make ORBITER_PATH=$(ORBITER_EXE_PATH) -f sts-13_group.makefile sts-13

@@ -1,0 +1,10 @@
+geo_13_3_orderly:
+	$(ORBITER) -v 2 \
+		-define Test_lines -set -loop 4 14 1 -end \
+		-define Geo -geometry_builder \
+			-V 13 -B 13 -TDO 3 \
+			-fuse 1 -fname_GEO 13_3 \
+			-output_to_inc_file \
+			-test Test_lines \
+			-orderly \
+		-end

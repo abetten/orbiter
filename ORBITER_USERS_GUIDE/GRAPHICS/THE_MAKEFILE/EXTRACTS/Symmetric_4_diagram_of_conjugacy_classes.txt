@@ -1,0 +1,17 @@
+Symmetric_4_diagram_of_conjugacy_classes:
+	$(ORBITER) -v 3 \
+		-define G -permutation_group -symmetric_group 4 -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-diagram \
+		-end
+	$(ORBITER) -v 2 \
+		-draw_matrix \
+			-input_csv_file_column Sym_4_class_diagram.csv Class \
+			-box_width 50 \
+			-bit_depth 24 \
+			-indent 15 \
+			-color_offset 1 \
+		-end
+	magick Sym_4_class_diagram_draw.bmp Sym_4_class_diagram_draw.pdf
+	$(OPEN) Sym_4_class_diagram_draw.pdf

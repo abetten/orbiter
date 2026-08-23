@@ -1,0 +1,28 @@
+PGGL_2_9_on_subsets:
+	$(ORBITER) -v 10 \
+		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define Do -draw_options \
+			-radius 200 -embedded \
+		-end \
+		-define Control -poset_classification_control \
+			-problem_label PGGL_2_9 \
+			-W -depth 10 \
+		-end \
+		-define G -linear_group -PGGL 2 9 -end \
+		-define Orb -orbits \
+			-group G \
+			-group_action G \
+			-generators G \
+			-on_subsets 10 Control \
+		-end \
+		-define ro \
+			-poset_classification_report_options \
+				-draw_poset -type_ordinary \
+				-draw_options Do \
+		-end \
+		-with Orb -do -orbits_activity \
+			-report "" \
+			-report_options ro \
+		-end 
+	$(PDFLATEX) PGGL_2_9_poset.tex
+	$(OPEN) PGGL_2_9_poset.pdf

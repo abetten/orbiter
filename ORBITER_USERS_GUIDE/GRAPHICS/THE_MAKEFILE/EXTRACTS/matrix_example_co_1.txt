@@ -1,0 +1,6 @@
+matrix_example_co_1:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define v -vector -field F -format 22 \
+			-compact $(CONWAY_GEN1) -end \
+		-print_symbols

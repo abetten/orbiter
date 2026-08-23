@@ -1,0 +1,32 @@
+
+
+The problem of classification of combinatorial objects is related to that of computing canonical forms and computing automorphism groups. 
+First, a combinatorial object is any kind of object that can be described as a sets of sets (always finite). 
+This includes objects in finite projective geometries, as the geometry can be represented as sets itself (for instance the set of lines).
+Orbiter uses the graph theory package Nauty~\cite{Nauty2020} to perform the underlying computations. 
+The combinatorial object is turned into an incidence structure, which in turn is converted into a bipartite graph. 
+Then, the canonical form and automorphism group of the graph is computed with Nauty. 
+From this information, the classification problem can be solved, and the automorphism group of the object can be converted in the type of group that we expect. 
+For instance, an object in projective space will have an automorphism group which is a subgroup of the collineation group, which means that in effect we produce matrices which generate the group.
+For background on the reduction of the isomorphism problem of combinatorial objects to graphs, see~\cite{AlogaidiBetten}.
+
+
+\bigskip
+
+Orbiter can go beyond combinatorial objects. A variety is not a true combinatorial object, as the action of the group is by means of linear substitution, and the object is more than just the set of rational points. 
+For varieties, Orbiter offers the algorithm of~\cite{AlazemiBetten2024} to perform classification and 
+for computing the automorphism group.
+
+\bigskip
+
+Table~\ref{tab:canonical} lists Orbiter commands for classification of combinatorial/geometric objects.
+\orbitertableofcommands{canonical_form_classifier}
+
+Table~\ref{tab:combi:classification} lists Orbiter commands for classification of combinatorial objects.
+\orbitertableofcommands{classification_of_objects}
+
+
+Table~\ref{tab:nauty:control} lists Orbiter commands for the classification using Nauty.
+\orbitertableofcommands{nauty_control}
+
+

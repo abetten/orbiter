@@ -1,0 +1,10 @@
+F_4096:
+	$(ORBITER) -v 4 \
+		-define F -finite_field -q 4096 \
+			-compute_related_fields \
+		-end \
+		-with F -do -finite_field_activity \
+			-cheat_sheet_GF \
+		-end
+	$(PDFLATEX) GF_4096.tex
+	$(OPEN) GF_4096.pdf

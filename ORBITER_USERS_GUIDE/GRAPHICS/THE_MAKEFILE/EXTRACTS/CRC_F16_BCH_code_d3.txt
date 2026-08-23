@@ -1,0 +1,20 @@
+CRC_F16_BCH_code_d3:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 16 -override_polynomial 19 -end \
+		-define C -code -field F \
+			-BCH 51 3 \
+		-end \
+		-with C -and F -do -coding_theoretic_activity \
+			-export_magma BCH_q16_n51_d3.magma \
+		-end \
+		-with C -and F -do -coding_theoretic_activity \
+			-export_checkma BCH_q16_n51_d3_check.csv \
+		-end \
+		-with C -and F -do -coding_theoretic_activity \
+			-export_checkma_as_projective_set BCH_q16_n51_d3_check_ranks.csv \
+		-end \
+		-with C -and F -do -coding_theoretic_activity \
+			-report \
+		-end
+	$(PDFLATEX) BCH_n51_d3_code_n51_k47_q16.tex
+	$(OPEN) BCH_n51_d3_code_n51_k47_q16.pdf

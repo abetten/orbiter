@@ -1,0 +1,10 @@
+BLT_67_4:
+	$(ORBITER) -v 4 \
+		-define F -finite_field -q 67 -end \
+		-define O -orthogonal_space 0 5 F -create_extension_fields -end \
+		-define BLT -BLT_set \
+			-space O -catalogue 4 -invariants \
+		-end \
+		-with BLT -do -blt_set_activity \
+			-report \
+		-end

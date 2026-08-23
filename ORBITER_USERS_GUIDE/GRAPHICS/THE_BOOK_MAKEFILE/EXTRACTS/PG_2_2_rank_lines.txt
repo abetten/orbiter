@@ -1,0 +1,11 @@
+PG_2_2_rank_lines:
+	$(ORBITER) -v 2 \
+		-define v -vector -format 4 \
+		-dense "1,0,0, 0,1,0, 1,0,0, 0,0,1, 1,1,1, 0,1,0, 1,1,1, 0,0,1" \
+		-end \
+		-define F -finite_field -q 2 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-with P -do \
+		-projective_space_activity \
+			-rank_lines_in_PG v \
+		-end \

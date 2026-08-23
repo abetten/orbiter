@@ -1,0 +1,35 @@
+\begin{table}
+\begin{tcolorbox}[tabularx={X|p{2cm}|X|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black,title=Options for Drawing Modulo N Objects]
+		\hline
+		Command & Arguments & Purpose \\
+		\hline
+		\hline
+		\verb'-n' & n & Set the number of dots. \\
+		\hline
+		\verb'-mod_s' & s &  \\
+		\hline
+		\verb'-divide_out_by' & k & Divide by k. \\
+		\hline
+		\verb'-file' & fname & Read from file. \\
+		\hline
+		\verb'-inverse' &  & Connect $i$ with $i^{-1}$ mod $n$. \\
+		\hline
+		\verb'-additive_inverse' &  & Connect $i$ with $-i$ mod $n$. \\
+		\hline
+		\verb'-power_cycle' & a & Draw a cycle connecting the powers of $a$ mod $n$. \\
+		\hline
+		\verb'-cyclotomic_sets' & q list & Draw the $q$-cyclotomic sets of all elements in the list. \\
+		\hline
+		\verb'-cyclotomic_sets_thickness' &  & Set the thickness for the drawing of cyclotomic sets. \\
+		\hline
+		%\verb'-eigenvalues' & a b c d  & Draw the effect of the matrix $\left[
+		%\begin{array}{cc}
+		%	a&b\\
+		%	c&d
+		%\right]$ on the unit circle. Illustrate for $n$ equally spaces points\\
+		%\hline
+		\end{tcolorbox}
+	\caption{\label{tab:draw:mod:n}Options for Drawing Modulo N Objects}
+	\end{table}

@@ -1,0 +1,256 @@
+
+To install Orbiter, we first check if git is installed. Type
+$$
+\verb'git'
+$$
+If you get an error message, please install git. 
+If you get a long output with commands, you are fine. 
+Git is installed. 
+
+\bigskip
+
+
+The steps to install Orbiter differ slightly, 
+depending on your operating system.
+For Windows, we need ``Windows Subsystem Linux.''
+On Linux/unix based systems, including Macintosh, 
+you will utilize a terminal window. 
+You will also need the development tools. 
+You need the C++ compiler and library tools.
+On Macintosh, you need Xcode and the command-line tools. 
+You can get them for free on the App-store.
+You will also need the compiler 
+generator tools flex and bison.
+They are open source projects. On Macintosh, you can use the package manager brew. 
+On Linux, simply use your package manager to install these tools.
+
+\bigskip
+
+
+To install Orbiter, 
+you first need to download the source code from github. 
+So, navigate your web browser to
+$$
+\verb'https://github.com/abetten/orbiter'
+$$
+Click on the green box that says ``Code'' 
+and copy the address into the clipboard 
+by clicking the clipboard symbol, see below:
+\orbiteroutput{GRAPHICS/LATEX/github}
+Click on ``Code'' and copy paste the address. 
+Then type 
+$$
+\verb'git clone XXX' 
+$$
+Where XXX is to be replaced with the address 
+that you copied (simply use CTRL-P to paste).
+
+\bigskip
+
+Once the command finishes, 
+you need to check that the prerequisites are satisfied, which are 
+\begin{enumerate}
+\item
+flex
+\item
+bison
+\end{enumerate}
+These are compiler generator tools, and they are required for compiling Orbiter. 
+The required tools are called bison and flex (in the Unix world, they correspond to yacc and lex, respectively).
+Unfortunately, many Mac OS versions come with outdated versions of bison and flex, so 
+we need to check the version that is installed 
+(or install it in the first place).
+To check the version of bison, type 
+$$
+\verb'bison --version'
+$$
+If you get a message \verb'bison not found' 
+it means that you don't have bison. 
+In this case you need to install bison. 
+Otherwise, check out the version number. 
+Orbiter requires 3.8.2 or higher.
+If your version number is below that, 
+you need to upgrade your bison software.
+Regarding flex, type 
+$$
+\verb'flex --version'
+$$
+If you get a message \verb'flex not found' 
+it means that you don't have flex. 
+In this case you need to install flex. 
+Otherwise, check out the version number. 
+Orbiter requires 2.6.4 or higher.
+If your version number is below that, 
+you need to upgrade your flex software.
+
+\bigskip
+
+Next, we will show how to install bison and flex, 
+and possibly update the version that is installed.
+On a Macintosh system, the package manage brew can be used. 
+On Linux, different package managers exists.
+In either case, we have to also update certain shell variables, 
+so that the correct version of flex and bison 
+is used during the Orbiter build process.
+
+\bigskip 
+
+On a Macintosh, using csh (pronounciation: cee-shell), 
+you can install bison using ``brew.'' 
+Type 
+$$
+\verb'brew install bison'
+$$
+The install will go to 
+$$
+\verb'/opt/homebrew/Cellar'
+$$
+Go there and check whether a directory bison exists. 
+If so, do 
+$$
+\verb'cd bison'
+$$
+and 
+$$
+\verb'ls'
+$$ 
+and note the version number. 
+You may still have an old version of bison somewhere else. 
+In order to activate the new bison, you will 
+have to change the path in your shell. 
+For csh, make sure you add the line
+$$
+\verb'set path = ( /opt/homebrew/Cellar/bison/3.8.2/bin $path )'
+$$
+Here, the \verb'3.8.2.' part may has 
+to be changed depending on your version of bison. 
+
+\bigskip
+
+You can install flex using brew. Type 
+$$
+\verb'brew install flex'
+$$
+The install will go to 
+$$
+\verb'/opt/homebrew/Cellar'
+$$
+Go there and check whether a directory flex exists. 
+If so, do 
+$$
+\verb'cd flex'
+$$
+and 
+$$
+\verb'ls'
+$$ 
+and note the version number. 
+Like with bison earlier, 
+you may still have an old version of flex somewhere else. 
+In order to activate the new flex and not the old, 
+you will have to change the path in your shell. 
+For csh, make sure you add the line
+$$
+\verb'set path = ( /opt/homebrew/Cellar/flex/2.6.4_2/bin $path )'
+$$
+Here, the \verb'2.6.4_2' 
+part may has to be changed depending on your version of bison. 
+
+\bigskip
+
+Finally, you have to add 
+$$
+\verb'set LDFLAGS = ( -L/usr/local/Cellar/flex/2.6.4_2/lib -L/usr/local/Cellar/bison/3.8.2/lib )'
+$$
+to your \verb'~/.cshrc'
+Here, the version numbers may have to be 
+changed to match those that you used before.
+
+\bigskip
+
+After these changes, 
+you need to read the \verb'~/.cshrc' 
+file again and rehash. Type
+$$
+\verb'read ~/.cshrc'
+$$
+and
+$$
+\verb'rehash'
+$$
+If you type 
+$$
+\verb'bison --version'
+$$ 
+you should get the correct version number of bison. 
+Likewise, if you type 
+$$
+\verb'flex --version'
+$$
+you should get the correct version number of flex. 
+
+\bigskip
+
+
+You are now ready to compile Orbiter. 
+For this purpose, you need to enter 
+the Orbiter home directory. 
+Assuming that you are still 
+in the directory where you did \verb'git clone', type 
+$$
+\verb'cd orbiter'
+$$
+and then 
+$$
+\verb'make'
+$$
+If your computer CPU has multiple cores, you can try 
+$$
+\verb'make -j 8'
+$$
+The number 8 can be adjusted 
+to the number of cores that you have. 
+This multitasking reduces the time it takes to compile Orbiter. 
+Once done, you should have an orbiter executable 
+in the directory 
+$$
+\verb'orbiter/src/apps/orbiter'
+$$
+The executable is called 
+$$
+\verb'orbiter.out'
+$$
+Note that you are already in orbiter, so you could do 
+$$
+\verb'ls src/apps/orbiter'
+$$
+to check if \verb'orbiter.out' appears.
+In either case, you can do 
+$$
+\verb'cd ..'
+$$
+to leave the orbiter branch.
+You should only go back in 
+the Orbiter branch 
+if you want to update Orbiter. 
+Otherwise, you should not be there. 
+In particular, 
+you should not change any files in this branch, 
+as this would cause problems in the update. 
+
+
+
+\bigskip
+
+
+Finally, if you have to update bison or flex, 
+you can type 
+$$
+\verb'brew upgrade bison'
+$$
+or 
+$$
+\verb'brew upgrade flex'
+$$
+
+

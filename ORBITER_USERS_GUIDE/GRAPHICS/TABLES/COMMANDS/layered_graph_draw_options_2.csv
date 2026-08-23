@@ -1,0 +1,19 @@
+ROW,C1,C2,C3
+0,"tab:draw:options:b",,
+1,"Drawing Options for Layered Graph Files (Part 2)",,
+1,"\verb'-scale' "," $s$  "," Use Tikz global scale-factor of $s$. Default value: $s=0.45$."
+1,"\verb'-line_width' "," $s$  "," Set Tikz line width to $s$. Default value: $s=1.5$. "
+1,"\verb'-rotated' ","   ","Rotate the output.  "
+1,"\verb'-upside_down' ","   "," Flip top and bottom.  "
+1,"\verb'-nodes' ","   ","Turn on node drawing.  "
+1,"\verb'-nodes_empty' ","   ","Do not label the nodes. Default value: off."
+1,"\verb'-no_vertices' ","   ","Do not draw vertices."
+1,"\verb'-node_color' ","  $c$ ","Set the color for nodes to $c$ (unless the graph already has vertex colors)."
+1,"\verb'-select_layers' ","  $S$ ","Draw layers whose index is given in the list $S$ only. "
+1,"\verb'-paths_in_between' "," $l_1$ $i_1$ $l_2$ $i_2$ ","Draw all paths from node $(l_1,i_1)$ to node $(l_2,i_2)$. Here, $(l,i)$ is the $i$-th node at layer $l$ (counting from zero). Delete all other edges between layers $l_1$ and $l_2.$ "
+1,"\verb'-poset_orbits_x_stretch' "," f1000 ","Specify a stretch factor for grouping of poset orbits in 1000th. "
+1,"\verb'-place' "," ","Layout the graph. "
+1,"\verb'-poset_type_Asup' "," ","Draw poset in supremum style. "
+1,"\verb'-poset_type_Ainf' "," ","Draw poset in infimum style. "
+1,"\verb'-poset_with_horizontal_lines' "," ","Draw horizontal lines to indicate orbits. "
+END

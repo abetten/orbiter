@@ -1,0 +1,8 @@
+Allen_Gates_noise_1_percent:
+	cp $(ORBITER_PATH)/examples/users_guide/allen_Gates.bmp .
+	$(ORBITER) -v 3 \
+		-random_noise_in_bitmap_file \
+		allen_Gates.bmp \
+		allen_Gates_1.bmp \
+		1 100 
+	$(OPEN) allen_Gates_1.bmp

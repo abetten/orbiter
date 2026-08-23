@@ -1,0 +1,10 @@
+classes_PGGL_4_4:
+	$(ORBITER) -v 3 \
+		-magma_path $(MAGMA_PATH) \
+		-define G -linear_group -PGGL 4 4 -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-classes \
+		-end
+	$(PDFLATEX) PGGL_4_4_classes_out.tex
+	$(OPEN) PGGL_4_4_classes_out.pdf

@@ -1,0 +1,24 @@
+Op_6_2_orthogonal_reflections:
+	$(ORBITER) -v 2 \
+		-define Pts -vector \
+			-dense $(ORTHOGONAL_OP_6_2_POINTS_OFF) \
+		-end \
+		-define F -finite_field -q 2 -end \
+		-define O -orthogonal_space 1 6 F -end \
+		-with O -do -orthogonal_space_activity \
+			-create_orthogonal_reflection Pts \
+		-end \
+		-define G -linear_group -PGOp 6 F -end \
+		-define Op_6_2_orthogonal_reflections -vector_ge \
+			-action G \
+			-read_csv O_1_6_2_orthogonal_reflections.csv Element \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-element_processing \
+				-input Op_6_2_orthogonal_reflections \
+				-print \
+			-end \
+		-end
+	$(PDFLATEX) Op_6_2_orthogonal_reflections_elements.tex
+	$(OPEN) Op_6_2_orthogonal_reflections_elements.pdf

@@ -1,0 +1,66 @@
+
+
+
+
+We can create maps between projective spaces. 
+There are two possible ways to do so.
+The first ist by using the \verb'-map' command, which is a projective space activity.
+The second is by using a map object.
+We will demonstrate both ways next.
+
+
+\bigskip
+
+
+The first example shows a Cremona map from $\PG(2,13)$ to $\PG(3,13).$ 
+At first, we define the 4 coordinate functions as makefile variables. 
+These coordinate functions must be polynomials. 
+In the command, we create the finite field, the projective space for the domain of the map, 
+and the polynomial ring associated with the domain. 
+After that, we will create symbolic objects for the 4 coordinate functions. 
+The object called ``Cremona'' is a vector of the coordinate functions. 
+Finally, the \verb'-map' command is used to define and evaluate the map. 
+This command is a projective space activity.
+Here are the necessary makefile definitions and commands:
+
+\sourcecodevariable{CREMONA_MAP_Y0}
+
+
+\sourcecodevariable{CREMONA_MAP_Y1}
+
+
+\sourcecodevariable{CREMONA_MAP_Y2}
+
+
+\sourcecodevariable{CREMONA_MAP_Y3}
+
+
+\sourcecode{Cremona_map}
+
+
+
+\bigskip
+
+
+
+
+
+
+Next, we demonstrate the mapping object 
+to define a map between projective spaces. 
+Table~\ref{tab:mapping} lists Orbiter 
+commands for mappings between projective spaces.
+\orbitertableofcommands{mapping}
+
+
+The first example creates the Veronese variety of $\PG(1,7)$ in $\PG(3,7)$:
+
+\sourcecode{Veronese_1_3_q7}
+
+The image is written as a set of points in Orbiter ranks:
+\orbiteroutput{GRAPHICS/LATEX/Veronese_1_3_q7}
+For a deeper exploration of the combinatorial and group-theoretic properties of this object, 
+see Section~\ref{sec:canonical:form:objects:incidence:geometries}.
+
+\bigskip
+

@@ -1,0 +1,23 @@
+representation_tetrahedral_group_on_polynomials_of_degree_3:
+	$(ORBITER) -v 4 \
+		-define F -finite_field -q 3 -end \
+		-define G -linear_group -GL 3 F \
+		-subgroup_by_generators "tetra" "12" 2 \
+		"0,1,0,0,0,1,1,0,0, 0,0,1,2,0,0,0,2,0" \
+		-end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 3 \
+			-homogeneous_of_degree 3 \
+			-monomial_ordering_partition \
+			-variables "X,Y,Z" "X,Y,Z" \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-representation_on_polynomials R \
+		-end 
+	$(ORBITER) -v 2 -loop L 0 2 1 -draw_matrix \
+		-input_csv_file GL_3_3_Subgroup_tetra_12_rep_3_%L.csv \
+		-box_width 40 -bit_depth 24 -partition 3 10 10 -end -end_loop L
+	$(OPEN) GL_3_3_Subgroup_tetra_12_rep_3_0_draw.bmp
+	$(OPEN) GL_3_3_Subgroup_tetra_12_rep_3_1_draw.bmp

@@ -1,0 +1,30 @@
+symbolic_Clebsch:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 13 -end \
+		-define A1 -symbolic_object \
+			-field F \
+			-matrix 3 \
+			-text "1,0,0,0,0,0,0,1,y0,y1,y2,0" \
+		-end \
+		-define A2 -symbolic_object \
+			-field F \
+			-matrix 3 \
+			-text "0,1,0,0,0,0,-1,1,y0,y1,y2,0" \
+		-end \
+		-define A3 -symbolic_object \
+			-field F \
+			-matrix 2 \
+			-text "0,0,1,0,0,0,0,1" \
+		-end \
+		-define M1 -symbolic_object \
+			-field F \
+			-symbolic_nullspace A1 \
+		-end \
+		-define M2 -symbolic_object \
+			-field F \
+			-symbolic_nullspace A2 \
+		-end \
+		-define L -symbolic_object \
+			-field F \
+			-stack_matrices_vertically M1,M2,A3 \
+		-end

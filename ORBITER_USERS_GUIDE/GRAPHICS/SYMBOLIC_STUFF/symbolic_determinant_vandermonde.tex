@@ -1,0 +1,68 @@
+%% Created by Maple 2022.2, Mac OS X
+%% Source Worksheet: symbolic_determinant_vandermonde
+%% Generated: Wed May 31 11:38:42 AST 2023
+\documentclass{article}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{mathtools}
+\usepackage{maple}
+\usepackage[utf8]{inputenc}
+\usepackage[svgnames]{xcolor}
+\usepackage{amsmath}
+\usepackage{breqn}
+\usepackage{textcomp}
+\begin{document}
+\lstset{basicstyle=\ttfamily,breaklines=true,columns=flexible}
+\pagestyle{empty}
+\DefineParaStyle{Maple Bullet Item}
+\DefineParaStyle{Maple Heading 1}
+\DefineParaStyle{Maple Warning}
+\DefineParaStyle{Maple Heading 4}
+\DefineParaStyle{Maple Heading 2}
+\DefineParaStyle{Maple Heading 3}
+\DefineParaStyle{Maple Dash Item}
+\DefineParaStyle{Maple Error}
+\DefineParaStyle{Maple Title}
+\DefineParaStyle{Maple Ordered List 1}
+\DefineParaStyle{Maple Text Output}
+\DefineParaStyle{Maple Ordered List 2}
+\DefineParaStyle{Maple Ordered List 3}
+\DefineParaStyle{Maple Normal}
+\DefineParaStyle{Maple Ordered List 4}
+\DefineParaStyle{Maple Ordered List 5}
+\DefineCharStyle{Maple 2D Output}
+\DefineCharStyle{Maple 2D Input}
+\DefineCharStyle{Maple Maple Input}
+\DefineCharStyle{Maple 2D Math}
+\DefineCharStyle{Maple Hyperlink}
+\begin{Maple Normal}
+{$ \displaystyle \mathit{with} (\mathit{LinearAlgebra})\colon  $}
+\end{Maple Normal}
+\begin{Maple Normal}
+{$ \displaystyle A \coloneqq \mathit{Matrix} ([[1,\mathit{x0} ,\mathit{x0}^{2},\mathit{x0}^{3}],[1,\mathit{x1} ,\mathit{x1}^{2},\mathit{x1}^{3}],[1,\mathit{x2} ,\mathit{x2}^{2},\mathit{x2}^{3}],[1,\mathit{x3} ,\mathit{x3}^{2},\mathit{x3}^{3}]]); $}
+\end{Maple Normal}
+% \mapleresult
+\begin{dmath}\label{(1)}
+A \coloneqq \left[\begin{array}{cccc}
+1 & \mathit{x0}  & \mathit{x0}^{2} & \mathit{x0}^{3} 
+\\
+ 1 & \mathit{x1}  & \mathit{x1}^{2} & \mathit{x1}^{3} 
+\\
+ 1 & \mathit{x2}  & \mathit{x2}^{2} & \mathit{x2}^{3} 
+\\
+ 1 & \mathit{x3}  & \mathit{x3}^{2} & \mathit{x3}^{3} 
+\end{array}\right]
+\end{dmath}
+\begin{Maple Normal}
+{$ \displaystyle \mathit{Determinant} (A)\boldsymbol{\mod}13; $}
+\end{Maple Normal}
+% \mapleresult
+\begin{dmath}\label{(2)}
+\mathit{x0}^{3} \mathit{x1}^{2} \mathit{x2} +12 \mathit{x0}^{3} \mathit{x1}^{2} \mathit{x3} +12 \mathit{x0}^{3} \mathit{x1} \,\mathit{x2}^{2}+\mathit{x0}^{3} \mathit{x1} \,\mathit{x3}^{2}+\mathit{x0}^{3} \mathit{x2}^{2} \mathit{x3} +12 \mathit{x0}^{3} \mathit{x2} \,\mathit{x3}^{2}+12 \mathit{x0}^{2} \mathit{x1}^{3} \mathit{x2} +\mathit{x0}^{2} \mathit{x1}^{3} \mathit{x3} +\mathit{x0}^{2} \mathit{x1} \,\mathit{x2}^{3}+12 \mathit{x0}^{2} \mathit{x1} \,\mathit{x3}^{3}+12 \mathit{x0}^{2} \mathit{x2}^{3} \mathit{x3} +\mathit{x0}^{2} \mathit{x2} \,\mathit{x3}^{3}+\mathit{x0} \,\mathit{x1}^{3} \mathit{x2}^{2}+12 \mathit{x0} \,\mathit{x1}^{3} \mathit{x3}^{2}+12 \mathit{x0} \,\mathit{x1}^{2} \mathit{x2}^{3}+\mathit{x0} \,\mathit{x1}^{2} \mathit{x3}^{3}+\mathit{x0} \,\mathit{x2}^{3} \mathit{x3}^{2}+12 \mathit{x0} \,\mathit{x2}^{2} \mathit{x3}^{3}+12 \mathit{x1}^{3} \mathit{x2}^{2} \mathit{x3} +\mathit{x1}^{3} \mathit{x2} \,\mathit{x3}^{2}+\mathit{x1}^{2} \mathit{x2}^{3} \mathit{x3} +12 \mathit{x1}^{2} \mathit{x2} \,\mathit{x3}^{3}+12 \mathit{x1} \,\mathit{x2}^{3} \mathit{x3}^{2}+\mathit{x1} \,\mathit{x2}^{2} \mathit{x3}^{3}
+\end{dmath}
+\begin{Maple Normal}
+
+\end{Maple Normal}
+\end{document}

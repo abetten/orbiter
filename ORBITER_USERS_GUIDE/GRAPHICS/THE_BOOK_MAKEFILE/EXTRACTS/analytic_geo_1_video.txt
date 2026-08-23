@@ -1,0 +1,12 @@
+analytic_geo_1_video:
+	- rm -r FRAMES
+	- mkdir FRAMES
+	- rm analytic_geo_1.mp4
+	$(ORBITER) \
+		-prepare_frames \
+			-i 0 30 PNG/ANALYTIC_GEO_1/analytic_geo_1_0_%03d.png \
+			-output_starts_at 0 \
+			-o FRAMES/frame%04d.png \
+		-end
+	ffmpeg -r 5 -f image2 -i FRAMES/frame%04d.png \
+		-f mp4 -q:v 0 -vcodec mpeg4 analytic_geo_1.mp4

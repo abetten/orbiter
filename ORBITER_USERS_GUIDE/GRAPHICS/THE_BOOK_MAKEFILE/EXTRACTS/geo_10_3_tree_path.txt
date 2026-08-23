@@ -1,0 +1,26 @@
+geo_10_3_tree_path:
+	$(ORBITER) -v 20 \
+		-define Test_lines -set -loop 0 11 1 -end \
+		-define GEO -geometry_builder \
+			-V 10 -B 10 -TDO 3 -fuse 1 \
+			-fname_GEO 10_3 \
+			-output_to_inc_file \
+			-search_tree \
+			-test Test_lines \
+		-end
+	$(ORBITER) -v 20 \
+		-define Do -draw_options -embedded -radius 20 \
+			-paperheight 220 \
+			-paperwidth 330 \
+			-xin 10000 -yin 10000 \
+			-xout 1000000 -yout 500000 \
+			-scale 2 -line_width 0.3 \
+		-end \
+		-tree_draw \
+			-restrict 2 \
+			-file 10_3_tree.txt \
+			-draw_options Do \
+			-select_path "0,0,15,26,46,56,72,80,93,106,119" \
+		-end
+	$(PDFLATEX) 10_3_tree_draw.tex
+	$(OPEN) 10_3_tree_draw.pdf

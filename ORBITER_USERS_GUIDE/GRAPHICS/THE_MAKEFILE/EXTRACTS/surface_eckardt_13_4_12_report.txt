@@ -1,0 +1,16 @@
+surface_eckardt_13_4_12_report:
+	$(ORBITER) -v 6 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 -nodes_empty \
+		-end \
+		-define F -finite_field -q 13 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define Eckardt_4_12 -cubic_surface \
+			-space P -family_Eckardt 4 12 \
+		-end \
+		-with Eckardt_4_12 -do \
+		-cubic_surface_activity \
+			-report Do \
+		-end
+	$(PDFLATEX) surface_Eckardt_alpha12_beta12_report.tex
+	$(OPEN) surface_Eckardt_alpha12_beta12_report.pdf

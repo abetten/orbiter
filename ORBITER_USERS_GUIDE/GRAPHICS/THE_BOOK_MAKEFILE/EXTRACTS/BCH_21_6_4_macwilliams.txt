@@ -1,0 +1,5 @@
+BCH_21_6_4_macwilliams:
+	$(ORBITER) -v 2 \
+		-make_macwilliams_system 21 6 4
+	$(PDFLATEX) MacWilliams_n21_k6_q4.tex
+	$(OPEN) MacWilliams_n21_k6_q4.pdf

@@ -1,0 +1,6 @@
+F_256:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 256 -end \
+		-with F -do -finite_field_activity -cheat_sheet_GF -end
+	$(PDFLATEX) GF_256.tex
+	$(OPEN) GF_256.pdf

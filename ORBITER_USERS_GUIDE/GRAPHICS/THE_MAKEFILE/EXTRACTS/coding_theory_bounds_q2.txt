@@ -1,0 +1,6 @@
+coding_theory_bounds_q2:
+	$(ORBITER) -v 2 -table_of_bounds 12 2
+	$(ORBITER) -v 2 \
+		-csv_file_latex 1 table_of_bounds_n12_q2.csv
+	$(PDFLATEX) table_of_bounds_n12_q2.tex
+	$(OPEN) table_of_bounds_n12_q2.pdf

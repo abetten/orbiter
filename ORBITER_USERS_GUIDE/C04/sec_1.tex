@@ -1,0 +1,77 @@
+Orbiter commands to create a finite projective space $\PG(n,q)$ 
+are listed in Table~\ref{tab:PG:create}.
+The command also creates the group of the space, 
+which is $\PGGL(n+1,q).$
+\orbitertableofcommands{projective_space_with_action}
+Let us look at a very simple example. 
+Suppose we want to create $\PG(3,2).$ 
+The following command sequence creates the finite field $\bbF_2$ 
+and stores the object in the symbol table, using the label $F$.
+After that, the projective space $\PG(3,F)$ is created, using the field $F$. 
+The projective space is 
+stored in the symbol table under the label $P$.
+
+\sourcecode{PG_3_2_easy}
+
+
+\bigskip
+
+
+
+
+
+Orbiter offers 
+indexing for points and for subspaces o allf $\PG(n,q)$ of a fixed dimension. 
+The incidence matrix between points and lines with respect to this ordering can be 
+computed. 
+The indexing is used to establish 
+the permutation representations of the projective group, 
+as will be described in Section~\ref{sec:lineargroups}.
+The indexing of points is not the lexicographic ordering. 
+It emphasizes the role of frames in the geometry
+by assigning the smallest rank values to the members of the standard frame. 
+After that, the other points are listed. 
+
+\bigskip
+
+
+Orbiter can create a cheat sheet for $\PG(n,q).$ 
+The cheat sheet lists the objects in the space, and basic properties.
+Here are two examples. 
+The first is a projective plane. The second is a projective 3-space. 
+
+\bigskip
+
+
+The following command creates a cheat sheet 
+for $\PG(2,4)$:
+
+\sourcecode{PG_2_4}
+
+The cheat sheet contains a drawing of the plane:
+\orbiteroutput{GRAPHICS/WRAPPERS/PG_2_4}
+The affine plane is shown in the cartesian plane, 
+while the line at infinity 
+is wrapped around the top right corner.
+The cheat sheet continues by listing the points, including the 
+canonical Baer subgeometry $\PG(2,2).$
+After that, the points are listed again, 
+but with left-normalized vectors.
+Finally, the lines are shown. 
+\orbiteroutput{GRAPHICS/LATEX/report_PG_2_4}
+
+
+
+\bigskip
+
+The following command creates a cheat sheet for $\PG(3,2).$
+
+\sourcecode{PG_3_2}
+
+The cheat sheet shows points, lines and planes. 
+The lines are shown together with their Pl\"ucker coordinates. 
+The lines whose Pl\"ucker coordinates are unit vectors are shown separately.
+\orbiteroutput{GRAPHICS/LATEX/report_PG_3_2}
+
+\bigskip
+

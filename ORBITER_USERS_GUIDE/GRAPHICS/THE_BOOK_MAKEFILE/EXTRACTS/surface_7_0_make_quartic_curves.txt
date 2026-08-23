@@ -1,0 +1,29 @@
+surface_7_0_make_quartic_curves:
+	$(ORBITER) -v 3 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 -nodes_empty \
+		-end \
+		-define F -finite_field -q 7 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define P2 -projective_space -n 2 -field F -v 0 -end \
+		-define Control -poset_classification_control \
+			-problem_label nc_arcs_q7 \
+			-W -depth 6 \
+		-end \
+		-define Arc_control -arc_generator_control \
+			-projective_space P2 \
+			-control Control \
+			-target_size 6 \
+			-d 2 \
+		-end \
+		-define Orb -orbits \
+			-on_arcs Arc_control \
+		-end \
+		-define S -cubic_surface -space P -catalogue 0 -end \
+		-with S -do \
+		-cubic_surface_activity \
+			-report Do \
+			-report_all_flag_orbits Orb \
+		-end
+	$(PDFLATEX) surface_catalogue_q7_iso0_report.tex
+	$(OPEN) surface_catalogue_q7_iso0_report.pdf

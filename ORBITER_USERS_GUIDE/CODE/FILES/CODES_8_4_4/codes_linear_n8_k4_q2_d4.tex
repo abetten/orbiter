@@ -1,0 +1,1817 @@
+
+\section{Classification of linear $[8,4,4]$ codes over ${\mathbb F}_{2}$}
+\label{app:codes844}
+
+
+\subsection{The field of order 2}
+\noindent The field ${\mathbb F}_{2}$ :\\
+%\small
+$Z_i = \log_\alpha (1 + \alpha^i)$\\
+$$\begin{array}{|*{7}{r|}}
+\hline
+i & \gamma_i & -\gamma_i& \gamma_i^{-1}& \log_\alpha(\gamma_i)& \alpha^i& Z_i\\
+\hline
+  0 & 0 = 0 &0 & \mbox{DNE} & \mbox{DNE} &1 & \mbox{DNE}\\
+  1 &   1 = 1 &1 &1 &0 &1 & \mbox{DNE}\\
+\hline
+\end{array}
+$$
+\subsection{The group ${\rm PGL}(4,2)$}
+Group action ${\rm PGL}(4,2)$ of degree 15\\
+Group order 20160\\
+tl=$15, 14, 12, 8, $\\
+Base: $( 0, 1, 2, 3 )$\\
+{\small\arraycolsep=2pt
+Strong generators for a group of order 20160:
+$$
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 1 & 0\\
+1 & 0 & 0 & 1\\
+\end{array}
+\right]
+, 
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 1 & 0\\
+0 & 1 & 0 & 1\\
+\end{array}
+\right]
+, 
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 1 & 0\\
+0 & 0 & 1 & 1\\
+\end{array}
+\right]
+, 
+$$
+$$
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 0 & 1\\
+0 & 0 & 1 & 0\\
+\end{array}
+\right]
+, 
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 0 & 1 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 0 & 1\\
+\end{array}
+\right]
+, 
+\left[
+\begin{array}{*{4}{r}}
+0 & 1 & 0 & 0\\
+1 & 0 & 0 & 0\\
+0 & 0 & 1 & 0\\
+0 & 0 & 0 & 1\\
+\end{array}
+\right]
+$$
+1,0,0,0,0,1,0,0,0,0,1,0,1,0,0,1,\\
+1,0,0,0,0,1,0,0,0,0,1,0,0,1,0,1,\\
+1,0,0,0,0,1,0,0,0,0,1,0,0,0,1,1,\\
+1,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,\\
+1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1,\\
+0,1,0,0,1,0,0,0,0,0,1,0,0,0,0,1,\\
+}
+
+\subsection*{Stabilizer chain}
+
+
+$$
+\begin{array}{|c|c|c|c|}
+\hline
+\mbox{Level} & \mbox{Base pt} & \mbox{Orbit length} & \mbox{Subgroup order}\\
+\hline
+\hline
+0 & 0 & 15 & 20160\\
+\hline
+1 & 1 & 14 & 1344\\
+\hline
+2 & 2 & 12 & 96\\
+\hline
+3 & 3 & 8 & 8\\
+\hline
+\end{array}
+$$
+
+\subsection*{Basic Orbit 0}
+
+\input CODE/FILES/CODES_8_4_4/sims_0.tex
+
+\bigskip
+
+\subsection*{Basic Orbit 1}
+
+\input CODE/FILES/CODES_8_4_4/sims_1.tex
+
+\bigskip
+
+\subsection*{Basic Orbit 2}
+
+\input CODE/FILES/CODES_8_4_4/sims_2.tex
+
+\bigskip
+
+\subsection*{Basic Orbit 3}
+
+\input CODE/FILES/CODES_8_4_4/sims_3.tex
+
+\bigskip
+{\renewcommand*{\arraystretch}{1.5}
+$$
+\begin{array}{|c|c|}
+\hline
+i & P_{i}\\
+\hline
+\hline
+0 & ( 1, 0, 0, 0 )\\
+1 & ( 0, 1, 0, 0 )\\
+2 & ( 0, 0, 1, 0 )\\
+3 & ( 0, 0, 0, 1 )\\
+4 & ( 1, 1, 1, 1 )\\
+5 & ( 1, 1, 0, 0 )\\
+6 & ( 1, 0, 1, 0 )\\
+7 & ( 0, 1, 1, 0 )\\
+8 & ( 1, 1, 1, 0 )\\
+9 & ( 1, 0, 0, 1 )\\
+\hline
+\end{array}
+, \;
+\begin{array}{|c|c|c|}
+\hline
+i & P_{i}\\
+\hline
+\hline
+10 & ( 0, 1, 0, 1 )\\
+11 & ( 1, 1, 0, 1 )\\
+12 & ( 0, 0, 1, 1 )\\
+13 & ( 1, 0, 1, 1 )\\
+14 & ( 0, 1, 1, 1 )\\
+\hline
+\end{array}
+$$}%
+Poset classification up to depth 8\\
+
+\subsection{The orbits}
+
+\subsection{Number of orbits at depth}
+$$
+\begin{array}{|r|r|}
+\hline
+\mbox{Depth} & \mbox{Nb of orbits}\\
+\hline
+\hline
+0 & 1\\
+\hline
+1 & 1\\
+\hline
+2 & 1\\
+\hline
+3 & 1\\
+\hline
+4 & 2\\
+\hline
+5 & 2\\
+\hline
+6 & 1\\
+\hline
+7 & 1\\
+\hline
+8 & 1\\
+\hline
+\end{array}
+$$
+
+\subsection{Orbit representatives: overview}
+
+N = node\\
+D = depth or level\\
+O = orbit with a level\\
+Rep = orbit representative\\
+SO = (order of stabilizer, orbit length)\\
+L = number of live points\\
+F = number of flags\\
+Gen = number of generators for the stabilizer of the orbit rep.\\
+\begin{center}
+\begin{longtable}{|r|r|r|p{3cm}|r|r|r|r|}
+\caption{Orbit Representatives}\\
+
+\hline N & D & O & Rep & SO & L & F & Gen\\ \hline 
+\endfirsthead
+
+\multicolumn{8}{c}%
+{{\bfseries \tablename\ \thetable{} -- continued from previous page}} \\
+\hline N & D & O & Rep & SO & L & F & Gen\\ \hline 
+\endhead
+
+\hline \multicolumn{8}{|r|}{{Continued on next page}} \\ \hline
+\endfoot
+
+\hline \hline
+\endlastfoot
+0 & 0 & 0 & $\{$  $\}$ & (20160, 1) & 15 & 1 & 6\\
+\hline
+1 & 1 & 0 & $\{$ 0 $\}$ & (1344, 15) & 14 & 1 & 6\\
+\hline
+2 & 2 & 0 & $\{$ 0, 1 $\}$ & (192, 105) & 12 & 1 & 6\\
+\hline
+3 & 3 & 0 & $\{$ 0, 1, 2 $\}$ & (48, 420) & 9 & 2 & 6\\
+\hline
+4 & 4 & 0 & $\{$ 0, 1, 2, 3 $\}$ & (24, 840) & 5 & 2 & 5\\
+5 & 4 & 1 & $\{$ 0, 1, 2, 8 $\}$ & (192, 105) & 8 & 0 & 9\\
+\hline
+6 & 5 & 0 & $\{$ 0, 1, 2, 3, 4 $\}$ & (120, 168) & 0 & 0 & 7\\
+7 & 5 & 1 & $\{$ 0, 1, 2, 3, 8 $\}$ & (24, 840) & 3 & 1 & 5\\
+\hline
+8 & 6 & 0 & $\{$ 0, 1, 2, 3, 8, 11 $\}$ & (48, 420) & 2 & 1 & 5\\
+\hline
+9 & 7 & 0 & $\{$ 0, 1, 2, 3, 8, 11, 13 $\}$ & (168, 120) & 1 & 1 & 6\\
+\hline
+10 & 8 & 0 & $\{$ 0, 1, 2, 3, 8, 11, 13, 14 $\}$ & (1344, 15) &  &  & 7\\
+\hline
+\end{longtable}
+\end{center}
+
+\subsection{The poset of orbits}
+
+%\includegraphics[width=160mm]{CODE/FILES/CODES_8_4_4/poset_draw_tree.1}\
+\includegraphics[width=160mm]{GRAPHICS/codes_8_4_4}\
+
+\section{Stabilizers and Schreier trees}
+
+
+\subsection{Stabilizers and Schreier trees at level 0}
+
+\subsection*{Node 0 at Level 0 Orbit 0 / 1}
+$$
+\{  \}_{20160}$$
+{\small\arraycolsep=2pt
+Strong generators for a group of order 20160:
+$$
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 1 & 0\\
+1 & 0 & 0 & 1\\
+\end{array}
+\right]
+, 
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 1 & 0\\
+0 & 1 & 0 & 1\\
+\end{array}
+\right]
+, 
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 1 & 0\\
+0 & 0 & 1 & 1\\
+\end{array}
+\right]
+, 
+$$
+$$
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 0 & 1\\
+0 & 0 & 1 & 0\\
+\end{array}
+\right]
+, 
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 0 & 1 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 0 & 1\\
+\end{array}
+\right]
+, 
+\left[
+\begin{array}{*{4}{r}}
+0 & 1 & 0 & 0\\
+1 & 0 & 0 & 0\\
+0 & 0 & 1 & 0\\
+0 & 0 & 0 & 1\\
+\end{array}
+\right]
+$$
+1,0,0,0,0,1,0,0,0,0,1,0,1,0,0,1,\\
+1,0,0,0,0,1,0,0,0,0,1,0,0,1,0,1,\\
+1,0,0,0,0,1,0,0,0,0,1,0,0,0,1,1,\\
+1,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,\\
+1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1,\\
+0,1,0,0,1,0,0,0,0,0,1,0,0,0,0,1,\\
+}
+There are 1 extensions\\
+Number of generators 6\\
+Generators for the Schreier trees:\\
+{\small\arraycolsep=2pt
+Generators for a group of order 20160:
+$$
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 1 & 0\\
+1 & 0 & 0 & 1\\
+\end{array}
+\right]
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 1 & 0\\
+0 & 1 & 0 & 1\\
+\end{array}
+\right]
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 1 & 0\\
+0 & 0 & 1 & 1\\
+\end{array}
+\right]
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 0 & 1\\
+0 & 0 & 1 & 0\\
+\end{array}
+\right]
+$$
+$$
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 0 & 1 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 0 & 1\\
+\end{array}
+\right]
+\left[
+\begin{array}{*{4}{r}}
+0 & 1 & 0 & 0\\
+1 & 0 & 0 & 0\\
+0 & 0 & 1 & 0\\
+0 & 0 & 0 & 1\\
+\end{array}
+\right]
+$$
+1,0,0,0,0,1,0,0,0,0,1,0,1,0,0,1,\\
+1,0,0,0,0,1,0,0,0,0,1,0,0,1,0,1,\\
+1,0,0,0,0,1,0,0,0,0,1,0,0,0,1,1,\\
+1,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,\\
+1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1,\\
+0,1,0,0,1,0,0,0,0,0,1,0,0,0,0,1,\\
+}
+\noindent Orbit 0 / 1: Point 0 lies in an orbit of length 14 with average word length 5.28571 $H_{6} = 2.40214$, $\Delta = 2.88357$\\
+\subsubsection*{Node 0 at Level 0 Orbit 0 / 1 Tree 0 / 1}
+Number of generators 6\\
+%\includegraphics[width=160mm]{CODE/FILES/CODES_8_4_4/shallow_schreier_tree_node_0_0_draw_tree.1}\
+
+\noindent Extension number 0\\
+Orbit representative 0\\
+Flag orbit length 15\\
+Flag orbit is defining new orbit 1 at level 1\\
+
+\subsection{Stabilizers and Schreier trees at level 1}
+
+\subsection*{Node 1 at Level 1 Orbit 0 / 1}
+$$
+\{ 0 \}_{1344}$$
+{\small\arraycolsep=2pt
+Strong generators for a group of order 1344:
+$$
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 1 & 0\\
+1 & 0 & 0 & 1\\
+\end{array}
+\right]
+, 
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 1 & 0\\
+1 & 0 & 1 & 1\\
+\end{array}
+\right]
+, 
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 1 & 0\\
+0 & 1 & 1 & 1\\
+\end{array}
+\right]
+, 
+$$
+$$
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 0 & 1\\
+0 & 0 & 1 & 0\\
+\end{array}
+\right]
+, 
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+1 & 1 & 1 & 0\\
+0 & 0 & 0 & 1\\
+\end{array}
+\right]
+, 
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 0 & 1 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 0 & 1\\
+\end{array}
+\right]
+$$
+1,0,0,0,0,1,0,0,0,0,1,0,1,0,0,1,\\
+1,0,0,0,0,1,0,0,0,0,1,0,1,0,1,1,\\
+1,0,0,0,0,1,0,0,0,0,1,0,0,1,1,1,\\
+1,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,\\
+1,0,0,0,0,1,0,0,1,1,1,0,0,0,0,1,\\
+1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1,\\
+}
+There are 1 extensions\\
+Number of generators 6\\
+Generators for the Schreier trees:\\
+{\small\arraycolsep=2pt
+Generators for a group of order 1344:
+$$
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 1 & 0\\
+1 & 0 & 0 & 1\\
+\end{array}
+\right]
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 1 & 0\\
+1 & 0 & 1 & 1\\
+\end{array}
+\right]
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 1 & 0\\
+0 & 1 & 1 & 1\\
+\end{array}
+\right]
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 0 & 1\\
+0 & 0 & 1 & 0\\
+\end{array}
+\right]
+$$
+$$
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+1 & 1 & 1 & 0\\
+0 & 0 & 0 & 1\\
+\end{array}
+\right]
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 0 & 1 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 0 & 1\\
+\end{array}
+\right]
+$$
+1,0,0,0,0,1,0,0,0,0,1,0,1,0,0,1,\\
+1,0,0,0,0,1,0,0,0,0,1,0,1,0,1,1,\\
+1,0,0,0,0,1,0,0,0,0,1,0,0,1,1,1,\\
+1,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,\\
+1,0,0,0,0,1,0,0,1,1,1,0,0,0,0,1,\\
+1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1,\\
+}
+\noindent Orbit 0 / 1: Point 1 lies in an orbit of length 14 with average word length 4.07143 $H_{6} = 2.25647$, $\Delta = 1.81496$\\
+\subsubsection*{Node 1 at Level 1 Orbit 0 / 1 Tree 0 / 1}
+Number of generators 6\\
+%\includegraphics[width=160mm]{CODE/FILES/CODES_8_4_4/shallow_schreier_tree_node_1_0_draw_tree.1}\
+
+\noindent Extension number 0\\
+Orbit representative 1\\
+Flag orbit length 14\\
+Flag orbit is defining new orbit 2 at level 2\\
+
+\subsection{Stabilizers and Schreier trees at level 2}
+
+\subsection*{Node 2 at Level 2 Orbit 0 / 1}
+$$
+\{ 0, 1 \}_{192}$$
+{\small\arraycolsep=2pt
+Strong generators for a group of order 192:
+$$
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 1 & 0\\
+1 & 0 & 1 & 1\\
+\end{array}
+\right]
+, 
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 1 & 0\\
+0 & 1 & 1 & 1\\
+\end{array}
+\right]
+, 
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 1 & 0\\
+0 & 1 & 0 & 1\\
+\end{array}
+\right]
+, 
+$$
+$$
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 0 & 1\\
+0 & 0 & 1 & 0\\
+\end{array}
+\right]
+, 
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 1 & 1 & 0\\
+0 & 0 & 0 & 1\\
+\end{array}
+\right]
+, 
+\left[
+\begin{array}{*{4}{r}}
+0 & 1 & 0 & 0\\
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 1\\
+1 & 0 & 1 & 0\\
+\end{array}
+\right]
+$$
+1,0,0,0,0,1,0,0,0,0,1,0,1,0,1,1,\\
+1,0,0,0,0,1,0,0,0,0,1,0,0,1,1,1,\\
+1,0,0,0,0,1,0,0,0,0,1,0,0,1,0,1,\\
+1,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,\\
+1,0,0,0,0,1,0,0,0,1,1,0,0,0,0,1,\\
+0,1,0,0,1,0,0,0,0,1,0,1,1,0,1,0,\\
+}
+There are 1 extensions\\
+Number of generators 6\\
+Generators for the Schreier trees:\\
+{\small\arraycolsep=2pt
+Generators for a group of order 192:
+$$
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 1 & 0\\
+1 & 0 & 1 & 1\\
+\end{array}
+\right]
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 1 & 0\\
+0 & 1 & 1 & 1\\
+\end{array}
+\right]
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 1 & 0\\
+0 & 1 & 0 & 1\\
+\end{array}
+\right]
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 0 & 1\\
+0 & 0 & 1 & 0\\
+\end{array}
+\right]
+$$
+$$
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 1 & 1 & 0\\
+0 & 0 & 0 & 1\\
+\end{array}
+\right]
+\left[
+\begin{array}{*{4}{r}}
+0 & 1 & 0 & 0\\
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 1\\
+1 & 0 & 1 & 0\\
+\end{array}
+\right]
+$$
+1,0,0,0,0,1,0,0,0,0,1,0,1,0,1,1,\\
+1,0,0,0,0,1,0,0,0,0,1,0,0,1,1,1,\\
+1,0,0,0,0,1,0,0,0,0,1,0,0,1,0,1,\\
+1,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,\\
+1,0,0,0,0,1,0,0,0,1,1,0,0,0,0,1,\\
+0,1,0,0,1,0,0,0,0,1,0,1,1,0,1,0,\\
+}
+\noindent Orbit 0 / 1: Point 2 lies in an orbit of length 12 with average word length 2.75 $H_{6} = 1.95144$, $\Delta = 0.798562$\\
+\subsubsection*{Node 2 at Level 2 Orbit 0 / 1 Tree 0 / 1}
+Number of generators 6\\
+%\includegraphics[width=160mm]{CODE/FILES/CODES_8_4_4/shallow_schreier_tree_node_2_0_draw_tree.1}\
+
+\noindent Extension number 0\\
+Orbit representative 2\\
+Flag orbit length 12\\
+Flag orbit is defining new orbit 3 at level 3\\
+
+\subsection{Stabilizers and Schreier trees at level 3}
+
+\subsection*{Node 3 at Level 3 Orbit 0 / 1}
+$$
+\{ 0, 1, 2 \}_{48}$$
+{\small\arraycolsep=2pt
+Strong generators for a group of order 48:
+$$
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 1 & 0\\
+1 & 1 & 0 & 1\\
+\end{array}
+\right]
+, 
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 1 & 0\\
+0 & 1 & 0 & 1\\
+\end{array}
+\right]
+, 
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 1 & 0\\
+1 & 0 & 1 & 1\\
+\end{array}
+\right]
+, 
+$$
+$$
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 0 & 1 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 0 & 1\\
+\end{array}
+\right]
+, 
+\left[
+\begin{array}{*{4}{r}}
+0 & 1 & 0 & 0\\
+1 & 0 & 0 & 0\\
+0 & 0 & 1 & 0\\
+1 & 0 & 0 & 1\\
+\end{array}
+\right]
+, 
+\left[
+\begin{array}{*{4}{r}}
+0 & 0 & 1 & 0\\
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+1 & 1 & 1 & 1\\
+\end{array}
+\right]
+$$
+1,0,0,0,0,1,0,0,0,0,1,0,1,1,0,1,\\
+1,0,0,0,0,1,0,0,0,0,1,0,0,1,0,1,\\
+1,0,0,0,0,1,0,0,0,0,1,0,1,0,1,1,\\
+1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1,\\
+0,1,0,0,1,0,0,0,0,0,1,0,1,0,0,1,\\
+0,0,1,0,1,0,0,0,0,1,0,0,1,1,1,1,\\
+}
+There are 2 extensions\\
+Number of generators 6\\
+Generators for the Schreier trees:\\
+{\small\arraycolsep=2pt
+Generators for a group of order 48:
+$$
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 1 & 0\\
+1 & 1 & 0 & 1\\
+\end{array}
+\right]
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 1 & 0\\
+0 & 1 & 0 & 1\\
+\end{array}
+\right]
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 1 & 0\\
+1 & 0 & 1 & 1\\
+\end{array}
+\right]
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 0 & 1 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 0 & 1\\
+\end{array}
+\right]
+$$
+$$
+\left[
+\begin{array}{*{4}{r}}
+0 & 1 & 0 & 0\\
+1 & 0 & 0 & 0\\
+0 & 0 & 1 & 0\\
+1 & 0 & 0 & 1\\
+\end{array}
+\right]
+\left[
+\begin{array}{*{4}{r}}
+0 & 0 & 1 & 0\\
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+1 & 1 & 1 & 1\\
+\end{array}
+\right]
+$$
+1,0,0,0,0,1,0,0,0,0,1,0,1,1,0,1,\\
+1,0,0,0,0,1,0,0,0,0,1,0,0,1,0,1,\\
+1,0,0,0,0,1,0,0,0,0,1,0,1,0,1,1,\\
+1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1,\\
+0,1,0,0,1,0,0,0,0,0,1,0,1,0,0,1,\\
+0,0,1,0,1,0,0,0,0,1,0,0,1,1,1,1,\\
+}
+\noindent Orbit 0 / 2: Point 3 lies in an orbit of length 8 with average word length 2.125 $H_{6} = 1.58125$, $\Delta = 0.543754$\\
+\noindent Orbit 1 / 2: Point 8 lies in an orbit of length 1 with average word length 1 $H_{6} = 0$, $\Delta = 1$\\
+\subsubsection*{Node 3 at Level 3 Orbit 0 / 1 Tree 0 / 2}
+Number of generators 6\\
+%\includegraphics[width=160mm]{CODE/FILES/CODES_8_4_4/shallow_schreier_tree_node_3_0_draw_tree.1}\
+
+\noindent Extension number 0\\
+Orbit representative 3\\
+Flag orbit length 8\\
+Flag orbit is defining new orbit 4 at level 4\\
+\subsubsection*{Node 3 at Level 3 Orbit 0 / 1 Tree 1 / 2}
+Number of generators 6\\
+%\includegraphics[width=160mm]{CODE/FILES/CODES_8_4_4/shallow_schreier_tree_node_3_1_draw_tree.1}\
+
+\noindent Extension number 1\\
+Orbit representative 8\\
+Flag orbit length 1\\
+Flag orbit is defining new orbit 5 at level 4\\
+
+\subsection{Stabilizers and Schreier trees at level 4}
+
+\subsection*{Node 4 at Level 4 Orbit 0 / 2}
+$$
+\{ 0, 1, 2, 3 \}_{24}$$
+{\small\arraycolsep=2pt
+Strong generators for a group of order 24:
+$$
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 0 & 1\\
+0 & 0 & 1 & 0\\
+\end{array}
+\right]
+, 
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 0 & 1 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 0 & 1\\
+\end{array}
+\right]
+, 
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 0 & 0 & 1\\
+0 & 0 & 1 & 0\\
+0 & 1 & 0 & 0\\
+\end{array}
+\right]
+, 
+$$
+$$
+\left[
+\begin{array}{*{4}{r}}
+0 & 0 & 1 & 0\\
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 0 & 1\\
+\end{array}
+\right]
+, 
+\left[
+\begin{array}{*{4}{r}}
+0 & 0 & 0 & 1\\
+0 & 1 & 0 & 0\\
+1 & 0 & 0 & 0\\
+0 & 0 & 1 & 0\\
+\end{array}
+\right]
+$$
+1,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,\\
+1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1,\\
+1,0,0,0,0,0,0,1,0,0,1,0,0,1,0,0,\\
+0,0,1,0,1,0,0,0,0,1,0,0,0,0,0,1,\\
+0,0,0,1,0,1,0,0,1,0,0,0,0,0,1,0,\\
+}
+There are 2 extensions\\
+Number of generators 5\\
+Generators for the Schreier trees:\\
+{\small\arraycolsep=2pt
+Generators for a group of order 24:
+$$
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 0 & 1\\
+0 & 0 & 1 & 0\\
+\end{array}
+\right]
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 0 & 1 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 0 & 1\\
+\end{array}
+\right]
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 0 & 0 & 1\\
+0 & 0 & 1 & 0\\
+0 & 1 & 0 & 0\\
+\end{array}
+\right]
+\left[
+\begin{array}{*{4}{r}}
+0 & 0 & 1 & 0\\
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 0 & 1\\
+\end{array}
+\right]
+$$
+$$
+\left[
+\begin{array}{*{4}{r}}
+0 & 0 & 0 & 1\\
+0 & 1 & 0 & 0\\
+1 & 0 & 0 & 0\\
+0 & 0 & 1 & 0\\
+\end{array}
+\right]
+$$
+1,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,\\
+1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1,\\
+1,0,0,0,0,0,0,1,0,0,1,0,0,1,0,0,\\
+0,0,1,0,1,0,0,0,0,1,0,0,0,0,0,1,\\
+0,0,0,1,0,1,0,0,1,0,0,0,0,0,1,0,\\
+}
+\noindent Orbit 0 / 2: Point 4 lies in an orbit of length 1 with average word length 1 $H_{5} = 0$, $\Delta = 1$\\
+\noindent Orbit 1 / 2: Point 8 lies in an orbit of length 4 with average word length 2 $H_{5} = 1.29203$, $\Delta = 0.70797$\\
+\subsubsection*{Node 4 at Level 4 Orbit 0 / 2 Tree 0 / 2}
+Number of generators 5\\
+%\includegraphics[width=160mm]{CODE/FILES/CODES_8_4_4/shallow_schreier_tree_node_4_0_draw_tree.1}\
+
+\noindent Extension number 0\\
+Orbit representative 4\\
+Flag orbit length 1\\
+Flag orbit is defining new orbit 6 at level 5\\
+\subsubsection*{Node 4 at Level 4 Orbit 0 / 2 Tree 1 / 2}
+Number of generators 5\\
+%\includegraphics[width=160mm]{CODE/FILES/CODES_8_4_4/shallow_schreier_tree_node_4_1_draw_tree.1}\
+
+\noindent Extension number 1\\
+Orbit representative 8\\
+Flag orbit length 4\\
+Flag orbit is defining new orbit 7 at level 5\\
+\subsection*{Node 5 at Level 4 Orbit 1 / 2}
+$$
+\{ 0, 1, 2, 8 \}_{192}$$
+{\small\arraycolsep=2pt
+Strong generators for a group of order 192:
+$$
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 1 & 0\\
+1 & 1 & 0 & 1\\
+\end{array}
+\right]
+, 
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 1 & 0\\
+0 & 1 & 0 & 1\\
+\end{array}
+\right]
+, 
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 1 & 0\\
+1 & 0 & 1 & 1\\
+\end{array}
+\right]
+, 
+$$
+$$
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+1 & 1 & 1 & 0\\
+0 & 0 & 1 & 1\\
+\end{array}
+\right]
+, 
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 0 & 1 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 0 & 1\\
+\end{array}
+\right]
+, 
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+1 & 1 & 1 & 0\\
+0 & 1 & 0 & 0\\
+1 & 0 & 1 & 1\\
+\end{array}
+\right]
+, 
+$$
+$$
+\left[
+\begin{array}{*{4}{r}}
+0 & 1 & 0 & 0\\
+1 & 0 & 0 & 0\\
+0 & 0 & 1 & 0\\
+1 & 0 & 0 & 1\\
+\end{array}
+\right]
+, 
+\left[
+\begin{array}{*{4}{r}}
+0 & 0 & 1 & 0\\
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+1 & 1 & 1 & 1\\
+\end{array}
+\right]
+, 
+\left[
+\begin{array}{*{4}{r}}
+1 & 1 & 1 & 0\\
+0 & 0 & 1 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 0 & 1\\
+\end{array}
+\right]
+$$
+1,0,0,0,0,1,0,0,0,0,1,0,1,1,0,1,\\
+1,0,0,0,0,1,0,0,0,0,1,0,0,1,0,1,\\
+1,0,0,0,0,1,0,0,0,0,1,0,1,0,1,1,\\
+1,0,0,0,0,1,0,0,1,1,1,0,0,0,1,1,\\
+1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1,\\
+1,0,0,0,1,1,1,0,0,1,0,0,1,0,1,1,\\
+0,1,0,0,1,0,0,0,0,0,1,0,1,0,0,1,\\
+0,0,1,0,1,0,0,0,0,1,0,0,1,1,1,1,\\
+1,1,1,0,0,0,1,0,0,1,0,0,0,0,0,1,\\
+}
+There are 0 extensions\\
+Number of generators 9\\
+Generators for the Schreier trees:\\
+{\small\arraycolsep=2pt
+Generators for a group of order 192:
+$$
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 1 & 0\\
+1 & 1 & 0 & 1\\
+\end{array}
+\right]
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 1 & 0\\
+0 & 1 & 0 & 1\\
+\end{array}
+\right]
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 1 & 0\\
+1 & 0 & 1 & 1\\
+\end{array}
+\right]
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+1 & 1 & 1 & 0\\
+0 & 0 & 1 & 1\\
+\end{array}
+\right]
+$$
+$$
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 0 & 1 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 0 & 1\\
+\end{array}
+\right]
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+1 & 1 & 1 & 0\\
+0 & 1 & 0 & 0\\
+1 & 0 & 1 & 1\\
+\end{array}
+\right]
+\left[
+\begin{array}{*{4}{r}}
+0 & 1 & 0 & 0\\
+1 & 0 & 0 & 0\\
+0 & 0 & 1 & 0\\
+1 & 0 & 0 & 1\\
+\end{array}
+\right]
+\left[
+\begin{array}{*{4}{r}}
+0 & 0 & 1 & 0\\
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+1 & 1 & 1 & 1\\
+\end{array}
+\right]
+$$
+$$
+\left[
+\begin{array}{*{4}{r}}
+1 & 1 & 1 & 0\\
+0 & 0 & 1 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 0 & 1\\
+\end{array}
+\right]
+$$
+1,0,0,0,0,1,0,0,0,0,1,0,1,1,0,1,\\
+1,0,0,0,0,1,0,0,0,0,1,0,0,1,0,1,\\
+1,0,0,0,0,1,0,0,0,0,1,0,1,0,1,1,\\
+1,0,0,0,0,1,0,0,1,1,1,0,0,0,1,1,\\
+1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1,\\
+1,0,0,0,1,1,1,0,0,1,0,0,1,0,1,1,\\
+0,1,0,0,1,0,0,0,0,0,1,0,1,0,0,1,\\
+0,0,1,0,1,0,0,0,0,1,0,0,1,1,1,1,\\
+1,1,1,0,0,0,1,0,0,1,0,0,0,0,0,1,\\
+}
+\noindent Orbit 0 / 1: Point 3 lies in an orbit of length 8 with average word length 2 $H_{9} = 1.26186$, $\Delta = 0.73814$\\
+\subsubsection*{Node 5 at Level 4 Orbit 1 / 2 Tree 0 / 1}
+Number of generators 9\\
+%\includegraphics[width=160mm]{CODE/FILES/CODES_8_4_4/shallow_schreier_tree_node_5_0_draw_tree.1}\
+
+Cannot find an extension for point 3\\
+
+\subsection{Stabilizers and Schreier trees at level 5}
+
+\subsection*{Node 6 at Level 5 Orbit 0 / 2}
+$$
+\{ 0, 1, 2, 3, 4 \}_{120}$$
+{\small\arraycolsep=2pt
+Strong generators for a group of order 120:
+$$
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 1 & 0\\
+1 & 1 & 1 & 1\\
+\end{array}
+\right]
+, 
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 0 & 1\\
+0 & 0 & 1 & 0\\
+\end{array}
+\right]
+, 
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+1 & 1 & 1 & 1\\
+0 & 0 & 1 & 0\\
+\end{array}
+\right]
+, 
+$$
+$$
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 0 & 1 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 0 & 1\\
+\end{array}
+\right]
+, 
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 0 & 0 & 1\\
+0 & 0 & 1 & 0\\
+0 & 1 & 0 & 0\\
+\end{array}
+\right]
+, 
+\left[
+\begin{array}{*{4}{r}}
+0 & 0 & 1 & 0\\
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 0 & 1\\
+\end{array}
+\right]
+, 
+$$
+$$
+\left[
+\begin{array}{*{4}{r}}
+1 & 1 & 1 & 1\\
+0 & 1 & 0 & 0\\
+0 & 0 & 0 & 1\\
+0 & 0 & 1 & 0\\
+\end{array}
+\right]
+$$
+1,0,0,0,0,1,0,0,0,0,1,0,1,1,1,1,\\
+1,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,\\
+1,0,0,0,0,1,0,0,1,1,1,1,0,0,1,0,\\
+1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1,\\
+1,0,0,0,0,0,0,1,0,0,1,0,0,1,0,0,\\
+0,0,1,0,1,0,0,0,0,1,0,0,0,0,0,1,\\
+1,1,1,1,0,1,0,0,0,0,0,1,0,0,1,0,\\
+}
+There are 0 extensions\\
+Number of generators 7\\
+Generators for the Schreier trees:\\
+{\small\arraycolsep=2pt
+Generators for a group of order 120:
+$$
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 1 & 0\\
+1 & 1 & 1 & 1\\
+\end{array}
+\right]
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 0 & 1\\
+0 & 0 & 1 & 0\\
+\end{array}
+\right]
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+1 & 1 & 1 & 1\\
+0 & 0 & 1 & 0\\
+\end{array}
+\right]
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 0 & 1 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 0 & 1\\
+\end{array}
+\right]
+$$
+$$
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 0 & 0 & 1\\
+0 & 0 & 1 & 0\\
+0 & 1 & 0 & 0\\
+\end{array}
+\right]
+\left[
+\begin{array}{*{4}{r}}
+0 & 0 & 1 & 0\\
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 0 & 1\\
+\end{array}
+\right]
+\left[
+\begin{array}{*{4}{r}}
+1 & 1 & 1 & 1\\
+0 & 1 & 0 & 0\\
+0 & 0 & 0 & 1\\
+0 & 0 & 1 & 0\\
+\end{array}
+\right]
+$$
+1,0,0,0,0,1,0,0,0,0,1,0,1,1,1,1,\\
+1,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,\\
+1,0,0,0,0,1,0,0,1,1,1,1,0,0,1,0,\\
+1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1,\\
+1,0,0,0,0,0,0,1,0,0,1,0,0,1,0,0,\\
+0,0,1,0,1,0,0,0,0,1,0,0,0,0,0,1,\\
+1,1,1,1,0,1,0,0,0,0,0,1,0,0,1,0,\\
+}
+\subsection*{Node 7 at Level 5 Orbit 1 / 2}
+$$
+\{ 0, 1, 2, 3, 8 \}_{24}$$
+{\small\arraycolsep=2pt
+Strong generators for a group of order 24:
+$$
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+1 & 1 & 1 & 0\\
+0 & 0 & 0 & 1\\
+\end{array}
+\right]
+, 
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 0 & 1 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 0 & 1\\
+\end{array}
+\right]
+, 
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+1 & 1 & 1 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 0 & 1\\
+\end{array}
+\right]
+, 
+$$
+$$
+\left[
+\begin{array}{*{4}{r}}
+0 & 0 & 1 & 0\\
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 0 & 1\\
+\end{array}
+\right]
+, 
+\left[
+\begin{array}{*{4}{r}}
+1 & 1 & 1 & 0\\
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 0 & 1\\
+\end{array}
+\right]
+$$
+1,0,0,0,0,1,0,0,1,1,1,0,0,0,0,1,\\
+1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1,\\
+1,0,0,0,1,1,1,0,0,1,0,0,0,0,0,1,\\
+0,0,1,0,1,0,0,0,0,1,0,0,0,0,0,1,\\
+1,1,1,0,1,0,0,0,0,1,0,0,0,0,0,1,\\
+}
+There are 1 extensions\\
+Number of generators 5\\
+Generators for the Schreier trees:\\
+{\small\arraycolsep=2pt
+Generators for a group of order 24:
+$$
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+1 & 1 & 1 & 0\\
+0 & 0 & 0 & 1\\
+\end{array}
+\right]
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 0 & 1 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 0 & 1\\
+\end{array}
+\right]
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+1 & 1 & 1 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 0 & 1\\
+\end{array}
+\right]
+\left[
+\begin{array}{*{4}{r}}
+0 & 0 & 1 & 0\\
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 0 & 1\\
+\end{array}
+\right]
+$$
+$$
+\left[
+\begin{array}{*{4}{r}}
+1 & 1 & 1 & 0\\
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 0 & 1\\
+\end{array}
+\right]
+$$
+1,0,0,0,0,1,0,0,1,1,1,0,0,0,0,1,\\
+1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1,\\
+1,0,0,0,1,1,1,0,0,1,0,0,0,0,0,1,\\
+0,0,1,0,1,0,0,0,0,1,0,0,0,0,0,1,\\
+1,1,1,0,1,0,0,0,0,1,0,0,0,0,0,1,\\
+}
+\noindent Orbit 0 / 1: Point 11 lies in an orbit of length 3 with average word length 1.66667 $H_{5} = 1$, $\Delta = 0.666667$\\
+\subsubsection*{Node 7 at Level 5 Orbit 1 / 2 Tree 0 / 1}
+Number of generators 5\\
+%\includegraphics[width=160mm]{CODE/FILES/CODES_8_4_4/shallow_schreier_tree_node_7_0_draw_tree.1}\
+
+\noindent Extension number 0\\
+Orbit representative 11\\
+Flag orbit length 3\\
+Flag orbit is defining new orbit 8 at level 6\\
+
+\subsection{Stabilizers and Schreier trees at level 6}
+
+\subsection*{Node 8 at Level 6 Orbit 0 / 1}
+$$
+\{ 0, 1, 2, 3, 8, 11 \}_{48}$$
+{\small\arraycolsep=2pt
+Strong generators for a group of order 48:
+$$
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 1 & 0\\
+1 & 1 & 0 & 1\\
+\end{array}
+\right]
+, 
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+1 & 1 & 1 & 0\\
+0 & 0 & 0 & 1\\
+\end{array}
+\right]
+, 
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+1 & 1 & 0 & 1\\
+0 & 0 & 1 & 0\\
+\end{array}
+\right]
+, 
+$$
+$$
+\left[
+\begin{array}{*{4}{r}}
+1 & 1 & 1 & 0\\
+0 & 0 & 1 & 0\\
+1 & 0 & 0 & 0\\
+0 & 0 & 0 & 1\\
+\end{array}
+\right]
+, 
+\left[
+\begin{array}{*{4}{r}}
+1 & 1 & 0 & 1\\
+0 & 0 & 0 & 1\\
+1 & 0 & 0 & 0\\
+0 & 0 & 1 & 0\\
+\end{array}
+\right]
+$$
+1,0,0,0,0,1,0,0,0,0,1,0,1,1,0,1,\\
+1,0,0,0,0,1,0,0,1,1,1,0,0,0,0,1,\\
+1,0,0,0,0,1,0,0,1,1,0,1,0,0,1,0,\\
+1,1,1,0,0,0,1,0,1,0,0,0,0,0,0,1,\\
+1,1,0,1,0,0,0,1,1,0,0,0,0,0,1,0,\\
+}
+There are 1 extensions\\
+Number of generators 5\\
+Generators for the Schreier trees:\\
+{\small\arraycolsep=2pt
+Generators for a group of order 48:
+$$
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 1 & 0\\
+1 & 1 & 0 & 1\\
+\end{array}
+\right]
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+1 & 1 & 1 & 0\\
+0 & 0 & 0 & 1\\
+\end{array}
+\right]
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+1 & 1 & 0 & 1\\
+0 & 0 & 1 & 0\\
+\end{array}
+\right]
+\left[
+\begin{array}{*{4}{r}}
+1 & 1 & 1 & 0\\
+0 & 0 & 1 & 0\\
+1 & 0 & 0 & 0\\
+0 & 0 & 0 & 1\\
+\end{array}
+\right]
+$$
+$$
+\left[
+\begin{array}{*{4}{r}}
+1 & 1 & 0 & 1\\
+0 & 0 & 0 & 1\\
+1 & 0 & 0 & 0\\
+0 & 0 & 1 & 0\\
+\end{array}
+\right]
+$$
+1,0,0,0,0,1,0,0,0,0,1,0,1,1,0,1,\\
+1,0,0,0,0,1,0,0,1,1,1,0,0,0,0,1,\\
+1,0,0,0,0,1,0,0,1,1,0,1,0,0,1,0,\\
+1,1,1,0,0,0,1,0,1,0,0,0,0,0,0,1,\\
+1,1,0,1,0,0,0,1,1,0,0,0,0,0,1,0,\\
+}
+\noindent Orbit 0 / 1: Point 13 lies in an orbit of length 2 with average word length 1.5 $H_{5} = 0.682606$, $\Delta = 0.817394$\\
+\subsubsection*{Node 8 at Level 6 Orbit 0 / 1 Tree 0 / 1}
+Number of generators 5\\
+%\includegraphics[width=160mm]{CODE/FILES/CODES_8_4_4/shallow_schreier_tree_node_8_0_draw_tree.1}\
+
+\noindent Extension number 0\\
+Orbit representative 13\\
+Flag orbit length 2\\
+Flag orbit is defining new orbit 9 at level 7\\
+
+\subsection{Stabilizers and Schreier trees at level 7}
+
+\subsection*{Node 9 at Level 7 Orbit 0 / 1}
+$$
+\{ 0, 1, 2, 3, 8, 11, 13 \}_{168}$$
+{\small\arraycolsep=2pt
+Strong generators for a group of order 168:
+$$
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 0 & 1\\
+0 & 0 & 1 & 0\\
+\end{array}
+\right]
+, 
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+1 & 1 & 1 & 0\\
+1 & 1 & 0 & 1\\
+\end{array}
+\right]
+, 
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 0 & 1 & 0\\
+1 & 0 & 1 & 1\\
+1 & 1 & 1 & 0\\
+\end{array}
+\right]
+, 
+$$
+$$
+\left[
+\begin{array}{*{4}{r}}
+0 & 0 & 0 & 1\\
+1 & 1 & 0 & 1\\
+1 & 0 & 0 & 0\\
+0 & 0 & 1 & 0\\
+\end{array}
+\right]
+, 
+\left[
+\begin{array}{*{4}{r}}
+1 & 1 & 0 & 1\\
+0 & 0 & 0 & 1\\
+1 & 0 & 0 & 0\\
+1 & 1 & 1 & 0\\
+\end{array}
+\right]
+, 
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 1 & 1\\
+1 & 1 & 1 & 0\\
+1 & 1 & 0 & 1\\
+0 & 1 & 0 & 0\\
+\end{array}
+\right]
+$$
+1,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,\\
+1,0,0,0,0,1,0,0,1,1,1,0,1,1,0,1,\\
+1,0,0,0,0,0,1,0,1,0,1,1,1,1,1,0,\\
+0,0,0,1,1,1,0,1,1,0,0,0,0,0,1,0,\\
+1,1,0,1,0,0,0,1,1,0,0,0,1,1,1,0,\\
+1,0,1,1,1,1,1,0,1,1,0,1,0,1,0,0,\\
+}
+There are 1 extensions\\
+Number of generators 6\\
+Generators for the Schreier trees:\\
+{\small\arraycolsep=2pt
+Generators for a group of order 168:
+$$
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 0 & 1\\
+0 & 0 & 1 & 0\\
+\end{array}
+\right]
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+1 & 1 & 1 & 0\\
+1 & 1 & 0 & 1\\
+\end{array}
+\right]
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 0 & 1 & 0\\
+1 & 0 & 1 & 1\\
+1 & 1 & 1 & 0\\
+\end{array}
+\right]
+\left[
+\begin{array}{*{4}{r}}
+0 & 0 & 0 & 1\\
+1 & 1 & 0 & 1\\
+1 & 0 & 0 & 0\\
+0 & 0 & 1 & 0\\
+\end{array}
+\right]
+$$
+$$
+\left[
+\begin{array}{*{4}{r}}
+1 & 1 & 0 & 1\\
+0 & 0 & 0 & 1\\
+1 & 0 & 0 & 0\\
+1 & 1 & 1 & 0\\
+\end{array}
+\right]
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 1 & 1\\
+1 & 1 & 1 & 0\\
+1 & 1 & 0 & 1\\
+0 & 1 & 0 & 0\\
+\end{array}
+\right]
+$$
+1,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,\\
+1,0,0,0,0,1,0,0,1,1,1,0,1,1,0,1,\\
+1,0,0,0,0,0,1,0,1,0,1,1,1,1,1,0,\\
+0,0,0,1,1,1,0,1,1,0,0,0,0,0,1,0,\\
+1,1,0,1,0,0,0,1,1,0,0,0,1,1,1,0,\\
+1,0,1,1,1,1,1,0,1,1,0,1,0,1,0,0,\\
+}
+\noindent Orbit 0 / 1: Point 14 lies in an orbit of length 1 with average word length 1 $H_{6} = 0$, $\Delta = 1$\\
+\subsubsection*{Node 9 at Level 7 Orbit 0 / 1 Tree 0 / 1}
+Number of generators 6\\
+%\includegraphics[width=160mm]{CODE/FILES/CODES_8_4_4/shallow_schreier_tree_node_9_0_draw_tree.1}\
+
+\noindent Extension number 0\\
+Orbit representative 14\\
+Flag orbit length 1\\
+Flag orbit is defining new orbit 10 at level 8\\
+
+\subsection{Stabilizers and Schreier trees at level 8}
+
+\subsection*{Node 10 at Level 8 Orbit 0 / 1}
+$$
+\{ 0, 1, 2, 3, 8, 11, 13, 14 \}_{1344}$$
+{\small\arraycolsep=2pt
+Strong generators for a group of order 1344:
+$$
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 1 & 0\\
+1 & 1 & 0 & 1\\
+\end{array}
+\right]
+, 
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 1 & 0\\
+0 & 1 & 1 & 1\\
+\end{array}
+\right]
+, 
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 0 & 1\\
+0 & 0 & 1 & 0\\
+\end{array}
+\right]
+, 
+$$
+$$
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+1 & 1 & 1 & 0\\
+1 & 1 & 0 & 1\\
+\end{array}
+\right]
+, 
+\left[
+\begin{array}{*{4}{r}}
+1 & 0 & 0 & 0\\
+0 & 0 & 1 & 0\\
+1 & 0 & 1 & 1\\
+1 & 1 & 1 & 0\\
+\end{array}
+\right]
+, 
+\left[
+\begin{array}{*{4}{r}}
+0 & 0 & 0 & 1\\
+1 & 1 & 0 & 1\\
+1 & 0 & 0 & 0\\
+0 & 0 & 1 & 0\\
+\end{array}
+\right]
+, 
+$$
+$$
+\left[
+\begin{array}{*{4}{r}}
+0 & 1 & 1 & 1\\
+1 & 1 & 0 & 1\\
+1 & 1 & 1 & 0\\
+0 & 0 & 0 & 1\\
+\end{array}
+\right]
+$$
+1,0,0,0,0,1,0,0,0,0,1,0,1,1,0,1,\\
+1,0,0,0,0,1,0,0,0,0,1,0,0,1,1,1,\\
+1,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,\\
+1,0,0,0,0,1,0,0,1,1,1,0,1,1,0,1,\\
+1,0,0,0,0,0,1,0,1,0,1,1,1,1,1,0,\\
+0,0,0,1,1,1,0,1,1,0,0,0,0,0,1,0,\\
+0,1,1,1,1,1,0,1,1,1,1,0,0,0,0,1,\\
+}
+There are 0 extensions\\
+Number of generators 7\\
+

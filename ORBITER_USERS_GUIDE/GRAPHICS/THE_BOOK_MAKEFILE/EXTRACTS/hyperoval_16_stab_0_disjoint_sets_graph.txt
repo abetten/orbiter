@@ -1,0 +1,12 @@
+hyperoval_16_stab_0_disjoint_sets_graph:
+	$(ORBITER) -v 2 \
+		-define G -graph -disjoint_sets_graph \
+			neighbors_of_0_with_4_removed.csv \
+		-end \
+		-with G -do \
+			-graph_theoretic_activity \
+			-find_cliques \
+				-target_size 4 \
+			-end \
+		-end \
+		-print_symbols

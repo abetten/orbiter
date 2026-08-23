@@ -1,0 +1,4 @@
+vector_example_repeat:
+	$(ORBITER) -v 2 \
+		-define v -vector -repeat "0,1,2,3" 11 -end \
+		-print_symbols

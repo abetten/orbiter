@@ -1,0 +1,130 @@
+Besides classification, Orbiter provides recognition and isomorphism testing of cubic surfaces. 
+Table~\ref{tab:surfaces:study} lists the relevant Orbiter commands.
+These commands are activities of type ``classification of cubic surfaces with double sixes.''
+\begin{table}
+\begin{center}
+\begin{tabular}{|p{4cm}|p{3cm}|p{8cm}|}
+\hline
+Command & Arguments & Purpose \\
+\hline
+\hline
+\verb'-identify_Eckardt' & & 
+Identifies the isomorphism type of the Eckardt surface with parameter $a$. All values of $a$ are considered. \\
+\hline
+\verb'-identify_F13' & & 
+Identifies the isomorphism type of the $F_{13}$ surface with parameter $a$. All values of $a$ are considered. \\
+\hline
+\verb'-identify_Bes' & & 
+Identifies the isomorphism type of the Bes surface with parameters $a$ and $c$. All values of $a,c$ are considered.\\
+\hline
+\verb'-identify_general_' \verb'abcd' & & 
+Identifies the isomorphism type of the general surface with parameters $a,b,c,d$. All values of $a,b,c,d$ are considered.\\
+\hline
+\verb'-isomorphism_' \verb'testing' &  S1 S2 & 
+Computes an isomorphism from surface S1 to surface S2 or concludes that none exists. \\
+\hline
+\verb'-recognize' &  S & 
+Identifies the isomorphism type of the given surface $S$. \\
+\hline
+\verb'-create_source_code' &   & 
+Creates source code for the classification of cubic surfaces 
+with 27 lines over the given field. \\
+\hline
+\verb'-sweep_Cayley' &   & 
+Identifies all surfaces given by the Cayley normal form over the given field. \\
+\hline
+\end{tabular}
+\end{center}
+\caption{\label{tab:surfaces:study}Activities related to the classification of cubic surfaces}
+\end{table}
+
+
+
+
+
+\bigskip
+
+
+The \verb'-recognize' option can be used to identify a given surface 
+in the list produced by the classification.
+The command computes an isomorphism between the given surface and the surface in the catalogue.
+For instance, 
+{\tt
+\input GRAPHICS/THE_MAKEFILE/EXTRACTS/surface_recognize_q7_abcd_2_3_3_4.tex
+}
+identifies 
+the surface (cf. Table~\ref{tab:PG3monomials})
+\begin{equation}\label{eqn:surface8}
+X_0^2X_3+X_1^2X_2+X_1X_2^2+X_0X_3^2+X_1X_2X_3 = 0
+\end{equation}
+in the classification of surfaces over the field $\bbF_7.$
+This means that an isomorphism from the given surface 
+to the surface in the list is computed.
+Also, the generators of the automorphism group of the 
+given surface are computed, 
+using the known generators for the automorphism group 
+of the surface in the classification. 
+For instance, executing the command above produces the isomorphism
+\begin{mdframed}[style=MyFrame]
+\input GRAPHICS/LATEX/surface_isomorphism.tex
+\end{mdframed}
+
+\bigskip
+
+
+Orbiter can compute isomorphism between two given surfaces. 
+Both surfaces must have 27 lines. Let us consider an example.
+Suppose we want to find an isomorphism between the surfaces 
+$$
+\begin{array}{p{14cm}}
+$X_0^2X_2 + X_1^2X_2 + X_1^2X_3 + X_0X_2^2 + X_1X_2^2 + X_2^2X_3 +$ 
+$\delta^{13}X_1X_3^2 + \delta^{13}X_2X_3^2 + \delta^{7}X_0X_2X_3 +\delta^{7}X_1X_2X_3$
+\end{array}
+=0
+$$
+and
+$$
+\delta^{11}X_0^2X_3 + \delta^{12}X_1^2X_2 + \delta^{12}X_1X_2^2 + \delta^{11}X_0X_3^2 + X_1X_2X_3=0,
+$$
+over the field $\bbF_{16}.$	
+The command 
+{\tt
+\input GRAPHICS/THE_MAKEFILE/EXTRACTS/surface_isomorph_16.tex
+}
+computes an isomorphism from the first surface to the second, given by the matrix:
+\begin{mdframed}[style=MyFrame]
+\input GRAPHICS/LATEX/surface_isomorphism_q16.tex
+\end{mdframed}
+
+\bigskip
+
+
+Orbiter can recognize the isomorphism type of 
+a cubic surface with 27 lines inside the Orbiter catalogue. 
+Given a surface, Orbiter will return the orbiter catalogue number 
+of the surface isomorphic to it.
+Let us consider an example. 
+Suppose we want to determine the isomorphism type of the surface
+$$
+X_0^2X_3 + X_1^2X_2 + X_1X_2^2 + X_0X_3^2 + X_1X_2X_3 = 0.
+$$
+The command 
+{\tt
+\input GRAPHICS/THE_MAKEFILE/EXTRACTS/surface_recognize_8.tex
+}
+finds that the surface is isomorphic to the surface with OCN equal to 0.
+An isomorphism will be computed as well.
+
+
+\bigskip
+
+
+The command 
+{\tt
+\input GRAPHICS/THE_MAKEFILE/EXTRACTS/surface_sweep_Cayley_13.tex
+}
+creates all surfaces in Cayley's 4-parameter normal form over the field $\bbF_{13}$ 
+and determines their isomorphism types.
+
+
+

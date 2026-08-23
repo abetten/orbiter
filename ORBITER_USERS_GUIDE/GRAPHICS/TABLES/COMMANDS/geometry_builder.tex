@@ -1,0 +1,72 @@
+\begin{table}
+\begin{tcolorbox}[tabularx={X|p{2cm}|X|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black,title=Constructing and Classifying Geometries]
+		\hline
+		Command & Arguments & Purpose \\
+		\hline
+		\hline
+		\verb'-V' & part  & 
+		The initial partition of points (rows). \\
+		\hline
+		\verb'-B' & part & 
+		The initial partition of blocks (columns). \\
+		\hline
+		\verb'-TDO' & tdo & 
+		The initial row-tactical decomposition scheme. \\
+		\hline
+		\verb'-fuse' & fuse & 
+		The partition of row classes. \\
+		\hline
+		\verb'-girth_test' & $g$ & 
+		Require the girth of the collinearity graph to be at least $g$. \\
+		\hline
+		\verb'-lambda' & $\lambda$ & 
+		Set $\lambda$ for two-design test. 
+		Every pair of points is required to lie in $\lambda$ blocks. \\
+		\hline
+		\verb'-no_square_test' &  &  
+		Disable the test for linear spaces. \\
+		\hline
+		\verb'-simple' &  & 
+		Construct simple designs only (needs \verb'-lambda') \\
+		\hline
+		\verb'-search_tree' &  & 
+		Write a file containing the search tree 
+		(at the level of rows of the partial geometry). \\
+		\hline
+		\verb'-search_tree_flags' &  & 
+		Write a file containing the search tree 
+		(at the level of flags of the partial geometry). 
+		A flag is an incident point-block pair. \\
+		\hline
+		\verb'-orderly' &  & 
+		Apply orderly generation. \\
+		\hline
+		\verb'-special_test_not_orderly' &  & 
+		Apply the special test. 
+		This option only applies to generation which is not orderly. \\
+		\hline
+		\verb'-split' & $l$ $r$ $m$ & 
+		Split the search tree at line $l$. 
+		After $l$ lines, 
+		continue only the cases which are congruent to $r$ modulo $m$. \\
+		\hline
+		\verb'-fname_GEO' & fname & 
+		Set the output file name base (no extension). \\
+		\hline
+		\verb'-output_to_inc_file' &  & 
+		Set output to inc file.  \\
+		\hline
+		\verb'-output_to_sage_file' &  & 
+		Set output to sage file. \\
+		\hline
+		\verb'-output_to_blocks_file' &  & 
+		Set output to a file containing the blocks in coded form. \\
+		\hline
+		\verb'-output_to_blocks_latex_file' &  & 
+		Set output to a file containing the blocks in latex. \\
+		\hline
+		\end{tcolorbox}
+	\caption{\label{tab:geometry:builder}Constructing and Classifying Geometries}
+	\end{table}

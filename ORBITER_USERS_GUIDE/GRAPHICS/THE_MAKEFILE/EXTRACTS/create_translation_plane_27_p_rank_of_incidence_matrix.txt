@@ -1,0 +1,12 @@
+create_translation_plane_27_p_rank_of_incidence_matrix:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 3 -end \
+		-define G -linear_group -PGL 6 F -end \
+		-define G1 -linear_group -PGL 7 F -end \
+		-define S -spread -kernel_field F \
+			-group G -k 3 -catalogue 6 \
+			-end \
+		-define T -translation_plane S G G1 -end \
+		-with T -do -translation_plane_activity \
+			-p_rank 3 \
+		-end

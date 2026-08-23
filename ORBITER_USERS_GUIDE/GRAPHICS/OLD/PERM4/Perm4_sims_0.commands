@@ -1,0 +1,35 @@
+% file: Perm4_sims_0.commands
+% created by Orbiter graphics interface
+% creation date: Sat Dec  4 21:21:38 +03 2021
+
+DeviceCoordinates 0 0 1000000 1000000
+UserCoordinates 0 0 10000 10000
+Polygon 2 5000 9375 5000 8125
+Polygon 2 5000 8125 5000 6875
+Polygon 2 5000 6875 5000 5625
+sf_interior 100
+Circle 500000, 937500, 20000
+sf_interior 0
+Circle 500000, 937500, 20000
+st_alignment 1, 1
+Text 500000, 937500, "{\scriptsize 0}"
+sf_interior 100
+Circle 500000, 812500, 20000
+sf_interior 0
+Circle 500000, 812500, 20000
+st_alignment 1, 1
+Text 500000, 812500, "{\scriptsize 1}"
+sf_interior 100
+Circle 500000, 687500, 20000
+sf_interior 0
+Circle 500000, 687500, 20000
+st_alignment 1, 1
+Text 500000, 687500, "{\scriptsize 2}"
+sf_interior 100
+Circle 500000, 562500, 20000
+sf_interior 0
+Circle 500000, 562500, 20000
+st_alignment 1, 1
+Text 500000, 562500, "{\scriptsize 3}"
+END_OF_FILE
+

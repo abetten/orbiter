@@ -1,0 +1,6 @@
+order_of_2_mod_n:
+	$(ORBITER) -v 3 -order_of_q_mod_n 2 3 51
+	$(ORBITER) -v 1 -csv_file_latex 1 \
+		order_of_q_mod_n_q2_3_51.csv
+	$(PDFLATEX) order_of_q_mod_n_q2_3_51.tex
+	$(OPEN) order_of_q_mod_n_q2_3_51.pdf

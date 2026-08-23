@@ -1,0 +1,7 @@
+gnuplot_Eulerfunction_50:
+	$(ORBITER) -v 1 -eulerfunction_interval 1 50
+	$(ORBITER) -v 3 \
+		-gnuplot table_eulerfunction_1_50.csv \
+		"Euler function" \
+		"Input" \
+		"Output"

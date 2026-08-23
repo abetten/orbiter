@@ -1,0 +1,12 @@
+BLT_11_0:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 11 -end \
+		-define O -orthogonal_space 0 5 F -create_extension_fields -end \
+		-define BLT -BLT_set \
+			-space O -catalogue 0 -invariants \
+		-end \
+		-with BLT -do -blt_set_activity \
+			-report \
+		-end
+	$(PDFLATEX) BLT_catalogue_q11_iso0.tex
+	$(OPEN) BLT_catalogue_q11_iso0.pdf

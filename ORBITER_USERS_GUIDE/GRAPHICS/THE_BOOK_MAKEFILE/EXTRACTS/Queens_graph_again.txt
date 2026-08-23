@@ -1,0 +1,15 @@
+Queens_graph_again:
+	$(ORBITER) -v 2 \
+		-define G -graph -non_attacking_queens_graph 8 -end \
+		-with G -do \
+		-graph_theoretic_activity -export_csv -end \
+		-with G -do \
+		-graph_theoretic_activity -export_graphviz -end \
+		-with G -do \
+		-graph_theoretic_activity -save -end \
+		-with G -do \
+		-graph_theoretic_activity -automorphism_group -end \
+		-with G -do \
+		-graph_theoretic_activity -find_cliques \
+			-target_size 8 -output_file 8queens \
+		-end 

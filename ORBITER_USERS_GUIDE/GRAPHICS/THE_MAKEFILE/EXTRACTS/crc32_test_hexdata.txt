@@ -1,0 +1,6 @@
+crc32_test_hexdata:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 2 -end \
+		-with F -do -coding_theoretic_activity \
+			-crc32_hexdata "7BD11C4010" \
+		-end

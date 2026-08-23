@@ -1,0 +1,9 @@
+PGL_3_2_order_invariant:
+	$(ORBITER) -v 5 \
+		-define G -linear_group -PGL 3 2 -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-order_invariant \
+		-end
+	$(PDFLATEX) PGL_3_2_order_invariant.tex
+	$(OPEN) PGL_3_2_order_invariant.pdf

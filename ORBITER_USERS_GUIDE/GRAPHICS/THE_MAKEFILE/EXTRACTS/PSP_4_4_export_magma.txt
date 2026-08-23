@@ -1,0 +1,10 @@
+PSP_4_4_export_magma:
+	$(ORBITER) -v 5 \
+		-define F -finite_field -q 4 -end \
+		-define G -linear_group -PGL 4 F \
+			-symplectic_group \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-export_magma \
+		-end

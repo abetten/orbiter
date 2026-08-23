@@ -1,0 +1,7 @@
+Op_6_64_line_rank_problem:
+	$(ORBITER) -v 4 \
+		-define F -finite_field -q 64 -end \
+		-define O -orthogonal_space 1 6 F -end \
+		-with O -do -orthogonal_space_activity \
+			-unrank_line_through_two_points 15447347 15225451 \
+		-end

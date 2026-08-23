@@ -1,0 +1,10 @@
+LSQ_5B:
+	$(ORBITER) -v 8 \
+		-define LSQ5B -vector -format 5 -dense $(LSQ_5B_TABLE) -end \
+		-define D -design -linear_space_from_latin_square \
+			LSQ5B \
+		-end \
+		-with D -do \
+			-design_activity \
+				-export_flags \
+		-end

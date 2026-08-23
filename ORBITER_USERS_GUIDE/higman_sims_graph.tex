@@ -1,0 +1,349 @@
+\documentclass[10pt]{article}
+
+\input header_for_paper.tex
+
+\title{Constructing the Higman-Sims Graph in Orbiter}
+
+\author{Anton Betten}
+
+
+
+\begin{document}
+
+\bibliographystyle{plain}
+\setTBstruts
+
+
+\maketitle
+
+
+
+
+\begin{abstract}
+{\bf MSC 2010:} 14J10, 05B25, 05E18, 14E05, 14J26, 51E25 \\
+{\bf Keywords:} 
+Geometry; Algebraic Geometry; Cubic Surface; Automorphism group; Eckardt Point; Eckardt Surface; Finite Field
+\end{abstract}
+
+
+
+%\tableofcontents
+
+%\clearpage
+
+%\addcontentsline{toc}{chapter}{\listtablename}
+%\listoftables
+
+%\clearpage
+
+
+\section{Introduction}
+
+
+Constructing interesting combinatorial objects can be somewhat intriguing for a beginner. 
+A combinatorial object comes with an automorphism group, and many interesting objects have large groups. This raises the chicken and egg problem: which was first, the group or the object? 
+Take for example the Golay code. The code is a subspace of dimension 12 of a 24-dimensional vectors space over the binary field with minimum distance 8. 
+The automorphism group is the Mathieu group $M_{24}$. Given the group, it is easy to constrict the code. Given the code, it is possible to construct the group. But this is impractical for 
+a beginner. Where do we start? 
+Should we first learn about the code or should we start with the group? 
+What if we want to start from scratch? We need to have a step-by-step learning process 
+that does not require substantial previous knowledge. This is a big hurdle in makeing combinatorics accessible to a wider audience. The present paper is  contribution to 
+making this step-by-step process possible in one case. Namely we focus on an interesting 
+strongly regular graph known as the Higman-Sims graph and the associated group, the Higman-Sims group.
+The construction of this graph and the group are well-known, but the steps are somewhat hard to do. 
+Computer algebra is used in a meaningful way to 
+perform the construction step-by-step. The result will be an interesting combinatorial object, 
+detailed infomration about the automorphism group, and information about properties. 
+The construction itself is supported by the computer algebra system Orbiter, but the steps are visible for the user. We believe that this is helpful to make an interesting topic in the theory of algbraic combinatorics accessible to a wider audience. 
+This will teach about the beautiful connections between group theory, 
+combinatorics, geometry, coding theory and graph theory. 
+
+
+\bigskip
+
+A better way to motivate the object is by starting from a general set of conditions that we wish to satisfy. For the code, we may ask that the code corresponds to a projective set of size 24 in the projective geometry $\PG(11,2),$ and that any 7 points are independent. 
+A tedious but manageablt computation using the poset classification algorithm shows that the set is unique and that is has a stabilizer of order 244823040. The group is of course the Mathieu group $M_{24}$ though the computer does not know this. 
+
+\bigskip
+
+Once we have the set of points, we can fill the coordinate vectors in the columns of a matrix to create a check matrix of the extended Golay code, from which a generator matrix can be computed. 
+It turns out that the code is self-dual, so the check matrix is also a generator matrix. 
+By construction, the code has minimum distance at least 8 (any 7 columns of the check matrix are independent). It cannot be more than 8, so it is exactly 8. 
+
+
+\bigskip
+
+
+
+\section{Preliminaries}
+
+
+Before we can get to work, we need to get accustomed to some conventions with how Orbiter 
+works. One important idea is that of indexing. This is a way of encoding objects using integers
+from an interval, typically starting with either 0 or 1. 
+During indexing, it does not really matter how the bijection between objects and integers is chosen. However, it matters that the bijection is fixed. So, the ranks of objects are 
+permanent. 
+Simply put, indexing is a way of reducing the memory footprint of combinatorial data, 
+as the index values are often more compact than the descriptions of the objects. 
+The indexing function is deterministic: the same object always gives the same index value. 
+Orbiter provides many different index functions. Orbiter index values are zero-based, so the lowest index value is $0$ (and not $1$).
+
+
+\bigskip
+
+Let us consider the projective space. 
+We denote by $\PG(n,q)$ the $n$-dimensional projective space over the field $\bbF_q.$ This is an incidence geometry with finitely many objects called points. The points are structured by subspaces. The basis is a vector space. Let $V(d,q)$ be the $d$-dimensional vector space over $\bbF_q.$ The projective space $\PG(n,q)$ arises from $V(n+1,q)$ is the following way. Let 
+${\frak Gr}_{d,k,q}$ be the Grassmannion of $k$-subspaces of $V(d,q).$ The point of $\PG(n,q)$
+are the elements of ${\frak Gr}_{n+1,1,q},$ i.e., the one dimensional subspaces. 
+The lines are the elements of ${\frak Gr}_{n+1,1,q}.$ Lines are viewed as sets of point. 
+More generally, we can consider projective subspaces of $i$ as $i+1$ subspaces of $V{n+1,q}.$ 
+again, it is customary to think of these subspaces as sets of points, simply by inclusion. 
+There are formulae for the number of subspaces of any given dimension. 
+Using the Gauss coefficients
+$$
+\left[ {d\atop k} \right]_q = \prod_{i=0}^{k-1} \frac{q^d-q^i}{q^k-q^i},
+$$
+we find that 
+$$
+|{\frak Gr}_{d,k,q}| = 
+\left[ {d\atop k} \right]_q.
+$$
+In particular, the number of points of $\PG(n,q)$ is 
+$$
+\left[ {n+1\atop 1} \right]_q = \frac{q^{n+1}-1}{q-1}.
+$$
+The abbreviation $\vartheta_n(q)$ is in common use.
+A point in $\PG(n,q)$ is denoted as $\bP(\bx)$ for $\bx$ aa vector in $V(n+1,q)$. 
+The bold face letter $P$ should remind us that the object is the subpace spanned by the vector $\bx.$
+If $\bx = (x_0,\ldots,x_n),$ we write $\bP(x_0,\ldots,x_n)$ for the corresponding projective point. 
+
+\bigskip
+
+
+In order to work with a projective geometry, 
+it is useful to set up indexing for points (at least). 
+The indexing in Orbiter is $0$-based, so the first index value is $0$. 
+The last index value is $\frac{q^{n+1}-1}{q-1}-1.$ 
+Indexing simplifies the description of a combinatorial object. To be clear, indexing in $\PG(n,q)$ 
+also requires indexing of the elements in $\bbF_q.$
+
+\bigskip
+
+In Orbiter, one further convention is used. 
+Namely, the lowest index values $0,1,\ldots,n$ are 
+always reserved for the elements of the standard frame of $\PG(n,q).$ 
+That is 
+$$
+0 \leftrightarrow \bP(1,0,0,\ldots,0), \; 
+1 \leftrightarrow \bP(0,1,0,\ldots,0), \; 
+n \leftrightarrow \bP(0,0,0,\ldots,1), \; 
+$$
+and finally
+$$
+n+1 \leftrightarrow \bP(1,1,1,\ldots,1).
+$$
+The particular way of the indexing of the remaining set of points is not that important, apart from the fact that it is deterministic and dependent of the indexing of elements in the underlying finite field.
+
+
+
+
+\bigskip
+
+
+
+\section{The Golay Code}
+
+Let us now create the Higman-Sims graph on 100 points. 
+We begin with the extended Golay code and the corresponding automorphism group $M_{24}.$ 
+The Golay code is a projective code of length 24. 
+For this reason, it suffices to find 
+a set $S$ of 
+$24$ points in $\PG(11,2)$ 
+with the property that any $7$ points from $S$ are independent. 
+This can be done using the poset classification algorithm.
+We use Orbiter to perform the necessary computations. 
+Let us discuss some of the details.
+
+\bigskip
+ 
+The poset classification algorithm considers the poset of subsets of $\PG(m,q)$ 
+with the condition that any $d-1$ points are linearly independent. 
+The projective group $\PGGL(m+1,q)$ acts on this poset. 
+With $m = n - k-1$, the subsets of size $n$ correspond 
+to the projective $[n,k,q]_{\ge d}$ codes. 
+If we run this algorithm for $(n,m,q,d) = (24,11,2,8)$ and the action of the group $\PGL(12,2)$ we get exactly one orbit on $n$-subset. 
+The poset of orbits if shown in~\figure{fig:golay:code}.
+\begin{figure}
+$$
+\includegraphics[width=10cm]{GRAPHICS/}
+$$
+\caption{\label{fig:golay:code}Uniqueness of the extended binary Golay code $[24,12,2]_8$}
+\end{figure}
+To summarize, we have created one interesting combinatorial object (the Golay code) by starting only from the parameters of the code and the action of the projective group on a partially ordered set. At the same time, we have created the automorphism group of the code. 
+
+
+\bigskip
+
+Using Orbiter ranks in $\PG(11,2)$, the set $S$ is 
+$$
+\left\{
+\begin{array}{l}
+0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 132, 913, 1460, \\
+1750, 1898, 2518, 2787, 2874, 3320, 3357, 3662, 4004
+\end{array}
+\right\}.
+$$
+The stabilizer of $S$ inside $\PGL(12,2)$ is the Mathieu group $M_{24}$ of order 
+$244823040.$
+The columns of the generator matrix correspond to a set $S$ of 
+24 points in $\PG(11,2)$ with the property that any 7 are independent.
+This set of points can be encoded using Orbiter point ranks as the following set:
+
+\sourcecodevariable{GOLAY_24_CODE_PROJECTIVE}
+
+\bigskip
+
+The automorphism group is computed as a matrix group. We use the standard action on the underlying projective space to consider it as a permutation group. 
+We consider a stabilizer chain for the group. The stabilizer chain is defined using a base 
+in the sense of permutation group theory. A base is a set of points such that the pointwise stabilizer of all is trivial. 
+Suppose the base is $b_1,b_2,\ldots, b_n.$ The stabilizer subgroup is defined 
+using the subgroups 
+$$
+G^{(i)} = G_{b_1,b_2,\ldots, b_{i-1}}.
+$$
+A strong generating set of $G$ with respect to the base is a set of elements $\gamma = \{s_1,\ldots,s_\ell\}$ in $G$ 
+such that 
+$$
+\le \gamma \cap G^{(i)} \ra = G^{(i)}.
+$$
+This means, the set $\gamma$ contains sufficiently many elements to generate each group in the chain. 
+Since the elements of $G$ consist of $12 \times 12$ matrices, 
+displaying the strong generating set would require quite a lot of space. 
+However, it is important for the next steps, so we decide to show the orbiter coding of 
+it.
+They group elements 
+are encoded as a makefile variable. Each line lists one matrix, listed in row-by-row fashion. 
+For visual clarity, the lines have been broken to fit the page format. 
+
+
+
+\sourcecodevariable{GOLAY_24_CODE_AUT_GENS}
+
+
+
+\bigskip
+
+
+
+\section{The Witt Design}
+
+The next step is to create a subgroup of $M_{24}$ which stabilizes two points as a set. 
+This group is $M_{22}.2$. It is unique, of order 
+$$
+\frac{|M_{24}|}{24 \cdot 23} \cdot 2 = 887040. 
+$$
+We will denote thioe groups as $H$. 
+The action of $H$ is then restricted to the 22 points other than $\{0,1\}.$ To simplify the following procedure, the remaining points are reindexed as $0,\ldots,21.$ 
+
+\bigskip
+
+With this group at hand, we now create the Witt design. 
+This is a $3$-design, with block size 6. 
+To create the design, we classify the orbits of $H$ 
+on the poset of subsets of the 22 point set. 
+We only classify those subsets whose size is at most 6. 
+To perform this work, we use poset classification again. 
+The Orbiter code will be shown in the next section. 
+The construction of the design is by evaluating the Kramer-Mesner matrix between $3$-orbits and $6$-orbits. 
+The rows of this matrix ${\rm KM}_{3,6}$ correspond to the orbits of $H$ on 3-subsets. 
+The columns of ${\rm KM}_{3,6}$ correspond to the orbits of $H$ on $6$-subsets. 
+The entry corresponding to a $3$-orbit $A$ and a $6$-orbit $B$ is the number of times that an element of $B$ contains a fixed element of $A$. This number is independent of which element in $A$ is chosen. 
+The orbit on $6$-subsets which corresponds to a column of all-ones in ${\rm KM}_{3,6}$ is the set of $6$-sets which will form the design. 
+
+
+\bigskip
+
+
+
+\section{The Higman-Sims Graph}
+
+
+Let us now take all the steps together and create the Higman-Sims graph.
+The following orbiter code snippet creates the graph. 
+We assume that the automorphism group generators for the Golay code and the projective set have been computed and are now available in makefile variables as shown earlier.
+
+\bigskip
+
+\sourcecode{Higman_Sims_graph}
+
+\bigskip
+
+Let us discuss the main setps in the algorithm:
+
+\bigskip
+
+In lines 7-9, we create the set $S$ of size 24. In line 14, we create the field $\bbF_2$. 
+In lines 15-18, we create the group $M_{24}$ as a matrix subgroup of $\PGL(12,2).$
+In lines 19-21, we create the permutation representation of $M_{24}$ of degree 24 
+acting on the set $S$.
+In lines 22-24, we create the subgroup $M_{22}.2$ 
+which stabilizes the elements $\{0,1\}$ of $S$ as a set. 
+In lines 25-28, we create the permutation action of $M_{22}.2$ 
+on the 22 points of $S$ 
+different from $\{0,1\}$. 
+Note that the action is re-indexing the point set as $0-21.$
+In lines 37-42, we invoke the poset classification algorithm 
+to compute the orbits of $M_{22}.2$ 
+on subsets of size at most 6. 
+This computation takes place in the action of degree 22 just constructed. 
+In lines 43-45, we create the Kramer-Mesner matrix for the orbits on $3$-subsets versuc the orbits on $6$-subsets. 
+This matrix allows us to identify the orbit on $6$-subsets which forms 
+a Steiner 3-design. 
+In the numbering chosen by the poset classification algorithm, 
+it is the second orbit. 
+Since indexing is zero-based, this is orbit 1.
+In lines 55-57, we create the design from this orbit.
+This is the Witt design on 22 points. 
+In lines 58-61, we export the design to file by means of the set of flags. 
+In lines 62-65, we compute the intersection matrix of the design. 
+This matrix can be used to give an independent verification that the chosen orbit has the design property. 
+In lines 70-73, we compute the orbits of the group of the design (which is $M_{11}.2$) 
+on pairs of blocks. 
+In lines 74-77, we create the one-point extension of the Witt design based on the orbit on pairs of index 1. 
+Finally, in lines 78-81, the Higman-Sims graph is constructed from the one-point extension. 
+
+
+
+
+
+\bigskip
+
+
+
+\section{The Higman-Sims Group}
+
+
+Finally, we wish to construct the Higman-Sims group. 
+The Higman-Sims group is the even subgroup of the automorphism group of the Higman-Sims graph. 
+It is a simple group. 
+Here are the construction steps of the group in Orbiter.
+
+\bigskip
+
+Building on the previus work, we take the Higman-Sims graph 
+and compute its automorphism group. The group has order 88704000.
+It is a permutation group of degree 100, acting on the vertices of the graph. 
+It is no longer a matrix group.
+
+
+
+
+
+%\addcontentsline{toc}{section}{References}
+
+\bibliography{anton}
+
+
+\end{document}
+
+

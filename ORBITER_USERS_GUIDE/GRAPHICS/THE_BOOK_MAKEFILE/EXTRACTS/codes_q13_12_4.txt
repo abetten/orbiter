@@ -1,0 +1,19 @@
+codes_q13_12_4:
+	$(ORBITER) -v 6 \
+		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define Do -draw_options \
+				-embedded -radius 250 \
+				-line_width 1.0 -spanning_tree \
+		-end \
+		-define Control -poset_classification_control \
+			-problem_label codes_q13 \
+			-draw_options Do \
+		-end \
+		-define G \
+		-linear_group -PGL 4 13 -end \
+		-with G -do \
+		-group_theoretic_activity \
+		-linear_codes Control 6 12 \
+		-end
+	#$(PDFLATEX) codes_q13_poset.tex
+	#$(OPEN) codes_q13_poset.pdf

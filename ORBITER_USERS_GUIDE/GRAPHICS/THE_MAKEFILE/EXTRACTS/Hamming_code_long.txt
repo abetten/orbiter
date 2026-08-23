@@ -1,0 +1,10 @@
+Hamming_code_long:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define C -code -field F \
+			-long_code 7 4 \
+			"0,5,6" \
+			"1,4,6" \
+			"2,4,5" \
+			"3,4,5,6" \
+		-end 

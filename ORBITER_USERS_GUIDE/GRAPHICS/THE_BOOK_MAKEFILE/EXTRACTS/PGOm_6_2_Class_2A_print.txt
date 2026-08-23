@@ -1,0 +1,18 @@
+PGOm_6_2_Class_2A_print:
+	$(ORBITER) -v 9 \
+		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define F -finite_field -q 2 -end \
+		-define G -linear_group -PGOm 6 F -end \
+		-define PGOm_6_2_Class2A -vector_ge \
+			-action G \
+			-read_csv $(FILE_NAME_PGOM_6_2_CLASS_2A) elements \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-element_processing \
+				-input PGOm_6_2_Class2A \
+				-print \
+			-end \
+		-end
+	$(PDFLATEX) PGOm_6_2_Class2A_elements.tex
+	$(OPEN) PGOm_6_2_Class2A_elements.pdf

@@ -1,0 +1,2 @@
+max_arc_16_4_convert_stack_tdo:
+	$(ORBITER) -v 4 -convert_stack_to_tdo max_arc_q16_r4.stack

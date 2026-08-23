@@ -1,0 +1,9 @@
+BLT_11_0_sort:
+	$(ORBITER) -v 2 \
+		-define G -graph \
+			-load BLT_q11_graph_5_0.bin \
+		-end \
+		-with G -do \
+		-graph_theoretic_activity \
+			-sort_by_colors \
+		-end

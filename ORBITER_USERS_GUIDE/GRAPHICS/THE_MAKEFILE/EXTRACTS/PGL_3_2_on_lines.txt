@@ -1,0 +1,31 @@
+PGL_3_2_on_lines:
+	$(ORBITER) -v 3 \
+		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define Do -draw_options \
+			-radius 200 -embedded \
+		-end \
+		-define Control -poset_classification_control \
+			-problem_label PGL_3_2_lines \
+			-W -depth 7 \
+		-end \
+		-define G -linear_group -PGL 3 2 -end \
+		-define G_on_lines -modified_group -from G \
+			-on_k_subspaces 2 \
+		-end \
+		-define Orb -orbits \
+			-group G \
+			-group_action G_on_lines \
+			-generators G \
+			-on_subsets 7 Control \
+		-end \
+		-define ro \
+			-poset_classification_report_options \
+				-draw_poset -type_ordinary \
+				-draw_options Do \
+		-end \
+		-with Orb -do -orbits_activity \
+			-report "" \
+			-report_options ro \
+		-end 
+	$(PDFLATEX) PGL_3_2_lines_poset.tex
+	$(OPEN) PGL_3_2_lines_poset.pdf

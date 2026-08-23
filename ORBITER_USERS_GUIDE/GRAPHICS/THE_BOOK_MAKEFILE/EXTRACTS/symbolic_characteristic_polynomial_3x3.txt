@@ -1,0 +1,22 @@
+symbolic_characteristic_polynomial_3x3:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 13 -end \
+		-define M -symbolic_object \
+			-field F \
+			-matrix 3 \
+			-text "a,b,c,d,e,f,g,h,i" \
+		-end \
+		-define p -symbolic_object \
+			-field F \
+			-characteristic_polynomial lambda M \
+		-end \
+		-define p1 -symbolic_object \
+			-field F \
+			-expand p \
+		-end \
+		-define coeffs -symbolic_object \
+			-field F \
+			-collect p1 lambda \
+		-end
+	#$(PDFLATEX) p1.tex
+	#$(OPEN) p1.pdf

@@ -1,0 +1,10 @@
+ROW,C1,C2,C3
+0,"tab:BLT:activity",,
+1,"BLT-Set Activity",,
+1,"\verb'-report' ","  "," Produce a latex report. "
+1,"\verb'-export_gap' "," index "," Export to GAP/fining based on the indexed point. "
+1,"\verb'-create_flock' ","  "," Create a flock. "
+1,"\verb'-BLT_test' ","  "," Test of the set has the BLT-property. "
+1,"\verb'-export_set_in_PG' ","  "," Export the set in ranks of the underlying projective space. "
+1,"\verb'-plane_invariant' ","  "," Compute the plane invariant. "
+END

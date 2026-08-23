@@ -1,0 +1,12 @@
+geo_18_3_g4:
+	$(ORBITER) -v 2 \
+		-define Test_lines -set -loop 4 19 1 -end \
+		-define Geo -geometry_builder \
+			-V 18 -B 18 -TDO 3 \
+			-fuse 1 -fname_GEO 18_3_g4 \
+			-output_to_inc_file \
+			-girth 4 \
+			-search_tree \
+			-special_test_not_orderly \
+			-test Test_lines \
+		-end

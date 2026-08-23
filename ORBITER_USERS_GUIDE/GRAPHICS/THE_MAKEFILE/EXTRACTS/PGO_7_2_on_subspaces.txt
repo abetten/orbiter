@@ -1,0 +1,15 @@
+PGO_7_2_on_subspaces:
+	$(ORBITER) -v 6 \
+		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define Control -poset_classification_control \
+			-problem_label O_7_2 \
+			-W -depth 7 \
+		-end \
+		-define F -finite_field -q 2 -end \
+		-define G -linear_group -PGL 7 F -orthogonal 0 -end \
+		-define Orb -orbits \
+			-group G \
+			-group_action G \
+			-generators G \
+			-on_subspaces 7 Control \
+		-end

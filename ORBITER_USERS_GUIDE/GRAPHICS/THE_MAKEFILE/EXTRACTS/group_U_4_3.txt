@@ -1,0 +1,53 @@
+group_U_4_3:
+	$(ORBITER) -v 6 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define F -finite_field -q 9 -compute_related_fields -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 4 \
+			-homogeneous_of_degree 4 \
+			-monomial_ordering_partition \
+			-variables "X0,X1,X2,X3" "X_0,X_1,X_2,X_3" \
+		-end \
+		-define V -variety \
+			-projective_space P \
+			-ring R \
+			-equation_in_algebraic_form \
+				$(HERMITIAN_SURFACE_Q9_EQUATION) \
+			-label_txt hermitian_surface_q3 \
+			-label_tex "{\\rm hermitian\\_surface\\_q3}" \
+		-end \
+		-define G -modified_group \
+			-stabilizer_of_variety V -nauty_control -nauty_log "U_4_3_nauty_log.txt" -end \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end \
+		-define GP -modified_group -from G \
+			-projectivity_subgroup \
+		-end \
+		-define GPD -modified_group -from GP \
+			-derived_subgroup \
+		-end \
+		-with GPD -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end \
+		-define v -vector \
+			-dense $(HERMITIAN_SURFACE_Q9_POINTS) \
+		-end \
+		-define GPDr -modified_group \
+			-from GPD \
+			-restricted_action v \
+			"{\\rm \\_on\\_hermitiansurface}" \
+		-end \
+		-with GPDr -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end
+	$(PDFLATEX) PGGL_4_9_stab_of_hermitian_surface_q3_res_v_report.tex
+	$(OPEN) PGGL_4_9_stab_of_hermitian_surface_q3_res_v_report.pdf

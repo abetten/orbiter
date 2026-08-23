@@ -1,0 +1,9 @@
+RM_6_genma_draw:
+	$(ORBITER) -v 2 \
+		-draw_matrix \
+			-input_csv_file RM6_genma.csv \
+			-box_width 25 -bit_depth 8 \
+			-partition 3 7 64 \
+		-end
+	magick RM6_genma_draw.bmp RM6_genma_draw.png
+	open RM6_genma_draw.png

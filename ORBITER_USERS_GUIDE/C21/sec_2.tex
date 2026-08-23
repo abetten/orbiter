@@ -1,0 +1,156 @@
+Several limitations exist in Orbiter. Here is a list:
+
+\begin{enumerate}
+\item
+Field elements are encoded as  $\verb'int'$. This limits the size of fields that can be handled to $2^{8s-1}$ where $s=$\verb'sizeof(int)'.
+\item
+The ranks of elements in the permutation domain are encoded as  $\verb'long int'$. 
+This limits the size of permutation domains that can be handled.
+The degree of a permutation group must be less that $2^{8s-1}$ where $s=$\verb'sizeof(long int)'.
+\item
+The finite field class builds tables for the addition and multiplication of field elements. 
+This restricts the size of the fields that can be created.
+\item
+The projective geometry class tries to build a bitmatrix for the adjacency matrix if the number of lines is less than 
+\verb'MAX_NUMBER_OF_LINES_FOR_INCIDENCE_MATRIX' which is defined in \verb'src/lib/foundations/geometry/projective_space.cpp'. 
+If the number of lines is too big, the table is not created. 
+In this case, the projective geometry class may behave slower.
+\item
+The projective geometry class tries to build a table for the lines if the number of points is less that \verb'MAX_NUMBER_OF_POINTS_FOR_POINT_TABLE' and the number of 
+lines is less than 
+\verb'MAX_NUMBER_OF_LINES_FOR_LINE_TABLE', 
+both of which are  defined in \verb'src/lib/foundations/geometry/projective_space.cpp'.
+If the number of points is too big, the table is not created. 
+In this case, the projective geometry class may behave slow.
+\item
+The projective geometry class tries to build a table for the lines through any two points if the number of points is less than 
+\verb'MAX_NB_POINTS_FOR_LINE_THROUGH_TWO_POINTS_TABLE' 
+which is defined in \verb'src/lib/foundations/geometry/projective_space.cpp'.
+If the number of points is too big, the table is not created. 
+In this case, the projective geometry class may behave slow.
+\item
+The projective geometry class tries to build a table for the intersection points of pairs of lines if the number of points is less than 
+\verb'MAX_NB_POINTS_FOR_LINE_INTERSECTION_TABLE' 
+which is defined in \verb'src/lib/foundations/geometry/projective_space.cpp'.
+If the number of points or lines is too big, the table is not created. 
+In this case, the projective geometry class may behave slow.
+\item
+For Windows users: Cygwin by default uses 32 bit integers for both \verb'int' and \verb'long int'. 
+Using Cygwin 64 to compile Orbiter recommended.
+\item
+A limited list of primitive polynomials are hard-coded in Orbiter. 
+For large fields, the user must provide their own primitive polynomial.
+The polynomials encoded in orbiter are not guaranteed to be compatible with the subfield relationship.
+%\item
+%The base and strong generators used by Orbiter (see Section~\ref{sec:permutation:groups}) do not lead to optimal Schreier trees. 
+%This is a performance issue for projective linear groups. The techniques of shallow Schreier trees (cf. Seress~\cite{Seress03}) 
+%would be useful.
+%\item
+%Orbiter uses long integer arithmetic for the orders of finite groups, so there is no restriction in the order of finite groups from that point of view. 
+\end{enumerate}
+
+
+\bigskip
+
+
+The command  
+
+\sourcecode{F_15bit}
+
+creates the field $\bbF_{32749}$. Tables are suppressed for speed.
+Note that 
+$$
+2^{15}-19 = 32749
+$$
+is prime (see~\url{https://primes.utm.edu/lists/2small/0bit.html}).
+The command creates two instances of $-1$ in the field and multiplies them. 
+
+
+\bigskip
+
+
+The command  
+
+\sourcecode{F_31bit}
+
+creates the field $\bbF_{2147483647}$. Tables are suppressed for speed.
+Note that 
+$$
+2^{31}-1 = 2147483647 = p
+$$
+is prime (see~\url{https://primes.utm.edu/lists/2small/0bit.html}).
+The command creates two instances of $-1$ in the field $\bbZ_p$ 
+and multiplies them. 
+The fact that this is done correctly is remarkable, because 
+the intermediate value exceeds the size of 32 bit signed integers.
+Recall that 
+$-1$ is stored as $p-1,$ 
+so
+$$
+-1 \equiv 2147483646.
+$$
+But
+$$
+-1 \cdot -1 \equiv 2147483646 \cdot 2147483646 = 4611686009837453316,
+$$
+which exceeds the range of $32$ bit signed integers.
+The reason why this command works is that the multiplication of integers 
+is performed using long integer arithmetic.
+Long integer arithmetic treats integers as text strings, and hence is not bound 
+by the size of a machine word. Unfortunately, 
+long integer arithmetic is considerably slower than arithmetic in machine words.
+So, there is a performance drawback with large finite fields in Orbiter.
+
+
+\bigskip
+
+The command  
+
+\sourcecode{F_32bit}
+
+creates the field $\bbF_{4294967291}$. 
+Note that 
+$$
+2^{32}-5 = 4294967291
+$$
+is prime (see~\url{https://primes.utm.edu/lists/2small/0bit.html}).
+The command will likely not run, and terminate with an error message. 
+The reason is hardware dependent. 
+The command tests the size of a machine word.
+Most compilers map the C++ data type 
+{\em signed int} to 32 bit machine words, 
+so this command will fail in such an environment. 
+This is true even with 64 bit hardware.
+There may be some compiler options to change this.
+
+
+
+\bigskip
+
+Machines for which the previous command works correctly, the following command should also be fine:
+
+\sourcecode{F_63bit}
+
+Note that 
+$$
+2^{63}-25 = 9223372036854775783
+$$
+is prime (see~\url{https://primes.utm.edu/lists/2small/0bit.html}).
+However, the next command will almost surely fail:
+
+\sourcecode{F_64bit}
+
+This is because we are exceeding the range 
+that can be stored in a 64 bit unsigned integer machine word.
+Note that 
+$$
+2^{64}-59 = 18446744073709551557
+$$
+is prime (see~\url{https://primes.utm.edu/lists/2small/0bit.html}).
+
+
+
+
+
+
+

@@ -1,0 +1,5 @@
+Hamming_code_macwilliams:
+	$(ORBITER) -v 2 \
+		-make_macwilliams_system 7 4 2
+	$(PDFLATEX) MacWilliams_n7_k4_q2.tex
+	$(OPEN) MacWilliams_n7_k4_q2.pdf

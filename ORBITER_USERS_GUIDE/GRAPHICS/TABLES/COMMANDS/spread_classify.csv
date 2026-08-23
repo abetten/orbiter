@@ -1,0 +1,11 @@
+ROW,C1,C2,C3
+0,"tab:spreads:classify",,
+1,"Classification of Spreads",,
+1,"\verb'-projective_space' "," P "," Select the projective space object P. "
+1,"\verb'-starter_size' "," k "," Choose starter size $k$. "
+1,"\verb'-k' "," k "," Choose dimension of the spread elements. "
+1,"\verb'-poset_classification_control' "," control "," Select poset classification control. "
+1,"\verb'-output_prefix' "," prefix "," Set output prefix for file i/o. "
+1,"\verb'-recoordinatize' ","  "," Turn recoordinatization on (recommended). "
+END
+

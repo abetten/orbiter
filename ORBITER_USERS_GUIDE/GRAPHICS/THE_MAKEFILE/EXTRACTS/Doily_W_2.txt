@@ -1,0 +1,18 @@
+Doily_W_2:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define O -orthogonal_space 0 5 F -without_group -end \
+		-define W2_points -set -loop 0 15 1 -end \
+		-define W2_lines -set -loop 0 15 1 -end \
+		-with O -do \
+		-orthogonal_space_activity \
+			-print_points W2_points \
+		-end \
+		-with O -do \
+		-orthogonal_space_activity \
+			-print_lines W2_lines \
+		-end
+	$(PDFLATEX) W2_points_set_report.tex
+	$(OPEN) W2_points_set_report.pdf
+	$(PDFLATEX) W2_lines_set_of_lines_report.tex
+	$(OPEN) W2_lines_set_of_lines_report.pdf

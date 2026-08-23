@@ -1,0 +1,13 @@
+part10:
+	$(ORBITER) -v 4 \
+		-define A -vector -format 1 -dense "10,9,8,7,6,5,4,3,2,1" -end \
+		-define D -diophant \
+			-label part10 \
+			-coefficient_matrix A \
+			-RHS "mult=1,EQ=10" \
+			-x_min_global 0 -x_max_global 10 \
+		-end \
+		-with D -do \
+			-diophant_activity -solve_mckay \
+		-end
+		

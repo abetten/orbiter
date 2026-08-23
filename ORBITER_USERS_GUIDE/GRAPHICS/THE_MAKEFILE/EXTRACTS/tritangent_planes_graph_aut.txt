@@ -1,0 +1,11 @@
+tritangent_planes_graph_aut:
+	$(ORBITER) -v 2 \
+		-define Gamma \
+			-graph -tritangent_planes_disjointness_graph \
+		-end \
+		-with Gamma -do \
+		-graph_theoretic_activity \
+			-automorphism_group \
+		-end 
+	$(PDFLATEX) tritangent_planes_disjointness_report.tex
+	$(OPEN) tritangent_planes_disjointness_report.pdf

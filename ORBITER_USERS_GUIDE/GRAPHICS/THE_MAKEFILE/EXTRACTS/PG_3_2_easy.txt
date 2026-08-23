@@ -1,0 +1,4 @@
+PG_3_2_easy:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define P -projective_space -n 3 -field F -end

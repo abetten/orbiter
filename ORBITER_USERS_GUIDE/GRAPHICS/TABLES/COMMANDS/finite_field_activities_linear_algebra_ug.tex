@@ -1,0 +1,21 @@
+\begin{table}
+\begin{tcolorbox}[tabularx={X|p{2cm}|X|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black,title=Finite Field Activities Pertaining to Linear Algebra]
+\hline
+Command & Arguments & Purpose \\
+\hline
+\hline
+\verb'-nullspace'  &  $L$   &  Compute a basis for the right nullspace of the matrix $L$ \\
+\hline
+\verb'-RREF'  &  $L$  &  Compute the RREF of the matrix $L$ over $\bbF_q$\\
+\hline
+\verb'-RREF_random_matrix'  &   $m$ $n$  &   Produce a random $m \times n$ matrix over $\bbF_q$ and perform RREF.\\
+\hline
+\verb'-Walsh_matrix'  &  $n$   & Create the Walsh matrix of order $n$.\\
+\hline
+\verb'-Vandermonde_matrix'  &    & Create the Vandermonde matrix of order $q$ and compute its inverse. The $(i,j)$ entry is $\gamma_i^j$ ($i,j=0,\ldots,q-1$). Here, $\gamma_0,\ldots,\gamma_{q-1}$ is the list of elements in $\bbF_q$ in Orbiter ordering. The matrix and its inverse are written to file. \\
+\hline
+\end{tcolorbox}
+\caption{\label{tab:linear:algebra}Finite Field Activities Pertaining to Linear Algebra}
+\end{table}

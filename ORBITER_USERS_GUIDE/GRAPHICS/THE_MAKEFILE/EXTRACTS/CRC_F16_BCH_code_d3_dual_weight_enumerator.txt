@@ -1,0 +1,12 @@
+CRC_F16_BCH_code_d3_dual_weight_enumerator:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 16 -override_polynomial 19 -end \
+		-define v -vector -file BCH_q16_n51_d3_check.csv \
+			-field F -format 4 -file BCH_q16_n51_d3_check.csv -end \
+		-define C -code -field F \
+			-generator_matrix v \
+			-end \
+		-with C -do \
+		-coding_theoretic_activity \
+			-weight_enumerator \
+		-end

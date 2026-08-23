@@ -1,0 +1,3 @@
+permutation_matrix:
+	$(ORBITER) -v 2 \
+		-define P -vector -permutation_matrix "1,2,3,0" -end \

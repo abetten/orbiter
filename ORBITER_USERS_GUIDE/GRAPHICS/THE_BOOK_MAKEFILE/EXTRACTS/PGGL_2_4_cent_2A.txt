@@ -1,0 +1,18 @@
+PGGL_2_4_cent_2A:
+	$(ORBITER) -v 3 \
+		-define G \
+		-linear_group -PGGL 2 4 -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-centralizer_of_element "2A" "1,0, 0,1, 1" \
+		-end
+	$(ORBITER) -v 3 \
+		-define G \
+		-linear_group -PGGL 2 4 -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-centralizer_of_element "2A" "1,0, 0,1, 1" \
+		-end
+	$(PDFLATEX) PGGL_2_4_elt_2A_centralizer.tex
+	$(OPEN) PGGL_2_4_elt_2A_centralizer.pdf
+	

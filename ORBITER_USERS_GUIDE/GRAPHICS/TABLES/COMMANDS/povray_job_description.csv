@@ -1,0 +1,10 @@
+ROW,C1,C2,C3
+0,"tab:povray:job",,
+1,"Povray Job Options",,
+1,"\verb'-video_options' ","  "," Set options from Tables~\ref{tab:povray1} and~\ref{tab:povray2}. "
+1,"\verb'-round' "," n "," Select round $n$ for rendering only. "
+1,"\verb'-rounds' "," list "," Select a list of rounds for rendering. "
+1,"\verb'-nb_frames_default' "," f "," Select the number of frames per round.  "
+1,"\verb'-output_mask' "," fname-mask "," Set mask for output file name generation. "
+1,"\verb'-scene_objects' "," options "," Define Scene objects according to Table~\ref{tab:3doutput}. "
+END

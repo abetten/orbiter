@@ -1,0 +1,1 @@
+Dickson8_eqn_af="X3^3 + X0^2*X1 + X0^2*X2 + X0*X1^2 + X0*X2^2 + X1*X2^2 + X1*X2*X3"

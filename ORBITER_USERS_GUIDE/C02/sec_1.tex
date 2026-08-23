@@ -1,0 +1,68 @@
+Orbiter is a command line program. There is no graphical user interface. 
+The Orbiter executable is \verb'orbiter.out'. 
+It needs to be called from a terminal window, through the command shell. 
+Orbiter takes commands from the command line for execution. 
+The language is called Orbiter dash code. 
+This refers to the fact that 
+keywords are indicated with a leading dash, 
+just like in the unix / linux command syntax. 
+This user's guide will describe the orbiter dash code language.
+
+\bigskip
+
+
+Orbiter commands and command sequences can be stored 
+either a makefile or in a shell script.
+Makefiles have the advantage that they can hold many command sequences, 
+each with a different call name. 
+This reduces clutter, 
+as all these command sequences are stored in one file. 
+On the other hand, makefiles come with some very stringent syntax requirements, 
+so there is a learning curve. 
+Shell sripts are little programs executed by the command line shell. 
+Depending on the shell program, 
+a slightly different syntax is required.
+However, the Orbiter commands are the same.
+
+\bigskip
+
+
+In this user's guide, we will make extensive use of makefiles. 
+In fact, there will be only one makefile.
+It is available in the orbiter tree as
+$$
+\verb'orbiter/examples/users_guide/makefile'
+$$
+It is strongly recommended to copy this file 
+somewhere outside of the orbiter tree before running any commands.
+
+
+\bigskip
+
+Let us take a closer look at an Orbiter session. 
+As a test, we can run Orbiter 
+without any arguments.
+We use a makefile entry like this:
+
+\sourcecode{test_orbiter_session}
+
+Once started, the Orbiter session 
+will produce a short welcome message:
+\orbiteroutput{GRAPHICS/LATEX/orbiter_welcome_message}
+
+The build number is the version number of the Orbiter software, 
+as defined by the number of submits to the Git repository. 
+Higher numbers mean more recent versions.
+After this message, Orbiter will start parsing the command line arguments. 
+Once this is done, the session will execute these commands. 
+At the end of the session, a short message 
+is given that specifies the processor time used up by the session.
+
+\bigskip
+
+Several commands are global, 
+and must appear right at the beginning of the orbiter dash code. 
+These are the session commands. 
+They are listed in Table~\ref{tab:session}.
+\orbitertableofcommands{orbiter_session}
+

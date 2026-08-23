@@ -1,0 +1,12 @@
+Hamming_nullspace:
+	$(ORBITER) -v 2 \
+		-define F2 -finite_field -q 2 -end \
+		-define v -vector -format 4 -field F2 \
+			-dense $(HAMMING_CODE_GENERATOR) \
+		-end \
+		-with F2 -do \
+		-finite_field_activity \
+		-nullspace v \
+		-end
+	$(PDFLATEX) v_nullspace.tex
+	$(OPEN) v_nullspace.pdf

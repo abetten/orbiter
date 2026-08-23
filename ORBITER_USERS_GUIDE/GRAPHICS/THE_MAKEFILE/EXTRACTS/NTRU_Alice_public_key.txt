@@ -1,0 +1,8 @@
+NTRU_Alice_public_key:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q $(NTRU_Q) -end \
+		-with F -do \
+		-finite_field_activity \
+		-polynomial_mult_mod $(ALICE_PRIVATE_F) \
+			$(ALICE_PRIVATE_G) $(NTRU_XN1) \
+		-end

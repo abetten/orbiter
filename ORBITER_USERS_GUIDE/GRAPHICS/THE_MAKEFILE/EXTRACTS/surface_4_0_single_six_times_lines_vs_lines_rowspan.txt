@@ -1,0 +1,6 @@
+surface_4_0_single_six_times_lines_vs_lines_rowspan:
+	$(ORBITER) -v 3 \
+		-define M -vector \
+			-file single_six_times_lines_vs_lines.csv \
+		-end \
+		-rowspan_over_R M

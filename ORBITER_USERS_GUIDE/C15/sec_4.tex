@@ -1,0 +1,174 @@
+
+
+
+A BLT-set of $Q(4,q)$ is a set of $q+1$ point on the quadric 
+such that no point on the quadric is collinear to more than two points of the set. 
+BLT sets are related to spreads of $\PG(3,q),$ to flocks 
+of the quadratic cone in $\PG(3,q)$, 
+and other objects in finite geometry.
+These sets have been introduced in~\cite{BaderLunardonThas90} 
+for the purposes of creating new flocks from old.
+A BLT-set exists if and only if $q$ is odd. 
+It is an interesting problem to classify BLT-sets of $Q(4,q)$ under the orthogonal group.
+Some references are 
+Law~\cite{Law03}, Penttila-Royle~\cite{PenttilaRoyle98}, 
+Penttila-Law~\cite{LawPenttila03,LawPenttila04}, 
+Betten~\cite{Betten13}, 
+AlAzemi-Betten-Chowdhury~\cite{AlAzemiBettenChowdhury18}.
+For small values of $q$, computer search has been used extensively. 
+As we will discuss below, Orbiter is useful to supporting such computations.
+
+\bigskip
+
+Before we go into the problem of classification, let us first discuss how known BLT-sets 
+can be constructed in Orbiter. 
+Orbiter maintains a catalogue of BLT-sets over small fields. 
+Besides that, 
+Orbiter can be used to create instances of known families of BLT-sets.
+
+
+\bigskip
+
+Table~\ref{tab:BLT:create} shows options to create known BLT-sets.
+\orbitertableofcommands{BLT_set_create}
+
+\bigskip
+
+Table~\ref{tab:BLT:families} shows names for known families of sporadic sets.
+\orbitertableofextracommands{BLT_set_families}
+
+\bigskip
+
+Table~\ref{tab:BLT:activity} shows Orbiter activities for a BLT-set object.
+\orbitertableofcommands{blt_set_activity}
+
+
+
+Table~\ref{tab:BLT:classify} shows options to prepare for the classification of BLT-sets.
+\orbitertableofcommands{blt_set_classify}
+
+
+Table~\ref{tab:BLT:classify:activity} shows commands for the classification of BLT-sets.
+\orbitertableofcommands{blt_set_classify_activity}
+
+
+
+\bigskip
+
+
+Let us demonstrate some examples. 
+The command
+
+\sourcecode{BLT_5_1}
+
+creates the first BLT-set of order 5 from the catalogue. 
+Suppose we want to export the BLT-set to GAP/fining. 
+The following command can do that:
+
+\sourcecode{BLT_5_1_export_gap}
+
+The command creates the following GAP/fining file:
+\orbiteroutput{GRAPHICS/LATEX/BLT_5_1_fining_export}
+
+\bigskip
+
+The command
+
+\sourcecode{BLT_11_0}
+
+creates the BLT-set \#0 in $Q(4,11).$
+The command
+
+\sourcecode{BLT_11_Mondello}
+
+creates the Mondello BLT-set in $Q(4,11).$
+Orbiter creates the following report:
+\orbiteroutput{GRAPHICS/LATEX/BLT_mondello}
+
+
+
+\bigskip
+
+The classification of BLT-sets is a difficult problem. 
+One approach is by means of the poset of partial BLT-sets. 
+The orbits at level $q+1$ in the poset of partial BLT-sets 
+are the isomorphism classes of BLT-sets. 
+We illustrate this method by a small example, comparing different construction algorithms.
+
+We begin with a classification of the complete poset of partial BLT sets. 
+This method is very limited, as the number of orbits of partial BLT-sets 
+gets out of hand quickly as $q$ increases.
+
+
+\sourcecode{BLT_13_deep_search}
+
+The technique of classification via substructure can help.
+Various authors have described different versions of this technique,  
+see~\cite{AlAzemiBettenChowdhury18,Betten13,Law03}.
+As an example, we classify the BLT-sets of order $13$ 
+with the technique of substructures and rainbow cliques.
+
+\bigskip
+
+We consider the classification problem of BLT-sets of order 13. 
+We use the technique of substructures of size 5.
+So, to begin with, we classify all partial BLT-sets 
+of size $5$. 
+For each isomorphism type of partial BLT-set of size 5, 
+we create a colored graph.
+The vertices in the graph are the points in $Q(4,13)$ 
+which can be added to the partial BLT-set.
+Two vertices are connected if they can both be added.
+Here is the command:
+
+\sourcecode{BLT_13_classify_starter}
+
+In the next step, we compute all rainbow cliques in each of the graphs:
+
+\sourcecode{BLT_13_cliques}
+
+Next, we create a data structure for isomorphism testing. 
+The first step is to create a database of 
+all partial BLT-sets of order at most 5:
+
+\sourcecode{BLT_13_isomorph_read_DB}
+
+The next step is to read the rainbow cliques from the clique finding process:
+
+\sourcecode{BLT_13_isomorph_read_solutions}
+
+Once the cliques have been read from file, 
+we compute the flag orbits in the relation between partial BLT-sets and full BLT-sets.
+For each orbit representative of a partial BLT-set, 
+we compute the orbits of the stabilizer on the 
+BLT-sets incident with it. The following command can be used.
+
+\sourcecode{BLT_13_isomorph_stabilizer_orbits}
+
+Finally, we perform isomorphism testing:
+
+\sourcecode{BLT_13_isomorph_testing}
+
+This last command results in exactly three 
+isomorphism types of BLT-sets of order 13.
+Of course, these results match with the results 
+from the classification of the complete poset of partial BLT-sets before.
+The difference is that the second approach is more efficient, 
+as the number of 
+orbits to be considered by the algorithm is much smaller.
+In essence, we are skipping over the worst part of the poset. 
+Many partial BLT-sets do not complete to BLT-sets, 
+so these braches of the search tree will die out in the clique finding algorithm.
+
+\bigskip
+
+
+The command 
+
+\sourcecode{blt_set_export_gap_all}
+
+exports all BLT-sets in the Orbiter catalogue to GAP. 
+
+
+\bigskip
+

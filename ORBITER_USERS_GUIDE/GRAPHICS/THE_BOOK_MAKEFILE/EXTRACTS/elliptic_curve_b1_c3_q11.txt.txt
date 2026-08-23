@@ -1,0 +1,9 @@
+elliptic_curve_b1_c3_q11.txt:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 11 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define EC -geometric_object P \
+			-elliptic_curve 1 3 \
+		-end \
+		-with EC -do -combinatorial_object_activity -save \
+		-end

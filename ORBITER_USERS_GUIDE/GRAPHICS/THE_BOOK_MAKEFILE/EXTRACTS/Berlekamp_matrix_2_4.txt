@@ -1,0 +1,8 @@
+Berlekamp_matrix_2_4:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define v -vector -field F -dense "1,1,0,0,1" -end \
+		-with F -do \
+		-finite_field_activity \
+			-Berlekamp_matrix v \
+		-end

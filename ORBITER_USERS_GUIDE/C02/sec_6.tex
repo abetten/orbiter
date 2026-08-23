@@ -1,0 +1,53 @@
+Orbiter can create vectors of group elements. 
+Table~\ref{tab:vector:ge:builder} 
+shows the Orbiter commands that can be used to create 
+a vector of group elements.
+
+\orbitertableofcommands{vector_ge_builder}
+
+%Table~\ref{tab:vector:ge:activity} 
+%shows the Orbiter activities for \verb'vector_ge' objects.
+
+
+%\orbitertableofcommands{vector_ge_activity}
+
+
+Let us consider an example. 
+Our goal is to describe the action of the elements of class 2A in 
+the stabilizer of the Hirschfeld surface. 
+The group 
+element is a Baer collineation:
+$$
+\left[
+\begin{array}{cccc}
+1&0&0&0\\
+0&1&0&0\\
+0&0&1&0\\
+0&0&0&1\\
+\end{array}
+\right]_1
+$$
+The class representative is stored in a makefile variable:
+
+\sourcecodevariable{CLASS_2A_REP}
+
+
+The first command creates the conjugacy class 2A. 
+The elements will be written to a csv file:
+
+\sourcecode{Hirschfeld_Class_2A}
+
+The filename is stored in a makefile variable:
+
+\sourcecodevariable{FILE_NAME_CLASS_2A}
+
+
+The next command reads the elements of class 2A from this file. 
+It then prints the action of these elements on 
+the various objects associated with the cubic surface:
+
+\sourcecode{surface_4_0_export_action}
+
+
+For activities with vectors of group elements, 
+see Section~\ref{sec:lineargroups:vectorge:activity}.

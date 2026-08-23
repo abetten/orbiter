@@ -1,0 +1,12 @@
+create_BLT_5_1:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 5 -end \
+		-define O -orthogonal_space 0 5 F -end \
+		-define BLT -BLT_set \
+			-space O -catalogue 1 \
+		-end \
+		-with BLT -do -blt_set_activity \
+			-report \
+		-end
+	$(PDFLATEX) BLT_catalogue_q5_iso1.tex
+	$(OPEN) BLT_catalogue_q5_iso1.pdf

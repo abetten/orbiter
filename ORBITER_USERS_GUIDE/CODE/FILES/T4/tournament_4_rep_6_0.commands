@@ -1,0 +1,37 @@
+% file: tournament_4_rep_6_0.commands
+% created by Orbiter graphics interface
+% creation date: Fri Nov 29 20:48:18 MST 2019
+
+DeviceCoordinates 0 0 1000000 1000000
+UserCoordinates 0 0 1000000 1000000
+sl_thickness 50
+sl_ends 0, 1
+Polygon 2 850000 500000 587500 762500
+sl_ends 0, 1
+Polygon 2 850000 500000 325000 500000
+sl_ends 0, 1
+Polygon 2 850000 500000 587500 237500
+sl_ends 0, 1
+Polygon 2 500000 850000 237500 587500
+sl_ends 0, 1
+Polygon 2 500000 850000 500000 325000
+sl_ends 0, 1
+Polygon 2 150000 500000 412500 237500
+sf_interior 100
+Circle 850000, 500000, 25000
+sf_interior 0
+Circle 850000, 500000, 25000
+sf_interior 100
+Circle 500000, 850000, 25000
+sf_interior 0
+Circle 500000, 850000, 25000
+sf_interior 100
+Circle 150000, 500000, 25000
+sf_interior 0
+Circle 150000, 500000, 25000
+sf_interior 100
+Circle 500000, 150000, 25000
+sf_interior 0
+Circle 500000, 150000, 25000
+END_OF_FILE
+

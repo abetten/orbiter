@@ -1,0 +1,28 @@
+GL_2_3_RNF_elements:
+	$(ORBITER) -v 2 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define F -finite_field -q 3 -end \
+		-define G -linear_group -GL 2 F -end \
+		-assign elements -from \
+		-with G -do \
+		-group_theoretic_activity \
+			-elements \
+		-end \
+		-assign RNF -and BaseChange -from \
+		-with elements -do \
+		-vector_ge_activity \
+			-rational_canonical_form \
+		-end \
+		-with RNF -do \
+		-vector_ge_activity \
+			-report_with_options "dense=on" \
+		-end \
+		-with BaseChange -do \
+		-vector_ge_activity \
+			-report_with_options "dense=on" \
+		-end \
+		-print_symbols
+	$(PDFLATEX) GL_2_3_RNF_elements.tex
+	$(OPEN) GL_2_3_RNF_elements.pdf

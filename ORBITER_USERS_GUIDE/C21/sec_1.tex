@@ -1,0 +1,36 @@
+Tables~\ref{tab:misc:1}-\ref{tab:misc:3} list miscellaneous Orbiter commands.
+\orbitertableofcommands{interface_toolkit_1}
+\orbitertableofcommands{interface_toolkit_2}
+\orbitertableofcommands{interface_toolkit_3}
+\orbitertableofcommands{tree_draw_options}
+
+
+The command \verb'-csv_file_select_rows' can be used to select rows from a csv file. 
+The command \verb'-csv_file_select_cols' can be used to select columns from a csv file. 
+The command \verb'-csv_file_select_rows_and_cols' selects rows and columns. 
+Here is an example. 
+We create the multiplication table of the finite field $\bbF_7$, 
+ordered according to the powers of a primitive element:
+$$
+\alpha^0, \alpha^1, \alpha^2, \alpha^3, \alpha^4, \alpha^5.
+$$
+The even powers of $\alpha$ create a multiplicative subgroup. 
+We select the rows and columns 
+corresponding to even powers $\alpha^0, \alpha^2, \alpha^4.$
+
+\sourcecode{misc_select}
+
+Here is the file \verb'GF_q7_multiplication_table_reordered.csv'
+
+\orbiteroutput{GRAPHICS/LATEX/GF_q7_multiplication_table_reordered}
+
+and next the file that is created by selecting rows and columns $0,2,4$:
+
+\orbiteroutput{GRAPHICS/LATEX/GF_q7_multiplication_table_reordered_sub}
+
+A graphical output is shown below:
+
+\orbiteroutput{GRAPHICS/WRAPPERS/GF_q7_tables_reordered_draw}
+
+\bigskip
+

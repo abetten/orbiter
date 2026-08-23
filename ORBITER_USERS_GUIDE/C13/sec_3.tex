@@ -1,0 +1,41 @@
+
+
+Table~\ref{tab:graphoptions} lists the Orbiter commands to classify graphs and tournaments. 
+\orbitertableofcommands{graph_classify}
+Table~\ref{tab:graph:classify:activity} 
+lists activities after the classification has been completed. 
+\orbitertableofcommands{graph_classification_activity}
+
+
+The following command classifies all graphs on 5 vertices:
+
+\sourcecode{graph_classify_5}
+
+After the classification, the graphs with 5 edges are shown. 
+\orbiteroutput{GRAPHICS/WRAPPERS/graphs_5_transversal}
+
+
+\bigskip
+
+
+The next command classifies all tournaments on 4 vertices:
+
+\sourcecode{tournament_classify_4}
+
+There are four tournaments, shown below:
+\orbiteroutput{GRAPHICS/WRAPPERS/tournaments_4_transversal}
+
+
+\bigskip
+
+The next command classifies all cubic graphs on 8 vertices:
+
+\sourcecode{graph_classify_8_r3}
+
+There are six cubic graphs. 
+The graph drawings are shown below:
+\orbiteroutput{GRAPHICS/WRAPPERS/graphs_cubic_8_transversal}
+
+
+
+

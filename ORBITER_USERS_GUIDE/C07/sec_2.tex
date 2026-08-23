@@ -1,0 +1,32 @@
+Orbiter can work with the Grassmannian over a finite field. 
+In particular, Orbiter offers indexing for subspaces.
+For the special case of the Grassmannian ${\mathfrak Gr}_{4,2}(V)$, 
+Pl\"ucker coordinates can be used to identify 
+${\mathfrak Gr}_{4,2}(V)$ with the $Q^+(5,q)$ (Klein) quadric.
+Here is an example. The command 
+
+\sourcecode{GR_4_2_2}
+
+creates the elements of ${\mathfrak Gr}_{4,2,2}$ 
+and lists them together with their Pl\"ucker coordinates.
+The following list is produced (output shortened): 
+\orbiteroutput{GRAPHICS/LATEX/report_Gr_4_2_2}
+The Pl\"ucker coordinates satisfy
+$$
+p_{12}p_{34} - p_{13}p_{24}+p_{14}p_{23}=0
+$$
+and hence belong to the Klein quadric $Q^+(5,q)$.
+Orthogonal spaces and quadrics will 
+be discussed in Section~\ref{sec:orthogonal}.
+
+\bigskip
+
+
+The Orbiter labeling of points of 
+the $Q^+(5,q)$ quadric (see Section~\ref{sec:orthogonal}) 
+can then be used to enumerate the lines of $\PG(3,q)$ in a second, different way.
+In the example of $\PG(3,2),$ 
+this yields the following list (output shortened):
+\orbiteroutput{GRAPHICS/LATEX/report_Op_5_2}
+
+

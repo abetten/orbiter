@@ -1,0 +1,11 @@
+geo_7_3_orderly:
+	$(ORBITER) -v 200 \
+		-define Test_lines -set -loop 3 8 1 -end \
+		-define Geo -geometry_builder \
+			-V 7 -B 7 -TDO 3 \
+			-fuse 1 -fname_GEO 7_3 \
+			-output_to_inc_file \
+			-test Test_lines \
+			-search_tree \
+			-orderly \
+		-end

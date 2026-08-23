@@ -1,0 +1,245 @@
+For $p$ prime, the finite field $\bbF_p$ of 
+order $p$ can be constructed as factorring of the integers moulo $p$. 
+In this section, we will consider polynomials over $\bbF_p.$
+The ring of polynomials in one variable 
+with coefficients in $\bbF_p$ is denoted as $\bbF_p[X].$ 
+Table~\ref{tab:finitefield:activities:poly} 
+lists Orbiter finite field activities related to polynomials.
+\orbitertableofcommands{finite_field_activities_polynomials}
+For instance, the command 
+
+\sourcecode{poly_division}
+
+computes the polynomial long division of $A(X)$ by $B(X)$ over $\bbF_2$ where 
+$$
+A(X) = X^{10} + 1, \quad B(X) = X^3+X^2+1.
+$$
+The result is $Q(X)$ and $R(X)$
+with 
+$$
+A(X) = Q(X) \cdot B(X) + R(X)
+$$
+with 
+$$
+Q(X) = X^{7} + X^{6} + X^{5} + X^{3} + 1, \quad R(X) = X^{2}.
+$$
+The coefficient lists in the arguments are from the lowest term up.
+
+\bigskip
+
+
+It is perhaps more convenient to create the polynomials
+as vectors, as in Section~\ref{sec:vector:builder}. 
+The following example uses vectors named $A$ and $B.$
+After that, the division command is called. 
+
+\sourcecode{poly_division2}
+
+
+
+\bigskip
+
+
+
+
+
+The command 
+\verb'-extended_gcd_for_polynomials' 
+takes two polynomials $A(X)$ and $B(X)$ and 
+computes polynomials $U(X)$ and $V(X)$ and $G(X)$ such that $G(X)$ 
+is the greatest common divisor of $A(X)$ and $B(X)$ and 
+$$
+G(X) = U(X) \cdot A(X) + V(X) \cdot B(X).
+$$
+For instance, 
+
+\sourcecode{poly_gcd}
+
+computes 
+$$
+U(X)=X + 1, \quad 
+V(X)=X^{8} + X^{5} + X^{4} + X^{3} + X, \quad 
+G(X)=1.
+$$
+
+
+\bigskip
+
+The next command computes 
+$$
+\big( 3X^2 + 2X + 1 \big) \cdot \big( 5X^2+4X+3\big) \mod \big( X^3 +6\big) \mod 7.
+$$
+
+\sourcecode{poly_mult_mod1}
+
+which has a result of 
+$$
+X^2+4X+4.
+$$
+The coefficients are given from the lowest to the highest term. 
+For the opposite order, the following command computes 
+$$
+\big(2X^{2} + X + 3\big) \cdot  \big(4X^{2} + 3X + 5\big) \mod \big( X^3 +6\big) \mod 7.
+$$
+
+\sourcecode{poly_mult_mod2}
+
+The result is 
+$$
+4X^{2} + X + 4.
+$$
+
+\bigskip
+
+
+The finite field $\bbF_4$ 
+can be defined by using polynomial arithmetic over $\bbF_2$ 
+modulo $X^2+X+1.$
+Here is a command that computes the three non-trivial products of polynomials:
+
+\sourcecode{poly_mult_mod_F4}
+
+
+
+\bigskip
+
+It is possible to use numerical values for polynomials, 
+using the representation in radix $q.$
+The following command computes the product of the polynomials $5$ and $7$ over $\bbF_2$:
+
+\sourcecode{mult_polynomials_2_5_7}
+
+The next command performs polynomial 
+long division based on numerical polynomials:
+
+\sourcecode{polynomial_division_ranked_2_27_13}
+
+
+\bigskip
+
+Here is a somewhat larger example for numerical arguments. 
+We wish to multiply $999$ by $997$ modulo $1033$. 
+The first command performs multiplication: 
+
+\sourcecode{mult_polynomials_1024_999_997}
+
+The next command performs division with remainder:
+
+\sourcecode{polynomial_division_ranked_2_349147_1033}
+
+%The next command performs an independent check, 
+%using the finite field with $1024$ elements. 
+%This check relies on the fact that the irreducible polynomial to create the field 
+%$\bbF_{1024}$ is exactly the polynomial by which we did mod out in the example before:
+
+%\sourcecode{mult_polynomials_1024_999_997_check}
+
+%In this last command, the formula \verb'a*b' is used and evaluated over 
+%$\bbF_{1024}$, using  $a=999$ and $b=997$.
+
+
+\bigskip
+
+Orbiter allows polynomial arithmetic modulo a factor polynomial.
+The coefficient vector of the polynomial can be created as a vector.
+Here is an example which performs arithmetic modulo the CRC32 polynomial. 
+The goal is to compute the multiplicative inverse of $X$. 
+In order to do so, 
+we use the fact that the CRC32 polynomial is irreducible, 
+and hence the factor ring is a finite field 
+of order $2^{32}.$ 
+The inverse of a polynomial can be computed by raising to the 
+power of $2^{32}-2$:
+
+\sourcecodevariable{CRC32_SPARSE}
+
+\sourcecodevariable{TWO_TO_THE_32_MINUS_2}
+
+\sourcecode{power_mod_inverse}
+
+This command produces the polynomial 
+$$
+B(X)=X^{31} + X^{25} + X^{22} + X^{21} + X^{15} + X^{11} + X^{10} + X^{9} + X^{7} + X^{6} + X^{4} + X^{3} + X + 1
+$$
+In order to test that this polynomial really 
+is the multiplicative inverse of $X$ modulo CRC32, 
+we perform the following command:
+
+\sourcecodevariable{INVERSE_SPARSE}
+
+
+\sourcecode{mult_mod_to_get_one}
+
+The product is indeed $1$.
+
+
+\bigskip
+
+
+
+
+The Berlekamp matrix can be used to test if 
+a polynomial is irreducible over a given finite field.
+The polynomial is irreducible if and only if the rank of 
+the Berlekamp matrix is $d-1$, where $d$ is the degree of the polynomial.
+For instance, the command
+
+\sourcecode{Berlekamp_matrix_2_3}
+
+computes the Berlekamp matrix associated 
+with the polynomial $X^3+X+1$ over $\bbF_2.$ 
+The matrix is 
+$$
+\left[
+\begin{array}{ccc}
+0 &0 &0\\ 
+0 &1 &1 \\
+0 &1 &0 \\
+\end{array}
+\right].
+$$
+Since the matrix has rank $2$, the polynomial is irreducible.
+
+\bigskip
+
+
+
+
+Orbiter can compute irreducible and primitive polynomials.
+The following command creates a list of all irreducible polynomials of 
+degree $3$ over $\bbF_4$:
+
+\sourcecode{irred_3_4}
+
+The output is:
+\orbiteroutput{GRAPHICS/LATEX/ring_theory_irred_poly_3_4}
+
+\bigskip
+
+The following command creates a primitive polynomial of degre 10 over $\bbF_2$:
+
+\sourcecode{F2_get_primitive_poly_of_deg_10}
+
+
+
+\bigskip
+
+The following command creates one primitive polynomial 
+over $\bbF_2$ for each degree in the range $[2,10]$:
+
+\sourcecode{F2_get_primitive_poly_range_2_10}
+
+The unix commnd \verb'grep' is used to filter the output for 
+lines containing the given pattern ``//''. 
+This yields the list
+
+\orbiteroutput{GRAPHICS/LATEX/ring_theory_irred_poly_q2}
+
+Primitive polynomials over the base field $\bbF_s$ 
+are converted into integers, using the base-$s$ representation of integers.
+For instance, the polynomial $X^{2} + X + 1$ is read as binary string $111$, 
+which in turn translates to the integer $7$ (we use $s=2$).
+
+
+\bigskip
+

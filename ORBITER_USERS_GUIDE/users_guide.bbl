@@ -1,0 +1,415 @@
+\begin{thebibliography}{10}
+
+\bibitem{AbiadDeBoeckZeijlemaker2024}
+Aida Abiad, Maarten De~Boeck, and Sjanne Zeijlemaker.
+\newblock On the existence of small strictly {N}eumaier graphs.
+\newblock {\em Graphs Combin.}, 40(3):Paper No. 51, 25, 2024.
+
+\bibitem{AlAzemiBettenChowdhury18}
+Abdullah Al-Azemi, Anton Betten, and Sajeeb~Roy Chowdhury.
+\newblock A rainbow-clique search algorithm for {B}{L}{T}-sets.
+\newblock In {\em I{CMS} 2018---{P}roceedings of the {I}nternational {C}ongress
+  on {M}athematical {S}oftware; James H. Davenport, Manuel Kauers, George
+  Labahn, Josef Urban (ed.)}, pages 71--79. Springer, 2018.
+
+\bibitem{AlogaidiBetten}
+Awss Al-ogaidi and Anton Betten.
+\newblock Large Arcs in Small Planes, Congressus Numerantium 232 (2019),
+  119--136.
+
+\bibitem{AlazemiBetten2024}
+Abdullah Alazemi and Anton Betten.
+\newblock Computing the Group of an Algebraic Variety over a Finite Field, In:
+  K. Buzzard, et al. (ed): ICMS 2024, Springer Lecture Notes in Computer
+  Science, 14749, pp 89--96 (2024).
+
+\bibitem{Andre54}
+Johannes Andr{\'e}.
+\newblock \"{U}ber nicht-{D}esarguessche {E}benen mit transitiver
+  {T}ranslationsgruppe.
+\newblock {\em Math. Z.}, 60:156--186, 1954.
+
+\bibitem{BaderLunardonThas90}
+Laura Bader, Guglielmo Lunardon, and Joseph~A. Thas.
+\newblock Derivation of flocks of quadratic cones.
+\newblock {\em Forum Math.}, 2(2):163--174, 1990.
+
+\bibitem{fining}
+John Bamberg, Anton Betten, Philippe Cara, Jan De~Beule, Michel Lavrauw, and
+  Max Neunh\"offer.
+\newblock {\em {FinInG -- Finite Incidence Geometry, Version 1.4.1}}, 2018.
+
+\bibitem{Barth1996}
+W.~Barth.
+\newblock Two projective surfaces with many nodes, admitting the symmetries of
+  the icosahedron.
+\newblock {\em J. Algebraic Geom.}, 5(1):173--186, 1996.
+
+\bibitem{BarwickEbert2008}
+Susan Barwick and Gary Ebert.
+\newblock {\em Unitals in projective planes}.
+\newblock Springer Monographs in Mathematics. Springer, New York, 2008.
+
+\bibitem{Bayley}
+R.~Bayley.
+\newblock \url{https://www.distanceregular.org}.
+
+\bibitem{Betten2008}
+Anton Betten.
+\newblock Twisted tensor product codes.
+\newblock {\em Des. Codes Cryptogr.}, 47(1-3):191--219, 2008.
+
+\bibitem{Betten13}
+Anton Betten.
+\newblock Rainbow cliques and the classification of small {BLT}-sets.
+\newblock In {\em I{SSAC} 2013---{P}roceedings of the 38th {I}nternational
+  {S}ymposium on {S}ymbolic and {A}lgebraic {C}omputation}, pages 53--60. ACM,
+  New York, 2013.
+
+\bibitem{Betten2020}
+Anton Betten.
+\newblock The orbiter ecosystem for combinatorial objects.
+\newblock In {\em I{SSAC} 2020---{P}roceedings of the 45th {I}nternational
+  {S}ymposium on {S}ymbolic and {A}lgebraic {C}omputation}, pages 30--37. ACM,
+  New York, 2020.
+
+\bibitem{BettenBetten10}
+Anton Betten and Dieter Betten.
+\newblock There is no {D}rake/{L}arson linear space on 30 points.
+\newblock {\em J. Combin. Des.}, 18(1):48--70, 2010.
+
+\bibitem{BettenCheonKimMaruta13}
+Anton Betten, Eun~Ju Cheon, Seon~Jeong Kim, and Tatsuya Maruta.
+\newblock Three families of multiple blocking sets in {D}esarguesian projective
+  planes of even order.
+\newblock {\em Des. Codes Cryptogr.}, 68(1-3):49--59, 2013.
+
+\bibitem{BettenKaraoglu19a}
+Anton Betten and Fatma Karaoglu.
+\newblock Cubic surfaces over small finite fields.
+\newblock {\em Des. Codes Cryptogr.}, 87(4):931--953, 2019.
+
+\bibitem{BettenKaraoglu2022}
+Anton Betten and Fatma Karaoglu.
+\newblock The {E}ckardt point configuration of cubic surfaces revisited.
+\newblock {\em Des. Codes Cryptogr.}, 90(9):2159--2180, 2022.
+
+\bibitem{BettenKaraoglu22}
+Anton Betten and Fatma Karaoglu.
+\newblock The {E}ckardt point configuration of cubic surfaces revisited.
+\newblock {\em Des. Codes Cryptogr.}, 90(9):2159--2180, 2022.
+
+\bibitem{Betten73}
+Dieter Betten.
+\newblock {$4$}-dimensionale {T}ranslationsebenen mit {$8$}-dimensionaler
+  {K}ollineationsgruppe.
+\newblock {\em Geometriae Dedicata}, 2:327--339, 1973.
+
+\bibitem{Magma}
+Wieb Bosma, John Cannon, and Catherine Playoust.
+\newblock The {M}agma algebra system. {I}. {T}he user language.
+\newblock {\em J. Symbolic Comput.}, 24(3-4):235--265, 1997.
+\newblock Computational algebra and number theory (London, 1993).
+
+\bibitem{Brouwer315}
+A.~Brouwer.
+\newblock The Cohen-Tits near octagon on 315 points,
+  \url{https://www.win.tue.nl/~aeb/drg/graphs/HJ315.html}.
+
+\bibitem{BruckBose64}
+R.~H. Bruck and R.~C. Bose.
+\newblock The construction of translation planes from projective spaces.
+\newblock {\em J. Algebra}, 1:85--102, 1964.
+
+\bibitem{Butler91}
+G.~Butler.
+\newblock {\em Fundamental algorithms for permutation groups}, volume 559 of
+  {\em Lecture Notes in Computer Science}.
+\newblock Springer-Verlag, Berlin, 1991.
+
+\bibitem{Cohen1981}
+Arjeh~M. Cohen.
+\newblock Geometries originating from certain distance-regular graphs.
+\newblock In {\em Finite geometries and designs ({P}roc. {C}onf., {C}helwood
+  {G}ate, 1980)}, volume~49 of {\em London Math. Soc. Lecture Note Ser.}, pages
+  81--87. Cambridge Univ. Press, Cambridge-New York, 1981.
+
+\bibitem{Cohen93}
+Henri Cohen.
+\newblock {\em A course in computational algebraic number theory}, volume 138
+  of {\em Graduate Texts in Mathematics}.
+\newblock Springer-Verlag, Berlin, 1993.
+
+\bibitem{Cooley14}
+Jenny~Anne Cooley.
+\newblock Cubic Surfaces over Finite Fields, Ph.D. thesis, University of
+  Warwick, 2014.
+
+\bibitem{CzerwinskiOakden92}
+Terry Czerwinski and David Oakden.
+\newblock The translation planes of order twenty-five.
+\newblock {\em J. Combin. Theory Ser. A}, 59(2):193--217, 1992.
+
+\bibitem{DelandtsheerDoyen1989}
+Anne Delandtsheer and Jean Doyen.
+\newblock Most block-transitive {$t$}-designs are point-primitive.
+\newblock {\em Geom. Dedicata}, 29(3):307--310, 1989.
+
+\bibitem{Dickson15}
+L.E. Dickson.
+\newblock Projective classification of cubic surfaces modulo 2, Ann. of Math.
+  16 (1915), 139-157.
+
+\bibitem{Endrass97}
+S.~Endrass.
+\newblock A projective surface of degree eight with {$168$} nodes.
+\newblock {\em J. Algebraic Geom.}, 6(2):325--334, 1997.
+
+\bibitem{FisherThas79}
+J.~Chris Fisher and Joseph~A. Thas.
+\newblock Flocks in {${\rm PG}(3,\,q)$}.
+\newblock {\em Math. Z.}, 169(1):1--11, 1979.
+
+\bibitem{GAP}
+The GAP~Group.
+\newblock {\em {GAP -- Groups, Algorithms, and Programming, Version 4.11.1}},
+  2021.
+\newblock \url{http://www.gap-system.org}.
+
+\bibitem{GlynnHirschfeld95}
+D.~G. Glynn and J.~W.~P. Hirschfeld.
+\newblock On the classification of geometric codes by polynomial functions.
+\newblock {\em Des. Codes Cryptogr.}, 6(3):189--204, 1995.
+
+\bibitem{gnuplot}
+Gnuplot.
+\newblock Gnuplot \url{http://www.gnuplot.info}.
+
+\bibitem{Hill83}
+R.~Hill.
+\newblock On {P}ellegrino's {$20$}-caps in {$S_{4,3}$}.
+\newblock In {\em Combinatorics '81 ({R}ome, 1981)}, volume~78 of {\em
+  North-Holland Math. Stud.}, pages 433--447. North-Holland, Amsterdam, 1983.
+
+\bibitem{Hirschfeld82}
+J.~W.~P. Hirschfeld.
+\newblock del {P}ezzo surfaces over finite fields.
+\newblock {\em Tensor (N.S.)}, 37(1):79--84, 1982.
+
+\bibitem{Hirschfeld64}
+James W.~P. Hirschfeld.
+\newblock The double-six of lines over {$PG(3,\,4)$}.
+\newblock {\em J. Austral. Math. Soc.}, 4:83--89, 1964.
+
+\bibitem{Hirschfeld10}
+J.W.P. Hirschfeld.
+\newblock Curves of genus 3, Rendiconti di Matematica, Serie VII Volume 30,
+  Roma (2010), 77-88.
+
+\bibitem{metapost2010}
+John~D. Hobby.
+\newblock Metapost, a user's manual. 2010, 2010.
+
+\bibitem{Hoffstein2014}
+Jeffrey Hoffstein, Jill Pipher, and Joseph~H. Silverman.
+\newblock {\em An introduction to mathematical cryptography}.
+\newblock Undergraduate Texts in Mathematics. Springer, New York, second
+  edition, 2014.
+
+\bibitem{Holt05}
+Derek~F. Holt, Bettina Eick, and Eamonn~A. O'Brien.
+\newblock {\em Handbook of computational group theory}.
+\newblock Discrete Mathematics and its Applications (Boca Raton). Chapman \&
+  Hall/CRC, Boca Raton, FL, 2005.
+
+\bibitem{images}
+Christopher Jefferson, Markus Pfeiffer, Rebecca Waldecker, and Eliza
+  Jonauskyte, year\_unknown.
+\newblock GAP package images. 2019.
+  \url{https://www.gap-system.org/Packages/images.html}.
+
+\bibitem{Karaoglu18}
+Fatma Karaoglu.
+\newblock The cubic surfaces with twenty-seven lines over finite fields, Ph.D.
+  thesis, University of Sussex, 2018.
+
+\bibitem{KaraogluBetten21}
+Fatma Karaoglu and Anton Betten.
+\newblock The number of cubic surfaces with 27 lines over a finite field.
+\newblock {\em J. Algebraic Combin.}, 56(1):43--57, 2022.
+
+\bibitem{KernighanRitchie78}
+Brian Kernighan and Dennis Ritchie.
+\newblock The C Programming Language. Prentice Hall. 1978 and 1988.
+
+\bibitem{KramerMesner76}
+Earl~S. Kramer and Dale~M. Mesner.
+\newblock {$t$}-designs on hypergraphs.
+\newblock {\em Discrete Math.}, 15(3):263--296, 1976.
+
+\bibitem{Kung81}
+Joseph P.~S. Kung.
+\newblock The cycle structure of a linear transformation over a finite field.
+\newblock {\em Linear Algebra Appl.}, 36:141--155, 1981.
+
+\bibitem{Law03}
+Maska Law.
+\newblock Flocks, generalizes quadrangles and translation planes from BLT-sets,
+  Ph.D. thesis, University of Western Australia, 2003.
+
+\bibitem{LawPenttila03}
+Maska Law and Tim Penttila.
+\newblock Classification of flocks of the quadratic cone over fields of order
+  at most 29.
+\newblock Number suppl., pages S232--S244. 2003.
+\newblock Special issue dedicated to Adriano Barlotti.
+
+\bibitem{LawPenttila04}
+Maska Law and Tim Penttila.
+\newblock Construction of {BLT}-sets over small fields.
+\newblock {\em European J. Combin.}, 25(1):1--22, 2004.
+
+\bibitem{Li1992}
+Wen-Ch'ing~Winnie Li.
+\newblock Character sums and abelian {R}amanujan graphs.
+\newblock {\em J. Number Theory}, 41(2):199--217, 1992.
+
+\bibitem{Lubotzky1988}
+A.~Lubotzky, R.~Phillips, and P.~Sarnak.
+\newblock Ramanujan graphs.
+\newblock {\em Combinatorica}, 8(3):261--277, 1988.
+
+\bibitem{Lueneburg1987}
+Heinz L\"{u}neburg.
+\newblock {\em On the rational normal form of endomorphisms}.
+\newblock Bibliographisches Institut, Mannheim, 1987.
+\newblock A primer to constructive algebra.
+
+\bibitem{LunelliSce58}
+L.~Lunelli and M.~Sce.
+\newblock {\em {$k$}-archi completi nei piani proiettivi desarguesiani di rango
+  {$8$} e {$16$}}.
+\newblock Centro di Calcoli Numerici, Politecnico di Milano, Milan, 1958.
+
+\bibitem{Maple}
+2021.
+\newblock Maple 21. Maplesoft, a division of Waterloo Maple Inc., Waterloo,
+  Ontario. 2021.
+
+\bibitem{Possolve}
+Brendan McKay, 1995.
+\newblock Possolve, A program to solve positive integer systems, Australian
+  National University, private communication.
+
+\bibitem{Nauty2020}
+Brendan McKay, 2020.
+\newblock Nauty and Traces (Version 2.7r1), Australian National University,
+  2020.
+
+\bibitem{Moorhouse:tables:16}
+G.~Eric Moorhouse.
+\newblock Projective Planes of Order 16.
+  \url{http://ericmoorhouse.org/pub/planes16/}.
+
+\bibitem{Moorhouse:tables:27}
+G.~Eric Moorhouse.
+\newblock Projective Planes of Order 27.
+  \url{http://ericmoorhouse.org/pub/planes27/}.
+
+\bibitem{RaoRao1976}
+M.~L. Narayana~Rao and K.~Kuppuswamy~Rao.
+\newblock A new flag transitive affine plane of order {$27$}.
+\newblock {\em Proc. Amer. Math. Soc.}, 59(2):337--345, 1976.
+
+\bibitem{Penttila98}
+T.~Penttila.
+\newblock Regular cyclic {BLT}-sets.
+\newblock Number~53, pages 167--172. 1998.
+\newblock Combinatorics '98 (Mondello).
+
+\bibitem{PenttilaRoyle98}
+Tim Penttila and Gordon~F. Royle.
+\newblock B{LT}-sets over small fields.
+\newblock {\em Australas. J. Combin.}, 17:295--307, 1998.
+
+\bibitem{Plesken82}
+Wilhelm Plesken.
+\newblock Counting with groups and rings.
+\newblock {\em J. Reine Angew. Math.}, 334:40--68, 1982.
+
+\bibitem{povray}
+2021.
+\newblock POV-RAY Developers. POV-RAY, Persistence of Vision Raytracer Pty.
+  Ltd. \url{http://povray.org}, accessed 1/23/2021.
+
+\bibitem{Praeger2007}
+Cheryl~E. Praeger.
+\newblock The flag-transitive symmetric designs with 45 points, blocks of size
+  12, and 3 blocks on every point pair.
+\newblock {\em Des. Codes Cryptogr.}, 44(1-3):115--132, 2007.
+
+\bibitem{Schlaefli58}
+L.~Schl{\"a}fli, 1858.
+\newblock An attempt to determine the twenty-seven lines upon a surface of the
+  third order and to divide such surfaces into species in reference to the
+  reality of the lines upon the surface, \emph{Quart. J. Math.} \textbf{2}
+  (1858), 55--110.
+
+\bibitem{Schmalz90}
+Bernd Schmalz.
+\newblock Verwendung von {U}ntergruppenleitern zur {B}estimmung von
+  {D}oppelnebenklassen.
+\newblock {\em Bayreuth. Math. Schr.}, (31):109--143, 1990.
+
+\bibitem{Seress03}
+\'Akos Seress.
+\newblock {\em Permutation group algorithms}, volume 152 of {\em Cambridge
+  Tracts in Mathematics}.
+\newblock Cambridge University Press, Cambridge, 2003.
+
+\bibitem{SteinJoyner2005}
+William Stein and David Joyner.
+\newblock {SAGE}: System for algebra and geometry experimentation.
+\newblock {\em ACM SIGSAM Bulletin}, 39(2):61--64, 2005.
+\newblock \url{http://www.sagemath.org/files/sage_stein2005.pdf}.
+
+\bibitem{SuleimanWilson1997}
+Ibrahim A.~I. Suleiman and Robert~A. Wilson.
+\newblock The {$2$}-modular characters of {C}onway's third group {${\rm
+  Co}_3$}.
+\newblock {\em J. Symbolic Comput.}, 24(3-4):493--506, 1997.
+
+\bibitem{MagmaOnline}
+Magma system, year\_unknown.
+\newblock Magma Calculator \url{http://magma.maths.usyd.edu.au/calc/}, accessed
+  11/24/2019.
+
+\bibitem{tantau:2022}
+Till Tantau.
+\newblock The TikZ and PGF Packages. Manual for Version 3.1.9a -- 2022
+  \url{https://tikz.dev}.
+
+\bibitem{Taylor1992}
+D.E. Taylor.
+\newblock {\em The geometry of the classical groups}, volume~9 of {\em Sigma
+  Series in Pure Mathematics}.
+\newblock Heldermann Verlag, Berlin, 1992.
+
+\bibitem{Walker76}
+Michael Walker.
+\newblock A class of translation planes.
+\newblock {\em Geometriae Dedicata}, 5(2):135--146, 1976.
+
+\bibitem{bitmap}
+Wikipedia.
+\newblock Bmp file format.
+\newblock \url{https://en.wikipedia.org/wiki/BMP_file_format}.
+
+\bibitem{Atlas3}
+Robert Wilson, Peter Walsh, Jonathan Tripp, Ibrahim Suleiman, Richard Parker,
+  Simon Norton, Simon Nickerson, Steve Linton, John Bray, and Rachel Abbott,
+  2019.
+\newblock ATLAS of Finite Group Representations - Version 3,
+  \url{http://brauer.maths.qmul.ac.uk/Atlas/v3/}, accessed 11/24/2019.
+
+\end{thebibliography}

@@ -1,0 +1,41 @@
+	\begin{table}
+\begin{tcolorbox}[tabularx={X|p{2cm}|X|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black,title=Scene Elements (Part 2)]
+		\hline
+		Command & Arguments & Purpose \\
+		\hline
+		\hline
+		\verb'-line_through_two_points' & pt-coords   & Create a line through two points given by 6 coordinates \\
+		\hline
+		\verb'-line_through_two_existing_points' & $i_1$ $i_2$   & Create a line through two points \\
+		\hline
+		\verb'-line_through_point_with_direction' & $x$ $y$ $z$ $u_x$ $u_y$ $u_z$   & Create a line through a point $(x,y,z)$ with a given direction $(u_x,u_y,u_z)$ \\
+		\hline
+		\verb'-plane_by_dual_coordinates' & $a$ $b$ $c$ $d$   & Create the plane $ax+by+cz+d=0$ given in dual coordinates \\
+		\hline
+		\verb'-dodecahedron' &    & Create a Dodecahedron centered at the origin (20 points, 30 edges, 12 faces) \\
+		\hline
+		\verb'-Hilbert_Cohn_Vossen_surface' &    & Create the Hilbert, Cohn-Vossen surface (1 cubic surface, 45 tritangent planes, 27 lines) \\
+		\hline
+		\verb'-obj_file' &  fname  & Read points and faces from the given .obj file \\
+		\hline
+		\verb'-group_of_things' &  list  & Create a group of things from the given list \\
+		\hline
+		\verb'-group_of_things_with_offset' &  list offset & Create a group of things from the given list, each value is increase by offset \\
+		\hline
+		\verb'-group_of_things_as_interval' &  $a$ $b$ & Create a group of things indexed by the interval $a, \ldots, a+b -1$ \\
+		\hline
+		\verb'-group_of_things_as_interval_' \verb'with_exceptions' &  $a$ $b$ ex & Create a group of things indexed by the interval $a, \ldots, a+b -1$ with the exceptional elements in the list ex removed\\
+		\hline
+		\verb'-group_of_all_points' &   & Create a group of things from all points currently defined\\
+		\hline
+		\verb'-group_of_all_faces' &   & Create a group of things from all faces currently defined\\
+		\hline
+		\verb'-group_subset_at_random' & $i$ $f$  & Create a group of things from the existing group $i$ by picking a random subset with probability $f$ \\
+		\hline
+		\verb'-create_regulus' & $i$ $N$  & Create a regulus for quadric $i$ with $N$ lines \\
+		\hline
+		\end{tcolorbox}
+	\caption{\label{tab:scene2}Scene Elements (Part 2)}
+	\end{table}

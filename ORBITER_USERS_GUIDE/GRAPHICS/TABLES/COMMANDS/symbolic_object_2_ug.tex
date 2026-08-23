@@ -1,0 +1,35 @@
+\begin{table}
+\begin{tcolorbox}[tabularx={X|p{2cm}|X|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black,title=Creating Symbolic Objects II]
+\hline
+Command & Arguments & Purpose \\
+\hline
+\hline
+\verb'-multiply_2x2_from_the_left'  &  $s$ $A2$ $i$ $j$  &  Multiply the $2 \times 2$ matrix $A2$ from the left to $s$, applying to rows $i$ and $j$. \\
+\hline
+\verb'-matrix_entry'  &  $s$ $i$ $j$  &  Select the $(i,j)$-entry of the matrix $s$. \\
+\hline
+\verb'-vector_entry'  &  $s$ $i$   &  Select the $j$-th entry of the vector $s$. Using row-major ordering, a matrix is considered a vector also. \\
+\hline
+\verb'-collect'  &  $s$ $t$  &  Collect by coefficients of $t$ in the expression $s$. \\
+\hline
+\verb'-collect_by_degree'  &  $s$  &  Collect the expression $s$ by degree. The result is a vector of the homogeneous components of $s$. \\
+\hline
+\verb'-collect_by'  &  $s$ $R$  &  Collect the expression $s$ by monomials of the ring $R.$ The ring R must be univariate. For multivariate rings, use \verb'-collect_by_ring'. \\
+\hline
+\verb'-collect_by_ring'  &  $s$ $R$  &  Collect the expression $s$ by monomials of the ring $R.$ \\
+\hline
+\verb'-encode_CRC'  &  $l$ $d$ $c$  &  Encode tha data $d$ by blocks of length $l$ using the check polynomial $c$. \\
+\hline
+\verb'-decode_CRC'  &  $l$ $d$ $c$  &  Encode tha data $d$ by blocks of length $l$ using the check polynomial $c$. \\
+\hline
+\verb'-submatrix'  &  $M$ $i$ $m$ $j$ $n$  &  Form the $m \times n$ submatrix of $M$ starting in position $(i,j).$ \\
+\hline
+\verb'-do_not_simplify'  &    &  Do not simplify the output object. \\
+\hline
+\verb'-write_trees_during_expand'  &    &  Export trees during the expand command. \\
+\hline
+\end{tcolorbox}
+\caption{\label{tab:symbolic:objects:2}Creating Symbolic Objects II}
+\end{table}

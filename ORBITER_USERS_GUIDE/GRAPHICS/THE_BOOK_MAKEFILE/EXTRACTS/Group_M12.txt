@@ -1,0 +1,14 @@
+Group_M12:
+	$(ORBITER) -v 2 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define gens -vector -dense $(GENERATORS_M12) -end \
+		-define G -permutation_group -symmetric_group 12 \
+			-subgroup_by_generators M12 95040 2 gens -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end
+	$(PDFLATEX) Sym_12_Subgroup_M12_95040_report.tex
+	$(OPEN) Sym_12_Subgroup_M12_95040_report.pdf

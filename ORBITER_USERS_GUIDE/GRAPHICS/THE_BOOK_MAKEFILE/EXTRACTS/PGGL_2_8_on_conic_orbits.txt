@@ -1,0 +1,7 @@
+PGGL_2_8_on_conic_orbits:
+	$(ORBITER) -v 4 \
+		-define G \
+		-linear_group -PGGL 2 8 -PGL2OnConic -end \
+		-define Orb -orbits -group G \
+			-on_points \
+		-end

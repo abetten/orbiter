@@ -1,0 +1,9 @@
+normal_forms_PGL_4_5:
+	$(ORBITER) -v 7 \
+		-define G -linear_group -PGL 4 5 -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-classes_based_on_normal_form \
+		-end
+	$(PDFLATEX) PGL_4_5_classes_based_on_normal_forms_4_5.tex
+	$(OPEN) PGL_4_5_classes_based_on_normal_forms_4_5.pdf

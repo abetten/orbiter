@@ -1,0 +1,41 @@
+\begin{table}
+\begin{tcolorbox}[tabularx={X|p{2cm}|X|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black,title=Refining Tactical Decompositions]
+\hline
+Command & Arguments & Purpose \\
+\hline
+\hline
+\verb'-lambda3'  &  $\lambda_3$ $s$  &   Refine as 3-design with $\lambda_3$ and with block-size $s$  \\
+\hline
+\verb'-solution'  &  $i$ fname   &   Use solutions to system $i$ from file fname. \\
+\hline
+\verb'-range'  &  $f$ $l$   &  Refine cases $i$ with $f \le i < f + l$ only.   \\
+\hline
+\verb'-select'  &  label    &   Select the case for refinement by label.  \\
+\hline
+\verb'-o1'  &   $s$  &  Omit $s$ variables from the first refinement system.   \\
+\hline
+\verb'-o2'  &  $s$   &   Omit $s$ variables from the second refinement system.   \\
+\hline
+\verb'-D1_upper_bound_x0'  &   $b$  &   Add the bound $x_0\le b$ in the first refinement. \\
+\hline
+\verb'-reverse'  &     &  Sort the distributions in reverse order.   \\
+\hline
+\verb'-reverse_inverse'  &     &     \\
+\hline
+\verb'-nopacking'  &     &   Do not use packing inequalities.  \\
+\hline
+\verb'-dual_is_linear_space'  &     &   Assume that the dual incidence structure is a linear space also. This is valid for projective planes, for instance.  \\
+\hline
+\verb'-geometric_test'  &     &   Subject the distributions to the geometric test.  \\
+\hline
+\verb'-once'  &     &   Find at most one refinement in each case. This can be used to test which cases can be refined. \\
+\hline
+\verb'-mckay'  &     &   Use McKay's solver instead (by default, a lexicographic solver is used).  \\
+\hline
+\verb'-input_file'  &  fname   &   Specify the input TDO-file for refinement.  \\
+\hline
+\end{tcolorbox}
+\caption{\label{tab:tdo:refine}Refining Tactical Decompositions}
+\end{table}

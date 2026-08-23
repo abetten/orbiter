@@ -1,0 +1,20 @@
+PGGL_2_4_export_magma:
+	$(ORBITER) -v 20 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define F -finite_field -q 4 \
+			-compute_related_fields \
+		-end \
+		-define G -linear_group -PGGL 2 F \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-export_magma \
+		-end
+	$(PDFLATEX) PGGL_2_4_report.tex
+	$(OPEN) PGGL_2_4_report.pdf

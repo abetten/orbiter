@@ -1,0 +1,5 @@
+sqrt_mod_33_41:
+	$(ORBITER) -v 2 -square_root_mod 33 41
+	
+quadratic_sieve:
+	$(ORBITER) -v 5 -quadratic_sieve 31 500 1

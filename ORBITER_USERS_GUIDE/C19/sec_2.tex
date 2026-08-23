@@ -1,0 +1,120 @@
+Orbiter can be used to create raytracing 3D-graphics.
+Orbiter serves as a front end for the raytracing software Povray~\cite{povray}.
+This is a multi step process: 
+A 3D scene is defined through orbiter commands. 
+Next, Orbiter produces Povray files. 
+After that, the 
+povray files are processed through povray, and turned into graphics files (png), called frames. 
+The frames can be turned into a video 
+by using tools like ffmpeg (see Section~\ref{sec:animations}).
+By default, an rotational animation is produced. 
+The main commands are listed in Table~\ref{tab:interface:povray}.
+\orbitertableofcommands{interface_povray}
+
+\bigskip
+
+To describe a povray job, the commands in Table~\ref{tab:povray:job} can be used.
+\orbitertableofcommands{povray_job_description}
+
+\bigskip
+
+The Orbiter Povray interface requires some general information about the animation, 
+the camera position, the boundary box for clipping, 
+the font size for text and others.
+Tables~\ref{tab:povray1}-~\ref{tab:povray2} 
+list the commands to control the 3D-povray frontend.
+\orbitertableofcommands{video_draw_options_1}
+\orbitertableofcommands{video_draw_options_2}
+
+\bigskip
+
+
+A povray graphics starts with a description of the scene.
+The scene will be rendered to the final frame. 
+A scene is composed of geometric objects. 
+Various types of objects are available: 
+points, lines, planes, faces, algebraic surfaces, reguli, 3D-text,  
+and others.
+Some complex objects are predefined, 
+for instance the Eckardt surface. 
+Once the objects are defined, output commands can be invoked 
+to draw them in various colors and with various options.
+At times, there are many objects in one scene. 
+In order to ease drawing, objects can be grouped together. 
+Only objects of the same type may be grouped. 
+A group of object can be drawn at once.
+Tables~\ref{tab:scene1} and~\ref{tab:scene2} 
+summarize the Orbiter commands to build objects of a 3D scene.
+\orbitertableofcommands{scene_1}
+\orbitertableofcommands{scene_2}
+The commands in Table~\ref{tab:3doutput} are used to build the scene.
+Each of these commands applies to a group of objects of the same kind. 
+Groups of objects are created using the commands in 
+Table~\ref{tab:scene2} which start with \verb'group_of'.
+\orbitertableofcommands{drawable_set_of_objects}
+Here is a simple example which combines scene building and graphical output.
+The example creates a cube with vertices, edges and faces:
+
+\sourcecode{cube}
+
+This command instructs Orbiter to create 30 povray files (extension .pov), 
+one for each frame of a rotating scene. 
+The scene containes a cube whose vertices are shown in chrome, 
+whose edges are in red, and whose faces are yellow and transparent. 
+The cube turns around a vertical axis of symmetry.
+Here is the first frame of the result:
+\orbiteroutput{GRAPHICS/WRAPPERS/povray_cube}
+The coordinates of the cube are stored in an object file \verb'cube_centered.obj'.
+The content of this file is:
+\orbiteroutput{GRAPHICS/WRAPPERS/povray_cube_obj_file}
+The monkey saddle is a cubic surface, given by the equation 
+$$
+z = x^3-3xy^2
+$$
+The next example plots the surface knowns as the monkey saddle. 
+The tangent plane at $(0,0,0)$ is drawn as well. 
+An animation is created by rotating the scene around the $z$-axis.
+
+\sourcecodevariable{MONKEY_SADDLE_CUBIC}
+
+
+\sourcecode{monkey}
+
+Here is one of the frames that are created:
+\orbiteroutput{GRAPHICS/WRAPPERS/povray_monkey}
+The Eckardt surface is given by the equation
+$$
+\frac{5}{2}xyz-(x^2+y^2+z^2)+1=0.
+$$
+We use the following code to plot the surface and the lines on it. 
+The Schl\"afli labeling of the lines is indicated.
+
+\sourcecode{Eckardt}
+
+The rendering yields:
+\orbiteroutput{GRAPHICS/WRAPPERS/povray_Eckardt}
+
+
+
+
+
+
+\bigskip
+
+The Endrass octic~\cite{Endrass97} is the algebraic surface given by the equation
+
+\input GRAPHICS/WRAPPERS/endrass_octic_equation.tex
+
+The following Orbiter command creates a povray graphics of the octic. 
+
+\sourcecodevariable{ENDRASS_OCTIC_LEX_165}
+
+
+\sourcecode{endrass8}
+
+Here is the rendering:
+\orbiteroutput{GRAPHICS/WRAPPERS/Endrass_octic}
+It includes coordinate axes and the $x,y$-plane. 
+
+\bigskip
+

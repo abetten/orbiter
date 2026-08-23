@@ -1,0 +1,10 @@
+create_spread_9a:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 3 -end \
+		-define G -linear_group -PGL 4 F -end \
+		-define S -spread -kernel_field F \
+			-group G -k 2 -catalogue 0 \
+			-end \
+		-with S -do -spread_activity \
+			-report \
+		-end

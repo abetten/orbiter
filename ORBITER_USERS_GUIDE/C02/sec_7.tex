@@ -1,0 +1,670 @@
+Symbolic objects in Orbiter represent algebraic expressions with coefficients in finite fields.
+They consist of the elementary arithmetic operations, 
+numbers, variables and exponents.
+In Orbiter, an expression can be parsed from a text representation. 
+The purpose of parting is to produce an internat representation of the expression as a syntax tree. 
+The syntax tree is an efficient way to represent the expression, 
+and algebraic operations will be performed by manipulating the syntax tree.
+The process of creating the abstract syntax tree 
+from the text representation is called parsing. 
+Orbiter can deal with vectors and matrices of symbolic expressions. 
+These are simply sequences of symbolic objects.
+
+
+\bigskip
+
+
+Tables~\ref{tab:symbolic:objects:1}-\ref{tab:symbolic:objects:2} 
+show Orbiter commands to create symbolic objects. 
+\orbitertableofcommands{symbolic_object_1}
+\orbitertableofcommands{symbolic_object_2}
+
+\bigskip
+
+Table~\ref{tab:symbolic:objects:activity} 
+show Orbiter activities for symbolic objects. 
+\orbitertableofcommands{symbolic_object_activity}
+
+\bigskip
+
+
+Let us consider some examples. 
+The elements of the finite field $\bbF_q$ are coded as integers in the interval from $0$ to $q-1$.  
+For more information about finite fields, 
+see Chapter~\ref{chapter:finite:fields}.
+It is fair to assume that $0$ represents zero and $1$ represents one.
+Numbers outside the interval $0$ to $q-1$ are not allowed 
+and lead to error messages when encountered.
+However, when parsing a algebraic formula from text, 
+a negative sign is interpreted as a uniary or binary minus, 
+as hence one can say that negative numbers are allowed at the time of input.
+
+\bigskip
+
+The first example creates the polynomial $1-X-X^2$ over $\bbF_7$:
+
+\sourcecode{symbolic_poly}
+
+The output is 
+$$
+M = 
+\begin{array}{*{1}c}
+1 + (6 X) + (6 X^{2})\\
+\end{array}
+$$
+The coefficients of $X$ and $X^2$ are $6$, because $6 \equiv -1$ mod $7$ 
+and Orbiter chooses field elements of $\bbF_q$ to lie in the interval $[0,q-1].$
+
+
+
+\bigskip
+
+The second example creates the polynomial CRC32, 
+using the makefile variable
+
+\sourcecodevariable{CRC32_ETHERNET_POLY}
+
+The command 
+
+\sourcecode{symbolic_CRC32}
+
+
+produces the following output:
+$$
+M = 
+\begin{array}{*{1}c}
+1 + X + X^{2} + X^{4} + X^{5} + X^{7} + X^{8} + X^{10} + X^{11} + X^{12} + X^{16} + X^{22} + X^{23} + X^{26} + X^{32}\\
+\end{array}
+$$
+
+
+
+\bigskip
+
+
+The second example creates the BCH polynomial Alfa, 
+defined over the field $\bbF_{256}$, 
+using the makefile variable
+
+\sourcecodevariable{BCH_POLYNOMIAL_ALFA_F256}
+
+The command 
+
+\sourcecode{symbolic_CRC_alfa}
+
+
+produces the following output:
+$$
+M = 
+\begin{array}{*{1}c}
+214 + X^{2} + (167 X)\\
+\end{array}
+$$
+
+
+
+\bigskip
+
+
+
+The next example creates the CRC polynomial Bravo over the field $\bbF_{256}$.
+The makefile variable is:
+
+\sourcecodevariable{BCH_POLYNOMIAL_BRAVO_F256}
+
+The actual command is:
+
+\sourcecode{symbolic_CRC_bravo}
+
+The output is 
+$$
+M = 
+\begin{array}{*{1}c}
+1 + X^{4} + (27 X^{2}) + (23 X) + (213 X^{3})\\
+\end{array}
+$$
+
+\bigskip
+
+
+%\sourcecode{symbolic_test_4_expand_draw}
+
+
+Let us consider the formula $(a+b)^3$ and expand:
+
+
+\sourcecode{symbolic_test_5_expand}
+
+
+The output is 
+$$
+M1 = 
+\left[
+\begin{array}{*{1}c}
+a^{3} + b^{3} + (3 a^{2} b) + (3 a b^{2})\\
+\end{array}
+\right]
+$$
+It is also possible to inspect the 
+representation of the expressions as abstract syntax trees. 
+The node labeled R signifies the root node of the tree. 
+The tree on the left is the syntax tree before expansion, 
+whereas the tree on the right is the syntax tree after expansion:
+
+\orbiteroutput{GRAPHICS/WRAPPERS/symbolic_test_5}
+
+\bigskip
+
+
+The command 
+
+\sourcecode{test_expand_1}
+
+tests that 
+$$
+a(x+y) = ax + ay.
+$$
+
+\bigskip
+
+
+The command 
+
+\sourcecode{test_expand_2}
+
+tests that 
+$$
+a(-(x-y)) = -ax + ay.
+$$
+
+\bigskip
+
+
+
+The command 
+
+\sourcecode{test_expand_3}
+
+tests that 
+$$
+a(-(x-y)+(x+y)) = 2ay.
+$$
+The output is 
+$$
+fe = 
+\begin{array}{*{1}c}
+(2 a y)\\
+\end{array}
+$$
+
+
+The command shows the abstract syntax trees 
+for the intermediate steps in the algebraic simplification.
+
+\bigskip
+
+
+
+
+The command 
+
+\sourcecode{test_expand_4}
+
+tests that 
+$$
+x*(a+(x*(a+(x*(a+x*(a+x*(a+x*(a+x)))))))) = ax + ax^2+ax^3+ax^4+ax^5+ax^6+x^7.
+$$
+The output is 
+$$
+fx = 
+\begin{array}{*{1}c}
+x^{7} + (a x^{2}) + (a x^{3}) + (a x^{4}) + (a x^{5}) + (a x^{6}) + (a x)\\
+\end{array}
+$$
+The abstract syntax tree before expansion is:
+\orbiteroutput{GRAPHICS/WRAPPERS/test_expand_4_before}
+The abstract syntax tree after expansion is:
+\orbiteroutput{GRAPHICS/WRAPPERS/test_expand_4_after}
+The abstract syntax trees for the intermediate steps 
+during expansion are avaliable also. 
+
+\bigskip
+
+
+
+Objects are stored in the Orbiter symbol table. There is only one table. 
+There can be only one object with any given name.
+Symbolic objects can recycle objects 
+defined earlier using a process called implicit substitution.
+In this process, the object being referenced 
+is taken from the symbol table and substituted immediately.
+For instance, in the next example we create an 
+object $a = x + y$ and then another object $b = a+z$ 
+which immediately expands into $b = x + y + z.$
+This is because the object $a$ already exists. 
+Implicit substitution is non-recursive, 
+so the substituted syntax tree is not subjected to implicit substitution itself. 
+This prevents unlimited recursion which would result in crashes. 
+
+
+\sourcecode{symbolic_objects_building_on_earlier_objects}
+
+The output of the command is:
+$$
+b = 
+\begin{array}{*{1}c}
+x + y + z\\
+\end{array}
+$$
+
+Self-referential objects are allowed. 
+The following command is legal:
+
+\sourcecode{symbolic_objects_self_referential_1}
+
+The output is
+$$
+x = 
+\begin{array}{*{1}c}
+x\\
+\end{array}
+$$
+
+\bigskip
+
+Likewise, the following command is ok:
+
+\sourcecode{symbolic_objects_self_referential_2}
+
+The output is
+$$
+a = 
+\begin{array}{*{1}c}
+a + x\\
+\end{array}
+$$
+
+\bigskip
+
+The implicit substitution process is limited to scalar quantities. 
+Matrices and vectors cannot be substituted.
+
+
+
+
+\bigskip
+
+
+
+Let us create a Vandermonde matrix. We use the makefile variable 
+
+\sourcecodevariable{VANDERMONDE_4X4_FORMULA}
+
+The following command creates the matrix:
+
+\sourcecode{symbolic_matrix1}
+
+The output is:
+$$
+\left[
+\begin{array}{*{4}c}
+1  & x0  & x0^{2}  & x0^{3}\\
+1  & x1  & x1^{2}  & x1^{3}\\
+1  & x2  & x2^{2}  & x2^{3}\\
+1  & x3  & x3^{2}  & x3^{3}\\
+\end{array}
+\right]
+$$
+
+\bigskip
+
+Let us create a fully symbolic $2 \times 2$ matrix:
+
+\sourcecode{symbolic_matrix_2x2}
+
+The output is:
+$$
+M = 
+\left[
+\begin{array}{*{2}c}
+a  & b\\
+c  & d\\
+\end{array}
+\right]
+$$
+
+\bigskip
+
+
+Let us create the determinant of a symbolic $2 \times 2$ matrix:
+
+\sourcecode{symbolic_determinant_2x2}
+
+The output is
+$$
+det1 = 
+\begin{array}{*{1}c}
+(a d) + (12 b c)\\
+\end{array}
+$$
+
+\bigskip
+
+
+Let us create the determinant of a symbolic $3 \times 3$ matrix:
+
+\sourcecode{symbolic_determinant_3x3}
+
+
+The output is
+$$
+det1 = 
+\begin{array}{*{1}c}
+(c d h) + (b f g) + (12 b d i) + (12 a f h) + (a e i) + (12 c e g)\\
+\end{array}
+$$
+
+\bigskip
+
+Let us create the determinant of the Vandermonde matrix from above:
+
+
+\sourcecode{symbolic_determinant_vandermonde}
+
+The output is lengthy, so it is given in text notation:
+
+{\tt
+  0 : \\
+(12\ *\ x1\ *\ x2\ \symbol{94}\ 3\ *\ x3\ \symbol{94}\ 2)\ +\ (12\ *\ x1\ \symbol{94}\ 2\ *\ x2\ *\ x3\ \symbol{94}\ 3)\ +\ (x1\ \symbol{94}\ 2\ *\ x2\ \symbol{94}\ 3\\
+\ *\ x3)\ +\ (x1\ \symbol{94}\ 3\ *\ x2\ *\ x3\ \symbol{94}\ 2)\ +\ (12\ *\ x1\ \symbol{94}\ 3\ *\ x2\ \symbol{94}\ 2\ *\ x3)\ +\ (12\ *\ x0\ *\ x\\
+2\ \symbol{94}\ 2\ *\ x3\ \symbol{94}\ 3)\ +\ (x0\ *\ x2\ \symbol{94}\ 3\ *\ x3\ \symbol{94}\ 2)\ +\ (x0\ *\ x1\ \symbol{94}\ 2\ *\ x3\ \symbol{94}\ 3)\ +\ (12\ *\ x0\\
+\ *\ x1\ \symbol{94}\ 2\ *\ x2\ \symbol{94}\ 3)\ +\ (12\ *\ x0\ *\ x1\ \symbol{94}\ 3\ *\ x3\ \symbol{94}\ 2)\ +\ (x0\ *\ x1\ \symbol{94}\ 3\ *\ x2\ \symbol{94}\ 2)\ +\\
+\ (x0\ \symbol{94}\ 2\ *\ x2\ *\ x3\ \symbol{94}\ 3)\ +\ (12\ *\ x0\ \symbol{94}\ 2\ *\ x2\ \symbol{94}\ 3\ *\ x3)\ +\ (12\ *\ x0\ \symbol{94}\ 2\ *\ x1\ *\ \\
+x3\ \symbol{94}\ 3)\ +\ (x0\ \symbol{94}\ 2\ *\ x1\ *\ x2\ \symbol{94}\ 3)\ +\ (x0\ \symbol{94}\ 2\ *\ x1\ \symbol{94}\ 3\ *\ x3)\ +\ (12\ *\ x0\ \symbol{94}\ 2\ *\ x\\
+1\ \symbol{94}\ 3\ *\ x2)\ +\ (12\ *\ x0\ \symbol{94}\ 3\ *\ x2\ *\ x3\ \symbol{94}\ 2)\ +\ (x0\ \symbol{94}\ 3\ *\ x2\ \symbol{94}\ 2\ *\ x3)\ +\ (x0\ \symbol{94}\ 3\\
+\ *\ x1\ *\ x3\ \symbol{94}\ 2)\ +\ (12\ *\ x0\ \symbol{94}\ 3\ *\ x1\ *\ x2\ \symbol{94}\ 2)\ +\ (12\ *\ x0\ \symbol{94}\ 3\ *\ x1\ \symbol{94}\ 2\ *\ x3)\ \\
++\ (x0\ \symbol{94}\ 3\ *\ x1\ \symbol{94}\ 2\ *\ x2)\ +\ (x1\ *\ x2\ \symbol{94}\ 2\ *\ x3\ \symbol{94}\ 3)\\
+}
+
+\bigskip
+
+The next command computes the characteristic polynomial 
+of a symbolic $2 \times 2$ matrix. 
+When all is done, the terms of the polynomial 
+are collected to form a coefficient vector:
+
+
+\sourcecode{symbolic_characteristic_polynomial_2x2}
+
+The output is:
+$$
+coeffs = 
+\left[
+\begin{array}{*{1}c}
+(a d) + (12 b c)\\
+(12 d) + (12 a)\\
+1\\
+\end{array}
+\right]
+$$
+
+
+%\sourcecode{symbolic_characteristic_polynomial_2x2_draw}
+
+\bigskip
+
+Let us do the characteristic polynomial of a symbolic $3 \times 3$ matrix:
+
+
+
+
+\sourcecode{symbolic_characteristic_polynomial_3x3}
+
+The output is:
+$$
+coeffs = 
+\left[
+\begin{array}{*{1}c}
+(c d h) + (b f g) + (12 b d i) + (12 a f h) + (a e i) + (12 c e g)\\
+(12 e i) + (c g) + (b d) + (12 a i) + (12 a e) + (f h)\\
+a + e + i\\
+12\\
+\end{array}
+\right]
+$$
+
+
+\bigskip
+
+Let us compare Orbiter and Maple with an example. 
+We create an object and then substitute values
+over the field $\bbF_{13}$. 
+Here is the Orbiter code:
+
+
+\sourcecode{symbolic_object1}
+
+The output is:
+
+$$
+M = 
+\begin{array}{*{1}c}
+a + (10 ((3 d) + (12 a^{2} b^{2} c^{2}) + (2 c^{4})^{3})) + (2 b^{2} (x + (12 y)))\\
+\end{array}
+$$
+
+
+\bigskip
+
+
+
+Let us substitute some values and evaluate the formula:
+
+
+\sourcecode{symbolic_object1_evaluate}
+
+The value obtained after substitution is:
+$$
+eval = 
+\left[
+\begin{array}{*{1}c}
+4\\
+\end{array}
+\right]
+$$
+
+
+\bigskip
+
+
+Let us perform the same task in Maple:
+
+\orbiteroutput{GRAPHICS/WRAPPERS/symbolic_maple_1}
+
+
+\bigskip
+
+
+
+%\sourcecode{symbolic_object1_expand}
+
+%\sourcecode{symbolic_object1_draw}
+
+Let us create the general equation 
+of the Eckardt surface using a makefile variable:
+
+\sourcecodevariable{ECKARDT_SURFACE_EQN}
+
+
+The following command parses the equation:
+
+
+\sourcecode{symbolic_Eckardt_surface}
+
+
+The output is:
+$$
+M = 
+\begin{array}{*{1}c}
+(12 X3 a b^{2} (X0^{2} + X1^{2} + X2^{2})) + (X0 X1 X2 b^{3} (1 + a^{2})) + (X3^{3} a)\\
+\end{array}
+$$
+
+We specify $a=3$ and $b=1$ by issuing the following command:
+
+\sourcecode{symbolic_Eckardt_surface_q13_a3_b1}
+
+The output is:
+$$
+M2 = 
+\left[
+\begin{array}{*{1}c}
+(10 X2^{2} X3) + (10 X1^{2} X3) + (10 X0 X1 X2) + (10 X0^{2} X3) + (3 X3^{3})\\
+\end{array}
+\right]
+$$
+
+
+\bigskip
+
+
+Let us consider the 4 parameter normal form 
+of a cubic surface from~\cite{BettenKaraoglu2022}.
+A makefile variable can be used to define the equation in text form:
+
+\sourcecodevariable{F_abcd_eqn}
+
+The following command parses the equation.
+
+\sourcecode{symbolic_Fabcd}
+
+The output in text form is:
+{\tt
+  0 : \\
+(X0\ *\ X1\ *\ X2\ *\ (a\ +\ b\ +\ (12\ *\ c)\ +\ (12\ *\ d))\ *\ ((12\ *\ a\ *\ b\ *\ d)\ +\ (12\ *\ a\ \\
+*\ c\ *\ d)\ +\ (b\ *\ c\ *\ d)\ +\ (a\ *\ d)\ +\ (12\ *\ b\ *\ c)\ +\ (a\ *\ b\ *\ c)))\ +\ (X0\ *\ X1\ *\\
+\ X3\ *\ (b\ +\ (12\ *\ d))\ *\ ((12\ *\ a\ \symbol{94}\ 2\ *\ d)\ +\ (12\ *\ a\ *\ c\ \symbol{94}\ 2)\ +\ (b\ *\ c\ \symbol{94}\ 2)\ +\ \\
+(a\ *\ d)\ +\ (12\ *\ b\ *\ c)\ +\ (a\ \symbol{94}\ 2\ *\ c)))\ +\ (12\ *\ X0\ *\ X2\ \symbol{94}\ 2\ *\ ((12\ *\ a\ *\ b\ *\ \\
+d)\ +\ (12\ *\ a\ *\ c\ *\ d)\ +\ (b\ *\ c\ *\ d)\ +\ (a\ *\ d)\ +\ (12\ *\ b\ *\ c)\ +\ (a\ *\ b\ *\ c))\ \\
+*\ ((12\ *\ b\ *\ c)\ +\ (a\ *\ d)))\ +\ (12\ *\ X0\ *\ X2\ *\ X3\ *\ (b\ +\ (12\ *\ d))\ *\ ((12\ *\ a\\
+\ *\ b\ *\ c\ \symbol{94}\ 2)\ +\ (12\ *\ a\ \symbol{94}\ 2\ *\ d)\ +\ (a\ *\ b\ *\ d)\ +\ (b\ *\ c\ \symbol{94}\ 2)\ +\ (12\ *\ b\ *\ c\ *\\
+\ d)\ +\ (a\ \symbol{94}\ 2\ *\ c\ *\ d)))\ +\ (12\ *\ X1\ \symbol{94}\ 2\ *\ X2\ *\ ((12\ *\ a\ *\ b\ *\ d)\ +\ (12\ *\ a\ *\ \\
+c\ *\ d)\ +\ (b\ *\ c\ *\ d)\ +\ (a\ *\ d)\ +\ (12\ *\ b\ *\ c)\ +\ (a\ *\ b\ *\ c))\ *\ (a\ +\ (12\ *\ c)\\
+))\ +\ (12\ *\ X1\ \symbol{94}\ 2\ *\ X3\ *\ ((12\ *\ a\ *\ b\ *\ d)\ +\ (12\ *\ a\ *\ c\ *\ d)\ +\ (b\ *\ c\ *\ d)\ \\
++\ (a\ *\ d)\ +\ (12\ *\ b\ *\ c)\ +\ (a\ *\ b\ *\ c))\ *\ (a\ +\ (12\ *\ c)))\ +\ (X1\ *\ X2\ \symbol{94}\ 2\ *\ (\\
+(12\ *\ a\ *\ b\ *\ d)\ +\ (12\ *\ a\ *\ c\ *\ d)\ +\ (b\ *\ c\ *\ d)\ +\ (a\ *\ d)\ +\ (12\ *\ b\ *\ c)\ +\\
+\ (a\ *\ b\ *\ c))\ *\ ((12\ *\ b\ *\ c)\ +\ (a\ *\ d)))\ +\ (X1\ *\ X2\ *\ X3\ *\ ((12\ *\ a\ \symbol{94}\ 2\ *\ b\\
+\ *\ d\ \symbol{94}\ 2)\ +\ (11\ *\ a\ \symbol{94}\ 2\ *\ c\ *\ d\ \symbol{94}\ 2)\ +\ (11\ *\ a\ *\ b\ \symbol{94}\ 2\ *\ c\ \symbol{94}\ 2)\ +\ (a\ *\ b\ \symbol{94}\ 2\\
+\ *\ c\ *\ d)\ +\ (2\ *\ a\ *\ b\ *\ c\ \symbol{94}\ 2\ *\ d)\ +\ (a\ *\ b\ *\ c\ *\ d\ \symbol{94}\ 2)\ +\ (12\ *\ b\ \symbol{94}\ 2\ *\ c\ \\
+\symbol{94}\ 2\ *\ d)\ +\ (12\ *\ a\ \symbol{94}\ 2\ *\ b\ *\ c)\ +\ (a\ \symbol{94}\ 2\ *\ c\ *\ d)\ +\ (a\ \symbol{94}\ 2\ *\ d\ \symbol{94}\ 2)\ +\ (a\ *\ b\\
+\ \symbol{94}\ 2\ *\ c)\ +\ (a\ *\ b\ *\ c\ \symbol{94}\ 2)\ +\ (9\ *\ a\ *\ b\ *\ c\ *\ d)\ +\ (12\ *\ a\ *\ c\ \symbol{94}\ 2\ *\ d)\ +\ (\\
+a\ *\ c\ *\ d\ \symbol{94}\ 2)\ +\ (b\ \symbol{94}\ 2\ *\ c\ \symbol{94}\ 2)\ +\ (2\ *\ a\ \symbol{94}\ 2\ *\ b\ *\ c\ *\ d)))\ +\ (X1\ *\ X3\ \symbol{94}\ 2\ \\
+*\ a\ *\ c\ *\ (b\ +\ c\ +\ (12\ *\ a)\ +\ (12\ *\ b\ *\ c)\ +\ (12\ *\ d)\ +\ (a\ *\ d))\ *\ (b\ +\ (12\ \\
+*\ d)))\ +\ (12\ *\ X0\ \symbol{94}\ 2\ *\ X2\ *\ (b\ +\ (12\ *\ d))\ *\ ((12\ *\ a\ *\ b\ *\ d)\ +\ (12\ *\ a\ *\ \\
+c\ *\ d)\ +\ (b\ *\ c\ *\ d)\ +\ (a\ *\ d)\ +\ (12\ *\ b\ *\ c)\ +\ (a\ *\ b\ *\ c)))\\
+}
+\bigskip
+
+The next command expands the equation. 
+The domain of coefficients is the finite field $\bbF_{31}$.
+
+\sourcecode{symbolic_Fabcd_expand}
+
+The expanded equation has 127 terms. 
+
+
+\bigskip
+
+Over the field $\bbF_{31}$,
+let us substitute $(a,b,c,d) = (25,5,5,25)$ 
+in the general equation.
+The following command does the job:
+
+\sourcecode{symbolic_Fabcd_q31_E18}
+
+The output is:
+$$
+M2 = 
+\left[
+\begin{array}{*{1}c}
+(13 X1 X2 X3) + (22 X1 X2^{2}) + (22 X1^{2} X3) + (22 X1^{2} X2) + (9 X0 X2^{2}) + (9 X0^{2} X2) + (22 X1 X3^{2})\\
+\end{array}
+\right]
+$$
+
+
+\bigskip
+
+It is also possible to use implicit 
+substitution to achieve the same effect, 
+as shown in the following command:
+
+\sourcecode{symbolic_Fabcd_q31_E18_with_implicit_substitution}
+
+
+The output is again 
+$$
+M2 = 
+\begin{array}{*{1}c}
+(13 X1 X2 X3) + (22 X1 X2^{2}) + (22 X1^{2} X3) + (22 X1^{2} X2) + (9 X0 X2^{2}) + (9 X0^{2} X2) + (22 X1 X3^{2})\\
+\end{array}
+$$
+
+We can use the option \verb'-do_not_simplify' 
+to see the syntax tree 
+exactly after the moment of substitution, 
+before the nodes are evaluated:
+So, the command 
+
+
+\sourcecode{symbolic_Fabcd_q31_E18_with_implicit_substitution_do_not_simplify}
+
+produces the output
+
+{\tt
+  0 : \\
+((30\ *\ ((25\ *\ 5\ *\ 5)\ +\ (30\ *\ (25\ *\ 5\ *\ 25))\ +\ (30\ *\ (25\ *\ 5\ *\ 25))\ +\ (5\ *\ 5\ \\
+*\ 25)\ +\ (25\ *\ 25)\ +\ (30\ *\ (5\ *\ 5))))\ *\ (5\ +\ (30\ *\ 25))\ *\ X0\ \symbol{94}\ 2\ *\ X2)\ +\ (((2\\
+5\ *\ 5\ *\ 5)\ +\ (30\ *\ (25\ *\ 5\ *\ 25))\ +\ (30\ *\ (25\ *\ 5\ *\ 25))\ +\ (5\ *\ 5\ *\ 25)\ +\ (2\\
+5\ *\ 25)\ +\ (30\ *\ (5\ *\ 5)))\ *\ (25\ +\ 5\ +\ (30\ *\ 5)\ +\ (30\ *\ 25))\ *\ X0\ *\ X1\ *\ X2)\ \\
++\ (((25\ \symbol{94}\ 2\ *\ 5)\ +\ (30\ *\ (25\ \symbol{94}\ 2\ *\ 25))\ +\ (30\ *\ (25\ *\ 5\ \symbol{94}\ 2))\ +\ (5\ *\ 5\ \symbol{94}\ 2)\ \\
++\ (25\ *\ 25)\ +\ (30\ *\ (5\ *\ 5)))\ *\ (5\ +\ (30\ *\ 25))\ *\ X0\ *\ X1\ *\ X3)\ +\ (30\ *\ (((2\\
+5\ *\ 25)\ +\ (30\ *\ (5\ *\ 5)))\ *\ ((25\ *\ 5\ *\ 5)\ +\ (30\ *\ (25\ *\ 5\ *\ 25))\ +\ (30\ *\ (25\\
+\ *\ 5\ *\ 25))\ +\ (5\ *\ 5\ *\ 25)\ +\ (25\ *\ 25)\ +\ (30\ *\ (5\ *\ 5)))\ *\ X0\ *\ X2\ \symbol{94}\ 2))\ +\ (\\
+30\ *\ (((25\ \symbol{94}\ 2\ *\ 5\ *\ 25)\ +\ (30\ *\ (25\ *\ 5\ *\ 5\ \symbol{94}\ 2))\ +\ (30\ *\ (25\ \symbol{94}\ 2\ *\ 25))\ +\ \\
+(25\ *\ 5\ *\ 25)\ +\ (5\ *\ 5\ \symbol{94}\ 2)\ +\ (30\ *\ (5\ *\ 5\ *\ 25)))\ *\ (5\ +\ (30\ *\ 25))\ *\ X0\ *\ \\
+X2\ *\ X3))\ +\ (30\ *\ ((25\ +\ (30\ *\ 5))\ *\ ((25\ *\ 5\ *\ 5)\ +\ (30\ *\ (25\ *\ 5\ *\ 25))\ +\ \\
+(30\ *\ (25\ *\ 5\ *\ 25))\ +\ (5\ *\ 5\ *\ 25)\ +\ (25\ *\ 25)\ +\ (30\ *\ (5\ *\ 5)))\ *\ X1\ \symbol{94}\ 2\ *\\
+\ X2))\ +\ (30\ *\ ((25\ +\ (30\ *\ 5))\ *\ ((25\ *\ 5\ *\ 5)\ +\ (30\ *\ (25\ *\ 5\ *\ 25))\ +\ (30\ \\
+*\ (25\ *\ 5\ *\ 25))\ +\ (5\ *\ 5\ *\ 25)\ +\ (25\ *\ 25)\ +\ (30\ *\ (5\ *\ 5)))\ *\ X1\ \symbol{94}\ 2\ *\ X3)\\
+)\ +\ (((25\ *\ 25)\ +\ (30\ *\ (5\ *\ 5)))\ *\ ((25\ *\ 5\ *\ 5)\ +\ (30\ *\ (25\ *\ 5\ *\ 25))\ +\ (\\
+30\ *\ (25\ *\ 5\ *\ 25))\ +\ (5\ *\ 5\ *\ 25)\ +\ (25\ *\ 25)\ +\ (30\ *\ (5\ *\ 5)))\ *\ X1\ *\ X2\ \symbol{94}\\
+\ 2)\ +\ ((((1\ +\ 1)\ *\ 25\ \symbol{94}\ 2\ *\ 5\ *\ 5\ *\ 25)\ +\ (30\ *\ (25\ \symbol{94}\ 2\ *\ 5\ *\ 25\ \symbol{94}\ 2))\ +\ (30\\
+\ *\ ((1\ +\ 1)\ *\ 25\ \symbol{94}\ 2\ *\ 5\ *\ 25\ \symbol{94}\ 2))\ +\ (30\ *\ ((1\ +\ 1)\ *\ 25\ *\ 5\ \symbol{94}\ 2\ *\ 5\ \symbol{94}\ 2))\ \\
++\ (25\ *\ 5\ \symbol{94}\ 2\ *\ 5\ *\ 25)\ +\ ((1\ +\ 1)\ *\ 25\ *\ 5\ *\ 5\ \symbol{94}\ 2\ *\ 25)\ +\ (25\ *\ 5\ *\ 5\ *\ 25\\
+\ \symbol{94}\ 2)\ +\ (30\ *\ (5\ \symbol{94}\ 2\ *\ 5\ \symbol{94}\ 2\ *\ 25))\ +\ (30\ *\ (25\ \symbol{94}\ 2\ *\ 5\ *\ 5))\ +\ (25\ \symbol{94}\ 2\ *\ 5\ \\
+*\ 25)\ +\ (25\ \symbol{94}\ 2\ *\ 25\ \symbol{94}\ 2)\ +\ (25\ *\ 5\ \symbol{94}\ 2\ *\ 5)\ +\ (25\ *\ 5\ *\ 5\ \symbol{94}\ 2)\ +\ (30\ *\ ((1\ \\
++\ 1\ +\ 1\ +\ 1)\ *\ 25\ *\ 5\ *\ 5\ *\ 25))\ +\ (30\ *\ (25\ *\ 5\ \symbol{94}\ 2\ *\ 25))\ +\ (25\ *\ 5\ *\ 25\ \symbol{94}\\
+\ 2)\ +\ (5\ \symbol{94}\ 2\ *\ 5\ \symbol{94}\ 2))\ *\ X1\ *\ X2\ *\ X3)\ +\ (5\ *\ 25\ *\ ((25\ *\ 25)\ +\ (30\ *\ (5\ *\ 5\\
+))\ +\ (30\ *\ 25)\ +\ 5\ +\ 5\ +\ (30\ *\ 25))\ *\ (5\ +\ (30\ *\ 25))\ *\ X1\ *\ X3\ \symbol{94}\ 2)\\
+}
+
+
+
+%\sourcecode{symbolic_matrix_minor}
+
+%\sourcecode{symbolic_matrix_nullspace_1}
+
+%\sourcecode{symbolic_matrix_nullspace_2}
+
+
+%\sourcecode{symbolic_Clebsch}
+
+%\sourcecode{Clebsch_map_up_Fabcd}
+
+
+
+
+
+\bigskip
+

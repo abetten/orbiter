@@ -1,0 +1,43 @@
+KM_cyclic_7:
+	$(ORBITER) -v 3 \
+		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define gens -vector -dense "1,2,3,4,5,6,0" -end \
+		-define G -permutation_group -symmetric_group 7 \
+			-subgroup_by_generators "C7" 7 1 gens \
+		-end \
+		-define Do -draw_options -embedded -sideways -radius 50 \
+			-scale 0.5 -line_width 0.3 \
+		-end \
+		-define Control -poset_classification_control \
+			-problem_label C7 -W -depth 3 \
+			-draw_options Do \
+		-end \
+		-define Orb -orbits \
+			-group G \
+			-group_action G \
+			-generators G \
+			-on_subsets 3 Control \
+		-end \
+		-with Orb -do -orbits_activity \
+			-Kramer_Mesner_matrix 2 3 \
+		-end \
+		-define ro \
+			-poset_classification_report_options \
+				-draw_poset -type_ordinary \
+				-draw_options Do \
+		-end \
+		-with Orb -do -orbits_activity \
+			-report "" \
+			-report_options ro \
+		-end 
+	$(ORBITER) -v 4 \
+		-define A -vector -file C7_KM_2_3.csv -end \
+		-define D -diophant \
+		-label "C7_KM_2_3_system" \
+		-coefficient_matrix A \
+		-RHS_constant "EQ=1" \
+		-x_min_global 0 -x_max_global 1 \
+		-end \
+		-with D -do \
+			-diophant_activity -solve_mckay \
+		-end

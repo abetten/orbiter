@@ -1,0 +1,12 @@
+J1:
+	$(ORBITER) -v 2 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define G -linear_group -PGL 7 11 -Janko1 -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end
+	$(PDFLATEX) Janko1_report.tex
+	$(OPEN) Janko1_report.pdf

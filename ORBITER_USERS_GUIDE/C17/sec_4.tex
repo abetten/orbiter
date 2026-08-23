@@ -1,0 +1,52 @@
+In Section~\ref{sec:design}, we discussed how to create designs in Orbiter. 
+In this section, we wish to compute properties of designs related to the automorphism group.
+The first step is to 
+export the incidence matrix of the design to file. 
+After that, we compute the canonical form of the design, 
+which allows us to determine many properties.
+The following example computes the properties of $\PG(2,3)$:
+
+\sourcecode{design_PG_2_3_canonical}
+
+
+
+
+
+
+\bigskip
+
+
+The command 
+
+\sourcecode{wreath_product_designs_n4_k2_c}
+
+computes the automorphism group of the design on 8 points created in Section~\ref{sec:design}.
+The group is $\Sym(4) \wr \Sym(2)$.
+The command 
+
+\sourcecode{wreath_product_designs_n8_k6_c}
+
+computes the automorphism group of the design on 16 points created in Section~\ref{sec:design}.
+The group is $\Sym(8) \wr \Sym(2)$.
+
+
+\bigskip
+
+
+
+In Section~\ref{sec:large:sets}, the large sets of $\AG(2,3)$ were constructed. 
+However, the isomorph classsification of the created objects is still outstanding. 
+We will do this final step now.
+The isomorphism classification is performed using the Nauty interface. 
+A list of combinatorial objects is created, 
+and the  \verb'-canonical_form' command is applied as activity.
+This will produce a list of pairwise non-isomorphic designs.
+The size of this list is the number of isomorphism types of large sets of $\AG(2,3).$
+
+\sourcecode{LS_AG_2_3_solutions_classify}
+
+It turns out that there are exactly two isomorphism types, 
+with automorphism groups of order 54 and 42, respectively.
+
+\bigskip
+

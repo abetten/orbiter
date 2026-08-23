@@ -1,0 +1,7 @@
+PGGL_7_8_orbits:
+	$(ORBITER) -v 4 \
+		-define G \
+		-linear_group -PGGL 7 8 -end \
+		-define Orb -orbits -group G \
+			-on_points \
+		-end

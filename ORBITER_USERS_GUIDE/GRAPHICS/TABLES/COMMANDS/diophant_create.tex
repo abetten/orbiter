@@ -1,0 +1,44 @@
+\begin{table}
+\begin{tcolorbox}[tabularx={X|p{2cm}|X|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black,title=Creating Diophantine Systems]
+		\hline
+		Command & Arguments & Purpose \\
+		\hline
+		\hline
+		\verb'-label' & label & Use the given name as file name. \\
+		\hline
+		\verb'-coefficient_matrix' & A  & Set the coefficient matrix to the previously created vector with format information. \\
+		\hline
+		\verb'-coefficient_matrix_csv' & fname  & Read the coefficient matrix from the given csv-file.\\
+		\hline
+		\verb'-RHS' & options  & Set RHS info for a set of $m$ rows. Possible types of conditions are EQ, LE, INT, ZOR. This command can be repeated. 
+		Example: mult=2,EQ=1 is condition for 2 rows where the RHS is equal to zero. 
+		Example: mult=1,LE=3 is one condition where the RHS is at most three. 
+		Example: mult=1,INT=1to2 is one condition where the RHS is between 1 and 2. 
+		Example: mult=1,ZOR=2 is one condition where the RHS is either 0 or 2. 
+		\\
+		\hline
+		\verb'-RHS_csv' & fname  & Read the RHS information from the given csv file. \\
+		\hline
+		\verb'-RHS_constant' & options  & Set the RHS as in \verb'-RHS' (without the mult component).\\
+		\hline
+		\verb'-x_max_global' & $a$  & Set the upper bound for all variables to $a$ \\
+		\hline
+		\verb'-x_min_global' & $a$  & Set the lower bound for all variables to $a$ \\
+		\hline
+		\verb'-x_bounds' & list-of-values  & Set the lower and upper bounds for all variables. \\
+		\hline
+		\verb'-x_bounds_csv' & fname  & Read the lower and upper bounds for all variables from the given file. \\
+		\hline
+		\verb'-has_sum' & $s$  & Force the sum of the variables to be $s.$ \\
+		\hline
+		\verb'-problem_of_Steiner_type' & N fname & Create an instance of an exact cover problem based on the matrix in the given file. The underlying set has size $N.$ \\
+		\hline
+		\verb'-maximal_arc' & $s$ $d$ secants subset & Create system for a maximal arc of size $s$ and degree $d$ in $\PG(2,q)$. Use the given set of two pencil lines. The subset picks the lines from the given pencils which are external.  \\
+		\hline
+		\verb'-field' & F  & Use the field F. Related to \verb'-maximal_arc'. \\
+		\hline
+		\end{tcolorbox}
+	\caption{\label{tab:diophant}Creating Diophantine Systems}
+	\end{table}

@@ -1,0 +1,17 @@
+BCH_21_15_4_field_reduction:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 4 -end \
+		-with F -do \
+		-finite_field_activity \
+			-field_reduction "BCH_21_15_4" 2 15 21 \
+				$(BCH_21_15_GENERATOR_MATRIX) \
+		-end
+	$(ORBITER) -v 2 \
+		-draw_matrix \
+			-input_csv_file BCH_21_15_4.csv \
+			-box_width 20 -bit_depth 24 \
+			-partition 4 "30" "42" \
+		-end
+	$(PDFLATEX) field_reduction_Q4_q2_15_21.tex
+	$(OPEN) BCH_21_15_4_draw.bmp
+	#$(OPEN) field_reduction_Q4_q2_15_21.pdf

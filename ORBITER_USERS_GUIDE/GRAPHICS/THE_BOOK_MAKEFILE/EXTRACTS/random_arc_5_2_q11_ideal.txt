@@ -1,0 +1,18 @@
+random_arc_5_2_q11_ideal:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 11 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 3 \
+			-homogeneous_of_degree 2 \
+			-monomial_ordering_lex \
+			-variables "x0,x1,x2" "x_0,x_1,x_2" \
+			-end \
+		-define C -combinatorial_object \
+			-label random_arc random\_arc \
+			-set_of_points "3,33,40,83,102" \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-ideal R \
+		-end

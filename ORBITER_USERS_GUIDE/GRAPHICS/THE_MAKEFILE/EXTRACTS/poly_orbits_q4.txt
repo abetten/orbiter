@@ -1,0 +1,32 @@
+poly_orbits_q4:
+	$(ORBITER) -v 4 \
+		-define Do -draw_options \
+			-yout 500000 -radius 15 -nodes_empty \
+			-line_width 0.5 -y_stretch 0.25 -embedded -end \
+		-define F -finite_field -q 4 -print_numerically -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 3 \
+			-homogeneous_of_degree 3 \
+			-monomial_ordering_partition \
+			-variables "X0,X1,X2" "X_0,X_1,X_2" \
+			-end \
+		-define G -linear_group -PGGL 3 F -end \
+		-define Orb -orbits -group G \
+			-print_interval 1000000 \
+			-on_polynomials R \
+		-end \
+		-define ro \
+			-poset_classification_report_options \
+				-draw_poset -type_ordinary \
+				-draw_options Do \
+		-end \
+		-with Orb -do -orbits_activity \
+			-report "" \
+			-report_options ro \
+		-end \
+		-with Orb -do -orbits_activity \
+			-export_something "orbit" 0 \
+		-end
+	$(PDFLATEX) poly_orbits_d3_n2_q4.tex
+	$(OPEN) poly_orbits_d3_n2_q4.pdf

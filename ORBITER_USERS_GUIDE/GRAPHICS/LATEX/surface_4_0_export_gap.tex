@@ -1,0 +1,64 @@
+\begin{verbatim}
+LoadPackage("fining");
+# Cubic surface catalogue_q4_iso0
+# Group:
+mat1 := [[Z(4)^1,0*Z(4),0*Z(4),0*Z(4)],
+[0*Z(4),Z(4)^1,0*Z(4),0*Z(4)],
+[0*Z(4),0*Z(4),Z(4)^1,0*Z(4)],
+[0*Z(4),0*Z(4),0*Z(4),Z(4)^1]];
+frob1 := FrobeniusAutomorphism(GF(4))^1;
+psi1 := ProjectiveSemilinearMap(mat1, frob1,GF(4));
+mat2 := [[Z(4)^2,0*Z(4),0*Z(4),0*Z(4)],
+[0*Z(4),Z(4)^1,0*Z(4),0*Z(4)],
+[0*Z(4),0*Z(4),Z(4)^1,0*Z(4)],
+[0*Z(4),0*Z(4),0*Z(4),Z(4)^2]];
+frob2 := FrobeniusAutomorphism(GF(4))^1;
+psi2 := ProjectiveSemilinearMap(mat2, frob2,GF(4));
+mat3 := [[Z(4)^0,0*Z(4),0*Z(4),0*Z(4)],
+[0*Z(4),Z(4)^2,0*Z(4),0*Z(4)],
+[0*Z(4),0*Z(4),Z(4)^2,0*Z(4)],
+[0*Z(4),0*Z(4),0*Z(4),Z(4)^0]];
+frob3 := FrobeniusAutomorphism(GF(4))^0;
+psi3 := ProjectiveSemilinearMap(mat3, frob3,GF(4));
+mat4 := [[Z(4)^2,0*Z(4),0*Z(4),0*Z(4)],
+[0*Z(4),Z(4)^2,0*Z(4),0*Z(4)],
+[0*Z(4),0*Z(4),Z(4)^2,0*Z(4)],
+[Z(4)^2,0*Z(4),0*Z(4),Z(4)^2]];
+frob4 := FrobeniusAutomorphism(GF(4))^0;
+psi4 := ProjectiveSemilinearMap(mat4, frob4,GF(4));
+mat5 := [[Z(4)^0,0*Z(4),0*Z(4),0*Z(4)],
+[0*Z(4),Z(4)^2,0*Z(4),0*Z(4)],
+[Z(4)^1,0*Z(4),Z(4)^2,0*Z(4)],
+[0*Z(4),Z(4)^1,0*Z(4),Z(4)^0]];
+frob5 := FrobeniusAutomorphism(GF(4))^1;
+psi5 := ProjectiveSemilinearMap(mat5, frob5,GF(4));
+mat6 := [[Z(4)^0,0*Z(4),0*Z(4),0*Z(4)],
+[0*Z(4),Z(4)^2,0*Z(4),0*Z(4)],
+[Z(4)^1,Z(4)^2,Z(4)^2,0*Z(4)],
+[Z(4)^0,Z(4)^1,0*Z(4),Z(4)^0]];
+frob6 := FrobeniusAutomorphism(GF(4))^1;
+psi6 := ProjectiveSemilinearMap(mat6, frob6,GF(4));
+mat7 := [[Z(4)^1,0*Z(4),0*Z(4),0*Z(4)],
+[Z(4)^1,Z(4)^1,0*Z(4),0*Z(4)],
+[0*Z(4),0*Z(4),Z(4)^1,0*Z(4)],
+[0*Z(4),0*Z(4),Z(4)^1,Z(4)^1]];
+frob7 := FrobeniusAutomorphism(GF(4))^1;
+psi7 := ProjectiveSemilinearMap(mat7, frob7,GF(4));
+mat8 := [[Z(4)^2,0*Z(4),0*Z(4),0*Z(4)],
+[Z(4)^2,Z(4)^0,Z(4)^0,0*Z(4)],
+[0*Z(4),Z(4)^0,0*Z(4),0*Z(4)],
+[Z(4)^2,Z(4)^0,0*Z(4),Z(4)^2]];
+frob8 := FrobeniusAutomorphism(GF(4))^1;
+psi8 := ProjectiveSemilinearMap(mat8, frob8,GF(4));
+mat9 := [[Z(4)^0,Z(4)^2,Z(4)^0,Z(4)^2],
+[0*Z(4),Z(4)^2,Z(4)^2,Z(4)^1],
+[Z(4)^2,Z(4)^0,Z(4)^2,Z(4)^0],
+[Z(4)^0,Z(4)^1,0*Z(4),Z(4)^0]];
+frob9 := FrobeniusAutomorphism(GF(4))^0;
+psi9 := ProjectiveSemilinearMap(mat9, frob9,GF(4));
+gens := [psi1, psi2, psi3, psi4, psi5, psi6, psi7, psi8, psi9];
+G := Group(gens);
+Size(G);
+r := PolynomialRing(GF(4),["X0","X1","X2","X3"]);
+Eqn := (r.1)^2*(r.4)+(r.2)^2*(r.3)+(r.2)*(r.3)^2+(r.1)*(r.4)^2;
+\end{verbatim}

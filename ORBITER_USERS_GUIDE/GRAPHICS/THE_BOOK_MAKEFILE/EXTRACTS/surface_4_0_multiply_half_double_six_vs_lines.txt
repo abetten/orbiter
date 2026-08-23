@@ -1,0 +1,9 @@
+surface_4_0_multiply_half_double_six_vs_lines:
+	$(ORBITER) -v 3 \
+		-define lines_vs_lines -vector \
+			-file PG_3_4_lines_vs_lines_incma.csv \
+		-end \
+		-define single_six -vector \
+			-file PG_3_4_single_sixes_char_vec.csv \
+		-end \
+		-matrix_multiply_over_Z single_six lines_vs_lines

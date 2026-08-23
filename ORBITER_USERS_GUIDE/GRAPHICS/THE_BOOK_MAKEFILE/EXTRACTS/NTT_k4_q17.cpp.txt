@@ -1,0 +1,6 @@
+NTT_k4_q17.cpp:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 17 -end \
+		-with F -do -coding_theoretic_activity \
+			-NTT 4 17 \
+		-end

@@ -1,0 +1,11 @@
+symbolic_objects_building_on_earlier_objects:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 2 -end \
+		-define a -symbolic_object \
+			-field F \
+			-text "x+y"\
+		-end \
+		-define b -symbolic_object \
+			-field F \
+			-text "a+z"\
+		-end

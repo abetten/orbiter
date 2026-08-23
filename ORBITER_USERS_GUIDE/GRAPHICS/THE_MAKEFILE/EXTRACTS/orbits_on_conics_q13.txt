@@ -1,0 +1,17 @@
+orbits_on_conics_q13:
+	$(ORBITER) -v 4 \
+		-define F -finite_field -q 13 -end \
+		-define G -linear_group -PGL 3 F -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 3 \
+			-homogeneous_of_degree 2 \
+			-monomial_ordering_partition \
+			-variables "X,Y,Z" "X,Y,Z" \
+		-end \
+		-define Orb -orbits -group G \
+			-print_interval 1000000 \
+			-on_polynomials R \
+		-end
+	#$(PDFLATEX) poly_orbits_d2_n2_q13.tex
+	#$(OPEN) poly_orbits_d2_n2_q13.pdf

@@ -1,0 +1,9 @@
+LS_AG_2_3_disjoint_sets_split:
+	$(ORBITER) -v 4 \
+		-define Gamma -graph -load \
+			AG_2_3_design_table_disjoint_sets.colored_graph \
+		-end \
+		-with Gamma -do \
+		-graph_theoretic_activity \
+			-split_by_clique "0" "0" \
+		-end

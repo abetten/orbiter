@@ -1,0 +1,13 @@
+RS_7_3_reduced_weight_enumerator:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define v -vector -format 15 -field F \
+			-compact $(RS_8_reduced) \
+		-end \
+		-define C -code -field F \
+			-generator_matrix v \
+		-end \
+		-with C -do \
+		-coding_theoretic_activity \
+			-weight_enumerator \
+		-end

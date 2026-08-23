@@ -1,0 +1,12 @@
+KM_PGGL_2_32_solve:
+	$(ORBITER) -v 4 \
+		-define A -vector -file KM_PGGL_2_32_KM_7_8.csv -end \
+		-define D -diophant \
+		-label "KM_PGGL_2_32_KM_7_8_system" \
+		-coefficient_matrix A \
+		-RHS_constant "EQ=10" \
+		-x_min_global 0 -x_max_global 1 \
+		-end \
+		-with D -do \
+			-diophant_activity -solve_mckay \
+		-end

@@ -1,0 +1,17 @@
+F_64_over_F4_field_reduction:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 64 -end \
+		-define elts -vector -field F -loop 0 64 1 -end \
+		-with F -do \
+		-finite_field_activity \
+			-field_reduction "F64_over_F4" 4 8 8 elts \
+		-end
+	$(ORBITER) -v 2 \
+		-draw_matrix \
+			-input_csv_file F64_over_F4.csv \
+			-box_width 40 -bit_depth 24 \
+			-partition 4 "3,3,3,3,3,3,3,3" "3,3,3,3,3,3,3,3" \
+		-end
+	$(OPEN) F64_over_F4_draw.bmp
+	$(PDFLATEX) field_reduction_Q64_q4_8_8.tex
+	$(OPEN) field_reduction_Q64_q4_8_8.pdf

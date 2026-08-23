@@ -1,0 +1,29 @@
+\begin{table}
+\begin{tcolorbox}[tabularx={X|p{2cm}|X|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black,title=Projective Space Activities (Part 2)]
+\hline
+Command & Arguments & Purpose \\
+\hline
+\hline
+\verb'-sweep'  &  options surface   &  Perform a parameter sweep for all cubic surface, given a surface description. Options can be given to direct the sweep.  \\
+\hline
+\verb'-set_stabilizer'  &  $k$ fname-mask $N$  col-label fname-out  & Compute canonical form of sets using the substructure algorithm. \\
+\hline
+\verb'-conic_type'  &  $t$ set  & Compute the conic type of the given set (given by its label). Record intersections of size $\ge t$ only.\\
+\hline
+\verb'-arc_with_given_set_as_' \verb's_lines_after_dualizing'  &  $sz$ $d$ $d_{\min}$ $s$   & Finds arcs with the given set as $s$-lines. \\
+\hline
+\verb'-arc_with_two_given_sets_' \verb'of_lines_after_dualizing'  &  $sz$ $d$ $d_{\min}$ $s$  $t$ $T$  & Finds arcs with the two given sets as $s$-lines and $t$-lines, respectively. \\
+\hline
+\verb'-arc_with_three_given_sets_' \verb'of_lines_after_dualizing'  &  $sz$ $d$ $d_{\min}$ $s$  $t$ $T$  $u$ $U$  & Finds arcs with the three given sets as $s$-lines and $t$-lines and $u$-lines, respectively. \\
+\hline
+\verb'-dualize_hyperplanes_to_points'  &   & Turns ranks of hyperplanes into ranks of points.\\
+\hline
+\verb'-dualize_points_to_hyperplanes'  &   & Turns ranks of points into ranks of hyperplanes. \\
+\hline
+\verb'-dualize_rank_k_subspaces'  &  $k$  & Turns ranks of $k$-subspaces into ranks of $n-k$ subspaces. \\
+\hline
+\end{tcolorbox}
+\caption{\label{tab:projective:space:activities:2}Projective Space Activities (Part 2)}
+\end{table}

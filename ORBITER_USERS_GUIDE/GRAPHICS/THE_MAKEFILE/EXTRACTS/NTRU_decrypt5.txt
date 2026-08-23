@@ -1,0 +1,6 @@
+NTRU_decrypt5:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q $(NTRU_P) -end \
+		-with F -do \
+		-finite_field_activity \
+		-polynomial_center_lift $(ALICE_C4) -end

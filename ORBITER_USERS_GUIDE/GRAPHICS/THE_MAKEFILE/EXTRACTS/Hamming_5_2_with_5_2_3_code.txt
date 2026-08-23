@@ -1,0 +1,15 @@
+Hamming_5_2_with_5_2_3_code:
+	$(ORBITER) -v 2 \
+		-define G -graph -Hamming 5 2 \
+			-subset "_code_5_2_3" "\\_code\\_5\\_2\\_3" \
+			$(CODE_5_2_3_CODEWORDS) -end \
+		-with G -do \
+		-graph_theoretic_activity -export_csv -end \
+		-with G -do \
+		-graph_theoretic_activity -export_graphviz -end \
+		-with G -do \
+		-graph_theoretic_activity -save -end \
+		-with G -do \
+		-graph_theoretic_activity -automorphism_group -end
+	$(PDFLATEX) Hamming_5_2_code_5_2_3_report.tex
+	$(OPEN) Hamming_5_2_code_5_2_3_report.pdf

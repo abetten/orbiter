@@ -1,0 +1,8 @@
+PGGO_5_4_export_gap:
+	$(ORBITER) -v 2 \
+		-define F4 -finite_field -q 4 -end \
+		-define G -linear_group -PGGO 5 F4 -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-export_gap \
+		-end

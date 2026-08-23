@@ -1,0 +1,6 @@
+CRC_3_128_10:
+	$(ORBITER) -v 1 \
+		-define F -finite_field -q 2 -end \
+		-with F -do -coding_theoretic_activity \
+			-find_CRC_polynomials 3 128 10 \
+		-end

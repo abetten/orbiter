@@ -1,0 +1,28 @@
+Clebsch_map_up_Fabcd:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 13 -end \
+		-define M -symbolic_object \
+			-field F \
+			-managed_variables "X0,X1,X2,X3" \
+			-text $(F_abcd_eqn) \
+		-end \
+		-define L -symbolic_object \
+			-field F \
+			-text "y0+t*y0,t*y1,t*y2,y2" \
+		-end \
+		-define C1 -symbolic_object \
+			-field F \
+			-managed_variables "y0,y1,y2" \
+			-substitute "X0,X1,X2,X3" M L \
+		-end \
+		-define M -symbolic_object \
+			-field F \
+			-expand C1 \
+			-managed_variables "y0,y1,y2" \
+			-write_trees_during_expand \
+		-end \
+		-define coeff_t -symbolic_object \
+			-field F \
+			-managed_variables "y0,y1,y2" \
+			-collect M t \
+		-end

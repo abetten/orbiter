@@ -1,0 +1,22 @@
+BLT_13_isomorph_read_DB:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 13 -end \
+		-define O -orthogonal_space 0 5 F -end \
+		-define C -BLT_set_classifier \
+			-orthogonal_space O -starter_size 5 \
+		-end \
+		-with C -do -BLT_set_classify_activity \
+			-compute_starter \
+				-problem_label BLT_q13 \
+				-W -depth 5 \
+			-end \
+		-end \
+		-with C -do -BLT_set_classify_activity \
+			-isomorph \
+				-prefix_iso "./BLT_q13" \
+				-use_database_for_starter \
+				-build_db \
+				-solution_prefix "" \
+				-base_fname "" \
+			-end \
+		-end

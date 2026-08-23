@@ -1,0 +1,9 @@
+power_mod_211:
+	$(ORBITER) -v 3 -power_function_mod_n 2 211
+	$(ORBITER) -v 3 \
+		-plot_function power_function_k2_n211.csv
+	$(ORBITER) -v 2 -draw_matrix \
+		-input_csv_file power_function_k2_n211_graph.csv \
+		-box_width 10 -bit_depth 8 \
+		-partition 3 211 211 -end
+	$(OPEN) power_function_k2_n211_graph_draw.bmp

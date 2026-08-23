@@ -1,0 +1,19 @@
+create_translation_plane_16_4_0:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 4 -end \
+		-define G -linear_group -PGGL 4 F -end \
+		-define G1 -linear_group -PGGL 5 F -end \
+		-define S -spread -kernel_field F \
+			-group G -k 2 -catalogue 0 \
+			-end \
+		-define T -translation_plane S G G1 -end \
+		-with T -do -translation_plane_activity \
+			-export_incma \
+		-end
+	$(ORBITER) -v 2 \
+		-draw_matrix \
+			-input_csv_file plane_catalogue_q4_k2_0_incma.csv \
+			-box_width 6 -bit_depth 8 \
+			-partition 4 273 273 \
+		-end
+	$(OPEN) plane_catalogue_q4_k2_0_incma_draw.bmp

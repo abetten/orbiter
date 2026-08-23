@@ -1,0 +1,7 @@
+make_triangle_graph:
+	echo $(TRIANGLE_GRAPH) >triangle_graph.csv
+	$(ORBITER) -v 6 \
+		-define G -graph \
+			-load_csv_no_border \
+			triangle_graph.csv \
+		-end

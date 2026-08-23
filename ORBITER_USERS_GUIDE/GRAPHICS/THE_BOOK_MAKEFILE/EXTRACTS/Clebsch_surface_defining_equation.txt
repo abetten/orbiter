@@ -1,0 +1,20 @@
+Clebsch_surface_defining_equation:
+	$(ORBITER) -v 2 -povray \
+		-round 0 -nb_frames_default 30 \
+		-output_mask Clebsch_%d_%03d.pov \
+		-video_options -W 1024 -H 768 \
+		-global_picture_scale 0.6 \
+		-default_angle 75 \
+		-clipping_radius 1.6 \
+		-camera 0 "1,1,1" "-2,0,2" "0,0,0" \
+		-end \
+		-scene_objects \
+			-cubic_orbiter "0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2" \
+			-group_of_things "0" \
+			-cubics 0 $(SURFACE_COLOR_SEETHROUGH) \
+		-scene_objects_end \
+		-povray_end
+	- rm -rf POV
+	mkdir POV
+	mv Clebsch_0_*.pov POV
+	mv makefile_animation POV

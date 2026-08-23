@@ -1,0 +1,9 @@
+CRC_F16_BCH_code_d3_mindist_dual:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 16 -override_polynomial 19 -end \
+		-define v -vector -file BCH_q16_n51_d3_check.csv \
+			-field F -format 4 -file BCH_q16_n51_d3_check.csv -end \
+		-with F -do \
+		-coding_theoretic_activity \
+			-minimum_distance v \
+		-end

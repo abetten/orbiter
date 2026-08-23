@@ -1,0 +1,5 @@
+quartic_curve_9_0: 
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 9 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define C -quartic_curve -space P -catalogue 0 -end

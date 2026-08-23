@@ -1,0 +1,29 @@
+\begin{table}
+\begin{tcolorbox}[tabularx={X|p{2cm}|X|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black,title=Creating Graphs (Part 2)]
+\hline
+Command & Arguments & Purpose \\
+\hline
+\hline
+\verb'-subset'  &  label  labeltex subset   & Define vertex coloring with two colors based on a subset of vertices. \\
+\hline
+\verb'-disjoint_sets_graph'  &  fname   & Reads a set of sets from the given file. Define a graph on the sets. Vertices correspond to the given sets. Two vertices are adjacent if the associated sets are disjoint. \\
+\hline
+\verb'-orbital_graph'  &  $G$ $i$     & Define orbital graph from the $i$-th orbit of the group $G$ acting on pairs.  \\
+\hline
+\verb'-collinearity_graph'  &  inc-matrix    & Collinearity graph of the given incidence matrix.\\
+\hline
+\verb'-chain_graph'  &  P1 P2    & Chain graph with respect to the partitions P1 and P2.\\
+\hline
+\verb'-Neumaier_graph_16'  &      & Create a Neumaier graph on 16 vertices.\\
+\hline
+\verb'-Neumaier_graph_25'  &      & Create a Neumaier graph on 25 vertices, see~\cite{AbiadDeBoeckZeijlemaker2024}\\
+\hline
+\verb'-adjacency_bitvector'  &  bitvec N    & Create a graph on $N$ vertices from a bitvector.\\
+\hline
+\verb'-Cayley_graph'  &  $G$ gens    & Cayley graph with respect to group $G$ and generating set gens.\\
+\hline
+\end{tcolorbox}
+\caption{\label{tab:graphtypes:two}Creating Graphs (Part 2)}
+\end{table}

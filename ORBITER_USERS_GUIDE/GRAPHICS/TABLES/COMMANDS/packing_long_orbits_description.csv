@@ -1,0 +1,12 @@
+ROW,C1,C2,C3
+0,"tab:packings:long:orbits",,
+1,"Creating Packings from Long Orbits",,
+1,"\verb'-split' "," $r$ $m$   ","Define a subset of cases of fixed point cliques to be worked on. Only those cases whose number is congruent to $r$ modulo $m$ are considered. "
+1,"\verb'-orbit_length' "," $l$   ","  Use orbits of length $l$. "
+1,"\verb'-mixed_orbits' ","  length  ","  "
+1,"\verb'-list_of_cases_from_file' "," fname   ","Define a subset of cases of fixed point cliques to be worked on. Only the cases listed the given file are considered.  "
+1,"\verb'-solution_path' ","  $P$  ","  Use $P$ as a prefix for all solution files."
+1,"\verb'-create_graphs' ","    ","For each case, create the graph that describes whether two orbits of length $l$ are compatible. "
+1,"\verb'-solve' ","    ","Perform clique finding and write solutions to file. "
+1,"\verb'-read_solutions' ","    ","Read solutions from file. "
+END

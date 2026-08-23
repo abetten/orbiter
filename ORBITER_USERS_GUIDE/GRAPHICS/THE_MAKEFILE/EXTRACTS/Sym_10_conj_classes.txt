@@ -1,0 +1,3 @@
+Sym_10_conj_classes:
+	$(ORBITER) -v 2 -conjugacy_classes_Sym_n 10
+	$(OPEN) classes_Sym_10.csv

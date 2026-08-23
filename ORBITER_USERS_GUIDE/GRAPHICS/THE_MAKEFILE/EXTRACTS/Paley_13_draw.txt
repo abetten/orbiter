@@ -1,0 +1,13 @@
+Paley_13_draw:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 13 -end \
+		-define Gamma -graph -Paley F -end \
+		-with Gamma -do \
+		-graph_theoretic_activity -export_csv -end \
+		-with Gamma -do \
+		-graph_theoretic_activity -export_graphviz -end
+	$(ORBITER) -v 2 -draw_matrix \
+		-input_csv_file Paley_13.csv \
+		-box_width 20 -bit_depth 8 -partition 4 13 13 -end
+	dot -Tpng Paley_13.gv >Paley_13.png
+	$(OPEN) Paley_13_draw.bmp

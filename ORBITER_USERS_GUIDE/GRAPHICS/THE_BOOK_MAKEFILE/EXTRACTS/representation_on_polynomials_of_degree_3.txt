@@ -1,0 +1,20 @@
+representation_on_polynomials_of_degree_3:
+	$(ORBITER) -v 4 \
+		-define F -finite_field -q 3 -end \
+		-define G -linear_group -PGL 4 F -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 4 \
+			-homogeneous_of_degree 3 \
+			-monomial_ordering_partition \
+			-variables "X,Y,Z,W" "X,Y,Z,W" \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-representation_on_polynomials R \
+		-end 
+	$(ORBITER) -v 2 \
+		-loop L 0 9 1 -draw_matrix \
+			-input_csv_file PGL_4_3_rep_3_%L.csv \
+			-box_width 40 -bit_depth 24 -partition 3 20 20 -end \
+		-end_loop L

@@ -1,0 +1,14 @@
+% file: PGO_5_2_sims_4.commands
+% created by Orbiter graphics interface
+% creation date: Mon Dec 21 16:40:00 MST 2020
+
+DeviceCoordinates 0 0 1000000 1000000
+UserCoordinates 0 0 10000 10000
+sf_interior 100
+Circle 500000, 750000, 20000
+sf_interior 0
+Circle 500000, 750000, 20000
+st_alignment 1, 1
+Text 500000, 750000, "{\scriptsize 4}"
+END_OF_FILE
+

@@ -1,0 +1,2 @@
+sqrt_5_mod_19:
+	$(ORBITER) -v 2 -square_root_mod 5 19 

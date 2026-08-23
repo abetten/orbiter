@@ -1,0 +1,12 @@
+PGLstar_3_2_classes:
+	$(ORBITER) -v 10 \
+		-define F -finite_field -q 2 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define G0 -linear_group -PGL 3 F -end \
+		-define G -modified_group -polarity_extension \
+			G0 P \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-classes \
+		-end

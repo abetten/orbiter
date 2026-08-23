@@ -1,0 +1,6 @@
+classes_GL_4_2:
+	$(ORBITER) -v 7 \
+		-define F -finite_field -q 2 -end \
+		-all_rational_normal_forms F 4 
+	$(PDFLATEX) Class_reps_GL_4_2.tex
+	$(OPEN) Class_reps_GL_4_2.pdf

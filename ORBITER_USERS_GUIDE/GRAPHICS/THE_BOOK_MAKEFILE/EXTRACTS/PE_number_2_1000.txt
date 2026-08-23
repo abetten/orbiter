@@ -1,0 +1,5 @@
+PE_number_2_1000:
+	$(ORBITER) -v 1 -number_of_primitive_roots_interval 2 1000
+	$(ORBITER) -v 1 -csv_file_latex 1 table_number_of_pe_2_1000.csv
+	$(PDFLATEX) table_number_of_pe_2_1000.tex
+	$(OPEN) table_number_of_pe_2_1000.pdf

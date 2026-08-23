@@ -1,0 +1,36 @@
+~/orbiter/src/apps/orbiter/orbiter.out
+Welcome to Orbiter! Your build number is 3241.
+do_orbiter_session
+orbiter_top_level_session::orbiter_top_level_session before new orbiter_session
+orbiter_session::orbiter_session
+orbiter_session::orbiter_session done
+orbiter_top_level_session::orbiter_top_level_session after new orbiter_session
+do_orbiter_session before Top_level_session.execute_command_line
+orbiter_top_level_session::execute_command_line
+A user's guide is available here: 
+https://www.math.colostate.edu/~betten/orbiter/users_guide.pdf
+The sources are available here: 
+https://github.com/abetten/orbiter
+An example makefile with many commands from the user's guide is here: 
+https://github.com/abetten/orbiter/tree/master/examples/users_guide/makefile
+SYSTEMUNIX is defined
+SYSTEM_IS_MACINTOSH is defined
+sizeof(int)=4
+sizeof(long int)=8
+session_verbose_level = 0
+orbiter_top_level_session::execute_command_line before handle_everything
+orbiter_top_level_session::execute_command_line after handle_everything
+orbiter_top_level_session::execute_command_line done
+do_orbiter_session after Top_level_session.execute_command_line
+orbiter_top_level_session::~orbiter_top_level_session
+orbiter_top_level_session::~orbiter_top_level_session before delete Orbiter_session
+orbiter_session::~orbiter_session
+nb_times_finite_field_created=0
+nb_times_projective_space_created=0
+nb_times_action_created=0
+nb_calls_to_densenauty=0
+orbiter_session::~orbiter_session done
+orbiter_top_level_session::~orbiter_top_level_session after delete Orbiter_session
+orbiter_top_level_session::~orbiter_top_level_session done
+The Orbiter session is finished.
+User time: 0.000000 of a second, dt=0 tps = 100

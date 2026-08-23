@@ -1,0 +1,11 @@
+quartic_curve_29_121: 
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 29 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define C -quartic_curve -space P -catalogue 121 -end \
+		-with C -do \
+			-quartic_curve_activity \
+				-report \
+			-end
+	$(PDFLATEX) quartic_curve_catalogue_q29_iso121_report.tex
+	$(OPEN) quartic_curve_catalogue_q29_iso121_report.pdf

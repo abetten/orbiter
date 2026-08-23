@@ -1,0 +1,5 @@
+surface_11_random:
+	$(ORBITER) -v 10 \
+		-define F -finite_field -q 11 -end \
+		-define P -projective_space -n 3 -field F -v 6 -end \
+		-define S -cubic_surface -space P -random -end

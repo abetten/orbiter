@@ -1,0 +1,7 @@
+Golay23_code_diagram_draw:
+	$(ORBITER) -v 2 \
+		-draw_matrix \
+			-input_csv_file Golay_23_diagram_01_23_4096.csv \
+			-box_width 4 -bit_depth 8 \
+			-partition 20 4096 2048 \
+		-end

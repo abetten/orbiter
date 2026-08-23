@@ -1,0 +1,23 @@
+PG_2_13_orbits_on_lines:
+	$(ORBITER) -v 5 \
+		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define Control -poset_classification_control \
+			-problem_label PGL_3_13 \
+			-depth 4 \
+		-end \
+		-define G -linear_group -PGL 3 13 -end \
+		-define G_on_lines -modified_group -from G \
+			-on_k_subspaces 2 \
+		-end \
+		-define Orb -orbits \
+			-group G \
+			-group_action G_on_lines \
+			-generators G \
+			-on_subsets 4 Control \
+		-end \
+		-with Orb -do -orbits_activity \
+			-recognize "170, 111, 140, 2" \
+			-recognize "0,23,24,47" \
+		-end
+	#$(PDFLATEX) PGL_3_13_poset.tex
+	#$(OPEN) PGL_3_13_poset.pdf

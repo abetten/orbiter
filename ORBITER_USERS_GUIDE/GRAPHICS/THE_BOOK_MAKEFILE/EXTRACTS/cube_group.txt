@@ -1,0 +1,24 @@
+cube_group:
+	$(ORBITER) -v 2 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define gens -vector -dense \
+			"0,1,0,2,0,0,0,0,1, \
+			0,0,1,0,1,0,2,0,0, \
+			2,0,0,0,1,0,0,0,1" \
+		-end \
+		-define G -linear_group -GL 3 3 \
+		-subgroup_by_generators "cube" "48" 3 \
+			gens \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-print_elements_tex \
+		-end
+	$(PDFLATEX) GL_3_3_Subgroup_cube_48_report.tex
+	$(OPEN) GL_3_3_Subgroup_cube_48_report.pdf

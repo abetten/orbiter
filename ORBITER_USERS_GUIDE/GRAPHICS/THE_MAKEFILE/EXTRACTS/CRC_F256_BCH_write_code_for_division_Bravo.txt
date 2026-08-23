@@ -1,0 +1,12 @@
+CRC_F256_BCH_write_code_for_division_Bravo:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 256 -end \
+		-define A -vector -field F -sparse 772 "1,771,1,0" -end \
+		-define B -vector -field F -dense $(CRC_POLY_BRAVO_DENSE) -end \
+		-with F -do \
+		-coding_theoretic_activity \
+			-write_code_for_division \
+			bravo A B \
+		-end
+	g++ crc_bravo.cpp -o crc_bravo.out
+	./crc_bravo.out

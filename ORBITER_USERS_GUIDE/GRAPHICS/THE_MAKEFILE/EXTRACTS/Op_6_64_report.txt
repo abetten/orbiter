@@ -1,0 +1,12 @@
+Op_6_64_report:
+	$(ORBITER) -v 4 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 -nodes_empty \
+		-end \
+		-define F -finite_field -q 64 -end \
+		-define O -orthogonal_space 1 6 F -without_group -end \
+		-with O -do -orthogonal_space_activity \
+			-cheat_sheet_orthogonal Do \
+		-end
+	$(PDFLATEX) O_1_6_64_report.tex
+	$(OPEN) O_1_6_64_report.pdf

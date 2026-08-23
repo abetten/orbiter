@@ -1,0 +1,9 @@
+JK_graph_grid_3_3:
+	$(ORBITER) -v 2 \
+		-define Gamma -graph -load_dimacs \
+		../JUNTTILA_KASKI/benchmarks/grid/grid-w-3-3 \
+		-end \
+		-with Gamma -do \
+		-graph_theoretic_activity -save -end \
+		-with Gamma -do \
+		-graph_theoretic_activity -automorphism_group -end \

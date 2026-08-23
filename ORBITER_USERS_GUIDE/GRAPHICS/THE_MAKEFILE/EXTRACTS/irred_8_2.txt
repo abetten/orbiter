@@ -1,0 +1,9 @@
+irred_8_2:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 2 -end \
+		-with F -do \
+		-finite_field_activity \
+			-make_table_of_irreducible_polynomials 8 \
+		-end
+	$(PDFLATEX) Irred_q2_d8.tex
+	$(OPEN) Irred_q2_d8.pdf

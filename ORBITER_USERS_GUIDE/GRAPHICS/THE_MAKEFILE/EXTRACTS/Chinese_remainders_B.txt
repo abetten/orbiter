@@ -1,0 +1,5 @@
+Chinese_remainders_B:
+	$(ORBITER) -v 2 \
+		-define R -vector -dense "38,2" -end \
+		-define M -vector -dense "74,27" -end \
+		-Chinese_remainders R M

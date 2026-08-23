@@ -1,0 +1,4 @@
+Paley_13_graph_complement:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 13 -end \
+		-define Gamma -graph -Paley F -complement -end \

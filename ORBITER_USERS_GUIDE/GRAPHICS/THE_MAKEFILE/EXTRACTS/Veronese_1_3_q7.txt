@@ -1,0 +1,24 @@
+Veronese_1_3_q7:
+	$(ORBITER) -v 5 \
+		-define Fq -finite_field -q 7 -end \
+		-define C -symbolic_object \
+			-field Fq \
+			-managed_variables "y0,y1" \
+			-text "y1^3,y0*y1^2,y0^2*y1,y0^3" \
+		-end \
+		-define P1 -projective_space -n 1 -field Fq -v 0 -end \
+		-define P3 -projective_space -n 3 -field Fq -v 0 -end \
+		-define R2 -polynomial_ring \
+			-field Fq \
+			-number_of_variables 2 \
+			-homogeneous_of_degree 3 \
+			-monomial_ordering_partition \
+			-variables "y0,y1" "y_0,y_1" \
+			-end \
+		-define map -mapping \
+			-domain P1 \
+			-codomain P3 \
+			-ring R2 \
+			-formula C \
+			-substitute "" \
+		-end

@@ -1,0 +1,6 @@
+Sylvester_Hadamard_code_8:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 3 -end \
+		-with F -do -coding_theoretic_activity \
+			-Sylvester_Hadamard_code 8 \
+		-end

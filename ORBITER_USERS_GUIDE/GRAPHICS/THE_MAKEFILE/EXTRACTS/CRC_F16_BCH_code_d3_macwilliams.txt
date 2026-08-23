@@ -1,0 +1,3 @@
+CRC_F16_BCH_code_d3_macwilliams:
+	$(ORBITER) -v 2 \
+		-make_macwilliams_system 51 4 16

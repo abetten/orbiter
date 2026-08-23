@@ -1,0 +1,16 @@
+symbolic_determinant_vandermonde:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 13 -end \
+		-define M -symbolic_object \
+			-field F \
+			-matrix 4 \
+			-text $(VANDERMONDE_4X4_FORMULA) \
+		-end \
+		-define det -symbolic_object \
+			-field F \
+			-determinant M \
+		-end \
+		-define det1 -symbolic_object \
+			-field F \
+			-expand det \
+		-end

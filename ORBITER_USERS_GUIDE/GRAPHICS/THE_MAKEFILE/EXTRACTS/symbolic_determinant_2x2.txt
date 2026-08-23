@@ -1,0 +1,18 @@
+symbolic_determinant_2x2:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 13 -end \
+		-define M -symbolic_object \
+			-field F \
+			-matrix 2 \
+			-text "a,b,c,d" \
+		-end \
+		-define det -symbolic_object \
+			-field F \
+			-determinant M \
+		-end \
+		-define det1 -symbolic_object \
+			-field F \
+			-expand det \
+		-end
+	$(PDFLATEX) det1.tex
+	$(OPEN) det1.pdf

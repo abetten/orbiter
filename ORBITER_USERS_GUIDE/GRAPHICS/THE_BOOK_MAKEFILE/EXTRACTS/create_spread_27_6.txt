@@ -1,0 +1,12 @@
+create_spread_27_6:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 3 -end \
+		-define G -linear_group -PGL 6 F -end \
+		-define S -spread -kernel_field F \
+			-group G -k 3 -catalogue 6 \
+			-end \
+		-with S -do -spread_activity \
+			-report \
+		-end
+	$(PDFLATEX) catalogue_q3_k3_6_report.tex
+	$(OPEN) catalogue_q3_k3_6_report.pdf

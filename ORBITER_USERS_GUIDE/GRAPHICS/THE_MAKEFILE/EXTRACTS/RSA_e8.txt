@@ -1,0 +1,3 @@
+RSA_e8:
+	$(ORBITER) -v 2 \
+		-RSA_encrypt_text 9017 60256069 3 strawberry

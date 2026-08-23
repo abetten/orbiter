@@ -1,0 +1,59 @@
+The classification problem of optimal codes 
+in coding theory is the problem of determining the 
+equivalence classes of codes for a given set of values 
+of $n$ and $k$ and $q$ with a lower bound on $d.$ 
+Orbiter can be used to classify linear codes with given redundancy and bounded minimum distance. 
+The redundancy of a linear $[n,k]$ code is the parameter $r = n - k.$
+Codes with redundancy $r$ can be identified with subsets of $\PG(r-1,q).$
+Under this correspondence, 
+a code with minimum distance at least $d$ 
+corresponds to a subset such that any $d-1$ elements are independent.
+We use the notation  $\Lambda_{r-1,s}(q)$ to denote the poset of 
+subsets of $\PG(r-1,q)$ for which any $d-1$-subset (if any) is independent. 
+Under the correspondence, 
+the action of $\PGGL(r,q)$ on $\Lambda_{r-1,s}(q)$ corresponds to the orbits of equivalent linear codes.
+For this reason, we are interested in determining the orbits of $\PGGL(r,q)$ on $\Lambda_{r-1,s}(q).$ 
+An orbit of size $n$ represents an isometry class of  $[n,n-r,d;q]$ codes with $d \ge s +1.$
+The projective stabilizer of the subset is the automorphism group of the code.
+The Orbiter command 
+
+\sourcecode{codes_8_4_4}
+
+classifies linear codes with redundancy $4$ and minimum distance at least $4$. 
+Orbiter confirms that there is exactly one such code, and it 
+computes the code together with the projective stabilizer.
+Orbiter creates the action of 
+the group $\PGL(4,2)$ on the poset $\Lambda_{3,3}(2).$ 
+Using poset classification, Orbiter then produces the 
+poset of orbits shown below
+\orbiteroutput{GRAPHICS/WRAPPERS/codes_8_4_4_draw}
+
+In this diagram, the numbers stand for Orbiter ranks of points in $\PG(3,2).$ 
+All nodes except for the root node have a number attached to it.
+The nodes represent subsets. In order to determine the set associated to a node, 
+follow the path from the root node to the node and collect the points according to their labels. 
+The root node represents the empty set.
+The $[8,4,4;2]$-code is represented by the set $\{0,1,2,3,8,11,13,14\}.$
+The fact that there is only one node at level $8$ 
+in the poset of orbits tells us that the code is unique up to equivalence.
+Let us look at the code. The elements of the set $\{0,1,2,3,8,11,13,14\}$
+are points in $\PG(3,2)$. 
+We write the coordinate vectors in the columns of a matrix $H$:
+$$
+H=\left[
+\begin{array}{cccccccc}
+1&0&0&0&1&1&1&0\\
+0&1&0&0&1&1&0&1\\
+0&0&1&0&1&0&1&1\\
+0&0&0&1&0&1&1&1\\
+\end{array}
+\right].
+$$
+This matrix is the parity check matrix $H$ of the code $\cC.$
+This means that the words of the code are the vectors $\bc$ such that $\bc\cdot H^\top = 0.$
+Observe that the vectors that we put in the columns of $H$ all have odd weight. 
+They are in fact the points of the hyperplane $x+y+z+w = 0.$ 
+This shows that the stabilizer of the code which is the stabilizer of the set is 
+equal to $\AGL(3,2)$, a group of order $1344.$
+
+\bigskip

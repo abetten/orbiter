@@ -1,0 +1,7 @@
+EC_Koblitz_encoding:
+	$(ORBITER) -v 6 -seed 17 \
+		-define F -finite_field -q 199 -end \
+		-with F -do \
+		-finite_field_activity \
+		-EC_Koblitz_encoding 5 7 67 "147,164" "DEADBEEF" \
+		-end

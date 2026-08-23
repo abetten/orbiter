@@ -1,0 +1,1191 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
+      <meta name="generator" content="Railroad Diagram Generator 2.2-SNAPSHOT" />
+      <style type="text/css">
+    ::-moz-selection
+    {
+      color: #FFFCF0;
+      background: #0F0C00;
+    }
+    ::selection
+    {
+      color: #FFFCF0;
+      background: #0F0C00;
+    }
+    body
+    {
+      font: normal 12px Verdana, sans-serif;
+      color: #0F0C00;
+      background: #FFFCF0;
+    }
+    .ebnf a
+    {
+      text-decoration: none;
+    }
+    .ebnf a:hover
+    {
+      color: #050400;
+      text-decoration: underline;
+    }
+    .signature
+    {
+      color: #806600;
+      font-size: 11px;
+      text-align: right;
+    }
+    a:link, a:visited
+    {
+      color: #0F0C00;
+    }
+    a:link.signature, a:visited.signature
+    {
+      color: #806600;
+    }
+    div.ebnf
+    {
+      padding: 10px;
+      background: #FFF6D1;
+      width: 992px;
+    }
+    .ebnf div
+    {
+      padding-left: 13ch;
+      text-indent: -13ch;
+    }
+    .ebnf code
+    {
+      font:12px SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
+    }
+  </style>
+   </head>
+   <body>
+      <p style="font-size: 14px; font-weight:bold"><a name="Grammar">Grammar:</a></p><img border="0" src="diagram/Grammar.png" height="37" width="133" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#Grammar" title="Grammar">Grammar</a>  ::= <a href="#Program" title="Program">Program</a></div></code></div>
+      </p>
+      <p>no references</p><br /><p style="font-size: 14px; font-weight:bold"><a name="Program">Program:</a></p><img border="0" src="diagram/Program.png" height="71" width="321" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#Program" title="Program">Program</a>  ::= <a href="#Setup" title="Setup">Setup</a>* <a href="#CommandSequence" title="CommandSequence">CommandSequence</a></div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#Grammar" title="Grammar">Grammar</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="Setup">Setup:</a></p><img border="0" src="diagram/Setup.png" height="389" width="281" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#Setup" title="Setup">Setup</a>    ::= <a href="#Verbosity" title="Verbosity">Verbosity</a></div>
+               <div>           | '-list_arguments'</div>
+               <div>           | '-parse_commands_only'</div>
+               <div>           | <a href="#SeedRandomGen" title="SeedRandomGen">SeedRandomGen</a></div>
+               <div>           | <a href="#MemoryDebug" title="MemoryDebug">MemoryDebug</a></div>
+               <div>           | <a href="#OverridePoly" title="OverridePoly">OverridePoly</a></div>
+               <div>           | <a href="#OrbiterPath" title="OrbiterPath">OrbiterPath</a></div>
+               <div>           | <a href="#MagmaPath" title="MagmaPath">MagmaPath</a></div>
+               <div>           | <a href="#Fork" title="Fork">Fork</a></div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#Program" title="Program">Program</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="CommandSequence">CommandSequence:</a></p><img border="0" src="diagram/CommandSequence.png" height="57" width="183" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#CommandSequence" title="CommandSequence">CommandSequence</a></div>
+               <div>         ::= <a href="#Command" title="Command">Command</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#Program" title="Program">Program</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="Command">Command:</a></p><img border="0" src="diagram/Command.png" height="169" width="193" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#Command" title="Command">Command</a>  ::= <a href="#Definition" title="Definition">Definition</a></div>
+               <div>           | <a href="#Assignment" title="Assignment">Assignment</a></div>
+               <div>           | <a href="#Activity" title="Activity">Activity</a></div>
+               <div>           | <a href="#GlobalCmd" title="GlobalCmd">GlobalCmd</a></div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#CommandSequence" title="CommandSequence">CommandSequence</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="Definition">Definition:</a></p><img border="0" src="diagram/Definition.png" height="37" width="439" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#Definition" title="Definition">Definition</a></div>
+               <div>         ::= '-define' <a href="#Literal" title="Literal">Literal</a><a href="#ObjectTypeAndArgs" title="ObjectTypeAndArgs">ObjectTypeAndArgs</a> '-end'</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#Command" title="Command">Command</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="Assignment">Assignment:</a></p><img border="0" src="diagram/Assignment.png" height="81" width="409" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#Assignment" title="Assignment">Assignment</a></div>
+               <div>         ::= '-assign' <a href="#Literal" title="Literal">Literal</a> ( '-and' <a href="#Literal" title="Literal">Literal</a> )* '-from' <a href="#Activity" title="Activity">Activity</a></div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#Command" title="Command">Command</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="Activity">Activity:</a></p><img border="0" src="diagram/Activity.png" height="81" width="493" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#Activity" title="Activity">Activity</a> ::= '-with' <a href="#Literal" title="Literal">Literal</a> ( '-and' <a href="#Literal" title="Literal">Literal</a> )* '-do' <a href="#ObjectActivity" title="ObjectActivity">ObjectActivity</a> '-end'</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#Assignment" title="Assignment">Assignment</a></li>
+            <li><a href="#Command" title="Command">Command</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="ObjectTypeAndArgs">ObjectTypeAndArgs:</a></p><img border="0" src="diagram/ObjectTypeAndArgs.png" height="257" width="249" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#ObjectTypeAndArgs" title="ObjectTypeAndArgs">ObjectTypeAndArgs</a></div>
+               <div>         ::= <a href="#DataStructure" title="DataStructure">DataStructure</a></div>
+               <div>           | <a href="#AlgebraObject" title="AlgebraObject">AlgebraObject</a></div>
+               <div>           | <a href="#GeometryObject" title="GeometryObject">GeometryObject</a></div>
+               <div>           | <a href="#CombinatoricsObject" title="CombinatoricsObject">CombinatoricsObject</a></div>
+               <div>           | <a href="#CodingTheoryObject" title="CodingTheoryObject">CodingTheoryObject</a></div>
+               <div>           | <a href="#OtherObject" title="OtherObject">OtherObject</a></div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#Definition" title="Definition">Definition</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="DataStructure">DataStructure:</a></p><img border="0" src="diagram/DataStructure.png" height="169" width="181" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#DataStructure" title="DataStructure">DataStructure</a></div>
+               <div>         ::= <a href="#collection" title="collection">collection</a></div>
+               <div>           | <a href="#set" title="set">set</a></div>
+               <div>           | <a href="#vector" title="vector">vector</a></div>
+               <div>           | <a href="#vector_ge" title="vector_ge">vector_ge</a></div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#ObjectTypeAndArgs" title="ObjectTypeAndArgs">ObjectTypeAndArgs</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="AlgebraObject">AlgebraObject:</a></p><img border="0" src="diagram/AlgebraObject.png" height="433" width="345" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#AlgebraObject" title="AlgebraObject">AlgebraObject</a></div>
+               <div>         ::= <a href="#finite_field" title="finite_field">finite_field</a></div>
+               <div>           | <a href="#polynomial_ring" title="polynomial_ring">polynomial_ring</a></div>
+               <div>           | <a href="#linear_group" title="linear_group">linear_group</a></div>
+               <div>           | <a href="#permutation_group" title="permutation_group">permutation_group</a></div>
+               <div>           | <a href="#group_modification" title="group_modification">group_modification</a></div>
+               <div>           | <a href="#action_on_forms" title="action_on_forms">action_on_forms</a></div>
+               <div>           | <a href="#orbits" title="orbits">orbits</a></div>
+               <div>           | <a href="#poset_classification_control" title="poset_classification_control">poset_classification_control</a></div>
+               <div>           | <a href="#poset_classification_report_options" title="poset_classification_report_options">poset_classification_report_options</a></div>
+               <div>           | <a href="#poset_classification_activity" title="poset_classification_activity">poset_classification_activity</a></div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#ObjectTypeAndArgs" title="ObjectTypeAndArgs">ObjectTypeAndArgs</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="GeometryObject">GeometryObject:</a></p><img border="0" src="diagram/GeometryObject.png" height="785" width="339" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#GeometryObject" title="GeometryObject">GeometryObject</a></div>
+               <div>         ::= <a href="#projective_space" title="projective_space">projective_space</a></div>
+               <div>           | <a href="#orthogonal_space" title="orthogonal_space">orthogonal_space</a></div>
+               <div>           | <a href="#BLT_set_classifier" title="BLT_set_classifier">BLT_set_classifier</a></div>
+               <div>           | <a href="#spread_classifier" title="spread_classifier">spread_classifier</a></div>
+               <div>           | <a href="#geometric_object" title="geometric_object">geometric_object</a></div>
+               <div>           | <a href="#spread" title="spread">spread</a></div>
+               <div>           | <a href="#cubic_surface" title="cubic_surface">cubic_surface</a></div>
+               <div>           | <a href="#quartic_curve" title="quartic_curve">quartic_curve</a></div>
+               <div>           | <a href="#BLT_set" title="BLT_set">BLT_set</a></div>
+               <div>           | <a href="#translation_plane" title="translation_plane">translation_plane</a></div>
+               <div>           | <a href="#spread_table" title="spread_table">spread_table</a></div>
+               <div>           | <a href="#packing_classify" title="packing_classify">packing_classify</a></div>
+               <div>           | <a href="#packing_was" title="packing_was">packing_was</a></div>
+               <div>           | <a href="#packing_was_choose_fixed_points" title="packing_was_choose_fixed_points">packing_was_choose_fixed_points</a></div>
+               <div>           | <a href="#packing_long_orbits" title="packing_long_orbits">packing_long_orbits</a></div>
+               <div>           | <a href="#arc_generator_control" title="arc_generator_control">arc_generator_control</a></div>
+               <div>           | <a href="#mapping" title="mapping">mapping</a></div>
+               <div>           | <a href="#variety" title="variety">variety</a></div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#ObjectTypeAndArgs" title="ObjectTypeAndArgs">ObjectTypeAndArgs</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="CombinatoricsObject">CombinatoricsObject:</a></p><img border="0" src="diagram/CombinatoricsObject.png" height="301" width="251" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#CombinatoricsObject" title="CombinatoricsObject">CombinatoricsObject</a></div>
+               <div>         ::= <a href="#graph" title="graph">graph</a></div>
+               <div>           | <a href="#graph_classification" title="graph_classification">graph_classification</a></div>
+               <div>           | <a href="#design" title="design">design</a></div>
+               <div>           | <a href="#design_table" title="design_table">design_table</a></div>
+               <div>           | <a href="#large_set_was" title="large_set_was">large_set_was</a></div>
+               <div>           | <a href="#combinatorial_object" title="combinatorial_object">combinatorial_object</a></div>
+               <div>           | <a href="#geometry_builder" title="geometry_builder">geometry_builder</a></div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#ObjectTypeAndArgs" title="ObjectTypeAndArgs">ObjectTypeAndArgs</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="CodingTheoryObject">CodingTheoryObject:</a></p><img border="0" src="diagram/CodingTheoryObject.png" height="81" width="175" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#CodingTheoryObject" title="CodingTheoryObject">CodingTheoryObject</a></div>
+               <div>         ::= <a href="#code" title="code">code</a></div>
+               <div>           | <a href="#crc_code" title="crc_code">crc_code</a></div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#ObjectTypeAndArgs" title="ObjectTypeAndArgs">ObjectTypeAndArgs</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="OtherObject">OtherObject:</a></p><img border="0" src="diagram/OtherObject.png" height="81" width="221" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#OtherObject" title="OtherObject">OtherObject</a></div>
+               <div>         ::= <a href="#diophant" title="diophant">diophant</a></div>
+               <div>           | <a href="#symbolic_object" title="symbolic_object">symbolic_object</a></div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#ObjectTypeAndArgs" title="ObjectTypeAndArgs">ObjectTypeAndArgs</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="ObjectActivity">ObjectActivity:</a></p><img border="0" src="diagram/ObjectActivity.png" height="213" width="255" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#ObjectActivity" title="ObjectActivity">ObjectActivity</a></div>
+               <div>         ::= <a href="#AlgebraActivity" title="AlgebraActivity">AlgebraActivity</a></div>
+               <div>           | <a href="#GeometryActivity" title="GeometryActivity">GeometryActivity</a></div>
+               <div>           | <a href="#CombinatoricsActivity" title="CombinatoricsActivity">CombinatoricsActivity</a></div>
+               <div>           | <a href="#CodingTheoryActivity" title="CodingTheoryActivity">CodingTheoryActivity</a></div>
+               <div>           | <a href="#OtherActivity" title="OtherActivity">OtherActivity</a></div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#Activity" title="Activity">Activity</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="AlgebraActivity">AlgebraActivity:</a></p><img border="0" src="diagram/AlgebraActivity.png" height="213" width="277" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#AlgebraActivity" title="AlgebraActivity">AlgebraActivity</a></div>
+               <div>         ::= <a href="#finite_field_activity" title="finite_field_activity">finite_field_activity</a></div>
+               <div>           | <a href="#polynomial_ring_activity" title="polynomial_ring_activity">polynomial_ring_activity</a></div>
+               <div>           | <a href="#group_theoretic_activity" title="group_theoretic_activity">group_theoretic_activity</a></div>
+               <div>           | <a href="#action_on_forms_activity" title="action_on_forms_activity">action_on_forms_activity</a></div>
+               <div>           | <a href="#orbits_activity" title="orbits_activity">orbits_activity</a></div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#ObjectActivity" title="ObjectActivity">ObjectActivity</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="GeometryActivity">GeometryActivity:</a></p><img border="0" src="diagram/GeometryActivity.png" height="609" width="499" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#GeometryActivity" title="GeometryActivity">GeometryActivity</a></div>
+               <div>         ::= <a href="#projective_space_activity" title="projective_space_activity">projective_space_activity</a></div>
+               <div>           | <a href="#orthogonal_space_activity" title="orthogonal_space_activity">orthogonal_space_activity</a></div>
+               <div>           | <a href="#cubic_surface_activity" title="cubic_surface_activity">cubic_surface_activity</a></div>
+               <div>           | <a href="#quartic_curve_activity" title="quartic_curve_activity">quartic_curve_activity</a></div>
+               <div>           | <a href="#blt_set_activity" title="blt_set_activity">blt_set_activity</a></div>
+               <div>           | <a href="#variety_activity" title="variety_activity">variety_activity</a></div>
+               <div>           | <a href="#classification_of_cubic_surfaces_with_double_sixes_activity" title="classification_of_cubic_surfaces_with_double_sixes_activity">classification_of_cubic_surfaces_with_double_sixes_activity</a></div>
+               <div>           | <a href="#spread_table_activity" title="spread_table_activity">spread_table_activity</a></div>
+               <div>           | <a href="#packing_with_symmetry_assumption_activity" title="packing_with_symmetry_assumption_activity">packing_with_symmetry_assumption_activity</a></div>
+               <div>           | <a href="#packing_fixed_points_activity" title="packing_fixed_points_activity">packing_fixed_points_activity</a></div>
+               <div>           | <a href="#BLT_set_classify_activity" title="BLT_set_classify_activity">BLT_set_classify_activity</a></div>
+               <div>           | <a href="#spread_classify_activity" title="spread_classify_activity">spread_classify_activity</a></div>
+               <div>           | <a href="#spread_activity" title="spread_activity">spread_activity</a></div>
+               <div>           | <a href="#translation_plane_activity" title="translation_plane_activity">translation_plane_activity</a></div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#ObjectActivity" title="ObjectActivity">ObjectActivity</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="CombinatoricsActivity">CombinatoricsActivity:</a></p><img border="0" src="diagram/CombinatoricsActivity.png" height="169" width="305" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#CombinatoricsActivity" title="CombinatoricsActivity">CombinatoricsActivity</a></div>
+               <div>         ::= <a href="#combinatorial_object_activity" title="combinatorial_object_activity">combinatorial_object_activity</a></div>
+               <div>           | <a href="#graph_theoretic_activity" title="graph_theoretic_activity">graph_theoretic_activity</a></div>
+               <div>           | <a href="#graph_classification_activity" title="graph_classification_activity">graph_classification_activity</a></div>
+               <div>           | <a href="#large_set_was_activity" title="large_set_was_activity">large_set_was_activity</a></div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#ObjectActivity" title="ObjectActivity">ObjectActivity</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="CodingTheoryActivity">CodingTheoryActivity:</a></p><img border="0" src="diagram/CodingTheoryActivity.png" height="81" width="277" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#CodingTheoryActivity" title="CodingTheoryActivity">CodingTheoryActivity</a></div>
+               <div>         ::= <a href="#coding_theoretic_activity" title="coding_theoretic_activity">coding_theoretic_activity</a></div>
+               <div>           | <a href="#design_activity" title="design_activity">design_activity</a></div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#ObjectActivity" title="ObjectActivity">ObjectActivity</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="OtherActivity">OtherActivity:</a></p><img border="0" src="diagram/OtherActivity.png" height="81" width="273" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#OtherActivity" title="OtherActivity">OtherActivity</a></div>
+               <div>         ::= <a href="#diophant_activity" title="diophant_activity">diophant_activity</a></div>
+               <div>           | <a href="#symbolic_object_activity" title="symbolic_object_activity">symbolic_object_activity</a></div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#ObjectActivity" title="ObjectActivity">ObjectActivity</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="finite_field">finite_field:</a></p><img border="0" src="diagram/finite_field.png" height="71" width="391" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#finite_field" title="finite_field">finite_field</a></div>
+               <div>         ::= '-finite_field' <a href="#specific_args_to_create" title="specific_args_to_create">specific_args_to_create</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#AlgebraObject" title="AlgebraObject">AlgebraObject</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="polynomial_ring">polynomial_ring:</a></p><img border="0" src="diagram/polynomial_ring.png" height="71" width="427" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#polynomial_ring" title="polynomial_ring">polynomial_ring</a></div>
+               <div>         ::= '-polynomial_ring' <a href="#specific_args_to_create" title="specific_args_to_create">specific_args_to_create</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#AlgebraObject" title="AlgebraObject">AlgebraObject</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="projective_space">projective_space:</a></p><img border="0" src="diagram/projective_space.png" height="71" width="433" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#projective_space" title="projective_space">projective_space</a></div>
+               <div>         ::= '-projective_space' <a href="#specific_args_to_create" title="specific_args_to_create">specific_args_to_create</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#GeometryObject" title="GeometryObject">GeometryObject</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="orthogonal_space">orthogonal_space:</a></p><img border="0" src="diagram/orthogonal_space.png" height="71" width="437" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#orthogonal_space" title="orthogonal_space">orthogonal_space</a></div>
+               <div>         ::= '-orthogonal_space' <a href="#specific_args_to_create" title="specific_args_to_create">specific_args_to_create</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#GeometryObject" title="GeometryObject">GeometryObject</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="BLT_set_classifier">BLT_set_classifier:</a></p><img border="0" src="diagram/BLT_set_classifier.png" height="71" width="441" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#BLT_set_classifier" title="BLT_set_classifier">BLT_set_classifier</a></div>
+               <div>         ::= '-BLT_set_classifier' <a href="#specific_args_to_create" title="specific_args_to_create">specific_args_to_create</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#GeometryObject" title="GeometryObject">GeometryObject</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="spread_classifier">spread_classifier:</a></p><img border="0" src="diagram/spread_classifier.png" height="71" width="433" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#spread_classifier" title="spread_classifier">spread_classifier</a></div>
+               <div>         ::= '-spread_classifier' <a href="#specific_args_to_create" title="specific_args_to_create">specific_args_to_create</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#GeometryObject" title="GeometryObject">GeometryObject</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="linear_group">linear_group:</a></p><img border="0" src="diagram/linear_group.png" height="71" width="403" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#linear_group" title="linear_group">linear_group</a></div>
+               <div>         ::= '-linear_group' <a href="#specific_args_to_create" title="specific_args_to_create">specific_args_to_create</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#AlgebraObject" title="AlgebraObject">AlgebraObject</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="permutation_group">permutation_group:</a></p><img border="0" src="diagram/permutation_group.png" height="71" width="449" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#permutation_group" title="permutation_group">permutation_group</a></div>
+               <div>         ::= '-permutation_group' <a href="#specific_args_to_create" title="specific_args_to_create">specific_args_to_create</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#AlgebraObject" title="AlgebraObject">AlgebraObject</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="group_modification">group_modification:</a></p><img border="0" src="diagram/group_modification.png" height="71" width="449" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#group_modification" title="group_modification">group_modification</a></div>
+               <div>         ::= '-group_modification' <a href="#specific_args_to_create" title="specific_args_to_create">specific_args_to_create</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#AlgebraObject" title="AlgebraObject">AlgebraObject</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="geometric_object">geometric_object:</a></p><img border="0" src="diagram/geometric_object.png" height="71" width="435" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#geometric_object" title="geometric_object">geometric_object</a></div>
+               <div>         ::= '-geometric_object' <a href="#specific_args_to_create" title="specific_args_to_create">specific_args_to_create</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#GeometryObject" title="GeometryObject">GeometryObject</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="collection">collection:</a></p><img border="0" src="diagram/collection.png" height="71" width="381" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#collection" title="collection">collection</a></div>
+               <div>         ::= '-collection' <a href="#specific_args_to_create" title="specific_args_to_create">specific_args_to_create</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#DataStructure" title="DataStructure">DataStructure</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="graph">graph:</a></p><img border="0" src="diagram/graph.png" height="71" width="355" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#graph" title="graph">graph</a>    ::= '-graph' <a href="#specific_args_to_create" title="specific_args_to_create">specific_args_to_create</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#CombinatoricsObject" title="CombinatoricsObject">CombinatoricsObject</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="code">code:</a></p><img border="0" src="diagram/code.png" height="71" width="349" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#code" title="code">code</a>     ::= '-code' <a href="#specific_args_to_create" title="specific_args_to_create">specific_args_to_create</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#CodingTheoryObject" title="CodingTheoryObject">CodingTheoryObject</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="spread">spread:</a></p><img border="0" src="diagram/spread.png" height="71" width="363" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#spread" title="spread">spread</a>   ::= '-spread' <a href="#specific_args_to_create" title="specific_args_to_create">specific_args_to_create</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#GeometryObject" title="GeometryObject">GeometryObject</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="cubic_surface">cubic_surface:</a></p><img border="0" src="diagram/cubic_surface.png" height="71" width="411" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#cubic_surface" title="cubic_surface">cubic_surface</a></div>
+               <div>         ::= '-cubic_surface' <a href="#specific_args_to_create" title="specific_args_to_create">specific_args_to_create</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#GeometryObject" title="GeometryObject">GeometryObject</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="quartic_curve">quartic_curve:</a></p><img border="0" src="diagram/quartic_curve.png" height="71" width="411" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#quartic_curve" title="quartic_curve">quartic_curve</a></div>
+               <div>         ::= '-quartic_curve' <a href="#specific_args_to_create" title="specific_args_to_create">specific_args_to_create</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#GeometryObject" title="GeometryObject">GeometryObject</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="BLT_set">BLT_set:</a></p><img border="0" src="diagram/BLT_set.png" height="71" width="371" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#BLT_set" title="BLT_set">BLT_set</a>  ::= '-BLT_set' <a href="#specific_args_to_create" title="specific_args_to_create">specific_args_to_create</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#GeometryObject" title="GeometryObject">GeometryObject</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="translation_plane">translation_plane:</a></p><img border="0" src="diagram/translation_plane.png" height="71" width="435" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#translation_plane" title="translation_plane">translation_plane</a></div>
+               <div>         ::= '-translation_plane' <a href="#specific_args_to_create" title="specific_args_to_create">specific_args_to_create</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#GeometryObject" title="GeometryObject">GeometryObject</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="spread_table">spread_table:</a></p><img border="0" src="diagram/spread_table.png" height="71" width="405" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#spread_table" title="spread_table">spread_table</a></div>
+               <div>         ::= '-spread_table' <a href="#specific_args_to_create" title="specific_args_to_create">specific_args_to_create</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#GeometryObject" title="GeometryObject">GeometryObject</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="packing_classify">packing_classify:</a></p><img border="0" src="diagram/packing_classify.png" height="71" width="429" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#packing_classify" title="packing_classify">packing_classify</a></div>
+               <div>         ::= '-packing_classify' <a href="#specific_args_to_create" title="specific_args_to_create">specific_args_to_create</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#GeometryObject" title="GeometryObject">GeometryObject</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="packing_was">packing_was:</a></p><img border="0" src="diagram/packing_was.png" height="71" width="405" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#packing_was" title="packing_was">packing_was</a></div>
+               <div>         ::= '-packing_was' <a href="#specific_args_to_create" title="specific_args_to_create">specific_args_to_create</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#GeometryObject" title="GeometryObject">GeometryObject</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="packing_was_choose_fixed_points">packing_was_choose_fixed_points:</a></p><img border="0" src="diagram/packing_was_choose_fixed_points.png" height="71" width="555" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#packing_was_choose_fixed_points" title="packing_was_choose_fixed_points">packing_was_choose_fixed_points</a></div>
+               <div>         ::= '-packing_was_choose_fixed_points' <a href="#specific_args_to_create" title="specific_args_to_create">specific_args_to_create</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#GeometryObject" title="GeometryObject">GeometryObject</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="packing_long_orbits">packing_long_orbits:</a></p><img border="0" src="diagram/packing_long_orbits.png" height="71" width="455" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#packing_long_orbits" title="packing_long_orbits">packing_long_orbits</a></div>
+               <div>         ::= '-packing_long_orbits' <a href="#specific_args_to_create" title="specific_args_to_create">specific_args_to_create</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#GeometryObject" title="GeometryObject">GeometryObject</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="graph_classification">graph_classification:</a></p><img border="0" src="diagram/graph_classification.png" height="71" width="453" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#graph_classification" title="graph_classification">graph_classification</a></div>
+               <div>         ::= '-graph_classification' <a href="#specific_args_to_create" title="specific_args_to_create">specific_args_to_create</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#CombinatoricsObject" title="CombinatoricsObject">CombinatoricsObject</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="diophant">diophant:</a></p><img border="0" src="diagram/diophant.png" height="71" width="377" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#diophant" title="diophant">diophant</a> ::= '-diophant' <a href="#specific_args_to_create" title="specific_args_to_create">specific_args_to_create</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#OtherObject" title="OtherObject">OtherObject</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="design">design:</a></p><img border="0" src="diagram/design.png" height="71" width="361" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#design" title="design">design</a>   ::= '-design' <a href="#specific_args_to_create" title="specific_args_to_create">specific_args_to_create</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#CombinatoricsObject" title="CombinatoricsObject">CombinatoricsObject</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="design_table">design_table:</a></p><img border="0" src="diagram/design_table.png" height="71" width="403" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#design_table" title="design_table">design_table</a></div>
+               <div>         ::= '-design_table' <a href="#specific_args_to_create" title="specific_args_to_create">specific_args_to_create</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#CombinatoricsObject" title="CombinatoricsObject">CombinatoricsObject</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="large_set_was">large_set_was:</a></p><img border="0" src="diagram/large_set_was.png" height="71" width="417" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#large_set_was" title="large_set_was">large_set_was</a></div>
+               <div>         ::= '-large_set_was' <a href="#specific_args_to_create" title="specific_args_to_create">specific_args_to_create</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#CombinatoricsObject" title="CombinatoricsObject">CombinatoricsObject</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="set">set:</a></p><img border="0" src="diagram/set.png" height="71" width="337" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#set" title="set">set</a>      ::= '-set' <a href="#specific_args_to_create" title="specific_args_to_create">specific_args_to_create</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#DataStructure" title="DataStructure">DataStructure</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="vector">vector:</a></p><img border="0" src="diagram/vector.png" height="71" width="359" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#vector" title="vector">vector</a>   ::= '-vector' <a href="#specific_args_to_create" title="specific_args_to_create">specific_args_to_create</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#DataStructure" title="DataStructure">DataStructure</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="symbolic_object">symbolic_object:</a></p><img border="0" src="diagram/symbolic_object.png" height="71" width="427" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#symbolic_object" title="symbolic_object">symbolic_object</a></div>
+               <div>         ::= '-symbolic_object' <a href="#specific_args_to_create" title="specific_args_to_create">specific_args_to_create</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#OtherObject" title="OtherObject">OtherObject</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="combinatorial_object">combinatorial_object:</a></p><img border="0" src="diagram/combinatorial_object.png" height="71" width="461" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#combinatorial_object" title="combinatorial_object">combinatorial_object</a></div>
+               <div>         ::= '-combinatorial_object' <a href="#specific_args_to_create" title="specific_args_to_create">specific_args_to_create</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#CombinatoricsObject" title="CombinatoricsObject">CombinatoricsObject</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="geometry_builder">geometry_builder:</a></p><img border="0" src="diagram/geometry_builder.png" height="71" width="437" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#geometry_builder" title="geometry_builder">geometry_builder</a></div>
+               <div>         ::= '-geometry_builder' <a href="#specific_args_to_create" title="specific_args_to_create">specific_args_to_create</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#CombinatoricsObject" title="CombinatoricsObject">CombinatoricsObject</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="vector_ge">vector_ge:</a></p><img border="0" src="diagram/vector_ge.png" height="71" width="385" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#vector_ge" title="vector_ge">vector_ge</a></div>
+               <div>         ::= '-vector_ge' <a href="#specific_args_to_create" title="specific_args_to_create">specific_args_to_create</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#DataStructure" title="DataStructure">DataStructure</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="action_on_forms">action_on_forms:</a></p><img border="0" src="diagram/action_on_forms.png" height="71" width="431" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#action_on_forms" title="action_on_forms">action_on_forms</a></div>
+               <div>         ::= '-action_on_forms' <a href="#specific_args_to_create" title="specific_args_to_create">specific_args_to_create</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#AlgebraObject" title="AlgebraObject">AlgebraObject</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="orbits">orbits:</a></p><img border="0" src="diagram/orbits.png" height="71" width="355" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#orbits" title="orbits">orbits</a>   ::= '-orbits' <a href="#specific_args_to_create" title="specific_args_to_create">specific_args_to_create</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#AlgebraObject" title="AlgebraObject">AlgebraObject</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="poset_classification_control">poset_classification_control:</a></p><img border="0" src="diagram/poset_classification_control.png" height="71" width="507" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#poset_classification_control" title="poset_classification_control">poset_classification_control</a></div>
+               <div>         ::= '-poset_classification_control' <a href="#specific_args_to_create" title="specific_args_to_create">specific_args_to_create</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#AlgebraObject" title="AlgebraObject">AlgebraObject</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="poset_classification_report_options">poset_classification_report_options:</a></p><img border="0" src="diagram/poset_classification_report_options.png" height="71" width="561" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#poset_classification_report_options" title="poset_classification_report_options">poset_classification_report_options</a></div>
+               <div>         ::= '-poset_classification_report_options' <a href="#specific_args_to_create" title="specific_args_to_create">specific_args_to_create</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#AlgebraObject" title="AlgebraObject">AlgebraObject</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="draw_options">draw_options:</a></p><img border="0" src="diagram/draw_options.png" height="71" width="409" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#draw_options" title="draw_options">draw_options</a></div>
+               <div>         ::= '-draw_options' <a href="#specific_args_to_create" title="specific_args_to_create">specific_args_to_create</a>*</div></code></div>
+      </p>
+      <p>no references</p><br /><p style="font-size: 14px; font-weight:bold"><a name="draw_incidence_structure_options">draw_incidence_structure_options:</a></p><img border="0" src="diagram/draw_incidence_structure_options.png" height="71" width="553" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#draw_incidence_structure_options" title="draw_incidence_structure_options">draw_incidence_structure_options</a></div>
+               <div>         ::= '-draw_incidence_structure_options' <a href="#specific_args_to_create" title="specific_args_to_create">specific_args_to_create</a>*</div></code></div>
+      </p>
+      <p>no references</p><br /><p style="font-size: 14px; font-weight:bold"><a name="arc_generator_control">arc_generator_control:</a></p><img border="0" src="diagram/arc_generator_control.png" height="71" width="469" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#arc_generator_control" title="arc_generator_control">arc_generator_control</a></div>
+               <div>         ::= '-arc_generator_control' <a href="#specific_args_to_create" title="specific_args_to_create">specific_args_to_create</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#GeometryObject" title="GeometryObject">GeometryObject</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="poset_classification_activity">poset_classification_activity:</a></p><img border="0" src="diagram/poset_classification_activity.png" height="71" width="509" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#poset_classification_activity" title="poset_classification_activity">poset_classification_activity</a></div>
+               <div>         ::= '-poset_classification_activity' <a href="#specific_args_to_create" title="specific_args_to_create">specific_args_to_create</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#AlgebraObject" title="AlgebraObject">AlgebraObject</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="crc_code">crc_code:</a></p><img border="0" src="diagram/crc_code.png" height="71" width="377" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#crc_code" title="crc_code">crc_code</a> ::= '-crc_code' <a href="#specific_args_to_create" title="specific_args_to_create">specific_args_to_create</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#CodingTheoryObject" title="CodingTheoryObject">CodingTheoryObject</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="mapping">mapping:</a></p><img border="0" src="diagram/mapping.png" height="71" width="375" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#mapping" title="mapping">mapping</a>  ::= '-mapping' <a href="#specific_args_to_create" title="specific_args_to_create">specific_args_to_create</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#GeometryObject" title="GeometryObject">GeometryObject</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="variety">variety:</a></p><img border="0" src="diagram/variety.png" height="71" width="365" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#variety" title="variety">variety</a>  ::= '-variety' <a href="#specific_args_to_create" title="specific_args_to_create">specific_args_to_create</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#GeometryObject" title="GeometryObject">GeometryObject</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="finite_field_activity">finite_field_activity:</a></p><img border="0" src="diagram/finite_field_activity.png" height="71" width="379" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#finite_field_activity" title="finite_field_activity">finite_field_activity</a></div>
+               <div>         ::= '-finite_field_activity' <a href="#specific_args" title="specific_args">specific_args</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#AlgebraActivity" title="AlgebraActivity">AlgebraActivity</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="polynomial_ring_activity">polynomial_ring_activity:</a></p><img border="0" src="diagram/polynomial_ring_activity.png" height="71" width="415" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#polynomial_ring_activity" title="polynomial_ring_activity">polynomial_ring_activity</a></div>
+               <div>         ::= '-polynomial_ring_activity' <a href="#specific_args" title="specific_args">specific_args</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#AlgebraActivity" title="AlgebraActivity">AlgebraActivity</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="projective_space_activity">projective_space_activity:</a></p><img border="0" src="diagram/projective_space_activity.png" height="71" width="421" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#projective_space_activity" title="projective_space_activity">projective_space_activity</a></div>
+               <div>         ::= '-projective_space_activity' <a href="#specific_args" title="specific_args">specific_args</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#GeometryActivity" title="GeometryActivity">GeometryActivity</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="orthogonal_space_activity">orthogonal_space_activity:</a></p><img border="0" src="diagram/orthogonal_space_activity.png" height="71" width="427" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#orthogonal_space_activity" title="orthogonal_space_activity">orthogonal_space_activity</a></div>
+               <div>         ::= '-orthogonal_space_activity' <a href="#specific_args" title="specific_args">specific_args</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#GeometryActivity" title="GeometryActivity">GeometryActivity</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="group_theoretic_activity">group_theoretic_activity:</a></p><img border="0" src="diagram/group_theoretic_activity.png" height="71" width="415" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#group_theoretic_activity" title="group_theoretic_activity">group_theoretic_activity</a></div>
+               <div>         ::= '-group_theoretic_activity' <a href="#specific_args" title="specific_args">specific_args</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#AlgebraActivity" title="AlgebraActivity">AlgebraActivity</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="coding_theoretic_activity">coding_theoretic_activity:</a></p><img border="0" src="diagram/coding_theoretic_activity.png" height="71" width="419" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#coding_theoretic_activity" title="coding_theoretic_activity">coding_theoretic_activity</a></div>
+               <div>         ::= '-coding_theoretic_activity' <a href="#specific_args" title="specific_args">specific_args</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#CodingTheoryActivity" title="CodingTheoryActivity">CodingTheoryActivity</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="cubic_surface_activity">cubic_surface_activity:</a></p><img border="0" src="diagram/cubic_surface_activity.png" height="71" width="399" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#cubic_surface_activity" title="cubic_surface_activity">cubic_surface_activity</a></div>
+               <div>         ::= '-cubic_surface_activity' <a href="#specific_args" title="specific_args">specific_args</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#GeometryActivity" title="GeometryActivity">GeometryActivity</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="quartic_curve_activity">quartic_curve_activity:</a></p><img border="0" src="diagram/quartic_curve_activity.png" height="71" width="399" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#quartic_curve_activity" title="quartic_curve_activity">quartic_curve_activity</a></div>
+               <div>         ::= '-quartic_curve_activity' <a href="#specific_args" title="specific_args">specific_args</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#GeometryActivity" title="GeometryActivity">GeometryActivity</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="blt_set_activity">blt_set_activity:</a></p><img border="0" src="diagram/blt_set_activity.png" height="71" width="353" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#blt_set_activity" title="blt_set_activity">blt_set_activity</a></div>
+               <div>         ::= '-blt_set_activity' <a href="#specific_args" title="specific_args">specific_args</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#GeometryActivity" title="GeometryActivity">GeometryActivity</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="combinatorial_object_activity">combinatorial_object_activity:</a></p><img border="0" src="diagram/combinatorial_object_activity.png" height="71" width="449" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#combinatorial_object_activity" title="combinatorial_object_activity">combinatorial_object_activity</a></div>
+               <div>         ::= '-combinatorial_object_activity' <a href="#specific_args" title="specific_args">specific_args</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#CombinatoricsActivity" title="CombinatoricsActivity">CombinatoricsActivity</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="graph_theoretic_activity">graph_theoretic_activity:</a></p><img border="0" src="diagram/graph_theoretic_activity.png" height="71" width="415" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#graph_theoretic_activity" title="graph_theoretic_activity">graph_theoretic_activity</a></div>
+               <div>         ::= '-graph_theoretic_activity' <a href="#specific_args" title="specific_args">specific_args</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#CombinatoricsActivity" title="CombinatoricsActivity">CombinatoricsActivity</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="classification_of_cubic_surfaces_with_double_sixes_activity">classification_of_cubic_surfaces_with_double_sixes_activity:</a></p><img border="0" src="diagram/classification_of_cubic_surfaces_with_double_sixes_activity.png" height="71" width="663" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#classification_of_cubic_surfaces_with_double_sixes_activity" title="classification_of_cubic_surfaces_with_double_sixes_activity">classification_of_cubic_surfaces_with_double_sixes_activity</a></div>
+               <div>         ::= '-classification_of_cubic_surfaces_with_double_sixes_activity' <a href="#specific_args" title="specific_args">specific_args</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#GeometryActivity" title="GeometryActivity">GeometryActivity</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="spread_table_activity">spread_table_activity:</a></p><img border="0" src="diagram/spread_table_activity.png" height="71" width="395" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#spread_table_activity" title="spread_table_activity">spread_table_activity</a></div>
+               <div>         ::= '-spread_table_activity' <a href="#specific_args" title="specific_args">specific_args</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#GeometryActivity" title="GeometryActivity">GeometryActivity</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="packing_classify_activity">packing_classify_activity:</a></p><img border="0" src="diagram/packing_classify_activity.png" height="71" width="417" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#packing_classify_activity" title="packing_classify_activity">packing_classify_activity</a></div>
+               <div>         ::= '-packing_classify_activity' <a href="#specific_args" title="specific_args">specific_args</a>*</div></code></div>
+      </p>
+      <p>no references</p><br /><p style="font-size: 14px; font-weight:bold"><a name="packing_with_symmetry_assumption_activity">packing_with_symmetry_assumption_activity:</a></p><img border="0" src="diagram/packing_with_symmetry_assumption_activity.png" height="71" width="561" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#packing_with_symmetry_assumption_activity" title="packing_with_symmetry_assumption_activity">packing_with_symmetry_assumption_activity</a></div>
+               <div>         ::= '-packing_with_symmetry_assumption_activity' <a href="#specific_args" title="specific_args">specific_args</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#GeometryActivity" title="GeometryActivity">GeometryActivity</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="packing_fixed_points_activity">packing_fixed_points_activity:</a></p><img border="0" src="diagram/packing_fixed_points_activity.png" height="71" width="451" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#packing_fixed_points_activity" title="packing_fixed_points_activity">packing_fixed_points_activity</a></div>
+               <div>         ::= '-packing_fixed_points_activity' <a href="#specific_args" title="specific_args">specific_args</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#GeometryActivity" title="GeometryActivity">GeometryActivity</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="graph_classification_activity">graph_classification_activity:</a></p><img border="0" src="diagram/graph_classification_activity.png" height="71" width="441" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#graph_classification_activity" title="graph_classification_activity">graph_classification_activity</a></div>
+               <div>         ::= '-graph_classification_activity' <a href="#specific_args" title="specific_args">specific_args</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#CombinatoricsActivity" title="CombinatoricsActivity">CombinatoricsActivity</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="diophant_activity">diophant_activity:</a></p><img border="0" src="diagram/diophant_activity.png" height="71" width="365" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#diophant_activity" title="diophant_activity">diophant_activity</a></div>
+               <div>         ::= '-diophant_activity' <a href="#specific_args" title="specific_args">specific_args</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#OtherActivity" title="OtherActivity">OtherActivity</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="design_activity">design_activity:</a></p><img border="0" src="diagram/design_activity.png" height="71" width="351" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#design_activity" title="design_activity">design_activity</a></div>
+               <div>         ::= '-design_activity' <a href="#specific_args" title="specific_args">specific_args</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#CodingTheoryActivity" title="CodingTheoryActivity">CodingTheoryActivity</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="large_set_was_activity">large_set_was_activity:</a></p><img border="0" src="diagram/large_set_was_activity.png" height="71" width="405" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#large_set_was_activity" title="large_set_was_activity">large_set_was_activity</a></div>
+               <div>         ::= '-large_set_was_activity' <a href="#specific_args" title="specific_args">specific_args</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#CombinatoricsActivity" title="CombinatoricsActivity">CombinatoricsActivity</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="symbolic_object_activity">symbolic_object_activity:</a></p><img border="0" src="diagram/symbolic_object_activity.png" height="71" width="417" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#symbolic_object_activity" title="symbolic_object_activity">symbolic_object_activity</a></div>
+               <div>         ::= '-symbolic_object_activity' <a href="#specific_args" title="specific_args">specific_args</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#OtherActivity" title="OtherActivity">OtherActivity</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="BLT_set_classify_activity">BLT_set_classify_activity:</a></p><img border="0" src="diagram/BLT_set_classify_activity.png" height="71" width="419" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#BLT_set_classify_activity" title="BLT_set_classify_activity">BLT_set_classify_activity</a></div>
+               <div>         ::= '-BLT_set_classify_activity' <a href="#specific_args" title="specific_args">specific_args</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#GeometryActivity" title="GeometryActivity">GeometryActivity</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="spread_classify_activity">spread_classify_activity:</a></p><img border="0" src="diagram/spread_classify_activity.png" height="71" width="411" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#spread_classify_activity" title="spread_classify_activity">spread_classify_activity</a></div>
+               <div>         ::= '-spread_classify_activity' <a href="#specific_args" title="specific_args">specific_args</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#GeometryActivity" title="GeometryActivity">GeometryActivity</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="spread_activity">spread_activity:</a></p><img border="0" src="diagram/spread_activity.png" height="71" width="351" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#spread_activity" title="spread_activity">spread_activity</a></div>
+               <div>         ::= '-spread_activity' <a href="#specific_args" title="specific_args">specific_args</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#GeometryActivity" title="GeometryActivity">GeometryActivity</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="translation_plane_activity">translation_plane_activity:</a></p><img border="0" src="diagram/translation_plane_activity.png" height="71" width="425" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#translation_plane_activity" title="translation_plane_activity">translation_plane_activity</a></div>
+               <div>         ::= '-translation_plane_activity' <a href="#specific_args" title="specific_args">specific_args</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#GeometryActivity" title="GeometryActivity">GeometryActivity</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="action_on_forms_activity">action_on_forms_activity:</a></p><img border="0" src="diagram/action_on_forms_activity.png" height="71" width="421" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#action_on_forms_activity" title="action_on_forms_activity">action_on_forms_activity</a></div>
+               <div>         ::= '-action_on_forms_activity' <a href="#specific_args" title="specific_args">specific_args</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#AlgebraActivity" title="AlgebraActivity">AlgebraActivity</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="orbits_activity">orbits_activity:</a></p><img border="0" src="diagram/orbits_activity.png" height="71" width="345" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#orbits_activity" title="orbits_activity">orbits_activity</a></div>
+               <div>         ::= '-orbits_activity' <a href="#specific_args" title="specific_args">specific_args</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#AlgebraActivity" title="AlgebraActivity">AlgebraActivity</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="variety_activity">variety_activity:</a></p><img border="0" src="diagram/variety_activity.png" height="71" width="353" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#variety_activity" title="variety_activity">variety_activity</a></div>
+               <div>         ::= '-variety_activity' <a href="#specific_args" title="specific_args">specific_args</a>*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#GeometryActivity" title="GeometryActivity">GeometryActivity</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="Literal">Literal:</a></p><img border="0" src="diagram/Literal.png" height="291" width="283" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#Literal" title="Literal">Literal</a>  ::= [a-zA-Z_] [0-9a-zA-Z_]*</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#Activity" title="Activity">Activity</a></li>
+            <li><a href="#Assignment" title="Assignment">Assignment</a></li>
+            <li><a href="#Definition" title="Definition">Definition</a></li>
+            <li><a href="#Fork" title="Fork">Fork</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="FilePath">FilePath:</a></p><img border="0" src="diagram/FilePath.png" height="229" width="201" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#FilePath" title="FilePath">FilePath</a> ::= [0-9a-zA-Z_/]+</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#MagmaPath" title="MagmaPath">MagmaPath</a></li>
+            <li><a href="#OrbiterPath" title="OrbiterPath">OrbiterPath</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="FileMask">FileMask:</a></p><img border="0" src="diagram/FileMask.png" height="229" width="201" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#FileMask" title="FileMask">FileMask</a> ::= [0-9a-zA-Z_/]+</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#Fork" title="Fork">Fork</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="Integer">Integer:</a></p><img border="0" src="diagram/Integer.png" height="53" width="161" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#Integer" title="Integer">Integer</a>  ::= [0-9]+</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#Fork" title="Fork">Fork</a></li>
+            <li><a href="#MemoryDebug" title="MemoryDebug">MemoryDebug</a></li>
+            <li><a href="#OverridePoly" title="OverridePoly">OverridePoly</a></li>
+            <li><a href="#SeedRandomGen" title="SeedRandomGen">SeedRandomGen</a></li>
+            <li><a href="#Verbosity" title="Verbosity">Verbosity</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="GlobalCmd">GlobalCmd:</a></p><img border="0" src="diagram/GlobalCmd.png" height="345" width="249" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#GlobalCmd" title="GlobalCmd">GlobalCmd</a></div>
+               <div>         ::= <a href="#AlgebraGlobal" title="AlgebraGlobal">AlgebraGlobal</a></div>
+               <div>           | <a href="#CodingTheoryGlobal" title="CodingTheoryGlobal">CodingTheoryGlobal</a></div>
+               <div>           | <a href="#CombinatoricsGlobal" title="CombinatoricsGlobal">CombinatoricsGlobal</a></div>
+               <div>           | <a href="#CryptographyGlobal" title="CryptographyGlobal">CryptographyGlobal</a></div>
+               <div>           | <a href="#PovrayGlobal" title="PovrayGlobal">PovrayGlobal</a></div>
+               <div>           | <a href="#ProjectiveGlobal" title="ProjectiveGlobal">ProjectiveGlobal</a></div>
+               <div>           | <a href="#SymbolTableGlobal" title="SymbolTableGlobal">SymbolTableGlobal</a></div>
+               <div>           | '-print_symbols'</div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#Command" title="Command">Command</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="Verbosity">Verbosity:</a></p><img border="0" src="diagram/Verbosity.png" height="37" width="179" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#Verbosity" title="Verbosity">Verbosity</a></div>
+               <div>         ::= '-v' <a href="#Integer" title="Integer">Integer</a></div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#Setup" title="Setup">Setup</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="SeedRandomGen">SeedRandomGen:</a></p><img border="0" src="diagram/SeedRandomGen.png" height="37" width="203" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#SeedRandomGen" title="SeedRandomGen">SeedRandomGen</a></div>
+               <div>         ::= '-seed' <a href="#Integer" title="Integer">Integer</a></div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#Setup" title="Setup">Setup</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="MemoryDebug">MemoryDebug:</a></p><img border="0" src="diagram/MemoryDebug.png" height="37" width="277" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#MemoryDebug" title="MemoryDebug">MemoryDebug</a></div>
+               <div>         ::= '-memory_debug' <a href="#Integer" title="Integer">Integer</a></div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#Setup" title="Setup">Setup</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="OverridePoly">OverridePoly:</a></p><img border="0" src="diagram/OverridePoly.png" height="37" width="311" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#OverridePoly" title="OverridePoly">OverridePoly</a></div>
+               <div>         ::= '-override_polynomial' <a href="#Integer" title="Integer">Integer</a></div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#Setup" title="Setup">Setup</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="OrbiterPath">OrbiterPath:</a></p><img border="0" src="diagram/OrbiterPath.png" height="37" width="259" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#OrbiterPath" title="OrbiterPath">OrbiterPath</a></div>
+               <div>         ::= '-orbiter_path' <a href="#FilePath" title="FilePath">FilePath</a></div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#Setup" title="Setup">Setup</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="MagmaPath">MagmaPath:</a></p><img border="0" src="diagram/MagmaPath.png" height="37" width="263" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#MagmaPath" title="MagmaPath">MagmaPath</a></div>
+               <div>         ::= '-magma_path' <a href="#FilePath" title="FilePath">FilePath</a></div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#Setup" title="Setup">Setup</a></li>
+         </ul>
+      </p><br /><p style="font-size: 14px; font-weight:bold"><a name="Fork">Fork:</a></p><img border="0" src="diagram/Fork.png" height="37" width="543" /><p>
+         <div class="ebnf"><code>
+               <div><a href="#Fork" title="Fork">Fork</a>     ::= '-fork' <a href="#Literal" title="Literal">Literal</a><a href="#FileMask" title="FileMask">FileMask</a><a href="#Integer" title="Integer">Integer</a><a href="#Integer" title="Integer">Integer</a><a href="#Integer" title="Integer">Integer</a></div></code></div>
+      </p>
+      <p>referenced by:
+         
+         <ul>
+            <li><a href="#Setup" title="Setup">Setup</a></li>
+         </ul>
+      </p><br /><hr />
+      <p>
+         <table border="0" class="signature">
+            <tr>
+               <td style="width: 100%"> </td>
+               <td valign="top">
+                  <nobr class="signature">... generated by <a name="Railroad-Diagram-Generator" class="signature" title="https://www.bottlecaps.de/rr" href="https://www.bottlecaps.de/rr" target="_blank">RR - Railroad Diagram Generator</a></nobr>
+               </td>
+               <td><a name="Railroad-Diagram-Generator" title="https://www.bottlecaps.de/rr" href="https://www.bottlecaps.de/rr" target="_blank"><img border="0" src="diagram/rr-2.2-SNAPSHOT.png" height="16" width="16" /></a></td>
+            </tr>
+         </table>
+      </p>
+   </body>
+</html>

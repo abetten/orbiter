@@ -1,0 +1,37 @@
+\begin{table}[t]
+\tbl{\label{tab:variety}}
+{\begin{tcolorbox}[tabularx={p{3cm}|p{2cm}|p{6.3cm}|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black,title=Creating Varieties]
+\hline
+Command & Arguments & Purpose \\
+\hline
+\hline
+\verb'-label_txt'  &  label  &  Specify an ASCII label for the variety. \\
+\hline
+\verb'-label_tex'  &  label  &  Specify a tex label for the variety. \\
+\hline
+\verb'-projective_space'  &  $P$  &  Specify the underlying projective space. \\
+\hline
+\verb'-ring'  &  $R$  &  Specify the underlying polynomial ring. \\
+\hline
+\verb'-equation_in_algebraic_form'  &  eqn  &  The defining equation in algebraic form. \\
+\hline
+\verb'-set_parameters'  &  label lable\_tex parameter\_values  &  Set parameter values for the equation given in algebraic form. \\
+\hline
+\verb'-equation_by_coefficients'  &  eqn  &  The defining equation is given as a list of coefficients in the chosen ordering of monomials. \\
+\hline
+\verb'-equation_by_rank'  &  rank  &  The defining equation is given as orbiter rank of a projective point. \\
+\hline
+\verb'-points'  &  pts  &  The set of $\bbF_q$-rational points (optional). \\
+\hline
+\verb'-bitangents'  &  lines  &  A set of lines (optional). \\
+\hline
+\verb'-compute_lines'  &   &  Compute the lines. \\
+\hline
+\verb'-transform'  &  element  &  Apply the transformation by the given group element. \\
+\hline
+\verb'-transform_inverse'  &  element  &  Apply the inverse transformation by the given group element. \\
+\hline
+\end{tcolorbox}}
+\end{table}

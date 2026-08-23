@@ -1,0 +1,14 @@
+symbolic_Fabcd_expand:
+	$(ORBITER) -v 3 \
+		-define Fq -finite_field -q 31 -end \
+		-define Fabcd -symbolic_object \
+			-field Fq \
+			-managed_variables "X0,X1,X2,X3" \
+			-text $(F_abcd_eqn) \
+		-end \
+		-define Fabcd_e -symbolic_object \
+			-field Fq \
+			-managed_variables "X0,X1,X2,X3" \
+			-expand Fabcd \
+			-write_trees_during_expand \
+		-end

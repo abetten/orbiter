@@ -1,0 +1,27 @@
+symbolic_test_4_expand_draw:
+	$(PDFLATEX) M.tex
+	$(OPEN) M.pdf
+	$(PDFLATEX) M1.tex
+	$(OPEN) M1.pdf
+	$(PDFLATEX) M1_0.tex
+	$(OPEN) M1_0.pdf
+	$(PDFLATEX) M1_0_e.tex
+	$(OPEN) M1_0_e.pdf
+	$(PDFLATEX) M1_0_ef.tex
+	$(OPEN) M1_0_ef.pdf
+	$(PDFLATEX) M1_0_efs.tex
+	$(OPEN) M1_0_efs.pdf
+	$(PDFLATEX) M1_0_efsx.tex
+	$(OPEN) M1_0_efsx.pdf
+	$(PDFLATEX) M1_0_efsxs.tex
+	$(OPEN) M1_0_efsxs.pdf
+	$(PDFLATEX) M1_0_efsxsf.tex
+	$(OPEN) M1_0_efsxsf.pdf
+	$(PDFLATEX) M1_0_efsxsfs.tex
+	$(OPEN) M1_0_efsxsfs.pdf
+	$(PDFLATEX) M1_0_efsxsfsc.tex
+	$(OPEN) M1_0_efsxsfsc.pdf
+	$(PDFLATEX) M1_0_efsxsfscs.tex
+	$(OPEN) M1_0_efsxsfscs.pdf
+	$(PDFLATEX) M1_0_efsxsfscsc.tex
+	$(OPEN) M1_0_efsxsfscsc.pdf

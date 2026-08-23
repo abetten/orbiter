@@ -1,0 +1,2 @@
+PR127:
+	$(ORBITER) -v 5 -primitive_root 127

@@ -1,0 +1,20 @@
+quartic_curve_q9_Hermitian_transform:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 9 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 3 \
+			-homogeneous_of_degree 4 \
+			-monomial_ordering_partition \
+			-variables "X1,X2,X3" "X_1,X_2,X_3" \
+		-end \
+		-define V -variety \
+			-projective_space P \
+			-ring R \
+			-equation_in_algebraic_form $(QUARTIC_CURVE_Q9_CLEAN) \
+			-bitangents $(QC_Q9_CLEAN_LINES) \
+			-transform $(QC_Q9_TRANSFORM_CLEAN_TO_HERMITIAN) \
+			-label_txt qc_q9 \
+			-label_tex "{\\rm qc\_q9}" \
+		-end

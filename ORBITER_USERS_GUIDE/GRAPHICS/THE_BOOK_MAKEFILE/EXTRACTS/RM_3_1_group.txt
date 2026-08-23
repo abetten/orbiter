@@ -1,0 +1,18 @@
+RM_3_1_group:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define genma -vector -field F -format 4 \
+			-compact $(CODE_RM_3_1_GENMA) \
+		-end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-with P -do \
+		-projective_space_activity \
+			-canonical_form_of_code \
+				"RM_3_1" genma \
+				-save_ago \
+				-save_classification "RM_3_1" \
+				-nauty_control -nauty_log "RM_3_1_nauty_log.txt" -end \
+			-end \
+		-end
+	$(PDFLATEX) RM_3_1_classification.tex
+	$(OPEN) RM_3_1_classification.pdf

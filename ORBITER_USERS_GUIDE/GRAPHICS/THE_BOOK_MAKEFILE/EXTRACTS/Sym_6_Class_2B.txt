@@ -1,0 +1,8 @@
+Sym_6_Class_2B:
+	$(ORBITER) -v 9 \
+		-orbiter_path $(ORBITER_PATH) \
+		-define G -permutation_group -symmetric_group 6 -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-conjugacy_class_of "2B" $(SYM_6_CLASS_2B_REP) \
+		-end

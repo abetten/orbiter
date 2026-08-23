@@ -1,0 +1,14 @@
+test_expand_4:
+	$(ORBITER) -v 3 \
+		-define Fq -finite_field -q 31 -end \
+		-define f -symbolic_object \
+			-field Fq \
+			-text "x*(a+(x*(a+(x*(a+x*(a+x*(a+x*(a+x))))))))" \
+		-end \
+		-define fx -symbolic_object \
+			-field Fq \
+			-expand f \
+			-write_trees_during_expand \
+		-end
+	$(PDFLATEX) fx_0_efsxsfscsefsxsfscsefsxsfscsefsxsfscsefsxsfscsefsxsfscsc.tex
+	$(OPEN) fx_0_efsxsfscsefsxsfscsefsxsfscsefsxsfscsefsxsfscsefsxsfscsc.pdf

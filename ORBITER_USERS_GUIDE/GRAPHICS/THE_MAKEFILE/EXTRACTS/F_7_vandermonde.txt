@@ -1,0 +1,6 @@
+F_7_vandermonde:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 7 -end \
+		-with F -do -finite_field_activity \
+			-Vandermonde_matrix \
+		-end

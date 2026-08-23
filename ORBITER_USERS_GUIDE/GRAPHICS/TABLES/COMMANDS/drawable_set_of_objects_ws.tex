@@ -1,0 +1,31 @@
+\begin{table}[t]
+\tbl{\label{tab:3doutput}}
+{\begin{tcolorbox}[tabularx={p{3cm}|p{2cm}|p{6.3cm}|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black,title=Scene Object Types]
+\hline
+Command & Arguments & Purpose \\
+\hline
+\hline
+\verb'-spheres'  &  $i$ $r$ prop  & For each element in point group $i$, create a sphere of radius $r$ with given Povray properties.\\
+\hline
+\verb'-cylinders'  &  $i$ $r$ prop  & For each element in edge group $i$, create a cylinder of radius $r$ with given Povray properties.\\
+\hline
+\verb'-prisms'  &  $i$ $d$ prop  &  For each element in face group $i$, create a prism of half-thickness $d$ with given Povray properties.\\
+\hline
+\verb'-planes'  &  $i$ prop  & For each element in plane group $i$, create a plane with given Povray properties.\\
+\hline
+\verb'-lines'  &  $i$ $r$ prop  & For each element in line group $i$, create a line of radius $r$ with given Povray properties.\\
+\hline
+\verb'-cubics'  &  $i$ prop  & For each element in group $i$ of cubics, create a surface with given Povray properties.\\
+\hline
+\verb'-quadrics'  &  $i$ prop  & For each element in group $i$ of quadrics, create a surface with given Povray properties.\\
+\hline
+\verb'-quartics'  &  $i$ prop  &  For each element in group $i$ of quartics, create a surface with given Povray properties.\\
+\hline
+\verb'-octics'  &  $i$ prop  & For each element in group $i$ of octics, create a surface with given Povray properties.\\
+\hline
+\verb'-texts'  &  $i$ $d$ $s$ prop  &  For each element in group $i$ of labels, create a text element with half-thickness $d$ and size $s$ with given Povray properties.\\
+\hline
+\end{tcolorbox}}
+\end{table}

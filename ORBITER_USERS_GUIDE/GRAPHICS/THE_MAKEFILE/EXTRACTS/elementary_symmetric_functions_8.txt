@@ -1,0 +1,2 @@
+elementary_symmetric_functions_8:
+	$(ORBITER) -make_elementary_symmetric_functions 8 8

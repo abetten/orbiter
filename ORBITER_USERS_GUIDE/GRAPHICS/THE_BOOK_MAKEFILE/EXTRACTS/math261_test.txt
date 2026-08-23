@@ -1,0 +1,37 @@
+math261_test:
+	$(ORBITER) -v 2 -povray \
+		-round 0 -nb_frames_default 30 \
+		-output_mask math261_%d_%03d.pov \
+		-video_options -W 1024 -H 768 \
+		-global_picture_scale 0.1 \
+		-default_angle 75 \
+		-clipping_radius 2.7 \
+		-end \
+		-scene_objects \
+			-point "0,0,0" \
+			-point "5,0,0" \
+			-point "0,5,0" \
+			-point "0,0,5" \
+			-point "1,2,3" \
+			-point "4,5,6" \
+			-point "5,7,9" \
+			-edge "0,1" \
+			-edge "0,2" \
+			-edge "0,3" \
+			-edge "0,4" \
+			-edge "0,5" \
+			-edge "4,6" \
+			-edge "5,6" \
+			-face "0,4,6,5" \
+			-group_of_things_as_interval 0 7 \
+			-spheres 0 0.1 $(POLISHED_CHROME_WHITE) \
+			-group_of_things_as_interval 0 7 \
+			-cylinders 1 0.05 $(COLOR_RED) \
+			-prisms 2 0.05 $(YELLOW_TRANSPARENT) \
+			-group_of_things_as_interval 0 1 \
+		-scene_objects_end \
+		-povray_end
+	- rm -rf POV
+	mkdir POV
+	mv math261_0_*.pov POV
+	mv makefile_animation POV

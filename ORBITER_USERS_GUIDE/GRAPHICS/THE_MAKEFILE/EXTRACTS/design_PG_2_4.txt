@@ -1,0 +1,12 @@
+design_PG_2_4:
+	$(ORBITER) -v 8 \
+		-define F -finite_field -q 4 -end \
+		-define D -design -field F -family PG_2_q -end \
+		-with D -do \
+			-design_activity \
+				-export_flags \
+		-end \
+		-with D -do \
+			-design_activity \
+				-export_blocks \
+		-end

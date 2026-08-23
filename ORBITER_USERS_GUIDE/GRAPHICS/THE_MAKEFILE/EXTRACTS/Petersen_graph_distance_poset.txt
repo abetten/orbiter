@@ -1,0 +1,6 @@
+Petersen_graph_distance_poset:
+	$(ORBITER) -v 2 \
+		-define Gamma -graph -Johnson 5 2 0 -end \
+		-with Gamma -do \
+			-graph_theoretic_activity -create_distance_poset 0 \
+		-end

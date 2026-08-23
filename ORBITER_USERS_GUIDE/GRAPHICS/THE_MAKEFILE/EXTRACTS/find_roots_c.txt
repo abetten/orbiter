@@ -1,0 +1,8 @@
+find_roots_c:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 19 -end \
+		-define v -vector -field F -dense "1,16,1" -end \
+		-with F -do \
+		-finite_field_activity \
+			-polynomial_find_roots v \
+		-end

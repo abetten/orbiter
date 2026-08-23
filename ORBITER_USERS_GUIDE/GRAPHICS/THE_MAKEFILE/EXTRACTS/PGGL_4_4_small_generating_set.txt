@@ -1,0 +1,8 @@
+PGGL_4_4_small_generating_set:
+	$(ORBITER) -v 4 \
+		-define F -finite_field -q 4 -end \
+		-define G -linear_group -PGGL 4 F -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-find_small_generating_set 2 1000 \
+		-end

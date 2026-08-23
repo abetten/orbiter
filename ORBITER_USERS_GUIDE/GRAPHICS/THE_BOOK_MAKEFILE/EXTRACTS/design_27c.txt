@@ -1,0 +1,29 @@
+design_27c:
+	$(ORBITER) -v 4 \
+		-define Doinc -draw_incidence_structure_options \
+			-width 20 -width_10 2 -end \
+		-define C -combinatorial_object \
+			-label design design \
+			-set_of_points "2,56,30,112,253,90,440,508" \
+		-end \
+		-define F -finite_field -q 27 \
+			-override_polynomial 46 \
+		-end \
+		-define P -projective_space -n 2 -field F -end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form_PG P \
+			-nauty_control -end \
+			-end \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-post_processing \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-report \
+				-incidence_draw_options Doinc \
+		-end
+	$(PDFLATEX) design_classification.tex
+	$(OPEN) design_classification.pdf

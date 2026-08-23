@@ -1,0 +1,6 @@
+matrix_example2:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define v -vector -field F -format 4 \
+			-dense $(HAMMING_CODE_GENERATOR) -end \
+		-print_symbols

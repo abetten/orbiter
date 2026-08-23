@@ -1,0 +1,9 @@
+polynomial_division_ranked_2_120_25:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-with F -do \
+		-finite_field_activity \
+			-polynomial_division_ranked 120 25 \
+		-end
+	$(PDFLATEX) polynomial_division_120_25.tex
+	$(OPEN) polynomial_division_120_25.pdf

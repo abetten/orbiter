@@ -1,0 +1,10 @@
+PG_3_25:
+	$(ORBITER) -v 2 \
+		-define Do -draw_options -end \
+		-define F -finite_field -q 25 -compute_related_fields -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-with P -do -projective_space_activity \
+			-cheat_sheet Do \
+		-end
+	$(PDFLATEX) PG_3_25.tex 
+	$(OPEN) PG_3_25.pdf

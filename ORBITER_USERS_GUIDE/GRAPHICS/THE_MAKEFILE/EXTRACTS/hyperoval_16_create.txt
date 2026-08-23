@@ -1,0 +1,7 @@
+hyperoval_16_create:
+	$(ORBITER) -v 2 \
+		-define C -combinatorial_object \
+			-label hyperoval_q16 hyperoval\_q16 \
+			-set_of_points $(HYPEROVAL_16_16320) \
+			-set_of_points $(HYPEROVAL_16_144) \
+		-end \

@@ -1,0 +1,18 @@
+Golay24_2A_fix_code:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define v -vector \
+			-format 8 \
+			-dense $(GOLAY24_2A_FIX_SUBCODE) \
+		-end \
+		-define C -code -field F \
+			-generator_matrix v \
+		-end \
+		-with C -do \
+		-coding_theoretic_activity \
+			-weight_enumerator \
+		-end \
+		-with C -do \
+		-coding_theoretic_activity \
+			-export_codewords_by_weight Golay24_2A_fix \
+		-end

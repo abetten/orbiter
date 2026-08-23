@@ -1,0 +1,381 @@
+Tables~\ref{tab:graphtypes:one}-\ref{tab:graphtypes:two} 
+list Orbiter commands to create graphs.
+\orbitertableofcommands{create_graph_1}
+\orbitertableofcommands{create_graph_2}
+
+
+
+\bigskip
+
+Let us consider some examples.
+
+\bigskip 
+
+The command 
+
+\sourcecode{make_graph_from_adjacency_matrix}
+
+creates a graph on three vertices from a given adjacency matrix.
+The adjacency matrix must be given as a vector object, with the matrix entries listed in row-major ordering.
+In the example, the adjacency matrix is 
+$$
+\left[
+\begin{array}{cccc}
+0&1&1 \\
+1&0&1 \\
+1&1&0
+\end{array}
+\right]
+$$
+which is given as a vector 
+$$
+0,1,1, 1,0,1, 1,1,0.
+$$
+
+\bigskip 
+
+
+The adjacency matrix of a graph can be read from a file. 
+The following command sequence 
+uses a makefile variable to store the adjacency matrix of a graph. 
+The matrix is then copied into a file and the graph is created from the file. 
+Here is the makefile variable containing the adjacency matrix:
+
+\sourcecodevariable{TRIANGLE_GRAPH}
+
+The following command writes the adjacency matrix 
+to a csv file and then creates 
+the graph from the csv file:
+
+\sourcecode{make_triangle_graph}
+
+This will create the same triangle graph that we have created before. 
+
+
+
+\bigskip
+
+
+The command 
+
+\sourcecode{Cycle_graph_13}
+
+creates the cycle graph of degree 13. 
+
+\bigskip 
+
+
+
+The command 
+
+\sourcecode{Chain_232}
+
+creates the chain graph with respect to the partitions $(2,3,2)$ and $(2,3,2)$. 
+
+
+
+\bigskip
+
+The command 
+
+\sourcecode{Paley_13_graph}
+
+creates the Paley graph on 13 vertices. 
+The command first creates the field $\bbF_{13}$ 
+and then the associated Payley graph.
+
+\bigskip
+
+The command 
+
+\sourcecode{Paley_13_graph_complement}
+
+creates the complement of the Paley graph on 13 vertices. 
+
+\bigskip
+
+The command 
+
+\sourcecode{Winnie_Li_graph_q16_index2}
+
+creates the Winnie Li graph~\cite{Li1992} 
+on 16 vertices with index 2.
+The command first creates the field $\bbF_{16}$ 
+and then the associated graph.
+
+\bigskip
+
+
+The command 
+
+\sourcecode{Sarnak_graph_29_5}
+
+creates the graph $X_{29,5}$ from~\cite{Lubotzky1988} on 60 vertices.
+
+\bigskip
+
+
+
+The command 
+
+\sourcecode{Neumaier_graph_16}
+
+creates a Neumaier graph on 16 vertices.
+
+\bigskip
+
+The command 
+
+\sourcecode{tritangent_planes_graph}
+
+creates the graph of tritangent planes in a general cubic surface with 27 lines. 
+Two vertices are adjacent if the associated tritangent planes are line-disjoint.
+
+
+\bigskip
+
+
+The command 
+
+\sourcecode{trihedral_pair_graph}
+
+creates the graph of trihedral pairs in a general cubic surface with 27 lines. 
+Two vertices are adjacent if the associated trihedral pairs are line-disjoint.
+
+
+\bigskip
+
+
+The command 
+
+\sourcecode{small_graph}
+
+creates a graph by listing the edges in pairs. 
+The following graph is created:
+\orbiteroutput{GRAPHICS/WRAPPERS/a_small_graph}
+
+
+
+\bigskip
+
+The command 
+
+\sourcecode{petersen}
+
+creates the Petersen graph. 
+
+\bigskip
+
+The command 
+
+\sourcecode{Johnson_6_2_0}
+
+creates the Johnson graph $J(6,2,0).$ 
+
+\bigskip
+
+
+The command 
+
+\sourcecode{Hamming_graph_3}
+
+creates the Hamming graph of order 3. 
+
+\bigskip
+
+The command 
+
+\sourcecode{Hamming_graph_7}
+
+creates the Hamming graph of order 7. 
+
+\bigskip
+
+
+The command 
+
+\sourcecode{Op_6_2_coll_graph}
+
+creates the collinearity graph of the orthogonal space
+$O^+(6,2).$
+
+
+
+
+
+
+\bigskip
+
+There is a graph on 315 vertices 
+that arises from the Cohen-Tits near octagon (see~\cite{Brouwer315}). 
+The graph was first constructed in~\cite{Cohen1981} 
+and has automorphism group equal to $\Aut(HJ)$, 
+the automorphism group of the Higman-Sims sporadic simple group.
+The graph is distance-regular.
+An incidence matrix can be found in 
+Ascii format on the web site~\cite{Bayley}. 
+In the following, we assume that a file \verb'halljanko315.csv' 
+is present, containing the incidence matrix of the graph. 
+The following command creates the graph from the file:
+
+\sourcecode{HJ_graph}
+
+In Section~\ref{sec:canonical:form:objects:graphs}, 
+we will compute the automorphism group of the graph (of order 1209600). 
+This will create a file \verb'halljanko315_gens.csv' 
+which we use here to create an orbital graph.
+An orbital graph is a graph whose adjacency matrix corresponds 
+to an orbit of a permutation group in the action on pairs. 
+The group is the automorphism group of the graph.
+The following command creates the third orbital graph:
+
+\sourcecode{Group_Perm315_Orbital_3.colored_graph}
+
+
+\bigskip
+
+Table~\ref{tab:graph:modifiers} 
+shows some Orbiter commands to modify graphs.
+The commands replace the given graph 
+by the graph obtained after applying the specified modification.
+\orbitertableofcommands{graph_modification}
+
+\bigskip
+
+
+For a graph $\Gamma$, the distance 2 graph $\Delta$ 
+has the same vertices as $\Gamma$, 
+and two vertices in $\Delta$ are adjacent 
+if and only if the distance in $\Gamma$ is two.
+The following command creates 
+the distance 2 graph of the Cohen-Tits graph. 
+
+\sourcecode{HJ_d2_graph}
+
+
+
+
+\bigskip
+
+
+Let us look at some examples of Cayley graphs. 
+The first graph has $G = \bbZ_{11}$ 
+and connection set all elements congruent $1$ mod $3$. 
+We create the group as a subgroup of 
+the one-dimensional affine group over $\bbF_{11}.$ 
+This means that the map $x \mapsto ax+b$ mod $11$ 
+is encoded as a pair $(a,b).$  
+
+\sourcecode{Cayley_Z11_1mod3}
+
+The vertices of the Cayley graph are ordered. 
+The ordering is determined by the stabilizer chain. 
+This is a total ordering.
+
+\bigskip
+
+
+In the following example, we create a Cayley graph 
+based on the symmetric group on 4 things. 
+We take the Coxeter generators as connection set:
+
+\sourcecode{Cayley_Sym4_coxeter}
+
+The star graph is another Cayley graph for the symmetric group. 
+The connection set is given by the permutations 
+$(0,\,i)$ for $i=1,\ldots,n-1.$
+The next example creates the star graph on 4 vertices:
+
+\sourcecode{Cayley_Sym4_star}
+
+
+
+\bigskip
+
+In the following example, 
+we create a graph of nonattacking queens on a chess board.
+
+\sourcecode{Queens_graph}
+
+\bigskip
+
+
+In the following example, 
+we create an affine polar graph based on the $O^+(4,2)$ space.
+
+\sourcecode{Op_4_2_affine_polar_graph}
+
+\bigskip
+
+
+Next, we create the first 
+and then the 15th graph in the list of Paulus and Rozenfeld.
+
+\sourcecode{Paulus_1}
+
+\bigskip
+
+\sourcecode{Paulus_15}
+
+\bigskip
+
+The next command creates the Higman Sims graph. The graph is on 100 points.
+We begin with the Mathieu group $M_{24}$, which arises as the stabilizer of the Golay code.
+The Golay code is a projective code of length 24. 
+The colums of the generator matrix correspond to a set $S$ of 
+24 points in $\PG(11,2)$ with the property that any 7 are independent. 
+This set of points can be encoded using Orbiter point ranks as the following set:
+
+\sourcecodevariable{GOLAY_24_CODE_PROJECTIVE}
+
+Next, we need precomputed generator for the group $M_{24}$. These are a set of matrices of size $12 \times 12$ acting on $\PG(11,2)$ and stabilizing the set $S$. They
+are encoded as a makefile variable: 
+
+\sourcecodevariable{GOLAY_24_CODE_AUT_GENS}
+
+The following code snippet creates the graph:
+
+\sourcecode{Higman_Sims_graph}
+
+
+In lines 7-9, we create the set $S$ of size 24. In line 14, we create the field $\bbF_2$. 
+In lines 15-18, we create the group $M_{24}$ as a matrix subgroup of $\PGL(12,2).$
+In lines 19-21, we create the permutation representation of $M_{24}$ of degree 24 
+acting on the set $S$.
+In lines 22-24, we create the subgroup $M_{22}.2$ 
+which stabilizes the elements $\{0,1\}$ of $S$ as a set. 
+In lines 25-28, we create the permutation action of $M_{22}.2$ 
+on the 22 points of $S$ 
+different from $\{0,1\}$. 
+Note that the action is re-indexing the point set as $0-21.$
+In lines 37-42, we invoke the poset classification algorithm 
+to compute the orbits of $M_{22}.2$ 
+on subsets of size at most 6. 
+This computation takes place in the action of degree 22 just constructed. 
+In lines 43-45, we create the Kramer-Mesner matrix for the orbits on $3$-subsets versuc the orbits on $6$-subsets. 
+This matrix allows us to identify the orbit on $6$-subsets which forms 
+a Steiner 3-design. 
+In the numbering chosen by the poset classification algorithm, 
+it is the second orbit. 
+Since indexing is zero-based, this is orbit 1.
+In lines 55-57, we create the design from this orbit.
+This is the Witt design on 22 points. 
+In lines 58-61, we export the design to file by means of the set of flags. 
+In lines 62-65, we compute the intersection matrix of the design. 
+This matrix can be used to give an independent verification that the chosen orbit has the design property. 
+In lines 70-73, we compute the orbits of the group of the design (which is $M_{11}.2$) 
+on pairs of blocks. 
+In lines 74-77, we create the one-point extension of the Witt design based on the orbit on pairs of index 1. 
+Finally, in lines 78-81, the Higman-Sims graph is constructed from the one-point extension. 
+
+
+
+
+
+
+
+
+
+
+\bigskip
+

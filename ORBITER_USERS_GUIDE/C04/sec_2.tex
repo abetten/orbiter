@@ -1,0 +1,132 @@
+The enumerator for points establishes a bijection between 
+the set of points and the integers on the 
+interval $[0,\theta_n(q)-1],$ 
+where 
+$$
+\theta_n(q) = \frac{q^{n+1}-1}{q-1}.
+$$
+In order to facilitate the bijection, 
+Orbiter enumerates representative vectors 
+for the one-dimensional subspaces.
+The conditions on the vectors are summarized below:
+\begin{enumerate}
+\item
+The vector is not the zero vector.
+\item
+The rightmost nonzero entry in the vector is one. 
+If it is not, we nomalize the vector 
+so that the rightmost nonzero vector is indeed one. 
+This operation does not change the projective 
+point which is associated with the vector.
+\end{enumerate}
+The second condition ensures that we list 
+each projective point exactly once.
+We require two functions, 
+{\sc Rank} and {\sc Unrank}. 
+The function {\sc Rank} takes a vector 
+$\bx \in \bbF_q^n,$ 
+not zero, and maps it to the element in $\bbZ_N$ 
+representing the projective point 
+$\bP(\bx).$
+A frame in $\PG(n,q)$ is a set of $n+2$ points, no $n+1$ in a hyperplane. 
+We assume that the coordinates of a vector 
+are indexed by the elements of $\bbZ_n.$ 
+Also, we let $\be_i$ be the $i$-th unit vector. 
+A frame for $\PG(n,q)$ is  
+$$
+\be_0,\ldots,\be_{n-1}, \be_0+\cdots+\be_{n-1}.
+$$
+This is the {\em standard frame.} 
+We start the labeling of points with the  
+standard frame. After these $n+2$ points, 
+we list the remaining points 
+in lexicographic ordering 
+(utilizing right-normalized representative).
+The points in the small spaces $\PG(2,2)$, $\PG(3,2)$ and $\PG(2,3)$ 
+are listed by their ranks 
+in Table~\ref{tab:rank:points:PG}.
+
+\input GRAPHICS/TABLES/OTHER/rank_points_small
+
+\bigskip
+
+It is possible to request ranks of specific points given by means of homogeneous coordinate vectors.
+Conversely, given a point rank, 
+the coordinate vector can be produced. 
+The following command computes the rank of 
+$$
+\bP(3,3,1) = \bP(\omega+1,\omega+1,1)
+$$
+in $\PG(2,4)$:
+
+\sourcecode{PG_2_4_rank_point}
+
+The rank turns out to be 20.
+Conversely, runnnig 
+
+\sourcecode{PG_2_4_unrank_point}
+
+shows that the point with rank 20 is $\bP(3,3,1).$
+
+\bigskip
+
+
+Next we show how to print an arbitrary set of points. 
+In the example, we print all 21 points of $\PG(2,4).$ 
+At first, we create a vector containing all point ranks, 
+i.e., all integers from $0$ to $20$. 
+After that, we invoke the \verb'-print_points' 
+command, which is a projective space activity. 
+In this case, because the field 
+is an extension field, the list of points is printed twice. 
+The first list shows the points and the coordinates in extension field notation. 
+The second list shows the points with coordinates in numeric form. 
+In the numeric form, 
+a field element in $\bbF_q$ is encoded as integer in the interval $[0,q-1].$
+
+
+
+\sourcecode{PG_2_4_print_points}
+
+
+
+\bigskip
+
+
+Line ranking will be discussed next.
+The lines in the small spaces $\PG(2,2)$ and $\PG(2,3)$ are listed by their ranks 
+in Table~\ref{tab:rank:lines:PG}.
+
+\input GRAPHICS/TABLES/OTHER/rank_lines_small
+
+\bigskip
+
+The command 
+
+\sourcecode{PG_2_2_rank_lines}
+
+computes the Orbiter ranks of 4 lines in $\PG(2,2)$. 
+The lines are given by two points each. 
+The data is formatted as a matrix with 4 rows of size 6.
+Each row represents one line, 
+with the coordinates of the two points written one after the other.
+
+
+\bigskip
+
+
+The command 
+
+\sourcecode{PG_2_2_unrank_lines}
+
+lists the 7 lines of $\PG(2,2)$ by their Orbiter 
+ranks from $0$ to $6.$
+
+
+\bigskip
+
+
+
+
+
+

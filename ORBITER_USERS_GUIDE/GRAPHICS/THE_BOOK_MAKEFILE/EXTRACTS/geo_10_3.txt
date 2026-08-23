@@ -1,0 +1,12 @@
+geo_10_3:
+	$(ORBITER) -v 2 \
+		-define Test_lines -set -loop 4 11 1 -end \
+		-define Geo -geometry_builder \
+			-V 10 -B 10 -TDO 3 -fuse 1 \
+			-fname_GEO 10_3 \
+			-output_to_inc_file \
+			-output_to_sage_file \
+			-output_to_blocks_file \
+			-test Test_lines \
+			-save_canonical_forms \
+		-end

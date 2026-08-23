@@ -1,0 +1,17 @@
+T3r1_orbits:
+	$(ORBITER) -v 4 \
+		-define Do -draw_options -embedded -end \
+		-define G \
+		-linear_group -GL_d_q_wr_Sym_n 2 2 3 \
+			-on_rank_one_tensors -end \
+		-define Orb -orbits -group G \
+			-on_points \
+		-end \
+		-with Orb -do -orbits_activity \
+			-report Do \
+		-end \
+		-with Orb -do -orbits_activity \
+			-draw_tree 0 Do \
+		-end
+	$(PDFLATEX) GL_2_2_wreath_Sym3_orbit_0_tree.tex
+	$(OPEN) GL_2_2_wreath_Sym3_orbit_0_tree.pdf

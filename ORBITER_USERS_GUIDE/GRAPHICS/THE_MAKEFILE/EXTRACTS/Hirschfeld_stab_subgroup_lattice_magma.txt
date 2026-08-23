@@ -1,0 +1,29 @@
+Hirschfeld_stab_subgroup_lattice_magma:
+	$(ORBITER) -v 3 \
+		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define F -finite_field -q 4 \
+			-compute_related_fields \
+		-end \
+		-define G -linear_group -PGGL 4 F \
+			-subgroup_by_generators "Hirschfeld_Stab" \
+			51840 6 $(HIRSCHFELD_STAB_GENERATORS) \
+			-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-subgroup_lattice_magma \
+		-end
+	$(ORBITER) -v 3 \
+		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define F -finite_field -q 4 \
+			-compute_related_fields \
+		-end \
+		-define G -linear_group -PGGL 4 F \
+			-subgroup_by_generators "Hirschfeld_Stab" \
+			51840 6 $(HIRSCHFELD_STAB_GENERATORS) \
+			-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-subgroup_lattice_magma \
+		-end
+	$(PDFLATEX) PGGL_4_4_Subgroup_Hirschfeld_Stab_51840_subgroup_lattice_out.tex
+	$(OPEN) PGGL_4_4_Subgroup_Hirschfeld_Stab_51840_subgroup_lattice_out.pdf

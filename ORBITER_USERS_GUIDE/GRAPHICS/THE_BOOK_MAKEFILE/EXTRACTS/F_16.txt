@@ -1,0 +1,8 @@
+F_16:
+	$(ORBITER) -v 10 \
+		-define F -finite_field -q 16 -compute_related_fields -end \
+		-with F -do -finite_field_activity \
+			-cheat_sheet_GF \
+		-end
+	$(PDFLATEX) GF_16.tex
+	$(OPEN) GF_16.pdf

@@ -1,0 +1,2 @@
+PR_2_100:
+	$(ORBITER) -v 1 -smallest_primitive_root_interval 2 100

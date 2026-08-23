@@ -1,0 +1,18 @@
+PGGL_3_4:
+	$(ORBITER) -v 2 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define G -linear_group -PGGL 3 4 -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-sylow \
+		-end
+	$(PDFLATEX) PGGL_3_4_report.tex
+	$(OPEN) PGGL_3_4_report.pdf
+	$(PDFLATEX) PGGL_3_4_sylow_report.tex
+	$(OPEN) PGGL_3_4_sylow_report.pdf

@@ -1,0 +1,26 @@
+dode:
+	$(ORBITER) -v 2 \
+		-povray \
+		-round 0 -nb_frames_default 30 \
+		-output_mask dode_%d_%03d.pov \
+		-video_options -W 1024 -H 768 \
+		-global_picture_scale 0.50 \
+		-default_angle 45 \
+		-clipping_radius 5   \
+		-camera 0 "1,1,1" "-2,2,4" "0,0,0"  \
+		-rotate_about_111 \
+		-end \
+		-scene_objects \
+			-dodecahedron \
+			-group_of_things_as_interval 0 20 \
+			-spheres 0 0.075 $(POLISHED_CHROME_WHITE) \
+			-group_of_things_as_interval 0 30\
+			-cylinders 1 0.05 $(COLOR_RED_SHINY) \
+			-group_of_things_as_interval 0 12\
+			-prisms 2 0.02 $(YELLOW_TRANSPARENT) \
+		-scene_objects_end \
+		-povray_end
+	- rm -rf POV
+	mkdir POV
+	mv dode_0_*.pov POV
+	mv makefile_animation POV

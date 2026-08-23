@@ -1,0 +1,9 @@
+RREF_Rao_Rao_plane_incma_rank:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 3 -end \
+		-define v -vector -field F  \
+			-file plane_Rao_Rao_incma.csv \
+		-end \
+		-with F -do -finite_field_activity \
+			-RREF v \
+		-end

@@ -1,0 +1,5 @@
+DELANDTSHEER_DOYEN_PROBLEM_27_53_MASK1=\
+	-masktest 3 x ge 1 \
+	-masktest 4 x+y ge 3 \
+	-depth 4 \
+	-mask_label "mask1"

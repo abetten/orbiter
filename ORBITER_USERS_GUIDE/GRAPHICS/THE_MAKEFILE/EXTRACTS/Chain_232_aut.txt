@@ -1,0 +1,12 @@
+Chain_232_aut:
+	$(ORBITER) -v 2 \
+		-define P1 -vector -dense 2,3,2 -end \
+		-define P2 -vector -dense 2,3,2 -end \
+		-define Gamma -graph \
+			-chain_graph P1 P2 \
+		-end \
+		-with Gamma -do \
+			-graph_theoretic_activity -automorphism_group \
+		-end
+	$(PDFLATEX) chain_graph_report.tex
+	$(OPEN) chain_graph_report.pdf

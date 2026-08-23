@@ -1,0 +1,2 @@
+number_of_primitive_roots_10000:
+	$(ORBITER) -v 1 -number_of_primitive_roots_interval 10000 10001

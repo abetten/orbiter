@@ -1,0 +1,224 @@
+Graph theoretic activities allow us to perform tasks on graphs.
+Tables~\ref{tab:graphactivities:1}-\ref{tab:graphactivities:2}
+show the commands for graph theoretic activities.
+These are activities that can be applied to objects of type graph. 
+\orbitertableofcommands{graph_theoretic_activities_1}
+\orbitertableofcommands{graph_theoretic_activities_2}
+
+
+\bigskip
+
+Let us continue the example of the three-cycle 
+from Section~\ref{sec:graphtheory}. 
+The command 
+
+\sourcecode{triangle_graph_properties}
+
+computes the degree type of the graph. 
+This is the distribution of degrees in the degree sequence of the graph.
+It prints the distribution of degree values in exponential notation. 
+The multiplicities are indicated as exponent. 
+For instance, the graph in this example has three vertices of degree 2, 
+so the degree type is written as $2^3.$
+
+\bigskip
+
+
+The command 
+
+\sourcecode{Hamming_graph_7_drg}
+
+verifies that the Hamming graph of order $7$ is distance regular. 
+The command assumes that the graph is known to be vertex transitive. 
+The computation is performed using vertex $0$ as a distinguished vertex. 
+The vertex for which the computation is to be performed is an argument to the command.
+If the graph is distance regular, the parameters $a_i,b_i,c_i$ are computed 
+for $i =0,\ldots,d$, where $d$ is the diameter of the graph.
+
+
+\bigskip
+
+The command 
+
+\sourcecode{Johnson_8_3_2_drg}
+
+verifies that the Johnson graph $J_{8,3}$ is distance regular. 
+
+
+
+\bigskip
+
+
+The following command
+exports the adjacency matrix and creates a bitmap drawing of it.
+
+\sourcecode{Cycle_13_draw}
+
+The command first creates the cycle graph of order 13, 
+and then exports the adjacency matrix as 
+csv file. 
+It then draws the adjacency matrix as a bitmap graphics. 
+
+\bigskip
+
+Suppose we want to compute the eigenvalues 
+of the adjacency matrix of a graph.
+In the following example, 
+the command \verb'-eigenvalues' is used to compute 
+the eigenvalues (both regular and Laplace) 
+of the 9-cycle: 
+
+\sourcecode{Cycle_9_eigenvalues}
+
+The following output is produced:
+\orbiteroutput{GRAPHICS/LATEX/eigenvalues_Cycle_9}
+
+
+\bigskip
+
+
+
+The command 
+
+\sourcecode{Paley_13_draw}
+
+draws the Paley graph of order 13 created 
+in Section~\ref{sec:graphtheory} 
+using the external tool graphviz.
+
+\bigskip
+
+Let us consider the Cayley graphs from Section~\ref{sec:graphtheory}.
+Here is a command that draws the first graph and computes the eigenvalues:
+
+\sourcecode{Cayley_Z11_1mod3_eigenvalues_and_draw}
+
+The drawing is shown below
+\orbiteroutput{GRAPHICS/WRAPPERS/graph_Cayley_Z11_1_and_3}
+Let us draw the Cayley graph of $\Sym(5)$ 
+with respect to the Coxeter generators:
+
+\sourcecode{Cayley_Sym5_coxeter_draw}
+
+The drawing is shown below
+\orbiteroutput{GRAPHICS/WRAPPERS/graph_Cayley_Sym5_Coxeter}
+
+
+
+\bigskip
+
+
+It is possible to create the collinearity graph of an incidence structure. 
+The incidence structure must be encoded by means of an incidence matrix. 
+We can search for disjoint sets in the generalized quadrangle $W(2)$ (the Doily).
+For starters, here is the makefile variable to create the geometry:
+
+\sourcecodevariable{DOILY}
+
+Next, we read the incidence matrix from file and create the collinearity graph of it:
+
+
+\sourcecode{PGO_5_2_collinearity_graph}
+
+The command also computes properties of the graph. 
+The graph has 15 vertices of degree 6. 
+This is because in the geometry, each point lies on three lines, 
+and hence is collinar with 6 other points.
+
+
+
+
+\bigskip
+
+The command 
+
+\sourcecode{Op_4_2_affine_polar_graph_info}
+
+computes properties of the affine polar graph based on $O^+(4,2).$
+
+\bigskip
+
+The command 
+
+\sourcecode{Neumaier_16_test_SRG_property}
+
+tests the Neumaier property for the Neumaier graph on 16 vertices.  
+
+\bigskip
+
+
+The command 
+
+\sourcecode{Paulus_1_aut}
+
+computes the automorphism group of 
+the first graph in the list of Paulus and Rozenfeldt.
+
+
+\bigskip
+
+The command 
+
+\sourcecode{Paulus_15_aut}
+
+computes the automorphism group of 
+the 15th graph in the list of Paulus and Rozenfeldt.
+
+
+\bigskip
+
+
+
+The command 
+
+\sourcecode{PG_3_2_packing_make_group_and_test}
+
+creates the set of all labeled spreads in $\PG(3,2).$ 
+It then creates the graph of disjointness on the set of spreads. 
+Afterwards, it creates the action of the projective group on the set of all labeled spreads in $\PG(3,2).$ 
+Finally, it tests whether the group preserves the graph. 
+
+
+\bigskip
+
+
+
+
+The command 
+
+\sourcecode{Petersen_graph_distance_poset}
+
+computes the poset of neighborhood sets of the Petersen graph with respect to vertex 0.
+
+The command 
+
+\sourcecode{Petersen_graph_distance_poset_draw}
+
+produces a drawing of the poset, shown below:
+
+\orbiteroutput{GRAPHICS/WRAPPERS/Petersen_graph_distance_poset_draw}
+
+The command 
+
+\sourcecode{Petersen_test_if_distance_regular}
+
+tests whether the Petersen graph is distance regular. The answer is positive.
+
+\bigskip
+
+
+The command 
+
+\sourcecode{Cayley_Sym5_distance_poset}
+
+computes the neighborhood poset for the Coxeter group $\Sym(5).$ 
+This poset is related to the Bruhat order.
+The following drawing is produced:
+
+\orbiteroutput{GRAPHICS/WRAPPERS/Cayley_Sym5_distance_poset}
+
+
+
+
+
+

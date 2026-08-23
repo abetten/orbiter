@@ -1,0 +1,3 @@
+all_square_roots_mod_n_1549411:
+	$(ORBITER) -v 3 -all_square_roots_mod_n 1075922 1549411
+	

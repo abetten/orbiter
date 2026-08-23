@@ -1,0 +1,6 @@
+Neumaier_graph_16_reordered_export_csv:
+	$(ORBITER) -v 2 \
+		-define perm -vector -dense "0,1,2,3,4,5,12,13,6,7,8,9,10,11,14,15" -end \
+		-define Gamma -graph -Neumaier_graph_16 -reorder perm -end \
+		-with Gamma -do \
+		-graph_theoretic_activity -export_csv -end

@@ -1,0 +1,5 @@
+power_function_2_mod_11:
+	$(ORBITER) -v 5 -power_function_mod_n 2 11
+	$(ORBITER) -v 1 -csv_file_latex 1 power_function_k2_n11.csv
+	$(PDFLATEX) power_function_k2_n11.tex
+	$(OPEN) power_function_k2_n11.pdf

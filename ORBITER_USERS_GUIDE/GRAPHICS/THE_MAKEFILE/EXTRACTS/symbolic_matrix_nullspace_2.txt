@@ -1,0 +1,12 @@
+symbolic_matrix_nullspace_2:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 13 -end \
+		-define A2 -symbolic_object \
+			-field F \
+			-matrix 3 \
+			-text "0,1,0,0,0,0,-1,1,y0,y1,y2,0" \
+		-end \
+		-define M2 -symbolic_object \
+			-field F \
+			-symbolic_nullspace A2 \
+		-end

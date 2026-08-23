@@ -1,0 +1,23 @@
+RM_3_draw:
+	$(ORBITER) -v 2 \
+		-draw_matrix \
+			-input_csv_file RM_m3_distance_H_8_16.csv \
+			-box_width 25 -bit_depth 8 \
+			-partition 4 16 16 \
+		-end
+	$(ORBITER) -v 2 \
+		-draw_matrix \
+			-input_csv_file RM_m3_char_func_8_16.csv \
+			-box_width 25 -bit_depth 8 \
+			-partition 4 16 16 \
+		-end
+	$(ORBITER) -v 2 \
+		-draw_matrix \
+			-input_csv_file RM_m3_idx_8_16.csv \
+			-box_width 25 -bit_depth 8 \
+			-partition 4 16 16 \
+		-end
+	magick RM_m3_distance_H_8_16_draw.bmp RM_m3_distance_H_8_16_draw.png
+	magick RM_m3_char_func_8_16_draw.bmp RM_m3_char_func_8_16_draw.png
+	magick RM_m3_idx_8_16_draw.bmp RM_m3_idx_8_16_draw.png
+	$(OPEN) RM_m3_distance_H_8_16_draw.bmp

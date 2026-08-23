@@ -1,0 +1,25 @@
+typedef INT OBJECTKIND;
+
+typedef union {
+	INT ob_INT;
+	INT * ob_INTpointer;
+	char *ob_charpointer;
+	struct bruch *ob_bruch;
+	struct graph *ob_graph;
+	struct list *ob_list;
+	struct longint *ob_longint;
+	struct matrix *ob_matrix;
+	struct monom *ob_monom;
+	struct number *ob_number;
+	struct partition *ob_partition;
+	struct permutation *ob_permutation;
+	struct reihe *ob_reihe;
+	struct skewpartition *ob_skewpartition;
+	struct symchar *ob_symchar;
+	struct tableaux *ob_tableaux;
+	struct vector *ob_vector;
+	} OBJECTSELF;
+
+
+struct object { OBJECTKIND ob_kind; OBJECTSELF ob_self; };
+

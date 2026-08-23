@@ -1,0 +1,3 @@
+vector_loop_8:
+	$(ORBITER) -v 2 \
+		-define v -vector -loop 0 8 1 -end \

@@ -1,0 +1,25 @@
+symbolic_Fabcd_q31_E18_with_implicit_substitution_do_not_simplify:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 31 -end \
+		-define a -symbolic_object \
+			-field F \
+			-text "25" \
+		-end \
+		-define b -symbolic_object \
+			-field F \
+			-text "5" \
+		-end \
+		-define c -symbolic_object \
+			-field F \
+			-text "5" \
+		-end \
+		-define d -symbolic_object \
+			-field F \
+			-text "25" \
+		-end \
+		-define M -symbolic_object \
+			-field F \
+			-managed_variables "X0,X1,X2,X3" \
+			-text $(F_abcd_eqn) \
+			-do_not_simplify \
+		-end

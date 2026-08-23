@@ -1,0 +1,13 @@
+PGGO_5_4:
+	$(ORBITER) -v 2 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define F4 -finite_field -q 4 -compute_related_fields -end \
+		-define G -linear_group -PGGO 5 F4 -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end
+	$(PDFLATEX) PGGO_5_4_report.tex
+	$(OPEN) PGGO_5_4_report.pdf

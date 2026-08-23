@@ -1,0 +1,28 @@
+% file: PGGL_2_8_OnConic_sims_3.commands
+% created by Orbiter graphics interface
+% creation date: Sat Dec 19 23:54:03 MST 2020
+
+DeviceCoordinates 0 0 1000000 1000000
+UserCoordinates 0 0 10000 10000
+Polygon 2 5000 9166 5000 7500
+Polygon 2 5000 7500 5000 5833
+sf_interior 100
+Circle 500000, 916600, 25000
+sf_interior 0
+Circle 500000, 916600, 25000
+st_alignment 1, 1
+Text 500000, 916600, "{\scriptsize 4}"
+sf_interior 100
+Circle 500000, 750000, 25000
+sf_interior 0
+Circle 500000, 750000, 25000
+st_alignment 1, 1
+Text 500000, 750000, "{\scriptsize 6}"
+sf_interior 100
+Circle 500000, 583300, 25000
+sf_interior 0
+Circle 500000, 583300, 25000
+st_alignment 1, 1
+Text 500000, 583300, "{\scriptsize 7}"
+END_OF_FILE
+

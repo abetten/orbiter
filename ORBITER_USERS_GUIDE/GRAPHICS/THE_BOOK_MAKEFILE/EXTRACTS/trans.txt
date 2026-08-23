@@ -1,0 +1,10 @@
+trans:
+	$(ORBITER) -v 5 \
+		-define F -finite_field -q 16 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-with P -do \
+		-projective_space_activity \
+			-move_two_lines_in_hyperplane_stabilizer_text \
+				"1,0,0,0, 0,0,0,1" "1,1,0,2, 0,0,1,0" \
+				"1,0,0,0, 0,0,0,1" "0,1,0,1, 0,0,1,0" \
+		-end

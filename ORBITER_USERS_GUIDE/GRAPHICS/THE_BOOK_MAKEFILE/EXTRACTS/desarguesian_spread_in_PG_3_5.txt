@@ -1,0 +1,8 @@
+desarguesian_spread_in_PG_3_5:
+	$(ORBITER) -v 3 \
+		-define FQ -finite_field -q 25 -end \
+		-define Fq -finite_field -q 5 -end \
+		-with FQ -and Fq -do -finite_field_activity \
+			-cheat_sheet_desarguesian_spread 2 -end
+	$(PDFLATEX) Desarguesian_Spread_3_5.tex
+	$(OPEN) Desarguesian_Spread_3_5.pdf

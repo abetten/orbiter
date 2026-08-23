@@ -1,0 +1,29 @@
+Clebsch_surface_defining_equation_and_curves:
+	$(ORBITER) -v 2 -povray \
+		-round 0 -nb_frames_default 30 \
+		-output_mask Clebsch_2curves_%d_%03d.pov \
+		-video_options -W 1024 -H 768 \
+		-global_picture_scale 0.6 \
+		-default_angle 75 \
+		-clipping_radius 1.6 \
+		-camera 0 "1,1,1" "-2,0,2" "0,0,0" \
+		-end \
+		-scene_objects \
+			-cubic_orbiter "0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2" \
+			-group_of_things "0" \
+			-cubics 0 $(SURFACE_COLOR_SEETHROUGH) \
+			-point_list_from_csv_file \
+			function_Clebsch_map_of_circle_to_defininig_eqn_N1000_points.csv \
+			-group_of_things_as_interval 0 656 \
+			-spheres 1 0.07 $(COLOR_RED) \
+			-point_list_from_csv_file \
+			function_Clebsch_map_of_circle_to_defininig_eqn_r2_N1000_points.csv \
+			-group_of_things_as_interval 656 1042 \
+			-spheres 2 0.07 "texture{ pigment{ color Blue } \
+finish { diffuse 0.9 phong 1}}" \
+		-scene_objects_end \
+		-povray_end
+	- rm -rf POV
+	mkdir POV
+	mv Clebsch_2curves_0_*.pov POV
+	mv makefile_animation POV

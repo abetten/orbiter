@@ -1,0 +1,7 @@
+HJ_graph:
+	cp $(ORBITER_PATH)/examples/users_guide/halljanko315.csv .
+	$(ORBITER) -v 6 \
+		-define G -graph \
+			-load_csv_no_border \
+			halljanko315.csv \
+		-end

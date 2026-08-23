@@ -1,0 +1,10 @@
+RS_7_3:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 8 -end \
+		-define C -code -field F -Reed_Solomon 7 3 -end \
+		-with C -do -coding_theoretic_activity \
+			-export_magma RS_7_3.magma \
+		-end \
+		-with C -do -coding_theoretic_activity -report -end
+	$(PDFLATEX) RS_n7_d3_code_n7_k5_q8.tex
+	$(OPEN) RS_n7_d3_code_n7_k5_q8.pdf

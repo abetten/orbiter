@@ -1,0 +1,8 @@
+Berlekamp_matrix_crc32:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define v -vector -field F -sparse 33 $(CRC32_SPARSE) -end \
+		-with F -do \
+		-finite_field_activity \
+			-Berlekamp_matrix v \
+		-end

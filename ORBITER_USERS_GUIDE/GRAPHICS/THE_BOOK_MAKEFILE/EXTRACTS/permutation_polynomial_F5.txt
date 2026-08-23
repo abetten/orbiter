@@ -1,0 +1,27 @@
+permutation_polynomial_F5:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 5 -end \
+		-define P -projective_space -n 1 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 2 \
+			-homogeneous_of_degree 4 \
+			-monomial_ordering_lex \
+			-variables "x,y" "x,y" \
+			-end \
+		-define Y0 -symbolic_object \
+			-field F \
+			-text "3*(1-x^4)+4*(1-(x-2)^4)+1*(1-(x-3)^4)+2*(1-(x-4)^4)" \
+			-end \
+		-define Y -symbolic_object \
+			-field F \
+			-text "Y0" \
+			-end \
+		-with P -do \
+		-projective_space_activity \
+			-affine_map R Y "" \
+		-end \
+		-define Yx -symbolic_object \
+			-field F \
+			-expand Y \
+		-end

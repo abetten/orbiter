@@ -1,0 +1,92 @@
+
+
+Orbiter can create translation planes from spreads. 
+The construction of translation planes from spreads 
+is due to Andr\'e and Bruck, Bose (cf.~\cite{Andre54,BruckBose64}). 
+In order to perform the construction, we need a field $F=\bbF_q$ 
+which is the kernel of the plane, 
+a spread of $k$-subspaces, 
+and the groups $\PGGL(2k,F)$ and $\PGGL(2k+1,F)$.
+
+\bigskip
+
+Table~\ref{tab:translationplane:activity} lists Orbiter activities for translation planes.
+\orbitertableofcommands{translation_plane_activity}
+
+
+For instance, the command 
+
+\sourcecode{create_translation_plane_9b}
+
+creates the (projective) Hall plane of order 9 from the Hall spread.
+In this example, we use the fact that $\PGGL(n,q) = \PGL(n,q)$ if $q$ is prime.
+The example also creates a bitmap drawing of the incidence matrix of the plane, 
+shown below:
+\orbiteroutput{GRAPHICS/WRAPPERS/plane_catalogue_q3_k2_1_incma_draw}
+
+\bigskip
+
+In the next example, we will create a translation plane 
+of order 16 with kernel of order 4:
+
+\sourcecode{create_translation_plane_16_4_0}
+
+This plane is the Hall plane, and the spread is the Hall spread. 
+The stabilizer of the spread has order 1200.
+
+\bigskip
+
+In the next example, we will create 
+a translation plane of order 16 with kernel of order 2:
+
+\sourcecode{create_translation_plane_16_2_0}
+
+The spread has a stabilizer of order 1008, 
+which means that the associated translation plane 
+has a stabilizer of order $1008 \cdot 256 = 258045.$
+According to~\cite{Moorhouse:tables:16}, there are two planes 
+whose associated spreads have an automorphism group of this order. 
+They can be distinguished by the 2-rank of their incidence matrices. 
+The Johnson-Walker plane has a 2-rank of 100. 
+The Lorimer-Rahilly plane has a 2-rank of 106. 
+Using Orbiter, we compute the 2-rank of the translation plane that we have created:
+
+\sourcecode{RREF_plane_16_2_0_rank_of_incma}
+
+It turns out that the 2-rank of our plane is 106, so the plane is Lorimer-Rahilly.
+
+
+\bigskip
+
+Let us investigate the Rao / Rao plane from Section~\ref{sec:spreads}, 
+which we know is isomorphic to the spread in the Orbiter catalogue 
+with number 0 and projective stabilizer of order 84.
+The command  
+
+\sourcecode{create_translation_plane_27_Rao_Rao}
+
+creates the translation plane from the spread.
+To compute the 3-rank of the incidence matrix, we issue the following comand:
+
+\sourcecode{RREF_Rao_Rao_plane_incma_rank}
+
+The 3-rank turns out to be 271. 
+According to the Moorhouse tables~\cite{Moorhouse:tables:27}, 
+the plane has Moorhouse number IV.
+
+\bigskip
+
+Suppose we want to study the orbits of the group of a translation plane on points and blocks. 
+The following command creates the translation plane of order 27 with Orbiter number $4.$
+Once done, it creates the action on points and blocks and 
+invokes the Schreier orbit algorithm (see Section~\ref{sec:orbit:algorithms}).
+
+\sourcecode{translation_plane_27_4_orbits}
+
+The group of the plane has order $1592136.$
+The degree of the action is $1514.$
+The orbit lengths are
+$$
+1, \; 28, \; 729, \; 756.
+$$
+

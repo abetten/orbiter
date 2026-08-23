@@ -1,0 +1,12 @@
+PG_2_27_special:
+	$(ORBITER) -v 2 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 -nodes_empty \
+		-end \
+		-define F -finite_field -q 27 -override_polynomial 46 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-with P -do -projective_space_activity \
+			-cheat_sheet Do \
+		-end
+	$(PDFLATEX) PG_2_27.tex 
+	$(OPEN) PG_2_27.pdf

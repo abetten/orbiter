@@ -1,0 +1,15 @@
+all_subsets_6_3:
+	$(ORBITER) -v 2 -tree_of_all_k_subsets 6 3
+	$(ORBITER) -v 20 \
+		-define Do -draw_options -embedded \
+			-nodes -radius 80 \
+			-xin 5000 -yin 5000 \
+			-xout 1000000 -yout 500000 \
+			-scale 0.5 -line_width 1.0 \
+		-end \
+		-tree_draw \
+			-file all_k_subsets_n6_k3.tree \
+			-draw_options Do \
+		-end
+	$(PDFLATEX) all_k_subsets_n6_k3_draw.tex
+	$(OPEN) all_k_subsets_n6_k3_draw.pdf

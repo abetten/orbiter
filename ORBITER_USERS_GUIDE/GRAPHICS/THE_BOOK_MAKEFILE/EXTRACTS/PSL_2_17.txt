@@ -1,0 +1,13 @@
+PSL_2_17:
+	$(ORBITER) -v 2 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define F -finite_field -q 17 -end \
+		-define G -linear_group -PSL 2 F -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end
+	$(PDFLATEX) PSL_2_17_report.tex
+	$(OPEN) PSL_2_17_report.pdf

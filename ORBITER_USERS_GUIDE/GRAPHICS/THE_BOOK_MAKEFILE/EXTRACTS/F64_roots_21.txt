@@ -1,0 +1,8 @@
+F64_roots_21:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 2 -end \
+		-with F -do -finite_field_activity \
+			-nth_roots 21 \
+		-end
+	$(PDFLATEX) Nth_roots_q2_n21.tex
+	$(OPEN) Nth_roots_q2_n21.pdf

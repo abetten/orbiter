@@ -1,0 +1,9 @@
+mult_polynomials_2_4_6:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-with F -do \
+		-finite_field_activity \
+			-mult_polynomials 4 6 \
+		-end
+	$(PDFLATEX) polynomial_mult_4_6.tex
+	$(OPEN) polynomial_mult_4_6.pdf

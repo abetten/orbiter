@@ -1,0 +1,10 @@
+quartic_curves_table_q17: 
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 17 -end \
+		-define P -projective_space \
+			-n 2 -field F -v 0 \
+		-end \
+		-with P -do \
+			-projective_space_activity \
+				-table_of_quartic_curves \
+		-end

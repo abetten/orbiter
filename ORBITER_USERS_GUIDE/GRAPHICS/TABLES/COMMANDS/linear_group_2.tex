@@ -1,0 +1,55 @@
+\begin{table}
+\begin{tcolorbox}[tabularx={X|p{2cm}|X|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black,title=Creating a Matrix Group (Part 2)]
+\hline
+Command & Arguments & Purpose \\
+\hline
+\hline
+\verb'-wedge' &  & Create the group in the action on the wedge product. \\
+\hline
+\verb'-wedge_detached' &  & Create the group in the action on the wedge product. \\
+\hline
+\verb'-PGL2OnConic' &  & Create the action of $\PGL(2,q)$ on the conic. \\
+\hline
+\verb'-monomial' &  & Create the group in the monomial action. \\
+\hline
+\verb'-diagonal' &  & Create the group in the diagonal action. \\
+\hline
+\verb'-null_polarity_group' &  & Create the subgroup corresponding to a null polarity. \\
+\hline
+\verb'-symplectic_group' &  & Create the subgroup of type symplectic group. \\
+\hline
+\verb'-singer' &  & Create the Singer subgroup. \\
+\hline
+\verb'-singer_and_frobenius' & $k$ & Create the Singer subgroup extended by a Frobenius automorphism. Here, $k$ is the power of the Frobenius endomorphism. \\
+\hline
+\verb'-subfield_structure_action' & $s$ & Create the action on the field reduction w.r.t. the subfield $\bbF_r$, where $r^s = q$. \\
+\hline
+\verb'-subgroup_from_file' & fname label & Create the subgroup from the given file and assign the given label. \\
+\hline
+\verb'-borel_upper' &  & Create the upper Borel subgroup. \\
+\hline
+\verb'-borel_lower' &  & Create the lower Borel subgroup. \\
+\hline
+\verb'-identity_group' &  & Create the identity subgroup. \\
+\hline
+\verb'-orthogonal' & epsilon & Create the orthogonal group of type epsilon as subgroup, where epsilon $\in \{0,1,-1\}.$ \\
+\hline
+\verb'-on_tensors' &  & Create the tensor action. \\
+\hline
+\verb'-on_rank_one_tensors' &  & Create the action on rank-one tensors. \\
+\hline
+\verb'-subgroup_by_generators' & label order $k$ gens & Create a subgroup with a known order from a set of generators. There are $k$ generators. gens is a orbiter vector object. \\
+\hline
+\verb'-Janko1' &  & Create the Janko group $J_1$ as a subgroup. \\
+\hline
+\verb'-export_magma' &  & Export the group to Magma. \\
+\hline
+\verb'-import_group_of_plane' & plane & Import the group of a translation plane. Here, plane must be an Orbiter object of type translation plane. \\
+\hline
+\verb'-lex_least_base' &  & Create the lex-least base. This will make indexing of group elements deterministic. \\
+\hline
+\end{tcolorbox}
+\caption{\label{tab:matrix:group:2}Creating a Matrix Group (Part 2)}
+\end{table}

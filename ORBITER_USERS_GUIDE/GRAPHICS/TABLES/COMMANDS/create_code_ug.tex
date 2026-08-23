@@ -1,0 +1,41 @@
+\begin{table}
+\begin{tcolorbox}[tabularx={X|p{2cm}|X|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black,title=Creating Codes]
+\hline
+Command & Arguments & Purpose \\
+\hline
+\hline
+\verb'-field'  &  F  &   The field $F=\bbF_q$ over which the code is defined.\\
+\hline
+\verb'-generator_matrix'  &  M  &  A generator matrix over $F$ defining the code as Orbiter object. \\
+\hline
+\verb'-basis'  &  n basis  & A basis for the code as Orbiter ranks. The rows of the generator matrix are coded as integers using the binary representation. \\
+\hline
+\verb'-long_code'  &  n genma-by-rows  & Create a code over $\bbF_q$ defined by a generator matrix. The rows of the generator matrix are given as a list of strings. Each string lists the positions in the codeword which are one.\\
+\hline
+\verb'-nonlinear_code'  &  n codewords  & Create a code over $\bbF_q$ of length $n$ defined by a list of words. The codewords are given as string of comma-separated integers in base $q$. \\
+\hline
+\verb'-nonlinear_code_long'  &  n k codewords  & Create a code over $\bbF_q$ of length $n$ with $k$ codewords defined by a list of words. The codewords are given as a list of strings. Each string lists the positions in the codeword which are one. The command expects exactly $k$ strings to follow. \\
+\hline
+\verb'-projective_set'  &  $nmk$  & A projective set defining the columns of a check matrix of a code. The projective set is in $\PG(n-k-1,q)$ where $nmk = n - k$ is given. \\
+\hline
+\verb'-columns_of_generator_matrix'  &  k cols  & The columns of a check matrix defining the code are given, using the ranking of elements of $\AG(k,q).$ \\
+\hline
+\verb'-Reed_Muller'  &  m  &  The first order Reed-Muller code with $m$ variables. \\
+\hline
+\verb'-BCH'  &  n d  &  BCH-code over $\bbF_q$ of length $n$ with designed distance $d$. The minimum distance will be at least the designed distance. \\
+\hline
+\verb'-Reed_Solomon'  &  n d  &  A Reed-Solomon code of length $n$ with designed distance $d$. This requires that $n$ divides $q-1$. \\
+\hline
+\verb'-Gilbert_Varshamov'  &  n k d   &  A Gilbert-Varshamov code with length n, dimension k and minimum  distance d. \\
+\hline
+\verb'-ttpA'  &  FQ  &  Twisted tensor product code of type A using the extension field $FQ.$ The code arises from a hyperoval in $\bbF_{q^2}$ (Theorem 1 in~\cite{Betten2008})\\
+\hline
+\verb'-ttpB'  &  FQ  &  Twisted tensor product code of type B using the extension field $FQ.$ The code arises from the projective line over $\bbF_{q^3}$ (Theorem 2 in~\cite{Betten2008}). \\
+\hline
+\verb'-dual'  &    &  Create the dual code instead. \\
+\hline
+\end{tcolorbox}
+\caption{\label{tab:code:create}Creating Codes}
+\end{table}

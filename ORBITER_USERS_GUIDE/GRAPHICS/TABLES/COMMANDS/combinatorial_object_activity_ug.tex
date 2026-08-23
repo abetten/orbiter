@@ -1,0 +1,55 @@
+\begin{table}
+\begin{tcolorbox}[tabularx={X|p{2cm}|X|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black,title=Activities for Combinatorial Objects]
+\hline
+Command & Arguments & Purpose \\
+\hline
+\hline
+\verb'-save'  &     &  Save the objects under the name that was assigned automatically. \\
+\hline
+\verb'-save_as'  &  fname   &  Save the objects under the given name.\\
+\hline
+\verb'-extract_subset'  &  set fname   &  Extract a subset of the objects. \\
+\hline
+\verb'-line_type_old'  &     &  Compute the line type of a set in projective space.\\
+\hline
+\verb'-line_type'  &     &  Compute the line type of a set in projective space.\\
+\hline
+\verb'-conic_type'  &     &  Compute the conic type of a set in projective space.\\
+\hline
+\verb'-non_conical_type'  &     &  \\
+\hline
+\verb'-ideal'  &  R   &  Compute the ideal of the set, using the ring R.\\
+\hline
+\verb'-canonical_form_PG'  &  P options   &  Requires a projective space P. See Tab.~\ref{tab:combi:classification} for options.\\
+\hline
+\verb'-canonical_form'  &   options  &  Classification by canonical form. See Tab.~\ref{tab:combi:classification} for options. \\
+\hline
+\verb'-post_processing'  &    &  Perform post processing for objects after the canonical form has been computed. \\
+\hline
+\verb'-get_combo_with_group'  &  i   &  Returns the i-th combinatorial object and its group.\\
+\hline
+\verb'-report'  &  options   &  See Tab.~\ref{tab:combi:reporting} for options.\\
+\hline
+\verb'-draw_incidence_matrices'  &  prefix option  &  Draws the incidence matrices, using the given prefix and the given draw incidence options object. \\
+\hline
+\verb'-test_distinguishing_property'  &  G   &  Test the distinguishing property for the graph G.\\
+\hline
+\verb'-covering_type'  &  orbits $k$   &  Compute the covering numbers of the combinatorial objects (which are sets) w.r.t. the orbits on $k$ subsets.\\
+\hline
+\verb'-filter_by_Steiner_property'  &    &  When computing the covering type, filter those which have the Steiner property. This means that no $k$-orbit is covered more than once. \\
+\hline
+\verb'-compute_frequency'  &  graph  &  \\
+\hline
+\verb'-unpack_from_restricted_action'  &  prefix G   &  \\
+\hline
+\verb'-line_covering_type'  &  prefix P L   &  Computes the line type of the lines in L in the projective space P.\\
+\hline
+\verb'-activity'  &  description   &  Perform an Orbiter activity according to the given description.\\
+\hline
+\verb'-algebraic_degree'  &  P   &  Compute the algebraic degree of the set inside the given projective space P.\\
+\hline
+\end{tcolorbox}
+\caption{\label{tab:combi:activity}Activities for Combinatorial Objects}
+\end{table}

@@ -1,0 +1,40 @@
+PGL_4_2_orthogonal_reflections_report_vector_ge:
+	$(ORBITER) -v 2 \
+		-define Pts -vector \
+			-dense $(ORTHOGONAL_OP_6_2_POINTS_OFF) \
+		-end \
+		-define F -finite_field -q 2 -end \
+		-define O -orthogonal_space 1 6 F -end \
+		-define G4 -linear_group -PGL 4 2 -end \
+		-with O -do -orthogonal_space_activity \
+			-create_orthogonal_reflection_6_and_4 Pts G4 \
+		-end
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define G -linear_group -PGL 4 F -end \
+		-define reflections -vector_ge \
+			-action G \
+			-read_csv O_1_6_2_orthogonal_reflections_4x4.csv Element \
+		-end \
+		-with reflections -do \
+		-vector_ge_activity \
+			-report \
+		-end \
+		-with reflections -do \
+		-vector_ge_activity \
+			-export_GAP \
+		-end \
+		-assign RNF -and BaseChange -from \
+		-with reflections -do \
+		-vector_ge_activity \
+			-rational_canonical_form \
+		-end \
+		-with RNF -do \
+		-vector_ge_activity \
+			-report_with_options "dense=on" \
+		-end \
+		-print_symbols
+	$(PDFLATEX) PGL_4_2_reflections_elements.tex
+	$(OPEN) PGL_4_2_reflections_elements.pdf
+	$(PDFLATEX) PGL_4_2_RNF_elements.tex
+	$(OPEN) PGL_4_2_RNF_elements.pdf

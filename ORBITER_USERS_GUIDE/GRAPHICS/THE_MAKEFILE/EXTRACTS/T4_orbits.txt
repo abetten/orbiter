@@ -1,0 +1,13 @@
+T4_orbits:
+	$(ORBITER) -v 4 \
+		-define G -linear_group \
+			-GL_d_q_wr_Sym_n 2 2 4 \
+			-on_tensors \
+		-end \
+		-define Orb -orbits -group G \
+			-on_points \
+		-end
+	#$(PDFLATEX) GL_2_2_wreath_Sym4_res65535_orbits.tex
+	#$(OPEN) GL_2_2_wreath_Sym4_res65535_orbits.pdf
+	#$(PDFLATEX) GL_2_2_wreath_Sym4_report.tex
+	#$(OPEN) GL_2_2_wreath_Sym4_report.pdf

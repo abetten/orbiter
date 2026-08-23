@@ -1,0 +1,110 @@
+
+A linear space is a pair $(S,\cL)$ where $S$ is a set and $\cL$ is a set of subsets of $S$ such that 
+each set $L \in \cL$ satisfies $|L| \ge 2$ and 
+morover for any two $a,b \in S$ there is exactly one element $L \in \cL$
+such that both $a$ and $b$ belong to $L.$ 
+The usual notions of isomorphism and automorphism apply.
+For finite linear spaces, 
+a first combinatorial property is the number $a_i$ 
+which counts the number of sets $L \in \cL$ of size $i.$ 
+The vector $(a_2,\ldots,a_n)$ is the line type of $(S,\cL)$.
+The equation 
+\begin{equation}\label{eqn:linetype}
+{n \choose 2} = \sum_{j=2}^n a_j {j \choose 2}
+\end{equation}
+is satisfied. 
+The equation 
+can be used to generate all possible line types of a putative linear space.
+Here is an example. For $|S| = 6,$~(\ref{eqn:linetype}) becomes
+$$
+x_0 {6 \choose 2} + x_1 {5 \choose 2} + x_2 {4 \choose 2} + x_3 {3 \choose 2} + x_4 {2 \choose 2} = {6 \choose 2}.
+$$
+Here, $(x_0,x_1,\ldots,x_4)$ is the line type of a putative linear space on $6$ points. 
+That is, $x_i = a_{6-i}$ is the number of lines of size $6-i.$
+The extended coefficient matrix of the system is 
+$$
+\left[ 
+15 \; 
+10 \; 
+6 \; 
+3 \; 
+1 \; 
+\mid 
+15 
+\;
+\right].
+$$
+The Orbiter command
+
+\sourcecode{linsp6}
+
+solves the system using 
+McKay's program possolve~\cite{Possolve}. 
+The program finds 15 solutions, 
+written to the file \verb'linsp6.sol'.
+
+
+\bigskip
+
+Let us consider a problem from~\cite{BettenBetten10}.
+Suppose we are interested in linear spaces on 30 points and 
+with line type $(7,5^{27},4^{24})$. 
+This notation means that we assume 
+one $7$-line, $27$ $5$-lines and $24$ $4$-lines. 
+The type of a point $P$ is the set of integers 
+$$
+p_{j} = \# j\mbox{-lines though $P$}.
+$$
+We are trying to precompute the matrix of point types  
+$$
+(p_{ij})
+$$
+where $j=7,5,4$ and $i$ belongs to an index set of all possible point types.
+Fixing a point $P$, counting points $Q \neq P$ collinear with $P$ yields
+$$
+6p_7 + 4p_5+3p_4 = 29, \quad p_7 \le 1, \; p_5 \le 27, p_4 \le 24.
+$$
+Using the Orbiter commands 
+
+\sourcecode{linsp30_pt_types}
+
+we determine the possibilities 
+$$
+(p_7,p_5,p_4) = \left\{
+\begin{array}{ccc}
+1 & 5 & 1 \\
+1 & 2 & 5 \\
+0 & 5 & 3 \\
+0 & 2 & 7 \\
+\end{array}
+\right.
+$$
+The rows in this matrix are called the point types $(i=0,1,2,3).$
+Let $b_i$ be the number of points of type  $i.$
+By counting points, incident (point,line) pairs by $j$-lines 
+and pairs of intersecting $j$-lines, we arrive at the following system:
+\begin{align*}
+	b_0 + b_1 + b_2 + b_3 & = 30 \\
+	b_0 + b_1 & = 7\\
+	5b_0 + 2b_1 + 5b_2 + 2b_3 &= 135 = 27 \cdot 5\\
+	b_0 + 5b_1+3b_2+7b_3 & = 96 = 24 \cdot 4\\
+	10b_0 + b_1 + 10b_2 + b_3 & \le 351 = {27 \choose 2}\\
+	10b_1+3b_2+21b_3 & \le 276 = {24 \choose 2}
+\end{align*}
+Using the Orbiter commands 
+
+\sourcecode{linsp30_pt_distribution}
+
+we determine the possibilities 
+$$
+(b_0,b_1,b_2,b_3) = \left\{
+\begin{array}{cccc}
+2 &5 &23 &0 \\
+3 &4 &22 &1 \\
+4 &3 &21 &2 \\
+5 &2 &20 &3 \\
+6 &1 &19 &4 \\
+7 &0 &18 &5 \\
+\end{array}
+\right.
+$$

@@ -1,0 +1,41 @@
+\begin{table}
+\begin{tcolorbox}[tabularx={X|p{2cm}|X|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black,title=Vector of Group Elements Activities]
+\hline
+Command & Arguments & Purpose \\
+\hline
+\hline
+\verb'-report'  &    &  Produce a report of the group elements in the vector. \\
+\hline
+\verb'-report_with_options'  &  options  &  Produce a report of the group elements in the vector using the given options. Options must be a comma separated list of ``key=value'' pairs. \\
+\hline
+\verb'-report_elements_coded'  &    &  Produce a report of the group elements in the vector in coded form. \\
+\hline
+\verb'-export_GAP'  &    &  Export the group elements to GAP and generate the group. \\
+\hline
+\verb'-transform_variety'  &  variety  &  Transform the given variety by the group elements in the vector. \\
+\hline
+\verb'-multiply'  &    &  Multiply corresponding elements in the input vectors. Multiple input vectors can be given using the \verb'-with' command. \\
+\hline
+\verb'-conjugate'  &    &  Conjugate all elements of the first vector by the first (and only) entry in the second vector. Multiple input vectors can be given using the \verb'-with' command. \\
+\hline
+\verb'-conjugate_by'  &  elt  &  Conjugate all elements of the given vector by the element given in text form. \\
+\hline
+\verb'-conjugate_inverse'  &    &  Same as \verb'-conjugate', but use the inverse element instead. \\
+\hline
+\verb'-select_subset'  &  indexset  &  Create a new vector from the elements given in the index set. The index set must be a label of a vector of integers. Indexing of elements of the vector is zero-based. \\
+\hline
+\verb'-field_reduction'  &  s  &  Perform field reduction w.r.t. the subfield of the given index s. The group must be a matrix group over a field admitting a subfield of index s.\\
+\hline
+\verb'-rational_canonical_form'  &    &  Computes the rational normal form of each element. Returns a vector containing all rational normal forms and a second vector containing all transformation matrices. \\
+\hline
+\verb'-products_of_pairs'  &    &  Computes a matrix whose entry $a_{ij}$ is the order of the product of element $i$ with element $j$. \\
+\hline
+\verb'-apply_isomorphism_wedge_product_4to6'  &    &  For each vector element, compute the matrix for the induced action on the wedge product. The result will be written to csv file. \\
+\hline
+\verb'-filter_subfield'  &  q  &  Produces a new vector whose elements are the elements in that belong to the subfield (and -- for semilinear groups -- whose associated field automorphism is trivial). \\
+\hline
+\end{tcolorbox}
+\caption{\label{tab:vector:ge:activity}Vector of Group Elements Activities}
+\end{table}

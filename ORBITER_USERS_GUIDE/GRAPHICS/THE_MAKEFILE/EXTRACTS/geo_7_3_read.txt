@@ -1,0 +1,9 @@
+geo_7_3_read:
+	$(ORBITER) -v 10 \
+		-define Doinc -draw_incidence_structure_options \
+			-width 60 -width_10 6 -end \
+		-define C -combinatorial_object \
+			-label geo_7_3 geo\_7\_3 \
+			-file_of_incidence_geometries \
+				7_3.inc 7 7 21 \
+		-end

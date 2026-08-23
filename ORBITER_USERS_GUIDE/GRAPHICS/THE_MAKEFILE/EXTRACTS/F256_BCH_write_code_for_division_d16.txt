@@ -1,0 +1,12 @@
+F256_BCH_write_code_for_division_d16:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 256 -end \
+		-define A -vector -field F -sparse 772 "1,771,1,0" -end \
+		-define B -vector -field F -dense $(POLY_Q256_DEG30_DENSE) -end \
+		-with F -do \
+		-coding_theoretic_activity \
+			-write_code_for_division \
+			check_q256_n771_r30 A B \
+		-end
+	g++ crc_check_q256_n771_r30.cpp -o crc_check_q256_n771_r30.out
+	./crc_check_q256_n771_r30.out

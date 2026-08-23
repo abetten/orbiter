@@ -1,0 +1,11 @@
+symbolic_object1_draw:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 13 -end \
+		-define M -symbolic_object \
+			-field F \
+			-text "a+2*b^2*(x-y)+3*-(2*c^4+3*d-(a*b*c)^2)^3" \
+		-end
+	$(PDFLATEX) sajeeb_tree0.tex
+	$(OPEN) sajeeb_tree0.pdf
+	$(PDFLATEX) M.tex
+	$(OPEN) M.pdf

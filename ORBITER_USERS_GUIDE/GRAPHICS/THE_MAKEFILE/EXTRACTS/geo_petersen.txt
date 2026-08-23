@@ -1,0 +1,10 @@
+geo_petersen:
+	$(ORBITER) -v 8 \
+		-define Test_lines -set -loop 3 11 1 -end \
+		-define Geo -geometry_builder \
+			-V 10 -B 15 -TDO 3 -fuse 1 \
+			-fname_GEO petersen -girth 5 \
+			-output_to_inc_file \
+			-search_tree \
+			-test Test_lines \
+		-end

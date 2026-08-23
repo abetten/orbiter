@@ -1,0 +1,22 @@
+C13_as_subgroup:
+	$(ORBITER) -v 2 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define G -permutation_group -symmetric_group 13 \
+			-subgroup_by_generators C13 13 1 $(GEN_C13) \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-export_orbiter \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-save_elements_csv "C13_elts.csv" \
+		-end
+	#$(PDFLATEX) Perm13_Subgroup_C13_13_report.tex
+	#$(OPEN) Perm13_Subgroup_C13_13_report.pdf

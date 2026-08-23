@@ -1,0 +1,14 @@
+Higman_Sims_group_subgroup_lattice:
+	$(ORBITER) -v 2 \
+		-define gens -vector -dense \
+			$(HIGMAN_SIMS_GENS) \
+		-end \
+		-define G -permutation_group -symmetric_group 100 \
+			-subgroup_by_generators HS \
+			$(HIGMAN_SIMS_GO) \
+			$(HIGMAN_SIMS_NB_GENS) gens \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-subgroup_lattice_magma \
+		-end

@@ -1,0 +1,24 @@
+code_3_2_aut:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define genma -vector -field F -format 2 \
+			-dense $(CODE_N3_K2_Q2_GENMA) \
+		-end \
+		-define P -projective_space -n 1 -field F -v 0 -end \
+		-with P -do \
+		-projective_space_activity \
+			-canonical_form_of_code \
+				"3_2" genma \
+				-save_ago \
+				-save_classification "3_2" \
+				-nauty_control -end \
+			-end \
+		-end
+	$(PDFLATEX) 3_2_classification.tex
+	$(OPEN) 3_2_classification.pdf
+	$(ORBITER) -v 2 -draw_matrix \
+		-input_csv_file 3_2_object0_TDA_flag_orbits.csv \
+		-secondary_input_csv_file 3_2_object0_TDA.csv \
+		-box_width 16 -bit_depth 24 \
+		-end
+	$(OPEN) 3_2_object0_TDA_flag_orbits_draw.bmp

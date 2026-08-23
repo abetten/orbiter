@@ -1,0 +1,42 @@
+\begin{table}
+\begin{tcolorbox}[tabularx={X|p{2cm}|X|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black,title=Creating Packings with Assumed Symmetry]
+\hline
+Command & Arguments & Purpose \\
+\hline
+\verb'-H' & description   & 
+Specify the assumed group $H$ of symmetries. 
+The orbits of $H$ on the set of spreads are considered. 
+The packings will be constructed as union of orbits. \\
+\hline
+\verb'-N' & description   & Specify the normalizer of $H$.\\
+\hline
+\verb'-cliques_on_fixpoint_graph' &  $s$  & 
+Using poset classification, 
+classify the orbits of $N$ on cliques of size $\le s$ in the graph on fixed points. \\
+\hline
+\verb'-cliques_on_fixpoint_graph_control' &  descr  & 
+Specify poset classification options related to the classification 
+of cliques on the fixed point graph as in Table~\ref{tab:pc:options}. \\
+\hline
+\verb'-fixp_clique_types_save_individually' &    & 
+Sort the cliques on fixed points by the type 
+of their spreads and write one csv file for each possible 
+type containing the index of the cliques of the given type.  \\
+\hline
+\verb'-process_long_orbits' &  descr  & 
+Proceed on to long orbits using Table~\ref{tab:packings:long:orbits}. \\
+\hline
+\verb'-spread_tables_prefix' &  $P$  &  Use prefix $P$ to access spread tables. \\
+\hline
+\verb'-report' &    & Create a report of the classification process. \\
+\hline
+\verb'-regular_packing' &    &  
+Initialize Klein correspondence and identify (regular) 
+spreads with external lines to the Klein quadric 
+using the polarity of the Klein quadric. \\
+\hline
+\end{tcolorbox}
+\caption{\label{tab:packings:was}Creating Packings with Assumed Symmetry}
+\end{table}

@@ -1,0 +1,8 @@
+roots_over_F2:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2  -end \
+		-define v -vector -field F -dense "0,1,0,1,1,1" -end \
+		-with F -do \
+		-finite_field_activity \
+			-polynomial_find_roots v \
+		-end

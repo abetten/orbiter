@@ -1,0 +1,19 @@
+HJ_orbital_graph_3:
+	$(ORBITER) -v 2 \
+		-define gens -vector -file \
+			File_halljanko315_gens.csv -end \
+		-define G -permutation_group \
+			-bsgs halljanko315 "File\_halljanko315" \
+			315 1209600 "0,1,2" 5 gens \
+		-end \
+		-define Gamma -graph \
+			-orbital_graph G 3 \
+		-end \
+		-with Gamma -do \
+			-graph_theoretic_activity \
+			-properties \
+		-end \
+		-with Gamma -do \
+			-graph_theoretic_activity \
+			-save \
+		-end

@@ -1,0 +1,29 @@
+quartic_curves_q19:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 19 -end \
+		-define P -projective_space -n 3 -field F -end \
+		-define P2 -projective_space -n 2 -field F -v 0 -end \
+		-define Control -poset_classification_control \
+			-problem_label nc_arcs_q19 \
+			-W -depth 6 \
+		-end \
+		-define Arc_control -arc_generator_control \
+			-projective_space P2 \
+			-control Control \
+			-target_size 6 \
+			-d 2 \
+		-end \
+		-define Orb -orbits \
+			-on_arcs Arc_control \
+		-end \
+		-loop L 0 $(NB_CUBIC_SURFACES_Q19) 1 \
+			-define S_%L -cubic_surface -space P -catalogue %L -end \
+		-end_loop L \
+		-print_symbols \
+		-loop L 0 $(NB_CUBIC_SURFACES_Q19) 1 \
+			-with S_%L -do \
+			-cubic_surface_activity \
+				-export_all_quartic_curves Orb \
+			-end \
+		-end_loop L \
+		-print_symbols

@@ -1,0 +1,6 @@
+Hamming_graph_7_drg:
+	$(ORBITER) -v 2 \
+		-define Gamma -graph -Hamming 7 2 -end \
+		-with Gamma -do -graph_theoretic_activity \
+			-test_if_distance_regular 0 \
+		-end

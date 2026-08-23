@@ -1,0 +1,13 @@
+Baer_PG_2_4:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 4 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define Geo -geometric_object P \
+			-Baer_substructure \
+		-end \
+		-define C -combinatorial_object \
+			-label Baer Baer \
+			-geometric_object Geo \
+		-end \
+		-with C -do -combinatorial_object_activity -save \
+		-end

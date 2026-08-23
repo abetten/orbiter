@@ -1,0 +1,4 @@
+DELANDTSHEER_DOYEN_PROBLEM_COLBOURN_COLBOURN_7_13_MASK1=\
+	-nb_orbits_on_blocks 3 \
+	-depth 6 \
+	-mask_label "no_mask"

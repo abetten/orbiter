@@ -1,0 +1,62 @@
+Orbiter contains a knowledge base of mathematical data. 
+This is like a database, except for the way that the data is stored. 
+The data does not reside in files, like in a database. 
+Rather, the data is compiled into the Orbiter executable. 
+This means that the data is immediately available, without any delay. 
+We will now discuss what data exists in Orbiter and how to access it.
+
+\bigskip
+
+
+
+In most cases, 
+the data that Orbiter stores includes the automorphism group of the objects.
+Individual objects can be accessed by creating them from the catalogue.
+Other functions exist that can write reports about all objects of a certain type.
+
+
+\bigskip
+
+
+The command 
+
+\sourcecode{make_table_of_surfaces}
+
+creates a table of all cubic surfaces contained in the Orbiter knowledge base.
+The output is shown in Appendix~\ref{sec:data:cubic:surfaces}.
+
+
+\bigskip
+
+The command 
+
+\sourcecode{make_table_of_quartic_curves}
+
+creates a table of all quartic curves contained in the Orbiter knowledge base.
+%The output is shown in Appendix~\ref{sec:data:cubic:surfaces}.
+
+
+\bigskip
+
+It is possible to export data on cubic surfaces and quartic curves. 
+Two file types are supported: csv and sql. 
+For instance, 
+the command 
+
+\sourcecode{cubic_surfaces_table_q17}
+
+exports the cubic surfaces over the field $\bbF_{17}$ 
+contained in the Orbiter knowledge base.
+The files 
+\verb'table_of_cubic_surfaces_q17_info.csv' and 
+\verb'table_of_cubic_surfaces_q17_data.sql' are created.
+For each isomorphism class of cubic surfaces, one line is generate in the file.
+The command 
+
+\sourcecode{quartic_curves_table_q17}
+
+exports all quartic curves over the field $\bbF_{17}$ 
+
+
+\bigskip
+

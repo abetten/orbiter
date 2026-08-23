@@ -1,0 +1,23 @@
+ROW,C1,C2,C3
+0,"tab:matrix:group:1",,
+1,"Creating a Matrix Group (Part 1)",,
+2,"\verb'-GL' "," $n$ $F$ "," $\GL(n,q)$. Here (and in all of below), $F$ is an Orbiter object for a finite field $\bbF_q$. "
+3,"\verb'-GGL' "," $n$ $F$ "," $\GGL(n,q)$. "
+4,"\verb'-SL' "," $n$ $F$ "," $\SL(n,q)$. "
+5,"\verb'-SSL' "," $n$ $F$ "," $\SSL(n,q)$. "
+6,"\verb'-PGL' "," $n$ $F$ "," $\PGL(n,q)$. "
+7,"\verb'-PGGL' "," $n$ $F$ "," $\PGGL(n,q)$. "
+8,"\verb'-PSL' "," $n$ $F$ "," $\PSL(n,q)$. "
+9,"\verb'-PSSL' "," $n$ $F$ "," $\PSSL(n,q)$. "
+10,"\verb'-AGL' "," $n$ $F$ "," $\AGL(n,q)$. "
+11,"\verb'-AGGL' "," $n$ $F$ "," $\AGGL(n,q)$. "
+12,"\verb'-ASL' "," $n$ $F$ "," $\ASL(n,q)$. "
+13,"\verb'-ASSL' "," $n$ $F$ "," $\ASSL(n,q)$. "
+14,"\verb'-GL_d_q_wr_Sym_n' "," $d$ $F$ $n$ "," $\GL(d,q)$ wreath product $\Sym(n)$. "
+15,"\verb'-PGO' "," $n$ $F$ "," $\PGO(n,q)$. "
+16,"\verb'-PGOp' "," $n$ $F$ "," $\PGO^+(n,q)$. "
+17,"\verb'-PGOm' "," $n$ $F$ "," $\PGO^-(n,q)$. "
+18,"\verb'-PGGO' "," $n$ $F$ "," $\PGGO(n,q)$. "
+19,"\verb'-PGGOp' "," $n$ $F$ "," $\PGGO^+(n,q)$. "
+20,"\verb'-PGGOm' "," $n$ $F$ "," $\PGGO^-(n,q)$. "
+END

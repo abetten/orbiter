@@ -1,0 +1,1 @@
+Dickson6_eqn_af="X2^3 + X3^3 + X0^2*X1 + X0*X1^2 + X2*X3^2"

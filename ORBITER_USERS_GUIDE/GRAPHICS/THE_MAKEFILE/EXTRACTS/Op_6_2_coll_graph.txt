@@ -1,0 +1,9 @@
+Op_6_2_coll_graph:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 13 -end \
+		-define O -orthogonal_space 1 6 F -end \
+		-define v -vector -loop 0 35 1 -end \
+		-define Gamma -graph -coll_orthogonal O v -end \
+		-with Gamma -do \
+			-graph_theoretic_activity -save \
+		-end

@@ -1,0 +1,7 @@
+F2_get_primitive_poly_range_2_10:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-with F -do \
+		-finite_field_activity \
+			-get_primitive_polynomial_in_range 2 10 \
+		-end

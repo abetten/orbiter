@@ -1,0 +1,9 @@
+tritangent_planes_graph_cliques_all:
+	$(ORBITER) -v 2 \
+		-define Gamma \
+			-graph -tritangent_planes_disjointness_graph \
+		-end \
+		-with Gamma -do \
+		-graph_theoretic_activity \
+			-find_cliques -target_size 9 \
+		-end

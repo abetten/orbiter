@@ -1,0 +1,8 @@
+PGGO_5_4_multiply_all_elements:
+	$(ORBITER) -v 5 \
+		-define F4 -finite_field -q 4 -end \
+		-define G -linear_group -PGGO 5 F4 -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-multiply_all_elements_in_lex_order \
+		-end

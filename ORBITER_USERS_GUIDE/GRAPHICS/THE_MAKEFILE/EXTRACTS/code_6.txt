@@ -1,0 +1,20 @@
+code_6:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define C -code -field F \
+			-basis 6 "60,50,41" \
+		-end \
+		-with C -and F -do -coding_theoretic_activity \
+			-make_diagram \
+		-end \
+		-with C -do -coding_theoretic_activity \
+			-report \
+		-end
+	$(ORBITER) -v 2 -draw_matrix \
+		-input_csv_file by_basis_n6_k3_char_func_6_8.csv \
+		-box_width 20 -bit_depth 24 \
+		-partition 2 "1,1,1,1,1,1,1,1" "1,1,1,1,1,1,1,1" \
+		-end
+	$(PDFLATEX) by_basis_n6_k3_code_n6_k3_q2.tex
+	$(OPEN) by_basis_n6_k3_code_n6_k3_q2.pdf
+	$(OPEN) by_basis_n6_k3_char_func_6_8_draw.bmp

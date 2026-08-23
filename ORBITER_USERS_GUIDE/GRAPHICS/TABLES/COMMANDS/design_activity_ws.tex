@@ -1,0 +1,41 @@
+\begin{table}[t]
+\tbl{\label{tab:design:activity}}
+{\begin{tcolorbox}[tabularx={p{3cm}|p{2cm}|p{6.3cm}|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black,title=Design Activities]
+\hline
+Command & Arguments & Purpose \\
+\hline
+\hline
+\verb'-load_table'  &  label group H\_label H\_group\_order H\_gens l  &   \\
+\hline
+\verb'-canonical_form'  &  options   &   \\
+\hline
+\verb'-extract_solutions_by_index_csv'  &  label group fname-solutions-in fname-solutions-out prefix    &  Used by large set desargues. \\
+\hline
+\verb'-extract_solutions_by_index_txt'  &  label group fname-solutions-in fname-solutions-out prefix     &   \\
+\hline
+\verb'-export_flags'  &     &  Export the flags of the incidence to file.  \\
+\hline
+\verb'-export_incidence_matrix'  &     &  Export the incidence matrix as csv file. The adjacency matrix will be written row-by-row on $v$ rows. \\
+\hline
+\verb'-export_incidence_matrix_as_flags'  &     &  Export the incidence matrix as csv file. The whole design will be coded in one row. \\
+\hline
+\verb'-export_incidence_matrix_latex'  &   options  &  Export the incidence matrix as latex file. Used the options for drawing incidence matrices.\\
+\hline
+\verb'-intersection_matrix'  &     &  Compute the intersection matrix. If \verb'-save' is given, writes the intersection matrix to file. \\
+\hline
+\verb'-save'  &     &  See \verb'-intersection_matrix'. \\
+\hline
+\verb'-export_blocks'  &     &  Export the incidence matrix as blocks file \\
+\hline
+\verb'-row_sums'  &     &  Compute the row sums of the incidence matrix. \\
+\hline
+\verb'-tactical_decomposition'  &     &  Compute the tactical decomposition. \\
+\hline
+\verb'-orbits_on_blocks'  &  s control  &  Computes orbits on blocks of size $s$ ($s$-subsets of the set of blocks). Requires a poset classification control structure.  \\
+\hline
+\verb'-one_point_extension'  &  idx control  &  Construct the one-point extension graph from the incidence matrix of a design, using a relation on pairs of blocks. Idx is the orbit on pairs of blocks that defines the relation. Points in the graph correspond to points of the design, blocks of the design, and to the special point. \\
+\hline
+\end{tcolorbox}}
+\end{table}

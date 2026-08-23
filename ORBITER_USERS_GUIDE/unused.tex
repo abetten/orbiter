@@ -1,0 +1,680 @@
+Thus, for $\PG(2,2)$ the  ordering is
+\begin{center}
+$(1,0,0),$
+$(0,1,0),$
+$(0,0,1),$
+$(1,1,1),$
+$(1,1,0),$
+$(1,0,1),$
+$(0,1,1).$
+\end{center}
+Let us describe the two functions rank and unrank 
+to perform the actual mappings 
+between $\PG(n,q)$ and $\bbZ_{N},$ where $N = \theta_n(q).$
+For this, assume that ranking and unranking 
+functions have already been defined for the 
+elements of the finite field $\bbF_q$.
+Thus, we assume that for $x \in \bbF_q$, 
+{\sc Rank}$(\bbF_q,x)$ is a number $b$ in $\bbZ_q.$
+Also, for $b \in \bbZ_q$, 
+we assume that {\sc Unrank}$(\bbF_q,b)$ is the 
+corresponding $x \in \bbF_q$.
+So, we assume that 
+{\sc Rank} and {\sc Unrank} are mutually inverse functions.  
+\begin{algorithm}
+\caption{Rank}\label{algo:Rank}
+\begin{algorithmic}[1]
+\Procedure{Rank}{\textbf{vector} : $\bx,$ \textbf{field} : $\bbF_q$, $\textbf{int} : n$}
+\State \textbf{assert} $\bx$ is a nonzero vector in $\bbF_q^n.$
+\If {$\bx = \be_i$} 
+\State \Return $i$
+\EndIf
+\If {$\bx = \bone$} 
+\State \Return $n$
+\EndIf
+\State $i \gets \max\{j \in \bbZ_n \mid x_j \neq 0\}$
+\State $\bx \gets \frac{1}{x_i} \bx$
+\State $a := 0$
+\For {$j=i-1,\ldots,1,0$}
+\State $a \gets a + ${\sc Rank}$(\bbF_q, x_j)$
+\If {$j > 0 $} 
+\State $ a \gets a \cdot q$
+\EndIf
+\EndFor
+\If {$i = n - 1$ and $a \ge \sum_{j=0}^{i-1} q^j$} 
+\State $ a \gets a - 1$
+\EndIf
+\State $ a \gets a+ n - i + \sum_{j=0}^{i-1} q^j$
+\State \Return $a$
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+\begin{algorithm}
+\caption{Unrank}\label{algo:Unrank}
+\begin{algorithmic}[1]
+\Procedure{Unrank}{\textbf{int} : $a,$ \textbf{field} : $\bbF_q$, $\textbf{int} : n$}
+\State \textbf{assert} $a \in \bbZ_N$ where $N = \theta_{n-1}(q).$
+\If {$a < n$} 
+\State \Return $\be_a$
+\EndIf
+\State $a \gets a - n$
+\If {$a = 0$} 
+\State \Return $\bone$
+\EndIf
+\State $a \gets a - 1$
+\State $\bx \gets \bzero$
+\For {$i=1,\ldots,n-1$}
+\If {$a \ge \sum_{j=1}^{i-1}q^j$} 
+\State $a \gets a - \sum_{j=1}^{i-1}q^j$
+\Else
+\State $x_i \gets 1$
+\State \textbf{break}
+\EndIf
+\EndFor
+\For {$k=i+1,\ldots,n-1$}
+\State $x_k \gets 0$
+\EndFor
+\State $a \gets a + 1$
+\If {$i = n - 1$ and $a \ge \sum_{j=0}^{i-1} q^j$} 
+\State $ a \gets a + 1$
+\EndIf
+\State $j \gets 0$
+\While {$a > 0$}
+\State $r \gets a \mod q$
+\State $x_j \gets $ {\sc Unrank}$(\bbF_q,r)$
+\State $j \gets j + 1$
+\State $a \gets (a - r)/q$
+\EndWhile
+\For {$h=j,\ldots,i-1$}
+\State $x_h \gets 0$
+\EndFor
+\State \Return $\bx$
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+Consider the group $\PGL(3,2)$ acting on $\PG(2,2)$, 
+for instance. 
+
+
+
+
+The orbiter workflow is depicted in Figure~\ref{fig:workflow}.
+\begin{figure}
+$$
+\includegraphics[width=15cm]{GRAPHICS/OTHER/workflow}
+$$
+\caption{\label{fig:workflow}The Orbiter workflow}
+\end{figure}
+
+
+Combinatorial objects are objects that are defined by means of a finite group action.  
+The isomorphism problem for combinatorial objects is the question 
+to decide whether two objects of the same type belong to 
+the same orbit under the relevant group action. 
+Orbiter offers a unified treatment of such questions for various types of objects.
+The main tool is the computation of a canonical form, as well as the automorphism group. 
+
+\bigskip
+
+Combinatorial objects are coded as sequences of integers.
+Each type of object has its own coding. 
+Coding of objects as integer sequences allows easy handling of objcts. 
+For instance, objects can be specified in a command line argument, or they can be stored in a file.
+Large numbers of objects can be stored in files.
+
+\bigskip
+
+
+
+What is a combinatorial object? For the purposes of Orbiter, 
+it is any kind of  object that has a representation as a set of sets, 
+all drawn from an underlying finite set. 
+We allow colorings of the elements of the underlying set and of the sets in the set-system.
+The representation is functorial. 
+Isomorphisms between the combinatorial objects 
+must correspond to color preserving bijections of the set-representation and vice-versa.
+Under these conditions, the isomorphisms  between  combinatorial objects and automorphisms from one object to itself 
+correspond to the mappings between the associated set representations. 
+
+
+\bigskip
+
+The set-representation of combinatorial objects can help us computationally approach the isomorphism problem. 
+We simply search for color-preserving bijections that take the set-representation of the object to 
+the set-representation of the other object. Automorphisms can be found by mapping 
+the set-representation of the object to itself.
+
+
+\bigskip
+
+Canonical labelings can be used to eliminate the need to do pairwise isomorphism testing. 
+This is particularly helpful if the number of objects to test is large. 
+If we have $N$ objects, say, 
+then pairwise isomorphism testing requires ${N\choose 2}$ tests. 
+With canonical forms, we only need $N$ canonical forms computations.
+
+\bigskip
+
+
+Sets of sets are incidence structures.
+The Levi graph of an incidence structure is the bipartite graph 
+whose two classes correspond to rows and columns 
+of the incidence matrix. 
+The partition of the set system (underlying point set and set of sets) 
+reduces to a coloring of the vertices of the graph.
+Two combinatorial objects are isomorphic if and only if the associated colored 
+Levi graphs are isomorphic in the sense of graph isomorphism. 
+This allows to settle many questions associated with combinatorial object, such as 
+isomorphism testing and determining the automorphism group.
+
+\bigskip
+
+A canonical labeling of a graph is a bijection of the vertices. 
+The property is that if two graphs are isomorphic, then the 
+graphs become identical if the canonical labeling permutation is applied 
+(each graph has its own canonical labeling). 
+It is therefore important to compute canonical forms.
+If there is a vertex coloring, 
+we implicitly assume that the canonical labeling preserves the coloring.
+
+\bigskip
+
+Using the Levi graph construction, 
+this technique allows to solve the isomorphism problem for 
+combinatorial objects in the more general sense just defined. 
+This can also be applied to objects in projective geometries, 
+see for instance~\cite{AlogaidiBetten}.
+
+\bigskip
+
+
+
+===
+
+
+
+
+A packing is regular if it consists solely of regular spreads.
+The smallest regular packings exist in $\PG(3,5).$ 
+They were first described by Prince~\cite{Prince98} 
+and later placed into an infinite family by Penttila and Williams~\cite{PenttilaWilliams1998}.
+Up to isomorphism, there are exactly two regular packings in $\PG(3,5)$.
+Let us construct these packings. 
+We start by making a table of all regular packings:
+{\tt
+\input GRAPHICS/THE_MAKEFILE/EXTRACTS/spread_table_PG_3_5_regular.tex
+}
+There are 155,000 regular spreads in $\PG(3,5)$. 
+In the command, we rely on the classification of spreads in $\PG(3,5)$ 
+which is built into Orbiter. 
+The spread with orbiter catalogue number 12 is the regular spread.
+
+\bigskip
+
+We consider the projectivity of order 31 given by the matrix
+$$
+\left[
+\begin{array}{cccc}
+1&0&0&0\\
+0&3&4&3\\
+0&3&3&4\\
+0&3&2&3\\
+\end{array}
+\right]
+$$
+The next command computes the normalizer of the cyclic subgroup of order 31 generated by this element:
+{\tt
+\input GRAPHICS/THE_MAKEFILE/EXTRACTS/PG_3_5_element_of_order_31_ME_normalizer.tex
+}
+The normalizer is a group of order 372.
+We encode the group and its normalizer as makefile variables: 
+{\tt
+\input GRAPHICS/THE_MAKEFILE/EXTRACTS/PGL_4_5_SUBGROUP_31_ME.tex
+}
+{\tt
+\input GRAPHICS/THE_MAKEFILE/EXTRACTS/PGL_4_5_SUBGROUP_31_ME_NORMALIZER.tex
+}
+Let $H$ be the subgroup of order $31$ and let $N$ be its normalizer.
+Then we compute the orbits of $H$ on the regular spreads:
+{\tt
+\input GRAPHICS/THE_MAKEFILE/EXTRACTS/PG_3_5_assume_31_graph.tex
+}
+The command produces reports about the orbits of both $H$ and $N$ on points, lines and spreads. 
+The following command searches all cliques of size 1 in the graph on long orbits. 
+{\tt
+\input GRAPHICS/THE_MAKEFILE/EXTRACTS/PG_3_5_assume_31_fpc0_lo_cliques.tex
+}
+There are exactly 8 cliques of size 1.
+The next command builds the packings arising from these 8 cliques:
+{\tt
+\input GRAPHICS/THE_MAKEFILE/EXTRACTS/PG_3_5_assume_31_read_again.tex
+}
+
+
+
+
+
+
+
+
+If $p$ is a prime number, 
+the integer factor ring $\bbZ/\bI(p)$ is a finite field. 
+Here, 
+$$
+\bI(p) = p\bbZ = \{pk \mid k \in \bbZ \} = \{0, \; \pm k, \; \pm 2k, \; \pm 3k, \ldots \}
+$$
+is the ideal of all integer multiples of $p.$
+The elements of $\bbF_p$ are the residue classes of the ideal given by the integer multiples of $p$.
+Each residue class has the form 
+$$
+\{ a + kp \mid k \in \bbZ \}.
+$$ 
+Standard representatives of the equivalence classes can be chosen as the smallest non-negative member in each class.
+This means that the standard representatives are the integers from $0$ to $p-1.$
+This canonical representative is the remainder after division by $p$.
+Two integers belong to the same residue class if they have the same remainder after division by $p$. 
+For instance, $11$ and $46$ are in the same residue class modulo $5$ because 
+both have a remainder of $1$ after division by five. 
+It is convenient to identify the residue classes mod $p$ with the integers from $0$ to $p-1.$
+In Orbiter, this convention is used automatically.
+The addition table and the multiplication table can be used to add and multiply in $\bbF_p.$
+For instance, in Figure~\ref{fig:fieldtables7} the addition and multiplication tables of $\bbF_7$  are shown, both numerically and using colors. 
+\begin{figure}
+$$
+\begin{array}{c}
+\includegraphics[width=13cm]{GRAPHICS/GF/F7_addition_table}\\
+%\includegraphics[width=5cm]{GRAPHICS/GF/GF_q7_addition_table_draw}
+\includegraphics[width=13cm]{GRAPHICS/GF/F7_multiplication_table}
+%\includegraphics[width=5cm]{GRAPHICS/GF/GF_q7_multiplication_table_draw}
+\end{array}
+$$
+\caption{\label{fig:fieldtables7}Addition and multiplication tables of $\bbF_7$}
+\end{figure}
+The 
+natural ordering of the integers in the interval $[0,6]$ is used. 
+Different integers are represented by different colors.
+It is customary to restrict the multiplication table to the non-zero elements of the field. 
+
+\bigskip
+
+
+
+
+The command 
+{\tt
+\input GRAPHICS/THE_MAKEFILE/EXTRACTS/draw_mod_13.tex
+}
+computes the powers of $2$ mod $13$ and connects consecutive powers along the circle modulo $13.$
+By changing the value of the base, the diagrams in Figure~\ref{ref:power:13} are created.
+\begin{figure}
+$$
+{\arraycolsep=0pt
+\begin{array}{ccc}
+\begin{array}{c}
+\input GRAPHICS/MOD13/mod_13_powers_of_2_draw.tex\\
+b=2\\
+\end{array}
+&
+\begin{array}{c}
+\input GRAPHICS/MOD13/mod_13_powers_of_3_draw.tex\\
+b=3\\
+\end{array}
+&
+\begin{array}{c}
+\input GRAPHICS/MOD13/mod_13_powers_of_4_draw.tex\\
+b=4\\
+\end{array}\\
+\end{array}}
+$$
+$$
+{\arraycolsep=0pt
+\begin{array}{cc}
+\begin{array}{c}
+\input GRAPHICS/MOD13/mod_13_powers_of_5_draw.tex\\
+b=5\\
+\end{array}
+&
+\begin{array}{c}
+\input GRAPHICS/MOD13/mod_13_powers_of_6_draw.tex\\
+b=6\\
+\end{array}
+\\
+\end{array}
+}
+$$
+\caption{\label{ref:power:13}Cycle of powers of $b$ modulo $13$}
+\end{figure}
+The cases $b=2$ and $b=6$ are special. In those cases, the sequence of powers of $b$ mod $13$ 
+loops back unto itself after visiting all non-zero elements modulo $13.$ 
+This is because $2$ and $6$ are primitive elements modulo $13.$ 
+Because $-1$ is a square modulo 13, 
+the power cycles of $b$ and of $-b$ have the same length, 
+so $-2 = 11$ and $-6 = 5$ are primitive elements also. 
+In total, there are $4$ primitive elements modulo $13$. 
+This agrees with $\varphi(12) = 4,$ where $\varphi(k)$ is Euler's totient function, 
+which counts the number of generators in the cyclic group of order $k$. 
+However, this reasoning relies on the fact that $13$ is prime, 
+which implies that the group of prime residues modulo 13 is cyclic. 
+
+\bigskip
+
+
+The command 
+{\tt
+\input GRAPHICS/THE_MAKEFILE/EXTRACTS/draw_mod_127.tex
+}
+creates the drawing shown in Figure~\ref{ref:power:127}.
+\begin{figure}
+$$
+\includegraphics[width=8cm]{GRAPHICS/mod_127_base_3}
+$$
+\caption{\label{ref:power:127}Cycle of powers of $3$ modulo $127$}
+\end{figure}
+
+
+
+
+
+Orbiter is also an open source computer algebra system. 
+It is devoted to the goal of aiding the development of a software stack in 
+open source computations in mathematics. 
+What does this mean?
+According to \url{https://www.techtarget.com/}, 
+\begin{quote}
+A software stack is a collection of independent components that work together to support the execution of an application. The components, which may include an operating system, architectural layers, protocols, runtime environments, databases and function calls, are stacked one on top of each other in a hierarchy.
+\end{quote}
+To date, most computer algebra systems are run through a session, where commands are entered and output is formatted to be viewable by the user instantaneously. 
+This works well for many users. However, it is difficult to 
+build a software stack on top of such a system. 
+Building a software stack is necessary in case that several systems ought to work together, 
+which is important in the world of mathematical software, in particular in parallel computing.
+Successful research often requires to combination of different software tools. 
+In order to do this, the tools need to interface and exchange data. 
+The collaboration should be automatized. 
+This allows repetetive execution of laborious tasks, and 
+minimizes the risk of human-induced error, 
+such as file mishandling and parameter mismatch. 
+Collaboration with the unix command line tools 
+is another big aspect of building a software stack. 
+Too many systems neglect the command line in favor of a shiny user interface.
+The user interface often makes it difficult to process large data quantities, 
+for instance because it requires the input to be typed in a certain way. 
+Such requirements can lead to inefficient data storage and to laborious and unnecessary 
+data conversion requirements. 
+
+\bigskip
+
+
+Orbiter was designed with these goals in mind:
+\begin{enumerate}
+\item
+Allow Orbiter to be part of a software stack. 
+\item
+Allow code to be shared and reused different software projects.
+\item
+Interface with existing software solutions, say, eigenvalue software, 
+graph canonical form software, latex text processing, computer graphics.
+\item
+Produce human readable reports of mathematical data. 
+\item
+Support highly efficient data structures for mathematics an state-of-the art algorithms. 
+\item
+Keep data in files. Files should be in standard formats, such as csv or ascii. 
+If necessary, efficient binary file formats should be used.
+\item
+Keep source code and data separate. 
+This can make it easier to verify what a piece of code does, 
+including making code changes more safe. 
+There is only one version of the code, and there are defined entrance points. 
+Parameters are set in a visible place, outside of the code.
+\item
+Allow classification of mathematical objects of various kinds. 
+To this end, the system should allow to define various types of finite groups and actions. 
+\item
+Provide access to different orbit calculation algorithms.
+The orbit tools should be independent from the group action, 
+so that a variety of problems can be run with the same basic code.
+\item
+Provide a place for storage of mathematical data, 
+including the automorphism groups of mathematical objects.
+\end{enumerate}
+
+
+\bigskip
+
+
+
+Orbiter is a library of C++ classes, together with a command line driven front end.
+There is no graphical user interface.
+The system offers two modes of use, programming or command line interface.
+This manual is about the command line interface.
+Readers who are interested in the Orbiter C++ class library should consult the programmer's guide.
+A makefile with all commands used in this guide can be found in the \verb'examples' subdirectory.
+For background on Orbiter, see~\cite{Betten2020}.
+
+
+
+
+
+Orbiter objects are 
+models of mathematical objects. 
+Objects are created and activities are invoked for these objects.
+This way, most of the functionality of Orbiter is attached to an object. 
+Tables~\ref{tab:objects:1}-\ref{tab:objects:2} give an overview of Orbiter objects, 
+with pointers to the relevant chapter or section in this user's guide..
+Besides these Objects and their activities, there are still functions that are global. 
+This means that these functions do not require any objects.
+\orbitertableofcommands{aaa_summary_of_objects_1}
+\orbitertableofcommands{aaa_summary_of_objects_2}
+
+
+There are two ways to run Orbiter: Native and Docker.
+Native means that Orbiter is compiled from scratch, 
+using the source code from the github repository (cf.~\cite{Orbiter}).
+Docker~\cite{docker} is a system to run preconfigured software in an encapsulated way on various platform, 
+including Windows.
+We describe using Orbiter through unix {\em makefiles}, 
+which are run through the tool {\em make} (cf.~\cite{make}). 
+This is a software tool that allows collecting short command snipplets in 
+the form of text files that can easily be handled. 
+However, the conventions in the tool involve some subtleties regarding the use of whitespace, 
+which can cause problems to novice users. 
+We will point out possible pitfalls along the way. 
+Note that it is not necessary to use makefiles. 
+Another possibility would be to use shell scripts. 
+Ultimately, it would be possible to type out all commands into a terminal window. 
+This could be a little tedious though, considering the fact that 
+most Orbiter commands expect lengthy parameters from the command line.
+
+ 
+\smallskip
+
+Let us start by discussing how to run Orbiter as a native application.
+To do so, a unix-like compile environment is required, 
+including a modern C++ compiler and the tools {\em git} and {\em make}. 
+Windows users may need to install Cygwin~\cite{cygwin}.
+The following steps are required:
+Using git, {\em clone} the repository. Then enter the directory {\em orbiter} 
+and type 
+\begin{verbatim}
+make
+\end{verbatim}
+Once compiled, the Orbiter executable is
+$$
+\verb'src/apps/orbiter/orbiter.out'
+$$
+within the Orbiter directory. 
+
+
+
+In the work directory, create a small makefile like so:
+\begin{verbatim}
+OP=../orbiter
+ORBITER_PATH=$(OP)/src/apps/orbiter/
+
+test:
+  $(ORBITER_PATH)orbiter.out
+\end{verbatim}
+Different directory structures can be accommodated by changing the first line.
+Next, typing 
+\begin{verbatim}
+make test
+\end{verbatim} 
+within the work directory will invoke Orbiter. 
+Here, {\em test} is the makefile ``target.'' The makefile target must appear in the makefile.
+In the example above, the block 
+\begin{verbatim}
+test:
+  $(ORBITER_PATH)orbiter.out
+\end{verbatim}
+is the makefile target ``test.''
+It is important that the indentation after the makefile target is done using tab characters (no spaces).
+There can be multiple targets in one makefile, as long as they are separated by an empty line.
+for more information about the syntax of makefiles, see~\cite{make}.
+
+\smallskip
+
+A second way to run Orbiter is through Docker~\cite{docker}. 
+This does not require a compile environment.
+However, it comes at a small performance cost when running Orbiter commands that are computationally heavy.
+%Simply install docker and then use our example makefile with the docker option enabled.
+%Perhaps it is helpful to outline the role that Docker plays in running Orbiter. 
+%Orbiter is open source software, developed in a unix/linux environment. The installation of such software 
+%on a user's computer can be difficult. The necessary tools to compile the source code are often not available. 
+%Docker helps to deliver an executable to the user, regardless of which operating system is used. 
+Orbiter has already been precompiled (by the Orbiter developer) 
+into an {\em image}, which is a completely self-sustained 
+copy of a unix-environment that can
+run by the user under the docker front-end. 
+The image is stored on a docker server under the name \verb'abetten/orbiter'.
+% The image is stored on a Docker server. 
+%For there, the image can be pulled to the user's computer and run. This is done using the Docker environment. 
+Docker will receive the name of the image from the command line, 
+pull a local copy of the image, and run 
+the image in an encapsulated environment called a {\em container}. 
+A copy of the image is stored locally, so that subsequent calls to 
+Orbiter can be satisfied using the local copy, which increases turnaround speed. 
+%In order to update Orbiter to a new version, 
+%one should simply discard the current image. 
+%In this case, Docker will pull the current copy of Orbiter from the server. 
+For instance, the following bare-bones makefile sets up Orbiter for use through Docker: 
+\begin{verbatim}
+DOCKER_OPTIONS=run -it \
+  --volume ${PWD}:/mnt -w \
+  /mnt abetten/orbiter 
+ORBITER_PATH=docker $(DOCKER_OPTIONS)
+
+test:
+  $(ORBITER_PATH)orbiter.out
+\end{verbatim}
+In this file, there is a space character in line three after \verb'abetten/orbiter' 
+which is important (and unfortunately cannot be seen).
+By typing
+\begin{verbatim}
+make test
+\end{verbatim}
+into a terminal window, 
+Docker starts up and pulls 
+a copy of Orbiter to the local machine, which is then executed. 
+Orbiter will start up, produce a few messages and then shut down.
+Interestingly, this will work on a 
+Windows machine also (using {\em supershell} as terminal). 
+The {\em make} command is passed through to the container, 
+which contains the unix-like software environment, including make.
+The associated {\em makefile} resides on the local machine, 
+as do input and output files.
+
+\smallskip
+
+Orbiter comes with a version numbering system called a build number. 
+The build number should match the commit number on the github tree, shown below:
+\orbiteroutput{GRAPHICS/LATEX/github_commit_number}
+When Orbiter starts up, the build number is displayed.
+In order to update to a more recent version of Orbiter, 
+Docker needs to be instructed to discard the local image. 
+To do so, the command 
+\begin{verbatim}
+docker rmi -f abetten/orbiter
+\end{verbatim}	
+is used.
+After that, any new invocation of Orbiter 
+will cause Docker to pull the latest Orbiter {\em image} from the 
+Docker repository.
+It is convenient to combine the Docker and Native compile environment into a single makefile 
+and use the comment symbol (hash \verb'#') 
+to switch between the two modes (the line numbers are not part of the file).
+
+
+
+\sourcecode{ORBITER_PATH}
+
+In the code excerpts, 
+a tabulator character is shown as a little triangle pointing to the right. 
+Also, the backslash signs are used to break long lines. 
+Please make sure that there are no spaces after the backslash sign.
+
+
+
+\bigskip
+
+
+
+For use with Docker, the installation of Orbiter requires the following steps:
+\begin{enumerate}[(a)]
+\item
+Install Docker from \url{www.docker.com}, including the Linux kernel.
+\item
+Open a terminal window (for instance PowerShell on Windows).
+\item
+Type
+\begin{quote}
+\verb'docker run -it --volume ${PWD}:/mnt -w /mnt abetten/orbiter orbiter.out'
+\end{quote}
+\end{enumerate}
+Docker will start downloading Orbiter as a container. 
+This can take a while, depending on the Internet speed.
+After that, an Orbiter session is started. 
+As no specific commands were given, Orbiter simply starts up and quits.
+Once it has been downloaded, Docker will recycle the copy of orbiter and a download is no longer required.
+However, once Orbiter updates, Docker will update the local copy of Orbiter as well.
+
+
+\bigskip
+
+To use Orbiter in native mode, the sources have to be installed and compiled. 
+This is more complicated on Windows machines, because the unix environment is missing. 
+Windows users can use cygwin to install Orbiter.
+The installation of Orbiter requires the following steps:
+\begin{enumerate}[(a)]
+\item
+Ensure that \verb'git' and the C++ development suite are installed (\verb'gnuc' and \verb'make'). 
+Windows users may have to install \verb'cygwin' 
+(plus the extra packages \verb'git', \verb'make', \verb'gnuc'). 
+Macintosh users may have to install the xcode development tools from the appstore (it is free).
+Linux users may have to install the development packages.
+Orbiter often produces latex reports. 
+In order to compile these files, make sure you have latex installed 
+\item
+Clone the Orbiter source tree from github (abetten/orbiter).
+The commands are: 
+\begin{quote}
+\verb'git clone <github-orbiter-path>'
+\end{quote}
+where \verb'<github-orbiter-path>'  has to be replaced by the actual address provided by github. 
+To obtain this path, find Orbiter on github, 
+then click on the green box that says ``Code'' 
+and copy the address into the clipboard by clicking the clipboard symbol, see below:
+\orbiteroutput{GRAPHICS/LATEX/github}
+Back in the terminal, paste this text after the \verb'git clone' command.
+After cloning is complete, enter the orbiter directory (\verb'cd orbiter').
+\item
+Issue the following commands to compile Orbiter:
+\begin{quote}
+\verb'make'\\
+\verb'make install'\\
+\end{quote}
+These two commands compile the Orbiter source tree and copy 
+the executables to the subdirectory bin inside the Orbiter source tree. 
+The orbiter executable is called \verb'orbiter.out'. 
+\end{enumerate}
+

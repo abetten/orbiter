@@ -1,0 +1,132 @@
+Let $\bbF_q$ denote the finite field with $q$ elements. 
+Up to isomorphism, there is only one field of order $q$. 
+In Orbiter, the elements of $\bbF_q$ are represented 
+by the integers in the interval $[0,q-1].$
+
+
+\bigskip
+
+Table~\ref{tab:finitefield:create} 
+lists Orbiter commands for creating a finite field.
+\orbitertableofcommands{finite_field}
+For instance,  
+
+\sourcecode{F_2}
+
+creates the finite field $\bbF_2$ and produces a report for it.
+
+\bigskip
+
+
+Table~\ref{tab:finitefield:activities} 
+lists basic Orbiter activities for finite fields. 
+More activities will follow in Section~\ref{sec:extension:fields}.  
+\orbitertableofcommands{finite_field_activities}
+
+The command  
+
+\sourcecode{F_7}
+
+creates a cheat sheet for $\bbF_7$ as shown below. 
+The element $\alpha$ is a primitive element. 
+\orbiteroutput{GRAPHICS/LATEX/report_finite_field_7}
+The command  
+
+\sourcecode{F_7_tables}
+
+creates the addition and multiplication tables for the field, 
+shown below
+\orbiteroutput{GRAPHICS/WRAPPERS/GF_q7_tables_draw}
+
+
+\bigskip
+
+
+Suppose we want to check Wilson's theorem:
+$$
+\prod_{a \in \bbF_q^\times} a = -1.
+$$
+The following command verifies this statement for $q = 11.$ 
+We first create a vector of all 
+nonzero field elements, 
+which we take as the integers from $1$ to $10$. After that, 
+we use the \verb'-product_of' finite field activity.
+This computes the product of the elements in the given set. 
+
+\sourcecode{F_11_product_of_all_nonzero_elements}
+
+The answer is $10,$ which is congruent to $-1$ mod $11:$
+
+
+\bigskip
+
+
+Suppose we want to create the Vandermonde 
+matrix whose entries are $x_{i}^j$. 
+Here $x_0,\ldots,x_{q-1}$ are the elements of the field $\bbF_q$ 
+and $j$ ranges from $0$ to $q-1$. 
+The following command does so for $q=7$. 
+The command also computes the inverse of the Vandermonde matrix.
+
+\sourcecode{F_7_vandermonde}
+
+The output is shown below. 
+The first matrix is $V = (x_{i}^j).$ 
+The second matrix is $V^{-1}$:
+\orbiteroutput{GRAPHICS/LATEX/report_finite_field_7_vandermonde}
+
+
+\bigskip
+
+
+
+There is a second ordering of the elements which is used occasionally. 
+In this labeling, every non-zero element 
+is written as a power of a fixed primitive element.
+So, if $\alpha$ is a primitive element, 
+we arrange the elements of $\bbF_p$ as 
+$$
+0,1,\alpha,\alpha^2,\ldots,\alpha^{q-2}.
+$$
+The cheat sheet contains this list of field elements at the very end.
+It is sometimes convenient to arrange 
+the elements in the order of powers of a primitive element. 
+In $\bbF_7$, $3$ is a primitive element. 
+The powers of $3$ are 
+$$
+0,3^0,3^1,3^2,\ldots,3^6 = 0,1,3,2,6,4,5,1 \mod 7.
+$$
+With respect to this ordering of elements, 
+the addition and multiplication tables become
+\orbiteroutput{GRAPHICS/WRAPPERS/GF_q7_tables_reordered_draw}
+
+
+
+
+
+
+\bigskip
+
+
+For small field orders, the Orbiter employs 
+precomputed tables for the arithmetic operations 
+such as addition and multiplication and computing inverses.
+Precomputing these tables can be time-consuming. 
+The option \verb'-without_tables' 
+can be given to avoid precomputing tables. 
+Of course, not by not precomputing the tables, 
+arithmetic operations are somewhat slower than before.  
+Here is an example. 
+We create the field $\bbF_{101}$ without precomputed tables:
+
+\sourcecode{F_101_wo}
+
+
+
+
+\bigskip
+
+For a list of limitations of Orbiter, see Section~\ref{sec:limitations}.
+
+
+\bigskip

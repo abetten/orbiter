@@ -1,0 +1,18 @@
+surface_8_0b:
+	$(ORBITER) -v 3 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 -nodes_empty \
+		-end \
+		-define F -finite_field -q 8 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define S8_0 -cubic_surface -space P -catalogue 0 \
+			-select_double_six "15,11,22,19,24,5,16,10,23,20,25,4" \
+			-select_double_six "3,2,1,0,5,4,9,8,7,6,11,10" \
+			-transform "1,0,0,0,0,1,0,6,0,0,1,6,0,0,0,1,0" \
+			-transform_inverse "3,1,1,0,0,1,0,0,0,0,1,0,0,0,0,1,0" \
+			-transform_inverse "2,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1,0" \
+		-end \
+		-with S8_0 -do \
+		-cubic_surface_activity \
+			-report Do \
+		-end

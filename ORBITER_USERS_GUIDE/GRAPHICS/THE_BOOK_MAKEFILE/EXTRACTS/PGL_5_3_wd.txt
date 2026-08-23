@@ -1,0 +1,12 @@
+PGL_5_3_wd:
+	$(ORBITER) -v 3 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define G -linear_group -PGL 5 3 -wedge_detached -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end
+	$(PDFLATEX) PGL_10_3_Wedge_5_3_detached_report.tex
+	$(OPEN) PGL_10_3_Wedge_5_3_detached_report.pdf

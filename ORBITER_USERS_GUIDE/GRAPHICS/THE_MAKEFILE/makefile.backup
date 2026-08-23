@@ -1,0 +1,11 @@
+all:
+	~/bin/a2tex.out -numbers -text_width 80 <the_makefile >the_makefile.tex
+	~/bin/a2tex.out -text_width 10000  <the_makefile >the_makefile_nonumbers.tex
+	~/bin/a2tex.out -text_width 10000  <C13.makefile >C13_makefile.tex
+	~/bin/a2tex.out -text_width 10000  <PGL_4_2.makefile >PGL_4_2_makefile.tex
+	~/bin/a2tex.out -text_width 10000  <Paley_13_group.makefile >Paley_13_group_makefile.tex
+	~/bin/a2tex.out -text_width 10000  <15_lines.makefile >15_lines_makefile.tex
+	~/bin/a2tex.out -text_width 10000  <Cycle_13_gens.csv >Cycle_13_gens_csv.tex
+
+
+	

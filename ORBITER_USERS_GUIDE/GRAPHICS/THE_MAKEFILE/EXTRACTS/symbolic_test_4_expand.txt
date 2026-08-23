@@ -1,0 +1,13 @@
+symbolic_test_4_expand:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 13 -end \
+		-define M -symbolic_object \
+			-field F \
+			-matrix 1 \
+			-text "(a+b)^2" \
+		-end \
+		-define M1 -symbolic_object \
+			-field F \
+			-expand M \
+			-write_trees_during_expand \
+		-end

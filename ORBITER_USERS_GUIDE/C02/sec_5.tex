@@ -1,0 +1,268 @@
+Table~\ref{tab:vector:builder} shows Orbiter commands to create vector and matrix objects.
+\orbitertableofcommands{vector_builder}
+Matrices are vectors with an additional format information. By specifying the number of rows, 
+a vector turns into a matrix. 
+So, to create a matrix, one creates a vector, and uses the \verb'-format' command.
+Examples will be shown below. 
+
+
+
+
+
+
+\bigskip
+
+
+Vectors can be defined in two different formats, 
+called dense and sparse, respectively.
+In the dense format, the coefficients 
+are listed in order from the lowest to the highest term.
+The \verb'-dense' command creates the vector from a list of coefficients.
+The sparse format can be useful for coefficient vectors with few nonzero entries.
+It is a list of coefficient pairs, 
+each of which describing one entry in the vector.
+One pair consists of the coefficient and the index of the term. 
+The pairs are listed in sequence.
+The \verb'-sparse' command creates the vectors 
+from a given list of coefficient pairs. 
+
+
+\bigskip
+
+If the option \verb'-field' is given, 
+Orbiter will assume that the vector entries lie in the 
+interval $[0,q-1]$, where $q$ is the order of the finite field. 
+If entries lie outside that interval, 
+an error is raised.
+There are limits on the size of $q$, see Section~\ref{sec:limitations}.
+It is safe to assume that any number $q$ 
+less than $2^{31}-1$ is fine. 
+On 64 bit systems (with Orbiter compiled in 64 bit mode) 
+we can have $q \le 2^{63}-1.$
+
+\bigskip
+
+
+Here is an example. 
+We first create the field $\bbF_5$, 
+and then create the vector $v=(0,1,2,3,4)$.
+The \verb'-field' option refers to 
+the finite field created previously.
+The \verb'-dense' option allows to enter 
+the vector coefficients on the command line. 
+
+\sourcecode{vector_example1}
+
+
+\bigskip
+
+
+Vectors can also be read from file. 
+The \verb'-file' option can be used to name a csv file. 
+
+\bigskip
+
+
+A vector can also serve as a matrix. 
+The \verb'-format' $k$ option can be used to specify the number $k$ of rows. 
+The number of columns is determined as $n/k$, 
+where $n$ is the length of the vector given.
+For instance, the next example 
+creates a $2 \times 3$ matrix over $\bbF_5$:
+
+\sourcecode{vector_example2}
+
+
+\bigskip
+
+
+
+
+Orbiter has a command to create vectors whose entries repeat. 
+For instance, the following code creates a vector of length 11 
+whose entries repeat over the sequence $0,1,2,3$. 
+It is not necessary that the vector length is an 
+integer multiple of the length of the repeating sequence.
+
+\sourcecode{vector_example_repeat}
+
+The sequence 0,1,2,3 is repeated sufficiently 
+often to make a vector of length 11. 
+This creates the vector 
+$$
+( 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2 ).
+$$
+
+\bigskip
+
+In order to create a constant vector, 
+the \verb'-repeat' command can be used as well. 
+Simply use a repeat sequence consisting of a single number. 
+For instance,  the following example creates the all-one vector of length 11:
+
+\sourcecode{vector_example_all_one_11}
+
+This code will create the all-one vector of length $11$:
+$$
+( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ).
+$$
+
+\bigskip
+
+
+A loop command can create sequences of numbers $a_0,a_1,\ldots$.
+It takes three arguments: $s$, $u$, and $d.$ 
+The values of the sequence are 
+$$
+a_i = s + id, \ldots k = 0,1,2,\ldots, \quad a_i < u.
+$$
+So, the values of the sequence increases in steps of $d$, 
+and are forced to be less than the upper bound $u$.
+For instance, in order to create all integers from $0$ to $7$, we use the command:
+
+\sourcecode{vector_loop_8}
+
+If we wanted to create the odd integers less 
+than or equal to 16, we could do this:
+
+\sourcecode{vector_loop_odd_16}
+
+This command creates the vector 
+$$
+( 1, 3, 5, 7, 9, 11, 13, 15 ).
+$$
+
+
+\bigskip
+
+
+Two vectors can be concatenated, 
+as demonstrated in the following example:
+
+\sourcecode{vector_concatenate}
+
+The vectors $(1,2,3)$,  $(4,5,6)$ and $(7,8,9)$ are created. 
+After that, the concatenation command produces 
+$$(1,2,3,4,5,6,7,8,9).$$
+
+
+\bigskip
+
+The vector command can also be used to create matrices. 
+A matrix is a vector with additional formatting information.
+The vector is the coefficient vector, 
+using row-major ordering.
+For instance, the following command creates the vector 
+$$
+(1,2,3,4,5,6),
+$$
+which by means of the \verb'-format 2' command turns into the matrix 
+$$
+\left[
+\begin{array}{ccc}
+	1 & 2 & 3 \\
+	4 & 5 & 6 \\
+\end{array}
+\right].
+$$
+Here is the command:
+
+\sourcecode{matrix_example1}
+
+
+\bigskip
+
+For large vectors, the \verb'sparse' 
+command can be used to enter non-zero coefficients as a list of pairs. 
+For instance,
+
+\sourcecode{vector_example_sparse}
+
+creates a vector of length 20 and 
+sets the 0-th and the 19-th coefficient to 1. 
+So, the vector is 
+$$
+(1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1).
+$$
+Finally, the vector is displayed as a four-rowed matrix:
+$$
+\left[
+\begin{array}{ccccc}
+	1 & 0 & 0 & 0 & 0 \\
+	0 & 0 & 0 & 0 & 0 \\
+	0 & 0 & 0 & 0 & 0 \\
+	0 & 0 & 0 & 0 & 1 \\
+\end{array}
+\right].
+$$
+
+\bigskip
+
+
+Makefile variables can be used to hold 
+the coefficients in a separate place. 
+This helps reduce clutter.
+For instance, the following command creates 
+the generator matrix of the Hamming code:
+
+\sourcecodevariable{HAMMING_CODE_GENERATOR}
+
+
+\sourcecode{matrix_example2}
+
+
+\bigskip
+
+
+For matrices over small fields, 
+the \verb'-compact' option can be given.
+This works similar as the \verb'-dense' option, 
+but the entries are not separated by commas. 
+This is only good for single digit data, 
+as it arises with very small fields. 
+For instance, the following code creates 
+a $22 \times 22$ matrix over the binary field:
+
+\sourcecodevariable{CONWAY_GEN1}
+
+
+\sourcecode{matrix_example_co_1}
+
+
+
+\bigskip
+
+The next command creates a vector and then computes the set of position where the vector is nonzero: 
+
+\sourcecode{vector_index_set}
+
+
+\bigskip
+
+
+The next command creates the permutation matrix associated with the permutation $[1,2,3,0]$
+
+\sourcecode{vector_index_set}
+
+The following matrix is created: 
+$$
+\left[
+\begin{array}{cccc}
+0&1&0&0\\
+0&0&1&0\\
+0&0&0&1\\
+1&0&0&0\\
+\end{array}
+\right].
+$$
+
+\bigskip
+
+
+
+Table~\ref{tab:vector:activity} shows Orbiter activities for vector and matrix objects.
+\orbitertableofcommands{vector_activity}
+
+
+\bigskip
+

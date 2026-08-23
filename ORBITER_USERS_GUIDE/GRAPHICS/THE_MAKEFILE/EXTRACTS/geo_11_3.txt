@@ -1,0 +1,9 @@
+geo_11_3:
+	$(ORBITER) -v 2 \
+		-define Test_lines -set -loop 4 12 1 -end \
+		-define Geo -geometry_builder \
+			-V 11 -B 11 -TDO 3 \
+			-fuse 1 -fname_GEO 11_3 \
+			-output_to_inc_file \
+			-test Test_lines \
+		-end

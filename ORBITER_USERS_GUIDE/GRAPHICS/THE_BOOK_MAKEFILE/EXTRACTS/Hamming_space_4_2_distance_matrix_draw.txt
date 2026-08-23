@@ -1,0 +1,8 @@
+Hamming_space_4_2_distance_matrix_draw:
+	$(ORBITER) -v 2 \
+		-draw_matrix \
+			-input_csv_file Hamming_n4_q2.csv \
+			-box_width 20 -bit_depth 24 \
+			-partition 4 16 16 \
+		-end
+	$(OPEN) Hamming_n4_q2_draw.bmp

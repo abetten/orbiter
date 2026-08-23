@@ -1,0 +1,4 @@
+random_permutation_12:
+	$(ORBITER) -v 4 \
+		-seed 31415 \
+		-random_permutation 12 random.csv

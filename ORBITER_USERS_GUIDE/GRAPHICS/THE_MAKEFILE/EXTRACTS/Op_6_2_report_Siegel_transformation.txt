@@ -1,0 +1,17 @@
+Op_6_2_report_Siegel_transformation:
+	$(ORBITER) -v 2 \
+		-define Pts -vector \
+			-dense $(ORTHOGONAL_OP_6_2_POINTS_OFF) \
+		-end \
+		-define F -finite_field -q 2 -end \
+		-define G -linear_group -PGOp 6 F -end \
+		-define Siegel -vector_ge \
+			-action G \
+			-read_csv O_1_6_2_Siegel_transformation.csv Element \
+		-end \
+		-with Siegel -do \
+		-vector_ge_activity \
+			-report_with_options "dense=on" \
+		-end 
+	$(PDFLATEX) PGOp_6_2_Siegel_elements.tex
+	$(OPEN) PGOp_6_2_Siegel_elements.pdf

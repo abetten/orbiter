@@ -1,0 +1,3 @@
+COLOR_RED=\
+	"texture{ pigment{ color Red } \
+	finish {diffuse 0.9 phong 0.6} }"

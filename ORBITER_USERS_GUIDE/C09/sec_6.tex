@@ -1,0 +1,76 @@
+Let us now address the problem of classification of quartic curves.
+For a fixed field $\bbF_q$, $q$ odd, 
+we can exploit the previously classified list 
+of cubic surfaces as a start. 
+For each surface, and for each orbit on points not on lines, 
+we perform the projection along the tangent cone to create one quartic curve. 
+This guarantees that each isomorphism type of quartic curve with 28 bitangents will be created.
+Afterwards, we apply isomorphism testing based on canonical forms. 
+This is based on subtructures 
+and using canonical froms for graphs using the built-in package Nauty.
+
+\bigskip
+
+Let us look at some examples of this algorithm.
+We try $q=7$ and then $q=13.$
+We will set  a 
+makefile variable to the number of 
+(isomorphism types of) cubic surfaces 
+with 27 lines over $\bbF_q$. 
+For $q=7$, there is exactly one isomorphism type, so we put 
+
+\sourcecodevariable{NB_CUBIC_SURFACES_Q7}
+
+The next command creates a list of 
+quartic curves using a projection construction. 
+For each isomorphism type of cubic surface, 
+and for each point not on any line, we 
+consider the intersection of the tangent cone 
+with the surface and project onto a plane not containing the point. 
+Because of symmetry, it suffices to perform this projection 
+only for a set of representatives of the orbits 
+on points not on lines. 
+Here is the Orbiter command for $q=7$:
+
+\sourcecode{quartic_curves_q7}
+
+The resulting curves are written to file. 
+Unfortunately, in this example, 
+there is no point which does not lie on any line of the surface.
+This means that no quartic curve with 28 lines exists over $\bbF_7.$ 
+
+
+\bigskip
+
+
+We move on to the next example, 
+which is $q=13$.
+Again, we use a makefile variable 
+to set the number of isomorphism types of 
+cubic surfaces with 27 lines over $\bbF_{13}$. 
+There are exactly 4 types:
+
+\sourcecodevariable{NB_CUBIC_SURFACES_Q13}
+
+Just like before, we create all 
+quartic curves arising from projections:
+
+\sourcecode{quartic_curves_q13}
+
+Every cubic surface creates a number of quartic curves.
+Namely, each orbit of the automorphism 
+group on points not on lines of the cubic surface 
+creates one quartic curve. 
+The curves arising this way are written to file. 
+There is one file for each surface.
+In Section~\ref{sec:canonical:form:objects:PG}, 
+we will continue with the classification of quartic curves.
+
+
+
+
+
+\bigskip
+
+
+

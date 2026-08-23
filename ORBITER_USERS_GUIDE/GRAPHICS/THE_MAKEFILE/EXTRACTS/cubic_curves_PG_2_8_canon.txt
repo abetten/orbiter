@@ -1,0 +1,36 @@
+cubic_curves_PG_2_8_canon:
+	$(ORBITER) -v 6 \
+		-define C -combinatorial_object \
+			-label cc_8 cc\_8 \
+			-set_of_points "2,3,28,46,51,61,40,71" \
+		-end \
+		-define F -finite_field -q 8 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form_PG P \
+				-save_ago \
+				-max_TDO_depth 10 \
+				-nauty_control -nauty_log "cubic_curves_q8_nauty_log.txt" -show_canonical_form  -end \
+			-end \
+		-end \
+		-define Doinc -draw_incidence_structure_options \
+			-width 40 -width_10 6 \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-post_processing \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-report \
+				-export_flag_orbits \
+				-show_TDO \
+				-show_TDA \
+				-dont_show_incidence_matrices \
+				-export_group_GAP \
+				-incidence_draw_options Doinc \
+			-end \
+		-end
+	$(PDFLATEX) cc_8_classification.tex
+	$(OPEN) cc_8_classification.pdf

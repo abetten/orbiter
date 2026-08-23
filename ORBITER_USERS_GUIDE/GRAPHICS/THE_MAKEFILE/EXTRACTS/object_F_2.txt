@@ -1,0 +1,2 @@
+object_F_2:
+	$(ORBITER) -v 3 -define F -finite_field -q 2 -end

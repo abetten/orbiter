@@ -1,0 +1,74 @@
+Clebsch_up_create_points:
+	$(ORBITER) -v 2 \
+		-smooth_curve "Clebsch_map_of_circle_to_defininig_eqn_r2" \
+			0.07 1000 5 0 $(TWO_PI) \
+		-const a $(CLEBSCH_A) b $(CLEBSCH_B) c $(CLEBSCH_C) d $(CLEBSCH_D) \
+			t00 $(T00) t01 $(T01) t02 $(T02) t03 $(T03) \
+			t10 $(T10) t11 $(T11) t12 $(T12) t13 $(T13) \
+			t20 $(T20) t21 $(T21) t22 $(T22) t23 $(T23) \
+			t30 $(T30) t31 $(T31) t32 $(T32) t33 $(T33) \
+			r 2 one 1 m -1 \
+		-const_end \
+		-var t \
+			c001 c002 c011 c012 \
+			d001 d011 d012 d112 \
+			m002 m012 m022 m122 \
+			n002 n012 n112 n022 n122 \
+			y0 y1 y2 \
+			y001 y002 y011 y012 y022 y112 y122 \
+			x0 x1 x2 x3 \
+			-var_end \
+		-code \
+			push t cos push r mult store y0 \
+			push t sin push r mult store y1 \
+			push one store y2 \
+			push y0 push y0 push y1 mult mult store y001 \
+			push y0 push y0 push y2 mult mult store y002 \
+			push y0 push y1 push y1 mult mult store y011 \
+			push y0 push y1 push y2 mult mult store y012 \
+			push y0 push y2 push y2 mult mult store y022 \
+			push y1 push y1 push y2 mult mult store y112 \
+			push y1 push y2 push y2 mult mult store y122 \
+			$(CLEBSCH_CUBICS) \
+				push c001 push y001 mult \
+				push c002 push y002 mult add \
+				push c011 push y011 mult add \
+				push c012 push y012 mult add \
+				store x0 \
+				push d001 push y001 mult \
+				push d011 push y011 mult add \
+				push d012 push y012 mult add \
+				push d112 push y112 mult add \
+				store x1 \
+				push m002 push y002 mult \
+				push m012 push y012 mult add \
+				push m022 push y022 mult add \
+				push m122 push y122 mult add \
+				store x2 \
+				push n002 push y002 mult \
+				push n012 push y012 mult add \
+				push n022 push y022 mult add \
+				push n112 push y112 mult add \
+				push n122 push y122 mult add \
+				store x3 \
+				push x0 push t00 mult \
+				push x1 push t10 mult add \
+				push x2 push t20 mult add \
+				push x3 push t30 mult add \
+				return \
+				push x0 push t01 mult \
+				push x1 push t11 mult add \
+				push x2 push t21 mult add \
+				push x3 push t31 mult add \
+				return \
+				push x0 push t02 mult \
+				push x1 push t12 mult add \
+				push x2 push t22 mult add \
+				push x3 push t32 mult add \
+				return \
+				push x0 push t03 mult \
+				push x1 push t13 mult add \
+				push x2 push t23 mult add \
+				push x3 push t33 mult add \
+				return \
+		-code_end

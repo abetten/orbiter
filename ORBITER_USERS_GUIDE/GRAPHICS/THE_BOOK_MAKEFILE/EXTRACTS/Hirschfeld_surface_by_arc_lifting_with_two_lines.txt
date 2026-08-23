@@ -1,0 +1,17 @@
+Hirschfeld_surface_by_arc_lifting_with_two_lines:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 4 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define Surf -cubic_surface -space P \
+			-arc_lifting_with_two_lines "0,1,2,12,18,21" "0,0" \
+		-end \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-with Surf -do \
+		-cubic_surface_activity \
+			-report Do \
+		-end \
+		-print_symbols
+	pdflatex surface_arc_lifting_with_two_lines_q4_lines_0_0_arc_0_1_2_12_18_21_report.tex
+	open surface_arc_lifting_with_two_lines_q4_lines_0_0_arc_0_1_2_12_18_21_report.pdf

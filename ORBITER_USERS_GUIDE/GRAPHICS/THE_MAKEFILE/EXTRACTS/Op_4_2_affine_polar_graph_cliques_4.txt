@@ -1,0 +1,15 @@
+Op_4_2_affine_polar_graph_cliques_4:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define O -orthogonal_space 1 4 F -end \
+		-define Gamma -graph -affine_polar O -end \
+		-with Gamma -do \
+			-graph_theoretic_activity -save \
+		-end \
+		-with Gamma -do \
+			-graph_theoretic_activity -test_SRG_property \
+		-end \
+		-with Gamma -do \
+		-graph_theoretic_activity \
+			-find_cliques -target_size 4 -end \
+		-end \

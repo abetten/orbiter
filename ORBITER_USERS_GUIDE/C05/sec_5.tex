@@ -1,0 +1,294 @@
+
+Once a group has been created as in 
+Sections~\ref{sec:generic:permutation:groups} and~\ref{sec:lineargroups}, 
+a group theoretic activity can be performed. 
+For this purpose, Orbiter provides the \verb'-group_theoretic_activity' option. 
+Tables~\ref{tab:grouptasks}-\ref{tab:grouptasks5} list the available commands.
+\orbitertableofcommands{group_theoretic_activity_1}
+\orbitertableofcommands{group_theoretic_activity_2}
+\orbitertableofcommands{group_theoretic_activity_3}
+\orbitertableofcommands{group_theoretic_activity_4}
+\orbitertableofcommands{group_theoretic_activity_5}
+Table~\ref{tab:grouptasks:elementprocessing} lists commands for element processing. 
+\orbitertableofcommands{element_processing}
+
+
+\bigskip
+
+The command
+
+\sourcecode{PGL_3_2_order_invariant}
+
+computes the order invariant of $\PGL(3,2).$ 
+This is the statistic of the orders of the elements in the group. 
+The following latex output will be created:
+
+\orbiteroutput{GRAPHICS/LATEX/PGL_3_2_order_invariant}
+
+
+This shows us that the group contains 48 elements of order 7, 
+42 elements of order 4 and so forth.
+The order invariant is invariant under group isomorphisms, 
+and hence can be used to distinguish non-isomorphic groups. 
+If the order invariants of two groups differ, the groups are not isomorphic.
+
+\bigskip
+
+
+The command
+
+\sourcecode{PGL_3_2_elements}
+
+creates all elements of $\PGL(3,2)$ 
+and writes them into the file \verb'PGL_3_2_elements.csv'.
+
+\bigskip
+
+
+The command
+
+\sourcecode{Sym_3_elements}
+
+creates a report of the elements of the group $\Sym(3)$: 
+\orbiteroutput{GRAPHICS/LATEX/report_group_elements_Sym3}
+
+
+\bigskip
+
+
+The command
+
+\sourcecode{Sym_3_make_element_tree}
+
+produces a tree of all group elements of $\Sym(3)$ according to the selected stabilizer chain. 
+\orbiteroutput{GRAPHICS/WRAPPERS/sym_3_elements_tree}
+The stabilizer chain is defined by a sequence of points in the permutation domain called a base.
+For $\Sym(n)$ the default base is the sequence $0,1,2,\ldots,n-1.$
+
+
+\bigskip
+
+
+
+It is possible to compute all powers of a fixed element, as in the following command:
+
+\sourcecode{Cycle_12_power}
+
+We create the 12 powers of the cycle 
+$$
+(0,1,2,3,4,5,6,7,8,9,10,11).
+$$
+The output is
+\orbiteroutput{GRAPHICS/LATEX/report_group_element_powers}
+
+
+\bigskip
+
+
+The command
+
+\sourcecode{PGL_3_4_singer}
+
+finds all Singer cycles in $\PGL(3,4)$ 
+whose matrix is the companion matrix of a polynomial. 
+The first one found is 
+
+
+\orbiteroutput{GRAPHICS/LATEX/report_group_singer}
+
+
+whose projective order is $21.$ 
+Here, we are using the numeric form of field elements, 
+so $2$ is $\omega$ and $3$ is $\omega+1.$
+
+\bigskip
+
+Suppose we want to multiply two group elements. 
+The following command shows an example in $\GL(2,8).$ 
+The elements of $\GL(2,8)$ 
+are coded as vectors of length 4 with entries coded as integers in the interval $[0,7]$. 
+We multiply the elements coded by 0,1,2,3 and 4,5,6,7:
+
+\sourcecode{GL_2_8_multiply}
+
+The output is
+\orbiteroutput{GRAPHICS/LATEX/report_group_multiply_GL_2_8}
+Note that the output shows the codings of the three group elements. 
+This way, the result of this computation can be processed further easily.
+The same example over $\bbF_7$ is:
+
+\sourcecode{GL_2_7_multiply}
+
+The output is
+\orbiteroutput{GRAPHICS/LATEX/report_group_multiply_GL_2_7}
+We can compute the inverse of a group element:
+
+\sourcecode{GL_2_7_inv}
+
+The output is
+
+\orbiteroutput{GRAPHICS/LATEX/report_group_inverse_GL_2_7}
+
+We can raise a group element to a power:
+
+\sourcecode{GL_2_7_power}
+
+The output is
+
+\orbiteroutput{GRAPHICS/LATEX/report_group_power_GL_2_7}
+
+\bigskip
+
+
+
+Suppose we want to find a small generating set for a group. 
+The following command invokes a randomized algorithm to find a generating set of 2 elements for the 
+group $\PGGL(4,4).$ The command specfies the size of the desired generating system and an upper bound for the number of attempts. 
+
+
+\sourcecode{PGGL_4_4_small_generating_set}
+
+
+\bigskip
+
+
+
+
+The next example computes the action of 
+a specific group element on the set of planes through a line. 
+The planes have been computed in Section~\ref{sec:grassmannian}.
+
+\sourcecode{on_planes}
+
+The output is
+
+\orbiteroutput{GRAPHICS/LATEX/report_group_on_planes}
+
+\bigskip
+
+The command \verb'-random_element' 
+can be used to pick a random element in a group.
+Here is an example. 
+We create the group 
+$\PGL(4,2)$ and then ask for a random element:
+
+\sourcecode{PGL_4_2_random_element}
+
+
+The output is the following csv file (the actual content may differ, as the output is pseudo-random).
+
+\orbiteroutput{GRAPHICS/WRAPPERS/random_element}
+
+The contents is as follows:
+\begin{enumerate}
+\item
+The column \verb'Rk' is the rank number of the group element in the group. It is a number between zero and group order minus one. 
+\item
+The column \verb'Path' is the coset decomposition in the basic orbits determined by the rank. 
+\item
+The column \verb'Tl' is the vector whose $i$-th entry is the length of the $i$-th basic orbit. 
+\item
+The column \verb'ElementLatex' is a latex description of the group element.
+\item
+The column \verb'ElementCoded' is the coded description of the group element.
+\item
+The column \verb'Perm' is the permutation action of the group element in the natural action.
+\item
+The column \verb'CycleType' is the cycle type of the permutation action of the group element in the natural action.
+\item
+The column \verb'Sign' is the sign of the permutation action of the group element in the natural action (even=1, odd=-1).
+\item
+The column \verb'Order' is the order of the group element in the natural action.
+\end{enumerate}
+
+
+
+
+\bigskip
+
+
+
+
+The command
+
+\sourcecode{PGL_2_3_subgroup_lattice}
+
+computes the subgroup lattice of 
+$\PGL(2,3)$ and writes the data to a csv file called 
+$$
+\verb'PGL_2_3_subgroup_lattice.csv'.
+$$
+
+The command
+
+\sourcecode{PGL_2_3_subgroup_lattice_load_and_draw_by_groups}
+
+reads this file and produces a drawing of the lattice by groups. 
+The nodes correspond to subgroups. 
+The lattice is ``upside down,'' 
+i.e. the unit subgroup is at the top and the full group is at the bottom. 
+The maximal inclusions are drawn as edges between the nodes:
+
+\orbiteroutput{GRAPHICS/WRAPPERS/sgl_PGL_2_3_by_groups}
+
+
+\bigskip
+
+
+The command
+
+\sourcecode{PGL_2_3_subgroup_lattice_load_and_draw_by_orbits}
+
+also reads the csv file and produces a drawing of the lattice by orbits. 
+The nodes correspond to conjugacy classes of subgroups. 
+The nodes are labeled by symbols of the form  
+$$
+{a \atop b}.
+$$
+Here, $a$ is the order of the subgroups 
+in the orbit and $b$ is the number of conjugate groups.  
+
+\orbiteroutput{GRAPHICS/WRAPPERS/sgl_PGL_2_3_by_orbits}
+
+
+\bigskip
+
+The command
+
+\sourcecode{PGL_3_13_2B_RNF}
+
+computes the rational normal form of the matrix
+$$
+A=\left[
+\begin{array}{ccc}
+1 & 1 & 11\\
+1 & 6 & 12\\
+7 & 10 & 5\\
+\end{array}
+\right]
+$$
+in $\PGL(3,13)$.
+The rational normal form is 
+$$
+R = \left[
+\begin{array}{ccc}
+12 & 0 & 0\\
+0 & 12 & 0\\
+0 & 0 & 1\\
+\end{array}
+\right].
+$$
+A matrix $B$ such that $B^{-1}AB=R$ is 
+$$
+B = \left[
+\begin{array}{ccc}
+7 & 12 & 9\\
+12 & 0 & 11\\
+0 & 12 & 12\\
+\end{array}
+\right].
+$$
+
+\bigskip
+
+

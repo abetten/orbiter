@@ -1,0 +1,23 @@
+Symmetric_4_inversion_graph_recognize:
+	$(ORBITER) -v 10 \
+		-define G -permutation_group -symmetric_group 4 -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-export_inversion_graphs "Symmetric4_inversion_graphs.csv" \
+		-end
+	$(ORBITER) -v 2 \
+		-define Do -draw_options \
+			-radius 250 -embedded \
+		-end \
+		-define GC -graph_classification \
+			-n 4 \
+			-poset_classification_control \
+				-draw_options Do \
+			-end \
+		-end \
+		-with GC -do \
+		-graph_classification_activity \
+			-recognize_graphs_from_adjacency_matrix_csv \
+				Symmetric4_inversion_graphs.csv \
+		-end \
+		-print_symbols

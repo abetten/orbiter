@@ -1,0 +1,49 @@
+\begin{table}
+\begin{tcolorbox}[tabularx={X|p{2cm}|X|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black,title=Creating a Cubic Surface (Part 3)]
+\hline
+Command & Arguments & Purpose \\
+\hline
+\hline
+\verb'-Cayley_form' & $k$ $l$ $m$ $n$   & 
+Create the surface from Cayley's normal form, using the parameters $k,l,m,n.$\\
+\hline
+\verb'-by_equation' & R label label\_tex  vars eqn para para\_tex para\_values & 
+Create the surface from an equation.\\
+\hline
+\verb'-by_symbolic_object' &  R formula  & 
+Create the surface from an equation. 
+Here, R is a ring and formula is the equation of the surface. \\
+\hline
+\verb'-by_double_six' &  label label\_tex $D$  & 
+Create the surface from a double six $D$.\\
+\hline
+\verb'-by_skew_hexagon' &  label label  & 
+Create the surface from a skew hexagon.\\
+\hline
+\verb'-select_double_six' &  $L$   & 
+Establish a new set of Schlaefli labels 
+by distinguishing a double six, using an existing Schlaefli labeling. 
+The double six is given in $L$, and consists of 12 comma separated entries 
+(first the six $a_i$, then the corresponding six $b_j$).
+%Relabel the lines by choosing the 12 lines in $L$ as new double six. 
+The entries in $L$ can be either Schlaefli symbols or numerical line indices. 
+The latter are integers in the interval $[0,26].$ 
+This command can be repeated. 
+In each application, the selection takes place 
+with respect to the previous Schlaefli labeling. \\
+\hline
+\verb'-override_group' & descr & 
+Override the automorphism group of the surface by the given group. \\
+\hline
+\verb'-random' &    & 
+Create a random cubic surface with 27 lines over the given field.\\
+\hline
+\verb'-transform' & elt & Apply the transformation given by the group element. \\
+\hline
+\verb'-transform_inverse' & elt & Apply the inverse transformation given by the group element. \\
+\hline
+\end{tcolorbox}
+\caption{\label{tab:createsurface:three}Creating a Cubic Surface (Part 3)}
+\end{table}

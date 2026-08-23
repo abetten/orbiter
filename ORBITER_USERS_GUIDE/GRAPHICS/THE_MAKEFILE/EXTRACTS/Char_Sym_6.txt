@@ -1,0 +1,2 @@
+Char_Sym_6:
+	$(ORBITER) -v 2 -character_table_symmetric_group 6

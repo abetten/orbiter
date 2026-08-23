@@ -1,0 +1,9 @@
+ROW,C1,C2,C3
+0,"tab:specific",,
+1,"Creating Special Actions",,
+1,"\verb'-wedge_detached' ","  "," action on the exterior square. Unlike \verb'-wedge', this command does not establish the homomorphism to the original group. Instead, the group is created as subgroup of the larger general linear group."
+1,"\verb'-PGL2OnConic' ","  "," induced action of $\PGL(2,q)$ on the conic in the plane $\PG(2,q)$ "
+1,"\verb'-subfield_structure_action' "," $s$ "," action by field reduction to the subfield of index $s$"
+1,"\verb'-on_tensors' ","  "," induced action of $\GL(d,q) \wr \Sym(n)$ on the tensor space "
+1,"\verb'-on_rank_one_tensors' ","  "," induced action of $\GL(d,q) \wr \Sym(n)$ on the tensor space "
+END

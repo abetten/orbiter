@@ -1,0 +1,9 @@
+solve_test_system:
+	$(ORBITER) -v 4 \
+		-define A -vector -format 7 -dense $(TEST_SYSTEM) -end \
+		-define D -diophant \
+			-label test_system \
+			-coefficient_matrix A \
+			-RHS "mult=7,EQ=1" \
+			-x_min_global 0 -x_max_global 1 \
+		-end

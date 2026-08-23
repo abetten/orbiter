@@ -1,0 +1,7 @@
+PG_2_4_rank_point:
+	$(ORBITER) -v 2 \
+		-define v -vector -dense "3,3,1" -format 1 -end \
+		-define F -finite_field -q 4 -end \
+		-with F -do -finite_field_activity \
+			-rank_point_in_PG v \
+		-end

@@ -1,0 +1,17 @@
+Op_6_2_incidence_matrix.csv:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define O -orthogonal_space 1 6 F -without_group -end \
+		-with O -do -orthogonal_space_activity \
+			-export_point_line_incidence_matrix \
+		-end
+	$(ORBITER) -v 2 \
+		-define all_one_r -vector -repeat 1 35 -end \
+		-define all_one_c -vector -repeat 1 105 -end \
+		-draw_matrix \
+			-input_csv_file Op_6_2_incidence_matrix.csv \
+			-box_width 20 -bit_depth 8 \
+			-partition 2 \
+				all_one_r all_one_c \
+		-end
+	$(OPEN) Op_6_2_incidence_matrix_draw.bmp

@@ -1,0 +1,23 @@
+symbolic_Fabcd_q31_E18:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 31 -end \
+		-define M -symbolic_object \
+			-field F \
+			-managed_variables "X0,X1,X2,X3" \
+			-text $(F_abcd_eqn) \
+		-end \
+		-define L -symbolic_object \
+			-field F \
+			-text "25,5,5,25" \
+		-end \
+		-define M1 -symbolic_object \
+			-field F \
+			-substitute "a,b,c,d" M L \
+		-end \
+		-define M2 -symbolic_object \
+			-field F \
+			-expand M1 \
+			-write_trees_during_expand \
+		-end
+	$(PDFLATEX) M2.tex
+	$(OPEN) M2.pdf

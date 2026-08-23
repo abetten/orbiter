@@ -1,0 +1,46 @@
+\begin{table}
+\begin{tcolorbox}[tabularx={X|X|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=green!50!black,colbacktitle=blue!30!white,
+coltitle=black,title=Latin Squares of Order 5]
+\begin{tcbitemize}[raster columns=2,raster equal height,
+  colframe=red!75!black,colback=red!5!white,fonttitle=\bfseries]
+\tcbitem[squeezed title*={Cyclic 5}] 
+{\renewcommand{\arraystretch}{2}
+$$
+\begin{array}{|c|c|c|c|c|}
+\hline
+0&1&2&3&4\\
+\hline
+1&2&3&4&0\\
+\hline
+2&3&4&0&1\\
+\hline
+3&4&0&1&2\\
+\hline
+4&0&1&2&3\\
+\hline
+\end{array}
+$$}
+%First box
+\tcbitem[squeezed title*={Nonassociative Loop}] 
+{\renewcommand{\arraystretch}{2}
+$$
+\begin{array}{|c|c|c|c|c|}
+\hline
+0&1&2&3&4\\
+\hline
+1&0&4&2&3\\
+\hline
+2&4&3&1&0\\
+\hline
+3&2&0&4&1\\
+\hline
+4&3&1&0&2\\
+\hline
+\end{array}
+$$}
+%Third box
+\end{tcbitemize}
+\end{tcolorbox}
+\caption{\label{tab:lsq5}Latin Squares of Order 5}
+\end{table}

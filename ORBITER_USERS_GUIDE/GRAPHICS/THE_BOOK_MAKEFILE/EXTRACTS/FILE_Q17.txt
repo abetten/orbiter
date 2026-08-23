@@ -1,0 +1,3 @@
+FILE_Q17="orbit,curve,pts_on_curve,bitangents,go\
+\n0,\"$(EDGE_CURVE_Q17_EQUATION)\",\"$(EDGE_CURVE_Q17_AS_POINTS)\",\"\",-1\
+\nEND"

@@ -1,0 +1,15 @@
+AG_2_3_stab_orb_0:
+	$(ORBITER) -v 2 \
+		-define gens -vector -file AG_2_3_stab_pt_0_gens.csv -end \
+		-define Set192 -set -here $(LARGE_SET_AG_2_3_NEIGHBOR_SET) -end \
+		-define G -permutation_group \
+		-bsgs AG_2_3_stab_orb_0 "AG_2_3_stab_pt_0" \
+			840 432 "0,1,2,3,4,5,6,7,8" 4 gens \
+		-end \
+		-define Gr -modified_group -from G \
+			-restricted_action Set192 Set192 \
+		-end \
+		-with Gr -do \
+		-group_theoretic_activity \
+			-export_orbiter \
+		-end

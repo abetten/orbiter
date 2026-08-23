@@ -1,0 +1,11 @@
+Normalizer_of_Z22_in_PGL_2_9:
+	$(ORBITER) -v 2 \
+		-define G -linear_group -PGL 2 9 \
+		-subgroup_by_generators Z22 4 2 \
+			"2,0,0,1, 0,1,1,0" -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-normalizer \
+		-end
+	$(PDFLATEX) PGL_2_9_Subgroup_Z22_4_normalizer.tex
+	$(OPEN) PGL_2_9_Subgroup_Z22_4_normalizer.pdf

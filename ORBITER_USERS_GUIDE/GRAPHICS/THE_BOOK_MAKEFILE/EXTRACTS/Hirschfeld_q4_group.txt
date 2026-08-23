@@ -1,0 +1,26 @@
+Hirschfeld_q4_group:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 4 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 4 \
+			-homogeneous_of_degree 3 \
+			-monomial_ordering_partition \
+			-variables "X,Y,Z,W" "X,Y,Z,W" \
+		-end \
+		-define V -variety \
+			-label_txt Hirschfeld_q4 \
+			-label_tex Hirschfeld\_q4 \
+			-projective_space P \
+			-ring R \
+			-equation_in_algebraic_form \
+				$(HIRSCHFELD_EQUATION_XYZW) \
+		-end \
+		-with V -do -variety_activity \
+			-compute_group -nauty_control -end \
+		-end \
+		-with V -do -variety_activity -singular_points -end \
+		-with V -do -variety_activity -report -end
+	$(PDFLATEX) variety_Hirschfeld_q4_report.tex
+	$(OPEN) variety_Hirschfeld_q4_report.pdf

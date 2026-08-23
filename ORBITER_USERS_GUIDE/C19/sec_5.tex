@@ -1,0 +1,16 @@
+Orbiter can interface with gnuplot~\cite{gnuplot} to draw diagrams.
+Here is an example. Suppose we have data in a csv file like this:
+\orbiteroutput{GRAPHICS/LATEX/gnuplot_test_data}
+The following command creates this csv file from a makefile variable
+\sourcecodevariable{GNUPLOT_TEST_INPUT}
+The next command invokes the Orbiter gnuplot interface:
+\sourcecode{gnuplot_test_data}
+The resulting plot created by gnuplot is:
+\orbiteroutput{GRAPHICS/WRAPPERS/gnuplot_test_data}
+
+The next command plots the Eulerfunction, 
+the number of prime divisors and the number 
+of distinct prime divisors of all integers $n$ between 1 and 50:
+\sourcecode{gnuplot_Eulerfunction_50}
+The resulting plot is:
+\orbiteroutput{GRAPHICS/WRAPPERS/gnuplot_eulerfunction}

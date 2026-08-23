@@ -1,0 +1,34 @@
+Orbiter can classify cubic curves in $\PG(2,q)$. 
+To this end, the $(9,3)$-arcs in $\PG(2,q)$ are classified first.
+From this classification, the classification of curves is computed.
+This classification only works for arcs which contain a $(9,3)$ arc. 
+For very small fields, this is not always the case. 
+Here is an example. The command  
+
+\sourcecode{cubic_curves_PG_2_4}
+
+classifies the cubic curves in $\PG(2,4)$ containing at least 9 points.
+There are none.
+%The command 
+
+%\sourcecode{cubic_curves_PG_2_4_draw}
+
+%draws the poset of orbits of the classification of 9-arcs, shown below:
+
+%\orbiteroutput{GRAPHICS/WRAPPERS/cubic_curve_arcs_q4}
+
+
+\bigskip
+
+
+The command  
+
+\sourcecode{poly_orbits_q4}
+
+uses the basic Schreier algorithm to classify all cubic curves in $\PG(2,4).$
+This is done using the action of the group $\PGGL(3,4)$ on all cubic forms over $\bbF_4$.
+The output is shown below:
+
+\orbiteroutput{GRAPHICS/LATEX/poly_orbits_d3_n2_q4}
+
+This classification involves curves that are degenerate or singular, or contain lines.

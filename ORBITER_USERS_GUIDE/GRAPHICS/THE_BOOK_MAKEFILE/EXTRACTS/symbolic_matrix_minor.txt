@@ -1,0 +1,12 @@
+symbolic_matrix_minor:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 13 -end \
+		-define A -symbolic_object \
+			-field F \
+			-matrix 4 \
+			-text "1,0,0,0,0,0,0,1,x0,x1,x2,x3,a,b,c,d" \
+		-end \
+		-define M -symbolic_object \
+			-field F \
+			-minor A 3 1  \
+		-end

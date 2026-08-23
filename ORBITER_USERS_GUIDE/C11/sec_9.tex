@@ -1,0 +1,54 @@
+In coding theory, one main question is 
+to determine the best value of $d_{\max}$ for a fixed $n$, $k$ and $q$ such that 
+a linear $[n,k,d]_q$ code exists.
+There are many bounds, both upper and lower bounds. 
+An upper bound tells us that no code with $d \ge d_{\max}$ exists.
+A lower bound tells us that a code with $d \ge d_{\max}$ exists. 
+The command  
+
+\sourcecode{bounds_for_d_given_n15_k6_q2}
+
+
+gives upper and lower bounds on the optimal minimum distance $d_{max}$ of a $[15,6]_2$ code.
+The values of the Gilbert-Varshamov lower bound 
+and the Singleton, Hamming, Plotkin and Griesmer upper bounds are computed. 
+The output is:
+\orbiteroutput{GRAPHICS/LATEX/bounds_for_d_given_n15_k6_q2}
+This shows that $5 \le d_{\max} \le 6.$
+The command 
+
+\sourcecode{coding_theory_bounds_q2}
+
+produces a table of bounds for binary codes with $n,k \le 12.$
+%The second command produces the latex report below:
+%\orbiteroutput{GRAPHICS/LATEX/table_of_bounds_n12_q2}
+
+The command 
+
+\sourcecode{GV_n15_k6_d5}
+
+creates a $[15,6,d]_2$ with minimum distance $g \ge 5$ 
+using a greedy algorithm based on the proof of the Gilbert-Varshamov bound.
+The code that is produced has the following generator matrix:
+
+\orbiteroutput{GRAPHICS/WRAPPERS/code_GV_n15_k6_d5}
+
+To compute the minimum distance of the code, we store the generator  matrix
+
+\sourcecodevariable{CODE_GV_N15_K6}
+
+
+and apply the following command to determine the weight enumerator of the code:
+
+
+\sourcecode{GV_n15_k6_d5_weight_enumerator}
+
+The weight enumerator turns out to be
+
+\orbiteroutput{GRAPHICS/LATEX/GV_n15_k6_d5_weight_enumerator}
+
+From this, we see that the code has minimum distance $6,$ 
+which is better than predicted.
+%# surprise: d = 6
+
+\bigskip

@@ -1,0 +1,6 @@
+surface_4_0_dot_products_rows:
+	$(ORBITER) -v 3 \
+		-define single_six_vs_trit_planes -vector \
+			-file single_six_times_line_vs_trit.csv \
+		-end \
+		-dot_product_of_rows single_six_vs_trit_planes

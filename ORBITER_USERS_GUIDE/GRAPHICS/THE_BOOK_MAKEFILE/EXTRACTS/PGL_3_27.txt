@@ -1,0 +1,14 @@
+PGL_3_27:
+	$(ORBITER) -v 5 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define G \
+		-linear_group -PGL 3 27 -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end
+	$(PDFLATEX) PGL_3_27_report.tex
+	$(OPEN) PGL_3_27_report.pdf
+	

@@ -1,0 +1,11 @@
+Cayley_Z11_1mod3:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 11 -end \
+		-define S -vector -dense \
+			"1,1, 1,4, 1,7, 1,10" -end \
+		-define G -linear_group -AGL 1 F \
+			-subgroup_by_generators "Z11" 11 1 "1,1" \
+		-end \
+		-define Gamma -graph \
+			-Cayley_graph G S \
+		-end 

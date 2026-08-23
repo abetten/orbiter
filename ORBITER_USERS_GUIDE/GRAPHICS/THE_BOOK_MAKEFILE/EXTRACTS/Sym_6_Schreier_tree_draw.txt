@@ -1,0 +1,13 @@
+Sym_6_Schreier_tree_draw:
+	$(ORBITER) -v 3 \
+		-draw_layered_graph \
+			images_tree.layered_graph \
+			-place \
+			-embedded \
+			-nodes_empty \
+			-spanning_tree \
+			-radius 25 -line_width 1.3 \
+			-y_stretch 1.0 -scale 0.5 \
+		-end
+	$(PDFLATEX) images_tree_draw.tex
+	$(OPEN) images_tree_draw.pdf

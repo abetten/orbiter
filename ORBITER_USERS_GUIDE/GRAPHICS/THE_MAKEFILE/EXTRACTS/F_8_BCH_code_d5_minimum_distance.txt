@@ -1,0 +1,13 @@
+F_8_BCH_code_d5_minimum_distance:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 8 -override_polynomial 11 -end \
+		-define v -vector -format 14 -field F \
+			-compact $(CODE_BCH_F8_N21_D5_GENMA_OVERRIDE_POLYNOMIAL11) \
+		-end \
+		-with F -do \
+		-coding_theoretic_activity \
+			-minimum_distance v \
+		-end
+# important: use the same polynomial as when creating the code.
+#
+# d=5

@@ -1,0 +1,14 @@
+Op_6_3_orbits_on_subspaces:
+	$(ORBITER) -v 5 \
+		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define Control -poset_classification_control \
+			-problem_label Op_6_3 -W \
+			-depth 6 \
+		-end \
+		-define G -linear_group -PGL 6 3 -orthogonal 1 -end \
+		-define Orb -orbits \
+			-group G \
+			-group_action G \
+			-generators G \
+			-on_subspaces 6 Control \
+		-end

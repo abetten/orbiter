@@ -1,0 +1,4 @@
+set_of_primes:
+	$(ORBITER) -v 2 \
+		-define S -set -here "2,3,5,7,11,13" -end \
+		-print_symbols

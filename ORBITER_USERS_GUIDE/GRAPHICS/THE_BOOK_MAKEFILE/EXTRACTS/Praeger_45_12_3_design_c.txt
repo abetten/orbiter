@@ -1,0 +1,51 @@
+Praeger_45_12_3_design_c:
+	$(ORBITER) -v 3 \
+		-define Doinc -draw_incidence_structure_options \
+			-width 60 -width_10 6 -end \
+		-define C -combinatorial_object \
+			-label Praeger Praeger \
+			-file_of_incidence_geometries \
+				Praeger_45_flags.txt 45 45 540 \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form \
+				-save_ago \
+				-save_transversal \
+				-nauty_control -nauty_log "praeger_design_nauty_log.txt" -end \
+			-end \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-post_processing \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-report \
+				-export_flag_orbits \
+				-show_incidence_matrices \
+				-export_group_GAP \
+				-incidence_draw_options Doinc \
+			-end \
+		-end
+	$(PDFLATEX) Praeger_classification.tex
+	$(OPEN) Praeger_classification.pdf
+	$(ORBITER) -v 2 -draw_matrix \
+		-input_csv_file Praeger_object_0_INP_flag_orbits.csv \
+		-secondary_input_csv_file Praeger_object_0_INP.csv \
+		-box_width 32 -bit_depth 24 \
+		-end
+	magick \
+		Praeger_object_0_INP_flag_orbits_draw.bmp \
+		Praeger_object_0_INP_flag_orbits_draw.png
+	$(OPEN) Praeger_object_0_INP_flag_orbits_draw.png
+	$(ORBITER) -v 2 \
+		-define Do -draw_options -embedded -radius 150 \
+			-nodes_empty \
+			-scale 0.5 -line_width 0.3 -end \
+		-tree_draw \
+			-file praeger_design_nauty_log.txt \
+			-draw_options Do \
+		-end
+	$(PDFLATEX) praeger_design_nauty_log_draw.tex
+	$(OPEN) praeger_design_nauty_log_draw.pdf

@@ -1,0 +1,13 @@
+TTP_A_4:
+	$(ORBITER) -v 2 \
+		-define F4 -finite_field -q 4 -end \
+		-define F16 -finite_field -q 16 -end \
+		-define C -code -field F4 -ttpA F16 -end \
+		-with C -do -coding_theoretic_activity \
+			-export_magma TTP_A_q4.magma \
+		-end \
+		-with C -do -coding_theoretic_activity \
+			-report \
+		-end
+	$(PDFLATEX) ttpA_n18_k9_code_n18_k9_q4.tex
+	$(OPEN) ttpA_n18_k9_code_n18_k9_q4.pdf

@@ -1,0 +1,2 @@
+PR10:
+	$(ORBITER) -v 5 -primitive_root 4460190157

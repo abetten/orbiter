@@ -1,0 +1,15 @@
+Aut_Sym_6_subgroup_lattice:
+	$(ORBITER) -v 3 \
+		-define gens -vector -dense $(AUT_SYM_6_GENS) -end \
+		-define G -permutation_group \
+			-bsgs AutSym6 "{\rm AutSym}(6)" \
+			$(AUT_SYM_6_DEGREE) \
+			$(AUT_SYM_6_GROUP_ORDER) \
+			$(AUT_SYM_6_BASE) \
+			$(AUT_SYM_6_NB_GENS) \
+			gens \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-subgroup_lattice \
+		-end

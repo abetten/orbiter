@@ -1,0 +1,12 @@
+monkey_video:
+	- rm -r FRAMES
+	- mkdir FRAMES
+	- rm monkey.mp4
+	$(ORBITER) \
+		-prepare_frames \
+			-i 0 30 monkey_0_%03d.png \
+			-output_starts_at 0 \
+			-o FRAMES/frame%04d.png \
+		-end
+	ffmpeg -r 5 -f image2 -i FRAMES/frame%04d.png \
+		-f mp4 -q:v 0 -vcodec mpeg4 monkey.mp4

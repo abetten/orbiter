@@ -1,0 +1,14 @@
+blt_set_table: 
+	$(ORBITER) -v 30 \
+		-define Q -vector -dense "3,5,7,9,11,13,17,19,23,25,27,29,31" -end \
+		-define NB -vector -dense "1,2,2,3,4,3,6,5,9,6,6,9,8" -end \
+		-loop_over i Q \
+			-define F%i -finite_field -q "%i[Q]" -end \
+			-define O%i -orthogonal_space 0 5 F%i -create_extension_fields -end \
+			-with O%i -do \
+				-orthogonal_space_activity \
+					-table_of_blt_sets \
+				-end \
+			-end \
+		-end_loop_over i \
+		-print_symbols

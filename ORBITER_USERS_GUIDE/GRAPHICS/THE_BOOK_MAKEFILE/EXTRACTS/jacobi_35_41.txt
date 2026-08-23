@@ -1,0 +1,4 @@
+jacobi_35_41:
+	$(ORBITER) -v 5 -jacobi 35 41
+	$(PDFLATEX) jacobi_35_41.tex
+	$(OPEN) jacobi_35_41.pdf

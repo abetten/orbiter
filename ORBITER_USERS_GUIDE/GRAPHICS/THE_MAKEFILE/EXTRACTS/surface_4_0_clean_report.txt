@@ -1,0 +1,18 @@
+surface_4_0_clean_report:
+	$(ORBITER) -v 3 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 -nodes_empty \
+		-end \
+		-define F -finite_field -q 4 -end \
+		-define P -projective_space -n 3 -field F -end \
+		-define S -cubic_surface -space P -catalogue 0 \
+			-select_double_six "a4,b4,c15,c25,c35,c56,a5,b5,c14,c24,c34,c46" \
+			-select_double_six "a1,a6,a2,a3,a4,a5,b1,b6,b2,b3,b4,b5" \
+			-select_double_six "a1,a2,a5,a6,a3,a4,b1,b2,b5,b6,b3,b4" \
+		-end \
+		-with S -do \
+		-cubic_surface_activity \
+			-report Do \
+		-end
+	$(PDFLATEX) surface_catalogue_q4_iso0_report.tex
+	$(OPEN) surface_catalogue_q4_iso0_report.pdf

@@ -1,0 +1,19 @@
+RM_6:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define C -code -field F \
+			-long_code 64 7 \
+			$(RM_6_GENERATOR_1) \
+			$(RM_6_GENERATOR_2) \
+			$(RM_6_GENERATOR_3) \
+			$(RM_6_GENERATOR_4) \
+			$(RM_6_GENERATOR_5) \
+			$(RM_6_GENERATOR_6) \
+			$(RM_6_GENERATOR_7) \
+		-end \
+		-with C -and F -do -coding_theoretic_activity \
+			-export_genma RM6_genma.csv \
+		-end \
+		-with C -and F -do -coding_theoretic_activity \
+			-export_codewords_long RM6_codewords.csv \
+		-end \

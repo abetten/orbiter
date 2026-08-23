@@ -1,0 +1,21 @@
+MATH360_hw2:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 16 -end \
+		-with F -do -finite_field_activity \
+		-parse_and_evaluate "test" "" "a+b" "a=8,b=14" -end
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 16 -end \
+		-with F -do -finite_field_activity \
+		-parse_and_evaluate "test" "" "a*b" "a=9,b=13" -end
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 16 -end \
+		-with F -do -finite_field_activity \
+		-parse_and_evaluate "test" "" "a*a*a*a*a" "a=9" -end
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 16 -end \
+		-with F -do -finite_field_activity \
+		-parse_and_evaluate "test" "" "(a+b)*(a+b)" "a=5,b=7" -end
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 16 -end \
+		-with F -do -finite_field_activity \
+		-parse_and_evaluate "test" "" "a*a+b*b" "a=5,b=7" -end

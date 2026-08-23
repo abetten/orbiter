@@ -1,0 +1,11 @@
+geo_LSQ6.inc:
+	$(ORBITER) -v 1 \
+		-define Test_lines -set -loop 1 19 1 -end \
+		-define Geo -geometry_builder \
+			-V 6,6,6 -B 1,1,1,36 -TDO \
+			"1,0,0,6, 0,1,0,6, 0,0,1,6" \
+			-fuse 3 \
+			-fname_GEO LSQ6 \
+			-output_to_inc_file \
+			-test Test_lines \
+		-end

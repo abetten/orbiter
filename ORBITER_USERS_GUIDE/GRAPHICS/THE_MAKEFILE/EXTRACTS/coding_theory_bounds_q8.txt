@@ -1,0 +1,2 @@
+coding_theory_bounds_q8:
+	$(ORBITER) -v 2 -table_of_bounds 20 8

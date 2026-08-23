@@ -1,0 +1,14 @@
+Hirschfeld_stab_export_magma:
+	$(ORBITER) -v 9 \
+		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define F -finite_field -q 4 \
+			-compute_related_fields \
+		-end \
+		-define G -linear_group -PGGL 4 F \
+			-subgroup_by_generators "Hirschfeld_Stab" \
+			51840 6 $(HIRSCHFELD_STAB_GENERATORS) \
+			-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-export_magma \
+		-end

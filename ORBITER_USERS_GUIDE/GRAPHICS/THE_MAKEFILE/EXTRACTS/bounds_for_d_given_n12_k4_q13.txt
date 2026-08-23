@@ -1,0 +1,3 @@
+bounds_for_d_given_n12_k4_q13:
+	$(ORBITER) -v 2 \
+		-make_bounds_for_d_given_n_and_k_and_q 12 4 13

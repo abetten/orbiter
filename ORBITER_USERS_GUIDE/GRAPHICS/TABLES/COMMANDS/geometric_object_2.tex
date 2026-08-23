@@ -1,0 +1,42 @@
+\begin{table}
+\begin{tcolorbox}[tabularx={X|p{2cm}|X|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black,title=Geometric Objects (Part 2)]
+\hline
+Command  & Arguments & Purpose \\
+\hline
+\hline
+\verb'-unital_XXq_YZq_ZYq' &  &  Create  the unital with equation $XX^q+YZ^q+ZY^q=0$ \\
+\hline
+\verb'-desarguesian_line_spread_in_PG_3_q' &  & Create the desarguesian line spread in $\PG(3,q)$ as a set of 2-subspaces \\
+\hline
+\verb'-Buekenhout_Metz' &  & Create the Buekenhout Metz unital \\
+\hline
+\verb'-Uab' & $a$ $b$ & Create the Buekenhout Metz unital in the form of Barwick and Ebert~\cite{BarwickEbert2008}\\
+\hline
+\verb'-whole_space' &  & Create the whole space\\
+\hline
+\verb'-hyperplane' & pt & Create the hyperplane given by dual coordinates associated with the given point\\
+\hline
+\verb'-segre_variety' & $a$ $b$ & Create the Segre variety\\
+\hline
+\verb'-arc1_BCKM' &  & Create arc from family 1 in~\cite{BettenCheonKimMaruta13}. \\
+\hline
+\verb'-arc2_BCKM' &  & Create arc from family 2 in~\cite{BettenCheonKimMaruta13}. \\
+\hline
+\verb'-Maruta_Hamada_arc' &  & Create the Maruta Hamada arc\\
+\hline
+\verb'-projective_variety' & lab\_ascii lab\_tex $d$ coeffs & 
+Create a projective variety of degree $d$ from an equation. 
+By default, the coefficients of the equation are listed in the partition ordering. 
+A different ordering can be specified. 
+A label for the variety in ascii and in tex is required. See Section~\ref{sec:algebraicsets}. \\
+\hline
+\verb'-intersection_of_zariski_open_sets' & $l$ $d$ $n$ $\cC_1$ ... $\cC_n$ & Create the intersection of the Zariski open sets given by equations $\cC_1,\ldots\cC_n$ of degree $d$ with label $l$, see Section~\ref{sec:algebraicsets}. \\
+\hline
+\verb'-projective_curve' & $l$ $r$ $d$ $\cC$ & Create the projective curve of degree $d$ with label $l$, 
+with coefficient vector $\cC$ in $r$ variables\\
+\hline
+\end{tcolorbox}
+\caption{\label{tab:geometric:objects:2}Geometric Objects (Part 2)}
+\end{table}

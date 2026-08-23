@@ -1,0 +1,148 @@
+
+Orbiter is a command line driven system.
+There is no graphical user interface.
+This means that commands are typed into a terminal, and executed by the operating system.
+In this mode of operation, Orbiter is just like any other program installed on the computer. 
+This also means that Orbiter 
+can be mixed with other applications, using files to share data between the processes. 
+
+\bigskip
+
+
+The command line is entered into an application that is called {\em Terminal} (or {\em SuperShell} in Windows).
+Orbiter is called from the command line, and command options are given to instruct Orbiter what to do.
+The process that calls orbiter is the shell. There are different types of shells, but they all 
+provide the necessary interface to allow the user to start jobs and maintain files. 
+Shells can be programmed by means of shell scripts. Programming by mans of shell scripts is called scripting. 
+Orbiter can be programmed using shell scripting. 
+
+
+\bigskip
+
+
+Make is a software tool that allows to execute small command sequences. 
+Commands can trigger other commands, based on dependencies. The dependencies are tied to the existence of files, 
+which can be named. If the file does not exist or is outdate, make triggers a command whose purpose is to create that file.
+The dependencies are called rules. 
+The makefile consists of rules and command sequences to be invoked based on the dependencies 
+and the commands issued.
+Many commands can be collected in one makefile. 
+Because of the convenience offered by makefiles, 
+this user's guide 
+will rely on a the make / makefile tool.
+The makefile associated with this user's guide is listed in full in Section~\ref{sec:makefile}.
+It would also be possible to define shell scripts for each of the commands.
+
+
+\bigskip
+
+Make also allows to use variables, which are used by means of text substitution.
+A variable 
+is defined as 
+\begin{verbatim}
+A="I am a variable"
+\end{verbatim}
+and used anywhere later using the 
+\begin{verbatim}
+$(A)
+\end{verbatim}
+syntax. 
+Rules are defined using the following syntax
+\begin{verbatim}
+Label:
+  Do something
+\end{verbatim}
+Here, label is the name of the rule, and \verb'Do something' is the code that is exacuted whenever make is called 
+with the given label in the command line. For instance
+\begin{verbatim}
+make Label
+\end{verbatim}
+will execute \verb'Do something'. 
+The shell will take the command and peel off the first word, which is \verb'Do'. It will then search the 
+system for a command called \verb'Do'.  Of course, this will result in an error because there is no command called \verb'Do'.
+The remaining piece of the command line, i.e. \verb'something' is considered as an argument to the command. 
+For instance, suppose we have a orbiter command with several options, say 
+\begin{verbatim}
+orbiter.out -v 3 -define F -finite_field -q 16 -end \
+  -with F -do -finite_field_activity -cheat_sheet_GF -end
+\end{verbatim}
+The purpose of this command is to produce a file called 
+$$
+\verb'GF_16.tex'
+$$ 
+which can then be processed through latex to give the report. 
+Observe that the command is quite long, and stretches over two lines. 
+The backslash at the end of the first line indicates that the command continues on to the next line.
+Using make, we can assign a label to this command. 
+Suppose we want to call this command \verb'F_16'.
+We can create a makefile like this:
+
+\sourcecode{F_16}
+
+With this file present, type the terminal command \verb'make F_16' to 
+execute the two line Orbiter command.
+Windows users can use \verb'SuperShell'.
+The program \verb'make' will look for the file \verb'makefile' in the current directory.
+Once found, it will search for the label \verb'F_16' in it and execute the commands beneath it.
+The given commands will invoke Orbiter and produce the \verb'GF_16.tex' containing the desired report.
+If we wanted to do some other Orbiter command, 
+we could edit the makefile. 
+We would also have a sequence of commands listed in the same target. 
+In this case, makefile will process these commands one after the other.
+
+
+\bigskip
+
+Makefiles are somewhat picky when it comes to whitespacing.
+The command sequence needs to be indented using tab symbols. 
+Leading spaces will cause error messages. 
+Also, there should be no whitespace after the trailing backslash symbol.
+Some editors can display whitespace characters. This can be helpful when 
+working with makefiles.
+
+
+
+\bigskip
+
+A sample makefile with all of the commands discussed in this user's guide 
+is distributed with Orbiter (in the examples directory). 
+The file is reproduced in Section~\ref{sec:makefile}. 
+It is advised to copy the example makefile from the orbiter tree to a location outside the orbiter 
+distribution directory (otherwise, git update will cause error messages). 
+It is also fine to create a new custom makefile, considering the remarks about  \verb'ORBITER_PATH' below.
+
+
+
+\bigskip
+
+
+One difficulty in installing Orbiter is the path of installation.
+In the sample makefile, there is a makefile variable called 
+\verb'ORBITER_PATH' which contains the path to the orbiter executable \verb'orbiter.exe'.
+Depending on the local installation of orbiter, 
+the makefile variable needs to be changed accordingly. 
+The actual command to run the \verb'F_16' example is as follows:
+\begin{verbatim}
+F_16:
+  $(ORBITER_PATH)orbiter.out -v 3 -define F -finite_field -q 16 -end \
+    -with F -do -finite_field_activity -cheat_sheet_GF -end
+\end{verbatim}
+The orbiter installation directory \verb'orbiter' 
+and a second directory called \verb'work' should be next to each other. 
+The orbiter example makefile should be copied into the \verb'work' directory. 
+The top of the file should contain the line
+\begin{verbatim}
+MY_PATH=../orbiter
+\end{verbatim}
+This will set \verb'ORBITER_PATH' to point to the correct location of the orbiter executable. 
+inside the \verb'work' directory, any of the commands listed in this guide will function correctly.
+Another possibility is to install \verb'orbiter.out' in a central location, where it can be found by the shell. 
+In this case, we should change the line 
+\begin{verbatim}
+ORBITER_PATH=$(MY_PATH)/src/apps/orbiter/
+\end{verbatim}
+to
+\begin{verbatim}
+ORBITER_PATH=
+\end{verbatim}
+in the makefile.

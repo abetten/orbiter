@@ -1,0 +1,8 @@
+PG_2_3_plane_pencil:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-with P -do \
+		-projective_space_activity \
+			-planes_through_line 0 \
+		-end \

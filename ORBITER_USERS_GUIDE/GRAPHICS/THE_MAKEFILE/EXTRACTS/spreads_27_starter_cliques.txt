@@ -1,0 +1,9 @@
+spreads_27_starter_cliques:
+	$(ORBITER) -v 2 \
+		-loop L 0 50 1 \
+			-define G -graph -load spreads_27_3_graph_%L.bin -end \
+			-with G -do \
+			-graph_theoretic_activity \
+				-find_cliques -rainbow -target_size 23 -end \
+			-end \
+		-end_loop L

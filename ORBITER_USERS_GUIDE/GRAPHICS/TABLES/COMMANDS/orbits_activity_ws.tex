@@ -1,0 +1,41 @@
+\begin{table}[t]
+\tbl{\label{tab:orbits:activities}}
+{\begin{tcolorbox}[tabularx={p{3cm}|p{2cm}|p{6.3cm}|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black,title=Orbit Based Activities]
+\hline
+Command & Arguments & Purpose \\
+\hline
+\hline
+\verb'-report'  &  options  &  Create a report on the orbits. \\
+\hline
+\verb'-export_something'  &  type data  & Export orbit data of the given type. \\
+\hline
+\verb'-export_trees'  &   & Create drawings of the Schreier trees. \\
+\hline
+\verb'-export_source_code'  &   & Create a cpp file for the orbit representatives. \\
+\hline
+\verb'-export_levels'  &  idx  &  \\
+\hline
+\verb'-draw_tree'  &  $i$ options  & Create a drawing of the $i$-th orbit as a tree. Uses the given draw options. \\
+\hline
+\verb'-stabilizer'  &  $i$  & Compute the stabilizer of the given point $i$. \\
+\hline
+\verb'-stabilizer_of_orbit_rep'  &  $i$  & Compute the stabilizer of the orbit representative of orbit $i$. \\
+\hline
+\verb'-Kramer_Mesner_matrix'  &  $t$ $k$  & Compute the Kramer Mesner matrix associated with the orbits on $t$-subsets and the orbits on $k$-subsets. This option requires a poset type problem. \\
+\hline
+\verb'-recognize'  &  $S$  & Recognize $S$ in the orbit data structure. \\
+\hline
+\verb'-transporter'  &  $S$  & For each $s \in S,$ which is the index of an element in the orbit, compute a transporter that maps the element to the orbit representative. At present, this is only implemented for orbits on equations.\\
+\hline
+\verb'-schreier_poset'  &  $i$ prefix  & Export the orbit whose index is $i$ as a partially ordered set. The file name is constructed by using the given prefix.\\
+\hline
+\verb'-draw_options'  &  label  & Specify draw options.\\
+\hline
+\verb'-report_options'  &  descr  & Set additional parameters for the report, see Table~\ref{tab:pc:report:options}. \\
+\hline
+\verb'-poset_classification_activity'  &  label  & Perform the given poset classification activity. This option requires a poset type problem. \\
+\hline
+\end{tcolorbox}}
+\end{table}

@@ -1,0 +1,5 @@
+im3:
+	$(ORBITER) -v 2 \
+		-inverse_mod 2909 59248840
+	
+#the inverse of 2909 mod 59248840 is 4358629

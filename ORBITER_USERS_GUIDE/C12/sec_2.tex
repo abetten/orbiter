@@ -1,0 +1,198 @@
+Orbiter facilitates processing batch processing of combinatorial data.
+The data is described by means of input streams. 
+An input stream defines a sequence of combinatorial objects, all of the same type. 
+Once an input stream is defined, 
+there are commands for activities that can be applied to the objects in the stream. 
+It does not matter how many objects are in the stream. 
+
+\bigskip
+
+
+Tables~\ref{tab:combinatorial:objects} and~\ref{tab:combinatorial:objects2} 
+show the commands that are available to define input streams. 
+\orbitertableofcommands{data_input_stream}
+\orbitertableofcommands{data_input_stream2}
+
+\bigskip
+
+Let us consider some examples. 
+First, we create the Hirschfeld surface in $\PG(3,4),$
+using point ranks 
+as described in Section~\ref{sec:indexing:points}.
+The 45 points on the surface can be coded as in the following makefile variable:
+
+\sourcecodevariable{HIRSCHFELD_SURFACE_Q4_SET_OF_POINTS}
+
+The next command creates a combinatorial object 
+from this set of points:
+
+\sourcecode{Hirschfeld_q4_from_set}
+
+The next example creates the two hyperovals in $\PG(2,16).$ 
+The hyperovals are stored in two makefile variables:
+
+\sourcecodevariable{HYPEROVAL_16_144}
+
+
+\sourcecodevariable{HYPEROVAL_16_16320}
+
+The next command creates combinatorial objects for these two hyperovals:
+ 
+\sourcecode{hyperoval_16_create}
+
+In the next example, we read the points 
+of an elliptic curve from file 
+(see Section~\ref{sec:indexing:points}):
+
+\sourcecode{EC_read}
+
+In the next example, we read a packing, 
+using a previously defined table of spreads, 
+stored in a csv file.
+
+\sourcecode{PG_3_5_assume_31_read}
+
+The following command reads a file of large sets of designs:
+
+\sourcecode{LS_AG_2_3_read}
+
+The next command reads incidence geometries from a file containing the flags:
+
+\sourcecode{geo_7_3_read}
+
+
+\bigskip
+
+
+Combinatorial objects can be stored in text files. 
+There can be any number of objects in one file.
+The objects themselves are coded. 
+For instance, a set of points in projective space 
+is given as a set of integers, using the Orbiter point ranks. 
+Likewise, a set of lines is coded using Orbiter line ranks. 
+For designs, there are several ways in which the object can be stored. 
+One way is by listing the incidences (flags) in a numerical form. 
+An incidence between point $i$ and line $j$ is recorded as $ib+j.$ 
+Here, $i$ and $j$ are the zero based index values of 
+the point and line pair, and $b$ is the number of lines.
+Another way is by recording the flags in a row of the incidence matrix as a subset. 
+In this case, the number of incidences per row must be constant, say $r$. 
+The flags in a given row thus comprise an $r$-subset of a set of size $b$, 
+and the ranking of subsets is used to encode the flags in one row.
+Proceeding in a row-by-row fashion, 
+the incidence matrix is encoded as a vector of ranks of length $v$.
+Yet another way is by listing the columns of the incidence matrix, 
+provided the number of inciences is constant across columns, say $k$. 
+In this case, 
+we encode the flags in one column as a rank of a $k$-subset of a set of size $v$. 
+
+
+\bigskip
+
+
+The Pasch configuration is the configuration of 6 points and 4 lines 
+shown below:
+
+\orbiteroutput{GRAPHICS/WRAPPERS/pasch}
+
+In the geometry, we have 4 lines, 
+which we can identify with the index sets of the points as
+$\{0,1,2\},$ $\{0,3,4\},$ $\{1,3,5\}$ and $\{2,4,5\}.$ 
+The incidence matrix of the configuration is 
+\orbiteroutput{GRAPHICS/LATEX/pasch_incma}
+The rows correspond to the points, the columns correspond to the lines. 
+The labels of points and lines are shown. 
+
+\bigskip
+
+
+How to encode an incidence structure for computer storage?
+There are three ways to encode the incidence structure. 
+One way encodes the flags of the geometry.
+This will be described next.
+The flag space is the set of all possible flags 
+in the incidence matrix between the given number of points and lines.
+The space is totally ordered 
+using the row-major ordering
+
+\orbiteroutput{GRAPHICS/LATEX/pasch_incma_row_major}
+
+The Pasch configuration can now be coded as 
+$$
+\{0,1,4,6,8,11,13,14,17,19,22,23\}.
+$$
+The file \verb'pasch.inc' contains:
+
+\orbiteroutput{GRAPHICS/LATEX/file_pasch_inc}
+
+The first line lists the number of rows and columns of the incidence matrix, 
+and the number of incidences. 
+The geometry is encoded on the next line. 
+After that, a marker of -1 shows that this is the only 
+geometry in this file (the file format allows for any number of incidence geometries, 
+all with the same parameters).
+The final row is the order of the automorphism group of the geometry. 
+This row is optional. In case that there are several geometries in the file, 
+the orders will all be listed. In this case, the possible values will be 
+collected with multiplicities, and listed in decreasing order.
+The command 
+
+\sourcecode{geo_pasch_read}
+
+reads the incidence geometry from the file \verb'pasch.inc'.
+It is also possible to enter the incidence geometry 
+directly from the command line. The following example 
+uses the \verb'-incidence_geometry' command to do so:
+
+\sourcecode{geo_pasch_given}
+
+
+
+\bigskip
+
+
+Let us study small Neumaier graphs. 
+The makefile variables
+
+\sourcecodevariable{NEUMAIER_GRAPH_16_1_ADJ}
+
+and
+
+\sourcecodevariable{NEUMAIER_GRAPH_16_2_ADJ}
+
+hold the adjacency matrices of two Neumaier graphs on 16 vertices.
+
+
+The command 
+
+\sourcecode{neumaier_graphs_16} creates the associated graphs as Orbiter objects.
+
+
+\bigskip
+
+The command 
+
+\sourcecode{neumaier_graphs_16_from_file} reads Neumaier graphs on 16 vertices 
+from an csv file called 
+$$
+\verb'NG_16_9_4_2_4.csv'.
+$$
+
+\bigskip
+
+The command 
+
+\sourcecode{Neumaier_graph_25} creates a specific Neumaier graph on 25 vertices 
+and computes properties of the graph. 
+It verifies the strongly regular graph property, 
+computes the eigenvalues, 
+finds all cliques of size 5, 
+computes the automorphism group, 
+and tests the Neumaier property.
+
+\bigskip
+
+
+
+
+

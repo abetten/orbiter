@@ -1,0 +1,16 @@
+small_graph_draw:
+	$(ORBITER) -v 2 \
+		-define G -graph -edges_as_pairs 5 \
+			"0,1,0,2,0,3,0,4,1,3,1,4,2,4" \
+		-end \
+		-with G -do \
+		-graph_theoretic_activity -export_csv -end \
+		-with G -do \
+		-graph_theoretic_activity -export_graphviz -end \
+		-with G -do \
+		-graph_theoretic_activity -save -end
+	$(ORBITER) -v 2 -draw_matrix \
+		-input_csv_file graph_v5_e7.csv \
+		-box_width 40 -bit_depth 24 \
+		-partition 4 "1,1,1,1,1" "1,1,1,1,1" -end
+	dot -Tpng graph_v5_e7.gv >graph_v5_e7.png

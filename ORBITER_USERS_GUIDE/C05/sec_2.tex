@@ -1,0 +1,480 @@
+%Orbiter provides support for matrix groups and their various permutation representationes. 
+Tables~\ref{tab:matrix:group:1}-\ref{tab:matrix:group:2} shows the Orbiter commands to create a matrix group.
+\orbitertableofcommands{linear_group_1}
+\orbitertableofcommands{linear_group_2}
+Matrix groups are treated as permutation groups, 
+so that a stabilizer chain can be established. 
+Therefore, when creating a matrix group, a permutation representation must be chosen.
+By default, this will be 
+the natural permutation representation. 
+In the case of a projective matrix group, this is the action on the points of the underlying projective space.
+In case of an affine group or a general linear group, 
+is is the set of vectors of the underlying vector space.
+At times, there are other permutation actions which are more suitable. 
+Here, suitable often means that the degree of the permutation representation is small. 
+This helps improve the performance of the permutation group algorithms. 
+For background information about the classical groups of matrices 
+over finite fields and their actions, 
+see~\cite{Taylor1992}, for instance. 
+
+
+\bigskip
+
+Let $V \simeq \bbF_q^n$
+be a finite dimensional vector space over $\bbF_q$. 
+The set of subspaces of $V$ form the projective geometry $\PG(n-1,q).$
+The points of the geometry are the one-dimensional subspaces of $\bbF_q^n.$
+The hyperplanes are the codimension one subspaces. 
+For each $i$ with $0 \le i \le n$, there are subspaces of that dimension. 
+They form the elements of a given type. 
+For $i=1$ and $i=n-1$ we have points and hyperplanes. 
+For $i=2$ we get lines. 
+For $i=3$ we get planes.
+The easiest way to denote a subspace if by means of a generator matrix. 
+This is a matrix whose rows form a basis for the subspace in question. 
+
+
+\bigskip
+
+Let $\pi$ be a projective space.
+A collineation of a projective space $\pi$ 
+is a bijective mapping from the points of $\pi$ to themselves  
+which preserves collinearity. That is, a collineation $\varphi$ maps any 
+three collinear points $P,Q,R$ 
+to another collinear triple $\varphi(P), \varphi(Q), \varphi(R).$ 
+The collineations form a group with respect to composition, the collineation group.
+If $M$ is the matrix of an endomorphism, then $\Psi_M$ is the induced 
+map on projective space. 
+By considering the homomorphism $M \mapsto \Psi_M$, 
+the group $\GL(n+1,q)$ of invertible endomorphisms becomes 
+a subgroup of the group of collineations of $\PG(n,q).$ 
+This is the projectivity group $\PGL(n+1,q).$ 
+It is isomorphic to $\GL(n+1,q)/\bbF_q^\times.$ 
+Another source of collineations is this: 
+Let $\Phi \in \Aut(\bbF_q)$ be a field automorphism. Then 
+$\Phi$ acts on projective space by sending 
+$P(\bx)$ to $P(\bx\Phi).$ 
+This map is another type of collineation, 
+called automorphic collineation.
+This way, $\Aut(\bbF_q)$ gives rise to a group of collineations.
+If $q = p^h$ for some prime $p$ and some integer $h$ then 
+$$
+\Phi_0: \bbF_q \rightarrow \bbF_q, \; x \mapsto x^p
+$$ 
+is a generator for the cyclic group $C_h \simeq \Aut(\bbF_q).$ 
+The collineation group 
+of $\PG(n,q)$ ($n \ge 2$) is isomorphic 
+to the semidirect product of the projectivity group and the 
+automorphism group of the field. 
+The collineation group is 
+$\PGGL(n+1,q) = \PGL(n+1,q) \ltimes \Aut(\bbF_q).$
+We use the following notation for elements of $\PGGL(n+1,q).$ 
+Let $\Phi_0$ be a generator 
+for $\Aut(\bbF_q)$ and let $M \in \GL(n+1,q).$ 
+The map 
+$$
+(\Psi_M,\Phi_0^k): \PG(n,q) \rightarrow \PG(n,q), \; 
+P(\bx) \mapsto P(\by), \quad \by = (\bx \cdot M)^{\Phi_0^k}
+$$
+is denoted as 
+\begin{equation}\label{eqn:Mk}
+M_k.
+\end{equation}
+The identity element is $I_0$, 
+where $I$ is the identity matrix and $0$ is the residue class modulo $h.$
+The rules for multiplication and inversion in the collineation group are given as
+\begin{eqnarray}\label{eqn:MkNl}
+M_k \cdot N_l &=& \Big(M \cdot N^{\Phi^{-k}}\Big)_{k+l},\\
+\Big(M_k\Big)^{-1} &=& \Big(\Big(M^{-1}\Big)^{\Phi^{k}}\Big)_{-k}.
+\end{eqnarray}
+The affine group $\AGL(n,q)$ is the semidirect product of $\GL(n,q)$ with $\bbF_q^n.$ 
+The affine semilinear group $\AGGL(n,q)$  is the semidirect product of $\AGL(n,q)$ with $\Aut(\bbF_q).$
+The elements of $\AGGL(n,q)$ are triples 
+$$
+M_{\ba,k} := (M, \ba, k) \in \GL(n,q) \times \bbF_q^n \times \Aut(\bbF_q), 
+$$
+which act on $\bbF_q^n$:
+$$
+\Big(\bx, (M, \ba, k)\Big) \mapsto \big(\bx \cdot M + \ba\big)^{\Phi^k}.
+$$
+The multiplication in $\AGGL(n,q)$ is 
+$$
+M_{\ba,k}  \cdot N_{\bb,l} = (MN)_{\ba N^{\Phi^{-k}}+ \bb^{\Phi^{-k}},k+l}. 
+$$
+The inverse of an element is 
+$$
+\Big(M_{\ba,k} \Big)^{-1} = \Big( M^{-1}\Big)_{\ba^{\Phi^{k}} M^{-1},-k}.
+$$
+
+ 
+
+
+\bigskip
+
+A correlation is a one-to-one mapping between the set of 
+points and the set of hyperplanes which reverses incidence. 
+So, if $\rho$ is a correlation and 
+$P$ is a point and $\ell$ is a hyperplane then $P^\rho$ is a hyperplane and $\ell^\rho$ is 
+a point and 
+$$
+\ell^\rho \in P^\rho \iff P \in \ell.
+$$
+A correlation of order two is called polarity.
+The standard polarity is the map 
+$$
+\rho:  \cP \leftrightarrow \cL, \;P(\bx) \leftrightarrow [\bx].
+$$
+
+
+
+
+
+\bigskip
+
+A group $G$ can act on $V$ in one of the types listed in Table~\ref{tab:actions}.
+
+\orbitertableofextracommands{basic_actions}
+
+
+\bigskip
+
+To create a matrix group over a finite field, 
+it is possible to specify the field by its order. 
+It is also possible to use a specific field in the construction of the group. 
+In this case, one can create the field beforehand, 
+and reference the field object in the creation of the group.
+The second way allows more control, as it allows to select  
+the irreducible polynomial that is used to create the field. 
+If only the field order is given, the default polynomial is used. 
+
+
+
+\bigskip
+
+The command 
+
+\sourcecode{GL_2_3_elements_dense}
+
+creates the group $\GL(2,3)$ acting on the $9$ vectors of $\bbF_3^2$. 
+In this case, the field is created explicitly. The group has 48 elements, which are printed in latex format. 
+The latex output is shown below:
+
+\orbiteroutput{GRAPHICS/LATEX/GL_2_3_elements_dense}
+
+\bigskip
+
+
+
+
+The command 
+
+\sourcecode{PGL_2_3_elements_dense}
+
+creates the group $\PGL(2,3)$ acting on the $4$ points of $\PG(1,3)$. 
+In this case, the field is created implicitly. The group has 24 elements, shown below:
+
+
+\orbiteroutput{GRAPHICS/LATEX/PGL_2_3_elements_dense}
+
+
+
+\bigskip
+
+The command 
+
+\sourcecode{PGL_2_17}
+
+creates the group $\PGL(2,17)$ of order $4896$ acting on the $18$ points of $\PG(1,18)$. 
+The group is not simple. 
+However, the subgroup $\PSL(2,17)$ of order $2448$ is. 
+To create it, we used the following command:
+
+\sourcecode{PSL_2_17}
+
+\bigskip
+
+The command 
+
+\sourcecode{PGL_4_2}
+
+creates the group $\PGL(4,2)$ of order $20160$ acting on the $15$ elements of $\PG(3,2)$. 
+In this case, the field is created implicitly.
+
+
+
+\bigskip
+
+
+The command 
+
+\sourcecode{PGL_4_2_with_field}
+
+creates the field $\bbF_2$ first, and the builds the group based in this field. 
+The group is the same as the group created by the previous command.
+However, it is good to be able to have more options when creating the finite field. 
+For instance, when using extension fields, it is sometimes necessary to pick the appropriate polynomial 
+that defines the field, as described in Section~\ref{sec:extension:fields}.
+
+
+\bigskip
+
+The command 
+
+\sourcecode{PGL_4_2_report}
+
+creates a report about the group $\PGL(4,2)$.
+The report gives information about the underlying field and the projective geometry, 
+as well as about the permutation action, 
+including the stabilizer chain that is used to represent the group effectively.
+
+\orbiteroutput{GRAPHICS/LATEX/report_group_PGL_4_2}
+
+
+
+\bigskip
+
+
+We use the following Orbiter command creates $\PGL(4,2)$ again.
+The command invokes two activities. 
+The first creates a latex report for the group in the file \verb'PGL_4_2_report.tex'.
+The second activity exports the permutation representation in Orbiter makefile format.
+
+\sourcecode{PGL_4_2_export}
+
+The file \verb'PGL_4_2.makefile' is created:
+
+\sourcecode{PGL_4_2_generated}
+
+This command can be used to recreate the group as permutation group directly.
+This group will be considered again in Section~\ref{sec:lineargroups} below.
+The permutation representation itself is stored 
+in the file \verb'PGL_4_2_gens.csv':
+\orbiteroutput{GRAPHICS/LATEX/PGL_4_2_gens_csv}
+
+\bigskip
+
+
+
+The command
+
+\sourcecode{L_5_3}
+
+creates $\PSL(5,3)$ of order $237783237120$ 
+in the action on the 121 points of $\PG(4,3).$
+
+\bigskip
+
+The command
+
+\sourcecode{L_4_5}
+
+creates $\PSL(4,5)$ of order $7254000000$ 
+in the action on the 156 points of $\PG(3,5).$
+
+\bigskip
+
+
+The command
+
+\sourcecode{PGL_4_5}
+
+creates $\PGL(4,5)$ of order $29016000000$ 
+in the action on the 156 points of $\PG(3,5).$
+The group $\PSL(4,5)$ is a subgroup of $\PGL(4,5)$ of index 4.
+
+\bigskip
+
+
+
+The command
+
+\sourcecode{PGGL_3_4}
+
+creates $\PGGL(3,4)$ of order $120960$ 
+in the action on the 21 points of $\PG(2,4).$
+The report contains one $p$-Sylow subgroup 
+for each of the primes $p$ dividing the order of the group.
+
+\bigskip
+
+
+
+The command
+
+\sourcecode{PGGL_3_8}
+
+creates $\PGGL(3,8)$ of order $49448448$ 
+in the action on the 73 points of $\PG(2,8).$
+The report contains one $p$-Sylow subgroup for each 
+of the primes $p$ dividing the order of the group.
+
+\bigskip
+
+
+
+
+
+
+The command
+
+\sourcecode{AGL_1_27}
+
+creates $\AGL(1,27)$ of order $702$ 
+in the action on the 27 points of $\AG(1,27).$
+
+\bigskip
+
+
+
+
+The command
+
+\sourcecode{AGGL_2_27}
+
+creates $\AGGL(2,27)$ of order $1117679472$ 
+in the action on the 729 points of $\AG(2,27).$
+
+\bigskip
+
+
+
+
+
+
+
+The command 
+
+\sourcecode{SP_4_2}
+
+creates the symplectic group $\Sp(4,2)$ of order $720$ 
+acting on the 16 points of $\AG(4,2).$
+
+
+\bigskip
+
+
+
+
+
+
+
+The command 
+
+\sourcecode{PSP_4_4}
+
+creates the symplectic group $\PSp(4,4)$ of order $979200$ 
+acting on the 85 points of $\PG(3,4).$
+
+
+\bigskip
+
+
+
+The command 
+
+\sourcecode{PGO_5_2}
+
+creates the group $\PGO(5,2)$ acting on the 15 points of the $Q(4,2)$ quadric. 
+The following latex report is produced:
+\orbiteroutput{GRAPHICS/LATEX/report_group_PGO_5_2}
+
+The group order is $720$.
+
+
+\bigskip
+
+
+
+The command 
+
+\sourcecode{PGGO_5_4}
+
+creates the group $\PGGO(5,4)$ of order $1958400$ 
+acting on the 85 points of the $Q(4,4)$ quadric. 
+
+
+\bigskip
+
+
+
+The command 
+
+\sourcecode{PGOp_6_2}
+
+creates the group $\PGGO^+(6,2)$ of order $40320$ 
+acting on the 35 points of the $Q^+(5,2)$ quadric. 
+
+
+\bigskip
+
+
+The command 
+
+\sourcecode{PGOm_6_2}
+
+creates the group $\PGGO^-(6,2)$ of order $51840$ 
+acting on the 27 points of the $Q^-(5,2)$ quadric. 
+
+
+\bigskip
+
+
+
+
+
+The symplectic group $\PSp(6,2)$ can be created using the following command: 
+
+\sourcecode{PSP_6_2}
+
+The group order is $1451520$. 
+The degree of the action is $63$.
+
+
+\bigskip
+
+The group $\PGO(7,2)$, isomorphic to $\PSp(6,2)$, 
+can be created using the following command: 
+
+\sourcecode{PGO_7_2}
+
+The group order is $1451520$. The degree of the action is $63$.
+
+
+\bigskip
+
+The command 
+
+\sourcecode{NullPolarity_6_2}
+
+creates the null polarity group of $\PG(6,2)$ 
+acting on the 63 points of $\PG(5,2)$. 
+This is the group preserving the 
+dot product
+$$
+\bx \cdot \by = \sum_{i=1}^n x_i y_i.
+$$
+The group order is $23040$. 
+The degree of the action is $63$.
+
+
+\bigskip
+
+
+The command 
+
+\sourcecode{M24_matrix_group}
+
+creates the matrix group $M_{24}$ as a subgroup of $\PGL(12,2).$ 
+The group is given by means of a generating set of 12 matrices, 
+stored in the makefile variable 
+$$
+\verb'GOLAY_24_CODE_AUT_GENS'.
+$$
+
+
+
+
+\bigskip
+
+
+

@@ -1,0 +1,18 @@
+Hamming_code_words:
+	$(ORBITER) -v 2 \
+		-define v -vector -dense $(HAMMING_CODE_CODEWORDS) -end \
+		-define F -finite_field -q 2 -end \
+		-loop_over i v \
+			-with F -do -coding_theoretic_activity \
+			-general_code_binary 7 "Hamming_7_4_word_%i" "%i[v]" \
+			-metric_balls 1 \
+			-end \
+		-end_loop_over i
+	$(ORBITER) -v 2 \
+		-loop i 0 16 1 -draw_matrix \
+			-input_csv_file Hamming_7_4_word_%i_char_func_7_1.csv \
+			-box_width 25 -bit_depth 8 \
+			-partition 4 16 8 -end \
+			-system "magick Hamming_7_4_word_%i_char_func_7_1_draw.bmp \
+			-frame 8 Hamming_7_4_word_%i_char_func_7_1_draw.png" \
+		-end_loop i

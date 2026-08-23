@@ -1,0 +1,55 @@
+Praeger_design_45_12_3:
+	$(ORBITER) -v 4 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define F -finite_field -q 81 -compute_related_fields \
+			-override_polynomial 89 \
+		-end \
+		-define AGGL -linear_group -AGGL 1 F \
+			-end \
+		-define G -linear_group -AGGL 1 F \
+			-subgroup_by_generators G 3240 \
+			8 $(PRAEGER_DESIGN_45_12_3_GENS) \
+			-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end \
+		-define v -vector \
+			-dense $(PRAEGER_DESIGN_45_12_3_GENS) \
+		-end \
+		-define gens -vector_ge \
+			-action AGGL \
+			-vector_data v \
+		-end \
+		-with gens -do \
+		-vector_ge_activity \
+			-report \
+		-end \
+		-with gens -do \
+		-vector_ge_activity \
+			-field_reduction 4 \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-subgroup_lattice_magma \
+		-end \
+		-define L -modified_group -from G \
+			-subgroup_by_lattice 43 \
+		-end \
+		-define R -modified_group -from G \
+			-subgroup_by_lattice 44 \
+		-end \
+		-with L -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end \
+		-with R -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-create_flag_transitive_geometry L R \
+		-end

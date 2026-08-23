@@ -1,0 +1,79 @@
+quartic_curves_q13_classify_nauty:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 13 -end \
+		-define P -projective_space -n 3 -field F -end \
+		-define P2 -projective_space -n 2 -field F -v 0 -end \
+		-define Control -poset_classification_control \
+			-problem_label nc_arcs_q12 \
+			-W -depth 6 \
+		-end \
+		-define Arc_control -arc_generator_control \
+			-projective_space P2 \
+			-control Control \
+			-target_size 6 \
+			-d 2 \
+		-end \
+		-define Orb -orbits \
+			-on_arcs Arc_control \
+		-end \
+		-loop L 0 $(NB_CUBIC_SURFACES_Q13) 1 \
+			-define S_%L -cubic_surface -space P -catalogue %L -end \
+		-end_loop L \
+		-print_symbols \
+		-loop L 0 $(NB_CUBIC_SURFACES_Q13) 1 \
+			-with S_%L -do \
+			-cubic_surface_activity \
+				-export_all_quartic_curves Orb \
+			-end \
+		-end_loop L \
+		-print_symbols
+	$(ORBITER) -v 3 \
+		-csv_file_concatenate_from_mask 0 $(NB_CUBIC_SURFACES_Q13) \
+			surface_catalogue_q13_iso%ld_quartics.csv \
+			quartics_q13.csv
+	$(ORBITER) -v 5 \
+		-define F -finite_field -q 13 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 3 \
+			-homogeneous_of_degree 4 \
+			-monomial_ordering_partition \
+			-variables "y0,y1,y2" "y_0,y_1,y_2" \
+		-end \
+		-define Orb -orbits -classification_by_canonical_form \
+			-space P \
+			-ring R \
+			-input_fname_mask quartics_q13.csv \
+			-nb_files 1 \
+			-output_fname quartic_curves_q13 \
+			-label_po "File" \
+			-label_so "orbit" \
+			-carry_through "PT" \
+			-carry_through "PTCOEFF" \
+			-carry_through "TANGENT_PLANE_RK" \
+			-carry_through "abcdef" \
+			-carry_through "NB_E" \
+			-carry_through "NB_ET" \
+			-carry_through "NB_K" \
+			-carry_through "NB_DOUBLE" \
+			-carry_through "NB_SINGLE" \
+			-carry_through "NB_ZERO" \
+			-carry_through "SEQN" \
+			-carry_through "SEQNALG" \
+			-carry_through "curve" \
+			-carry_through "CURVEALG" \
+			-label_equation_by_coefficients "curve" \
+			-label_points "pts_on_curve" \
+			-label_lines "bitangents" \
+			-carry_through "Kovalevski_pts" \
+			-nauty_control -reduce_memory_footprint 1 -end \
+			-end \
+		-end \
+		-with Orb -do \
+			-orbits_activity \
+			-export_source_code \
+		-end \
+		-print_symbols
+	#$(PDFLATEX) quartic_curves_q13_orbits.tex
+	#$(OPEN) quartic_curves_q13_orbits.pdf

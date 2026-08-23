@@ -1,0 +1,7 @@
+PG_2_4_unrank_point:
+	$(ORBITER) -v 2 \
+		-define v -vector -dense "20" -end \
+		-define F -finite_field -q 4 -end \
+		-with F -do -finite_field_activity \
+			-unrank_point_in_PG 2 v \
+		-end

@@ -1,0 +1,9 @@
+BCH_15_5:
+	$(ORBITER) \
+		-define F -finite_field -q 2 -end \
+		-define C -code -field F \
+			-BCH 15 5 \
+		-end \
+		-with C -do -coding_theoretic_activity -report -end
+	$(PDFLATEX) BCH_n15_d5_code_n15_k7_q2.tex
+	$(OPEN) BCH_n15_d5_code_n15_k7_q2.pdf

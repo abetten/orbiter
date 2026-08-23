@@ -1,0 +1,11 @@
+PG_2_4_with_decomposition:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 4 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-with P -do -projective_space_activity \
+			-decomposition_by_element_PG \
+			1 "0,1,0, 0,0,1, 2,1,1, 0" \
+			"PG_2_4_singer" \
+		-end
+	$(PDFLATEX) PG_2_4_singer.tex
+	$(OPEN) PG_2_4_singer.pdf

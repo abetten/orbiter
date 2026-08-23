@@ -1,0 +1,37 @@
+\begin{table}[t]
+\tbl{\label{tab:grouptasks3}}
+{\begin{tcolorbox}[tabularx={p{3cm}|p{2cm}|p{6.3cm}|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black,title=Group theoretic activities (Part 3)]
+\hline
+Command & Arguments & Purpose \\
+\hline
+\hline
+\verb'-find_conjugating_element'  &  $a$ $b$  & Computes an element $g$ which conjugates $a$ to $b$ or states that the given elements $a$ and $b$ are not conjugate. \\
+\hline
+\verb'-group_of_automorphisms_' \verb'by_images_of_generators'  &  label v images  & Creates a group of automorphisms by assigning image values to certain generators. The vector v is a vector of group elements. The image values are numerical values representing indices in the vector v. \\
+\hline
+\verb'-order_of_products'  &   $g_1 \ldots g_n$  & Computes the orders of all products $g_ig_j$, $1 \le i,j \le n.$ Writes a table with these orders to file.\\
+\hline
+\verb'-reverse_isomorphism_exterior_square'  &    & Given a set of generators of a subgroup of $\PGO^+(6,q)$ as $6\times 6$ matrixes, the command computes the inverse image of the generators in $\PGL(4,q)$ (if possible).\\
+\hline
+\verb'-reverse_isomorphism_exterior_' \verb'square_vector_of_ge'  &  vector   & applies reverse isomorphism exterior square to all elements in the given vector object.\\
+\hline
+\verb'-is_subgroup_of'  &    & This function is applied to two groups, say $G_1$ and $G_2$, using the syntax \verb'-with G1 -and G2'. It tests if $G_1$ is a subgroup of $G_2$.\\
+\hline
+\verb'-coset_reps'  &    & This function is applied to two groups, say $G_1$ and $G_2$, using the syntax \verb'-with G1 -and G2'. It assumes that $G_1$ is a subgroup of $G_2$. The command produces a set of coset representatives for $G_1$ in $G_2$.\\
+\hline
+\verb'-subgroup_lattice'  &    & Computes the subgroup lattice of the given group. A csv file containing the subgroup lattice is written.\\
+\hline
+\verb'-subgroup_lattice_load'  &  fname  & Reads a previously computed subgroup lattice from the csv file.\\
+\hline
+\verb'-subgroup_lattice_draw_by_orbits'  &  options  & Produces a drawing of the subgroup lattice in terms of the conjugacy classes of subgroups. Each node represents one conjugacy class of subgroups. Uses the given draw options. \\
+\hline
+\verb'-subgroup_lattice_draw_by_groups'  &  options  & Produces a drawing of the subgroup lattice in terms of subgroups. Each node represents one single subgroup. Uses the given draw options. \\
+\hline
+\verb'-subgroup_lattice_' \verb'intersection_orbit_orbit'  &  orb1 orb2  &  Intersect all groups of orbit 1 with groups of orbit 2.\\
+\hline
+\verb'-subgroup_lattice_' \verb'find_overgroup_in_orbit'  &  orb1global gidx orb2global  &  Find the group on orb2global which normalizes the group gidx in orb1global. \\
+\hline
+\end{tcolorbox}}
+\end{table}

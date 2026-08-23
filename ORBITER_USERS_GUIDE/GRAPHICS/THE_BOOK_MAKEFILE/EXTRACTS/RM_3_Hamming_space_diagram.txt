@@ -1,0 +1,11 @@
+RM_3_Hamming_space_diagram:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define C -code -field F \
+			-Reed_Muller 3 \
+		-end \
+		-with C -do \
+		-coding_theoretic_activity \
+			-make_diagram \
+			-metric_balls 1 \
+		-end

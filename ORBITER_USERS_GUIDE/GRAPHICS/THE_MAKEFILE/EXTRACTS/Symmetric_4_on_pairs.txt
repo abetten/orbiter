@@ -1,0 +1,15 @@
+Symmetric_4_on_pairs:
+	$(ORBITER) -v 3 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define G -permutation_group -symmetric_group 4 -end \
+		-define G_on_2subsets -modified_group -from G \
+			-on_k_subsets 2 \
+		-end \
+		-with G_on_2subsets -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end
+	$(PDFLATEX) Sym_4_OnSubsets_2_report.tex
+	$(OPEN) Sym_4_OnSubsets_2_report.pdf

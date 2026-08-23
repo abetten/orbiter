@@ -1,0 +1,3 @@
+F_32bit:
+	$(ORBITER) -v 10 \
+		-define F -finite_field -q 4294967291 -without_tables -end \

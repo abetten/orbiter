@@ -1,0 +1,12 @@
+PG_2_4_incma_singer_sub_3:
+	$(ORBITER) -v 2 \
+		-list_arguments \
+		-define R -vector -repeat 3 7 -end \
+		-define C -vector -repeat 3 7 -end \
+		-draw_matrix \
+			-input_csv_file PG_2_4_singer_incma_subgroup_index_3.csv \
+			-box_width 40 -bit_depth 24 \
+			-partition 3 R C \
+		-end
+	$(OPEN) PG_2_4_singer_incma_subgroup_index_3_draw.bmp
+	magick PG_2_4_singer_incma_subgroup_index_3_draw.bmp PG_2_4_singer_incma_subgroup_index_3_draw.png

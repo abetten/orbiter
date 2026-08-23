@@ -1,0 +1,21 @@
+Hesse_group:
+	$(ORBITER) -v 3 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define gens -vector -compact \
+			$(GENERATORS_HESSE_GROUP) \
+		-end \
+		-define G -linear_group -PGGL 3 4 \
+		-subgroup_by_generators "Hesse" "432" 7 gens \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-print_elements_tex \
+		-end
+	$(PDFLATEX) PGGL_3_4_Subgroup_Hesse_432_report.tex
+	$(OPEN) PGGL_3_4_Subgroup_Hesse_432_report.pdf

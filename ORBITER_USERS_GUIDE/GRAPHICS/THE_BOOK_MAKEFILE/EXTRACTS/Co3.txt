@@ -1,0 +1,20 @@
+Co3:
+	$(ORBITER) -v 2 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define F -finite_field -q 2 -end \
+		-define g1 -vector -field F -format 22 \
+			-compact $(CONWAY_GEN1) -end \
+		-define g2 -vector -field F -format 22 \
+			-compact $(CONWAY_GEN2) -end \
+		-define gens -vector -concatenate g1,g2 -end \
+		-define G -linear_group -PGL 22 2 \
+			-subgroup_by_generators "Co3" "495766656000" 2 gens \
+			-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end
+	$(PDFLATEX) PGL_22_2_Subgroup_Co3_495766656000_report.tex
+	#$(OPEN) PGL_22_2_Subgroup_Co3_495766656000_report.pdf

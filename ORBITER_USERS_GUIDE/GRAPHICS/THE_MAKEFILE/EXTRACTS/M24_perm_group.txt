@@ -1,0 +1,22 @@
+M24_perm_group:
+	$(ORBITER) -v 2 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define v -vector \
+			-dense $(GOLAY_24_CODE_PROJECTIVE) \
+		-end \
+		-define F -finite_field -q 2 -end \
+		-define G -linear_group -PGL 12 2 \
+		-subgroup_by_generators "M24" "244823040" 12 \
+			$(GOLAY_24_CODE_AUT_GENS) \
+		-end \
+		-define M24_perm -modified_group -from G \
+			-restricted_action v \\_on\\_code \
+		-end \
+		-with M24_perm -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end
+	$(PDFLATEX) PGL_12_2_res_v_report.tex
+	$(OPEN) PGL_12_2_res_v_report.pdf

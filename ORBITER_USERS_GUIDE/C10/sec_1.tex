@@ -1,0 +1,373 @@
+In Table~\ref{tab:global:algebra},  
+global Orbiter commands for Algebra are summarized.
+\orbitertableofcommands{interface_algebra}
+
+
+\bigskip
+
+
+Table~\ref{tab:basic:number:theory} 
+shows Orbiter commands for basic number theory, 
+including integer factor rings and 
+the Euclidean algorithm.
+\orbitertableofcommands{global_basic_number_theory}
+
+\bigskip
+
+In Table~\ref{tab:nt}, 
+some number theoretic commands are shown.
+\orbitertableofcommands{number_theoretic_commands}
+
+\bigskip
+
+To compute primitive roots, 
+there exists a randomized fast algorithm. 
+On the other hand, there is also 
+an algorithm that finds the smalles primitive root. 
+For instance,  
+
+
+\sourcecode{PR101}
+
+finds a primitive root modulo 101 
+using the randomized algorithm. 
+The command find the root 75.
+On the other hand, the command
+
+\sourcecode{PR101_smallest}
+
+finds the smallest primitive root mot 101, 
+which turns out to be 2. 
+
+
+
+
+\sourcecode{PR29}
+
+computes a primitive root modulo $29$. 
+The answer in this case is $2.$
+
+\bigskip
+
+
+It is possible to compute primitive roots 
+for all prime numbers in a given interval. 
+The command
+\sourcecode{PR_2_1000}
+finds all primitive roots for all primes between 2 and 1000.
+
+\bigskip
+
+The command
+\sourcecode{PE_number_2_1000}
+determines the number of primitive elements 
+for all primes between 2 and 1000.
+
+
+\bigskip
+
+
+The command
+\sourcecode{PR_915839}
+computes a primitive root modulo $915839$. 
+The answer is $43085$.
+Let us check this result.
+The command 
+
+\sourcecode{PR_915839_check}
+
+computes 
+$$
+43085^{49842} \mod 915839
+$$
+which is $487320$.
+
+\bigskip
+
+The command \verb'-discrete_log' can be used to compute 
+the discrete logarithm of $a$ modulo $p$ with respect to $b$. 
+This means, a number $k$ is computed such that 
+$$
+b^k \equiv a \mod p.
+$$
+For instance, the discrete log of $487320$ with respect to 
+the base $43085$ modulo $915839$ is $49842,$ 
+based on the previous example. 
+We can compute the discrete logarithm 
+using the command 
+
+\sourcecode{DL_915839}
+
+This command can be quite expensive.
+
+\bigskip
+
+Computing inverses modulo a prime $p$ is possible using the \verb'-inverse_mod' command. 
+The command
+
+\sourcecode{IM}
+
+computes the inverse of $1865025205$ modulo $2147483647$ which is $579785381.$
+
+\bigskip
+
+
+A different way of computing the inverse is by using the 1-trick. 
+This approach utilizes the lattice linear combination of the gcd. 
+Given two numbers $a$ and $b$, say, 
+we can find two integers $u$ and $v$, say, such that  
+$$
+\gcd(a,b)  = ua+vb, \quad u,v \in \bbZ.
+$$
+The \verb'-extended_gcd' command can be used to compute $g$ and $u$ and $v$ from $a$ and $b.$ 
+For instance, the following code 
+computes the gcd of $a=2147483647$  and $b=1865025205$.
+
+\sourcecode{IM_gcd}
+
+The output is
+$$
+1 = -503526232 * 2147483647 + 579785381 * 1865025205,
+$$
+from which we see that $\gcd(a,b) = 1$ 
+and $u= -503526232$ and $v = 579785381.$
+which is the gcd written as a lattice combination of the input arguments. 
+The inverse of $1865025205$  mod $2147483647$ is $v=579785381.$
+
+\bigskip
+
+In order to compute the modular power
+$$
+a^e \mod n,
+$$
+the \verb'-power_mod' command can be used. For instance, 
+
+\sourcecode{PM3a}
+
+computes 
+$16807$ raised to the power $1073741823$ 
+modulo $2147483647,$ which is $2147483646.$
+
+\bigskip
+
+The modular square root of $a$ modulo $p$ is any $x$ such that 
+$$
+x^2 \equiv a \mod p.
+$$
+The command \verb'-square_root_mod' can be used 
+to compute modular square roots using 
+the algorithm of Tonelli and Shanks (cf.~\cite{Cohen93}).
+For instance, 
+
+\sourcecode{sqrt_mod}
+
+finds that the square root of $33$ mod $41$ is $19,$
+i.e.
+$$
+19^2 \equiv 33 \mod 41.
+$$
+
+\bigskip
+
+
+The command \verb'order_of_q_mod_n'
+computes  ${\rm ord}(q,n)$, the order of $q$ modulo $n$, 
+for all $n$ with $n_{\min} \le n \le n_{\max}$ and $\gcd(n,q) = 1$. 
+It also computes Euler's totient function $\varphi(n)$ 
+and the cofactor $\varphi(n)/{\rm ord}(q,n).$
+For instance, 
+
+\sourcecode{order_of_2_mod_n}
+
+produces the output shown below 
+\orbiteroutput{GRAPHICS/LATEX/table_order_of_2}
+
+
+
+\bigskip
+
+
+The command 
+
+\sourcecode{Eulerfunction_150}
+
+computes Euler's totient function for all integers $n$ with $1 \le n \le 150.$
+The result is shown below:
+\orbiteroutput{GRAPHICS/LATEX/table_eulerfunction}
+
+
+
+\bigskip
+
+A power map sends $a$ to $a^k$ for some fixed $k$. 
+Orbiter can compute power maps modulo $p$. 
+For instance, the following command 
+computes the function $a \mapsto a^k \mod 11$:
+
+\sourcecode{power_function_2_mod_11}
+
+The result is shown below:
+
+\orbiteroutput{GRAPHICS/LATEX/table_power_2_mod_11}
+
+\bigskip
+
+It is sometimes helpful to draw the elements modulo $n$ on a circle, 
+using the vertices of an $n$-gon to represent the field elements. 
+For instance, for the command 
+
+\sourcecode{draw_mod_13}
+
+uses a $13$-gon to represent the elements modulo $13$ as shown below
+\orbiteroutput{GRAPHICS/WRAPPERS/mod_13_powers_of_2_draw}
+Consecutive powers of $2$ mod $13$ are connected.
+
+\bigskip
+
+
+The command 
+
+\sourcecode{inverse_mod_a}
+
+computes the inverse of $18059241$ modulo $58014043$.
+
+\bigskip
+
+
+
+Orbiter can compute the Smith-Normal-Form of matrices with integer entries.
+The command 
+
+\sourcecode{smith_normal_form_1}
+
+computes the Smith-Normal-Form of the matrix 
+$$
+\left[
+\begin{array}{ccc}
+	1&2&3\\
+	4&5&6\\
+	7&8&9\\
+\end{array}
+\right]
+$$
+
+
+
+\bigskip
+
+The Legendre symbol evaluates if a number $a$ is a square modulo an odd prime $p$. 
+By definition,  
+$$
+\left(
+\frac{a}{p}
+\right) = 
+\left\{
+\begin{array}{cl}
+	1 & \mbox{if there exists $r$ s.t.} \; r^2 \equiv a \mod p \\ 
+	-1 & \mbox{if there does not exist $r$ s.t.} \; r^2 \equiv a \mod p \\ 
+	0 & \mbox{if $p$ divides $a$.}\\
+	\end{array}
+\right.
+$$
+The Jacobi symbol 
+generalizes the Legendre symbol to allow non-prime bottom arguments.
+By definition,
+$$
+\left(
+\frac{a}{b}
+\right) 
+= 
+\prod_{i=1}^k 
+\left(
+\frac{a}{r_i}
+\right)^{e_i},
+$$
+where 
+$$
+b = \prod_{i=1}^k r_i^{e_i}
+$$
+is the prime factorization of $b$ with pairwise distinct primes $r_i.$
+The Jacobi symbol agrees with the Legendre symbol 
+whenever the bottom argument $b$ is an odd prime.
+Because there is no ambiguity, 
+the same notation is used for the Jacobi symbol as for the Legendre symbol.
+Orbiter can compute Jacobi symbols. 
+For instance, the command 
+
+\sourcecode{jacobi_a}
+
+computes the Jacobi symbol 
+$$
+\left(
+\frac{2221}{7817}
+\right).
+$$
+In the Jacobi symbol, 
+the denominator $p$ has to be a positive odd integer.
+This command creates the file \verb'jacobi_2221_7817.tex' 
+which contains a detailed step-by-step description 
+of the computation.
+After reformatting, the description looks like this:
+
+\orbiteroutput{GRAPHICS/LATEX/jacobi_2221_7817}
+
+
+The answer $1$ tells us that $2221$ is a square modulo $7817.$
+Because $7817$ is prime, the Jacobi symbol and the Legendre symbol agree on this input pair. 
+We can use the \verb'square_root_mod' 
+command 
+to compute a square root of $2221$ modulo $7817$ and verify this fact.
+The command 
+
+\sourcecode{sqrt_mod_7817}
+
+yields that $7634$ is a square root. Indeed,
+$$
+7634^2 \equiv 2221 \mod 7817.
+$$
+
+\bigskip
+
+The next command illustrates how to solve a system of congruences with coprime moduli 
+using the Chinese remainder theorem.
+Suppose we want to find the integer $x$ such that 
+\begin{eqnarray*}
+x & \equiv 2 \; \mbox{mod} \; 5\\
+x & \equiv 2 \; \mbox{mod} \; 6\\
+x & \equiv 5 \; \mbox{mod} \; 7\\
+\end{eqnarray*}
+The following command creates one vector for the remainders and one for the moduli and then 
+invokes the \verb'-Chinese_remainders' command.
+
+\sourcecode{Chinese_remainders_A}
+
+The answer is $x \equiv 152$ modulo 210.
+
+\bigskip
+
+The next example shows that the Chinese remainder algorithm is safe for large numbers.
+We pick two 10 digit prime numbers as moduli and solve 
+\begin{eqnarray*}
+x & \equiv 2 \; \mbox{mod} \; 2147483647\\
+x & \equiv 3 \; \mbox{mod} \; 5915587277\\
+\end{eqnarray*}
+using the command
+
+\sourcecode{Chinese_remainders_C2}
+
+The answer is 
+$$
+x \equiv 5684294357108828365 \mod 12703626939758759219.
+$$
+A quick check with Maple shows that 
+\begin{eqnarray*}
+5684294357108828365 \mod 2147483647 & \equiv 2 \\
+5684294357108828365 \mod 5915587277 & \equiv 3 \\
+\end{eqnarray*}
+as required.
+
+
+
+\bigskip
+
+

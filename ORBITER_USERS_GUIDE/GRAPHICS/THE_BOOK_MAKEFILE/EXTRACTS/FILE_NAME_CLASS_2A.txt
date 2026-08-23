@@ -1,0 +1,1 @@
+FILE_NAME_CLASS_2A="PGGL_4_4_Subgroup_Hirschfeld_Stab_51840_class_of_2A.csv"

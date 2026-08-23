@@ -1,0 +1,35 @@
+M22_bar:
+	$(ORBITER) -v 2 \
+		-define Do -draw_options \
+			-radius 50 -scale 0.5  -line_width 0.3 \
+		-end \
+		-define code -vector \
+			-dense $(GOLAY_24_CODE_PROJECTIVE) \
+		-end \
+		-define Control2 -poset_classification_control \
+			-problem_label M24_pairs -W -depth 2 \
+			-draw_options Do \
+		-end \
+		-define F -finite_field -q 2 -end \
+		-define G -linear_group -PGL 12 2 \
+		-subgroup_by_generators "M24" "244823040" 12 \
+			$(GOLAY_24_CODE_AUT_GENS) \
+		-end \
+		-define M24_perm -modified_group \
+			-from G -restricted_action code \\_on\\_code \
+		-end \
+		-define M22_perm -modified_group \
+			-from M24_perm \
+			-set_stabilizer 0,1 Control2 \
+		-end \
+		-define pts -set -loop 2 22 1 -end \
+		-define M22 -modified_group \
+			-from M22_perm \
+			-restricted_action pts M22 \
+		-end \
+		-with M22 -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end
+	$(PDFLATEX) PGL_12_2_res_code_res_pts_report.tex
+	$(OPEN) PGL_12_2_res_code_res_pts_report.pdf

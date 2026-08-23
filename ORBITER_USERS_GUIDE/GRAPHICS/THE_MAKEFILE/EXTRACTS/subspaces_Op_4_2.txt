@@ -1,0 +1,47 @@
+subspaces_Op_4_2:
+	$(ORBITER) -v 10 \
+		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+			-poset_orbits_x_stretch 750 \
+			-embedded \
+		-end \
+		-define Control -poset_classification_control \
+			-problem_label Op_4_2 -W -depth 4 \
+		-end \
+		-define G -linear_group -PGL 4 2 -orthogonal 1 -end \
+		-define Orb -orbits \
+			-group G \
+			-group_action G \
+			-generators G \
+			-on_subspaces 4 Control \
+		-end \
+		-define ro \
+			-poset_classification_report_options \
+				-draw_poset -type_ordinary \
+			-draw_options Do \
+		-end \
+		-with Orb -do -orbits_activity \
+			-report "" \
+			-report_options ro \
+		-end \
+		-define PC_Activity -poset_classification_activity \
+			-draw_full_poset Do \
+		-end \
+		-with Orb -do -orbits_activity \
+			-poset_classification_activity PC_Activity \
+		-end
+	$(ORBITER) -v 3 \
+		-draw_layered_graph \
+			Op_4_2_poset_full_lvl_4.layered_graph \
+		-radius 150 -embedded \
+			-line_width 0.2 -x_stretch 1.4 -scale 0.5 \
+		-end
+	$(PDFLATEX) Op_4_2_poset_full_lvl_4_draw.tex
+	$(OPEN) Op_4_2_poset_full_lvl_4_draw.pdf
+	$(PDFLATEX) Op_4_2_poset.tex
+	$(OPEN) Op_4_2_poset.pdf
+	#$(PDFLATEX) Op_4_2_poset_full_lvl_4.tex
+	#$(OPEN) Op_4_2_poset_full_lvl_4.pdf
+	#$(PDFLATEX) Op_4_2_poset_full_lvl_4_draw.tex
+	#$(OPEN) Op_4_2_poset_full_lvl_4_draw.pdf

@@ -1,0 +1,1 @@
+QUARTIC_Q9_NF_COEFFICIENTS=" 1, 1, 2, 4, 8, 6, 6, 3, 4, 0, 0, 0, 0, 0, 0 "

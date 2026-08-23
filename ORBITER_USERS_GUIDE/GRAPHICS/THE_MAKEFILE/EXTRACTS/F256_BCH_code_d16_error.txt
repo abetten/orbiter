@@ -1,0 +1,8 @@
+F256_BCH_code_d16_error:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 256 -end \
+		-define A -vector -field F -sparse 771 "2,30,3,31,55,770" -end \
+		-define B -vector -field F -dense $(POLY_Q256_DEG30_DENSE) -end \
+		-with F -do \
+		-finite_field_activity \
+		-polynomial_division A B -end

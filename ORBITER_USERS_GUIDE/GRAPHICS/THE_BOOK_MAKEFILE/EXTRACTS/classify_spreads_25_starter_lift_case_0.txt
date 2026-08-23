@@ -1,0 +1,29 @@
+classify_spreads_25_starter_lift_case_0:
+	$(ORBITER) -v 3 \
+		-define Do -draw_options \
+			-radius 20 \
+			-nodes_empty \
+			-line_width 0.2 \
+			-embedded \
+		-end \
+		-define Control -poset_classification_control \
+			-W \
+			-problem_label spreads_25 \
+			-draw_options Do \
+		-end \
+		-define F -finite_field -q 5 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define C -spread_classifier \
+			-projective_space P \
+			-k 2 \
+			-starter_size 5 \
+			-recoordinatize \
+			-poset_classification_control Control \
+			-output_prefix "" \
+		-end \
+		-with C -do -spread_classify_activity \
+			-compute_starter \
+		-end \
+		-with C -do -spread_classify_activity \
+			-prepare_lifting_single_case 0 \
+		-end

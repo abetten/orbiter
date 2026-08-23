@@ -1,0 +1,22 @@
+	\begin{table}
+\begin{tcolorbox}[tabularx={X|p{2cm}|X|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black,title=Preparing Frames for an Animation]
+		\hline
+		Command & Arguments & Purpose \\
+		\hline
+		\hline
+		\verb'-i' & $s$ $l$ mask & Specify the input file names 
+by running a printf command with the given mask applied 
+to the index $i$ where $i$ loops over all integers from $s$ to $s+l-1.$ 
+This option can be repeated. \\
+		\hline
+		\verb'-step' & $s$  & Increment the index in steps of size $s$. \\
+		\hline
+		\verb'-o' & mask & Create the output file using the given mask.\\
+		\hline
+		\verb'-output_starts_at' & $i$ & Start output file indices at $i$ (default is 0).\\
+		\hline
+		\end{tcolorbox}
+	\caption{\label{tab:prepareframes}Preparing Frames for an Animation}
+	\end{table}

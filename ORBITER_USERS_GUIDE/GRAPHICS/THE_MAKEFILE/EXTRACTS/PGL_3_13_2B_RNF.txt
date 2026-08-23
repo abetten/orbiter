@@ -1,0 +1,8 @@
+PGL_3_13_2B_RNF:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 13 -end \
+		-define G -linear_group -PGL 3 F -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-rational_normal_form $(PGL_3_13_CLASS_2B_REP) \
+		-end

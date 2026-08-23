@@ -1,0 +1,10 @@
+Walsh_matrix_4:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 2 -end \
+		-with F -do -finite_field_activity \
+			-Walsh_matrix 4 -end
+	$(ORBITER) -v 2 -draw_matrix \
+		-input_csv_file Walsh_01_4.csv \
+		-box_width 10 -bit_depth 24 -partition 3 16 16 -end
+	#$(PDFLATEX) GF_2.tex
+	#$(OPEN) GF_2.pdf

@@ -1,0 +1,40 @@
+RM_6_codewords_draw:
+	$(ORBITER) -v 4 \
+		-loop i 0 128 1 \
+			-csv_file_select_rows RM6_codewords.csv %i \
+			-mv RM6_codewords_select.csv RM6_codewords_select_%i.csv \
+			-destring RM6_codewords_select_%i.csv "Codeword" RM6_codewords_sel_%i.csv \
+			-reformat RM6_codewords_sel_%i.csv RM6_codewords_ref_%i.csv 8 \
+			-draw_matrix \
+				-input_csv_file RM6_codewords_ref_%i.csv \
+				-box_width 25 -bit_depth 8 \
+				-partition 3 8 8 \
+			-end \
+			-system "magick RM6_codewords_ref_%i_draw.bmp -frame 8 %i.png" \
+		-end_loop i
+	magick 0.png 1.png 2.png 3.png 4.png 5.png \
+		6.png 7.png 8.png 9.png 10.png +append a0
+	magick 11.png 12.png 13.png 14.png 15.png \
+		16.png 17.png 18.png 19.png 20.png 21.png +append a1
+	magick 22.png 23.png 24.png 25.png 26.png \
+		27.png 28.png 29.png 30.png 31.png 32.png +append a2
+	magick 33.png 34.png 35.png 36.png 37.png \
+		38.png 39.png 40.png 41.png 42.png 43.png +append a3
+	magick 44.png 45.png 46.png 47.png 48.png \
+		49.png 50.png 51.png 52.png 53.png 54.png +append a4
+	magick 55.png 56.png 57.png 58.png 59.png \
+		60.png 61.png 62.png 63.png 64.png 65.png +append a5
+	magick 66.png 67.png 68.png 69.png 70.png \
+		71.png 72.png 73.png 74.png 75.png 76.png +append a6
+	magick 77.png 78.png 79.png 80.png 81.png \
+		82.png 83.png 84.png 85.png 86.png 87.png +append a7
+	magick 88.png 89.png 90.png 91.png 92.png \
+		93.png 94.png 95.png 96.png 97.png 98.png +append a8
+	magick 99.png 100.png 101.png 102.png 103.png \
+		104.png 105.png 106.png 107.png 108.png 109.png +append a9
+	magick 110.png 111.png 112.png 113.png 114.png \
+		115.png 116.png 117.png 118.png 119.png 120.png +append a10
+	magick 121.png 122.png 123.png 124.png 125.png \
+		126.png 127.png 0.png 0.png 0.png 0.png +append a11
+	magick a0 a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 \
+		a11 -append poster_RM_1_6.png

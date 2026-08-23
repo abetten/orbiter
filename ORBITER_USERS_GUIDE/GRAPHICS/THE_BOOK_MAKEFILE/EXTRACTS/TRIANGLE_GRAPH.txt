@@ -1,0 +1,1 @@
+TRIANGLE_GRAPH="0,1,1\n1,0,1\n1,1,0\n"

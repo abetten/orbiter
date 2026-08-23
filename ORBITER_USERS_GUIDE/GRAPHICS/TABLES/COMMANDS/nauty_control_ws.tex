@@ -1,0 +1,21 @@
+\begin{table}[t]
+\tbl{\label{tab:nauty:control}}
+{\begin{tcolorbox}[tabularx={p{3cm}|p{2cm}|p{6.3cm}|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black,title=Nauty Control Options]
+\hline
+Command & Arguments & Purpose \\
+\hline
+\hline
+\verb'-save_nauty_input_graphs'  &  prefix  &  Save nauty input graphs during classification. The graphs will be written in Dimacs format. The file name will be constructed from the given prefix and the name of the combinatorial object. \\
+\hline
+\verb'-save_orbit_of_equations'  &  prefix  &  Save the orbit of equations (only for objects of type variety). The file name will be constructed from the given prefix and the name of the combinatorial object. \\
+\hline
+\verb'-partition'  &  part  &  Compute the canonical form with respect to the stabilizer of the partition. \\
+\hline
+\verb'-show_canonical_form'  &   &  Show the canonical form during classification. \\
+\hline
+\verb'-reduce_memory_footprint'  &  k &  Reduce the memory footprint (for $k=1$). \\
+\hline
+\end{tcolorbox}}
+\end{table}

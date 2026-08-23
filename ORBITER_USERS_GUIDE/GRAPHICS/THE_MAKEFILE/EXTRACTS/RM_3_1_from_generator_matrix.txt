@@ -1,0 +1,11 @@
+RM_3_1_from_generator_matrix:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define genma -vector -format 8 -field F \
+			-compact $(CODE_RM_3_1_GENMA) \
+		-end \
+		-define C -code -field F \
+			-generator_matrix genma \
+		-end
+	#$(PDFLATEX) code_n8_k4_q2.tex
+	#$(OPEN) code_n8_k4_q2.pdf

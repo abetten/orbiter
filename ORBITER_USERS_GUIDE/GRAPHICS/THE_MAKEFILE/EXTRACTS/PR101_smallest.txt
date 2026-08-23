@@ -1,0 +1,2 @@
+PR101_smallest:
+	$(ORBITER) -v 5 -smallest_primitive_root 101

@@ -1,0 +1,4 @@
+COLOR_TURQUOISE=\
+	"texture{ pigment{Cyan*1.3} \
+	finish {ambient 0.4 diffuse 0.6 roughness 0.001 \
+	reflection 0 specular .8} }"

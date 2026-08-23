@@ -1,0 +1,8 @@
+Queens_graph_aut:
+	$(ORBITER) -v 2 \
+		-define Gamma -graph -non_attacking_queens_graph 8 -end \
+		-with Gamma -do \
+			-graph_theoretic_activity -automorphism_group \
+		-end
+	$(PDFLATEX) non_attacking_queens_graph_8_report.tex
+	$(OPEN) non_attacking_queens_graph_8_report.pdf

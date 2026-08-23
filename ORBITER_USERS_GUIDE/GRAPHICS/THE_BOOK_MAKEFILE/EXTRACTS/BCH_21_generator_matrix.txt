@@ -1,0 +1,8 @@
+BCH_21_generator_matrix:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 4 -end \
+		-with F -do \
+		-coding_theoretic_activity \
+			-generator_matrix_cyclic_code \
+				21 "1,0,1,0,1,1,1" \
+		-end

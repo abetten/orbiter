@@ -1,0 +1,22 @@
+geo_15_3_g4:
+	$(ORBITER) -v 2 \
+		-define Test_lines -set -loop 4 16 1 -end \
+		-define Geo -geometry_builder \
+			-V 15 -B 15 -TDO 3 \
+			-fuse 1 -fname_GEO 15_3_g4 \
+			-output_to_inc_file \
+			-girth 4 \
+			-search_tree \
+			-special_test_not_orderly \
+			-test Test_lines \
+		-end
+	$(ORBITER) -v 2 \
+		-define Do -draw_options -embedded -radius 50 \
+			-nodes_empty \
+			-scale 0.5 -line_width 0.3 -end \
+		-tree_draw \
+			-file 15_3_g4_tree.txt \
+			-draw_options Do \
+		-end
+	$(PDFLATEX) 15_3_g4_tree_draw.tex
+	$(OPEN) 15_3_g4_tree_draw.pdf

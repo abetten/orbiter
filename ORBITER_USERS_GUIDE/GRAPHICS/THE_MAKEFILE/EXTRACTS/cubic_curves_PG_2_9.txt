@@ -1,0 +1,34 @@
+cubic_curves_PG_2_9:
+	$(ORBITER) -v 3 \
+		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define Do -draw_options \
+			-radius 200 -embedded \
+		-end \
+		-define F -finite_field -q 9 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define Control -poset_classification_control \
+			-problem_label cc_9 -W -depth 9 \
+		-end \
+		-define Arc_control -arc_generator_control \
+			-projective_space P \
+			-control Control \
+			-target_size 9 \
+			-d 3 \
+		-end \
+		-define Orb -orbits \
+			-on_cubic_curves Arc_control \
+		-end \
+		-define ro \
+			-poset_classification_report_options \
+				-draw_poset -type_ordinary \
+				-draw_options Do \
+		-end \
+		-with Orb -do -orbits_activity \
+			-report "" \
+			-report_options ro \
+		-end
+		-with Orb -do -orbits_activity \
+			-draw_tree 0 Do \
+		-end
+	#$(PDFLATEX) cc_9_poset_lvl_9.tex
+	#$(OPEN) cc_9_poset_lvl_9.pdf

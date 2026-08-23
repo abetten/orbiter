@@ -1,0 +1,15 @@
+PGL_4_2_wedge:
+	$(ORBITER) -v 3 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define G -linear_group -PGL 4 2 -end \
+		-define G2 -modified_group -from G \
+			-on_wedge_product \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end
+	$(PDFLATEX) PGL_4_2_report.tex
+	$(OPEN) PGL_4_2_report.pdf

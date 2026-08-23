@@ -1,0 +1,3 @@
+Hamming_graph_7:
+	$(ORBITER) -v 2 \
+		-define G -graph -Hamming 7 2 -end

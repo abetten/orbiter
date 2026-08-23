@@ -1,0 +1,7 @@
+PG_2_4_order_21:
+	$(ORBITER) -v 2 \
+		-define G -linear_group -PGL 3 4 -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-search_element_of_order 21 \
+		-end

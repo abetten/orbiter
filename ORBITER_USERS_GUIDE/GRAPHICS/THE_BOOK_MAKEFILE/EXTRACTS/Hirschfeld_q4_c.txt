@@ -1,0 +1,66 @@
+Hirschfeld_q4_c:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 4 -end \
+		-define R -polynomial_ring -field F \
+			-number_of_variables 4 \
+			-homogeneous_of_degree 3 \
+			-end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-assign Eqn -from \
+		-with R -do \
+			-ring_theoretic_activity \
+			-parse_equation_wo_parameters \
+				"Hirschfeld_surface_q4" "Hirschfeld\_surface\_q4" \
+				$(HIRSCHFELD_SURFACE_EQUATION_ALGEBRAIC_FORM) \
+		-end \
+		-define Geo -geometric_object P \
+			-projective_variety R \
+				"Hirschfeld_surface_q4" "Hirschfeld\_surface\_q4" \
+				Eqn \
+		-end \
+		-define C -combinatorial_object \
+			-label Hirschfeld_surface_q4 Hirschfeld\_surface\_q4 \
+			-geometric_object Geo \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form_PG P \
+				-save_ago \
+				-max_TDO_depth 10 \
+				-nauty_control \
+					-nauty_log "Hirschfeld_q4_nauty_log.txt" \
+					-save_nauty_input_graphs Hirschfeld_q4 \
+				-end \
+			-end \
+		-end \
+		-define Doinc -draw_incidence_structure_options \
+			-width 60 -width_10 6 \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-post_processing \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-report \
+				-export_flag_orbits \
+				-show_TDO \
+				-show_TDA \
+				-export_labels \
+				-dont_show_incidence_matrices \
+				-export_group_GAP \
+				-incidence_draw_options Doinc \
+			-end \
+		-end
+	$(PDFLATEX) Hirschfeld_surface_q4_classification.tex
+	$(OPEN) Hirschfeld_surface_q4_classification.pdf
+	$(ORBITER) -v 2 \
+		-define Do -draw_options -embedded -radius 150 \
+			-nodes_empty \
+			-scale 0.5 -line_width 0.3 -end \
+		-tree_draw \
+			-file Hirschfeld_q4_nauty_log.txt \
+			-draw_options Do \
+		-end
+	$(PDFLATEX) Hirschfeld_q4_nauty_log_draw.tex
+	$(OPEN) Hirschfeld_q4_nauty_log_draw.pdf

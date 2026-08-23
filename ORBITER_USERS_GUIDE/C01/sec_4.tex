@@ -1,0 +1,61 @@
+To update Orbiter, 
+we first check if ``git'' is installed. Type
+$$
+\verb'git'
+$$
+If you get an error message, it means that git 
+is not installed or that git cannot be found. 
+in the former, you need to install git. 
+In the latter, you may have to check the path of your shell. 
+On the other hand, if you get a long output with commands, 
+you are fine. 
+Git is installed. 
+
+\bigskip
+
+Next, we enter the \verb'orbiter' directory. 
+This is the directory that was created by \verb'git clone'.
+$$
+\verb'cd orbiter'
+$$
+Now type 
+$$
+\verb'git pull'
+$$
+to update the Orbiter sources. 
+If you get an error message 
+to the effect that you should stash something first, 
+it means that you have made 
+changes inside the orbiter directory. 
+Most likely, you edited a file in the 
+Orbiter directory tree by chance. 
+In this case, it is best to let go of these changes by issuing
+$$
+\verb'git reset --hard'
+$$
+and then doing 
+$$
+\verb'git pull'
+$$
+again.
+Then type 
+$$
+\verb'make clean'
+$$
+and
+$$
+\verb'make'
+$$
+Orbiter is a large project, 
+so this command may take soime time. 
+You can speed up things by using parallel compilation. 
+For instance, use
+$$
+\verb'make -j 8'
+$$
+for parallel compile ith 8 threads. 
+If necessary, 
+change the number in the command.
+Use larger numbers if your hardware supports more CPU cores. 
+You should get a new Orbiter executable. 
+

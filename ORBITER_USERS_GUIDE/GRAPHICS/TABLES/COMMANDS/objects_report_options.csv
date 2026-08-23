@@ -1,0 +1,15 @@
+ROW,C1,C2,C3
+0,"tab:combi:reporting",,
+1,"Options for Reporting After Classification",,
+1,"\verb'-export_flag_orbits' ","   "," Export flag orbits to csv file. "
+1,"\verb'-show_incidence_matrices' ","   "," Show incidence matrices in the report. "
+1,"\verb'-show_TDO' ","   "," Compute the TDO for the report. "
+1,"\verb'-show_TDA' ","   "," Compute the TDA for the report. "
+1,"\verb'-export_labels' ","   ","  "
+1,"\verb'-export_group_orbiter' ","   "," Export the automorphism group in Orbiter format.  "
+1,"\verb'-export_group_GAP' ","   "," Export the automorphism group in GAP format. "
+1,"\verb'-export_group_magma' ","   "," Export the automorphism group in Magma format. "
+1,"\verb'-lex_least' ","  geo "," Show lex-least orbit representatives. Here, geo is a geometry builder object. "
+1,"\verb'-canonical_forms' ","   "," Report the canonical forms of each input object. "
+END
+

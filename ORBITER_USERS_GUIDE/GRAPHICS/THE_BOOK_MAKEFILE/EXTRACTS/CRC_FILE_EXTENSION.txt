@@ -1,0 +1,1 @@
+CRC_FILE_EXTENSION=bmp

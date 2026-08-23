@@ -1,0 +1,9 @@
+BLT_database_5_0:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 5 -end \
+		-define P -projective_space -n 4 -field F -v 0 -end \
+		-define O -geometric_object P \
+			-BLT_database 0 \
+		-end \
+		-with O -do -combinatorial_object_activity -save \
+		-end

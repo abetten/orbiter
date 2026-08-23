@@ -1,0 +1,8 @@
+NTRU_Alice2:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q $(NTRU_P) -end \
+		-with F -do \
+		-finite_field_activity \
+		-extended_gcd_for_polynomials \
+			$(NTRU_XN1) $(ALICE_PRIVATE_F) \
+		-end

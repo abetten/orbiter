@@ -1,0 +1,27 @@
+Op_8_2_orbits_on_subspaces:
+	$(ORBITER) -v 5 \
+		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define Control -poset_classification_control \
+			-problem_label Op_8_2 -W -depth 8 \
+		-end \
+		-define G -linear_group -PGL 8 2 -orthogonal 1 -end \
+		-define Orb -orbits \
+			-group G \
+			-group_action G \
+			-generators G \
+			-on_subspaces 8 Control \
+		-end \
+		-define ro \
+			-poset_classification_report_options \
+				-draw_poset -type_ordinary \
+			-draw_options Do \
+		-end \
+		-with Orb -do -orbits_activity \
+			-report "" \
+			-report_options ro \
+		-end 
+	$(PDFLATEX) Op_8_2_poset.tex
+	$(OPEN) Op_8_2_poset.pdf

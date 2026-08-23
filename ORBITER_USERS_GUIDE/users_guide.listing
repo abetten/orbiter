@@ -1,0 +1,211 @@
+test \end {sexylisting}{PR29}
+
+computes a primitive root modulo $29$. The answer in this case is $2.$
+For a large example, consider
+
+\sourcecode{PR_915839}
+
+which computes a primitive root modulo $915839$. The answer is $43085$.
+The command
+
+\sourcecode{PR_915839_check}
+
+computes
+$$
+43085^{49842} \mod 915839
+$$
+which is $487320$.
+
+\bigskip
+
+The command \verb'-discrete_log' can be used to compute the discrete logarithm of $a$ modulo $p$ with respect to $b$.
+This means, a number $k$ is computed such that
+$$
+b^k \equiv a \mod p.
+$$
+For instance, the discrete log of $487320$ with respect to the base $43085$ modulo $915839$ is $49842,$
+based on the previous example.
+We can compute the discrete logarithm
+using the command
+
+\sourcecode{DL_915839}
+
+This command can be quite expensive.
+
+\bigskip
+
+Computing inverses modulo  a prime $p$ is possible using the \verb'-inverse_mod' command.
+The command
+
+\sourcecode{IM}
+
+computes the inverse of $1865025205$ modulo $2147483647$ which is $579785381.$
+
+\bigskip
+
+
+A different way of computing the inverse is using the 1-trick.
+This approach computes the gcd of two numbers $a$ and $b$, say,
+and writes
+$$
+\gcd(a,b)  = ua+vb
+$$
+for some $u,v \in \bbZ$.
+The \verb'-extended_gcd' command can be used. For instance, the following command
+computes the gcd of  $a=2147483647$  and $b=1865025205$.
+
+\sourcecode{IM_gcd}
+
+The output is
+$$
+1 = -503526232 * 2147483647 + 579785381 * 1865025205,
+$$
+from which we see that $\gcd(a,b) = 1$ and $u= -503526232$ and $v = 579785381.$
+which is the gcd written as a lattice combination of the input arguments.
+The inverse of $1865025205$  mod $2147483647$ is $v=579785381.$
+
+\bigskip
+
+In order to compute the modular power
+$$
+a^e \mod n,
+$$
+the \verb'-power_mod' command can be used. For instance,
+
+\sourcecode{PM3a}
+
+computes
+$16807$ raised to the power $1073741823$ modulo $2147483647,$ which is $2147483646.$
+
+\bigskip
+
+The modular square root of $a$ modulo $p$ is any $x$ in
+$$
+x^2 \equiv a \mod p.
+$$
+Thecommand \verb'-square_root_mod' can be used to compute modular square roots using
+the algorithm of Tonelli and Shanks (cf.~\cite{Cohen93}).
+For instance,
+
+\sourcecode{sqrt_mod}
+
+finds that the square root of $33$ mod $41$ is $19,$
+i.e.
+$$
+19^2 \equiv 33 \mod 41.
+$$
+
+\bigskip
+
+
+The command \verb'order_of_q_mod_n'
+computes  ${\rm ord}(q,n)$, the order of $q$ modulo $n$,
+for all $n$ with $n_{\min} \le n \le n_{\max}$ and $\gcd(n,q) = 1$.
+It also computes Euler's totient function $\varphi(n)$
+and the cofactor $\varphi(n)/{\rm ord}(q,n).$
+For instance,
+
+\sourcecode{order_of_2_mod_n}
+
+produces the output shown in Table~\ref{tab:order}.
+\begin{table}
+$$
+\includegraphics[width=11cm]{GRAPHICS/NUMBER_THEORY/order_of_2}
+$$
+\caption{\label{tab:order}The order of $2$ modulo $n$}
+\end{table}
+
+\bigskip
+
+
+The command
+
+\sourcecode{Eulerfunction_150}
+
+computes Euler's totient function for all integers $n$ with $1 \le n \le 150.$
+The result is shown in Table~\ref{tab:eulerfunction}.
+\begin{table}
+$$
+\includegraphics[width=11cm]{GRAPHICS/NUMBER_THEORY/eulerfunction_150}
+$$
+\caption{\label{tab:eulerfunction}The values of the Eulerfunction}
+\end{table}
+
+\bigskip
+
+A power map sends $a$ to $a^k$ for some fixed $k$.
+Orbiter can compute power maps modulo $p$.
+For instance, the following command computes the function $a \mapsto a^k \mod 11$:
+
+\sourcecode{power_function_2_mod_11}
+
+The result is shown in Table~\ref{tab:eulerfunction}.
+\begin{table}
+$$
+\includegraphics[width=3cm]{GRAPHICS/NUMBER_THEORY/a_pow_2_mod_11}
+$$
+\caption{\label{tab:power:2:11}The function $a \mapsto a^2$ mod $11$}
+\end{table}
+
+\bigskip
+
+It is sometimes helpful to draw the elements modulo $n$ on a circle,
+using the vertices of an $n$-gon to represent the field elements. For instance, for
+the command
+
+\sourcecode{draw_mod_13}
+
+uses a $13$-gon to represent the elements modulo $13$.
+It also computes the powers of $2$ mod $13$ and connects
+consecutive powers in the diagram (see Figure~\ref{ref:power:13}).
+\begin{figure}
+$$
+\begin{array}{c}
+\input GRAPHICS/MOD13/mod_13_powers_of_2_draw.tex\\
+\end{array}
+$$
+\caption{\label{ref:power:13}Cycle of powers of $2$ modulo $13$}
+\end{figure}
+
+\bigskip
+
+The next command illustrates how to solve a system of congruences with coprime moduli
+using the Chinese remainder theorem.
+Suppose we want to find the integer $x$ such that
+\begin{eqnarray*}
+x & \equiv 2 \; \mbox{mod} \; 5\\
+x & \equiv 2 \; \mbox{mod} \; 6\\
+x & \equiv 5 \; \mbox{mod} \; 7\\
+\end{eqnarray*}
+The following command creates one vector for the remainders and one for the moduli and then
+invokes the \verb'-Chinese_remainders' command.
+
+\sourcecode{Chinese_remainders_A}
+
+The answer is $x \equiv 152$ modulo 210.
+
+\bigskip
+
+The next example shows that the Chinese remainder algorithm is safe for large numbers.
+We pick two 10 digit prime numbers as moduli and solve
+\begin{eqnarray*}
+x & \equiv 2 \; \mbox{mod} \; 2147483647\\
+x & \equiv 3 \; \mbox{mod} \; 5915587277\\
+\end{eqnarray*}
+using the command
+
+\sourcecode{Chinese_remainders_C2}
+
+The answer is
+$$
+x \equiv 5684294357108828365 \mod 12703626939758759219.
+$$
+A quick check with Maple shows that
+\begin{eqnarray*}
+5684294357108828365 \mod 2147483647 & \equiv 2 \\
+5684294357108828365 \mod 5915587277 & \equiv 3 \\
+\end{eqnarray*}
+as required.
+
+
+

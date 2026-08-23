@@ -1,0 +1,4 @@
+F_17_NTT_compile: NTT_k4_q17.cpp
+	$(MY_CPP)  NTT_k4_q17.cpp $(CPPFLAGS) \
+		$(LIB) $(LFLAGS) -o NTT_k4_q17.out
+	./NTT_k4_q17.out

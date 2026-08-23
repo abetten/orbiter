@@ -1,0 +1,3 @@
+COLOR_BLUE_SHINY=\
+	"texture{ pigment{ color Blue } \
+	finish { diffuse 0.9 phong 1}}"

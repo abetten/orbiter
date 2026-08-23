@@ -1,0 +1,23 @@
+PGL_5_3_wedge_subspace_orbits:
+	$(ORBITER) -v 3 \
+		-define Do -draw_options \
+			-radius 75 -embedded -nodes_empty \
+		-end \
+		-define G -linear_group -PGL 5 3 -end \
+		-define G2 -modified_group -from G \
+			-on_wedge_product \
+		-end \
+		-define Control -poset_classification_control \
+			-problem_label PGL_5_3_wedge -W -depth 5 \
+		-end \
+		-define Orb -orbits \
+			-group G \
+			-group_action G2 \
+			-generators G \
+			-on_subspaces 5 Control \
+		-end \
+		-with Orb -do -orbits_activity \
+			-draw_tree 0 Do \
+		-end 
+	$(PDFLATEX) PGL_5_3_wedge_tree_lvl_5.tex
+	$(OPEN) PGL_5_3_wedge_tree_lvl_5.pdf

@@ -1,0 +1,25 @@
+Family_general_F11_iso_test:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 11 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define Surf1 -cubic_surface \
+			-space P -family_general_abcd 2 4 4 2 \
+		-end \
+		-define Surf2 -cubic_surface \
+			-space P -family_general_abcd 5 10 7 5 \
+		-end \
+		-define Control -poset_classification_control -W \
+			-problem_label "surf_q11" \
+		-end \
+		-define Classify -classify_cubic_surfaces \
+			-use_double_sixes \
+			-projective_space P \
+			-poset_classification_control Control \
+		-end \
+		-define Orb -orbits \
+			-on_cubic_surfaces Classify \
+		-end \
+		-with Orb -do \
+			-cubic_surfaces_after_classification_activity \
+			-isomorphism_testing Surf1 Surf2 \
+		-end

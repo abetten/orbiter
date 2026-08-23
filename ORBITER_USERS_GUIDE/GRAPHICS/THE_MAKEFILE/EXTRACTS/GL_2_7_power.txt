@@ -1,0 +1,9 @@
+GL_2_7_power:
+	$(ORBITER) -v 5 \
+		-define G -linear_group -GL 2 7 -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-raise_to_the_power "0,1,2,3" 2 \
+		-end
+	$(PDFLATEX) GL_2_7_power.tex
+	$(OPEN) GL_2_7_power.pdf

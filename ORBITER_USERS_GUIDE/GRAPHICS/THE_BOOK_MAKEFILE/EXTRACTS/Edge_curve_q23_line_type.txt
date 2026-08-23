@@ -1,0 +1,17 @@
+Edge_curve_q23_line_type:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 23 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define E -geometric_object P \
+			-set "edge_curve_q23" "edge\_curve\_q23" \
+			$(EDGE_CURVE_Q23_AS_POINTS) \
+		-end \
+		-with E -do \
+		-combinatorial_object_activity \
+			-save \
+		-end \
+		-with E -do \
+		-combinatorial_object_activity \
+			-line_type_old \
+		-end \
+		-print_symbols

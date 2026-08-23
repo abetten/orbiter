@@ -1,0 +1,81 @@
+Orbiter has an interface to GAP~\cite{GAP}. 
+This allows Orbiter commands to utilize GAP specific functionality. 
+One application is the computation of canonical images 
+of sets in the context of permutation groups. 
+This is facilitated by means of the GAP package images~\cite{images}.
+
+\bigskip
+
+
+Table~\ref{tab:grouptasks:GAP} 
+lists the group theoretic commands in Orbiter 
+that rely on GAP.
+\orbitertableofcommands{group_theoretic_activity_gap}
+
+\bigskip
+
+
+How can we export a group from Orbiter to GAP? 
+For semilinear matrix groups, 
+we need to export to the GAP package Fining~\cite{fining}. 
+This is because semilinear groups are not available in GAP.
+Here is an example. 
+We create the stabilizer of the Hirschfeld surface 
+in $\PG(3,4)$ and export the group to GAP/Fining 
+as a group of collineations.
+
+\sourcecode{Hirschfeld_stab_export_gap}
+
+The command creates a GAP/Fining file shown below:
+\orbiteroutput{GRAPHICS/LATEX/Hirschfeld_stab_fining}
+
+When we load this file into GAP, we see the following output
+(for printing purposes, 
+it has been shortened and reformatted slightly):
+\orbiteroutput{GRAPHICS/LATEX/Hirschfeld_stab_fining_gap_output}
+
+\bigskip
+
+
+
+Suppose we want to compute the least image 
+of the set $\{3,5\}$ in the permutation group 
+$C_6.$
+The following command sets up the group 
+$C_6$ and invokes the Orbiter \verb'-canonical_image' command.
+
+\sourcecode{Cyclic_6_canonical_image}
+
+The command creates a GAP file shown below:
+\orbiteroutput{GRAPHICS/LATEX/minimal_image_cyclic_6_command}
+Running this command in GAP yields:
+\orbiteroutput{GRAPHICS/LATEX/minimal_image_cyclic_6_gap_output}
+Note that the permutation representations in GAP are 1-based, 
+while Orbiter uses 0-based representations. 
+So, the least image of $\{1,3\}$ 
+in GAP really corresponds to the set $\{0,2\}$ in Orbiter.
+
+
+\bigskip
+
+
+Let us try a larger example. 
+We want to compute the canonical form of the 
+Edge curve by means of their rational points over $\bbF_{17}.$
+We use the following makefile variable 
+to specify the set of rational points:
+
+\sourcecodevariable{EDGE_CURVE_Q17_AS_POINTS}
+
+The next command creates $\PGL(3,17)$ 
+and invokes the \verb'-canonical_image' image command.
+
+\sourcecode{Edge_qurve_q17_canonical_image}
+
+The command creates a GAP input file called \verb'PGL_3_17_canonical_image.gap'. 
+The file is too large to be shown here.
+%\orbiteroutput{GRAPHICS/LATEX/minimal_image_PSL_3_17_command}
+Running it through GAP yields the canonical form:
+\orbiteroutput{GRAPHICS/LATEX/minimal_image_PSL_3_17_gap_output}
+Keep in mind that the permutation representation in Gap is 1-based, 
+so the numbers have been incremented by one.

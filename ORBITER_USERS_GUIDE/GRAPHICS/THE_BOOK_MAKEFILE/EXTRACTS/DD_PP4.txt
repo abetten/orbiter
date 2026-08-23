@@ -1,0 +1,18 @@
+DD_PP4:
+	$(ORBITER) -v 6 \
+		-define Do -draw_options -end \
+		-define pair_search_control -poset_classification_control \
+			-problem_label PP4_pairs -W \
+			-draw_options Do \
+		-end \
+		-define search_control -poset_classification_control \
+			-problem_label PP4_search -W \
+			-draw_options Do \
+			-depth 5 \
+		-end \
+		-Delandtsheer_Doyen \
+			-pair_search_control pair_search_control \
+			-search_control search_control \
+			$(PP4) $(PP4_GROUP1) $(PP4_MASK1) \
+			-create_starter \
+			-end \

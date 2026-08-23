@@ -1,0 +1,2 @@
+PR31:
+	$(ORBITER) -v 1 -smallest_primitive_root 31

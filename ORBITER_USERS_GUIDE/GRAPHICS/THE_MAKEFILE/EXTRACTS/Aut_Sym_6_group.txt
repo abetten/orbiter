@@ -1,0 +1,20 @@
+Aut_Sym_6_group:
+	$(ORBITER) -v 3 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define gens -vector -dense $(AUT_SYM_6_GENS) -end \
+		-define G -permutation_group \
+			-bsgs AutSym6 "{\rm AutSym}(6)" \
+			$(AUT_SYM_6_DEGREE) \
+			$(AUT_SYM_6_GROUP_ORDER) \
+			$(AUT_SYM_6_BASE) \
+			$(AUT_SYM_6_NB_GENS) \
+			gens \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end
+	$(PDFLATEX) AutSym6_report.tex
+	$(OPEN) AutSym6_report.pdf

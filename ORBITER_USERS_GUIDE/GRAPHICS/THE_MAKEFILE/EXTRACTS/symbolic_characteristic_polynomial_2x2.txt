@@ -1,0 +1,21 @@
+symbolic_characteristic_polynomial_2x2:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 13 -end \
+		-define M -symbolic_object \
+			-field F \
+			-matrix 2 \
+			-text "a,b,c,d" \
+		-end \
+		-define p -symbolic_object \
+			-field F \
+			-characteristic_polynomial lambda M \
+		-end \
+		-define p1 -symbolic_object \
+			-field F \
+			-expand p \
+			-write_trees_during_expand \
+		-end \
+		-define coeffs -symbolic_object \
+			-field F \
+			-collect p1 lambda \
+		-end

@@ -1,0 +1,12 @@
+design_PG_2_3:
+	$(ORBITER) -v 8 \
+		-define F -finite_field -q 3 -end \
+		-define D -design -field F -family PG_2_q -end \
+		-with D -do \
+			-design_activity \
+				-export_flags \
+		-end \
+		-with D -do \
+			-design_activity \
+				-tactical_decomposition \
+		-end

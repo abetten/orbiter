@@ -1,0 +1,17 @@
+Chain_232_eigen:
+	$(ORBITER) -v 2 \
+		-define P1 -vector -dense 2,3,2 -end \
+		-define P2 -vector -dense 2,3,2 -end \
+		-define Gamma -graph \
+			-chain_graph P1 P2 \
+		-end \
+		-with Gamma -do \
+			-graph_theoretic_activity \
+			-eigenvalues \
+		-end \
+		-with Gamma -do \
+			-graph_theoretic_activity \
+			-eigenvalue_report \
+		-end
+	$(PDFLATEX) chain_graph_eigenvalues.tex
+	$(OPEN) chain_graph_eigenvalues.pdf

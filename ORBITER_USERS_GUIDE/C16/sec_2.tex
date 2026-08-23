@@ -1,0 +1,53 @@
+Consider a  graph $\Gamma = (V,E).$ 
+A vertex coloring of $\Gamma$ is a map $f: V \rightarrow C$ 
+where $C$ is a finite set whose elements we call colors. 
+Let $k = |C|$. 
+A rainbow clique in $\Gamma$ 
+is a clique $X$ such that $|X \cap f^{-1})(c)| = 1$ for all $c\in C.$ 
+This means that the clique 
+contains exactly one vertex from every color. 
+Rainbow cliques can be helpful in the search for combinatorial objects. 
+This is because the conditions for rainbow cliques 
+are stronger than the conditions for ordinary cliques, 
+which leads to better pruning in a backtrack search algorithm for cliques. 
+Orbiter offers two algorithms for rainbow cliques. 
+Let us consider an example. 
+The classification of BLT-sets can be facilitated using rainbow cliques. 
+The following algorithm was introduced in~\cite{Betten13}, 
+building on earlier work of Penttila.
+At first, the partial BLT-sets of a certain size (usually 5) are computed. 
+The orbit representatives of this classification are called starter sets.
+Then, for each orbit representative, a certain graph is defined. 
+The graph helps us to find the BLT-sets that contain the given starter set.
+The graph has a vertex coloring, and the extensions correspond to rainbow cliques. 
+Let us look at an example. 
+We classify the BLT-sets of size 11. 
+The first command classifies the starters of size 5 and creates the graphs.
+The graphs are $\Gamma_0, \ldots, \Gamma_{s-1}$, 
+where $s$ is the number of orbits on partial BLT-sets.
+
+\sourcecode{BLT_11_classify_starter}
+
+Consider just one graph, say the first. 
+The following command computes the rainbow cliques in $\Gamma_0$:
+
+\sourcecode{BLT_11_clique_0}
+
+There are three rainbow cliques.
+The following command computes the rainbow cliques in $\Gamma_0$ using the second algorithm.
+The second algorithm, due to Sajeeb Chowdhury, allows for parallel computing using multithreading.
+
+\sourcecode{BLT_11_clique_0_Sajeeb}
+
+Let us look at the graph $\Gamma_0$. At first, we sort the vertices by color class:
+
+\sourcecode{BLT_11_0_sort}
+
+Next, we produce a drawing of the graph. 
+The subscripts at the vertex label indicate the vertex color:
+
+\sourcecode{BLT_11_0_sorted_draw}
+
+\orbiteroutput{GRAPHICS/WRAPPERS/BLT_11_0_sorted_draw}
+
+

@@ -1,0 +1,10 @@
+EC_bsgs_decode:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 199 -end \
+		-with F -do \
+		-finite_field_activity \
+		-EC_bsgs_decode 5 7 "129,176" 212 \
+		"127,188,51,141,85,29,106,90,41,105,179,71,\
+		171,2,16,197,183,72,27,129,37,10" \
+		"50,179,169,13,153,169,115,116,188,110,176" \
+		-end

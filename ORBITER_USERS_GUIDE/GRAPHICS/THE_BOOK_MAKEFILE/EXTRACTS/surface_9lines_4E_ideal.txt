@@ -1,0 +1,17 @@
+surface_9lines_4E_ideal:
+	$(ORBITER) -v 2 \
+		-define Pts -vector -dense \
+			$(PTS_OF_SURFACE_ORBIT211_Q3_L9_E4) \
+			-end \
+		-define F -finite_field -q 3 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 4 \
+			-homogeneous_of_degree 3 \
+			-monomial_ordering_lex \
+			-variables "x0,x1,x2,x3" "x_0,x_1,x_2,x_3" \
+			-end \
+		-with R -do \
+			-ring_theoretic_activity \
+			-ideal "surf_eqn" "surf\_eqn" Pts \
+			-end 

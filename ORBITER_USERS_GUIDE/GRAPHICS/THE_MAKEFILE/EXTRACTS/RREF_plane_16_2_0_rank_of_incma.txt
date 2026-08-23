@@ -1,0 +1,9 @@
+RREF_plane_16_2_0_rank_of_incma:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define v -vector -field F  \
+			-file plane_catalogue_q2_k4_0_incma.csv \
+		-end \
+		-with F -do -finite_field_activity \
+		-RREF v \
+		-end

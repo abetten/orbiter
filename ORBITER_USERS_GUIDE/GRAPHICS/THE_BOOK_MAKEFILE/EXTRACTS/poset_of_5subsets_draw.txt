@@ -1,0 +1,11 @@
+poset_of_5subsets_draw:
+	$(ORBITER) -v 3 \
+		-draw_layered_graph \
+			poset_5_poset_lvl_5.layered_graph \
+			-place \
+			-radius 300 -embedded \
+			-line_width 1.1 -y_stretch 0.9 \
+			-scale 0.25 \
+		-end
+	$(PDFLATEX) poset_5_poset_lvl_5_draw.tex
+	$(OPEN) poset_5_poset_lvl_5_draw.pdf

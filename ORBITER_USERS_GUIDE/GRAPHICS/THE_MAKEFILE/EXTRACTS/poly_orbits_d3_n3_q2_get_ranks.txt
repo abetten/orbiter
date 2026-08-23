@@ -1,0 +1,5 @@
+poly_orbits_d3_n3_q2_get_ranks:
+	$(ORBITER) -v 4 \
+		-csv_file_select_cols poly_orbits_d3_n3_q2.csv "_reps" Rep
+	#$(PDFLATEX) poly_orbits_d3_n3_q2.tex
+	#$(OPEN) poly_orbits_d3_n3_q2.pdf

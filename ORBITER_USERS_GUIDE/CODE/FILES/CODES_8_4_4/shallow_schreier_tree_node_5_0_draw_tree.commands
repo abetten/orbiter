@@ -1,0 +1,51 @@
+% file: shallow_schreier_tree_node_5_0_draw_tree.commands
+% created by Orbiter graphics interface
+% creation date: Mon Nov 25 12:41:15 MST 2019
+
+DeviceCoordinates 0 0 1000000 1000000
+UserCoordinates 0 0 1000000 1000000
+Polygon 2 500000 950000 71428 850000
+Polygon 2 500000 950000 214285 850000
+Polygon 2 500000 950000 357142 850000
+Polygon 2 500000 950000 571428 850000
+Polygon 2 500000 950000 785714 850000
+Polygon 2 500000 950000 928571 850000
+Polygon 2 571428 850000 571428 750000
+sf_interior 100
+Circle 500000, 950000, 2000
+sf_interior 0
+Circle 500000, 950000, 2000
+sf_interior 100
+Circle 71428, 850000, 2000
+sf_interior 0
+Circle 71428, 850000, 2000
+sf_interior 100
+Circle 214285, 850000, 2000
+sf_interior 0
+Circle 214285, 850000, 2000
+sf_interior 100
+Circle 357142, 850000, 2000
+sf_interior 0
+Circle 357142, 850000, 2000
+sf_interior 100
+Circle 571428, 850000, 2000
+sf_interior 0
+Circle 571428, 850000, 2000
+sf_interior 100
+Circle 785714, 850000, 2000
+sf_interior 0
+Circle 785714, 850000, 2000
+sf_interior 100
+Circle 928571, 850000, 2000
+sf_interior 0
+Circle 928571, 850000, 2000
+sf_interior 100
+Circle 571428, 750000, 2000
+sf_interior 0
+Circle 571428, 750000, 2000
+Polygon 3 -10000 790000 -10000 740000 40000 740000
+Polygon 3 960000 740000 1010000 740000 1010000 790000
+Polygon 3 960000 960000 1010000 960000 1010000 910000
+Polygon 3 -10000 910000 -10000 960000 40000 960000
+END_OF_FILE
+

@@ -1,0 +1,14 @@
+surface_11_random_report:
+	$(ORBITER) -v 10 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 -nodes_empty \
+		-end \
+		-define F -finite_field -q 11 -end \
+		-define P -projective_space -n 3 -field F -v 6 -end \
+		-define S -cubic_surface -space P -random -end \
+		-with S -do \
+		-cubic_surface_activity \
+			-report Do \
+		-end
+	$(PDFLATEX) surface_random_q11_report.tex
+	$(OPEN) surface_random_q11_report.pdf

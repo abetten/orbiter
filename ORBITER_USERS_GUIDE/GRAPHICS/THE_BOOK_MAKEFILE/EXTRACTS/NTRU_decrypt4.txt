@@ -1,0 +1,8 @@
+NTRU_decrypt4:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q $(NTRU_Q) -end \
+		-with F -do \
+		-finite_field_activity \
+		-polynomial_mult_mod $(ALICE_PRIVATE_FP) \
+			$(ALICE_C3) $(NTRU_XN1) \
+		-end

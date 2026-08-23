@@ -1,0 +1,18 @@
+ROW,C1,C2,C3
+0,"tab:diophant",,
+1,"Creating Diophantine Systems",,
+1,"\verb'-label' "," label "," Use the given name as file name. "
+1,"\verb'-coefficient_matrix' "," A  "," Set the coefficient matrix to the previously created vector with format information. "
+1,"\verb'-coefficient_matrix_csv' "," fname  "," Read the coefficient matrix from the given csv-file."
+1,"\verb'-RHS' "," options  "," Set RHS info for a set of $m$ rows. Possible types of conditions are EQ, LE, INT, ZOR. This command can be repeated. Example: mult=2,EQ=1 is condition for 2 rows where the RHS is equal to zero. Example: mult=1,LE=3 is one condition where the RHS is at most three. Example: mult=1,INT=1to2 is one condition where the RHS is between 1 and 2. Example: mult=1,ZOR=2 is one condition where the RHS is either 0 or 2. "
+1,"\verb'-RHS_csv' "," fname  "," Read the RHS information from the given csv file. "
+1,"\verb'-RHS_constant' "," options  "," Set the RHS as in \verb'-RHS' (without the mult component)."
+1,"\verb'-x_max_global' "," $a$  "," Set the upper bound for all variables to $a$ "
+1,"\verb'-x_min_global' "," $a$  "," Set the lower bound for all variables to $a$ "
+1,"\verb'-x_bounds' "," list-of-values  "," Set the lower and upper bounds for all variables. "
+1,"\verb'-x_bounds_csv' "," fname  "," Read the lower and upper bounds for all variables from the given file. "
+1,"\verb'-has_sum' "," $s$  "," Force the sum of the variables to be $s.$ "
+1,"\verb'-problem_of_Steiner_type' "," N fname "," Create an instance of an exact cover problem based on the matrix in the given file. The underlying set has size $N.$ "
+1,"\verb'-maximal_arc' "," $s$ $d$ secants subset "," Create system for a maximal arc of size $s$ and degree $d$ in $\PG(2,q)$. Use the given set of two pencil lines. The subset picks the lines from the given pencils which are external.  "
+1,"\verb'-field' "," F  "," Use the field F. Related to \verb'-maximal_arc'. "
+END

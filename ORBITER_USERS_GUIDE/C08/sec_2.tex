@@ -1,0 +1,92 @@
+
+A partially ordered set (poset) is a set together with a partial order. 
+For instance, the set of subsets of a fixed set form an order structure 
+with respect to set-inclusion.
+The Hasse diagram is a diagram whose nodes represent the element. 
+Nodes are arranged from top to bottom, 
+and relations are indicated by lines. 
+Only the maximal inclusions are drawn. 
+The other relations can be inferred from transitivity.
+
+For example, consider the set of subsets of 
+a 4-element set, say $\{1,2,3,4\}$:
+
+\orbiteroutput{GRAPHICS/WRAPPERS/subset_lattice_4}
+
+Here, $\{1\}$ is a subset of $\{1,2\}$, which is a subset of $\{1,2,3\}$.
+There is no line from $\{1\}$ to $\{1,2,3\}$ as the relation is not maximal. 
+
+
+\bigskip
+
+
+Partial orders can be useful in the problem of classifying combinatorial 
+objects by means of substructures.
+A poset action is group action on a poset. 
+Let $G$ be a group and let $\cP$ be a poset. 
+For a poset action, we require that 
+$$
+x \le y \Rightarrow xg \le yg \quad \mbox{for all} \; x,y \in \cP, \; g \in G.
+$$
+For background on poset actions, see Plesken~\cite{Plesken82}.
+The orbits of $G$ on $\cP$ form another poset, the poset of orbits. 
+A ranked poset can be decomposed into layers according to the rank function. 
+It is then possible to build the poset by considering adjacent levels inductively.
+In each step, the next layer is constructed from the previous layer and all the layers below.
+This allows one to reduce a classification problem to a sequence of smaller, 
+and in many cases easier steps.  
+
+
+\bigskip
+
+
+
+
+Orbiter uses the algorithm of Schmalz~\cite{Schmalz90} to perform poset classification.
+Two versions are available: one for subset-type posets and one for subspace-type posets.
+The subspace lattice of $V(3,2)=\bbF_2^3$ is shown below:
+
+\orbiteroutput{GRAPHICS/LATEX/V_3_2}
+
+The basis elements are listed, using the enumerator for 
+elements of the projective geometry $\PG(2,2)$ 
+explained in Section~\ref{sec:FPG}.
+
+
+
+
+\bigskip
+
+
+The commands listed in Table~\ref{tab:pc:options}
+can be used to control the poset classification algorithm.
+
+\orbitertableofcommands{poset_classification_control}
+
+By default, Orbiter will choose the lexiographically least orbit representatives. 
+It is possible to direct Orbiter to choose different orbit representatives. 
+To this end, the nodes in the orbit tree are labeled. 
+The node number is the zero-based number of a given node in the tree, 
+using the breadth first ordering. 
+
+\bigskip
+
+For posets whose orbits have been computed, 
+there are activities as shown in Tables~\ref{tab:pc:activity:1}-\ref{tab:pc:activity:2}. 
+\orbitertableofcommands{poset_classification_activity_1}
+\orbitertableofcommands{poset_classification_activity_2}
+
+\bigskip
+
+For reporting purposes, the options in Table~\ref{tab:pc:report:options} can be used. 
+\orbitertableofcommands{poset_classification_report_options}
+
+\bigskip
+
+Suppose that Orbiter chooses element $a$ at node $n.$ 
+If we prefer $b$ over $a$, we can issue the command 
+$$
+\verb'-preferred_choice' \; n \; a \; b
+$$
+It forces Orbiter to choose $b$ instead of $a$ at node $n$.
+

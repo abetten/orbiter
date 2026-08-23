@@ -1,0 +1,29 @@
+\begin{table}[t]
+\tbl{\label{tab:variety:activities}}
+{\begin{tcolorbox}[tabularx={p{3cm}|p{2cm}|p{6.3cm}|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black,title=Variety Activities]
+\hline
+Command & Arguments & Purpose \\
+\hline
+\hline
+\verb'-compute_group'  &    &  Compute the group of the variety (i.e., the stabilizer of the equation). \\
+\hline
+\verb'-test_isomorphism'  &    &  Test if two varieties are isomorphic. If yes, compute an isomorphism from the second to the first. \\
+\hline
+\verb'-compute_set_stabilizer'  &    &  Compute the set stabilizer of the variety. This group contains the stabilizer of the equation as a subgroup. \\
+\hline
+\verb'-nauty_control'  &   options  &  Nauty options, see Table~\ref{tab:nauty:control}.  \\
+\hline
+\verb'-report'  &    &  Produce a report of the variety. \\
+\hline
+\verb'-export'  &    &  Export data about the variety to a csv file. \\
+\hline
+\verb'-apply_transformation_to_self'  &  M  &  Apply the given transformation to the variety. M must be a coded semilinear map. \\
+\hline
+\verb'-singular_points'  &    &  Compute the singular points of the variety. \\
+\hline
+\verb'-output_fname_base'  &  fname  &  Set output filename base. \\
+\hline
+\end{tcolorbox}}
+\end{table}

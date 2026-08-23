@@ -1,0 +1,18 @@
+Weyl_E8:
+	$(ORBITER) -v 3 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define gens -vector -dense \
+			$(GENERATORS_WEYL_GROUP_E8) \
+		-end \
+		-define G -linear_group -GL 8 3 \
+		-subgroup_by_generators \
+			"Weyl_E8" "696729600" 2 gens  \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end
+	$(PDFLATEX) GL_8_3_Subgroup_Weyl_E8_696729600_report.tex
+	$(OPEN) GL_8_3_Subgroup_Weyl_E8_696729600_report.pdf

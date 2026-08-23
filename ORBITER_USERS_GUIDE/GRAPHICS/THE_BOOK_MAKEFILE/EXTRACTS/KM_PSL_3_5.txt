@@ -1,0 +1,44 @@
+KM_PSL_3_5:
+	$(ORBITER) -v 3 \
+		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define Do -draw_options -embedded -sideways \
+			-radius 50 -scale 0.5 -line_width 0.3 \
+		-end \
+		-define Control -poset_classification_control \
+			-problem_label KM_PSL_3_5 \
+			-W -depth 10 \
+			-draw_options Do \
+		-end \
+		-define G -linear_group -PSL 3 5 -end \
+		-define Orb -orbits \
+			-group G \
+			-group_action G \
+			-generators G \
+			-on_subsets 10 Control \
+		-end \
+		-with Orb -do -orbits_activity \
+			-Kramer_Mesner_matrix 8 10 \
+		-end \
+		-define ro \
+			-poset_classification_report_options \
+				-draw_poset -type_ordinary \
+				-draw_options Do \
+		-end \
+		-with Orb -do -orbits_activity \
+			-report "" \
+			-report_options ro \
+		-end 
+	$(ORBITER) -v 2 -draw_matrix \
+		-input_csv_file KM_PSL_3_5_KM_8_10.csv \
+		-box_width 10 -bit_depth 8 -partition 3 42 174 -end
+	$(ORBITER) -v 4 \
+		-define A -vector -file KM_PSL_3_5_KM_8_10.csv -end \
+		-define D -diophant \
+			-label "KM_PSL_3_5_KM_8_10_system" \
+			-coefficient_matrix A \
+			-RHS_constant "EQ=93" \
+			-x_min_global 0 -x_max_global 1 \
+		-end \
+		-with D -do \
+			-diophant_activity -solve_mckay \
+		-end

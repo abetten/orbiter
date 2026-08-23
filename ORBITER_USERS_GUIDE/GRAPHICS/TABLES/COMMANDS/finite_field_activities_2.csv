@@ -1,0 +1,9 @@
+ROW,C1,C2,C3
+0,"tab:finitefield:activities:more",,
+1,"More Finite Field Activities",,
+1,"\verb'-trace' ","   ","Computes the partition of the field elements according to the value of their absolute trace."
+1,"\verb'-norm' ","   ","Computes the partition of the field elements according to the value of their absolute norm."
+1,"\verb'-normal_basis' "," $d$  ","Computes a normal basis for $\bbF_{q^d}$ over $\bbF_q.$"
+1,"\verb'-nth_roots' "," $n$  ","Compute the minimum polynomials of all $n$-th roots over $F$."
+1,"\verb'-field_reduction' "," label $q$ $m$ $n$ $v$ ","Compute the field reduction from $F$ to the subfield $\bbF_q$ of the $m \times n$ matrix whose coefficients are given in $v$.  "
+END

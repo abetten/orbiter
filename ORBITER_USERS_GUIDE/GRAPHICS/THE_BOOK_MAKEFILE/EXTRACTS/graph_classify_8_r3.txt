@@ -1,0 +1,22 @@
+graph_classify_8_r3:
+	$(ORBITER) -v 3 \
+		-define Do -draw_options \
+			-radius 400 \
+			-line_width 2 -scale 0.10 \
+		-end \
+		-define GC -graph_classification \
+			-n 8 -regular 3 \
+			-poset_classification_control \
+				-problem_label graphs_v8_r3 \
+				-depth 12 \
+				-draw_options Do \
+			-end \
+		-end \
+		-with GC -do \
+		-graph_classification_activity \
+			-draw_options Do \
+			-draw_graphs_at_level 12 \
+		-end \
+		-print_symbols
+	#$(PDFLATEX) graphs_v8_r3_poset_lvl_12.tex
+	#$(OPEN) graphs_v8_r3_poset_lvl_12.pdf

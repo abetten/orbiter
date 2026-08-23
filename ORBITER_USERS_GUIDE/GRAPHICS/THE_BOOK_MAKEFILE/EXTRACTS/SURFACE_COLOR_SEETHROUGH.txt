@@ -1,0 +1,4 @@
+SURFACE_COLOR_SEETHROUGH=\
+	"texture{ pigment{ White*0.5 transmit 0.5 } \
+	finish {ambient 0.4 diffuse 0.5 roughness 0.001 \
+	reflection 0.1 specular .8} }"

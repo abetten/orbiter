@@ -1,0 +1,63 @@
+% file: PGL_4_2_sims_3.commands
+% created by Orbiter graphics interface
+% creation date: Thu Dec 17 16:59:38 MST 2020
+
+DeviceCoordinates 0 0 1000000 1000000
+UserCoordinates 0 0 10000 10000
+Polygon 2 5000 9375 2857 8125
+Polygon 2 5000 9375 7142 8125
+Polygon 2 5000 9375 9285 8125
+Polygon 2 2857 8125 1904 6875
+Polygon 2 2857 8125 4761 6875
+Polygon 2 7142 8125 7142 6875
+Polygon 2 1904 6875 1904 5625
+sf_interior 100
+Circle 500000, 937500, 20000
+sf_interior 0
+Circle 500000, 937500, 20000
+st_alignment 1, 1
+Text 500000, 937500, "{\scriptsize 3}"
+sf_interior 100
+Circle 285700, 812500, 20000
+sf_interior 0
+Circle 285700, 812500, 20000
+st_alignment 1, 1
+Text 285700, 812500, "{\scriptsize 9}"
+sf_interior 100
+Circle 714200, 812500, 20000
+sf_interior 0
+Circle 714200, 812500, 20000
+st_alignment 1, 1
+Text 714200, 812500, "{\scriptsize 12}"
+sf_interior 100
+Circle 928500, 812500, 20000
+sf_interior 0
+Circle 928500, 812500, 20000
+st_alignment 1, 1
+Text 928500, 812500, "{\scriptsize 10}"
+sf_interior 100
+Circle 190400, 687500, 20000
+sf_interior 0
+Circle 190400, 687500, 20000
+st_alignment 1, 1
+Text 190400, 687500, "{\scriptsize 13}"
+sf_interior 100
+Circle 476100, 687500, 20000
+sf_interior 0
+Circle 476100, 687500, 20000
+st_alignment 1, 1
+Text 476100, 687500, "{\scriptsize 11}"
+sf_interior 100
+Circle 714200, 687500, 20000
+sf_interior 0
+Circle 714200, 687500, 20000
+st_alignment 1, 1
+Text 714200, 687500, "{\scriptsize 14}"
+sf_interior 100
+Circle 190400, 562500, 20000
+sf_interior 0
+Circle 190400, 562500, 20000
+st_alignment 1, 1
+Text 190400, 562500, "{\scriptsize 4}"
+END_OF_FILE
+

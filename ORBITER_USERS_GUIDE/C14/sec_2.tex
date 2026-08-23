@@ -1,0 +1,156 @@
+One way to construct combinatorial designs is by assuming a suitable group of symmetries. 
+Let us consider an example. 
+It is possible to construct $t$-$(v,k,\lambda)$ 
+designs invariant under a permutation group $G$ 
+acting on a set $V$ with $|V| = v$ as follows: 
+Classify the orbits of $G$ on subsets of size $k$ and less. 
+Construct a matrix which describes the relationship between 
+the orbits on $t$-sets and the orbits on $k$-sets. 
+This matrix is often referred to as the Kramer-Mesner matrix (cf.~\cite{KramerMesner76}).
+For each pair of $t$-orbit and $k$-orbit, 
+for instance with representatives $T$ and $K$, say, 
+we count the number of elements in the orbit of $K$ which contain $T$. 
+The rows of the matrix are in correspondence to the $t$-orbits, 
+while the columns are in correspondence to the $k$-orbits. 
+The matrix entry $a_{ij}$ is the number just defined where $T$ is the representative of the 
+$i$-th orbit on $t$-sets, 
+and where $K$ is the representative of the $j$-th orbit on $k$-sets. 
+Let $M_{t,k}(G)$ be the Kramer-Mesner matrix 
+for the group $G \le \Sym(V)$ defined in this way. 
+The 
+$t$-$(v,k,\lambda)$ designs invariant under $G$ 
+are in one-to-one correspondence to the solutions of 
+$$
+M_{t,k}(G)\cdot \bx = \lambda {\bf 1},
+$$
+where $\bx$ is a column vector of zeros and ones 
+and ${\bf 1}$ is the column vector of all ones.
+The length of $\bx$ is the number of $k$-orbits of $G$ on $V$, 
+while the length of $\bone$ is the number of $t$-orbits of $G$ on $V$. 
+Any vector $\bx$ satisfying the matrix equation 
+corresponds to a design invariant under $G$.
+Simply take the  blocks of the design to be the union 
+of those orbits of $G$ on $k$-subsets 
+whose associated entry in $\bx$ is one.
+We assume the group $\PGGL(2,32)$ in the action on points 
+of the projective line $\PG(1,32)$ 
+over the field $\bbF_{32}.$
+The parameters of the design are $7$-$(33,8,10)$, 
+that is, each $7$-subset of $\PG(1,32)$
+is covered exactly 10 times by the chosen $8$-subsets comprising the design.
+Let us consider the following Orbiter command:
+
+\sourcecode{KM_PGGL_2_32}
+
+The first command creates the group $\PGGL(2,32)$ 
+and computes the Kramer-Mesner matrix 
+$$
+M_{7,8}(\PGGL(2,32)).
+$$
+The number of $7$-orbits is 32. The number of $8$-orbits is $97.$
+Correspondingly, the Kramer-Menser matrix has 32 rows and 97 columns.
+The matrix is stored in the csv-file 
+$$
+\verb'KM_PGGL_2_32_KM_7_8.csv'.
+$$
+
+The second command produces the graphical representation 
+of the matrix shown below
+\orbiteroutput{GRAPHICS/WRAPPERS/KM_PGGL_2_32_KM_7_8_draw}
+(different colors represent different values of the entries in the matrix).
+The command
+
+\sourcecode{KM_PGGL_2_32_solve}
+
+creates the diophantine system associated 
+with the Kramer-Mesner matrix and solves it.
+It performs a complete enumeration 
+of all solutions by solving the system and producing 
+the solution vectors $\bx$ 
+corresponding to the designs. 
+
+
+\bigskip
+
+Let us construct configurations with an assumed symmetry group. 
+Suppose we are interested in configurations with $v=15$ points, 
+and $25$ blocks of size 3. 
+We assume a group of order 5 acting semi regularly. In cyclce notation, 
+the generator may be taken as 
+$$
+(0,1,2,3,4)(5,6,7,8,9)(10,11,12,13,14).
+$$
+In two row notation, we write
+$$
+\left[
+\begin{array}{*{15}{c}}
+0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14 \\
+1 & 2 & 3 & 4 & 0 & 6 & 7 & 8 & 9 & 5 & 11 & 12 & 13 & 14 & 10 \\
+\end{array}
+\right]
+$$
+A makefile variable will hold the generator (the second row in the two-row notation):
+\sourcecodevariable{GEN_C5}
+Next, we need to compute the orbits on pairs and triples. 
+We also need the Kramer-Mesner matrices 
+$$
+M_{1,3}, \quad M_{2,3}
+$$
+Every point lies on 5 blocks, and every pair orbit is covered at most once. 
+This leads to the system
+$$
+M_{1,3} \bx = 5 \cdot \bone, \qquad M_{2,3} \bx \le \bone, \qquad \bzero \le \bx \le \bone,
+$$
+where $\bzero$ is the all-zero vector and $\bone$ is the all-one vector.
+The following command computes $M_{1,3}$:
+
+\sourcecode{C5_KM_1_3}
+
+The matrix has 3 rows and 91 columns.
+The command also exports the orbits on 3-subsets 
+to a file with the name \verb'C5_set_orbits_level_3.csv'.
+The following command computes $M_{2,3}$:
+
+\sourcecode{C5_KM_2_3}
+
+The matrix has 21 rows and 91 columns.
+The next command stacks the two matrices together, one on top of the other:
+
+\sourcecode{C5_concatenate}
+
+Next, we need to solve the system. To this end, we use the following command.
+
+\sourcecode{C5_solve}
+
+Orbiter finds 21540 solutions in 61001 backtrack steps.
+Next, we need to assemble the designs 
+by concatenating the set orbits on 3-subsets 
+that are selected by the solution vector $\bx$. 
+Once the designs are created, we need to classify them up to isomorphism. 
+We utilize the classification algorithm in Orbiter which is based on canonical forms 
+computed by Nauty:
+
+\sourcecode{C5_design_classify}
+
+A latex report is produced.
+Orbiter finds 42 isomorphism types of designs. 
+The largest automorphism group associated with these designs has order 600.
+
+
+\bigskip
+
+
+The command
+
+\sourcecode{Witt_design_on_22_points}
+
+creates the Witt design on 22 points.
+
+
+\bigskip
+
+
+
+
+
+

@@ -1,0 +1,8 @@
+gnuplot_test_data:
+	echo $(GNUPLOT_TEST_INPUT) >gnuplot_test_data.csv
+	$(ORBITER) -v 3 \
+		-gnuplot gnuplot_test_data.csv \
+		"Gnuplot test data" \
+		"Input" \
+		"Output"
+	$(OPEN) gnuplot_test_data_gnuplot.png

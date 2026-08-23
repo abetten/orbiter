@@ -1,0 +1,45 @@
+\begin{table}[t]
+\tbl{\label{tab:misc:2}}
+{\begin{tcolorbox}[tabularx={p{3cm}|p{2cm}|p{6.3cm}|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black,title=Miscellaneous Orbiter Commands (Part 2)]
+\hline
+Command & Arguments & Purpose \\
+\hline
+\hline
+\verb'-csv_file_join'  &  fname n fname-label-pair-list   &  Joins csv file fname based on a list of fname-label pairs of length $n$. \\
+\hline
+\verb'-csv_file_concatenate'  &  fname-out n f1 f2 ... fn  & Join the n csv files f1, f2, ..., fn. The output is written to fname-out. \\
+\hline
+\verb'-csv_file_concatenate_from_mask'  &  f N fname-mask fname-out  & Join csv files. The input files arise from fname-mask with all values $i=f,f+1,\ldots,f+N-1.$ The output is written to fname-out. \\
+\hline
+\verb'-csv_file_extract_column_to_txt'  &  fname  col-label  &  \\
+\hline
+\verb'-csv_file_filter'  &  fname  col-label value  &  Extracts those rows whole entry in the given column matches the given value. \\
+\hline
+\verb'-csv_file_latex'  &  header fname    & Produces a latex table from the given csv-file. The binary variable header determines whether a header is produced. \\
+\hline
+\verb'-draw_matrix'  &  descr  & Produce a bitmap graphic, see Table~\ref{tab:bitmap}. \\
+\hline
+\verb'-destring'  &  file-in column file-out  &  Unstring a text vector by removing quotes. The text is from the given file in the given column and will be written to the given output file. \\
+\hline
+\verb'-reformat'  &  fname-in fname-out nb-cols  & Reformat the data from fname-in in nb-cols columns. Write the output to fname-out. \\
+\hline
+\verb'-split_by_values'  &  fname-in   & Split the file fname-in by values. For each value, a separate file is written. \\
+\hline
+\verb'-change_values'  &  fname-in fname-out map-in map-out  & Change the values of the file in fname-in according to a mapping. The output is written to fname-out. The mapping is defined by two corresponding sequences. The input values are in map-in, the corresponding output values are in map-out. \\
+\hline
+\verb'-store_as_csv_file'  &  fname $m$ $n$ $L$   & Stores the data in $L$ to a csv file. The data is an $m \times n$ matrix in row-major ordering. \\
+\hline
+\verb'-mv'  &  fname-in fname-out   & Rename file fname-in to fname-out. \\
+\hline
+\verb'-cp'  &  fname-in fname-out   & Copy file fname-in to fname-out. \\
+\hline
+\verb'-system'  &  command   & Execute the given system command. \\
+\hline
+\verb'-loop'  &  variable val\_from val\_to val\_step  & Create a loop with the given loop variable, whose values rangle from loop\_from to val\_to minus one in steps of val\_step.  \\
+\hline
+\verb'-loop_over'  &  variable domain  & Create a loop with the given loop variable, whose values range over the given domain. \\
+\hline
+\end{tcolorbox}}
+\end{table}

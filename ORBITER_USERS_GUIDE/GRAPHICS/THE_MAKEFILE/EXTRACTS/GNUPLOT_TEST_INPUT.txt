@@ -1,0 +1,1 @@
+GNUPLOT_TEST_INPUT="Row,Curve-1,Curve-2\n1,2,4\n2,6,8\n3,9,10\n4,13,17\n5,17,20\n6,19,25\n7,23,30\nEND\n"

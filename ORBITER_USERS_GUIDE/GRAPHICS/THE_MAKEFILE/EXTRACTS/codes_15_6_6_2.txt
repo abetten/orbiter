@@ -1,0 +1,17 @@
+codes_15_6_6_2:
+	$(ORBITER) -v 6 \
+		-define Do -draw_options \
+			-embedded -radius 250 \
+		-end \
+		-define Control -poset_classification_control \
+			-problem_label codes_15_6_6_2 \
+			-draw_options Do \
+		-end \
+		-define G \
+		-linear_group -PGL 9 2 -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-linear_codes Control 6 15 \
+		-end
+	#$(PDFLATEX) codes_15_6_6_2_poset_lvl_15.tex
+	#$(OPEN) codes_15_6_6_2_poset_lvl_15.pdf 

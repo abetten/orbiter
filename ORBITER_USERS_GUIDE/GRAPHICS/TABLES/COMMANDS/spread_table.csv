@@ -1,0 +1,12 @@
+ROW,C1,C2,C3
+0,"tab:spread:table",,
+1,"Creating a Spread Table",,
+1,"\verb'-space' "," label "," Set the projective space object. The space must be an object of type $\PG(3,q)$. "
+1,"\verb'-rk' "," rk "," Set the vector space dimension of the spread elements (i.e., 2 for line-spreads). "
+1,"\verb'-iso_types' "," list "," Selection of isomorphism types of spreads for the table. The numbers refer to the Orbiter catalogue of spreads. The spreads in the orbits of the chosen representatives will be added to the table. "
+1,"\verb'-path' "," path "," Set a path for files associated with the table of spreads. "
+1,"\verb'-control' "," control "," Specify a control structure for poset classification. "
+1,"\verb'-load' ","  "," Load the table from previously created files. "
+1,"\verb'-restricted_table' "," label subset "," Create a new table containing a subset of the spreads. Subset is the list of indices of spreads that should go in the table. "
+END
+

@@ -1,0 +1,5 @@
+im1061:
+	$(ORBITER) -v 2 \
+		-inverse_mod 1061 25320204
+	
+# the inverse of 1061 mod 25320204 is 2076209

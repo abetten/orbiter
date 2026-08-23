@@ -1,0 +1,14 @@
+geo_7_3_orderly_draw:
+	$(ORBITER) -v 20 \
+		-define Do -draw_options -embedded -radius 50 \
+			-xin 10000 -yin 10000 \
+			-xout 1000000 -yout 1000000 \
+			-nodes_empty \
+			-scale 0.5 -line_width 0.3 \
+		-end \
+		-tree_draw \
+			-file 7_3_tree.txt \
+			-draw_options Do \
+		-end
+	$(PDFLATEX) 7_3_tree_draw.tex
+	$(OPEN) 7_3_tree_draw.pdf

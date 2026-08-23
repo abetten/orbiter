@@ -1,0 +1,19 @@
+\begin{table}[t]
+\tbl{\label{tab:grouptasks5}}
+{\begin{tcolorbox}[tabularx={p{3cm}|p{2cm}|p{6.3cm}|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black,title=Group theoretic activities (Part 5)]
+\hline
+Command & Arguments & Purpose \\
+\hline
+\hline
+\verb'-subgroup_lattice_magma'  &    & Computes the lattice of subgroups by means of conjugacy classes of subgroups, see Section~\ref{sec:group:magma}.\\
+\hline
+\verb'-find_overgroup'  &  order subgroup  & Computes the lattice of subgroups by means of conjugacy classes of subgroups, see Section~\ref{sec:group:magma}. Then identified the overgroups of the given subgroup which have the desired size.\\
+\hline
+\verb'-identify_subgroups_from_file'  &  file col-label grouporder  & Identifies subgroups of a given order in the lattice of subgroups (which is computed using magma just as in the previous command). The subgroups are read from the given column in the given file. Subgroups can have any size. Groups whose size does not match are ignored. A file with the results of the identification is written. \\
+\hline
+\verb'-permutation_subgroup'  &    &  Computes the permutation subgroup of a matrix group. An element belongs to the permutation subgroup if each row of the matrix has Hamming weight one. This function is in experimental stage. \\
+\hline
+\end{tcolorbox}}
+\end{table}

@@ -1,0 +1,2 @@
+inverse_mod_a:
+	$(ORBITER) -v 2 -inverse_mod 18059241 58014043

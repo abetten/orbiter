@@ -1,0 +1,14 @@
+% file: sims_6.commands
+% created by Orbiter graphics interface
+% creation date: Mon Nov 25 02:25:56 MST 2019
+
+DeviceCoordinates 0 0 300000 300000
+UserCoordinates 0 0 10000 10000
+sf_interior 100
+Circle 150000, 225000, 9000
+sf_interior 0
+Circle 150000, 225000, 9000
+st_alignment 1, 1
+Text 150000, 225000, "{\scriptsize 6}"
+END_OF_FILE
+

@@ -1,0 +1,7 @@
+PGL_3_2_elements:
+	$(ORBITER) -v 5 \
+		-define G -linear_group -PGL 3 2 -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-save_elements_csv "PGL_3_2_elements.csv" \
+		-end

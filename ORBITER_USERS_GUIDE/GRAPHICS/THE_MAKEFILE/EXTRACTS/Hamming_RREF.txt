@@ -1,0 +1,17 @@
+Hamming_RREF:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define v -vector -format 4 -field F \
+			-dense $(HAMMING_CODE_GENERATOR) \
+		-end \
+		-with F -do \
+		-finite_field_activity \
+			-RREF v \
+		-end
+	$(PDFLATEX) v_rref.tex
+	$(OPEN) v_rref.pdf
+	#$(PDFLATEX) RREF_example_q2_4_7.tex
+	#gs -sDEVICE=png16 -dFIXEDMEDIA \
+	#	-dDEVICEWIDTHPOINTS=500 -dDEVICEHEIGHTPOINTS=450 \
+	#	-r240 -oHamming_dual_page%02d.png \
+	#	RREF_example_q2_4_7.pdf

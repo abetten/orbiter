@@ -1,0 +1,7 @@
+symbolic_CRC_alfa:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 256 -end \
+		-define M -symbolic_object \
+			-field F \
+			-text $(BCH_POLYNOMIAL_ALFA_F256) \
+		-end \

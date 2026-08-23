@@ -1,0 +1,14 @@
+ROW,C1,C2,C3
+0,"tab:3doutput",,
+1,"Scene Object Types",,
+1,"\verb'-spheres' "," $i$ $r$ prop ","For each element in point group $i$, create a sphere of radius $r$ with given Povray properties."
+1,"\verb'-cylinders' "," $i$ $r$ prop ","For each element in edge group $i$, create a cylinder of radius $r$ with given Povray properties."
+1,"\verb'-prisms' "," $i$ $d$ prop "," For each element in face group $i$, create a prism of half-thickness $d$ with given Povray properties."
+1,"\verb'-planes' "," $i$ prop ","For each element in plane group $i$, create a plane with given Povray properties."
+1,"\verb'-lines' "," $i$ $r$ prop ","For each element in line group $i$, create a line of radius $r$ with given Povray properties."
+1,"\verb'-cubics' "," $i$ prop ","For each element in group $i$ of cubics, create a surface with given Povray properties."
+1,"\verb'-quadrics' "," $i$ prop ","For each element in group $i$ of quadrics, create a surface with given Povray properties."
+1,"\verb'-quartics' "," $i$ prop "," For each element in group $i$ of quartics, create a surface with given Povray properties."
+1,"\verb'-octics' "," $i$ prop ","For each element in group $i$ of octics, create a surface with given Povray properties."
+1,"\verb'-texts' "," $i$ $d$ $s$ prop "," For each element in group $i$ of labels, create a text element with half-thickness $d$ and size $s$ with given Povray properties."
+END

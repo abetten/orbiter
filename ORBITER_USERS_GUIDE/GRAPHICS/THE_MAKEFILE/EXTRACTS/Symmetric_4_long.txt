@@ -1,0 +1,65 @@
+Symmetric_4_long:
+	$(ORBITER) -v 3 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define G -permutation_group -symmetric_group 4 -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-export_orbiter \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-export_group_table \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-print_elements_tex \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-save_elements_csv "Sym_4_elts.csv" \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-make_element_tree \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-export_inversion_graphs "Sym_4_inversion_graphs.csv" \
+		-end
+	$(ORBITER) -v 2 \
+		-define Do -draw_options \
+			-nodes \
+			-embedded -radius 175 \
+			-xin 10000 -yin 10000 \
+			-xout 1500000 -yout 600000 \
+			-scale 0.3 -line_width 1.0 \
+		-end \
+		-tree_draw \
+			-file Sym_4_elements_tree.txt \
+			-draw_options Do \
+		-end
+	$(ORBITER) -v 2 -draw_matrix \
+		-input_csv_file Sym_4_group_table.csv \
+		-box_width 50 -bit_depth 24 -end
+	$(ORBITER) -v 2 \
+		-define M -vector -load_csv_data_column \
+			Sym_4_elts.csv 1 -end \
+		-save_matrix_csv M 
+	$(ORBITER) -v 2 \
+		-define all_one_r -vector -repeat 1 24 -end \
+		-define all_one_c -vector -repeat 1 4 -end \
+		-draw_matrix \
+			-input_csv_file M_matrix.csv \
+			-box_width 50 \
+			-bit_depth 8 \
+			-partition 3 \
+				all_one_r all_one_c \
+		-end
+	$(PDFLATEX) Sym_4_elements_tree_draw.tex
+	#$(OPEN) Sym_4_elements_tree_draw.pdf

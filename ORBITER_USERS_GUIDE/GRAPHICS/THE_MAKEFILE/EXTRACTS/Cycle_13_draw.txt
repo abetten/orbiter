@@ -1,0 +1,15 @@
+Cycle_13_draw:
+	$(ORBITER) -v 2 \
+		-define Gamma -graph -cycle 13 -end \
+		-with Gamma -do \
+		-graph_theoretic_activity -export_csv -end \
+		-with Gamma -do \
+		-graph_theoretic_activity -export_graphviz -end
+	$(ORBITER) -v 2 -draw_matrix \
+		-input_csv_file Cycle_13.csv \
+		-box_width 20 -bit_depth 8 -partition 4 13 13 -end
+	dot -Tpng Cycle_13.gv >Cycle_13.png
+	#twopi -Tpng Cycle_13.gv >Cycle_13.png
+	#$(OPEN) Cycle_13_draw.bmp
+	#$(PDFLATEX) Cycle_13_report.tex
+	#$(OPEN) Cycle_13_report.pdf

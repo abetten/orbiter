@@ -1,0 +1,12 @@
+quartic_curve_9_0_normal_form_report:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 9 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define C -quartic_curve -space P -by_normal_form "6,3,4,6,2,5" -end \
+		-with C -do \
+			-quartic_curve_activity \
+				-report \
+			-end \
+		-print_symbols
+	$(PDFLATEX) quartic_curve_by_normal_form_q9_report.tex
+	$(OPEN) quartic_curve_by_normal_form_q9_report.pdf

@@ -1,0 +1,13 @@
+codes_d4:
+	$(ORBITER) -v 3 \
+		-define Do -draw_options -embedded -end \
+		-define Control -poset_classification_control \
+			-W \
+			-problem_label codes_r4_d4 \
+			-draw_options Do \
+		-end \
+		-define G -linear_group -PGL 4 2 -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-linear_codes Control 4 100 \
+		-end

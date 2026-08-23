@@ -1,0 +1,162 @@
+A design is an incidence structure of points and blocks. 
+The incidence matrix of a design has rows corresponding to the points 
+and columns corresponding to the blocks. 
+An entry in a certain row and column is one if and only if the point associated with the row 
+is contaned in the block associated with the column, zero otherwise.
+A decomposition of the design is a partition of the points and blocks such that 
+each class consists either exclusively of points or exclusively of blocks. 
+
+\bigskip
+
+
+A decomposition is point-tactical if for all points, 
+the number of incident lines in the $j$th block class depends only on the class of the point.
+It the point belongs to class $i,$ this number is denoted as $a_{ij}.$
+A decomposition is block-tactical if for all blocks, 
+the number of incident points in the $i$th point class depends only on the class of the block.
+If the block belongs to class $j,$ this number is denoted as $b_{ij}.$
+
+\bigskip
+
+A projective plane of order $n$ is a 
+design with $n^2+n+1$ points and equally 
+many blocks (also called lines), each of size $n+1$ such that 
+any two points lie in exactly one block and any two blocks have exactly one point in common.
+Projective planes are known to exist 
+for all $n = q$ which are a power of a prime. 
+This follows from a construction which utilizes the projective geometry $\PG(2,q).$ 
+Points are the one-dimensional subspaces of $\bbF_q^3,$
+blocks are the two-dimensional subspaces of $\bbF_q^3,$ and
+incidence is natural (inclusion of subspaces). 
+The automorphism group of this design is the collineation group of the projective space.
+Projective planes other than these exist, though none are known when $n$ is not a prime power.
+The number of lines through a point equals the number of points on a line. 
+The fact that these numbers exist imply 
+that there is a tactical decomposition. 
+Namely, the trivial decomposition with two classes, 
+one containing all points and one containing all lines.
+The structure constants of the decomposition are the numbers just described.
+
+\bigskip
+
+Table~\ref{tab:design:create} 
+lists Orbiter commands to create designs.
+\orbitertableofcommands{design_create}
+Table~\ref{tab:design:activity}
+lists Orbiter activities for designs.
+\orbitertableofcommands{design_activity}
+
+The command 
+
+\sourcecode{design_PG_2_3}
+
+creates the design $\PG(2,3).$ 
+\orbiteroutput{GRAPHICS/LATEX/design_PG_2_3}
+The blocks of the design are encoded in the lexicographic ordering of $k$-subsets (here $k=4$).
+The program also displays the tactical decomposition scheme of the design, which is
+\orbiteroutput{GRAPHICS/LATEX/design_PG_2_3_td}
+In Section~\ref{sec:canonical:form:objects:design:theory}, we will show how to compute 
+further properties of the design.
+
+
+\bigskip
+
+The command 
+
+\sourcecode{wreath_product_designs_n4_k2_inc.txt}
+
+creates a design on $8$ points invariant under the wreath product $\Sym(4) \wr \Sym(2).$
+The design has 12 blocks of size 4. 
+The command 
+
+\sourcecode{wreath_product_designs_n8_k6_inc.txt}
+
+creates a design on $16$ points invariant under 
+the wreath product $\Sym(8) \wr \Sym(2).$
+The design has 3920 blocks of size 6. 
+We will compute the automorphism groups of these 
+two designs in Section~\ref{sec:canonical:form:objects:incidence:geometries}.
+
+
+
+\bigskip
+
+A design can be created by listing the blocks in coded fashion. 
+The codes correspond to the 
+ranking of $k$-subsets of the $v$ set which is the underlying set of the design. 
+The following command creates a configuration $15_4 20_3$ from its set of blocks. 
+
+\sourcecode{design_20}
+
+
+
+
+\bigskip
+
+It is also possible to create a design by listing the blocks as sets. 
+Here is an example. At first, we create a makefile variable 
+for a csv file containing the blocks:
+
+\sourcecodevariable{GEO_BLOCKS_600}
+
+The following command creates the csv file from the makefile variable using the unix echo command. 
+The sed command is necessary to remove space characters that are inserted by the echo command.
+The Orbiter command then reads the list of blocks from the csv file. 
+After that, it creates the design from the list of blocks. 
+As we will see below, the design has an automorphism group of order 600 
+and is related to the Latin Square of order 5 associated with the cyclic group of order 5. 
+
+\sourcecode{design_600}
+
+The command also computes the intersection matrix of the design. 
+The design is a transversal design. 
+The configuration graph is three copies of the complete graph $K_5.$
+
+
+\bigskip
+
+
+How can we convince ourselves that the design 
+created previously is indeed associated to a certain Latin Square?
+There are exactly two Latin Squares of order 5. 
+One is the Cayley table of the cyclic group of order 5, 
+the other is the multiplication table of the 
+non-associative loop of order 5, see Table~\ref{tab:lsq5}. 
+
+\input GRAPHICS/TABLES/OTHER/lsq5.tex
+
+We create makefile variables for the two tables:
+
+\sourcecodevariable{LSQ_5A_TABLE}
+
+\sourcecodevariable{LSQ_5B_TABLE}
+
+The next two commands create the associated linear spaces:
+
+\sourcecode{LSQ_5A}
+
+\sourcecode{LSQ_5B}
+
+Finally, we perform the canonical form algorithm on these two linear spaces. 
+We note that any isomorphism between 
+the Latin Squares corresponds to an isomorphism 
+between the associated linear spaces.  
+Likewise, any automorphism of a given Latin Square 
+corresponds to an automorphism of the 
+associated linear space.
+
+\sourcecode{LSQ_5_c}
+
+This establishes the fact that the geometries are not isomorphic, 
+and it also produces the automorphism groups of each geometry. 
+It turns out that the Latin Square of order 5 arising 
+from the cyclic group has a symmetry group of order 600. 
+The second Latin Square arising from the loop has a symmetry group of order 72. 
+Orbiter produces a report listing generators for each group.
+For more information about the canonical form of designs, 
+see Section~\ref{sec:canonical:form:objects:design:theory}.
+Since there is only one linear space of Latin Square 5 type with a group of order 600, 
+the object constructed earlier must be that same space 
+which is associated to the Cayley table of the cyclic group of order 5.
+
+

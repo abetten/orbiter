@@ -1,0 +1,13 @@
+code_Hamming_systematic:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define v -vector -dense $(HAMMING_CODE_ROWS_IN_BINARY_RANKS) -end \
+		-define C -code -field F \
+			-basis 7 v \
+		-end
+	#$(ORBITER) -v 2 -draw_matrix \
+	#	-input_csv_file code_matrix_16_8.csv \
+	#	-box_width 25 -bit_depth 8 -partition 2 16 8 -end
+	#$(OPEN) code_matrix_16_8_draw.bmp
+	#$(PDFLATEX) code_7_16.tex
+	#$(OPEN) code_7_16.pdf

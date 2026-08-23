@@ -1,0 +1,10 @@
+geo_16:
+	$(ORBITER) -v 1 \
+		-define Test_lines -set -loop 3 17 1 -end \
+		-define Geo -geometry_builder \
+			-V 16 -B 20 -TDO 5 \
+			-fuse 1 -fname_GEO geo_16 \
+			-special_test_not_orderly \
+			-output_to_inc_file \
+			-test Test_lines \
+		-end

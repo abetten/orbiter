@@ -1,0 +1,12 @@
+PGGL_2_4_classes:
+	$(ORBITER) -v 3 \
+		-define G \
+		-linear_group -PGGL 2 4 \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-classes \
+		-end \
+		-print_symbols
+	$(PDFLATEX) PGGL_2_4_classes.tex
+	$(OPEN) PGGL_2_4_classes.pdf

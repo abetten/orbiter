@@ -1,0 +1,9 @@
+neumaier_graphs_16:
+	$(ORBITER) -v 2 \
+		-define C -combinatorial_object \
+			-label neumaier_graph neumaier\_graph \
+			-graph_by_adjacency_matrix \
+			$(NEUMAIER_GRAPH_16_1_ADJ) 16 \
+			-graph_by_adjacency_matrix \
+			$(NEUMAIER_GRAPH_16_2_ADJ) 16 \
+		-end

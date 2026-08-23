@@ -1,0 +1,26 @@
+Higman_Sims_subgroup_176a:
+	$(ORBITER) -v 2 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define gens -vector -dense \
+			$(HIGMAN_SIMS_GENS) \
+		-end \
+		-define G -permutation_group -symmetric_group 100 \
+			-subgroup_by_generators HS \
+			$(HIGMAN_SIMS_GO) \
+			$(HIGMAN_SIMS_NB_GENS) gens \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-subgroup_lattice_magma \
+		-end \
+		-define G176a -modified_group -from G \
+			-subgroup_by_lattice 585 \
+		-end \
+		-with G176a -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end
+	$(PDFLATEX) Sym_100_Subgroup_HS_44352000_subgroup_by_lattice_585_report.tex
+	$(OPEN) Sym_100_Subgroup_HS_44352000_subgroup_by_lattice_585_report.pdf

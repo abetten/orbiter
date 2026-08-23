@@ -1,0 +1,9 @@
+geo_20_3_g4_read:
+	$(ORBITER) -v 10 \
+		-define Doinc -draw_incidence_structure_options \
+			-width 60 -width_10 6 -end \
+		-define C -combinatorial_object \
+			-label geo_20_3_g4 geo\_20\_3\_g4 \
+			-file_of_incidence_geometries_csv \
+				20_3_g4_canonical_forms.csv Object 20 20 60 \
+		-end

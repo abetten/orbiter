@@ -1,0 +1,124 @@
+
+Let $\beta$ be an $n$-th root of unity over $\bbF_q$. 
+The minimum polynomial of $\beta$ over $\bbF_q$ is denoted as $m_{\beta,\bbF_q}.$
+The BCH code of length $n$ and designed distance $d$ is 
+the cyclic code with generator polynomial 
+$$
+{\rm lcm}\Big(m_{\beta^1,\bbF_q}, m_{\beta^2,\bbF_q},\ldots, m_{\beta^{d-1},\bbF_q}\Big).
+$$
+To create the polynomial $m_{\beta^a,\bbF_q}$, 
+we consider the $q$-cyclotomic set of $a$ modulo $n,$ 
+which is 
+$$
+\{aq^i \mod n \mid i \in \bbZ \}.
+$$
+
+\bigskip
+
+Orbiter can illustrate cyclic sets 
+using the commands of Table~\ref{tab:draw:mod:n}.
+\orbitertableofcommands{draw_mod_n}
+
+\bigskip
+
+
+Suppose we want to make a BCH-code of length $21$ over $\bbF_8.$
+In Section~\ref{sec:extension:fields}, 
+we considered the $q$-cyclotomic sets modulo $21$ for $q=8.$
+Let us produce a pictorial representation. 
+Omitting the singletons, a transversal is given by the 
+sets containing $1,2,4,5,7,10,13.$ 
+For this reason, we issue the command 
+
+\sourcecode{draw_cyclotomic_mod_21_q8}
+
+
+The output is shown below:
+\orbiteroutput{GRAPHICS/WRAPPERS/cyclotomic_set_mod_21_q8_draw}
+
+We will try BCH-codes with minimum distances $3,$ $5$ and $7$.
+Here is distance $3$:
+
+\sourcecode{F_8_BCH_code_d3}
+
+The code construction is shown in a latex report: 
+\orbiteroutput{GRAPHICS/LATEX/code_BCH_8_3}
+
+\bigskip
+
+Let us stick to the same parameters for the field and the length 
+but increase the minimum distance to $d=5$:
+
+\sourcecode{F_8_BCH_code_d5}
+
+The output file is:
+\orbiteroutput{GRAPHICS/LATEX/code_BCH_8_5}
+
+
+We compute the minimum distance:
+
+\sourcecode{F_8_BCH_code_d5_minimum_distance}
+
+The minimum distance turns out to be $d=5$.
+
+
+\bigskip
+
+Finally, we create the BCH code with minimum distance $d=7$:
+
+\sourcecode{F_8_BCH_code_d7}
+
+The output file is:
+\orbiteroutput{GRAPHICS/LATEX/code_BCH_8_7}
+
+
+
+\bigskip
+
+
+
+As a larger example, let us consider the 2-cyclotomic sets of $2$ and $3$ modulo 255. 
+The following command produces 
+a graphical representation on a circle 
+(similar to the unit circle in complex analysis). 
+The $255$-th roots of unity are placed in the appropriate position.
+
+\sourcecode{draw_mod_255_cyclotomic_1_and_3}
+
+The drawing is shown below 
+\orbiteroutput{GRAPHICS/WRAPPERS/cyclotomic_set_BCH_255_cyclotomic_stets_1_3_draw}
+
+
+\bigskip
+
+Suppose we want to make a BCH-code over $\bbF_{256}.$
+In order to keep the degree of the generator polynomial low, 
+we try a quadratic field extension. 
+This way, each cyclotomic set has size either 1 or 2.
+Since 
+$$
+256^2-1 = (256+1)(256-1) = 257 \cdot 3 \cdot 5 \cdot 17,
+$$
+we can consider a code of length $n=771=257\cdot 3.$ 
+The following command computes the $256$-cyclotomic cosets modulo 771:
+
+\sourcecode{BCH_F256_roots_771}
+
+The next command creates a BCH-code of length 771 
+over $\bbF_{256}$ with minimum distance at least 16:
+
+\sourcecode{BCH_F256_BCH_code_d16}
+
+
+\bigskip
+
+We compute the minimum distance:
+
+\sourcecode{F_8_BCH_code_d5_minimum_distance}
+
+The minimum distance turns out to be $d=5$.
+
+
+
+\bigskip
+

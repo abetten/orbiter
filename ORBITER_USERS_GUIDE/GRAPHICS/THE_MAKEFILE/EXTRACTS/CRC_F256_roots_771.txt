@@ -1,0 +1,6 @@
+CRC_F256_roots_771:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 256 -end \
+		-with F -do -finite_field_activity \
+			-nth_roots 771 \
+		-end

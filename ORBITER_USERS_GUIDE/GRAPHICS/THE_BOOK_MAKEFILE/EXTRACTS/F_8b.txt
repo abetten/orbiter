@@ -1,0 +1,6 @@
+F_8b:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 8 -override_polynomial 11 -end \
+		-with F -do -finite_field_activity -cheat_sheet_GF -end
+	$(PDFLATEX) GF_8.tex
+	$(OPEN) GF_8.pdf

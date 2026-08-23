@@ -1,0 +1,4 @@
+quartic_curves_q13_tally_ago:
+	$(ORBITER) -v 3 \
+		-tally_column \
+		quartic_curves_q13_iso.csv AGO

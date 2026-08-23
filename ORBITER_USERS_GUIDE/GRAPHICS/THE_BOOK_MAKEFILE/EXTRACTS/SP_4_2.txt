@@ -1,0 +1,15 @@
+SP_4_2:
+	$(ORBITER) -v 2 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define F -finite_field -q 2 -end \
+		-define G -linear_group -GL 4 F \
+			-symplectic_group \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end
+	$(PDFLATEX) GL_4_2_Sp_4_2_report.tex
+	$(OPEN) GL_4_2_Sp_4_2_report.pdf

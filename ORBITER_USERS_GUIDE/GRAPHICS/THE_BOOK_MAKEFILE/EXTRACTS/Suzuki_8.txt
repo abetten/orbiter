@@ -1,0 +1,17 @@
+Suzuki_8:
+	$(ORBITER) -v 6 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define F -finite_field -q 8 -end \
+		-define gens -vector -field F \
+			-compact $(SUZUKI_8_GENERATORS) -end \
+		-define G -linear_group -PGGL 4 8 \
+		-subgroup_by_generators "Sz8" "87360" 5 gens \
+			-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end
+	$(PDFLATEX) PGGL_4_8_Subgroup_Sz8_87360_report.tex
+	$(OPEN) PGGL_4_8_Subgroup_Sz8_87360_report.pdf

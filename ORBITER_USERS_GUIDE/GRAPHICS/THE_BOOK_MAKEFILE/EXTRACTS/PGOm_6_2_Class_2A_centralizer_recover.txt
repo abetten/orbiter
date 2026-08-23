@@ -1,0 +1,19 @@
+PGOm_6_2_Class_2A_centralizer_recover:
+	$(ORBITER) -v 2 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define F -finite_field -q 2 -end \
+		-define Class2A_cent_gens -vector \
+			-dense $(PGOM_6_2_CLASS_2A_CENTRALIZER_GENS) \
+		-end \
+		-define G -linear_group -PGL 6 2 \
+			-subgroup_by_generators "2ACent" \
+			1440 9 Class2A_cent_gens \
+			-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end
+	$(PDFLATEX) PGL_6_2_Subgroup_2ACent_1440_report.tex
+	$(OPEN) PGL_6_2_Subgroup_2ACent_1440_report.pdf

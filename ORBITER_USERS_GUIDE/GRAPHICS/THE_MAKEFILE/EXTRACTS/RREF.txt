@@ -1,0 +1,11 @@
+RREF:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define v -vector -field F -format 2 \
+			-dense "1,1,1,1,0,1,1,0,0,1" \
+		-end \
+		-with F -do -finite_field_activity \
+			-RREF v \
+		-end
+	$(PDFLATEX) v_rref.tex
+	$(OPEN) v_rref.pdf

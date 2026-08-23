@@ -1,0 +1,9 @@
+Sym_6_classes:
+	$(ORBITER) -v 3 \
+		-define G -permutation_group -symmetric_group 6 -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-classes \
+		-end
+	$(PDFLATEX) Sym_6_classes_out.tex
+	$(OPEN) Sym_6_classes_out.pdf

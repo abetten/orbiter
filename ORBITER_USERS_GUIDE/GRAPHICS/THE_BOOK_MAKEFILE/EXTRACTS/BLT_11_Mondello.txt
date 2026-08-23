@@ -1,0 +1,12 @@
+BLT_11_Mondello:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 11 -end \
+		-define O -orthogonal_space 0 5 F -end \
+		-define BLT -BLT_set \
+			-space O -family "Mondello" -invariants \
+		-end \
+		-with BLT -do -blt_set_activity \
+			-report \
+		-end
+	$(PDFLATEX) BLT_Mondello_q11.tex
+	$(OPEN) BLT_Mondello_q11.pdf

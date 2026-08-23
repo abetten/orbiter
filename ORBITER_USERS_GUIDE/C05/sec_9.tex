@@ -1,0 +1,127 @@
+Table~\ref{tab:vector:ge:activity} lists the commands that are available for activities for vectors of group elements.
+\orbitertableofcommands{vector_ge_activity}
+
+
+\bigskip
+
+The following command computes and prints the conjugacy classes in $\PGGL(2,4)$:
+
+\sourcecode{PGGL_2_4_classes_reps}
+
+The class representatives are chosen by Magma.
+
+\bigskip
+
+
+
+\bigskip
+
+The next command computes and prints 
+the rational normal form for the representatives of the conjugacy classes in $\PGL(4,4)$
+
+\sourcecode{PGL_4_4_classes_reps}
+
+\bigskip
+
+
+
+
+The next command computes and prints 
+the conjugacy classes in $\PGGL(4,4)$:
+
+\sourcecode{PGGL_4_4_classes_reps}
+
+The class representatives are chosen by Magma.
+
+\bigskip
+
+
+
+
+
+
+The next command illustrates how to obtain the generators of a group as a vector of group elements object. 
+In the example, we consider the group $\Sym(6).$ 
+
+\sourcecode{Sym_6_generators}
+
+\bigskip
+
+
+The command produces a latex report of the generators, which are the Coxeter generators.
+
+\orbiteroutput{GRAPHICS/LATEX/Sym_6_generators}
+
+
+\bigskip
+
+
+The next command illustrates how to obtain 
+the elements of a group as a vector of group elements object. 
+In the example, we consider the group 
+$\Sym(6)$ with $720$ elements. 
+The command produces a latex report of the group elements.
+
+\sourcecode{Sym_6_elements}
+
+\bigskip
+
+
+
+The following command creates the conjugacy 
+class of orthogonal reflection in $\PGO^+(6,2)$ and 
+pushes them back into $\PGL(4,2)$ using the inverse of the exterior square action.
+Because the group elements lie in $\PGO^+(6,2)$ but not 
+in the subgroup isomorphic to $\PGL(4,2)$, 
+a fixed polarity is divided off before the push back.
+After that, a report of the 28 group elements is produced. 
+Finally, the group elements are exported to GAP.
+Using GAP, the order of the group generated 
+by these elements turns out to be 20160.
+
+\bigskip
+
+
+
+
+
+The command 
+
+\sourcecode{GL_2_3_RNF_elements}
+
+computes the rational normal form of each element in $\GL(2,3)$.
+A transformation matrix is computed as well. The output is:
+
+\orbiteroutput{GRAPHICS/LATEX/GL_2_3_RNF_elements}
+
+
+
+
+\bigskip
+
+
+
+
+\sourcecode{PGL_4_2_orthogonal_reflections_report_vector_ge}
+
+\bigskip
+
+
+The command produces a latex report of the group elements, 
+which are matrices of size 4. 
+The associated permutation action 
+on the 15 points of $\PG(3,2)$ is shown also.
+For reasons of space, the output has been truncated.
+
+\orbiteroutput{GRAPHICS/LATEX/PGL_4_2_orthogonal_reflections_cut}
+
+
+
+\bigskip
+
+
+
+
+
+
+

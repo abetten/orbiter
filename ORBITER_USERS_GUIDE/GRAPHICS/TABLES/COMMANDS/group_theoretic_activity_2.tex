@@ -1,0 +1,101 @@
+\begin{table}
+\begin{tcolorbox}[tabularx={X|p{2cm}|X|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black,title=Group theoretic activities (Part 2)]
+\hline
+Command & Arguments & Purpose \\
+\hline
+\hline
+\verb'-find_singer_cycle' &  & 
+Finds all Singer cycles whose matrix is a companion matrix. \\
+\hline
+\verb'-classes_based_on_normal_form' & & \\
+\hline
+\verb'-normalizer' &  & 
+See Section~\ref{sec:group:magma}.
+ \\
+\hline
+\verb'-centralizer_of_element' &  & 
+See Section~\ref{sec:group:magma}.
+ \\
+\hline
+%\verb'-conjugacy_class_of_element' &  & 
+% \\
+%\hline
+%\verb'-orbits_on_group_elements_under_' \verb'conjugation' &  & 
+% \\
+%\hline
+\verb'-normalizer_of_cyclic_subgroup' &  & 
+Computes the normalizer of a cyclic group, see Section~\ref{sec:group:magma}.
+ \\
+\hline
+\verb'-classes' &  & 
+Computes the conjugacy classes of elements, see Section~\ref{sec:group:magma}.
+ \\
+\hline
+\verb'-subgroup_lattice_magma' &  & 
+Computes the lattice of subgroups by means of conjugacy classes of subgroups, see Section~\ref{sec:group:magma}.
+ \\
+\hline
+%\verb'-test_if_geometric' & & 
+%Test is the action is geometric. \\
+%\hline
+\verb'-conjugacy_class_of' & $g$ & 
+Computes the conjugacy class of $g$. \\
+\hline
+\verb'-isomorphism_Klein_quadric' & fname & 
+ \\
+\hline
+\verb'-print_elements' & & 
+Produces a printout of all group elements. \\
+\hline
+\verb'-print_elements_tex' & & 
+Produces a latex report of all group elements. \\
+\hline
+%\verb'-print_given_elements_tex' & label file & 
+%Produces a latex report of all group elements in file. 
+%The latex file will be named label.tex. 
+%The group elements are given in coded (make-element) form. \\
+%\hline
+\verb'-save_elements_csv' & fname & 
+Writes the elements of the group to the given csv file.
+ \\
+\hline
+\verb'-export_inversion_graphs' & fname & 
+Exports the inversion graphs 
+associated to the group elements to the given file.
+ \\
+\hline
+\verb'-evaluate_word' & word gens & 
+Expresses a word in terms of the given set of generators. 
+ \\
+\hline
+\verb'-multiply_all_elements_in_lex_order' &  & 
+Multiplies all group elements together. 
+%The main purpose is for speed-testing. 
+The output depends on the chosen stabilizer chain.
+ \\
+\hline
+\verb'-stats' & prefix & Report statistics on group operations. \\
+\hline
+\verb'-move_a_b' & a b & 
+Determine a group element mapping a to b. 
+Computes the stabilizer of b in the given group $G$ 
+(the group for which the activity is applied). \\
+\hline
+\verb'-rational_normal_form' & element & 
+Computes the rational normal form of 
+the given group element (must be a matrix group). \\
+\hline
+\verb'-find_conjugating_element' & $a$ $b$ & 
+Computes an element $g$ which conjugates $a$ to $b$ 
+or states that the given elements $a$ and $b$ are not conjugate. \\
+\hline
+\verb'-group_of_automorphisms_' \verb'by_images_of_generators' & label v images & 
+Creates a group of automorphisms by assigning image values to certain generators. 
+The vector v is a vector of group elements. 
+The image values are numerical values representing indices in the vector v. \\
+%\hline
+\end{tcolorbox}
+\caption{\label{tab:grouptasks2}Group theoretic activities (Part 2)}
+\end{table}

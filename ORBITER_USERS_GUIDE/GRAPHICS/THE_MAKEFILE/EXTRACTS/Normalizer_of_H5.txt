@@ -1,0 +1,11 @@
+Normalizer_of_H5:
+	$(ORBITER) -v 2 \
+		-define G -permutation_group -symmetric_group 13 \
+			-subgroup_by_generators H5 5 1 \
+				$(GENERATORS_H5) -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-normalizer \
+		-end
+	$(PDFLATEX) Sym_13_Subgroup_H5_5_normalizer.tex
+	$(OPEN) Sym_13_Subgroup_H5_5_normalizer.pdf

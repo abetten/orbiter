@@ -1,0 +1,41 @@
+\begin{table}[t]
+\tbl{\label{tab:orthogonal:activities}}
+{\begin{tcolorbox}[tabularx={p{3cm}|p{2cm}|p{6.3cm}|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black,title=Orthogonal Space Activities]
+\hline
+Command & Arguments & Purpose \\
+\hline
+\hline
+\verb'-cheat_sheet_orthogonal'  &  options  &  Create a cheat sheet. Considers the given draw options object. \\
+\hline
+\verb'-print_points'  &  $v$  &  Print the points whose ranks are given in the vector $v$. \\
+\hline
+\verb'-print_lines'  &  $v$  &  Print the lines whose ranks are given in the vector $v$. \\
+\hline
+\verb'-unrank_line_through_two_points'  &  $p1$ $p2$  & Determine the rank of the line through the points whose ranks are $p1$ and $p2$. \\
+\hline
+\verb'-lines_on_point'  &  $p$  &   Create the ranks of all lines through the point whose rank is $p$. \\
+\hline
+\verb'-perp'   &  $L$  & Determine the common perp of a set of points. The point ranks are given in the list $L$.  \\
+\hline
+\verb'-export_point_line_incidence_matrix'   &    & Create a csv file with the point line incidence matrix of the space.  \\
+\hline
+\verb'-intersect_with_subspace'   &  $M$  & Find the points in the intersection of the quadric with the subspace whose generating matrix has label $M$. \\
+\hline
+\verb'-intersect_with_subspace_given_by_base'   &  $base$  & Find the points in the intersection of the quadric with the subspace whose base elements are given by means of their Orbiter ranks. \\
+\hline
+\verb'-table_of_blt_sets'   &   &  Export a table of BLT-sets. We must be in an $Q^4(q)$ space.  \\
+\hline
+\verb'-create_orthogonal_reflection'   &  points  &  Create the orthogonal reflections associated with the given set of points, encoded as a vector. The points must be off the quadric. The points are given as point ranks in projective space. \\
+\hline
+\verb'-create_perp_of_points'   &  points  &  For each point p in the given set of points, compute the set of points q on the quadric which are perpendicular to p. The input set of points is coded in the underlying projective geometry. The output points are coded as points on the quadric.  \\
+\hline
+\verb'-create_Siegel_transformation'   &  u v  &  Create the Siegel transformation defined by the vectors $u$ and $v$. The Siegel transformation is defined as $\rho_{u,v}(x) := x + \beta(x,v) u - \beta(x,u) v - Q(v) \beta(x,u) u.$  Here, $Q$ is the quadratic form and $\beta$ is the associated bilinear form. The vector $u$ must be singular and $v$ must be in $u^\perp.$ \\
+\hline
+\verb'-make_all_Siegel_transformations'   &   &  Make all Siegel transformations by looping over all possible pairs for $u$ and $v$.  \\
+\hline
+\verb'-create_orthogonal_reflection_6_and_4'   &  points A4  &  Create the orthogonal reflections associated with the given set of point. Once done, turn the mappings into mappings of $\PG(3,q)$, using the action A4. \\
+\hline
+\end{tcolorbox}}
+\end{table}

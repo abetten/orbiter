@@ -1,0 +1,10 @@
+PG_4_3:
+	$(ORBITER) -v 2 \
+		-define Do -draw_options -end \
+		-define F -finite_field -q 3 -end \
+		-define P -projective_space -n 4 -field F -v 0 -end \
+		-with P -do -projective_space_activity \
+			-cheat_sheet Do \
+		-end
+	$(PDFLATEX) PG_4_3.tex 
+	$(OPEN) PG_4_3.pdf

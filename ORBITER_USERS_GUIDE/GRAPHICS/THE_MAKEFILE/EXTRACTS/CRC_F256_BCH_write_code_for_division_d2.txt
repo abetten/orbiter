@@ -1,0 +1,12 @@
+CRC_F256_BCH_write_code_for_division_d2:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 256 -end \
+		-define A -vector -field F -sparse 772 "1,771,1,0" -end \
+		-define B -vector -field F -dense $(CRC_POLY_Q256_DEG2_DENSE) -end \
+		-with F -do \
+		-coding_theoretic_activity \
+			-write_code_for_division \
+			alfa A B \
+		-end
+	g++ crc_alfa.cpp -o crc_alfa.out
+	./crc_alfa.out

@@ -1,0 +1,13 @@
+L_5_3:
+	$(ORBITER) -v 2 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define F -finite_field -q 3 -end \
+		-define G -linear_group -PSL 5 F -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end
+	$(PDFLATEX) PSL_5_3_report.tex
+	$(OPEN) PSL_5_3_report.pdf

@@ -1,0 +1,17 @@
+ROW,C1,C2,C3
+0,"tab:subgroups",,
+1,"Creating Subgroups",,
+1,"\verb'-Janko1' ","  "," first Janko group, needs $\PGL(7,11)$ "
+1,"\verb'-monomial' ","  "," subgroup of monomial matrices "
+1,"\verb'-diagonal' ","  "," subgroup of diagonal matrices "
+1,"\verb'-null_polarity_group' "," "," null polarity group "
+1,"\verb'-symplectic_group' "," "," symplectic group "
+1,"\verb'-singer' "," $k$ "," subgroup of index $k$ in the Singer cycle "
+1,"\verb'-singer_and_frobenius' "," $k$ "," subgroup of index $k$ in the Singer cycle, extended by the Frobenius automorphism of $\bbF_{q^n}$ over $\bbF_q$ "
+1,"\verb'-borel_upper' ","  "," Borel subgroup of upper triangular matrices "
+1,"\verb'-borel_lower' ","  "," Borel subgroup of lower triangular matrices "
+1,"\verb'-identity_group' ","  "," identity subgroup "
+1,"\verb'-subgroup_from_file' "," $f$ $l$ "," read subgroup from file $f$ and give it the label $l$"
+1,"\verb'-orthogonal' "," $\epsilon$ "," orthogonal group $O^\epsilon(n,q)$, with $\epsilon  \in \{ \pm 1 \}$ when $n$ is even"
+1,"\verb'-subgroup_by_generators' "," $l$ $o$ $n$ $s_1$ $\ldots$ $s_n$ ","Generate a subgroup from generators. The label ``l'' is used to denote the subgroup; $o$ is the order of the subgroup; $n$ is the number of generators and $s_1$, $\ldots$, $s_n$ are the generators for the subgroup in vector form. "
+END

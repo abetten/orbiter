@@ -1,0 +1,13 @@
+polynomial_division_ranked_2_204_37:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-with F -do \
+		-finite_field_activity \
+			-polynomial_division_ranked 204 37 \
+		-end
+	$(PDFLATEX) polynomial_division_204_37.tex
+	$(OPEN) polynomial_division_204_37.pdf
+	
+# answer is 18
+	
+	

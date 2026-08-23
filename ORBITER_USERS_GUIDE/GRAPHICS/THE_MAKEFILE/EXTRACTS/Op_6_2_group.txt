@@ -1,0 +1,41 @@
+Op_6_2_group:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 2 -end \
+		-define P -projective_space -n 5 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 6 \
+			-homogeneous_of_degree 2 \
+			-monomial_ordering_partition \
+			-variables "X0,X1,X2,X3,X4,X5" \
+				"X_0,X_1,X_2,X_3,X_4,X_5" \
+		-end \
+		-define V -variety \
+			-projective_space P \
+			-ring R \
+			-equation_in_algebraic_form \
+				$(Op_6_eqn) \
+			-label_txt Op_6_2 \
+			-label_tex "{\\rm Op\_6\_2}" \
+		-end \
+		-with V -do -variety_activity -compute_group \
+			-nauty_control -save_orbit_of_equations eqn_ -nauty_log "Op6_2_nauty_log.txt" -end \
+		-end \
+		-with V -do -variety_activity -compute_set_stabilizer \
+			-nauty_control -save_orbit_of_equations eqn_ -end \
+		-end \
+		-with V -do -variety_activity -singular_points -end \
+		-with V -do -variety_activity -export -end \
+		-with V -do -variety_activity -report -end
+	$(PDFLATEX) variety_Op_6_2_report.tex
+	$(OPEN) variety_Op_6_2_report.pdf
+	$(ORBITER) -v 2 \
+		-define Do -draw_options -embedded -radius 150 \
+			-nodes_empty \
+			-scale 0.5 -line_width 0.3 -end \
+		-tree_draw \
+			-file Op6_2_nauty_log.txt \
+			-draw_options Do \
+		-end
+	$(PDFLATEX) Op6_2_nauty_log_draw.tex
+	$(OPEN) Op6_2_nauty_log_draw.pdf

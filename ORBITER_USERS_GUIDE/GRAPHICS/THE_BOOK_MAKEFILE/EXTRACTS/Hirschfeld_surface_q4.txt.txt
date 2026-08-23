@@ -1,0 +1,16 @@
+Hirschfeld_surface_q4.txt:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 4 -end \
+		-define R -polynomial_ring -field F \
+			-number_of_variables 4 \
+			-homogeneous_of_degree 3 \
+			-end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define H4 -geometric_object P \
+			-projective_variety R \
+				"Hirschfeld_surface_q4" \
+				"Hirschfeld\_surface\_q4" \
+				$(HIRSCHFELD_SURFACE_EQUATION) \
+			-end \
+		-with H4 -do -combinatorial_object_activity -save \
+		-end

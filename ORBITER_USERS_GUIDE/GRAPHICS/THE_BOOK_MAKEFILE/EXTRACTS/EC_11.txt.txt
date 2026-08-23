@@ -1,0 +1,15 @@
+EC_11.txt:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 11 -end \
+		-define R -polynomial_ring -field F \
+			-number_of_variables 3 \
+			-homogeneous_of_degree 3 \
+			-end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define EC -geometric_object P \
+			-projective_variety R \
+				"EC_11" "EC\_11" \
+				$(EC_11_EQUATION) \
+			-end \
+		-with EC -do -combinatorial_object_activity -save \
+		-end

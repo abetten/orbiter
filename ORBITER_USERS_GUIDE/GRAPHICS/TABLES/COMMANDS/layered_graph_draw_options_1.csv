@@ -1,0 +1,19 @@
+ROW,C1,C2,C3
+0,"tab:draw:options",,
+1,"Drawing Options for Layered Graph Files (Part 1)",,
+1,"\verb'-paperheight' ","  h  "," Set paperheight for the latex document. The given value is measures the paperheight in tens of an inch. "
+1,"\verb'-paperwidth' ","  w  "," Set paperwidth for the latex document. The given value is measures the paperwidth in tens of an inch. "
+1,"\verb'-xin' ","  $a$  "," Assume input $x$-coordinates are in the interval $[0,a]$. Default value: 10000. "
+1,"\verb'-yin' ","  $a$  "," Assume input $y$-coordinates are in the interval $[0,a]$. Default value: 10000. "
+1,"\verb'-xout' ","  $a$  "," Assume output $x$-coordinates are in the interval $[0,a]$. Default value: 1000000. "
+1,"\verb'-yout' ","  $a$  "," Assume output $y$-coordinates are in the interval $[0,a]$. Default value: 1000000. "
+1,"\verb'-spanning_tree' ","   "," Place nodes according to a spanning tree. Default value: off."
+1,"\verb'-circle' ","   "," Circle all nodes. Default value: on."
+1,"\verb'-corners' ","   "," Draw corners at the outside of the drawing. Default value: off."
+1,"\verb'-radius' "," $r$  "," Use radius $r$ for drawing circles around nodes. "
+1,"\verb'-embedded' ","   "," Create latex headers for stand-alone latex files. Default value: off. "
+1,"\verb'-sideways' ","   "," Create latex figure sideways. Default value: off."
+1,"\verb'-label_edges' ","   "," Label the edges. This option is relevant for the drawing of Schreier trees. Default value: off. "
+1,"\verb'-x_stretch' "," $s$  "," Apply $x$-axis scaling by a factor of $s$. Default value: $s=1.0$. "
+1,"\verb'-y_stretch' "," $s$  "," Apply $y$-axis scaling by a factor of $s$. Default value: $s=1.0$. "
+END

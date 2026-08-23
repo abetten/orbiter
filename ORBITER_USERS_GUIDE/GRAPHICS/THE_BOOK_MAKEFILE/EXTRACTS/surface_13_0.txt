@@ -1,0 +1,14 @@
+surface_13_0:
+	$(ORBITER) -v 3 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 -nodes_empty \
+		-end \
+		-define F -finite_field -q 13 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define S13_0 -cubic_surface -space P -catalogue 0 -end \
+		-with S13_0 -do \
+		-cubic_surface_activity \
+			-report Do \
+		-end
+	$(PDFLATEX) surface_catalogue_q13_iso0_report.tex
+	$(OPEN) surface_catalogue_q13_iso0_report.pdf

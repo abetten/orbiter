@@ -1,0 +1,16 @@
+Desargues_path_can_anc_draw:
+	echo $(DESARGUES_PATH_CANONICAL_ANCESTOR) >Desargues_path_can_anc.inc
+	$(ORBITER) -v 10 \
+		-draw_incidence_structure_description \
+			-width 60 -width_10 6 -end \
+		-define C -combinatorial_object \
+			-label geo_10_3 geo\_10\_3 \
+			-file_of_incidence_geometries_by_row_ranks Desargues_path_can_anc.inc 10 10 3 \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-draw_incidence_matrices \
+			Desargues_path_can_anc \
+		-end
+	$(PDFLATEX) Desargues_path_can_anc_incma.tex
+	$(OPEN) Desargues_path_can_anc_incma.pdf

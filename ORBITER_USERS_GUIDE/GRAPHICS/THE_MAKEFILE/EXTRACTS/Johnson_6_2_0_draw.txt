@@ -1,0 +1,13 @@
+Johnson_6_2_0_draw:
+	$(ORBITER) -v 2 \
+		-define G -graph -Johnson 6 2 0 -end \
+		-with G -do \
+		-graph_theoretic_activity -export_csv -end \
+		-with G -do \
+		-graph_theoretic_activity -export_graphviz -end \
+		-with G -do \
+		-graph_theoretic_activity -save -end
+	$(ORBITER) -v 2 -draw_matrix \
+		-input_csv_file Johnson_6_2_0.csv \
+		-box_width 40 -bit_depth 24 -partition 4 "10" "10" -end
+	dot -Tpng Johnson_6_2_0.gv >Johnson_6_2_0.png

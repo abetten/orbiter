@@ -1,0 +1,7 @@
+smith_normal_form_2:
+	$(ORBITER) -v 3 \
+		-define M -vector \
+			-dense "9,8,7,6,5,4,3,2,1" \
+			-format 3 \
+		-end \
+		-smith_normal_form M

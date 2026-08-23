@@ -1,0 +1,38 @@
+PG_3_3_assume_5_packings_classify:
+	$(ORBITER) -v 2 \
+		-define C -combinatorial_object \
+			-label PG_3_3_assuming_5 \
+			"{\\rm PG\_3\_3\_assuming\_5}" \
+			-file_of_packings_through_spread_table \
+				H5_packings.csv \
+				SPREAD_TABLES_3/spread_9_table.csv \
+				SpreadRep \
+				3 \
+		-end \
+		-define F -finite_field -q 3 -end \
+		-define P3 -projective_space -n 3 -field F -v 0 -end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form_PG P3 \
+			-nauty_control -nauty_log "PG_3_3_packings_5_nauty_log.txt" -end \
+			-end \
+		-end \
+		-define Doinc -draw_incidence_structure_options \
+			-width 40 -width_10 6 \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-post_processing \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-report \
+				-export_flag_orbits \
+				-show_TDO \
+				-show_TDA \
+				-dont_show_incidence_matrices \
+				-incidence_draw_options Doinc \
+			-end \
+		-end
+	$(PDFLATEX) PG_3_3_assuming_5_classification.tex
+	$(OPEN) PG_3_3_assuming_5_classification.pdf

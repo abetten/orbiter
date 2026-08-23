@@ -1,0 +1,10 @@
+PGOm_6_2_classes:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define G -linear_group -PGOm 6 F -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-classes \
+		-end
+	$(PDFLATEX) PGOm_6_2_classes_out.tex
+	$(OPEN) PGOm_6_2_classes_out.pdf

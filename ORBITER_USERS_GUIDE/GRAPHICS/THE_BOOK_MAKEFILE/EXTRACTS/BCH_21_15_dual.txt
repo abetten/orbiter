@@ -1,0 +1,8 @@
+BCH_21_15_dual:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 4 -end \
+		-define v -vector -field F -format 15 \
+			-dense $(BCH_21_15_GENERATOR_MATRIX) -end \
+		-with F -do -finite_field_activity \
+			-nullspace v \
+		-end

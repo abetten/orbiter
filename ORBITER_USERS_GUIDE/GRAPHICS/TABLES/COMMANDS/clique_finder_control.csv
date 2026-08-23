@@ -1,0 +1,10 @@
+ROW,C1,C2,C3
+0,"tab:graphcliques",,
+1,"Finding Cliques",,
+1,"\verb'-rainbow' ","  "," Find all rainbow cliques. The size of the cliques is the number of vertex colors. "
+1,"\verb'-target_size' "," $s$  "," Find all cliques of size $s$. "
+1,"\verb'-weighted' "," $s$  "," Find weighted cliques. "
+1,"\verb'-Sajeeb' ","   ","Use the implementation by Sajeeb Chowdhury. "
+1,"\verb'-output_file' ","  fname "," Write cliques to the named file. "
+1,"\verb'-restrictions' ","  $l$ $r$  $m$ ","Restricted search: At level $l$, restrict to all branches congruent to $r$ modulo $m$. Here, $0 \le r < m.$ "
+END

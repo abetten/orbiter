@@ -1,0 +1,16 @@
+\section{Orbiter directory structure}
+\label{app:dir}
+
+Here is a schematic diagram of the Orbiter directory structure:
+{\tt
+\input CODE/FILES/DIR/dir.tex
+}
+The bin directory on line 67 contains the executables.
+The directories on lines 9-29 contain the main source files of all Orbiter applications. 
+The directories on lines 31-66 contain the Orbiter library. 
+The application source files rely on the library.
+The directory contrib on line 30 contains makefiles which show how Orbiter applications can be used. 
+The directory doc on line 3 contains this user's guide.
+The directory DATA on line 46 contains geometric data that is compiled into the Orbiter applications.
+The directory DISCRETA on line 32 contains legacy code from the DISCRETA project~\cite{DISCRETA}.
+The directory grapth\_theory\_nauty on line 50 contains Brendan McKay's Nauty~\cite{Nauty2016}.

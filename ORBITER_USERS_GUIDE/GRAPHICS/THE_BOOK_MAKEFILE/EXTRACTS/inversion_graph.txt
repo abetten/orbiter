@@ -1,0 +1,11 @@
+inversion_graph:
+	$(ORBITER) -v 6 \
+		-define G -graph \
+			-inversion_graph "1,0,2,3" \
+		-end \
+		-with G -do \
+			-graph_theoretic_activity -properties \
+		-end \
+		-with G -do \
+			-graph_theoretic_activity -automorphism_group \
+		-end

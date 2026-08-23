@@ -1,0 +1,141 @@
+It is well-known that $\Sym(6)$ has an outer automorphism of order two, 
+and that the full automorphism group has order $1440$.
+Let us create this group.
+We exploit the structure of $\Sym(6)$ as a Coxeter group. 
+To this end, we find all possible labelings of 
+the Dynkin diagram of type $A_5$ by involutions.
+
+\bigskip
+
+The first command creates the group $\Sym(6)$ as a permutation group of order $720$ of degree $6$:
+
+\sourcecode{Sym_6}
+
+The next command computes the conjugacy classes of the group (using magma):
+
+\sourcecode{Sym_6_classes}
+
+The ordering of conjugacy classes is chosen by Magma. 
+Here is the output of the command:
+
+
+\orbiteroutput{GRAPHICS/LATEX/Sym_6_classes}
+
+\bigskip
+
+There are three classes of involutions. 
+We store representatives for each class in a separate makefile variable:
+
+\sourcecodevariable{SYM_6_CLASS_2A_REP}
+
+\sourcecodevariable{SYM_6_CLASS_2B_REP}
+
+\sourcecodevariable{SYM_6_CLASS_2C_REP}
+
+
+
+
+
+Using the following three commands, 
+we create the full class in each case. Each time, the 
+set of elements of a class is written to file.
+
+\sourcecode{Sym_6_Class_2A}
+
+\sourcecode{Sym_6_Class_2B}
+
+\sourcecode{Sym_6_Class_2C}
+
+
+We store the filenames of each class in separate makefile variables:
+
+\sourcecodevariable{FILE_NAME_SYM_6_CLASS_2A}
+
+\sourcecodevariable{FILE_NAME_SYM_6_CLASS_2B}
+
+\sourcecodevariable{FILE_NAME_SYM_6_CLASS_2C}
+
+
+We form the union of the three classes by concatenating the three files containing the three conjugacy classes: 
+
+
+\sourcecode{Sym_6_concatenate_classes}
+
+Next, we compute the orders of the products of pairs of involutions.
+The following command reads the file created previously and writes a matrix containing the orders of pairs.
+In the $(i,j)$-entry, the order of the product of involution $i$ and involution $j$ is recorded:
+
+\sourcecode{Sym_6_class_2ABC_order_of_pairs}
+
+For the purposes of labeling the Dynkin diagram of type $A_5$, 
+we are interested in those pairs for which the product has order either two or three. 
+We create two matrices. 
+The first for products of order 2, the second for products of order 3:
+
+
+\sourcecode{Sym_6_order_of_products_change_values}
+
+We create two graphs from these matrices. 
+For fun, we compute the automorphism group of each graph, as well as the eigenvalues:
+
+\sourcecode{Sym_6_class_2ABC_make_graph_G2}
+
+\sourcecode{Sym_6_class_2ABC_make_graph_G3}
+
+
+The next step is to find all possible labelings 
+of the Dynkin diagram of type $A_5$ with involutions, 
+so that the relations are satisfied. 
+To this end, we need the two graphs created before. 
+The program writes a file which contains all possible labelings. 
+It turns out that there are exactly 1440 labelings.
+
+\sourcecode{Sym_6_class_2ABC_subgraph_A5}
+
+
+Next, we create the automorphisms associated 
+to the different labelings of the Dynkin diagram:
+
+
+\sourcecode{Sym_6_aut_group}
+
+We copy paste the generators and add information about 
+the group in the form of makefile variables:
+
+\sourcecodevariable{AUT_SYM_6_GROUP_ORDER}
+
+\sourcecodevariable{AUT_SYM_6_DEGREE}
+
+\sourcecodevariable{AUT_SYM_6_BASE}
+
+
+\sourcecodevariable{AUT_SYM_6_NB_GENS}
+
+For the sake of saving space, the variable \verb'AUT_SYM_6_GENS' is omitted.
+%\sourcecodevariablesmall{AUT_SYM_6_GENS}
+
+
+The next command creates the automorphism group of $\Sym(6)$ 
+from the data that is in the makefile variables. 
+The group has order 1440 and a permutation representation of degree 720.
+
+\sourcecode{Aut_Sym_6_group}
+
+
+For fun, we compute the subgroup lattice of $\Aut(\Sym(6)).$ 
+Warning: the following command is very slow.
+
+\sourcecode{Aut_Sym_6_subgroup_lattice}
+
+
+We produce a drawing of the subgroup lattice.
+
+
+\sourcecode{Aut_Sym_6_subgroup_lattice_load_and_draw}
+
+
+As there are too many subgroups, we simply draw the poset of orbits, shown below:
+
+\orbiteroutput{GRAPHICS/WRAPPERS/sgl_Aut_Sym_6}
+
+

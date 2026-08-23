@@ -1,0 +1,58 @@
+
+
+
+
+Orbiter can create objects in projective space.
+To do so, define an object of type
+\verb'-geometric_object'.
+The definition of a geometric object requires a projective geometry object. 
+For this reason, the definition requires an extra argument, 
+which is the label of a previously created projective geometry object.
+After that, one of the commands shown in 
+Tables~\ref{tab:geometric:objects:1} and~\ref{tab:geometric:objects:2} can be issued.
+\orbitertableofcommands{geometric_object_1}
+\orbitertableofcommands{geometric_object_2}
+
+
+
+
+The following command creates an elliptic quadric ovoid on $\PG(3,8)$:
+
+\sourcecode{elliptic_quadric_ovoid_q8}
+
+The next command creates the Suzuki-Tits ovoid in $\PG(3,8)$:
+
+\sourcecode{ovoid_ST_q8}
+
+
+
+
+\bigskip
+
+The following command creates the Baer subplane of $\PG(2,4)$:
+
+\sourcecode{Baer_PG_2_4}
+
+The next command creates the Baer subgeometry of $\PG(3,4)$:
+
+\sourcecode{Baer_PG_3_4}
+
+
+\bigskip
+
+Let us consider BLT-sets. The following command recalls the unique BLT-set 
+of order $5$ from the database:
+
+\sourcecode{BLT_database_5_0}
+
+Let us pull the first BLT-set of order $7$ and print it to latex:
+
+\sourcecode{BLT_database_7_0_print}
+
+The output is shown below:
+\orbiteroutput{GRAPHICS/LATEX/BLT_7_0}
+
+
+\bigskip
+
+

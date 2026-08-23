@@ -1,0 +1,615 @@
+~/DEV.18/GITHUB/orbiter/ORBITER/SRC/APPS/OVOID/ovoid.out -v 5 -epsilon -1 -n 5 -q 2 -draw_poset -embedded -W
+-v5
+-epsilon -1
+-n 5
+-q 2
+-draw_poset 
+-embedded 
+epsilon=-1
+projective dimension n=5
+d=6
+q=2
+Witt index 2
+ovoid_generator::init d=6
+ovoid_generator::init f_siegel=1
+ovoid_generator::init f_reflection=1
+ovoid_generator::init f_similarity=1
+ovoid_generator::init f_semisimilarity=1
+action::init_orthogonal_group verbose_level=5
+action::init_orthogonal_group before A->init_projective_group
+action::init_projective_group
+n=6 q=2
+f_semilinear=0
+f_basis=1
+action::init_projective_group before M->init_projective_group
+matrix_group::init_projective_group
+n=6
+q=2
+f_semilinear=0
+matrix_group::compute_elt_size
+bits_per_digit = 1
+bits_extension_degree = 0
+bits_per_elt = 36
+char_per_elt = 5
+elt_size_INT_half = 36
+elt_size_INT = 72
+matrix_group::compute_elt_size done
+matrix_group::init_projective_group elt_size_INT = 72
+matrix_group::allocate_data
+matrix_group::allocate_data done
+matrix_group::setup_page_storage
+matrix_group::setup_page_storage calling Elts->init()
+matrix_group::setup_page_storage calling GL_one()
+matrix_group::setup_page_storage calling Elts->store()
+identity element stored, hdl = 0
+matrix_group::setup_page_storage done
+matrix_group::init_projective_group before init_base
+matrix_group::init_base
+matrix_group::init_base before init_base_projective
+matrix_group::init_base after init_base_projective
+matrix_group::init_base done
+matrix_group::init_projective_group after init_base
+matrix_group::init_projective_group finished
+action::init_projective_group after M->init_projective_group
+action::init_projective_group low_level_point_size=6
+action::init_projective_group label=PGL_6_2
+action::init_projective_group before setup_linear_group_from_strong_generators
+action::setup_linear_group_from_strong_generators setting up a basis
+action::setup_linear_group_from_strong_generators before init_matrix_group_strong_generators_builtin
+action::init_matrix_group_strong_generators_builtin
+action::init_matrix_group_strong_generators_builtin computing strong generators builtin group
+n=6
+q=2
+p=2
+e=1
+f_semilinear=0
+action::init_matrix_group_strong_generators_builtin computing strong generators builtin group finished
+action::setup_linear_group_from_strong_generators after init_matrix_group_strong_generators_builtin
+action::setup_linear_group_from_strong_generators before S->compute_base_orbits_known_length
+action::setup_linear_group_from_strong_generators before S->compute_base_orbits_known_length
+sims::compute_base_orbits_known_length: ( 63, 62, 60, 56, 48, 32 )
+verbose_level=3
+sims::compute_base_orbits_known_length computing level 5
+sims::compute_base_orbit_known_length: computing orbit of 5-th base point 5 target_length = 32 nb_gens=5
+sims::compute_base_orbit_known_length finished, 5-th base orbit of length 32
+sims::compute_base_orbits_known_length level 5 base point 5 orbit length 32 has been computed
+sims::compute_base_orbits_known_length computing level 4
+sims::compute_base_orbit_known_length: computing orbit of 4-th base point 4 target_length = 48 nb_gens=6
+sims::compute_base_orbit_known_length finished, 4-th base orbit of length 48
+sims::compute_base_orbits_known_length level 4 base point 4 orbit length 48 has been computed
+sims::compute_base_orbits_known_length computing level 3
+sims::compute_base_orbit_known_length: computing orbit of 3-th base point 3 target_length = 56 nb_gens=7
+sims::compute_base_orbit_known_length finished, 3-th base orbit of length 56
+sims::compute_base_orbits_known_length level 3 base point 3 orbit length 56 has been computed
+sims::compute_base_orbits_known_length computing level 2
+sims::compute_base_orbit_known_length: computing orbit of 2-th base point 2 target_length = 60 nb_gens=8
+sims::compute_base_orbit_known_length finished, 2-th base orbit of length 60
+sims::compute_base_orbits_known_length level 2 base point 2 orbit length 60 has been computed
+sims::compute_base_orbits_known_length computing level 1
+sims::compute_base_orbit_known_length: computing orbit of 1-th base point 1 target_length = 62 nb_gens=9
+sims::compute_base_orbit_known_length finished, 1-th base orbit of length 62
+sims::compute_base_orbits_known_length level 1 base point 1 orbit length 62 has been computed
+sims::compute_base_orbits_known_length computing level 0
+sims::compute_base_orbit_known_length: computing orbit of 0-th base point 0 target_length = 63 nb_gens=10
+sims::compute_base_orbit_known_length finished, 0-th base orbit of length 63
+sims::compute_base_orbits_known_length level 0 base point 0 orbit length 63 has been computed
+sims::compute_base_orbits_known_length done
+action::setup_linear_group_from_strong_generators after S->compute_base_orbits_known_length
+action::setup_linear_group_from_strong_generators before init_sims
+action::init_sims action PGL_6_2 base_len = 6
+action::init_base_from_sims, base length 6
+action::init_sims done
+action::setup_linear_group_from_strong_generators after init_sims
+action::init_projective_group after setup_linear_group_from_strong_generators
+action::init_projective_group, finished setting up PGL_6_2, a permutation group of degree 63 and of order 20158709760
+action::init_orthogonal_group before O->init
+orthogonal::init: epsilon=-1 n=6 (= vector space dimension) m=2 (= Witt index) q=2 verbose_level=5
+choose_anisotropic_form over GF(2)
+longinteger_object::create_from_base_10_string() str = 7
+object = 7
+unipoly_domain::create_object_by_rank_longinteger rank=7
+quotient 3 remainder 1
+quotient 1 remainder 1
+quotient 0 remainder 1
+unipoly_domain::create_object_by_rank_string X^{2} + X + 1
+choosing the following primitive polynomial:
+X^{2} + X + 1
+choose_anisotropic_form over GF(2): choosing c1=1, c2=1, c3=1
+orthogonal::init computing Gram matrix
+orthogonal::init computing Gram matrix done
+count_T1 epsilon = -1 not yet implemented, returning 0
+T1_m(-1,2,2) = 0
+count_T1 epsilon = -1 not yet implemented, returning 0
+T1_mm1(-1,1,2) = 0
+count_T1 epsilon = -1 not yet implemented, returning 0
+T1_mm2(-1,0,2) = 0
+T1(2,2) = 0
+T1(1,2) = 0
+T1(0,2) = 0
+T2(2,2) = 6
+T2(1,2) = 0
+T2(0,2) = 0
+nb_pts_N1(2,2) = 6
+nb_pts_N1(1,2) = 1
+nb_pts_N1(0,2) = 0
+S_m=10
+S_mm1=3
+S_mm2=1
+Sbar_m=9
+Sbar_mm1=2
+Sbar_mm2=0
+N1_m=6
+N1_mm1=1
+N1_mm2=0
+nb_points=27
+action::init_orthogonal_group after O->init
+action::init_orthogonal_group before AO->init
+action_on_orthogonal::init
+f_on_lines=0
+action_on_orthogonal::init degree=27
+action_on_orthogonal::init done
+action::init_orthogonal_group we will create the orthogonal group now
+action::init_orthogonal_group with reflections, before order_PO_epsilon
+order_PO_epsilon
+Witt index = 2
+order_PO epsilon = -1 m=2 q=2
+order_PO_minus 2^(2*3) = 64
+order_PO_minus 2^2 - 1 = 3
+order_PO_minus 2^4 - 1 = 15
+order_PO_minus 2^3 + 1 = 9
+order_PO_minus the order of PO^-(6,2) is 51840
+order_PO_epsilon  f_semilinear=0 epsilon=-1 k=5 q=2 order=51840
+action::init_orthogonal_group the target group order is 51840
+action::init_orthogonal_group before create_orthogonal_group
+action::init_orthogonal_group after create_orthogonal_group
+action::init_orthogonal_group done
+The finite field is:
+i : inverse(i) : frobenius_power(i, 1) : alpha_power(i) : log_alpha(i)
+   0 :   -1 :    0 :    1 :   -1
+   1 :    1 :    1 :    1 :    1
+addition table:
+ 0  1 
+ 1  0 
+
+multiplication table:
+ 0  0 
+ 0  1 
+
+nb_points=27
+nb_lines=0
+alpha=140735720683904
+depth = 9
+generator::init
+generator::init sz = 9
+generator::init A->degree=27
+generator::init A2->degree=27
+generator::init sz = 9
+generator::init action A:
+ACTION O^-(6,2) degree=27 of type action_on_orthogonal_t->matrix_group_t
+low_level_point_size=6, f_has_sims=1, f_has_strong_generators=1
+base: ( 1, 0, 2, 5, 9, 15 )
+has sims
+Order 51840 = ( 27, 16, 5, 4, 3, 2 )
+
+generator::init action A2:
+ACTION O^-(6,2) degree=27 of type action_on_orthogonal_t->matrix_group_t
+low_level_point_size=6, f_has_sims=1, f_has_strong_generators=1
+base: ( 1, 0, 2, 5, 9, 15 )
+has sims
+Order 51840 = ( 27, 16, 5, 4, 3, 2 )
+
+generator::init computing group order
+generator::init group order is 51840
+generator::init sz = 9
+generator::init allocating S of size 9
+generator::init allocating Elt_memory
+generator::init done
+fname_base = ovoid_Q-1_5_2
+calling init_oracle with 1000000 nodes
+generator::init_oracle
+generator::init_oracle done
+after calling init_root_node
+oracle::init_root_node() initializing root node
+storing strong generators
+init_root_node done
+init() finished
+before generator_main
+generator::main
+generator::main  depth = 9
+f_W = 1
+f_w = 0
+verbose_level = 5
+generator::main target_depth=9
+generator::main:  calling extend_level 0
+we will store schreier vectors for this level
+##################################################################################################
+
+generator::extend_level constructing nodes at depth 1
+generator::extend_level from 1 nodes at depth 0
+verbose_level=3
+generator::extend_level 0 calling downstep
+##################################################################################################
+
+downstep depth 0 verbose_level=2
+Time 0:00 : Level 0 Node 0 = 0 / 1 :  Downstep node starting
+
+Downstep node finished :  found 27 live points in 1 orbits : progress: 0. 0 % 
+generator::extend_level after downstep
+generator::extend_level calling upstep
+generator::upstep
+verbose_level = 2
+##################################################################################################
+
+extension step depth 0
+verbose_level=2
+f_indicate_not_canonicals=0
+with 1 extension nodes
+Time 0:00 : Level 0 Node 0 = 0 / 1 :  Upstep : 
+Time 0:00 : Level 0 Node 0 = 0 / 1 :  Upstep : progress: 100. 0 % 
+generator::extend_level after upstep
+generator::housekeeping level=1
+generator::housekeeping verbose_level=4
+generator::housekeeping fname_base=ovoid_Q-1_5_2
+##################################################################################################
+Found 1 orbits at depth 1
+0 : 1 orbits
+1 : 1 orbits
+total: 2
+(1920) average is 1920 + 0 / 1
+# 1
+1 0 1920 agaaaaaaagaaaaaaabaaaaaaaaaaaaaaacaaaaaaafaaaaaaajaaaaaaapaaaaaabaaaaaaaabaaaaaaafaaaaaaaeaaaaaaadaaaaaaacaaaaaaibeacabaamibeacadaaeibeahaceanibmacbbaaombeicadbaimbnmpcbfad
+-1 1 1 in 0:00
+(1920) average is 1920 + 0 / 1
+
+# in action O^-(6,2)
+generator_housekeeping writing files
+generator_housekeeping my_fname_base=ovoid_Q-1_5_2a
+we have a swap
+generator::housekeeping writing files done
+generator_housekeeping not writing tree
+generator::housekeeping done
+generator::main:  calling extend_level 1
+we will store schreier vectors for this level
+##################################################################################################
+
+generator::extend_level constructing nodes at depth 2
+generator::extend_level from 1 nodes at depth 1
+verbose_level=3
+generator::extend_level 1 calling downstep
+##################################################################################################
+
+downstep depth 1 verbose_level=2
+Time 0:00 : Level 1 Node 1 = 0 / 1 :  Downstep node starting
+
+Downstep node finished :  found 16 live points in 1 orbits : progress: 0. 0 % 
+generator::extend_level after downstep
+generator::extend_level size = 1 before write_candidates_binary_using_sv
+generator::write_candidates_binary_using_sv lvl=1 fname_base=ovoid_Q-1_5_2
+generator::write_candidates_binary_using_sv first node at level 1 is 1
+generator::write_candidates_binary_using_sv number of nodes at level 1 is 1
+written file ovoid_Q-1_5_2_lvl_1_candidates.bin of size 76
+generator::extend_level calling upstep
+generator::upstep
+verbose_level = 2
+##################################################################################################
+
+extension step depth 1
+verbose_level=2
+f_indicate_not_canonicals=0
+with 1 extension nodes
+Time 0:00 : Level 1 Node 1 = 0 / 1 :  Upstep : 
+Time 0:00 : Level 1 Node 1 = 0 / 1 :  Upstep : progress: 100. 0 % 
+generator::extend_level after upstep
+generator::housekeeping level=2
+generator::housekeeping verbose_level=4
+generator::housekeeping fname_base=ovoid_Q-1_5_2
+##################################################################################################
+Found 1 orbits at depth 2
+0 : 1 orbits
+1 : 1 orbits
+2 : 1 orbits
+total: 3
+(240) average is 240 + 0 / 1
+# 2
+2 0 1 240 agaaaaaaahaaaaaaabaaaaaaaaaaaaaaacaaaaaaafaaaaaaajaaaaaaapaaaaaaacaaaaaaabaaaaaaafaaaaaaaeaaaaaaadaaaaaaacaaaaaaibeacabaamibeacacaaeibeacadaaiibeahaceanibealadeaiibmapbamakecmapcamaf
+-1 1 2 in 0:00
+(240) average is 240 + 0 / 1
+
+# in action O^-(6,2)
+generator_housekeeping writing files
+generator_housekeeping my_fname_base=ovoid_Q-1_5_2a
+generator::housekeeping writing files done
+generator_housekeeping not writing tree
+generator::housekeeping done
+generator::main:  calling extend_level 2
+we will store schreier vectors for this level
+##################################################################################################
+
+generator::extend_level constructing nodes at depth 3
+generator::extend_level from 1 nodes at depth 2
+verbose_level=3
+generator::extend_level 2 calling downstep
+##################################################################################################
+
+downstep depth 2 verbose_level=2
+Time 0:00 : Level 2 Node 2 = 0 / 1 :  Downstep node starting
+
+Downstep node finished :  found 10 live points in 1 orbits : progress: 0. 0 % 
+generator::extend_level after downstep
+generator::extend_level size = 2 before write_candidates_binary_using_sv
+generator::write_candidates_binary_using_sv lvl=2 fname_base=ovoid_Q-1_5_2
+generator::write_candidates_binary_using_sv first node at level 2 is 2
+generator::write_candidates_binary_using_sv number of nodes at level 2 is 1
+written file ovoid_Q-1_5_2_lvl_2_candidates.bin of size 52
+generator::extend_level calling upstep
+generator::upstep
+verbose_level = 2
+##################################################################################################
+
+extension step depth 2
+verbose_level=2
+f_indicate_not_canonicals=0
+with 1 extension nodes
+Time 0:00 : Level 2 Node 2 = 0 / 1 :  Upstep : 
+Time 0:00 : Level 2 Node 2 = 0 / 1 :  Upstep : progress: 100. 0 % 
+generator::extend_level after upstep
+generator::housekeeping level=3
+generator::housekeeping verbose_level=4
+generator::housekeeping fname_base=ovoid_Q-1_5_2
+##################################################################################################
+Found 1 orbits at depth 3
+0 : 1 orbits
+1 : 1 orbits
+2 : 1 orbits
+3 : 1 orbits
+total: 4
+(72) average is 72 + 0 / 1
+# 3
+3 0 1 8 72 agaaaaaaagaaaaaaabaaaaaaaaaaaaaaacaaaaaaafaaaaaaajaaaaaaapaaaaaaadaaaaaaacaaaaaaacaaaaaaabaaaaaaadaaaaaaacaaaaaaibeacabaamibeacacaaeibeacadaaiibiabadaaeipkabicaameceacabaam
+-1 1 3 in 0:00
+(72) average is 72 + 0 / 1
+
+# in action O^-(6,2)
+generator_housekeeping writing files
+generator_housekeeping my_fname_base=ovoid_Q-1_5_2a
+generator::housekeeping writing files done
+generator_housekeeping not writing tree
+generator::housekeeping done
+generator::main:  calling extend_level 3
+we will store schreier vectors for this level
+##################################################################################################
+
+generator::extend_level constructing nodes at depth 4
+generator::extend_level from 1 nodes at depth 3
+verbose_level=3
+generator::extend_level 3 calling downstep
+##################################################################################################
+
+downstep depth 3 verbose_level=2
+Time 0:00 : Level 3 Node 3 = 0 / 1 :  Downstep node starting
+
+Downstep node finished :  found 6 live points in 1 orbits : progress: 0. 0 % 
+generator::extend_level after downstep
+generator::extend_level size = 3 before write_candidates_binary_using_sv
+generator::write_candidates_binary_using_sv lvl=3 fname_base=ovoid_Q-1_5_2
+generator::write_candidates_binary_using_sv first node at level 3 is 3
+generator::write_candidates_binary_using_sv number of nodes at level 3 is 1
+written file ovoid_Q-1_5_2_lvl_3_candidates.bin of size 36
+generator::extend_level calling upstep
+generator::upstep
+verbose_level = 2
+##################################################################################################
+
+extension step depth 3
+verbose_level=2
+f_indicate_not_canonicals=0
+with 1 extension nodes
+Time 0:00 : Level 3 Node 3 = 0 / 1 :  Upstep : 
+Time 0:00 : Level 3 Node 3 = 0 / 1 :  Upstep : progress: 100. 0 % 
+generator::extend_level after upstep
+generator::housekeeping level=4
+generator::housekeeping verbose_level=4
+generator::housekeeping fname_base=ovoid_Q-1_5_2
+##################################################################################################
+Found 1 orbits at depth 4
+0 : 1 orbits
+1 : 1 orbits
+2 : 1 orbits
+3 : 1 orbits
+4 : 1 orbits
+total: 5
+(48) average is 48 + 0 / 1
+# 4
+4 0 1 8 10 48 agaaaaaaafaaaaaaabaaaaaaaaaaaaaaacaaaaaaafaaaaaaajaaaaaaapaaaaaaaeaaaaaaadaaaaaaacaaaaaaabaaaaaaabaaaaaaacaaaaaaibeacabaamibmacbbaakipkabibaaijheahijaajeceacabaam
+-1 1 4 in 0:00
+(48) average is 48 + 0 / 1
+
+# in action O^-(6,2)
+generator_housekeeping writing files
+generator_housekeeping my_fname_base=ovoid_Q-1_5_2a
+generator::housekeeping writing files done
+generator_housekeeping not writing tree
+generator::housekeeping done
+generator::main:  calling extend_level 4
+we will store schreier vectors for this level
+##################################################################################################
+
+generator::extend_level constructing nodes at depth 5
+generator::extend_level from 1 nodes at depth 4
+verbose_level=3
+generator::extend_level 4 calling downstep
+##################################################################################################
+
+downstep depth 4 verbose_level=2
+Time 0:00 : Level 4 Node 4 = 0 / 1 :  Downstep node starting
+
+Downstep node finished :  found 3 live points in 2 orbits : progress: 0. 0 % 
+generator::extend_level after downstep
+generator::extend_level size = 4 before write_candidates_binary_using_sv
+generator::write_candidates_binary_using_sv lvl=4 fname_base=ovoid_Q-1_5_2
+generator::write_candidates_binary_using_sv first node at level 4 is 4
+generator::write_candidates_binary_using_sv number of nodes at level 4 is 1
+written file ovoid_Q-1_5_2_lvl_4_candidates.bin of size 24
+generator::extend_level calling upstep
+generator::upstep
+verbose_level = 2
+##################################################################################################
+
+extension step depth 4
+verbose_level=2
+f_indicate_not_canonicals=0
+with 2 extension nodes
+Time 0:00 : Level 4 Node 4 = 0 / 1 :  Upstep : 
+Time 0:00 : Level 4 Node 4 = 0 / 1 :  Upstep : progress: 100. 0 % 
+generator::extend_level after upstep
+generator::housekeeping level=5
+generator::housekeeping verbose_level=4
+generator::housekeeping fname_base=ovoid_Q-1_5_2
+##################################################################################################
+Found 2 orbits at depth 5
+0 : 1 orbits
+1 : 1 orbits
+2 : 1 orbits
+3 : 1 orbits
+4 : 1 orbits
+5 : 2 orbits
+total: 7
+(240, 120) average is 180 + 0 / 2
+# 5
+5 0 1 8 10 11 240 agaaaaaaagaaaaaaabaaaaaaaaaaaaaaacaaaaaaafaaaaaaajaaaaaaapaaaaaaafaaaaaaaeaaaaaaadaaaaaaacaaaaaaabaaaaaaacaaaaaaibeacabaamibeahabaanibmacbbaakipkabibaaijloacbjaaoeceacabaam
+5 0 1 8 10 16 120 agaaaaaaahaaaaaaabaaaaaaaaaaaaaaacaaaaaaafaaaaaaajaaaaaaapaaaaaaafaaaaaaaeaaaaaaadaaaaaaabaaaaaaacaaaaaaabaaaaaaibeacacaaeibmacbbaaoibmaccdiaijheahijaanipkabibaaikhkalicaaoeceacabaai
+-1 2 5 in 0:00
+(240, 120) average is 180 + 0 / 2
+
+# in action O^-(6,2)
+generator_housekeeping writing files
+generator_housekeeping my_fname_base=ovoid_Q-1_5_2a
+generator::housekeeping writing files done
+generator_housekeeping not writing tree
+generator::housekeeping done
+generator::main:  calling extend_level 5
+we will store schreier vectors for this level
+##################################################################################################
+
+generator::extend_level constructing nodes at depth 6
+generator::extend_level from 2 nodes at depth 5
+verbose_level=3
+generator::extend_level 5 calling downstep
+##################################################################################################
+
+downstep depth 5 verbose_level=2
+Time 0:00 : Level 5 Node 5 = 0 / 2 :  Downstep node starting
+
+Downstep node finished :  found 0 live points in 0 orbits : progress: 0. 0 % 
+generator::extend_level after downstep
+generator::extend_level size = 5 before write_candidates_binary_using_sv
+generator::write_candidates_binary_using_sv lvl=5 fname_base=ovoid_Q-1_5_2
+generator::write_candidates_binary_using_sv first node at level 5 is 5
+generator::write_candidates_binary_using_sv number of nodes at level 5 is 2
+written file ovoid_Q-1_5_2_lvl_5_candidates.bin of size 24
+generator::extend_level calling upstep
+generator::upstep
+verbose_level = 2
+##################################################################################################
+
+extension step depth 5
+verbose_level=2
+f_indicate_not_canonicals=0
+with 1 extension nodes
+Time 0:00 : Level 5 Node 5 = 0 / 2 :  Upstep : 
+Time 0:00 : Level 5 Node 5 = 0 / 2 :  Upstep : progress: 0. 0 % 
+generator::extend_level after upstep
+generator::housekeeping level=6
+generator::housekeeping verbose_level=4
+generator::housekeeping fname_base=ovoid_Q-1_5_2
+##################################################################################################
+Found 1 orbits at depth 6
+0 : 1 orbits
+1 : 1 orbits
+2 : 1 orbits
+3 : 1 orbits
+4 : 1 orbits
+5 : 2 orbits
+6 : 1 orbits
+total: 8
+(720) average is 720 + 0 / 1
+# 6
+6 0 1 8 10 16 22 720 agaaaaaaahaaaaaaabaaaaaaaaaaaaaaacaaaaaaafaaaaaaajaaaaaaapaaaaaaagaaaaaaafaaaaaaaeaaaaaaabaaaaaaadaaaaaaacaaaaaaibeacabaamibeacacaaeibeacadaaiibmacbbaaojheahijaanlhmapjkiajeceacabaai
+-1 1 7 in 0:00
+(720) average is 720 + 0 / 1
+
+# in action O^-(6,2)
+generator_housekeeping writing files
+generator_housekeeping my_fname_base=ovoid_Q-1_5_2a
+generator::housekeeping writing files done
+generator_housekeeping not writing tree
+generator::housekeeping done
+generator::main:  calling extend_level 6
+we will store schreier vectors for this level
+##################################################################################################
+
+generator::extend_level constructing nodes at depth 7
+generator::extend_level from 1 nodes at depth 6
+verbose_level=3
+generator::extend_level 6 calling downstep
+##################################################################################################
+
+downstep depth 6 verbose_level=2
+Time 0:00 : Level 6 Node 7 = 0 / 1 :  Downstep node starting
+
+Downstep node finished :  found 0 live points in 0 orbits : progress: 0. 0 % 
+generator::extend_level after downstep
+generator::extend_level size = 6 before write_candidates_binary_using_sv
+generator::write_candidates_binary_using_sv lvl=6 fname_base=ovoid_Q-1_5_2
+generator::write_candidates_binary_using_sv first node at level 6 is 7
+generator::write_candidates_binary_using_sv number of nodes at level 6 is 1
+written file ovoid_Q-1_5_2_lvl_6_candidates.bin of size 12
+generator::extend_level calling upstep
+generator::upstep
+verbose_level = 2
+##################################################################################################
+
+extension step depth 6
+verbose_level=2
+f_indicate_not_canonicals=0
+with 0 extension nodes
+Time 0:00 : Level 6 Node 7 = 0 / 1 :  Upstep : 
+Time 0:00 : Level 6 Node 7 = 0 / 1 :  Upstep : progress: -92233720368547758.-8 % 
+generator::extend_level after upstep
+generator::housekeeping level=7
+generator::housekeeping verbose_level=4
+generator::housekeeping fname_base=ovoid_Q-1_5_2
+##################################################################################################
+Found 0 orbits at depth 7
+0 : 1 orbits
+1 : 1 orbits
+2 : 1 orbits
+3 : 1 orbits
+4 : 1 orbits
+5 : 2 orbits
+6 : 1 orbits
+7 : 0 orbits
+total: 8
+() average is 9 + 0 / 0
+# 7
+-1 0 8 in 0:00
+() average is 9 + 0 / 0
+
+# in action O^-(6,2)
+generator_housekeeping writing files
+generator_housekeeping my_fname_base=ovoid_Q-1_5_2a
+generator::housekeeping writing files done
+generator_housekeeping not writing tree
+generator::housekeeping done
+generator::draw_poset data=0
+generator::draw_poset before make_auxiliary_graph
+generator::draw_poset before make_graph
+generator::draw_poset before make_graph
+generator::draw_poset before make_poset_graph_detailed
+generator::draw_poset after make_poset_graph_detailed
+generator::draw_poset writing file ovoid_-1_6_2_aux_poset_lvl_9.layered_graph
+generator::draw_poset writing file ovoid_-1_6_2_poset_lvl_9.layered_graph
+generator::draw_poset writing file ovoid_-1_6_2_tree_lvl_9.layered_graph
+generator::draw_poset writing file ovoid_-1_6_2_poset_detailed_lvl_9.layered_graph
+generator::draw_poset done
+0:00

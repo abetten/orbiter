@@ -1,0 +1,15 @@
+RM_3_distance_draw:
+	$(ORBITER) -v 2 \
+		-loop L 0 3 1 \
+			-draw_matrix \
+				-input_csv_file RM_m3_distance_H_8_16_value%L.csv \
+				-box_width 25 -bit_depth 8 \
+				-partition 5 16 16 \
+			-end \
+		-end_loop L
+	magick RM_m3_distance_H_8_16_value0_draw.bmp RM_m3_distance_H_8_16_value0_draw.png
+	magick RM_m3_distance_H_8_16_value1_draw.bmp RM_m3_distance_H_8_16_value1_draw.png
+	magick RM_m3_distance_H_8_16_value2_draw.bmp RM_m3_distance_H_8_16_value2_draw.png
+	$(OPEN) RM_m3_distance_H_8_16_value0_draw.png
+	$(OPEN) RM_m3_distance_H_8_16_value1_draw.png
+	$(OPEN) RM_m3_distance_H_8_16_value2_draw.png

@@ -1,0 +1,102 @@
+\newcommand{\bbF}{{\mathbb F}}
+\newcommand{\bbZ}{{\mathbb Z}}
+\newcommand{\bbR}{{\mathbb R}}
+\def\PG{{\rm PG}}
+\def\AG{{\rm AG}}
+\newcommand{\bI}{{\bf I}}
+\newcommand{\id}{{\rm id}}
+\newcommand{\Stab}{{\rm Stab}}
+\newcommand{\Orb}{{\rm Orb}}
+\newcommand{\Hu}{{\rm Hu}}
+\newcommand{\Fix}{{\rm Fix}}
+\newcommand{\Sym}{{\rm Sym}}
+\newcommand{\Alt}{{\rm Alt}}
+\newcommand{\PSL}{{\rm PSL}}
+\newcommand{\PGL}{{\rm PGL}}
+\newcommand{\PSSL}{{\rm P}\Sigma{\rm L}}
+\newcommand{\PGGL}{{\rm P}\Gamma{\rm L}}
+\newcommand{\PGGO}{{\rm P}\Gamma{\rm O}}
+\newcommand{\SL}{{\rm SL}}
+\newcommand{\GL}{{\rm GL}}
+\newcommand{\SSL}{{\rm \Sigma L}}
+\newcommand{\GGL}{{\rm \Gamma L}}
+\newcommand{\ASL}{{\rm ASL}}
+\newcommand{\AGL}{{\rm AGL}}
+\newcommand{\ASSL}{{\rm A\Sigma L}}
+\newcommand{\AGGL}{{\rm A\Gamma L}}
+\newcommand{\PSU}{{\rm PSU}}
+\newcommand{\PGO}{{\rm PGO}}
+\newcommand{\Sp}{{\rm Sp}}
+\newcommand{\PSp}{{\rm PSp}}
+\newcommand{\rows}{{\rm rows}}
+\newcommand{\cols}{{\rm cols}}
+\newcommand{\diag}{{\rm diag}}
+\newcommand{\be}{{\bf e}}
+\newcommand{\bv}{{\bf v}}
+\newcommand{\bx}{{\bf x}}
+\newcommand{\by}{{\bf y}}
+\newcommand{\bz}{{\bf z}}
+\newcommand{\bP}{{\bf P}}
+\newcommand{\bone}{{\bf 1}}
+\newcommand{\bzero}{{\bf 0}}
+\newcommand{\cC}{{\cal C}}
+\def\Aut{{\rm Aut}}
+\newcommand{\ba}{{\bf a}}
+\newcommand{\bb}{{\bf b}}
+\newcommand{\bc}{{\bf c}}
+\newcommand{\cB}{{\cal B}}
+\newcommand{\cP}{{\cal P}}
+\newcommand{\cL}{{\cal L}}
+\def\la{{\langle}}
+\def\ra{{\rangle}}
+\newcommand{\frakP}{{\mathfrak P}}
+
+\newcounter{ExampleCounter}
+
+\newcommand{\sourcecodepath}{GRAPHICS/THE_MAKEFILE/EXTRACTS/}
+
+\newcommand{\orbitertableofcommands}[1]{\input GRAPHICS/TABLES/#1.tex}
+
+%\newcommand{\sourcecode}[1]{{\tt
+%\input \sourcecodepath#1.tex
+%}}
+
+%\newcommand{\ExampleBox}[1]{\begin{center}\framebox{\parbox[t]{6in}{\underline{Example:}{\\ \\ \input \sourcecodepath#1}}\end{center}}
+
+
+%\newcommand{\sourcecode}[1]{\begin{center}\framebox{\parbox[t]{6in}{\stepcounter{ExampleCounter}\underline{Example \arabic{ExampleCounter}:}\\ {\tt \input \sourcecodepath#1.tex
+%}}}\end{center}}
+
+
+%\stepcounter{ExampleCounter}\arabic{ExampleCounter}
+
+\newcommand{\sourcecode}[1]{\begin{tcolorbox}[colback=red!5!white,colframe=red!75!black,breakable,title=Example \stepcounter{ExampleCounter}\arabic{ExampleCounter}] 
+{\tt \input \sourcecodepath#1.tex }
+\end{tcolorbox}}
+
+\newcommand{\orbitertableheader}{tabularx={X|p{2cm}|X|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black}
+
+%\tcbset{enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+%  colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+%  coltitle=black,center title}
+
+
+
+%\newcommand{\sourcecode}{\begin{sexylisting}[colback=white]{Example \arabic{ExampleCounter}}
+%test 
+%\end{sexylisting}}
+
+%\input \sourcecodepath#1.tex
+%\begin{sexylisting}[colback=white]{Same code again}
+%public void here() {
+%    goes().the().code()
+%}
+%\end{sexylisting}
+
+
+\newcommand{\orbiteroutput}[1]{\begin{mdframed}[style=MyFrame]
+\input #1.tex
+\end{mdframed}}
+

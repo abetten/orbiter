@@ -1,0 +1,161 @@
+
+There are several different approaches to classify 
+cubic surfaces with 27 lines over finite fields $\bbF_q$ in Orbiter.
+Classification means to determine the non-equivalent surfaces under the action of the 
+collineation group $\PGGL(4,q)$ of $\PG(3,q).$
+The approach described in~\cite{BettenKaraoglu19a} 
+relies on Schlaefli's notion of 
+a double six as a substructure~\cite{Schlaefli58}.
+The approach described in~\cite{Karaoglu18} 
+utilizes the relation to non-conical six-arcs in a plane.
+A third approach is described in~\cite{KaraogluBetten21}.
+All three approaches are available in Orbiter.
+
+\bigskip
+
+
+Table~\ref{tab:classify:cubic:surfaces} 
+lists the Orbiter commands to classify cubic surfaces.
+\orbitertableofcommands{classify_cubic_surfaces}
+
+
+\bigskip
+
+Table~\ref{tab:cubic:surface:classified:activity} 
+lists the Orbiter commands that can be performed 
+once the classification is completed.
+\orbitertableofcommands{classification_of_cubic_surfaces_with_double_sixes_activity}
+
+\bigskip
+
+
+
+In $\PG(3,4)$, there is only one type of cubic surfaces with 27 lines. 
+It is a member of the Hirschfeld family, 
+described in~\cite{Hirschfeld64}.
+The following Orbiter command can be used 
+to construct this surface and to prove its uniqueness 
+for $\bbF_4$. 
+The following command utilizes the algorithm 
+of~\cite{BettenKaraoglu19a} to do so:
+
+\sourcecode{surface_classify_q4}
+
+The \verb'-report' option creates a latex report.
+After some redactions, the report contains the following elements.
+\orbiteroutput{GRAPHICS/LATEX/report_suface_classify_q4}
+
+\bigskip
+
+
+Karaoglu~\cite{Karaoglu18} describes a different algorithm, 
+based on non-conical six-arcs and Steiner trihedral pairs. 
+The command 
+
+\sourcecode{surface_classify_q4_arc_lifting_two_lines}
+
+classifies all cubic surfaces with 27 lines over 
+the field $\bbF_{4}$ using the algorithm of Karaoglu.
+The result agrees with the previous algorithm. 
+In $\PG(3,4),$ the only surface with 27 lines is the Hirschfeld surface.
+
+
+
+\bigskip
+
+
+The classification of cubic surfaces with double sixes 
+can be used to perform isomorphism testing and recognition of surfaces. 
+The surfaces chosen in the classification algorithm are called canonical surfaces. 
+Any surface is isomorphic to exactly one canonical surface.
+The canonical surface is often called the fanonical form.
+It is possible to efficiently compute a map that takes a given surface to the associated canonical surface.  
+Suppose we want to compute the canonical surface of $F_{a,b,c,d}$ with $(a,b,c,d) = (25,5,5,25)$ over $\bbF_{31}.$ 
+We can use the following command to create the surface, 
+to classify all surfaces with 27 lines over $\bbF_{31},$ and to establish  
+an isomorphism between the given surface and the canonical form.
+
+
+\sourcecode{Family_general_F31_25_5_5_25_recognize}
+
+
+\bigskip
+
+The following command creates all surfaces in the form 
+$F_{abcd}$ over $\bbF_{9}$ and identifies the isomorphism type of each surface.
+The result is written to a csv file.
+
+\sourcecode{surface_F_abcd_identify_q9}
+
+
+\bigskip
+
+
+The next example illustrates isomorphism testing for smooth cubic surfaces with 27 lines. 
+In order to perform isomorphism testing, the classification of cubic surfaces of that order is required.
+Let us consider an example over the field $\bbF_{11}.$
+Let us see whether the two surfaces of type $F_{abcd}$ 
+with $(a,b,c,d) = (2,4,4,2)$ and $(a,b,c,d) = (5,10,7,5)$ over $\bbF_{11}$ are isomorphic.
+Both surfaces have 10 Eckardt points. 
+However, having the same number of Eckardt points is only a necessary condition for surfaces to be isomorphic. 
+It is not a sufficient condition.
+To determine whether the surfaces are isomorphic, 
+we can use the following command:
+
+\sourcecode{Family_general_F11_iso_test}
+
+The command creates both surfaces, 
+and then performs an isomorphism 
+test for the two given surfaces. The surfaces are found to be isomorphic. 
+A transformation mapping one surface to the other is computed.
+
+\bigskip
+
+Doing isomorphism testing of cubic surfaces is difficult. 
+The approach taken here is the following:
+Classify all cubic surfaces over the given field and use the data 
+obtained during this classification to compute 
+the canonical form of each of the given surfaces. 
+The surfaces are isomorphic if and only if the respective canonical forms agree. 
+By multiplying the group elements that move each of the surfaces 
+to their associated canonical form (one element inverted), 
+we obtain an isomorphism mapping one to the other. 
+Obviously, the computation of one isomorphism is as costly as the classification of all surfaces.
+However, once the classification is finished, isomorphisms can be computed in near constant time, 
+as the data from the classification allows to determine 
+a canonizing group element in almost constant time. 
+
+
+\bigskip
+
+
+It is possible to identify cubic surfaces in special forms. 
+For instance, the Cayley normal form is parametrized by 4 field elements $(k,l,m,n)$ as
+$$
+\left(X_0^2+X_1^2+X_2^2+X_3^2\right)X_3 + \left(aX_0+bX_1+cX_2\right)X_3^2+kX_0X_1X_2+dX_0X_1X_3+eX_0X_2X_3+fX_1X_2X_3,
+$$
+where 
+$$
+a=l+ \frac{1}{l}, \;
+b=m+ \frac{1}{m}, \;
+c=n+ \frac{1}{n}, \;
+d=lm+ \frac{1}{lm}, \;
+e=nl+ \frac{1}{nl}, \;
+f=mn+ \frac{1}{mn}.
+$$
+The following command identifies the Cayley normal form among all cubic surfaces with 27 lines for $q=7.$
+
+\sourcecode{surface_classify_q7_sweep_Cayley}
+
+The command writes two csv files. The first maps $(k,l,m,n)$ to isomorphism types of surfaces. 
+The second file writes for each isomorphism type a suitable $(k,l,m,n)$ pair.
+There is only one cubic surface over $\bbF_7.$
+The computation shows that it can be obtained in the Cayley form with parameters $(k,l,m,n) = (1,2,2,2)$.
+This is not the only way. 
+In total, there are 64 parameter tuples which all produce isomorphic copies of the same surface.
+
+\bigskip
+
+
+
+

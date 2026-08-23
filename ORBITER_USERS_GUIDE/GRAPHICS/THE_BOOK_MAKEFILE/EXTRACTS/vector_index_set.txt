@@ -1,0 +1,7 @@
+vector_index_set:
+	$(ORBITER) -v 2 \
+		-define v -vector -dense "0,1,0,1,0,1,0,1,0,1,0,1" -end \
+		-define v2 -vector \
+			-index_of_support \
+			v \
+		-end \

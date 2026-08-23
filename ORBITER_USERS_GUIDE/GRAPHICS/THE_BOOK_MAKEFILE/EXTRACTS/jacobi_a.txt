@@ -1,0 +1,2 @@
+jacobi_a:
+	$(ORBITER) -v 5 -jacobi 2221 7817

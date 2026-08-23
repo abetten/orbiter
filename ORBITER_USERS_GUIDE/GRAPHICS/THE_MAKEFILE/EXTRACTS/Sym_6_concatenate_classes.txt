@@ -1,0 +1,6 @@
+Sym_6_concatenate_classes:
+	$(ORBITER) -v 3 \
+		-csv_file_concatenate Sym_6_class_2ABC.csv 3 \
+			$(FILE_NAME_SYM_6_CLASS_2A) \
+			$(FILE_NAME_SYM_6_CLASS_2B) \
+			$(FILE_NAME_SYM_6_CLASS_2C)

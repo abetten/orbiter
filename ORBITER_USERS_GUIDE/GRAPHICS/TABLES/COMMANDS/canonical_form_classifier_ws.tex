@@ -1,0 +1,49 @@
+\begin{table}[t]
+\tbl{\label{tab:canonical}}
+{\begin{tcolorbox}[tabularx={p{3cm}|p{2cm}|p{6.3cm}|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black,title=Classification by Canonical Form]
+\hline
+Command & Arguments & Purpose \\
+\hline
+\hline
+\verb'-space'  &  L   &  A projective space is required for some types of combinatorial objects. \\
+\hline
+\verb'-ring'  &  R   &  A polynomial ring is required for algebraic varieties. \\
+\hline
+\verb'-input_fname_mask'  &  fname-mask   &  Input file name mask. \\
+\hline
+\verb'-nb_files'  &  n   &  Number of input files. \\
+\hline
+\verb'-output_fname'  &  fname   &  Output file name. \\
+\hline
+\verb'-label_po_go'  &  label   &  Column label for po-go columns. This is the stabilizer of the orbit representative of the primary orbit. \\
+\hline
+\verb'-label_po_index'  &  label   &  Column label for the subgroup index of the secondary orbit representative inside the stabilizer of the representative of the primary orbit. \\
+\hline
+\verb'-label_po'  &  label   &  Column label for the primary orbit number. \\
+\hline
+\verb'-label_so'  &  label   &  Column label for the secondary orbit number. \\
+\hline
+\verb'-label_equation_algebraic'  &  label   &  Column label for the algebraic equation (in case of a variety).\\
+\hline
+\verb'-label_equation_by_coefficients'  &  label   &  Column label for the equation (in vector of coefficients form).\\
+\hline
+\verb'-label_equation2_algebraic'  &  label   &  Column label for the optional second algebraic equation (in case of a variety).\\
+\hline
+\verb'-label_equation2_by_coefficients'  &  label   &  Column label for the optional second equation (in vector of coefficients form).\\
+\hline
+\verb'-label_points'  &  label   &  Column label for the set of points of the object (optional). \\
+\hline
+\verb'-label_lines'  &  label   &  Column label for the set of lines of the object (optional). \\
+\hline
+\verb'-nauty_control'  &   options  &  Nauty options, see Table~\ref{tab:nauty:control}.  \\
+\hline
+\verb'-has_nauty_output'  &    &  Whether data from a previous run of Nauty is available.  \\
+\hline
+\verb'-carry_through'  &  label   &  Column label of a property that is carried through from the input file to the output file. This option can be repeated. \\
+\hline
+\verb'-skip'  &  list   &  List of cases to be skipped. Case numbers are 0-based. \\
+\hline
+\end{tcolorbox}}
+\end{table}

@@ -1,0 +1,8 @@
+F_5:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 5 -end \
+		-with F -do -finite_field_activity \
+			-cheat_sheet_GF \
+		-end
+	$(PDFLATEX) GF_5.tex
+	$(OPEN) GF_5.pdf

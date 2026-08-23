@@ -1,0 +1,8 @@
+normal_basis_2_4_poly19:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-with F -do -finite_field_activity \
+			-normal_basis_with_given_polynomial 19 4 \
+		-end
+	$(PDFLATEX) normal_basis_q2_d4_poly19.tex
+	$(OPEN) normal_basis_q2_d4_poly19.pdf

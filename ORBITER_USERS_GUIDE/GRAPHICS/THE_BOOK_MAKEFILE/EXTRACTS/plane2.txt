@@ -1,0 +1,36 @@
+plane2:
+	cp $(ORBITER_PATH)/examples/users_guide/coordinate_grid.csv .
+	$(ORBITER) -v 2 -povray \
+		-round 0 -nb_frames_default 30 \
+		-output_mask plane2_%d_%03d.pov \
+		-video_options -W 2560 -H 1920 \
+		-global_picture_scale 0.40 \
+		-default_angle 75 \
+		-clipping_radius 5 -omit_bottom_plane  \
+			-camera 0 "0,0,1" "6,6,2" "0,0,0"  \
+			-rotate_about_z_axis \
+			-boundary_box \
+		-end \
+		-scene_objects \
+			-line_through_two_points_recentered_from_csv_file coordinate_grid.csv \
+			-plane_by_dual_coordinates "0,0,1,0" \
+			-plane_by_dual_coordinates "0,1,0,0" \
+			-plane_by_dual_coordinates "1,0,0,0" \
+			-plane_by_dual_coordinates "4,5,-1,9" \
+			-group_of_things "0" \
+			-group_of_things "1" \
+			-group_of_things "2" \
+			-group_of_things_as_interval 3 39 \
+			-lines 0 0.15 $(COLOR_RED_SHINY) \
+			-lines 1 0.15 $(COLOR_GREEN_SHINY) \
+			-lines 2 0.15 $(COLOR_BLUE_SHINY) \
+			-lines 3 0.05 $(COLOR_BLACK_SHINY) \
+			-group_of_things "0" \
+			-planes 4 $(COLOR_BLUE_SEE_THROUGH) \
+			-group_of_things "3" \
+		-scene_objects_end \
+		-povray_end
+	- rm -rf POV
+	mkdir POV
+	mv plane2_0_*.pov POV
+	mv makefile_animation POV

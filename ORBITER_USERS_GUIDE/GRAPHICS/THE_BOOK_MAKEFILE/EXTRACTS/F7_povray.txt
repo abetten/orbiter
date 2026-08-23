@@ -1,0 +1,35 @@
+F7_povray:
+	$(ORBITER) -v 2 -povray \
+		-round 0 -nb_frames_default 30 \
+		-output_mask F7_15_lines_%d_%03d.pov \
+		-video_options -W 1024 -H 768 \
+		-global_picture_scale 1.5 \
+		-default_angle 80 \
+		-clipping_radius 4.4 \
+		-omit_bottom_plane \
+		-camera 0 "1,1,1" "-4.5,3.5,6" "0,0,0" \
+		-end \
+		-scene_objects \
+			-cubic_lex "0, 0, 6, 0, 0, -13.39014946, -3.341901346, -6.972931640, 5.827182718, 0, 0, 7.390149464, 7.390149464, 6.972931640, -1.512349728, -8.485281372, 0, 0, 0, 0" \
+			-group_of_things "0" \
+			-cubics 0 $(SURFACE_COLOR_SEETHROUGH) \
+			-line_through_point_with_direction "0, 0, 0, 1, 0, 0" \
+			-line_through_point_with_direction "0, 0, -1, 0, 1, 0" \
+			-line_through_point_with_direction "0, 0, 0, 0, 0, -1" \
+			-line_through_point_with_direction "1, 0, 0, 1, 1, 1" \
+			-line_through_point_with_direction "-1.414213562, 0, 0, 4.146264370, 1.732050808, 1.732050808" \
+			-line_through_point_with_direction "0, 1.732050808, -1, 2.414213562, -0.317837246, 2.414213562" \
+			-line_through_point_with_direction "-2.133352390, 0, -1, 1.674708020, 1, 0" \
+			-line_through_point_with_direction "-2.539058015, 0, 0, 2.211360755, 1, 0" \
+			-line_through_point_with_direction "0, 1.148188060, 0, 0, -0.9435440612, 1" \
+			-line_through_point_with_direction "-0.9711971171, 0, 0, 1.162155272, 0, 1" \
+			-line_through_point_with_direction "2.096037870, 2.096037870, 0, -1.065851905, -1.065851905, 1" \
+			-line_through_point_with_direction "3.921555783, 2.921555781, 0, -1.722456585, -1.722456585, 1" \
+			-group_of_things_as_interval 0 12 \
+			-lines 1 0.04 $(COLOR_YELLOW) \
+		-scene_objects_end \
+		-povray_end
+	- rm -rf POV
+	mkdir POV
+	mv F7_15_lines_0_*.pov POV
+	mv makefile_animation POV

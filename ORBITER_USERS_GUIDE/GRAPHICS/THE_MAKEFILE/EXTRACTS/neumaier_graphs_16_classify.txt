@@ -1,0 +1,37 @@
+neumaier_graphs_16_classify:
+	$(ORBITER) -v 2 \
+		-define Doinc -draw_incidence_structure_options \
+			-width 20 -width_10 2 -end \
+		-define C -combinatorial_object \
+			-label neumaier_graph neumaier\_graph \
+			-graph_object Gamma \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form \
+				-save_ago \
+				-save_transversal \
+				-max_TDO_depth 10 \
+				-nauty_control -nauty_log "neumaier_graphs_16_nauty_log.txt" -end \
+			-end \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-post_processing \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-report \
+				-export_flag_orbits \
+				-show_TDO \
+				-show_TDA \
+				-export_labels \
+				-show_incidence_matrices \
+				-export_group_GAP \
+				-incidence_draw_options Doinc \
+			-end \
+		-end
+	$(ORBITER) -v 4 -csv_file_select_rows_by_file \
+		NG_16_9_4_2_4.csv neumaier_graph_transversal.csv
+	$(PDFLATEX) neumaier_graph_classification.tex
+	$(OPEN) neumaier_graph_classification.pdf

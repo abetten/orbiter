@@ -1,0 +1,11 @@
+codes_24_12_8_draw:
+	$(ORBITER) -v 3 \
+		-draw_layered_graph \
+			codes_24_12_8_poset_lvl_24.layered_graph \
+			-place \
+			-radius 100 -spanning_tree -embedded \
+			-line_width 0.5 -x_stretch 1.4 \
+			-scale 0.25 -nodes_empty \
+		-end
+	$(PDFLATEX) codes_24_12_8_poset_lvl_24_draw.tex
+	$(OPEN) codes_24_12_8_poset_lvl_24_draw.pdf

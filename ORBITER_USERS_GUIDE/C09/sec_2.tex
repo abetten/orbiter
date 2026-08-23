@@ -1,0 +1,217 @@
+In this section, we describe ways in which surfaces can be created in Orbiter. 
+
+\bigskip
+
+Orbiter contains a built-in catalogue of cubic surfaces with 27 
+lines for small finite fields $\bbF_q.$ 
+The surfaces in the catalogue all come with their automorphism group.
+It is also possible to create surfaces from known families, 
+or from associated objects like 6-arcs. 
+Some of these constructions only create the surface, 
+not the automorphism group.
+
+\bigskip
+
+Tables~\ref{tab:createsurface:one}-\ref{tab:createsurface:three} 
+summarize the Orbiter commands that can be used
+to create cubic surfaces. 
+\orbitertableofcommands{surface_create_1}
+\orbitertableofcommands{surface_create_2}
+\orbitertableofcommands{surface_create_3}
+The commands require a projective space object.
+Not all of the surfaces created have 27 lines, 
+and some of the constructions may yield degenerate surfaces. 
+
+
+
+
+Let us look at some examples. 
+The next command creates the unique surface with 27 lines 
+over the field $\bbF_4.$ 
+It is the Hirschfeld surface. 
+In this command, 
+the surface is pulled from Orbiter's built-in catalogue of cubic surfaces. 
+The surface has Orbiter Catalogue Number (OCN) equal to 0.
+
+\sourcecode{surface_4_0}
+
+
+\bigskip
+
+
+It is possible to create the same surface directly from the equation. 
+At first, we define a variable holding the equation in algebraic form:
+
+
+\sourcecodevariable{HIRSCHFELD_SURFACE_EQN_AF}
+
+The following command creates the surface from the algebraic form and produces a report. 
+In order to do so, the command creates a suitable polynomial ring $R$ and a symbolic object for the equation. 
+Only then the surface is created and a report is written. 
+
+\sourcecode{Hirschfeld_surface_q4}
+
+
+\bigskip
+
+
+There is a 4-parameter normal form $\cF_{abcd}$ for 
+cubic surfaces with 27 lines. Here, $a,b,c,d$ are field elements in $\bbF_q$.
+The following command creates the surface $\cF_{abcd}$ 
+with $(a,b,c,d)=(2,3,3,4)$ over the field $\bbF_7$:
+\sourcecode{Family_general_F7}
+This command uses a built-in 
+command to realize the surface of type $\cF_{abcd}$. 
+We will see later that it is possible to 
+create surfaces symbolically from an equation.
+
+\bigskip
+
+
+Another way of creating a cubic surface is as member of a known infinite family.
+However, different choices of the parameters may lead to isomorphic surfaces.
+For instance, 
+
+\sourcecode{surface_eckardt_13_4_12}
+
+creates the member of the Eckardt family  
+described in~\cite{BettenKaraoglu19a} 
+with parameters $(a,b) = (4,12)$ over the field $\bbF_{13}.$
+On the other hand, the command 
+\sourcecode{Eckardt_13}
+creates the Eckardt surface over the field $\bbF_{13}$ 
+from the parameter set $(a,b) = (3,1).$
+The two surfaces are isomorphic.
+
+
+\bigskip
+
+
+
+It is possible to create a random cubic surface of order $q$. The following example 
+creates a random cubic surface over the field $\bbF_{11}$:
+
+\sourcecode{surface_11_random}
+
+The only restriction is that $q$ is within the range 
+for which the classification of cubic surfaces is available in Orbiter.
+
+\bigskip
+
+The normal form of~\cite{BettenKaraoglu22} 
+can be used to create any cubic surface over $\bbF_q$.
+This means that up to isomorphism, 
+any cubic surface with 27 lines 
+can be written as $\cF_{a,b,c,d}$ 
+for a suitable choice of parameters $a,b,c,d \in \bbF_q.$
+For instance, the following command uses $(a,b,c,d) = (2,30,30,2)$ 
+to create the Eckardt surface over $\bbF_{31}$:
+
+
+\sourcecode{surface_F_abcd_Eckardt_q31_by_equation}
+
+
+\bigskip
+
+
+
+A cubic surface is determined uniquely up 
+to isomorphism by a non-conical 6-arc in a plane. 
+The points of the arc are given in Orbiter ranks.
+The following command creates the cubic surface which is 
+associated with the arc $0,1,2,3,43,113$ over the field 
+$\bbF_{13}$.
+
+
+\sourcecode{Eckardt_13_by_arc_lifting}
+
+The surface is of Eckardt type.
+
+\bigskip
+
+
+The formula for $\cF_{a,b,c,d}$ can be used symbolically. 
+To this end, we encode it as a makefile varaible:
+
+\sourcecodevariable{F_abcd_eqn}
+
+We use notation such as $1+1+\cdots+1$ ($k$ times) 
+for the integer $k$. This makes the formula valid 
+over very small fields such as $\bbF_3$ and $\bbF_4,$
+where the Orbiter conventions for field elements prohibit using $3$ or $4.$
+There is no automatic reduction modulo 
+the characteristic when specifying field elements.
+
+
+\bigskip
+
+
+
+To do so, we first create a symbolic object for the equation. 
+Then we perform the substitution of $(a,b,c,d)$ with the desired values.
+Finally, we create the surface from the equation:
+
+\sourcecode{surface_F_abcd_Eckardt_q31_by_symbolic_object}
+
+
+
+\bigskip
+
+Using the Clebsch map, we can create a cubic surface from a non-conical 6-arc. 
+The command expects the 6-arc in a plane in $\PG(3,q).$ 
+The command also expects the rank numbers of two skew lines not in the plane contaoining the arc. 
+If two rank numbers are given as two zeros, then Orbiter will pick a suitable set of lines. 
+Here is the non-conical 6-arc arising from the hyperoval in $\PG(2,4).$ 
+The assuciated cubic surface is the Hirschfeld-surface. 
+This can be verified from the fact that the surface has 
+45 Eckardt points:
+
+
+
+\sourcecode{Hirschfeld_surface_by_arc_lifting_with_two_lines}
+
+
+
+
+\bigskip
+
+
+We can also create a cubic surface as an algebraic variety. 
+For instance, consider the second surface  
+from Dickson's list~\cite{Dickson15}.
+In algebraic form, the curve is given by using the following makefile variable:
+
+\sourcecodevariable{Dickson2_eqn_af}
+
+The following command creates the algebraic variety defined by this equation
+
+
+\sourcecode{Dickson2_group}
+
+
+\bigskip
+
+
+It is also possible to create a surface from an equation given as coefficient/value pairs. 
+For instance, the Dickson surface $D_6$ 
+can be created from the following makefile variable:
+
+
+\sourcecodevariable{Dickson6}
+
+This means that the monomials 
+$m_2, m_3, m_4, m_7,$ and $m_{15}$ have a coefficient of one. 
+The other monomials do not appear in the equation.
+The monomial ordering is determined by the polynomial ring. 
+In this case, since we use the default ring, the partition ordering is used.
+The command to create the surface over $\bbF_2$ is:
+
+
+\sourcecode{Dickson6_q2}
+
+\bigskip
+
+
+
+
+

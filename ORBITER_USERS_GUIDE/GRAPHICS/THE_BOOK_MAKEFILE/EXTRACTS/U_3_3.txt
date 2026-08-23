@@ -1,0 +1,20 @@
+U_3_3:
+	$(ORBITER) -v 3 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define F -finite_field -q 9 \
+			-override_polynomial "17" \
+		-end \
+		-define G -linear_group -PGL 3 F \
+			-subgroup_by_generators \
+			"U_3_3" "6048" 2 \
+			"1,6,4, 5,0,6, 8,5,1, \
+			6,2,1, 7,8,4, 0,6,6" \
+			-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end
+	$(PDFLATEX) PGL_3_9_Subgroup_U_3_3_6048_report.tex
+	#$(OPEN) PGL_3_9_Subgroup_U_3_3_6048_report.pdf

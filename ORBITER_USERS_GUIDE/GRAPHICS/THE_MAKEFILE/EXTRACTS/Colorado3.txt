@@ -1,0 +1,14 @@
+Colorado3:
+	$(ORBITER) -v 3 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 -nodes_empty \
+		-end \
+		-define F -finite_field -q 128 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define CO-3 -cubic_surface -space P -catalogue 928 \
+			-transform_inverse "1,0,0,0,0,1,0,59,0,0,1,59,0,0,0,1,0" \
+		-end \
+		-with CO-3 -do \
+		-cubic_surface_activity \
+			-report Do \
+		-end

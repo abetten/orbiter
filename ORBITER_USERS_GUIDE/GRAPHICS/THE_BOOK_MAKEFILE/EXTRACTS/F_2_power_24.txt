@@ -1,0 +1,11 @@
+F_2_power_24:
+	$(ORBITER) -v 4 \
+		-define F -finite_field -q 16777216 \
+			-compute_related_fields \
+			-without_tables \
+		-end \
+		-with F -do -finite_field_activity \
+			-cheat_sheet_GF \
+		-end
+	$(PDFLATEX) GF_16777216.tex
+	$(OPEN) GF_16777216.pdf

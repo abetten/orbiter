@@ -1,0 +1,8 @@
+geo_pasch_given:
+	$(ORBITER) -v 10 \
+		-define C -combinatorial_object \
+			-label Pasch Pasch \
+			-incidence_geometry \
+				"0,1,4,6,8,11,13,14,17,19,22,23" \
+				6 4 12 \
+		-end

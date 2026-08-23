@@ -1,0 +1,19 @@
+surface_F_abcd_identify_q9:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 9 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define Control -poset_classification_control -W \
+			-problem_label "surf_q9" \
+		-end \
+		-define Classify -classify_cubic_surfaces \
+			-use_double_sixes \
+			-projective_space P \
+			-poset_classification_control Control \
+		-end \
+		-define Orb -orbits \
+			-on_cubic_surfaces Classify \
+		-end \
+		-with Orb -do \
+			-cubic_surfaces_after_classification_activity \
+			-identify_general_abcd \
+		-end

@@ -1,0 +1,57 @@
+\begin{table}[t]
+\tbl{\label{tab:misc:3}}
+{\begin{tcolorbox}[tabularx={p{3cm}|p{2cm}|p{6.3cm}|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black,title=Miscellaneous Orbiter Commands (Part 3)]
+\hline
+Command & Arguments & Purpose \\
+\hline
+\hline
+\verb'-plot_function'  &  function-name  &   \\
+\hline
+\verb'-draw_projective_curve'  &  options  &   \\
+\hline
+\verb'-tree_draw'  &  options  & Draw a tree from a description. For options, see Table~\ref{tab:tree:draw}. \\
+\hline
+\verb'-extract_from_file'  &  fname-in key fname-out  & Extract lines from a text file, starting with the given key and continuing until the next empty row.  \\
+\hline
+\verb'-extract_from_file_with_tail'  &  fname-in key tail fname-out   & Extract lines from a text file, starting with the given key and continuing until the next empty row.  \\
+\hline
+\verb'-serialize_file_names'  &  fname output-mask  &   \\
+\hline
+\verb'-save_4_bit_data_file'  &  fname vector-data  &   \\
+\hline
+\verb'-gnuplot'  &  fname title label\_x label\_y  & Produce an diagram of data series using gnuplot~\cite{gnuplot}. \\
+\hline
+\verb'-compare_columns'  &  fname col1 col2  &   \\
+\hline
+\verb'-gcd_worksheet'  &  nb\_problems N key  &   \\
+\hline
+\verb'-draw_layered_graph'  &  options  &  Draw layered graph with options. \\
+\hline
+\verb'-draw_factor_poset'  &  options  &  Draw factor poset with options. \\
+\hline
+\verb'-read_xml'  &  fname fname\_out  &  Produces cross references for classes from a Doxygen output file. \\
+\hline
+\verb'-read_column_and_tally'  &  fname col-header  &   \\
+\hline
+\verb'-intersect_with'  &  matrix data  &  Counts the number of times an element of data appears in any given row of the given matrix.  \\
+\hline
+\verb'-make_set_of_sets'  &  fname-in col-label list  &    \\
+\hline
+\verb'-copy_and_edit'  &  fname-in fname-out-mask params search-and-replace  &    \\
+\hline
+\verb'-join_columns'  &  fname-in fname-out col1 col2  &    \\
+\hline
+\verb'-decomposition_matrix'  &  fname-in po fst iso n1 n2 n3  &    \\
+\hline
+\verb'-stats'  &  fname-base  &    \\
+\hline
+\verb'-intersect_set_of_sets'  &  fname col  &    \\
+\hline
+\verb'-eliminate_duplicate_columns'  &  fname  &  Eliminates duplicate columns in the given file and writes a file with one column per each type.  \\
+\hline
+\verb'-density_of_ones_in_bitvector_file'  &  fname  &  Computes the density of ones in the given bitvector file.  \\
+\hline
+\end{tcolorbox}}
+\end{table}

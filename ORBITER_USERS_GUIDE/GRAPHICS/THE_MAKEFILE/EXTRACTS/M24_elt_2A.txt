@@ -1,0 +1,16 @@
+M24_elt_2A:
+	$(ORBITER) -v 2 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define F -finite_field -q 2 -end \
+		-define G -linear_group -PGL 12 2 \
+		-subgroup_by_generators "M24_2A" "2" 1 \
+			$(M24_ELEMENT_2A) \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end
+	$(PDFLATEX) PGL_12_2_Subgroup_M24_2A_2_report.tex
+	$(OPEN) PGL_12_2_Subgroup_M24_2A_2_report.pdf

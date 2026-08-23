@@ -1,0 +1,27 @@
+\begin{table}[t]
+\tbl{\label{tab:packings:long:orbits}}
+{\begin{tcolorbox}[tabularx={p{3cm}|p{2cm}|p{6.3cm}|},enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white,
+coltitle=black,title=Creating Packings from Long Orbits]
+\hline
+Command & Arguments & Purpose \\
+\hline
+\hline
+\verb'-split'  &  $r$ $m$    & Define a subset of cases of fixed point cliques to be worked on. Only those cases whose number is congruent to $r$ modulo $m$ are considered. \\
+\hline
+\verb'-orbit_length'  &  $l$    &   Use orbits of length $l$. \\
+\hline
+\verb'-mixed_orbits'  &   length   &   \\
+\hline
+\verb'-list_of_cases_from_file'  &  fname    & Define a subset of cases of fixed point cliques to be worked on. Only the cases listed the given file are considered.  \\
+\hline
+\verb'-solution_path'  &   $P$   &   Use $P$ as a prefix for all solution files.\\
+\hline
+\verb'-create_graphs'  &      & For each case, create the graph that describes whether two orbits of length $l$ are compatible. \\
+\hline
+\verb'-solve'  &      & Perform clique finding and write solutions to file. \\
+\hline
+\verb'-read_solutions'  &      & Read solutions from file. \\
+\hline
+\end{tcolorbox}}
+\end{table}

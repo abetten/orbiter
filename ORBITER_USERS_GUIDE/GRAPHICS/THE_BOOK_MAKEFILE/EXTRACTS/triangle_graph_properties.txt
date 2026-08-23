@@ -1,0 +1,10 @@
+triangle_graph_properties:
+	echo $(TRIANGLE_GRAPH) >triangle_graph.csv
+	$(ORBITER) -v 6 \
+		-define G -graph \
+			-load_csv_no_border \
+			triangle_graph.csv \
+		-end \
+		-with G -do \
+			-graph_theoretic_activity -properties \
+		-end

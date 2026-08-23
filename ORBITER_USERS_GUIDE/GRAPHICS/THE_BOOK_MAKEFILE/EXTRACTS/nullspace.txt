@@ -1,0 +1,12 @@
+nullspace:
+	$(ORBITER) -v 2 \
+		-define F2 -finite_field -q 2 -end \
+		-define v -vector -field F2 -format 2 \
+			-dense "1,1,1,1,0,1,1,0,0,1" \
+		-end \
+		-with F2 -do \
+		-finite_field_activity \
+			-nullspace v \
+		-end
+	$(PDFLATEX) v_nullspace.tex
+	$(OPEN) v_nullspace.pdf

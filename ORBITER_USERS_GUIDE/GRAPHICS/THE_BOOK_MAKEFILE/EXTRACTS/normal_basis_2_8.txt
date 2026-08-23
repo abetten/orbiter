@@ -1,0 +1,8 @@
+normal_basis_2_8:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-with F -do -finite_field_activity \
+			-normal_basis 8 \
+		-end
+	$(PDFLATEX) normal_basis_q2_d8.tex
+	$(OPEN) normal_basis_q2_d8.pdf

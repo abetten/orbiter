@@ -1,0 +1,112 @@
+
+
+
+
+The following command creates the Reed Muller code $\mbox{RM}_{3}.$ 
+The command exports the code to magma and writes a file of all codewords.
+
+\sourcecode{RM_3_export}
+
+Here is the csv file containing the codewords. 
+
+\orbiteroutput{GRAPHICS/WRAPPERS/RM3_codewords}
+
+The four columns represent:
+\begin{enumerate}
+\item
+Idx -- The numerical value of the message.
+\item
+Message -- The message.
+\item
+Codeword -- The associated codeword.
+\item
+CodewordRank -- The numerical value of the codeword.
+\end{enumerate}
+
+\bigskip
+
+
+
+The next command creates a diagram of the codewords in the appropriate Hamming space, 
+which is $H(8,2)$ in this case.
+
+\sourcecode{RM_3_Hamming_space_diagram}
+
+The following command produces a diagram of the characteristic 
+function of the code in the Hamming space $H(8,2).$
+
+\sourcecode{RM_3_draw}
+
+The following boolean function representation of ${\rm RM}_{3}$ in $H(8,2)$ is produced:
+
+\orbiteroutput{GRAPHICS/WRAPPERS/RM_3_diagram_01_8_16_draw}
+
+The next command splits the vectors according to their distance from the code:
+
+\sourcecode{RM_3_split}
+
+We produce a diagram of each distance set. 
+We loop over all distances $\delta=0,1,2$:
+
+\sourcecode{RM_3_distance_draw}
+
+The distance sets are shown below
+\orbiteroutput{GRAPHICS/WRAPPERS/RM_3_distance_sets}
+For each distance, 
+we compute the algebraic normal form of the characteristic function of the distance set:
+
+\sourcecode{RM_3_algebraic_normal_form}
+
+
+
+\bigskip
+
+In the example, we will compute a graphical representation of the codewords 
+of the Reed-Muller code of order 6. First, we use makefile variables to 
+define the rows of the generator matrix:
+
+\sourcecodevariable{RM_6_GENERATOR_1}
+
+
+\sourcecodevariable{RM_6_GENERATOR_2}
+
+
+\sourcecodevariable{RM_6_GENERATOR_3}
+
+
+\sourcecodevariable{RM_6_GENERATOR_4}
+
+
+\sourcecodevariable{RM_6_GENERATOR_5}
+
+
+\sourcecodevariable{RM_6_GENERATOR_6}
+
+
+\sourcecodevariable{RM_6_GENERATOR_7}
+
+The following command creates the generator matrix, and exports the generator matrix 
+and the set of codewords to two csv files. 
+
+\sourcecode{RM_6}
+
+The next command produces a drawing of the generator matrix:
+
+\sourcecode{RM_6_genma_draw}
+
+
+The next command produces individual pictures for each of the 128 codewords. 
+The command utilizes the \verb'-loop' command to automatize the processing. 
+Afterwards, the codeword pictures are composed in one poster, 
+using the \verb'magick' tool on the command line.
+
+\sourcecode{RM_6_codewords_draw}
+
+Finally, the 128 codewords are stitched together in the form of a tapestry.
+Each codeword is a bitvector of length 64, rearranged as $8 \times 8$ bitmatrix.
+\orbiteroutput{GRAPHICS/WRAPPERS/poster_RM_1_6_draw}
+
+
+\bigskip
+
+

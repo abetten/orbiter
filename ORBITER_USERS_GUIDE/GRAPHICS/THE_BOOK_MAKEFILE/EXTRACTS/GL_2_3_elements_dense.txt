@@ -1,0 +1,16 @@
+GL_2_3_elements_dense:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 3 -end \
+		-define G -linear_group -GL 2 F -end \
+		-assign elements -from \
+		-with G -do \
+		-group_theoretic_activity \
+			-elements \
+		-end \
+		-with elements -do \
+		-vector_ge_activity \
+			-report_with_options "dense=on" \
+		-end \
+		-print_symbols
+	$(PDFLATEX) GL_2_3_elements.tex
+	$(OPEN) GL_2_3_elements.pdf

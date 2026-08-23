@@ -1,0 +1,14 @@
+PGL_6_2_Wedge_4_2_detached_report.tex:
+	$(ORBITER) -v 4 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define G -linear_group -PGL 4 2 \
+			-wedge_detached \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end
+	$(PDFLATEX) PGL_6_2_Wedge_4_2_detached_report.tex
+	$(OPEN) PGL_6_2_Wedge_4_2_detached_report.pdf

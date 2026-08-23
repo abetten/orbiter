@@ -1,0 +1,2 @@
+Sym_15_conj_classes:
+	$(ORBITER) -v 2 -conjugacy_classes_Sym_n 15

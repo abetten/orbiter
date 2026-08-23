@@ -1,0 +1,14 @@
+Hirschfeld_evaluate_symbolic:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 4 -end \
+		-define M -symbolic_object \
+			-field F \
+			-text "X0*X1^2+X0^2*X1+X2*X3^2+X2^2*X3" \
+		-end \
+		-define Mx -symbolic_object \
+			-field F \
+			-expand M \
+		-end \
+		-with Mx -do -symbolic_object_activity \
+			-evaluate_affine \
+		-end 

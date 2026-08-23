@@ -1,0 +1,7 @@
+make_graph_from_adjacency_matrix:
+	$(ORBITER) -v 6 \
+		-define triangle -vector -dense "0,1,1, 1,0,1, 1,1,0" -end \
+		-define G -graph \
+			-adjacency_matrix \
+			triangle \
+		-end

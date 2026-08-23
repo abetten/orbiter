@@ -1,0 +1,29 @@
+Symmetric_5_inversion_graph_recognize:
+	$(ORBITER) -v 10 \
+		-define G -permutation_group -symmetric_group 5 -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-export_inversion_graphs \
+				"Symmetric5_inversion_graphs.csv" \
+		-end
+	$(ORBITER) -v 2 \
+		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define Do -draw_options \
+			-radius 250 -embedded \
+		-end \
+		-define GC -graph_classification \
+			-n 5 \
+			-poset_classification_control \
+				-problem_label graphs_v5 \
+				-depth 10 \
+				-draw_options Do \
+			-end \
+		-end \
+		-with GC -do \
+		-graph_classification_activity \
+			-recognize_graphs_from_adjacency_matrix_csv \
+			Symmetric5_inversion_graphs.csv \
+		-end \
+		-print_symbols
+	#$(PDFLATEX) graphs_v5_poset.tex
+	#$(OPEN) graphs_v5_poset.pdf

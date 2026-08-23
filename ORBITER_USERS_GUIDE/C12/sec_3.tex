@@ -1,0 +1,59 @@
+Table~\ref{tab:combi:activity} shows activities for geometric objects:
+
+\orbitertableofcommands{combinatorial_object_activity}
+
+Some commands require extra options. 
+Table~\ref{tab:combi:reporting} shows options for the report which is generated after a classification.
+\orbitertableofcommands{objects_report_options}
+For more details on classification, 
+please see Section~\ref{sec:canonical:form:overview}.
+
+
+\bigskip
+
+
+
+The Edge curve is given by the equation
+$$
+X^4 -Y^4 -Z^4 +2f^2Y^2Z^2 +4fX^2YZ =0
+$$
+where $f$ is a primitive element of $\bbF_q.$
+Let us pick $q=17.$
+The next example creates the 
+Edge curve in $\PG(2,17)$ using the primitive element $f=3$.
+For more details, see Section~\ref{sec:algebraic:varieties}.
+%The equation is encoded as a vector of coefficients, 
+%using the ordering of monomials 
+%as in Table~\ref{tab:PG2monomials}.
+
+%\sourcecode{EDGE_CURVE_Q17_EQUATION}
+
+%The following command computes the points 
+%on the variety and writes them to a file. 
+%The filename is \verb'Edge_q17.csv'.
+
+%\sourcecode{EDGE_CURVE_Q17_AS_POINTS}
+
+
+%\sourcecode{FILE_Q17}
+
+
+\sourcecode{Edge_curve_17}
+
+
+The following command computes the line type of the Edge curve:
+
+\sourcecode{Edge_curve_17_line_type}
+
+The line type is 
+$$
+( 4^6, 2^{30}, 1^{132}, 0^{139} )
+$$
+This means that there are 6 4-secants, 
+30 2-secants, 132 tangent lines, and 139 external lines to the curve.
+
+
+
+
+
+

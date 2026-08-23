@@ -1,0 +1,10 @@
+lissajous_3d:
+	$(ORBITER) -v 2 \
+		-smooth_curve "lissajous_3d" 0.07 2000 50 0 18.85 \
+		-const a 3 b 2 c 1.57 r 7 -const_end \
+		-var t -var_end \
+		-code \
+			push t push a mult push c add sin push r mult return \
+			push t push b mult sin push r mult return \
+			push t return \
+		-code_end \

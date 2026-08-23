@@ -1,0 +1,43 @@
+PG_3_3_packing_make_group_and_test:
+	- mkdir SPREAD_TABLES_3
+	$(ORBITER) -v 5 \
+		-define Control -poset_classification_control \
+			-problem_label spreads_PG_3_3 \
+			-W \
+		-end \
+		-define F -finite_field -q 3 -end \
+		-define P3 -projective_space -n 3 -field F -v 0 -end \
+		-define P5 -projective_space -n 5 -field F -v 0 -end \
+		-define T -spread_table P3 2 "0,1" "SPREAD_TABLES_3/" Control
+		-define PC -packing_classify P3 P5 T \
+		-with PC -do -packing_classify_activity \
+			-make_graph_of_disjoint_spreads \
+		-end
+	cp SPREAD_TABLES_3/spread_9_disjoint.graph .
+	$(ORBITER) -v 5 \
+		-define Control -poset_classification_control \
+			-problem_label packings_PG_3_3 \
+			-W \
+		-end \
+		-define F -finite_field -q 3 -end \
+		-define P3 -projective_space -n 3 -field F -v 0 -end \
+		-define P5 -projective_space -n 5 -field F -v 0 -end \
+		-define T -spread_table P3 2 "0,1" "SPREAD_TABLES_3/" Control \
+		-define PC -packing_classify P3 P5 T \
+		-with PC -do -packing_classify_activity \
+			-export_group_on_spreads \
+		-end \
+		-define G -modified_group \
+			-import \
+		-end \
+		-define Orb -orbits -group G \
+			-on_points \
+		-end \
+		-define Gamma -graph \
+			-load \
+			spread_9_disjoint.graph \
+		-end \
+		-with Gamma -do \
+			-graph_theoretic_activity \
+			-test_automorphism_property_of_group G \
+		-end \

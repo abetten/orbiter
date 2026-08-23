@@ -1,0 +1,3 @@
+CRC_POLY_DELTA_DENSE="1, 2, 13, 5, 1"
+#create_BCH_code::init Q=X^{4} + 5X^{3} + 13X^{2} + 2X + 1
+#create_BCH_code::init BCH_POLYNOMIAL_F16="X^4+5*X^3+13*X^2+2*X+1"

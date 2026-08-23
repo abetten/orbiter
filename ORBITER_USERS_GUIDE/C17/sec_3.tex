@@ -1,0 +1,198 @@
+
+Let us consider incidence structures, which are sets of subsets. 
+This subsets are chosen from the same set, which we call the carrier set. 
+The elements of the set are often called points.
+The distinguished subsets are called blcoks or sometimes lines.
+There are conditions that restrict the way in which the sets can be chosen. 
+There is a notion of isomorphism on such set systems. 
+Two set systems are isomorphic is there is a bijection between the underlying 
+sets which takes one to the other. 
+The incidence matrix is the 0/1 matrix whose rows correspond to the elements of the group set, 
+and whose columns correspond to the chosen subsets. An entry 1 indicates that the 
+corresponding point belongs to the corresponding block.
+A flag is an incident point-line pair.
+An anti-flag is a non-incident point-line pair.
+Two points are said to be collinear of there is a line containing both.
+
+\bigskip
+
+
+
+It is interesting to study the action of the automorphism group on the elements of a geometry. 
+Properties of interest are various levels of transitivity on the elements of the geometry. 
+For instance, a geometry is line-transitive if the automorphism group is transitive on lines. 
+Likewise, it is flag transitive if the automorphism group is transitive on flags.
+The collinearity graph of a geometry is the graph whose vertices correspond to the points, 
+with two vertices adjacent of the associated points are collinear.
+The girth of the incidence geometry is the girth of the associated collineation graph. 
+A geometry is triangle free if its girth is at least 4.
+
+
+
+\bigskip
+
+
+A configuration $v_r b_k$ is an incidence geometry 
+on a set of size $v$ and with $b$ lines such that 
+each line has size $k$ and each point is contained in exactly $r$ lines.
+In the special case where $b=v$ and $k=r$, 
+the name symmetric configuration $v_r$ is used 
+(the term symmetric is somewhat misleading because the 
+incidence matrix of a symmetric configuration need not be symmetric). 
+Orbiter can be used to classify incidence geometries. 
+One of the important steps in this process 
+is computing a canonical form of the incidence gometry. 
+
+\bigskip
+
+We will also be producing drawings of the incidence matrices of geometries.
+There are two types of drawings:
+\begin{enumerate}
+\item
+Bitmap drawings,
+\item
+Latex drawings.
+\end{enumerate}
+In the bitmap drawings, flags are indicated as heavy squares while 
+anti-flags are drawn as small squares. 
+The coloring will indicate the orbits of the automorphism group on flags and anti-flags. 
+Objects with the same color belong to the same orbit. In a flag-transitive geometry, 
+all incidences have the same color, which is black. 
+Bitmaps can be created using the \verb'-draw_matrix' command. 
+The input is an integer-valued matrix in csv format.
+The matrix entries are translated into colors.
+The possible commands after \verb'-draw_matrix' 
+are shown in Table~\ref{tab:bitmap}.
+\orbitertableofcommands{draw_bitmap_control}
+Orbiter uses latex drawings for instance in reports. 
+Table~\ref{tab:draw:incidence:structure} 
+shows the available commands to customize such drawings.
+\orbitertableofcommands{draw_incidence_structure_description}
+
+
+
+
+
+\bigskip
+
+The following command computes the canonical form  and a report 
+of the projective plane $\PG(2,2)$, which is a configuration $7_3.$
+
+\sourcecode{geo_7_3_c}
+
+A bitmap drawing is produced, shown below:
+\orbiteroutput{GRAPHICS/WRAPPERS/7_3_object0_INP_flag_orbits_draw}
+
+The command also produces the following report of the geometry:
+\orbiteroutput{GRAPHICS/LATEX/canon_7_3}
+
+\bigskip
+
+
+
+The following command computes the canonical form  and a report 
+of the affine plane $\AG(2,3),$ which is a configuration $9_4 12_3.$
+
+\sourcecode{AG_2_3_c}
+
+The following bitmap drawing is produced: 
+\orbiteroutput{GRAPHICS/WRAPPERS/AG_2_3_object0_INP_flag_orbits_draw}
+
+Because the geometry is flag transitive, 
+there is only one color being used for the incidence (black). 
+In addition, the geometry is also anti-flag transitive. 
+The smallish boxes all have the same color (red).
+Orbiter also produces the following report of the geometry:
+\orbiteroutput{GRAPHICS/LATEX/canon_AG_2_3}
+
+\bigskip
+
+
+
+It is possible to perform isomorph classification 
+for configurations based on incidence files. 
+Suppose we want to check that the configurations 
+in \verb'10_3' are in fact all distinct, 
+in the sense of being pairwise-nonisomorphic. 
+We apply the 
+canonical form algorithm given by Nauty.
+This produces a transversal of the isomorphism types 
+of incidence geometries from the given list of input objects.
+The objects are specified by means of the \verb'combinatorial_objects' command. 
+
+\sourcecode{geo_10_3_c}
+
+The classification algorithm prints a report. The report, shown below, 
+lists the transversal of the isomorphism types. 
+For the sake of space, the report is shown only partially.
+Note that the ordering of geometries 
+in the report may be different from the ordering in the input file. 
+This is because the classification program 
+sorts the geometries according to the canonical form.
+Also, note that the report includes the incidence geometry in the original form 
+as well as the tactical decomposition 
+induced by the orbits of the automorphism group.
+\orbiteroutput{GRAPHICS/10_3/10_3_report_truncated}
+
+Besides the report, the command also produces a diagram of each geometry. 
+The diagram indicates the orbits on flags and anti-flags. 
+All the diagrams are pasted together, to form one large tapestry:
+
+\orbiteroutput{GRAPHICS/WRAPPERS/10_3}
+
+
+\bigskip
+
+
+At times, we have large lists of geometries. It may help to filter them by the order of the automorphism group. 
+The following example illustrates this technique. 
+We assume that the file \verb'15_3.inc' (created in Section~\ref{sec:configurations}) is available
+The first command reclassifies the geometries and filters out those whose automorphism group order is at least 72. 
+
+\sourcecode{geo_15_3_c_filter72}
+
+The next command runs the classification for the filtered geometries only:
+
+
+\sourcecode{geo_15_3_filtered_c}
+
+
+
+\bigskip
+
+
+
+
+
+The following command computes 
+the canonical form for the three triangle-free 
+configurations $24_3$ found by Abdullah Alazemi. 
+These configurations have $24$ points,
+$24$ lines, each line consists of $3$ points 
+and each point is on $3$ lines. 
+
+\sourcecodevariable{FILE_24_3_TFC_INC}
+
+
+\sourcecode{TFC_24_3_c}
+
+The command also computes the 
+tactical decomposition induced by the automorphism group. 
+In addition, the command also computes the orbits on flags and on anti-flags. 
+The third of the three geometries is flag transitive.
+A bitmap drawing is produced, 
+shown below:
+\orbiteroutput{GRAPHICS/WRAPPERS/24_3_TFC_object2_TDA_flag_orbits_draw}
+The geometry is flag transitive, so all incidences are drawn in the same color (black).
+
+\bigskip
+
+The next command produces a diagram of the flag orbits 
+for each of the twelve Latin squares of order 6.
+
+\sourcecode{geo_LSQ6_c}
+
+The output is shown below
+\orbiteroutput{GRAPHICS/WRAPPERS/Latin_squares_order_6_drawings}
+
+

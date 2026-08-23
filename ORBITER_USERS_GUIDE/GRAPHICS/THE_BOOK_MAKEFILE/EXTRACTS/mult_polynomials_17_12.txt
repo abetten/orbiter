@@ -1,0 +1,11 @@
+mult_polynomials_17_12:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-with F -do \
+		-finite_field_activity \
+			-mult_polynomials 17 12 \
+		-end
+	$(PDFLATEX) polynomial_mult_17_12.tex
+	$(OPEN) polynomial_mult_17_12.pdf
+	
+# gives 204

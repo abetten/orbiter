@@ -1,0 +1,7 @@
+LS_AG_2_3_read:
+	$(ORBITER) -v 2 \
+		-define C -combinatorial_object \
+			-label designs designs \
+			-file_of_designs \
+			solutions.csv 9 84 3 12 \
+		-end

@@ -1,0 +1,11 @@
+fix_structure_G1:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 4 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-with P -do \
+		-projective_space_activity \
+			-decomposition_by_subgroup \
+				$(H1_LABEL) $(H1_GENS)  \
+		-end 
+	$(PDFLATEX) PGGL_4_4_Subgroup_$(H1_LABEL)_4_decomp.tex
+	$(OPEN) PGGL_4_4_Subgroup_$(H1_LABEL)_4_decomp.pdf

@@ -1,0 +1,15 @@
+Sym_6_elements:
+	$(ORBITER) -v 3 \
+		-define G -permutation_group -symmetric_group 6 -end \
+		-assign elements -from \
+		-with G -do \
+		-group_theoretic_activity \
+			-elements \
+		-end \
+		-with elements -do \
+		-vector_ge_activity \
+			-report \
+		-end \
+		-print_symbols
+	$(PDFLATEX) Sym_6_elements_elements.tex
+	$(OPEN) Sym_6_elements_elements.pdf

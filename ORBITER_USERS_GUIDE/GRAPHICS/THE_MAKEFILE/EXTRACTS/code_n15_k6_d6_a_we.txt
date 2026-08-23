@@ -1,0 +1,13 @@
+code_n15_k6_d6_a_we:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define v -vector -format 6 -field F \
+			-compact $(CODE_15_6_6_A) \
+		-end \
+		-define C -code -field F \
+			-generator_matrix v \
+		-end \
+		-with C -do \
+		-coding_theoretic_activity \
+			-weight_enumerator \
+		-end

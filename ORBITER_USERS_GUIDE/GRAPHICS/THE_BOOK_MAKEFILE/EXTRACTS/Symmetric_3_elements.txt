@@ -1,0 +1,22 @@
+Symmetric_3_elements:
+	$(ORBITER) -v 3 \
+		-define G -permutation_group -symmetric_group 3 -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-save_elements_csv "Symmetric3_elts.csv" \
+		-end
+	$(ORBITER) -v 2 \
+		-define Sym3_elts -vector -load_csv_data_column \
+			Symmetric3_elts.csv 1 -end \
+		-save_matrix_csv Sym3_elts 
+	$(ORBITER) -v 2 \
+		-define all_one_r -vector -repeat 1 6 -end \
+		-define all_one_c -vector -repeat 1 3 -end \
+		-draw_matrix \
+			-input_csv_file Sym3_elts_matrix.csv \
+			-box_width 50 \
+			-bit_depth 8 \
+			-partition 3 \
+				all_one_r all_one_c \
+		-end
+	$(OPEN) Sym3_elts_matrix_draw.bmp

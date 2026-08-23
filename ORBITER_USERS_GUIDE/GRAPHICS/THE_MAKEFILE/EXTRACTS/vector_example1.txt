@@ -1,0 +1,5 @@
+vector_example1:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 5 -end \
+		-define v -vector -field F -dense "0,1,2,3,4" -end \
+		-print_symbols

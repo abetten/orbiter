@@ -1,0 +1,9 @@
+GL_2_7_inv:
+	$(ORBITER) -v 5 \
+		-define G -linear_group -GL 2 7 -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-inverse "0,1,2,3" \
+		-end
+	$(PDFLATEX) GL_2_7_inv.tex
+	$(OPEN) GL_2_7_inv.pdf

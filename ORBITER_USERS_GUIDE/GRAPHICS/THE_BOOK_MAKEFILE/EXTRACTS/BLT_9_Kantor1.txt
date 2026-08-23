@@ -1,0 +1,12 @@
+BLT_9_Kantor1:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 9 -end \
+		-define O -orthogonal_space 0 5 F -end \
+		-define BLT -BLT_set \
+			-space O -family "Kantor1" -invariants \
+		-end \
+		-with BLT -do -blt_set_activity \
+			-report \
+		-end
+	$(PDFLATEX) BLT_Kantor1_q9.tex
+	$(OPEN) BLT_Kantor1_q9.pdf

@@ -1,0 +1,9 @@
+mult_polynomials_2_8_15:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-with F -do \
+		-finite_field_activity \
+			-mult_polynomials 8 15 \
+		-end
+	$(PDFLATEX) polynomial_mult_8_15.tex
+	$(OPEN) polynomial_mult_8_15.pdf

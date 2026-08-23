@@ -1,0 +1,6 @@
+Eulerfunction_10000:
+	$(ORBITER) -v 1 -eulerfunction_interval 10000 10150
+	$(ORBITER) -v 1 -csv_file_latex 1 \
+		table_eulerfunction_10000_10150.csv
+	$(PDFLATEX) table_eulerfunction_10000_10150.tex
+	$(OPEN) table_eulerfunction_10000_10150.pdf

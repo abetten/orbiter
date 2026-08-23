@@ -1,0 +1,16 @@
+geo_10_3_inc_draw:
+	$(ORBITER) -v 10 \
+		-define Doinc -draw_incidence_structure_options \
+			-width 60 -width_10 6 -end \
+		-define C -combinatorial_object \
+			-label geo_10_3 geo\_10\_3 \
+			-file_of_incidence_geometries \
+			10_3.inc 10 10 30 \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-draw_incidence_matrices \
+			10_3_inc Doinc \
+		-end
+	$(PDFLATEX) 10_3_inc_incma.tex
+	$(OPEN) 10_3_inc_incma.pdf

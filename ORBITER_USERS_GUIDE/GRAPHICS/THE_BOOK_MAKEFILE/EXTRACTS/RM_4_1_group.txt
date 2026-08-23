@@ -1,0 +1,30 @@
+RM_4_1_group:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define genma -vector -field F -format 5 \
+			-compact $(CODE_RM_4_1_GENMA) \
+		-end \
+		-define P -projective_space -n 4 -field F -v 0 -end \
+		-with P -do \
+		-projective_space_activity \
+			-canonical_form_of_code \
+				"RM_4_1" genma \
+				-save_ago \
+				-save_classification "RM_4_1" \
+				-nauty_control -nauty_log "RM_4_1_nauty_log.txt" -end \
+			-end \
+		-end
+	$(PDFLATEX) RM_4_1_classification.tex
+	$(OPEN) RM_4_1_classification.pdf
+	$(ORBITER) -v 2 -draw_matrix \
+		-input_csv_file RM_4_1_object0_INP_flag_orbits.csv \
+		-secondary_input_csv_file RM_4_1_object0_INP.csv \
+		-box_width 16 -bit_depth 24 \
+		-end
+	$(ORBITER) -v 2 -draw_matrix \
+		-input_csv_file RM_4_1_object0_TDA_flag_orbits.csv \
+		-secondary_input_csv_file RM_4_1_object0_TDA.csv \
+		-box_width 16 -bit_depth 24 \
+		-end
+	$(OPEN) RM_4_1_object0_INP_flag_orbits_draw.bmp
+	$(OPEN) RM_4_1_object0_TDA_flag_orbits_draw.bmp

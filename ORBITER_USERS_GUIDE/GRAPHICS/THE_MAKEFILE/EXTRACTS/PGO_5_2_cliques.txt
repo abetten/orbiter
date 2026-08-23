@@ -1,0 +1,14 @@
+PGO_5_2_cliques:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define O -orthogonal_space 0 5 F -without_group -end \
+		-with O -do -orthogonal_space_activity \
+			-export_point_line_incidence_matrix \
+		-end
+	$(ORBITER) -v 3 \
+		-define Inc -vector -file O_5_2_incidence_matrix.csv -end \
+		-define Gamma -graph -collinearity_graph Inc -end \
+		-with Gamma -do \
+		-graph_theoretic_activity \
+			-find_cliques -target_size 3 \
+		-end

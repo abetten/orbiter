@@ -1,0 +1,3 @@
+Op_6_2_all_Siegel_transformations_tally:
+	$(ORBITER) -v 2 \
+		-tally_column all_Siegel.csv transform

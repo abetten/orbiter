@@ -1,0 +1,7 @@
+PGL_3_4_singer:
+	$(ORBITER) -v 5 \
+		-define G -linear_group -PGL 3 4 -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-find_singer_cycle \
+		-end
