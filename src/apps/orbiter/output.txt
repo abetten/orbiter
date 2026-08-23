@@ -1,0 +1,412 @@
+Welcome to Orbiter! Your build number is 3352.
+do_orbiter_session
+orbiter_top_level_session::orbiter_top_level_session before new orbiter_session
+orbiter_session::orbiter_session
+orbiter_session::orbiter_session done
+orbiter_top_level_session::orbiter_top_level_session after new orbiter_session
+do_orbiter_session before execute_command_line
+orbiter_top_level_session::execute_command_line
+A user's guide is available here: 
+https://www.math.colostate.edu/~betten/orbiter/users_guide.pdf
+The sources are available here: 
+https://github.com/abetten/orbiter
+An example makefile with many commands from the user's guide is here: 
+https://github.com/abetten/orbiter/tree/master/examples/users_guide/makefile
+SYSTEMUNIX is defined
+SYSTEM_IS_MACINTOSH is defined
+sizeof(int)=4
+sizeof(long int)=8
+session_verbose_level = 1
+orbiter_top_level_session::execute_command_line before handle_everything
+orbiter_top_level_session::handle_everything memory_debug before parse_and_execute
+orbiter_top_level_session::parse parsing the orbiter dash code
+orbiter_top_level_session::parse i = 3
+orbiter_command::parse
+interface_symbol_table::init
+interface_symbol_table::done
+orbiter_command::parse recognizing keyword from Interface_symbol_table
+interface_symbol_table::read_arguments
+interface_symbol_table::read_arguments the next argument is -define
+interface_symbol_table::read_arguments before Symbol_definition->read_definition
+symbol_definition::read_definition i=3 argc=27
+symbol_definition::read_definition define_label=G0
+-define G0
+symbol_definition::read_definition reading -graph
+create_graph_description::read_arguments
+-cycle 1
+graph_modification_description::check_and_parse_argument
+next argument is -end
+graph_modification_description::read_arguments done
+-end
+create_graph_description::read_arguments done
+-graph
+i = 9
+argc = 27
+next argument is -with
+-graph 
+-cycle 1
+symbol_definition::read_definition done
+interface_symbol_table::read_arguments after Symbol_definition->read_definition
+interface_symbol_table::read_arguments done
+orbiter_command::parse after Interface_symbol_table.read_arguments, i=9
+orbiter_top_level_session::parse i = 9
+orbiter_command::parse
+interface_symbol_table::init
+interface_symbol_table::done
+orbiter_command::parse recognizing keyword from Interface_symbol_table
+interface_symbol_table::read_arguments
+interface_symbol_table::read_arguments the next argument is -with
+interface_symbol_table::read_with
+activity_description::read_arguments
+reading -graph_theoretic_activity
+graph_theoretic_activity_description::read_arguments
+-double_cover 
+-end
+graph_theoretic_activity_description::read_arguments done
+-graph_theoretic_activity
+-double_cover 
+i = 15
+argc = 27
+next argument is -with
+activity_description::read_arguments done
+interface_symbol_table::read_with done
+-with finished, next command is -with at i=15
+interface_symbol_table::read_arguments done
+orbiter_command::parse after Interface_symbol_table.read_arguments, i=15
+orbiter_top_level_session::parse i = 15
+orbiter_command::parse
+interface_symbol_table::init
+interface_symbol_table::done
+orbiter_command::parse recognizing keyword from Interface_symbol_table
+interface_symbol_table::read_arguments
+interface_symbol_table::read_arguments the next argument is -with
+interface_symbol_table::read_with
+activity_description::read_arguments
+reading -graph_theoretic_activity
+graph_theoretic_activity_description::read_arguments
+-properties 
+-end
+graph_theoretic_activity_description::read_arguments done
+-graph_theoretic_activity
+-properties 
+i = 21
+argc = 27
+next argument is -with
+activity_description::read_arguments done
+interface_symbol_table::read_with done
+-with finished, next command is -with at i=21
+interface_symbol_table::read_arguments done
+orbiter_command::parse after Interface_symbol_table.read_arguments, i=21
+orbiter_top_level_session::parse i = 21
+orbiter_command::parse
+interface_symbol_table::init
+interface_symbol_table::done
+orbiter_command::parse recognizing keyword from Interface_symbol_table
+interface_symbol_table::read_arguments
+interface_symbol_table::read_arguments the next argument is -with
+interface_symbol_table::read_with
+activity_description::read_arguments
+reading -graph_theoretic_activity
+graph_theoretic_activity_description::read_arguments
+-automorphism_group 
+-end
+graph_theoretic_activity_description::read_arguments done
+-graph_theoretic_activity
+-automorphism_group 
+i = 27
+argc = 27
+activity_description::read_arguments done
+interface_symbol_table::read_with done
+-with finished, next command is THE_END at i=27
+interface_symbol_table::read_arguments done
+orbiter_command::parse after Interface_symbol_table.read_arguments, i=27
+orbiter_top_level_session::parse parsing the orbiter dash code done
+orbiter_top_level_session::parse_and_execute, we have parsed the following orbiter dash code program:
+Command 0:
+-define G0 
+-graph -cycle 1
+Command 1:
+-with G0
+-do 
+-graph_theoretic_activity -double_cover 
+Command 2:
+-with G0
+-do 
+-graph_theoretic_activity -properties 
+Command 3:
+-with G0
+-do 
+-graph_theoretic_activity -automorphism_group 
+################################################################################################
+Executing commands:
+################################################################################################
+Executing command 0:
+-define G0 
+-graph -cycle 1
+################################################################################################
+orbiter_command::execute
+orbiter_command::execute before Symbol_table->worker
+interface_symbol_table::worker
+interface_symbol_table::worker f_define
+symbol_definition::perform_definition
+symbol_definition::perform_definition before definition_of_graph
+symbol_definition::definition_of_graph
+symbol_definition::definition_of_graph before Gr->init
+create_graph::init
+create_graph::init before create_cycle
+create_graph::create_cycle
+create_graph::create_cycle before GT.make_cycle_graph
+graph_theory_domain::make_cycle_graph
+graph_theory_domain::make_cycle_graph done
+create_graph::create_cycle after GT.make_cycle_graph
+create_graph::create_cycle done
+create_graph::init after create_cycle
+create_graph::init before CG->init_from_adjacency_no_colors
+colored_graph::init_from_adjacency_no_colors
+nb_points=1
+colored_graph::init_adjacency
+nb_points=1
+nb_colors=1
+colored_graph::init_from_bitvector
+nb_points=1
+nb_colors=1
+nb_colors_per_vertex=1
+colored_graph::init_from_bitvector colored_graph::label = Cycle_1
+colored_graph::init_from_bitvector colored_graph::label_tex = Cycle\_1
+colored_graph::init_from_bitvector
+colored_graph::init_adjacency
+colored_graph::init_from_adjacency_no_colors done
+create_graph::init after CG->init_from_adjacency_no_colors
+create_graph::init created colored graph with one color
+create_graph::init label = Cycle_1
+create_graph::init done
+symbol_definition::definition_of_graph after Gr->init
+Gr->N=1
+Gr->label=Cycle_1
+Gr->f_has_CG=1
+Gr->CG->nb_points = 1
+symbol_definition::definition_of_graph we created a graph on 1 points, called Cycle_1
+orbiter_symbol_table_entry::init_graph
+orbiter_symbol_table_entry::init_graph done
+symbol_definition::definition_of_graph before add_symbol_table_entry
+orbiter_top_level_session::add_symbol_table_entry label = G0
+orbiter_symbol_table::add_symbol_table_entry
+orbiter_symbol_table::add_symbol_table_entry done
+orbiter_top_level_session::add_symbol_table_entry done
+symbol_definition::definition_of_graph done
+symbol_definition::perform_definition after definition_of_graph
+interface_symbol_table::worker done
+orbiter_command::execute after Symbol_table->worker
+orbiter_command::execute done
+################################################################################################
+Executing command 1:
+-with G0
+-do 
+-graph_theoretic_activity -double_cover 
+################################################################################################
+orbiter_command::execute
+orbiter_command::execute before Symbol_table->worker
+interface_symbol_table::worker
+interface_symbol_table::worker f_activity
+interface_symbol_table::worker before Activity_description->worker
+activity_description::worker
+activity_description::worker verbose_level = 1
+activity_description::worker number of inputs = 1
+G0
+activity_description::worker f_graph_theoretic_activity
+activity_description::do_graph_theoretic_activity activity for the following objects:G0
+activity_description::do_graph_theoretic_activity graphs = Cycle_1
+graph_theoretic_activity::init
+graph_theoretic_activity::init, labels = Cycle_1
+graph_theoretic_activity::init done
+activity_description::do_graph_theoretic_activity before Activity.perform_activity
+graph_theoretic_activity::perform_activity
+graph_theoretic_activity::perform_activity f_double_cover
+graph_theoretic_activity::perform_activity before CG->double_cover
+colored_graph::double_cover n=1 n_new=3
+colored_graph::init_adjacency
+nb_points=3
+nb_colors=3
+colored_graph::init_from_bitvector
+nb_points=3
+nb_colors=3
+nb_colors_per_vertex=1
+colored_graph::init_from_bitvector colored_graph::label = Cycle_1_dc
+colored_graph::init_from_bitvector colored_graph::label_tex = Cycle\_1\_dc
+colored_graph::init_from_bitvector
+colored_graph::init_adjacency
+colored_graph::double_cover done
+graph_theoretic_activity::perform_activity after CG->double_cover
+feedback:
+graph_theoretic_activity::perform_activity done
+activity_description::do_graph_theoretic_activity after Activity.perform_activity
+activity_description::do_graph_theoretic_activity done
+activity_description::worker no activity_output
+activity_description::worker done
+interface_symbol_table::worker after Activity_description->worker
+interface_symbol_table::worker nb_output = 0
+interface_symbol_table::worker done
+orbiter_command::execute after Symbol_table->worker
+orbiter_command::execute done
+################################################################################################
+Executing command 2:
+-with G0
+-do 
+-graph_theoretic_activity -properties 
+################################################################################################
+orbiter_command::execute
+orbiter_command::execute before Symbol_table->worker
+interface_symbol_table::worker
+interface_symbol_table::worker f_activity
+interface_symbol_table::worker before Activity_description->worker
+activity_description::worker
+activity_description::worker verbose_level = 1
+activity_description::worker number of inputs = 1
+G0
+activity_description::worker f_graph_theoretic_activity
+activity_description::do_graph_theoretic_activity activity for the following objects:G0
+activity_description::do_graph_theoretic_activity graphs = 
+graph_theoretic_activity::init
+graph_theoretic_activity::init, labels = 
+graph_theoretic_activity::init done
+activity_description::do_graph_theoretic_activity before Activity.perform_activity
+graph_theoretic_activity::perform_activity
+graph_theoretic_activity::perform_activity f_properties
+graph_theoretic_activity::perform_activity before CG->properties
+colored_graph::properties
+colored_graph::properties before compute_degree_sequence
+colored_graph::properties after compute_degree_sequence
+colored_graph::properties before is_regular
+colored_graph::properties after is_regular
+colored_graph::properties The graph is NOT regular
+colored_graph::is_strongly_regular
+colored_graph::compute_A_and_A_square
+colored_graph::compute_A_and_A_square done
+colored_graph::is_strongly_regular done
+colored_graph::properties is strongly regular with parameters k=-1 lambda=-1 mu=-1
+colored_graph::properties done
+graph_theoretic_activity::perform_activity after CG->properties
+feedback:
+graph_theoretic_activity::perform_activity done
+activity_description::do_graph_theoretic_activity after Activity.perform_activity
+activity_description::do_graph_theoretic_activity done
+activity_description::worker no activity_output
+activity_description::worker done
+interface_symbol_table::worker after Activity_description->worker
+interface_symbol_table::worker nb_output = 0
+interface_symbol_table::worker done
+orbiter_command::execute after Symbol_table->worker
+orbiter_command::execute done
+################################################################################################
+Executing command 3:
+-with G0
+-do 
+-graph_theoretic_activity -automorphism_group 
+################################################################################################
+orbiter_command::execute
+orbiter_command::execute before Symbol_table->worker
+interface_symbol_table::worker
+interface_symbol_table::worker f_activity
+interface_symbol_table::worker before Activity_description->worker
+activity_description::worker
+activity_description::worker verbose_level = 1
+activity_description::worker number of inputs = 1
+G0
+activity_description::worker f_graph_theoretic_activity
+activity_description::do_graph_theoretic_activity activity for the following objects:G0
+activity_description::do_graph_theoretic_activity graphs = 
+graph_theoretic_activity::init
+graph_theoretic_activity::init, labels = 
+graph_theoretic_activity::init done
+activity_description::do_graph_theoretic_activity before Activity.perform_activity
+graph_theoretic_activity::perform_activity
+graph_theoretic_activity::perform_activity f_automorphism_group
+graph_theoretic_activity::perform_activity before GTA.automorphism_group_bw
+graph_theory_apps::automorphism_group_bw
+graph_theory_apps::automorphism_group_bw before Nauty.create_automorphism_group_of_colored_graph_ignoring_colors
+nauty_interface_for_graphs::create_automorphism_group_of_colored_graph_ignoring_colors
+nauty_interface_for_graphs::create_automorphism_group_of_colored_graph_ignoring_colors before create_automorphism_group_of_graph_bitvec
+nauty_interface_for_graphs::create_automorphism_group_of_graph_bitvec
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling creating partition
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling before nauty_interface_graph_bitvec
+nauty_interface::nauty_interface_graph_bitvec
+nauty_interface::nauty_interface_graph_bitvec calling nauty (densenauty)
+nauty_interface::nauty_interface_graph_bitvec after nauty (densenauty)
+nauty_interface::nauty_interface_graph_bitvec after nauty
+base_length=0
+transversal_length=(  )
+nauty_interface::nauty_interface_graph_bitvec done
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling: The group order is = 1 = (  )
+nb_backtrack1 = 0
+nb_backtrack2 = 0
+nb_backtrack3 = 0
+nb_backtrack4 = 0
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling before A->Known_groups->init_permutation_group_from_nauty_output
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling after A->Known_groups->init_permutation_group_from_nauty_output
+nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling: created action ACTION Perm_0 : Perm\_0 degree = 0 of type perm_group_t : base = (base of length zero) : tl = (N/A) : go = 1 =  : label = function_pointers_permutation_group : sub = Perm_0
+
+nauty_interface_for_graphs::create_automorphism_group_of_graph_bitvec done
+nauty_interface_for_graphs::create_automorphism_group_of_colored_graph_ignoring_colors after create_automorphism_group_of_graph_bitvec
+nauty_interface_for_graphs::create_automorphism_group_of_colored_graph_ignoring_colors done
+graph_theory_apps::automorphism_group_bw after Nauty.create_automorphism_group_of_colored_graph_ignoring_colors
+graph_theory_apps::automorphism_group_bw before report_automorphism_group
+graph_theory_apps::report_automorphism_group
+action_global::get_orbits_on_points_as_characteristic_vector
+action_global::get_orbits_on_points_as_characteristic_vector before all_point_orbits
+action_global::get_orbits_on_points_as_characteristic_vector after all_point_orbits
+action_global::get_orbits_on_points_as_characteristic_vector done
+graph_theory_apps::automorphism_group after report
+written file _report.tex of size 8440
+graph_theory_apps::report_automorphism_group done
+graph_theory_apps::automorphism_group_bw after report_automorphism_group
+graph_theory_apps::automorphism_group_bw label = 
+graph_theory_apps::automorphism_group_bw degree = 0
+graph_theory_apps::automorphism_group_bw before Aut->export_to_orbiter_as_bsgs
+action::export_to_orbiter_as_bsgs
+action::export_to_orbiter_as_bsgs before SG->export_to_orbiter_as_bsgs
+strong_generators::export_to_orbiter_as_bsgs
+strong_generators::export_to_orbiter_as_bsgs go = 1
+strong_generators::export_to_orbiter_as_bsgs number of generators = 0
+strong_generators::export_to_orbiter_as_bsgs degree = 0
+strong_generators::export_to_orbiter_as_bsgs writing csv file
+strong_generators::export_to_orbiter_as_bsgs writing csv file done
+Written file _group.makefile of size 150
+strong_generators::export_to_orbiter_as_bsgs
+action::export_to_orbiter_as_bsgs after SG->export_to_orbiter_as_bsgs
+action::export_to_orbiter_as_bsgs
+graph_theory_apps::automorphism_group_bw after Aut->export_to_orbiter_as_bsgs
+graph_theory_apps::automorphism_group_bw written file _group.makefile of size 150
+graph_theory_apps::automorphism_group_bw done
+graph_theoretic_activity::perform_activity after GTA.automorphism_group_bw
+feedback:1
+graph_theoretic_activity::perform_activity done
+activity_description::do_graph_theoretic_activity after Activity.perform_activity
+activity_description::do_graph_theoretic_activity done
+activity_description::worker no activity_output
+activity_description::worker done
+interface_symbol_table::worker after Activity_description->worker
+interface_symbol_table::worker nb_output = 0
+interface_symbol_table::worker done
+orbiter_command::execute after Symbol_table->worker
+orbiter_command::execute done
+Executing commands done
+orbiter_top_level_session::parse_and_execute done
+orbiter_top_level_session::handle_everything memory_debug after parse_and_execute
+orbiter_top_level_session::handle_everything memory_debug before finish_session
+orbiter_top_level_session::handle_everything memory_debug after finish_session
+orbiter_top_level_session::handle_everything done
+orbiter_top_level_session::execute_command_line after handle_everything
+orbiter_top_level_session::execute_command_line done
+do_orbiter_session after execute_command_line
+orbiter_top_level_session::~orbiter_top_level_session
+orbiter_top_level_session::~orbiter_top_level_session before delete Orbiter_session
+orbiter_session::~orbiter_session
+nb_times_finite_field_created=0
+nb_times_projective_space_created=0
+nb_times_action_created=1
+nb_calls_to_densenauty=1
+orbiter_session::~orbiter_session done
+orbiter_top_level_session::~orbiter_top_level_session after delete Orbiter_session
+orbiter_top_level_session::~orbiter_top_level_session done
+The Orbiter session is finished.
+User time: 0.000000 of a second, dt=0 tps = 100

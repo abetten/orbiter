@@ -1,0 +1,562 @@
+\documentclass[12pt]{article}
+% a4paper
+
+%\usepackage[dvips]{epsfig}
+%\usepackage{cours11, cours}
+%\usepackage{fancyheadings}
+%\usepackage{calc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{latexsym}
+\usepackage{epsfig}
+\usepackage{enumerate}
+%\usepackage{supertabular}
+%\usepackage{wrapfig}
+%\usepackage{blackbrd}
+%\usepackage{epic,eepic}
+\usepackage{rotating}
+\usepackage{multicol}
+%\usepackage{multirow}
+\usepackage{makeidx} % additional command see
+\usepackage{rotating}
+\usepackage{array}
+\usepackage{tikz}
+\usepackage{longtable}
+%\usepackage{anyfontsize}
+\usepackage{t1enc}
+%\usepackage{amsmath,amsfonts}
+
+
+%\usepackage[mtbold,mtplusscr]{mathtime}
+% lucidacal,lucidascr,
+
+%\usepackage{mathtimy}
+%\usepackage{bm}
+%\usepackage{avant}
+%\usepackage{basker}
+%\usepackage{bembo}
+%\usepackage{bookman}
+%\usepackage{chancery}
+%\usepackage{garamond}
+%\usepackage{helvet}
+%\usepackage{newcent}
+%\usepackage{palatino}
+%\usepackage{times}
+%\usepackage{pifont}
+
+
+
+%\parindent=0pt
+
+
+%\topmargin=0pt
+%\headsep=18pt
+%\footskip=45pt
+%\mathsurround=1pt
+%\evensidemargin=0pt
+%\oddsidemargin=15pt
+
+%\setlength{\textheight}{\baselineskip*41+\topskip}
+
+\newcommand{\sectionline}{
+   \nointerlineskip \vspace{\baselineskip}
+   \hspace{\fill}\rule{0.9\linewidth}{1.7pt}\hspace{\fill}
+   \par\nointerlineskip \vspace{\baselineskip}
+   }
+\newcommand\setTBstruts{\def\T{\rule{0pt}{2.6ex}}%
+\def\B{\rule[-1.2ex]{0pt}{0pt}}}
+\newcommand{\ans}[1]{\\{\bf ANSWER}: {#1}}
+\newcommand{\Aut}{{\rm Aut}}
+\newcommand{\Sym}{{\rm Sym}}
+\newcommand{\sFix}{{\cal Fix}}
+\newcommand{\sOrbits}{{\cal Orbits}}
+\newcommand{\Stab}{{\rm Stab}}
+\newcommand{\Fix}{{\rm Fix}}
+\newcommand{\fix}{{\rm fix}}
+\newcommand{\Orbits}{{\rm Orbits}}
+\newcommand{\PG}{{\rm PG}}
+\newcommand{\AG}{{\rm AG}}
+\newcommand{\SQS}{{\rm SQS}}
+\newcommand{\STS}{{\rm STS}}
+\newcommand{\PSL}{{\rm PSL}}
+\newcommand{\PGL}{{\rm PGL}}
+\newcommand{\PSSL}{{\rm P\Sigma L}}
+\newcommand{\PGGL}{{\rm P\Gamma L}}
+\newcommand{\SL}{{\rm SL}}
+\newcommand{\GL}{{\rm GL}}
+\newcommand{\SSL}{{\rm \Sigma L}}
+\newcommand{\GGL}{{\rm \Gamma L}}
+\newcommand{\ASL}{{\rm ASL}}
+\newcommand{\AGL}{{\rm AGL}}
+\newcommand{\ASSL}{{\rm A\Sigma L}}
+\newcommand{\AGGL}{{\rm A\Gamma L}}
+\newcommand{\PSU}{{\rm PSU}}
+\newcommand{\HS}{{\rm HS}}
+\newcommand{\Hol}{{\rm Hol}}
+\newcommand{\SO}{{\rm SO}}
+\newcommand{\ASO}{{\rm ASO}}
+\newcommand{\la}{\langle}
+\newcommand{\ra}{\rangle}
+\newcommand{\cA}{{\cal A}}
+\newcommand{\cB}{{\cal B}}
+\newcommand{\cC}{{\cal C}}
+\newcommand{\cD}{{\cal D}}
+\newcommand{\cE}{{\cal E}}
+\newcommand{\cF}{{\cal F}}
+\newcommand{\cG}{{\cal G}}
+\newcommand{\cH}{{\cal H}}
+\newcommand{\cI}{{\cal I}}
+\newcommand{\cJ}{{\cal J}}
+\newcommand{\cK}{{\cal K}}
+\newcommand{\cL}{{\cal L}}
+\newcommand{\cM}{{\cal M}}
+\newcommand{\cN}{{\cal N}}
+\newcommand{\cO}{{\cal O}}
+\newcommand{\cP}{{\cal P}}
+\newcommand{\cQ}{{\cal Q}}
+\newcommand{\cR}{{\cal R}}
+\newcommand{\cS}{{\cal S}}
+\newcommand{\cT}{{\cal T}}
+\newcommand{\cU}{{\cal U}}
+\newcommand{\cV}{{\cal V}}
+\newcommand{\cW}{{\cal W}}
+\newcommand{\cX}{{\cal X}}
+\newcommand{\cY}{{\cal Y}}
+\newcommand{\cZ}{{\cal Z}}
+\newcommand{\rmA}{{\rm A}}
+\newcommand{\rmB}{{\rm B}}
+\newcommand{\rmC}{{\rm C}}
+\newcommand{\rmD}{{\rm D}}
+\newcommand{\rmE}{{\rm E}}
+\newcommand{\rmF}{{\rm F}}
+\newcommand{\rmG}{{\rm G}}
+\newcommand{\rmH}{{\rm H}}
+\newcommand{\rmI}{{\rm I}}
+\newcommand{\rmJ}{{\rm J}}
+\newcommand{\rmK}{{\rm K}}
+\newcommand{\rmL}{{\rm L}}
+\newcommand{\rmM}{{\rm M}}
+\newcommand{\rmN}{{\rm N}}
+\newcommand{\rmO}{{\rm O}}
+\newcommand{\rmP}{{\rm P}}
+\newcommand{\rmQ}{{\rm Q}}
+\newcommand{\rmR}{{\rm R}}
+\newcommand{\rmS}{{\rm S}}
+\newcommand{\rmT}{{\rm T}}
+\newcommand{\rmU}{{\rm U}}
+\newcommand{\rmV}{{\rm V}}
+\newcommand{\rmW}{{\rm W}}
+\newcommand{\rmX}{{\rm X}}
+\newcommand{\rmY}{{\rm Y}}
+\newcommand{\rmZ}{{\rm Z}}
+\newcommand{\bA}{{\bf A}}
+\newcommand{\bB}{{\bf B}}
+\newcommand{\bC}{{\bf C}}
+\newcommand{\bD}{{\bf D}}
+\newcommand{\bE}{{\bf E}}
+\newcommand{\bF}{{\bf F}}
+\newcommand{\bG}{{\bf G}}
+\newcommand{\bH}{{\bf H}}
+\newcommand{\bI}{{\bf I}}
+\newcommand{\bJ}{{\bf J}}
+\newcommand{\bK}{{\bf K}}
+\newcommand{\bL}{{\bf L}}
+\newcommand{\bM}{{\bf M}}
+\newcommand{\bN}{{\bf N}}
+\newcommand{\bO}{{\bf O}}
+\newcommand{\bP}{{\bf P}}
+\newcommand{\bQ}{{\bf Q}}
+\newcommand{\bR}{{\bf R}}
+\newcommand{\bS}{{\bf S}}
+\newcommand{\bT}{{\bf T}}
+\newcommand{\bU}{{\bf U}}
+\newcommand{\bV}{{\bf V}}
+\newcommand{\bW}{{\bf W}}
+\newcommand{\bX}{{\bf X}}
+\newcommand{\bY}{{\bf Y}}
+\newcommand{\bZ}{{\bf Z}}
+\newcommand{\sA}{{\cal A}}
+\newcommand{\sB}{{\cal B}}
+\newcommand{\sC}{{\cal C}}
+\newcommand{\sD}{{\cal D}}
+\newcommand{\sE}{{\cal E}}
+\newcommand{\sF}{{\cal F}}
+\newcommand{\sG}{{\cal G}}
+\newcommand{\sH}{{\cal H}}
+\newcommand{\sI}{{\cal I}}
+\newcommand{\sJ}{{\cal J}}
+\newcommand{\sK}{{\cal K}}
+\newcommand{\sL}{{\cal L}}
+\newcommand{\sM}{{\cal M}}
+\newcommand{\sN}{{\cal N}}
+\newcommand{\sO}{{\cal O}}
+\newcommand{\sP}{{\cal P}}
+\newcommand{\sQ}{{\cal Q}}
+\newcommand{\sR}{{\cal R}}
+\newcommand{\sS}{{\cal S}}
+\newcommand{\sT}{{\cal T}}
+\newcommand{\sU}{{\cal U}}
+\newcommand{\sV}{{\cal V}}
+\newcommand{\sW}{{\cal W}}
+\newcommand{\sX}{{\cal X}}
+\newcommand{\sY}{{\cal Y}}
+\newcommand{\sZ}{{\cal Z}}
+\newcommand{\frakA}{{\mathfrak A}}
+\newcommand{\frakB}{{\mathfrak B}}
+\newcommand{\frakC}{{\mathfrak C}}
+\newcommand{\frakD}{{\mathfrak D}}
+\newcommand{\frakE}{{\mathfrak E}}
+\newcommand{\frakF}{{\mathfrak F}}
+\newcommand{\frakG}{{\mathfrak G}}
+\newcommand{\frakH}{{\mathfrak H}}
+\newcommand{\frakI}{{\mathfrak I}}
+\newcommand{\frakJ}{{\mathfrak J}}
+\newcommand{\frakK}{{\mathfrak K}}
+\newcommand{\frakL}{{\mathfrak L}}
+\newcommand{\frakM}{{\mathfrak M}}
+\newcommand{\frakN}{{\mathfrak N}}
+\newcommand{\frakO}{{\mathfrak O}}
+\newcommand{\frakP}{{\mathfrak P}}
+\newcommand{\frakQ}{{\mathfrak Q}}
+\newcommand{\frakR}{{\mathfrak R}}
+\newcommand{\frakS}{{\mathfrak S}}
+\newcommand{\frakT}{{\mathfrak T}}
+\newcommand{\frakU}{{\mathfrak U}}
+\newcommand{\frakV}{{\mathfrak V}}
+\newcommand{\frakW}{{\mathfrak W}}
+\newcommand{\frakX}{{\mathfrak X}}
+\newcommand{\frakY}{{\mathfrak Y}}
+\newcommand{\frakZ}{{\mathfrak Z}}
+\newcommand{\fraka}{{\mathfrak a}}
+\newcommand{\frakb}{{\mathfrak b}}
+\newcommand{\frakc}{{\mathfrak c}}
+\newcommand{\frakd}{{\mathfrak d}}
+\newcommand{\frake}{{\mathfrak e}}
+\newcommand{\frakf}{{\mathfrak f}}
+\newcommand{\frakg}{{\mathfrak g}}
+\newcommand{\frakh}{{\mathfrak h}}
+\newcommand{\fraki}{{\mathfrak i}}
+\newcommand{\frakj}{{\mathfrak j}}
+\newcommand{\frakk}{{\mathfrak k}}
+\newcommand{\frakl}{{\mathfrak l}}
+\newcommand{\frakm}{{\mathfrak m}}
+\newcommand{\frakn}{{\mathfrak n}}
+\newcommand{\frako}{{\mathfrak o}}
+\newcommand{\frakp}{{\mathfrak p}}
+\newcommand{\frakq}{{\mathfrak q}}
+\newcommand{\frakr}{{\mathfrak r}}
+\newcommand{\fraks}{{\mathfrak s}}
+\newcommand{\frakt}{{\mathfrak t}}
+\newcommand{\fraku}{{\mathfrak u}}
+\newcommand{\frakv}{{\mathfrak v}}
+\newcommand{\frakw}{{\mathfrak w}}
+\newcommand{\frakx}{{\mathfrak x}}
+\newcommand{\fraky}{{\mathfrak y}}
+\newcommand{\frakz}{{\mathfrak z}}
+\newcommand{\Tetra}{{\mathfrak Tetra}}
+\newcommand{\Cube}{{\mathfrak Cube}}
+\newcommand{\Octa}{{\mathfrak Octa}}
+\newcommand{\Dode}{{\mathfrak Dode}}
+\newcommand{\Ico}{{\mathfrak Ico}}
+\newcommand{\bbF}{{\mathbb F}}
+\newcommand{\bbQ}{{\mathbb Q}}
+\newcommand{\bbC}{{\mathbb C}}
+\newcommand{\bbR}{{\mathbb R}}
+
+
+
+%\makeindex
+
+\begin{document} 
+\setTBstruts
+
+\bibliographystyle{plain}
+%\large
+
+{\allowdisplaybreaks%
+
+
+
+
+%\makeindex
+
+%\renewcommand{\labelenumi}{(\roman{enumi})}
+
+\title{Cheat Sheet ${\mathbb F}_{9}$}
+\author{}%end author
+%\date{}
+\maketitle%
+%\pagenumbering{roman}
+%\thispagestyle{empty}
+%\input et.tex%
+%\thispagestyle{empty}%\phantom{page2}%\clearpage%
+%\addcontentsline{toc}{chapter}{Inhaltsverzeichnis}%
+%\tableofcontents
+%\listofsymbols
+%\pagenumbering{arabic}
+%\pagenumbering{roman}
+
+
+
+Extension field generated by the polynomial
+$$
+X^2+X+2
+$$
+The numerical value of the polynomial is 14\\
+The field is equianharmonic, $a = 2$\\
+The polynomial used to define the field is : $X^2+X+2$ = 14\\
+$Z_i = \log_\alpha (1 + \alpha^i)$\\
+\subsection*{Subfields in Detail}
+The subfield ${\mathbb F}_{3}$, divisor $h=1$, is generated by polynomial 4:\\
+Subfield of Order $3$:\\
+polynomial: \\
+Field basis:\\
+$$
+( 1, 7 )
+$$
+$$
+\begin{array}{|c|c|c|}
+\hline
+i & \mbox{elt in Fq} & \mbox{elt in FQ} \\
+\hline
+\hline
+0 & 0 & 0\\
+\hline
+1 & 1 & 1\\
+\hline
+2 & 2 & 2\\
+\hline
+\end{array}
+$$
+The power table shows $(\alpha^d)^i$ for $i=0,1,\ldots,e$ where $q=p^{e}$:
+$q = 9$, 
+$p = 3$, 
+$e = 2$, 
+$d = 4$, 
+$\alpha = 3$, 
+$$
+\begin{array}{|c|c|c|c|}
+\hline
+i & i\cdot d  & \alpha^{id} & \mbox{vector} \\
+\hline
+0 & 0 & 1 & (0,1)\\
+1 & 4 & 2 & (0,2)\\
+\hline
+\end{array}
+$$
+
+\bigskip
+
+\subsection*{Table of Elements of ${\mathbb F}_{9}$}
+$$
+\begin{array}{|r|r|r|}
+\hline
+  0 & 00 & 0\\
+  1 & 01 &   1\\
+  2 & 02 &   2\\
+  3 & 10 & \alpha\\
+  4 & 11 & \alpha +   1\\
+  5 & 12 & \alpha +   2\\
+  6 & 20 &   2\alpha\\
+  7 & 21 &   2\alpha +   1\\
+  8 & 22 &   2\alpha +   2\\
+\hline
+\end{array}
+$$
+$$
+\begin{array}{|*{10}{r|}}
+\hline
+i & \gamma_i & -\gamma_i& \gamma_i^{-1}& \log_\alpha(\gamma_i)& \alpha^i& Z_i& \phi(\gamma_i) & T(\gamma_i) & N(\gamma_i) \\
+\hline
+  0 & 0 = 0 &0 & \mbox{DNE} & \mbox{DNE} &1 &4 &0 &0 &0\\
+  1 &   1 = 1 &2 &1 &0 &3 &7 &1 &2 &1\\
+  2 &   2 = \alpha^{4} &1 &2 &4 &7 &3 &2 &1 &1\\
+  3 & \alpha = \alpha  &6 &4 &1 &8 &5 &8 &2 &2\\
+  4 & \alpha +   1 = \alpha^{7} &8 &3 &7 &2 & \mbox{DNE} &6 &1 &2\\
+  5 & \alpha +   2 = \alpha^{6} &7 &7 &6 &6 &2 &7 &0 &1\\
+  6 &   2\alpha = \alpha^{5} &3 &8 &5 &5 &1 &4 &1 &2\\
+  7 &   2\alpha +   1 = \alpha^{2} &5 &5 &2 &4 &6 &5 &0 &1\\
+  8 &   2\alpha +   2 = \alpha^{3} &4 &6 &3 &1 &4 &3 &2 &2\\
+\hline
+\end{array}
+$$
+$$
+\begin{array}{|r|*{9}{r}|}
+\hline
++  &         0 &         1 &         2 &         3 &         4 &         5 &         6 &         7 &         8\\
+\hline
+         0&         0&         1&         2&         3&         4&         5&         6&         7&         8\\
+         1&         1&         2&         0&         4&         5&         3&         7&         8&         6\\
+         2&         2&         0&         1&         5&         3&         4&         8&         6&         7\\
+         3&         3&         4&         5&         6&         7&         8&         0&         1&         2\\
+         4&         4&         5&         3&         7&         8&         6&         1&         2&         0\\
+         5&         5&         3&         4&         8&         6&         7&         2&         0&         1\\
+         6&         6&         7&         8&         0&         1&         2&         3&         4&         5\\
+         7&         7&         8&         6&         1&         2&         0&         4&         5&         3\\
+         8&         8&         6&         7&         2&         0&         1&         5&         3&         4\\
+\hline
+\end{array}
+$$
+$$
+\begin{array}{|r|*{8}{r}|}
+\hline
+\cdot  &         1 &         2 &         3 &         4 &         5 &         6 &         7 &         8\\
+\hline
+         1&         1&         2&         3&         4&         5&         6&         7&         8\\
+         2&         2&         1&         6&         8&         7&         3&         5&         4\\
+         3&         3&         6&         7&         1&         4&         5&         8&         2\\
+         4&         4&         8&         1&         5&         6&         2&         3&         7\\
+         5&         5&         7&         4&         6&         2&         8&         1&         3\\
+         6&         6&         3&         5&         2&         8&         7&         4&         1\\
+         7&         7&         5&         8&         3&         1&         4&         2&         6\\
+         8&         8&         4&         2&         7&         3&         1&         6&         5\\
+\hline
+\end{array}
+$$
+\subsection*{Cyclic structure}
+$$
+\begin{array}{|r|r|r|r|r|}
+\hline
+i & \alpha^i & \alpha^i & \mbox{vector}& \mbox{reduced rep.}\\
+\hline
+0 & 3^{0} & 1 & 01 &   1\\
+1 & 3^{1} & 3 & 10 & \alpha\\
+2 & 3^{2} & 7 & 21 &   2\alpha +   1\\
+3 & 3^{3} & 8 & 22 &   2\alpha +   2\\
+4 & 3^{4} & 2 & 02 &   2\\
+5 & 3^{5} & 6 & 20 &   2\alpha\\
+6 & 3^{6} & 5 & 12 & \alpha +   2\\
+7 & 3^{7} & 4 & 11 & \alpha +   1\\
+8 & 3^{8} & 1 & 01 &   1\\
+\hline
+\end{array}
+$$
+\subsection*{Cyclic structure}
+$$
+\begin{array}{|r|r|r|r|}
+\hline
+i & \alpha^i & \alpha^i & \mbox{vector}\\
+\hline
+0 & 3^{0} & 1 & 01\\
+1 & 3^{1} & 3 & 10\\
+2 & 3^{2} & 7 & 21\\
+3 & 3^{3} & 8 & 22\\
+4 & 3^{4} & 2 & 02\\
+5 & 3^{5} & 6 & 20\\
+6 & 3^{6} & 5 & 12\\
+7 & 3^{7} & 4 & 11\\
+8 & 3^{8} & 1 & 01\\
+\hline
+\end{array}
+$$
+$$
+\begin{array}{|*{10}{r|}}
+\hline
+i & \gamma_i & -\gamma_i& \gamma_i^{-1}& \log_\alpha(\gamma_i)& \alpha^i& Z_i& \phi(\gamma_i) & T(\gamma_i) & N(\gamma_i) \\
+\hline
+  0 & 0 = 0 &0 & \mbox{DNE} & \mbox{DNE} &1 &4 &0 &0 &0\\
+  1 &   1 = 1 &2 &1 &0 &3 &7 &1 &2 &1\\
+  2 &   2 = \alpha^{4} &1 &2 &4 &7 &3 &2 &1 &1\\
+  3 & \alpha = \alpha  &6 &4 &1 &8 &5 &8 &2 &2\\
+  4 & \alpha +   1 = \alpha^{7} &8 &3 &7 &2 & \mbox{DNE} &6 &1 &2\\
+  5 & \alpha +   2 = \alpha^{6} &7 &7 &6 &6 &2 &7 &0 &1\\
+  6 &   2\alpha = \alpha^{5} &3 &8 &5 &5 &1 &4 &1 &2\\
+  7 &   2\alpha +   1 = \alpha^{2} &5 &5 &2 &4 &6 &5 &0 &1\\
+  8 &   2\alpha +   2 = \alpha^{3} &4 &6 &3 &1 &4 &3 &2 &2\\
+\hline
+\end{array}
+$$
+$$
+\begin{array}{|r|*{9}{r}|}
+\hline
++  &         0 &         1 &         2 &         3 &         4 &         5 &         6 &         7 &         8\\
+\hline
+         0&         0&         1&         2&         3&         4&         5&         6&         7&         8\\
+         1&         1&         2&         0&         4&         5&         3&         7&         8&         6\\
+         2&         2&         0&         1&         5&         3&         4&         8&         6&         7\\
+         3&         3&         4&         5&         6&         7&         8&         0&         1&         2\\
+         4&         4&         5&         3&         7&         8&         6&         1&         2&         0\\
+         5&         5&         3&         4&         8&         6&         7&         2&         0&         1\\
+         6&         6&         7&         8&         0&         1&         2&         3&         4&         5\\
+         7&         7&         8&         6&         1&         2&         0&         4&         5&         3\\
+         8&         8&         6&         7&         2&         0&         1&         5&         3&         4\\
+\hline
+\end{array}
+$$
+$$
+\begin{array}{|r|*{8}{r}|}
+\hline
+\cdot  &         1 &         2 &         3 &         4 &         5 &         6 &         7 &         8\\
+\hline
+         1&         1&         2&         3&         4&         5&         6&         7&         8\\
+         2&         2&         1&         6&         8&         7&         3&         5&         4\\
+         3&         3&         6&         7&         1&         4&         5&         8&         2\\
+         4&         4&         8&         1&         5&         6&         2&         3&         7\\
+         5&         5&         7&         4&         6&         2&         8&         1&         3\\
+         6&         6&         3&         5&         2&         8&         7&         4&         1\\
+         7&         7&         5&         8&         3&         1&         4&         2&         6\\
+         8&         8&         4&         2&         7&         3&         1&         6&         5\\
+\hline
+\end{array}
+$$
+\subsection*{Cyclic structure}
+$$
+\begin{array}{|r|r|r|r|r|}
+\hline
+i & \alpha^i & \alpha^i & \mbox{vector}& \mbox{reduced rep.}\\
+\hline
+0 & 3^{0} & 1 & 01 &   1\\
+1 & 3^{1} & 3 & 10 & \alpha\\
+2 & 3^{2} & 7 & 21 &   2\alpha +   1\\
+3 & 3^{3} & 8 & 22 &   2\alpha +   2\\
+4 & 3^{4} & 2 & 02 &   2\\
+5 & 3^{5} & 6 & 20 &   2\alpha\\
+6 & 3^{6} & 5 & 12 & \alpha +   2\\
+7 & 3^{7} & 4 & 11 & \alpha +   1\\
+8 & 3^{8} & 1 & 01 &   1\\
+\hline
+\end{array}
+$$
+\subsection*{Cyclic structure}
+$$
+\begin{array}{|r|r|r|r|}
+\hline
+i & \alpha^i & \alpha^i & \mbox{vector}\\
+\hline
+0 & 3^{0} & 1 & 01\\
+1 & 3^{1} & 3 & 10\\
+2 & 3^{2} & 7 & 21\\
+3 & 3^{3} & 8 & 22\\
+4 & 3^{4} & 2 & 02\\
+5 & 3^{5} & 6 & 20\\
+6 & 3^{6} & 5 & 12\\
+7 & 3^{7} & 4 & 11\\
+8 & 3^{8} & 1 & 01\\
+\hline
+\end{array}
+$$
+
+
+%\bibliographystyle{gerplain}% wird oben eingestellt
+%\addcontentsline{toc}{section}{References}
+%\bibliography{../MY_BIBLIOGRAPHY/anton}
+% ACHTUNG: nicht vergessen:
+% die Zeile
+%\addcontentsline{toc}{chapter}{Literaturverzeichnis}
+% muss per Hand in d.bbl eingefuegt werden !
+% nach \begin{thebibliography}{100}
+
+%\begin{theindex}
+
+%\clearpage
+%\addcontentsline{toc}{chapter}{Index}
+%\input{apd.ind}
+
+%\printindex
+%\end{theindex}
+
+}% allowdisplaybreaks
+
+\end{document}
+
+

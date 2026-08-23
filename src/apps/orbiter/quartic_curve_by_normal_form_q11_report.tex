@@ -1,0 +1,1087 @@
+\documentclass{article}
+% a4paper
+
+%\usepackage[dvips]{epsfig}
+%\usepackage{cours11, cours}
+%\usepackage{fancyheadings}
+%\usepackage{calc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{latexsym}
+\usepackage{epsfig}
+\usepackage{enumerate}
+%\usepackage{supertabular}
+%\usepackage{wrapfig}
+%\usepackage{blackbrd}
+%\usepackage{epic,eepic}
+\usepackage{rotating}
+\usepackage{multicol}
+%\usepackage{multirow}
+\usepackage{makeidx} % additional command see
+\usepackage{rotating}
+\usepackage{array}
+\usepackage{tikz}
+\usepackage{longtable}
+%\usepackage{anyfontsize}
+\usepackage{t1enc}
+%\usepackage{amsmath,amsfonts}
+
+
+%\usepackage[mtbold,mtplusscr]{mathtime}
+% lucidacal,lucidascr,
+
+%\usepackage{mathtimy}
+%\usepackage{bm}
+%\usepackage{avant}
+%\usepackage{basker}
+%\usepackage{bembo}
+%\usepackage{bookman}
+%\usepackage{chancery}
+%\usepackage{garamond}
+%\usepackage{helvet}
+%\usepackage{newcent}
+%\usepackage{palatino}
+%\usepackage{times}
+%\usepackage{pifont}
+
+
+
+%\parindent=0pt
+
+
+%\topmargin=0pt
+%\headsep=18pt
+%\footskip=45pt
+%\mathsurround=1pt
+%\evensidemargin=0pt
+%\oddsidemargin=15pt
+
+%\setlength{\textheight}{\baselineskip*41+\topskip}
+
+\newcommand{\sectionline}{
+   \nointerlineskip \vspace{\baselineskip}
+   \hspace{\fill}\rule{0.9\linewidth}{1.7pt}\hspace{\fill}
+   \par\nointerlineskip \vspace{\baselineskip}
+   }
+\newcommand\setTBstruts{\def\T{\rule{0pt}{2.6ex}}%
+\def\B{\rule[-1.2ex]{0pt}{0pt}}}
+\newcommand{\ans}[1]{\\{\bf ANSWER}: {#1}}
+\newcommand{\Aut}{{\rm Aut}}
+\newcommand{\Sym}{{\rm Sym}}
+\newcommand{\sFix}{{\cal Fix}}
+\newcommand{\sOrbits}{{\cal Orbits}}
+\newcommand{\Stab}{{\rm Stab}}
+\newcommand{\Fix}{{\rm Fix}}
+\newcommand{\fix}{{\rm fix}}
+\newcommand{\Orbits}{{\rm Orbits}}
+\newcommand{\PG}{{\rm PG}}
+\newcommand{\AG}{{\rm AG}}
+\newcommand{\SQS}{{\rm SQS}}
+\newcommand{\STS}{{\rm STS}}
+\newcommand{\PSL}{{\rm PSL}}
+\newcommand{\PGL}{{\rm PGL}}
+\newcommand{\PSSL}{{\rm P\Sigma L}}
+\newcommand{\PGGL}{{\rm P\Gamma L}}
+\newcommand{\SL}{{\rm SL}}
+\newcommand{\GL}{{\rm GL}}
+\newcommand{\SSL}{{\rm \Sigma L}}
+\newcommand{\GGL}{{\rm \Gamma L}}
+\newcommand{\ASL}{{\rm ASL}}
+\newcommand{\AGL}{{\rm AGL}}
+\newcommand{\ASSL}{{\rm A\Sigma L}}
+\newcommand{\AGGL}{{\rm A\Gamma L}}
+\newcommand{\PSU}{{\rm PSU}}
+\newcommand{\HS}{{\rm HS}}
+\newcommand{\Hol}{{\rm Hol}}
+\newcommand{\SO}{{\rm SO}}
+\newcommand{\ASO}{{\rm ASO}}
+\newcommand{\la}{\langle}
+\newcommand{\ra}{\rangle}
+\newcommand{\cA}{{\cal A}}
+\newcommand{\cB}{{\cal B}}
+\newcommand{\cC}{{\cal C}}
+\newcommand{\cD}{{\cal D}}
+\newcommand{\cE}{{\cal E}}
+\newcommand{\cF}{{\cal F}}
+\newcommand{\cG}{{\cal G}}
+\newcommand{\cH}{{\cal H}}
+\newcommand{\cI}{{\cal I}}
+\newcommand{\cJ}{{\cal J}}
+\newcommand{\cK}{{\cal K}}
+\newcommand{\cL}{{\cal L}}
+\newcommand{\cM}{{\cal M}}
+\newcommand{\cN}{{\cal N}}
+\newcommand{\cO}{{\cal O}}
+\newcommand{\cP}{{\cal P}}
+\newcommand{\cQ}{{\cal Q}}
+\newcommand{\cR}{{\cal R}}
+\newcommand{\cS}{{\cal S}}
+\newcommand{\cT}{{\cal T}}
+\newcommand{\cU}{{\cal U}}
+\newcommand{\cV}{{\cal V}}
+\newcommand{\cW}{{\cal W}}
+\newcommand{\cX}{{\cal X}}
+\newcommand{\cY}{{\cal Y}}
+\newcommand{\cZ}{{\cal Z}}
+\newcommand{\rmA}{{\rm A}}
+\newcommand{\rmB}{{\rm B}}
+\newcommand{\rmC}{{\rm C}}
+\newcommand{\rmD}{{\rm D}}
+\newcommand{\rmE}{{\rm E}}
+\newcommand{\rmF}{{\rm F}}
+\newcommand{\rmG}{{\rm G}}
+\newcommand{\rmH}{{\rm H}}
+\newcommand{\rmI}{{\rm I}}
+\newcommand{\rmJ}{{\rm J}}
+\newcommand{\rmK}{{\rm K}}
+\newcommand{\rmL}{{\rm L}}
+\newcommand{\rmM}{{\rm M}}
+\newcommand{\rmN}{{\rm N}}
+\newcommand{\rmO}{{\rm O}}
+\newcommand{\rmP}{{\rm P}}
+\newcommand{\rmQ}{{\rm Q}}
+\newcommand{\rmR}{{\rm R}}
+\newcommand{\rmS}{{\rm S}}
+\newcommand{\rmT}{{\rm T}}
+\newcommand{\rmU}{{\rm U}}
+\newcommand{\rmV}{{\rm V}}
+\newcommand{\rmW}{{\rm W}}
+\newcommand{\rmX}{{\rm X}}
+\newcommand{\rmY}{{\rm Y}}
+\newcommand{\rmZ}{{\rm Z}}
+\newcommand{\bA}{{\bf A}}
+\newcommand{\bB}{{\bf B}}
+\newcommand{\bC}{{\bf C}}
+\newcommand{\bD}{{\bf D}}
+\newcommand{\bE}{{\bf E}}
+\newcommand{\bF}{{\bf F}}
+\newcommand{\bG}{{\bf G}}
+\newcommand{\bH}{{\bf H}}
+\newcommand{\bI}{{\bf I}}
+\newcommand{\bJ}{{\bf J}}
+\newcommand{\bK}{{\bf K}}
+\newcommand{\bL}{{\bf L}}
+\newcommand{\bM}{{\bf M}}
+\newcommand{\bN}{{\bf N}}
+\newcommand{\bO}{{\bf O}}
+\newcommand{\bP}{{\bf P}}
+\newcommand{\bQ}{{\bf Q}}
+\newcommand{\bR}{{\bf R}}
+\newcommand{\bS}{{\bf S}}
+\newcommand{\bT}{{\bf T}}
+\newcommand{\bU}{{\bf U}}
+\newcommand{\bV}{{\bf V}}
+\newcommand{\bW}{{\bf W}}
+\newcommand{\bX}{{\bf X}}
+\newcommand{\bY}{{\bf Y}}
+\newcommand{\bZ}{{\bf Z}}
+\newcommand{\sA}{{\cal A}}
+\newcommand{\sB}{{\cal B}}
+\newcommand{\sC}{{\cal C}}
+\newcommand{\sD}{{\cal D}}
+\newcommand{\sE}{{\cal E}}
+\newcommand{\sF}{{\cal F}}
+\newcommand{\sG}{{\cal G}}
+\newcommand{\sH}{{\cal H}}
+\newcommand{\sI}{{\cal I}}
+\newcommand{\sJ}{{\cal J}}
+\newcommand{\sK}{{\cal K}}
+\newcommand{\sL}{{\cal L}}
+\newcommand{\sM}{{\cal M}}
+\newcommand{\sN}{{\cal N}}
+\newcommand{\sO}{{\cal O}}
+\newcommand{\sP}{{\cal P}}
+\newcommand{\sQ}{{\cal Q}}
+\newcommand{\sR}{{\cal R}}
+\newcommand{\sS}{{\cal S}}
+\newcommand{\sT}{{\cal T}}
+\newcommand{\sU}{{\cal U}}
+\newcommand{\sV}{{\cal V}}
+\newcommand{\sW}{{\cal W}}
+\newcommand{\sX}{{\cal X}}
+\newcommand{\sY}{{\cal Y}}
+\newcommand{\sZ}{{\cal Z}}
+\newcommand{\frakA}{{\mathfrak A}}
+\newcommand{\frakB}{{\mathfrak B}}
+\newcommand{\frakC}{{\mathfrak C}}
+\newcommand{\frakD}{{\mathfrak D}}
+\newcommand{\frakE}{{\mathfrak E}}
+\newcommand{\frakF}{{\mathfrak F}}
+\newcommand{\frakG}{{\mathfrak G}}
+\newcommand{\frakH}{{\mathfrak H}}
+\newcommand{\frakI}{{\mathfrak I}}
+\newcommand{\frakJ}{{\mathfrak J}}
+\newcommand{\frakK}{{\mathfrak K}}
+\newcommand{\frakL}{{\mathfrak L}}
+\newcommand{\frakM}{{\mathfrak M}}
+\newcommand{\frakN}{{\mathfrak N}}
+\newcommand{\frakO}{{\mathfrak O}}
+\newcommand{\frakP}{{\mathfrak P}}
+\newcommand{\frakQ}{{\mathfrak Q}}
+\newcommand{\frakR}{{\mathfrak R}}
+\newcommand{\frakS}{{\mathfrak S}}
+\newcommand{\frakT}{{\mathfrak T}}
+\newcommand{\frakU}{{\mathfrak U}}
+\newcommand{\frakV}{{\mathfrak V}}
+\newcommand{\frakW}{{\mathfrak W}}
+\newcommand{\frakX}{{\mathfrak X}}
+\newcommand{\frakY}{{\mathfrak Y}}
+\newcommand{\frakZ}{{\mathfrak Z}}
+\newcommand{\fraka}{{\mathfrak a}}
+\newcommand{\frakb}{{\mathfrak b}}
+\newcommand{\frakc}{{\mathfrak c}}
+\newcommand{\frakd}{{\mathfrak d}}
+\newcommand{\frake}{{\mathfrak e}}
+\newcommand{\frakf}{{\mathfrak f}}
+\newcommand{\frakg}{{\mathfrak g}}
+\newcommand{\frakh}{{\mathfrak h}}
+\newcommand{\fraki}{{\mathfrak i}}
+\newcommand{\frakj}{{\mathfrak j}}
+\newcommand{\frakk}{{\mathfrak k}}
+\newcommand{\frakl}{{\mathfrak l}}
+\newcommand{\frakm}{{\mathfrak m}}
+\newcommand{\frakn}{{\mathfrak n}}
+\newcommand{\frako}{{\mathfrak o}}
+\newcommand{\frakp}{{\mathfrak p}}
+\newcommand{\frakq}{{\mathfrak q}}
+\newcommand{\frakr}{{\mathfrak r}}
+\newcommand{\fraks}{{\mathfrak s}}
+\newcommand{\frakt}{{\mathfrak t}}
+\newcommand{\fraku}{{\mathfrak u}}
+\newcommand{\frakv}{{\mathfrak v}}
+\newcommand{\frakw}{{\mathfrak w}}
+\newcommand{\frakx}{{\mathfrak x}}
+\newcommand{\fraky}{{\mathfrak y}}
+\newcommand{\frakz}{{\mathfrak z}}
+\newcommand{\Tetra}{{\mathfrak Tetra}}
+\newcommand{\Cube}{{\mathfrak Cube}}
+\newcommand{\Octa}{{\mathfrak Octa}}
+\newcommand{\Dode}{{\mathfrak Dode}}
+\newcommand{\Ico}{{\mathfrak Ico}}
+\newcommand{\bbF}{{\mathbb F}}
+\newcommand{\bbQ}{{\mathbb Q}}
+\newcommand{\bbC}{{\mathbb C}}
+\newcommand{\bbR}{{\mathbb R}}
+
+
+
+%\makeindex
+
+\begin{document} 
+\setTBstruts
+
+\bibliographystyle{plain}
+%\large
+
+{\allowdisplaybreaks%
+
+
+
+
+%\makeindex
+
+%\renewcommand{\labelenumi}{(\roman{enumi})}
+
+\title{by\_normal\_form\_q11 over GF(11)}
+\author{}%end author
+%\date{}
+\maketitle%
+%\pagenumbering{roman}
+%\thispagestyle{empty}
+%\input et.tex%
+%\thispagestyle{empty}%\phantom{page2}%\clearpage%
+%\addcontentsline{toc}{chapter}{Inhaltsverzeichnis}%
+%\tableofcontents
+%\listofsymbols
+%\pagenumbering{arabic}
+%\pagenumbering{roman}
+
+
+
+\subsection*{The equation}
+The equation of the quartic curve  is :
+$$
+\begin{array}{c}
+X_0^4 + 4X_1^4 + 4X_2^4 + 5X_0^3X_1 + 4X_0^3X_2 + 4X_0X_1^3 + 4X_1^3X_2 + 3X_0X_2^3\\
+ + 7X_1X_2^3 + 4X_0^2X_2^2 + 4X_1^2X_2^2 + 10X_0^2X_1X_2 + X_0X_1^2X_2 + X_0X_1X_2^2\end{array}
+$$
+$$
+( 1, 4, 4, 5, 4, 4, 4, 3, 7, 0, 4, 4, 10, 1, 1 )$$
+\begin{verbatim}
+X0^4 + 4*X1^4 + 4*X2^4 + 5*X0^3*X1 + 4*X0^3*X2 + 4*X0*X1^3 + 4*X1^3*X2 + 3*X0*X2^3 + 7*X1*X2^3 + 4*X0^2*X2^2 + 4*X1^2*X2^2 + 10*X0^2*X1*X2 + X0*X1^2*X2 + X0*X1*X2^2
+\end{verbatim}
+\subsection*{General information}
+{\renewcommand{\arraystretch}{1.5}
+$$
+\begin{array}{|l|r|}
+\hline
+\mbox{Number of bitangents} & 28\\
+\hline
+\mbox{Number of points} & 0\\
+\hline
+\mbox{Fullness} &  \mbox{is full}\\
+\hline
+\mbox{Number of Kovalevski points} & 21\\
+\hline
+\mbox{Bitangent line type $(a_0,a_1,a_2)$} & (28,
+0,
+0)\\
+\hline
+\mbox{Number of singular points} & 0\\
+\hline
+\end{array}
+$$}
+\subsection*{All points on the curve}
+The quartic has 0 points:\\
+The points on the quartic curve are:\\
+\begin{multicols}{3}
+\noindent
+\end{multicols}
+The points by rank are: 
+(  )\\
+The Kovalevski points are: \\
+0 : $P_{125}=( 3, 10, 1 ) = b_{2} \cap b_{5} \cap c_{23} \cap c_{35}$\\
+1 : $P_{61}=( 5, 4, 1 ) = a_{2} \cap a_{6} \cap c_{24} \cap c_{46}$\\
+2 : $P_{122}=( 0, 10, 1 ) = a_{2} \cap a_{3} \cap b_{2} \cap b_{3}$\\
+3 : $P_{120}=( 9, 9, 1 ) = c_{24} \cap c_{26} \cap c_{34} \cap c_{36}$\\
+4 : $P_{28}=( 5, 1, 1 ) = c_{12} \cap c_{13} \cap c_{25} \cap c_{35}$\\
+5 : $P_{109}=( 9, 8, 1 ) = a_{2} \cap b_{6} \cap c_{15} \cap c_{34}$\\
+6 : $P_{26}=( 3, 1, 1 ) = a_{1} \cap a_{6} \cap c_{12} \cap c_{26}$\\
+7 : $P_{103}=( 3, 8, 1 ) = c_{14} \cap c_{15} \cap c_{46} \cap c_{56}$\\
+8 : $P_{51}=( 6, 3, 1 ) = c_{16} \cap c_{23} \cap c_{45} \cap d$\\
+9 : $P_{101}=( 1, 8, 1 ) = b_{1} \cap b_{3} \cap c_{15} \cap c_{35}$\\
+10 : $P_{11}=( 8, 1, 0 ) = a_{4} \cap a_{6} \cap c_{14} \cap c_{16}$\\
+11 : $P_{94}=( 5, 7, 1 ) = b_{1} \cap b_{5} \cap c_{16} \cap c_{56}$\\
+12 : $P_{21}=( 8, 0, 1 ) = b_{4} \cap b_{6} \cap c_{45} \cap c_{56}$\\
+13 : $P_{10}=( 7, 1, 0 ) = b_{1} \cap b_{6} \cap c_{13} \cap c_{36}$\\
+14 : $P_{78}=( 0, 6, 1 ) = a_{3} \cap a_{4} \cap c_{23} \cap c_{24}$\\
+15 : $P_{35}=( 1, 2, 1 ) = a_{4} \cap b_{5} \cap c_{13} \cap c_{26}$\\
+16 : $P_{8}=( 5, 1, 0 ) = a_{1} \cap b_{3} \cap c_{25} \cap c_{46}$\\
+17 : $P_{68}=( 1, 5, 1 ) = a_{1} \cap a_{5} \cap c_{14} \cap c_{45}$\\
+18 : $P_{128}=( 6, 10, 1 ) = a_{5} \cap b_{2} \cap c_{25} \cap d$\\
+19 : $P_{31}=( 8, 1, 1 ) = a_{5} \cap b_{4} \cap c_{12} \cap c_{36}$\\
+20 : $P_{1}=( 0, 1, 0 ) = a_{3} \cap b_{4} \cap c_{34} \cap d$\\
+The incidence structure induced by the Kovalevski points is: 
+\\
+Flags=( 6, 16, 17, 22, 23, 26, 44, 56, 62, 73, 77, 78, 101, 102, 103, 106, 111, 115, 135, 137, 139, 147, 149, 165, 170, 177, 184, 201, 208, 209, 210, 221, 225, 236, 243, 244, 256, 258, 271, 277, 286, 288, 301, 304, 311, 320, 322, 324, 344, 346, 347, 357, 365, 371, 379, 381, 392, 403, 415, 417, 423, 426, 435, 444, 446, 461, 462, 466, 471, 486, 496, 502, 512, 516, 521, 526, 532, 541, 553, 557, 558, 575, 585, 587 )\\
+nb\_rows=28\\
+nb\_cols=21\\
+nb\_flags=84\\
+Incma=\\
+( 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0 )\\
+( 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 )\\
+( 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1 )\\
+( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0 )\\
+( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0 )\\
+( 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 )\\
+( 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0 )\\
+( 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0 )\\
+( 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0 )\\
+( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1 )\\
+( 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0 )\\
+( 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0 )\\
+( 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0 )\\
+( 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0 )\\
+( 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0 )\\
+( 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 )\\
+( 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0 )\\
+( 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0 )\\
+( 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0 )\\
+( 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0 )\\
+( 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 )\\
+( 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 )\\
+( 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 )\\
+( 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0 )\\
+( 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0 )\\
+( 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0 )\\
+( 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0 )\\
+( 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1 )\\
+The Kovalevski points sorted by rank are: 
+( 1, 8, 10, 11, 21, 26, 28, 31, 35, 51, 61, 68, 78, 94, 101, 103, 109, 120, 122, 125, 128 )\\
+The points off the curve are: \\
+\begin{multicols}{3}
+\noindent
+0 : $P_{0}=( 1, 0, 0 )$\\
+1 : $P_{1}=( 0, 1, 0 )$\\
+2 : $P_{2}=( 0, 0, 1 )$\\
+3 : $P_{3}=( 1, 1, 1 )$\\
+4 : $P_{4}=( 1, 1, 0 )$\\
+5 : $P_{5}=( 2, 1, 0 )$\\
+6 : $P_{6}=( 3, 1, 0 )$\\
+7 : $P_{7}=( 4, 1, 0 )$\\
+8 : $P_{8}=( 5, 1, 0 )$\\
+9 : $P_{9}=( 6, 1, 0 )$\\
+10 : $P_{10}=( 7, 1, 0 )$\\
+11 : $P_{11}=( 8, 1, 0 )$\\
+12 : $P_{12}=( 9, 1, 0 )$\\
+13 : $P_{13}=( 10, 1, 0 )$\\
+14 : $P_{14}=( 1, 0, 1 )$\\
+15 : $P_{15}=( 2, 0, 1 )$\\
+16 : $P_{16}=( 3, 0, 1 )$\\
+17 : $P_{17}=( 4, 0, 1 )$\\
+18 : $P_{18}=( 5, 0, 1 )$\\
+19 : $P_{19}=( 6, 0, 1 )$\\
+20 : $P_{20}=( 7, 0, 1 )$\\
+21 : $P_{21}=( 8, 0, 1 )$\\
+22 : $P_{22}=( 9, 0, 1 )$\\
+23 : $P_{23}=( 10, 0, 1 )$\\
+24 : $P_{24}=( 0, 1, 1 )$\\
+25 : $P_{25}=( 2, 1, 1 )$\\
+26 : $P_{26}=( 3, 1, 1 )$\\
+27 : $P_{27}=( 4, 1, 1 )$\\
+28 : $P_{28}=( 5, 1, 1 )$\\
+29 : $P_{29}=( 6, 1, 1 )$\\
+30 : $P_{30}=( 7, 1, 1 )$\\
+31 : $P_{31}=( 8, 1, 1 )$\\
+32 : $P_{32}=( 9, 1, 1 )$\\
+33 : $P_{33}=( 10, 1, 1 )$\\
+34 : $P_{34}=( 0, 2, 1 )$\\
+35 : $P_{35}=( 1, 2, 1 )$\\
+36 : $P_{36}=( 2, 2, 1 )$\\
+37 : $P_{37}=( 3, 2, 1 )$\\
+38 : $P_{38}=( 4, 2, 1 )$\\
+39 : $P_{39}=( 5, 2, 1 )$\\
+40 : $P_{40}=( 6, 2, 1 )$\\
+41 : $P_{41}=( 7, 2, 1 )$\\
+42 : $P_{42}=( 8, 2, 1 )$\\
+43 : $P_{43}=( 9, 2, 1 )$\\
+44 : $P_{44}=( 10, 2, 1 )$\\
+45 : $P_{45}=( 0, 3, 1 )$\\
+46 : $P_{46}=( 1, 3, 1 )$\\
+47 : $P_{47}=( 2, 3, 1 )$\\
+48 : $P_{48}=( 3, 3, 1 )$\\
+49 : $P_{49}=( 4, 3, 1 )$\\
+50 : $P_{50}=( 5, 3, 1 )$\\
+51 : $P_{51}=( 6, 3, 1 )$\\
+52 : $P_{52}=( 7, 3, 1 )$\\
+53 : $P_{53}=( 8, 3, 1 )$\\
+54 : $P_{54}=( 9, 3, 1 )$\\
+55 : $P_{55}=( 10, 3, 1 )$\\
+56 : $P_{56}=( 0, 4, 1 )$\\
+57 : $P_{57}=( 1, 4, 1 )$\\
+58 : $P_{58}=( 2, 4, 1 )$\\
+59 : $P_{59}=( 3, 4, 1 )$\\
+60 : $P_{60}=( 4, 4, 1 )$\\
+61 : $P_{61}=( 5, 4, 1 )$\\
+62 : $P_{62}=( 6, 4, 1 )$\\
+63 : $P_{63}=( 7, 4, 1 )$\\
+64 : $P_{64}=( 8, 4, 1 )$\\
+65 : $P_{65}=( 9, 4, 1 )$\\
+66 : $P_{66}=( 10, 4, 1 )$\\
+67 : $P_{67}=( 0, 5, 1 )$\\
+68 : $P_{68}=( 1, 5, 1 )$\\
+69 : $P_{69}=( 2, 5, 1 )$\\
+70 : $P_{70}=( 3, 5, 1 )$\\
+71 : $P_{71}=( 4, 5, 1 )$\\
+72 : $P_{72}=( 5, 5, 1 )$\\
+73 : $P_{73}=( 6, 5, 1 )$\\
+74 : $P_{74}=( 7, 5, 1 )$\\
+75 : $P_{75}=( 8, 5, 1 )$\\
+76 : $P_{76}=( 9, 5, 1 )$\\
+77 : $P_{77}=( 10, 5, 1 )$\\
+78 : $P_{78}=( 0, 6, 1 )$\\
+79 : $P_{79}=( 1, 6, 1 )$\\
+80 : $P_{80}=( 2, 6, 1 )$\\
+81 : $P_{81}=( 3, 6, 1 )$\\
+82 : $P_{82}=( 4, 6, 1 )$\\
+83 : $P_{83}=( 5, 6, 1 )$\\
+84 : $P_{84}=( 6, 6, 1 )$\\
+85 : $P_{85}=( 7, 6, 1 )$\\
+86 : $P_{86}=( 8, 6, 1 )$\\
+87 : $P_{87}=( 9, 6, 1 )$\\
+88 : $P_{88}=( 10, 6, 1 )$\\
+89 : $P_{89}=( 0, 7, 1 )$\\
+90 : $P_{90}=( 1, 7, 1 )$\\
+91 : $P_{91}=( 2, 7, 1 )$\\
+92 : $P_{92}=( 3, 7, 1 )$\\
+93 : $P_{93}=( 4, 7, 1 )$\\
+94 : $P_{94}=( 5, 7, 1 )$\\
+95 : $P_{95}=( 6, 7, 1 )$\\
+96 : $P_{96}=( 7, 7, 1 )$\\
+97 : $P_{97}=( 8, 7, 1 )$\\
+98 : $P_{98}=( 9, 7, 1 )$\\
+99 : $P_{99}=( 10, 7, 1 )$\\
+100 : $P_{100}=( 0, 8, 1 )$\\
+101 : $P_{101}=( 1, 8, 1 )$\\
+102 : $P_{102}=( 2, 8, 1 )$\\
+103 : $P_{103}=( 3, 8, 1 )$\\
+104 : $P_{104}=( 4, 8, 1 )$\\
+105 : $P_{105}=( 5, 8, 1 )$\\
+106 : $P_{106}=( 6, 8, 1 )$\\
+107 : $P_{107}=( 7, 8, 1 )$\\
+108 : $P_{108}=( 8, 8, 1 )$\\
+109 : $P_{109}=( 9, 8, 1 )$\\
+110 : $P_{110}=( 10, 8, 1 )$\\
+111 : $P_{111}=( 0, 9, 1 )$\\
+112 : $P_{112}=( 1, 9, 1 )$\\
+113 : $P_{113}=( 2, 9, 1 )$\\
+114 : $P_{114}=( 3, 9, 1 )$\\
+115 : $P_{115}=( 4, 9, 1 )$\\
+116 : $P_{116}=( 5, 9, 1 )$\\
+117 : $P_{117}=( 6, 9, 1 )$\\
+118 : $P_{118}=( 7, 9, 1 )$\\
+119 : $P_{119}=( 8, 9, 1 )$\\
+120 : $P_{120}=( 9, 9, 1 )$\\
+121 : $P_{121}=( 10, 9, 1 )$\\
+122 : $P_{122}=( 0, 10, 1 )$\\
+123 : $P_{123}=( 1, 10, 1 )$\\
+124 : $P_{124}=( 2, 10, 1 )$\\
+125 : $P_{125}=( 3, 10, 1 )$\\
+126 : $P_{126}=( 4, 10, 1 )$\\
+127 : $P_{127}=( 5, 10, 1 )$\\
+128 : $P_{128}=( 6, 10, 1 )$\\
+129 : $P_{129}=( 7, 10, 1 )$\\
+130 : $P_{130}=( 8, 10, 1 )$\\
+131 : $P_{131}=( 9, 10, 1 )$\\
+132 : $P_{132}=( 10, 10, 1 )$\\
+\end{multicols}
+( 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132 )\\
+\subsection*{Duals of Bitangents}
+dual of bitangents:\\
+0 : $P_{51}=( 6, 3, 1 )$\\
+1 : $P_{33}=( 10, 1, 1 )$\\
+2 : $P_{0}=( 1, 0, 0 )$\\
+3 : $P_{114}=( 3, 9, 1 )$\\
+4 : $P_{103}=( 3, 8, 1 )$\\
+5 : $P_{76}=( 9, 5, 1 )$\\
+6 : $P_{6}=( 3, 1, 0 )$\\
+7 : $P_{24}=( 0, 1, 1 )$\\
+8 : $P_{25}=( 2, 1, 1 )$\\
+9 : $P_{17}=( 4, 0, 1 )$\\
+10 : $P_{87}=( 9, 6, 1 )$\\
+11 : $P_{71}=( 4, 5, 1 )$\\
+12 : $P_{122}=( 0, 10, 1 )$\\
+13 : $P_{40}=( 6, 2, 1 )$\\
+14 : $P_{80}=( 2, 6, 1 )$\\
+15 : $P_{56}=( 0, 4, 1 )$\\
+16 : $P_{42}=( 8, 2, 1 )$\\
+17 : $P_{121}=( 10, 9, 1 )$\\
+18 : $P_{119}=( 8, 9, 1 )$\\
+19 : $P_{5}=( 2, 1, 0 )$\\
+20 : $P_{58}=( 2, 4, 1 )$\\
+21 : $P_{19}=( 6, 0, 1 )$\\
+22 : $P_{53}=( 8, 3, 1 )$\\
+23 : $P_{99}=( 10, 7, 1 )$\\
+24 : $P_{126}=( 4, 10, 1 )$\\
+25 : $P_{92}=( 3, 7, 1 )$\\
+26 : $P_{104}=( 4, 8, 1 )$\\
+27 : $P_{22}=( 9, 0, 1 )$\\
+Dimension of the vanishing ideal is 0\\
+\begin{verbatim}
+\end{verbatim}
+The lines and their points of contact are:\\
+$
+a_{1} = 
+\left[
+\begin{array}{*{3}{r}}
+1 & 0 & 5\\
+0 & 1 & 8\\
+\end{array}
+\right]
+_{68}
+$\\
+$
+a_{2} = 
+\left[
+\begin{array}{*{3}{r}}
+1 & 0 & 1\\
+0 & 1 & 10\\
+\end{array}
+\right]
+_{22}
+$\\
+$
+a_{3} = 
+\left[
+\begin{array}{*{3}{r}}
+0 & 1 & 0\\
+0 & 0 & 1\\
+\end{array}
+\right]
+_{132}
+$\\
+$
+a_{4} = 
+\left[
+\begin{array}{*{3}{r}}
+1 & 0 & 8\\
+0 & 1 & 2\\
+\end{array}
+\right]
+_{98}
+$\\
+$
+a_{5} = 
+\left[
+\begin{array}{*{3}{r}}
+1 & 0 & 8\\
+0 & 1 & 3\\
+\end{array}
+\right]
+_{99}
+$\\
+$
+a_{6} = 
+\left[
+\begin{array}{*{3}{r}}
+1 & 0 & 2\\
+0 & 1 & 6\\
+\end{array}
+\right]
+_{30}
+$\\
+$
+b_{1} = 
+\left[
+\begin{array}{*{3}{r}}
+1 & 8 & 0\\
+0 & 0 & 1\\
+\end{array}
+\right]
+_{107}
+$\\
+$
+b_{2} = 
+\left[
+\begin{array}{*{3}{r}}
+1 & 0 & 0\\
+0 & 1 & 10\\
+\end{array}
+\right]
+_{10}
+$\\
+$
+b_{3} = 
+\left[
+\begin{array}{*{3}{r}}
+1 & 0 & 9\\
+0 & 1 & 10\\
+\end{array}
+\right]
+_{118}
+$\\
+$
+b_{4} = 
+\left[
+\begin{array}{*{3}{r}}
+1 & 0 & 7\\
+0 & 1 & 0\\
+\end{array}
+\right]
+_{84}
+$\\
+$
+b_{5} = 
+\left[
+\begin{array}{*{3}{r}}
+1 & 0 & 2\\
+0 & 1 & 5\\
+\end{array}
+\right]
+_{29}
+$\\
+$
+b_{6} = 
+\left[
+\begin{array}{*{3}{r}}
+1 & 0 & 7\\
+0 & 1 & 6\\
+\end{array}
+\right]
+_{90}
+$\\
+$
+c_{12} = 
+\left[
+\begin{array}{*{3}{r}}
+1 & 0 & 0\\
+0 & 1 & 1\\
+\end{array}
+\right]
+_{1}
+$\\
+$
+c_{13} = 
+\left[
+\begin{array}{*{3}{r}}
+1 & 0 & 5\\
+0 & 1 & 9\\
+\end{array}
+\right]
+_{69}
+$\\
+$
+c_{14} = 
+\left[
+\begin{array}{*{3}{r}}
+1 & 0 & 9\\
+0 & 1 & 5\\
+\end{array}
+\right]
+_{113}
+$\\
+$
+c_{15} = 
+\left[
+\begin{array}{*{3}{r}}
+1 & 0 & 0\\
+0 & 1 & 7\\
+\end{array}
+\right]
+_{7}
+$\\
+$
+c_{16} = 
+\left[
+\begin{array}{*{3}{r}}
+1 & 0 & 3\\
+0 & 1 & 9\\
+\end{array}
+\right]
+_{45}
+$\\
+$
+c_{23} = 
+\left[
+\begin{array}{*{3}{r}}
+1 & 0 & 1\\
+0 & 1 & 2\\
+\end{array}
+\right]
+_{14}
+$\\
+$
+c_{24} = 
+\left[
+\begin{array}{*{3}{r}}
+1 & 0 & 3\\
+0 & 1 & 2\\
+\end{array}
+\right]
+_{38}
+$\\
+$
+c_{25} = 
+\left[
+\begin{array}{*{3}{r}}
+1 & 9 & 0\\
+0 & 0 & 1\\
+\end{array}
+\right]
+_{119}
+$\\
+$
+c_{26} = 
+\left[
+\begin{array}{*{3}{r}}
+1 & 0 & 9\\
+0 & 1 & 7\\
+\end{array}
+\right]
+_{115}
+$\\
+$
+c_{34} = 
+\left[
+\begin{array}{*{3}{r}}
+1 & 0 & 5\\
+0 & 1 & 0\\
+\end{array}
+\right]
+_{60}
+$\\
+$
+c_{35} = 
+\left[
+\begin{array}{*{3}{r}}
+1 & 0 & 3\\
+0 & 1 & 8\\
+\end{array}
+\right]
+_{44}
+$\\
+$
+c_{36} = 
+\left[
+\begin{array}{*{3}{r}}
+1 & 0 & 1\\
+0 & 1 & 4\\
+\end{array}
+\right]
+_{16}
+$\\
+$
+c_{45} = 
+\left[
+\begin{array}{*{3}{r}}
+1 & 0 & 7\\
+0 & 1 & 1\\
+\end{array}
+\right]
+_{85}
+$\\
+$
+c_{46} = 
+\left[
+\begin{array}{*{3}{r}}
+1 & 0 & 8\\
+0 & 1 & 4\\
+\end{array}
+\right]
+_{100}
+$\\
+$
+c_{56} = 
+\left[
+\begin{array}{*{3}{r}}
+1 & 0 & 7\\
+0 & 1 & 3\\
+\end{array}
+\right]
+_{87}
+$\\
+$
+d = 
+\left[
+\begin{array}{*{3}{r}}
+1 & 0 & 2\\
+0 & 1 & 0\\
+\end{array}
+\right]
+_{24}
+$\\
+Rank of lines: ( 68, 22, 132, 98, 99, 30, 107, 10, 118, 84, 29, 90, 1, 69, 113, 7, 45, 14, 38, 119, 115, 60, 44, 16, 85, 100, 87, 24 )\\
+Line type: $
+0^{28}$\\
+$$
+\begin{array}{|r|r|l|}
+\hline
+28 & 0 & \begin{array}{l}
+1, 2, 3, 4, 5, 6, 7, 8, 9, 10, \\
+11, 12, 13, 14, 15, 16, 17, 18, 19, 20, \\
+21, 22, 23, 24, 25, 26, 27, 0\end{array}
+\\
+\hline
+\end{array}
+$$
+point types: $
+$\\
+$$
+\begin{array}{|r|r|l|}
+\end{array}
+$$
+point types for points off the curve: $
+4^{21},\,3^{84},\,0^{28}$\\
+$$
+\begin{array}{|r|r|l|}
+\hline
+21 & 4 & \begin{array}{l}
+125, 61, 122, 120, 28, 109, 26, 103, 51, 101, \\
+11, 94, 21, 10, 78, 35, 8, 68, 128, 31, \\
+1\end{array}
+\\
+\hline
+\hline
+84 & 3 & \begin{array}{l}
+30, 14, 29, 116, 55, 27, 6, 121, 123, 59, \\
+49, 47, 2, 119, 113, 22, 91, 45, 95, 97, \\
+100, 24, 12, 52, 53, 60, 111, 56, 44, 117, \\
+43, 4, 126, 42, 84, 20, 40, 80, 19, 62, \\
+18, 37, 130, 73, 17, 131, 75, 76, 77, 38, \\
+129, 70, 69, 82, 34, 33, 85, 86, 87, 88, \\
+89, 67, 0, 92, 65, 32, 64, 96, 63, 98, \\
+127, 3, 132, 102, 25, 104, 105, 106, 107, 108, \\
+54, 110, 124, 112\end{array}
+\\
+\hline
+\hline
+28 & 0 & \begin{array}{l}
+58, 46, 15, 115, 74, 99, 83, 71, 114, 118, \\
+16, 36, 90, 50, 48, 41, 79, 72, 23, 5, \\
+57, 13, 7, 66, 93, 9, 39, 81\end{array}
+\\
+\hline
+\end{array}
+$$
+Lines on points off the curve:\\
+Off point 0 = $P_{0} = ( 1, 0, 0 )$ lies on 3 bisecants : \{ 7, 12, 15 \}\\
+Off point 1 = $P_{1} = ( 0, 1, 0 )$ lies on 4 bisecants : \{ 2, 9, 21, 27 \}\\
+Off point 2 = $P_{2} = ( 0, 0, 1 )$ lies on 3 bisecants : \{ 2, 6, 19 \}\\
+Off point 3 = $P_{3} = ( 1, 1, 1 )$ lies on 3 bisecants : \{ 12, 16, 25 \}\\
+Off point 4 = $P_{4} = ( 1, 1, 0 )$ lies on 3 bisecants : \{ 1, 4, 22 \}\\
+Off point 5 = $P_{5} = ( 2, 1, 0 )$ lies on 0 bisecants : \{  \}\\
+Off point 6 = $P_{6} = ( 3, 1, 0 )$ lies on 3 bisecants : \{ 10, 18, 24 \}\\
+Off point 7 = $P_{7} = ( 4, 1, 0 )$ lies on 0 bisecants : \{  \}\\
+Off point 8 = $P_{8} = ( 5, 1, 0 )$ lies on 4 bisecants : \{ 0, 8, 19, 25 \}\\
+Off point 9 = $P_{9} = ( 6, 1, 0 )$ lies on 0 bisecants : \{  \}\\
+Off point 10 = $P_{10} = ( 7, 1, 0 )$ lies on 4 bisecants : \{ 6, 11, 13, 23 \}\\
+Off point 11 = $P_{11} = ( 8, 1, 0 )$ lies on 4 bisecants : \{ 3, 5, 14, 16 \}\\
+Off point 12 = $P_{12} = ( 9, 1, 0 )$ lies on 3 bisecants : \{ 17, 20, 26 \}\\
+Off point 13 = $P_{13} = ( 10, 1, 0 )$ lies on 0 bisecants : \{  \}\\
+Off point 14 = $P_{14} = ( 1, 0, 1 )$ lies on 3 bisecants : \{ 1, 17, 23 \}\\
+Off point 15 = $P_{15} = ( 2, 0, 1 )$ lies on 0 bisecants : \{  \}\\
+Off point 16 = $P_{16} = ( 3, 0, 1 )$ lies on 0 bisecants : \{  \}\\
+Off point 17 = $P_{17} = ( 4, 0, 1 )$ lies on 3 bisecants : \{ 16, 18, 22 \}\\
+Off point 18 = $P_{18} = ( 5, 0, 1 )$ lies on 3 bisecants : \{ 8, 14, 20 \}\\
+Off point 19 = $P_{19} = ( 6, 0, 1 )$ lies on 3 bisecants : \{ 5, 10, 27 \}\\
+Off point 20 = $P_{20} = ( 7, 0, 1 )$ lies on 3 bisecants : \{ 3, 4, 25 \}\\
+Off point 21 = $P_{21} = ( 8, 0, 1 )$ lies on 4 bisecants : \{ 9, 11, 24, 26 \}\\
+Off point 22 = $P_{22} = ( 9, 0, 1 )$ lies on 3 bisecants : \{ 0, 13, 21 \}\\
+Off point 23 = $P_{23} = ( 10, 0, 1 )$ lies on 0 bisecants : \{  \}\\
+Off point 24 = $P_{24} = ( 0, 1, 1 )$ lies on 3 bisecants : \{ 2, 12, 24 \}\\
+Off point 25 = $P_{25} = ( 2, 1, 1 )$ lies on 3 bisecants : \{ 1, 12, 14 \}\\
+Off point 26 = $P_{26} = ( 3, 1, 1 )$ lies on 4 bisecants : \{ 0, 5, 12, 20 \}\\
+Off point 27 = $P_{27} = ( 4, 1, 1 )$ lies on 3 bisecants : \{ 3, 11, 12 \}\\
+Off point 28 = $P_{28} = ( 5, 1, 1 )$ lies on 4 bisecants : \{ 12, 13, 19, 22 \}\\
+Off point 29 = $P_{29} = ( 6, 1, 1 )$ lies on 3 bisecants : \{ 12, 26, 27 \}\\
+Off point 30 = $P_{30} = ( 7, 1, 1 )$ lies on 3 bisecants : \{ 6, 12, 18 \}\\
+Off point 31 = $P_{31} = ( 8, 1, 1 )$ lies on 4 bisecants : \{ 4, 9, 12, 23 \}\\
+Off point 32 = $P_{32} = ( 9, 1, 1 )$ lies on 3 bisecants : \{ 10, 12, 21 \}\\
+Off point 33 = $P_{33} = ( 10, 1, 1 )$ lies on 3 bisecants : \{ 8, 12, 17 \}\\
+Off point 34 = $P_{34} = ( 0, 2, 1 )$ lies on 3 bisecants : \{ 2, 5, 11 \}\\
+Off point 35 = $P_{35} = ( 1, 2, 1 )$ lies on 4 bisecants : \{ 3, 10, 13, 20 \}\\
+Off point 36 = $P_{36} = ( 2, 2, 1 )$ lies on 0 bisecants : \{  \}\\
+Off point 37 = $P_{37} = ( 3, 2, 1 )$ lies on 3 bisecants : \{ 1, 6, 24 \}\\
+Off point 38 = $P_{38} = ( 4, 2, 1 )$ lies on 3 bisecants : \{ 8, 23, 26 \}\\
+Off point 39 = $P_{39} = ( 5, 2, 1 )$ lies on 0 bisecants : \{  \}\\
+Off point 40 = $P_{40} = ( 6, 2, 1 )$ lies on 3 bisecants : \{ 22, 25, 27 \}\\
+Off point 41 = $P_{41} = ( 7, 2, 1 )$ lies on 0 bisecants : \{  \}\\
+Off point 42 = $P_{42} = ( 8, 2, 1 )$ lies on 3 bisecants : \{ 0, 9, 17 \}\\
+Off point 43 = $P_{43} = ( 9, 2, 1 )$ lies on 3 bisecants : \{ 4, 16, 21 \}\\
+Off point 44 = $P_{44} = ( 10, 2, 1 )$ lies on 3 bisecants : \{ 14, 18, 19 \}\\
+Off point 45 = $P_{45} = ( 0, 3, 1 )$ lies on 3 bisecants : \{ 2, 23, 25 \}\\
+Off point 46 = $P_{46} = ( 1, 3, 1 )$ lies on 0 bisecants : \{  \}\\
+Off point 47 = $P_{47} = ( 2, 3, 1 )$ lies on 3 bisecants : \{ 0, 18, 26 \}\\
+Off point 48 = $P_{48} = ( 3, 3, 1 )$ lies on 0 bisecants : \{  \}\\
+Off point 49 = $P_{49} = ( 4, 3, 1 )$ lies on 3 bisecants : \{ 1, 10, 19 \}\\
+Off point 50 = $P_{50} = ( 5, 3, 1 )$ lies on 0 bisecants : \{  \}\\
+Off point 51 = $P_{51} = ( 6, 3, 1 )$ lies on 4 bisecants : \{ 16, 17, 24, 27 \}\\
+Off point 52 = $P_{52} = ( 7, 3, 1 )$ lies on 3 bisecants : \{ 11, 14, 22 \}\\
+Off point 53 = $P_{53} = ( 8, 3, 1 )$ lies on 3 bisecants : \{ 5, 9, 13 \}\\
+Off point 54 = $P_{54} = ( 9, 3, 1 )$ lies on 3 bisecants : \{ 3, 8, 21 \}\\
+Off point 55 = $P_{55} = ( 10, 3, 1 )$ lies on 3 bisecants : \{ 4, 6, 20 \}\\
+Off point 56 = $P_{56} = ( 0, 4, 1 )$ lies on 3 bisecants : \{ 2, 4, 26 \}\\
+Off point 57 = $P_{57} = ( 1, 4, 1 )$ lies on 0 bisecants : \{  \}\\
+Off point 58 = $P_{58} = ( 2, 4, 1 )$ lies on 0 bisecants : \{  \}\\
+Off point 59 = $P_{59} = ( 3, 4, 1 )$ lies on 3 bisecants : \{ 8, 11, 16 \}\\
+Off point 60 = $P_{60} = ( 4, 4, 1 )$ lies on 3 bisecants : \{ 13, 14, 17 \}\\
+Off point 61 = $P_{61} = ( 5, 4, 1 )$ lies on 4 bisecants : \{ 1, 5, 18, 25 \}\\
+Off point 62 = $P_{62} = ( 6, 4, 1 )$ lies on 3 bisecants : \{ 3, 6, 27 \}\\
+Off point 63 = $P_{63} = ( 7, 4, 1 )$ lies on 3 bisecants : \{ 0, 10, 23 \}\\
+Off point 64 = $P_{64} = ( 8, 4, 1 )$ lies on 3 bisecants : \{ 9, 20, 22 \}\\
+Off point 65 = $P_{65} = ( 9, 4, 1 )$ lies on 3 bisecants : \{ 19, 21, 24 \}\\
+Off point 66 = $P_{66} = ( 10, 4, 1 )$ lies on 0 bisecants : \{  \}\\
+Off point 67 = $P_{67} = ( 0, 5, 1 )$ lies on 3 bisecants : \{ 2, 13, 16 \}\\
+Off point 68 = $P_{68} = ( 1, 5, 1 )$ lies on 4 bisecants : \{ 0, 4, 14, 24 \}\\
+Off point 69 = $P_{69} = ( 2, 5, 1 )$ lies on 3 bisecants : \{ 5, 6, 17 \}\\
+Off point 70 = $P_{70} = ( 3, 5, 1 )$ lies on 3 bisecants : \{ 3, 19, 23 \}\\
+Off point 71 = $P_{71} = ( 4, 5, 1 )$ lies on 0 bisecants : \{  \}\\
+Off point 72 = $P_{72} = ( 5, 5, 1 )$ lies on 0 bisecants : \{  \}\\
+Off point 73 = $P_{73} = ( 6, 5, 1 )$ lies on 3 bisecants : \{ 1, 20, 27 \}\\
+Off point 74 = $P_{74} = ( 7, 5, 1 )$ lies on 0 bisecants : \{  \}\\
+Off point 75 = $P_{75} = ( 8, 5, 1 )$ lies on 3 bisecants : \{ 8, 9, 18 \}\\
+Off point 76 = $P_{76} = ( 9, 5, 1 )$ lies on 3 bisecants : \{ 21, 22, 26 \}\\
+Off point 77 = $P_{77} = ( 10, 5, 1 )$ lies on 3 bisecants : \{ 10, 11, 25 \}\\
+Off point 78 = $P_{78} = ( 0, 6, 1 )$ lies on 4 bisecants : \{ 2, 3, 17, 18 \}\\
+Off point 79 = $P_{79} = ( 1, 6, 1 )$ lies on 0 bisecants : \{  \}\\
+Off point 80 = $P_{80} = ( 2, 6, 1 )$ lies on 3 bisecants : \{ 4, 8, 10 \}\\
+Off point 81 = $P_{81} = ( 3, 6, 1 )$ lies on 0 bisecants : \{  \}\\
+Off point 82 = $P_{82} = ( 4, 6, 1 )$ lies on 3 bisecants : \{ 20, 24, 25 \}\\
+Off point 83 = $P_{83} = ( 5, 6, 1 )$ lies on 0 bisecants : \{  \}\\
+Off point 84 = $P_{84} = ( 6, 6, 1 )$ lies on 3 bisecants : \{ 0, 11, 27 \}\\
+Off point 85 = $P_{85} = ( 7, 6, 1 )$ lies on 3 bisecants : \{ 1, 13, 26 \}\\
+Off point 86 = $P_{86} = ( 8, 6, 1 )$ lies on 3 bisecants : \{ 9, 16, 19 \}\\
+Off point 87 = $P_{87} = ( 9, 6, 1 )$ lies on 3 bisecants : \{ 6, 14, 21 \}\\
+Off point 88 = $P_{88} = ( 10, 6, 1 )$ lies on 3 bisecants : \{ 5, 22, 23 \}\\
+Off point 89 = $P_{89} = ( 0, 7, 1 )$ lies on 3 bisecants : \{ 0, 2, 22 \}\\
+Off point 90 = $P_{90} = ( 1, 7, 1 )$ lies on 0 bisecants : \{  \}\\
+Off point 91 = $P_{91} = ( 2, 7, 1 )$ lies on 3 bisecants : \{ 11, 19, 20 \}\\
+Off point 92 = $P_{92} = ( 3, 7, 1 )$ lies on 3 bisecants : \{ 4, 13, 18 \}\\
+Off point 93 = $P_{93} = ( 4, 7, 1 )$ lies on 0 bisecants : \{  \}\\
+Off point 94 = $P_{94} = ( 5, 7, 1 )$ lies on 4 bisecants : \{ 6, 10, 16, 26 \}\\
+Off point 95 = $P_{95} = ( 6, 7, 1 )$ lies on 3 bisecants : \{ 14, 23, 27 \}\\
+Off point 96 = $P_{96} = ( 7, 7, 1 )$ lies on 3 bisecants : \{ 5, 8, 24 \}\\
+Off point 97 = $P_{97} = ( 8, 7, 1 )$ lies on 3 bisecants : \{ 1, 3, 9 \}\\
+Off point 98 = $P_{98} = ( 9, 7, 1 )$ lies on 3 bisecants : \{ 17, 21, 25 \}\\
+Off point 99 = $P_{99} = ( 10, 7, 1 )$ lies on 0 bisecants : \{  \}\\
+Off point 100 = $P_{100} = ( 0, 8, 1 )$ lies on 3 bisecants : \{ 2, 15, 20 \}\\
+Off point 101 = $P_{101} = ( 1, 8, 1 )$ lies on 4 bisecants : \{ 6, 8, 15, 22 \}\\
+Off point 102 = $P_{102} = ( 2, 8, 1 )$ lies on 3 bisecants : \{ 15, 16, 23 \}\\
+Off point 103 = $P_{103} = ( 3, 8, 1 )$ lies on 4 bisecants : \{ 14, 15, 25, 26 \}\\
+Off point 104 = $P_{104} = ( 4, 8, 1 )$ lies on 3 bisecants : \{ 4, 5, 15 \}\\
+Off point 105 = $P_{105} = ( 5, 8, 1 )$ lies on 3 bisecants : \{ 0, 3, 15 \}\\
+Off point 106 = $P_{106} = ( 6, 8, 1 )$ lies on 3 bisecants : \{ 15, 18, 27 \}\\
+Off point 107 = $P_{107} = ( 7, 8, 1 )$ lies on 3 bisecants : \{ 15, 17, 19 \}\\
+Off point 108 = $P_{108} = ( 8, 8, 1 )$ lies on 3 bisecants : \{ 9, 10, 15 \}\\
+Off point 109 = $P_{109} = ( 9, 8, 1 )$ lies on 4 bisecants : \{ 1, 11, 15, 21 \}\\
+Off point 110 = $P_{110} = ( 10, 8, 1 )$ lies on 3 bisecants : \{ 13, 15, 24 \}\\
+Off point 111 = $P_{111} = ( 0, 9, 1 )$ lies on 3 bisecants : \{ 2, 10, 14 \}\\
+Off point 112 = $P_{112} = ( 1, 9, 1 )$ lies on 3 bisecants : \{ 5, 19, 26 \}\\
+Off point 113 = $P_{113} = ( 2, 9, 1 )$ lies on 3 bisecants : \{ 3, 22, 24 \}\\
+Off point 114 = $P_{114} = ( 3, 9, 1 )$ lies on 0 bisecants : \{  \}\\
+Off point 115 = $P_{115} = ( 4, 9, 1 )$ lies on 0 bisecants : \{  \}\\
+Off point 116 = $P_{116} = ( 5, 9, 1 )$ lies on 3 bisecants : \{ 4, 11, 17 \}\\
+Off point 117 = $P_{117} = ( 6, 9, 1 )$ lies on 3 bisecants : \{ 8, 13, 27 \}\\
+Off point 118 = $P_{118} = ( 7, 9, 1 )$ lies on 0 bisecants : \{  \}\\
+Off point 119 = $P_{119} = ( 8, 9, 1 )$ lies on 3 bisecants : \{ 6, 9, 25 \}\\
+Off point 120 = $P_{120} = ( 9, 9, 1 )$ lies on 4 bisecants : \{ 18, 20, 21, 23 \}\\
+Off point 121 = $P_{121} = ( 10, 9, 1 )$ lies on 3 bisecants : \{ 0, 1, 16 \}\\
+Off point 122 = $P_{122} = ( 0, 10, 1 )$ lies on 4 bisecants : \{ 1, 2, 7, 8 \}\\
+Off point 123 = $P_{123} = ( 1, 10, 1 )$ lies on 3 bisecants : \{ 7, 11, 18 \}\\
+Off point 124 = $P_{124} = ( 2, 10, 1 )$ lies on 3 bisecants : \{ 7, 13, 25 \}\\
+Off point 125 = $P_{125} = ( 3, 10, 1 )$ lies on 4 bisecants : \{ 7, 10, 17, 22 \}\\
+Off point 126 = $P_{126} = ( 4, 10, 1 )$ lies on 3 bisecants : \{ 0, 6, 7 \}\\
+Off point 127 = $P_{127} = ( 5, 10, 1 )$ lies on 3 bisecants : \{ 7, 23, 24 \}\\
+Off point 128 = $P_{128} = ( 6, 10, 1 )$ lies on 4 bisecants : \{ 4, 7, 19, 27 \}\\
+Off point 129 = $P_{129} = ( 7, 10, 1 )$ lies on 3 bisecants : \{ 7, 16, 20 \}\\
+Off point 130 = $P_{130} = ( 8, 10, 1 )$ lies on 3 bisecants : \{ 7, 9, 14 \}\\
+Off point 131 = $P_{131} = ( 9, 10, 1 )$ lies on 3 bisecants : \{ 5, 7, 21 \}\\
+Off point 132 = $P_{132} = ( 10, 10, 1 )$ lies on 3 bisecants : \{ 3, 7, 26 \}\\
+\subsection*{The gradient}
+The gradient of the quartic curve  is :
+$$
+\begin{array}{c}
+4X_0^3 + 4X_1^3 + 3X_2^3 + 4X_0^2X_1 + X_0^2X_2 + X_1^2X_2 + 8X_0X_2^2 + X_1X_2^2\\
+ + 9X_0X_1X_2\end{array}
+$$
+$$
+( 4, 4, 3, 4, 1, 0, 1, 8, 1, 9 )$$
+$$
+\begin{array}{c}
+5X_0^3 + 5X_1^3 + 7X_2^3 + 10X_0^2X_2 + X_0X_1^2 + X_1^2X_2 + X_0X_2^2 + 8X_1X_2^2\\
+ + 2X_0X_1X_2\end{array}
+$$
+$$
+( 5, 5, 7, 0, 10, 1, 1, 1, 8, 2 )$$
+$$
+\begin{array}{c}
+4X_0^3 + 4X_1^3 + 5X_2^3 + 10X_0^2X_1 + 8X_0^2X_2 + X_0X_1^2 + 8X_1^2X_2 + 9X_0X_2^2\\
+ + 10X_1X_2^2 + 2X_0X_1X_2\end{array}
+$$
+$$
+( 4, 4, 5, 10, 8, 1, 8, 9, 10, 2 )$$
+
+
+%\bibliographystyle{gerplain}% wird oben eingestellt
+%\addcontentsline{toc}{section}{References}
+%\bibliography{../MY_BIBLIOGRAPHY/anton}
+% ACHTUNG: nicht vergessen:
+% die Zeile
+%\addcontentsline{toc}{chapter}{Literaturverzeichnis}
+% muss per Hand in d.bbl eingefuegt werden !
+% nach \begin{thebibliography}{100}
+
+%\begin{theindex}
+
+%\clearpage
+%\addcontentsline{toc}{chapter}{Index}
+%\input{apd.ind}
+
+%\printindex
+%\end{theindex}
+
+}% allowdisplaybreaks
+
+\end{document}
+
+

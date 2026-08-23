@@ -1,0 +1,108 @@
+Welcome to Orbiter! Your build number is 3352.
+do_orbiter_session
+orbiter_top_level_session::orbiter_top_level_session before new orbiter_session
+orbiter_session::orbiter_session
+orbiter_session::orbiter_session done
+orbiter_top_level_session::orbiter_top_level_session after new orbiter_session
+do_orbiter_session before execute_command_line
+orbiter_top_level_session::execute_command_line
+A user's guide is available here: 
+https://www.math.colostate.edu/~betten/orbiter/users_guide.pdf
+The sources are available here: 
+https://github.com/abetten/orbiter
+An example makefile with many commands from the user's guide is here: 
+https://github.com/abetten/orbiter/tree/master/examples/users_guide/makefile
+SYSTEMUNIX is defined
+SYSTEM_IS_MACINTOSH is defined
+sizeof(int)=4
+sizeof(long int)=8
+session_verbose_level = 3
+orbiter_top_level_session::execute_command_line before handle_everything
+orbiter_top_level_session::handle_everything memory_debug before parse_and_execute
+orbiter_top_level_session::parse parsing the orbiter dash code
+orbiter_top_level_session::parse cnt = 0, i = 3
+orbiter_top_level_session::parse i=3, next argument is -define
+orbiter_top_level_session::parse i = 3
+orbiter_top_level_session::parse before OC->parse
+orbiter_command::parse
+interface_symbol_table::init
+interface_symbol_table::done
+orbiter_command::parse recognizing keyword from Interface_symbol_table
+interface_symbol_table::read_arguments
+interface_symbol_table::read_arguments the next argument is -define
+interface_symbol_table::read_arguments before Symbol_definition->read_definition
+symbol_definition::read_definition i=3 argc=33
+symbol_definition::read_definition define_label=F
+-define F
+reading -finite_field
+finite_field_description::read_arguments
+-q 2
+-end
+finite_field_description::read_arguments done
+-finite_field
+i = 9
+argc = 33
+next argument is -define
+symbol_definition::read_definition done
+interface_symbol_table::read_arguments after Symbol_definition->read_definition
+interface_symbol_table::read_arguments done
+orbiter_command::parse after Interface_symbol_table.read_arguments, i=9
+orbiter_top_level_session::parse after OC->parse
+orbiter_top_level_session::parse command 0 starting at token 9 is:
+-define F 
+-finite_field -q 2
+orbiter_top_level_session::parse cnt = 1, i = 9
+orbiter_top_level_session::parse i=9, next argument is -define
+orbiter_top_level_session::parse i = 9
+orbiter_top_level_session::parse before OC->parse
+orbiter_command::parse
+interface_symbol_table::init
+interface_symbol_table::done
+orbiter_command::parse recognizing keyword from Interface_symbol_table
+interface_symbol_table::read_arguments
+interface_symbol_table::read_arguments the next argument is -define
+interface_symbol_table::read_arguments before Symbol_definition->read_definition
+symbol_definition::read_definition i=9 argc=33
+symbol_definition::read_definition define_label=P
+-define P
+reading -projective_space
+projective_space_with_action_description::read_arguments
+-n 2
+projective_space_with_action_description::read_arguments looping, i=1
+-field F
+projective_space_with_action_description::read_arguments looping, i=3
+-v 0
+projective_space_with_action_description::read_arguments looping, i=5
+-end
+projective_space_with_action_description::read_arguments done
+-projective_space
+i = 19
+argc = 33
+next argument is -define
+symbol_definition::read_definition done
+interface_symbol_table::read_arguments after Symbol_definition->read_definition
+interface_symbol_table::read_arguments done
+orbiter_command::parse after Interface_symbol_table.read_arguments, i=19
+orbiter_top_level_session::parse after OC->parse
+orbiter_top_level_session::parse command 1 starting at token 19 is:
+-define P 
+-projective_space  -n 2
+ -field F
+-verbose_level 0
+orbiter_top_level_session::parse cnt = 2, i = 19
+orbiter_top_level_session::parse i=19, next argument is -define
+orbiter_top_level_session::parse i = 19
+orbiter_top_level_session::parse before OC->parse
+orbiter_command::parse
+interface_symbol_table::init
+interface_symbol_table::done
+orbiter_command::parse recognizing keyword from Interface_symbol_table
+interface_symbol_table::read_arguments
+interface_symbol_table::read_arguments the next argument is -define
+interface_symbol_table::read_arguments before Symbol_definition->read_definition
+symbol_definition::read_definition i=19 argc=33
+symbol_definition::read_definition define_label=V
+-define V
+reading -variety
+variety_description::read_arguments
+variety_description::read_arguments unrecognized option -space

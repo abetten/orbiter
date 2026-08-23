@@ -1,0 +1,352 @@
+\documentclass[12pt,a4paper]{article}
+
+% Packages
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amssymb}
+\usepackage{geometry}
+\geometry{top=1in, bottom=1in, left=1in, right=1in}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{xcolor}
+
+% Document Info
+\title{\textbf{Orbiter Assignment Report} \\ \large Algebraic Geometry over Finite Fields using Orbiter}
+\author{Sudenaz U\c{c}ar}
+\date{June 2026}
+
+\begin{document}
+
+\maketitle
+
+\noindent \textit{\textbf{Note:} In accordance with the assignment rules, the Orbiter guide (\url{https://www.math.colostate.edu/~betten/orbiter/users_guide.pdf}) and its example \texttt{makefile} were heavily consulted to find the correct command syntax for each problem. The methodology sections below demonstrate how the correct commands were discovered using the guide's examples.}
+
+\vspace{0.5cm}
+\hrule
+\vspace{0.5cm}
+
+% --------------------------------------------------------
+% PROBLEM 1
+% --------------------------------------------------------
+\section*{Problem 1 --- GF(9) Cheat Sheet and Table Drawings}
+
+I have created an Orbiter cheat sheet for the finite field GF(9) and drown the addition and multiplication tables as colored matrix images using the \texttt{-draw\_matrix} command.
+
+To find how to generate a cheat sheet and draw the tables properly, I searched the Orbiter example \texttt{makefile}:
+\begin{verbatim}
+grep -n "cheat_sheet_GF\|draw_matrix" /Users/sudenazucar/Orbiter/...
+\end{verbatim}
+From the results, I found that the cheat sheet requires the \texttt{-cheat\_sheet\_GF} and \texttt{-export\_tables} activities. For drawing the matrix, I learned from the guide's examples that we need to define dummy vectors (\texttt{-repeat 1 9}) and use the \texttt{-partition 3 all\_one all\_one} syntax to format the 9x9 grid correctly.
+
+\vspace{0.3cm}\noindent\textbf{Commands Used:}
+\begin{verbatim}
+./orbiter.out -v 3 \
+  -define F -finite_field -q 9 -end \
+  -with F -do -finite_field_activity \
+    -cheat_sheet_GF \
+    -export_tables \
+  -end
+
+./orbiter.out -v 3 \
+  -define all_one -vector -repeat 1 9 -end \
+  -draw_matrix \
+    -input_csv_file GF_q9_table_add.csv \
+    -box_width 40 -bit_depth 24 \
+    -partition 3 all_one all_one \
+  -end \
+  -draw_matrix \
+    -input_csv_file GF_q9_table_mul.csv \
+    -box_width 40 -bit_depth 24 \
+    -partition 3 all_one all_one \
+  -end
+\end{verbatim}
+
+\textbf{Results:}
+\begin{itemize}
+    \item The cheat sheet (\texttt{GF\_9.tex}) shows that GF(9) has characteristic 3 and uses the primitive polynomial $x^2 + 1 \pmod 3$.
+    \item The addition table is a perfect 9x9 Latin square.
+    \item The multiplication table is a 9x9 grid where the first row and first column are all zeros (white color).
+\end{itemize}
+
+\vspace{0.5cm}
+\hrule
+\vspace{0.5cm}
+
+% --------------------------------------------------------
+% PROBLEM 2
+% --------------------------------------------------------
+\section*{Problem 2 --- Quartic Curve over GF(9)}
+
+I have retrieved a quartic curve (degree-4 plane curve) in PG(2,9) from the Orbiter knowledge base, createdd a detailed report, and determined the number of Kovalevski points.
+
+To learn how to load a specific curve from the database and extract Kovalevski points, I checked the \texttt{makefile}:
+\begin{verbatim}
+grep -n "quartic_curve\|Kovalevski" /Users/sudenazucar/Orbiter/...
+\end{verbatim}
+The guide showed that I must use \texttt{-catalogue 0} to load the first highly symmetric curve, and the activity \texttt{-export\_something "Kovalevski\_points"} to specifically extract these geometric features.
+
+\vspace{0.3cm}\noindent\textbf{Command Used:}
+\begin{verbatim}
+./orbiter.out -v 3 \
+  -define F -finite_field -q 9 -end \
+  -define P -projective_space -n 2 -field F -v 0 -end \
+  -define C -quartic_curve -space P -catalogue 0 -end \
+  -with C -do \
+    -quartic_curve_activity \
+      -report \
+      -export_something "Kovalevski_points" \
+    -end
+\end{verbatim}
+
+\textbf{Results and Analysis:}\\
+The equation of this curve is $X_1^4 + 6X_0^3X_2 + 4X_0X_2^3 = 0$.
+\begin{itemize}
+    \item \textbf{Smoothness:} The curve has 0 singular points, meaning it is perfectly smooth.
+    \item \textbf{Points:} There are exactly 28 points on the curve in PG(2,9).
+    \item \textbf{Automorphism Group:} The symmetry group of the curve has an order of \textbf{12,096}. This group is isomorphic to PSU(3,3).
+    \item \textbf{Kovalevski Points:} A Kovalevski point (or sextactic point) is where the osculating conic touches the curve with a contact order of at least 6. Orbiter calculated exactly \textbf{63 Kovalevski points}. Because of the high symmetry, all 63 points form a single orbit under the automorphism group.
+\end{itemize}
+
+\vspace{0.5cm}
+\hrule
+\vspace{0.5cm}
+
+% --------------------------------------------------------
+% PROBLEM 3
+% --------------------------------------------------------
+\section*{Problem 3 --- Cubic Surface $F(a,b,c,d)$ over GF(9)}
+
+I have created the cubic surface in PG(3,9) using the parameters $(a, b, c, d) = (6, 3, 4, 6)$. Create a report and identify its isomorphism type from the Orbiter catalogue.
+
+To find the correct command to define and identify the surface, I searched through the Orbiter examples:
+\begin{verbatim}
+grep -n "Fabcd\|cubic_surface\|recognize" /Users/sudenazucar/...
+sed -n '13330,13380p' /Users/sudenazucar/Orbiter/...
+\end{verbatim}
+This investigation revealed that the surface parameters are entered using \texttt{-family\_general\_abcd 6 3 4 6} and the classification is performed using the \texttt{-identify\_general\_abcd} activity.
+
+\vspace{0.3cm}\noindent\textbf{Commands Used:}
+\begin{verbatim}
+./orbiter.out -v 3 \
+    -define F -finite_field -q 9 -end \
+    -define P -projective_space -n 3 -field F -v 0 -end \
+    -define S -cubic_surface \
+        -space P -family_general_abcd 6 3 4 6 \
+    -end \
+    -define Control -poset_classification_control -W \
+        -problem_label "surf_q9" \
+    -end \
+    -define Classify -classify_cubic_surfaces \
+        -use_double_sixes \
+        -projective_space P \
+        -poset_classification_control Control \
+    -end \
+    -define Orb -orbits \
+        -on_cubic_surfaces Classify \
+    -end \
+    -with Orb -do \
+        -cubic_surfaces_after_classification_activity \
+        -identify_general_abcd \
+    -end
+\end{verbatim}
+
+\textbf{Results and Analysis:}
+\begin{itemize}
+    \item \textbf{Points and Lines:} Orbiter found that the surface contains exactly \textbf{145 points} and \textbf{27 lines}. A classical rule states that smooth cubic surfaces always contain exactly 27 lines, which confirms our surface is smooth.
+    \item \textbf{Identification:} The \texttt{-identify\_general\_abcd} command matched our surface with the catalogue. The output showed it is isomorphic to \textbf{\texttt{iso\_type 0}}. This is the first (and most symmetric) isomorphism class in the GF(9) catalogue.
+    \item \textbf{Transformation:} During the matching process, the parameters (6,3,4,6) were transformed to (8,7,6,5). This parameter change corresponds to applying a field automorphism in GF(9).
+\end{itemize}
+
+\newpage
+
+% --------------------------------------------------------
+% PROBLEM 4
+% --------------------------------------------------------
+\section*{Problem 4 --- Isomorphism Between Two Quartic Varieties}
+
+I have tested if the following two varieties are isomorphic in PG(2,9):
+\[ V_1: X_0^4 + X_1^4 + X_2^4 = 0 \]
+\[ V_2: X_0^4 + X_1^4 + X_2^4 + X_0^3X_1 + 5X_0^3X_2 + X_0X_1^3 + 7X_1^3X_2 + 7X_0X_2^3 + 5X_1X_2^3 = 0 \]
+
+To learn how to test isomorphisms between custom varieties, I searched the \texttt{makefile} for testing commands:
+\begin{verbatim}
+grep -n "isomorphism_testing\|test_isomorphism" /Users/...
+\end{verbatim}
+I found the \texttt{-test\_isomorphism} command and learned how to input custom equations using the \texttt{-equation\_by\_coefficients} flag based on the standard monomial ordering.
+
+\vspace{0.3cm}\noindent\textbf{Command Used:}
+\begin{verbatim}
+./orbiter.out -v 6 \
+    -define F -finite_field -q 9 -end \
+    -define P -projective_space -n 2 -field F -v 0 -end \
+    -define R -polynomial_ring \
+        -field F -number_of_variables 3 -homogeneous_of_degree 4 \
+        -monomial_ordering_partition -variables "X0,X1,X2" "X_0,X_1,X_2" \
+    -end \
+    -define V1 -variety -label_txt curve1 -projective_space P -ring R \
+        -equation_by_coefficients "1,1,1,0,0,0,0,0,0,0,0,0,0,0,0" \
+    -end \
+    -define V2 -variety -label_txt curve2 -projective_space P -ring R \
+        -equation_by_coefficients "1,1,1,1,5,1,7,7,5,0,0,0,0,0,0" \
+    -end \
+    -with V1 -and V2 -do -variety_activity \
+        -test_isomorphism -nauty_control -nauty_log "nauty_log.txt" -end \
+    -end
+\end{verbatim}
+
+\textbf{Results:}\\
+Orbiter successfully confirmed that \textbf{$V_1$ and $V_2$ are isomorphic}.
+\begin{itemize}
+    \item Both varieties contain exactly \textbf{28 points} and have an automorphism group of order \textbf{12,096}.
+    \item The explicit isomorphism matrix $\phi$ mapping $V_1$ to $V_2$ is:
+    \[
+    \phi = \begin{bmatrix} 1 & 4 & 8 \\ 8 & 2 & 8 \\ 0 & 0 & 8 \end{bmatrix}
+    \]
+    \item The inverse matrix $\phi^{-1}$ mapping $V_2$ to $V_1$ is:
+    \[
+    \phi^{-1} = \begin{bmatrix} 1 & 4 & 7 \\ 8 & 2 & 5 \\ 0 & 0 & 1 \end{bmatrix}
+    \]
+\end{itemize}
+
+\vspace{0.5cm}
+\hrule
+\vspace{0.5cm}
+
+% --------------------------------------------------------
+% PROBLEM 5
+% --------------------------------------------------------
+\section*{Problem 5 --- Quartic Variety in PG(2,q) for q = 2, 4, 8}
+
+I have found the number of points and the automorphism group order for the variety:
+\[ X^4 + Y^4 + Z^4 + X^2Y^2 + X^2Z^2 + Y^2Z^2 + X^2YZ + XY^2Z + XYZ^2 = 0 \]
+over characteristic 2 fields (q = 2, 4, 8).
+
+I needed to find how to compute the group order of a variety. Searching the guide's \texttt{makefile}:
+\begin{verbatim}
+grep -n "variety_activity.*automorph\|compute_group" ...
+\end{verbatim}
+This search revealed the \texttt{-compute\_set\_stabilizer} command under \texttt{-variety\_activity}, which successfully computes the automorphism group size of the points on the variety. The coefficient vector for our equation is \texttt{1,1,1,0,0,0,0,0,0,1,1,1,1,1,1}.
+
+\vspace{0.3cm}\noindent\textbf{Results:}\\
+I ran the \texttt{-compute\_set\_stabilizer} activity for each field size:
+
+\begin{table}[h]
+\centering
+\begin{tabular}{llcl}
+\toprule
+\textbf{Field Size (q)} & \textbf{Number of Points} & \textbf{Automorphism Group Order} & \textbf{Notes} \\
+\midrule
+\textbf{q = 2} & 0 & - & The variety is empty over GF(2). \\
+\textbf{q = 4} & 14 & 336 & Group is isomorphic to PSL(2,7) \\
+\textbf{q = 8} & 24 & 504 & Group is isomorphic to PSL(2,8) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\newpage
+
+% --------------------------------------------------------
+% PROBLEM 6
+% --------------------------------------------------------
+\section*{Problem 6 --- Classification of Cubic Curves in PG(2,4)}
+
+I have found a generating set of size 2 for the group PGL(3,4). Then, classify all cubic curves in PG(2,4) and find how many of them are nonsingular (smooth).
+
+To find how to generate the group and classify curves, I searched the \texttt{makefile}:
+\begin{verbatim}
+grep -n "generating_set.*PGL\|orbits.*polynomials" ...
+\end{verbatim}
+I found \texttt{-find\_small\_generating\_set 2 100} to find the generators, and \texttt{-orbits -on\_polynomials} to classify the curves.
+
+\vspace{0.3cm}\noindent\textbf{Step 1: Generating Set for PGL(3,4)}\\
+Using the search command, Orbiter found two generators for PGL(3,4) (which has a group order of 60,480):
+\[
+g_1 = \begin{bmatrix} 1 & 2 & 1 \\ 0 & 2 & 2 \\ 2 & 0 & 0 \end{bmatrix}, \quad g_2 = \begin{bmatrix} 2 & 0 & 0 \\ 1 & 0 & 1 \\ 3 & 1 & 1 \end{bmatrix}
+\]
+
+\vspace{0.3cm}\noindent\textbf{Step 2: Orbit Classification}\\
+By running the \texttt{-orbits -on\_polynomials} command, Orbiter grouped the $4^{10}$ possible polynomials into exactly \textbf{33 distinct orbits} (isomorphism classes).
+
+\vspace{0.3cm}\noindent\textbf{Step 3: Finding Nonsingular Curves using Bash Scripting}\\
+A curve is nonsingular if its number of singular points is exactly 0. To check all 33 orbit representatives automatically, I wrote a bash script invoking Orbiter's \texttt{-singular\_points} command:
+
+\begin{verbatim}
+for i in 0 3 9 10 11 12 18 19 20 24 34 44 50 51 55 175 176 ... 91990; do
+  result=$(./orbiter.out -v 1 \
+      -define F -finite_field -q 4 -end \
+      -define P -projective_space -n 2 -field F -v 0 -end \
+      -define R -polynomial_ring -field F -number_of_variables 3 ... -end \
+      -define V -variety -projective_space P -ring R -equation_by_rank $i \
+        -label_txt eqn_$i -label_tex eqn_$i -end \
+      -with V -do -variety_activity -singular_points -end 2>&1 | \
+        grep "number of singular points")
+  echo "Rep $i: $result"
+done
+\end{verbatim}
+
+\textbf{Results:}\\
+Exactly \textbf{20 out of the 33 orbits} returned \texttt{number of singular points = 0}. Therefore, there are exactly 20 nonsingular cubic curves in PG(2,4).
+
+\vspace{0.5cm}
+\hrule
+\vspace{0.5cm}
+
+% --------------------------------------------------------
+% PROBLEM 7
+% --------------------------------------------------------
+\section*{Problem 7 --- Binary Hamming Graph of Order 7}
+
+I have created the binary Hamming graph $H(7,2)$, find its diameter, computed its automorphism group order using Orbiter, and find its parameters as a distance-regular graph.
+
+The official users guide mentions \texttt{-hamming}, but running this gave an \texttt{unrecognized option} error in Build 3352. To find the correct syntax, I searched the Orbiter C++ source code directly:
+\begin{verbatim}
+find /Users/sudenazucar/Orbiter -name "create_graph_description.cpp" ...
+\end{verbatim}
+This source code investigation revealed that the updated syntax requires a capital letter (\texttt{-Hamming 7 2}) and the activity must be called using \texttt{-graph\_theoretic\_activity}.
+
+\vspace{0.3cm}\noindent\textbf{Command Used:}
+\begin{verbatim}
+./orbiter.out -v 3 \
+  -define G -graph -Hamming 7 2 -end \
+  -with G -do -graph_theoretic_activity \
+    -automorphism_group \
+  -end
+\end{verbatim}
+
+\textbf{Results from Terminal Output:}\\
+Orbiter triggered the internal \texttt{densenauty} graph library and printed the following critical results:
+\begin{itemize}
+    \item \texttt{Gr->CG->nb\_points = 128}: The graph has exactly $2^7 =$ \textbf{128 vertices}.
+    \item The group order was successfully verified. Nauty output showed exactly \textbf{645,120}. This matches the theoretical hypercube group order $7! \times 2^7 = 5040 \times 128 = 645,120$.
+\end{itemize}
+
+\textbf{Diameter and Distance-Regular Parameters:}
+\begin{itemize}
+    \item \textbf{Diameter:} The maximum distance is between a word and its inverse, so the \textbf{diameter is 7}.
+    \item \textbf{Intersection Array:} As a distance-regular graph, the number of forward steps ($b_i$) and backward steps ($c_i$) at distance $i$ are calculated mathematically:
+    \begin{itemize}
+        \item $b_i = 7 - i \implies \{7, 6, 5, 4, 3, 2, 1\}$
+        \item $c_i = i \implies \{1, 2, 3, 4, 5, 6, 7\}$
+        \item \textbf{Intersection Array:} $\{7, 6, 5, 4, 3, 2, 1 \; ; \; 1, 2, 3, 4, 5, 6, 7\}$
+    \end{itemize}
+\end{itemize}
+
+\vspace{0.5cm}
+\hrule
+\vspace{0.5cm}
+
+\section*{Appendix: Files to Attach for the Instructor}
+
+
+
+
+\begin{itemize}
+    \item \textbf{Problem 1:} \texttt{GF\_9.pdf} (The Cheat Sheet PDF) and the generated images \texttt{GF\_q9\_table\_add\_draw.bmp} \& \texttt{GF\_q9\_table\_mul\_draw.bmp}.
+    \item \textbf{Problem 2:} \texttt{quartic\_curve\_catalogue\_q9\_iso0\_report.pdf}
+    \item \textbf{Problem 4:} \texttt{nauty\_log.txt} (Contains the Nauty processing details).
+    \item \textbf{Problem 5:} \texttt{variety\_curve\_q4\_report.pdf} \& \texttt{variety\_curve\_q8\_report.pdf}
+    \item \textbf{Problem 6:} \texttt{poly\_orbits\_d3\_n2\_q4.pdf} \& \texttt{poly\_orbits\_d3\_n2\_q4.csv}
+    \item \textbf{Problem 7:} \texttt{Hamming\_7\_2\_report.tex} .
+\end{itemize}
+
+\end{document}
+

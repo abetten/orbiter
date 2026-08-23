@@ -409,6 +409,9 @@ class interface_combinatorics {
 	int f_test_if_distance_regular_graph;
 	std::string test_if_distance_regular_graph_fname;
 
+	int f_double_cover;
+	int double_cover_iterations;
+
 
 public:
 	interface_combinatorics();

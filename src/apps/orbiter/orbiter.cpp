@@ -13,80 +13,66 @@ using namespace orbiter::layer5_applications;
 
 int build_number =
 #include "../../../build_number"
-;
+    ;
 
-//! This is the Orbiter front-end. It creates an object of type user_interface::orbiter_top_level_session and executes the command line
+//! This is the Orbiter front-end. It creates an object of type
+//! user_interface::orbiter_top_level_session and executes the command line
 
+std::string do_orbiter_session(int argc, const char **argv, int verbose_level);
 
-std::string do_orbiter_session(
-		int argc, const char **argv, int verbose_level);
+int main(int argc, const char **argv) {
 
+  // cout << "orbiter.out main" << endl;
 
-int main(
-		int argc, const char **argv)
-{
+  int verbose_level = 1;
 
-	//cout << "orbiter.out main" << endl;
+  // int f_v = (verbose_level >= 1);
 
+  string delta_t;
 
-	int verbose_level = 1;
+  delta_t = do_orbiter_session(argc, argv, verbose_level);
 
-	//int f_v = (verbose_level >= 1);
-
-	string delta_t;
-
-
-	delta_t = do_orbiter_session(argc, argv, verbose_level);
-
-
-	cout << "The Orbiter session is finished." << endl;
-	cout << "User time: " << delta_t << endl;
-
+  cout << "The Orbiter session is finished." << endl;
+  cout << "User time: " << delta_t << endl;
 }
 
-std::string do_orbiter_session(
-		int argc, const char **argv, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	long int t0;
+std::string do_orbiter_session(int argc, const char **argv, int verbose_level) {
+  int f_v = (verbose_level >= 1);
+  long int t0;
 
+  cout << "Welcome to Orbiter! Your build number is " << build_number + 1 << "."
+       << endl;
 
-	cout << "Welcome to Orbiter! Your build number is " << build_number + 1 << "." << endl;
+  if (f_v) {
+    cout << "do_orbiter_session" << endl;
+  }
+  user_interface::core_system::orbiter_top_level_session Top_level_session;
 
-	if (f_v) {
-		cout << "do_orbiter_session" << endl;
-	}
-	user_interface::core_system::orbiter_top_level_session Top_level_session;
+  user_interface::core_system::The_Orbiter_top_level_session =
+      &Top_level_session;
 
+  if (f_v) {
+    cout << "do_orbiter_session "
+            "before execute_command_line"
+         << endl;
+  }
+  // Top_level_session.execute_command_line(
+  //		argc, argv, verbose_level);
+  orbiter::layer6_user_interface::control_everything::
+      orbiter_execute_command_line(&Top_level_session, argc, argv,
+                                   verbose_level);
+  if (f_v) {
+    cout << "do_orbiter_session "
+            "after execute_command_line"
+         << endl;
+  }
 
-	user_interface::core_system::The_Orbiter_top_level_session = &Top_level_session;
+  other::orbiter_kernel_system::os_interface Os;
+  string str;
 
+  t0 = Top_level_session.Orbiter_session->t0;
 
-	if (f_v) {
-		cout << "do_orbiter_session "
-				"before execute_command_line" << endl;
-	}
-	//Top_level_session.execute_command_line(
-	//		argc, argv, verbose_level);
-	orbiter::layer6_user_interface::control_everything::orbiter_execute_command_line(
-			&Top_level_session,
-			argc, argv, verbose_level);
-	if (f_v) {
-		cout << "do_orbiter_session "
-				"after execute_command_line" << endl;
-	}
+  str = Os.stringify_time_difference(t0);
 
-
-	other::orbiter_kernel_system::os_interface Os;
-	string str;
-
-	t0 = Top_level_session.Orbiter_session->t0;
-
-	str = Os.stringify_time_difference(t0);
-
-	return str;
+  return str;
 }
-
-
-
-

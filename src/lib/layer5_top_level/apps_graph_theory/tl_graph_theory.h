@@ -495,6 +495,9 @@ public:
 
 	int f_distance_2;
 
+	int f_double_cover;
+
+
 	int f_reorder;
 	std::string reorder_perm_label;
 

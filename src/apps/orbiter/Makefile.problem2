@@ -1,0 +1,52 @@
+# Makefile for Orbiter Homework Problem 2
+
+ORBITER_EXEC = ./orbiter.out
+
+.PHONY: all q9 q11 q17 q13 clean
+
+all: q9 q11 q17 q13
+
+q9:
+	@echo "Running Quartic Curve Kovalevski extraction for q=9..."
+	$(ORBITER_EXEC) -v 3 \
+		-define F -finite_field -q 9 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define C -quartic_curve -space P -by_normal_form "6,3,4,6,2,5" -end \
+		-with C -do -quartic_curve_activity -report -end
+
+q11:
+	@echo "Running Quartic Curve Kovalevski extraction for q=11..."
+	$(ORBITER_EXEC) -v 3 \
+		-define F -finite_field -q 11 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define C -quartic_curve -space P -by_normal_form "8,5,3,2,10,7" -end \
+		-with C -do -quartic_curve_activity -report -end
+
+q17:
+	@echo "Running Quartic Curve Kovalevski extraction for q=17..."
+	$(ORBITER_EXEC) -v 3 \
+		-define F -finite_field -q 17 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define C -quartic_curve -space P -by_normal_form "2,7,16,3,9,4" -end \
+		-with C -do -quartic_curve_activity -report -end
+
+q13:
+	@echo "Running Quartic Curve Kovalevski extraction for q=13..."
+	$(ORBITER_EXEC) -v 3 \
+		-define F -finite_field -q 13 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define C -quartic_curve -space P -by_normal_form "3,2,10,4,2,3" -end \
+		-with C -do -quartic_curve_activity -report -end
+
+pdf: q9 q11 q17 q13
+	@echo "Compiling LaTeX reports to PDF..."
+	/Library/TeX/texbin/pdflatex -interaction=nonstopmode quartic_curve_by_normal_form_q9_report.tex
+	/Library/TeX/texbin/pdflatex -interaction=nonstopmode quartic_curve_by_normal_form_q11_report.tex
+	/Library/TeX/texbin/pdflatex -interaction=nonstopmode quartic_curve_by_normal_form_q17_report.tex
+	/Library/TeX/texbin/pdflatex -interaction=nonstopmode quartic_curve_by_normal_form_q13_report.tex
+
+clean:
+	rm -f quartic_curve_by_normal_form_*_report.tex
+	rm -f quartic_curve_by_normal_form_*_report.aux
+	rm -f quartic_curve_by_normal_form_*_report.log
+	rm -f quartic_curve_by_normal_form_*_report.pdf

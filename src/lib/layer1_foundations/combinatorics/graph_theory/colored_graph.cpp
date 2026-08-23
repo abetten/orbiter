@@ -4394,7 +4394,64 @@ void colored_graph::test_if_almost_distance_regular_assuming_vertex_transitive(
 
 }
 
+colored_graph *colored_graph::double_cover(int verbose_level)
+{
+    int f_v = (verbose_level >= 1);
+    int n = nb_points;
+    int n_new = 2 * n + 1;
+    int i, j;
 
+    if (f_v) {
+        cout << "colored_graph::double_cover n=" << n
+             << " n_new=" << n_new << endl;
+    }
+
+    int *Adj = NEW_int(n_new * n_new);
+    Int_vec_zero(Adj, n_new * n_new);
+
+    // Copy edges to V0 and V1
+    for (i = 0; i < n; i++) {
+        for (j = i + 1; j < n; j++) {
+            if (is_adjacent(i, j)) {
+                Adj[i * n_new + j] = 1;
+                Adj[j * n_new + i] = 1;
+                Adj[(n+i)*n_new + (n+j)] = 1;
+                Adj[(n+j)*n_new + (n+i)] = 1;
+            }
+        }
+    }
+
+    // Extra vertex v=2n adjacent to all of V0
+    for (i = 0; i < n; i++) {
+        Adj[(2*n)*n_new + i] = 1;
+        Adj[i*n_new + (2*n)] = 1;
+    }
+
+    // Colors: V0=0, V1=1, v=2
+    int nb_colors = 3;
+    int *colors = NEW_int(n_new);
+    for (i = 0; i < n; i++)   colors[i]   = 0;
+    for (i = 0; i < n; i++)   colors[n+i] = 1;
+    colors[2*n] = 2;
+
+    std::string lbl  = label + "_dc";
+    std::string ltex = label_tex + "\\_dc";
+
+    colored_graph *CG2 = NEW_OBJECT(colored_graph);
+    CG2->init_adjacency(
+        n_new, nb_colors, 1,
+        colors, Adj,
+        lbl, ltex,
+        verbose_level);
+
+    FREE_int(Adj);
+    FREE_int(colors);
+
+    if (f_v) {
+        cout << "colored_graph::double_cover done" << endl;
+    }
+    return CG2;
+}
 
 
 

@@ -1,0 +1,916 @@
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.11)  25 JUN 2026 13:40
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**Hamming_7_2_report.tex
+(./Hamming_7_2_report.tex
+LaTeX2e <2025-11-01>
+L3 programming layer <2026-01-19>
+(/usr/local/texlive/2026/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2025/01/22 v1.4n Standard LaTeX document class
+(/usr/local/texlive/2026/texmf-dist/tex/latex/base/size12.clo
+File: size12.clo 2025/01/22 v1.4n Standard LaTeX file (size option)
+)
+\c@part=\count275
+\c@section=\count276
+\c@subsection=\count277
+\c@subsubsection=\count278
+\c@paragraph=\count279
+\c@subparagraph=\count280
+\c@figure=\count281
+\c@table=\count282
+\abovecaptionskip=\skip49
+\belowcaptionskip=\skip50
+\bibindent=\dimen148
+)
+(/usr/local/texlive/2026/texmf-dist/tex/latex/amsmath/amsmath.sty
+Package: amsmath 2025/07/09 v2.17z AMS math features
+\@mathmargin=\skip51
+
+For additional information on amsmath, use the `?' option.
+(/usr/local/texlive/2026/texmf-dist/tex/latex/amsmath/amstext.sty
+Package: amstext 2024/11/17 v2.01 AMS text
+
+(/usr/local/texlive/2026/texmf-dist/tex/latex/amsmath/amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0 generic functions
+\@emptytoks=\toks17
+\ex@=\dimen149
+))
+(/usr/local/texlive/2026/texmf-dist/tex/latex/amsmath/amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d Bold Symbols
+\pmbraise@=\dimen150
+)
+(/usr/local/texlive/2026/texmf-dist/tex/latex/amsmath/amsopn.sty
+Package: amsopn 2022/04/08 v2.04 operator names
+)
+\inf@bad=\count283
+LaTeX Info: Redefining \frac on input line 233.
+\uproot@=\count284
+\leftroot@=\count285
+LaTeX Info: Redefining \overline on input line 398.
+LaTeX Info: Redefining \colon on input line 409.
+\classnum@=\count286
+\DOTSCASE@=\count287
+LaTeX Info: Redefining \ldots on input line 495.
+LaTeX Info: Redefining \dots on input line 498.
+LaTeX Info: Redefining \cdots on input line 619.
+\Mathstrutbox@=\box53
+\strutbox@=\box54
+LaTeX Info: Redefining \big on input line 721.
+LaTeX Info: Redefining \Big on input line 722.
+LaTeX Info: Redefining \bigg on input line 723.
+LaTeX Info: Redefining \Bigg on input line 724.
+\big@size=\dimen151
+LaTeX Font Info:    Redeclaring font encoding OML on input line 742.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 743.
+\macc@depth=\count288
+LaTeX Info: Redefining \bmod on input line 904.
+LaTeX Info: Redefining \pmod on input line 909.
+LaTeX Info: Redefining \smash on input line 939.
+LaTeX Info: Redefining \relbar on input line 969.
+LaTeX Info: Redefining \Relbar on input line 970.
+\c@MaxMatrixCols=\count289
+\dotsspace@=\muskip17
+\c@parentequation=\count290
+\dspbrk@lvl=\count291
+\tag@help=\toks18
+\row@=\count292
+\column@=\count293
+\maxfields@=\count294
+\andhelp@=\toks19
+\eqnshift@=\dimen152
+\alignsep@=\dimen153
+\tagshift@=\dimen154
+\tagwidth@=\dimen155
+\totwidth@=\dimen156
+\lineht@=\dimen157
+\@envbody=\toks20
+\multlinegap=\skip52
+\multlinetaggap=\skip53
+\mathdisplay@stack=\toks21
+LaTeX Info: Redefining \[ on input line 2950.
+LaTeX Info: Redefining \] on input line 2951.
+)
+(/usr/local/texlive/2026/texmf-dist/tex/latex/amsfonts/amssymb.sty
+Package: amssymb 2013/01/14 v3.01 AMS font symbols
+
+(/usr/local/texlive/2026/texmf-dist/tex/latex/amsfonts/amsfonts.sty
+Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
+))
+(/usr/local/texlive/2026/texmf-dist/tex/latex/base/latexsym.sty
+Package: latexsym 1998/08/17 v2.2e Standard LaTeX package (lasy symbols)
+\symlasy=\mathgroup6
+LaTeX Font Info:    Overwriting symbol font `lasy' in version `bold'
+(Font)                  U/lasy/m/n --> U/lasy/b/n on input line 52.
+)
+(/usr/local/texlive/2026/texmf-dist/tex/latex/graphics/epsfig.sty
+Package: epsfig 2024/01/14 v1.7b (e)psfig emulation (SPQR)
+
+(/usr/local/texlive/2026/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 2024/12/31 v1.2e Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/usr/local/texlive/2026/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2022/05/29 v1.15 key=value parser (DPC)
+\KV@toks@=\toks22
+)
+(/usr/local/texlive/2026/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2024/08/06 v1.4g Standard LaTeX Graphics (DPC,SPQR)
+
+(/usr/local/texlive/2026/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 2023/12/02 v1.11 sin cos tan (DPC)
+)
+(/usr/local/texlive/2026/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: pdftex.def on input line 106.
+
+(/usr/local/texlive/2026/texmf-dist/tex/latex/graphics-def/pdftex.def
+File: pdftex.def 2025/09/29 v1.2d Graphics/color driver for pdftex
+))
+\Gin@req@height=\dimen158
+\Gin@req@width=\dimen159
+)
+\epsfxsize=\dimen160
+\epsfysize=\dimen161
+)
+(/usr/local/texlive/2026/texmf-dist/tex/latex/tools/enumerate.sty
+Package: enumerate 2023/07/04 v3.00 enumerate extensions (DPC)
+\@enLab=\toks23
+)
+(/usr/local/texlive/2026/texmf-dist/tex/latex/graphics/rotating.sty
+Package: rotating 2025/01/14 v2.16e rotated objects in LaTeX
+
+(/usr/local/texlive/2026/texmf-dist/tex/latex/base/ifthen.sty
+Package: ifthen 2024/03/16 v1.1e Standard LaTeX ifthen package (DPC)
+)
+\c@r@tfl@t=\count295
+\rotFPtop=\skip54
+\rotFPbot=\skip55
+\rot@float@box=\box55
+\rot@mess@toks=\toks24
+)
+(/usr/local/texlive/2026/texmf-dist/tex/latex/tools/multicol.sty
+Package: multicol 2025/10/21 v2.0b multicolumn formatting (FMi)
+\c@tracingmulticols=\count296
+\mult@box=\box56
+\multicol@leftmargin=\dimen162
+\c@unbalance=\count297
+\c@collectmore=\count298
+\doublecol@number=\count299
+\multicoltolerance=\count300
+\multicolpretolerance=\count301
+\full@width=\dimen163
+\page@free=\dimen164
+\premulticols=\dimen165
+\postmulticols=\dimen166
+\multicolsep=\skip56
+\multicolbaselineskip=\skip57
+\partial@page=\box57
+\last@line=\box58
+\mc@boxedresult=\box59
+\maxbalancingoverflow=\dimen167
+\mult@rightbox=\box60
+\mult@grightbox=\box61
+\mult@firstbox=\box62
+\mult@gfirstbox=\box63
+\@tempa=\box64
+\@tempa=\box65
+\@tempa=\box66
+\@tempa=\box67
+\@tempa=\box68
+\@tempa=\box69
+\@tempa=\box70
+\@tempa=\box71
+\@tempa=\box72
+\@tempa=\box73
+\@tempa=\box74
+\@tempa=\box75
+\@tempa=\box76
+\@tempa=\box77
+\@tempa=\box78
+\@tempa=\box79
+\@tempa=\box80
+\@tempa=\box81
+\@tempa=\box82
+\@tempa=\box83
+\@tempa=\box84
+\@tempa=\box85
+\@tempa=\box86
+\@tempa=\box87
+\@tempa=\box88
+\@tempa=\box89
+\@tempa=\box90
+\@tempa=\box91
+\@tempa=\box92
+\@tempa=\box93
+\@tempa=\box94
+\@tempa=\box95
+\@tempa=\box96
+\@tempa=\box97
+\@tempa=\box98
+\@tempa=\box99
+\c@minrows=\count302
+\c@columnbadness=\count303
+\c@finalcolumnbadness=\count304
+\last@try=\dimen168
+\multicolovershoot=\dimen169
+\multicolundershoot=\dimen170
+\mult@nat@firstbox=\box100
+\colbreak@box=\box101
+\mc@col@check@num=\count305
+\g__mc_curr_col_int=\count306
+)
+(/usr/local/texlive/2026/texmf-dist/tex/latex/base/makeidx.sty
+Package: makeidx 2021/10/04 v1.0m Standard LaTeX package
+)
+(/usr/local/texlive/2026/texmf-dist/tex/latex/tools/array.sty
+Package: array 2025/09/25 v2.6n Tabular extension package (FMi)
+\col@sep=\dimen171
+\ar@mcellbox=\box102
+\extrarowheight=\dimen172
+\NC@list=\toks25
+\extratabsurround=\skip58
+\backup@length=\skip59
+\ar@cellbox=\box103
+)
+(/usr/local/texlive/2026/texmf-dist/tex/latex/pgf/frontendlayer/tikz.sty
+(/usr/local/texlive/2026/texmf-dist/tex/latex/pgf/basiclayer/pgf.sty
+(/usr/local/texlive/2026/texmf-dist/tex/latex/pgf/utilities/pgfrcs.sty
+(/usr/local/texlive/2026/texmf-dist/tex/generic/pgf/utilities/pgfutil-common.te
+x
+\pgfutil@everybye=\toks26
+\pgfutil@tempdima=\dimen173
+\pgfutil@tempdimb=\dimen174
+)
+(/usr/local/texlive/2026/texmf-dist/tex/generic/pgf/utilities/pgfutil-latex.def
+\pgfutil@abb=\box104
+) (/usr/local/texlive/2026/texmf-dist/tex/generic/pgf/utilities/pgfrcs.code.tex
+(/usr/local/texlive/2026/texmf-dist/tex/generic/pgf/pgf.revision.tex)
+Package: pgfrcs 2025-08-29 v3.1.11a (3.1.11a)
+))
+Package: pgf 2025-08-29 v3.1.11a (3.1.11a)
+
+(/usr/local/texlive/2026/texmf-dist/tex/latex/pgf/basiclayer/pgfcore.sty
+(/usr/local/texlive/2026/texmf-dist/tex/latex/pgf/systemlayer/pgfsys.sty
+(/usr/local/texlive/2026/texmf-dist/tex/generic/pgf/systemlayer/pgfsys.code.tex
+Package: pgfsys 2025-08-29 v3.1.11a (3.1.11a)
+(/usr/local/texlive/2026/texmf-dist/tex/generic/pgf/utilities/pgfkeys.code.tex
+\pgfkeys@pathtoks=\toks27
+\pgfkeys@temptoks=\toks28
+
+(/usr/local/texlive/2026/texmf-dist/tex/generic/pgf/utilities/pgfkeyslibraryfil
+tered.code.tex
+\pgfkeys@tmptoks=\toks29
+))
+\pgf@x=\dimen175
+\pgf@y=\dimen176
+\pgf@xa=\dimen177
+\pgf@ya=\dimen178
+\pgf@xb=\dimen179
+\pgf@yb=\dimen180
+\pgf@xc=\dimen181
+\pgf@yc=\dimen182
+\pgf@xd=\dimen183
+\pgf@yd=\dimen184
+\w@pgf@writea=\write3
+\r@pgf@reada=\read2
+\c@pgf@counta=\count307
+\c@pgf@countb=\count308
+\c@pgf@countc=\count309
+\c@pgf@countd=\count310
+\t@pgf@toka=\toks30
+\t@pgf@tokb=\toks31
+\t@pgf@tokc=\toks32
+\pgf@sys@id@count=\count311
+
+(/usr/local/texlive/2026/texmf-dist/tex/generic/pgf/systemlayer/pgf.cfg
+File: pgf.cfg 2025-08-29 v3.1.11a (3.1.11a)
+)
+Driver file for pgf: pgfsys-pdftex.def
+
+(/usr/local/texlive/2026/texmf-dist/tex/generic/pgf/systemlayer/pgfsys-pdftex.d
+ef
+File: pgfsys-pdftex.def 2025-08-29 v3.1.11a (3.1.11a)
+
+(/usr/local/texlive/2026/texmf-dist/tex/generic/pgf/systemlayer/pgfsys-common-p
+df.def
+File: pgfsys-common-pdf.def 2025-08-29 v3.1.11a (3.1.11a)
+)))
+(/usr/local/texlive/2026/texmf-dist/tex/generic/pgf/systemlayer/pgfsyssoftpath.
+code.tex
+File: pgfsyssoftpath.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgfsyssoftpath@smallbuffer@items=\count312
+\pgfsyssoftpath@bigbuffer@items=\count313
+)
+(/usr/local/texlive/2026/texmf-dist/tex/generic/pgf/systemlayer/pgfsysprotocol.
+code.tex
+File: pgfsysprotocol.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+)) (/usr/local/texlive/2026/texmf-dist/tex/latex/xcolor/xcolor.sty
+Package: xcolor 2024/09/29 v3.02 LaTeX color extensions (UK)
+
+(/usr/local/texlive/2026/texmf-dist/tex/latex/graphics-cfg/color.cfg
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package xcolor Info: Driver file: pdftex.def on input line 274.
+
+(/usr/local/texlive/2026/texmf-dist/tex/latex/graphics/mathcolor.ltx)
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1349.
+Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1353.
+Package xcolor Info: Model `RGB' extended on input line 1365.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1367.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1368.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1369.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1370.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1371.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1372.
+)
+(/usr/local/texlive/2026/texmf-dist/tex/generic/pgf/basiclayer/pgfcore.code.tex
+Package: pgfcore 2025-08-29 v3.1.11a (3.1.11a)
+(/usr/local/texlive/2026/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex
+(/usr/local/texlive/2026/texmf-dist/tex/generic/pgf/math/pgfmathutil.code.tex)
+(/usr/local/texlive/2026/texmf-dist/tex/generic/pgf/math/pgfmathparser.code.tex
+\pgfmath@dimen=\dimen185
+\pgfmath@count=\count314
+\pgfmath@box=\box105
+\pgfmath@toks=\toks33
+\pgfmath@stack@operand=\toks34
+\pgfmath@stack@operation=\toks35
+)
+(/usr/local/texlive/2026/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.code.
+tex)
+(/usr/local/texlive/2026/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.basic
+.code.tex)
+(/usr/local/texlive/2026/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.trigo
+nometric.code.tex)
+(/usr/local/texlive/2026/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.rando
+m.code.tex)
+(/usr/local/texlive/2026/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.compa
+rison.code.tex)
+(/usr/local/texlive/2026/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.base.
+code.tex)
+(/usr/local/texlive/2026/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.round
+.code.tex)
+(/usr/local/texlive/2026/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.misc.
+code.tex)
+(/usr/local/texlive/2026/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.integ
+erarithmetics.code.tex)
+(/usr/local/texlive/2026/texmf-dist/tex/generic/pgf/math/pgfmathcalc.code.tex)
+(/usr/local/texlive/2026/texmf-dist/tex/generic/pgf/math/pgfmathfloat.code.tex
+\c@pgfmathroundto@lastzeros=\count315
+)) (/usr/local/texlive/2026/texmf-dist/tex/generic/pgf/math/pgfint.code.tex)
+(/usr/local/texlive/2026/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepoints.co
+de.tex
+File: pgfcorepoints.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgf@picminx=\dimen186
+\pgf@picmaxx=\dimen187
+\pgf@picminy=\dimen188
+\pgf@picmaxy=\dimen189
+\pgf@pathminx=\dimen190
+\pgf@pathmaxx=\dimen191
+\pgf@pathminy=\dimen192
+\pgf@pathmaxy=\dimen193
+\pgf@xx=\dimen194
+\pgf@xy=\dimen195
+\pgf@yx=\dimen196
+\pgf@yy=\dimen197
+\pgf@zx=\dimen198
+\pgf@zy=\dimen199
+)
+(/usr/local/texlive/2026/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathconst
+ruct.code.tex
+File: pgfcorepathconstruct.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgf@path@lastx=\dimen256
+\pgf@path@lasty=\dimen257
+)
+(/usr/local/texlive/2026/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathusage
+.code.tex
+File: pgfcorepathusage.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgf@shorten@end@additional=\dimen258
+\pgf@shorten@start@additional=\dimen259
+)
+(/usr/local/texlive/2026/texmf-dist/tex/generic/pgf/basiclayer/pgfcorescopes.co
+de.tex
+File: pgfcorescopes.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgfpic=\box106
+\pgf@hbox=\box107
+\pgf@layerbox@main=\box108
+\pgf@picture@serial@count=\count316
+)
+(/usr/local/texlive/2026/texmf-dist/tex/generic/pgf/basiclayer/pgfcoregraphicst
+ate.code.tex
+File: pgfcoregraphicstate.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgflinewidth=\dimen260
+)
+(/usr/local/texlive/2026/texmf-dist/tex/generic/pgf/basiclayer/pgfcoretransform
+ations.code.tex
+File: pgfcoretransformations.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgf@pt@x=\dimen261
+\pgf@pt@y=\dimen262
+\pgf@pt@temp=\dimen263
+)
+(/usr/local/texlive/2026/texmf-dist/tex/generic/pgf/basiclayer/pgfcorequick.cod
+e.tex
+File: pgfcorequick.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+)
+(/usr/local/texlive/2026/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreobjects.c
+ode.tex
+File: pgfcoreobjects.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+)
+(/usr/local/texlive/2026/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathproce
+ssing.code.tex
+File: pgfcorepathprocessing.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+)
+(/usr/local/texlive/2026/texmf-dist/tex/generic/pgf/basiclayer/pgfcorearrows.co
+de.tex
+File: pgfcorearrows.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgfarrowsep=\dimen264
+)
+(/usr/local/texlive/2026/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreshade.cod
+e.tex
+File: pgfcoreshade.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgf@max=\dimen265
+\pgf@sys@shading@range@num=\count317
+\pgf@shadingcount=\count318
+)
+(/usr/local/texlive/2026/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreimage.cod
+e.tex
+File: pgfcoreimage.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+)
+(/usr/local/texlive/2026/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreexternal.
+code.tex
+File: pgfcoreexternal.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgfexternal@startupbox=\box109
+)
+(/usr/local/texlive/2026/texmf-dist/tex/generic/pgf/basiclayer/pgfcorelayers.co
+de.tex
+File: pgfcorelayers.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+)
+(/usr/local/texlive/2026/texmf-dist/tex/generic/pgf/basiclayer/pgfcoretranspare
+ncy.code.tex
+File: pgfcoretransparency.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+)
+(/usr/local/texlive/2026/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepatterns.
+code.tex
+File: pgfcorepatterns.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+)
+(/usr/local/texlive/2026/texmf-dist/tex/generic/pgf/basiclayer/pgfcorerdf.code.
+tex
+File: pgfcorerdf.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+)))
+(/usr/local/texlive/2026/texmf-dist/tex/generic/pgf/modules/pgfmoduleshapes.cod
+e.tex
+File: pgfmoduleshapes.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgfnodeparttextbox=\box110
+)
+(/usr/local/texlive/2026/texmf-dist/tex/generic/pgf/modules/pgfmoduleplot.code.
+tex
+File: pgfmoduleplot.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+)
+(/usr/local/texlive/2026/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version
+-0-65.sty
+Package: pgfcomp-version-0-65 2025-08-29 v3.1.11a (3.1.11a)
+\pgf@nodesepstart=\dimen266
+\pgf@nodesepend=\dimen267
+)
+(/usr/local/texlive/2026/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version
+-1-18.sty
+Package: pgfcomp-version-1-18 2025-08-29 v3.1.11a (3.1.11a)
+))
+(/usr/local/texlive/2026/texmf-dist/tex/latex/pgf/utilities/pgffor.sty
+(/usr/local/texlive/2026/texmf-dist/tex/latex/pgf/utilities/pgfkeys.sty
+(/usr/local/texlive/2026/texmf-dist/tex/generic/pgf/utilities/pgfkeys.code.tex)
+) (/usr/local/texlive/2026/texmf-dist/tex/latex/pgf/math/pgfmath.sty
+(/usr/local/texlive/2026/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex))
+(/usr/local/texlive/2026/texmf-dist/tex/generic/pgf/utilities/pgffor.code.tex
+Package: pgffor 2025-08-29 v3.1.11a (3.1.11a)
+\pgffor@iter=\dimen268
+\pgffor@skip=\dimen269
+\pgffor@stack=\toks36
+\pgffor@toks=\toks37
+))
+(/usr/local/texlive/2026/texmf-dist/tex/generic/pgf/frontendlayer/tikz/tikz.cod
+e.tex
+Package: tikz 2025-08-29 v3.1.11a (3.1.11a)
+
+(/usr/local/texlive/2026/texmf-dist/tex/generic/pgf/libraries/pgflibraryplothan
+dlers.code.tex
+File: pgflibraryplothandlers.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgf@plot@mark@count=\count319
+\pgfplotmarksize=\dimen270
+)
+\tikz@lastx=\dimen271
+\tikz@lasty=\dimen272
+\tikz@lastxsaved=\dimen273
+\tikz@lastysaved=\dimen274
+\tikz@lastmovetox=\dimen275
+\tikz@lastmovetoy=\dimen276
+\tikzleveldistance=\dimen277
+\tikzsiblingdistance=\dimen278
+\tikz@figbox=\box111
+\tikz@figbox@bg=\box112
+\tikz@tempbox=\box113
+\tikz@tempbox@bg=\box114
+\tikztreelevel=\count320
+\tikznumberofchildren=\count321
+\tikznumberofcurrentchild=\count322
+\tikz@fig@count=\count323
+
+(/usr/local/texlive/2026/texmf-dist/tex/generic/pgf/modules/pgfmodulematrix.cod
+e.tex
+File: pgfmodulematrix.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgfmatrixcurrentrow=\count324
+\pgfmatrixcurrentcolumn=\count325
+\pgf@matrix@numberofcolumns=\count326
+)
+\tikz@expandcount=\count327
+
+(/usr/local/texlive/2026/texmf-dist/tex/generic/pgf/frontendlayer/tikz/librarie
+s/tikzlibrarytopaths.code.tex
+File: tikzlibrarytopaths.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+)))
+(/usr/local/texlive/2026/texmf-dist/tex/latex/tools/longtable.sty
+Package: longtable 2025-10-13 v4.24 Multi-page Table package (DPC)
+\LTleft=\skip60
+\LTright=\skip61
+\LTpre=\skip62
+\LTpost=\skip63
+\LTchunksize=\count328
+\LTcapwidth=\dimen279
+\LT@head=\box115
+\LT@firsthead=\box116
+\LT@foot=\box117
+\LT@lastfoot=\box118
+\LT@gbox=\box119
+\LT@cols=\count329
+\LT@rows=\count330
+\c@LT@tables=\count331
+\c@LT@chunks=\count332
+\LT@p@ftn=\toks38
+)
+(/usr/local/texlive/2026/texmf-dist/tex/latex/base/t1enc.sty
+Package: t1enc 1994/06/01 Standard LaTeX package
+)
+(/usr/local/texlive/2026/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
+File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count333
+)
+No file Hamming_7_2_report.aux.
+\openout1 = `Hamming_7_2_report.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 270.
+LaTeX Font Info:    ... okay on input line 270.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 270.
+LaTeX Font Info:    ... okay on input line 270.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 270.
+LaTeX Font Info:    ... okay on input line 270.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 270.
+LaTeX Font Info:    ... okay on input line 270.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 270.
+LaTeX Font Info:    ... okay on input line 270.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 270.
+LaTeX Font Info:    ... okay on input line 270.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 270.
+LaTeX Font Info:    ... okay on input line 270.
+(/usr/local/texlive/2026/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count334
+\scratchdimen=\dimen280
+\scratchbox=\box120
+\nofMPsegments=\count335
+\nofMParguments=\count336
+\everyMPshowfont=\toks39
+\MPscratchCnt=\count337
+\MPscratchDim=\dimen281
+\MPnumerator=\count338
+\makeMPintoPDFobject=\count339
+\everyMPtoPDFconversion=\toks40
+) (/usr/local/texlive/2026/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
+Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
+85.
+
+(/usr/local/texlive/2026/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
+))
+LaTeX Font Info:    Trying to load font information for U+msa on input line 288
+.
+
+(/usr/local/texlive/2026/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 288
+.
+
+(/usr/local/texlive/2026/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+LaTeX Font Info:    Trying to load font information for U+lasy on input line 28
+8.
+
+(/usr/local/texlive/2026/texmf-dist/tex/latex/base/ulasy.fd
+File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
+)
+Overfull \hbox (2265.49988pt too wide) in paragraph at lines 301--331
+\OT1/cmr/m/n/12 (0)(1\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 2)(3)(4)(5\OML/cmm/m/it
+/12 ; \OT1/cmr/m/n/12 6)(7)(8)(9\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 10)(11)(12)(
+13\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 14)(15)(16)(17\OML/cmm/m/it/12 ; \OT1/cmr/
+m/n/12 18)(19)(20)(21\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 22)(23)(24)(25\OML/cmm/
+m/it/12 ; \OT1/cmr/m/n/12 26)(27)(28)(29\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 30)(
+31)(32)(33\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 34)(35)(36)(37\OML/cmm/m/it/12 ; \
+OT1/cmr/m/n/12 38)(39)(40)(41\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 42)(43)(44)(45\
+OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 46)(47)(48)(49\OML/cmm/m/it/12 ; \OT1/cmr/m/n
+/12 50)(51)(52)(53\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 54)(55)(56)(57\OML/cmm/m/i
+t/12 ; \OT1/cmr/m/n/12 58)(59)(60)(61\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 62)(63)
+(64)(65\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 66)(67)(68)(69\OML/cmm/m/it/12 ; \OT1
+/cmr/m/n/12 70)(71)(72)(73\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 74)(75)(76)(77\OML
+/cmm/m/it/12 ; \OT1/cmr/m/n/12 78)(79)(80)(81\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12
+ 82)(83)(84)(85\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 86)(87)(88)(89\OML/cmm/m/it/1
+2 ; \OT1/cmr/m/n/12 90)(91)(92)(93\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 94)(95)(96
+)(97\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 98)(99)(100)(101\OML/cmm/m/it/12 ; \OT1/
+cmr/m/n/12 102)(103)(104)(105\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 106)(107)(108)(
+109\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 110)(111)(112)(113\OML/cmm/m/it/12 ; \OT1
+/cmr/m/n/12 114)(115)(116)(117\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 118)(119)(120)
+(121\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 122)(123)(124)(125\OML/cmm/m/it/12 ; \OT
+1/cmr/m/n/12 126)(127)$
+ []
+
+
+Overfull \hbox (2271.63449pt too wide) in paragraph at lines 301--331
+\T1/cmr/m/n/12 , $\OT1/cmr/m/n/12 (0)(1)(2)(3)(4\OML/cmm/m/it/12 ; \OT1/cmr/m/n
+/12 8)(5\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 9)(6\OML/cmm/m/it/12 ; \OT1/cmr/m/n/
+12 10)(7\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 11)(12)(13)(14)(15)(16)(17)(18)(19)(
+20\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 24)(21\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 2
+5)(22\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 26)(23\OML/cmm/m/it/12 ; \OT1/cmr/m/n/1
+2 27)(28)(29)(30)(31)(32)(33)(34)(35)(36\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 40)(
+37\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 41)(38\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 4
+2)(39\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 43)(44)(45)(46)(47)(48)(49)(50)(51)(52\
+OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 56)(53\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 57)(
+54\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 58)(55\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 5
+9)(60)(61)(62)(63)(64)(65)(66)(67)(68\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 72)(69\
+OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 73)(70\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 74)(
+71\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 75)(76)(77)(78)(79)(80)(81)(82)(83)(84\OML
+/cmm/m/it/12 ; \OT1/cmr/m/n/12 88)(85\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 89)(86\
+OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 90)(87\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 91)(
+92)(93)(94)(95)(96)(97)(98)(99)(100\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 104)(101\
+OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 105)(102\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 10
+6)(103\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 107)(108)(109)(110)(111)(112)(113)(114
+)(115)(116\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 120)(117\OML/cmm/m/it/12 ; \OT1/cm
+r/m/n/12 121)(118\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 122)(119\OML/cmm/m/it/12 ; 
+\OT1/cmr/m/n/12 123)(124)(125)(126)(127)$
+ []
+
+
+Overfull \hbox (2271.63449pt too wide) in paragraph at lines 301--331
+\T1/cmr/m/n/12 , $\OT1/cmr/m/n/12 (0)(1)(2\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 4)
+(3\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 5)(6)(7)(8)(9)(10\OML/cmm/m/it/12 ; \OT1/c
+mr/m/n/12 12)(11\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 13)(14)(15)(16)(17)(18\OML/c
+mm/m/it/12 ; \OT1/cmr/m/n/12 20)(19\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 21)(22)(2
+3)(24)(25)(26\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 28)(27\OML/cmm/m/it/12 ; \OT1/c
+mr/m/n/12 29)(30)(31)(32)(33)(34\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 36)(35\OML/c
+mm/m/it/12 ; \OT1/cmr/m/n/12 37)(38)(39)(40)(41)(42\OML/cmm/m/it/12 ; \OT1/cmr/
+m/n/12 44)(43\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 45)(46)(47)(48)(49)(50\OML/cmm/
+m/it/12 ; \OT1/cmr/m/n/12 52)(51\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 53)(54)(55)(
+56)(57)(58\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 60)(59\OML/cmm/m/it/12 ; \OT1/cmr/
+m/n/12 61)(62)(63)(64)(65)(66\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 68)(67\OML/cmm/
+m/it/12 ; \OT1/cmr/m/n/12 69)(70)(71)(72)(73)(74\OML/cmm/m/it/12 ; \OT1/cmr/m/n
+/12 76)(75\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 77)(78)(79)(80)(81)(82\OML/cmm/m/i
+t/12 ; \OT1/cmr/m/n/12 84)(83\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 85)(86)(87)(88)
+(89)(90\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 92)(91\OML/cmm/m/it/12 ; \OT1/cmr/m/n
+/12 93)(94)(95)(96)(97)(98\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 100)(99\OML/cmm/m/
+it/12 ; \OT1/cmr/m/n/12 101)(102)(103)(104)(105)(106\OML/cmm/m/it/12 ; \OT1/cmr
+/m/n/12 108)(107\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 109)(110)(111)(112)(113)(114
+\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 116)(115\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 1
+17)(118)(119)(120)(121)(122\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 124)(123\OML/cmm/
+m/it/12 ; \OT1/cmr/m/n/12 125)(126)(127)$
+ []
+
+
+Overfull \hbox (2271.63449pt too wide) in paragraph at lines 301--331
+\T1/cmr/m/n/12 , $\OT1/cmr/m/n/12 (0)(1)(2)(3)(4)(5)(6)(7)(8\OML/cmm/m/it/12 ; 
+\OT1/cmr/m/n/12 16)(9\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 17)(10\OML/cmm/m/it/12 
+; \OT1/cmr/m/n/12 18)(11\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 19)(12\OML/cmm/m/it/
+12 ; \OT1/cmr/m/n/12 20)(13\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 21)(14\OML/cmm/m/
+it/12 ; \OT1/cmr/m/n/12 22)(15\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 23)(24)(25)(26
+)(27)(28)(29)(30)(31)(32)(33)(34)(35)(36)(37)(38)(39)(40\OML/cmm/m/it/12 ; \OT1
+/cmr/m/n/12 48)(41\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 49)(42\OML/cmm/m/it/12 ; \
+OT1/cmr/m/n/12 50)(43\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 51)(44\OML/cmm/m/it/12 
+; \OT1/cmr/m/n/12 52)(45\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 53)(46\OML/cmm/m/it/
+12 ; \OT1/cmr/m/n/12 54)(47\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 55)(56)(57)(58)(5
+9)(60)(61)(62)(63)(64)(65)(66)(67)(68)(69)(70)(71)(72\OML/cmm/m/it/12 ; \OT1/cm
+r/m/n/12 80)(73\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 81)(74\OML/cmm/m/it/12 ; \OT1
+/cmr/m/n/12 82)(75\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 83)(76\OML/cmm/m/it/12 ; \
+OT1/cmr/m/n/12 84)(77\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 85)(78\OML/cmm/m/it/12 
+; \OT1/cmr/m/n/12 86)(79\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 87)(88)(89)(90)(91)(
+92)(93)(94)(95)(96)(97)(98)(99)(100)(101)(102)(103)(104\OML/cmm/m/it/12 ; \OT1/
+cmr/m/n/12 112)(105\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 113)(106\OML/cmm/m/it/12 
+; \OT1/cmr/m/n/12 114)(107\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 115)(108\OML/cmm/m
+/it/12 ; \OT1/cmr/m/n/12 116)(109\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 117)(110\OM
+L/cmm/m/it/12 ; \OT1/cmr/m/n/12 118)(111\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 119)
+(120)(121)(122)(123)(124)(125)(126)(127)$
+ []
+
+
+Overfull \hbox (2271.63449pt too wide) in paragraph at lines 301--331
+\T1/cmr/m/n/12 , $\OT1/cmr/m/n/12 (0)(1)(2)(3)(4)(5)(6)(7)(8)(9)(10)(11)(12)(13
+)(14)(15)(16)(17)(18)(19)(20)(21)(22)(23)(24)(25)(26)(27)(28)(29)(30)(31)(32\OM
+L/cmm/m/it/12 ; \OT1/cmr/m/n/12 64)(33\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 65)(34
+\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 66)(35\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 67)
+(36\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 68)(37\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 
+69)(38\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 70)(39\OML/cmm/m/it/12 ; \OT1/cmr/m/n/
+12 71)(40\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 72)(41\OML/cmm/m/it/12 ; \OT1/cmr/m
+/n/12 73)(42\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 74)(43\OML/cmm/m/it/12 ; \OT1/cm
+r/m/n/12 75)(44\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 76)(45\OML/cmm/m/it/12 ; \OT1
+/cmr/m/n/12 77)(46\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 78)(47\OML/cmm/m/it/12 ; \
+OT1/cmr/m/n/12 79)(48\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 80)(49\OML/cmm/m/it/12 
+; \OT1/cmr/m/n/12 81)(50\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 82)(51\OML/cmm/m/it/
+12 ; \OT1/cmr/m/n/12 83)(52\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 84)(53\OML/cmm/m/
+it/12 ; \OT1/cmr/m/n/12 85)(54\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 86)(55\OML/cmm
+/m/it/12 ; \OT1/cmr/m/n/12 87)(56\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 88)(57\OML/
+cmm/m/it/12 ; \OT1/cmr/m/n/12 89)(58\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 90)(59\O
+ML/cmm/m/it/12 ; \OT1/cmr/m/n/12 91)(60\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 92)(6
+1\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 93)(62\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 94
+)(63\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 95)(96)(97)(98)(99)(100)(101)(102)(103)(
+104)(105)(106)(107)(108)(109)(110)(111)(112)(113)(114)(115)(116)(117)(118)(119)
+(120)(121)(122)(123)(124)(125)(126)(127)$
+ []
+
+
+Overfull \hbox (2271.63449pt too wide) in paragraph at lines 301--331
+\T1/cmr/m/n/12 , $\OT1/cmr/m/n/12 (0)(1)(2)(3)(4)(5)(6)(7)(8)(9)(10)(11)(12)(13
+)(14)(15)(16\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 32)(17\OML/cmm/m/it/12 ; \OT1/cm
+r/m/n/12 33)(18\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 34)(19\OML/cmm/m/it/12 ; \OT1
+/cmr/m/n/12 35)(20\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 36)(21\OML/cmm/m/it/12 ; \
+OT1/cmr/m/n/12 37)(22\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 38)(23\OML/cmm/m/it/12 
+; \OT1/cmr/m/n/12 39)(24\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 40)(25\OML/cmm/m/it/
+12 ; \OT1/cmr/m/n/12 41)(26\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 42)(27\OML/cmm/m/
+it/12 ; \OT1/cmr/m/n/12 43)(28\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 44)(29\OML/cmm
+/m/it/12 ; \OT1/cmr/m/n/12 45)(30\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 46)(31\OML/
+cmm/m/it/12 ; \OT1/cmr/m/n/12 47)(48)(49)(50)(51)(52)(53)(54)(55)(56)(57)(58)(5
+9)(60)(61)(62)(63)(64)(65)(66)(67)(68)(69)(70)(71)(72)(73)(74)(75)(76)(77)(78)(
+79)(80\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 96)(81\OML/cmm/m/it/12 ; \OT1/cmr/m/n/
+12 97)(82\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 98)(83\OML/cmm/m/it/12 ; \OT1/cmr/m
+/n/12 99)(84\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 100)(85\OML/cmm/m/it/12 ; \OT1/c
+mr/m/n/12 101)(86\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 102)(87\OML/cmm/m/it/12 ; \
+OT1/cmr/m/n/12 103)(88\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 104)(89\OML/cmm/m/it/1
+2 ; \OT1/cmr/m/n/12 105)(90\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 106)(91\OML/cmm/m
+/it/12 ; \OT1/cmr/m/n/12 107)(92\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 108)(93\OML/
+cmm/m/it/12 ; \OT1/cmr/m/n/12 109)(94\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 110)(95
+\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 111)(112)(113)(114)(115)(116)(117)(118)(119)
+(120)(121)(122)(123)(124)(125)(126)(127)$
+ []
+
+
+Overfull \hbox (2147.63547pt too wide) in paragraph at lines 301--331
+\T1/cmr/m/n/12 , $\OT1/cmr/m/n/12 (0\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 1)(2\OML
+/cmm/m/it/12 ; \OT1/cmr/m/n/12 3)(4\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 5)(6\OML/
+cmm/m/it/12 ; \OT1/cmr/m/n/12 7)(8\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 9)(10\OML/
+cmm/m/it/12 ; \OT1/cmr/m/n/12 11)(12\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 13)(14\O
+ML/cmm/m/it/12 ; \OT1/cmr/m/n/12 15)(16\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 17)(1
+8\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 19)(20\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 21
+)(22\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 23)(24\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12
+ 25)(26\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 27)(28\OML/cmm/m/it/12 ; \OT1/cmr/m/n
+/12 29)(30\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 31)(32\OML/cmm/m/it/12 ; \OT1/cmr/
+m/n/12 33)(34\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 35)(36\OML/cmm/m/it/12 ; \OT1/c
+mr/m/n/12 37)(38\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 39)(40\OML/cmm/m/it/12 ; \OT
+1/cmr/m/n/12 41)(42\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 43)(44\OML/cmm/m/it/12 ; 
+\OT1/cmr/m/n/12 45)(46\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 47)(48\OML/cmm/m/it/12
+ ; \OT1/cmr/m/n/12 49)(50\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 51)(52\OML/cmm/m/it
+/12 ; \OT1/cmr/m/n/12 53)(54\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 55)(56\OML/cmm/m
+/it/12 ; \OT1/cmr/m/n/12 57)(58\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 59)(60\OML/cm
+m/m/it/12 ; \OT1/cmr/m/n/12 61)(62\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 63)(64\OML
+/cmm/m/it/12 ; \OT1/cmr/m/n/12 65)(66\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 67)(68\
+OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 69)(70\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 71)(
+72\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 73)(74\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 7
+5)(76\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 77)(78\OML/cmm/m/it/12 ; \OT1/cmr/m/n/1
+2 79)(80\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 81)(82\OML/cmm/m/it/12 ; \OT1/cmr/m/
+n/12 83)(84\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 85)(86\OML/cmm/m/it/12 ; \OT1/cmr
+/m/n/12 87)(88\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 89)(90\OML/cmm/m/it/12 ; \OT1/
+cmr/m/n/12 91)(92\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 93)(94\OML/cmm/m/it/12 ; \O
+T1/cmr/m/n/12 95)(96\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 97)(98\OML/cmm/m/it/12 ;
+ \OT1/cmr/m/n/12 99)(100\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 101)(102\OML/cmm/m/i
+t/12 ; \OT1/cmr/m/n/12 103)(104\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 105)(106\OML/
+cmm/m/it/12 ; \OT1/cmr/m/n/12 107)(108\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 109)(1
+10\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 111)(112\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12
+ 113)(114\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 115)(116\OML/cmm/m/it/12 ; \OT1/cmr
+/m/n/12 117)(118\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 119)(120\OML/cmm/m/it/12 ; \
+OT1/cmr/m/n/12 121)(122\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 123)(124\OML/cmm/m/it
+/12 ; \OT1/cmr/m/n/12 125)(126\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 127)$ 
+ []
+
+
+Overfull \hbox (1633.76775pt too wide) in paragraph at lines 301--331
+\T1/cmr/m/n/12 0,2,1,3,4,6,5,7,8,10,9,11,12,14,13,15,16,18,17,19,20,22,21,23,24
+,26,25,27,28,30,29,31,32,34,33,35,36,38,37,39,40,42,41,43,44,46,45,47,48,50,49,
+51,52,54,53,55,56,58,57,59,60,62,61,63,64,66,65,67,68,70,69,71,72,74,73,75,76,7
+8,77,79,80,82,81,83,84,86,85,87,88,90,89,91,92,94,93,95,96,98,97,99,100,102,101
+,103,104,106,105,107,108,110,109,111,112,114,113,115,116,118,117,119,120,122,12
+1,123,124,126,125,127 
+ []
+
+
+Overfull \hbox (1633.76775pt too wide) in paragraph at lines 301--331
+\T1/cmr/m/n/12 0,1,2,3,8,9,10,11,4,5,6,7,12,13,14,15,16,17,18,19,24,25,26,27,20
+,21,22,23,28,29,30,31,32,33,34,35,40,41,42,43,36,37,38,39,44,45,46,47,48,49,50,
+51,56,57,58,59,52,53,54,55,60,61,62,63,64,65,66,67,72,73,74,75,68,69,70,71,76,7
+7,78,79,80,81,82,83,88,89,90,91,84,85,86,87,92,93,94,95,96,97,98,99,104,105,106
+,107,100,101,102,103,108,109,110,111,112,113,114,115,120,121,122,123,116,117,11
+8,119,124,125,126,127 
+ []
+
+
+Overfull \hbox (1633.76775pt too wide) in paragraph at lines 301--331
+\T1/cmr/m/n/12 0,1,4,5,2,3,6,7,8,9,12,13,10,11,14,15,16,17,20,21,18,19,22,23,24
+,25,28,29,26,27,30,31,32,33,36,37,34,35,38,39,40,41,44,45,42,43,46,47,48,49,52,
+53,50,51,54,55,56,57,60,61,58,59,62,63,64,65,68,69,66,67,70,71,72,73,76,77,74,7
+5,78,79,80,81,84,85,82,83,86,87,88,89,92,93,90,91,94,95,96,97,100,101,98,99,102
+,103,104,105,108,109,106,107,110,111,112,113,116,117,114,115,118,119,120,121,12
+4,125,122,123,126,127 
+ []
+
+
+Overfull \hbox (1633.76775pt too wide) in paragraph at lines 301--331
+\T1/cmr/m/n/12 0,1,2,3,4,5,6,7,16,17,18,19,20,21,22,23,8,9,10,11,12,13,14,15,24
+,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,48,49,50,51,52,53,54,55,40,41,42,
+43,44,45,46,47,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,80,81,82,83,84,8
+5,86,87,72,73,74,75,76,77,78,79,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102
+,103,112,113,114,115,116,117,118,119,104,105,106,107,108,109,110,111,120,121,12
+2,123,124,125,126,127 
+ []
+
+
+Overfull \hbox (1633.76775pt too wide) in paragraph at lines 301--331
+\T1/cmr/m/n/12 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24
+,25,26,27,28,29,30,31,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,
+83,84,85,86,87,88,89,90,91,92,93,94,95,32,33,34,35,36,37,38,39,40,41,42,43,44,4
+5,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,96,97,98,99,100,101,102
+,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,12
+2,123,124,125,126,127 
+ []
+
+
+Overfull \hbox (1633.76775pt too wide) in paragraph at lines 301--331
+\T1/cmr/m/n/12 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,32,33,34,35,36,37,38,39,40
+,41,42,43,44,45,46,47,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,48,49,50,
+51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,7
+7,78,79,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,80,81,82,83
+,84,85,86,87,88,89,90,91,92,93,94,95,112,113,114,115,116,117,118,119,120,121,12
+2,123,124,125,126,127 
+ []
+
+
+Overfull \hbox (1633.76775pt too wide) in paragraph at lines 301--331
+\T1/cmr/m/n/12 1,0,3,2,5,4,7,6,9,8,11,10,13,12,15,14,17,16,19,18,21,20,23,22,25
+,24,27,26,29,28,31,30,33,32,35,34,37,36,39,38,41,40,43,42,45,44,47,46,49,48,51,
+50,53,52,55,54,57,56,59,58,61,60,63,62,65,64,67,66,69,68,71,70,73,72,75,74,77,7
+6,79,78,81,80,83,82,85,84,87,86,89,88,91,90,93,92,95,94,97,96,99,98,101,100,103
+,102,105,104,107,106,109,108,111,110,113,112,115,114,117,116,119,118,121,120,12
+3,122,125,124,127,126 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 301--331
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 334--335
+
+ []
+
+[1
+
+{/usr/local/texlive/2026/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/usr/loc
+al/texlive/2026/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}]
+(./Hamming_7_2_report.aux)
+ ***********
+LaTeX2e <2025-11-01>
+L3 programming layer <2026-01-19>
+ ***********
+ ) 
+Here is how much of TeX's memory you used:
+ 13800 strings out of 467525
+ 273380 string characters out of 5418982
+ 655324 words of memory out of 5000000
+ 42465 multiletter control sequences out of 15000+600000
+ 638218 words of font info for 79 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 84i,5n,104p,556b,226s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb
+></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><
+/usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></u
+sr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfrm1440.pfb></usr
+/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfrm2074.pfb></usr/l
+ocal/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sftt1200.pfb>
+Output written on Hamming_7_2_report.pdf (1 page, 85295 bytes).
+PDF statistics:
+ 42 PDF objects out of 1000 (max. 8388607)
+ 26 compressed objects within 1 object stream
+ 0 named destinations out of 1000 (max. 500000)
+ 13 words of extra memory for PDF output out of 10000 (max. 10000000)
+

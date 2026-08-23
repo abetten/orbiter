@@ -590,6 +590,9 @@ public:
 			int verbose_level);
 	void distance_2(
 			int verbose_level);
+	/**/	
+	colored_graph *double_cover(
+			int verbose_level);
 	void reorder(
 			std::string &perm_label,
 			int verbose_level);

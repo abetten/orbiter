@@ -1126,6 +1126,24 @@ void graph_theoretic_activity::perform_activity(
 					"after CG->properties" << endl;
 		}
 	}
+	else if (Descr->f_double_cover) {
+		if (f_v) {
+			cout << "graph_theoretic_activity::perform_activity "
+					"f_double_cover" << endl;
+		}
+		if (f_v) {
+			cout << "graph_theoretic_activity::perform_activity "
+					"before CG->double_cover" << endl;
+		}
+		combinatorics::graph_theory::colored_graph *CG2;
+		CG2 = CG[0]->double_cover(verbose_level);
+		FREE_OBJECT(CG[0]);
+		CG[0] = CG2;
+		if (f_v) {
+			cout << "graph_theoretic_activity::perform_activity "
+					"after CG->double_cover" << endl;
+		}
+	}
 	else if (Descr->f_eigenvalues) {
 
 		if (f_v) {

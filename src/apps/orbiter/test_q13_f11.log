@@ -1,0 +1,48 @@
+Welcome to Orbiter! Your build number is 3352.
+do_orbiter_session
+orbiter_top_level_session::orbiter_top_level_session before new orbiter_session
+orbiter_session::orbiter_session
+orbiter_session::orbiter_session done
+orbiter_top_level_session::orbiter_top_level_session after new orbiter_session
+do_orbiter_session before execute_command_line
+orbiter_top_level_session::execute_command_line
+A user's guide is available here: 
+https://www.math.colostate.edu/~betten/orbiter/users_guide.pdf
+The sources are available here: 
+https://github.com/abetten/orbiter
+An example makefile with many commands from the user's guide is here: 
+https://github.com/abetten/orbiter/tree/master/examples/users_guide/makefile
+SYSTEMUNIX is defined
+SYSTEM_IS_MACINTOSH is defined
+sizeof(int)=4
+sizeof(long int)=8
+session_verbose_level = 0
+orbiter_top_level_session::execute_command_line before handle_everything
+quartic_curve_activity_description::read_arguments
+quartic_curve_activity_description::read_arguments looping, i=0
+quartic_curve_activity_description::read_arguments done
+-with finished, next command is THE_END at i=33
+Command 0:
+-define F 
+-finite_field -q 13
+Command 1:
+-define P 
+-projective_space  -n 2
+ -field F
+-verbose_level 0
+Command 2:
+-define C 
+-quartic_curve 
+-space P
+-by_normal_form 3,2,10,4,2,11
+Command 3:
+-with C
+-do 
+-quartic_curve_activity -report 
+-q 13
+longinteger_domain::check_for_int_overflow sizeof(int) == 4
+polarity::determine_absolute_points we need n=3, skipping
+polarity::determine_absolute_points we need n=3, skipping
+polarity::determine_absolute_points we need n=3, skipping
+polarity::determine_absolute_points we need n=3, skipping
+grassmann::rank_lint error, does not have full rank

@@ -1516,6 +1516,7 @@ public:
 	int f_automorphism_group_colored_graph;
 
 	int f_properties;
+	int f_double_cover;
 	int f_eigenvalues;
 	int f_eigenvalues_report;
 

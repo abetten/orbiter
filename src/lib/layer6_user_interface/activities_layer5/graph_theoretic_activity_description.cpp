@@ -83,6 +83,8 @@ graph_theoretic_activity_description::graph_theoretic_activity_description()
 
 	f_properties = false;
 
+	f_double_cover = false;
+
 	f_eigenvalues = false;
 
 	f_eigenvalues_report = false;
@@ -272,6 +274,12 @@ int graph_theoretic_activity_description::read_arguments(
 				cout << "-properties " << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-double_cover") == 0) {
+			f_double_cover = true;
+			if (f_v) {
+				cout << "-double_cover " << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-eigenvalues") == 0) {
 			f_eigenvalues = true;
 			if (f_v) {
@@ -410,6 +418,9 @@ void graph_theoretic_activity_description::print()
 	}
 	if (f_properties) {
 		cout << "-properties " << endl;
+	}
+	if (f_double_cover) {
+		cout << "-double_cover " << endl;
 	}
 	if (f_eigenvalues) {
 		cout << "-eigenvalues " << endl;

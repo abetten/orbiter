@@ -150,6 +150,9 @@ interface_combinatorics::interface_combinatorics()
 	f_test_if_distance_regular_graph = false;
 	//std::string test_if_distance_regular_graph_fname;
 
+	f_double_cover = false;
+	double_cover_iterations = 0;
+
 }
 
 interface_combinatorics::~interface_combinatorics()
@@ -268,6 +271,9 @@ void interface_combinatorics::print_help(
 	else if (ST.stringcmp(argv[i], "-test_if_distance_regular_graph") == 0) {
 		cout << "-test_if_distance_regular_graph <string : fname> " << endl;
 	}
+	else if (ST.stringcmp(argv[i], "-double_cover") == 0) {
+		cout << "-double_cover <int : iterations> " << endl;
+	}
 }
 
 int interface_combinatorics::recognize_keyword(
@@ -381,6 +387,9 @@ int interface_combinatorics::recognize_keyword(
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-test_if_distance_regular_graph") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-double_cover") == 0) {
 		return true;
 	}
 	return false;
@@ -753,6 +762,13 @@ void interface_combinatorics::read_arguments(
 					<< test_if_distance_regular_graph_fname << endl;
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-double_cover") == 0) {
+		f_double_cover = true;
+		double_cover_iterations = ST.strtoi(argv[++i]);
+		if (f_v) {
+			cout << "-double_cover " << double_cover_iterations << endl;
+		}
+	}
 
 	if (f_v) {
 		cout << "interface_combinatorics::read_arguments done" << endl;
@@ -919,6 +935,9 @@ void interface_combinatorics::print()
 	if (f_test_if_distance_regular_graph) {
 		cout << "-test_if_distance_regular_graph "
 				<< test_if_distance_regular_graph_fname << endl;
+	}
+	if (f_double_cover) {
+		cout << "-double_cover " << double_cover_iterations << endl;
 	}
 
 }
@@ -1341,6 +1360,56 @@ void interface_combinatorics::worker(
 		}
 		//cout << "f_drg = " << f_drg << endl;
 
+	}
+	else if (f_double_cover) {
+		combinatorics::graph_theory::graph_theory_domain GT;
+		combinatorics::graph_theory::colored_graph *CG = NEW_OBJECT(combinatorics::graph_theory::colored_graph);
+		int n = 1;
+		int *Adj = NEW_int(1 * 1);
+		Adj[0] = 0; 
+		int *colors = NEW_int(1);
+		colors[0] = 0;
+		string label = "Graph_0";
+		string label_tex = "Graph\\_0";
+		CG->init_adjacency(1, 1, 1, colors, Adj, label, label_tex, verbose_level);
+		
+		for (int i = 0; i <= double_cover_iterations; i++) {
+			cout << "\n=============================================" << endl;
+			cout << "Iteration " << i << ", Graph size: " << CG->nb_points << endl;
+			cout << "=============================================" << endl;
+			
+			CG->properties(verbose_level);
+			
+			cout << "Eigenvalues:" << endl;
+			GT.eigenvalues(CG, verbose_level);
+
+			interfaces::nauty_interface_for_graphs Nauty;
+			actions::action *Aut;
+			other::l1_interfaces::nauty_interface_control Nauty_control;
+			Aut = Nauty.create_automorphism_group_of_colored_graph_ignoring_colors(
+					CG,
+					&Nauty_control,
+					0 /* verbose_level */);
+			algebra::ring_theory::longinteger_object go;
+			Aut->Strong_gens->group_order(go);
+			cout << "Automorphism group order is: " << go.stringify() << endl;
+
+			int rank = 0;
+			double *E;
+			CG->eigenvalues(E, 0);
+			for (int j = 0; j < CG->nb_points; j++) {
+				if (abs(E[j]) > 0.000000001) rank++;
+			}
+			cout << "Rank of adjacency matrix is: " << rank << endl;
+			delete [] E;
+
+			combinatorics::graph_theory::colored_graph *CG2 = CG->double_cover(verbose_level);
+			FREE_OBJECT(CG);
+			CG = CG2;
+		}
+		if (CG) {
+			FREE_OBJECT(CG);
+		}
 	}
 
 

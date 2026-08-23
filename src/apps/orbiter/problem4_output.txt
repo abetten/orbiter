@@ -1,0 +1,1001 @@
+Welcome to Orbiter! Your build number is 3352.
+do_orbiter_session
+orbiter_top_level_session::orbiter_top_level_session before new orbiter_session
+orbiter_session::orbiter_session
+orbiter_session::orbiter_session done
+orbiter_top_level_session::orbiter_top_level_session after new orbiter_session
+do_orbiter_session before execute_command_line
+orbiter_top_level_session::execute_command_line
+A user's guide is available here: 
+https://www.math.colostate.edu/~betten/orbiter/users_guide.pdf
+The sources are available here: 
+https://github.com/abetten/orbiter
+An example makefile with many commands from the user's guide is here: 
+https://github.com/abetten/orbiter/tree/master/examples/users_guide/makefile
+SYSTEMUNIX is defined
+SYSTEM_IS_MACINTOSH is defined
+sizeof(int)=4
+sizeof(long int)=8
+session_verbose_level = 6
+orbiter_top_level_session::execute_command_line before handle_everything
+orbiter_top_level_session::handle_everything memory_debug before parse_and_execute
+orbiter_top_level_session::parse parsing the orbiter dash code
+orbiter_top_level_session::parse cnt = 0, i = 3
+orbiter_top_level_session::parse i=3, next argument is -define
+orbiter_top_level_session::parse i = 3
+orbiter_top_level_session::parse before OC->parse
+orbiter_command::parse
+interface_symbol_table::init
+interface_symbol_table::done
+orbiter_command::parse recognizing keyword from Interface_symbol_table
+interface_symbol_table::read_arguments
+interface_symbol_table::read_arguments the next argument is -define
+interface_symbol_table::read_arguments before Symbol_definition->read_definition
+symbol_definition::read_definition i=3 argc=73
+symbol_definition::read_definition define_label=F
+-define F
+reading -finite_field
+finite_field_description::read_arguments
+-q 9
+-end
+finite_field_description::read_arguments done
+-finite_field
+i = 9
+argc = 73
+next argument is -define
+symbol_definition::read_definition done
+interface_symbol_table::read_arguments after Symbol_definition->read_definition
+interface_symbol_table::read_arguments done
+orbiter_command::parse after Interface_symbol_table.read_arguments, i=9
+orbiter_top_level_session::parse after OC->parse
+orbiter_top_level_session::parse command 0 starting at token 9 is:
+-define F 
+-finite_field -q 9
+orbiter_top_level_session::parse cnt = 1, i = 9
+orbiter_top_level_session::parse i=9, next argument is -define
+orbiter_top_level_session::parse i = 9
+orbiter_top_level_session::parse before OC->parse
+orbiter_command::parse
+interface_symbol_table::init
+interface_symbol_table::done
+orbiter_command::parse recognizing keyword from Interface_symbol_table
+interface_symbol_table::read_arguments
+interface_symbol_table::read_arguments the next argument is -define
+interface_symbol_table::read_arguments before Symbol_definition->read_definition
+symbol_definition::read_definition i=9 argc=73
+symbol_definition::read_definition define_label=P
+-define P
+reading -projective_space
+projective_space_with_action_description::read_arguments
+-n 2
+projective_space_with_action_description::read_arguments looping, i=1
+-field F
+projective_space_with_action_description::read_arguments looping, i=3
+-v 0
+projective_space_with_action_description::read_arguments looping, i=5
+-end
+projective_space_with_action_description::read_arguments done
+-projective_space
+i = 19
+argc = 73
+next argument is -define
+symbol_definition::read_definition done
+interface_symbol_table::read_arguments after Symbol_definition->read_definition
+interface_symbol_table::read_arguments done
+orbiter_command::parse after Interface_symbol_table.read_arguments, i=19
+orbiter_top_level_session::parse after OC->parse
+orbiter_top_level_session::parse command 1 starting at token 19 is:
+-define P 
+-projective_space  -n 2
+ -field F
+-verbose_level 0
+orbiter_top_level_session::parse cnt = 2, i = 19
+orbiter_top_level_session::parse i=19, next argument is -define
+orbiter_top_level_session::parse i = 19
+orbiter_top_level_session::parse before OC->parse
+orbiter_command::parse
+interface_symbol_table::init
+interface_symbol_table::done
+orbiter_command::parse recognizing keyword from Interface_symbol_table
+interface_symbol_table::read_arguments
+interface_symbol_table::read_arguments the next argument is -define
+interface_symbol_table::read_arguments before Symbol_definition->read_definition
+symbol_definition::read_definition i=19 argc=73
+symbol_definition::read_definition define_label=R
+-define R
+reading -polynomial_ring
+polynomial_ring_description::read_arguments
+-field F
+-number_of_variables 3
+-homogeneous_of_degree 4
+-monomial_ordering_partition 
+-variables X0,X1,X2 X_0,X_1,X_2
+-end
+polynomial_ring_description::read_arguments done
+-polynomial_ring
+i = 33
+argc = 73
+next argument is -define
+symbol_definition::read_definition done
+interface_symbol_table::read_arguments after Symbol_definition->read_definition
+interface_symbol_table::read_arguments done
+orbiter_command::parse after Interface_symbol_table.read_arguments, i=33
+orbiter_top_level_session::parse after OC->parse
+orbiter_top_level_session::parse command 2 starting at token 33 is:
+-define R 
+-polynomial_ring -field F
+-homogeneous_of_degree 4
+-number_of_variables 3
+-monomial_ordering_partition
+-variables X0,X1,X2 X_0,X_1,X_2
+orbiter_top_level_session::parse cnt = 3, i = 33
+orbiter_top_level_session::parse i=33, next argument is -define
+orbiter_top_level_session::parse i = 33
+orbiter_top_level_session::parse before OC->parse
+orbiter_command::parse
+interface_symbol_table::init
+interface_symbol_table::done
+orbiter_command::parse recognizing keyword from Interface_symbol_table
+interface_symbol_table::read_arguments
+interface_symbol_table::read_arguments the next argument is -define
+interface_symbol_table::read_arguments before Symbol_definition->read_definition
+symbol_definition::read_definition i=33 argc=73
+symbol_definition::read_definition define_label=V1
+-define V1
+reading -variety
+variety_description::read_arguments
+-label_txt curve1
+-label_tex curve1
+-projective_space P
+-ring R
+-equation_by_coefficients 1,1,1,0,0,0,0,0,0,0,0,0,0,0,0
+-end
+variety_description::read_arguments done
+-variety
+i = 47
+argc = 73
+next argument is -define
+-variety 
+-label_txt curve1
+-label_tex curve1
+-projective_space P
+-ring R
+-equation_by_coefficients 1,1,1,0,0,0,0,0,0,0,0,0,0,0,0
+symbol_definition::read_definition done
+interface_symbol_table::read_arguments after Symbol_definition->read_definition
+interface_symbol_table::read_arguments done
+orbiter_command::parse after Interface_symbol_table.read_arguments, i=47
+orbiter_top_level_session::parse after OC->parse
+orbiter_top_level_session::parse command 3 starting at token 47 is:
+-define V1 
+-variety -label_txt curve1
+-label_tex curve1
+-projective_space P
+-ring R
+-equation_by_coefficients 1,1,1,0,0,0,0,0,0,0,0,0,0,0,0
+orbiter_top_level_session::parse cnt = 4, i = 47
+orbiter_top_level_session::parse i=47, next argument is -define
+orbiter_top_level_session::parse i = 47
+orbiter_top_level_session::parse before OC->parse
+orbiter_command::parse
+interface_symbol_table::init
+interface_symbol_table::done
+orbiter_command::parse recognizing keyword from Interface_symbol_table
+interface_symbol_table::read_arguments
+interface_symbol_table::read_arguments the next argument is -define
+interface_symbol_table::read_arguments before Symbol_definition->read_definition
+symbol_definition::read_definition i=47 argc=73
+symbol_definition::read_definition define_label=V2
+-define V2
+reading -variety
+variety_description::read_arguments
+-label_txt curve2
+-label_tex curve2
+-projective_space P
+-ring R
+-equation_by_coefficients 1,1,1,1,5,1,7,7,5,0,0,0,0,0,0
+-end
+variety_description::read_arguments done
+-variety
+i = 61
+argc = 73
+next argument is -with
+-variety 
+-label_txt curve2
+-label_tex curve2
+-projective_space P
+-ring R
+-equation_by_coefficients 1,1,1,1,5,1,7,7,5,0,0,0,0,0,0
+symbol_definition::read_definition done
+interface_symbol_table::read_arguments after Symbol_definition->read_definition
+interface_symbol_table::read_arguments done
+orbiter_command::parse after Interface_symbol_table.read_arguments, i=61
+orbiter_top_level_session::parse after OC->parse
+orbiter_top_level_session::parse command 4 starting at token 61 is:
+-define V2 
+-variety -label_txt curve2
+-label_tex curve2
+-projective_space P
+-ring R
+-equation_by_coefficients 1,1,1,1,5,1,7,7,5,0,0,0,0,0,0
+orbiter_top_level_session::parse cnt = 5, i = 61
+orbiter_top_level_session::parse i=61, next argument is -with
+orbiter_top_level_session::parse i = 61
+orbiter_top_level_session::parse before OC->parse
+orbiter_command::parse
+interface_symbol_table::init
+interface_symbol_table::done
+orbiter_command::parse recognizing keyword from Interface_symbol_table
+interface_symbol_table::read_arguments
+interface_symbol_table::read_arguments the next argument is -with
+interface_symbol_table::read_with
+activity_description::read_arguments
+reading -variety_activity
+variety_activity_description::read_arguments
+-test_isomorphism 
+-nauty_control 
+nauty_interface_control::read_arguments
+-nauty_log nauty_log.txt
+-end
+done reading -nauty_control 
+i = 4
+argc = 6
+next argument is -end
+-end
+variety_activity_description::read_arguments done
+-variety_activity
+-test_isomorphism 
+-nauty_control 
+-nauty_log nauty_log.txt
+i = 73
+argc = 73
+activity_description::read_arguments done
+interface_symbol_table::read_with done
+-with finished, next command is THE_END at i=73
+interface_symbol_table::read_arguments done
+orbiter_command::parse after Interface_symbol_table.read_arguments, i=73
+orbiter_top_level_session::parse after OC->parse
+orbiter_top_level_session::parse command 5 starting at token 73 is:
+-with V2, V1
+-do 
+-variety_activity
+-test_isomorphism 
+-nauty_control 
+-nauty_log nauty_log.txt
+orbiter_top_level_session::parse parsing the orbiter dash code done
+orbiter_top_level_session::parse_and_execute, we have parsed the following orbiter dash code program:
+Command 0:
+-define F 
+-finite_field -q 9
+Command 1:
+-define P 
+-projective_space  -n 2
+ -field F
+-verbose_level 0
+Command 2:
+-define R 
+-polynomial_ring -field F
+-homogeneous_of_degree 4
+-number_of_variables 3
+-monomial_ordering_partition
+-variables X0,X1,X2 X_0,X_1,X_2
+Command 3:
+-define V1 
+-variety -label_txt curve1
+-label_tex curve1
+-projective_space P
+-ring R
+-equation_by_coefficients 1,1,1,0,0,0,0,0,0,0,0,0,0,0,0
+Command 4:
+-define V2 
+-variety -label_txt curve2
+-label_tex curve2
+-projective_space P
+-ring R
+-equation_by_coefficients 1,1,1,1,5,1,7,7,5,0,0,0,0,0,0
+Command 5:
+-with V2, V1
+-do 
+-variety_activity
+-test_isomorphism 
+-nauty_control 
+-nauty_log nauty_log.txt
+################################################################################################
+Executing commands:
+################################################################################################
+Executing command 0:
+-define F 
+-finite_field -q 9
+################################################################################################
+orbiter_command::execute
+orbiter_command::execute before Symbol_table->worker
+interface_symbol_table::worker
+interface_symbol_table::worker f_define
+symbol_definition::perform_definition
+symbol_definition::perform_definition before definition_of_finite_field
+symbol_definition::definition_of_finite_field
+-q 9
+symbol_definition::definition_of_finite_field before F->init
+finite_field::init
+finite_field::init before finite_field_init
+finite_field::finite_field_init q=9 f_without_tables = 0 verbose_level = 5
+finite_field::finite_field_init before D.check_for_int_overflow_given_string_and_convert
+longinteger_domain::check_for_int_overflow_given_string_and_convert
+longinteger_domain::check_for_int_overflow_given_string_and_convert before check_for_int_overflow_given_string
+longinteger_domain::check_for_int_overflow_given_string
+longinteger_domain::check_for_int_overflow_given_string number_to_test_longinteger = 9
+longinteger_domain::check_for_int_overflow_given_string number_to_test_lint = 9
+longinteger_domain::check_for_int_overflow_given_string before check_for_int_overflow
+longinteger_domain::check_for_int_overflow
+longinteger_domain::check_for_int_overflow sizeof(int) == 4
+longinteger_domain::check_for_int_overflow done
+longinteger_domain::check_for_int_overflow_given_string after check_for_int_overflow
+longinteger_domain::check_for_int_overflow_given_string number_to_test_int = 9
+longinteger_domain::check_for_int_overflow_given_string done
+longinteger_domain::check_for_int_overflow_given_string_and_convert after check_for_int_overflow_given_string
+longinteger_domain::check_for_int_overflow_given_string_and_convert done
+finite_field::finite_field_init after D.check_for_int_overflow_given_string_and_convert
+finite_field::finite_field_init q_longinteger = 9
+finite_field::finite_field_init q_long = 9
+finite_field::finite_field_init q = 9
+finite_field::finite_field_init before finite_field_init_small_order
+finite_field::finite_field_init_small_order q=9 f_without_tables = 0 f_compute_related_fields = 0 verbose_level = 5
+finite_field_io::init
+finite_field_io::init done
+linear_algebra::init
+linear_algebra::init done
+projective_space_basic::init
+projective_space_basic::init done
+finite_field::finite_field_init_small_order before NT.factor_prime_power
+finite_field::finite_field_init_small_order after NT.factor_prime_power
+finite_field::finite_field_init_small_order p=3 e=2
+knowledge_base::get_primitive_polynomial
+knowledge_base::get_primitive_polynomial done
+finite_field::finite_field_init_small_order q=9 before init_override_polynomial_small_order poly = 14
+finite_field::init_override_polynomial_small_order q=9 verbose_level = 3
+finite_field_io::init
+finite_field_io::init done
+linear_algebra::init
+linear_algebra::init done
+projective_space_basic::init
+projective_space_basic::init done
+finite_field::init_override_polynomial_small_order p=3
+finite_field::init_override_polynomial_small_order e=2
+finite_field::init_override_polynomial_small_order detected an extension field
+finite_field::init_override_polynomial_small_order poly = 14
+finite_field::init_override_polynomial_small_order, using polynomial 14
+finite_field::init_override_polynomial_small_order using poly 14
+finite_field::init_override_polynomial_small_order GF(9) = GF(3^2)
+finite_field::init_override_polynomial_small_order polynomial = X^2+X+2 = 14
+finite_field::init_override_polynomial_small_order before init_implementation
+finite_field::init_implementation
+finite_field::init_implementation implementation with field tables
+finite_field::init_implementation before T->init
+finite_field_implementation_by_tables::init q = 9 e=2
+finite_field_implementation_by_tables::init before create_alpha_table
+finite_field_implementation_by_tables::init after create_alpha_table
+finite_field_implementation_by_tables::init before init_binary_operations
+finite_field_implementation_by_tables::init after init_binary_operations
+finite_field_implementation_by_tables::init before init_quadratic_subfield
+finite_field_implementation_by_tables::init after init_quadratic_subfield
+finite_field_implementation_by_tables::init before init_frobenius_table
+finite_field_implementation_by_tables::init_frobenius_table
+finite_field_implementation_by_tables::init_frobenius_table computing the images under the Frobenius automorphism
+finite_field_implementation_by_tables::init_frobenius_table computing the images under the Frobenius automorphism finished
+finite_field_implementation_by_tables::init_frobenius_table done
+finite_field_implementation_by_tables::init after init_frobenius_table
+finite_field_implementation_by_tables::init before init_absolute_trace_table
+finite_field_implementation_by_tables::init_absolute_trace_table
+finite_field_implementation_by_tables::init_absolute_trace_table done
+finite_field_implementation_by_tables::init after init_absolute_trace_table
+finite_field_implementation_by_tables::init field of order 9 initialized
+finite_field_implementation_by_tables::init done
+finite_field::init_implementation after T->init
+finite_field::init_implementation done
+finite_field::init_override_polynomial_small_order after init_implementation
+finite_field::init_override_polynomial_small_order before compute_properties
+finite_field::compute_properties q=9
+finite_field::compute_properties before Related_fields->init
+finite_field_properties::init
+finite_field_properties::init before compute_harmonics
+finite_field_properties::compute_harmonics
+finite_field_properties::compute_harmonics
+finite_field_properties::compute_harmonics The field is equianharmonic, a = 2
+finite_field_properties::compute_harmonics done
+finite_field_properties::init after compute_harmonics
+finite_field_properties::init done
+finite_field::compute_properties after Related_fields->init
+finite_field::compute_properties done
+finite_field::init_override_polynomial_small_order after compute_properties
+finite_field::init_override_polynomial_small_order finished
+finite_field::finite_field_init_small_order q=9 after init_override_polynomial_small_order
+finite_field::finite_field_init_small_order done
+finite_field::finite_field_init after finite_field_init_small_order
+finite_field::finite_field_init done
+finite_field::init after finite_field_init
+finite_field::init done
+symbol_definition::definition_of_finite_field after F->init
+orbiter_symbol_table_entry::init_finite_field
+orbiter_symbol_table_entry::init_finite_field done
+symbol_definition::definition_of_finite_field before add_symbol_table_entry
+orbiter_top_level_session::add_symbol_table_entry label = F
+orbiter_symbol_table::add_symbol_table_entry
+orbiter_symbol_table::add_symbol_table_entry done
+orbiter_top_level_session::add_symbol_table_entry done
+symbol_definition::definition_of_finite_field done
+symbol_definition::perform_definition after definition_of_finite_field
+interface_symbol_table::worker done
+orbiter_command::execute after Symbol_table->worker
+orbiter_command::execute done
+################################################################################################
+Executing command 1:
+-define P 
+-projective_space  -n 2
+ -field F
+-verbose_level 0
+################################################################################################
+orbiter_command::execute
+orbiter_command::execute before Symbol_table->worker
+interface_symbol_table::worker
+interface_symbol_table::worker f_define
+symbol_definition::perform_definition
+symbol_definition::perform_definition before definition_of_projective_space
+symbol_definition::definition_of_projective_space verbose_level=6
+symbol_definition::definition_of_projective_space before load_finite_field_PG
+symbol_definition::definition_of_projective_space after load_finite_field_PG
+symbol_definition::definition_of_projective_space before PA->init_from_description
+polarity::determine_absolute_points we need n=3, skipping
+polarity::determine_absolute_points we need n=3, skipping
+polarity::determine_absolute_points we need n=3, skipping
+polarity::determine_absolute_points we need n=3, skipping
+symbol_definition::definition_of_projective_space after PA->init_from_description
+symbol_definition::definition_of_projective_space before add_symbol_table_entry
+symbol_definition::definition_of_projective_space done
+symbol_definition::perform_definition after definition_of_projective_space
+interface_symbol_table::worker done
+orbiter_command::execute after Symbol_table->worker
+orbiter_command::execute done
+################################################################################################
+Executing command 2:
+-define R 
+-polynomial_ring -field F
+-homogeneous_of_degree 4
+-number_of_variables 3
+-monomial_ordering_partition
+-variables X0,X1,X2 X_0,X_1,X_2
+################################################################################################
+orbiter_command::execute
+orbiter_command::execute before Symbol_table->worker
+interface_symbol_table::worker
+interface_symbol_table::worker f_define
+symbol_definition::perform_definition
+symbol_definition::perform_definition before definition_of_polynomial_ring
+symbol_definition::definition_of_polynomial_ring
+-field F
+-homogeneous_of_degree 4
+-number_of_variables 3
+-monomial_ordering_partition
+-variables X0,X1,X2 X_0,X_1,X_2
+symbol_definition::definition_of_polynomial_ring before HPD->init
+homogeneous_polynomial_domain::init
+homogeneous_polynomial_domain::init before init with variables
+homogeneous_polynomial_domain::init_with_or_without_variables
+homogeneous_polynomial_domain::init_with_or_without_variables before make_monomials
+homogeneous_polynomial_domain::make_monomials
+homogeneous_polynomial_domain::make_monomials nb_monomials = 15
+diophant::open
+homogeneous_polynomial_domain::make_monomials before D->solve_all_betten
+homogeneous_polynomial_domain::make_monomials after D->solve_all_betten
+homogeneous_polynomial_domain::make_monomials We found 15 monomials
+homogeneous_polynomial_domain::make_monomials There are 15 monomials.
+homogeneous_polynomial_domain::make_monomials rearranging by partition type:
+homogeneous_polynomial_domain::rearrange_monomials_by_partition_type
+homogeneous_polynomial_domain::rearrange_monomials_by_partition_type before Sorting.Heapsort_general
+homogeneous_polynomial_domain::rearrange_monomials_by_partition_type after Sorting.Heapsort_general
+homogeneous_polynomial_domain::rearrange_monomials_by_partition_type done
+homogeneous_polynomial_domain::make_monomials making symbols
+homogeneous_polynomial_domain::make_monomials after making symbols
+homogeneous_polynomial_domain::make_monomials making symbols_latex
+homogeneous_polynomial_domain::make_monomials after making symbols_latex
+homogeneous_polynomial_domain::make_monomials  before making Affine
+homogeneous_polynomial_domain::make_monomials  f_ok = 1
+homogeneous_polynomial_domain::make_monomials  nb_affine = 81
+homogeneous_polynomial_domain::make_monomials  nb_affine * degree = 324
+homogeneous_polynomial_domain::make_monomials before setup_affine
+homogeneous_polynomial_domain::setup_affine
+homogeneous_polynomial_domain::setup_affine nb_affine = 81 = nb_variables^degree = 3^4
+homogeneous_polynomial_domain::setup_affine Affine, nb_affine=81
+homogeneous_polynomial_domain::setup_affine done
+homogeneous_polynomial_domain::make_monomials after setup_affine
+homogeneous_polynomial_domain::make_monomials done
+homogeneous_polynomial_domain::init_with_or_without_variables after make_monomials
+homogeneous_polynomial_domain::init_with_or_without_variables done
+homogeneous_polynomial_domain::init after init with variables
+homogeneous_polynomial_domain::init done
+symbol_definition::definition_of_polynomial_ring after F->init
+orbiter_symbol_table_entry::init_polynomial_ring
+orbiter_symbol_table_entry::init_polynomial_ring done
+symbol_definition::definition_of_polynomial_ring before add_symbol_table_entry
+orbiter_top_level_session::add_symbol_table_entry label = R
+orbiter_symbol_table::add_symbol_table_entry
+orbiter_symbol_table::add_symbol_table_entry done
+orbiter_top_level_session::add_symbol_table_entry done
+symbol_definition::definition_of_polynomial_ring done
+symbol_definition::perform_definition after definition_of_polynomial_ring
+interface_symbol_table::worker done
+orbiter_command::execute after Symbol_table->worker
+orbiter_command::execute done
+################################################################################################
+Executing command 3:
+-define V1 
+-variety -label_txt curve1
+-label_tex curve1
+-projective_space P
+-ring R
+-equation_by_coefficients 1,1,1,0,0,0,0,0,0,0,0,0,0,0,0
+################################################################################################
+orbiter_command::execute
+orbiter_command::execute before Symbol_table->worker
+interface_symbol_table::worker
+interface_symbol_table::worker f_define
+symbol_definition::perform_definition
+symbol_definition::perform_definition before definition_of_variety
+symbol_definition::definition_of_variety
+symbol_definition::definition_of_variety before getting PA
+symbol_definition::definition_of_variety after getting PA
+symbol_definition::definition_of_variety before Variety->create_variety
+variety_object_with_action::create_variety
+variety_object_with_action::create_variety before Variety_object->init
+variety_object::init
+variety_object::init before parse_equation_by_coefficients
+variety_object::init equation = 
+variety_object::parse_equation_by_coefficients
+variety_object::parse_equation_by_coefficients equation = 1,1,1,0,0,0,0,0,0,0,0,0,0,0,0
+variety_object::parse_equation_by_coefficients reading coefficients numerically
+variety_object::parse_equation_by_coefficients done
+variety_object::init after parse_equation_by_coefficients
+variety_object::init eqn = ( 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 )
+variety_object::init computing the set of rational points
+variety_object::init before enumerate_points
+variety_object::enumerate_points
+variety_object::enumerate_points before Ring->enumerate_points
+variety_object::enumerate_points after Ring->enumerate_points
+variety_object::enumerate_points The variety has 28 points
+variety_object::enumerate_points before Point_sets->init_single
+variety_object::enumerate_points after Point_sets->init_single
+variety_object::enumerate_points done
+variety_object::init after enumerate_points
+variety_object::init !f_bitangents
+variety_object::init !f_compute_lines
+variety_object::init nb_pts = 28 nb_bitangents=-1
+variety_object::init done
+variety_object_with_action::create_variety after Variety_object->init
+variety_object_with_action::create_variety before apply_transformations_if_necessary
+variety_object_with_action::apply_transformations_if_necessary
+variety_object_with_action::create_variety after apply_transformations_if_necessary
+variety_object_with_action::create_variety before compute_tactical_decompositions
+variety_object_with_action::compute_tactical_decompositions
+variety_object_with_action::compute_tactical_decompositions the automorphism group is not available
+variety_object_with_action::compute_tactical_decompositions done
+variety_object_with_action::create_variety after compute_tactical_decompositions
+variety_object_with_action::create_variety before print
+cnt=0 po=0 so=0 eqn = ( 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 )equation1 is: ( 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 )
+nb_pts = 28 pts=( 3, 6, 7, 9, 11, 14, 15, 17, 19, 21, 24, 26, 29, 30, 33, 35, 37, 46, 56, 57, 60, 62, 64, 74, 75, 78, 80, 82 )
+variety_object_with_action::create_variety after print
+variety_object_with_action::create_variety done
+symbol_definition::definition_of_variety after Variety->create_variety
+Variety->Variety_object->label_txt = curve1
+symbol_definition::definition_of_variety we have created a variety called curve1
+orbiter_symbol_table_entry::init_variety
+orbiter_symbol_table_entry::init_variety done
+symbol_definition::definition_of_variety before add_symbol_table_entry
+orbiter_top_level_session::add_symbol_table_entry label = V1
+orbiter_symbol_table::add_symbol_table_entry
+orbiter_symbol_table::add_symbol_table_entry done
+orbiter_top_level_session::add_symbol_table_entry done
+symbol_definition::definition_of_variety done
+symbol_definition::perform_definition after definition_of_variety
+interface_symbol_table::worker done
+orbiter_command::execute after Symbol_table->worker
+orbiter_command::execute done
+################################################################################################
+Executing command 4:
+-define V2 
+-variety -label_txt curve2
+-label_tex curve2
+-projective_space P
+-ring R
+-equation_by_coefficients 1,1,1,1,5,1,7,7,5,0,0,0,0,0,0
+################################################################################################
+orbiter_command::execute
+orbiter_command::execute before Symbol_table->worker
+interface_symbol_table::worker
+interface_symbol_table::worker f_define
+symbol_definition::perform_definition
+symbol_definition::perform_definition before definition_of_variety
+symbol_definition::definition_of_variety
+symbol_definition::definition_of_variety before getting PA
+symbol_definition::definition_of_variety after getting PA
+symbol_definition::definition_of_variety before Variety->create_variety
+variety_object_with_action::create_variety
+variety_object_with_action::create_variety before Variety_object->init
+variety_object::init
+variety_object::init before parse_equation_by_coefficients
+variety_object::init equation = 
+variety_object::parse_equation_by_coefficients
+variety_object::parse_equation_by_coefficients equation = 1,1,1,1,5,1,7,7,5,0,0,0,0,0,0
+variety_object::parse_equation_by_coefficients reading coefficients numerically
+variety_object::parse_equation_by_coefficients done
+variety_object::init after parse_equation_by_coefficients
+variety_object::init eqn = ( 1, 1, 1, 1, 5, 1, 7, 7, 5, 0, 0, 0, 0, 0, 0 )
+variety_object::init computing the set of rational points
+variety_object::init before enumerate_points
+variety_object::enumerate_points
+variety_object::enumerate_points before Ring->enumerate_points
+variety_object::enumerate_points after Ring->enumerate_points
+variety_object::enumerate_points The variety has 28 points
+variety_object::enumerate_points before Point_sets->init_single
+variety_object::enumerate_points after Point_sets->init_single
+variety_object::enumerate_points done
+variety_object::init after enumerate_points
+variety_object::init !f_bitangents
+variety_object::init !f_compute_lines
+variety_object::init nb_pts = 28 nb_bitangents=-1
+variety_object::init done
+variety_object_with_action::create_variety after Variety_object->init
+variety_object_with_action::create_variety before apply_transformations_if_necessary
+variety_object_with_action::apply_transformations_if_necessary
+variety_object_with_action::create_variety after apply_transformations_if_necessary
+variety_object_with_action::create_variety before compute_tactical_decompositions
+variety_object_with_action::compute_tactical_decompositions
+variety_object_with_action::compute_tactical_decompositions the automorphism group is not available
+variety_object_with_action::compute_tactical_decompositions done
+variety_object_with_action::create_variety after compute_tactical_decompositions
+variety_object_with_action::create_variety before print
+cnt=0 po=0 so=0 eqn = ( 1, 1, 1, 1, 5, 1, 7, 7, 5, 0, 0, 0, 0, 0, 0 )equation1 is: ( 1, 1, 1, 1, 5, 1, 7, 7, 5, 0, 0, 0, 0, 0, 0 )
+nb_pts = 28 pts=( 5, 18, 25, 36, 39, 40, 42, 43, 47, 50, 51, 54, 55, 58, 59, 62, 68, 69, 70, 71, 76, 77, 79, 81, 85, 87, 89, 90 )
+variety_object_with_action::create_variety after print
+variety_object_with_action::create_variety done
+symbol_definition::definition_of_variety after Variety->create_variety
+Variety->Variety_object->label_txt = curve2
+symbol_definition::definition_of_variety we have created a variety called curve2
+orbiter_symbol_table_entry::init_variety
+orbiter_symbol_table_entry::init_variety done
+symbol_definition::definition_of_variety before add_symbol_table_entry
+orbiter_top_level_session::add_symbol_table_entry label = V2
+orbiter_symbol_table::add_symbol_table_entry
+orbiter_symbol_table::add_symbol_table_entry done
+orbiter_top_level_session::add_symbol_table_entry done
+symbol_definition::definition_of_variety done
+symbol_definition::perform_definition after definition_of_variety
+interface_symbol_table::worker done
+orbiter_command::execute after Symbol_table->worker
+orbiter_command::execute done
+################################################################################################
+Executing command 5:
+-with V2, V1
+-do 
+-variety_activity
+-test_isomorphism 
+-nauty_control 
+-nauty_log nauty_log.txt
+################################################################################################
+orbiter_command::execute
+orbiter_command::execute before Symbol_table->worker
+interface_symbol_table::worker
+interface_symbol_table::worker f_activity
+interface_symbol_table::worker before Activity_description->worker
+activity_description::worker
+activity_description::worker verbose_level = 6
+activity_description::worker number of inputs = 2
+V2, V1
+activity_description::worker f_variety_activity
+activity_description::do_variety_activity activity for the following objects:V2, V1
+activity_description::do_variety_activity nb_input = 2
+variety_activity::init
+variety_activity::init nb_input_Vo = 2
+variety_activity::init done
+activity_description::do_variety_activity before Activity.perform_activity
+variety_activity::perform_activity
+variety_activity::perform_activity -test_isomorphism
+variety_activity::perform_activity before do_test_isomorphism
+variety_activity::do_test_isomorphism
+variety_activity::do_test_isomorphism nb_input_Vo = 2
+variety_activity::do_test_isomorphism before Classifier->init_variety_object_with_action_directly
+canonical_form_classifier::init_variety_object_with_action_directly
+canonical_form_classifier::init_variety_object_with_action_directly before getting PA
+canonical_form_classifier::init_variety_object_with_action_directly after getting PA
+canonical_form_classifier::init_variety_object_with_action_directly before getting Poly_ring
+canonical_form_classifier::init_variety_object_with_action_directly after getting Poly_ring
+canonical_form_classifier::init_variety_object_with_action_directly before Ring_with_action->ring_with_action_init
+ring_with_action::ring_with_action_init verbose_level=6
+ring_with_action::ring_with_action_init before AonHPD->init
+action_on_homogeneous_polynomials::init
+starting with action PGGL_3_9
+action_on_homogeneous_polynomials::init n = 3
+action_on_homogeneous_polynomials::init q = 9
+action_on_homogeneous_polynomials::init dimension = 15
+action_on_homogeneous_polynomials::init degree = 25736391511831
+action_on_homogeneous_polynomials::init done
+ring_with_action::ring_with_action_init after AonHPD->init
+ring_with_action::ring_with_action_init done
+canonical_form_classifier::init_variety_object_with_action_directly after Ring_with_action->ring_with_action_init
+canonical_form_classifier::init_variety_object_with_action_directly before Input->init_direct
+input_objects_of_type_variety::init_direct
+input_objects_of_type_variety::init_direct nb_input_Vo = 2
+input_objects_of_type_variety::init_direct i = 0 / 2, Variety_object =  eqn = ( 1, 1, 1, 1, 5, 1, 7, 7, 5, 0, 0, 0, 0, 0, 0 )equation1 is: ( 1, 1, 1, 1, 5, 1, 7, 7, 5, 0, 0, 0, 0, 0, 0 )
+nb_pts = 28 pts=( 5, 18, 25, 36, 39, 40, 42, 43, 47, 50, 51, 54, 55, 58, 59, 62, 68, 69, 70, 71, 76, 77, 79, 81, 85, 87, 89, 90 )
+input_objects_of_type_variety::init_direct i = 1 / 2, Variety_object =  eqn = ( 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 )equation1 is: ( 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 )
+nb_pts = 28 pts=( 3, 6, 7, 9, 11, 14, 15, 17, 19, 21, 24, 26, 29, 30, 33, 35, 37, 46, 56, 57, 60, 62, 64, 74, 75, 78, 80, 82 )
+input_objects_of_type_variety::init_direct done
+canonical_form_classifier::init_variety_object_with_action_directly after Input->init_direct
+canonical_form_classifier::init_variety_object_with_action_directly done
+variety_activity::do_test_isomorphism after Classifier->init_variety_object_with_action_directly
+variety_activity::do_test_isomorphism before Canonical_form_global.compute_isomorphism
+canonical_form_global::compute_isomorphism
+canonical_form_global::compute_isomorphism before Classification_of_varieties_nauty->prepare_for_classification
+classification_of_varieties_nauty::prepare_for_classification 
+classification_of_varieties_nauty::prepare_for_classification
+classification_of_varieties_nauty::prepare_for_classification nb_objects_to_test=2
+classification_of_varieties_nauty::prepare_for_classification fname_base=Iso_curve2_and_curve1
+classification_of_varieties_nauty::prepare_for_classification Input->nb_objects_to_test=2
+classification_of_varieties_nauty::prepare_for_classification before prepare_input
+classification_of_varieties_nauty::prepare_input 
+classification_of_varieties_nauty::prepare_input Input->nb_objects_to_test2
+classification_of_varieties_nauty::prepare_input input_counter = 0 / 2 before Variety_compute_canonical_form->init
+variety_compute_canonical_form::init  input_counter=0 verbose_level=4
+variety_compute_canonical_form::init done
+classification_of_varieties_nauty::prepare_input input_counter = 0 / 2 after Variety_compute_canonical_form->init
+classification_of_varieties_nauty::prepare_input input_counter = 1 / 2 before Variety_compute_canonical_form->init
+variety_compute_canonical_form::init  input_counter=1 verbose_level=4
+variety_compute_canonical_form::init done
+classification_of_varieties_nauty::prepare_input input_counter = 1 / 2 after Variety_compute_canonical_form->init
+classification_of_varieties_nauty::prepare_input done
+classification_of_varieties_nauty::prepare_for_classification after prepare_input
+classification_of_varieties_nauty::prepare_for_classification done
+canonical_form_global::compute_isomorphism after Classification_of_varieties_nauty->prepare_for_classification
+canonical_form_global::compute_isomorphism before Classification_of_varieties_nauty->classify_nauty
+classification_of_varieties_nauty::classify_nauty
+classification_of_varieties_nauty::classify_nauty verbose_level = 6
+classification_of_varieties_nauty::classify_nauty
+classification_of_varieties_nauty::classify_nauty nb_objects_to_test = 2
+classification_of_varieties_nauty::classify_nauty before allocate_tables
+classification_of_varieties_nauty::classify_nauty after allocate_tables
+classification_of_varieties_nauty::classify_nauty before main_loop
+classification_of_varieties_nauty::main_loop
+classification_of_varieties_nauty::main_loop verbose_level = 5
+classification_of_varieties_nauty::main_loop nb_objects_to_test = 2
+classification_of_varieties_nauty::main_loop input_counter = 0 / 2
+classification_of_varieties_nauty::main_loop before handle_one_input_case
+classification_of_varieties_nauty::handle_one_input_case
+classification_of_varieties_nauty::handle_one_input_case verbose_level = 4
+classification_of_varieties_nauty::handle_one_input_case input_counter = 0 / 2 before Variety_compute_canonical_form->compute_canonical_form_nauty
+variety_compute_canonical_form::compute_canonical_form_nauty verbose_level=3
+variety_compute_canonical_form::compute_canonical_form_nauty input_counter=0
+variety_compute_canonical_form::compute_canonical_form_nauty input_counter = 0 / 2
+variety_compute_canonical_form::compute_canonical_form_nauty before classify_using_set_of_rational_points
+variety_compute_canonical_form::classify_using_set_of_rational_points verbose_level=2
+variety_compute_canonical_form::classify_using_set_of_rational_points before Variety_stabilizer_compute->init
+variety_compute_canonical_form::classify_using_set_of_rational_points after Variety_stabilizer_compute->init
+variety_compute_canonical_form::classify_using_set_of_rational_points input_counter = 0 / 2
+variety_compute_canonical_form::classify_using_set_of_rational_points before Variety_stabilizer_compute->compute_canonical_form_of_variety
+variety_compute_canonical_form::classify_using_set_of_rational_points after Variety_stabilizer_compute->compute_canonical_form_of_variety
+variety_compute_canonical_form::classify_using_set_of_rational_points before Variety_stabilizer_compute->Orb->get_canonical_form
+variety_compute_canonical_form::classify_using_set_of_rational_points after Variety_stabilizer_compute->Orb->get_canonical_form
+variety_compute_canonical_form::classify_using_set_of_rational_points The stabilizer of the variety is a group of order 12096
+variety_compute_canonical_form::classify_using_set_of_rational_points Variety_stabilizer_compute->NO->N = 184
+variety_compute_canonical_form::classify_using_set_of_rational_points canonical_labeling_len=184
+variety_compute_canonical_form::classify_using_set_of_rational_points before CB->canonical_form_search_and_add_if_new
+classify_bitvectors::canonical_form_search_and_add_if_new
+classify_bitvectors::canonical_form_search_and_add_if_new verbose_level=2
+classify_bitvectors::canonical_form_search_and_add_if_new rep_len=1058
+classify_bitvectors::canonical_form_search_and_add_if_new vec_search returns false, new bitvector, before add_at_idx
+classify_bitvectors::canonical_form_search_and_add_if_new vec_search after add_at_idx
+classify_bitvectors::canonical_form_search_and_add_if_new done, nb_types=1
+variety_compute_canonical_form::classify_using_set_of_rational_points after CB->canonical_form_search_and_add_if_new
+variety_compute_canonical_form::classify_using_set_of_rational_points CB->nb_types = 1
+variety_compute_canonical_form::classify_using_set_of_rational_points After search_and_add_if_new, cnt = 0 po = 0 so = 0 The canonical form is new and has been added
+variety_compute_canonical_form::classify_using_set_of_rational_points idx_equation = Variety_stabilizer_compute->Orb->position_of_original_object = 0
+variety_compute_canonical_form::classify_using_set_of_rational_points done
+variety_compute_canonical_form::compute_canonical_form_nauty after classify_using_set_of_rational_points
+variety_compute_canonical_form::compute_canonical_form_nauty input_counter = 0 / 2
+variety_compute_canonical_form::compute_canonical_form_nauty f_found_canonical_form=0
+variety_compute_canonical_form::compute_canonical_form_nauty idx_canonical_form=0
+variety_compute_canonical_form::compute_canonical_form_nauty idx_equation=0
+variety_compute_canonical_form::compute_canonical_form_nauty f_found_eqn=0
+variety_compute_canonical_form::compute_canonical_form_nauty group_order=12096
+variety_compute_canonical_form::compute_canonical_form_nauty done
+classification_of_varieties_nauty::handle_one_input_case input_counter = 0 / 2 after Variety_compute_canonical_form->compute_canonical_form_nauty f_found_canonical_form=0 idx_canonical_form=0 idx_equation=0
+classification_of_varieties_nauty::handle_one_input_case done
+classification_of_varieties_nauty::main_loop after handle_one_input_case
+classification_of_varieties_nauty::main_loop input_counter = 1 / 2
+classification_of_varieties_nauty::main_loop before handle_one_input_case
+classification_of_varieties_nauty::handle_one_input_case
+classification_of_varieties_nauty::handle_one_input_case verbose_level = 4
+classification_of_varieties_nauty::handle_one_input_case input_counter = 1 / 2 before Variety_compute_canonical_form->compute_canonical_form_nauty
+variety_compute_canonical_form::compute_canonical_form_nauty verbose_level=3
+variety_compute_canonical_form::compute_canonical_form_nauty input_counter=1
+variety_compute_canonical_form::compute_canonical_form_nauty input_counter = 1 / 2
+variety_compute_canonical_form::compute_canonical_form_nauty before classify_using_set_of_rational_points
+variety_compute_canonical_form::classify_using_set_of_rational_points verbose_level=2
+variety_compute_canonical_form::classify_using_set_of_rational_points before Variety_stabilizer_compute->init
+variety_compute_canonical_form::classify_using_set_of_rational_points after Variety_stabilizer_compute->init
+variety_compute_canonical_form::classify_using_set_of_rational_points input_counter = 1 / 2
+variety_compute_canonical_form::classify_using_set_of_rational_points before Variety_stabilizer_compute->compute_canonical_form_of_variety
+variety_compute_canonical_form::classify_using_set_of_rational_points after Variety_stabilizer_compute->compute_canonical_form_of_variety
+variety_compute_canonical_form::classify_using_set_of_rational_points before Variety_stabilizer_compute->Orb->get_canonical_form
+variety_compute_canonical_form::classify_using_set_of_rational_points after Variety_stabilizer_compute->Orb->get_canonical_form
+variety_compute_canonical_form::classify_using_set_of_rational_points The stabilizer of the variety is a group of order 12096
+variety_compute_canonical_form::classify_using_set_of_rational_points Variety_stabilizer_compute->NO->N = 184
+variety_compute_canonical_form::classify_using_set_of_rational_points canonical_labeling_len=184
+variety_compute_canonical_form::classify_using_set_of_rational_points before CB->canonical_form_search_and_add_if_new
+classify_bitvectors::canonical_form_search_and_add_if_new
+classify_bitvectors::canonical_form_search_and_add_if_new verbose_level=2
+classify_bitvectors::canonical_form_search_and_add_if_new rep_len=1058
+classify_bitvectors::canonical_form_search_and_add_if_new vec_search returns true, idx_of_canonical_form=0
+classify_bitvectors::canonical_form_search_and_add_if_new done, nb_types=1
+variety_compute_canonical_form::classify_using_set_of_rational_points after CB->canonical_form_search_and_add_if_new
+variety_compute_canonical_form::classify_using_set_of_rational_points CB->nb_types = 1
+variety_compute_canonical_form::classify_using_set_of_rational_points After search_and_add_if_new, cnt = 1 po = 0 so = 0 We found the canonical form at idx_canonical_form = 0
+variety_compute_canonical_form::classify_using_set_of_rational_points before handle_repeated_canonical_form_of_set
+variety_compute_canonical_form::handle_repeated_canonical_form_of_set verbose_level=2
+variety_compute_canonical_form::handle_repeated_canonical_form_of_set starting loop over idx1
+variety_compute_canonical_form::handle_repeated_canonical_form_of_set before Canonical_form_classifier->CB->compare_at idx_canonical_form = 0
+variety_compute_canonical_form::handle_repeated_canonical_form_of_set canonical form at 0 is equal
+variety_compute_canonical_form::handle_repeated_canonical_form_of_set before find_equation
+variety_compute_canonical_form::find_equation verbose_level=2
+variety_compute_canonical_form::find_equation before Canonical_form_global.find_isomorphism_between_set_of_rational_points
+variety_compute_canonical_form::find_equation after Canonical_form_global.find_isomorphism_between_set_of_rational_points
+variety_compute_canonical_form::find_equation before Ring_with_action->lift_mapping
+variety_compute_canonical_form::find_equation after Ring_with_action->lift_mapping
+The isomorphism from B to A is given by:
+1 4 7 
+8 2 5 
+0 0 1 
+, 0
+
+=
+1 4 7 
+8 2 5 
+0 0 1 
+
+variety_compute_canonical_form::find_equation before element_invert
+variety_compute_canonical_form::find_equation after element_invert
+variety_compute_canonical_form::find_equation before Ring_with_action->apply
+variety_compute_canonical_form::find_equation after Ring_with_action->apply
+The mapped equation is:( 1, 1, 1, 1, 5, 1, 7, 7, 5, 0, 0, 0, 0, 0, 0 )
+orbit_of_equations::search_equation
+The equation is:( 1, 1, 1, 1, 5, 1, 7, 7, 5, 0, 0, 0, 0, 0, 0 )
+orbit_of_equations::search_equation we found the equation at idx_equation = 0
+orbit_of_equations::search_equation done
+variety_compute_canonical_form::find_equation After A->Orb->search_equation, cnt = 1 po = 0 so = 0 We found the canonical form and the equation at idx_equation 0, idx_rational_point_set=0
+orbit_of_equations::get_transporter_from_a_to_b
+orbit_of_equations::stabilizer_any_point before get_transporter(idx_a)
+orbit_of_equations::stabilizer_any_point after get_transporter(idx_a)
+orbit_of_equations::stabilizer_any_point before A->Group_element->element_invert
+orbit_of_equations::stabilizer_any_point after A->Group_element->element_invert
+orbit_of_equations::stabilizer_any_point before get_transporter(idx_a)
+orbit_of_equations::stabilizer_any_point after get_transporter(idx_b)
+orbit_of_equations::stabilizer_any_point before A->Group_element->element_invert
+orbit_of_equations::stabilizer_any_point after A->Group_element->element_invert
+orbit_of_equations::get_transporter_from_a_to_b done
+variety_compute_canonical_form::find_equation gamma=
+1 4 7 
+8 2 5 
+0 0 1 
+, 0
+
+=
+1 4 7 
+8 2 5 
+0 0 1 
+
+variety_compute_canonical_form::find_equation gamma_inv=
+6 2 1 
+1 3 1 
+0 0 1 
+, 0
+
+=
+1 4 8 
+8 2 8 
+0 0 8 
+
+variety_compute_canonical_form::find_equation delta=
+1 0 0 
+0 1 0 
+0 0 1 
+, 0
+
+=
+1 0 0 
+0 1 0 
+0 0 1 
+
+variety_compute_canonical_form::find_equation done
+variety_compute_canonical_form::handle_repeated_canonical_form_of_set after find_equation
+variety_compute_canonical_form::handle_repeated_canonical_form_of_set We found the equation
+variety_compute_canonical_form::handle_repeated_canonical_form_of_set we found the equation at index 0
+variety_compute_canonical_form::handle_repeated_canonical_form_of_set done
+variety_compute_canonical_form::classify_using_set_of_rational_points after handle_repeated_canonical_form_of_set
+variety_compute_canonical_form::classify_using_set_of_rational_points done
+variety_compute_canonical_form::compute_canonical_form_nauty after classify_using_set_of_rational_points
+variety_compute_canonical_form::compute_canonical_form_nauty input_counter = 1 / 2
+variety_compute_canonical_form::compute_canonical_form_nauty f_found_canonical_form=1
+variety_compute_canonical_form::compute_canonical_form_nauty idx_canonical_form=0
+variety_compute_canonical_form::compute_canonical_form_nauty idx_equation=0
+variety_compute_canonical_form::compute_canonical_form_nauty f_found_eqn=1
+variety_compute_canonical_form::compute_canonical_form_nauty group_order=12096
+variety_compute_canonical_form::compute_canonical_form_nauty done
+classification_of_varieties_nauty::handle_one_input_case input_counter = 1 / 2 after Variety_compute_canonical_form->compute_canonical_form_nauty f_found_canonical_form=1 idx_canonical_form=0 idx_equation=0
+classification_of_varieties_nauty::handle_one_input_case input_counter = 1 / 2 is isomorphic to 0 idx_canonical_form =  0 idx_equation =  0 original object =  0 nb_iso =  1
+classification_of_varieties_nauty::handle_one_input_case an isomorphism is given by phi=
+6 2 1 
+1 3 1 
+0 0 1 
+, 0
+
+=
+1 4 8 
+8 2 8 
+0 0 8 
+
+classification_of_varieties_nauty::handle_one_input_case the inverse isomorphism is phi_inverse=
+1 4 7 
+8 2 5 
+0 0 1 
+, 0
+
+=
+1 4 7 
+8 2 5 
+0 0 1 
+
+classification_of_varieties_nauty::handle_one_input_case an isomorphism is given by phi=1,4,8,8,2,8,0,0,8,0
+classification_of_varieties_nauty::handle_one_input_case the inverse is phi_inv=1,4,7,8,2,5,0,0,1,0
+classification_of_varieties_nauty::handle_one_input_case done
+classification_of_varieties_nauty::main_loop after handle_one_input_case
+classification_of_varieties_nauty::main_loop CB->nb_types = 1
+classification_of_varieties_nauty::main_loop done
+classification_of_varieties_nauty::classify_nauty after main_loop
+classification_of_varieties_nauty::classify_nauty The number of graph theoretic canonical forms is 1
+canonical_form_global::compute_isomorphism after Classification_of_varieties_nauty->classify_nauty
+canonical_form_global::compute_isomorphism done
+variety_activity::do_test_isomorphism after Canonical_form_global.compute_isomorphism
+canonical_form_classifier::~canonical_form_classifier before Ring_with_action
+canonical_form_classifier::~canonical_form_classifier before Classification_of_varieties_nauty
+canonical_form_classifier::~canonical_form_classifier before skip_vector
+canonical_form_classifier::~canonical_form_classifier done
+variety_activity::do_test_isomorphism done
+variety_activity::perform_activity after do_test_isomorphism
+variety_activity::perform_activity done
+activity_description::do_variety_activity after Activity.perform_activity
+activity_description::do_variety_activity done
+activity_description::worker no activity_output
+activity_description::worker done
+interface_symbol_table::worker after Activity_description->worker
+interface_symbol_table::worker nb_output = 0
+interface_symbol_table::worker done
+orbiter_command::execute after Symbol_table->worker
+orbiter_command::execute done
+Executing commands done
+orbiter_top_level_session::parse_and_execute done
+orbiter_top_level_session::handle_everything memory_debug after parse_and_execute
+orbiter_top_level_session::handle_everything memory_debug before finish_session
+orbiter_top_level_session::handle_everything memory_debug after finish_session
+orbiter_top_level_session::handle_everything done
+orbiter_top_level_session::execute_command_line after handle_everything
+orbiter_top_level_session::execute_command_line done
+do_orbiter_session after execute_command_line
+orbiter_top_level_session::~orbiter_top_level_session
+orbiter_top_level_session::~orbiter_top_level_session before delete Orbiter_session
+orbiter_session::~orbiter_session
+nb_times_finite_field_created=0
+nb_times_projective_space_created=2
+nb_times_action_created=4
+nb_calls_to_densenauty=2
+orbiter_session::~orbiter_session done
+orbiter_top_level_session::~orbiter_top_level_session after delete Orbiter_session
+orbiter_top_level_session::~orbiter_top_level_session done
+The Orbiter session is finished.
+User time: 0.020000 of a second, dt=2 tps = 100

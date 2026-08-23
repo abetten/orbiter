@@ -25,6 +25,9 @@ graph_modification_description::graph_modification_description()
 
 	f_distance_2 = false;
 
+	/**/
+	f_double_cover = false;
+
 	f_reorder = false;
 	//std::string reorder_perm_label;
 
@@ -61,6 +64,15 @@ int graph_modification_description::check_and_parse_argument(
 		i++;
 		if (f_v) {
 			cout << "-distance_2 " << endl;
+		}
+		return true;
+	}
+	/**/
+	else if (ST.stringcmp(argv[i], "-double_cover") == 0) {
+		f_double_cover = true;
+		i++;
+		if (f_v) {
+			cout << "-double_cover " << endl;
 		}
 		return true;
 	}
@@ -105,6 +117,13 @@ int graph_modification_description::read_arguments(
 				cout << "-distance_2 " << endl;
 			}
 		}
+		/**/
+		else if (ST.stringcmp(argv[i], "-double_cover") == 0) {
+			f_double_cover = true;
+			if (f_v) {
+				cout << "-double_cover " << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-reorder") == 0) {
 			f_reorder = true;
 			reorder_perm_label.assign(argv[++i]);
@@ -139,6 +158,10 @@ void graph_modification_description::print()
 	if (f_distance_2) {
 		cout << "-distance_2 " << endl;
 	}
+	/**/
+	if (f_double_cover) {
+		cout << "-double_cover " << endl;
+	}
 	if (f_reorder) {
 		cout << "-reorder " << reorder_perm_label << endl;
 	}
@@ -157,6 +180,13 @@ void graph_modification_description::apply(
 	}
 	if (f_distance_2) {
 		CG->distance_2(verbose_level);
+	}
+	/**/
+	if (f_double_cover) {
+		combinatorics::graph_theory::colored_graph *CG2;
+		CG2 = CG->double_cover(verbose_level);
+		FREE_OBJECT(CG);
+		CG = CG2;
 	}
 	if (f_reorder) {
 		CG->reorder(reorder_perm_label, verbose_level);

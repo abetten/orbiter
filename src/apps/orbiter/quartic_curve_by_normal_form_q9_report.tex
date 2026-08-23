@@ -1,0 +1,1202 @@
+\documentclass{article}
+% a4paper
+
+%\usepackage[dvips]{epsfig}
+%\usepackage{cours11, cours}
+%\usepackage{fancyheadings}
+%\usepackage{calc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{latexsym}
+\usepackage{epsfig}
+\usepackage{enumerate}
+%\usepackage{supertabular}
+%\usepackage{wrapfig}
+%\usepackage{blackbrd}
+%\usepackage{epic,eepic}
+\usepackage{rotating}
+\usepackage{multicol}
+%\usepackage{multirow}
+\usepackage{makeidx} % additional command see
+\usepackage{rotating}
+\usepackage{array}
+\usepackage{tikz}
+\usepackage{longtable}
+%\usepackage{anyfontsize}
+\usepackage{t1enc}
+%\usepackage{amsmath,amsfonts}
+
+
+%\usepackage[mtbold,mtplusscr]{mathtime}
+% lucidacal,lucidascr,
+
+%\usepackage{mathtimy}
+%\usepackage{bm}
+%\usepackage{avant}
+%\usepackage{basker}
+%\usepackage{bembo}
+%\usepackage{bookman}
+%\usepackage{chancery}
+%\usepackage{garamond}
+%\usepackage{helvet}
+%\usepackage{newcent}
+%\usepackage{palatino}
+%\usepackage{times}
+%\usepackage{pifont}
+
+
+
+%\parindent=0pt
+
+
+%\topmargin=0pt
+%\headsep=18pt
+%\footskip=45pt
+%\mathsurround=1pt
+%\evensidemargin=0pt
+%\oddsidemargin=15pt
+
+%\setlength{\textheight}{\baselineskip*41+\topskip}
+
+\newcommand{\sectionline}{
+   \nointerlineskip \vspace{\baselineskip}
+   \hspace{\fill}\rule{0.9\linewidth}{1.7pt}\hspace{\fill}
+   \par\nointerlineskip \vspace{\baselineskip}
+   }
+\newcommand\setTBstruts{\def\T{\rule{0pt}{2.6ex}}%
+\def\B{\rule[-1.2ex]{0pt}{0pt}}}
+\newcommand{\ans}[1]{\\{\bf ANSWER}: {#1}}
+\newcommand{\Aut}{{\rm Aut}}
+\newcommand{\Sym}{{\rm Sym}}
+\newcommand{\sFix}{{\cal Fix}}
+\newcommand{\sOrbits}{{\cal Orbits}}
+\newcommand{\Stab}{{\rm Stab}}
+\newcommand{\Fix}{{\rm Fix}}
+\newcommand{\fix}{{\rm fix}}
+\newcommand{\Orbits}{{\rm Orbits}}
+\newcommand{\PG}{{\rm PG}}
+\newcommand{\AG}{{\rm AG}}
+\newcommand{\SQS}{{\rm SQS}}
+\newcommand{\STS}{{\rm STS}}
+\newcommand{\PSL}{{\rm PSL}}
+\newcommand{\PGL}{{\rm PGL}}
+\newcommand{\PSSL}{{\rm P\Sigma L}}
+\newcommand{\PGGL}{{\rm P\Gamma L}}
+\newcommand{\SL}{{\rm SL}}
+\newcommand{\GL}{{\rm GL}}
+\newcommand{\SSL}{{\rm \Sigma L}}
+\newcommand{\GGL}{{\rm \Gamma L}}
+\newcommand{\ASL}{{\rm ASL}}
+\newcommand{\AGL}{{\rm AGL}}
+\newcommand{\ASSL}{{\rm A\Sigma L}}
+\newcommand{\AGGL}{{\rm A\Gamma L}}
+\newcommand{\PSU}{{\rm PSU}}
+\newcommand{\HS}{{\rm HS}}
+\newcommand{\Hol}{{\rm Hol}}
+\newcommand{\SO}{{\rm SO}}
+\newcommand{\ASO}{{\rm ASO}}
+\newcommand{\la}{\langle}
+\newcommand{\ra}{\rangle}
+\newcommand{\cA}{{\cal A}}
+\newcommand{\cB}{{\cal B}}
+\newcommand{\cC}{{\cal C}}
+\newcommand{\cD}{{\cal D}}
+\newcommand{\cE}{{\cal E}}
+\newcommand{\cF}{{\cal F}}
+\newcommand{\cG}{{\cal G}}
+\newcommand{\cH}{{\cal H}}
+\newcommand{\cI}{{\cal I}}
+\newcommand{\cJ}{{\cal J}}
+\newcommand{\cK}{{\cal K}}
+\newcommand{\cL}{{\cal L}}
+\newcommand{\cM}{{\cal M}}
+\newcommand{\cN}{{\cal N}}
+\newcommand{\cO}{{\cal O}}
+\newcommand{\cP}{{\cal P}}
+\newcommand{\cQ}{{\cal Q}}
+\newcommand{\cR}{{\cal R}}
+\newcommand{\cS}{{\cal S}}
+\newcommand{\cT}{{\cal T}}
+\newcommand{\cU}{{\cal U}}
+\newcommand{\cV}{{\cal V}}
+\newcommand{\cW}{{\cal W}}
+\newcommand{\cX}{{\cal X}}
+\newcommand{\cY}{{\cal Y}}
+\newcommand{\cZ}{{\cal Z}}
+\newcommand{\rmA}{{\rm A}}
+\newcommand{\rmB}{{\rm B}}
+\newcommand{\rmC}{{\rm C}}
+\newcommand{\rmD}{{\rm D}}
+\newcommand{\rmE}{{\rm E}}
+\newcommand{\rmF}{{\rm F}}
+\newcommand{\rmG}{{\rm G}}
+\newcommand{\rmH}{{\rm H}}
+\newcommand{\rmI}{{\rm I}}
+\newcommand{\rmJ}{{\rm J}}
+\newcommand{\rmK}{{\rm K}}
+\newcommand{\rmL}{{\rm L}}
+\newcommand{\rmM}{{\rm M}}
+\newcommand{\rmN}{{\rm N}}
+\newcommand{\rmO}{{\rm O}}
+\newcommand{\rmP}{{\rm P}}
+\newcommand{\rmQ}{{\rm Q}}
+\newcommand{\rmR}{{\rm R}}
+\newcommand{\rmS}{{\rm S}}
+\newcommand{\rmT}{{\rm T}}
+\newcommand{\rmU}{{\rm U}}
+\newcommand{\rmV}{{\rm V}}
+\newcommand{\rmW}{{\rm W}}
+\newcommand{\rmX}{{\rm X}}
+\newcommand{\rmY}{{\rm Y}}
+\newcommand{\rmZ}{{\rm Z}}
+\newcommand{\bA}{{\bf A}}
+\newcommand{\bB}{{\bf B}}
+\newcommand{\bC}{{\bf C}}
+\newcommand{\bD}{{\bf D}}
+\newcommand{\bE}{{\bf E}}
+\newcommand{\bF}{{\bf F}}
+\newcommand{\bG}{{\bf G}}
+\newcommand{\bH}{{\bf H}}
+\newcommand{\bI}{{\bf I}}
+\newcommand{\bJ}{{\bf J}}
+\newcommand{\bK}{{\bf K}}
+\newcommand{\bL}{{\bf L}}
+\newcommand{\bM}{{\bf M}}
+\newcommand{\bN}{{\bf N}}
+\newcommand{\bO}{{\bf O}}
+\newcommand{\bP}{{\bf P}}
+\newcommand{\bQ}{{\bf Q}}
+\newcommand{\bR}{{\bf R}}
+\newcommand{\bS}{{\bf S}}
+\newcommand{\bT}{{\bf T}}
+\newcommand{\bU}{{\bf U}}
+\newcommand{\bV}{{\bf V}}
+\newcommand{\bW}{{\bf W}}
+\newcommand{\bX}{{\bf X}}
+\newcommand{\bY}{{\bf Y}}
+\newcommand{\bZ}{{\bf Z}}
+\newcommand{\sA}{{\cal A}}
+\newcommand{\sB}{{\cal B}}
+\newcommand{\sC}{{\cal C}}
+\newcommand{\sD}{{\cal D}}
+\newcommand{\sE}{{\cal E}}
+\newcommand{\sF}{{\cal F}}
+\newcommand{\sG}{{\cal G}}
+\newcommand{\sH}{{\cal H}}
+\newcommand{\sI}{{\cal I}}
+\newcommand{\sJ}{{\cal J}}
+\newcommand{\sK}{{\cal K}}
+\newcommand{\sL}{{\cal L}}
+\newcommand{\sM}{{\cal M}}
+\newcommand{\sN}{{\cal N}}
+\newcommand{\sO}{{\cal O}}
+\newcommand{\sP}{{\cal P}}
+\newcommand{\sQ}{{\cal Q}}
+\newcommand{\sR}{{\cal R}}
+\newcommand{\sS}{{\cal S}}
+\newcommand{\sT}{{\cal T}}
+\newcommand{\sU}{{\cal U}}
+\newcommand{\sV}{{\cal V}}
+\newcommand{\sW}{{\cal W}}
+\newcommand{\sX}{{\cal X}}
+\newcommand{\sY}{{\cal Y}}
+\newcommand{\sZ}{{\cal Z}}
+\newcommand{\frakA}{{\mathfrak A}}
+\newcommand{\frakB}{{\mathfrak B}}
+\newcommand{\frakC}{{\mathfrak C}}
+\newcommand{\frakD}{{\mathfrak D}}
+\newcommand{\frakE}{{\mathfrak E}}
+\newcommand{\frakF}{{\mathfrak F}}
+\newcommand{\frakG}{{\mathfrak G}}
+\newcommand{\frakH}{{\mathfrak H}}
+\newcommand{\frakI}{{\mathfrak I}}
+\newcommand{\frakJ}{{\mathfrak J}}
+\newcommand{\frakK}{{\mathfrak K}}
+\newcommand{\frakL}{{\mathfrak L}}
+\newcommand{\frakM}{{\mathfrak M}}
+\newcommand{\frakN}{{\mathfrak N}}
+\newcommand{\frakO}{{\mathfrak O}}
+\newcommand{\frakP}{{\mathfrak P}}
+\newcommand{\frakQ}{{\mathfrak Q}}
+\newcommand{\frakR}{{\mathfrak R}}
+\newcommand{\frakS}{{\mathfrak S}}
+\newcommand{\frakT}{{\mathfrak T}}
+\newcommand{\frakU}{{\mathfrak U}}
+\newcommand{\frakV}{{\mathfrak V}}
+\newcommand{\frakW}{{\mathfrak W}}
+\newcommand{\frakX}{{\mathfrak X}}
+\newcommand{\frakY}{{\mathfrak Y}}
+\newcommand{\frakZ}{{\mathfrak Z}}
+\newcommand{\fraka}{{\mathfrak a}}
+\newcommand{\frakb}{{\mathfrak b}}
+\newcommand{\frakc}{{\mathfrak c}}
+\newcommand{\frakd}{{\mathfrak d}}
+\newcommand{\frake}{{\mathfrak e}}
+\newcommand{\frakf}{{\mathfrak f}}
+\newcommand{\frakg}{{\mathfrak g}}
+\newcommand{\frakh}{{\mathfrak h}}
+\newcommand{\fraki}{{\mathfrak i}}
+\newcommand{\frakj}{{\mathfrak j}}
+\newcommand{\frakk}{{\mathfrak k}}
+\newcommand{\frakl}{{\mathfrak l}}
+\newcommand{\frakm}{{\mathfrak m}}
+\newcommand{\frakn}{{\mathfrak n}}
+\newcommand{\frako}{{\mathfrak o}}
+\newcommand{\frakp}{{\mathfrak p}}
+\newcommand{\frakq}{{\mathfrak q}}
+\newcommand{\frakr}{{\mathfrak r}}
+\newcommand{\fraks}{{\mathfrak s}}
+\newcommand{\frakt}{{\mathfrak t}}
+\newcommand{\fraku}{{\mathfrak u}}
+\newcommand{\frakv}{{\mathfrak v}}
+\newcommand{\frakw}{{\mathfrak w}}
+\newcommand{\frakx}{{\mathfrak x}}
+\newcommand{\fraky}{{\mathfrak y}}
+\newcommand{\frakz}{{\mathfrak z}}
+\newcommand{\Tetra}{{\mathfrak Tetra}}
+\newcommand{\Cube}{{\mathfrak Cube}}
+\newcommand{\Octa}{{\mathfrak Octa}}
+\newcommand{\Dode}{{\mathfrak Dode}}
+\newcommand{\Ico}{{\mathfrak Ico}}
+\newcommand{\bbF}{{\mathbb F}}
+\newcommand{\bbQ}{{\mathbb Q}}
+\newcommand{\bbC}{{\mathbb C}}
+\newcommand{\bbR}{{\mathbb R}}
+
+
+
+%\makeindex
+
+\begin{document} 
+\setTBstruts
+
+\bibliographystyle{plain}
+%\large
+
+{\allowdisplaybreaks%
+
+
+
+
+%\makeindex
+
+%\renewcommand{\labelenumi}{(\roman{enumi})}
+
+\title{by\_normal\_form\_q9 over GF(9)}
+\author{}%end author
+%\date{}
+\maketitle%
+%\pagenumbering{roman}
+%\thispagestyle{empty}
+%\input et.tex%
+%\thispagestyle{empty}%\phantom{page2}%\clearpage%
+%\addcontentsline{toc}{chapter}{Inhaltsverzeichnis}%
+%\tableofcontents
+%\listofsymbols
+%\pagenumbering{arabic}
+%\pagenumbering{roman}
+
+
+
+\subsection*{The equation}
+The equation of the quartic curve  is :
+$$
+\begin{array}{c}
+X_0^4 + X_1^4 + 2X_2^4 + 4X_0^3X_1 + 8X_0^3X_2 + 6X_0X_1^3 + 6X_1^3X_2 + 3X_0X_2^3\\
+ + 4X_1X_2^3\end{array}
+$$
+$$
+( 1, 1, 2, 4, 8, 6, 6, 3, 4, 0, 0, 0, 0, 0, 0 )$$
+\begin{verbatim}
+X0^4 + X1^4 + 2*X2^4 + 4*X0^3*X1 + 8*X0^3*X2 + 6*X0*X1^3 + 6*X1^3*X2 + 3*X0*X2^3 + 4*X1*X2^3
+\end{verbatim}
+\subsection*{General information}
+{\renewcommand{\arraystretch}{1.5}
+$$
+\begin{array}{|l|r|}
+\hline
+\mbox{Number of bitangents} & 28\\
+\hline
+\mbox{Number of points} & 28\\
+\hline
+\mbox{Fullness} &  \mbox{is full}\\
+\hline
+\mbox{Number of Kovalevski points} & 63\\
+\hline
+\mbox{Bitangent line type $(a_0,a_1,a_2)$} & (0,
+28,
+0)\\
+\hline
+\mbox{Number of singular points} & 0\\
+\hline
+\end{array}
+$$}
+\subsection*{All points on the curve}
+The quartic has 28 points:\\
+The points on the quartic curve are:\\
+\begin{multicols}{3}
+\noindent
+0 : $P_{4}=( 1, 1, 0 )$\\
+1 : $P_{6}=( 3, 1, 0 )$\\
+2 : $P_{9}=( 6, 1, 0 )$\\
+3 : $P_{10}=( 7, 1, 0 )$\\
+4 : $P_{15}=( 4, 0, 1 )$\\
+5 : $P_{22}=( 3, 1, 1 )$\\
+6 : $P_{23}=( 4, 1, 1 )$\\
+7 : $P_{25}=( 6, 1, 1 )$\\
+8 : $P_{27}=( 8, 1, 1 )$\\
+9 : $P_{36}=( 8, 2, 1 )$\\
+10 : $P_{37}=( 0, 3, 1 )$\\
+11 : $P_{39}=( 2, 3, 1 )$\\
+12 : $P_{43}=( 6, 3, 1 )$\\
+13 : $P_{44}=( 7, 3, 1 )$\\
+14 : $P_{48}=( 2, 4, 1 )$\\
+15 : $P_{62}=( 7, 5, 1 )$\\
+16 : $P_{65}=( 1, 6, 1 )$\\
+17 : $P_{66}=( 2, 6, 1 )$\\
+18 : $P_{70}=( 6, 6, 1 )$\\
+19 : $P_{72}=( 8, 6, 1 )$\\
+20 : $P_{77}=( 4, 7, 1 )$\\
+21 : $P_{78}=( 5, 7, 1 )$\\
+22 : $P_{79}=( 6, 7, 1 )$\\
+23 : $P_{80}=( 7, 7, 1 )$\\
+24 : $P_{84}=( 2, 8, 1 )$\\
+25 : $P_{86}=( 4, 8, 1 )$\\
+26 : $P_{89}=( 7, 8, 1 )$\\
+27 : $P_{90}=( 8, 8, 1 )$\\
+\end{multicols}
+The points by rank are: 
+( 4, 6, 9, 10, 15, 22, 23, 25, 27, 36, 37, 39, 43, 44, 48, 62, 65, 66, 70, 72, 77, 78, 79, 80, 84, 86, 89, 90 )\\
+The Kovalevski points are: \\
+0 : $P_{1}=( 0, 1, 0 ) = a_{3} \cap a_{6} \cap c_{34} \cap c_{46}$\\
+1 : $P_{2}=( 0, 0, 1 ) = a_{1} \cap a_{3} \cap b_{1} \cap b_{3}$\\
+2 : $P_{3}=( 1, 1, 1 ) = b_{5} \cap b_{6} \cap c_{45} \cap c_{46}$\\
+3 : $P_{5}=( 2, 1, 0 ) = a_{2} \cap a_{4} \cap c_{25} \cap c_{45}$\\
+4 : $P_{7}=( 4, 1, 0 ) = c_{23} \cap c_{26} \cap c_{35} \cap c_{56}$\\
+5 : $P_{8}=( 5, 1, 0 ) = a_{5} \cap b_{1} \cap c_{24} \cap c_{36}$\\
+6 : $P_{11}=( 8, 1, 0 ) = b_{4} \cap b_{5} \cap c_{14} \cap c_{15}$\\
+7 : $P_{12}=( 1, 0, 1 ) = a_{1} \cap a_{4} \cap c_{16} \cap c_{46}$\\
+8 : $P_{13}=( 2, 0, 1 ) = a_{1} \cap a_{5} \cap c_{14} \cap c_{45}$\\
+9 : $P_{14}=( 3, 0, 1 ) = a_{1} \cap a_{6} \cap c_{15} \cap c_{56}$\\
+10 : $P_{16}=( 5, 0, 1 ) = a_{1} \cap b_{5} \cap c_{26} \cap c_{34}$\\
+11 : $P_{17}=( 6, 0, 1 ) = a_{1} \cap b_{4} \cap c_{25} \cap c_{36}$\\
+12 : $P_{18}=( 7, 0, 1 ) = a_{1} \cap b_{6} \cap c_{24} \cap c_{35}$\\
+13 : $P_{19}=( 8, 0, 1 ) = a_{1} \cap a_{2} \cap c_{13} \cap c_{23}$\\
+14 : $P_{20}=( 0, 1, 1 ) = a_{3} \cap a_{4} \cap c_{23} \cap c_{24}$\\
+15 : $P_{21}=( 2, 1, 1 ) = c_{15} \cap c_{16} \cap c_{35} \cap c_{36}$\\
+16 : $P_{24}=( 5, 1, 1 ) = b_{1} \cap b_{4} \cap c_{13} \cap c_{34}$\\
+17 : $P_{26}=( 7, 1, 1 ) = a_{2} \cap b_{3} \cap c_{14} \cap c_{56}$\\
+18 : $P_{28}=( 0, 2, 1 ) = a_{3} \cap b_{2} \cap c_{16} \cap c_{45}$\\
+19 : $P_{29}=( 1, 2, 1 ) = b_{2} \cap b_{4} \cap c_{26} \cap c_{46}$\\
+20 : $P_{30}=( 2, 2, 1 ) = a_{4} \cap b_{2} \cap c_{13} \cap c_{56}$\\
+21 : $P_{31}=( 3, 2, 1 ) = a_{6} \cap b_{2} \cap c_{14} \cap c_{35}$\\
+22 : $P_{32}=( 4, 2, 1 ) = b_{2} \cap b_{6} \cap c_{23} \cap c_{36}$\\
+23 : $P_{33}=( 5, 2, 1 ) = b_{2} \cap b_{3} \cap c_{24} \cap c_{34}$\\
+24 : $P_{34}=( 6, 2, 1 ) = a_{2} \cap a_{5} \cap b_{2} \cap b_{5}$\\
+25 : $P_{35}=( 7, 2, 1 ) = b_{1} \cap b_{2} \cap c_{15} \cap c_{25}$\\
+26 : $P_{38}=( 1, 3, 1 ) = c_{13} \cap c_{14} \cap c_{36} \cap c_{46}$\\
+27 : $P_{40}=( 3, 3, 1 ) = a_{5} \cap a_{6} \cap c_{25} \cap c_{26}$\\
+28 : $P_{41}=( 4, 3, 1 ) = b_{1} \cap b_{5} \cap c_{16} \cap c_{56}$\\
+29 : $P_{42}=( 5, 3, 1 ) = a_{2} \cap b_{6} \cap c_{15} \cap c_{34}$\\
+30 : $P_{45}=( 8, 3, 1 ) = b_{3} \cap b_{4} \cap c_{35} \cap c_{45}$\\
+31 : $P_{46}=( 0, 4, 1 ) = a_{3} \cap b_{5} \cap c_{35} \cap d$\\
+32 : $P_{47}=( 1, 4, 1 ) = c_{15} \cap c_{23} \cap c_{46} \cap d$\\
+33 : $P_{49}=( 3, 4, 1 ) = a_{6} \cap b_{3} \cap c_{36} \cap d$\\
+34 : $P_{50}=( 4, 4, 1 ) = a_{2} \cap b_{4} \cap c_{24} \cap d$\\
+35 : $P_{51}=( 5, 4, 1 ) = c_{16} \cap c_{25} \cap c_{34} \cap d$\\
+36 : $P_{52}=( 6, 4, 1 ) = a_{4} \cap b_{1} \cap c_{14} \cap d$\\
+37 : $P_{53}=( 7, 4, 1 ) = c_{13} \cap c_{26} \cap c_{45} \cap d$\\
+38 : $P_{54}=( 8, 4, 1 ) = a_{5} \cap b_{6} \cap c_{56} \cap d$\\
+39 : $P_{55}=( 0, 5, 1 ) = a_{3} \cap b_{4} \cap c_{12} \cap c_{56}$\\
+40 : $P_{56}=( 1, 5, 1 ) = a_{5} \cap b_{3} \cap c_{12} \cap c_{46}$\\
+41 : $P_{57}=( 2, 5, 1 ) = b_{1} \cap b_{6} \cap c_{12} \cap c_{26}$\\
+42 : $P_{58}=( 3, 5, 1 ) = a_{2} \cap a_{6} \cap c_{12} \cap c_{16}$\\
+43 : $P_{59}=( 4, 5, 1 ) = c_{12} \cap c_{13} \cap c_{25} \cap c_{35}$\\
+44 : $P_{60}=( 5, 5, 1 ) = c_{12} \cap c_{14} \cap c_{23} \cap c_{34}$\\
+45 : $P_{61}=( 6, 5, 1 ) = c_{12} \cap c_{15} \cap c_{24} \cap c_{45}$\\
+46 : $P_{63}=( 8, 5, 1 ) = a_{4} \cap b_{5} \cap c_{12} \cap c_{36}$\\
+47 : $P_{64}=( 0, 6, 1 ) = a_{3} \cap b_{6} \cap c_{14} \cap c_{25}$\\
+48 : $P_{67}=( 3, 6, 1 ) = a_{6} \cap b_{5} \cap c_{13} \cap c_{24}$\\
+49 : $P_{68}=( 4, 6, 1 ) = a_{4} \cap b_{3} \cap c_{15} \cap c_{26}$\\
+50 : $P_{69}=( 5, 6, 1 ) = c_{34} \cap c_{36} \cap c_{45} \cap c_{56}$\\
+51 : $P_{71}=( 7, 6, 1 ) = a_{5} \cap b_{4} \cap c_{16} \cap c_{23}$\\
+52 : $P_{73}=( 0, 7, 1 ) = a_{3} \cap a_{5} \cap c_{13} \cap c_{15}$\\
+53 : $P_{74}=( 1, 7, 1 ) = a_{2} \cap b_{1} \cap c_{35} \cap c_{46}$\\
+54 : $P_{75}=( 2, 7, 1 ) = b_{3} \cap b_{5} \cap c_{23} \cap c_{25}$\\
+55 : $P_{76}=( 3, 7, 1 ) = a_{4} \cap a_{6} \cap b_{4} \cap b_{6}$\\
+56 : $P_{81}=( 8, 7, 1 ) = c_{14} \cap c_{16} \cap c_{24} \cap c_{26}$\\
+57 : $P_{82}=( 0, 8, 1 ) = a_{2} \cap a_{3} \cap c_{26} \cap c_{36}$\\
+58 : $P_{83}=( 1, 8, 1 ) = c_{24} \cap c_{25} \cap c_{46} \cap c_{56}$\\
+59 : $P_{85}=( 3, 8, 1 ) = a_{6} \cap b_{1} \cap c_{23} \cap c_{45}$\\
+60 : $P_{87}=( 5, 8, 1 ) = a_{4} \cap a_{5} \cap c_{34} \cap c_{35}$\\
+61 : $P_{88}=( 6, 8, 1 ) = b_{3} \cap b_{6} \cap c_{13} \cap c_{16}$\\
+62 : $P_{0}=( 1, 0, 0 ) = a_{1} \cap b_{2} \cap c_{12} \cap d$\\
+The incidence structure induced by the Kovalevski points is: 
+\\
+Flags=( 1, 7, 8, 9, 10, 11, 12, 13, 62, 66, 76, 80, 87, 92, 97, 105, 116, 120, 126, 127, 140, 144, 157, 165, 173, 178, 183, 192, 196, 203, 209, 225, 235, 238, 244, 249, 257, 260, 276, 279, 290, 292, 303, 304, 312, 315, 324, 336, 342, 348, 357, 363, 370, 374, 379, 383, 394, 403, 406, 414, 419, 431, 437, 459, 460, 461, 462, 463, 464, 465, 466, 503, 505, 521, 527, 534, 537, 544, 553, 558, 565, 573, 578, 583, 586, 597, 601, 606, 618, 622, 632, 636, 640, 654, 658, 661, 676, 678, 684, 695, 705, 715, 722, 731, 734, 740, 748, 754, 795, 796, 797, 798, 799, 800, 801, 802, 818, 832, 835, 839, 845, 856, 862, 867, 871, 880, 888, 890, 899, 903, 908, 918, 926, 929, 938, 951, 954, 960, 970, 974, 977, 990, 994, 997, 1015, 1023, 1026, 1036, 1043, 1050, 1059, 1064, 1069, 1075, 1084, 1085, 1093, 1103, 1115, 1122, 1125, 1130, 1139, 1146, 1148, 1157, 1168, 1179, 1182, 1190, 1192, 1200, 1208, 1222, 1224, 1232, 1240, 1244, 1251, 1255, 1264, 1270, 1279, 1287, 1297, 1301, 1309, 1316, 1317, 1323, 1333, 1339, 1346, 1352, 1358, 1367, 1373, 1383, 1390, 1398, 1401, 1407, 1416, 1417, 1429, 1439, 1446, 1454, 1460, 1464, 1471, 1475, 1482, 1495, 1499, 1506, 1514, 1515, 1520, 1530, 1542, 1549, 1557, 1562, 1571, 1575, 1577, 1582, 1594, 1601, 1607, 1615, 1628, 1633, 1642, 1647, 1655, 1658, 1666, 1676, 1677, 1688, 1696, 1732, 1733, 1734, 1735, 1736, 1737, 1738, 1739, 1763 )\\
+nb\_rows=28\\
+nb\_cols=63\\
+nb\_flags=252\\
+Incma=\\
+( 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 )\\
+( 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0 )\\
+( 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 )\\
+( 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0 )\\
+( 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0 )\\
+( 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )\\
+( 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0 )\\
+( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 )\\
+( 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0 )\\
+( 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0 )\\
+( 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0 )\\
+( 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0 )\\
+( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 )\\
+( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0 )\\
+( 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0 )\\
+( 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 )\\
+( 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0 )\\
+( 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0 )\\
+( 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0 )\\
+( 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0 )\\
+( 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0 )\\
+( 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0 )\\
+( 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0 )\\
+( 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 )\\
+( 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0 )\\
+( 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0 )\\
+( 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0 )\\
+( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 )\\
+The Kovalevski points sorted by rank are: 
+( 0, 1, 2, 3, 5, 7, 8, 11, 12, 13, 14, 16, 17, 18, 19, 20, 21, 24, 26, 28, 29, 30, 31, 32, 33, 34, 35, 38, 40, 41, 42, 45, 46, 47, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 63, 64, 67, 68, 69, 71, 73, 74, 75, 76, 81, 82, 83, 85, 87, 88 )\\
+The points off the curve are: \\
+\begin{multicols}{3}
+\noindent
+0 : $P_{0}=( 1, 0, 0 )$\\
+1 : $P_{1}=( 0, 1, 0 )$\\
+2 : $P_{2}=( 0, 0, 1 )$\\
+3 : $P_{3}=( 1, 1, 1 )$\\
+4 : $P_{5}=( 2, 1, 0 )$\\
+5 : $P_{7}=( 4, 1, 0 )$\\
+6 : $P_{8}=( 5, 1, 0 )$\\
+7 : $P_{11}=( 8, 1, 0 )$\\
+8 : $P_{12}=( 1, 0, 1 )$\\
+9 : $P_{13}=( 2, 0, 1 )$\\
+10 : $P_{14}=( 3, 0, 1 )$\\
+11 : $P_{16}=( 5, 0, 1 )$\\
+12 : $P_{17}=( 6, 0, 1 )$\\
+13 : $P_{18}=( 7, 0, 1 )$\\
+14 : $P_{19}=( 8, 0, 1 )$\\
+15 : $P_{20}=( 0, 1, 1 )$\\
+16 : $P_{21}=( 2, 1, 1 )$\\
+17 : $P_{24}=( 5, 1, 1 )$\\
+18 : $P_{26}=( 7, 1, 1 )$\\
+19 : $P_{28}=( 0, 2, 1 )$\\
+20 : $P_{29}=( 1, 2, 1 )$\\
+21 : $P_{30}=( 2, 2, 1 )$\\
+22 : $P_{31}=( 3, 2, 1 )$\\
+23 : $P_{32}=( 4, 2, 1 )$\\
+24 : $P_{33}=( 5, 2, 1 )$\\
+25 : $P_{34}=( 6, 2, 1 )$\\
+26 : $P_{35}=( 7, 2, 1 )$\\
+27 : $P_{38}=( 1, 3, 1 )$\\
+28 : $P_{40}=( 3, 3, 1 )$\\
+29 : $P_{41}=( 4, 3, 1 )$\\
+30 : $P_{42}=( 5, 3, 1 )$\\
+31 : $P_{45}=( 8, 3, 1 )$\\
+32 : $P_{46}=( 0, 4, 1 )$\\
+33 : $P_{47}=( 1, 4, 1 )$\\
+34 : $P_{49}=( 3, 4, 1 )$\\
+35 : $P_{50}=( 4, 4, 1 )$\\
+36 : $P_{51}=( 5, 4, 1 )$\\
+37 : $P_{52}=( 6, 4, 1 )$\\
+38 : $P_{53}=( 7, 4, 1 )$\\
+39 : $P_{54}=( 8, 4, 1 )$\\
+40 : $P_{55}=( 0, 5, 1 )$\\
+41 : $P_{56}=( 1, 5, 1 )$\\
+42 : $P_{57}=( 2, 5, 1 )$\\
+43 : $P_{58}=( 3, 5, 1 )$\\
+44 : $P_{59}=( 4, 5, 1 )$\\
+45 : $P_{60}=( 5, 5, 1 )$\\
+46 : $P_{61}=( 6, 5, 1 )$\\
+47 : $P_{63}=( 8, 5, 1 )$\\
+48 : $P_{64}=( 0, 6, 1 )$\\
+49 : $P_{67}=( 3, 6, 1 )$\\
+50 : $P_{68}=( 4, 6, 1 )$\\
+51 : $P_{69}=( 5, 6, 1 )$\\
+52 : $P_{71}=( 7, 6, 1 )$\\
+53 : $P_{73}=( 0, 7, 1 )$\\
+54 : $P_{74}=( 1, 7, 1 )$\\
+55 : $P_{75}=( 2, 7, 1 )$\\
+56 : $P_{76}=( 3, 7, 1 )$\\
+57 : $P_{81}=( 8, 7, 1 )$\\
+58 : $P_{82}=( 0, 8, 1 )$\\
+59 : $P_{83}=( 1, 8, 1 )$\\
+60 : $P_{85}=( 3, 8, 1 )$\\
+61 : $P_{87}=( 5, 8, 1 )$\\
+62 : $P_{88}=( 6, 8, 1 )$\\
+\end{multicols}
+( 0, 1, 2, 3, 5, 7, 8, 11, 12, 13, 14, 16, 17, 18, 19, 20, 21, 24, 26, 28, 29, 30, 31, 32, 33, 34, 35, 38, 40, 41, 42, 45, 46, 47, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 63, 64, 67, 68, 69, 71, 73, 74, 75, 76, 81, 82, 83, 85, 87, 88 )\\
+\subsection*{Duals of Bitangents}
+dual of bitangents:\\
+0 : $P_{1}=( 0, 1, 0 )$\\
+1 : $P_{40}=( 3, 3, 1 )$\\
+2 : $P_{0}=( 1, 0, 0 )$\\
+3 : $P_{30}=( 2, 2, 1 )$\\
+4 : $P_{74}=( 1, 7, 1 )$\\
+5 : $P_{19}=( 8, 0, 1 )$\\
+6 : $P_{8}=( 5, 1, 0 )$\\
+7 : $P_{20}=( 0, 1, 1 )$\\
+8 : $P_{10}=( 7, 1, 0 )$\\
+9 : $P_{59}=( 4, 5, 1 )$\\
+10 : $P_{69}=( 5, 6, 1 )$\\
+11 : $P_{53}=( 7, 4, 1 )$\\
+12 : $P_{55}=( 0, 5, 1 )$\\
+13 : $P_{76}=( 3, 7, 1 )$\\
+14 : $P_{47}=( 1, 4, 1 )$\\
+15 : $P_{81}=( 8, 7, 1 )$\\
+16 : $P_{21}=( 2, 1, 1 )$\\
+17 : $P_{31}=( 3, 2, 1 )$\\
+18 : $P_{35}=( 7, 2, 1 )$\\
+19 : $P_{50}=( 4, 4, 1 )$\\
+20 : $P_{42}=( 5, 3, 1 )$\\
+21 : $P_{16}=( 5, 0, 1 )$\\
+22 : $P_{71}=( 7, 6, 1 )$\\
+23 : $P_{41}=( 4, 3, 1 )$\\
+24 : $P_{3}=( 1, 1, 1 )$\\
+25 : $P_{13}=( 2, 0, 1 )$\\
+26 : $P_{63}=( 8, 5, 1 )$\\
+27 : $P_{64}=( 0, 6, 1 )$\\
+Dimension of the vanishing ideal is 1\\
+\begin{verbatim}
+3*X2^4 + 3*X0^3*X1 + X0^3*X2 + 3*X0*X1^3 + 7*X1^3*X2 + 5*X0*X2^3 + 2*X1*X2^3
+\end{verbatim}
+The lines and their points of contact are:\\
+$
+a_{1} = 
+\left[
+\begin{array}{*{3}{r}}
+1 & 0 & 0\\
+0 & 0 & 1\\
+\end{array}
+\right]
+_{9}
+=
+\left[
+\begin{array}{*{3}c}
+1  & 0  & 0\\
+0  & 0  & 1\\
+\end{array}
+\right]_{9}
+P_{15}=\bP( 4, 0, 1 )\;4 \times $\\
+$
+a_{2} = 
+\left[
+\begin{array}{*{3}{r}}
+1 & 0 & 6\\
+0 & 1 & 6\\
+\end{array}
+\right]
+_{66}
+=
+\left[
+\begin{array}{*{3}c}
+1  & 0  & 6\\
+0  & 1  & 6\\
+\end{array}
+\right]_{66}
+P_{66}=\bP( 2, 6, 1 )\;4 \times $\\
+$
+a_{3} = 
+\left[
+\begin{array}{*{3}{r}}
+0 & 1 & 0\\
+0 & 0 & 1\\
+\end{array}
+\right]
+_{90}
+=
+\left[
+\begin{array}{*{3}c}
+0  & 1  & 0\\
+0  & 0  & 1\\
+\end{array}
+\right]_{90}
+P_{37}=\bP( 0, 3, 1 )\;4 \times $\\
+$
+a_{4} = 
+\left[
+\begin{array}{*{3}{r}}
+1 & 0 & 1\\
+0 & 1 & 1\\
+\end{array}
+\right]
+_{11}
+=
+\left[
+\begin{array}{*{3}c}
+1  & 0  & 1\\
+0  & 1  & 1\\
+\end{array}
+\right]_{11}
+P_{44}=\bP( 7, 3, 1 )\;4 \times $\\
+$
+a_{5} = 
+\left[
+\begin{array}{*{3}{r}}
+1 & 0 & 2\\
+0 & 1 & 5\\
+\end{array}
+\right]
+_{25}
+=
+\left[
+\begin{array}{*{3}c}
+1  & 0  & 2\\
+0  & 1  & 5\\
+\end{array}
+\right]_{25}
+P_{23}=\bP( 4, 1, 1 )\;4 \times $\\
+$
+a_{6} = 
+\left[
+\begin{array}{*{3}{r}}
+1 & 0 & 4\\
+0 & 1 & 0\\
+\end{array}
+\right]
+_{40}
+=
+\left[
+\begin{array}{*{3}c}
+1  & 0  & 4\\
+0  & 1  & 0\\
+\end{array}
+\right]_{40}
+P_{22}=\bP( 3, 1, 1 )\;4 \times $\\
+$
+b_{1} = 
+\left[
+\begin{array}{*{3}{r}}
+1 & 7 & 0\\
+0 & 0 & 1\\
+\end{array}
+\right]
+_{79}
+=
+\left[
+\begin{array}{*{3}c}
+1  & 7  & 0\\
+0  & 0  & 1\\
+\end{array}
+\right]_{79}
+P_{72}=\bP( 8, 6, 1 )\;4 \times $\\
+$
+b_{2} = 
+\left[
+\begin{array}{*{3}{r}}
+1 & 0 & 0\\
+0 & 1 & 2\\
+\end{array}
+\right]
+_{2}
+=
+\left[
+\begin{array}{*{3}c}
+1  & 0  & 0\\
+0  & 1  & 2\\
+\end{array}
+\right]_{2}
+P_{36}=\bP( 8, 2, 1 )\;4 \times $\\
+$
+b_{3} = 
+\left[
+\begin{array}{*{3}{r}}
+1 & 5 & 0\\
+0 & 0 & 1\\
+\end{array}
+\right]
+_{59}
+=
+\left[
+\begin{array}{*{3}c}
+1  & 5  & 0\\
+0  & 0  & 1\\
+\end{array}
+\right]_{59}
+P_{10}=\bP( 7, 1, 0 )\;4 \times $\\
+$
+b_{4} = 
+\left[
+\begin{array}{*{3}{r}}
+1 & 0 & 8\\
+0 & 1 & 7\\
+\end{array}
+\right]
+_{87}
+=
+\left[
+\begin{array}{*{3}c}
+1  & 0  & 8\\
+0  & 1  & 7\\
+\end{array}
+\right]_{87}
+P_{84}=\bP( 2, 8, 1 )\;4 \times $\\
+$
+b_{5} = 
+\left[
+\begin{array}{*{3}{r}}
+1 & 0 & 7\\
+0 & 1 & 3\\
+\end{array}
+\right]
+_{73}
+=
+\left[
+\begin{array}{*{3}c}
+1  & 0  & 7\\
+0  & 1  & 3\\
+\end{array}
+\right]_{73}
+P_{89}=\bP( 7, 8, 1 )\;4 \times $\\
+$
+b_{6} = 
+\left[
+\begin{array}{*{3}{r}}
+1 & 0 & 5\\
+0 & 1 & 8\\
+\end{array}
+\right]
+_{58}
+=
+\left[
+\begin{array}{*{3}c}
+1  & 0  & 5\\
+0  & 1  & 8\\
+\end{array}
+\right]_{58}
+P_{6}=\bP( 3, 1, 0 )\;4 \times $\\
+$
+c_{12} = 
+\left[
+\begin{array}{*{3}{r}}
+1 & 0 & 0\\
+0 & 1 & 7\\
+\end{array}
+\right]
+_{7}
+=
+\left[
+\begin{array}{*{3}c}
+1  & 0  & 0\\
+0  & 1  & 7\\
+\end{array}
+\right]_{7}
+P_{62}=\bP( 7, 5, 1 )\;4 \times $\\
+$
+c_{13} = 
+\left[
+\begin{array}{*{3}{r}}
+1 & 0 & 6\\
+0 & 1 & 5\\
+\end{array}
+\right]
+_{65}
+=
+\left[
+\begin{array}{*{3}c}
+1  & 0  & 6\\
+0  & 1  & 5\\
+\end{array}
+\right]_{65}
+P_{9}=\bP( 6, 1, 0 )\;4 \times $\\
+$
+c_{14} = 
+\left[
+\begin{array}{*{3}{r}}
+1 & 0 & 2\\
+0 & 1 & 8\\
+\end{array}
+\right]
+_{28}
+=
+\left[
+\begin{array}{*{3}c}
+1  & 0  & 2\\
+0  & 1  & 8\\
+\end{array}
+\right]_{28}
+P_{86}=\bP( 4, 8, 1 )\;4 \times $\\
+$
+c_{15} = 
+\left[
+\begin{array}{*{3}{r}}
+1 & 0 & 4\\
+0 & 1 & 5\\
+\end{array}
+\right]
+_{45}
+=
+\left[
+\begin{array}{*{3}c}
+1  & 0  & 4\\
+0  & 1  & 5\\
+\end{array}
+\right]_{45}
+P_{90}=\bP( 8, 8, 1 )\;4 \times $\\
+$
+c_{16} = 
+\left[
+\begin{array}{*{3}{r}}
+1 & 0 & 1\\
+0 & 1 & 2\\
+\end{array}
+\right]
+_{12}
+=
+\left[
+\begin{array}{*{3}c}
+1  & 0  & 1\\
+0  & 1  & 2\\
+\end{array}
+\right]_{12}
+P_{4}=\bP( 1, 1, 0 )\;4 \times $\\
+$
+c_{23} = 
+\left[
+\begin{array}{*{3}{r}}
+1 & 0 & 6\\
+0 & 1 & 1\\
+\end{array}
+\right]
+_{61}
+=
+\left[
+\begin{array}{*{3}c}
+1  & 0  & 6\\
+0  & 1  & 1\\
+\end{array}
+\right]_{61}
+P_{43}=\bP( 6, 3, 1 )\;4 \times $\\
+$
+c_{24} = 
+\left[
+\begin{array}{*{3}{r}}
+1 & 0 & 5\\
+0 & 1 & 1\\
+\end{array}
+\right]
+_{51}
+=
+\left[
+\begin{array}{*{3}c}
+1  & 0  & 5\\
+0  & 1  & 1\\
+\end{array}
+\right]_{51}
+P_{39}=\bP( 2, 3, 1 )\;4 \times $\\
+$
+c_{25} = 
+\left[
+\begin{array}{*{3}{r}}
+1 & 0 & 8\\
+0 & 1 & 8\\
+\end{array}
+\right]
+_{88}
+=
+\left[
+\begin{array}{*{3}c}
+1  & 0  & 8\\
+0  & 1  & 8\\
+\end{array}
+\right]_{88}
+P_{27}=\bP( 8, 1, 1 )\;4 \times $\\
+$
+c_{26} = 
+\left[
+\begin{array}{*{3}{r}}
+1 & 0 & 7\\
+0 & 1 & 6\\
+\end{array}
+\right]
+_{76}
+=
+\left[
+\begin{array}{*{3}c}
+1  & 0  & 7\\
+0  & 1  & 6\\
+\end{array}
+\right]_{76}
+P_{25}=\bP( 6, 1, 1 )\;4 \times $\\
+$
+c_{34} = 
+\left[
+\begin{array}{*{3}{r}}
+1 & 0 & 7\\
+0 & 1 & 0\\
+\end{array}
+\right]
+_{70}
+=
+\left[
+\begin{array}{*{3}c}
+1  & 0  & 7\\
+0  & 1  & 0\\
+\end{array}
+\right]_{70}
+P_{78}=\bP( 5, 7, 1 )\;4 \times $\\
+$
+c_{35} = 
+\left[
+\begin{array}{*{3}{r}}
+1 & 0 & 5\\
+0 & 1 & 3\\
+\end{array}
+\right]
+_{53}
+=
+\left[
+\begin{array}{*{3}c}
+1  & 0  & 5\\
+0  & 1  & 3\\
+\end{array}
+\right]_{53}
+P_{70}=\bP( 6, 6, 1 )\;4 \times $\\
+$
+c_{36} = 
+\left[
+\begin{array}{*{3}{r}}
+1 & 0 & 8\\
+0 & 1 & 6\\
+\end{array}
+\right]
+_{86}
+=
+\left[
+\begin{array}{*{3}c}
+1  & 0  & 8\\
+0  & 1  & 6\\
+\end{array}
+\right]_{86}
+P_{80}=\bP( 7, 7, 1 )\;4 \times $\\
+$
+c_{45} = 
+\left[
+\begin{array}{*{3}{r}}
+1 & 0 & 2\\
+0 & 1 & 2\\
+\end{array}
+\right]
+_{22}
+=
+\left[
+\begin{array}{*{3}c}
+1  & 0  & 2\\
+0  & 1  & 2\\
+\end{array}
+\right]_{22}
+P_{77}=\bP( 4, 7, 1 )\;4 \times $\\
+$
+c_{46} = 
+\left[
+\begin{array}{*{3}{r}}
+1 & 0 & 1\\
+0 & 1 & 0\\
+\end{array}
+\right]
+_{10}
+=
+\left[
+\begin{array}{*{3}c}
+1  & 0  & 1\\
+0  & 1  & 0\\
+\end{array}
+\right]_{10}
+P_{65}=\bP( 1, 6, 1 )\;4 \times $\\
+$
+c_{56} = 
+\left[
+\begin{array}{*{3}{r}}
+1 & 0 & 4\\
+0 & 1 & 7\\
+\end{array}
+\right]
+_{47}
+=
+\left[
+\begin{array}{*{3}c}
+1  & 0  & 4\\
+0  & 1  & 7\\
+\end{array}
+\right]_{47}
+P_{79}=\bP( 6, 7, 1 )\;4 \times $\\
+$
+d = 
+\left[
+\begin{array}{*{3}{r}}
+1 & 0 & 0\\
+0 & 1 & 3\\
+\end{array}
+\right]
+_{3}
+=
+\left[
+\begin{array}{*{3}c}
+1  & 0  & 0\\
+0  & 1  & 3\\
+\end{array}
+\right]_{3}
+P_{48}=\bP( 2, 4, 1 )\;4 \times $\\
+Rank of lines: ( 9, 66, 90, 11, 25, 40, 79, 2, 59, 87, 73, 58, 7, 65, 28, 45, 12, 61, 51, 88, 76, 70, 53, 86, 22, 10, 47, 3 )\\
+Line type: $
+1^{28}$\\
+$$
+\begin{array}{|r|r|l|}
+\hline
+28 & 1 & \begin{array}{l}
+1, 2, 3, 4, 5, 6, 7, 8, 9, 10, \\
+11, 12, 13, 14, 15, 16, 17, 18, 19, 20, \\
+21, 22, 23, 24, 25, 26, 27, 0\end{array}
+\\
+\hline
+\end{array}
+$$
+point types: $
+1^{28}$\\
+$$
+\begin{array}{|r|r|l|}
+\hline
+28 & 1 & \begin{array}{l}
+1, 2, 3, 4, 5, 6, 7, 8, 9, 10, \\
+11, 12, 13, 14, 15, 16, 17, 18, 19, 20, \\
+21, 22, 23, 24, 25, 26, 27, 0\end{array}
+\\
+\hline
+\end{array}
+$$
+point types for points off the curve: $
+4^{63}$\\
+$$
+\begin{array}{|r|r|l|}
+\hline
+63 & 4 & \begin{array}{l}
+1, 2, 3, 4, 5, 6, 7, 8, 9, 10, \\
+11, 12, 13, 14, 15, 16, 17, 18, 19, 20, \\
+21, 22, 23, 24, 25, 26, 27, 28, 29, 30, \\
+31, 32, 33, 34, 35, 36, 37, 38, 39, 40, \\
+41, 42, 43, 44, 45, 46, 47, 48, 49, 50, \\
+51, 52, 53, 54, 55, 56, 57, 58, 59, 60, \\
+61, 62, 0\end{array}
+\\
+\hline
+\end{array}
+$$
+Lines on points off the curve:\\
+Off point 0 = $P_{0} = ( 1, 0, 0 )$ lies on 4 bisecants : \{ 0, 7, 12, 27 \}\\
+Off point 1 = $P_{1} = ( 0, 1, 0 )$ lies on 4 bisecants : \{ 2, 5, 21, 25 \}\\
+Off point 2 = $P_{2} = ( 0, 0, 1 )$ lies on 4 bisecants : \{ 0, 2, 6, 8 \}\\
+Off point 3 = $P_{3} = ( 1, 1, 1 )$ lies on 4 bisecants : \{ 10, 11, 24, 25 \}\\
+Off point 4 = $P_{5} = ( 2, 1, 0 )$ lies on 4 bisecants : \{ 1, 3, 19, 24 \}\\
+Off point 5 = $P_{7} = ( 4, 1, 0 )$ lies on 4 bisecants : \{ 17, 20, 22, 26 \}\\
+Off point 6 = $P_{8} = ( 5, 1, 0 )$ lies on 4 bisecants : \{ 4, 6, 18, 23 \}\\
+Off point 7 = $P_{11} = ( 8, 1, 0 )$ lies on 4 bisecants : \{ 9, 10, 14, 15 \}\\
+Off point 8 = $P_{12} = ( 1, 0, 1 )$ lies on 4 bisecants : \{ 0, 3, 16, 25 \}\\
+Off point 9 = $P_{13} = ( 2, 0, 1 )$ lies on 4 bisecants : \{ 0, 4, 14, 24 \}\\
+Off point 10 = $P_{14} = ( 3, 0, 1 )$ lies on 4 bisecants : \{ 0, 5, 15, 26 \}\\
+Off point 11 = $P_{16} = ( 5, 0, 1 )$ lies on 4 bisecants : \{ 0, 10, 20, 21 \}\\
+Off point 12 = $P_{17} = ( 6, 0, 1 )$ lies on 4 bisecants : \{ 0, 9, 19, 23 \}\\
+Off point 13 = $P_{18} = ( 7, 0, 1 )$ lies on 4 bisecants : \{ 0, 11, 18, 22 \}\\
+Off point 14 = $P_{19} = ( 8, 0, 1 )$ lies on 4 bisecants : \{ 0, 1, 13, 17 \}\\
+Off point 15 = $P_{20} = ( 0, 1, 1 )$ lies on 4 bisecants : \{ 2, 3, 17, 18 \}\\
+Off point 16 = $P_{21} = ( 2, 1, 1 )$ lies on 4 bisecants : \{ 15, 16, 22, 23 \}\\
+Off point 17 = $P_{24} = ( 5, 1, 1 )$ lies on 4 bisecants : \{ 6, 9, 13, 21 \}\\
+Off point 18 = $P_{26} = ( 7, 1, 1 )$ lies on 4 bisecants : \{ 1, 8, 14, 26 \}\\
+Off point 19 = $P_{28} = ( 0, 2, 1 )$ lies on 4 bisecants : \{ 2, 7, 16, 24 \}\\
+Off point 20 = $P_{29} = ( 1, 2, 1 )$ lies on 4 bisecants : \{ 7, 9, 20, 25 \}\\
+Off point 21 = $P_{30} = ( 2, 2, 1 )$ lies on 4 bisecants : \{ 3, 7, 13, 26 \}\\
+Off point 22 = $P_{31} = ( 3, 2, 1 )$ lies on 4 bisecants : \{ 5, 7, 14, 22 \}\\
+Off point 23 = $P_{32} = ( 4, 2, 1 )$ lies on 4 bisecants : \{ 7, 11, 17, 23 \}\\
+Off point 24 = $P_{33} = ( 5, 2, 1 )$ lies on 4 bisecants : \{ 7, 8, 18, 21 \}\\
+Off point 25 = $P_{34} = ( 6, 2, 1 )$ lies on 4 bisecants : \{ 1, 4, 7, 10 \}\\
+Off point 26 = $P_{35} = ( 7, 2, 1 )$ lies on 4 bisecants : \{ 6, 7, 15, 19 \}\\
+Off point 27 = $P_{38} = ( 1, 3, 1 )$ lies on 4 bisecants : \{ 13, 14, 23, 25 \}\\
+Off point 28 = $P_{40} = ( 3, 3, 1 )$ lies on 4 bisecants : \{ 4, 5, 19, 20 \}\\
+Off point 29 = $P_{41} = ( 4, 3, 1 )$ lies on 4 bisecants : \{ 6, 10, 16, 26 \}\\
+Off point 30 = $P_{42} = ( 5, 3, 1 )$ lies on 4 bisecants : \{ 1, 11, 15, 21 \}\\
+Off point 31 = $P_{45} = ( 8, 3, 1 )$ lies on 4 bisecants : \{ 8, 9, 22, 24 \}\\
+Off point 32 = $P_{46} = ( 0, 4, 1 )$ lies on 4 bisecants : \{ 2, 10, 22, 27 \}\\
+Off point 33 = $P_{47} = ( 1, 4, 1 )$ lies on 4 bisecants : \{ 15, 17, 25, 27 \}\\
+Off point 34 = $P_{49} = ( 3, 4, 1 )$ lies on 4 bisecants : \{ 5, 8, 23, 27 \}\\
+Off point 35 = $P_{50} = ( 4, 4, 1 )$ lies on 4 bisecants : \{ 1, 9, 18, 27 \}\\
+Off point 36 = $P_{51} = ( 5, 4, 1 )$ lies on 4 bisecants : \{ 16, 19, 21, 27 \}\\
+Off point 37 = $P_{52} = ( 6, 4, 1 )$ lies on 4 bisecants : \{ 3, 6, 14, 27 \}\\
+Off point 38 = $P_{53} = ( 7, 4, 1 )$ lies on 4 bisecants : \{ 13, 20, 24, 27 \}\\
+Off point 39 = $P_{54} = ( 8, 4, 1 )$ lies on 4 bisecants : \{ 4, 11, 26, 27 \}\\
+Off point 40 = $P_{55} = ( 0, 5, 1 )$ lies on 4 bisecants : \{ 2, 9, 12, 26 \}\\
+Off point 41 = $P_{56} = ( 1, 5, 1 )$ lies on 4 bisecants : \{ 4, 8, 12, 25 \}\\
+Off point 42 = $P_{57} = ( 2, 5, 1 )$ lies on 4 bisecants : \{ 6, 11, 12, 20 \}\\
+Off point 43 = $P_{58} = ( 3, 5, 1 )$ lies on 4 bisecants : \{ 1, 5, 12, 16 \}\\
+Off point 44 = $P_{59} = ( 4, 5, 1 )$ lies on 4 bisecants : \{ 12, 13, 19, 22 \}\\
+Off point 45 = $P_{60} = ( 5, 5, 1 )$ lies on 4 bisecants : \{ 12, 14, 17, 21 \}\\
+Off point 46 = $P_{61} = ( 6, 5, 1 )$ lies on 4 bisecants : \{ 12, 15, 18, 24 \}\\
+Off point 47 = $P_{63} = ( 8, 5, 1 )$ lies on 4 bisecants : \{ 3, 10, 12, 23 \}\\
+Off point 48 = $P_{64} = ( 0, 6, 1 )$ lies on 4 bisecants : \{ 2, 11, 14, 19 \}\\
+Off point 49 = $P_{67} = ( 3, 6, 1 )$ lies on 4 bisecants : \{ 5, 10, 13, 18 \}\\
+Off point 50 = $P_{68} = ( 4, 6, 1 )$ lies on 4 bisecants : \{ 3, 8, 15, 20 \}\\
+Off point 51 = $P_{69} = ( 5, 6, 1 )$ lies on 4 bisecants : \{ 21, 23, 24, 26 \}\\
+Off point 52 = $P_{71} = ( 7, 6, 1 )$ lies on 4 bisecants : \{ 4, 9, 16, 17 \}\\
+Off point 53 = $P_{73} = ( 0, 7, 1 )$ lies on 4 bisecants : \{ 2, 4, 13, 15 \}\\
+Off point 54 = $P_{74} = ( 1, 7, 1 )$ lies on 4 bisecants : \{ 1, 6, 22, 25 \}\\
+Off point 55 = $P_{75} = ( 2, 7, 1 )$ lies on 4 bisecants : \{ 8, 10, 17, 19 \}\\
+Off point 56 = $P_{76} = ( 3, 7, 1 )$ lies on 4 bisecants : \{ 3, 5, 9, 11 \}\\
+Off point 57 = $P_{81} = ( 8, 7, 1 )$ lies on 4 bisecants : \{ 14, 16, 18, 20 \}\\
+Off point 58 = $P_{82} = ( 0, 8, 1 )$ lies on 4 bisecants : \{ 1, 2, 20, 23 \}\\
+Off point 59 = $P_{83} = ( 1, 8, 1 )$ lies on 4 bisecants : \{ 18, 19, 25, 26 \}\\
+Off point 60 = $P_{85} = ( 3, 8, 1 )$ lies on 4 bisecants : \{ 5, 6, 17, 24 \}\\
+Off point 61 = $P_{87} = ( 5, 8, 1 )$ lies on 4 bisecants : \{ 3, 4, 21, 22 \}\\
+Off point 62 = $P_{88} = ( 6, 8, 1 )$ lies on 4 bisecants : \{ 8, 11, 13, 16 \}\\
+\subsection*{The gradient}
+The gradient of the quartic curve  is :
+$$
+\begin{array}{c}
+X_0^3 + 6X_1^3 + 3X_2^3\end{array}
+$$
+$$
+( 1, 6, 3, 0, 0, 0, 0, 0, 0, 0 )$$
+$$
+\begin{array}{c}
+4X_0^3 + X_1^3 + 4X_2^3\end{array}
+$$
+$$
+( 4, 1, 4, 0, 0, 0, 0, 0, 0, 0 )$$
+$$
+\begin{array}{c}
+8X_0^3 + 6X_1^3 + 2X_2^3\end{array}
+$$
+$$
+( 8, 6, 2, 0, 0, 0, 0, 0, 0, 0 )$$
+
+
+%\bibliographystyle{gerplain}% wird oben eingestellt
+%\addcontentsline{toc}{section}{References}
+%\bibliography{../MY_BIBLIOGRAPHY/anton}
+% ACHTUNG: nicht vergessen:
+% die Zeile
+%\addcontentsline{toc}{chapter}{Literaturverzeichnis}
+% muss per Hand in d.bbl eingefuegt werden !
+% nach \begin{thebibliography}{100}
+
+%\begin{theindex}
+
+%\clearpage
+%\addcontentsline{toc}{chapter}{Index}
+%\input{apd.ind}
+
+%\printindex
+%\end{theindex}
+
+}% allowdisplaybreaks
+
+\end{document}
+
+
