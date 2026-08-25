@@ -530,7 +530,8 @@ public:
 		// used for write_treefile in poset_classification_io
 
 
-
+	int f_substructure_invariant;
+	int substructure_invariant_k;
 
 	int f_preferred_choice;
 	std::vector<std::vector<int> > preferred_choice;
@@ -721,6 +722,10 @@ public:
 	int max_number_of_points_to_print_in_orbit();
 	void print_extension_type(
 			std::ostream &ost, int t);
+	void compute_substructure_invariant(
+			int level, int orbit_idx,
+			int *data, int substructure_invariant_k,
+			int verbose_level);
 
 
 	// poset_classification_init.cpp:
@@ -1184,7 +1189,7 @@ public:
 // poset_of_orbits.cpp
 // #############################################################################
 
-//! the data structure for the poset of orbits in the poset classification algorithm
+//! data structure for the poset of orbits in the poset classification algorithm
 
 
 class poset_of_orbits {
@@ -1618,6 +1623,11 @@ public:
 		int verbose_level);
 	int nb_extension_points();
 		// sums up the lengths of orbits in all extensions
+	void compute_substructure_invariant_1(
+			poset_classification *gen,
+			int level, int idx,
+			int *data,
+			int verbose_level);
 
 	// in poset_orbit_node_group_theory.cpp:
 	void store_strong_generators(
@@ -1840,7 +1850,8 @@ public:
 		// 1st level under downstep:
 	void schreier_forest(
 		poset_classification *gen,
-		groups::schreier &Schreier, actions::action *&AR,
+		groups::schreier &Schreier,
+		actions::action *&AR,
 		int lvl, 
 		int f_use_invariant_subset_if_available, 
 		int &f_using_invariant_subset, 

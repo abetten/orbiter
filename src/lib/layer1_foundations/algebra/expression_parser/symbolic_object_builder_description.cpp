@@ -41,6 +41,16 @@ symbolic_object_builder_description::symbolic_object_builder_description()
 	f_text = false;
 	//std::string text_txt;
 
+	f_noncommutative = false;
+
+	f_file = false;
+	//std::string file_fname;
+
+	f_file_specific_line = false;
+	//std::string file_specific_line_fname;
+	file_specific_line_line = 0;
+
+
 	f_field = false;
 	//std::string field_label;
 
@@ -50,11 +60,13 @@ symbolic_object_builder_description::symbolic_object_builder_description()
 	f_ring = false;
 	//std::string ring_label;
 
-	f_file = false;
-	//std::string file_name;
-
 	f_matrix = false;
 	nb_rows = 0;
+
+	f_algebra_evaluator = false;
+	algebra_evaluator_dimension = 0;
+	//std::string algebra_evaluator_source;
+
 
 	f_determinant = false;
 	//std::string determinant_source;
@@ -199,6 +211,34 @@ int symbolic_object_builder_description::read_arguments(
 				cout << "-text " << text_txt << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-noncommutative") == 0) {
+			f_noncommutative = true;
+			if (f_v) {
+				cout << "-noncommutative " << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-noncommutative") == 0) {
+			f_noncommutative = true;
+			if (f_v) {
+				cout << "-noncommutative " << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-file") == 0) {
+			f_file = true;
+			file_fname.assign(argv[++i]);
+			if (f_v) {
+				cout << "-file " << file_fname << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-file_specific_line") == 0) {
+			f_file_specific_line = true;
+			file_specific_line_fname.assign(argv[++i]);
+			file_specific_line_line = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-file_specific_line " << file_specific_line_fname << " " << file_specific_line_line << endl;
+			}
+		}
+
 		else if (ST.stringcmp(argv[i], "-field") == 0) {
 			f_field = true;
 			field_label.assign(argv[++i]);
@@ -213,13 +253,6 @@ int symbolic_object_builder_description::read_arguments(
 				cout << "-ring " << ring_label << endl;
 			}
 		}
-		else if (ST.stringcmp(argv[i], "-file") == 0) {
-			f_file = true;
-			file_name.assign(argv[++i]);
-			if (f_v) {
-				cout << "-file " << file_name << endl;
-			}
-		}
 		else if (ST.stringcmp(argv[i], "-matrix") == 0) {
 			f_matrix = true;
 			nb_rows = ST.strtoi(argv[++i]);
@@ -227,6 +260,16 @@ int symbolic_object_builder_description::read_arguments(
 				cout << "-matrix " << nb_rows << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-algebra_evaluator") == 0) {
+			f_algebra_evaluator = true;
+			algebra_evaluator_dimension = ST.strtoi(argv[++i]);
+			algebra_evaluator_source.assign(argv[++i]);
+			if (f_v) {
+				cout << "-algebra_evaluator " << algebra_evaluator_dimension << " " << algebra_evaluator_source << endl;
+			}
+		}
+
+
 		else if (ST.stringcmp(argv[i], "-determinant") == 0) {
 			f_determinant = true;
 			determinant_source.assign(argv[++i]);
@@ -525,6 +568,15 @@ void symbolic_object_builder_description::print()
 	if (f_text) {
 		cout << "-text " << text_txt << endl;
 	}
+	if (f_noncommutative) {
+		cout << "-noncommutative " << endl;
+	}
+	if (f_file) {
+		cout << "-file " << file_fname << endl;
+	}
+	if (f_file_specific_line) {
+		cout << "-file_specific_line " << file_specific_line_fname << " " << file_specific_line_line << endl;
+	}
 	if (f_field) {
 		cout << "-field " << field_label << endl;
 	}
@@ -534,11 +586,11 @@ void symbolic_object_builder_description::print()
 	if (f_ring) {
 		cout << "-ring " << ring_label << endl;
 	}
-	if (f_file) {
-		cout << "-file " << file_name << endl;
-	}
 	if (f_matrix) {
 		cout << "-matrix " << nb_rows << endl;
+	}
+	if (f_algebra_evaluator) {
+		cout << "-algebra_evaluator " << algebra_evaluator_dimension << " " << algebra_evaluator_source << endl;
 	}
 	if (f_determinant) {
 		cout << "-determinant "

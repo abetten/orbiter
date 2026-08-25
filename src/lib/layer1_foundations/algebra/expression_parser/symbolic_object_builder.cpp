@@ -27,6 +27,8 @@ symbolic_object_builder::symbolic_object_builder()
 
 	Fq = NULL;
 
+	f_is_commutative = false;
+
 	Ring = NULL;
 
 	Formula_vector = NULL;
@@ -56,6 +58,13 @@ void symbolic_object_builder::init(
 	symbolic_object_builder::label = label;
 	//string managed_variables;
 
+
+	if (Descr->f_noncommutative) {
+		f_is_commutative = false;
+	}
+	else {
+		f_is_commutative = true;
+	}
 
 	if (Descr->f_field) {
 		if (f_v) {
@@ -216,6 +225,7 @@ void symbolic_object_builder::process_arguments(
 				Descr->label_tex,
 				Descr->text_txt,
 				Fq,
+				f_is_commutative,
 				Descr->f_managed_variables,
 				Descr->managed_variables,
 				Descr->f_matrix, Descr->nb_rows,
@@ -226,6 +236,168 @@ void symbolic_object_builder::process_arguments(
 		}
 
 	}
+
+	else if (Descr->f_file) {
+		if (f_v) {
+			cout << "symbolic_object_builder::process_arguments "
+					"-file " << Descr->file_fname << endl;
+			if (Descr->f_managed_variables) {
+				cout << "symbolic_object_builder::process_arguments "
+						"-managed_variables " << Descr->managed_variables << endl;
+			}
+		}
+
+
+		// read a text file with one formula per line.
+
+		// Concatenate the formulas, using comma separation
+
+		std::vector<std::string> v;
+
+		{
+			ifstream file(Descr->file_fname);
+
+			while (!file.eof()) {
+				std::string text;
+
+				std::getline(file, text);
+				v.push_back(text);
+			}
+		}
+
+		std::string text;
+		int i;
+
+		for (i = 0; i < v.size(); i++) {
+			text += v[i];
+			if (i < v.size() - 2) {
+				text += ",";
+			}
+		}
+
+		if (f_v) {
+			cout << "symbolic_object_builder::process_arguments "
+					"text = " << text << endl;
+		}
+
+
+		Formula_vector = NEW_OBJECT(expression_parser::formula_vector);
+		if (f_v) {
+			cout << "symbolic_object_builder::process_arguments "
+					"before Formula_vector->init_from_text" << endl;
+		}
+		Formula_vector->init_from_text(
+				label,
+				Descr->label_tex,
+				text,
+				Fq,
+				f_is_commutative,
+				Descr->f_managed_variables,
+				Descr->managed_variables,
+				Descr->f_matrix, Descr->nb_rows,
+				verbose_level - 1);
+		if (f_v) {
+			cout << "symbolic_object_builder::process_arguments "
+					"after Formula_vector->init_from_text" << endl;
+		}
+
+	}
+
+
+	else if (Descr->f_file_specific_line) {
+		if (f_v) {
+			cout << "symbolic_object_builder::process_arguments "
+					"-file_specific_line " << Descr->file_specific_line_fname << endl;
+			if (Descr->f_managed_variables) {
+				cout << "symbolic_object_builder::process_arguments "
+						"-managed_variables " << Descr->managed_variables << endl;
+			}
+		}
+
+
+		// read a text file with one formula per line.
+
+		// Concatenate the formulas, using comma separation
+
+		std::vector<std::string> v;
+
+		{
+			ifstream file(Descr->file_specific_line_fname);
+
+			while (!file.eof()) {
+				std::string text;
+
+				std::getline(file, text);
+				v.push_back(text);
+			}
+		}
+
+		if (Descr->file_specific_line_line >= v.size() - 1) {
+			cout << "out of range" << endl;
+			cout << "wanted line " << Descr->file_specific_line_line << endl;
+			cout << "but number of lines read is only " << v.size() - 1 << endl;
+			exit(1);
+		}
+		std::string text;
+
+
+		text = v[Descr->file_specific_line_line];
+
+#if 0
+		int i;
+
+		for (i = 0; i < v.size(); i++) {
+			text += v[i];
+			if (i < v.size() - 2) {
+				text += ",";
+			}
+		}
+#endif
+
+		if (f_v) {
+			cout << "symbolic_object_builder::process_arguments "
+					"text = " << text << endl;
+		}
+
+
+		Formula_vector = NEW_OBJECT(expression_parser::formula_vector);
+		if (f_v) {
+			cout << "symbolic_object_builder::process_arguments "
+					"before Formula_vector->init_from_text" << endl;
+		}
+		Formula_vector->init_from_text(
+				label,
+				Descr->label_tex,
+				text,
+				Fq,
+				f_is_commutative,
+				Descr->f_managed_variables,
+				Descr->managed_variables,
+				Descr->f_matrix, Descr->nb_rows,
+				verbose_level - 1);
+		if (f_v) {
+			cout << "symbolic_object_builder::process_arguments "
+					"after Formula_vector->init_from_text" << endl;
+		}
+
+	}
+	else if (Descr->f_algebra_evaluator) {
+		if (f_v) {
+			cout << "symbolic_object_builder::process_arguments -algebra_evaluator"
+					<< " " << Descr->algebra_evaluator_dimension
+					<< " " << Descr->algebra_evaluator_source
+					<< endl;
+		}
+
+		do_algebra_evaluator(
+				Descr,
+				label,
+				verbose_level - 1);
+
+
+	}
+
+
 	else if (Descr->f_determinant) {
 		if (f_v) {
 			cout << "symbolic_object_builder::process_arguments -determinant"
@@ -550,7 +722,7 @@ void symbolic_object_builder::process_arguments(
 				"finished construction, now doing post processing" << endl;
 	}
 
-
+#if 0
 	if (Descr->f_file) {
 		if (f_v) {
 			cout << "symbolic_object_builder::process_arguments "
@@ -559,6 +731,7 @@ void symbolic_object_builder::process_arguments(
 
 
 	}
+#endif
 
 	if (f_v) {
 		cout << "symbolic_object_builder::process_arguments "
@@ -611,6 +784,61 @@ void symbolic_object_builder::process_arguments(
 }
 
 
+void symbolic_object_builder::do_algebra_evaluator(
+		symbolic_object_builder_description *Descr,
+		std::string &label,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "symbolic_object_builder::do_algebra_evaluator" << endl;
+	}
+
+	int dimension;
+
+	dimension = Descr->algebra_evaluator_dimension;
+
+
+
+
+	symbolic_object_builder *O_formula;
+
+	O_formula = Get_symbol(Descr->algebra_evaluator_source);
+
+
+	Formula_vector = NEW_OBJECT(expression_parser::formula_vector);
+
+	if (f_v) {
+		cout << "symbolic_object_builder::do_algebra_evaluator "
+				"before Formula_vector->algebra_evaluator" << endl;
+	}
+	Formula_vector->algebra_evaluator(
+			O_formula->Formula_vector,
+			Fq,
+			f_is_commutative,
+			dimension,
+			label, label,
+			Descr->f_managed_variables,
+			Descr->managed_variables,
+			verbose_level - 1);
+	if (f_v) {
+		cout << "symbolic_object_builder::do_algebra_evaluator "
+				"after Formula_vector->algebra_evaluator" << endl;
+	}
+
+
+
+
+
+	if (f_v) {
+		cout << "symbolic_object_builder::do_algebra_evaluator done" << endl;
+	}
+
+}
+
+
+
 void symbolic_object_builder::do_determinant(
 		symbolic_object_builder_description *Descr,
 		std::string &label,
@@ -636,6 +864,7 @@ void symbolic_object_builder::do_determinant(
 	Formula_vector->determinant(
 			O1->Formula_vector,
 			Fq,
+			f_is_commutative,
 			label, label,
 			Descr->f_managed_variables,
 			Descr->managed_variables,
@@ -703,6 +932,7 @@ void symbolic_object_builder::do_characteristic_polynomial(
 	Formula_vector->characteristic_polynomial(
 			O1->Formula_vector,
 			Fq,
+			f_is_commutative,
 			variable,
 			label, label,
 			Descr->f_managed_variables,
@@ -915,6 +1145,7 @@ void symbolic_object_builder::do_right_nullspace(
 	Formula_vector->right_nullspace(
 			O_source->Formula_vector,
 			Fq,
+			f_is_commutative,
 			label, label,
 			Descr->f_managed_variables,
 			Descr->managed_variables,
@@ -958,6 +1189,7 @@ void symbolic_object_builder::do_minor(
 	Formula_vector->matrix_minor(
 			O_source->Formula_vector,
 			Fq,
+			f_is_commutative,
 			minor_i, minor_j,
 			label, label,
 			Descr->f_managed_variables,
@@ -1001,6 +1233,7 @@ void symbolic_object_builder::do_symbolic_nullspace(
 	Formula_vector->symbolic_nullspace(
 			O_source->Formula_vector,
 			Fq,
+			f_is_commutative,
 			label, label,
 			Descr->f_managed_variables,
 			Descr->managed_variables,
@@ -1217,6 +1450,7 @@ void symbolic_object_builder::do_multiply_2x2_from_the_left(
 			O_A2->Formula_vector,
 			i, j,
 			O_source->Fq,
+			f_is_commutative,
 			label, label,
 			Descr->f_managed_variables,
 			Descr->managed_variables,
@@ -1434,7 +1668,9 @@ void symbolic_object_builder::do_collect(
 				label, label /*label_tex*/,
 				Descr->f_managed_variables,
 				Descr->managed_variables,
-				Fq, 0 /*verbose_level*/);
+				Fq,
+				f_is_commutative,
+				0 /*verbose_level*/);
 	}
 
 
@@ -1588,7 +1824,9 @@ void symbolic_object_builder::do_collect_by_degree(
 				label, label /*label_tex*/,
 				Descr->f_managed_variables,
 				Descr->managed_variables,
-				Fq, 0 /*verbose_level*/);
+				Fq,
+				f_is_commutative,
+				0 /*verbose_level*/);
 	}
 
 
@@ -1753,7 +1991,9 @@ void symbolic_object_builder::do_collect_by(
 				label, label /*label_tex*/,
 				Descr->f_managed_variables,
 				Descr->managed_variables,
-				Fq, 0 /*verbose_level*/);
+				Fq,
+				f_is_commutative,
+				0 /*verbose_level*/);
 	}
 
 
@@ -2271,6 +2511,7 @@ void symbolic_object_builder::do_CRC_encode(
 		Formula_vector->V[cnt].init_formula_monopoly(
 				label, label,
 				Fq,
+				f_is_commutative,
 				true,
 				managed_variables,
 				variable2,
@@ -2509,6 +2750,7 @@ void symbolic_object_builder::do_CRC_decode(
 		Formula_vector->V[cnt].init_formula_monopoly(
 				label, label,
 				Fq,
+				f_is_commutative,
 				f_has_managed_variables,
 				managed_variables,
 				variable2,

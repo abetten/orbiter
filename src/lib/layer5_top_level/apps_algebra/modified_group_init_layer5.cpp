@@ -139,6 +139,10 @@ void modified_group_init_layer5::modified_group_init(
 
 	else {
 
+
+		// go back to layer3:
+
+
 		if (f_v) {
 			cout << "modified_group_init_layer5::modified_group_init "
 					"before Modified_group_create->modified_group_init" << endl;
@@ -163,10 +167,19 @@ void modified_group_init_layer5::modified_group_init(
 		cout << "modified_group_init_layer5::modified_group_init "
 				"created a group of order " << go
 				<< " and degree " << Modified_group_create->A_modified->degree << endl;
+		cout << "modified_group_init_layer5::modified_group_init "
+				"A_base = " << Modified_group_create->A_base->label << endl;
+		cout << "modified_group_init_layer5::modified_group_init "
+				"A_previous = " << Modified_group_create->A_previous->label << endl;
+		cout << "modified_group_init_layer5::modified_group_init "
+				"A_modified = " << Modified_group_create->A_modified->label << endl;
 
 	}
+	if (f_v) {
 
-
+		cout << "modified_group_init_layer5::modified_group_init "
+				"created group label=" << Modified_group_create->label << endl;
+	}
 
 	if (f_v) {
 		cout << "modified_group_init_layer5::modified_group_init done" << endl;

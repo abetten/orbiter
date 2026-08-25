@@ -198,6 +198,7 @@ void any_group::init_permutation_group(
 
 void any_group::init_modified_group(
 		group_constructions::modified_group_create *MGC, int verbose_level)
+// creates a new sims object Subgroup_sims
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1792,21 +1793,22 @@ int any_group::find_small_generating_set(
 
 
 	algebra::ring_theory::longinteger_domain D;
-	groups::sims *Sims;
-	groups::strong_generators *SG;
+	groups::sims *H;
+	//groups::strong_generators *SG;
 
-	SG = get_strong_generators();
+	//SG = get_strong_generators();
 
 	int cnt;
 
 
-	Sims = SG->create_sims(verbose_level);
+	//Sims = SG->create_sims(verbose_level);
+	H = Subgroup_sims;
 
 	cnt = 0;
 
 	algebra::ring_theory::longinteger_object target_go;
 
-	Sims->group_order(target_go);
+	H->group_order(target_go);
 
 	while (true) {
 
@@ -1826,7 +1828,7 @@ int any_group::find_small_generating_set(
 		for (i = 0; i < desired_size; i++) {
 
 			A->Group_element->random_element(
-					Sims, gens->ith(i), verbose_level - 2);
+					H, gens->ith(i), verbose_level - 2);
 
 		}
 
@@ -1869,7 +1871,7 @@ int any_group::find_small_generating_set(
 		}
 	}
 
-	FREE_OBJECT(Sims);
+	//FREE_OBJECT(H);
 
 	if (f_v) {
 		cout << "any_group::find_small_generating_set f_success = " << f_success << " number of attempts = " << cnt << endl;
@@ -1887,15 +1889,15 @@ void any_group::print_elements(
 		cout << "any_group::print_elements" << endl;
 	}
 
-	groups::strong_generators *SG;
+	//groups::strong_generators *SG;
 
-	SG = get_strong_generators();
+	//SG = get_strong_generators();
 
 
 	groups::sims *H;
 
-	//G = LG->initial_strong_gens->create_sims(verbose_level);
-	H = SG->create_sims(verbose_level);
+	//H = SG->create_sims(verbose_level);
+	H = Subgroup_sims;
 
 	//cout << "group order G = " << G->group_order_int() << endl;
 	cout << "group order H = " << H->group_order_lint() << endl;
@@ -1940,14 +1942,15 @@ void any_group::print_elements_tex(
 
 	other::orbiter_kernel_system::file_io Fio;
 
-	groups::strong_generators *SG;
+	//groups::strong_generators *SG;
 
 
-	SG = get_strong_generators();
+	//SG = get_strong_generators();
 
 	groups::sims *H;
 
-	H = SG->create_sims(verbose_level);
+	//H = SG->create_sims(verbose_level);
+	H = Subgroup_sims;
 
 	if (f_v) {
 		cout << "any_group::print_elements_tex "
@@ -1990,6 +1993,7 @@ void any_group::print_elements_tex(
 
 
 	FREE_int(Elt);
+
 	if (f_v) {
 		cout << "any_group::print_elements_tex done" << endl;
 	}
@@ -1999,6 +2003,7 @@ void any_group::print_elements_tex(
 void any_group::make_element_tree(
 		int f_override_action, actions::action *A_special,
 		int verbose_level)
+// uses the sims object Subgroup_sims. Does not create a new sims object.
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2008,14 +2013,16 @@ void any_group::make_element_tree(
 
 	other::orbiter_kernel_system::file_io Fio;
 
-	groups::strong_generators *SG;
+	//groups::strong_generators *SG;
 
 
-	SG = get_strong_generators();
+	//SG = get_strong_generators();
 
 	groups::sims *H;
 
-	H = SG->create_sims(verbose_level);
+	//H = SG->create_sims(verbose_level);
+
+	H = Subgroup_sims;
 
 	if (f_v) {
 		cout << "any_group::print_elements_tex "
@@ -2060,6 +2067,7 @@ void any_group::make_element_tree(
 void any_group::order_of_products_of_elements_by_rank(
 		std::string &Elements_text,
 		int verbose_level)
+// uses the sims object Subgroup_sims. Does not create a new sims object.
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2067,14 +2075,15 @@ void any_group::order_of_products_of_elements_by_rank(
 		cout << "any_group::order_of_products_of_elements_by_rank" << endl;
 	}
 
-	groups::strong_generators *SG;
+	//groups::strong_generators *SG;
 
 
-	SG = get_strong_generators();
+	//SG = get_strong_generators();
 
 	groups::sims *H;
 
-	H = SG->create_sims(verbose_level);
+	//H = SG->create_sims(verbose_level);
+	H = Subgroup_sims;
 
 	//cout << "group order G = " << G->group_order_int() << endl;
 	cout << "group order H = " << H->group_order_lint() << endl;
@@ -2103,7 +2112,8 @@ void any_group::order_of_products_of_elements_by_rank(
 
 		int f_override_action = false;
 
-		H->print_all_group_elements_tex(fp, //false,
+		H->print_all_group_elements_tex(
+				fp, //false,
 				f_override_action, NULL);
 		//H->print_all_group_elements_with_permutations_tex(fp);
 
@@ -2143,14 +2153,18 @@ void any_group::order_of_products_of_elements_by_rank(
 		//latex_interface L;
 
 		fp << "$$" << endl;
-		L.print_integer_matrix_with_labels(fp, order_table,
-				nb_elements, nb_elements, elements, elements, true /* f_tex */);
+		L.print_integer_matrix_with_labels(
+				fp, order_table,
+				nb_elements, nb_elements, elements, elements,
+				true /* f_tex */);
 		fp << "$$" << endl;
 
 		L.foot(fp);
 	}
 
+	FREE_int(elements);
 	FREE_int(Elt);
+
 	if (f_v) {
 		cout << "any_group::order_of_products_of_elements_by_rank done" << endl;
 	}
@@ -2256,13 +2270,14 @@ void any_group::export_inversion_graphs(
 
 
 
-void any_group::random_element(
+void any_group::random_element_and_csv_file(
 		std::string &elt_label, int verbose_level)
+// uses the sims object Subgroup_sims. Does not create a new sims object.
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "any_group::random_element" << endl;
+		cout << "any_group::random_element_and_csv_file" << endl;
 	}
 
 	actions::action *A1;
@@ -2271,15 +2286,17 @@ void any_group::random_element(
 
 	groups::sims *H;
 
-	//G = LG->initial_strong_gens->create_sims(verbose_level);
-	groups::strong_generators *SG;
+	//groups::strong_generators *SG;
 
-	SG = get_strong_generators();
-	H = SG->create_sims(verbose_level);
+	//SG = get_strong_generators();
+	//H = SG->create_sims(verbose_level);
+
+	H = Subgroup_sims;
+
 
 	if (f_v) {
 		//cout << "group order G = " << G->group_order_int() << endl;
-		cout << "any_group::random_element group order H = " << H->group_order_lint() << endl;
+		cout << "any_group::random_element_and_csv_file group order H = " << H->group_order_lint() << endl;
 	}
 
 	int *Elt;
@@ -2296,7 +2313,8 @@ void any_group::random_element(
 
 	//H->random_element(Elt, 0 /* verbose_level */);
 	H->random_element_with_documentation(
-			Elt, rk, the_path, 0 /* verbose_level */);
+			Elt, rk, the_path,
+			0 /* verbose_level */);
 
 
 	string s_path;
@@ -2328,17 +2346,17 @@ void any_group::random_element(
 
 	if (f_v) {
 
-		cout << "any_group::random_element Element :" << endl;
+		cout << "any_group::random_element_and_csv_file Element :" << endl;
 		A1->Group_element->element_print(Elt, cout);
 		cout << endl;
 
-		cout << "any_group::random_element coded: ";
+		cout << "any_group::random_element_and_csv_file coded: ";
 		Int_vec_print(cout, data, A1->make_element_size);
 		cout << endl;
 	}
 
 	if (f_v) {
-		cout << "any_group::random_element Element as permutation:" << endl;
+		cout << "any_group::random_element_and_csv_file Element as permutation:" << endl;
 
 
 		A1->Group_element->element_print_as_permutation(Elt, cout);
@@ -2379,7 +2397,7 @@ void any_group::random_element(
 	H->element_rank(a, Elt);
 
 	if (f_v) {
-		cout << "any_group::random_element The rank of the element is " << a << endl;
+		cout << "any_group::random_element_and_csv_file The rank of the element is " << a << endl;
 	}
 
 
@@ -2432,7 +2450,7 @@ void any_group::random_element(
 
 
 	if (f_v) {
-		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+		cout << "any_group::random_element_and_csv_file Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 	}
 
 	delete [] Table;
@@ -2440,18 +2458,19 @@ void any_group::random_element(
 	FREE_int(the_path);
 	FREE_int(tl);
 	FREE_int(Elt);
-	FREE_OBJECT(H);
+	//FREE_OBJECT(H);
 
 
 
 	if (f_v) {
-		cout << "any_group::random_element done" << endl;
+		cout << "any_group::random_element_and_csv_file done" << endl;
 	}
 }
 
 
 void any_group::element_rank(
 		std::string &elt_data, int verbose_level)
+// uses the sims object Subgroup_sims. Does not create a new sims object.
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2465,19 +2484,27 @@ void any_group::element_rank(
 
 	groups::sims *H;
 
-	//G = LG->initial_strong_gens->create_sims(verbose_level);
-	groups::strong_generators *SG;
+	//groups::strong_generators *SG;
 
-	SG = get_strong_generators();
-	H = SG->create_sims(verbose_level);
+
+	if (Subgroup_sims == NULL) {
+		cout << "any_group::element_rank Subgroup_sims == NULL" << endl;
+		exit(1);
+	}
+
+	//SG = get_strong_generators();
+
+	//H = SG->create_sims(verbose_level); // bad!
+
+	H = Subgroup_sims;
 
 	if (f_v) {
 		//cout << "group order G = " << G->group_order_int() << endl;
-		cout << "group order H = " << H->group_order_lint() << endl;
+		cout << "any_group::element_rank group order H = " << H->group_order_lint() << endl;
 	}
 
 	if (f_v) {
-		cout << "creating element " << elt_data << endl;
+		cout << "any_group::element_rank creating element " << elt_data << endl;
 	}
 	int *Elt;
 
@@ -2485,7 +2512,7 @@ void any_group::element_rank(
 	A1->Group_element->make_element_from_string(Elt, elt_data, 0);
 
 	if (f_v) {
-		cout << "Element :" << endl;
+		cout << "any_group::element_rank Element :" << endl;
 		A1->Group_element->element_print(Elt, cout);
 		cout << endl;
 	}
@@ -2494,12 +2521,12 @@ void any_group::element_rank(
 	H->element_rank(a, Elt);
 
 	if (f_v) {
-		cout << "The rank of the element is " << a << endl;
+		cout << "any_group::element_rank The rank of the element is " << a << endl;
 	}
 
 
 	FREE_int(Elt);
-	FREE_OBJECT(H);
+	//FREE_OBJECT(H);
 
 
 
@@ -2510,6 +2537,7 @@ void any_group::element_rank(
 
 void any_group::element_unrank(
 		std::string &rank_string, int verbose_level)
+// uses the sims object Subgroup_sims. Does not create a new sims object.
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2522,13 +2550,22 @@ void any_group::element_unrank(
 	A1 = A;
 
 	groups::sims *H;
-	groups::strong_generators *SG;
+	//groups::strong_generators *SG;
 
-	SG = get_strong_generators();
+	//SG = get_strong_generators();
 
-	H = SG->create_sims(verbose_level);
+	if (Subgroup_sims == NULL) {
+		cout << "any_group::element_unrank Subgroup_sims == NULL" << endl;
+		exit(1);
+	}
+
+
+	//H = SG->create_sims(verbose_level);
 
 	//cout << "group order G = " << G->group_order_int() << endl;
+
+	H = Subgroup_sims;
+
 	if (f_v) {
 		cout << "any_group::element_unrank "
 				"group order H = " << H->group_order_lint() << endl;
@@ -2559,7 +2596,7 @@ void any_group::element_unrank(
 
 
 	FREE_int(Elt);
-	FREE_OBJECT(H);
+	//FREE_OBJECT(H);
 
 	if (f_v) {
 		cout << "any_group::element_unrank done" << endl;
@@ -2582,11 +2619,6 @@ void any_group::element_unrank_STL_lint(
 	A1 = A;
 
 	groups::sims *Sims;
-	//groups::strong_generators *SG;
-
-	//SG = get_strong_generators();
-
-	//H = SG->create_sims(verbose_level);
 
 	Sims = Subgroup_sims;
 
@@ -2640,7 +2672,6 @@ void any_group::element_unrank_STL_lint(
 
 
 		FREE_int(Elt);
-		//FREE_OBJECT(Sims);
 	}
 
 
@@ -2726,6 +2757,10 @@ void any_group::do_reverse_isomorphism_exterior_square(
 
 	if (f_v) {
 		cout << "any_group::do_reverse_isomorphism_exterior_square" << endl;
+	}
+
+	if (LG == NULL) {
+		cout << "any_group::do_reverse_isomorphism_exterior_square LG == NULL" << endl;
 	}
 
 
@@ -4441,6 +4476,162 @@ void any_group::get_elements(
 	}
 }
 
+void any_group::test_associative_law(
+		int nb_tests,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "any_group::test_associative_law" << endl;
+	}
+
+
+
+
+
+	int *Elt1, *Elt2, *Elt3;
+	int *Elt12;
+	int *Elt12_3;
+	int *Elt23;
+	int *Elt1_23;
+
+	Elt1 = NEW_int(A->elt_size_in_int);
+	Elt2 = NEW_int(A->elt_size_in_int);
+	Elt3 = NEW_int(A->elt_size_in_int);
+	Elt12 = NEW_int(A->elt_size_in_int);
+	Elt12_3 = NEW_int(A->elt_size_in_int);
+	Elt23 = NEW_int(A->elt_size_in_int);
+	Elt1_23 = NEW_int(A->elt_size_in_int);
+
+	groups::sims *H;
+
+	if (Subgroup_sims == NULL) {
+		cout << "any_group::test_associative_law Subgroup_sims == NULL" << endl;
+		exit(1);
+	}
+
+
+	H = Subgroup_sims;
+
+	if (f_v) {
+		cout << "any_group::test_associative_law "
+				"group order H = " << H->group_order_lint() << endl;
+	}
+
+
+
+
+	//string fname;
+
+	//fname = A->label + "_test_associative.csv";
+
+
+	{
+		int i, j, k;
+		int ret;
+
+
+
+		for (i = 0; i < nb_tests; i++) {
+
+
+			H->random_element(
+					Elt1, 0 /* verbose_level */);
+
+
+			for (j = 0; j < nb_tests; j++) {
+
+
+				H->random_element(
+						Elt2, 0 /* verbose_level */);
+
+				for (k = 0; k < nb_tests; k++) {
+
+
+					H->random_element(
+							Elt3, 0 /* verbose_level */);
+
+
+					A->Group_element->element_mult(
+							Elt1, Elt2, Elt12, 0);
+					A->Group_element->element_mult(
+							Elt12, Elt3, Elt12_3, 0);
+
+					A->Group_element->element_mult(
+							Elt2, Elt3, Elt23, 0);
+					A->Group_element->element_mult(
+							Elt1, Elt23, Elt1_23, 0);
+
+
+					ret = A->Group_element->compare_using_list_of_images(
+							Elt12_3, Elt1_23, verbose_level);
+
+					if (ret == false) {
+						cout << "error, not associative" << endl;
+
+						cout << "Elt1=" << endl;
+						A->Group_element->print_quick(
+								cout, Elt1);
+						cout << endl;
+
+						cout << "Elt2=" << endl;
+						A->Group_element->print_quick(
+								cout, Elt2);
+						cout << endl;
+
+						cout << "Elt3=" << endl;
+						A->Group_element->print_quick(
+								cout, Elt3);
+						cout << endl;
+
+						cout << "Elt12=" << endl;
+						A->Group_element->print_quick(
+								cout, Elt12);
+						cout << endl;
+
+						cout << "Elt23=" << endl;
+						A->Group_element->print_quick(
+								cout, Elt23);
+						cout << endl;
+
+						cout << "Elt12_3=" << endl;
+						A->Group_element->print_quick(
+								cout, Elt12_3);
+						cout << endl;
+
+						cout << "Elt1_23=" << endl;
+						A->Group_element->print_quick(
+								cout, Elt1_23);
+						cout << endl;
+
+						cout << "i=" << i << " j=" << j << " k=" << k << " error, not associative" << endl;
+
+						exit(1);
+					}
+				}
+
+			}
+		}
+
+
+	}
+
+	FREE_int(Elt1);
+	FREE_int(Elt2);
+	FREE_int(Elt3);
+	FREE_int(Elt12);
+	FREE_int(Elt12_3);
+	FREE_int(Elt23);
+	FREE_int(Elt1_23);
+
+
+
+
+	if (f_v) {
+		cout << "any_group::test_associative_law done" << endl;
+	}
+}
 
 
 

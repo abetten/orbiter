@@ -688,6 +688,7 @@ public:
 			other::data_structures::set_of_sets *SoS,
 			int nb_nodes_total,
 			int verbose_level);
+	void print();
 	void init_layered_graph(
 			layer1_foundations::combinatorics::graph_theory::layered_graph *Layered_graph,
 			int verbose_level);

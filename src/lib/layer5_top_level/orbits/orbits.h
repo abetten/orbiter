@@ -378,6 +378,7 @@ public:
 			int print_interval,
 			groups::orbits_on_something *&Orb,
 			int verbose_level);
+	// compute orbits given generators as vector_ge, not as strong generating set.
 
 	void orbits_on_subsets(
 			actions::action *A_base,

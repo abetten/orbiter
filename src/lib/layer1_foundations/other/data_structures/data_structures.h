@@ -166,6 +166,13 @@ public:
 			long int a);
 	double ratio_of_ones_in_bitvector_file(
 			std::string &fname, long int &length, int verbose_level);
+	void content_analysis_by_Hamming_weight(
+			int *Values_out, int N,
+			int verbose_level);
+	// statistical analysis of the vector Values_out[N], taking into account the Hamming weight of the index set.
+	void print_homogenized(
+			int *v, int len,
+			std::ostream &ost, int verbose_level);
 
 };
 
@@ -1705,6 +1712,7 @@ public:
 			int i, long int a);
 	void print();
 	void print_table();
+	void print_set_size_only();
 	std::string stringify();
 	void print_table_tex(
 			std::ostream &ost);
@@ -2922,7 +2930,6 @@ public:
 	int sparse_len;
 	std::string sparse_pairs;
 
-	// ToDo undocumented
 	int f_flags;
 	int flags_nb_rows;
 	int flags_nb_cols;

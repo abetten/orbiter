@@ -794,6 +794,19 @@ void set_of_sets::print_table()
 	cout << "end set of sets" << endl;
 }
 
+void set_of_sets::print_set_size_only()
+{
+	int i;
+
+	cout << "set of sets with " << nb_sets << " sets :" << endl;
+	cout << "i : size of set i" << endl;
+	for (i = 0; i < nb_sets; i++) {
+		cout << i << " : " << Set_size[i] << endl;
+	}
+	cout << "End" << endl;
+}
+
+
 std::string set_of_sets::stringify()
 {
 	string s, t;

@@ -421,7 +421,13 @@ void permutation_representation_domain::print(
 	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	//cout << "perm_group::print before perm_print" << endl;
-	Combi.Permutations->perm_print(ost, Elt, degree);
+
+	if (degree < 1024) {
+		Combi.Permutations->perm_print(ost, Elt, degree);
+	}
+	else {
+		ost << "too large to print (change threshold in permutation\\_representation\\_domain::print)" << endl;
+	}
 	//ost << endl;
 	//cout << "perm_group::print done" << endl;
 }

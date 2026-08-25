@@ -1392,6 +1392,8 @@ public:
 			std::ostream &ost, void *elt);
 	void make_list_of_images(
 			int *images, void *elt);
+	int compare_using_list_of_images(
+			int *Elt1, int *Elt2, int verbose_level);
 
 	long int element_image_of(
 			long int a, void *elt, int verbose_level);

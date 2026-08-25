@@ -158,6 +158,8 @@ public:
 		std::string power_map_elements;
 
 
+
+
 	// Section 3.3:
 	// Extension fields:
 	// TABLES/finite_field_activities_2.tex
@@ -480,14 +482,10 @@ public:
 
 	int f_export;
 
-#if 0
-	int f_evaluate;
-	//std::string evaluate_finite_field_label;
-	std::string evaluate_assignment;
-#endif
-
 	int f_print;
 	//std::string print_over_Fq_field_label;
+
+	int f_save;
 
 	int f_as_vector;
 
@@ -498,14 +496,6 @@ public:
 	int f_evaluate_affine;
 
 	int f_collect_monomials_binary;
-
-#if 0
-	int f_sweep;
-	std::string sweep_variables;
-
-	int f_sweep_affine;
-	std::string sweep_affine_variables;
-#endif
 
 
 	symbolic_object_activity_description();
@@ -543,6 +533,9 @@ public:
 			int verbose_level);
 	void print(
 			int verbose_level);
+	void save(
+			std::string &fname,
+			int verbose_level);
 	void as_vector(
 			int *&v, int &len,
 			int verbose_level);
@@ -555,13 +548,8 @@ public:
 			int verbose_level);
 	void collect_monomials_binary(
 			int verbose_level);
-#if 0
-	void do_sweep(
-			int f_affine,
-			formula *f,
-			std::string &sweep_variables,
-			int verbose_level);
-#endif
+	// writes the monomial table to a csv file.
+	// The filename is composed of the label and the suffix "_monomial_table_binary.csv"
 
 };
 

@@ -38,6 +38,9 @@ polarity_extension::polarity_extension()
 
 	degree_of_matrix_group = 0;
 	dimension_of_matrix_group = 0;
+	f_is_semilinear = false;
+
+
 	degree_overall = 0;
 	//low_level_point_size = 0;
 	make_element_size = 0;
@@ -164,6 +167,14 @@ void polarity_extension::init(
 
 	degree_of_matrix_group = M->degree;
 	dimension_of_matrix_group = M->n;
+	f_is_semilinear = A_on_points->is_semilinear_matrix_group();
+
+	if (f_v) {
+		cout << "polarity_extension::init "
+			"f_is_semilinear = " << f_is_semilinear << endl;
+	}
+
+
 	//low_level_point_size =
 	//		dimension_of_matrix_group; // this does not work!
 
@@ -511,6 +522,7 @@ void polarity_extension::element_mult(
 				f_print_cycles_of_length_one,
 				0/*verbose_level*/);
 			cout << endl;
+
 		}
 
 
@@ -518,7 +530,9 @@ void polarity_extension::element_mult(
 			cout << "polarity_extension::element_mult "
 					"before A_on_points->Group_element->element_mult" << endl;
 		}
-		A_on_points->Group_element->element_mult(A_Elt, rho_B_rho, AB_Elt, verbose_level);
+		A_on_points->Group_element->element_mult(
+				A_Elt, rho_B_rho, AB_Elt,
+				verbose_level);
 		if (f_v) {
 			cout << "polarity_extension::element_mult "
 					"after A_on_points->Group_element->element_mult" << endl;
@@ -565,6 +579,63 @@ void polarity_extension::element_move(
 	}
 }
 
+void polarity_extension::compute_image_rho_A_rho(
+		int *v_in, int *v_out, int *A_Elt, int n,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "polarity_extension::compute_image_rho_A_rho" << endl;
+	}
+
+	long int a, b, c, d;
+
+	M->GFq->Projective_space_basic->PG_element_rank_modified_lint(
+			v_in, 1, n, a, 0 /* verbose_level */);
+
+	b = Polarity->Point_to_hyperplane[a];
+
+	if (f_v) {
+		cout << "polarity_extension::compute_image_rho_A_rho "
+				"computing image of frame element a=" << a
+				<< " -> (rho) " << b << endl;
+	}
+
+	if (f_v) {
+		cout << "polarity_extension::compute_image_rho_A_rho "
+				"before A_on_hyperplanes->Group_element->element_image_of" << endl;
+	}
+	c = A_on_hyperplanes->Group_element->element_image_of(
+			b, A_Elt, 0 /*verbose_level*/);
+	if (f_v) {
+		cout << "polarity_extension::compute_image_rho_A_rho "
+				"after A_on_hyperplanes->Group_element->element_image_of" << endl;
+	}
+
+	if (f_v) {
+		cout << "polarity_extension::compute_image_rho_A_rho "
+				"computing image of frame element a=" << a
+				<< " -> (rho) " << b << " -> *A " << c << endl;
+	}
+
+	d = Polarity->Hyperplane_to_point[c];
+
+	if (f_v) {
+		cout << "polarity_extension::compute_image_rho_A_rho "
+				"computing image of frame element a=" << a
+				<< " -> (rho) " << b << " -> *A " << c << " -> (rho) " << d << endl;
+	}
+
+	M->GFq->Projective_space_basic->PG_element_unrank_modified_lint(
+			v_out, 1, n, d);
+
+	if (f_v) {
+		cout << "polarity_extension::compute_image_rho_A_rho done" << endl;
+	}
+
+}
+
 void polarity_extension::compute_images_rho_A_rho(
 		int *Mtx, int nb_rows, int *A_Elt, int verbose_level)
 {
@@ -575,7 +646,6 @@ void polarity_extension::compute_images_rho_A_rho(
 	}
 
 	int i;
-	long int a, b, c, d;
 
 	for (i = 0; i < M->n + 1; i++) {
 		if (f_v) {
@@ -583,6 +653,24 @@ void polarity_extension::compute_images_rho_A_rho(
 					"computing image of frame element i=" << i << endl;
 		}
 
+		int *v;
+
+		v = Mtx + i * M->n;
+
+		if (f_v) {
+			cout << "polarity_extension::compute_images_rho_A_rho "
+					"before compute_image_rho_A_rho" << endl;
+		}
+		compute_image_rho_A_rho(
+				v, v, A_Elt, M->n,
+				verbose_level - 2);
+		if (f_v) {
+			cout << "polarity_extension::compute_images_rho_A_rho "
+					"after compute_image_rho_A_rho" << endl;
+		}
+
+
+#if 0
 		M->GFq->Projective_space_basic->PG_element_rank_modified_lint(
 				Mtx + i * M->n, 1, M->n, a, 0 /* verbose_level */);
 
@@ -621,6 +709,7 @@ void polarity_extension::compute_images_rho_A_rho(
 
 		M->GFq->Projective_space_basic->PG_element_unrank_modified_lint(
 				Mtx + i * M->n, 1, M->n, d);
+#endif
 
 	}
 
@@ -638,6 +727,7 @@ void polarity_extension::compute_images_rho_A_rho(
 void polarity_extension::create_rho_A_rho(
 		int *A_Elt, int *data,
 		int verbose_level)
+// ToDo: what if A is semilinear ?
 {
 	int f_v = (verbose_level >= 1);
 
@@ -646,6 +736,7 @@ void polarity_extension::create_rho_A_rho(
 	}
 
 	algebra::linear_algebra::linear_algebra_global LA;
+
 
 
 	int *frame;
@@ -733,17 +824,18 @@ void polarity_extension::element_inverse_conjugate_by_polarity(
 		cout << endl;
 	}
 
-	int f_is_semilinear;
+	//int f_is_semilinear;
 
-	f_is_semilinear = A_on_points->is_semilinear_matrix_group();
-	if (f_is_semilinear) {
-		cout << "polarity_extension::element_inverse_conjugate_by_polarity "
-				"f_is_semilinear = " << f_is_semilinear << endl;
-	}
+	//f_is_semilinear = A_on_points->is_semilinear_matrix_group();
 
 	int save_frobenius = 0;
 
 	if (f_is_semilinear) {
+
+		if (f_v) {
+			cout << "polarity_extension::element_inverse_conjugate_by_polarity "
+					"f_is_semilinear is true" << endl;
+		}
 
 		if (A_on_points->make_element_size != M->n * M->n + 1) {
 			cout << "A_on_points->make_element_size != M->n * M->n + 1" << endl;

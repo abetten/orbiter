@@ -106,6 +106,16 @@ void distance_information::init_SoS(
 	}
 }
 
+void distance_information::print()
+{
+	int i;
+
+	cout << "i : depth[i] : perm[i] : perm_inv[i]" << endl;
+	for (i = 0; i < nb_nodes_total; i++) {
+		cout << setw(4) << i << " : " << setw(4) << depth[i] << " : " << setw(4) << perm[i] << " : " << setw(4) << perm_inv[i] << endl;
+	}
+}
+
 void distance_information::init_layered_graph(
 		layer1_foundations::combinatorics::graph_theory::layered_graph *Layered_graph,
 		int verbose_level)

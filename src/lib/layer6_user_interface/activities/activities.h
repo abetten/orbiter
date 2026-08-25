@@ -117,10 +117,13 @@ class interface_algebra {
 	// perhaps they should be projective space activities,
 	// because they need a general linear group
 
+#if 0
 	int f_all_rational_normal_forms;
 	std::string all_rational_normal_forms_finite_field_label;
 	int all_rational_normal_forms_d;
+#endif
 
+	// this should become a group theoretic activity so it does not have to create a projective group:
 	int f_compute_rational_normal_form;
 	std::string compute_rational_normal_form_field_label;
 	int compute_rational_normal_form_d;

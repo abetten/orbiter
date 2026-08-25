@@ -28,6 +28,9 @@ formula::formula()
 	//std::string managed_variables;
 	//std::string formula_text;
 	Fq = NULL;
+
+	f_is_commutative = false;
+
 	tree = NULL;
 
 	f_has_managed_variables = false;
@@ -383,6 +386,7 @@ void formula::init_empty_plus_node(
 		int f_has_managed_variables,
 		std::string &managed_variables_text,
 		algebra::field_theory::finite_field *Fq,
+		int f_is_commutative,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -397,6 +401,7 @@ void formula::init_empty_plus_node(
 	formula::f_has_managed_variables = f_has_managed_variables;
 
 	formula::Fq = Fq;
+	formula::f_is_commutative = f_is_commutative;
 
 	tree = NEW_OBJECT(syntax_tree);
 
@@ -406,6 +411,7 @@ void formula::init_empty_plus_node(
 	}
 	tree->init(
 			Fq,
+			f_is_commutative,
 			true, managed_variables,
 			verbose_level - 1);
 	if (f_v) {
@@ -428,6 +434,7 @@ void formula::init_empty_plus_node(
 void formula::init_formula_from_tree(
 		std::string &label, std::string &label_tex,
 		algebra::field_theory::finite_field *Fq,
+		int f_is_commutative,
 		syntax_tree *Tree,
 		int verbose_level)
 {
@@ -443,6 +450,7 @@ void formula::init_formula_from_tree(
 	//formula::formula_text.assign(formula_text);
 
 	formula::Fq = Fq;
+	formula::f_is_commutative = f_is_commutative;
 
 	formula::tree = Tree;
 
@@ -455,6 +463,7 @@ void formula::init_formula_int(
 		std::string &label, std::string &label_tex,
 		int value,
 		algebra::field_theory::finite_field *Fq,
+		int f_is_commutative,
 		int f_has_managed_variables,
 		std::string &managed_variables,
 		int verbose_level)
@@ -472,6 +481,7 @@ void formula::init_formula_int(
 	formula::f_has_managed_variables = f_has_managed_variables;
 
 	formula::Fq = Fq;
+	formula::f_is_commutative = f_is_commutative;
 
 	other::data_structures::string_tools ST;
 
@@ -481,7 +491,7 @@ void formula::init_formula_int(
 		cout << "expression_parser_domain::init_formula_int "
 				"before tree->init_int" << endl;
 	}
-	tree->init_int(Fq, value, verbose_level - 1);
+	tree->init_int(Fq, f_is_commutative, value, verbose_level - 1);
 	if (f_v) {
 		cout << "expression_parser_domain::init_formula_int "
 				"after tree->init_int" << endl;
@@ -496,6 +506,7 @@ void formula::init_formula_int(
 void formula::init_formula_monopoly(
 		std::string &label, std::string &label_tex,
 		algebra::field_theory::finite_field *Fq,
+		int f_is_commutative,
 		int f_has_managed_variables,
 		std::string &managed_variables,
 		std::string &variable,
@@ -515,6 +526,7 @@ void formula::init_formula_monopoly(
 	formula::f_has_managed_variables = f_has_managed_variables;
 
 	formula::Fq = Fq;
+	formula::f_is_commutative = f_is_commutative;
 
 	other::data_structures::string_tools ST;
 
@@ -525,6 +537,7 @@ void formula::init_formula_monopoly(
 	}
 	tree->init(
 			Fq,
+			f_is_commutative,
 			true /* f_has_managed_variables */,
 			managed_variables,
 			verbose_level - 1);
@@ -537,7 +550,10 @@ void formula::init_formula_monopoly(
 		cout << "expression_parser_domain::init_formula_monopoly "
 				"before tree->init_int" << endl;
 	}
-	tree->init_monopoly(Fq, variable,
+	tree->init_monopoly(
+			Fq,
+			f_is_commutative,
+			variable,
 			coeffs, nb_coeffs, verbose_level - 1);
 	if (f_v) {
 		cout << "expression_parser_domain::init_formula_monopoly "
@@ -558,11 +574,13 @@ void formula::init_formula_monopoly(
 
 
 void formula::init_formula_Sajeeb(
-		std::string &label, std::string &label_tex,
+		std::string &label,
+		std::string &label_tex,
 		int f_has_managed_variables,
 		std::string &managed_variables,
 		std::string &formula_text,
 		algebra::field_theory::finite_field *Fq,
+		int f_is_commutative,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -592,6 +610,7 @@ void formula::init_formula_Sajeeb(
 	formula::formula_text.assign(formula_text);
 
 	formula::Fq = Fq;
+	formula::f_is_commutative = f_is_commutative;
 
 	//expression_parser Parser;
 	//data_structures::string_tools ST;
@@ -647,6 +666,7 @@ void formula::init_formula_Sajeeb(
 	Expression_parser_sajeeb->convert_to_orbiter(
 			tree,
 			Fq,
+			f_is_commutative,
 			f_has_managed_variables,
 			managed_variables,
 			verbose_level - 1);
@@ -984,9 +1004,11 @@ void formula::substitute(
 	}
 
 	output->Fq = Fq;
+	output->f_is_commutative = f_is_commutative;
 	output->tree = NEW_OBJECT(syntax_tree);
 	output->tree->init(
 			Fq,
+			f_is_commutative,
 			true, managed_variables_text,
 			verbose_level - 1);
 
@@ -1065,6 +1087,7 @@ void formula::copy_to(
 		cout << "formula::copy_to setting Fq" << endl;
 	}
 	output->Fq = Fq;
+	output->f_is_commutative = f_is_commutative;
 
 	if (f_v) {
 		cout << "formula::copy_to allocating tree" << endl;
@@ -1072,6 +1095,7 @@ void formula::copy_to(
 	output->tree = NEW_OBJECT(syntax_tree);
 	output->tree->init(
 			Fq,
+			f_is_commutative,
 			f_has_managed_variables, managed_variables,
 			verbose_level - 1);
 
@@ -1127,6 +1151,7 @@ void formula::make_linear_combination(
 		formula *input_2a,
 		formula *input_2b,
 		algebra::field_theory::finite_field *Fq,
+		int f_is_commutative,
 		std::string &label_txt,
 		std::string &label_tex,
 		std::string &managed_variables_text,
@@ -1165,10 +1190,12 @@ void formula::make_linear_combination(
 	managed_variables = managed_variables_text;
 	//formula_text;
 	formula::Fq = Fq;
+	formula::f_is_commutative = f_is_commutative;
 
 	tree = NEW_OBJECT(syntax_tree);
 	tree->init(
 			Fq,
+			f_is_commutative,
 			true, managed_variables_text,
 			verbose_level - 1);
 
@@ -1968,6 +1995,7 @@ void formula::collect_subtrees_by_monomials(
 				f_has_managed_variables,
 				managed_variables_text,
 				Fq,
+				f_is_commutative,
 				verbose_level);
 		if (f_v) {
 			cout << "formula::collect_subtrees_by_monomials "
@@ -2031,7 +2059,9 @@ void formula::collect_subtrees_by_monomials(
 					<< " before append_monomial" << endl;
 		}
 		terms->V[idx_of_monomial].tree->Root->append_monomial(
-				I->M + i * I->n + tree->managed_variables.size(), tree->variables.size(), Coeff[i],
+				I->M + i * I->n + tree->managed_variables.size(),
+				tree->variables.size(),
+				Coeff[i],
 				verbose_level - 1);
 
 		if (f_v) {

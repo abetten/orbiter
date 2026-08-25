@@ -1229,11 +1229,18 @@ void orbiter_symbol_table_entry::print()
 			cout << "set" << endl;
 		}
 		else if (object_type == t_vector) {
-			cout << "vector : ";
 
 			data_structures::vector_builder *VB;
 
 			VB = (data_structures::vector_builder *) ptr;
+
+			if (VB->f_has_k) {
+				cout << "matrix : ";
+				cout << endl;
+			}
+			else {
+				cout << "vector : ";
+			}
 			VB->print(cout);
 		}
 		else if (object_type == t_text) {

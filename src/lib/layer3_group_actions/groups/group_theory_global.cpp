@@ -194,6 +194,8 @@ void group_theory_global::set_of_coset_representatives(
 }
 
 
+#if 0
+
 void group_theory_global::conjugacy_classes_based_on_normal_forms(
 		actions::action *A,
 		groups::sims *override_Sims,
@@ -240,6 +242,10 @@ void group_theory_global::conjugacy_classes_based_on_normal_forms(
 	fname_output += "_classes_based_on_normal_forms_"
 			+ std::to_string(d) + "_" + std::to_string(F->q) + ".tex";
 
+
+
+
+
 	C.init(d, F, verbose_level);
 
 	if (f_v) {
@@ -284,12 +290,12 @@ void group_theory_global::conjugacy_classes_based_on_normal_forms(
 		Int_matrix_print(Elt, d, d);
 
 		if (f_v) {
-			cout << "before C.print_matrix_and_centralizer_order_latex" << endl;
+			cout << "before print_matrix_and_centralizer_order_latex" << endl;
 		}
-		C.print_matrix_and_centralizer_order_latex(
-				cout, R + i);
+		R[i].print_matrix_and_centralizer_order_latex(
+				cout);
 		if (f_v) {
-			cout << "after C.print_matrix_and_centralizer_order_latex" << endl;
+			cout << "after print_matrix_and_centralizer_order_latex" << endl;
 		}
 
 		if (f_v) {
@@ -417,6 +423,7 @@ void group_theory_global::conjugacy_classes_based_on_normal_forms(
 	}
 }
 
+#endif
 
 void group_theory_global::find_singer_cycle(
 		groups::any_group *Any_group,

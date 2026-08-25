@@ -1543,7 +1543,6 @@ void finite_field_activity::perform_activity(
 #endif
 
 
-
 	if (f_v) {
 		cout << "finite_field_activity::perform_activity done" << endl;
 	}

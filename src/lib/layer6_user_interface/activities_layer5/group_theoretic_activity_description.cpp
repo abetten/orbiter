@@ -50,9 +50,6 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	//std::string select_elements_ranks;
 
 
-	f_export_group_table = false;
-
-
 	f_random_element = false;
 	//std::string random_element_label;
 
@@ -88,22 +85,9 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	//std::string raise_to_the_power_a_text;
 	//std::string raise_to_the_power_exponent_text;
 
-	f_export_orbiter = false;
-
-	f_export_gap = false;
-
-	f_export_magma = false;
-
 	f_search_element_of_order = false;
 	search_element_order = 0;
 
-	f_find_standard_generators = false;
-	find_standard_generators_order_a = 0;
-	find_standard_generators_order_b = 0;
-	find_standard_generators_order_ab = 0;
-
-
-	f_find_standard_generators_M24 = false;
 
 	f_element_rank = false;
 	// std::string element_rank_data;
@@ -111,25 +95,13 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	f_element_unrank = false;
 	//std::string element_unrank_data;
 
+	f_test_associativity = false;
+	test_associativity_nb_tests = 0;
 
 
 
 	// part 2:
 
-	f_find_small_generating_set = false;
-	find_small_generating_set_desired_size = 2;
-	find_small_generating_set_max_attempts = 1000;
-
-
-	f_proportion_of_generating_sets_of_size_k = false;
-	proportion_of_generating_sets_of_size_k_k = 0;
-
-
-	f_proportion_of_generating_sets_of_size_k_using_orbits = false;
-	proportion_of_generating_sets_of_size_k_using_orbits_k = 0;
-	//std::string proportion_of_generating_sets_of_size_k_using_orbits_fname;
-	//std::string proportion_of_generating_sets_of_size_k_using_orbits_col_label_reps;
-	//std::string proportion_of_generating_sets_of_size_k_using_orbits_col_label_orbit_length;
 
 
 	f_find_singer_cycle = false;
@@ -226,6 +198,42 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 
 	// part 3:
 
+	f_find_standard_generators = false;
+	find_standard_generators_order_a = 0;
+	find_standard_generators_order_b = 0;
+	find_standard_generators_order_ab = 0;
+
+
+	f_find_standard_generators_M24 = false;
+
+
+	f_find_small_generating_set = false;
+	find_small_generating_set_desired_size = 2;
+	find_small_generating_set_max_attempts = 1000;
+
+
+	f_proportion_of_generating_sets_of_size_k = false;
+	proportion_of_generating_sets_of_size_k_k = 0;
+
+
+	f_proportion_of_generating_sets_of_size_k_using_orbits = false;
+	proportion_of_generating_sets_of_size_k_using_orbits_k = 0;
+	//std::string proportion_of_generating_sets_of_size_k_using_orbits_fname;
+	//std::string proportion_of_generating_sets_of_size_k_using_orbits_col_label_reps;
+	//std::string proportion_of_generating_sets_of_size_k_using_orbits_col_label_orbit_length;
+
+	f_export_group_table = false;
+
+
+	f_export_orbiter = false;
+
+	f_export_gap = false;
+
+	f_export_magma = false;
+
+
+
+	// part 4:
 
 
 	f_find_conjugating_element = false;
@@ -285,7 +293,7 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 
 
 
-	// part 4:
+	// part 5:
 
 
 
@@ -342,7 +350,7 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 
 
 
-	// part 5:
+	// part 6:
 
 
 
@@ -442,12 +450,6 @@ int group_theoretic_activity_description::read_arguments(
 		}
 
 
-		else if (ST.stringcmp(argv[i], "-export_group_table") == 0) {
-			f_export_group_table = true;
-			if (f_v) {
-				cout << "-export_group_table" << endl;
-			}
-		}
 		else if (ST.stringcmp(argv[i], "-random_element") == 0) {
 			f_random_element = true;
 			random_element_label.assign(argv[++i]);
@@ -536,48 +538,11 @@ int group_theoretic_activity_description::read_arguments(
 			}
 		}
 
-		else if (ST.stringcmp(argv[i], "-export_orbiter") == 0) {
-			f_export_orbiter = true;
-			if (f_v) {
-				cout << "-export_orbiter " << endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-export_gap") == 0) {
-			f_export_gap = true;
-			if (f_v) {
-				cout << "-export_gap " << endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-export_magma") == 0) {
-			f_export_magma = true;
-			if (f_v) {
-				cout << "-export_magma " << endl;
-			}
-		}
 		else if (ST.stringcmp(argv[i], "-search_element_of_order") == 0) {
 			f_search_element_of_order = true;
 			search_element_order = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-search_element_of_order " << search_element_order << endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-find_standard_generators") == 0) {
-			f_find_standard_generators = true;
-			find_standard_generators_order_a = ST.strtoi(argv[++i]);
-			find_standard_generators_order_b = ST.strtoi(argv[++i]);
-			find_standard_generators_order_ab = ST.strtoi(argv[++i]);
-			if (f_v) {
-				cout << "-find_standard_generators "
-						<< find_standard_generators_order_a
-						<< " " << find_standard_generators_order_b
-						<< " " << find_standard_generators_order_ab
-						<< endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-find_standard_generators_M24") == 0) {
-			f_find_standard_generators_M24 = true;
-			if (f_v) {
-				cout << "-find_standard_generators_M24 " << endl;
 			}
 		}
 
@@ -596,43 +561,16 @@ int group_theoretic_activity_description::read_arguments(
 				cout << "-element_unrank " << element_unrank_data << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-test_associativity") == 0) {
+			f_test_associativity = true;
+			test_associativity_nb_tests = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-test_associativity " << test_associativity_nb_tests << endl;
+			}
+		}
 
 
 		// 2
-
-		else if (ST.stringcmp(argv[i], "-find_small_generating_set") == 0) {
-			f_find_small_generating_set = true;
-			find_small_generating_set_desired_size = ST.strtoi(argv[++i]);
-			find_small_generating_set_max_attempts = ST.strtoi(argv[++i]);
-			if (f_v) {
-				cout << "-find_small_generating_set " << find_small_generating_set_desired_size
-					<< " " << find_small_generating_set_max_attempts << endl;
-			}
-		}
-
-		else if (ST.stringcmp(argv[i], "-proportion_of_generating_sets_of_size_k") == 0) {
-			f_proportion_of_generating_sets_of_size_k = true;
-			proportion_of_generating_sets_of_size_k_k = ST.strtoi(argv[++i]);
-			if (f_v) {
-				cout << "-proportion_of_generating_sets_of_size_k " << proportion_of_generating_sets_of_size_k_k << endl;
-			}
-		}
-
-		else if (ST.stringcmp(argv[i], "-proportion_of_generating_sets_of_size_k_using_orbits") == 0) {
-			f_proportion_of_generating_sets_of_size_k_using_orbits = true;
-			proportion_of_generating_sets_of_size_k_using_orbits_k = ST.strtoi(argv[++i]);
-			proportion_of_generating_sets_of_size_k_using_orbits_fname.assign(argv[++i]);
-			proportion_of_generating_sets_of_size_k_using_orbits_col_label_reps.assign(argv[++i]);
-			proportion_of_generating_sets_of_size_k_using_orbits_col_label_orbit_length.assign(argv[++i]);
-			if (f_v) {
-				cout << "-proportion_of_generating_sets_of_size_k_using_orbits "
-						<< proportion_of_generating_sets_of_size_k_using_orbits_k
-						<< " " << proportion_of_generating_sets_of_size_k_using_orbits_fname
-						<< " " << proportion_of_generating_sets_of_size_k_using_orbits_col_label_reps
-						<< " " << proportion_of_generating_sets_of_size_k_using_orbits_col_label_orbit_length
-						<< endl;
-			}
-		}
 
 
 		else if (ST.stringcmp(argv[i], "-find_singer_cycle") == 0) {
@@ -836,7 +774,90 @@ int group_theoretic_activity_description::read_arguments(
 		}
 
 
+
+
 		// 3
+
+		else if (ST.stringcmp(argv[i], "-find_standard_generators") == 0) {
+			f_find_standard_generators = true;
+			find_standard_generators_order_a = ST.strtoi(argv[++i]);
+			find_standard_generators_order_b = ST.strtoi(argv[++i]);
+			find_standard_generators_order_ab = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-find_standard_generators "
+						<< find_standard_generators_order_a
+						<< " " << find_standard_generators_order_b
+						<< " " << find_standard_generators_order_ab
+						<< endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-find_standard_generators_M24") == 0) {
+			f_find_standard_generators_M24 = true;
+			if (f_v) {
+				cout << "-find_standard_generators_M24 " << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-find_small_generating_set") == 0) {
+			f_find_small_generating_set = true;
+			find_small_generating_set_desired_size = ST.strtoi(argv[++i]);
+			find_small_generating_set_max_attempts = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-find_small_generating_set " << find_small_generating_set_desired_size
+					<< " " << find_small_generating_set_max_attempts << endl;
+			}
+		}
+
+		else if (ST.stringcmp(argv[i], "-proportion_of_generating_sets_of_size_k") == 0) {
+			f_proportion_of_generating_sets_of_size_k = true;
+			proportion_of_generating_sets_of_size_k_k = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-proportion_of_generating_sets_of_size_k " << proportion_of_generating_sets_of_size_k_k << endl;
+			}
+		}
+
+		else if (ST.stringcmp(argv[i], "-proportion_of_generating_sets_of_size_k_using_orbits") == 0) {
+			f_proportion_of_generating_sets_of_size_k_using_orbits = true;
+			proportion_of_generating_sets_of_size_k_using_orbits_k = ST.strtoi(argv[++i]);
+			proportion_of_generating_sets_of_size_k_using_orbits_fname.assign(argv[++i]);
+			proportion_of_generating_sets_of_size_k_using_orbits_col_label_reps.assign(argv[++i]);
+			proportion_of_generating_sets_of_size_k_using_orbits_col_label_orbit_length.assign(argv[++i]);
+			if (f_v) {
+				cout << "-proportion_of_generating_sets_of_size_k_using_orbits "
+						<< proportion_of_generating_sets_of_size_k_using_orbits_k
+						<< " " << proportion_of_generating_sets_of_size_k_using_orbits_fname
+						<< " " << proportion_of_generating_sets_of_size_k_using_orbits_col_label_reps
+						<< " " << proportion_of_generating_sets_of_size_k_using_orbits_col_label_orbit_length
+						<< endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-export_group_table") == 0) {
+			f_export_group_table = true;
+			if (f_v) {
+				cout << "-export_group_table" << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-export_orbiter") == 0) {
+			f_export_orbiter = true;
+			if (f_v) {
+				cout << "-export_orbiter " << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-export_gap") == 0) {
+			f_export_gap = true;
+			if (f_v) {
+				cout << "-export_gap " << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-export_magma") == 0) {
+			f_export_magma = true;
+			if (f_v) {
+				cout << "-export_magma " << endl;
+			}
+		}
+
+
+
+		// 4
 
 		else if (ST.stringcmp(argv[i], "-find_conjugating_element") == 0) {
 			f_find_conjugating_element = true;
@@ -864,7 +885,6 @@ int group_theoretic_activity_description::read_arguments(
 			}
 		}
 
-		// 3:
 
 #if 0
 		else if (ST.stringcmp(argv[i], "-multiply_elements_csv_column_major_ordering") == 0) {
@@ -1010,7 +1030,7 @@ int group_theoretic_activity_description::read_arguments(
 		}
 
 
-		// 4
+		// 5
 
 
 		else if (ST.stringcmp(argv[i], "-subgroup_lattice_create_flag_transitive_geometry_with_partition") == 0) {
@@ -1182,7 +1202,7 @@ int group_theoretic_activity_description::read_arguments(
 			}
 		}
 
-		// 5:
+		// 6
 
 		else if (ST.stringcmp(argv[i], "-subgroup_lattice_magma") == 0) {
 			f_subgroup_lattice_magma = true;
@@ -1274,9 +1294,6 @@ void group_theoretic_activity_description::print()
 		cout << "-select_elements " << select_elements_ranks << endl;
 	}
 
-	if (f_export_group_table) {
-		cout << "-export_group_table" << endl;
-	}
 	if (f_random_element) {
 		cout << "-random_element " << random_element_label << endl;
 	}
@@ -1312,28 +1329,9 @@ void group_theoretic_activity_description::print()
 					<< " " << raise_to_the_power_exponent_text << endl;
 	}
 
-	if (f_export_orbiter) {
-		cout << "-export_orbiter " << endl;
-	}
-	if (f_export_gap) {
-		cout << "-export_gap " << endl;
-	}
-	if (f_export_magma) {
-		cout << "-export_magma " << endl;
-	}
 
 	if (f_search_element_of_order) {
 		cout << "-search_element_of_order " << search_element_order << endl;
-	}
-	if (f_find_standard_generators) {
-		cout << "-find_standard_generators "
-				<< find_standard_generators_order_a
-					<< " " << find_standard_generators_order_b
-					<< " " << find_standard_generators_order_ab
-					<< endl;
-	}
-	if (f_find_standard_generators_M24) {
-		cout << "-find_standard_generators_M24 " << endl;
 	}
 
 	if (f_element_rank) {
@@ -1342,26 +1340,14 @@ void group_theoretic_activity_description::print()
 	if (f_element_unrank) {
 		cout << "-element_unrank " << element_unrank_data << endl;
 	}
+	if (f_test_associativity) {
+		cout << "-test_associativity " << test_associativity_nb_tests << endl;
+	}
 
 
 	//  2
 
 
-	if (f_find_small_generating_set) {
-		cout << "-find_small_generating_set " << find_small_generating_set_desired_size
-			<< " " << find_small_generating_set_max_attempts << endl;
-	}
-	if (f_proportion_of_generating_sets_of_size_k) {
-		cout << "-proportion_of_generating_sets_of_size_k " << proportion_of_generating_sets_of_size_k_k << endl;
-	}
-	if (f_proportion_of_generating_sets_of_size_k_using_orbits) {
-		cout << "-proportion_of_generating_sets_of_size_k_using_orbits "
-				<< proportion_of_generating_sets_of_size_k_using_orbits_k
-				<< " " << proportion_of_generating_sets_of_size_k_using_orbits_fname
-				<< " " << proportion_of_generating_sets_of_size_k_using_orbits_col_label_reps
-				<< " " << proportion_of_generating_sets_of_size_k_using_orbits_col_label_orbit_length
-				<< endl;
-	}
 	if (f_find_singer_cycle) {
 		cout << "-find_singer_cycle " << endl;
 	}
@@ -1463,6 +1449,47 @@ void group_theoretic_activity_description::print()
 
 	// 3
 
+	if (f_find_standard_generators) {
+		cout << "-find_standard_generators "
+				<< find_standard_generators_order_a
+					<< " " << find_standard_generators_order_b
+					<< " " << find_standard_generators_order_ab
+					<< endl;
+	}
+	if (f_find_standard_generators_M24) {
+		cout << "-find_standard_generators_M24 " << endl;
+	}
+	if (f_find_small_generating_set) {
+		cout << "-find_small_generating_set " << find_small_generating_set_desired_size
+			<< " " << find_small_generating_set_max_attempts << endl;
+	}
+	if (f_proportion_of_generating_sets_of_size_k) {
+		cout << "-proportion_of_generating_sets_of_size_k " << proportion_of_generating_sets_of_size_k_k << endl;
+	}
+	if (f_proportion_of_generating_sets_of_size_k_using_orbits) {
+		cout << "-proportion_of_generating_sets_of_size_k_using_orbits "
+				<< proportion_of_generating_sets_of_size_k_using_orbits_k
+				<< " " << proportion_of_generating_sets_of_size_k_using_orbits_fname
+				<< " " << proportion_of_generating_sets_of_size_k_using_orbits_col_label_reps
+				<< " " << proportion_of_generating_sets_of_size_k_using_orbits_col_label_orbit_length
+				<< endl;
+	}
+	if (f_export_group_table) {
+		cout << "-export_group_table" << endl;
+	}
+	if (f_export_orbiter) {
+		cout << "-export_orbiter " << endl;
+	}
+	if (f_export_gap) {
+		cout << "-export_gap " << endl;
+	}
+	if (f_export_magma) {
+		cout << "-export_magma " << endl;
+	}
+
+
+	// 4
+
 
 	if (f_find_conjugating_element) {
 		cout << "-find_conjugating_element "
@@ -1480,7 +1507,6 @@ void group_theoretic_activity_description::print()
 	}
 
 
-	// 3:
 
 #if 0
 	if (f_multiply_elements_csv_column_major_ordering) {
@@ -1558,7 +1584,7 @@ void group_theoretic_activity_description::print()
 	}
 
 
-	// 4
+	// 5
 
 
 	if (f_subgroup_lattice_create_flag_transitive_geometry_with_partition) {
@@ -1643,7 +1669,7 @@ void group_theoretic_activity_description::print()
 		cout << "-canonical_image " << canonical_image_input_set << endl;
 	}
 
-	// 5
+	// 6
 
 	if (f_subgroup_lattice_magma) {
 		cout << "-subgroup_lattice_magma " << endl;

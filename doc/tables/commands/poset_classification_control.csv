@@ -14,6 +14,7 @@ ROW,C1,C2,C3
 1,"\verb'-t' ","   "," Write a file containing the search tree at level $d$. "
 1,"\verb'-T' ","   "," Write a file containing the search tree at all levels. "
 1,"\verb'-draw_options' "," options "," Drawing options according to Table~\ref{tab:draw:options}."
+1,"\verb'-substructure_invariant' "," k  "," Compute substructure invariant w.r.t. k-sets (at present k=1 is the only valid option). "
 1,"\verb'-preferred_choice' "," $n$ $a$ $b$ ","At node $n$, choose $b$ instead of $a$ as orbit representative. This option can be repeated. "
 1,"\verb'-clique_test' "," graph  ","Classify cliques in the given graph. "
 1,"\verb'-test_mindist_nonlinear' "," $d$  ","Search for non-linear codes with minimum distance at least $d$. See Chapter~\ref{sec:coding}. "

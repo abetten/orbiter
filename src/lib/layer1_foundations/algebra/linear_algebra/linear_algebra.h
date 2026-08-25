@@ -25,17 +25,34 @@ namespace linear_algebra {
 class gl_class_rep {
 
 public:
+
+
+	algebra::field_theory::finite_field *F;
 	other::data_structures::int_matrix *type_coding;
+		// l x 3
+		// where l is the sum of Select_polynomial[i] for i = 0 .. nb_irred - 1
 	algebra::ring_theory::longinteger_object *centralizer_order;
 	algebra::ring_theory::longinteger_object *class_length;
+	int n;
+	int *Mtx; // [n * n]
+	int *Elt;
+
+	long int elt_rk;
+	int order;
+	int nb_fixpoints;
+	int nb_fixlines;
+
 
 	gl_class_rep();
 	~gl_class_rep();
 	void init(
-			int nb_irred, int *Select_polynomial,
+			algebra::field_theory::finite_field *F,
+			int nb_irred,
+			int *Select_polynomial,
 		int *Select_partition, int verbose_level);
 	void print(
-			int nb_irred,  int *Select_polynomial,
+			int nb_irred,
+			int *Select_polynomial,
 			int *Select_partition, int verbose_level);
 	void compute_vector_coding(
 			gl_classes *C, int &nb_irred,
@@ -45,6 +62,8 @@ public:
 			gl_classes *C,
 			ring_theory::longinteger_object &co,
 		int verbose_level);
+	void print_matrix_and_centralizer_order_latex(
+			std::ostream &ost);
 };
 
 // #############################################################################
@@ -59,9 +78,12 @@ public:
 	int q;
 	algebra::field_theory::finite_field *F;
 	ring_theory::table_of_irreducible_polynomials *Table_of_polynomials;
-	int *Nb_part;
-	int **Partitions;
-	int *v, *w; // [k], used in choose_basis_for_rational_normal_form_block
+
+	int *Nb_part; // [k+1], used entries are from 1 to k
+	int **Partitions; // [k+1], used entries are from 1 to k
+
+	int *v; // [k], used in choose_basis_for_rational_normal_form_block
+	int *w; // [k], used in choose_basis_for_rational_normal_form_block
 
 	gl_classes();
 	~gl_classes();
@@ -153,17 +175,21 @@ public:
 	int find_class_rep(
 			gl_class_rep *Reps, int nb_reps,
 		gl_class_rep *R, int verbose_level);
-	void report(
-			std::ostream &ost, int verbose_level);
+#if 0
 	void print_matrix_and_centralizer_order_latex(
 			std::ostream &ost,
 		gl_class_rep *R);
+#endif
 	void get_matrix_and_centralizer_order(
 			ring_theory::longinteger_object &go,
 			ring_theory::longinteger_object &co,
 			ring_theory::longinteger_object &cl,
 			int *&Mtx,
 			gl_class_rep *R);
+#if 0
+	void report(
+			std::ostream &ost, int verbose_level);
+#endif
 
 };
 
@@ -173,7 +199,7 @@ public:
 // linear_algebra_global.cpp:
 // #############################################################################
 
-//! catch all class for functions related to linear algebra
+//! catch-all class for functions related to linear algebra
 
 class linear_algebra_global {
 public:

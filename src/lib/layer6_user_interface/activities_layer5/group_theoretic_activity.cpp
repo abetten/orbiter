@@ -92,7 +92,6 @@ void group_theoretic_activity::perform_activity(
 
 
 
-
 	if (perform_activity_part1(verbose_level)) {
 
 	}
@@ -110,6 +109,10 @@ void group_theoretic_activity::perform_activity(
 	}
 
 	else if (perform_activity_part5(verbose_level)) {
+
+	}
+
+	else if (perform_activity_part6(verbose_level)) {
 
 	}
 
@@ -427,25 +430,6 @@ int group_theoretic_activity::perform_activity_part1(
 
 
 
-
-	else if (Descr->f_export_group_table) {
-
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"f_export_group_table" << endl;
-		}
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"before AG->export_group_table" << endl;
-		}
-		AG->export_group_table(verbose_level);
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"after AG->export_group_table" << endl;
-		}
-
-	}
-
 	else if (Descr->f_random_element) {
 
 		if (f_v) {
@@ -455,12 +439,12 @@ int group_theoretic_activity::perform_activity_part1(
 
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
-					"before AG->random_element" << endl;
+					"before AG->random_element_and_csv_file" << endl;
 		}
-		AG->random_element(Descr->random_element_label, verbose_level);
+		AG->random_element_and_csv_file(Descr->random_element_label, verbose_level);
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
-					"after AG->random_element" << endl;
+					"after AG->random_element_and_csv_file" << endl;
 		}
 	}
 	else if (Descr->f_permutation_representation_of_element) {
@@ -652,57 +636,6 @@ int group_theoretic_activity::perform_activity_part1(
 
 	}
 
-	else if (Descr->f_export_orbiter) {
-
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"f_export_orbiter" << endl;
-		}
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"before AG->do_export_orbiter" << endl;
-		}
-		AG->do_export_orbiter(AG->A, verbose_level);
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"after AG->do_export_orbiter" << endl;
-		}
-	}
-
-	else if (Descr->f_export_gap) {
-
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"f_export_gap" << endl;
-		}
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"before AG->do_export_gap" << endl;
-		}
-		AG->do_export_gap(verbose_level);
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"after AG->do_export_gap" << endl;
-		}
-	}
-
-	else if (Descr->f_export_magma) {
-
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"f_export_magma" << endl;
-		}
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"before AG->do_export_magma" << endl;
-		}
-		AG->do_export_magma(verbose_level);
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"after AG->do_export_magma" << endl;
-		}
-	}
-
 
 	else if (Descr->f_search_element_of_order) {
 
@@ -727,71 +660,6 @@ int group_theoretic_activity::perform_activity_part1(
 		}
 	}
 
-	else if (Descr->f_find_standard_generators) {
-
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"f_find_standard_generators" << endl;
-		}
-
-		groups::group_theory_global Group_theory_global;
-
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"before Group_theory_global.find_standard_generators" << endl;
-		}
-		Group_theory_global.find_standard_generators(
-				AG->Subgroup_sims,
-				AG->A, AG->A,
-				Descr->find_standard_generators_order_a,
-				Descr->find_standard_generators_order_b,
-				Descr->find_standard_generators_order_ab,
-				verbose_level);
-
-
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"after Group_theory_global.find_standard_generators" << endl;
-		}
-
-	}
-
-
-	else if (Descr->f_find_standard_generators_M24) {
-
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"f_find_standard_generators_M24" << endl;
-		}
-
-		groups::group_theory_global Group_theory_global;
-		int *Elt_a;
-		int *Elt_b;
-
-
-		Elt_a = NEW_int(AG->A->elt_size_in_int);
-		Elt_b = NEW_int(AG->A->elt_size_in_int);
-
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"before Group_theory_global.find_standard_generators_M24" << endl;
-		}
-		Group_theory_global.find_standard_generators_M24(
-				AG->Subgroup_sims,
-				AG->A, AG->A,
-				Elt_a, Elt_b,
-				verbose_level);
-
-
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"after Group_theory_global.find_standard_generators_M24" << endl;
-		}
-
-		FREE_int(Elt_a);
-		FREE_int(Elt_b);
-
-	}
 
 
 	else if (Descr->f_element_rank) {
@@ -829,6 +697,25 @@ int group_theoretic_activity::perform_activity_part1(
 					"after AG->element_unrank" << endl;
 		}
 	}
+
+	else if (Descr->f_test_associativity) {
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"f_random_element" << endl;
+		}
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before AG->test_associative_law" << endl;
+		}
+		AG->test_associative_law(Descr->test_associativity_nb_tests, verbose_level);
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after AG->test_associative_law" << endl;
+		}
+	}
+
 	else {
 		ret = false;
 	}
@@ -855,135 +742,7 @@ int group_theoretic_activity::perform_activity_part2(
 
 
 
-	if (Descr->f_find_small_generating_set) {
-
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"f_find_small_generating_set" << endl;
-			cout << "group_theoretic_activity::perform_activity desired_size = " << Descr->find_small_generating_set_desired_size << endl;
-			cout << "group_theoretic_activity::perform_activity max_attempts = " << Descr->find_small_generating_set_max_attempts << endl;
-		}
-
-		int f_success;
-		data_structures_groups::vector_ge *generating_set_small;
-
-
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"before AG->find_small_generating_set" << endl;
-		}
-		f_success = AG->find_small_generating_set(
-				Descr->find_small_generating_set_desired_size,
-				Descr->find_small_generating_set_max_attempts,
-				generating_set_small,
-				verbose_level);
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"after AG->find_small_generating_set" << endl;
-		}
-
-		if (f_success) {
-			cout << "group_theoretic_activity::perform_activity find_small_generating_set success!" << endl;
-			generating_set_small->print_quick(cout);
-		}
-		else {
-			cout << "group_theoretic_activity::perform_activity find_small_generating_set failure" << endl;
-		}
-	}
-
-	if (Descr->f_proportion_of_generating_sets_of_size_k) {
-
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"f_proportion_of_generating_sets_of_size_k" << endl;
-			cout << "group_theoretic_activity::perform_activity proportion_of_generating_sets_of_size_k_k = " << Descr->proportion_of_generating_sets_of_size_k_k << endl;
-		}
-
-
-		long int nb_win, nb_total, goi;
-
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"before AG->proportion_of_generating_sets_of_size_k" << endl;
-		}
-		AG->proportion_of_generating_sets_of_size_k(
-				Descr->proportion_of_generating_sets_of_size_k_k,
-				nb_win, nb_total, goi,
-				verbose_level);
-
-
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"after AG->proportion_of_generating_sets_of_size_k" << endl;
-			cout << "group_theoretic_activity::perform_activity "
-					"nb_win = " << nb_win << endl;
-			cout << "group_theoretic_activity::perform_activity "
-					"nb_total = " << nb_total << endl;
-			cout << "group_theoretic_activity::perform_activity "
-					"goi = " << goi << endl;
-			cout << "group_theoretic_activity::perform_activity "
-					"rate = " << (double) nb_win / (double) nb_total << endl;
-		}
-
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"f_proportion_of_generating_sets_of_size_k done" << endl;
-		}
-	}
-
-
-	if (Descr->f_proportion_of_generating_sets_of_size_k_using_orbits) {
-
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"f_proportion_of_generating_sets_of_size_k_using_orbits" << endl;
-			cout << "group_theoretic_activity::perform_activity k = " << Descr->proportion_of_generating_sets_of_size_k_using_orbits_k << endl;
-		}
-
-
-		long int nb_orbits, nb_good_orbits, nb_win, nb_total, goi;
-
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"before AG->proportion_of_generating_sets_of_size_k_using_orbits" << endl;
-		}
-		AG->proportion_of_generating_sets_of_size_k_using_orbits(
-				Descr->proportion_of_generating_sets_of_size_k_using_orbits_k,
-				Descr->proportion_of_generating_sets_of_size_k_using_orbits_fname,
-				Descr->proportion_of_generating_sets_of_size_k_using_orbits_col_label_reps,
-				Descr->proportion_of_generating_sets_of_size_k_using_orbits_col_label_orbit_length,
-				nb_orbits,
-				nb_good_orbits,
-				nb_win,
-				nb_total,
-				goi,
-				verbose_level);
-
-
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"after AG->proportion_of_generating_sets_of_size_k_using_orbits" << endl;
-			cout << "group_theoretic_activity::perform_activity "
-					"nb_orbits = " << nb_orbits << endl;
-			cout << "group_theoretic_activity::perform_activity "
-					"nb_good_orbits = " << nb_good_orbits << endl;
-			cout << "group_theoretic_activity::perform_activity "
-					"nb_win = " << nb_win << endl;
-			cout << "group_theoretic_activity::perform_activity "
-					"nb_total = " << nb_total << endl;
-			cout << "group_theoretic_activity::perform_activity "
-					"goi = " << goi << endl;
-			cout << "group_theoretic_activity::perform_activity "
-					"rate = " << (double) nb_win / (double) nb_total << endl;
-		}
-
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"f_proportion_of_generating_sets_of_size_k done" << endl;
-		}
-	}
-
-	else if (Descr->f_find_singer_cycle) {
+	if (Descr->f_find_singer_cycle) {
 
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
@@ -1008,6 +767,12 @@ int group_theoretic_activity::perform_activity_part2(
 			cout << "group_theoretic_activity::perform_activity "
 					"f_classes_based_on_normal_form" << endl;
 		}
+
+#if 0
+		cout << "group_theoretic_activity::perform_activity "
+				"f_classes_based_on_normal_form not yet implemented" << endl;
+		exit(1);
+
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
 					"before AG->Any_group_linear->classes_based_on_normal_form" << endl;
@@ -1018,6 +783,57 @@ int group_theoretic_activity::perform_activity_part2(
 			cout << "group_theoretic_activity::perform_activity "
 					"after AG->Any_group_linear->classes_based_on_normal_form" << endl;
 		}
+#endif
+
+
+		apps_algebra::algebra_global_with_action Algebra_global_with_action;
+
+		if (!AG->f_linear_group) {
+			cout << "group_theoretic_activity::perform_activity "
+					"!AG->f_linear_group" << endl;
+			exit(1);
+		}
+
+
+		//groups::any_group_linear *Any_group_linear;
+
+		//Any_group_linear = AG->Any_group_linear;
+
+
+		groups::sims *Sims = AG->Subgroup_sims;
+
+		//groups::sims *G;
+		//group_theory_global Group_theory_global;
+
+		//G = Any_group->LG->Strong_gens->create_sims(verbose_level);
+
+
+		if (f_v) {
+			cout << "any_group_linear::classes_based_on_normal_form "
+					"before Algebra_global_with_action.conjugacy_classes_based_on_normal_forms" << endl;
+		}
+		Algebra_global_with_action.conjugacy_classes_based_on_normal_forms(
+				AG->A,
+				Sims,
+				AG->label,
+				AG->label_tex,
+				verbose_level);
+		if (f_v) {
+			cout << "any_group_linear::classes_based_on_normal_form "
+					"after Algebra_global_with_action.conjugacy_classes_based_on_normal_forms" << endl;
+		}
+
+
+#if 0
+		Algebra_global_with_action.conjugacy_classes_based_on_normal_forms(
+				actions::action *A,
+				groups::sims *override_Sims,
+				std::string &label,
+				std::string &label_tex,
+				int verbose_level)
+#endif
+
+
 	}
 
 	else if (Descr->f_normalizer) {
@@ -1844,6 +1660,288 @@ int group_theoretic_activity::perform_activity_part3(
 	int ret = true;
 
 
+	if (Descr->f_find_standard_generators) {
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"f_find_standard_generators" << endl;
+		}
+
+		groups::group_theory_global Group_theory_global;
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before Group_theory_global.find_standard_generators" << endl;
+		}
+		Group_theory_global.find_standard_generators(
+				AG->Subgroup_sims,
+				AG->A, AG->A,
+				Descr->find_standard_generators_order_a,
+				Descr->find_standard_generators_order_b,
+				Descr->find_standard_generators_order_ab,
+				verbose_level);
+
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after Group_theory_global.find_standard_generators" << endl;
+		}
+
+	}
+
+
+	else if (Descr->f_find_standard_generators_M24) {
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"f_find_standard_generators_M24" << endl;
+		}
+
+		groups::group_theory_global Group_theory_global;
+		int *Elt_a;
+		int *Elt_b;
+
+
+		Elt_a = NEW_int(AG->A->elt_size_in_int);
+		Elt_b = NEW_int(AG->A->elt_size_in_int);
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before Group_theory_global.find_standard_generators_M24" << endl;
+		}
+		Group_theory_global.find_standard_generators_M24(
+				AG->Subgroup_sims,
+				AG->A, AG->A,
+				Elt_a, Elt_b,
+				verbose_level);
+
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after Group_theory_global.find_standard_generators_M24" << endl;
+		}
+
+		FREE_int(Elt_a);
+		FREE_int(Elt_b);
+
+	}
+	else if (Descr->f_find_small_generating_set) {
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"f_find_small_generating_set" << endl;
+			cout << "group_theoretic_activity::perform_activity desired_size = " << Descr->find_small_generating_set_desired_size << endl;
+			cout << "group_theoretic_activity::perform_activity max_attempts = " << Descr->find_small_generating_set_max_attempts << endl;
+		}
+
+		int f_success;
+		data_structures_groups::vector_ge *generating_set_small;
+
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before AG->find_small_generating_set" << endl;
+		}
+		f_success = AG->find_small_generating_set(
+				Descr->find_small_generating_set_desired_size,
+				Descr->find_small_generating_set_max_attempts,
+				generating_set_small,
+				verbose_level);
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after AG->find_small_generating_set" << endl;
+		}
+
+		if (f_success) {
+			cout << "group_theoretic_activity::perform_activity find_small_generating_set success!" << endl;
+			generating_set_small->print_quick(cout);
+		}
+		else {
+			cout << "group_theoretic_activity::perform_activity find_small_generating_set failure" << endl;
+		}
+	}
+
+	else if (Descr->f_proportion_of_generating_sets_of_size_k) {
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"f_proportion_of_generating_sets_of_size_k" << endl;
+			cout << "group_theoretic_activity::perform_activity proportion_of_generating_sets_of_size_k_k = " << Descr->proportion_of_generating_sets_of_size_k_k << endl;
+		}
+
+
+		long int nb_win, nb_total, goi;
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before AG->proportion_of_generating_sets_of_size_k" << endl;
+		}
+		AG->proportion_of_generating_sets_of_size_k(
+				Descr->proportion_of_generating_sets_of_size_k_k,
+				nb_win, nb_total, goi,
+				verbose_level);
+
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after AG->proportion_of_generating_sets_of_size_k" << endl;
+			cout << "group_theoretic_activity::perform_activity "
+					"nb_win = " << nb_win << endl;
+			cout << "group_theoretic_activity::perform_activity "
+					"nb_total = " << nb_total << endl;
+			cout << "group_theoretic_activity::perform_activity "
+					"goi = " << goi << endl;
+			cout << "group_theoretic_activity::perform_activity "
+					"rate = " << (double) nb_win / (double) nb_total << endl;
+		}
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"f_proportion_of_generating_sets_of_size_k done" << endl;
+		}
+	}
+
+
+	else if (Descr->f_proportion_of_generating_sets_of_size_k_using_orbits) {
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"f_proportion_of_generating_sets_of_size_k_using_orbits" << endl;
+			cout << "group_theoretic_activity::perform_activity k = " << Descr->proportion_of_generating_sets_of_size_k_using_orbits_k << endl;
+		}
+
+
+		long int nb_orbits, nb_good_orbits, nb_win, nb_total, goi;
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before AG->proportion_of_generating_sets_of_size_k_using_orbits" << endl;
+		}
+		AG->proportion_of_generating_sets_of_size_k_using_orbits(
+				Descr->proportion_of_generating_sets_of_size_k_using_orbits_k,
+				Descr->proportion_of_generating_sets_of_size_k_using_orbits_fname,
+				Descr->proportion_of_generating_sets_of_size_k_using_orbits_col_label_reps,
+				Descr->proportion_of_generating_sets_of_size_k_using_orbits_col_label_orbit_length,
+				nb_orbits,
+				nb_good_orbits,
+				nb_win,
+				nb_total,
+				goi,
+				verbose_level);
+
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after AG->proportion_of_generating_sets_of_size_k_using_orbits" << endl;
+			cout << "group_theoretic_activity::perform_activity "
+					"nb_orbits = " << nb_orbits << endl;
+			cout << "group_theoretic_activity::perform_activity "
+					"nb_good_orbits = " << nb_good_orbits << endl;
+			cout << "group_theoretic_activity::perform_activity "
+					"nb_win = " << nb_win << endl;
+			cout << "group_theoretic_activity::perform_activity "
+					"nb_total = " << nb_total << endl;
+			cout << "group_theoretic_activity::perform_activity "
+					"goi = " << goi << endl;
+			cout << "group_theoretic_activity::perform_activity "
+					"rate = " << (double) nb_win / (double) nb_total << endl;
+		}
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"f_proportion_of_generating_sets_of_size_k done" << endl;
+		}
+	}
+	else if (Descr->f_export_group_table) {
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"f_export_group_table" << endl;
+		}
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before AG->export_group_table" << endl;
+		}
+		AG->export_group_table(verbose_level);
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after AG->export_group_table" << endl;
+		}
+
+	}
+	else if (Descr->f_export_orbiter) {
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"f_export_orbiter" << endl;
+		}
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before AG->do_export_orbiter" << endl;
+		}
+		AG->do_export_orbiter(AG->A, verbose_level);
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after AG->do_export_orbiter" << endl;
+		}
+	}
+
+	else if (Descr->f_export_gap) {
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"f_export_gap" << endl;
+		}
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before AG->do_export_gap" << endl;
+		}
+		AG->do_export_gap(verbose_level);
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after AG->do_export_gap" << endl;
+		}
+	}
+
+	else if (Descr->f_export_magma) {
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"f_export_magma" << endl;
+		}
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before AG->do_export_magma" << endl;
+		}
+		AG->do_export_magma(verbose_level);
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after AG->do_export_magma" << endl;
+		}
+	}
+
+	else {
+		ret = false;
+	}
+	if (f_v) {
+		cout << "group_theoretic_activity::perform_activity_part3 done" << endl;
+	}
+	return ret;
+}
+
+
+int group_theoretic_activity::perform_activity_part4(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::perform_activity_part4" << endl;
+	}
+
+	int ret = true;
+
+
 	if (Descr->f_find_conjugating_element) {
 
 		if (f_v) {
@@ -2106,20 +2204,21 @@ int group_theoretic_activity::perform_activity_part3(
 		ret = false;
 	}
 	if (f_v) {
-		cout << "group_theoretic_activity::perform_activity_part3 done" << endl;
+		cout << "group_theoretic_activity::perform_activity_part4 done" << endl;
 	}
 	return ret;
 
 
 }
 
-int group_theoretic_activity::perform_activity_part4(
+
+int group_theoretic_activity::perform_activity_part5(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "group_theoretic_activity::perform_activity_part4" << endl;
+		cout << "group_theoretic_activity::perform_activity_part5" << endl;
 	}
 
 	int ret = true;
@@ -2448,7 +2547,7 @@ int group_theoretic_activity::perform_activity_part4(
 		ret = false;
 	}
 	if (f_v) {
-		cout << "group_theoretic_activity::perform_activity_part4 done" << endl;
+		cout << "group_theoretic_activity::perform_activity_part5 done" << endl;
 	}
 	return ret;
 
@@ -2456,13 +2555,13 @@ int group_theoretic_activity::perform_activity_part4(
 }
 
 
-int group_theoretic_activity::perform_activity_part5(
+int group_theoretic_activity::perform_activity_part6(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "group_theoretic_activity::perform_activity_part5" << endl;
+		cout << "group_theoretic_activity::perform_activity_part6" << endl;
 	}
 
 	int ret = true;
@@ -2674,7 +2773,7 @@ int group_theoretic_activity::perform_activity_part5(
 		ret = false;
 	}
 	if (f_v) {
-		cout << "group_theoretic_activity::perform_activity_part5 done" << endl;
+		cout << "group_theoretic_activity::perform_activity_part6 done" << endl;
 	}
 	return ret;
 

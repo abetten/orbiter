@@ -1664,7 +1664,15 @@ void poset_of_orbits::make_table_of_orbit_reps(
 	nb_rows = Nb_orbits;
 	nb_cols = 8;
 
+
+	if (PC->get_control()->f_substructure_invariant) {
+		nb_cols++;
+	}
+
+
 	Table = new string [nb_rows * nb_cols];
+
+
 	Headings = new string [nb_cols];
 
 	Headings[0] = "Line";
@@ -1675,6 +1683,11 @@ void poset_of_orbits::make_table_of_orbit_reps(
 	Headings[5] = "StabOrder";
 	Headings[6] = "OrbitLength";
 	Headings[7] = "SV_length";
+
+	if (PC->get_control()->f_substructure_invariant) {
+		Headings[8] = "SubInv";
+	}
+
 
 	cur = 0;
 	for (level = level_min; level <= level_max; level++) {
@@ -1713,6 +1726,26 @@ void poset_of_orbits::make_table_of_orbit_reps(
 			Table[cur * nb_cols + 5] = stab_order.stringify();
 			Table[cur * nb_cols + 6] = orbit_length.stringify();
 			Table[cur * nb_cols + 7] = std::to_string(schreier_vector_length);
+
+			if (PC->get_control()->f_substructure_invariant) {
+
+				if (level > 1) {
+					int *data;
+
+					data = NEW_int(level);
+
+					PC->compute_substructure_invariant(level, i, data, PC->get_control()->substructure_invariant_k, verbose_level - 2);
+
+					Table[cur * nb_cols + 8] = "\"" + Int_vec_stringify(data, level) + "\"";
+
+					FREE_int(data);
+				}
+				else {
+
+					Table[cur * nb_cols + 8] = "\"\"";
+
+				}
+			}
 
 			//Text_level[first + i] = std::to_string(level);
 

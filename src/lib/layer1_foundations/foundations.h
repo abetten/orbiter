@@ -277,6 +277,7 @@ namespace algebra {
 	namespace expression_parser {
 
 		// expression_parser:
+		class evaluator;
 		class formula_vector;
 		class formula;
 		class symbolic_object_builder_description;

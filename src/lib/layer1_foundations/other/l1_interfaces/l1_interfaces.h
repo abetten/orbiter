@@ -113,6 +113,7 @@ public:
 	void convert_to_orbiter(
 			algebra::expression_parser::syntax_tree *&Tree,
 			algebra::field_theory::finite_field *F,
+			int f_is_commutative,
 			int f_has_managed_variables,
 			std::string &managed_variables,
 			int verbose_level);

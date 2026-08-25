@@ -22,9 +22,18 @@ namespace linear_algebra {
 gl_class_rep::gl_class_rep()
 {
 	Record_birth();
+	F = NULL;
 	type_coding = NULL;
 	centralizer_order = NULL;
 	class_length = NULL;
+	n = 0;
+	Mtx = NULL;
+	Elt = NULL;
+
+	elt_rk = -1;
+	order = -1;
+	nb_fixpoints = -1;
+	nb_fixlines = -1;
 }
 
 gl_class_rep::~gl_class_rep()
@@ -39,24 +48,36 @@ gl_class_rep::~gl_class_rep()
 	if (class_length) {
 		FREE_OBJECT(class_length);
 	}
+	if (Mtx) {
+		FREE_int(Mtx);
+	}
+	if (Elt) {
+		FREE_int(Elt);
+	}
 }
 
 void gl_class_rep::init(
-		int nb_irred, int *Select_polynomial,
+		algebra::field_theory::finite_field *F,
+		int nb_irred,
+		int *Select_polynomial,
 		int *Select_partition, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int l, i;
 
 	if (f_v) {
 		cout << "gl_class_rep::init" << endl;
 	}
+	int l, i;
+
+	gl_class_rep::F = F;
 	l = 0;
 	for (i = 0; i < nb_irred; i++) {
 		if (Select_polynomial[i]) {
 			l++;
 		}
 	}
+
+
 	type_coding = NEW_OBJECT(other::data_structures::int_matrix);
 
 	type_coding->allocate(l, 3);
@@ -75,7 +96,8 @@ void gl_class_rep::init(
 }
 
 void gl_class_rep::print(
-		int nb_irred,  int *Select_polynomial,
+		int nb_irred,
+		int *Select_polynomial,
 		int *Select_partition, int verbose_level)
 {
 	int i, l;
@@ -105,19 +127,23 @@ void gl_class_rep::compute_vector_coding(
 	if (f_v) {
 		cout << "gl_class_rep::compute_vector_coding" << endl;
 	}
+
 	nb_irred = type_coding->s_m();
 	if (f_v) {
 		cout << "gl_class_rep::compute_vector_coding "
 				"nb_irred=" << nb_irred << endl;
 	}
+
 	Poly_degree = NEW_int(nb_irred);
 	Poly_mult = NEW_int(nb_irred);
 	Partition_idx = NEW_int(nb_irred);
+
 	for (i = 0; i < nb_irred; i++) {
 		Poly_degree[i] = C->Table_of_polynomials->Degree[type_coding->s_ij(i, 0)];
 		Poly_mult[i] = type_coding->s_ij(i, 1);
 		Partition_idx[i] = type_coding->s_ij(i, 2);
 	}
+
 	if (f_v) {
 		cout << "gl_class_rep::compute_vector_coding done" << endl;
 	}
@@ -141,7 +167,8 @@ void gl_class_rep::centralizer_order_Kung(
 			C, nb_irred, Poly_degree,
 			Poly_mult, Partition_idx, verbose_level);
 
-	C->centralizer_order_Kung_basic(nb_irred,
+	C->centralizer_order_Kung_basic(
+			nb_irred,
 		Poly_degree, Poly_mult, Partition_idx,
 		co,
 		verbose_level);
@@ -154,6 +181,54 @@ void gl_class_rep::centralizer_order_Kung(
 		cout << "gl_class_rep::centralizer_order_Kung done" << endl;
 	}
 }
+
+void gl_class_rep::print_matrix_and_centralizer_order_latex(
+		std::ostream &ost)
+{
+
+	int i;
+	int a, m, p;
+
+	ost << "$";
+	for (i = 0; i < type_coding->m; i++) {
+		a = type_coding->s_ij(i, 0);
+		m = type_coding->s_ij(i, 1);
+		p = type_coding->s_ij(i, 2);
+		ost << a << "," << m << "," << p;
+		if (i < type_coding->m - 1) {
+			ost << ";";
+		}
+	}
+
+	int f_elements_exponential = false;
+	string symbol_for_print;
+
+	symbol_for_print.assign("\\alpha");
+
+
+	ost << "$" << endl;
+	ost << "$$" << endl;
+	ost << "\\left[" << endl;
+	F->Io->latex_matrix(
+			ost,
+			f_elements_exponential,
+			symbol_for_print,
+			Mtx, n, n);
+	ost << "\\right]";
+	//ost << "_{";
+	//ost << co << "}" << endl;
+	ost << "$$" << endl;
+
+	ost << "centralizer order $" << *centralizer_order << "$\\\\";
+	ost << "class size $" << *class_length << "$\\\\" << endl;
+	ost << "element order $" << order << "$\\\\" << endl;
+	ost << "number of fix points $" << nb_fixpoints << "$\\\\" << endl;
+	ost << "number of fix lines $" << nb_fixlines << "$\\\\" << endl;
+	//ost << endl;
+
+}
+
+
 
 }}}}
 

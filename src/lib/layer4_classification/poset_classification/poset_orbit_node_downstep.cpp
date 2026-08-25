@@ -517,7 +517,8 @@ void poset_orbit_node::get_candidates(
 
 
 void poset_orbit_node::schreier_forest(
-	poset_classification *gen, groups::schreier &Schreier,
+	poset_classification *gen,
+	groups::schreier &Schreier,
 	actions::action *&AR,
 	int lvl, 
 	int f_use_invariant_subset_if_available, 
@@ -801,7 +802,8 @@ void poset_orbit_node::schreier_forest(
 		//int max_orbits = 50;
 		//int max_points_per_orbit = 25;
 		if (f_using_invariant_subset) {
-			downstep_orbits_print(gen, 
+			downstep_orbits_print(
+					gen,
 				&Schreier, AR, lvl,
 				f_print_orbits, 
 				gen->max_number_of_orbits_to_print(),
@@ -850,11 +852,11 @@ void poset_orbit_node::downstep_orbit_test_and_schreier_vector(
 
 	if (f_v) {
 		gen->print_level_info(lvl, node);
-		cout << "poset_orbit_node::downstep_orbit_"
-				"test_and_schreier_vector" << endl;
+		cout << "poset_orbit_node::downstep_orbit_test_and_schreier_vector" << endl;
 	}
 	if (f_use_invariant_subset_if_available) {
-		check_orbits_wrapper(gen, Schreier,
+		check_orbits_wrapper(
+				gen, Schreier,
 			AR,
 			lvl, nb_good_orbits, nb_points, 
 			verbose_level - 1);
@@ -866,7 +868,8 @@ void poset_orbit_node::downstep_orbit_test_and_schreier_vector(
 			cout << "nb_points=" << nb_points << endl;
 		}
 		if (false) {
-			downstep_orbits_print(gen, 
+			downstep_orbits_print(
+					gen,
 				Schreier, AR, lvl, 
 				f_print_orbits, 
 				max_orbits, max_points_per_orbit);
@@ -904,10 +907,11 @@ void poset_orbit_node::downstep_orbit_test_and_schreier_vector(
 			cout << " : after creating Schreier vector." << endl;
 		}
 
-		check_orbits_wrapper(gen,
-			Schreier, AR,
-			lvl, nb_good_orbits, nb_points, 
-			verbose_level - 1);
+		check_orbits_wrapper(
+				gen,
+				Schreier, AR,
+				lvl, nb_good_orbits, nb_points,
+				verbose_level - 1);
 
 
 
@@ -918,7 +922,8 @@ void poset_orbit_node::downstep_orbit_test_and_schreier_vector(
 			cout << "nb_points=" << nb_points << endl;
 		}
 		if (false) {
-			downstep_orbits_print(gen, 
+			downstep_orbits_print(
+					gen,
 				Schreier, AR, lvl, 
 				f_print_orbits, 
 				max_orbits, max_points_per_orbit);

@@ -57,6 +57,7 @@ modified_group_create::~modified_group_create()
 void modified_group_create::modified_group_init(
 		group_constructions::group_modification_description *Descr,
 		int verbose_level)
+// called from modified_group_init_layer5::modified_group_init
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1503,6 +1504,7 @@ void modified_group_create::create_action_on_self_by_right_multiplication(
 		int verbose_level)
 // output in A_modified and Strong_gens
 // acts on AG->Subgroup_sims
+// Uses the sims object from the previous action in AG->Subgroup_sims
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1556,7 +1558,7 @@ void modified_group_create::create_action_on_self_by_right_multiplication(
 				"AG->Subgroup_sims == NULL" << endl;
 		exit(1);
 	}
-	action_on_self_by_right_multiplication_sims = AG->Subgroup_sims;
+	action_on_self_by_right_multiplication_sims = AG->Subgroup_sims; // use the sims object from the previous action in AG->Subgroup_sims
 #endif
 
 	A_modified = A_previous->Induced_action->induced_action_by_right_multiplication(
@@ -1905,6 +1907,8 @@ void modified_group_create::create_polarity_extension(
 			exit(1);
 		}
 		A_modified->Strong_gens = A_modified->subaction->Strong_gens;
+		A_base = A_modified->subaction;
+			// the action before the restriction is the original polarity extension
 
 	}
 	else {
@@ -1921,6 +1925,7 @@ void modified_group_create::create_polarity_extension(
 			cout << "modified_group_create::create_polarity_extension "
 					"after AGlobal.init_polarity_extension_group" << endl;
 		}
+		A_base = A_modified;
 	}
 
 	if (f_v) {
@@ -1943,9 +1948,12 @@ void modified_group_create::create_polarity_extension(
 	f_has_strong_generators = true;
 	Strong_gens = A_modified->Strong_gens;
 
-	A_base = A_modified;
 	A_previous = A_modified;
 
+	label = A_modified->label;
+	label_tex = A_modified->label_tex;
+
+#if 0
 
 	label += AG->label + "_polarity_ext";
 	label_tex += AG->label_tex + "{\\rm polarity extension}";
@@ -1957,6 +1965,7 @@ void modified_group_create::create_polarity_extension(
 		label += "_on_points_and_hyperplanes";
 		label_tex += "{\\rm \\_on\\_points\\_and\\_hyperplanes}";
 	}
+#endif
 
 	if (f_v) {
 		cout << "modified_group_create::create_polarity_extension "
@@ -2086,6 +2095,11 @@ void modified_group_create::create_automorphism_group(
 	A_previous = A_modified;
 
 	FREE_OBJECT(Sims);
+
+
+	label = A_modified->label;
+	label_tex = A_modified->label_tex;
+
 
 
 	if (f_v) {

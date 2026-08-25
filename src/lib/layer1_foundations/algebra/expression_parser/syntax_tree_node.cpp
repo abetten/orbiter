@@ -293,18 +293,22 @@ void syntax_tree_node::simplify(
 
 				}
 			}
+
+
+			if (f_v) {
+				cout << "syntax_tree_node::simplify "
+						"before combine_text_nodes_in_addition" << endl;
+			}
+			combine_text_nodes_in_addition(
+					verbose_level - 2);
+			if (f_v) {
+				cout << "syntax_tree_node::simplify "
+						"after combine_text_nodes_in_addition" << endl;
+			}
+
+
 		}
 
-		if (f_v) {
-			cout << "syntax_tree_node::simplify "
-					"before combine_text_nodes_in_addition" << endl;
-		}
-		combine_text_nodes_in_addition(
-				verbose_level - 2);
-		if (f_v) {
-			cout << "syntax_tree_node::simplify "
-					"after combine_text_nodes_in_addition" << endl;
-		}
 
 
 		if (nb_nodes == 1
@@ -378,6 +382,11 @@ void syntax_tree_node::combine_text_nodes_in_multiplication(
 		print_subtree_easy(cout);
 	}
 
+
+	if (!Tree->f_is_commutative) {
+		cout << "syntax_tree_node::combine_text_nodes_in_multiplication skipped because it is not commutative" << endl;
+		return;
+	}
 	int i, j;
 
 	for (i = 0; i < nb_nodes; i++) {
@@ -818,6 +827,7 @@ void syntax_tree_node::add_factor(
 
 	if (f_v) {
 		cout << "syntax_tree_node::add_factor" << endl;
+		cout << "syntax_tree_node::add_factor Tree->f_is_commutative = " << Tree->f_is_commutative << endl;
 	}
 
 	if (type != operation_type_mult) {
@@ -829,32 +839,50 @@ void syntax_tree_node::add_factor(
 	int i;
 	other::data_structures::string_tools ST;
 
-	for (i = 0; i < nb_nodes; i++) {
-		if (Nodes[i]->text_value_match(factor)) {
-			if (Nodes[i]->f_has_exponent) {
-				Nodes[i]->exponent += exponent;
+
+	// try to join with existing factor only if the ring is commutative:
+
+	int f_done = false;
+
+	if (Tree->f_is_commutative) {
+
+		for (i = 0; i < nb_nodes; i++) {
+			if (Nodes[i]->text_value_match(factor)) {
+				if (Nodes[i]->f_has_exponent) {
+					Nodes[i]->exponent += exponent;
+					f_done = true;
+				}
+				else {
+					Nodes[i]->f_has_exponent = true;
+					Nodes[i]->exponent = 1 + exponent;
+					f_done = true;
+				}
+				break;
 			}
-			else {
-				Nodes[i]->f_has_exponent = true;
-				Nodes[i]->exponent = 1 + exponent;
-			}
-			break;
 		}
 	}
-	if (i == nb_nodes) {
 
-		syntax_tree_node *fresh_node;
 
-		fresh_node = NEW_OBJECT(syntax_tree_node);
+	if (!f_done) {
 
-		fresh_node->init_terminal_node_text_with_exponent(
-				Tree, factor, exponent, verbose_level - 2);
+		// append at the end:
 
-		append_node(fresh_node, 0 /* verbose_level */);
 
-		if (f_v) {
-			cout << "syntax_tree_node::add_factor "
-					"new nb_nodes = " << nb_nodes << endl;
+		if (i == nb_nodes) {
+
+			syntax_tree_node *fresh_node;
+
+			fresh_node = NEW_OBJECT(syntax_tree_node);
+
+			fresh_node->init_terminal_node_text_with_exponent(
+					Tree, factor, exponent, verbose_level - 2);
+
+			append_node(fresh_node, 0 /* verbose_level */);
+
+			if (f_v) {
+				cout << "syntax_tree_node::add_factor "
+						"new nb_nodes = " << nb_nodes << endl;
+			}
 		}
 	}
 

@@ -30,6 +30,8 @@ symbolic_object_activity_description::symbolic_object_activity_description()
 
 	f_print = false;
 
+	f_save = false;
+
 	f_as_vector = false;
 
 	f_homogenize = false;
@@ -88,6 +90,12 @@ int symbolic_object_activity_description::read_arguments(
 			f_print = true;
 			if (f_v) {
 				cout << "-print " << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-save") == 0) {
+			f_save = true;
+			if (f_v) {
+				cout << "-save " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-as_vector") == 0) {
@@ -167,6 +175,9 @@ void symbolic_object_activity_description::print()
 	}
 	if (f_print) {
 		cout << "-print " << endl;
+	}
+	if (f_save) {
+		cout << "-save " << endl;
 	}
 	if (f_as_vector) {
 		cout << "-as_vector " << endl;

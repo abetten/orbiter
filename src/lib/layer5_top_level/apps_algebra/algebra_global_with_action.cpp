@@ -3273,6 +3273,205 @@ void algebra_global_with_action::find_small_generating_set(
 #endif
 
 
+void algebra_global_with_action::conjugacy_classes_based_on_normal_forms(
+		actions::action *A,
+		groups::sims *override_Sims,
+		std::string &label,
+		std::string &label_tex,
+		int verbose_level)
+// called from group_theoretic_activity
+{
+	int f_v = (verbose_level >= 1);
+	string prefix;
+	string fname_output;
+	other::orbiter_kernel_system::file_io Fio;
+	int d;
+	algebra::field_theory::finite_field *F;
+
+
+	if (f_v) {
+		cout << "algebra_global_with_action::conjugacy_classes_based_on_normal_forms" << endl;
+	}
+
+	prefix.assign(label);
+	fname_output.assign(label);
+
+
+	d = A->matrix_group_dimension();
+	F = A->matrix_group_finite_field();
+
+	if (f_v) {
+		cout << "algebra_global_with_action::conjugacy_classes_based_on_normal_forms "
+				"d=" << d << endl;
+		cout << "algebra_global_with_action::conjugacy_classes_based_on_normal_forms "
+				"q=" << F->q << endl;
+	}
+
+	apps_algebra::rational_normal_form *Rational_normal_form;
+
+
+	fname_output += "_classes_based_on_normal_forms_"
+			+ std::to_string(d) + "_" + std::to_string(F->q) + ".tex";
+
+
+	actions::action *A_on_lines;
+
+	if (f_v) {
+		cout << "algebra_global_with_action::conjugacy_classes_based_on_normal_forms "
+				"before A->Induced_action->induced_action_on_grassmannian" << endl;
+	}
+	A_on_lines = A->Induced_action->induced_action_on_grassmannian(
+			2, verbose_level);
+	if (f_v) {
+		cout << "algebra_global_with_action::conjugacy_classes_based_on_normal_forms "
+				"after A->Induced_action->induced_action_on_grassmannian" << endl;
+	}
+
+
+	int f_no_eigenvalue_one = false;
+
+	Rational_normal_form = NEW_OBJECT(apps_algebra::rational_normal_form);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::conjugacy_classes_based_on_normal_forms "
+				"before Rational_normal_form->make_classes_GL" << endl;
+	}
+	Rational_normal_form->make_classes_GL(
+			A,
+			A_on_lines,
+			override_Sims,
+			f_no_eigenvalue_one,
+			verbose_level);
+	if (f_v) {
+		cout << "algebra_global_with_action::conjugacy_classes_based_on_normal_forms "
+				"after Rational_normal_form->make_classes_GL" << endl;
+	}
+
+
+	int i;
+	int *Order;
+
+	Order = NEW_int(Rational_normal_form->nb_classes);
+
+	for (i = 0; i < Rational_normal_form->nb_classes; i++) {
+
+		if (f_v) {
+			cout << "class " << i << " / " << Rational_normal_form->nb_classes << ":" << endl;
+		}
+
+
+		cout << "Representative of class " << i << " / "
+				<< Rational_normal_form->nb_classes << " has rank "
+				<< Rational_normal_form->Reps[i].elt_rk << "\\\\" << endl;
+		Int_matrix_print(Rational_normal_form->Reps[i].Mtx, d, d);
+
+		if (f_v) {
+			cout << "before print_matrix_and_centralizer_order_latex" << endl;
+		}
+		Rational_normal_form->Reps[i].print_matrix_and_centralizer_order_latex(
+				cout);
+		if (f_v) {
+			cout << "after print_matrix_and_centralizer_order_latex" << endl;
+		}
+
+		cout << "The element order is : " << Rational_normal_form->Reps[i].order << "\\\\" << endl;
+
+		Order[i] = Rational_normal_form->Reps[i].order;
+
+	}
+
+	other::data_structures::tally T_order;
+
+	T_order.init(Order, Rational_normal_form->nb_classes, false, 0);
+
+
+	{
+		ofstream ost(fname_output);
+		other::l1_interfaces::latex_interface L;
+
+		L.head_easy(ost);
+		//C.report(fp, verbose_level);
+
+
+		ost << "The distribution of element orders is:" << endl;
+#if 0
+		ost << "$$" << endl;
+		T_order.print_file_tex_we_are_in_math_mode(ost, false /* f_backwards */);
+		ost << "$$" << endl;
+#endif
+
+		//ost << "$" << endl;
+		T_order.print_file_tex(ost, false /* f_backwards */);
+		ost << "\\\\" << endl;
+
+		ost << "$$" << endl;
+		T_order.print_array_tex(ost, false /* f_backwards */);
+		ost << "$$" << endl;
+
+
+
+		int t, f, l, a, h, c;
+
+		for (t = 0; t < T_order.nb_types; t++) {
+			f = T_order.type_first[t];
+			l = T_order.type_len[t];
+			a = T_order.data_sorted[f];
+
+			if (f_v) {
+				cout << "class type " << t << " / " << T_order.nb_types << ":" << endl;
+			}
+
+			ost << "\\section{The Classes of Elements of Order $" << a << "$}" << endl;
+
+
+			ost << "There are " << l << " classes of elements of order "
+					<< a << "\\\\" << endl;
+
+			for (h = 0; h < l; h++) {
+
+				c = f + h;
+
+				i = T_order.sorting_perm_inv[c];
+
+				if (f_v) {
+					cout << "class " << h << " / " << l
+							<< " of elements of order " << a << ":" << endl;
+				}
+
+
+				ost << "Representative of class " << i << " / "
+						<< Rational_normal_form->nb_classes << " has rank " << Rational_normal_form->Reps[i].elt_rk << "\\\\" << endl;
+				Int_matrix_print(Rational_normal_form->Reps[i].Mtx, d, d);
+
+				if (f_v) {
+					cout << "before C.print_matrix_and_centralizer_order_latex" << endl;
+				}
+				Rational_normal_form->Reps[i].print_matrix_and_centralizer_order_latex(ost);
+				if (f_v) {
+					cout << "after C.print_matrix_and_centralizer_order_latex" << endl;
+				}
+
+				ost << "The element order is : " << Rational_normal_form->Reps[i].order << "\\\\" << endl;
+
+
+			}
+
+		}
+		L.foot(ost);
+	}
+	cout << "Written file " << fname_output << " of size "
+			<< Fio.file_size(fname_output) << endl;
+
+	FREE_OBJECT(A_on_lines);
+	FREE_OBJECT(Rational_normal_form);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::conjugacy_classes_based_on_normal_forms done" << endl;
+	}
+}
+
+
+
 
 
 

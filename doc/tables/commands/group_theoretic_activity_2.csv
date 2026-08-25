@@ -1,8 +1,6 @@
 ROW,C1,C2,C3
 0,"tab:grouptasks2",,
 1,"Group theoretic activities (Part 2)",,
-1,"\verb'-find_small_generating_set' "," sz nb ","Find a generating set of the group consisting of sz generators using a randomized algorithm. Give up after nb trials. "
-1,"\verb'-proportion_of_generating_sets_of_size_k' "," k ","Find the proportion of subsets of size k which generate the group. "
 1,"\verb'-find_singer_cycle' ","  ","Finds all Singer cycles whose matrix is a companion matrix. "
 1,"\verb'-classes_based_on_normal_form' "," "," "
 1,"\verb'-normalizer' ","  ","See Section~\ref{sec:group:magma}."
@@ -11,7 +9,7 @@ ROW,C1,C2,C3
 1,"\verb'-classes' ","  ","Computes the conjugacy classes of elements, see Section~\ref{sec:group:magma}."
 1,"\verb'-split_by_classes' "," fname column "," Splits the sets from the given csv file in the given column accoding to the different conjugacy classes of the group."
 1,"\verb'-identify_elements_by_class' "," fname column go supergroup"," Identifies the conjugacy class of each of the elements in the given column in the given file."
-1,"\verb'-find_subgroup' "," go"," Finds all subgroups of the given order and produces a latex report."
+1,"\verb'-find_subgroup' "," go"," Finds all subgroups of the given order, A latex report is produced."
 1,"\verb'-conjugacy_class_of' "," label $g$ "," Computes the conjugacy class of $g$. "
 1,"\verb'-isomorphism_Klein_quadric' "," fname "," "
 1,"\verb'-print_elements' "," ","Produces a printout of all group elements. "

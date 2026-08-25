@@ -304,6 +304,7 @@ void orbits_global::orbits_on_points_from_vector_ge(
 		int print_interval,
 		groups::orbits_on_something *&Orb,
 		int verbose_level)
+// compute orbits given generators as vector_ge, not as strong generating set.
 {
 	int f_v = (verbose_level >= 1);
 
@@ -703,6 +704,7 @@ void orbits_global::orbits_on_points_from_generators(
 		int print_interval,
 		groups::orbits_on_something *&Orb,
 		int verbose_level)
+// compute orbits given generators as vector_ge, not as strong generating set.
 {
 	int f_v = (verbose_level >= 1);
 

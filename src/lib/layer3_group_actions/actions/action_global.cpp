@@ -1668,6 +1668,9 @@ action *action_global::init_polarity_extension_group_and_restrict(
 		cout << "Polarity_extension->Polarity->total_degree=" << Polarity_extension->Polarity->total_degree << endl;
 	}
 
+	std::string label_of_set;
+	std::string label_of_set_tex;
+
 	if (f_on_middle_layer_grassmannian) {
 
 #if 0
@@ -1703,6 +1706,9 @@ action *action_global::init_polarity_extension_group_and_restrict(
 			points[i] = Polarity_extension->perm_offset_i[1] + Polarity_extension->Polarity->offset[half] + i;
 		}
 
+		label_of_set = "middle_layer";
+		label_of_set_tex = "{\\rm middle\\_layer}";
+
 	}
 	else if (f_on_points_and_hyperplanes) {
 
@@ -1728,6 +1734,9 @@ action *action_global::init_polarity_extension_group_and_restrict(
 			points[j++] = Polarity_extension->perm_offset_i[1] + Polarity_extension->Polarity->offset[hyperplane_idx] + i;
 		}
 
+		label_of_set = "points_and_hyperplanes";
+		label_of_set_tex = "{\\rm points\\_and\\_hyperplanes}";
+
 
 	}
 	else {
@@ -1737,6 +1746,8 @@ action *action_global::init_polarity_extension_group_and_restrict(
 			points[i] = Polarity_extension->perm_offset_i[1] + i;
 		}
 
+		label_of_set = "all";
+		label_of_set_tex = "{\\rm all}";
 	}
 
 
@@ -1745,11 +1756,9 @@ action *action_global::init_polarity_extension_group_and_restrict(
 
 
 
-	std::string label_of_set;
-	std::string label_of_set_tex;
 
-	label_of_set.assign("_polarity_extension");
-	label_of_set_tex.assign("{\\rm \\_polext}");
+	//label_of_set.assign("_polarity_extension");
+	//label_of_set_tex.assign("{\\rm \\_polext}");
 
 	if (f_v) {
 		cout << "action_global::init_polarity_extension_group_and_restrict "

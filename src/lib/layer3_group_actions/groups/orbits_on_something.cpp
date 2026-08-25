@@ -199,6 +199,7 @@ void orbits_on_something::init_from_vector_ge(
 		std::string &prefix,
 		int print_interval,
 		int verbose_level)
+// compute orbits given generators as vector_ge, not as strong generating set.
 {
 	int f_v = (verbose_level >= 1);
 	other::orbiter_kernel_system::file_io Fio;
@@ -216,6 +217,9 @@ void orbits_on_something::init_from_vector_ge(
 	fname = prefix + "_orbits.bin";
 
 	fname_csv = prefix + "_orbits.csv";
+
+	f_has_SG = false;
+	//orbits_on_something::SG = SG;
 
 
 
@@ -2065,14 +2069,16 @@ void orbits_on_something::compute_orbit_invariant_after_classification(
 	}
 
 	if (f_v) {
-		cout << "orbits_on_something::compute_orbit_invariant_after_classification before evaluate_function_and_store" << endl;
+		cout << "orbits_on_something::compute_orbit_invariant_after_classification "
+				"before evaluate_function_and_store" << endl;
 	}
 	Classify_orbits_by_length->Set_partition->evaluate_function_and_store(Orbit_invariant,
 			evaluate_orbit_invariant_function,
 			evaluate_data,
 			verbose_level - 1);
 	if (f_v) {
-		cout << "orbits_on_something::compute_orbit_invariant_after_classification after evaluate_function_and_store" << endl;
+		cout << "orbits_on_something::compute_orbit_invariant_after_classification "
+				"after evaluate_function_and_store" << endl;
 	}
 
 
@@ -2160,7 +2166,8 @@ int orbits_on_something::get_orbit_rep_unpacked(
 	rep_unpacked = ABR->original_point(rep);
 
 	if (f_v) {
-		cout << "orbits_on_something::get_orbit_rep_unpacked rep=" << rep << " rep_unpacked=" << rep_unpacked << endl;
+		cout << "orbits_on_something::get_orbit_rep_unpacked "
+				"rep=" << rep << " rep_unpacked=" << rep_unpacked << endl;
 	}
 
 
@@ -2274,9 +2281,27 @@ void orbits_on_something::report(
 	}
 
 
+
+
+	int f_has_go;
 	algebra::ring_theory::longinteger_object go;
 
-	SG->group_order(go);
+	if (f_has_SG) {
+		if (f_v) {
+			cout << "orbits_on_something::report "
+					"before SG->group_order" << endl;
+		}
+		SG->group_order(go);
+		if (f_v) {
+			cout << "orbits_on_something::report "
+					"after SG->group_order" << endl;
+		}
+		f_has_go = true;
+	}
+	else {
+		cout << "orbits_on_something::report !f_has_SG" << endl;
+		f_has_go = false;
+	}
 
 
 
@@ -2292,10 +2317,25 @@ void orbits_on_something::report(
 	int i, orbit_length, nb_orbits, j, idx, l1;
 
 	ost << "\\section*{Group Orbits}" << endl;
-	//of a group of order " << go << "\\\\" << endl;
 
-	ost << "Orbits of the group $" << A->label_tex << "$:\\\\" << endl;
-	SG->print_generators_tex(ost);
+
+	if (f_has_go) {
+		 ost << "Orbits of a group of order " << go << "\\\\" << endl;
+	}
+	else {
+		 ost << "The group order is not known.\\\\" << endl;
+	}
+
+	if (f_has_SG) {
+		ost << "Orbits of the group $" << A->label_tex << "$:\\\\" << endl;
+		SG->print_generators_tex(ost);
+	}
+	else {
+		ost << "Orbits of the group $" << A->label_tex << "$:\\\\" << endl;
+		ost << "Generators are:\\\\" << endl;
+		gens->print_tex(ost);
+
+	}
 
 	ost << "Considering the orbit length, there are "
 			<< Classify_orbits_by_length->nb_types << " types of orbits:\\\\" << endl;
@@ -2397,11 +2437,23 @@ void orbits_on_something::report(
 
 			Lint_vec_heapsort(Orb, orbit_length);
 
-			Lint_vec_print_fully(ost, Orb, orbit_length);
+			if (orbit_length < 1024) {
+
+				Lint_vec_print_fully(ost, Orb, orbit_length);
+			}
+			else {
+				ost << "Too large to print (change threshold in orbits\\_on\\_something::report)\\\\" << endl;
+			}
 			//ost << "$$" << endl;
 			ost << "\\\\" << endl;
 
-			A->Action_latex_interface->latex_point_set(ost, Orb, orbit_length, 0 /* verbose_level */);
+			if (orbit_length < 1024) {
+				A->Action_latex_interface->latex_point_set(ost, Orb, orbit_length, 0 /* verbose_level */);
+			}
+			else {
+				ost << "Too large to print (change threshold in orbits\\_on\\_something::report)\\\\" << endl;
+
+			}
 		}
 		FREE_lint(Orb);
 	}

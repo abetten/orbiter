@@ -1026,7 +1026,7 @@ public:
 class group_theoretic_activity_description {
 public:
 
-	// TABLES/group_theoretic_activity_1.tex
+	// TABLES/group_theoretic_activity_1.csv
 
 
 	int f_report;
@@ -1051,8 +1051,6 @@ public:
 
 	int f_select_elements;
 	std::string select_elements_ranks;
-
-	int f_export_group_table;
 
 	int f_random_element;
 	std::string random_element_label;
@@ -1089,22 +1087,10 @@ public:
 	std::string raise_to_the_power_a_text;
 	std::string raise_to_the_power_exponent_text;
 
-	int f_export_orbiter;
-
-	int f_export_gap;
-
-	int f_export_magma;
 
 
 	int f_search_element_of_order;
 	int search_element_order;
-
-	int f_find_standard_generators;
-	int find_standard_generators_order_a;
-	int find_standard_generators_order_b;
-	int find_standard_generators_order_ab;
-
-	int f_find_standard_generators_M24;
 
 	int f_element_rank;
 	std::string element_rank_data;
@@ -1112,29 +1098,18 @@ public:
 	int f_element_unrank;
 	std::string element_unrank_data;
 
+	int f_test_associativity;
+	int test_associativity_nb_tests;
 
 
 
-	// TABLES/group_theoretic_activity_2.tex
-
-	int f_find_small_generating_set;
-	int find_small_generating_set_desired_size;
-	int find_small_generating_set_max_attempts;
-
-	int f_proportion_of_generating_sets_of_size_k;
-	int proportion_of_generating_sets_of_size_k_k;
-
-	// ToDo: undocumented
-	int f_proportion_of_generating_sets_of_size_k_using_orbits;
-	int proportion_of_generating_sets_of_size_k_using_orbits_k;
-	std::string proportion_of_generating_sets_of_size_k_using_orbits_fname;
-	std::string proportion_of_generating_sets_of_size_k_using_orbits_col_label_reps;
-	std::string proportion_of_generating_sets_of_size_k_using_orbits_col_label_orbit_length;
+	// TABLES/group_theoretic_activity_2.csv
 
 
 	int f_find_singer_cycle;
 
 
+	// ToDo: currently disabled
 	int f_classes_based_on_normal_form;
 
 
@@ -1221,7 +1196,50 @@ public:
 	std::string rational_normal_form_input;
 
 
-	// TABLES/group_theoretic_activity_3.tex
+
+
+	// TABLES/group_theoretic_activity_3
+
+
+
+
+	int f_find_standard_generators;
+	int find_standard_generators_order_a;
+	int find_standard_generators_order_b;
+	int find_standard_generators_order_ab;
+
+	int f_find_standard_generators_M24;
+
+
+	int f_find_small_generating_set;
+	int find_small_generating_set_desired_size;
+	int find_small_generating_set_max_attempts;
+
+	int f_proportion_of_generating_sets_of_size_k;
+	int proportion_of_generating_sets_of_size_k_k;
+
+	int f_proportion_of_generating_sets_of_size_k_using_orbits;
+	int proportion_of_generating_sets_of_size_k_using_orbits_k;
+	std::string proportion_of_generating_sets_of_size_k_using_orbits_fname;
+	std::string proportion_of_generating_sets_of_size_k_using_orbits_col_label_reps;
+	std::string proportion_of_generating_sets_of_size_k_using_orbits_col_label_orbit_length;
+
+
+	int f_export_group_table;
+
+	int f_export_orbiter;
+
+	int f_export_gap;
+
+	int f_export_magma;
+
+
+
+
+
+
+
+	// TABLES/group_theoretic_activity_4.csv
 
 
 	int f_find_conjugating_element;
@@ -1269,7 +1287,7 @@ public:
 
 
 
-	// TABLES/group_theoretic_activity_4.tex
+	// TABLES/group_theoretic_activity_5.tex
 
 
 
@@ -1345,7 +1363,7 @@ public:
 	std::string canonical_image_input_set;
 
 
-	// TABLES/group_theoretic_activity_5.tex
+	// TABLES/group_theoretic_activity_6.tex
 
 
 	int f_subgroup_lattice_magma;
@@ -1627,6 +1645,8 @@ public:
 	int perform_activity_part4(
 			int verbose_level);
 	int perform_activity_part5(
+			int verbose_level);
+	int perform_activity_part6(
 			int verbose_level);
 
 };

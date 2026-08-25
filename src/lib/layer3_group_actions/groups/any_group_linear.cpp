@@ -46,8 +46,10 @@ void any_group_linear::init(
 }
 
 
+#if 0
 void any_group_linear::classes_based_on_normal_form(
 		int verbose_level)
+// this function creates a sims object
 {
 	int f_v = (verbose_level >= 1);
 
@@ -87,6 +89,7 @@ void any_group_linear::classes_based_on_normal_form(
 		cout << "any_group_linear::classes_based_on_normal_form done" << endl;
 	}
 }
+#endif
 
 void any_group_linear::find_singer_cycle(
 		int verbose_level)

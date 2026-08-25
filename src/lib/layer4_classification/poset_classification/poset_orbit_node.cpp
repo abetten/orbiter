@@ -916,6 +916,14 @@ void poset_orbit_node::print_set(
 	set = NEW_lint(size);
 	store_set_to(gen, depth - 1, set /*gen->S0*/);
 	Lint_vec_print(cout, set /*gen->S0*/, size);
+
+#if 0
+	if (gen->get_A()->base_len() == 0) {
+		cout << "poset_orbit_node::print_set gen->get_A()->base_len() == 0" << endl;
+		exit(1);
+	}
+#endif
+
 	if (nb_strong_generators == 0) {
 		cout << "_1";
 	}
@@ -1151,6 +1159,57 @@ int poset_orbit_node::nb_extension_points()
 		n += E[i].get_orbit_len();
 	}
 	return n;
+
+}
+
+void poset_orbit_node::compute_substructure_invariant_1(
+		poset_classification *gen,
+		int level, int idx,
+		int *data,
+		int verbose_level)
+// data[level]
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "poset_orbit_node::compute_substructure_invariant_1" << endl;
+	}
+
+	long int *set;
+	long int *canonical_set;
+	long int sub_set[1];
+	int *transporter;
+	int color;
+
+
+	set = NEW_lint(level);
+	canonical_set = NEW_lint(level);
+	transporter = NEW_int(gen->get_poset()->A->elt_size_in_int);
+
+	store_set_to(gen, level - 1, set);
+
+
+	int i;
+
+	for (i = 0; i < level; i++) {
+		sub_set[0] = set[i];
+
+		color = gen->trace_set(sub_set, 1 /* size */, 1 /* level */, canonical_set, transporter,
+			verbose_level);
+
+
+		data[i] = color;
+	}
+
+
+	FREE_lint(set);
+	FREE_lint(canonical_set);
+	FREE_int(transporter);
+
+	if (f_v) {
+		cout << "poset_orbit_node::compute_substructure_invariant_1 done" << endl;
+	}
 
 }
 

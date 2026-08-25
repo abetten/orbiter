@@ -271,13 +271,12 @@ public:
 			groups::any_group *AG,
 			groups::sims *Sims,
 			int verbose_level);
-#if 0
-	void find_small_generating_set(
-			//groups::sims *Sims,
-			groups::any_group *Any_group,
-			groups::strong_generators *Subgroup_gens,
+	void conjugacy_classes_based_on_normal_forms(
+			actions::action *A,
+			groups::sims *override_Sims,
+			std::string &label,
+			std::string &label_tex,
 			int verbose_level);
-#endif
 
 };
 
@@ -494,20 +493,14 @@ public:
 
 	int f_print;
 
-	// ToDo: delete in documentation
 	//int f_apply_isomorphism_wedge_product_4to6;
 
 	int f_with_permutation;
 
 	int f_with_fix_structure;
 
-	// ToDo: delete in documentation
 	//int f_order_of_products_of_pairs;
 
-#if 0
-	// ToDo: undocumented
-	int f_products_of_pairs;
-#endif
 
 	int f_conjugate;
 	std::string conjugate_data;
@@ -672,11 +665,34 @@ public:
 class rational_normal_form {
 public:
 
+	int d;
+	int f_no_eigenvalue_one;
+	algebra::field_theory::finite_field *F;
+
+	actions::action *A;
+	//data_structures_groups::vector_ge *nice_gens;
+
+	actions::action *A_on_lines;
+	groups::sims *override_Sims;
+
+
+	algebra::linear_algebra::gl_class_rep *Reps;
+	int nb_classes;
+
+
 	rational_normal_form();
 	~rational_normal_form();
 	void make_classes_GL(
-			algebra::field_theory::finite_field *F,
-			int d, int f_no_eigenvalue_one, int verbose_level);
+			actions::action *A,
+			actions::action *A_on_lines,
+			groups::sims *override_Sims,
+			//algebra::field_theory::finite_field *F,
+			//int d,
+			int f_no_eigenvalue_one, int verbose_level);
+	void report(
+			std::ostream &ost, int verbose_level);
+	void init(
+			int verbose_level);
 #if 0
 	void compute_rational_normal_form(
 			algebra::field_theory::finite_field *F,

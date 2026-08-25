@@ -26,6 +26,7 @@ void sims::random_element(
 // compute a random element among the group
 // elements represented by the chain
 // (chooses random cosets along the stabilizer chain)
+// the coset indices are in path[]
 {
 	int f_v = (verbose_level >= 1);
 	int i;

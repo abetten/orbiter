@@ -82,6 +82,9 @@ poset_classification_control::poset_classification_control()
 	//draw_options = NEW_OBJECT(graphics::layered_graph_draw_options);
 
 
+	f_substructure_invariant = false;
+	substructure_invariant_k = 0;
+
 
 
 	f_preferred_choice = false;
@@ -260,6 +263,13 @@ int poset_classification_control::read_arguments(
 			}
 		}
 
+		else if (ST.stringcmp(argv[i], "-substructure_invariant") == 0) {
+			f_substructure_invariant = true;
+			substructure_invariant_k = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-substructure_invariant " << substructure_invariant_k << endl;
+			}
+		}
 
 		else if (ST.stringcmp(argv[i], "-preferred_choice") == 0) {
 
@@ -377,6 +387,9 @@ void poset_classification_control::print()
 		cout << "-draw_options " << draw_options_label << endl;
 	}
 
+	if (f_substructure_invariant) {
+		cout << "-substructure_invariant " << substructure_invariant_k << endl;
+	}
 
 	if (f_preferred_choice) {
 		for (int i = 0; i < preferred_choice.size(); i++) {

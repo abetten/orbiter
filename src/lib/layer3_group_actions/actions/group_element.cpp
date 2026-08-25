@@ -372,6 +372,44 @@ void group_element::make_list_of_images(
 }
 
 
+int group_element::compare_using_list_of_images(
+		int *Elt1, int *Elt2, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "group_element::compare_using_list_of_images" << endl;
+	}
+
+	int *Image1;
+	int *Image2;
+
+	Image1 = NEW_int(A->degree);
+	Image2 = NEW_int(A->degree);
+
+
+	make_list_of_images(Image1, Elt1);
+	make_list_of_images(Image2, Elt2);
+
+	int i;
+	int ret = true;
+
+	for (i = 0; i < A->degree; i++) {
+		if (Image1[i] != Image2[i]) {
+			ret = false;
+			break;
+		}
+	}
+
+
+	FREE_int(Image1);
+	FREE_int(Image2);
+	if (f_v) {
+		cout << "group_element::compare_using_list_of_images done, ret = " << ret << endl;
+	}
+	return ret;
+}
+
 
 // #############################################################################
 

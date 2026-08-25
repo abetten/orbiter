@@ -34,8 +34,10 @@ public:
 
 	void init(
 			any_group *Any_group, int verbose_level);
+#if 0
 	void classes_based_on_normal_form(
 			int verbose_level);
+#endif
 	void find_singer_cycle(
 			int verbose_level);
 	void isomorphism_Klein_quadric(
@@ -190,6 +192,7 @@ public:
 	void make_element_tree(
 			int f_override_action, actions::action *A_special,
 			int verbose_level);
+	// uses the sims object Subgroup_sims. Does not create a new sims object.
 	void order_of_products_of_elements_by_rank(
 			std::string &Elements_text,
 			int verbose_level);
@@ -204,12 +207,15 @@ public:
 			int verbose_level);
 	void export_inversion_graphs(
 			std::string &fname, int verbose_level);
-	void random_element(
+	void random_element_and_csv_file(
 			std::string &elt_label, int verbose_level);
+	// uses the sims object Subgroup_sims. Does not create a new sims object.
 	void element_rank(
 			std::string &elt_data, int verbose_level);
+	// uses the sims object Subgroup_sims. Does not create a new sims object.
 	void element_unrank(
 			std::string &rank_string, int verbose_level);
+	// uses the sims object Subgroup_sims. Does not create a new sims object.
 	void element_unrank_STL_lint(
 			std::vector<long int> &Ranks,
 			data_structures_groups::vector_ge *&Elts,
@@ -303,6 +309,9 @@ public:
 			int verbose_level);
 	void get_elements(
 			data_structures_groups::vector_ge *&elements,
+			int verbose_level);
+	void test_associative_law(
+			int nb_tests,
 			int verbose_level);
 
 
@@ -619,12 +628,14 @@ public:
 			groups::strong_generators *Subgroup_gens_G,
 			data_structures_groups::vector_ge *&coset_reps,
 			int verbose_level);
+#if 0
 	void conjugacy_classes_based_on_normal_forms(
 			actions::action *A,
 			groups::sims *override_Sims,
 			std::string &label,
 			std::string &label_tex,
 			int verbose_level);
+#endif
 	void find_singer_cycle(
 			groups::any_group *Any_group,
 			actions::action *A1, actions::action *A2,
@@ -705,7 +716,7 @@ public:
 // orbits_on_something.cpp
 // #############################################################################
 
-//! compute orbits of a group in a given action; allows file io
+//! compute orbits of a group in a given action; allows file io; generators can be given as vector or as strong generators
 
 class orbits_on_something {
 
@@ -744,6 +755,7 @@ public:
 			std::string &prefix,
 			int print_interval,
 			int verbose_level);
+	// compute orbits given generators as vector_ge, not as strong generating set.
 	void stabilizer_any_point(
 			int pt,
 			strong_generators *&Stab, int verbose_level);

@@ -405,6 +405,10 @@ void forest::get_orbit_by_levels(
 			SoS->Sets[i][j] = orbit[fst + Node[i][j]];
 		}
 	}
+	if (f_v) {
+		cout << "forest::get_orbit_by_levels max_depth = " << max_depth << endl;
+		cout << "forest::get_orbit_by_levels nb_layers = max_depth + 1 = " << nb_layers << endl;
+	}
 
 
 	if (f_v) {

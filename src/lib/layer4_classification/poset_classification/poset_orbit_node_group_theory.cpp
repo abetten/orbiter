@@ -694,6 +694,13 @@ void poset_orbit_node::compute_point_stabilizer_in_standard_setting(
 				"verbose_level = " << verbose_level << endl;
 	}
 
+	if (f_v) {
+		cout << "poset_orbit_node::compute_point_stabilizer_in_standard_setting "
+				"A = " << gen->get_A()->label << endl;
+		cout << "poset_orbit_node::compute_point_stabilizer_in_standard_setting "
+				"A2 = " << gen->get_A2()->label << endl;
+	}
+
 	D.integral_division_by_int(go_G, pt_orbit_len, go_H, r);
 	if (r != 0) {
 		cout << "poset_orbit_node::compute_point_stabilizer_in_standard_setting "
@@ -764,7 +771,7 @@ void poset_orbit_node::compute_point_stabilizer_in_standard_setting(
 			}
 			G.point_stabilizer_with_action(
 					AR, H, AR->G.ABR->idx_of_root_node /* 0 */ /*pt */,
-					0 /*verbose_level - 3*/);
+					verbose_level - 3);
 			if (f_v) {
 				gen->print_level_extension_info(size - 1, prev, prev_ex);
 				cout << " poset_orbit_node::compute_point_stabilizer_in_standard_setting "

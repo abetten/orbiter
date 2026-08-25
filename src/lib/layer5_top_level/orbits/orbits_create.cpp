@@ -221,7 +221,8 @@ void orbits_create::init(
 		}
 
 		Orbits.orbits_on_points_from_generators(
-				Group, Gens->V, Descr->print_interval, Orb, verbose_level);
+				Group, Gens->V, Descr->print_interval, Orb,
+				verbose_level);
 
 
 		f_has_Orb = true;
@@ -283,6 +284,12 @@ void orbits_create::init(
 				cout << "orbits_create::init loading A_base" << endl;
 			}
 			A_base = Group->A_base;
+
+
+			if (A_base->base_len() == 0) {
+				cout << "orbits_create::init A_base has no base. A_base->base_len() == 0" << endl;
+				exit(1);
+			}
 #if 0
 			if (f_v) {
 				cout << "orbits_create::init loading A_action" << endl;

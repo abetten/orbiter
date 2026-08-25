@@ -64,6 +64,7 @@ finite_field_activity_description::finite_field_activity_description()
 	power_map_k = 0;
 	//std::string power_map_elements;
 
+
 	// Extension fields:
 
 	f_trace = false;
@@ -380,6 +381,7 @@ int finite_field_activity_description::read_arguments(
 					<< endl;
 			}
 		}
+
 
 		// Extension fields:
 

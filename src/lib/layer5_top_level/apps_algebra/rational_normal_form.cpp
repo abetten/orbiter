@@ -21,21 +21,47 @@ namespace apps_algebra {
 rational_normal_form::rational_normal_form()
 {
 	Record_birth();
+
+	d = 0;
+	f_no_eigenvalue_one = false;
+	F = NULL;
+
+	A = NULL;
+	//nice_gens = NULL;
+	A_on_lines = NULL;
+	override_Sims = NULL;
+	Reps = NULL;
+	nb_classes = 0;
 }
 
 
 rational_normal_form::~rational_normal_form()
 {
 	Record_death();
-
+#if 0
+	if (A_on_lines) {
+		FREE_OBJECT(A_on_lines);
+	}
+	if (nice_gens) {
+		FREE_OBJECT(nice_gens);
+	}
+	if (A) {
+		FREE_OBJECT(A);
+	}
+#endif
+	if (Reps) {
+		FREE_OBJECTS(Reps);
+	}
 }
 
 
 void rational_normal_form::make_classes_GL(
-		algebra::field_theory::finite_field *F,
-		int d, int f_no_eigenvalue_one, int verbose_level)
-// called from interface_algebra
-// creates an object of type action
+		actions::action *A,
+		actions::action *A_on_lines,
+		groups::sims *override_Sims,
+		//algebra::field_theory::finite_field *F,
+		//int d,
+		int f_no_eigenvalue_one, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -43,145 +69,68 @@ void rational_normal_form::make_classes_GL(
 		cout << "rational_normal_form::make_classes_GL" << endl;
 	}
 
-	algebra::linear_algebra::gl_classes C;
-	algebra::linear_algebra::gl_class_rep *R;
-	int nb_classes;
-	int i;
+	rational_normal_form::A = A;
+	rational_normal_form::A_on_lines = A_on_lines;
+	rational_normal_form::override_Sims = override_Sims;
+	//rational_normal_form::d = d;
+	rational_normal_form::f_no_eigenvalue_one = f_no_eigenvalue_one;
+	//rational_normal_form::F = F;
 
-
-	if (f_v) {
-		cout << "rational_normal_form::make_classes_GL "
-				"before C.init" << endl;
-	}
-	C.init(d, F, verbose_level - 2);
-	if (f_v) {
-		cout << "rational_normal_form::make_classes_GL "
-				"after C.init" << endl;
-	}
+	d = A->matrix_group_dimension();
+	F = A->matrix_group_finite_field();
 
 	if (f_v) {
 		cout << "rational_normal_form::make_classes_GL "
-				"before C.make_classes" << endl;
+				"before init" << endl;
 	}
-	C.make_classes(R, nb_classes, f_no_eigenvalue_one, verbose_level);
+	init(verbose_level - 2);
 	if (f_v) {
 		cout << "rational_normal_form::make_classes_GL "
-				"after C.make_classes" << endl;
+				"after init" << endl;
 	}
 
-	actions::action *A;
+
 	algebra::ring_theory::longinteger_object Go;
-	data_structures_groups::vector_ge *nice_gens;
-	int a;
-	int *Mtx;
-	int *Elt;
 
-
-
-	A = NEW_OBJECT(actions::action);
-	if (f_v) {
-		cout << "rational_normal_form::make_classes_GL "
-				"before A->Known_groups->init_projective_group" << endl;
-	}
-	A->Known_groups->init_projective_group(
-			d /* n */, F,
-			false /* f_semilinear */,
-			true /* f_basis */, true /* f_init_sims */,
-			nice_gens,
-			verbose_level - 2);
-	if (f_v) {
-		cout << "rational_normal_form::make_classes_GL "
-				"after A->Known_groups->init_projective_group" << endl;
-	}
-
-	FREE_OBJECT(nice_gens);
 	A->print_base();
 	A->group_order(Go);
 
 
-	actions::action *A_on_lines;
 
-	if (f_v) {
-		cout << "rational_normal_form::make_classes_GL "
-				"before A->Induced_action->induced_action_on_grassmannian" << endl;
-	}
-	A_on_lines = A->Induced_action->induced_action_on_grassmannian(
-			2, verbose_level);
-	if (f_v) {
-		cout << "rational_normal_form::make_classes_GL "
-				"after A->Induced_action->induced_action_on_grassmannian" << endl;
-	}
+	std::string Col_headings[8];
 
-	Mtx = NEW_int(d * d);
-	Elt = NEW_int(A->elt_size_in_int);
-
-	int order, nb_fixpoints, nb_fixlines;
-
-	std::string Col_headings[7];
-
-	Col_headings[0] = "Line";
-	Col_headings[1] = "order";
-	Col_headings[2] = "nb_fixpoints";
-	Col_headings[3] = "nb_fixlines";
-	Col_headings[4] = "centralizer_order";
-	Col_headings[5] = "class_size";
-	Col_headings[6] = "matrix";
+	Col_headings[0] = "Row";
+	Col_headings[1] = "Elt_rk";
+	Col_headings[2] = "order";
+	Col_headings[3] = "nb_fixpoints";
+	Col_headings[4] = "nb_fixlines";
+	Col_headings[5] = "centralizer_order";
+	Col_headings[6] = "class_size";
+	Col_headings[7] = "matrix";
 
 	std::string *Table;
 	int nb_rows, nb_cols;
 
 	nb_rows = nb_classes;
-	nb_cols = 7;
+	nb_cols = 8;
 	Table = new string [nb_rows * nb_cols];
 
+	int i;
+	algebra::linear_algebra::gl_classes C;
 
 	for (i = 0; i < nb_classes; i++) {
 
-		C.make_matrix_from_class_rep(
-				Mtx, R + i, 0 /*verbose_level - 1 */);
-
-		A->Group_element->make_element(Elt, Mtx, 0);
-
-		a = A->Sims->element_rank_lint(Elt);
-
-		cout << "Representative of class " << i << " / "
-				<< nb_classes << " has rank " << a << endl;
-		Int_matrix_print(Elt, d, d);
-
-
-		order = A->Group_element->element_order(Elt);
-
-		nb_fixpoints = A->Group_element->count_fixed_points(
-				Elt, 0 /*  verbose_level */);
-
-
-		nb_fixlines = A_on_lines->Group_element->count_fixed_points(
-				Elt, 0 /*  verbose_level */);
-
-		algebra::ring_theory::longinteger_object go, co, cl;
-		int *Mtx2;
-
-		C.get_matrix_and_centralizer_order(
-				go,
-				co,
-				cl,
-				Mtx2,
-				R + i);
-
-
-		FREE_int(Mtx2);
 
 
 		Table[i * nb_cols + 0] = std::to_string(i);
-		Table[i * nb_cols + 1] = std::to_string(order);
-		Table[i * nb_cols + 2] = std::to_string(nb_fixpoints);
-		Table[i * nb_cols + 3] = std::to_string(nb_fixlines);
-		Table[i * nb_cols + 4] = co.stringify();
-		Table[i * nb_cols + 5] = cl.stringify();
-		Table[i * nb_cols + 6] = "\"" + Int_vec_stringify(Elt, d * d) + "\"";
+		Table[i * nb_cols + 1] = std::to_string(Reps[i].elt_rk);
+		Table[i * nb_cols + 2] = std::to_string(Reps[i].order);
+		Table[i * nb_cols + 3] = std::to_string(Reps[i].nb_fixpoints);
+		Table[i * nb_cols + 4] = std::to_string(Reps[i].nb_fixlines);
+		Table[i * nb_cols + 5] = Reps[i].centralizer_order->stringify();
+		Table[i * nb_cols + 6] = Reps[i].class_length->stringify();
+		Table[i * nb_cols + 7] = "\"" + Int_vec_stringify(Reps[i].Mtx, d * d) + "\"";
 
-		C.print_matrix_and_centralizer_order_latex(
-				cout, R + i);
 
 	}
 
@@ -220,12 +169,20 @@ void rational_normal_form::make_classes_GL(
 	fname = "Class_reps_GL_" + std::to_string(d)
 			+ "_" + std::to_string(F->q) + ".tex";
 	{
-		ofstream fp(fname);
+		ofstream ost(fname);
 		other::l1_interfaces::latex_interface L;
 
-		L.head_easy(fp);
-		C.report(fp, verbose_level);
-		L.foot(fp);
+		L.head_easy(ost);
+		if (f_v) {
+			cout << "rational_normal_form::make_classes_GL "
+					"before report" << endl;
+		}
+		report(ost, verbose_level);
+		if (f_v) {
+			cout << "rational_normal_form::make_classes_GL "
+					"after report" << endl;
+		}
+		L.foot(ost);
 	}
 	if (f_v) {
 		cout << "rational_normal_form::make_classes_GL "
@@ -233,18 +190,200 @@ void rational_normal_form::make_classes_GL(
 				<< Fio.file_size(fname) << endl;
 	}
 
-	//make_gl_classes(d, q, f_no_eigenvalue_one, verbose_level);
-
-	FREE_int(Mtx);
-	FREE_int(Elt);
-	FREE_OBJECTS(R);
-	FREE_OBJECT(A);
-	FREE_OBJECT(A_on_lines);
 	if (f_v) {
 		cout << "rational_normal_form::make_classes_GL done" << endl;
 	}
 }
 
+
+void rational_normal_form::report(
+		std::ostream &ost, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "rational_normal_form::report" << endl;
+	}
+
+
+
+	int i;
+
+	ost << "\\section*{Conjugacy Classes of "
+			"${\\rm GL}(" << d << "," << F->q << ")$}" << endl;
+
+
+	//int *M;
+	int f_elements_exponential = false;
+	string symbol_for_print;
+
+
+	symbol_for_print.assign("\\alpha");
+
+	//M = NEW_int(k * k);
+
+	ost << "The number of conjugacy classes of "
+			"${\\rm GL}(" << d << "," << F->q << ")$ is "
+			<< nb_classes << ":\\\\" << endl;
+	ost << "$$" << endl;
+	for (i = 0; i < nb_classes; i++) {
+
+
+		//make_matrix_from_class_rep(
+		//		M, R + i, 0 /* verbose_level */);
+
+
+		ost << "\\left[" << endl;
+		F->Io->latex_matrix(ost,
+				f_elements_exponential, symbol_for_print, Reps[i].Mtx, d, d);
+		ost << "\\right]" << endl;
+		if (i < nb_classes - 1) {
+			ost << ", " << endl;
+		}
+		if ((i + 1) % 5 == 0) {
+			ost << "$$" << endl;
+			ost << "$$" << endl;
+		}
+
+	}
+	ost << "$$" << endl;
+	ost << "\\bigskip" << endl;
+
+
+
+
+	for (i = 0; i < nb_classes; i++) {
+		ost << "Class " << i << " / "
+				<< nb_classes << "\\\\" << endl;
+		Reps[i].print_matrix_and_centralizer_order_latex(
+				ost);
+
+		ost << endl;
+		ost << "\\bigskip" << endl;
+		ost << endl;
+
+	}
+
+	if (f_v) {
+		cout << "rational_normal_form::report done" << endl;
+	}
+}
+
+
+
+void rational_normal_form::init(
+		int verbose_level)
+// uses override_Sims
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "rational_normal_form::init" << endl;
+	}
+
+	algebra::linear_algebra::gl_classes C;
+
+	if (f_v) {
+		cout << "rational_normal_form::init "
+				"before C.init" << endl;
+	}
+	C.init(d, F, verbose_level - 2);
+	if (f_v) {
+		cout << "rational_normal_form::init "
+				"after C.init" << endl;
+	}
+
+	if (f_v) {
+		cout << "rational_normal_form::init "
+				"before C.make_classes" << endl;
+	}
+	C.make_classes(
+			Reps, nb_classes, f_no_eigenvalue_one, verbose_level);
+	if (f_v) {
+		cout << "rational_normal_form::init "
+				"after C.make_classes" << endl;
+	}
+
+#if 0
+	A = NEW_OBJECT(actions::action);
+	if (f_v) {
+		cout << "rational_normal_form::init "
+				"before A->Known_groups->init_projective_group" << endl;
+	}
+	A->Known_groups->init_projective_group(
+			d /* n */, F,
+			false /* f_semilinear */,
+			true /* f_basis */, true /* f_init_sims */,
+			nice_gens,
+			verbose_level - 2);
+	if (f_v) {
+		cout << "rational_normal_form::init "
+				"after A->Known_groups->init_projective_group" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "rational_normal_form::init "
+				"before A->Induced_action->induced_action_on_grassmannian" << endl;
+	}
+	A_on_lines = A->Induced_action->induced_action_on_grassmannian(
+			2, verbose_level);
+	if (f_v) {
+		cout << "rational_normal_form::init "
+				"after A->Induced_action->induced_action_on_grassmannian" << endl;
+	}
+#endif
+
+	int i;
+	int *Elt;
+	long int elt_rk;
+	int order;
+	int nb_fixpoints;
+	int nb_fixlines;
+
+
+	Elt = NEW_int(A->elt_size_in_int);
+
+	for (i = 0; i < nb_classes; i++) {
+
+		//C.make_matrix_from_class_rep(
+		//		Mtx, Reps + i, 0 /*verbose_level - 1 */);
+
+		A->Group_element->make_element(Elt, Reps[i].Mtx, 0);
+
+		elt_rk = override_Sims->element_rank_lint(Elt);
+
+		if (f_v) {
+			cout << "rational_normal_form::init Representative of class " << i << " / "
+				<< nb_classes << " has rank " << elt_rk << endl;
+			Int_matrix_print(Elt, d, d);
+		}
+
+
+		order = A->Group_element->element_order(Elt);
+
+		nb_fixpoints = A->Group_element->count_fixed_points(
+				Elt, 0 /*  verbose_level */);
+
+
+		nb_fixlines = A_on_lines->Group_element->count_fixed_points(
+				Elt, 0 /*  verbose_level */);
+
+		Reps[i].elt_rk = elt_rk;
+		Reps[i].order = order;
+		Reps[i].nb_fixpoints = nb_fixpoints;
+		Reps[i].nb_fixlines = nb_fixlines;
+	}
+
+
+	FREE_int(Elt);
+
+
+	if (f_v) {
+		cout << "rational_normal_form::init done" << endl;
+	}
+}
 
 #if 0
 // please use action_global::rational_normal_form

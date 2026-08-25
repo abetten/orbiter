@@ -251,6 +251,14 @@ int poset_classification::compute_orbits(
 	}
 
 
+	if (get_A()->base_len() == 0) {
+		cout << "poset_classification::compute_orbits gen->get_A()->base_len() == 0" << endl;
+		cout << "poset_classification::compute_orbits A = ";
+		cout << get_A()->label << endl;
+		exit(1);
+	}
+
+
 	for (level = from_level; level < to_level; level++) {
 
 		if (f_v) {
@@ -710,14 +718,17 @@ void poset_classification::extend_node(
 		if (f_v) {
 			cout << "poset_classification::extend_node "
 					"running out of nodes" << endl;
-			cout << "cur = " << cur << endl;
-			cout << "allocated nodes = "
+			cout << "poset_classification::extend_node cur = " << cur << endl;
+			cout << "poset_classification::extend_node number of nodes allocated = "
 					<< Poo->get_nb_poset_orbit_nodes_allocated() << endl;
-			cout << "reallocating" << endl;
+			cout << "poset_classification::extend_node before Poo->reallocate" << endl;
 		}
 		Poo->reallocate();
 		if (f_v) {
-			cout << "allocated nodes = "
+			cout << "poset_classification::extend_node after Poo->reallocate" << endl;
+		}
+		if (f_v) {
+			cout << "poset_classification::extend_node number of nodes allocated = "
 					<< Poo->get_nb_poset_orbit_nodes_allocated() << endl;
 		}
 	}
@@ -759,6 +770,10 @@ void poset_classification::extend_node(
 	int nb_flags_10;
 
 	nb_flags_10 = Poo->node_get_nb_of_extensions(prev) / 10 + 1;
+
+	if (verbose_level > 5) {
+		nb_flags_10 = 1; // print every step
+	}
 
 	for (prev_ex = 0; prev_ex < Poo->node_get_nb_of_extensions(prev); prev_ex++) {
 		
@@ -805,7 +820,8 @@ void poset_classification::extend_node(
 					<< ": before Work.init" << endl;
 		}
 
-		Work.init(this, size, prev, prev_ex, cur, 
+		Work.init(
+				this, size, prev, prev_ex, cur,
 			f_debug, 
 			Control->f_lex,
 			f_indicate_not_canonicals,
@@ -823,7 +839,8 @@ void poset_classification::extend_node(
 
 		if (f_vvv) {
 			if ((prev_ex % Work.mod_for_printing) == 0 && prev_ex) {
-				print_progress_by_extension(size, cur,
+				print_progress_by_extension(
+						size, cur,
 						prev, prev_ex, nb_ext_cur, nb_fuse_cur);
 			}
 		}
@@ -835,7 +852,8 @@ void poset_classification::extend_node(
 					<< ": before Work.handle_extension nb_ext_cur="
 					<< nb_ext_cur << endl;
 		}
-		Work.handle_extension(nb_fuse_cur, nb_ext_cur, 
+		Work.handle_extension(
+				nb_fuse_cur, nb_ext_cur,
 			verbose_level - 2);
 		// in upstep_work.cpp
 

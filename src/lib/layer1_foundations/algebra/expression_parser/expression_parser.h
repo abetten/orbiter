@@ -17,6 +17,89 @@ namespace expression_parser {
 
 
 
+// #############################################################################
+// evaluator.cpp
+// #############################################################################
+
+
+
+//! to evaluate symbolic objects
+
+
+class evaluator {
+public:
+
+
+	int f_evaluation_mode_int;
+
+	int f_evaluation_mode_algebra;
+
+	int algebra_dimension;
+
+	int f_characteristic_zero;
+
+	int f_characteristic_p;
+	algebra::field_theory::finite_field *F;
+
+
+
+	evaluator();
+	~evaluator();
+	void init_mode_int(
+			int verbose_level);
+	void init_mode_algebra_characteristic_zero(
+			int algebra_dimension,
+			int verbose_level);
+	void init_mode_algebra_characteristic_p(
+			int algebra_dimension,
+			algebra::field_theory::finite_field *F,
+			int verbose_level);
+
+	void algebra_element_print(
+			int *Mtx);
+	void algebra_element_make_zero(
+			int *Mtx);
+	void algebra_element_make_identity(
+			int *Mtx);
+	void algebra_element_make_scalar(
+			int a,
+			int *Mtx);
+	void algebra_element_minus(
+			int *Mtx);
+	void algebra_element_mult(
+			int *Mtx_A, int *Mtx_B, int *Mtx_C, int verbose_level);
+	void algebra_element_add_apply(
+			int *Mtx_A, int *Mtx_B);
+	void algebra_element_move(
+			int *Mtx_A, int *Mtx_B);
+	void algebra_element_inverse(
+			int *Mtx_A, int *Mtx_Av);
+	void algebra_element_power(
+			int *Mtx_A, int n, int *Mtx_return, int verbose_level);
+	// computes A^n
+
+	void algebra_evaluate_formula(
+			algebra::expression_parser::formula *V,
+			int *Mtx_return,
+			int verbose_level);
+	void algebra_evaluate_syntax_tree(
+			syntax_tree *tree,
+			int *Mtx_return,
+			int verbose_level);
+	void algebra_evaluate_syntax_tree_node(
+			syntax_tree_node *Node,
+			int *Mtx_return,
+			int verbose_level);
+
+	void algebra_evaluate_terminal_node(
+			syntax_tree_node_terminal *T_Node,
+			int *Mtx_return,
+			int verbose_level);
+
+};
+
+
+
 
 
 // #############################################################################
@@ -34,6 +117,8 @@ public:
 	std::string label_txt;
 	std::string label_tex;
 
+	int f_is_commutative;
+
 	int f_has_managed_variables;
 	std::string managed_variables_text;
 
@@ -48,18 +133,22 @@ public:
 	formula_vector();
 	~formula_vector();
 	void init_from_text(
-			std::string &label_txt, std::string &label_tex,
+			std::string &label_txt,
+			std::string &label_tex,
 			std::string &text,
 			algebra::field_theory::finite_field *Fq,
+			int f_is_commutative,
 			int f_managed_variables,
 			std::string &managed_variables_text,
 			int f_matrix, int nb_rows,
 			int verbose_level);
 	void init_and_allocate(
-			std::string &label_txt, std::string &label_tex,
+			std::string &label_txt,
+			std::string &label_tex,
 			int f_has_managed_variables,
 			std::string managed_variables_text,
-			int len, int verbose_level);
+			int len,
+			int verbose_level);
 	int is_integer_matrix();
 	void get_integer_matrix(
 			int *&M, int verbose_level);
@@ -99,6 +188,16 @@ public:
 			int f_has_managed_variables,
 			std::string &managed_variables,
 			int verbose_level);
+	void algebra_evaluator(
+			formula_vector *Formula,
+			algebra::field_theory::finite_field *Fq,
+			int f_is_commutative,
+			int dimension,
+			std::string &label_txt,
+			std::string &label_tex,
+			int f_has_managed_variables,
+			std::string &managed_variables,
+			int verbose_level);
 	void simplify(
 			formula_vector *A,
 			algebra::field_theory::finite_field *Fq,
@@ -123,6 +222,7 @@ public:
 	void characteristic_polynomial(
 			formula_vector *A,
 			algebra::field_theory::finite_field *Fq,
+			int f_is_commutative,
 			std::string &variable,
 			std::string &label_txt,
 			std::string &label_tex,
@@ -135,6 +235,7 @@ public:
 	void determinant(
 			formula_vector *A,
 			algebra::field_theory::finite_field *Fq,
+			int f_is_commutative,
 			std::string &label_txt,
 			std::string &label_tex,
 			int f_has_managed_variables,
@@ -143,6 +244,7 @@ public:
 	void right_nullspace(
 			formula_vector *A,
 			algebra::field_theory::finite_field *Fq,
+			int f_is_commutative,
 			std::string &label_txt,
 			std::string &label_tex,
 			int f_has_managed_variables,
@@ -151,6 +253,7 @@ public:
 	void matrix_minor(
 			formula_vector *A,
 			algebra::field_theory::finite_field *Fq,
+			int f_is_commutative,
 			int i, int j,
 			std::string &label_txt,
 			std::string &label_tex,
@@ -160,6 +263,7 @@ public:
 	void symbolic_nullspace(
 			formula_vector *A,
 			algebra::field_theory::finite_field *Fq,
+			int f_is_commutative,
 			std::string &label_txt,
 			std::string &label_tex,
 			int f_has_managed_variables,
@@ -170,6 +274,7 @@ public:
 			formula_vector *A2,
 			int i, int j,
 			algebra::field_theory::finite_field *Fq,
+			int f_is_commutative,
 			std::string &label_txt,
 			std::string &label_tex,
 			int f_has_managed_variables,
@@ -183,6 +288,8 @@ public:
 			int verbose_level);
 	void print_variables(
 			std::ostream &ost);
+	void save_ascii(
+			std::string &fname, int verbose_level);
 
 };
 
@@ -209,6 +316,7 @@ public:
 	std::string managed_variables;
 	std::string formula_text;
 	algebra::field_theory::finite_field *Fq;
+	int f_is_commutative;
 	syntax_tree *tree;
 
 	int f_has_managed_variables;
@@ -242,22 +350,26 @@ public:
 			int f_has_managed_variables,
 			std::string &managed_variables_text,
 			algebra::field_theory::finite_field *Fq,
+			int f_is_commutative,
 			int verbose_level);
 	void init_formula_from_tree(
 			std::string &label, std::string &label_tex,
 			algebra::field_theory::finite_field *Fq,
+			int f_is_commutative,
 			syntax_tree *Tree,
 			int verbose_level);
 	void init_formula_int(
 			std::string &label, std::string &label_tex,
 			int value,
 			algebra::field_theory::finite_field *Fq,
+			int f_is_commutative,
 			int f_has_managed_variables,
 			std::string &managed_variables,
 			int verbose_level);
 	void init_formula_monopoly(
 			std::string &label, std::string &label_tex,
 			algebra::field_theory::finite_field *Fq,
+			int f_is_commutative,
 			int f_has_managed_variables,
 			std::string &managed_variables,
 			std::string &variable,
@@ -269,6 +381,7 @@ public:
 			std::string &managed_variables,
 			std::string &formula_text,
 			algebra::field_theory::finite_field *Fq,
+			int f_is_commutative,
 			int verbose_level);
 	int is_homogeneous(
 			int &degree, int verbose_level);
@@ -305,6 +418,7 @@ public:
 			formula *input_2a,
 			formula *input_2b,
 			algebra::field_theory::finite_field *Fq,
+			int f_is_commutative,
 			std::string &label_txt,
 			std::string &label_tex,
 			std::string &managed_variables_text,
@@ -374,6 +488,17 @@ public:
 	int f_text;
 	std::string text_txt;
 
+	int f_noncommutative;
+
+	int f_file;
+	std::string file_fname;
+
+
+	int f_file_specific_line;
+	std::string file_specific_line_fname;
+	int file_specific_line_line;
+
+
 	int f_field;
 	std::string field_label;
 
@@ -384,14 +509,17 @@ public:
 	int f_ring;
 	std::string ring_label;
 
-	int f_file;
-	std::string file_name;
-
 
 
 
 	int f_matrix;
 	int nb_rows;
+
+
+	int f_algebra_evaluator;
+	int algebra_evaluator_dimension;
+	std::string algebra_evaluator_source;
+
 
 	int f_determinant;
 	std::string determinant_source;
@@ -517,6 +645,8 @@ public:
 
 	algebra::field_theory::finite_field *Fq;
 
+	int f_is_commutative;
+
 	ring_theory::homogeneous_polynomial_domain *Ring;
 
 
@@ -529,6 +659,10 @@ public:
 			std::string &label,
 			int verbose_level);
 	void process_arguments(
+			int verbose_level);
+	void do_algebra_evaluator(
+			symbolic_object_builder_description *Descr,
+			std::string &label,
 			int verbose_level);
 	void do_determinant(
 			symbolic_object_builder_description *Descr,
@@ -930,6 +1064,9 @@ class syntax_tree {
 
 public:
 
+	int f_is_commutative;
+
+
 	int f_has_managed_variables;
 	std::string managed_variables_text;
 	std::vector<std::string> managed_variables;
@@ -945,16 +1082,20 @@ public:
 
 	void init(
 			algebra::field_theory::finite_field *Fq,
+			int f_is_commutative,
 			int f_managed_variables,
 			std::string &managed_variables_text,
 			int verbose_level);
 	void init_root_node(
 			int verbose_level);
 	void init_int(
-			algebra::field_theory::finite_field *Fq, int value,
+			algebra::field_theory::finite_field *Fq,
+			int f_is_commutative,
+			int value,
 			int verbose_level);
 	void init_monopoly(
 			algebra::field_theory::finite_field *Fq,
+			int f_is_commutative,
 			std::string &variable,
 			int *coeffs, int nb_coeffs,
 			int verbose_level);

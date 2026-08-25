@@ -106,10 +106,11 @@ interface_algebra::interface_algebra()
 	power_function_mod_n_k = 0;
 	power_function_mod_n_n = 0;
 
-
+#if 0
 	f_all_rational_normal_forms = false;
 	//std::string all_rational_normal_forms_finite_field_label;
 	all_rational_normal_forms_d = 0;
+#endif
 
 	f_compute_rational_normal_form = false;
 	//std::string compute_rational_normal_form_field_label;
@@ -590,6 +591,7 @@ void interface_algebra::read_arguments(
 				<< power_function_mod_n_k << " "
 				<< power_function_mod_n_n << endl;
 	}
+#if 0
 	else if (ST.stringcmp(argv[i], "-all_rational_normal_forms") == 0) {
 		f_all_rational_normal_forms = true;
 		all_rational_normal_forms_finite_field_label.assign(argv[++i]);
@@ -600,6 +602,7 @@ void interface_algebra::read_arguments(
 				<< " " << all_rational_normal_forms_d << endl;
 		}
 	}
+#endif
 	else if (ST.stringcmp(argv[i], "-compute_rational_normal_form") == 0) {
 		f_compute_rational_normal_form = true;
 		compute_rational_normal_form_field_label.assign(argv[++i]);
@@ -785,11 +788,14 @@ void interface_algebra::print()
 		cout << "-power_function_mod_n " << " " << power_function_mod_n_k << " " << power_function_mod_n_n << endl;
 	}
 
+#if 0
 	if (f_all_rational_normal_forms) {
 		cout << "-all_rational_normal_forms "
 				<< all_rational_normal_forms_finite_field_label
 				<< " " << all_rational_normal_forms_d << endl;
 	}
+#endif
+
 	if (f_compute_rational_normal_form) {
 		cout << "-compute_rational_normal_form "
 			<< compute_rational_normal_form_field_label
@@ -1184,7 +1190,7 @@ void interface_algebra::worker(
 	}
 
 
-
+#if 0
 	else if (f_all_rational_normal_forms) {
 
 		layer5_applications::apps_algebra::rational_normal_form Rational_normal_form;
@@ -1211,6 +1217,7 @@ void interface_algebra::worker(
 
 
 	}
+#endif
 
 	else if (f_compute_rational_normal_form) {
 
@@ -1597,6 +1604,24 @@ void interface_algebra::worker(
 
 		cout << "The polynomial representation is " << endl;
 		cout << s << endl;
+
+		other::orbiter_kernel_system::file_io Fio;
+
+		string fname;
+
+		fname = boolean_function_as_polynomial_text + "_polynomial_representation.txt";
+		{
+			ofstream ost(fname);
+
+			ost << s << endl;
+		}
+
+		if (f_v) {
+			cout << "interface_algebra::worker "
+					"Written file " << fname << " of size "
+					<< Fio.file_size(fname) << endl;
+		}
+
 
 	}
 

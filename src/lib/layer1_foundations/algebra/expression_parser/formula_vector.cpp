@@ -29,6 +29,8 @@ formula_vector::formula_vector()
 	//std::string label_txt;
 	//std::string label_tex;
 
+	f_is_commutative = false;
+
 	f_has_managed_variables = false;
 	//std::string managed_variables_text;
 
@@ -56,6 +58,7 @@ void formula_vector::init_from_text(
 		std::string &label_tex,
 		std::string &text,
 		algebra::field_theory::finite_field *Fq,
+		int f_is_commutative,
 		int f_managed_variables,
 		std::string &managed_variables_text,
 		int f_matrix, int nb_rows,
@@ -69,6 +72,11 @@ void formula_vector::init_from_text(
 
 	formula_vector::label_txt = label_txt;
 	formula_vector::label_tex = label_tex;
+	formula_vector::f_is_commutative = f_is_commutative;
+
+	if (f_v) {
+		cout << "formula_vector::init_from_text f_is_commutative = " << f_is_commutative << endl;
+	}
 
 	if (f_managed_variables) {
 		f_has_managed_variables = true;
@@ -110,7 +118,8 @@ void formula_vector::init_from_text(
 			label_tex,
 			f_managed_variables,
 			managed_variables_text,
-			input.size(), verbose_level - 2);
+			input.size(),
+			verbose_level - 2);
 
 	if (f_v) {
 		cout << "formula_vector::init_from_text "
@@ -140,11 +149,13 @@ void formula_vector::init_from_text(
 		}
 
 		V[i].init_formula_Sajeeb(
-				element_label_txt, element_label_tex,
+				element_label_txt,
+				element_label_tex,
 				f_managed_variables,
 				managed_variables_text,
 				input[i],
 				Fq,
+				f_is_commutative,
 				verbose_level - 2);
 
 		if (f_v) {
@@ -195,10 +206,12 @@ void formula_vector::init_from_text(
 }
 
 void formula_vector::init_and_allocate(
-		std::string &label_txt, std::string &label_tex,
+		std::string &label_txt,
+		std::string &label_tex,
 		int f_has_managed_variables,
 		std::string managed_variables_text,
-		int len, int verbose_level)
+		int len,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1090,6 +1103,101 @@ void formula_vector::substitute(
 
 }
 
+void formula_vector::algebra_evaluator(
+		formula_vector *Formula,
+		algebra::field_theory::finite_field *Fq,
+		int f_is_commutative,
+		int dimension,
+		std::string &label_txt,
+		std::string &label_tex,
+		int f_has_managed_variables,
+		std::string &managed_variables,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "formula_vector::algebra_evaluator" << endl;
+	}
+
+	len = dimension * dimension;
+
+	if (f_v) {
+		cout << "formula_vector::algebra_evaluator before init_and_allocate" << endl;
+	}
+	init_and_allocate(
+			label_txt,
+			label_tex,
+			f_has_managed_variables,
+			managed_variables_text,
+			len, verbose_level);
+	if (f_v) {
+		cout << "formula_vector::algebra_evaluator after init_and_allocate" << endl;
+	}
+
+
+	f_matrix = true;
+	nb_rows = dimension;
+	nb_cols = dimension;
+
+
+	int *Mtx_return;
+
+
+	Mtx_return = NEW_int(len);
+
+
+	evaluator Evaluator;
+
+	Evaluator.init_mode_algebra_characteristic_p(
+			dimension,
+			Fq,
+			verbose_level - 2);
+
+	if (f_v) {
+		cout << "formula_vector::algebra_evaluator before Evaluator.algebra_evaluate_formula" << endl;
+	}
+	Evaluator.algebra_evaluate_formula(
+			&Formula->V[0],
+			Mtx_return,
+			verbose_level - 2);
+	if (f_v) {
+		cout << "formula_vector::algebra_evaluator after Evaluator.algebra_evaluate_formula" << endl;
+	}
+	if (f_v) {
+		cout << "formula_vector::algebra_evaluator "
+				"the formula evaluates to:" << endl;
+		Evaluator.algebra_element_print(Mtx_return);
+	}
+
+
+
+	int i;
+
+	for (i = 0; i < len; i++) {
+
+		int value;
+
+		value = Mtx_return[i];
+
+		V[i].init_formula_int(
+				label_txt, label_tex,
+				value,
+				Fq,
+				f_is_commutative,
+				f_has_managed_variables,
+				managed_variables,
+				verbose_level);
+	}
+
+	FREE_int(Mtx_return);
+
+	if (f_v) {
+		cout << "formula_vector::algebra_evaluator done" << endl;
+	}
+}
+
+
 void formula_vector::simplify(
 		formula_vector *A,
 		algebra::field_theory::finite_field *Fq,
@@ -1357,6 +1465,7 @@ void formula_vector::expand(
 void formula_vector::characteristic_polynomial(
 		formula_vector *A,
 		algebra::field_theory::finite_field *Fq,
+		int f_is_commutative,
 		std::string &variable,
 		std::string &label_txt,
 		std::string &label_tex,
@@ -1403,7 +1512,7 @@ void formula_vector::characteristic_polynomial(
 		cout << "formula_vector::characteristic_polynomial "
 				"before Tree->init" << endl;
 	}
-	Tree->init(Fq, f_has_managed_variables, managed_variables_text, verbose_level);
+	Tree->init(Fq, f_is_commutative, f_has_managed_variables, managed_variables_text, verbose_level);
 	if (f_v) {
 		cout << "formula_vector::characteristic_polynomial "
 				"after Tree->init" << endl;
@@ -1436,6 +1545,7 @@ void formula_vector::characteristic_polynomial(
 	V[0].init_formula_from_tree(
 				label_txt, label_tex,
 				Fq,
+				f_is_commutative,
 				Tree,
 				verbose_level);
 
@@ -1492,6 +1602,7 @@ void formula_vector::collect_terms_and_coefficients(
 void formula_vector::determinant(
 		formula_vector *A,
 		algebra::field_theory::finite_field *Fq,
+		int f_is_commutative,
 		std::string &label_txt,
 		std::string &label_tex,
 		int f_has_managed_variables,
@@ -1535,7 +1646,7 @@ void formula_vector::determinant(
 		cout << "formula_vector::determinant "
 				"before Tree->init" << endl;
 	}
-	Tree->init(Fq, f_has_managed_variables, managed_variables_text, verbose_level);
+	Tree->init(Fq, f_is_commutative, f_has_managed_variables, managed_variables_text, verbose_level);
 	if (f_v) {
 		cout << "formula_vector::determinant "
 				"after Tree->init" << endl;
@@ -1567,6 +1678,7 @@ void formula_vector::determinant(
 	V[0].init_formula_from_tree(
 				label_txt, label_tex,
 				Fq,
+				f_is_commutative,
 				Tree,
 				verbose_level);
 
@@ -1582,6 +1694,7 @@ void formula_vector::determinant(
 void formula_vector::right_nullspace(
 		formula_vector *A,
 		algebra::field_theory::finite_field *Fq,
+		int f_is_commutative,
 		std::string &label_txt,
 		std::string &label_tex,
 		int f_has_managed_variables,
@@ -1669,6 +1782,7 @@ void formula_vector::right_nullspace(
 				label_txt, label_tex,
 				value,
 				Fq,
+				f_is_commutative,
 				f_has_managed_variables,
 				managed_variables,
 				verbose_level);
@@ -1695,6 +1809,7 @@ void formula_vector::right_nullspace(
 void formula_vector::matrix_minor(
 		formula_vector *A,
 		algebra::field_theory::finite_field *Fq,
+		int f_is_commutative,
 		int i, int j,
 		std::string &label_txt,
 		std::string &label_tex,
@@ -1816,6 +1931,7 @@ void formula_vector::matrix_minor(
 	Det->determinant(
 			M,
 			Fq,
+			f_is_commutative,
 			label_txt,
 			label_tex,
 			f_has_managed_variables,
@@ -1875,6 +1991,7 @@ void formula_vector::matrix_minor(
 void formula_vector::symbolic_nullspace(
 		formula_vector *A,
 		algebra::field_theory::finite_field *Fq,
+		int f_is_commutative,
 		std::string &label_txt,
 		std::string &label_tex,
 		int f_has_managed_variables,
@@ -1968,6 +2085,7 @@ void formula_vector::symbolic_nullspace(
 				label_txt, label_tex,
 				1,
 				Fq,
+				f_is_commutative,
 				f_has_managed_variables,
 				managed_variables,
 				verbose_level);
@@ -1988,6 +2106,7 @@ void formula_vector::symbolic_nullspace(
 		T->matrix_minor(
 				B,
 				Fq,
+				f_is_commutative,
 				i, j,
 				label_txt,
 				label_tex,
@@ -2020,6 +2139,7 @@ void formula_vector::multiply_2by2_from_the_left(
 		formula_vector *A2,
 		int i, int j,
 		algebra::field_theory::finite_field *Fq,
+		int f_is_commutative,
 		std::string &label_txt,
 		std::string &label_tex,
 		int f_has_managed_variables,
@@ -2098,6 +2218,7 @@ void formula_vector::multiply_2by2_from_the_left(
 						&A2->V[0 * 2 + 1],
 						&M->V[j * n + v],
 						Fq,
+						f_is_commutative,
 						label_txt,
 						label_tex,
 						managed_variables_text,
@@ -2127,6 +2248,7 @@ void formula_vector::multiply_2by2_from_the_left(
 						&A2->V[1 * 2 + 1],
 						&M->V[j * n + v],
 						Fq,
+						f_is_commutative,
 						label_txt,
 						label_tex,
 						managed_variables_text,
@@ -2232,6 +2354,11 @@ void formula_vector::collect_variables(
 	if (f_v) {
 		cout << "formula_vector::collect_variables" << endl;
 	}
+
+	if (!f_is_commutative) {
+		cout << "formula_vector::collect_variables skipped because the ring is not commutative" << endl;
+		return;
+	}
 	int i;
 
 	for (i = 0; i < len; i++) {
@@ -2271,6 +2398,49 @@ void formula_vector::print_variables(
 
 }
 
+void formula_vector::save_ascii(
+		std::string &fname, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "formula_vector::save_ascii" << endl;
+	}
+	ofstream file(fname);
+
+	//algebra::expression_parser::formula_vector *Vec;
+
+	int i, j;
+	int f_latex = false;
+
+	for (i = 0; i < len; i++) {
+
+		std::vector<std::string> rep;
+		string s;
+
+		V[i].print_to_vector(
+				rep, f_latex, 0 /*verbose_level */);
+
+		if (rep.size() == 0) {
+			string zero;
+
+			zero = "0";
+			rep.push_back(zero);
+		}
+
+		for (j = 0; j < rep.size(); j++) {
+			s += rep[j];
+		}
+
+		file << s << endl;
+
+		//Vec->V[i].print(cout);
+	}
+
+	if (f_v) {
+		cout << "formula_vector::save_ascii done" << endl;
+	}
+}
 
 }}}}
 

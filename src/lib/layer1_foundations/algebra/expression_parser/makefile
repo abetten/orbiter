@@ -6,6 +6,7 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
+	evaluator.o \
 	formula_vector.o \
 	formula.o \
 	symbolic_object_builder_description.o \

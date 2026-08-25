@@ -422,6 +422,12 @@ void gl_classes::centralizer_order_Kung(
 	int verbose_level)
 // Computes the centralizer order of a matrix in GL(k,q) 
 // according to Kung's formula~\cite{Kung81}.
+//Kung, Joseph P. S.,
+//The cycle structure of a linear transformation over a finite field,
+//Linear Algebra and its Applications,
+//36,
+//1981,
+//141--155.
 {
 	ring_theory::longinteger_object e, f, co1;
 	ring_theory::longinteger_domain D;
@@ -657,7 +663,9 @@ loop1:
 		}
 
 
-		R[cnt].init(Table_of_polynomials->nb_irred,
+		R[cnt].init(
+				F,
+				Table_of_polynomials->nb_irred,
 				Select_polynomial, Select_partition, verbose_level);
 
 		make_matrix_in_rational_normal_form(
@@ -694,8 +702,14 @@ loop1:
 		}
 
 
+		R[cnt].n = k;
+		R[cnt].Mtx = NEW_int(k * k);
+		Int_vec_copy(Mtx, R[cnt].Mtx, k * k);
+
+
 		R[cnt].centralizer_order = NEW_OBJECT(ring_theory::longinteger_object);
 		R[cnt].class_length = NEW_OBJECT(ring_theory::longinteger_object);
+
 		co.assign_to(*R[cnt].centralizer_order);
 		cl.assign_to(*R[cnt].class_length);
 
@@ -840,7 +854,9 @@ void gl_classes::identify_matrix(
 			cout << "gl_classes::identify_matrix "
 					"before R->init" << endl;
 		}
-		R->init(Table_of_polynomials->nb_irred,
+		R->init(
+				F,
+				Table_of_polynomials->nb_irred,
 				Mult, Select_partition, verbose_level);
 		if (f_v) {
 			cout << "gl_classes::identify_matrix "
@@ -958,7 +974,7 @@ void gl_classes::identify2(
 	compute_generalized_kernels_for_each_block(
 			Mtx, Irreds, nb_irreds,
 			Table_of_polynomials->Degree, Mult, Data,
-			verbose_level);
+			verbose_level - 2);
 
 	if (f_v) {
 		cout << "gl_classes::identify2 "
@@ -978,7 +994,7 @@ void gl_classes::identify2(
 
 	choose_basis_for_rational_normal_form(
 			Mtx, Data,
-			nb_irreds, Basis, verbose_level);
+			nb_irreds, Basis, verbose_level - 2);
 
 
 	if (f_v) {
@@ -1049,7 +1065,7 @@ void gl_classes::compute_generalized_kernels_for_each_block(
 
 		U.substitute_matrix_in_polynomial(
 				P, Mtx, M2, k,
-				verbose_level);
+				verbose_level - 2);
 
 		if (f_vv) {
 			cout << "gl_classes::compute_generalized_kernels_for_each_block "
@@ -1063,7 +1079,7 @@ void gl_classes::compute_generalized_kernels_for_each_block(
 		compute_generalized_kernels(
 				Data + h, M2, d, b0,
 				Mult[u], poly_coeffs,
-				verbose_level);
+				verbose_level - 2);
 
 		b0 += d * Mult[u];
 
@@ -1125,7 +1141,8 @@ void gl_classes::compute_generalized_kernels(
 		Int_vec_copy(M3, M4, k * k);
 
 		rank = F->Linear_algebra->Gauss_simple(
-				M4, k, k, base_cols, 0 /*verbose_level*/);
+				M4, k, k, base_cols,
+				0 /*verbose_level*/);
 
 		F->Linear_algebra->matrix_get_kernel_as_int_matrix(
 				M4, k, k,
@@ -1153,7 +1170,8 @@ void gl_classes::compute_generalized_kernels(
 		}
 
 		F->Linear_algebra->mult_matrix_matrix(
-				M3, M2, M4, k, k, k, 0 /* verbose_level */);
+				M3, M2, M4, k, k, k,
+				0 /* verbose_level */);
 		Int_vec_copy(M4, M3, k * k);
 
 	}
@@ -1167,7 +1185,8 @@ void gl_classes::compute_generalized_kernels(
 		cout << endl;
 	}
 
-	Combi.partition_dual(Data->dual_part,
+	Combi.partition_dual(
+			Data->dual_part,
 			Data->part, m,
 			verbose_level);
 
@@ -1306,11 +1325,11 @@ void gl_classes::choose_basis_for_rational_normal_form_block(
 	for (f = Data->height; f >= 1; f--) {
 		af = Data->part[f - 1];
 		if (f_v) {
-			cout << "f=" << f << " af=" << af << endl;
+			cout << "gl_classes::choose_basis_for_rational_normal_form_block f=" << f << " af=" << af << endl;
 		}
 		for (e = 0; e < af; e++) {
 			if (f_v) {
-				cout << "f=" << f << " af=" << af << " e=" << e << endl;
+				cout << "gl_classes::choose_basis_for_rational_normal_form_block f=" << f << " af=" << af << " e=" << e << endl;
 			}
 
 			other::data_structures::int_matrix *Forbidden_subspace;
@@ -1348,31 +1367,32 @@ void gl_classes::choose_basis_for_rational_normal_form_block(
 			FREE_OBJECT(Forbidden_subspace);
 				
 			if (f_v) {
-				cout << "chosing vector v=";
+				cout << "gl_classes::choose_basis_for_rational_normal_form_block chosing vector v=";
 				Int_vec_print(cout, v, k);
 				cout << endl;
 			}
 			for (c = 0; c < f; c++) {
 				b0 = b;
 				if (f_v) {
-					cout << "c=" << c << " / " << f << " b0=" << b0 << endl;
+					cout << "gl_classes::choose_basis_for_rational_normal_form_block c=" << c << " / " << f << " b0=" << b0 << endl;
 				}
 				for (g = 0; g < Data->d; g++) {
 					if (f_v) {
-						cout << "c=" << c << " / " << f << " b0=" << b0
+						cout << "gl_classes::choose_basis_for_rational_normal_form_block c=" << c << " / " << f << " b0=" << b0
 								<< "g=" << g << " / " << Data->d << endl;
 					}
 					for (i = 0; i < k; i++) {
 						Basis[i * k + b] = v[i];
 					}
 					if (f_v) {
-						cout << "Basis=" << endl;
+						cout << "gl_classes::choose_basis_for_rational_normal_form_block Basis=" << endl;
 						Int_matrix_print(Basis, k, k);
 					}
 					b++;
-					F->Linear_algebra->mult_vector_from_the_right(Mtx, v, w, k, k);
+					F->Linear_algebra->mult_vector_from_the_right(
+							Mtx, v, w, k, k);
 					if (f_v) {
-						cout << "forced vector w=";
+						cout << "gl_classes::choose_basis_for_rational_normal_form_block forced vector w=";
 						Int_vec_print(cout, w, k);
 						cout << endl;
 					}
@@ -1383,7 +1403,8 @@ void gl_classes::choose_basis_for_rational_normal_form_block(
 							coeff = Data->poly_coeffs[ii];
 							//coeff = F->negate(Data->poly_coeffs[ii]);
 							// mistake corrected Dec 29, 2016
-							F->Linear_algebra->vector_add_apply_with_stride(v,
+							F->Linear_algebra->vector_add_apply_with_stride(
+									v,
 									Basis + b0 + ii, k, coeff, k);
 						}
 					}
@@ -1391,8 +1412,7 @@ void gl_classes::choose_basis_for_rational_normal_form_block(
 				} // next g
 			} // next c
 			if (f_v) {
-				cout << "gl_classes::choose_basis_for_rational_normal_"
-						"form_block Basis = " << endl;
+				cout << "gl_classes::choose_basis_for_rational_normal_form_block Basis = " << endl;
 				Int_matrix_print(Basis, k, k);
 				cout << endl;
 			}
@@ -1403,8 +1423,7 @@ void gl_classes::choose_basis_for_rational_normal_form_block(
 	//FREE_int(w);
 
 	if (f_v) {
-		cout << "gl_classes::choose_basis_for_rational_normal_"
-				"form_block done" << endl;
+		cout << "gl_classes::choose_basis_for_rational_normal_form_block done" << endl;
 	}
 }
 
@@ -1446,9 +1465,13 @@ void gl_classes::generators_for_centralizer(
 
 
 
-		U.create_object_by_rank(char_poly, 0, verbose_level);
+		U.create_object_by_rank(
+				char_poly, 0,
+				verbose_level - 2);
 
-		U.characteristic_polynomial(Mtx, k, char_poly, verbose_level - 2);
+		U.characteristic_polynomial(
+				Mtx, k, char_poly,
+				verbose_level - 2);
 
 		if (f_vv) {
 			cout << "gl_classes::generators_for_centralizer "
@@ -1457,8 +1480,10 @@ void gl_classes::generators_for_centralizer(
 			cout << endl;
 		}
 
-		U.substitute_matrix_in_polynomial(char_poly,
-				Mtx, M2, k, verbose_level);
+		U.substitute_matrix_in_polynomial(
+				char_poly,
+				Mtx, M2, k,
+				verbose_level - 2);
 		if (f_vv) {
 			cout << "gl_classes::generators_for_centralizer "
 					"After substitution, the matrix is " << endl;
@@ -1471,7 +1496,8 @@ void gl_classes::generators_for_centralizer(
 			cout << "gl_classes::generators_for_centralizer before factorize_polynomial" << endl;
 		}
 
-		Table_of_polynomials->factorize_polynomial(char_poly, Mult, verbose_level);
+		Table_of_polynomials->factorize_polynomial(
+				char_poly, Mult, verbose_level - 2);
 
 		if (f_v) {
 			cout << "gl_classes::generators_for_centralizer after factorize_polynomial" << endl;
@@ -1493,7 +1519,7 @@ void gl_classes::generators_for_centralizer(
 		centralizer_generators(
 				Mtx, char_poly, Mult, Select_partition,
 				Basis, Gens, nb_gens, nb_alloc,
-				verbose_level);
+				verbose_level - 2);
 		if (f_v) {
 			cout << "gl_classes::generators_for_centralizer "
 					"after centralizer_generators" << endl;
@@ -1517,10 +1543,15 @@ void gl_classes::generators_for_centralizer(
 		}
 
 		for (i = 0; i < nb_gens; i++) {
-			F->Linear_algebra->matrix_inverse(Gens[i], Basis_inv, k,
+
+			F->Linear_algebra->matrix_inverse(
+					Gens[i], Basis_inv, k,
 					0 /* verbose_level */);
-			F->Linear_algebra->mult_matrix_matrix(Basis, Basis_inv, M2, k, k, k,
+
+			F->Linear_algebra->mult_matrix_matrix(
+					Basis, Basis_inv, M2, k, k, k,
 					0 /* verbose_level */);
+
 			Int_vec_copy(M2, Gens[i], k * k);
 		}
 
@@ -1535,16 +1566,22 @@ void gl_classes::generators_for_centralizer(
 		}
 
 
-		R->init(Table_of_polynomials->nb_irred,
-				Mult, Select_partition, verbose_level);
+		R->init(
+				F,
+				Table_of_polynomials->nb_irred,
+				Mult, Select_partition,
+				verbose_level - 2);
 
 
 
-		F->Linear_algebra->matrix_inverse(Basis, Basis_inv, k, 0 /* verbose_level */);
+		F->Linear_algebra->matrix_inverse(
+				Basis, Basis_inv, k, 0 /* verbose_level */);
 
-		F->Linear_algebra->mult_matrix_matrix(Basis_inv, Mtx, M2, k, k, k,
+		F->Linear_algebra->mult_matrix_matrix(
+				Basis_inv, Mtx, M2, k, k, k,
 				0 /* verbose_level */);
-		F->Linear_algebra->mult_matrix_matrix(M2, Basis, M3, k, k, k,
+		F->Linear_algebra->mult_matrix_matrix(
+				M2, Basis, M3, k, k, k,
 				0 /* verbose_level */);
 
 		if (f_vv) {
@@ -1602,6 +1639,7 @@ void gl_classes::centralizer_generators(
 		if (Mult[h] == 0) {
 			continue;
 		}
+
 		Irreds[i++] = h;
 
 	} // next h
@@ -1624,13 +1662,18 @@ void gl_classes::centralizer_generators(
 
 	if (f_v) {
 		cout << "gl_classes::centralizer_generators "
-				"before compute_data_on_blocks" << endl;
+				"before compute_generalized_kernels_for_each_block" << endl;
 	}
 
 	compute_generalized_kernels_for_each_block(
 			Mtx, Irreds, nb_irreds,
 			Table_of_polynomials->Degree, Mult, Data,
-			verbose_level);
+			verbose_level - 2);
+
+	if (f_v) {
+		cout << "gl_classes::centralizer_generators "
+				"after compute_generalized_kernels_for_each_block" << endl;
+	}
 
 
 	Int_vec_zero(Select_partition, nb_irreds);
@@ -1643,15 +1686,10 @@ void gl_classes::centralizer_generators(
 				"before choose_basis_for_rational_normal_form" << endl;
 	}
 
-
-
-
 	choose_basis_for_rational_normal_form(
 			Mtx, Data,
 			nb_irreds, Basis,
-			verbose_level);
-
-
+			verbose_level - 2);
 	if (f_v) {
 		cout << "gl_classes::centralizer_generators "
 				"after choose_basis_for_rational_normal_form" << endl;
@@ -1665,13 +1703,21 @@ void gl_classes::centralizer_generators(
 	for (h = 0; h < nb_irreds; h++) {
 		if (f_v) {
 			cout << "gl_classes::centralizer_generators "
-					"before centralizer_generators_block " << h
-					<< " / " << nb_irreds << endl;
+					" block " << h << " / " << nb_irreds << endl;
 		}
 
-		centralizer_generators_block(Mtx, Data, nb_irreds, h, 
+		if (f_v) {
+			cout << "gl_classes::centralizer_generators "
+					"before centralizer_generators_block" << endl;
+		}
+		centralizer_generators_block(
+				Mtx, Data, nb_irreds, h,
 			Gens, nb_gens, nb_alloc,  
-			verbose_level);
+			verbose_level - 2);
+		if (f_v) {
+			cout << "gl_classes::centralizer_generators "
+					"after centralizer_generators_block" << endl;
+		}
 
 	} // next h
 
@@ -1841,11 +1887,11 @@ int gl_classes::choose_basis_for_rational_normal_form_coset(
 	for (f = Data->height; f >= 1; f--) {
 		af = Data->part[f - 1];
 		if (f_v) {
-			cout << "f=" << f << " af=" << af << endl;
+			cout << "gl_classes::choose_basis_for_rational_normal_form_coset f=" << f << " af=" << af << endl;
 		}
 		for (e = 0; e < af; e++) {
 			if (f_vv) {
-				cout << "f=" << f << " af=" << af << " e=" << e << endl;
+				cout << "gl_classes::choose_basis_for_rational_normal_form_coset f=" << f << " af=" << af << " e=" << e << endl;
 			}
 
 			other::data_structures::int_matrix *Forbidden_subspace;
@@ -1915,18 +1961,18 @@ int gl_classes::choose_basis_for_rational_normal_form_coset(
 				goto the_end;
 			}
 			if (f_vv) {
-				cout << "choosing vector v=";
+				cout << "gl_classes::choose_basis_for_rational_normal_form_coset choosing vector v=";
 				Int_vec_print(cout, v, k);
 				cout << endl;
 			}
 			for (c = 0; c < f; c++) {
 				b0 = b;
 				if (f_vv) {
-					cout << "c=" << c << " b0=" << b0 << endl;
+					cout << "gl_classes::choose_basis_for_rational_normal_form_coset c=" << c << " b0=" << b0 << endl;
 				}
 				for (g = 0; g < Data->d; g++) {
 					if (f_vv) {
-						cout << "g=" << g << endl;
+						cout << "gl_classes::choose_basis_for_rational_normal_form_coset g=" << g << endl;
 					}
 					for (i = 0; i < k; i++) {
 						Basis[i * k + b] = v[i];
@@ -1935,7 +1981,7 @@ int gl_classes::choose_basis_for_rational_normal_form_coset(
 					F->Linear_algebra->mult_vector_from_the_right(
 							Mtx, v, w, k, k);
 					if (f_vv) {
-						cout << "forced vector w=";
+						cout << "gl_classes::choose_basis_for_rational_normal_form_coset forced vector w=";
 						Int_vec_print(cout, w, k);
 						cout << endl;
 					}
@@ -2004,82 +2050,12 @@ int gl_classes::find_class_rep(
 	return i;
 }
 
-void gl_classes::report(
-		std::ostream &ost, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
 
-	int nb_classes;
-	gl_class_rep *R;
-
-	if (f_v) {
-		cout << "gl_classes::report" << endl;
-	}
-	make_classes(R, nb_classes,
-			false /* f_no_eigenvalue_one */,
-			verbose_level - 1);
-
-	int i;
-
-	ost << "\\section*{Conjugacy Classes of "
-			"${\\rm GL}(" << k << "," << q << ")$}" << endl;
-
-
-	int *M;
-	int f_elements_exponential = false;
-	string symbol_for_print;
-
-
-	symbol_for_print.assign("\\alpha");
-
-	M = NEW_int(k * k);
-
-	ost << "The number of conjugacy classes of "
-			"${\\rm GL}(" << k << "," << q << ")$ is "
-			<< nb_classes << ":\\\\" << endl;
-	ost << "$$" << endl;
-	for (i = 0; i < nb_classes; i++) {
-
-
-		make_matrix_from_class_rep(
-				M, R + i, 0 /* verbose_level */);
-
-
-		ost << "\\left[" << endl;
-		F->Io->latex_matrix(ost,
-				f_elements_exponential, symbol_for_print, M, k, k);
-		ost << "\\right]" << endl;
-		if (i < nb_classes - 1) {
-			ost << ", " << endl;
-		}
-		if ((i + 1) % 5 == 0) {
-			ost << "$$" << endl;
-			ost << "$$" << endl;
-		}
-
-	}
-	ost << "$$" << endl;
-	ost << "\\bigskip" << endl;
-
-	FREE_int(M);
-
-
-
-	for (i = 0; i < nb_classes; i++) {
-		ost << "Class " << i << " / "
-				<< nb_classes << "\\\\" << endl;
-		print_matrix_and_centralizer_order_latex(ost, R + i);
-	}
-	FREE_OBJECTS(R);
-	if (f_v) {
-		cout << "gl_classes::report done" << endl;
-	}
-}
-
+#if 0
 void gl_classes::print_matrix_and_centralizer_order_latex(
 		std::ostream &ost, gl_class_rep *R)
 {
-	int *Mtx;
+	//int *Mtx;
 	ring_theory::longinteger_object go, co, cl, r, f, g;
 	ring_theory::longinteger_domain D;
 	int *Select_polynomial, *Select_Partition;
@@ -2088,7 +2064,7 @@ void gl_classes::print_matrix_and_centralizer_order_latex(
 	string symbol_for_print;
 	number_theory::number_theory_domain NT;
 
-	Mtx = NEW_int(k * k);
+	//Mtx = NEW_int(k * k);
 
 	symbol_for_print.assign("\\alpha");
 
@@ -2117,9 +2093,10 @@ void gl_classes::print_matrix_and_centralizer_order_latex(
 	}
 
 
-
+#if 0
 	make_matrix_from_class_rep(
 			Mtx, R, 0 /* verbose_level */);
+#endif
 
 	centralizer_order_Kung(
 			Select_polynomial,
@@ -2143,9 +2120,11 @@ void gl_classes::print_matrix_and_centralizer_order_latex(
 	ost << "$" << endl;
 	ost << "$$" << endl;
 	ost << "\\left[" << endl;
-	F->Io->latex_matrix(ost,
+	F->Io->latex_matrix(
+			ost,
 			f_elements_exponential,
-			symbol_for_print, Mtx, k, k);
+			symbol_for_print,
+			R->Mtx, k, k);
 	ost << "\\right]";
 	//ost << "_{";
 	//ost << co << "}" << endl;
@@ -2157,9 +2136,9 @@ void gl_classes::print_matrix_and_centralizer_order_latex(
 
 	FREE_int(Select_polynomial);
 	FREE_int(Select_Partition);
-	FREE_int(Mtx);
+	//FREE_int(Mtx);
 }
-
+#endif
 
 void gl_classes::get_matrix_and_centralizer_order(
 		ring_theory::longinteger_object &go,
@@ -2223,6 +2202,88 @@ void gl_classes::get_matrix_and_centralizer_order(
 	//FREE_int(Mtx);
 }
 
+#if 0
+void gl_classes::report(
+		std::ostream &ost, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	int nb_classes;
+	gl_class_rep *R;
+
+	if (f_v) {
+		cout << "gl_classes::report" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "gl_classes::report before make_classes" << endl;
+	}
+	make_classes(
+			R, nb_classes,
+			false /* f_no_eigenvalue_one */,
+			verbose_level - 1);
+	if (f_v) {
+		cout << "gl_classes::report after make_classes" << endl;
+	}
+
+	int i;
+
+	ost << "\\section*{Conjugacy Classes of "
+			"${\\rm GL}(" << k << "," << q << ")$}" << endl;
+
+
+	int *M;
+	int f_elements_exponential = false;
+	string symbol_for_print;
+
+
+	symbol_for_print.assign("\\alpha");
+
+	M = NEW_int(k * k);
+
+	ost << "The number of conjugacy classes of "
+			"${\\rm GL}(" << k << "," << q << ")$ is "
+			<< nb_classes << ":\\\\" << endl;
+	ost << "$$" << endl;
+	for (i = 0; i < nb_classes; i++) {
+
+
+		make_matrix_from_class_rep(
+				M, R + i, 0 /* verbose_level */);
+
+
+		ost << "\\left[" << endl;
+		F->Io->latex_matrix(ost,
+				f_elements_exponential, symbol_for_print, M, k, k);
+		ost << "\\right]" << endl;
+		if (i < nb_classes - 1) {
+			ost << ", " << endl;
+		}
+		if ((i + 1) % 5 == 0) {
+			ost << "$$" << endl;
+			ost << "$$" << endl;
+		}
+
+	}
+	ost << "$$" << endl;
+	ost << "\\bigskip" << endl;
+
+	FREE_int(M);
+
+
+
+	for (i = 0; i < nb_classes; i++) {
+		ost << "Class " << i << " / "
+				<< nb_classes << "\\\\" << endl;
+		print_matrix_and_centralizer_order_latex(ost, R + i);
+	}
+	FREE_OBJECTS(R);
+	if (f_v) {
+		cout << "gl_classes::report done" << endl;
+	}
+}
+#endif
 
 }}}}
 

@@ -1,17 +1,13 @@
 ROW,C1,C2,C3
 0,"tab:grouptasks3",,
 1,"Group theoretic activities (Part 3)",,
-1,"\verb'-find_conjugating_element' "," $a$ $b$ ","Computes an element $g$ which conjugates $a$ to $b$ or states that the given elements $a$ and $b$ are not conjugate. "
-1,"\verb'-group_of_automorphisms_' \verb'by_images_of_generators' "," label v images ","Creates a group of automorphisms by assigning image values to certain generators. The vector v is a vector of group elements. The image values are numerical values representing indices in the vector v. "
-1,"\verb'-order_of_products' ","  $g_1 \ldots g_n$ ","Computes the orders of all products $g_ig_j$, $1 \le i,j \le n.$ Writes a table with these orders to file."
-1,"\verb'-reverse_isomorphism_exterior_square' "," f\_lex\_ordering ","Given a set of generators of a subgroup of $\PGO^+(6,q)$ as $6\times 6$ matrixes, the command computes the inverse image of the generators in $\PGL(4,q)$ (if possible). The boolean variable f\_lex\_ordering is used to distinguish between two conjugate groups. If f\_lex\_ordering is true, the base is ordered lexicograhically. Otherwise, the ordering according to the Orbiter version of the Klein quadric is used. "
-1,"\verb'-reverse_isomorphism_exterior_' \verb'square_vector_of_ge' "," vector f\_lex\_ordering ","applies reverse isomorphism exterior square to all elements in the given vector object. For f\_lex\_ordering, see the previous command. "
-1,"\verb'-is_subgroup_of' ","  ","This function is applied to two groups, say $G_1$ and $G_2$, using the syntax \verb'-with G1 -and G2'. It tests if $G_1$ is a subgroup of $G_2$."
-1,"\verb'-coset_reps' ","  ","This function is applied to two groups, say $G_1$ and $G_2$, using the syntax \verb'-with G1 -and G2'. It assumes that $G_1$ is a subgroup of $G_2$. The command produces a set of coset representatives for $G_1$ in $G_2$."
-1,"\verb'-subgroup_lattice' ","  ","Computes the subgroup lattice of the given group. A csv file containing the subgroup lattice is written."
-1,"\verb'-subgroup_lattice_load' "," fname ","Reads a previously computed subgroup lattice from the csv file."
-1,"\verb'-subgroup_lattice_draw_by_orbits' "," options ","Produces a drawing of the subgroup lattice in terms of the conjugacy classes of subgroups. Each node represents one conjugacy class of subgroups. Uses the given draw options. "
-1,"\verb'-subgroup_lattice_draw_by_groups' "," options ","Produces a drawing of the subgroup lattice in terms of subgroups. Each node represents one single subgroup. Uses the given draw options. "
-1,"\verb'-subgroup_lattice_' \verb'intersection_orbit_orbit' "," orb1 orb2 "," Intersect all groups of orbit 1 with groups of orbit 2."
-1,"\verb'-subgroup_lattice_' \verb'find_overgroup_in_orbit' "," orb1global gidx orb2global "," Find the group on orb2global which normalizes the group gidx in orb1global. "
+1,"\verb'-find_standard_generators' "," $a$ $b$ $c$ "," Finds all pairs of elements $x,y$ in $G$ such that $|x| = a,$ $|y|=b$, and $|xy|=c$. Such pairs are called standard generators. "
+1,"\verb'-find_standard_generators_M24' "," "," Finds a pair of standard generators for $M_{24}$. "
+1,"\verb'-find_small_generating_set' "," sz nb ","Find a generating set of the group consisting of sz generators using a randomized algorithm. Give up after nb trials. "
+1,"\verb'-proportion_of_' \verb'generating_sets_of_size_k' "," k ","Find the proportion of subsets of size k which generate the group. "
+1,"\verb'-proportion_of_' \verb'generating_sets_of_size_k_' \verb'using_orbits' "," k orbiter\_file orbit\_reps orbit\_length ","Find the proportion of subsets of size k which generate the group, using a previously computed csv-file with orbits on pairs. orbit\_reps orbit\_length are the column labels in the csv file. "
+1,"\verb'-export_group_table' "," ","Export the group table as csv-file. "
+1,"\verb'-export_orbiter' ","  ","Exports the group to Orbiter. "
+1,"\verb'-export_gap' ","  ","Exports the group to GAP~\cite{GAP}. "
+1,"\verb'-export_magma' ","  ","Exports the group to Magma~\cite{Magma}. "
 END

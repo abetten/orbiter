@@ -645,7 +645,7 @@ public:
 	std::string sporadic_name;
 
 
-	// ToDo undocumented:
+	// ToDo undocumented, for an example, see ALGEBRAIC_DEGREE_AND_REED_MULLER/REED_MULLER/RM4
 	int f_from_blocks;
 	int from_blocks_v;
 	std::string from_blocks_label;

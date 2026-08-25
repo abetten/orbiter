@@ -57,7 +57,6 @@ public:
 	int f_by_coefficients;
 	std::string coefficients_text;
 
-	// ToDo undocumented:
 	int f_by_normal_form;
 	std::string by_normal_form_text;
 

@@ -57,39 +57,39 @@ upstep_work::~upstep_work()
 
 	if (f_v) {
 		cout << "upstep_work::~upstep_work" << endl;
-		}
+	}
 	if (G) {
 		if (f_v) {
 			cout << "upstep_work::~upstep_work "
 					"before FREE_OBJECT(G)" << endl;
-			}
+		}
 		FREE_OBJECT(G);
 		G = NULL;
-		}
+	}
 	if (H) {
 		if (f_v) {
 			cout << "upstep_work::~upstep_work "
 					"before FREE_OBJECT(H)" << endl;
-			}
+		}
 		FREE_OBJECT(H);
 		H = NULL;
-		}
+	}
 	if (coset_table) {
 		if (f_v) {
 			cout << "upstep_work::~upstep_work "
 					"before FREE_OBJECT(coset_table)" << endl;
-			}
+		}
 		FREE_OBJECTS(coset_table);
 		coset_table = NULL;
-		}
+	}
 	if (path) {
 		if (f_v) {
 			cout << "upstep_work::~upstep_work "
 					"before FREE_int(path)" << endl;
-			}
+		}
 		FREE_int(path);
 		path = NULL;
-		}
+	}
 	if (Elt1) {
 		FREE_int(Elt1);
 	}
@@ -101,7 +101,7 @@ upstep_work::~upstep_work()
 	}
 	if (f_v) {
 		cout << "upstep_work::~upstep_work done" << endl;
-		}
+	}
 }
 
 void upstep_work::init(
@@ -124,7 +124,7 @@ void upstep_work::init(
 		cout << "upstep_work::init size=" << size
 				<< " prev=" << prev << " prev_ex="
 				<< prev_ex << " cur=" << cur << endl;
-		}
+	}
 	upstep_work::gen = gen;
 	upstep_work::size = size;
 	upstep_work::prev = prev;
@@ -139,27 +139,27 @@ void upstep_work::init(
 
 	if (O_prev->get_nb_of_extensions() > 25) {
 		mod_for_printing = 25;
-		}
+	}
 	if (O_prev->get_nb_of_extensions() > 50) {
 		mod_for_printing = 50;
-		}
+	}
 	if (O_prev->get_nb_of_extensions() > 100) {
 		mod_for_printing = 100;
-		}
+	}
 	if (O_prev->get_nb_of_extensions() > 500) {
 		mod_for_printing = 500;
-		}
+	}
 
 	path = NEW_int(size + 1);
 	path[size] = prev;
 	for (i = size - 1; i >= 0; i--) {
 		path[i] = gen->get_node(path[i + 1])->get_prev();
-		}
+	}
 	if (f_v) {
 		cout << "upstep_work::init path: ";
 		Int_vec_print(cout, path, size + 1);
 		cout << endl;
-		}
+	}
 
 	Elt1 = NEW_int(gen->get_poset()->A->elt_size_in_int);
 	Elt2 = NEW_int(gen->get_poset()->A->elt_size_in_int);
@@ -167,7 +167,7 @@ void upstep_work::init(
 
 	if (f_v) {
 		cout << "upstep_work::init done" << endl;
-		}
+	}
 }
 
 void upstep_work::handle_extension(

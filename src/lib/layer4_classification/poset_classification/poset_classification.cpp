@@ -210,6 +210,32 @@ void poset_classification::print_extension_type(
 }
 
 
+void poset_classification::compute_substructure_invariant(
+		int level, int orbit_idx,
+		int *data, int substructure_invariant_k,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "poset_classification::compute_substructure_invariant" << endl;
+	}
+
+	if (substructure_invariant_k == 1) {
+		Poo->get_node_ij(level, orbit_idx)->compute_substructure_invariant_1(
+				this, level, orbit_idx,
+				data,
+				verbose_level);
+	}
+	else {
+		cout << "poset_classification::compute_substructure_invariant the value of k is not implemented" << endl;
+		exit(1);
+	}
+
+	if (f_v) {
+		cout << "poset_classification::compute_substructure_invariant done" << endl;
+	}
+}
 
 }}}
 

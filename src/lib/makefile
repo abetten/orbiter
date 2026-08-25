@@ -15,6 +15,7 @@ ORBITER_MODULES= \
 		layer1_foundations/algebra/basic_algebra/matrix_group.o \
 		layer1_foundations/algebra/basic_algebra/null_polarity_generator.o \
 		layer1_foundations/algebra/basic_algebra/rank_checker.o \
+		layer1_foundations/algebra/expression_parser/evaluator.o \
 		layer1_foundations/algebra/expression_parser/formula_vector.o \
 		layer1_foundations/algebra/expression_parser/formula.o \
 		layer1_foundations/algebra/expression_parser/symbolic_object_builder_description.o \

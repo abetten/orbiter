@@ -22,6 +22,9 @@ namespace expression_parser {
 syntax_tree::syntax_tree()
 {
 	Record_birth();
+
+	f_is_commutative = false;
+
 	f_has_managed_variables = false;
 	//std::string managed_variables_text
 	//std::vector<std::string> managed_variables;
@@ -44,6 +47,7 @@ syntax_tree::~syntax_tree()
 
 void syntax_tree::init(
 		algebra::field_theory::finite_field *Fq,
+		int f_is_commutative,
 		int f_managed_variables,
 		std::string &managed_variables_text,
 		int verbose_level)
@@ -54,12 +58,16 @@ void syntax_tree::init(
 		cout << "syntax_tree::init" << endl;
 	}
 	if (f_v) {
+		cout << "syntax_tree::init f_is_commutative = " << f_is_commutative << endl;
+	}
+	if (f_v) {
 		cout << "syntax_tree::init f_managed_variables = " << f_managed_variables << endl;
 		if (f_managed_variables) {
 			cout << "syntax_tree::init managed_variables_text = " << managed_variables_text << endl;
 		}
 	}
 
+	syntax_tree::f_is_commutative = f_is_commutative;
 	syntax_tree::Fq = Fq;
 
 	if (f_managed_variables) {
@@ -111,7 +119,9 @@ void syntax_tree::init_root_node(
 }
 
 void syntax_tree::init_int(
-		algebra::field_theory::finite_field *Fq, int value,
+		algebra::field_theory::finite_field *Fq,
+		int f_is_commutative,
+		int value,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -120,6 +130,7 @@ void syntax_tree::init_int(
 		cout << "syntax_tree::init_int" << endl;
 	}
 
+	syntax_tree::f_is_commutative = f_is_commutative;
 	syntax_tree::Fq = Fq;
 
 	init_root_node(verbose_level);
@@ -137,6 +148,7 @@ void syntax_tree::init_int(
 
 void syntax_tree::init_monopoly(
 		algebra::field_theory::finite_field *Fq,
+		int f_is_commutative,
 		std::string &variable,
 		int *coeffs, int nb_coeffs,
 		int verbose_level)
@@ -147,6 +159,7 @@ void syntax_tree::init_monopoly(
 		cout << "syntax_tree::init_monopoly" << endl;
 	}
 
+	syntax_tree::f_is_commutative = f_is_commutative;
 	syntax_tree::Fq = Fq;
 
 	init_root_node(verbose_level);

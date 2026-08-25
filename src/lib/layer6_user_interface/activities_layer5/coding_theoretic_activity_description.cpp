@@ -26,6 +26,8 @@ coding_theoretic_activity_description::coding_theoretic_activity_description()
 {
 	Record_birth();
 
+
+
 	f_report = false;
 
 	f_general_code_binary = false;

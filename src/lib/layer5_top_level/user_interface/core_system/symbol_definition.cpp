@@ -2645,6 +2645,7 @@ void symbol_definition::definition_of_modified_group(
 
 	AG = NEW_OBJECT(groups::any_group);
 	AG->init_modified_group(MGC, verbose_level);
+	// creates a new sims object AG->Subgroup_sims
 
 	other::orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 

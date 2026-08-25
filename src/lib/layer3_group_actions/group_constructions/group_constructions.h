@@ -241,13 +241,11 @@ public:
 	std::string polarity_extension_input;
 	std::string polarity_extension_PA;
 
-	// ToDo undocumented
 	int f_on_middle_layer_grassmannian;
 
-	// ToDo undocumented
 	int f_on_points_and_hyperplanes;
 
-	// ToDo undocumented
+	// ToDo not yet implemented
 	int f_holomorph;
 
 
@@ -848,6 +846,7 @@ public:
 
 	int degree_of_matrix_group; // |B|
 	int dimension_of_matrix_group;
+	int f_is_semilinear;
 
 
 	int degree_overall; // = 2 + |B|
@@ -858,7 +857,7 @@ public:
 
 	int *element_coding_offset; // [2]
 	int *perm_offset_i; // [2]
-	// perm_offset_i[] is the start of A, B respectively.
+	// perm_offset_i[] is the start of A and B, respectively.
 	int *tmp_Elt1;
 	int *tmp_matrix1; // [n * n]
 	int *tmp_matrix2; // [n * n]
@@ -902,6 +901,9 @@ public:
 			int *A, int *B, int *AB, int verbose_level);
 	void element_move(
 			int *A, int *B, int verbose_level);
+	void compute_image_rho_A_rho(
+			int *v_in, int *v_out, int *A_Elt, int n,
+			int verbose_level);
 	void compute_images_rho_A_rho(
 			int *Mtx, int nb_rows, int *A_Elt, int verbose_level);
 	void create_rho_A_rho(

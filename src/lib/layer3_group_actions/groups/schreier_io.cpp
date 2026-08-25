@@ -442,7 +442,7 @@ void schreier::print_tables(
 		ost << " : coset_rep";
 	ost << endl;
 
-	if (Generators_and_images->A->degree < 100) {
+	if (Generators_and_images->A->degree < 200) {
 		for (i = 0; i < Generators_and_images->A->degree; i++) {
 			Generators_and_images->coset_rep(i, 0 /* verbose_level */);
 			//coset_rep_inv(i);

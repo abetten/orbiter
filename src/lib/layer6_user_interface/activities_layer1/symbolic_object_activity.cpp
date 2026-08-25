@@ -76,6 +76,31 @@ void symbolic_object_activity::perform_activity(
 		}
 
 	}
+	else if (Descr->f_save) {
+
+		if (f_v) {
+			cout << "symbolic_object_activity::perform_activity f_save" << endl;
+		}
+
+		string fname;
+
+		fname = f->label + ".txt";
+		if (f_v) {
+			cout << "symbolic_object_activity::perform_activity "
+					"fname = " << fname << endl;
+		}
+
+		if (f_v) {
+			cout << "symbolic_object_activity::perform_activity "
+					"before save" << endl;
+		}
+		save(fname, verbose_level);
+		if (f_v) {
+			cout << "symbolic_object_activity::perform_activity "
+					"after save" << endl;
+		}
+
+	}
 	else if (Descr->f_as_vector) {
 
 		if (f_v) {
@@ -129,60 +154,12 @@ void symbolic_object_activity::perform_activity(
 		Int_vec_print(cout, v, len);
 		cout << endl;
 
-		int i;
-		int f_first = true;
+		other::data_structures::algorithms Algorithms;
 
-		cout << "homogenized: ";
-		for (i = 0; i < len; i++) {
+		Algorithms.print_homogenized(
+				v, len,
+				cout, verbose_level);
 
-			string coeff;
-
-
-			if (v[i] == 0) {
-				continue;
-			}
-			else if (v[i] == 1) {
-				coeff = "";
-			}
-			else {
-				coeff = std::to_string(v[i]) + "*";
-			}
-
-			string exp1;
-			string exp2;
-
-			if (i == 1) {
-				exp1 = "";
-			}
-			else {
-				exp1 = "^" + std::to_string(i);
-			}
-			if (len - 1 - i == 1) {
-				exp2 = "";
-			}
-			else {
-				exp2 = "^" + std::to_string(len - 1 - i);
-			}
-
-			if (f_first) {
-				f_first = false;
-			}
-			else {
-				cout << " + ";
-			}
-
-			cout << coeff;
-			if (i == 0) {
-				cout << "Y" << exp2;
-			}
-			else if (i == len - 1) {
-				cout << "X" << exp1;
-			}
-			else {
-				cout << "X" << exp1 << "*Y" << exp2;
-			}
-		}
-		cout << endl;
 
 		FREE_int(v);
 
@@ -238,91 +215,6 @@ void symbolic_object_activity::perform_activity(
 	}
 
 
-#if 0
-	if (Descr->f_export) {
-
-		std::string fname;
-		fname = f->name_of_formula + ".gv";
-
-		{
-			std::ofstream ost(fname);
-
-			cout << "formula " << f->name_of_formula << " = ";
-			f->tree->print_easy(cout);
-			cout << endl;
-
-
-
-			cout << "formula " << f->name_of_formula << " = " << endl;
-			f->tree->print(cout);
-			cout << endl;
-
-			f->tree->Root->export_graphviz(f->name_of_formula, ost);
-		}
-
-	}
-	else if (Descr->f_evaluate) {
-
-		cout << "before evaluate" << endl;
-
-		//field_theory::finite_field *F;
-
-		//F = Get_finite_field(Descr->evaluate_finite_field_label);
-
-		expression_parser_domain ED;
-		//int a;
-
-		//a = ;
-		ED.evaluate_formula(
-				f,
-				Descr->evaluate_assignment,
-				verbose_level);
-
-
-
-	}
-	else if (Descr->f_print) {
-
-		cout << "before f_print" << endl;
-
-		//field_theory::finite_field *F;
-
-		//F = Get_finite_field(Descr->print_over_Fq_field_label);
-
-		f->print_easy(cout);
-		cout << endl;
-
-	}
-	else if (Descr->f_sweep) {
-
-		cout << "before f_seep" << endl;
-
-		//field_theory::finite_field *F;
-
-		//F = Get_finite_field(Descr->sweep_field_label);
-
-		do_sweep(false /* f_affine */,
-				f,
-				Descr->sweep_variables,
-				verbose_level);
-
-	}
-	else if (Descr->f_sweep_affine) {
-
-		cout << "before f_seep_affine" << endl;
-
-		//field_theory::finite_field *F;
-
-		//F = Get_finite_field(Descr->sweep_affine_field_label);
-
-		do_sweep(true /* f_affine */,
-				f,
-				Descr->sweep_affine_variables,
-				verbose_level);
-
-	}
-#endif
-
 
 	if (f_v) {
 		cout << "symbolic_object_activity::perform_activity done" << endl;
@@ -377,6 +269,33 @@ void symbolic_object_activity::print(
 		cout << "symbolic_object_activity::print done" << endl;
 	}
 }
+
+void symbolic_object_activity::save(
+		std::string &fname,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "symbolic_object_activity::save" << endl;
+	}
+
+
+	algebra::expression_parser::formula_vector *Vec;
+
+	Vec = f->Formula_vector;
+
+	Vec->save_ascii(
+			fname, verbose_level);
+
+
+
+	if (f_v) {
+		cout << "symbolic_object_activity::save done" << endl;
+	}
+}
+
+
 
 
 void symbolic_object_activity::as_vector(
@@ -596,9 +515,9 @@ void symbolic_object_activity::evaluate_affine(
 
 
 	if (f_v) {
-		cout << "nb_variables=" << nb_variables << endl;
-		cout << "q=" << q << endl;
-		cout << "N=" << N << endl;
+		cout << "symbolic_object_activity::evaluate_affine nb_variables=" << nb_variables << endl;
+		cout << "symbolic_object_activity::evaluate_affine q=" << q << endl;
+		cout << "symbolic_object_activity::evaluate_affine N=" << N << endl;
 
 		cout << "symbolic_object_activity::evaluate_affine Values_out:" << endl;
 		Int_vec_print(cout, Values_out, N);
@@ -633,93 +552,16 @@ void symbolic_object_activity::evaluate_affine(
 
 	if (true) {
 
-		cout << "symbolic_object_activity::evaluate_affine "
-				"content analysis of Values_out:" << endl;
-		Int_vec_content_analysis(Values_out, N, 0 /* verbose_level*/);
-
-
-		other::data_structures::set_of_sets *SoS;
 		other::data_structures::algorithms Algorithms;
 
-		int *types;
-		int nb_types;
+		Algorithms.content_analysis_by_Hamming_weight(
+				Values_out, N,
+				verbose_level);
 
-		int *elements;
-		int *weight;
-		int l, t, w;
-		long int a;
-
-		Int_vec_content(Values_out, N, SoS, types, nb_types, 0 /* verbose_level*/);
-
-		cout << "Analysis of the fibers:" << endl;
-
-		for (t = 0; t < nb_types; t++) {
-
-			l = SoS->Set_size[t];
-
-			cout << "type " << t << " value " << types[t] << " number of elements " << l << endl;
-
-
-			weight = NEW_int(l);
-			elements = NEW_int(l);
-
-			for (i = 0; i < l; i++) {
-				a = SoS->Sets[t][i];
-
-				w = Algorithms.Hamming_weight(a);
-
-				weight[i] = w;
-			}
-
-			//Int_vec_content_analysis(weight, l, 0 /* verbose_level*/);
-
-			{
-				other::data_structures::tally Tw;
-
-				Tw.init(weight,
-						l, false /* f_second */,
-						0 /* verbose_level*/);
-
-				cout << "int_vec::content_analysis "
-						"place values of the given function:" << endl;
-				Tw.print(true /* f_backwards*/);
-
-				other::data_structures::set_of_sets *SoS2;
-
-				int *types2;
-				int nb_types2;
-
-
-				SoS2 = Tw.get_set_partition_and_types(
-						types2, nb_types2, verbose_level);
-
-				SoS2->sort_all(
-						0 /*verbose_level*/);
-				int i;
-
-				for (i = 0; i < nb_types2; i++) {
-					cout << i << " : " << types2[i] << " : " << SoS2->Set_size[i] << " : ";
-
-					int j;
-
-					for (j = 0; j < SoS2->Set_size[i]; j++) {
-						a = SoS->Sets[t][SoS2->Sets[i][j]];
-						elements[j] = a;
-					}
-					Int_vec_print(cout, elements, SoS2->Set_size[i]);
-					cout << endl;
-				}
-
-				FREE_OBJECT(SoS2);
-				FREE_int(types2);
-			}
-
-			FREE_int(weight);
-			FREE_int(elements);
-
-		}
 
 	}
+
+	// compute the true set of Values_out, viewed as a boolean function:
 
 	int sz;
 
@@ -730,11 +572,11 @@ void symbolic_object_activity::evaluate_affine(
 		}
 	}
 
-	cout << "symbolic_object_activity::evaluate_affine Index_set:" << endl;
+	cout << "symbolic_object_activity::evaluate_affine true set = " << endl;
 	Int_vec_print(cout, Index_set, sz);
 	cout << endl;
 
-	cout << "Size of index set = " << sz << endl;
+	cout << "Size of true set = " << sz << endl;
 
 	FREE_int(Values_in);
 	FREE_int(Values_out);
@@ -747,6 +589,8 @@ void symbolic_object_activity::evaluate_affine(
 
 void symbolic_object_activity::collect_monomials_binary(
 		int verbose_level)
+// writes the monomial table to a csv file.
+// The filename is composed of the label and the suffix "_monomial_table_binary.csv"
 {
 	int f_v = (verbose_level >= 1);
 
@@ -823,182 +667,6 @@ void symbolic_object_activity::collect_monomials_binary(
 
 
 
-#if 0
-void symbolic_object_activity::do_sweep(
-		int f_affine,
-		formula *f,
-		std::string &sweep_variables,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "symbolic_object_activity::do_sweep" << endl;
-	}
-
-
-	f->print_easy(cout);
-	cout << endl;
-
-	data_structures::string_tools ST;
-	std::vector<std::string> symbol_table;
-
-	ST.parse_comma_separated_values(symbol_table,
-			sweep_variables,
-			verbose_level);
-
-	expression_parser_domain ED;
-	geometry::geometry_global Gg;
-	int n, N;
-	int *v;
-
-
-	n = symbol_table.size();
-	v = NEW_int(n);
-
-	N = Gg.nb_AG_elements(n, f->Fq->q);
-
-	orbiter_kernel_system::file_io Fio;
-
-	string fname;
-	fname = "sweep_" + f->name_of_formula + "_q" + std::to_string(f->Fq->q) + ".csv";
-
-	//Fio.lint_matrix_write_csv(fname, Table, nb_quartic_curves, nb_cols);
-
-	int degree;
-
-	if (!f->is_homogeneous(degree, verbose_level - 3)) {
-		cout << "not homogeneous" << endl;
-		exit(1);
-	}
-
-	if (f_v) {
-		cout << "homogeneous of degree " << degree << endl;
-	}
-
-	ring_theory::homogeneous_polynomial_domain *Poly;
-
-	Poly = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
-
-	if (f_v) {
-		cout << "before Poly->init" << endl;
-	}
-	Poly->init(f->Fq,
-			f->nb_managed_vars /* nb_vars */, degree,
-			t_PART,
-			0 /*verbose_level - 3*/);
-	if (f_v) {
-		cout << "after Poly->init" << endl;
-	}
-
-	int *fun;
-	int N_points;
-
-	if (f_affine) {
-		number_theory::number_theory_domain NT;
-
-		N_points = NT.i_power_j(f->Fq->q, Poly->nb_variables - 1);
-	}
-	else {
-		geometry::geometry_global Gg;
-
-		N_points = Gg.nb_PG_elements(Poly->nb_variables - 1, f->Fq->q);
-	}
-	fun = NEW_int(N_points);
-
-
-	{
-		ofstream ost(fname);
-		int i, j, cnt;
-
-		ost << "Row,index,parameters,coefficients,evaluation_vector" << endl;
-
-
-		cnt = 0;
-
-		for (i = 0; i < N; i++) {
-
-
-			cout << "sweep is at " << i << " / " << N << endl;
-			string values;
-
-			Gg.AG_element_unrank(f->Fq->q, v, 1, n, i);
-
-			if (f_affine) {
-				if (v[0] == 0) {
-					continue;
-				}
-			}
-
-			values.assign("");
-			for (j = 0; j < n; j++) {
-				values += symbol_table[j] + "=" + std::to_string(v[j]);
-				if (j < n - 1) {
-					values += ",";
-				}
-			}
-
-			int *Values;
-			int nb_monomials;
-
-			ED.evaluate_managed_formula(
-					f,
-					values,
-					Values, nb_monomials,
-					verbose_level - 2);
-
-
-			int c;
-
-			c = Int_vec_is_zero(Values, nb_monomials);
-
-			if (!c) {
-
-
-				if (f_affine) {
-					Poly->polynomial_function_affine(Values, fun, verbose_level);
-				}
-				else {
-					Poly->polynomial_function(Values, fun, verbose_level);
-				}
-
-
-				ost << cnt << "," << i;
-				{
-					string str;
-					ost << ",";
-					//ost << values;
-					orbiter_kernel_system::Orbiter->Int_vec->create_string_with_quotes(str, v, n);
-					ost << str;
-					ost << ",";
-					orbiter_kernel_system::Orbiter->Int_vec->create_string_with_quotes(str, Values, nb_monomials);
-					ost << str;
-					ost << ",";
-					orbiter_kernel_system::Orbiter->Int_vec->create_string_with_quotes(str, fun, N_points);
-					ost << str;
-				}
-				ost << endl;
-
-				cnt++;
-
-			}
-
-			FREE_int(Values);
-
-		} // next i
-		ost << "END" << endl;
-	}
-	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-
-	FREE_int(fun);
-	FREE_OBJECT(Poly);
-
-	if (f_v) {
-		cout << "symbolic_object_activity::do_sweep done" << endl;
-	}
-
-}
-#endif
 
 }}}
 
