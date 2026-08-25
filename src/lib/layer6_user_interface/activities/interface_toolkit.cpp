@@ -1278,7 +1278,9 @@ void interface_toolkit::read_arguments(
 		for (++i; i < argc - 1; i++) {
 			if (ST.stringcmp(argv[i], "-end_loop_over") == 0
 					&& ST.stringcmp(argv[i + 1], loop_over_variable.c_str()) == 0) {
-				loop_over_end_idx = i + 1;
+				// exclusive bound: must be i, not i+1, or the body
+				// includes "-end_loop_over" itself
+				loop_over_end_idx = i;
 				break;
 			}
 		}
