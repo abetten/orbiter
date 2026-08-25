@@ -1113,17 +1113,18 @@ void spreadsheet::tokenize(
 
 
 
-			line_cnt++;
-			if (fp.eof()) {
+			string s;
+
+			// check getline's own result, not eof() beforehand -- avoids
+			// a phantom extra empty line on files ending in a newline
+			if (!std::getline(fp, s)) {
 				if (f_vv) {
 					cout << "eof" << endl;
 				}
 				break;
 			}
 
-			string s;
-
-			std::getline(fp, s);
+			line_cnt++;
 
 			int len;
 
