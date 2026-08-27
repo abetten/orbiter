@@ -56,6 +56,9 @@ orbits_create_description::orbits_create_description()
 	f_on_polynomials = false;
 	//std::string on_polynomials_ring;
 
+	f_on_polynomials_memory_efficient = false;
+	//std::string on_polynomials_memory_efficient_ring;
+
 	f_on_polynomials_with_bitvector_first = false;
 	//std::string on_polynomials_with_bitvector_first_ring;
 
@@ -190,6 +193,13 @@ int orbits_create_description::read_arguments(
 			on_polynomials_ring.assign(argv[++i]);
 			if (f_v) {
 				cout << "-on_polynomials " << on_polynomials_ring << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-on_polynomials_memory_efficient") == 0) {
+			f_on_polynomials_memory_efficient = true;
+			on_polynomials_memory_efficient_ring.assign(argv[++i]);
+			if (f_v) {
+				cout << "-on_polynomials_memory_efficient " << on_polynomials_memory_efficient_ring << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-on_polynomials_with_bitvector_first") == 0) {
@@ -401,6 +411,9 @@ void orbits_create_description::print()
 	}
 	if (f_on_polynomials) {
 		cout << "-on_polynomials " << on_polynomials_ring << endl;
+	}
+	if (f_on_polynomials_memory_efficient) {
+		cout << "-on_polynomials_memory_efficient " << on_polynomials_memory_efficient_ring << endl;
 	}
 	if (f_on_polynomials_with_bitvector_first) {
 		cout << "-on_polynomials_with_bitvector_first " << on_polynomials_with_bitvector_first_ring << endl;

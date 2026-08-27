@@ -295,6 +295,13 @@ public:
 			actions::action *default_action,
 			algebra::ring_theory::longinteger_object &full_group_order,
 			int verbose_level);
+	void init_from_orbit_reps(
+			actions::action *default_action,
+			actions::action *induced_action,
+			std::vector<long int> &orbit_reps,
+			std::vector<long int> &orbit_lengths,
+			algebra::ring_theory::longinteger_object &full_group_order,
+			int verbose_level);
 	void read_from_file(
 			actions::action *A,
 			actions::action *A2,
@@ -820,7 +827,9 @@ public:
 			int print_interval,
 			int verbose_level);
 	void reverse_isomorphism_exterior_square(
+			int f_lex_ordering,
 			int verbose_level);
+	// creates objects of type  geometry::orthogonal_geometry::orthogonal and geometry::projective_geometry::klein_correspondence
 	void matrix_representation(
 			induced_actions::action_on_homogeneous_polynomials *A_on_HPD,
 			int *&M, int &nb_gens,

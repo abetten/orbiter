@@ -585,6 +585,69 @@ void orbits_create::init(
 
 	}
 
+	if (Descr->f_on_polynomials_memory_efficient) {
+
+
+		if (f_v) {
+			cout << "orbits_create::init f_on_polynomials_memory_efficient" << endl;
+		}
+		if (f_v) {
+			cout << "orbits_create::init ring = " << Descr->on_polynomials_memory_efficient_ring << endl;
+		}
+
+		if (!Descr->f_group) {
+			cout << "orbits_create::init please specify the group using -group <label>" << endl;
+			exit(1);
+		}
+
+		if (!Group->f_linear_group) {
+			cout << "orbits_create::init group must be linear" << endl;
+			exit(1);
+		}
+
+		if (!f_has_generators) {
+			cout << "orbits_create::init please specify generators using -generators <label>" << endl;
+			exit(1);
+		}
+
+
+		On_polynomials = NEW_OBJECT(orbits_on_polynomials);
+
+		algebra::ring_theory::homogeneous_polynomial_domain *HPD;
+
+
+		HPD = Get_ring(Descr->on_polynomials_memory_efficient_ring);
+
+
+		data_structures_groups::vector_ge *generators = NULL;
+
+		if (f_generators_is_group) {
+			generators = Generators->Subgroup_gens->gens;
+		}
+		else if (f_generators_is_vector_ge) {
+			generators = Generators_vector_ge;
+		}
+		if (f_v) {
+			cout << "orbits_create::init "
+					"before On_polynomials->init_memory_efficient" << endl;
+		}
+		On_polynomials->init_memory_efficient(
+				Group->LG,
+				HPD,
+				generators,
+				Descr->print_interval,
+				verbose_level);
+
+		if (f_v) {
+			cout << "orbits_create::init "
+					"after On_polynomials->init_memory_efficient" << endl;
+		}
+
+		f_has_On_polynomials = true;
+
+
+	}
+
 	if (Descr->f_on_polynomials_with_bitvector_first) {
 
 
@@ -616,20 +679,38 @@ void orbits_create::init(
 
 
 
+		if (f_has_generators) {
 
-		if (f_v) {
-			cout << "orbits_create::init "
-					"before On_polynomials->init_bitvector_first" << endl;
+
+			data_structures_groups::vector_ge *generators = NULL;
+
+			if (f_generators_is_group) {
+				generators = Generators->Subgroup_gens->gens;
+			}
+			else if (f_generators_is_vector_ge) {
+				generators = Generators_vector_ge;
+			}
+			if (f_v) {
+				cout << "orbits_create::init "
+						"before On_polynomials->init_bitvector_first" << endl;
+			}
+			On_polynomials->init_bitvector_first(
+					Group->LG,
+					HPD,
+					generators,
+					Descr->print_interval,
+					verbose_level);
+
+			if (f_v) {
+				cout << "orbits_create::init "
+						"after On_polynomials->init_bitvector_first" << endl;
+			}
+
 		}
-		On_polynomials->init_bitvector_first(
-				Group->LG,
-				HPD,
-				Descr->print_interval,
-				verbose_level);
 
-		if (f_v) {
-			cout << "orbits_create::init "
-					"after On_polynomials->init_bitvector_first" << endl;
+		else {
+			cout << "orbits_create::init f_on_polynomials_with_bitvector_first needs generators" << endl;
+			exit(1);
 		}
 
 
@@ -672,21 +753,38 @@ void orbits_create::init(
 
 
 
+		if (f_has_generators) {
 
-		if (f_v) {
-			cout << "orbits_create::init "
-					"before On_polynomials->init_bitvector_continue" << endl;
+			data_structures_groups::vector_ge *generators = NULL;
+
+			if (f_generators_is_group) {
+				generators = Generators->Subgroup_gens->gens;
+			}
+			else if (f_generators_is_vector_ge) {
+				generators = Generators_vector_ge;
+			}
+
+			if (f_v) {
+				cout << "orbits_create::init "
+						"before On_polynomials->init_bitvector_continue" << endl;
+			}
+			On_polynomials->init_bitvector_continue(
+					Group->LG,
+					HPD,
+					generators,
+					Descr->print_interval,
+					Descr->on_polynomials_with_bitvector_continue_previous_orbit,
+					verbose_level);
+
+			if (f_v) {
+				cout << "orbits_create::init "
+						"after On_polynomials->init_bitvector_continue" << endl;
+			}
 		}
-		On_polynomials->init_bitvector_continue(
-				Group->LG,
-				HPD,
-				Descr->print_interval,
-				Descr->on_polynomials_with_bitvector_continue_previous_orbit,
-				verbose_level);
+		else {
+			cout << "orbits_create::init init_bitvector_continue needs generators" << endl;
+			exit(1);
 
-		if (f_v) {
-			cout << "orbits_create::init "
-					"after On_polynomials->init_bitvector_continue" << endl;
 		}
 
 

@@ -426,7 +426,7 @@ void orbit_of_equations::compute_orbit(
 				}
 
 				used_length++;
-				if ((used_length % 10000) == 0) {
+				if (f_v && (used_length % 10000) == 0) {
 					cout << "orbit_of_equations::compute_orbit  "
 							<< used_length << endl;
 				}
