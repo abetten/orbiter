@@ -22,4 +22,5 @@ ROW,C1,C2,C3
 1,"\verb'-element_rank' "," $s$ "," Determines the rank of the group element $s$ in the given group. $s$ is given in coded form."
 1,"\verb'-element_unrank' "," $r$ "," Produces the group element whose rank is $r$. "
 1,"\verb'-test_associativity' "," n "," Tests the associative law $a(bc) = (ab)c$ with $n$ random choices for each of $a$ and $b$ and $c$. In total, $n^3$ choices are tested. "
+1,"\verb'-test_inverse' "," n "," Tests the existence of an inverse $a^{-1}$ of a group element $a$ with $n$ random choices of $a$. "
 END

@@ -184,6 +184,8 @@ public:
 	// c := a^b = b^-1 * a * b
 	void perm_inverse(
 			int *a, int *b, long int n);
+	void perm_inverse_lint(
+			long int *a, long int *b, long int n);
 	// b := a^-1
 	void perm_raise(
 			int *a, int *b, int e, long int n);
@@ -266,6 +268,19 @@ public:
 			int m, int n, int *perm_mn,
 			long int *flags_in, long int *flags_out, int nb_flags,
 			int verbose_level);
+	void compute_canonical_form_of_incidence_matrix(
+			int *canonical_labeling,
+			int nb_rows, int nb_cols,
+			int *Incma_in, int *Incma_out, int verbose_level);
+	// assumes that canonical_labeling[] has size nb_rows + nb_cols
+	void compute_canonical_form_of_incidence_matrix_lint(
+			long int *canonical_labeling,
+			int nb_rows, int nb_cols,
+			long int *Incma_in, long int *Incma_out, int verbose_level);
+	void print_isomorphism_GDD(
+			std::ostream &ost,
+			int *canonical_labeling,
+			int order, int verbose_level);
 
 };
 

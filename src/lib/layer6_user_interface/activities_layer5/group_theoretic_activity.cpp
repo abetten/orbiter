@@ -702,7 +702,7 @@ int group_theoretic_activity::perform_activity_part1(
 
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
-					"f_random_element" << endl;
+					"f_test_associativity" << endl;
 		}
 
 		if (f_v) {
@@ -713,6 +713,23 @@ int group_theoretic_activity::perform_activity_part1(
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
 					"after AG->test_associative_law" << endl;
+		}
+	}
+	else if (Descr->f_test_inverse) {
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"f_test_inverse" << endl;
+		}
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before AG->test_inverse" << endl;
+		}
+		AG->test_inverse(Descr->test_inverse_nb_tests, verbose_level);
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after AG->test_inverse" << endl;
 		}
 	}
 

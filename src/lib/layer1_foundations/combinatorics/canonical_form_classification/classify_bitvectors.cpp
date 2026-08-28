@@ -38,6 +38,7 @@ classify_bitvectors::classify_bitvectors()
 	C_type_of = NULL;
 
 	perm = NULL;
+	perm_inv = NULL;
 }
 
 
@@ -74,6 +75,9 @@ classify_bitvectors::~classify_bitvectors()
 	if (perm) {
 		FREE_int(perm);
 	}
+	if (perm_inv) {
+		FREE_int(perm_inv);
+	}
 }
 
 
@@ -100,6 +104,7 @@ void classify_bitvectors::init(
 	n = 0;
 	C_type_of = NULL;
 	perm = NULL;
+	perm_inv = NULL;
 	
 	if (f_v) {
 		cout << "classify_bitvectors::init done" << endl;
@@ -305,7 +310,7 @@ void classify_bitvectors::add_at_idx(
 
 void classify_bitvectors::finalize(
 		int verbose_level)
-// Computes C_type_of and perm
+// Computes C_type_of, perm and perm_inv
 {
 	int f_v = (verbose_level >= 1);
 	other::data_structures::sorting Sorting;
@@ -331,12 +336,19 @@ void classify_bitvectors::finalize(
 	int i;
 
 	perm = NEW_int(nb_types);
+	perm_inv = NEW_int(nb_types);
 	v = NEW_int(nb_types);
 	for (i = 0; i < nb_types; i++) {
 		perm[i] = i;
 		v[i] = Type_rep[i];
 	}
 	Sorting.int_vec_heapsort_with_log(v, perm, nb_types);
+
+	combinatorics::special_functions::permutations Permutations;
+
+	Permutations.perm_inverse(
+			perm, perm_inv, nb_types);
+
 
 	FREE_int(v);
 	

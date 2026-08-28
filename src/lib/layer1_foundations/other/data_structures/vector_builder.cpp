@@ -386,6 +386,65 @@ void vector_builder::init(
 
 	}
 
+	else if (Descr->f_latin_square_GDD) {
+		if (f_v) {
+			cout << "vector_builder::init -f_latin_square_GDD" << endl;
+		}
+
+		int order;
+		int *latin_square;
+		int sz;
+		int nb_rows, nb_cols;
+		int i;
+
+		order = Descr->latin_square_GDD_order;
+		if (f_v) {
+			cout << "vector_builder::init order = " << order << endl;
+		}
+		Int_vec_scan(Descr->latin_square_GDD_text, latin_square, sz);
+
+		if (sz != order * order) {
+			cout << "vector_builder::init sz != order * order" << endl;
+			exit(1);
+		}
+
+		nb_rows = 3 * order;
+		nb_cols = 3 + order * order;
+
+		len = nb_rows * nb_cols;
+		v = NEW_lint(len);
+		Lint_vec_zero(v, len);
+
+		int h, j, digit, col;
+
+		for (j = 0; j < 3; j++) {
+			for (h = 0; h < order; h++) {
+				i = j * order + h;
+				v[i * nb_cols + j] = 1;
+			}
+		}
+
+		for (i = 0; i < order; i++) {
+			for (j = 0; j < order; j++) {
+				col = i * order + j;
+				digit = latin_square[i * order + j] - 1;
+
+				v[i * nb_cols + 3 + col] = 1;
+				v[(order + j) * nb_cols + 3 + col] = 1;
+				v[(2 * order + digit) * nb_cols + 3 + col] = 1;
+			}
+		}
+		FREE_int(latin_square);
+
+		f_has_k = true;
+		k = nb_rows;
+
+		if (f_v) {
+			cout << "vector_builder::init found a vector of length " << len << endl;
+		}
+
+	}
+
 
 	else if (Descr->f_concatenate) {
 
@@ -658,7 +717,7 @@ void vector_builder::init(
 		if (f_has_k) {
 			cout << "also seen as matrix of size "
 					<< k << " x " << len / k << endl;
-			if (k > 30 || (len / k) > 30) {
+			if (k > 40 || (len / k) > 40) {
 				cout << "too large to print" << endl;
 			}
 			else {

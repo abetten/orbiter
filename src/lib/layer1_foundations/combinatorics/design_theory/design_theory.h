@@ -34,6 +34,7 @@ public:
 	int q;
 	algebra::field_theory::finite_field *F;
 
+	int f_has_k;
 	int k;
 
 
@@ -121,7 +122,7 @@ public:
 			int *&Inc,
 			int verbose_level);
 	void make_design_from_incidence_matrix(
-		int *&Inc, int &v, int &b, int &k,
+		int *&Inc, int &v, int &b, int &f_has_k, int &k, int &nb_inc,
 		std::string &label,
 		int verbose_level);
 	void make_design_from_graph(

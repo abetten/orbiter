@@ -1101,6 +1101,9 @@ public:
 	int f_test_associativity;
 	int test_associativity_nb_tests;
 
+	int f_test_inverse;
+	int test_inverse_nb_tests;
+
 
 
 	// TABLES/group_theoretic_activity_2.csv
@@ -3106,6 +3109,11 @@ public:
 	int f_missing_sets;
 	int missing_sets_n;
 
+	int f_apply_permutation;
+	std::string apply_permutation_perm;
+
+	int f_apply_permutation_inverse;
+	std::string apply_permutation_inverse_perm;
 
 	vector_activity_description();
 	~vector_activity_description();

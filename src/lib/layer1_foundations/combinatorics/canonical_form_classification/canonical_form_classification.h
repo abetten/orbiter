@@ -424,7 +424,7 @@ class objects_report_options {
 
 public:
 
-	// TABLES/objects_report_options.tex
+	// TABLES/objects_report_options.csv
 
 	int f_export_flag_orbits;
 
@@ -448,6 +448,8 @@ public:
 
 	int f_canonical_forms;
 
+	int f_GDD;
+	int GDD_order;
 
 	objects_report_options();
 	~objects_report_options();
@@ -482,11 +484,21 @@ public:
 		// one object
 
 
+	//Type_data
+	//Type_extra_data
+	//Type_rep
+	//Type_mult
+	// are all indexed in the order of isomorphism types
+	// which is determined by the lexicograhic position of the canonical form
+
+
 	uchar **Type_data;   // [nb_types]
+
 
 		// Type_data[nb_types][rep_len]
 		// the canonical form of the i-th representative is
 		// Type_data[i][rep_len]
+		// The array Type_data is sorted.
 
 	int *Type_rep;  // [nb_types]
 
@@ -517,12 +529,17 @@ public:
 		// type_of[N]
 		// type_of[i] is the isomorphism type of the i-th candidate
 
+
+	// C_type_of, perm, perm_inv are computed in finalize()
+	// after the classification
+
 	other::data_structures::tally *C_type_of;
 
 		// the classification of type_of[N]
 		// this will be computed in finalize()
 
 	int *perm; // [nb_types]
+	int *perm_inv; // [nb_types]
 
 		// perm[] can be used to access the isomorphism
 		// types of objects in the order in which they appear in the input stream
@@ -554,7 +571,7 @@ public:
 			void *extra_data, int idx, int verbose_level);
 	void finalize(
 			int verbose_level);
-	// Computes C_type_of and perm
+	// Computes C_type_of, perm and perm_inv
 	void print_reps();
 	void print_canonical_forms();
 	void save(
@@ -706,7 +723,10 @@ public:
 	void init_file_of_packings(
 			std::string &a);
 	void init_file_of_packings_through_spread_table(
-			std::string &a, std::string &fname_spread_table, std::string &col_label, int q);
+			std::string &a,
+			std::string &fname_spread_table,
+			std::string &col_label,
+			int q);
 	void init_file_of_designs_through_block_orbits(
 			std::string &a, std::string &b, int v, int k);
 	void init_file_of_designs_through_blocks(

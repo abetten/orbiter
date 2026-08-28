@@ -32,6 +32,8 @@ design_object::design_object()
 
 	q = 0;
 	F = NULL;
+
+	f_has_k = false;
 	k = 0;
 
 	f_has_set = false;
@@ -105,6 +107,8 @@ void design_object::compute_incidence_matrix_from_blocks(
 	nb_inc = nb_blocks * k;
 
 	f_has_incma = true;
+	f_has_k = true;
+	design_object::k = k;
 
 	if (f_v) {
 		cout << "design_object::compute_incidence_matrix_from_blocks "
@@ -136,6 +140,11 @@ void design_object::compute_blocks_from_incidence_matrix(
 		cout << "design_object::compute_blocks_from_incidence_matrix" << endl;
 	}
 
+
+	if (!f_has_k) {
+		cout << "design_object::compute_blocks_from_incidence_matrix f_has_k is false" << endl;
+		exit(1);
+	}
 	nb_blocks = b;
 	block_sz = k;
 	int i, j, h;
@@ -197,6 +206,7 @@ void design_object::make_Baker_elliptic_semiplane_1978(
 	}
 
 
+	f_has_k = true;
 	k = 7;
 	block = NEW_int(k);
 	nb_inc = k * b;
@@ -248,7 +258,7 @@ void design_object::make_Mathon_elliptic_semiplane_1987(
 				"after Design_theory_global.make_Mathon_elliptic_semiplane_1987_incma" << endl;
 	}
 
-
+	f_has_k = true;
 	k = 12;
 	block = NEW_int(k);
 	nb_inc = k * b;
@@ -290,6 +300,7 @@ void design_object::make_design_from_blocks(
 
 	design_object::v = v;
 	b = m;
+	f_has_k = true;
 	k = n;
 
 	if (f_v) {
@@ -343,7 +354,7 @@ void design_object::make_design_from_incidence_matrix(
 				"before Design_theory_global.make_design_from_incidence_matrix" << endl;
 	}
 	Design_theory_global.make_design_from_incidence_matrix(
-			incma, v, b, k,
+			incma, v, b, f_has_k, k, nb_inc,
 			label,
 			verbose_level - 1);
 	if (f_v) {
@@ -352,7 +363,6 @@ void design_object::make_design_from_incidence_matrix(
 	}
 
 	block = NEW_int(k);
-	nb_inc = k * b;
 
 	f_has_set = false;
 
@@ -800,6 +810,11 @@ void design_object::do_export_blocks(
 
 	fname = label_txt + "_blocks.csv";
 
+
+	if (!f_has_k) {
+		cout << "design_object::do_export_blocks does not have k" << endl;
+		exit(1);
+	}
 	//combinatorics::other_combinatorics::combinatorics_domain Combi;
 	combinatorics::design_theory::design_theory_global Design;
 

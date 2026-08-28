@@ -2237,6 +2237,10 @@ void algebra_global_with_action::get_classses_expanded(
 	if (f_v) {
 		cout << "algebra_global_with_action::get_classses_expanded" << endl;
 	}
+	if (f_v) {
+		cout << "algebra_global_with_action::get_classses_expanded A = " << Any_group->A->label << endl;
+		cout << "algebra_global_with_action::get_classses_expanded A_base = " << Any_group->A_base->label << endl;
+	}
 
 	interfaces::conjugacy_classes_and_normalizers *class_data;
 

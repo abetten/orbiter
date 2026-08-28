@@ -46,6 +46,9 @@ objects_report_options::objects_report_options()
 
 	f_canonical_forms = false;
 
+	f_GDD = false;
+	GDD_order = 0;
+
 }
 
 objects_report_options::~objects_report_options()
@@ -175,7 +178,13 @@ int objects_report_options::read_arguments(
 				cout << "-canonical_forms " << endl;
 			}
 		}
-
+		else if (ST.stringcmp(argv[i], "-GDD") == 0) {
+			f_GDD = true;
+			GDD_order= ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-GDD " << GDD_order << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
 				cout << "objects_report_options::read_arguments -end" << endl;
@@ -232,6 +241,9 @@ void objects_report_options::print()
 	}
 	if (f_canonical_forms) {
 		cout << "-canonical_forms " << endl;
+	}
+	if (f_GDD) {
+		cout << "-GDD " << GDD_order << endl;
 	}
 
 }

@@ -313,6 +313,9 @@ public:
 	void test_associative_law(
 			int nb_tests,
 			int verbose_level);
+	void test_inverse(
+			int nb_tests,
+			int verbose_level);
 
 
 

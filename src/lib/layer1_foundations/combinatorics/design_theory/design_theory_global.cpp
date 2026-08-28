@@ -244,7 +244,7 @@ void design_theory_global::make_design_from_blocks(
 }
 
 void design_theory_global::make_design_from_incidence_matrix(
-	int *&Inc, int &v, int &b, int &k,
+	int *&Inc, int &v, int &b, int &f_has_k, int &k, int &nb_inc,
 	std::string &label,
 	int verbose_level)
 {
@@ -257,6 +257,9 @@ void design_theory_global::make_design_from_incidence_matrix(
 	Get_matrix(label, Inc, v, b);
 
 	int i, j, cnt;
+	f_has_k = true;
+
+	nb_inc = 0;
 
 	k = 0;
 	for (j = 0; j < b; j++) {
@@ -264,10 +267,11 @@ void design_theory_global::make_design_from_incidence_matrix(
 		for (i = 0; i < v; i++) {
 			if (Inc[i * b + j]) {
 				cnt++;
+				nb_inc++;
 			}
 		}
 		if (f_v) {
-			cout << "design_theory_global::make_design_from_incidence_matrix column " << j << " has k=" << k << endl;
+			cout << "design_theory_global::make_design_from_incidence_matrix column " << j << " has k=" << cnt << endl;
 		}
 
 		if (j == 0) {
@@ -275,8 +279,9 @@ void design_theory_global::make_design_from_incidence_matrix(
 		}
 		else {
 			if (k != cnt) {
-				cout << "design_theory_global::make_design_from_incidence_matrix the column sum is not constant" << endl;
-				exit(1);
+				f_has_k = false;
+				//cout << "design_theory_global::make_design_from_incidence_matrix the column sum is not constant" << endl;
+				//exit(1);
 			}
 		}
 	}

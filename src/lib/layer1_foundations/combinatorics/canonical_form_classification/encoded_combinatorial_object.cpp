@@ -394,6 +394,17 @@ void encoded_combinatorial_object::compute_canonical_incma(
 	int i, j, ii, jj;
 
 	Incma_out = NEW_int(nb_rows * nb_cols);
+
+
+	combinatorics::special_functions::permutations Permutations;
+
+	Permutations.compute_canonical_form_of_incidence_matrix(
+			canonical_labeling,
+			nb_rows, nb_cols,
+			Incma, Incma_out, verbose_level - 1);
+
+#if 0
+
 	for (i = 0; i < nb_rows; i++) {
 		ii = canonical_labeling[i];
 		for (j = 0; j < nb_cols; j++) {
@@ -403,6 +414,8 @@ void encoded_combinatorial_object::compute_canonical_incma(
 			Incma_out[i * nb_cols + j] = Incma[ii * nb_cols + jj];
 		}
 	}
+#endif
+
 	if (f_v) {
 		cout << "encoded_combinatorial_object::compute_canonical_incma done" << endl;
 	}

@@ -32,6 +32,12 @@ vector_activity_description::vector_activity_description()
 	f_missing_sets = false;
 	missing_sets_n = 0;
 
+	f_apply_permutation = false;
+	//std::string apply_permutation_perm;
+
+	f_apply_permutation_inverse = false;
+	//std::string apply_permutation_inverse_perm;
+
 }
 
 
@@ -67,6 +73,20 @@ int vector_activity_description::read_arguments(
 				cout << "-missing_sets " << missing_sets_n << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-apply_permutation") == 0) {
+			f_apply_permutation = true;
+			apply_permutation_perm.assign(argv[++i]);
+			if (f_v) {
+				cout << "-apply_permutation " << apply_permutation_perm << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-apply_permutation_inverse") == 0) {
+			f_apply_permutation_inverse = true;
+			apply_permutation_inverse_perm.assign(argv[++i]);
+			if (f_v) {
+				cout << "-apply_permutation_inverse " << apply_permutation_inverse_perm << endl;
+			}
+		}
 
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
@@ -93,6 +113,12 @@ void vector_activity_description::print()
 	}
 	if (f_missing_sets) {
 		cout << "-missing_sets " << missing_sets_n << endl;
+	}
+	if (f_apply_permutation) {
+		cout << "-apply_permutation " << apply_permutation_perm << endl;
+	}
+	if (f_apply_permutation_inverse) {
+		cout << "-apply_permutation_inverse " << apply_permutation_inverse_perm << endl;
 	}
 
 

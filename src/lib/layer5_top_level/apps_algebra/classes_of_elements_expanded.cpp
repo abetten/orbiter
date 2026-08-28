@@ -311,7 +311,21 @@ void classes_of_elements_expanded::report2(
 	h = 0;
 	for (idx = 0; idx < Classes->nb_classes; idx++) {
 
+		if (f_v) {
+			cout << "classes_of_elements_expanded::report2 "
+					"reporting class " << idx << " / " << Classes->nb_classes << endl;
+		}
+
+		if (f_v) {
+			cout << "classes_of_elements_expanded::report2 "
+					"before Classes->Conjugacy_class[idx]->report_single_class" << endl;
+		}
 		Classes->Conjugacy_class[idx]->report_single_class(ost, verbose_level - 1);
+		if (f_v) {
+			cout << "classes_of_elements_expanded::report2 "
+					"after Classes->Conjugacy_class[idx]->report_single_class" << endl;
+		}
+
 
 		if (h < nb_idx && Idx[h] == idx) {
 

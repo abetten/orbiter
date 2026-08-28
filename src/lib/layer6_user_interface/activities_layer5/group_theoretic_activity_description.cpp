@@ -98,6 +98,9 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	f_test_associativity = false;
 	test_associativity_nb_tests = 0;
 
+	f_test_inverse = false;
+	test_inverse_nb_tests = 0;
+
 
 
 	// part 2:
@@ -566,6 +569,13 @@ int group_theoretic_activity_description::read_arguments(
 			test_associativity_nb_tests = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-test_associativity " << test_associativity_nb_tests << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-test_inverse") == 0) {
+			f_test_inverse = true;
+			test_inverse_nb_tests = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-test_inverse " << test_inverse_nb_tests << endl;
 			}
 		}
 
@@ -1342,6 +1352,9 @@ void group_theoretic_activity_description::print()
 	}
 	if (f_test_associativity) {
 		cout << "-test_associativity " << test_associativity_nb_tests << endl;
+	}
+	if (f_test_inverse) {
+		cout << "-test_inverse " << test_inverse_nb_tests << endl;
 	}
 
 

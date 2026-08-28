@@ -188,6 +188,18 @@ void permutations::perm_inverse(
 	}
 }
 
+void permutations::perm_inverse_lint(
+		long int *a, long int *b, long int n)
+// b := a^-1
+{
+	long int i, j;
+
+	for (i = 0; i < n; i++) {
+		j = a[i];
+		b[j] = i;
+	}
+}
+
 void permutations::perm_raise(
 		int *a, int *b, int e, long int n)
 // b := a^e (e >= 0)
@@ -1264,6 +1276,114 @@ void permutations::apply_in_product_action_lint(
 		cout << "permutations::apply_in_product_action_lint done" << endl;
 	}
 }
+
+
+void permutations::compute_canonical_form_of_incidence_matrix(
+		int *canonical_labeling,
+		int nb_rows, int nb_cols,
+		int *Incma_in, int *Incma_out, int verbose_level)
+// assumes that canonical_labeling[] has size nb_rows + nb_cols
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "permutations::compute_canonical_form_of_incidence_matrix" << endl;
+	}
+
+	int i, j, ii, jj;
+
+	for (i = 0; i < nb_rows; i++) {
+		ii = canonical_labeling[i];
+		for (j = 0; j < nb_cols; j++) {
+			jj = canonical_labeling[nb_rows + j] - nb_rows;
+			//cout << "i=" << i << " j=" << j << " ii=" << ii
+			//<< " jj=" << jj << endl;
+			Incma_out[i * nb_cols + j] = Incma_in[ii * nb_cols + jj];
+		}
+	}
+	if (f_v) {
+		cout << "permutations::compute_canonical_form_of_incidence_matrix done" << endl;
+	}
+}
+
+void permutations::compute_canonical_form_of_incidence_matrix_lint(
+		long int *canonical_labeling,
+		int nb_rows, int nb_cols,
+		long int *Incma_in, long int *Incma_out, int verbose_level)
+// assumes that canonical_labeling[] has size nb_rows + nb_cols
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "permutations::compute_canonical_form_of_incidence_matrix_lint" << endl;
+	}
+
+	int i, j, ii, jj;
+
+	for (i = 0; i < nb_rows; i++) {
+		ii = canonical_labeling[i];
+		for (j = 0; j < nb_cols; j++) {
+			jj = canonical_labeling[nb_rows + j] - nb_rows;
+			//cout << "i=" << i << " j=" << j << " ii=" << ii
+			//<< " jj=" << jj << endl;
+			Incma_out[i * nb_cols + j] = Incma_in[ii * nb_cols + jj];
+		}
+	}
+	if (f_v) {
+		cout << "permutations::compute_canonical_form_of_incidence_matrix_lint done" << endl;
+	}
+}
+
+void permutations::print_isomorphism_GDD(
+		std::ostream &ost,
+		int *canonical_labeling,
+		int order, int verbose_level)
+{
+	string *labels;
+
+	labels = new string[3 * order];
+
+	int i;
+
+	for (i = 0; i < order; i++) {
+		labels[i] = "r_{" + std::to_string(i + 1) + "}";
+	}
+	for (i = order; i < 2 * order; i++) {
+		labels[i] = "c_{" + std::to_string(i + 1 - order) + "}";
+	}
+	for (i = 2 * order; i < 3 * order; i++) {
+		labels[i] = "d_{" + std::to_string(i + 1 - 2 * order) + "}";
+	}
+
+	ost << "$$" << endl;
+	ost << "\\left[" << endl;
+	ost << "\\begin{array}{*{" << order << "}c|*{" << order << "}c|*{" << order << "}c}" << endl;
+
+	for (i = 0; i < 3 * order; i++) {
+		ost << labels[i];
+		if (i < 3 * order - 1) {
+			ost << " & ";
+		}
+	}
+	ost << "\\\\" << endl;
+
+
+	for (i = 0; i < 3 * order; i++) {
+		ost << labels[canonical_labeling[i]];
+		if (i < 3 * order - 1) {
+			ost << " & ";
+		}
+	}
+	ost << "\\\\" << endl;
+
+
+	ost << "\\end{array}" << endl;
+	ost << "\\right]" << endl;
+	ost << "$$" << endl;
+
+}
+
+
 
 
 }}}}

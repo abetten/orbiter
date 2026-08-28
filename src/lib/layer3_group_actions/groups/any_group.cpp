@@ -4148,6 +4148,10 @@ void any_group::get_conjugacy_classes_of_elements(
 		cout << "any_group::get_conjugacy_classes_of_elements" << endl;
 	}
 
+	if (f_v) {
+		cout << "any_group::get_conjugacy_classes_of_elements A = " << A->label << endl;
+		cout << "any_group::get_conjugacy_classes_of_elements A_base = " << A_base->label << endl;
+	}
 
 
 	if (Subgroup_gens == NULL) {
@@ -4167,7 +4171,8 @@ void any_group::get_conjugacy_classes_of_elements(
 				"before Magma.get_conjugacy_classes_and_normalizers" << endl;
 	}
 	Magma.get_conjugacy_classes_and_normalizers(
-			A, Sims,
+			A_base,  // this used to be A here; ToDo
+			Sims,
 			label, label_tex,
 			class_data,
 			verbose_level);
@@ -4630,6 +4635,110 @@ void any_group::test_associative_law(
 
 	if (f_v) {
 		cout << "any_group::test_associative_law done" << endl;
+	}
+}
+
+void any_group::test_inverse(
+		int nb_tests,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "any_group::test_inverse" << endl;
+	}
+
+
+
+
+
+	int *Elt1, *Elt2, *Elt3;
+
+	Elt1 = NEW_int(A->elt_size_in_int);
+	Elt2 = NEW_int(A->elt_size_in_int);
+	Elt3 = NEW_int(A->elt_size_in_int);
+
+	groups::sims *H;
+
+	if (Subgroup_sims == NULL) {
+		cout << "any_group::test_inverse Subgroup_sims == NULL" << endl;
+		exit(1);
+	}
+
+
+	H = Subgroup_sims;
+
+	if (f_v) {
+		cout << "any_group::test_inverse "
+				"group order H = " << H->group_order_lint() << endl;
+	}
+
+
+
+
+	{
+		int i, j, k;
+		int ret;
+
+
+
+		for (i = 0; i < nb_tests; i++) {
+
+
+			H->random_element(
+					Elt1, 0 /* verbose_level */);
+
+
+
+			A->Group_element->element_invert(
+					Elt1, Elt2, 0);
+
+
+			A->Group_element->element_mult(
+					Elt1, Elt2, Elt3, 0);
+
+
+
+			ret = A->Group_element->identity_test_using_images(
+					Elt3, verbose_level);
+
+			if (ret == false) {
+				cout << "error, the inverse is wrong" << endl;
+
+				cout << "Elt1=" << endl;
+				A->Group_element->print_quick(
+						cout, Elt1);
+				cout << endl;
+
+				cout << "Elt2=" << endl;
+				A->Group_element->print_quick(
+						cout, Elt2);
+				cout << endl;
+
+				cout << "Elt3=" << endl;
+				A->Group_element->print_quick(
+						cout, Elt3);
+				cout << endl;
+
+
+				cout << "i=" << i << " error, the inverse is wrong" << endl;
+
+				exit(1);
+			}
+		}
+
+
+	}
+
+	FREE_int(Elt1);
+	FREE_int(Elt2);
+	FREE_int(Elt3);
+
+
+
+
+	if (f_v) {
+		cout << "any_group::test_inverse done" << endl;
 	}
 }
 
