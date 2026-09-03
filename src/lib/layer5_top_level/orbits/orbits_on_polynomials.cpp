@@ -496,6 +496,329 @@ void orbits_on_polynomials::init_Schreier_with_generators(
 
 
 
+void orbits_on_polynomials::init_memory_efficient(
+		group_constructions::linear_group *LG,
+		algebra::ring_theory::homogeneous_polynomial_domain *HPD,
+		data_structures_groups::vector_ge *generating_set,
+		int print_interval,
+		int verbose_level)
+// Memory-efficient orbit computation using bitvector (~45 MB)
+// instead of Schreier forest (~10 GB).
+// Uses on-the-fly image computation (no caching).
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbits_on_polynomials::init_memory_efficient" << endl;
+	}
+
+	orbits_on_polynomials::LG = LG;
+	orbits_on_polynomials::HPD = HPD;
+
+
+	f_has_small_generating_set = true;
+	generating_set_small = generating_set->duplicate(0 /* verbose_level */);
+
+
+	A = LG->A_linear;
+	F = A->matrix_group_finite_field();
+	A->group_order(go);
+
+	n = A->matrix_group_dimension();
+
+	if (f_v) {
+		cout << "n = " << n << endl;
+	}
+
+	A->Strong_gens->group_order(target_go);
+
+	target_go_log2 = target_go.log2();
+	if (f_v) {
+		cout << "orbits_on_polynomials::init_memory_efficient target_go_log2 = " << target_go_log2 << endl;
+	}
+
+
+	if (target_go_log2 > 31) {
+		cout << "orbits_on_polynomials::init_memory_efficient target_go_log2 > 31" << endl;
+		cout << "orbits_on_polynomials::init_memory_efficient target_go_log2 = " << target_go_log2 << endl;
+		exit(1);
+	}
+
+	degree_of_poly = HPD->degree;
+	if (f_v) {
+		cout << "orbits_on_polynomials::init_memory_efficient "
+				"degree_of_poly = " << degree_of_poly << endl;
+	}
+
+
+	A2 = A->Induced_action->induced_action_on_homogeneous_polynomials(
+		HPD,
+		false /* f_induce_action */, NULL,
+		verbose_level - 2);
+
+	if (f_v) {
+		cout << "created action A2" << endl;
+		A2->print_info();
+	}
+
+
+	Elt1 = NEW_int(A->elt_size_in_int);
+	Elt2 = NEW_int(A->elt_size_in_int);
+	Elt3 = NEW_int(A->elt_size_in_int);
+
+
+	fname_base =  "poly_orbits_d" + std::to_string(degree_of_poly)
+			+ "_n" + std::to_string(n - 1)
+			+ "_q" + std::to_string(F->q);
+	fname_csv = fname_base + ".csv";
+
+
+	// =========================================================
+	// Memory-efficient BFS using bitvector
+	// =========================================================
+
+	long int degree = A2->degree;
+
+	if (f_v) {
+		cout << "orbits_on_polynomials::init_memory_efficient "
+				"degree = " << degree << endl;
+		cout << "orbits_on_polynomials::init_memory_efficient "
+				"bitvector size = " << (degree / 8 / 1024 / 1024) << " MB" << endl;
+	}
+
+	// Allocate bitvector for tracking visited points
+	other::data_structures::bitvector *visited;
+	visited = NEW_OBJECT(other::data_structures::bitvector);
+	visited->allocate(degree);
+	visited->zero();
+
+	// Orbit data
+	std::vector<long int> orbit_reps;
+	std::vector<long int> orbit_lengths;
+
+	long int nb_orbits_found = 0;
+	long int total_covered = 0;
+	int nb_gens = generating_set_small->len;
+
+	other::orbiter_kernel_system::os_interface Os;
+	int t0 = Os.os_ticks();
+
+	if (f_v) {
+		cout << "orbits_on_polynomials::init_memory_efficient "
+				"starting BFS with " << nb_gens << " generators" << endl;
+	}
+
+	for (long int pt = 0; pt < degree; pt++) {
+
+		if (visited->s_i(pt)) {
+			continue;
+		}
+
+		// New orbit starting at pt
+		std::vector<long int> queue;
+		queue.push_back(pt);
+		visited->set_bit(pt);
+		long int front = 0;
+
+		while (front < (long int)queue.size()) {
+			long int cur_pt = queue[front];
+			front++;
+
+			for (int g = 0; g < nb_gens; g++) {
+				// On-the-fly image computation (no caching)
+				long int next_pt = A2->Group_element->element_image_of(
+					cur_pt, generating_set_small->ith(g), 0);
+
+				if (!visited->s_i(next_pt)) {
+					visited->set_bit(next_pt);
+					queue.push_back(next_pt);
+				}
+			}
+		}
+
+		long int orbit_len = (long int)queue.size();
+		orbit_reps.push_back(pt);
+		orbit_lengths.push_back(orbit_len);
+		nb_orbits_found++;
+		total_covered += orbit_len;
+
+		if ((nb_orbits_found % print_interval == 0) || orbit_len > 10000) {
+			int t1 = Os.os_ticks();
+			int elapsed = t1 - t0;
+			cout << "orbits_on_polynomials::init_memory_efficient "
+					"orbit " << nb_orbits_found
+					<< " rep=" << pt
+					<< " length=" << orbit_len
+					<< " covered=" << total_covered
+					<< "/" << degree
+					<< " (" << (100.0 * total_covered / degree) << "%)"
+					<< " elapsed=" << (elapsed / 1000) << "s"
+					<< endl;
+		}
+	}
+
+	int t1 = Os.os_ticks();
+	int elapsed = t1 - t0;
+
+	if (f_v) {
+		cout << "orbits_on_polynomials::init_memory_efficient "
+				"found " << nb_orbits_found << " orbits" << endl;
+		cout << "orbits_on_polynomials::init_memory_efficient "
+				"total covered = " << total_covered << " / " << degree << endl;
+		cout << "orbits_on_polynomials::init_memory_efficient "
+				"elapsed time = " << (elapsed / 1000) << " seconds" << endl;
+	}
+
+	// Free bitvector
+	FREE_OBJECT(visited);
+
+
+	// =========================================================
+	// Phase 2: Compute stabilizer generators using
+	// orbit_of_equations for each orbit representative
+	// =========================================================
+
+	A->group_order(full_go);
+
+	if (f_v) {
+		cout << "orbits_on_polynomials::init_memory_efficient "
+				"Phase 2: computing stabilizer generators "
+				"for " << nb_orbits_found << " orbits" << endl;
+	}
+
+	T = NEW_OBJECT(data_structures_groups::orbit_transversal);
+	T->A = A;
+	T->A2 = A2;
+	T->nb_orbits = (int)nb_orbits_found;
+	T->Reps = NEW_OBJECTS(data_structures_groups::set_and_stabilizer, T->nb_orbits);
+
+	int *coeff;
+	coeff = NEW_int(HPD->get_nb_monomials());
+
+	int t2 = Os.os_ticks();
+
+	long int full_go_lint = full_go.as_lint();
+
+	for (int i = 0; i < (int)nb_orbits_found; i++) {
+
+		// Build the orbit transversal entry
+		long int *Set = NEW_lint(1);
+		Set[0] = orbit_reps[i];
+
+		groups::strong_generators *stab_gens;
+
+		if (orbit_lengths[i] == full_go_lint) {
+			// Trivial stabilizer: |Orbit| == |G| → |Stab| = 1
+			// Skip orbit_of_equations entirely — just use identity
+			stab_gens = NEW_OBJECT(groups::strong_generators);
+			stab_gens->init(A);
+			stab_gens->init_trivial_group(A, 0 /* verbose_level */);
+
+		}
+		else {
+			// Non-trivial stabilizer: compute via orbit_of_equations
+			HPD->unrank_coeff_vector(coeff, orbit_reps[i]);
+
+			orbits_schreier::orbit_of_equations *OoE;
+			OoE = NEW_OBJECT(orbits_schreier::orbit_of_equations);
+
+			OoE->init(
+					A, F,
+					A2->G.OnHP,
+					LG->Strong_gens,
+					coeff,
+					0 /* verbose_level */);
+
+			stab_gens = OoE->stabilizer_orbit_rep(
+					full_go,
+					0 /* verbose_level */);
+
+			FREE_OBJECT(OoE);
+		}
+
+		T->Reps[i].init_everything(
+			A, A2,
+			Set, 1 /* set_sz */,
+			stab_gens, 0 /* verbose_level */);
+
+		if ((i + 1) % 100 == 0 || i == (int)nb_orbits_found - 1) {
+			int t3 = Os.os_ticks();
+			int elapsed2 = t3 - t2;
+			cout << "orbits_on_polynomials::init_memory_efficient "
+					"Phase 2: orbit " << (i + 1)
+					<< "/" << nb_orbits_found
+					<< " elapsed=" << (elapsed2 / 1000) << "s"
+					<< endl;
+		}
+	}
+
+	FREE_int(coeff);
+
+	int t_final = Os.os_ticks();
+	int total_elapsed = t_final - t0;
+
+	if (f_v) {
+		cout << "orbits_on_polynomials::init_memory_efficient "
+				"Phase 2 done" << endl;
+		cout << "orbits_on_polynomials::init_memory_efficient "
+				"total elapsed time = " << (total_elapsed / 1000) << " seconds" << endl;
+	}
+
+
+	// Print orbit representatives
+	cout << "Orbit representatives:" << endl;
+	for (int i = 0; i < (int)nb_orbits_found; i++) {
+
+		algebra::ring_theory::longinteger_object go_stab;
+		T->Reps[i].Strong_gens->group_order(go_stab);
+
+		cout << i << " : rep=" << orbit_reps[i]
+			<< " len=" << orbit_lengths[i]
+			<< " |Stab|=" << go_stab << endl;
+	}
+
+
+	if (f_v) {
+		cout << "orbits_on_polynomials::init_memory_efficient "
+				"before compute_points" << endl;
+	}
+	compute_points(verbose_level);
+	if (f_v) {
+		cout << "orbits_on_polynomials::init_memory_efficient "
+				"after compute_points" << endl;
+	}
+
+
+	// Write CSV summary
+	if (f_v) {
+		cout << "orbits_on_polynomials::init_memory_efficient "
+				"writing CSV to " << fname_csv << endl;
+	}
+	{
+		std::ofstream ost(fname_csv);
+		ost << "OrbitIdx,Rep,OrbitLength,StabOrder" << endl;
+
+		for (int i = 0; i < (int)nb_orbits_found; i++) {
+
+			algebra::ring_theory::longinteger_object stab_order;
+			T->Reps[i].Strong_gens->group_order(stab_order);
+
+			ost << i << "," << orbit_reps[i] << ","
+				<< orbit_lengths[i] << "," << stab_order << endl;
+		}
+	}
+
+	// Mark as having a valid orbit transversal (T) so that
+	// export functions (report, representatives_detailed) work
+	f_has_Sch = true;
+
+	if (f_v) {
+		cout << "orbits_on_polynomials::init_memory_efficient done" << endl;
+	}
+}
+
+
+
 void orbits_on_polynomials::init_bitvector_first(
 		group_constructions::linear_group *LG,
 		algebra::ring_theory::homogeneous_polynomial_domain *HPD,

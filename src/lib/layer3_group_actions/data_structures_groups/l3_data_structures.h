@@ -295,6 +295,13 @@ public:
 			actions::action *default_action,
 			algebra::ring_theory::longinteger_object &full_group_order,
 			int verbose_level);
+	void init_from_orbit_reps(
+			actions::action *default_action,
+			actions::action *induced_action,
+			std::vector<long int> &orbit_reps,
+			std::vector<long int> &orbit_lengths,
+			algebra::ring_theory::longinteger_object &full_group_order,
+			int verbose_level);
 	void read_from_file(
 			actions::action *A,
 			actions::action *A2,

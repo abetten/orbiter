@@ -1,0 +1,64 @@
+# Makefile to benchmark the orbit computation speed improvement
+# Target: test_d4_q4 (d=4, n=2, q=4)
+
+ORBITER_BIN = src/apps/orbiter/orbiter.out
+PGGL_GENS = "0, 1, 1, 2, 1, 3, 0, 2, 3, 1, 2, 1, 1, 3, 2, 0, 1, 2, 1, 0"
+
+.PHONY: all test-old test-new clean
+
+all:
+	@echo "Usage:"
+	@echo "  make test-old   - Runs the original (slow) algorithm without skipping trivial orbits."
+	@echo "  make test-new   - Runs the optimized algorithm (memory-efficient caching + skipping trivial orbits)."
+	@echo "  make clean      - Removes generated log files."
+
+test-old:
+	@echo "Running old algorithm (Warning: May take several days)..."
+	time $(ORBITER_BIN) -v 4 \
+		-define Do -draw_options \
+			-yout 500000 -radius 15 -nodes_empty \
+			-line_width 0.5 -y_stretch 0.25 -embedded \
+		-end \
+		-define F -finite_field -q 4 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define G -linear_group -PGGL 3 F -end \
+		-define R -polynomial_ring \
+			-field F -number_of_variables 3 \
+			-homogeneous_of_degree 4 \
+			-monomial_ordering_partition \
+			-variables "X,Y,Z" "X,Y,Z" \
+		-end \
+		-define v -vector -dense $(PGGL_GENS) -end \
+		-define gens -vector_ge -action G -vector_data v -end \
+		-define Orb -orbits -group G -generators gens \
+			-print_interval 1000000 -on_polynomials R \
+		-end \
+		-with Orb -do -orbits_activity -report Do -end > old_algorithm.log 2>&1
+	@echo "Done! See old_algorithm.log"
+
+test-new:
+	@echo "Running new optimized algorithm (Expected time: ~4 hours)..."
+	time $(ORBITER_BIN) -v 4 \
+		-define Do -draw_options \
+			-yout 500000 -radius 15 -nodes_empty \
+			-line_width 0.5 -y_stretch 0.25 -embedded \
+		-end \
+		-define F -finite_field -q 4 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define G -linear_group -PGGL 3 F -end \
+		-define R -polynomial_ring \
+			-field F -number_of_variables 3 \
+			-homogeneous_of_degree 4 \
+			-monomial_ordering_partition \
+			-variables "X,Y,Z" "X,Y,Z" \
+		-end \
+		-define v -vector -dense $(PGGL_GENS) -end \
+		-define gens -vector_ge -action G -vector_data v -end \
+		-define Orb -orbits -group G -generators gens \
+			-print_interval 1000000 -on_polynomials_memory_efficient R \
+		-end \
+		-with Orb -do -orbits_activity -report Do -end > new_algorithm.log 2>&1
+	@echo "Done! See new_algorithm.log"
+
+clean:
+	rm -f old_algorithm.log new_algorithm.log
