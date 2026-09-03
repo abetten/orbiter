@@ -92,6 +92,22 @@ void vector_activity::perform_activity(
 
 
 	}
+	else if (Descr->f_save) {
+
+		if (f_v) {
+			cout << "vector_activity::perform_activity f_save" << endl;
+		}
+
+
+		pVB[0]->save((*with_labels)[0], verbose_level);
+
+		if (f_v) {
+			cout << "vector_activity::perform_activity "
+					"f_save done" << endl;
+		}
+
+
+	}
 	else if (Descr->f_missing_sets) {
 
 		if (f_v) {
@@ -195,6 +211,161 @@ void vector_activity::perform_activity(
 
 
 	}
+	else if (Descr->f_apply_permutation) {
+
+		if (f_v) {
+			cout << "vector_activity::perform_activity f_apply_permutation" << endl;
+		}
+
+
+		long int *perm;
+		int N;
+
+		Get_vector_or_set(Descr->apply_permutation_perm, perm, N);
+
+
+		long int *v;
+		int m, n;
+
+		combinatorics::other_combinatorics::combinatorics_domain Combi;
+
+		v = pVB[0]->v;
+		m = pVB[0]->k;
+		n = pVB[0]->len / m;
+
+		//pVB[0]->print(cout);
+
+		if (f_v) {
+			cout << "vector_activity::perform_activity matrix before" << endl;
+			Lint_matrix_print(v, m, n);
+		}
+
+
+		combinatorics::special_functions::permutations Permutations;
+
+		long int *v1;
+
+		v1 = NEW_lint(m * n);
+		Lint_vec_zero(v1, m * n);
+
+		Permutations.compute_canonical_form_of_incidence_matrix_lint(
+				perm /*long int *canonical_labeling*/,
+				m /* nb_rows */, n /* nb_cols */,
+				v /* long int *Incma_in */, v1 /* int *Incma_out */, verbose_level - 2);
+
+
+#if 0
+		int i, j, a, ii, jj;
+
+
+		for (i = 0; i < m; i++) {
+
+			ii = perm[i];
+
+			for (j = 0; j < n; j++) {
+
+				a = v[i * n + j];
+
+				jj = perm[m + j] - m;
+
+				v1[ii * n + jj] = a;
+			}
+
+		}
+#endif
+
+		if (f_v) {
+			cout << "vector_activity::perform_activity matrix after" << endl;
+			Lint_matrix_print(v1, m, n);
+		}
+		Lint_vec_copy(v1, v, m * n);
+
+		FREE_lint(v1);
+		FREE_lint(perm);
+
+
+	}
+	else if (Descr->f_apply_permutation_inverse) {
+
+		if (f_v) {
+			cout << "vector_activity::perform_activity f_apply_permutation_inverse" << endl;
+		}
+
+
+		long int *perm;
+		long int *perm_inv;
+		int N;
+
+		Get_vector_or_set(Descr->apply_permutation_inverse_perm, perm, N);
+
+
+
+		long int *v;
+		int m, n;
+
+		combinatorics::other_combinatorics::combinatorics_domain Combi;
+
+		v = pVB[0]->v;
+		m = pVB[0]->k;
+		n = pVB[0]->len / m;
+
+		//pVB[0]->print(cout);
+
+		if (f_v) {
+			cout << "vector_activity::perform_activity matrix before" << endl;
+			Lint_matrix_print(v, m, n);
+		}
+
+		combinatorics::special_functions::permutations Permutations;
+
+		perm_inv = NEW_lint(N);
+		Permutations.perm_inverse_lint(
+				perm, perm_inv, N);
+
+		long int *v1;
+
+		v1 = NEW_lint(m * n);
+		Lint_vec_zero(v1, m * n);
+
+		Permutations.compute_canonical_form_of_incidence_matrix_lint(
+				perm_inv /*long int *canonical_labeling*/,
+				m /* nb_rows */, n /* nb_cols */,
+				v /* long int *Incma_in */, v1 /* int *Incma_out */, verbose_level - 2);
+
+
+#if 0
+		int i, j, a, ii, jj;
+
+
+		for (i = 0; i < m; i++) {
+
+			ii = perm[i];
+
+			for (j = 0; j < n; j++) {
+
+				a = v[i * n + j];
+
+				jj = perm[m + j] - m;
+
+				v1[ii * n + jj] = a;
+			}
+
+		}
+#endif
+
+		if (f_v) {
+			cout << "vector_activity::perform_activity matrix after" << endl;
+			Lint_matrix_print(v1, m, n);
+		}
+		Lint_vec_copy(v1, v, m * n);
+
+		FREE_lint(v1);
+		FREE_lint(perm);
+		FREE_lint(perm_inv);
+
+
+	}
+
 
 
 

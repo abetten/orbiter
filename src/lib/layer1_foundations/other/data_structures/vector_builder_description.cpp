@@ -69,6 +69,11 @@ vector_builder_description::vector_builder_description()
 	flags_nb_cols = 0;
 	//std::string flags_text;
 
+	f_latin_square_GDD = false;
+	latin_square_GDD_order = 0;
+	//std::string latin_square_GDD_text;
+
+
 	f_concatenate = false;
 	//std::string concatenate_list;
 
@@ -219,6 +224,17 @@ int vector_builder_description::read_arguments(
 						<< flags_nb_cols << " " << flags_text << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-latin_square_GDD") == 0) {
+			f_latin_square_GDD = true;
+			latin_square_GDD_order = ST.strtoi(argv[++i]);
+			latin_square_GDD_text.assign(argv[++i]);
+			if (f_v) {
+				cout << "-latin_square_GDD " << latin_square_GDD_order << " "
+						<< latin_square_GDD_text << endl;
+			}
+		}
+
+
 
 		else if (ST.stringcmp(argv[i], "-concatenate") == 0) {
 			f_concatenate = true;
@@ -320,6 +336,10 @@ void vector_builder_description::print()
 	if (f_flags) {
 		cout << "-flags " << flags_nb_rows << " "
 				<< flags_nb_cols << " " << flags_text << endl;
+	}
+	if (f_latin_square_GDD) {
+		cout << "-latin_square_GDD " << latin_square_GDD_order << " "
+				<< latin_square_GDD_text << endl;
 	}
 	if (f_concatenate) {
 		cout << "-concatenate " << concatenate_list << endl;

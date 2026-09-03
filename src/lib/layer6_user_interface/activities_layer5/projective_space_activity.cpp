@@ -43,6 +43,10 @@ void projective_space_activity::perform_activity(
 
 	// TABLES/projective_space_activity_1.tex
 
+
+	// 1:
+
+
 	if (Descr->f_cheat_sheet) {
 
 		other::graphics::draw_options *O;
@@ -532,6 +536,9 @@ void projective_space_activity::perform_activity(
 
 	// TABLES/projective_space_activity_2.tex
 
+	// 2:
+
+
 
 
 	else if (Descr->f_sweep) {
@@ -812,6 +819,11 @@ void projective_space_activity::perform_activity(
 
 
 	// TABLES/projective_space_activity_3.tex
+
+
+	// 3:
+
+
 
 
 	else if (Descr->f_lines_on_point_but_within_a_plane) {
@@ -1296,7 +1308,125 @@ void projective_space_activity::perform_activity(
 	}
 
 
+	else if (Descr->f_create_transvection) {
+
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"-create_transvection "
+					<< Descr->create_transvection_a
+					<< " " << Descr->create_transvection_v
+					<< " " << Descr->create_transvection_u << endl;
+		}
+
+		int *vec_v;
+		int *vec_u;
+		int d;
+
+		Int_vec_scan(Descr->create_transvection_v, vec_v, d);
+
+		if (d != PA->P->Subspaces->n + 1) {
+			cout << "projective_space_activity::perform_activity d != PA->P->Subspaces->n + 1 while scanning v" << endl;
+			exit(1);
+		}
+
+		Int_vec_scan(Descr->create_transvection_u, vec_u, d);
+
+		if (d != PA->P->Subspaces->n + 1) {
+			cout << "projective_space_activity::perform_activity d != PA->P->Subspaces->n + 1 while scanning u" << endl;
+			exit(1);
+		}
+
+
+
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"a = "
+					<< Descr->create_transvection_a << endl;
+
+			cout << "projective_space_activity::perform_activity "
+					"v = ";
+			Int_vec_print(cout, vec_v, d);
+			cout << endl;
+
+			cout << "projective_space_activity::perform_activity "
+					"u = ";
+			Int_vec_print(cout, vec_u, d);
+			cout << endl;
+		}
+
+
+		data_structures_groups::vector_ge *vec;
+
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"before PA->create_transvection" << endl;
+		}
+		PA->create_transvection(
+				Descr->create_transvection_a, vec_v, vec_u, d,
+				vec,
+				verbose_level - 2);
+
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"after PA->create_transvection" << endl;
+		}
+
+
+
+
+		other::orbiter_kernel_system::file_io Fio;
+		std::string fname;
+
+		fname = "transvection.csv";
+
+		vec->save_csv(
+				fname, verbose_level);
+
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+		}
+
+
+
+	}
+
+	else if (Descr->f_create_all_transvections) {
+
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"-create_all_transvections " << endl;
+		}
+
+
+		layer5_applications::projective_geometry::projective_space_global Projective_space_global;
+
+
+
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"before Projective_space_global.create_all_transvections" << endl;
+		}
+		Projective_space_global.create_all_transvections(
+				PA,
+				verbose_level);
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"after Projective_space_global.create_all_transvections" << endl;
+		}
+
+
+	}
+
+
+
+
+
 	// TABLES/projective_space_activity_4.tex
+
+
+	// 4:
+
 
 
 

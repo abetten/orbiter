@@ -447,6 +447,9 @@ static void polarity_extension_element_code_for_make_element(
 
 	P->element_code_for_make_element(
 			Elt, data);
+
+	data[P->M->make_element_size] = Elt[P->element_coding_offset[1]];
+
 }
 
 #if 0

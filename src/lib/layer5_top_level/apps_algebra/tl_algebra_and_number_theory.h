@@ -210,6 +210,7 @@ public:
 	void all_elements_by_class(
 			groups::sims *Sims,
 			groups::any_group *Any_group,
+			classes_of_elements_expanded *Classes_of_elements_expanded,
 			int class_order,
 			int class_id,
 			data_structures_groups::vector_ge *&vec,
@@ -238,7 +239,8 @@ public:
 	void split_by_classes(
 			groups::sims *Sims,
 			groups::any_group *Any_group,
-			int expand_by_go,
+			classes_of_elements_expanded *Classes_of_elements_expanded,
+			//int expand_by_go,
 			std::string &fname,
 			std::string &col_label,
 			int verbose_level);
@@ -246,7 +248,8 @@ public:
 			groups::sims *Sims,
 			groups::any_group *Any_group_H,
 			groups::any_group *Any_group_G,
-			int expand_by_go,
+			classes_of_elements_expanded *Classes_of_elements_expanded,
+			//int expand_by_go,
 			std::string &fname, std::string &col_label,
 			int *&Class_index,
 			int verbose_level);

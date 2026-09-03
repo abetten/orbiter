@@ -327,52 +327,6 @@ int group_theoretic_activity::perform_activity_part1(
 
 	}
 
-	else if (Descr->f_elements_by_class) {
-
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"f_elements_by_class, order = " << Descr->elements_by_class_order
-					<< " id=" << Descr->elements_by_class_id << endl;
-		}
-
-		layer5_applications::apps_algebra::algebra_global_with_action Algebra_global_with_action;
-		data_structures_groups::vector_ge *vec;
-
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"before AG->all_elements" << endl;
-		}
-
-		Algebra_global_with_action.all_elements_by_class(
-				AG->Subgroup_sims,
-				AG,
-				Descr->elements_by_class_order,
-				Descr->elements_by_class_id,
-				vec,
-				verbose_level);
-
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"after AG->all_elements" << endl;
-		}
-
-		nb_output = 1;
-		Output = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
-
-		string output_label;
-
-		output_label = AG->label + "_elements_of_class_" + std::to_string(Descr->elements_by_class_order) + "_" + std::to_string(Descr->elements_by_class_id);
-
-		layer5_applications::apps_algebra::vector_ge_builder *VB;
-
-		VB = NEW_OBJECT(layer5_applications::apps_algebra::vector_ge_builder);
-
-		VB->V = vec;
-
-		Output->init_vector_ge(output_label, VB, verbose_level);
-
-	}
-
 
 	else if (Descr->f_select_elements) {
 
@@ -702,7 +656,7 @@ int group_theoretic_activity::perform_activity_part1(
 
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
-					"f_random_element" << endl;
+					"f_test_associativity" << endl;
 		}
 
 		if (f_v) {
@@ -713,6 +667,23 @@ int group_theoretic_activity::perform_activity_part1(
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
 					"after AG->test_associative_law" << endl;
+		}
+	}
+	else if (Descr->f_test_inverse) {
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"f_test_inverse" << endl;
+		}
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before AG->test_inverse" << endl;
+		}
+		AG->test_inverse(Descr->test_inverse_nb_tests, verbose_level);
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after AG->test_inverse" << endl;
 		}
 	}
 
@@ -768,22 +739,6 @@ int group_theoretic_activity::perform_activity_part2(
 					"f_classes_based_on_normal_form" << endl;
 		}
 
-#if 0
-		cout << "group_theoretic_activity::perform_activity "
-				"f_classes_based_on_normal_form not yet implemented" << endl;
-		exit(1);
-
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"before AG->Any_group_linear->classes_based_on_normal_form" << endl;
-		}
-		AG->Any_group_linear->classes_based_on_normal_form(
-				verbose_level);
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"after AG->Any_group_linear->classes_based_on_normal_form" << endl;
-		}
-#endif
 
 
 		apps_algebra::algebra_global_with_action Algebra_global_with_action;
@@ -795,17 +750,9 @@ int group_theoretic_activity::perform_activity_part2(
 		}
 
 
-		//groups::any_group_linear *Any_group_linear;
-
-		//Any_group_linear = AG->Any_group_linear;
-
 
 		groups::sims *Sims = AG->Subgroup_sims;
 
-		//groups::sims *G;
-		//group_theory_global Group_theory_global;
-
-		//G = Any_group->LG->Strong_gens->create_sims(verbose_level);
 
 
 		if (f_v) {
@@ -823,15 +770,6 @@ int group_theoretic_activity::perform_activity_part2(
 					"after Algebra_global_with_action.conjugacy_classes_based_on_normal_forms" << endl;
 		}
 
-
-#if 0
-		Algebra_global_with_action.conjugacy_classes_based_on_normal_forms(
-				actions::action *A,
-				groups::sims *override_Sims,
-				std::string &label,
-				std::string &label_tex,
-				int verbose_level)
-#endif
 
 
 	}
@@ -939,12 +877,20 @@ int group_theoretic_activity::perform_activity_part2(
 		}
 	}
 
+#if 0
 	else if (Descr->f_classes) {
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
-					"f_classes" << endl;
+					"f_classes no longer supported by group_theoretic_activity" << endl;
+			cout << "group_theoretic_activity::perform_activity "
+					"please use -orbits instead" << endl;
+			exit(1);
 		}
 
+
+
+
+#if 0
 		groups::sims *Sims;
 		if (AG->Subgroup_sims == NULL) {
 			cout << "group_theoretic_activity::perform_activity "
@@ -1041,9 +987,113 @@ int group_theoretic_activity::perform_activity_part2(
 		Classes_of_elements_expanded->Classes = NULL;
 		FREE_OBJECT(Classes_of_elements_expanded);
 		//FREE_OBJECT(Reps);
+#endif
+
+	}
+#endif
+
+	else if (Descr->f_get_class_representatives) {
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"get_class_representatives" << endl;
+			cout << "group_theoretic_activity::perform_activity "
+					"orbit object = " << Descr->get_class_representatives_orbits_object << endl;
+		}
+
+
+		orbits::orbits_create *Orbits;
+
+		Orbits = Get_orbits(Descr->get_class_representatives_orbits_object);
+
+
+		if (!Orbits->f_has_conjugacy_classes_by_magma) {
+			cout << "group_theoretic_activity::perform_activity orbit object does not have conjugacy classes by magma" << endl;
+			exit(1);
+		}
+
+		nb_output = 1;
+		Output = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
+
+		string output_label;
+
+		output_label = AG->label + "_class_reps";
+
+		layer5_applications::apps_algebra::vector_ge_builder *VB;
+
+		VB = NEW_OBJECT(layer5_applications::apps_algebra::vector_ge_builder);
+
+		VB->V = Orbits->Classes_of_elements_expanded_Reps;
+
+		Output->init_vector_ge(output_label, VB, verbose_level);
 
 
 	}
+
+
+	else if (Descr->f_elements_by_class) {
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"f_elements_by_class, order = " << Descr->elements_by_class_order
+					<< " id=" << Descr->elements_by_class_id << endl;
+			cout << "group_theoretic_activity::perform_activity "
+					"orbits object for classes = " << Descr->elements_by_class_orbits_object << endl;
+		}
+
+
+
+		orbits::orbits_create *Orbits;
+
+		Orbits = Get_orbits(Descr->elements_by_class_orbits_object);
+
+
+		if (!Orbits->f_has_conjugacy_classes_by_magma) {
+			cout << "group_theoretic_activity::perform_activity "
+					"orbit object does not have conjugacy classes by magma" << endl;
+			exit(1);
+		}
+
+
+
+		layer5_applications::apps_algebra::algebra_global_with_action Algebra_global_with_action;
+		data_structures_groups::vector_ge *vec;
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before AG->all_elements" << endl;
+		}
+
+		Algebra_global_with_action.all_elements_by_class(
+				AG->Subgroup_sims,
+				AG,
+				Orbits->Classes_of_elements_expanded,
+				Descr->elements_by_class_order,
+				Descr->elements_by_class_id,
+				vec,
+				verbose_level);
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after AG->all_elements" << endl;
+		}
+
+		nb_output = 1;
+		Output = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
+
+		string output_label;
+
+		output_label = AG->label + "_elements_of_class_" + std::to_string(Descr->elements_by_class_order) + "_" + std::to_string(Descr->elements_by_class_id);
+
+		layer5_applications::apps_algebra::vector_ge_builder *VB;
+
+		VB = NEW_OBJECT(layer5_applications::apps_algebra::vector_ge_builder);
+
+		VB->V = vec;
+
+		Output->init_vector_ge(output_label, VB, verbose_level);
+
+	}
+
 
 	else if (Descr->f_split_by_classes) {
 		if (f_v) {
@@ -1053,7 +1103,22 @@ int group_theoretic_activity::perform_activity_part2(
 					"fname = " << Descr->split_by_classes_fname << endl;
 			cout << "group_theoretic_activity::perform_activity "
 					"column = " << Descr->split_by_classes_column << endl;
+			cout << "group_theoretic_activity::perform_activity "
+					"orbits object for classes = " << Descr->split_by_classes_orbits_object << endl;
 		}
+
+
+		orbits::orbits_create *Orbits;
+
+		Orbits = Get_orbits(Descr->split_by_classes_orbits_object);
+
+
+		if (!Orbits->f_has_conjugacy_classes_by_magma) {
+			cout << "group_theoretic_activity::perform_activity "
+					"orbit object does not have conjugacy classes by magma" << endl;
+			exit(1);
+		}
+
 
 		groups::sims *Sims;
 		if (AG->Subgroup_sims == NULL) {
@@ -1064,14 +1129,15 @@ int group_theoretic_activity::perform_activity_part2(
 		Sims = AG->Subgroup_sims;
 
 
-		int expand_by_go = 10000;
+		//int expand_by_go = 10000;
 
 		layer5_applications::apps_algebra::algebra_global_with_action Algebra_global_with_action;
 
 		Algebra_global_with_action.split_by_classes(
 				Sims,
 				AG,
-				expand_by_go,
+				Orbits->Classes_of_elements_expanded,
+				//expand_by_go,
 				Descr->split_by_classes_fname,
 				Descr->split_by_classes_column,
 				verbose_level);
@@ -1089,10 +1155,23 @@ int group_theoretic_activity::perform_activity_part2(
 			cout << "group_theoretic_activity::perform_activity "
 					"column = " << Descr->identify_elements_by_class_column << endl;
 			cout << "group_theoretic_activity::perform_activity "
-					"identify_elements_by_class_expand_go = " << Descr->identify_elements_by_class_expand_go << endl;
-			cout << "group_theoretic_activity::perform_activity "
 					"supergroup = " << Descr->identify_elements_by_class_supergroup << endl;
+			cout << "group_theoretic_activity::perform_activity "
+					"orbits object for classes = " << Descr->identify_elements_by_class_orbits_object << endl;
 		}
+
+
+		orbits::orbits_create *Orbits;
+
+		Orbits = Get_orbits(Descr->identify_elements_by_class_orbits_object);
+
+
+		if (!Orbits->f_has_conjugacy_classes_by_magma) {
+			cout << "group_theoretic_activity::perform_activity "
+					"orbit object does not have conjugacy classes by magma" << endl;
+			exit(1);
+		}
+
 
 		groups::sims *Sims;
 		if (AG->Subgroup_sims == NULL) {
@@ -1120,7 +1199,8 @@ int group_theoretic_activity::perform_activity_part2(
 			Sims,
 			AG,
 			Any_group_G,
-			Descr->identify_elements_by_class_expand_go,
+			Orbits->Classes_of_elements_expanded,
+			//Descr->identify_elements_by_class_expand_go,
 			Descr->identify_elements_by_class_fname,
 			Descr->identify_elements_by_class_column,
 			Class_index,

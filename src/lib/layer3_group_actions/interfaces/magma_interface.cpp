@@ -1143,6 +1143,12 @@ void magma_interface::read_conjugacy_classes_and_normalizers(
 				"after read_conjugacy_classes_and_normalizers_from_MAGMA" << endl;
 	}
 
+
+	if (A->base_len() == 0) {
+		cout << "magma_interface::read_conjugacy_classes_and_normalizers A->base_len() == 0, cannot create the group" << endl;
+		exit(1);
+	}
+
 	if (f_v) {
 		cout << "magma_interface::read_conjugacy_classes_and_normalizers "
 				"before class_data->create_classes" << endl;

@@ -727,7 +727,6 @@ void polarity_extension::compute_images_rho_A_rho(
 void polarity_extension::create_rho_A_rho(
 		int *A_Elt, int *data,
 		int verbose_level)
-// ToDo: what if A is semilinear ?
 {
 	int f_v = (verbose_level >= 1);
 
@@ -738,6 +737,10 @@ void polarity_extension::create_rho_A_rho(
 	algebra::linear_algebra::linear_algebra_global LA;
 
 
+	int n;
+
+	n = M->n;
+
 
 	int *frame;
 
@@ -746,7 +749,7 @@ void polarity_extension::create_rho_A_rho(
 				"before LA.create_frame" << endl;
 	}
 	LA.create_frame(
-			frame, M->n, verbose_level - 1);
+			frame, n, verbose_level - 1);
 	if (f_v) {
 		cout << "polarity_extension::create_rho_A_rho "
 				"after LA.create_frame" << endl;
@@ -762,7 +765,7 @@ void polarity_extension::create_rho_A_rho(
 				"before compute_images_rho_A_rho" << endl;
 	}
 	compute_images_rho_A_rho(
-			frame, M->n + 1 /* nb_rows */, A_Elt,
+			frame, n + 1 /* nb_rows */, A_Elt,
 			verbose_level - 1);
 	if (f_v) {
 		cout << "polarity_extension::create_rho_A_rho "
@@ -776,15 +779,55 @@ void polarity_extension::create_rho_A_rho(
 	}
 	LA.adjust_scalars_in_frame(
 			F,
-			M->n, frame /* Image_of_basis_in_rows */,
-			frame + M->n * M->n /* image_of_all_one */,
+			n, frame /* Image_of_basis_in_rows */,
+			frame + n * n /* image_of_all_one */,
 			verbose_level - 1);
 	if (f_v) {
 		cout << "polarity_extension::create_rho_A_rho "
 				"after LA.adjust_scalars_in_frame" << endl;
 	}
 
-	Int_vec_copy(frame, data, M->n * M->n);
+
+
+	if (f_is_semilinear) {
+
+		algebra::number_theory::number_theory_domain NT;
+
+		if (f_v) {
+			cout << "polarity_extension::create_rho_A_rho semilinear" << endl;
+		}
+
+		// apply the Frobenius to the power -f to the matrix in frame.
+		// Then copy to data[] and add the frobenius index f.
+
+		int f, f_inv;
+
+		f = A_Elt[n * n];
+		f_inv = NT.mod(-f, F->e);
+		if (f_v) {
+			cout << "polarity_extension::create_rho_A_rho f=" << f << endl;
+			cout << "polarity_extension::create_rho_A_rho f_inv=" << f_inv << endl;
+		}
+
+		algebra::linear_algebra::linear_algebra Linear_algebra;
+
+		Linear_algebra.init(F, 0 /*verbose_level*/);
+
+		Linear_algebra.vector_frobenius_power_in_place(frame, n * n, f_inv);
+
+		Int_vec_copy(frame, data, n * n);
+
+		data[n * n] = A_Elt[n * n];
+
+
+
+	}
+	else {
+
+		Int_vec_copy(frame, data, n * n);
+	}
+
+
 
 	FREE_int(frame);
 
@@ -792,6 +835,13 @@ void polarity_extension::create_rho_A_rho(
 		cout << "polarity_extension::create_rho_A_rho done" << endl;
 	}
 }
+
+
+
+
+
+
+
 
 void polarity_extension::element_inverse_conjugate_by_polarity(
 		int *A_Elt, int *rho_Av_rho, int verbose_level)
@@ -843,7 +893,7 @@ void polarity_extension::element_inverse_conjugate_by_polarity(
 		}
 
 		save_frobenius = data1[A_on_points->make_element_size - 1];
-		data1[A_on_points->make_element_size - 1] = 0;
+		//data1[A_on_points->make_element_size - 1] = 0;
 
 		if (f_v) {
 			cout << "polarity_extension::element_inverse_conjugate_by_polarity "
@@ -888,7 +938,7 @@ void polarity_extension::element_inverse_conjugate_by_polarity(
 	}
 
 	if (f_is_semilinear) {
-		data2[M->n * M->n] = save_frobenius;
+		//data2[M->n * M->n] = save_frobenius;
 	}
 
 	if (f_v) {

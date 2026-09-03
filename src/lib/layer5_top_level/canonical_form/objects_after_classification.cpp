@@ -349,10 +349,19 @@ void objects_after_classification::latex_report(
 				ost, verbose_level);
 
 
-		ost << "Ago : ";
+		ost << "Ago distribution : ";
 		Classification_of_objects->Output->T_Ago->print_file_tex(
 				ost, false /* f_backwards*/);
 		ost << "\\\\" << endl;
+
+
+		ost << "type\\_of :  \\\\" << endl;
+
+		int i;
+		for (i = 0; i < Classification_of_objects->Output->CB->N; i++) {
+			ost << i << " : " << Classification_of_objects->Output->CB->type_of[i] << "\\\\" << endl;
+
+		}
 
 		if (f_v) {
 			cout << "objects_after_classification::latex_report "
@@ -431,61 +440,278 @@ void objects_after_classification::report_all_isomorphism_types(
 			<< Classification_of_objects->Output->CB->Type_rep[j] << " and appears "
 			<< Classification_of_objects->Output->CB->Type_mult[j] << " times: \\\\" << endl;
 
-		{
-			other::data_structures::sorting Sorting;
-			int *Input_objects;
-			int nb_input_objects;
-			Classification_of_objects->Output->CB->C_type_of->get_class_by_value(
-					Input_objects,
-					nb_input_objects, j,
-					0 /*verbose_level */);
-			Sorting.int_vec_heapsort(Input_objects, nb_input_objects);
 
-			ost << "This isomorphism type appears " << nb_input_objects
-					<< " times, namely for the following "
-					<< nb_input_objects << " input objects: " << endl;
-			if (nb_input_objects < 10) {
-				ost << "$" << endl;
-				L.int_set_print_tex(
-						ost, Input_objects, nb_input_objects);
-				ost << "$\\\\" << endl;
-			}
-			else {
-				ost << "Too big to print. \\\\" << endl;
-#if 0
-				fp << "$$" << endl;
-				L.int_vec_print_as_matrix(fp, Input_objects,
-					nb_input_objects, 10 /* width */, true /* f_tex */);
-				fp << "$$" << endl;
-#endif
-			}
-
-			FREE_int(Input_objects);
-		}
+		report_input_objects(
+				ost,
+				Report_options,
+				j, iso_idx,
+				verbose_level);
 
 		if (f_v) {
 			cout << "objects_after_classification::report_all_isomorphism_types "
-					"before report_isomorphism_type" << endl;
+					"before report_isomorphism_type_representative" << endl;
 		}
-		report_isomorphism_type(
+		report_isomorphism_type_representative(
 				ost,
 				Report_options,
 				iso_idx,
 				verbose_level);
 		if (f_v) {
 			cout << "objects_after_classification::report_all_isomorphism_types "
-					"after report_isomorphism_type" << endl;
+					"after report_isomorphism_type_representative" << endl;
 		}
 
 
 	} // next iso_idx
 
 
+	if (f_v) {
+		cout << "objects_after_classification::report_all_isomorphism_types "
+				"before report_isomorphisms" << endl;
+	}
+	report_isomorphisms(ost, Report_options, verbose_level);
+	if (f_v) {
+		cout << "objects_after_classification::report_all_isomorphism_types "
+				"after report_isomorphisms" << endl;
+	}
+
 
 	if (f_v) {
 		cout << "objects_after_classification::report_all_isomorphism_types done" << endl;
 	}
 
+}
+
+void objects_after_classification::report_isomorphisms(
+		std::ostream &ost,
+		combinatorics::canonical_form_classification::objects_report_options
+			*Report_options,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "objects_after_classification::report_isomorphisms" << endl;
+	}
+
+	ost << "\\subsubsection*{objects\\_after\\_classification::report\\_isomorphisms}" << endl;
+
+	ost << "\\section*{Isomorphisms}" << endl;
+
+	other::l1_interfaces::latex_interface L;
+	int input_idx;
+
+
+	for (input_idx = 0; input_idx < Classification_of_objects->Output->nb_input; input_idx++) {
+
+		ost << "\\subsection*{Input Object " << input_idx << " / "
+				<< Classification_of_objects->Output->nb_input << "}" << endl;
+
+
+		if (f_v) {
+			cout << "objects_after_classification::report_isomorphisms "
+					<< " input object " << input_idx
+					<< ", before report_input_object_only" << endl;
+		}
+
+
+		if (f_v) {
+			cout << "objects_after_classification::report_isomorphisms "
+					"retrieving Classification_of_objects->Output->NO[input_idx]" << endl;
+		}
+		other::l1_interfaces::nauty_output *NO =
+				Classification_of_objects->Output->NO[input_idx];
+
+		if (f_v) {
+			cout << "objects_after_classification::report_isomorphisms "
+					"NO->N=" << NO->N << endl;
+		}
+
+		if (f_v) {
+			cout << "objects_after_classification::report_isomorphisms "
+					"retrieving Classification_of_objects->Output->OWCF[input_idx]" << endl;
+		}
+
+		combinatorics::canonical_form_classification::any_combinatorial_object
+			*Any_Combo = Classification_of_objects->Output->OWCF[input_idx];
+
+		if (f_v) {
+			cout << "objects_after_classification::report_isomorphisms "
+					"Any_Combo=" << Any_Combo << endl;
+		}
+
+
+		int iso_type;
+		int iso_rep_idx;
+		int N;
+		int j;
+
+		N = NO->N;
+		int *Iso;
+		int *Clv;
+
+		j = Classification_of_objects->Output->CB->type_of[input_idx];
+		iso_rep_idx = Classification_of_objects->Output->CB->Type_rep[j];
+
+		iso_type = Classification_of_objects->Output->CB->perm_inv[j];
+		//iso_rep_idx = Classification_of_objects->Output->Idx_transversal[j];
+
+		ost << "isomorphism type = " << iso_type << "\\\\" << endl;
+		ost << "isomorphism representative = " << iso_rep_idx << "\\\\" << endl;
+
+		Clv = NEW_int(NO->N);
+		Iso = NEW_int(NO->N);
+
+		int *perm1;
+		int *perm2;
+
+
+		perm1 = NO->canonical_labeling;
+		perm2 = Classification_of_objects->Output->NO[iso_rep_idx]->canonical_labeling;
+
+#if 0
+		ost << "canonical labeling: \\\\" << endl;
+		Int_vec_print_fully(ost, perm1, NO->N);
+		ost << "\\\\" << endl;
+
+
+
+		ost << "canonical labeling of iso representative: \\\\" << endl;
+		Int_vec_print_fully(ost,
+				perm2,
+				N);
+		ost << "\\\\" << endl;
+#endif
+
+		combinatorics::other_combinatorics::combinatorics_domain Combo;
+
+#if 0
+		Combo.Permutations->perm_inverse(
+				perm1,
+				Clv,
+				N);
+
+		Combo.Permutations->perm_mult(
+				Clv,
+				perm2,
+				Iso,
+				N);
+#else
+		Combo.Permutations->perm_inverse(
+				perm2,
+				Clv,
+				N);
+		Combo.Permutations->perm_mult(
+				Clv,
+				perm1,
+				Iso,
+				N);
+#endif
+
+
+		ost << "Isomorphism to the chosen representative: iso=\\\\" << endl;
+		Int_vec_print_fully(
+				ost,
+				Iso,
+				N);
+		ost << "\\\\" << endl;
+
+
+
+		if (Report_options->f_GDD) {
+			int order;
+
+			order = Report_options->GDD_order;
+
+			ost << "On the group divisible design:\\\\" << endl;
+			Combo.Permutations->print_isomorphism_GDD(
+					ost,
+					Iso,
+					order, verbose_level);
+		}
+
+		if (f_v) {
+			cout << "objects_after_classification::report_isomorphisms "
+					"after report_input_object_only" << endl;
+		}
+
+
+
+	}
+
+
+
+	if (f_v) {
+		cout << "objects_after_classification::report_isomorphisms done" << endl;
+	}
+}
+
+void objects_after_classification::report_input_objects(
+		std::ostream &ost,
+		combinatorics::canonical_form_classification::objects_report_options
+			*Report_options,
+		int j, int iso_idx,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "objects_after_classification::report_input_objects" << endl;
+	}
+
+	other::l1_interfaces::latex_interface L;
+
+	{
+		other::data_structures::sorting Sorting;
+		int *Input_objects;
+		int nb_input_objects;
+
+
+		get_input_objects(j, Input_objects, nb_input_objects);
+
+#if 0
+		Classification_of_objects->Output->CB->C_type_of->get_class_by_value(
+				Input_objects,
+				nb_input_objects, j,
+				0 /*verbose_level */);
+		Sorting.int_vec_heapsort(Input_objects, nb_input_objects);
+#endif
+
+		ost << "This isomorphism type appears " << nb_input_objects
+				<< " times, namely for the following "
+				<< nb_input_objects << " input objects: " << endl;
+		if (nb_input_objects < 10) {
+			ost << "$" << endl;
+			L.int_set_print_tex(
+					ost, Input_objects, nb_input_objects);
+			ost << "$\\\\" << endl;
+		}
+		else {
+			ost << "Too big to print. \\\\" << endl;
+#if 0
+			fp << "$$" << endl;
+			L.int_vec_print_as_matrix(fp, Input_objects,
+				nb_input_objects, 10 /* width */, true /* f_tex */);
+			fp << "$$" << endl;
+#endif
+		}
+
+		FREE_int(Input_objects);
+	}
+
+}
+
+void objects_after_classification::get_input_objects(
+		int j, int *&Input_objects,
+		int &nb_input_objects)
+{
+	other::data_structures::sorting Sorting;
+
+	Classification_of_objects->Output->CB->C_type_of->get_class_by_value(
+			Input_objects,
+			nb_input_objects, j,
+			0 /*verbose_level */);
+	Sorting.int_vec_heapsort(Input_objects, nb_input_objects);
 }
 
 void objects_after_classification::report_all_canonical_forms(
@@ -539,23 +765,24 @@ void objects_after_classification::report_all_canonical_forms(
 }
 
 
-void objects_after_classification::report_isomorphism_type(
+void objects_after_classification::report_isomorphism_type_representative(
 		std::ostream &ost,
 		combinatorics::canonical_form_classification::objects_report_options
 			*Report_options,
 		int iso_idx,
 		int verbose_level)
+// reports one object per each isomorphism class
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "objects_after_classification::report_isomorphism_type "
+		cout << "objects_after_classification::report_isomorphism_type_representative "
 				"iso_idx=" << iso_idx << endl;
 	}
 	int j;
 	other::l1_interfaces::latex_interface L;
 
-	ost << "\\subsubsection*{objects\\_after\\_classification::report\\_isomorphism\\_type}" << endl;
+	ost << "\\subsubsection*{objects\\_after\\_classification::report\\_isomorphism\\_type\\_representative}" << endl;
 
 
 	//j = CB->perm[i];
@@ -572,14 +799,29 @@ void objects_after_classification::report_isomorphism_type(
 			<< " : " << endl;
 
 
+	report_input_objects(
+			ost,
+			Report_options,
+			j, iso_idx,
+			verbose_level);
+
+#if 0
 	{
 		int *Input_objects;
 		int nb_input_objects;
+
+
+		get_input_objects(
+				j, Input_objects,
+				nb_input_objects);
+
+#if 0
 		Classification_of_objects->Output->CB->C_type_of->get_class_by_value(
 				Input_objects,
 				nb_input_objects,
 				j,
 				0 /*verbose_level */);
+#endif
 
 		cout << "This isomorphism type appears " << nb_input_objects
 				<< " times, namely for the following "
@@ -598,26 +840,34 @@ void objects_after_classification::report_isomorphism_type(
 
 		FREE_int(Input_objects);
 	}
+#endif
 
 
 	int input_idx;
 
-	input_idx = Classification_of_objects->Output->Idx_transversal[iso_idx];
+	input_idx = Classification_of_objects->Output->Idx_transversal[j];
 
 	if (f_v) {
-		cout << "objects_after_classification::report_isomorphism_type "
-				"iso type " << iso_idx
+		cout << "objects_after_classification::report_isomorphism_type_representative "
+				"iso type " << j
 				<< " is input object " << input_idx
 				<< ", before report_object_with_properties" << endl;
 	}
+
+
+	ost << "\\subsubsection*{Input Object " << input_idx << "}" << endl;
+
+
 	report_object_with_properties(
 			ost,
 			Report_options,
 			input_idx /* object_idx */,
 			iso_idx,
 			verbose_level);
+
+
 	if (f_v) {
-		cout << "objects_after_classification::report_isomorphism_type "
+		cout << "objects_after_classification::report_isomorphism_type_representative "
 				"iso_idx=" << iso_idx << " after report_object_with_properties" << endl;
 	}
 
@@ -625,7 +875,7 @@ void objects_after_classification::report_isomorphism_type(
 
 
 	if (f_v) {
-		cout << "objects_after_classification::report_isomorphism_type "
+		cout << "objects_after_classification::report_isomorphism_type_representative "
 				"iso_idx=" << iso_idx << " done" << endl;
 	}
 }
@@ -747,7 +997,7 @@ void objects_after_classification::report_input_object_only(
 	iso_type = Classification_of_objects->Output->CB->type_of[input_idx];
 	iso_rep_idx = Classification_of_objects->Output->Idx_transversal[iso_type];
 
-	ost << "isomorphism type = " << iso_type << "\\\\" << endl;
+	ost << "isomorphism type = " << Classification_of_objects->Output->CB->perm[iso_type] << "\\\\" << endl;
 	ost << "isomorphism representative = " << iso_rep_idx << "\\\\" << endl;
 
 	Clv = NEW_int(NO->N);

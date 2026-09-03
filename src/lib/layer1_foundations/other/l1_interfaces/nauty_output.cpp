@@ -108,6 +108,10 @@ void nauty_output::print()
 		cout << "N=" << N << endl;
 		cout << "invariant_set_start=" << invariant_set_start << endl;
 		cout << "invariant_set_size=" << invariant_set_size << endl;
+		cout << "Ago=" << *Ago << endl;
+		cout << "canonical_labeling=";
+		Int_vec_print(cout, canonical_labeling, N);
+		cout << endl;
 }
 
 void nauty_output::print_stats()

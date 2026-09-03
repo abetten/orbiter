@@ -2935,6 +2935,11 @@ public:
 	int flags_nb_cols;
 	std::string flags_text;
 
+	// ToDo not yet documented
+	int f_latin_square_GDD;
+	int latin_square_GDD_order;
+	std::string latin_square_GDD_text;
+
 	int f_concatenate;
 	std::string concatenate_list;
 
@@ -3002,6 +3007,8 @@ public:
 			int verbose_level);
 	void print(
 			std::ostream &ost);
+	void save(
+			std::string &fname_base, int verbose_level);
 
 };
 

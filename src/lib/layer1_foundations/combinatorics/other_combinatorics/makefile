@@ -7,7 +7,8 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
-		combinatorics_domain.o
+		combinatorics_domain.o \
+		girth_finder.o
 
 
 all : $(MODULES)

@@ -204,6 +204,8 @@ public:
 
 	// tables/commands/orbits_create2.csv
 
+	int f_conjugacy_classes_by_magma;
+
 
 
 	int f_group;
@@ -311,10 +313,53 @@ public:
 	int f_has_classification_by_canonical_form;
 	canonical_form::canonical_form_classifier *Canonical_form_classifier;
 
+	int f_has_conjugacy_classes_by_magma;
+	layer5_applications::apps_algebra::classes_of_elements_expanded *Classes_of_elements_expanded;
+	data_structures_groups::vector_ge *Classes_of_elements_expanded_Reps;
+
+
 	orbits_create();
 	~orbits_create();
 	void init(
 			orbits_create_description *Descr,
+			int verbose_level);
+	void get_generators(
+			int verbose_level);
+	void do_on_points(
+			int verbose_level);
+	void do_orbits_on_points_with_generators(
+			int verbose_level);
+	void do_on_subsets(
+			int verbose_level);
+	void do_orbit_of_one_subset(
+			int verbose_level);
+	void do_orbits_on_subspaces(
+			int verbose_level);
+	void do_orbits_on_tensors(
+			int verbose_level);
+	void do_orbits_on_partition(
+			int verbose_level);
+	void do_orbits_on_polynomials(
+			int verbose_level);
+	void do_on_polynomials_with_bitvector_first(
+			int verbose_level);
+	void do_on_polynomials_with_bitvector_continue(
+			int verbose_level);
+	void do_orbit_of_one_polynomial(
+			int verbose_level);
+	void do_classify_cubic_curves(
+			int verbose_level);
+	void do_classify_cubic_surfaces(
+			int verbose_level);
+	void do_classify_arcs(
+			int verbose_level);
+	void do_classify_semifields(
+			int verbose_level);
+	void do_on_boolean_functions(
+			int verbose_level);
+	void do_classification_by_canonical_form(
+			int verbose_level);
+	void do_conjugacy_classes_by_magma(
 			int verbose_level);
 
 };

@@ -214,10 +214,16 @@ void orbits_activity::perform_activity(
 		if (f_v) {
 			cout << "orbits_activity::perform_activity f_schreier_poset" << endl;
 		}
+
+
 		if (f_v) {
 			cout << "orbits_activity::perform_activity before do_schreier_poset" << endl;
 		}
-		do_schreier_poset(Descr->schreier_poset_prefix, Descr->schreier_poset_orbit_idx, verbose_level);
+		do_schreier_poset(
+				Descr->schreier_poset_prefix,
+				Descr->schreier_poset_orbit_idx,
+				Descr->schreier_poset_f_restricted,
+				verbose_level);
 		if (f_v) {
 			cout << "orbits_activity::perform_activity after do_schreier_poset" << endl;
 		}
@@ -2069,7 +2075,9 @@ void orbits_activity::do_transporter(
 }
 
 void orbits_activity::do_schreier_poset(
-		std::string &prefix, int orbit_idx, int verbose_level)
+		std::string &prefix, int orbit_idx,
+		int f_restricted,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2096,6 +2104,7 @@ void orbits_activity::do_schreier_poset(
 		Schreier_poset->init(
 				OC->Orb->Sch,
 				orbit_idx,
+				f_restricted,
 				prefix,
 				verbose_level);
 		if (f_v) {

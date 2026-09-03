@@ -28,6 +28,10 @@ projective_space_activity_description::projective_space_activity_description()
 	// TABLES/projective_space_activity_1.tex
 
 
+	// 1:
+
+
+
 	f_cheat_sheet = false;
 	//std::string cheat_sheet_draw_options_label;
 
@@ -105,6 +109,11 @@ projective_space_activity_description::projective_space_activity_description()
 	// TABLES/projective_space_activity_2.tex
 
 
+	// 2:
+
+
+
+
 
 	f_sweep = false;
 	//std::string sweep_options;
@@ -174,6 +183,11 @@ projective_space_activity_description::projective_space_activity_description()
 
 
 	// TABLES/projective_space_activity_3.tex
+
+
+	// 3:
+
+
 
 
 
@@ -249,8 +263,21 @@ projective_space_activity_description::projective_space_activity_description()
 
 
 
+	f_create_transvection = false;
+	create_transvection_a = 0;
+	//std::string create_transvection_v;
+	//std::string create_transvection_u;
+
+
+	f_create_all_transvections = false;
+
+
 
 	// TABLES/projective_space_activity_4.tex
+
+
+
+	// 4:
 
 
 
@@ -327,6 +354,8 @@ int projective_space_activity_description::read_arguments(
 
 		// TABLES/projective_space_activity_1.tex
 
+
+		// 1:
 
 		if (ST.stringcmp(argv[i], "-cheat_sheet") == 0) {
 			f_cheat_sheet = true;
@@ -551,6 +580,9 @@ int projective_space_activity_description::read_arguments(
 
 
 		// TABLES/projective_space_activity_2.tex
+
+
+		// 2:
 
 
 
@@ -824,6 +856,7 @@ int projective_space_activity_description::read_arguments(
 
 		// TABLES/projective_space_activity_3.tex
 
+		// 3:
 
 
 
@@ -997,10 +1030,35 @@ int projective_space_activity_description::read_arguments(
 					<< endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-create_transvection") == 0) {
+			f_create_transvection = true;
+			create_transvection_a = ST.strtoi(argv[++i]);
+			create_transvection_v.assign(argv[++i]);
+			create_transvection_u.assign(argv[++i]);
+			if (f_v) {
+				cout << "-create_transvection"
+						<< " " << create_transvection_a
+						<< " " << create_transvection_v
+						<< " " << create_transvection_u
+					<< endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-create_all_transvections") == 0) {
+			f_create_all_transvections = true;
+			if (f_v) {
+				cout << "-create_all_transvections"
+					<< endl;
+			}
+		}
+
+
+
 
 
 		// TABLES/projective_space_activity_4.tex
 
+
+		// 4:
 
 
 
@@ -1233,6 +1291,9 @@ void projective_space_activity_description::print()
 {
 	// TABLES/projective_space_activity_1.tex
 
+
+	// 1:
+
 	if (f_cheat_sheet) {
 		cout << "-cheat_sheet " << cheat_sheet_draw_options_label << endl;
 	}
@@ -1335,6 +1396,10 @@ void projective_space_activity_description::print()
 	// TABLES/projective_space_activity_2.tex
 
 
+	// 2:
+
+
+
 	if (f_sweep) {
 		cout << "-sweep " << sweep_options << endl;
 		sweep_surface_description->print();
@@ -1399,6 +1464,9 @@ void projective_space_activity_description::print()
 	}
 
 	// TABLES/projective_space_activity_3.tex
+
+
+	// 3:
 
 
 	if (f_lines_on_point_but_within_a_plane) {
@@ -1488,10 +1556,23 @@ void projective_space_activity_description::print()
 				<< " " << polynomial_representation_set_label
 			<< endl;
 	}
+	if (f_create_transvection) {
+		cout << "-create_transvection"
+				<< " " << create_transvection_a
+				<< " " << create_transvection_v
+				<< " " << create_transvection_u
+			<< endl;
+	}
+	if (f_create_all_transvections) {
+		cout << "-create_all_transvections"
+			<< endl;
+	}
 
 
 	// TABLES/projective_space_activity_4.tex
 
+
+	// 4:
 
 
 	// classification stuff:

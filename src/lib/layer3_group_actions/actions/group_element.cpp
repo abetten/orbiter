@@ -411,6 +411,45 @@ int group_element::compare_using_list_of_images(
 }
 
 
+
+
+int group_element::identity_test_using_images(
+		int *Elt, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "group_element::identity_test_using_images" << endl;
+	}
+
+	int *Image1;
+
+	Image1 = NEW_int(A->degree);
+
+
+	make_list_of_images(Image1, Elt);
+
+	int i;
+	int ret = true;
+
+	for (i = 0; i < A->degree; i++) {
+		if (Image1[i] != i) {
+			ret = false;
+			break;
+		}
+	}
+
+
+	FREE_int(Image1);
+	if (f_v) {
+		cout << "group_element::identity_test_using_images done, ret = " << ret << endl;
+	}
+	return ret;
+}
+
+
+
+
 // #############################################################################
 
 long int group_element::element_image_of(
@@ -599,7 +638,7 @@ void group_element::element_print_latex(
 std::string group_element::element_stringify(
 		void *elt, std::string &options)
 {
-	cout << "group_element::element_stringify before (*A->ptr->ptr_element_stringify)" << endl;
+	//cout << "group_element::element_stringify before (*A->ptr->ptr_element_stringify)" << endl;
 	if (A->ptr->ptr_element_stringify == NULL) {
 		cout << "group_element::element_stringify A->ptr->ptr_element_stringify == NULL" << endl;
 		exit(1);

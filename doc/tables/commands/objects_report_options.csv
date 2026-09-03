@@ -11,5 +11,6 @@ ROW,C1,C2,C3
 1,"\verb'-export_group_magma' ","   "," Export the automorphism group in Magma format. "
 1,"\verb'-lex_least' ","  geo "," Show lex-least orbit representatives. Here, geo is a geometry builder object. "
 1,"\verb'-canonical_forms' ","   "," Report the canonical forms of each input object. "
+1,"\verb'-GDD' "," sz  "," Assumes a group divisible design with three classes of size sz. This option affects the output of isomorphisms after the classification. "
 END
 

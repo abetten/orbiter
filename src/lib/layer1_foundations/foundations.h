@@ -484,6 +484,7 @@ namespace combinatorics {
 
 	namespace other_combinatorics {
 		class combinatorics_domain;
+		class girth_finder;
 	}
 
 	//! combinatorial puzzles

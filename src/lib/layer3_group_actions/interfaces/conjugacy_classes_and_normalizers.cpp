@@ -211,11 +211,17 @@ void conjugacy_classes_and_normalizers::create_classes(
 			cout << "conjugacy_classes_and_normalizers::create_classes idx=" << idx << " / " << nb_classes << endl;
 		}
 
+		if (f_v) {
+			cout << "conjugacy_classes_and_normalizers::create_classes before Conjugacy_class[idx]->init" << endl;
+		}
 		Conjugacy_class[idx]->init(
 				this,
 				idx,
 				group_G,
 				verbose_level - 1);
+		if (f_v) {
+			cout << "conjugacy_classes_and_normalizers::create_classes after Conjugacy_class[idx]->init" << endl;
+		}
 
 	}
 

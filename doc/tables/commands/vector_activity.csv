@@ -2,5 +2,8 @@ ROW,C1,C2,C3
 0,"tab:vector:activity",,
 1,"Vector of Integers Activities",,
 1,"\verb'-report' ","  "," Produce a report of the vector or matrix. "
+1,"\verb'-save' ","  "," Save the matrix or vector to a csv file. "
 1,"\verb'-missing_sets' "," n "," This assumes that the vector is a matrix whose rows describe a system of sets. Each set has size k, say. The entries are drawn from 0 to n - 1. The command produces a file containing the missing sets. The missing sets are the subsets of size k which are not member of the set system. "
+1,"\verb'-apply_permutation' "," perm "," Applies the permutation perm to the incidence matrix. The permutation is assumed to be composed of two parts. The first part is the permutation of rows, the second part is the permutation of columns. The permutation must be a vector-of-int object. The action is in passive form, i.e. the permutation applies to the row and column indices in inverse form. "
+1,"\verb'-apply_permutation_inverse' "," perm "," Just like \verb'-apply_permutation', except that the permutation applies in active form. "
 END

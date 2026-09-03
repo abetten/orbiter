@@ -165,6 +165,7 @@ void classification_of_objects::classify_objects_using_nauty(
 		cout << "classification_of_objects::classify_objects_using_nauty" << endl;
 	}
 	int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
 	//int f_vv = false;
 
 	int input_idx;
@@ -251,6 +252,12 @@ void classification_of_objects::classify_objects_using_nauty(
 		if (f_vv) {
 			cout << "classification_of_objects::classify_objects_using_nauty "
 					"after process_any_object" << endl;
+		}
+
+		if (f_vvv) {
+			cout << "classification_of_objects::classify_objects_using_nauty "
+					"NO=" << endl;
+			Output->NO[input_idx]->print();
 		}
 
 		FREE_OBJECT(Enc);

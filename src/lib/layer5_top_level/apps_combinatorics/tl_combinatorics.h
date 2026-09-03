@@ -640,6 +640,7 @@ public:
 
 	int f_family;
 	std::string family_name;
+		// At present, PG_2_q is the only family name recognized
 
 	int f_sporadic;
 	std::string sporadic_name;
@@ -728,18 +729,13 @@ public:
 	combinatorics::design_theory::design_object *Design_object;
 
 
-#if 0
-	std::string prefix;
-	std::string label_txt;
-	std::string label_tex;
-
-	int q;
-	algebra::field_theory::finite_field *F;
-
-	int k;
-#endif
-
 	actions::action *A_base;
+
+	// We need A and A2 to create a table
+	// of all designs isomorphic to the given one,
+	// which we need to construct large sets
+
+
 	actions::action *A;
 		// Sym(degree)
 	actions::action *A2;
@@ -753,33 +749,14 @@ public:
 
 	int degree;
 
-#if 0
-	int f_has_set;
-	long int *set; // [sz]
-		// The subsets are coded as ranks of k-subsets.
-	int sz; // = b, the number of blocks
-#endif
 
 	int f_has_group;
 	groups::strong_generators *Sg;
 
-#if 0
-	int f_has_block_partition;
-	int block_partition_class_size;
-#endif
 
 	projective_geometry::projective_space_with_action *PA;
 	geometry::projective_geometry::projective_space *P;
 
-#if 0
-	int *block; // [k]
-
-	int v;
-	int b;
-	int nb_inc;
-	int f_has_incma;
-	int *incma; // [v * b]
-#endif
 
 	design_create();
 	~design_create();

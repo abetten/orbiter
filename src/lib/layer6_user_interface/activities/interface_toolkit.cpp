@@ -23,6 +23,7 @@ namespace activities {
 interface_toolkit::interface_toolkit()
 {
 	Record_birth();
+
 	f_create_files_direct = false;
 	//std::string create_files_direct_fname_mask;
 	//std::string create_files_direct_text;

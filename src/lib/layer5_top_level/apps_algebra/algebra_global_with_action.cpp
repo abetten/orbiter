@@ -1756,6 +1756,7 @@ void algebra_global_with_action::identify_subgroups_from_file(
 void algebra_global_with_action::all_elements_by_class(
 		groups::sims *Sims,
 		groups::any_group *Any_group,
+		classes_of_elements_expanded *Classes_of_elements_expanded,
 		int class_order,
 		int class_id,
 		data_structures_groups::vector_ge *&vec,
@@ -1776,9 +1777,10 @@ void algebra_global_with_action::all_elements_by_class(
 	goi = go.as_int();
 
 
-	classes_of_elements_expanded *Classes_of_elements_expanded;
-	data_structures_groups::vector_ge *Reps;
+	//classes_of_elements_expanded *Classes_of_elements_expanded;
+	//data_structures_groups::vector_ge *Reps;
 
+#if 0
 	if (f_v) {
 		cout << "algebra_global_with_action::all_elements_by_class "
 				"before get_classses_expanded" << endl;
@@ -1794,6 +1796,8 @@ void algebra_global_with_action::all_elements_by_class(
 		cout << "algebra_global_with_action::all_elements_by_class "
 				"after get_classses_expanded" << endl;
 	}
+#endif
+
 #if 0
 	interfaces::conjugacy_classes_and_normalizers *Classes;
 	groups::sims *sims_G;
@@ -1900,13 +1904,14 @@ void algebra_global_with_action::all_elements_by_class(
 
 
 
-
+#if 1
 classes_of_subgroups_expanded *algebra_global_with_action::get_classes_of_subgroups_expanded(
 		interfaces::conjugacy_classes_of_subgroups *Classes,
 		groups::sims *sims_G,
 		groups::any_group *Any_group,
 		int expand_by_go,
 		int verbose_level)
+// please use the "orbits_create" data structure instead!
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1943,6 +1948,7 @@ classes_of_subgroups_expanded *algebra_global_with_action::get_classes_of_subgro
 	}
 	return Classes_of_subgroups_expanded;
 }
+#endif
 
 
 void algebra_global_with_action::identify_groups_from_csv_file(
@@ -2237,6 +2243,10 @@ void algebra_global_with_action::get_classses_expanded(
 	if (f_v) {
 		cout << "algebra_global_with_action::get_classses_expanded" << endl;
 	}
+	if (f_v) {
+		cout << "algebra_global_with_action::get_classses_expanded A = " << Any_group->A->label << endl;
+		cout << "algebra_global_with_action::get_classses_expanded A_base = " << Any_group->A_base->label << endl;
+	}
 
 	interfaces::conjugacy_classes_and_normalizers *class_data;
 
@@ -2303,7 +2313,8 @@ void algebra_global_with_action::get_classses_expanded(
 void algebra_global_with_action::split_by_classes(
 		groups::sims *Sims,
 		groups::any_group *Any_group,
-		int expand_by_go,
+		classes_of_elements_expanded *Classes_of_elements_expanded,
+		//int expand_by_go,
 		std::string &fname,
 		std::string &col_label,
 		int verbose_level)
@@ -2314,11 +2325,11 @@ void algebra_global_with_action::split_by_classes(
 		cout << "algebra_global_with_action::split_by_classes" << endl;
 	}
 
-	classes_of_elements_expanded *Classes_of_elements_expanded;
-	data_structures_groups::vector_ge *Reps;
+	//classes_of_elements_expanded *Classes_of_elements_expanded;
+	//data_structures_groups::vector_ge *Reps;
 
 
-
+#if 0
 	if (f_v) {
 		cout << "algebra_global_with_action::split_by_classes "
 				"before get_classses_expanded" << endl;
@@ -2334,6 +2345,7 @@ void algebra_global_with_action::split_by_classes(
 		cout << "algebra_global_with_action::split_by_classes "
 				"after get_classses_expanded" << endl;
 	}
+#endif
 
 
 
@@ -2519,8 +2531,8 @@ void algebra_global_with_action::split_by_classes(
 	std::string fname_identify;
 	std::string fname_identify_size;
 
-	fname_identify = Any_group->label + "_split_by_classes_" + std::to_string(expand_by_go) + ".csv";
-	fname_identify_size = Any_group->label + "_split_by_classes_" + std::to_string(expand_by_go) + "_size.csv";
+	fname_identify = Any_group->label + "_split_by_classes.csv";
+	fname_identify_size = Any_group->label + "_split_by_classes_size.csv";
 
 	std::string *Col_headings;
 
@@ -2587,8 +2599,8 @@ void algebra_global_with_action::split_by_classes(
 
 
 	FREE_OBJECT(SoS);
-	FREE_OBJECT(Classes_of_elements_expanded);
-	FREE_OBJECT(Reps);
+	//FREE_OBJECT(Classes_of_elements_expanded);
+	//FREE_OBJECT(Reps);
 
 
 }
@@ -2598,7 +2610,8 @@ void algebra_global_with_action::identify_elements_by_classes(
 		groups::sims *Sims,
 		groups::any_group *Any_group_H,
 		groups::any_group *Any_group_G,
-		int expand_by_go,
+		classes_of_elements_expanded *Classes_of_elements_expanded,
+		//int expand_by_go,
 		std::string &fname, std::string &col_label,
 		int *&Class_index,
 		int verbose_level)
@@ -2610,10 +2623,10 @@ void algebra_global_with_action::identify_elements_by_classes(
 	}
 
 
-	classes_of_elements_expanded *Classes_of_elements_expanded;
-	data_structures_groups::vector_ge *Reps;
+	//classes_of_elements_expanded *Classes_of_elements_expanded;
+	//data_structures_groups::vector_ge *Reps;
 
-
+#if 0
 	if (f_v) {
 		cout << "algebra_global_with_action::identify_elements_by_classes "
 				"before get_classses_expanded" << endl;
@@ -2629,6 +2642,7 @@ void algebra_global_with_action::identify_elements_by_classes(
 		cout << "algebra_global_with_action::identify_elements_by_classes "
 				"after get_classses_expanded" << endl;
 	}
+#endif
 
 	other::orbiter_kernel_system::file_io Fio;
 	other::data_structures::set_of_sets *SoS;
@@ -2752,8 +2766,8 @@ void algebra_global_with_action::identify_elements_by_classes(
 	}
 
 
-	FREE_OBJECT(Classes_of_elements_expanded);
-	FREE_OBJECT(Reps);
+	//FREE_OBJECT(Classes_of_elements_expanded);
+	//FREE_OBJECT(Reps);
 	FREE_OBJECT(SoS);
 	FREE_int(Elt);
 	FREE_int(data);

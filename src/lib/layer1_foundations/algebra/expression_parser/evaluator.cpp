@@ -236,6 +236,8 @@ void evaluator::algebra_element_inverse(
 
 	algebra::linear_algebra::linear_algebra Linear_algebra;
 
+	Linear_algebra.init(F, 0 /*verbose_level*/);
+
 	Linear_algebra.matrix_inverse(
 			Mtx_A, Mtx_Av, algebra_dimension, 0 /* verbose_level */);
 }

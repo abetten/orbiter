@@ -610,6 +610,11 @@ public:
 	int is_strongly_regular(
 			int &k, int &lambda, int &mu,
 			int verbose_level);
+	int girth_assuming_vertex_transitive(
+			int verbose_level);
+	void compute_A(
+			int *&A,
+			int verbose_level);
 	void compute_A_and_A_square(
 			int *&A,
 			int *&A_square,

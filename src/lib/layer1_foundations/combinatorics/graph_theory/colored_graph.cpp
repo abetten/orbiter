@@ -3754,6 +3754,117 @@ int colored_graph::is_strongly_regular(
 	return f_is_strongly_regular;
 }
 
+int colored_graph::girth_assuming_vertex_transitive(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "colored_graph::girth_assuming_vertex_transitive" << endl;
+	}
+
+	combinatorics::other_combinatorics::girth_finder *GF;
+
+	GF = NEW_OBJECT(combinatorics::other_combinatorics::girth_finder);
+
+	int *Adj;
+
+
+	compute_A(
+			Adj,
+			verbose_level - 2);
+
+	if (f_v) {
+		cout << "colored_graph::girth_assuming_vertex_transitive "
+				"before GF->init_graph_and_find_girth" << endl;
+	}
+	GF->init_graph_and_find_girth(Adj, nb_points, verbose_level);
+	if (f_v) {
+		cout << "colored_graph::girth_assuming_vertex_transitive "
+				"after GF->init_graph_and_find_girth" << endl;
+	}
+
+	int g;
+
+	g = GF->g;
+
+	if (f_v) {
+		cout << "colored_graph::girth_assuming_vertex_transitive found nb_points = " << nb_points << endl;
+		cout << "colored_graph::girth_assuming_vertex_transitive found g = " << g << endl;
+		cout << "colored_graph::girth_assuming_vertex_transitive short cycle = ";
+		Int_vec_print(cout, GF->short_cycle, g);
+		cout << endl;
+	}
+
+	std::vector<std::vector<int> > Cycles;
+
+	GF->find_all_shortest_cycles(Cycles, verbose_level - 1);
+
+	if (f_v) {
+
+		int N;
+
+		N = Cycles.size();
+		cout << "colored_graph::girth_assuming_vertex_transitive number of short cycles found is " << N << endl;
+		cout << "The short cycles are:" << endl;
+
+		int i, l, j;
+		for (i = 0; i < N; i++) {
+			cout << i << " : ";
+			l = Cycles[i].size();
+			for (j = 0; j < l; j++) {
+				cout << Cycles[i][j];
+				if (j < l - 1) {
+					cout << ", ";
+				}
+			}
+			cout << endl;
+		}
+	}
+
+
+	FREE_OBJECT(GF);
+
+
+	FREE_int(Adj);
+
+	if (f_v) {
+		cout << "colored_graph::girth_assuming_vertex_transitive done" << endl;
+	}
+
+	return g;
+}
+
+
+void colored_graph::compute_A(
+		int *&A,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "colored_graph::compute_A" << endl;
+	}
+	int i, j;
+
+	A = NEW_int(nb_points * nb_points);
+
+	for (i = 0; i < nb_points; i++) {
+		for (j = i + 1; j < nb_points; j++) {
+			if (is_adjacent(i, j)) {
+				A[i * nb_points + j] = 1;
+				A[j * nb_points + i] = 1;
+			}
+		}
+	}
+
+	if (f_v) {
+		cout << "colored_graph::compute_A done" << endl;
+	}
+}
+
 
 void colored_graph::compute_A_and_A_square(
 		int *&A,

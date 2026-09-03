@@ -1044,10 +1044,6 @@ public:
 
 	int f_elements;
 
-	int f_elements_by_class;
-	int elements_by_class_order;
-	int elements_by_class_id;
-
 
 	int f_select_elements;
 	std::string select_elements_ranks;
@@ -1101,6 +1097,9 @@ public:
 	int f_test_associativity;
 	int test_associativity_nb_tests;
 
+	int f_test_inverse;
+	int test_inverse_nb_tests;
+
 
 
 	// TABLES/group_theoretic_activity_2.csv
@@ -1134,18 +1133,35 @@ public:
 	std::string normalizer_of_cyclic_subgroup_label;
 	std::string normalizer_of_cyclic_subgroup_data;
 
-	// Magma:
-	int f_classes;
+	// Magma (defunct), use -orbits instead
+	//int f_classes;
 
+
+	// ToDo undocumented
+	int f_get_class_representatives;
+	std::string get_class_representatives_orbits_object;
+
+	// ToDo: changed!
+	int f_elements_by_class;
+	int elements_by_class_order;
+	int elements_by_class_id;
+	std::string elements_by_class_orbits_object;
+
+
+	// ToDo: changed!
 	int f_split_by_classes;
 	std::string split_by_classes_fname;
 	std::string split_by_classes_column;
+	std::string split_by_classes_orbits_object;
 
+	// ToDo: changed!
 	int f_identify_elements_by_class;
 	std::string identify_elements_by_class_fname;
 	std::string identify_elements_by_class_column;
-	int identify_elements_by_class_expand_go;
 	std::string identify_elements_by_class_supergroup;
+	std::string identify_elements_by_class_orbits_object;
+
+
 
 
 
@@ -1534,6 +1550,7 @@ public:
 	int f_automorphism_group_colored_graph;
 
 	int f_properties;
+	int f_girth_assuming_vertex_transitivity;
 	int f_eigenvalues;
 	int f_eigenvalues_report;
 
@@ -1820,7 +1837,9 @@ public:
 	int f_transporter;
 	std::string transporter_label_of_set;
 
+
 	int f_schreier_poset;
+	int schreier_poset_f_restricted;
 	int schreier_poset_orbit_idx;
 	std::string schreier_poset_prefix;
 
@@ -1897,7 +1916,9 @@ public:
 	void do_transporter(
 			std::string &label_of_set, int verbose_level);
 	void do_schreier_poset(
-			std::string &prefix, int orbit_idx, int verbose_level);
+			std::string &prefix, int orbit_idx,
+			int f_restricted,
+			int verbose_level);
 	void do_poset_classification_activity(
 			std::string &activity_label,
 			int &nb_output,
@@ -1938,13 +1959,15 @@ public:
 	int f_perp;
 	std::string perp_text;
 
-	// undocumented:
+	// ToDo: undocumented:
 	int f_set_stabilizer;
 	int set_stabilizer_intermediate_set_size;
 	std::string set_stabilizer_fname_mask;
 	int set_stabilizer_nb;
 	std::string set_stabilizer_column_label;
 	std::string set_stabilizer_fname_out;
+
+
 
 	int f_export_point_line_incidence_matrix;
 
@@ -2294,6 +2317,11 @@ public:
 
 	// TABLES/projective_space_activity_1.tex
 
+
+	// 1:
+
+
+
 	int f_cheat_sheet;
 	std::string cheat_sheet_draw_options_label;
 
@@ -2370,6 +2398,10 @@ public:
 	// TABLES/projective_space_activity_2.tex
 
 
+	// 2:
+
+
+
 
 
 	int f_sweep;
@@ -2421,6 +2453,9 @@ public:
 
 
 	// TABLES/projective_space_activity_3.tex
+
+
+	// 3:
 
 
 
@@ -2490,9 +2525,20 @@ public:
 	std::string polynomial_representation_set_label;
 
 
+	int f_create_transvection;
+	int create_transvection_a;
+	std::string create_transvection_v;
+	std::string create_transvection_u;
+
+	int f_create_all_transvections;
+
+
+
+
+
 	// TABLES/projective_space_activity_4.tex
 
-
+	// 4:
 
 	// classification stuff:
 
@@ -3103,9 +3149,16 @@ public:
 
 	int f_report;
 
+	int f_save;
+
 	int f_missing_sets;
 	int missing_sets_n;
 
+	int f_apply_permutation;
+	std::string apply_permutation_perm;
+
+	int f_apply_permutation_inverse;
+	std::string apply_permutation_inverse_perm;
 
 	vector_activity_description();
 	~vector_activity_description();
@@ -3217,7 +3270,6 @@ public:
 
 	int f_apply_isomorphism_wedge_product_4to6;
 
-	// ToDo not yet documented
 	int f_filter_subfield;
 	int subfield_index;
 

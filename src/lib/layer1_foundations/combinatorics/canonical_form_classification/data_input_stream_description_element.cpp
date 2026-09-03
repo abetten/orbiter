@@ -288,7 +288,10 @@ void data_input_stream_description_element::init_file_of_packings(std::string &a
 }
 
 void data_input_stream_description_element::init_file_of_packings_through_spread_table(
-		std::string &a, std::string &fname_spread_table, std::string &col_label, int q)
+		std::string &a,
+		std::string &fname_spread_table,
+		std::string &col_label,
+		int q)
 {
 	input_type = t_data_input_stream_file_of_packings_through_spread_table;
 
