@@ -1126,6 +1126,36 @@ void graph_theoretic_activity::perform_activity(
 					"after CG->properties" << endl;
 		}
 	}
+
+	else if (Descr->f_girth_assuming_vertex_transitivity) {
+
+		if (f_v) {
+			cout << "graph_theoretic_activity::perform_activity "
+					"f_girth_assuming_vertex_transitivity" << endl;
+		}
+
+		int g;
+
+		if (f_v) {
+			cout << "graph_theoretic_activity::perform_activity "
+					"before CG->properties" << endl;
+		}
+		g = CG[0]->girth_assuming_vertex_transitive(verbose_level);
+		if (f_v) {
+			cout << "graph_theoretic_activity::perform_activity "
+					"after CG->properties" << endl;
+		}
+
+		if (f_v) {
+			cout << "graph_theoretic_activity::perform_activity "
+					"girth = " << g << endl;
+		}
+
+	}
+
+
+
+
 	else if (Descr->f_eigenvalues) {
 
 		if (f_v) {

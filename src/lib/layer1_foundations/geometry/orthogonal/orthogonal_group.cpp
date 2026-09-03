@@ -1017,6 +1017,11 @@ void orthogonal_group::make_all_Siegel_Transformations(
 		cout << "orthogonal_group::make_all_Siegel_Transformations" << endl;
 	}
 
+
+	// at first, compute a list of all valid pairs:
+
+
+
 	std::vector<std::vector<long int> > Valid_pairs;
 
 	if (f_v) {
@@ -1035,6 +1040,11 @@ void orthogonal_group::make_all_Siegel_Transformations(
 		cout << "orthogonal_group::make_all_Siegel_Transformations "
 				"number of valid pairs = " << Valid_pairs.size() << endl;
 	}
+
+
+	// next, create the associated Siegel transformation for each valid pair:
+
+
 
 	int n;
 	int q;
@@ -1092,6 +1102,10 @@ void orthogonal_group::make_all_Siegel_Transformations(
 
 	}
 
+
+	// save the data to a csv file:
+
+
 	other::orbiter_kernel_system::file_io Fio;
 	std::string fname;
 
@@ -1137,6 +1151,10 @@ void orthogonal_group::make_all_Siegel_Transformations(
 void orthogonal_group::make_all_valid_pairs_for_Siegel_Transformations(
 		std::vector<std::vector<long int> > &Valid_pairs,
 		int verbose_level)
+// Makes pairs for Siegel transformations.
+// The first entry is the rank of a point on the quadric.
+// The second entry is the rank of an affine point.
+// A pair is valid if the bilinear form evaluated between them is zero.
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);

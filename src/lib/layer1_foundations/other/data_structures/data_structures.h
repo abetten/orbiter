@@ -3007,6 +3007,8 @@ public:
 			int verbose_level);
 	void print(
 			std::ostream &ost);
+	void save(
+			std::string &fname_base, int verbose_level);
 
 };
 

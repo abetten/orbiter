@@ -7,7 +7,6 @@ ROW,C1,C2,C3
 1,"\verb'-sylow' "," "," Produce a latex report for the sylow subgroups. "
 1,"\verb'-generators' ","  ","Returns the generators of the group as a vector of group elements. "
 1,"\verb'-elements' ","  ","Returns the elements of the group as a vector of group elements. "
-1,"\verb'-elements_by_class' "," order i ","Returns the elements of the i-th class whose elements have the given order.  "
 1,"\verb'-select_elements' "," list ","Returns the elements of the group whose ranks are given in the list as a vector of group elements. "
 1,"\verb'-random_element' "," label ","Creates a random element. Writes the element to file in coded form. "
 1,"\verb'-permutation_representation_' \verb'of_element' ","$g$ "," Compute the permutation representation of $g$ "

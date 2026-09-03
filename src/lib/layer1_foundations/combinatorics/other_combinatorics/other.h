@@ -278,6 +278,53 @@ public:
 };
 
 
+// #############################################################################
+// girth_finder.cpp
+// #############################################################################
+
+//! to compute the girth of a graph
+
+class girth_finder {
+
+public:
+
+	special_functions::permutations *Permutations;
+
+	int *Adj;
+	int n;
+
+	int g;
+
+	int *idx; // [n]
+
+	int *perm; // [n]
+	int *perm_inv; // [n]
+
+	int *short_cycle; // [n]
+
+	girth_finder();
+	~girth_finder();
+	void init_graph_and_find_girth(
+			int *Adj, int n,
+			int verbose_level);
+	void compute_girth_recursion(
+			int d,
+			int verbose_level);
+	// d = depth = index of the next point chosen for the cycle
+	int is_adjacent(
+			int i, int j);
+	void find_all_shortest_cycles(
+			std::vector<std::vector<int> > &Cycles,
+			int verbose_level);
+	void find_all_shortest_cycles_recursion(
+			int d,
+			std::vector<std::vector<int> > &Cycles,
+			int verbose_level);
+	// d = depth = index of the next point chosen for the cycle
+
+
+};
+
 
 
 

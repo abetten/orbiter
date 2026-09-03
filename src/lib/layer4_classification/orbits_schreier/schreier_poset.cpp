@@ -24,6 +24,8 @@ schreier_poset::schreier_poset()
 {
 	Record_birth();
 
+	f_restricted = false;
+
 	Schreier = NULL;
 
 	Layered_graph = NULL;
@@ -45,6 +47,7 @@ schreier_poset::~schreier_poset()
 void schreier_poset::init(
 		layer3_group_actions::groups::schreier *Schreier,
 		int orbit_no,
+		int f_restricted,
 		std::string &fname_base,
 	int verbose_level)
 {
@@ -56,7 +59,7 @@ void schreier_poset::init(
 	}
 
 	schreier_poset::Schreier = Schreier;
-
+	schreier_poset::f_restricted = f_restricted;
 
 	if (f_vv) {
 		cout << "schreier_poset::init Schreier tables:" << endl;
@@ -151,61 +154,14 @@ void schreier_poset::init(
 
 	if (f_v) {
 		cout << "schreier_poset::init "
-				"adding edges" << endl;
+				"before add_edges" << endl;
+	}
+	add_edges(verbose_level - 2);
+	if (f_v) {
+		cout << "schreier_poset::init "
+				"after add_edges" << endl;
 	}
 
-	int nb_gens;
-	int h, location, l2, n2;
-	int next_pt;
-	int coset, prev_pt;
-	//int next_pt_loc;
-
-	nb_gens = Schreier->Generators_and_images->gens.len;
-
-	for (l = 0; l < Distance_information->nb_layers; l++) {
-		for (n = 0; n < Distance_information->Nb_nodes[l]; n++) {
-
-			a = Layered_graph->L[l].Nodes[n].data1;
-			//a = SoS->Sets[l][n];
-
-			for (h = 0; h < nb_gens; h++) {
-
-				next_pt = Schreier->Generators_and_images->get_image(
-						a, h, 0/*verbose_level - 3*/);
-					// A->element_image_of(cur_pt, gens.ith(i), false);
-
-
-				coset = Schreier->Forest->orbit_inv[next_pt];
-				prev_pt = Schreier->Forest->prev[coset];
-
-
-				location = Distance_information->perm_inv[next_pt];
-				l2 = Distance_information->depth[location];
-				n2 = location - Distance_information->Fst[l2];
-
-
-				if (prev_pt == a) {
-
-					Layered_graph->add_edge(l, n, l2, n2,
-						h /* edge_color */,
-						0 /* verbose_level */);
-
-					//next_pt_loc = Schreier->Forest->orbit_inv[next_pt];
-
-					if (f_vv) {
-						cout << "schreier_poset::init adding edge (" << l << "," << n << ") - (" << l2 << "," << n2 << ") with color " << h << " node1=" << a << " node2=" << next_pt << " location=" << location << endl;
-					}
-				}
-				else {
-					if (f_vv) {
-						cout << "schreier_poset::init skipping edge (" << l << "," << n << ") - (" << l2 << "," << n2 << ") with color " << h << " node1=" << a << " node2=" << next_pt << " location=" << location << endl;
-					}
-
-				}
-			}
-
-		}
-	}
 
 	if (f_v) {
 		cout << "schreier_poset::init "
@@ -224,7 +180,7 @@ void schreier_poset::init(
 
 	string fname;
 
-	fname = fname_base + "_poset_draw_direct";
+	fname = fname_base + "_schreier_poset_draw_direct";
 
 	if (f_v) {
 		cout << "schreier_poset::init "
@@ -262,6 +218,94 @@ void schreier_poset::init(
 
 }
 
+void schreier_poset::add_edges(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+
+	if (f_v) {
+		cout << "schreier_poset::add_edges" << endl;
+	}
+
+	if (f_v) {
+		cout << "schreier_poset::init "
+				"adding edges" << endl;
+	}
+
+	int nb_gens;
+	int l, n, h, location, l2, n2;
+	int next_pt;
+	int coset, prev_pt;
+	long int a;
+	//int next_pt_loc;
+
+	nb_gens = Schreier->Generators_and_images->gens.len;
+
+	for (l = 0; l < Distance_information->nb_layers; l++) {
+		for (n = 0; n < Distance_information->Nb_nodes[l]; n++) {
+
+			a = Layered_graph->L[l].Nodes[n].data1;
+			//a = SoS->Sets[l][n];
+
+			for (h = 0; h < nb_gens; h++) {
+
+				next_pt = Schreier->Generators_and_images->get_image(
+						a, h, 0/*verbose_level - 3*/);
+					// A->element_image_of(cur_pt, gens.ith(i), false);
+
+
+				coset = Schreier->Forest->orbit_inv[next_pt];
+				prev_pt = Schreier->Forest->prev[coset];
+
+
+				location = Distance_information->perm_inv[next_pt];
+				l2 = Distance_information->depth[location];
+				n2 = location - Distance_information->Fst[l2];
+
+
+				if (f_restricted) {
+					if (prev_pt == a) {
+
+						Layered_graph->add_edge(l, n, l2, n2,
+							h /* edge_color */,
+							0 /* verbose_level */);
+
+						//next_pt_loc = Schreier->Forest->orbit_inv[next_pt];
+
+						if (f_vv) {
+							cout << "schreier_poset::init adding edge (" << l << "," << n << ") - (" << l2 << "," << n2 << ") with color " << h << " node1=" << a << " node2=" << next_pt << " location=" << location << endl;
+						}
+					}
+					else {
+						if (f_vv) {
+							cout << "schreier_poset::init skipping edge (" << l << "," << n << ") - (" << l2 << "," << n2 << ") with color " << h << " node1=" << a << " node2=" << next_pt << " location=" << location << endl;
+						}
+
+					}
+				}
+				else {
+
+					Layered_graph->add_edge(l, n, l2, n2,
+						h /* edge_color */,
+						0 /* verbose_level */);
+
+					//next_pt_loc = Schreier->Forest->orbit_inv[next_pt];
+
+					if (f_vv) {
+						cout << "schreier_poset::init adding edge (" << l << "," << n << ") - (" << l2 << "," << n2 << ") with color " << h << " node1=" << a << " node2=" << next_pt << " location=" << location << endl;
+					}
+
+				}
+			}
+
+		}
+	}
+
+	if (f_v) {
+		cout << "schreier_poset::add_edges done" << endl;
+	}
+}
 
 }}}
 

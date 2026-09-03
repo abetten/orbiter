@@ -638,7 +638,7 @@ void group_element::element_print_latex(
 std::string group_element::element_stringify(
 		void *elt, std::string &options)
 {
-	cout << "group_element::element_stringify before (*A->ptr->ptr_element_stringify)" << endl;
+	//cout << "group_element::element_stringify before (*A->ptr->ptr_element_stringify)" << endl;
 	if (A->ptr->ptr_element_stringify == NULL) {
 		cout << "group_element::element_stringify A->ptr->ptr_element_stringify == NULL" << endl;
 		exit(1);

@@ -92,6 +92,22 @@ void vector_activity::perform_activity(
 
 
 	}
+	else if (Descr->f_save) {
+
+		if (f_v) {
+			cout << "vector_activity::perform_activity f_save" << endl;
+		}
+
+
+		pVB[0]->save((*with_labels)[0], verbose_level);
+
+		if (f_v) {
+			cout << "vector_activity::perform_activity "
+					"f_save done" << endl;
+		}
+
+
+	}
 	else if (Descr->f_missing_sets) {
 
 		if (f_v) {

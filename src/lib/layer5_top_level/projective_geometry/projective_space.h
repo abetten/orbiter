@@ -53,6 +53,10 @@ public:
 			projective_space_with_action *PA,
 			std::string &polarity_36,
 			int verbose_level);
+	void create_all_transvections(
+			projective_space_with_action *PA,
+			int verbose_level);
+
 #if 0
 	void do_classify_arcs(
 			projective_space_with_action *PA,
@@ -233,6 +237,14 @@ public:
 	void report_fixed_objects(
 			std::string &Elt_text,
 			std::string &fname_latex, int verbose_level);
+	int create_transvection(
+			int a, int *v, int *u, int len,
+			data_structures_groups::vector_ge *&vec,
+			int verbose_level);
+	// vec is only allocated if the return value is true
+	void make_transvection(
+			int *M, int a, int *v, int *u,
+		int n, int verbose_level);
 
 };
 

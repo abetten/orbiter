@@ -452,6 +452,8 @@ public:
 class schreier_poset {
 public:
 
+	int f_restricted;
+
 	layer3_group_actions::groups::schreier *Schreier;
 
 	layer1_foundations::combinatorics::graph_theory::layered_graph *Layered_graph;
@@ -463,8 +465,11 @@ public:
 	void init(
 			layer3_group_actions::groups::schreier *Schreier,
 			int orbit_no,
+			int f_restricted,
 			std::string &fname_base,
 		int verbose_level);
+	void add_edges(
+			int verbose_level);
 
 
 };

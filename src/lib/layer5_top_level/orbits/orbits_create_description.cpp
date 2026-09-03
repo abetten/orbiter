@@ -87,6 +87,8 @@ orbits_create_description::orbits_create_description()
 	// tables/commands/orbits_create2.csv
 
 
+	f_conjugacy_classes_by_magma = false;
+
 
 	f_group = false;
 	//std::string group_label;
@@ -301,6 +303,16 @@ int orbits_create_description::read_arguments(
 
 		// tables/commands/orbits_create2.csv
 
+
+
+
+
+		else if (ST.stringcmp(argv[i], "-conjugacy_classes_by_magma") == 0) {
+			f_conjugacy_classes_by_magma = true;
+			if (f_v) {
+				cout << "-conjugacy_classes_by_magma " << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-group") == 0) {
 			f_group = true;
 			group_label.assign(argv[++i]);
@@ -437,6 +449,9 @@ void orbits_create_description::print()
 
 	// tables/commands/orbits_create2.csv
 
+	if (f_conjugacy_classes_by_magma) {
+		cout << "-conjugacy_classes_by_magma " << endl;
+	}
 	if (f_group) {
 		cout << "-group " << group_label << endl;
 	}

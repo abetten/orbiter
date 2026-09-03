@@ -190,6 +190,12 @@ void vector_builder::init(
 		m = SoS->nb_sets;
 		n = SoS->Set_size[0];
 		v = NEW_lint(m * n);
+		if (f_v) {
+			cout << "vector_builder::init "
+					"number of data sets = " << m << endl;
+			cout << "vector_builder::init "
+					"set size = " << n << endl;
+		}
 
 		int i;
 
@@ -202,6 +208,16 @@ void vector_builder::init(
 		len = m * n;
 		f_has_k = true;
 		k = m;
+
+
+		if (Descr->f_format) {
+
+			// override the number of columns:
+
+			f_has_k = true;
+			k = Descr->format_k;
+
+		}
 		if (f_v) {
 			cout << "vector_builder::init found a matrix of size " << m << " x " << n << endl;
 		}
@@ -747,6 +763,57 @@ void vector_builder::print(
 		ost << endl;
 	}
 }
+
+void vector_builder::save(
+		std::string &fname_base, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "vector_builder::save" << endl;
+	}
+
+	string fname;
+
+	fname = fname_base + ".csv";
+
+	other::orbiter_kernel_system::file_io Fio;
+
+
+	if (f_has_k) {
+		int nb_rows;
+		int nb_cols;
+
+		nb_rows = k;
+		nb_cols = len / k;
+
+		Fio.Csv_file_support->lint_matrix_write_csv(fname, v, nb_rows, nb_cols);
+
+
+	}
+	else {
+		int nb_rows;
+		int nb_cols;
+
+		nb_rows = len;
+		nb_cols = 1;
+
+
+		Fio.Csv_file_support->lint_matrix_write_csv(fname, v, nb_rows, nb_cols);
+
+	}
+
+	if (f_v) {
+		cout << "vector_builder::save written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+
+	if (f_v) {
+		cout << "vector_builder::save done" << endl;
+	}
+}
+
+
 
 
 }}}}

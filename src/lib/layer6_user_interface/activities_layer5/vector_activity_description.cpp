@@ -29,6 +29,8 @@ vector_activity_description::vector_activity_description()
 
 	f_report = false;
 
+	f_save = false;
+
 	f_missing_sets = false;
 	missing_sets_n = 0;
 
@@ -64,6 +66,12 @@ int vector_activity_description::read_arguments(
 			f_report = true;
 			if (f_v) {
 				cout << "-report " << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-save") == 0) {
+			f_save = true;
+			if (f_v) {
+				cout << "-save " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-missing_sets") == 0) {
@@ -110,6 +118,9 @@ void vector_activity_description::print()
 {
 	if (f_report) {
 		cout << "-report " << endl;
+	}
+	if (f_save) {
+		cout << "-save " << endl;
 	}
 	if (f_missing_sets) {
 		cout << "-missing_sets " << missing_sets_n << endl;

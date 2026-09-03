@@ -175,7 +175,7 @@ void graph_layer::write_memory_object(
 	}
 	m->write_int(id_of_first_node);
 	m->write_int(nb_nodes);
-	m->write_int(id_of_first_node);
+	m->write_int(id_of_first_node); // ToDo why twice?
 	for (i = 0; i < nb_nodes; i++) {
 		Nodes[i].write_memory_object(m, verbose_level - 1);
 	}
@@ -216,7 +216,7 @@ void graph_layer::read_memory_object(
 
 	m->read_int(&id_of_first_node);
 	m->read_int(&nb_nodes);
-	m->read_int(&id_of_first_node);
+	m->read_int(&id_of_first_node); // ToDo why twice?
 
 	Nodes = NEW_OBJECTS(graph_node, nb_nodes);
 

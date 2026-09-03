@@ -1414,6 +1414,144 @@ void projective_space_with_action::report_fixed_objects(
 	}
 }
 
+int projective_space_with_action::create_transvection(
+		int a, int *v, int *u, int len,
+		data_structures_groups::vector_ge *&vec,
+		int verbose_level)
+// vec is only allocated if the return value is true
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space_with_action::create_transvection" << endl;
+	}
+	if (f_v) {
+		cout << "projective_space_with_action::create_transvection "
+				"v = ";
+		Int_vec_print(cout, v, len);
+		cout << endl;
+		cout << "projective_space_with_action::create_transvection "
+				"u = ";
+		Int_vec_print(cout, u, len);
+		cout << endl;
+	}
+
+	if (len != P->Subspaces->n + 1) {
+		cout << "projective_space_with_action::create_transvection "
+				"len != P->Subspaces->n + 1" << endl;
+		exit(1);
+	}
+
+
+	int *z;
+	int *Data;
+	int i, d, sz;
+
+	d = P->Subspaces->n + 1;
+
+	sz = d * d;
+	if (f_semilinear) {
+		sz++;
+	}
+
+	z = NEW_int(d);
+	Data = NEW_int(sz);
+
+	int ret = true;
+
+
+
+	if (f_v) {
+		cout << "projective_space_with_action::create_transvection "
+				"i = " << i << endl;
+	}
+
+
+	make_transvection(
+			Data + i * sz, a, v, u,
+			len, verbose_level - 2);
+
+
+	if (F->Linear_algebra->matrix_determinant(Data, d, 0 /* verbose_level */) == 0) {
+		ret = false;
+	}
+
+
+	if (ret) {
+		if (f_semilinear) {
+			Data[d * d] = 0;
+		}
+
+
+
+
+		vec = NEW_OBJECT(data_structures_groups::vector_ge);
+
+		if (f_v) {
+			cout << "projective_space_with_action::create_transvection "
+					"A = " << endl;
+			A->print_info();
+		}
+
+		if (f_v) {
+			cout << "projective_space_with_action::create_transvection "
+					"before vec->init_from_data" << endl;
+		}
+		vec->init_from_data(
+				A, Data,
+				1, sz, verbose_level);
+		if (f_v) {
+			cout << "projective_space_with_action::create_transvection "
+					"after vec->init_from_data" << endl;
+		}
+	}
+
+	FREE_int(Data);
+	FREE_int(z);
+
+
+
+	if (f_v) {
+		cout << "projective_space_with_action::create_transvection done" << endl;
+	}
+	return ret;
+}
+
+void projective_space_with_action::make_transvection(
+		int *M, int a, int *v, int *u,
+	int n, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i, j, Qv, e;
+
+	if (f_v) {
+		cout << "projective_space_with_action::make_transvection" << endl;
+	}
+
+	F->Linear_algebra->identity_matrix(M, n);
+
+
+
+	// M := M + v^T * u
+
+	for (i = 0; i < n; i++) {
+		for (j = 0; j < n; j++) {
+			e = F->mult3(a, v[i], u[j]);
+			M[i * n + j] = F->add(M[i * n + j], e);
+		}
+	}
+	if (f_vv) {
+		cout << "projective_space_with_action::make_transvection matrix:" << endl;
+		Int_vec_print_integer_matrix_width(cout, M, n, n, n, 2);
+	}
+
+	if (f_v) {
+		cout << "projective_space_with_action::make_transvection done" << endl;
+	}
+
+}
+
 
 
 

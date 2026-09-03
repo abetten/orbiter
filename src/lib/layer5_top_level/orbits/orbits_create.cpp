@@ -29,6 +29,11 @@ orbits_create::orbits_create()
 	f_generators_is_vector_ge = false;
 	Generators_vector_ge = NULL;
 
+	//std::string prefix;
+	//std::string label_txt;
+	//std::string label_tex;
+
+
 
 	f_has_Orb = false;
 	Orb = NULL;
@@ -74,9 +79,9 @@ orbits_create::orbits_create()
 	f_has_classification_by_canonical_form = false;
 	Canonical_form_classifier = NULL;
 
-	//std::string prefix;
-	//std::string label_txt;
-	//std::string label_tex;
+	f_has_conjugacy_classes_by_magma = false;
+	Classes_of_elements_expanded = NULL;
+	Classes_of_elements_expanded_Reps = NULL;
 
 }
 
@@ -112,41 +117,9 @@ void orbits_create::init(
 
 	if (Descr->f_generators) {
 
-		int idx;
 
-		idx = user_interface::core_system::The_Orbiter_top_level_session->find_symbol(Descr->generators_label);
-		if (idx == -1) {
-			cout << "orbits_create::init "
-					"cannot find symbol " << Descr->generators_label << endl;
-			exit(1);
-		}
-		if (user_interface::core_system::The_Orbiter_top_level_session->get_object_type(idx) == layer1_foundations::other::orbiter_kernel_system::symbol_table_object_type::t_any_group) {
+		get_generators(verbose_level);
 
-			cout << "orbiter_top_level_session::get_any_group "
-					"gnerators are of type group" << endl;
-
-			f_generators_is_group = true;
-			Generators = Get_any_group(Descr->generators_label);
-		}
-		else if (user_interface::core_system::The_Orbiter_top_level_session->get_object_type(idx) == layer1_foundations::other::orbiter_kernel_system::symbol_table_object_type::t_vector_ge) {
-
-			cout << "orbiter_top_level_session::get_any_group "
-					"gnerators are of type vector_ge" << endl;
-
-			f_generators_is_vector_ge = true;
-
-			apps_algebra::vector_ge_builder *VB;
-
-			VB = Get_object_of_type_vector_ge(Descr->generators_label);
-			Generators_vector_ge = VB->V;
-		}
-		else {
-			cout << "orbiter_top_level_session::get_any_group "
-					"generators must be either a group or a vector_ge" << endl;
-			exit(1);
-		}
-		prefix += "_gens_" + Descr->generators_label;
-		f_has_generators = true;
 
 	}
 
@@ -157,42 +130,8 @@ void orbits_create::init(
 		if (f_v) {
 			cout << "orbits_create::init f_on_points" << endl;
 		}
-		if (!Descr->f_group) {
-			cout << "orbits_create::init please specify the group using -group <label>" << endl;
-			exit(1);
-		}
 
-		orbits_global Orbits;
-
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"print_interval = " << Descr->print_interval << endl;
-		}
-		if (Descr->f_group_action) {
-
-			cout << "group_theoretic_activity::perform_activity "
-					"before Orbits.orbits_on_points using Group_action" << endl;
-
-			Orbits.orbits_on_points(Group_action, Orb, Descr->print_interval, verbose_level);
-
-		}
-		else {
-
-			cout << "group_theoretic_activity::perform_activity "
-					"before Orbits.orbits_on_points using Group" << endl;
-
-			Orbits.orbits_on_points(Group, Orb, Descr->print_interval, verbose_level);
-
-		}
-
-
-		f_has_Orb = true;
-
-
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"after Orbits.orbits_on_points" << endl;
-		}
+		do_on_points(verbose_level);
 
 
 	}
@@ -202,36 +141,9 @@ void orbits_create::init(
 		if (f_v) {
 			cout << "orbits_create::init f_on_points_with_generators" << endl;
 		}
-		if (!Descr->f_group) {
-			cout << "orbits_create::init please specify the group using -group <label>" << endl;
-			exit(1);
-		}
 
+		do_orbits_on_points_with_generators(verbose_level);
 
-		apps_algebra::vector_ge_builder *Gens;
-
-		Gens = Get_object_of_type_vector_ge(Descr->on_points_with_generators_gens_label);
-
-		orbits_global Orbits;
-
-
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"before Orbits.orbits_on_points_from_generators" << endl;
-		}
-
-		Orbits.orbits_on_points_from_generators(
-				Group, Gens->V, Descr->print_interval, Orb,
-				verbose_level);
-
-
-		f_has_Orb = true;
-
-
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"after Orbits.orbits_on_points_from_generators" << endl;
-		}
 	}
 
 	if (Descr->f_on_subsets) {
@@ -239,116 +151,10 @@ void orbits_create::init(
 		if (f_v) {
 			cout << "orbits_create::init f_on_subsets" << endl;
 		}
-#if 0
-		if (!Descr->f_group_action) {
-			cout << "orbits_create::init please specify the group action using -group_action <label>" << endl;
-			exit(1);
-		}
-#endif
-
-		actions::action *A_base = NULL;
-		actions::action *A_action = NULL;
-		groups::strong_generators *Subgroup_gens = NULL;
 
 
+		do_on_subsets(verbose_level);
 
-		if (Descr->f_group_action) {
-			if (f_v) {
-				cout << "orbits_create::init -group_action" << endl;
-			}
-#if 0
-			if (f_v) {
-				cout << "orbits_create::init loading A_base" << endl;
-			}
-			A_base = Group_action->MGC->A_base;
-#endif
-			if (f_v) {
-				cout << "orbits_create::init loading A_action" << endl;
-			}
-			A_action = Group_action->A;
-			if (f_v) {
-				cout << "orbits_create::init loading Subgroup_gens" << endl;
-			}
-			//Subgroup_gens = Group->Subgroup_gens;
-		}
-		else {
-			cout << "orbits_create::init please specify -group_action <label>" << endl;
-			exit(1);
-		}
-
-		if (Descr->f_group) {
-			if (f_v) {
-				cout << "orbits_create::init -group" << endl;
-			}
-			if (f_v) {
-				cout << "orbits_create::init loading A_base" << endl;
-			}
-			A_base = Group->A_base;
-
-
-			if (A_base->base_len() == 0) {
-				cout << "orbits_create::init A_base has no base. A_base->base_len() == 0" << endl;
-				exit(1);
-			}
-#if 0
-			if (f_v) {
-				cout << "orbits_create::init loading A_action" << endl;
-			}
-			A_action = Group->A;
-			if (f_v) {
-				cout << "orbits_create::init loading Subgroup_gens" << endl;
-			}
-			//Subgroup_gens = Group->Subgroup_gens;
-#endif
-		}
-		else {
-			cout << "orbits_create::init please specify -group <label>" << endl;
-			exit(1);
-		}
-
-		if (Descr->f_generators) {
-			if (f_v) {
-				cout << "orbits_create::init -generators" << endl;
-			}
-			if (f_v) {
-				cout << "orbits_create::init loading Subgroup_gens" << endl;
-			}
-			Subgroup_gens = Generators->Subgroup_gens;
-		}
-		else {
-			cout << "orbits_create::init please specify -generators <label>" << endl;
-			exit(1);
-		}
-
-
-		poset_classification::poset_classification_control *Control =
-				Get_poset_classification_control(
-						Descr->on_subsets_poset_classification_control_label);
-
-
-		orbits::orbits_global Orbits;
-
-		if (f_v) {
-			cout << "orbits_create::init Strong generators Subgroup_gens:" << endl;
-			Subgroup_gens->print_generators(cout, 0 /* verbose_level */);
-			cout << "orbits_create::init Strong generators Subgroup_gens in tex:" << endl;
-			Subgroup_gens->print_generators_tex(cout);
-		}
-
-		if (f_v) {
-			cout << "orbits_create::init before Orbits.orbits_on_subsets" << endl;
-		}
-
-		Orbits.orbits_on_subsets(
-				A_base, A_action, Subgroup_gens,
-				Control, On_subsets,
-				Descr->on_subsets_size, verbose_level + 5);
-
-		f_has_On_subsets = true;
-
-		if (f_v) {
-			cout << "orbits_create::init after Group->orbits_on_subsets" << endl;
-		}
 
 	}
 	if (Descr->f_of_one_subset) {
@@ -356,43 +162,8 @@ void orbits_create::init(
 		if (f_v) {
 			cout << "orbits_create::init f_of_one_subset" << endl;
 		}
-		if (!Descr->f_group) {
-			cout << "orbits_create::init please "
-					"specify the group using -group <label>" << endl;
-			exit(1);
-		}
 
-		long int *set;
-		int sz;
-		std::string label_set;
-
-		Get_lint_vector_from_label(Descr->of_one_subset_label, set, sz, verbose_level - 2);
-
-		label_set = Descr->of_one_subset_label;
-
-		long int *Table;
-		int size;
-		orbits::orbits_global Orbits;
-
-
-		if (f_v) {
-			cout << "orbits_create::init before Orbits.orbits_of_one_subset" << endl;
-		}
-		Orbits.orbits_of_one_subset(
-				Group,
-				set, sz,
-				label_set,
-				Group->A, Group->A,
-				Table, size,
-				verbose_level);
-		if (f_v) {
-			cout << "orbits_create::init after Orbits.orbits_of_one_subset" << endl;
-		}
-
-
-		if (f_v) {
-			cout << "orbits_create::init after f_of_one_subset" << endl;
-		}
+		do_orbit_of_one_subset(verbose_level);
 	}
 
 	if (Descr->f_on_subspaces) {
@@ -400,47 +171,8 @@ void orbits_create::init(
 		if (f_v) {
 			cout << "orbits_create::init f_on_subspaces" << endl;
 		}
-		if (!Descr->f_group) {
-			cout << "orbits_create::init please specify the group using -group <label>" << endl;
-			exit(1);
-		}
 
-		poset_classification::poset_classification_control *Control =
-				Get_poset_classification_control(
-						Descr->on_subspaces_poset_classification_control_label);
-
-
-		orbits::orbits_global Orbits_global;
-
-		if (f_v) {
-			cout << "orbits_create::init "
-					"before Orbits_global.do_orbits_on_subspaces" << endl;
-		}
-
-		Orbits_global.do_orbits_on_subspaces(
-				Group,
-				Control,
-				On_Subspaces,
-				Descr->on_subspaces_dimension,
-				verbose_level);
-
-
-		if (f_v) {
-			cout << "orbits_create::init "
-					"after Orbits_global.do_orbits_on_subspaces" << endl;
-		}
-
-		f_has_On_Subspaces = true;
-		prefix = On_Subspaces->orbits_on_subspaces_PC->get_problem_label();
-		label_txt = prefix;
-		if (f_v) {
-			cout << "orbits_create::init prefix = " << prefix << endl;
-		}
-
-
-		if (f_v) {
-			cout << "orbits_create::init after Group->do_orbits_on_subspaces" << endl;
-		}
+		do_orbits_on_subspaces(verbose_level);
 
 	}
 	if (Descr->f_on_tensors) {
@@ -448,32 +180,7 @@ void orbits_create::init(
 		if (f_v) {
 			cout << "orbits_create::init f_on_tensors" << endl;
 		}
-		if (!Descr->f_group) {
-			cout << "orbits_create::init please specify the group using -group <label>" << endl;
-			exit(1);
-		}
-
-		orbits::orbits_global Orbits_global;
-
-
-		if (f_v) {
-			cout << "orbits_create::init "
-					"before Orbits_global.do_tensor_classify" << endl;
-		}
-
-		Orbits_global.do_tensor_classify(
-				Group,
-				Descr->on_tensors_poset_classification_control_label,
-				On_tensors,
-				Descr->on_tensors_dimension,
-				verbose_level);
-
-		f_has_On_tensors = true;
-
-		if (f_v) {
-			cout << "orbits_create::init "
-					"after Orbits_global.do_tensor_classify" << endl;
-		}
+		do_orbits_on_tensors(verbose_level);
 
 	}
 	if (Descr->f_on_partition) {
@@ -481,31 +188,8 @@ void orbits_create::init(
 		if (f_v) {
 			cout << "orbits_create::init f_on_partition" << endl;
 		}
-		if (!Descr->f_group) {
-			cout << "orbits_create::init please specify the group using -group <label>" << endl;
-			exit(1);
-		}
 
-
-
-		Cascade = NEW_OBJECT(orbit_cascade);
-
-
-		if (f_v) {
-			cout << "orbits_create::init before Cascade->init" << endl;
-		}
-
-		Cascade->init(Group->A->degree,
-				Descr->on_partition_k,
-				Group,
-				Descr->on_partition_poset_classification_control_label,
-				verbose_level);
-
-		f_has_Cascade = true;
-
-		if (f_v) {
-			cout << "orbits_create::init after Cascade->init" << endl;
-		}
+		do_orbits_on_partition(verbose_level);
 
 	}
 
@@ -516,79 +200,8 @@ void orbits_create::init(
 		if (f_v) {
 			cout << "orbits_create::init f_on_polynomials" << endl;
 		}
-		if (f_v) {
-			cout << "orbits_create::init ring = " << Descr->on_polynomials_ring << endl;
-		}
 
-		if (!Descr->f_group) {
-			cout << "orbits_create::init please specify the group using -group <label>" << endl;
-			exit(1);
-		}
-
-		if (!Group->f_linear_group) {
-			cout << "orbits_create::init group must be linear" << endl;
-			exit(1);
-		}
-
-
-		On_polynomials = NEW_OBJECT(orbits_on_polynomials);
-
-		algebra::ring_theory::homogeneous_polynomial_domain *HPD;
-
-
-		HPD = Get_ring(Descr->on_polynomials_ring);
-
-
-		if (f_has_generators) {
-
-
-			data_structures_groups::vector_ge *generators = NULL;
-
-			if (f_generators_is_group) {
-				generators = Generators->Subgroup_gens->gens;
-			}
-			else if (f_generators_is_vector_ge) {
-				generators = Generators_vector_ge;
-			}
-			if (f_v) {
-				cout << "orbits_create::init "
-						"before On_polynomials->init_Schreier_with_generators" << endl;
-			}
-			On_polynomials->init_Schreier_with_generators(
-					Group->LG,
-					HPD,
-					generators,
-					Descr->print_interval,
-					verbose_level);
-
-			if (f_v) {
-				cout << "orbits_create::init "
-						"after On_polynomials->init_Schreier_with_generators" << endl;
-			}
-
-		}
-
-		else {
-			if (f_v) {
-				cout << "orbits_create::init "
-						"before On_polynomials->init_Schreier" << endl;
-			}
-			On_polynomials->init_Schreier(
-					Group->LG,
-					HPD,
-					Descr->print_interval,
-					verbose_level);
-
-			if (f_v) {
-				cout << "orbits_create::init "
-						"after On_polynomials->init_Schreier" << endl;
-			}
-		}
-
-		f_has_On_polynomials = true;
-
-
-
+		do_orbits_on_polynomials(verbose_level);
 
 	}
 
@@ -598,70 +211,9 @@ void orbits_create::init(
 		if (f_v) {
 			cout << "orbits_create::init f_on_polynomials_with_bitvector_first" << endl;
 		}
-		if (f_v) {
-			cout << "orbits_create::init ring = " << Descr->on_polynomials_with_bitvector_first_ring << endl;
-		}
-
-		if (!Descr->f_group) {
-			cout << "orbits_create::init please specify the group using -group <label>" << endl;
-			exit(1);
-		}
-
-		if (!Group->f_linear_group) {
-			cout << "orbits_create::init group must be linear" << endl;
-			exit(1);
-		}
-
-		On_polynomials = NEW_OBJECT(orbits_on_polynomials);
 
 
-
-		algebra::ring_theory::homogeneous_polynomial_domain *HPD;
-
-
-		HPD = Get_ring(Descr->on_polynomials_with_bitvector_first_ring);
-
-
-
-		if (f_has_generators) {
-
-
-			data_structures_groups::vector_ge *generators = NULL;
-
-			if (f_generators_is_group) {
-				generators = Generators->Subgroup_gens->gens;
-			}
-			else if (f_generators_is_vector_ge) {
-				generators = Generators_vector_ge;
-			}
-			if (f_v) {
-				cout << "orbits_create::init "
-						"before On_polynomials->init_bitvector_first" << endl;
-			}
-			On_polynomials->init_bitvector_first(
-					Group->LG,
-					HPD,
-					generators,
-					Descr->print_interval,
-					verbose_level);
-
-			if (f_v) {
-				cout << "orbits_create::init "
-						"after On_polynomials->init_bitvector_first" << endl;
-			}
-
-		}
-
-		else {
-			cout << "orbits_create::init f_on_polynomials_with_bitvector_first needs generators" << endl;
-			exit(1);
-		}
-
-
-		f_has_On_polynomials = true;
-
-
-
+		do_on_polynomials_with_bitvector_first(verbose_level);
 
 	}
 
@@ -672,70 +224,8 @@ void orbits_create::init(
 		if (f_v) {
 			cout << "orbits_create::init f_on_polynomials_with_bitvector_continue" << endl;
 		}
-		if (f_v) {
-			cout << "orbits_create::init ring = " << Descr->on_polynomials_with_bitvector_continue_ring << endl;
-		}
 
-		if (!Descr->f_group) {
-			cout << "orbits_create::init please specify the group using -group <label>" << endl;
-			exit(1);
-		}
-
-		if (!Group->f_linear_group) {
-			cout << "orbits_create::init group must be linear" << endl;
-			exit(1);
-		}
-
-		On_polynomials = NEW_OBJECT(orbits_on_polynomials);
-
-
-
-		algebra::ring_theory::homogeneous_polynomial_domain *HPD;
-
-
-		HPD = Get_ring(Descr->on_polynomials_with_bitvector_continue_ring);
-
-
-
-		if (f_has_generators) {
-
-			data_structures_groups::vector_ge *generators = NULL;
-
-			if (f_generators_is_group) {
-				generators = Generators->Subgroup_gens->gens;
-			}
-			else if (f_generators_is_vector_ge) {
-				generators = Generators_vector_ge;
-			}
-
-			if (f_v) {
-				cout << "orbits_create::init "
-						"before On_polynomials->init_bitvector_continue" << endl;
-			}
-			On_polynomials->init_bitvector_continue(
-					Group->LG,
-					HPD,
-					generators,
-					Descr->print_interval,
-					Descr->on_polynomials_with_bitvector_continue_previous_orbit,
-					verbose_level);
-
-			if (f_v) {
-				cout << "orbits_create::init "
-						"after On_polynomials->init_bitvector_continue" << endl;
-			}
-		}
-		else {
-			cout << "orbits_create::init init_bitvector_continue needs generators" << endl;
-			exit(1);
-
-		}
-
-
-		f_has_On_polynomials = true;
-
-
-
+		do_on_polynomials_with_bitvector_continue(verbose_level);
 
 	}
 
@@ -747,50 +237,8 @@ void orbits_create::init(
 		if (f_v) {
 			cout << "orbits_create::init f_of_one_polynomial" << endl;
 		}
-		if (f_v) {
-			cout << "orbits_create::init ring = " << Descr->of_one_polynomial_ring << endl;
-		}
 
-		if (!Descr->f_group) {
-			cout << "orbits_create::init please specify the group using -group <label>" << endl;
-			exit(1);
-		}
-
-		if (!Group->f_linear_group) {
-			cout << "orbits_create::init group must be linear" << endl;
-			exit(1);
-		}
-
-
-
-		algebra::ring_theory::homogeneous_polynomial_domain *HPD;
-
-
-		HPD = Get_ring(Descr->of_one_polynomial_ring);
-
-
-		algebra::expression_parser::symbolic_object_builder *Symbol;
-
-		Symbol = Get_symbol(Descr->of_one_polynomial_equation);
-
-
-		Of_One_polynomial = NEW_OBJECT(orbits_on_polynomials);
-
-		if (f_v) {
-			cout << "orbits_create::init "
-					"before Of_One_polynomial->orbit_of_one_polynomial" << endl;
-		}
-		Of_One_polynomial->orbit_of_one_polynomial(
-				Group->LG,
-				HPD,
-				Symbol,
-				verbose_level);
-		if (f_v) {
-			cout << "orbits_create::init "
-					"after Of_One_polynomial->orbit_of_one_polynomial" << endl;
-		}
-
-		f_has_Of_One_polynomial = true;
+		do_orbit_of_one_polynomial(verbose_level);
 
 	}
 
@@ -801,104 +249,8 @@ void orbits_create::init(
 		if (f_v) {
 			cout << "orbits_create::init f_on_cubic_curves" << endl;
 		}
-		if (f_v) {
-			cout << "orbits_create::init control = " << Descr->on_cubic_curves_control << endl;
-		}
 
-
-
-		Arc_generator_description = Get_object_of_type_arc_generator_control(
-				Descr->on_cubic_curves_control);
-
-
-		projective_geometry::projective_space_with_action *PA;
-
-		if (!Arc_generator_description->f_projective_space) {
-			cout << "Please use option -projective_space in arc_generator" << endl;
-			exit(1);
-		}
-		PA = Get_projective_space(Arc_generator_description->projective_space_label);
-
-		CC = NEW_OBJECT(geometry::algebraic_geometry::cubic_curve);
-
-		if (f_v) {
-			cout << "orbits_create::init "
-					"before CC->init" << endl;
-		}
-		CC->init(PA->F, verbose_level);
-		if (f_v) {
-			cout << "orbits_create::init "
-					"after CC->init" << endl;
-		}
-
-
-
-		CCA = NEW_OBJECT(apps_geometry::cubic_curve_with_action);
-
-		if (f_v) {
-			cout << "orbits_create::init "
-					"before CCA->init" << endl;
-		}
-		CCA->init(CC, PA->A, verbose_level);
-		if (f_v) {
-			cout << "orbits_create::init "
-					"after CCA->init" << endl;
-		}
-
-
-
-		CCC = NEW_OBJECT(apps_geometry::classify_cubic_curves);
-
-
-		if (f_v) {
-			cout << "orbits_create::init "
-					"before CCC->init" << endl;
-		}
-		CCC->init(
-				PA,
-				CCA,
-				Arc_generator_description,
-				verbose_level);
-		if (f_v) {
-			cout << "orbits_create::init "
-					"after CCC->init" << endl;
-		}
-
-		if (f_v) {
-			cout << "orbits_create::init "
-					"before CCC->compute_starter" << endl;
-		}
-		CCC->compute_starter(verbose_level);
-		if (f_v) {
-			cout << "orbits_create::init "
-					"after CCC->compute_starter" << endl;
-		}
-
-	#if 0
-		if (f_v) {
-			cout << "orbits_create::init "
-					"before CCC->test_orbits" << endl;
-		}
-		CCC->test_orbits(verbose_level);
-		if (f_v) {
-			cout << "orbits_create::init "
-					"after CCC->test_orbits" << endl;
-		}
-	#endif
-
-		if (f_v) {
-			cout << "orbits_create::init "
-					"before CCC->do_classify" << endl;
-		}
-		CCC->do_classify(verbose_level);
-		if (f_v) {
-			cout << "orbits_create::init "
-					"after CCC->do_classify" << endl;
-		}
-
-
-		f_has_on_cubic_curves = true;
-
+		do_classify_cubic_curves(verbose_level);
 
 	}
 
@@ -908,93 +260,9 @@ void orbits_create::init(
 		if (f_v) {
 			cout << "orbits_create::init f_on_cubic_surfaces" << endl;
 		}
-		if (f_v) {
-			cout << "orbits_create::init classify = " << Descr->on_cubic_surfaces_classify << endl;
-		}
-
-		orbits::classify_cubic_surfaces_description *Classify_cubic_surfaces_description;
-
-		Classify_cubic_surfaces_description = Get_classify_cubic_surfaces(Descr->on_cubic_surfaces_classify);
 
 
-
-		if (!Classify_cubic_surfaces_description->f_use_double_sixes) {
-			cout << "please use the double six algorithm" << endl;
-			exit(1);
-		}
-
-		projective_geometry::projective_space_with_action *PA;
-
-		if (Classify_cubic_surfaces_description->f_projective_space == false) {
-			cout << "please specify a projective space" << endl;
-			exit(1);
-		}
-
-		PA = Get_projective_space(Classify_cubic_surfaces_description->projective_space_label);
-
-
-
-		if (Classify_cubic_surfaces_description->f_poset_classification_control == false) {
-			cout << "please specify a poset classification control object" << endl;
-			exit(1);
-		}
-
-		poset_classification::poset_classification_control *Control =
-				Get_poset_classification_control(
-						Classify_cubic_surfaces_description->poset_classification_control_object);
-
-		if (f_v) {
-			cout << "orbits_create::init "
-					"before classify_surfaces, control=" << endl;
-			Control->print();
-		}
-
-
-		SCW = NEW_OBJECT(applications_in_algebraic_geometry::cubic_surfaces_and_double_sixes::surface_classify_wedge);
-
-		if (f_v) {
-			cout << "orbits_create::init "
-					"before SCW->init" << endl;
-		}
-
-		SCW->init(PA,
-				Control,
-				verbose_level - 1);
-
-		if (f_v) {
-			cout << "orbits_create::init "
-					"after SCW->init" << endl;
-		}
-
-
-		if (f_v) {
-			cout << "orbits_create::init "
-					"before SCW->do_classify_double_sixes" << endl;
-		}
-		SCW->do_classify_double_sixes(verbose_level);
-		if (f_v) {
-			cout << "orbits_create::init "
-					"after SCW->do_classify_double_sixes" << endl;
-		}
-
-		if (f_v) {
-			cout << "orbits_create::init "
-					"before SCW->do_classify_surfaces" << endl;
-		}
-		SCW->do_classify_surfaces(verbose_level);
-		if (f_v) {
-			cout << "orbits_create::init "
-					"after SCW->do_classify_surfaces" << endl;
-		}
-
-		if (f_v) {
-			cout << "orbits_create::init "
-					"after classify_surfaces" << endl;
-		}
-
-
-		f_has_cubic_surfaces = true;
-
+		do_classify_cubic_surfaces(verbose_level);
 
 	}
 
@@ -1004,51 +272,9 @@ void orbits_create::init(
 		if (f_v) {
 			cout << "orbits_create::init f_on_arcs" << endl;
 		}
-		if (f_v) {
-			cout << "orbits_create::init control = " << Descr->on_arcs_control << endl;
-		}
 
 
-		Arc_generator_description_for_arcs = Get_object_of_type_arc_generator_control(
-				Descr->on_arcs_control);
-
-
-		projective_geometry::projective_space_with_action *PA;
-
-		if (!Arc_generator_description_for_arcs->f_projective_space) {
-			cout << "Please use option -projective_space in arc_generator" << endl;
-			exit(1);
-		}
-
-		PA = Get_projective_space(Arc_generator_description_for_arcs->projective_space_label);
-
-
-		Arc_generator = NEW_OBJECT(apps_geometry::arc_generator);
-
-
-		if (f_v) {
-			cout << "orbits_create::init before Arc_generator->init" << endl;
-		}
-		Arc_generator->init(
-				Arc_generator_description_for_arcs,
-				PA,
-				PA->A->Strong_gens,
-				verbose_level);
-		if (f_v) {
-			cout << "orbits_create::init after Arc_generator->init" << endl;
-		}
-
-		if (f_v) {
-			cout << "orbits_create::init before Arc_generator->compute_starter" << endl;
-		}
-		Arc_generator->compute_starter(
-				verbose_level);
-		if (f_v) {
-			cout << "orbits_create::init after Arc_generator->compute_starter" << endl;
-		}
-
-		f_has_arcs = true;
-
+		do_classify_arcs(verbose_level);
 
 
 	}
@@ -1058,47 +284,9 @@ void orbits_create::init(
 		if (f_v) {
 			cout << "orbits_create::init f_classify_semifields" << endl;
 		}
-		projective_geometry::projective_space_with_action *PA;
 
-		PA = Get_projective_space(Descr->classify_semifields_PA);
+		do_classify_semifields(verbose_level);
 
-		poset_classification::poset_classification_control *Control =
-				Get_poset_classification_control(
-						Descr->classify_semifields_control);
-
-		if (f_v) {
-			cout << "orbits_create::init "
-					"before classify_surfaces, control=" << endl;
-			Control->print();
-		}
-
-		Semifields = NEW_OBJECT(semifields::semifield_classify_with_substructure);
-
-		if (f_v) {
-			cout << "orbits_create::init "
-					"before Semifields->init" << endl;
-		}
-		Semifields->init(
-				Descr->Classify_semifields_description,
-				PA,
-				Control,
-				verbose_level);
-		if (f_v) {
-			cout << "orbits_create::init "
-					"after Semifields->init" << endl;
-		}
-
-		if (f_v) {
-			cout << "orbits_create::init "
-					"before Semifields->classify_semifields" << endl;
-		}
-		Semifields->classify_semifields(verbose_level);
-		if (f_v) {
-			cout << "orbits_create::init "
-					"after Semifields->classify_semifields" << endl;
-		}
-
-		f_has_semifields = true;
 	}
 
 
@@ -1106,57 +294,8 @@ void orbits_create::init(
 		if (f_v) {
 			cout << "orbits_create::init f_on_boolean_functions" << endl;
 		}
-		projective_geometry::projective_space_with_action *PA;
 
-		PA = Get_projective_space(Descr->on_boolean_functions_PA);
-
-		if (PA->P->Subspaces->F->q != 2) {
-			cout << "orbits_create::init "
-					"the field must have order 2" << endl;
-			exit(1);
-		}
-		if (PA->A->matrix_group_dimension() != PA->n + 1) {
-			cout << "orbits_create::init "
-					"the dimension of the matrix group must be PA->n + 1" << endl;
-			exit(1);
-		}
-
-
-		BF = NEW_OBJECT(combinatorics::special_functions::boolean_function_domain);
-
-		if (f_v) {
-			cout << "orbits_create::init before BF->init" << endl;
-		}
-		BF->init(PA->P->Subspaces->F, PA->n, verbose_level);
-		if (f_v) {
-			cout << "orbits_create::init after BF->init" << endl;
-		}
-
-
-		BFC = NEW_OBJECT(apps_combinatorics::boolean_function_classify);
-
-		if (f_v) {
-			cout << "orbits_create::init "
-					"before BFC->init_group" << endl;
-		}
-		BFC->init_group(BF, PA->A, verbose_level);
-		if (f_v) {
-			cout << "orbits_create::init "
-					"after BFC->init_group" << endl;
-		}
-
-		if (f_v) {
-			cout << "orbits_create::init "
-					"before BFC->search_for_bent_functions" << endl;
-		}
-		BFC->search_for_bent_functions(verbose_level);
-		if (f_v) {
-			cout << "orbits_create::init "
-					"after BFC->search_for_bent_functions" << endl;
-		}
-
-		f_has_boolean_functions = true;
-
+		do_on_boolean_functions(verbose_level);
 
 	}
 
@@ -1168,65 +307,8 @@ void orbits_create::init(
 		}
 
 
+		do_classification_by_canonical_form(verbose_level);
 
-		if (!Descr->Canonical_form_classifier_description->f_output_fname) {
-			cout << "Please specify the output file name using -output_fname <fname>" << endl;
-			exit(1);
-		}
-
-		if (f_v) {
-			cout << "orbits_create::init getting projective space "
-					<< Descr->Canonical_form_classifier_description->space_label << endl;
-		}
-
-		Canonical_form_classifier = NEW_OBJECT(canonical_form::canonical_form_classifier);
-
-		if (f_v) {
-			cout << "orbits_create::init "
-					"before Canonical_form_classifier->init_objects_from_list_of_csv_files" << endl;
-		}
-		Canonical_form_classifier->init_objects_from_list_of_csv_files(
-				Descr->Canonical_form_classifier_description,
-				verbose_level - 2);
-		if (f_v) {
-			cout << "orbits_create::init "
-					"after Canonical_form_classifier->init_objects_from_list_of_csv_files" << endl;
-		}
-
-		// now Input is set
-
-
-		std::string fname_base;
-
-		if (Descr->Canonical_form_classifier_description->f_output_fname) {
-			fname_base = Descr->Canonical_form_classifier_description->fname_base_out;
-		}
-		else {
-			fname_base = "classification_";
-		}
-
-		if (f_v) {
-			cout << "orbits_create::init "
-					"fname_base = " << fname_base << endl;
-		}
-
-		if (f_v) {
-			cout << "orbits_create::init "
-					"before Canonical_form_classifier->classify" << endl;
-		}
-		Canonical_form_classifier->classify(
-				Canonical_form_classifier->Input,
-				fname_base,
-				verbose_level - 2);
-		if (f_v) {
-			cout << "orbits_create::init "
-					"after Classifier.classify" << endl;
-		}
-
-		//Descr->Canonical_form_classifier_description->Canonical_form_classifier = Canonical_form_classifier;
-
-
-		f_has_classification_by_canonical_form = true;
 
 
 		if (f_v) {
@@ -1235,11 +317,1381 @@ void orbits_create::init(
 
 	}
 
+	if (Descr->f_conjugacy_classes_by_magma) {
+
+
+		if (f_v) {
+			cout << "orbits_create::init f_conjugacy_classes_by_magma" << endl;
+		}
+
+
+		do_conjugacy_classes_by_magma(
+				verbose_level);
+
+	}
+
 
 	if (f_v) {
 		cout << "orbits_create::init done" << endl;
 	}
 }
+
+
+void orbits_create::get_generators(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbits_create::get_generators" << endl;
+	}
+
+	int idx;
+
+	idx = user_interface::core_system::The_Orbiter_top_level_session->find_symbol(Descr->generators_label);
+	if (idx == -1) {
+		cout << "orbits_create::get_generators "
+				"cannot find symbol " << Descr->generators_label << endl;
+		exit(1);
+	}
+	if (user_interface::core_system::The_Orbiter_top_level_session->get_object_type(idx) == layer1_foundations::other::orbiter_kernel_system::symbol_table_object_type::t_any_group) {
+
+		cout << "orbits_create::get_generators "
+				"generators are of type group" << endl;
+
+		f_generators_is_group = true;
+		Generators = Get_any_group(Descr->generators_label);
+	}
+	else if (user_interface::core_system::The_Orbiter_top_level_session->get_object_type(idx) == layer1_foundations::other::orbiter_kernel_system::symbol_table_object_type::t_vector_ge) {
+
+		cout << "orbits_create::get_generators "
+				"generators are of type vector_ge" << endl;
+
+		f_generators_is_vector_ge = true;
+
+		apps_algebra::vector_ge_builder *VB;
+
+		VB = Get_object_of_type_vector_ge(Descr->generators_label);
+		Generators_vector_ge = VB->V;
+	}
+	else {
+		cout << "orbits_create::get_generators "
+				"generators must be either a group or a vector_ge" << endl;
+		exit(1);
+	}
+	prefix += "_gens_" + Descr->generators_label;
+	f_has_generators = true;
+
+	if (f_v) {
+		cout << "orbits_create::get_generators done" << endl;
+	}
+
+}
+
+void orbits_create::do_on_points(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbits_create::do_on_points" << endl;
+	}
+
+	if (!Descr->f_group) {
+		cout << "orbits_create::do_on_points please specify the group using -group <label>" << endl;
+		exit(1);
+	}
+
+	orbits_global Orbits;
+
+	if (f_v) {
+		cout << "orbits_create::do_on_points "
+				"print_interval = " << Descr->print_interval << endl;
+	}
+	if (Descr->f_group_action) {
+
+		cout << "orbits_create::do_on_points "
+				"before Orbits.orbits_on_points using Group_action" << endl;
+
+		Orbits.orbits_on_points(Group_action, Orb, Descr->print_interval, verbose_level);
+
+	}
+	else {
+
+		cout << "orbits_create::do_on_points "
+				"before Orbits.orbits_on_points using Group" << endl;
+
+		Orbits.orbits_on_points(Group, Orb, Descr->print_interval, verbose_level);
+
+	}
+
+
+	f_has_Orb = true;
+
+
+	if (f_v) {
+		cout << "orbits_create::do_on_points "
+				"after Orbits.orbits_on_points" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "orbits_create::do_on_points done" << endl;
+	}
+}
+
+void orbits_create::do_orbits_on_points_with_generators(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbits_create::do_orbits_on_points_with_generators" << endl;
+	}
+
+	if (!Descr->f_group) {
+		cout << "orbits_create::do_orbits_on_points_with_generators please specify the group using -group <label>" << endl;
+		exit(1);
+	}
+
+
+	apps_algebra::vector_ge_builder *Gens;
+
+	Gens = Get_object_of_type_vector_ge(Descr->on_points_with_generators_gens_label);
+
+	orbits_global Orbits;
+
+
+	if (f_v) {
+		cout << "orbits_create::do_orbits_on_points_with_generators "
+				"before Orbits.orbits_on_points_from_generators" << endl;
+	}
+
+	Orbits.orbits_on_points_from_generators(
+			Group, Gens->V, Descr->print_interval, Orb,
+			verbose_level);
+
+
+
+
+	if (f_v) {
+		cout << "orbits_create::do_orbits_on_points_with_generators "
+				"after Orbits.orbits_on_points_from_generators" << endl;
+	}
+
+	f_has_Orb = true;
+
+	if (f_v) {
+		cout << "orbits_create::do_orbits_on_points_with_generators done" << endl;
+	}
+
+}
+
+void orbits_create::do_on_subsets(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbits_create::do_on_subsets" << endl;
+	}
+
+	actions::action *A_base = NULL;
+	actions::action *A_action = NULL;
+	groups::strong_generators *Subgroup_gens = NULL;
+
+
+
+	if (Descr->f_group_action) {
+		if (f_v) {
+			cout << "orbits_create::do_on_subsets -group_action" << endl;
+		}
+#if 0
+		if (f_v) {
+			cout << "orbits_create::do_on_subsets loading A_base" << endl;
+		}
+		A_base = Group_action->MGC->A_base;
+#endif
+		if (f_v) {
+			cout << "orbits_create::do_on_subsets loading A_action" << endl;
+		}
+		A_action = Group_action->A;
+		if (f_v) {
+			cout << "orbits_create::do_on_subsets loading Subgroup_gens" << endl;
+		}
+		//Subgroup_gens = Group->Subgroup_gens;
+	}
+	else {
+		cout << "orbits_create::do_on_subsets please specify -group_action <label>" << endl;
+		exit(1);
+	}
+
+	if (Descr->f_group) {
+		if (f_v) {
+			cout << "orbits_create::do_on_subsets -group" << endl;
+		}
+		if (f_v) {
+			cout << "orbits_create::do_on_subsets loading A_base" << endl;
+		}
+		A_base = Group->A_base;
+
+
+		if (A_base->base_len() == 0) {
+			cout << "orbits_create::do_on_subsets A_base has no base. A_base->base_len() == 0" << endl;
+			exit(1);
+		}
+#if 0
+		if (f_v) {
+			cout << "orbits_create::do_on_subsets loading A_action" << endl;
+		}
+		A_action = Group->A;
+		if (f_v) {
+			cout << "orbits_create::do_on_subsets loading Subgroup_gens" << endl;
+		}
+		//Subgroup_gens = Group->Subgroup_gens;
+#endif
+	}
+	else {
+		cout << "orbits_create::do_on_subsets please specify -group <label>" << endl;
+		exit(1);
+	}
+
+	if (Descr->f_generators) {
+		if (f_v) {
+			cout << "orbits_create::do_on_subsets -generators" << endl;
+		}
+		if (f_v) {
+			cout << "orbits_create::do_on_subsets loading Subgroup_gens" << endl;
+		}
+		Subgroup_gens = Generators->Subgroup_gens;
+	}
+	else {
+		cout << "orbits_create::do_on_subsets please specify -generators <label>" << endl;
+		exit(1);
+	}
+
+
+	poset_classification::poset_classification_control *Control =
+			Get_poset_classification_control(
+					Descr->on_subsets_poset_classification_control_label);
+
+
+	orbits::orbits_global Orbits;
+
+	if (f_v) {
+		cout << "orbits_create::do_on_subsets Strong generators Subgroup_gens:" << endl;
+		Subgroup_gens->print_generators(cout, 0 /* verbose_level */);
+		cout << "orbits_create::do_on_subsets Strong generators Subgroup_gens in tex:" << endl;
+		Subgroup_gens->print_generators_tex(cout);
+	}
+
+	if (f_v) {
+		cout << "orbits_create::do_on_subsets before Orbits.orbits_on_subsets" << endl;
+	}
+
+	Orbits.orbits_on_subsets(
+			A_base, A_action, Subgroup_gens,
+			Control, On_subsets,
+			Descr->on_subsets_size, verbose_level + 5);
+
+	f_has_On_subsets = true;
+
+	if (f_v) {
+		cout << "orbits_create::do_on_subsets after Group->orbits_on_subsets" << endl;
+	}
+
+}
+
+void orbits_create::do_orbit_of_one_subset(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbits_create::do_orbit_of_one_subset" << endl;
+	}
+
+	if (!Descr->f_group) {
+		cout << "orbits_create::do_orbit_of_one_subset please "
+				"specify the group using -group <label>" << endl;
+		exit(1);
+	}
+
+	long int *set;
+	int sz;
+	std::string label_set;
+
+	Get_lint_vector_from_label(Descr->of_one_subset_label, set, sz, verbose_level - 2);
+
+	label_set = Descr->of_one_subset_label;
+
+	long int *Table;
+	int size;
+	orbits::orbits_global Orbits;
+
+
+	if (f_v) {
+		cout << "orbits_create::do_orbit_of_one_subset before Orbits.orbits_of_one_subset" << endl;
+	}
+	Orbits.orbits_of_one_subset(
+			Group,
+			set, sz,
+			label_set,
+			Group->A, Group->A,
+			Table, size,
+			verbose_level);
+	if (f_v) {
+		cout << "orbits_create::do_orbit_of_one_subset after Orbits.orbits_of_one_subset" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "orbits_create::do_orbit_of_one_subset after f_of_one_subset" << endl;
+	}
+
+	f_has_On_subsets = true; // ToDo Why the same flag?
+
+	if (f_v) {
+		cout << "orbits_create::do_orbit_of_one_subset done" << endl;
+	}
+
+}
+
+void orbits_create::do_orbits_on_subspaces(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbits_create::do_orbits_on_subspaces" << endl;
+	}
+
+
+	if (!Descr->f_group) {
+		cout << "orbits_create::do_orbits_on_subspaces please specify the group using -group <label>" << endl;
+		exit(1);
+	}
+
+	poset_classification::poset_classification_control *Control =
+			Get_poset_classification_control(
+					Descr->on_subspaces_poset_classification_control_label);
+
+
+	orbits::orbits_global Orbits_global;
+
+	if (f_v) {
+		cout << "orbits_create::do_orbits_on_subspaces "
+				"before Orbits_global.do_orbits_on_subspaces" << endl;
+	}
+
+	Orbits_global.do_orbits_on_subspaces(
+			Group,
+			Control,
+			On_Subspaces,
+			Descr->on_subspaces_dimension,
+			verbose_level);
+
+
+	if (f_v) {
+		cout << "orbits_create::do_orbits_on_subspaces "
+				"after Orbits_global.do_orbits_on_subspaces" << endl;
+	}
+
+	f_has_On_Subspaces = true;
+	prefix = On_Subspaces->orbits_on_subspaces_PC->get_problem_label();
+	label_txt = prefix;
+	if (f_v) {
+		cout << "orbits_create::do_orbits_on_subspaces prefix = " << prefix << endl;
+	}
+
+
+	if (f_v) {
+		cout << "orbits_create::do_orbits_on_subspaces after Group->do_orbits_on_subspaces" << endl;
+	}
+
+	if (f_v) {
+		cout << "orbits_create::do_orbits_on_subspaces done" << endl;
+	}
+
+}
+
+void orbits_create::do_orbits_on_tensors(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbits_create::do_orbits_on_tensors" << endl;
+	}
+
+	if (!Descr->f_group) {
+		cout << "orbits_create::do_orbits_on_tensors please specify the group using -group <label>" << endl;
+		exit(1);
+	}
+
+	orbits::orbits_global Orbits_global;
+
+
+	if (f_v) {
+		cout << "orbits_create::do_orbits_on_tensors "
+				"before Orbits_global.do_tensor_classify" << endl;
+	}
+
+	Orbits_global.do_tensor_classify(
+			Group,
+			Descr->on_tensors_poset_classification_control_label,
+			On_tensors,
+			Descr->on_tensors_dimension,
+			verbose_level);
+
+
+	if (f_v) {
+		cout << "orbits_create::do_orbits_on_tensors "
+				"after Orbits_global.do_tensor_classify" << endl;
+	}
+
+	f_has_On_tensors = true;
+
+	if (f_v) {
+		cout << "orbits_create::do_orbits_on_tensors done" << endl;
+	}
+}
+
+void orbits_create::do_orbits_on_partition(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbits_create::do_orbits_on_partition" << endl;
+	}
+
+	if (!Descr->f_group) {
+		cout << "orbits_create::do_orbits_on_partition please specify the group using -group <label>" << endl;
+		exit(1);
+	}
+
+
+
+	Cascade = NEW_OBJECT(orbit_cascade);
+
+
+	if (f_v) {
+		cout << "orbits_create::do_orbits_on_partition before Cascade->init" << endl;
+	}
+
+	Cascade->init(Group->A->degree,
+			Descr->on_partition_k,
+			Group,
+			Descr->on_partition_poset_classification_control_label,
+			verbose_level);
+
+
+	if (f_v) {
+		cout << "orbits_create::do_orbits_on_partition after Cascade->init" << endl;
+	}
+
+	f_has_Cascade = true;
+
+	if (f_v) {
+		cout << "orbits_create::do_orbits_on_partition done" << endl;
+	}
+
+}
+
+void orbits_create::do_orbits_on_polynomials(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbits_create::do_orbits_on_polynomials" << endl;
+	}
+
+	if (f_v) {
+		cout << "orbits_create::do_orbits_on_polynomials ring = " << Descr->on_polynomials_ring << endl;
+	}
+
+	if (!Descr->f_group) {
+		cout << "orbits_create::do_orbits_on_polynomials please specify the group using -group <label>" << endl;
+		exit(1);
+	}
+
+	if (!Group->f_linear_group) {
+		cout << "orbits_create::init group must be linear" << endl;
+		exit(1);
+	}
+
+
+	On_polynomials = NEW_OBJECT(orbits_on_polynomials);
+
+	algebra::ring_theory::homogeneous_polynomial_domain *HPD;
+
+
+	HPD = Get_ring(Descr->on_polynomials_ring);
+
+
+	if (f_has_generators) {
+
+
+		data_structures_groups::vector_ge *generators = NULL;
+
+		if (f_generators_is_group) {
+			generators = Generators->Subgroup_gens->gens;
+		}
+		else if (f_generators_is_vector_ge) {
+			generators = Generators_vector_ge;
+		}
+		if (f_v) {
+			cout << "orbits_create::do_orbits_on_polynomials "
+					"before On_polynomials->init_Schreier_with_generators" << endl;
+		}
+		On_polynomials->init_Schreier_with_generators(
+				Group->LG,
+				HPD,
+				generators,
+				Descr->print_interval,
+				verbose_level);
+
+		if (f_v) {
+			cout << "orbits_create::do_orbits_on_polynomials "
+					"after On_polynomials->init_Schreier_with_generators" << endl;
+		}
+
+	}
+
+	else {
+		if (f_v) {
+			cout << "orbits_create::do_orbits_on_polynomials "
+					"before On_polynomials->init_Schreier" << endl;
+		}
+		On_polynomials->init_Schreier(
+				Group->LG,
+				HPD,
+				Descr->print_interval,
+				verbose_level);
+
+		if (f_v) {
+			cout << "orbits_create::do_orbits_on_polynomials "
+					"after On_polynomials->init_Schreier" << endl;
+		}
+	}
+
+	f_has_On_polynomials = true;
+
+
+	if (f_v) {
+		cout << "orbits_create::do_orbits_on_polynomials done" << endl;
+	}
+
+}
+
+void orbits_create::do_on_polynomials_with_bitvector_first(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbits_create::do_on_polynomials_with_bitvector_first" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "orbits_create::do_on_polynomials_with_bitvector_first ring = " << Descr->on_polynomials_with_bitvector_first_ring << endl;
+	}
+
+	if (!Descr->f_group) {
+		cout << "orbits_create::do_on_polynomials_with_bitvector_first please specify the group using -group <label>" << endl;
+		exit(1);
+	}
+
+	if (!Group->f_linear_group) {
+		cout << "orbits_create::do_on_polynomials_with_bitvector_first group must be linear" << endl;
+		exit(1);
+	}
+
+	On_polynomials = NEW_OBJECT(orbits_on_polynomials);
+
+
+
+	algebra::ring_theory::homogeneous_polynomial_domain *HPD;
+
+
+	HPD = Get_ring(Descr->on_polynomials_with_bitvector_first_ring);
+
+
+
+	if (f_has_generators) {
+
+
+		data_structures_groups::vector_ge *generators = NULL;
+
+		if (f_generators_is_group) {
+			generators = Generators->Subgroup_gens->gens;
+		}
+		else if (f_generators_is_vector_ge) {
+			generators = Generators_vector_ge;
+		}
+		if (f_v) {
+			cout << "orbits_create::do_on_polynomials_with_bitvector_first "
+					"before On_polynomials->init_bitvector_first" << endl;
+		}
+		On_polynomials->init_bitvector_first(
+				Group->LG,
+				HPD,
+				generators,
+				Descr->print_interval,
+				verbose_level);
+
+		if (f_v) {
+			cout << "orbits_create::do_on_polynomials_with_bitvector_first "
+					"after On_polynomials->init_bitvector_first" << endl;
+		}
+
+	}
+
+	else {
+		cout << "orbits_create::do_on_polynomials_with_bitvector_first f_on_polynomials_with_bitvector_first needs generators" << endl;
+		exit(1);
+	}
+
+
+	f_has_On_polynomials = true;
+
+	if (f_v) {
+		cout << "orbits_create::do_on_polynomials_with_bitvector_first done" << endl;
+	}
+
+}
+
+void orbits_create::do_on_polynomials_with_bitvector_continue(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbits_create::do_on_polynomials_with_bitvector_continue" << endl;
+	}
+
+	if (f_v) {
+		cout << "orbits_create::do_on_polynomials_with_bitvector_continue ring = " << Descr->on_polynomials_with_bitvector_continue_ring << endl;
+	}
+
+	if (!Descr->f_group) {
+		cout << "orbits_create::do_on_polynomials_with_bitvector_continue please specify the group using -group <label>" << endl;
+		exit(1);
+	}
+
+	if (!Group->f_linear_group) {
+		cout << "orbits_create::do_on_polynomials_with_bitvector_continue group must be linear" << endl;
+		exit(1);
+	}
+
+	On_polynomials = NEW_OBJECT(orbits_on_polynomials);
+
+
+
+	algebra::ring_theory::homogeneous_polynomial_domain *HPD;
+
+
+	HPD = Get_ring(Descr->on_polynomials_with_bitvector_continue_ring);
+
+
+
+	if (f_has_generators) {
+
+		data_structures_groups::vector_ge *generators = NULL;
+
+		if (f_generators_is_group) {
+			generators = Generators->Subgroup_gens->gens;
+		}
+		else if (f_generators_is_vector_ge) {
+			generators = Generators_vector_ge;
+		}
+
+		if (f_v) {
+			cout << "orbits_create::do_on_polynomials_with_bitvector_continue "
+					"before On_polynomials->init_bitvector_continue" << endl;
+		}
+		On_polynomials->init_bitvector_continue(
+				Group->LG,
+				HPD,
+				generators,
+				Descr->print_interval,
+				Descr->on_polynomials_with_bitvector_continue_previous_orbit,
+				verbose_level);
+
+		if (f_v) {
+			cout << "orbits_create::do_on_polynomials_with_bitvector_continue "
+					"after On_polynomials->init_bitvector_continue" << endl;
+		}
+	}
+	else {
+		cout << "orbits_create::init init_bitvector_continue needs generators" << endl;
+		exit(1);
+
+	}
+
+
+	f_has_On_polynomials = true;
+
+	if (f_v) {
+		cout << "orbits_create::do_on_polynomials_with_bitvector_continue done" << endl;
+	}
+
+}
+
+void orbits_create::do_orbit_of_one_polynomial(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbits_create::do_orbit_of_one_polynomial" << endl;
+	}
+
+	if (f_v) {
+		cout << "orbits_create::do_orbit_of_one_polynomial ring = " << Descr->of_one_polynomial_ring << endl;
+	}
+
+	if (!Descr->f_group) {
+		cout << "orbits_create::do_orbit_of_one_polynomial please specify the group using -group <label>" << endl;
+		exit(1);
+	}
+
+	if (!Group->f_linear_group) {
+		cout << "orbits_create::do_orbit_of_one_polynomial group must be linear" << endl;
+		exit(1);
+	}
+
+
+
+	algebra::ring_theory::homogeneous_polynomial_domain *HPD;
+
+
+	HPD = Get_ring(Descr->of_one_polynomial_ring);
+
+
+	algebra::expression_parser::symbolic_object_builder *Symbol;
+
+	Symbol = Get_symbol(Descr->of_one_polynomial_equation);
+
+
+	Of_One_polynomial = NEW_OBJECT(orbits_on_polynomials);
+
+	if (f_v) {
+		cout << "orbits_create::do_orbit_of_one_polynomial "
+				"before Of_One_polynomial->orbit_of_one_polynomial" << endl;
+	}
+	Of_One_polynomial->orbit_of_one_polynomial(
+			Group->LG,
+			HPD,
+			Symbol,
+			verbose_level);
+	if (f_v) {
+		cout << "orbits_create::do_orbit_of_one_polynomial "
+				"after Of_One_polynomial->orbit_of_one_polynomial" << endl;
+	}
+
+	f_has_Of_One_polynomial = true;
+
+	if (f_v) {
+		cout << "orbits_create::do_orbit_of_one_polynomial done" << endl;
+	}
+}
+
+void orbits_create::do_classify_cubic_curves(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbits_create::do_classify_cubic_curves" << endl;
+	}
+
+	if (f_v) {
+		cout << "orbits_create::do_classify_cubic_curves control = " << Descr->on_cubic_curves_control << endl;
+	}
+
+
+
+	Arc_generator_description = Get_object_of_type_arc_generator_control(
+			Descr->on_cubic_curves_control);
+
+
+	projective_geometry::projective_space_with_action *PA;
+
+	if (!Arc_generator_description->f_projective_space) {
+		cout << "Please use option -projective_space in arc_generator" << endl;
+		exit(1);
+	}
+	PA = Get_projective_space(Arc_generator_description->projective_space_label);
+
+	CC = NEW_OBJECT(geometry::algebraic_geometry::cubic_curve);
+
+	if (f_v) {
+		cout << "orbits_create::do_classify_cubic_curves "
+				"before CC->init" << endl;
+	}
+	CC->init(PA->F, verbose_level);
+	if (f_v) {
+		cout << "orbits_create::do_classify_cubic_curves "
+				"after CC->init" << endl;
+	}
+
+
+
+	CCA = NEW_OBJECT(apps_geometry::cubic_curve_with_action);
+
+	if (f_v) {
+		cout << "orbits_create::do_classify_cubic_curves "
+				"before CCA->init" << endl;
+	}
+	CCA->init(CC, PA->A, verbose_level);
+	if (f_v) {
+		cout << "orbits_create::do_classify_cubic_curves "
+				"after CCA->init" << endl;
+	}
+
+
+
+	CCC = NEW_OBJECT(apps_geometry::classify_cubic_curves);
+
+
+	if (f_v) {
+		cout << "orbits_create::do_classify_cubic_curves "
+				"before CCC->init" << endl;
+	}
+	CCC->init(
+			PA,
+			CCA,
+			Arc_generator_description,
+			verbose_level);
+	if (f_v) {
+		cout << "orbits_create::do_classify_cubic_curves "
+				"after CCC->init" << endl;
+	}
+
+	if (f_v) {
+		cout << "orbits_create::do_classify_cubic_curves "
+				"before CCC->compute_starter" << endl;
+	}
+	CCC->compute_starter(verbose_level);
+	if (f_v) {
+		cout << "orbits_create::do_classify_cubic_curves "
+				"after CCC->compute_starter" << endl;
+	}
+
+#if 0
+	if (f_v) {
+		cout << "orbits_create::do_classify_cubic_curves "
+				"before CCC->test_orbits" << endl;
+	}
+	CCC->test_orbits(verbose_level);
+	if (f_v) {
+		cout << "orbits_create::do_classify_cubic_curves "
+				"after CCC->test_orbits" << endl;
+	}
+#endif
+
+	if (f_v) {
+		cout << "orbits_create::do_classify_cubic_curves "
+				"before CCC->do_classify" << endl;
+	}
+	CCC->do_classify(verbose_level);
+	if (f_v) {
+		cout << "orbits_create::do_classify_cubic_curves "
+				"after CCC->do_classify" << endl;
+	}
+
+
+	f_has_on_cubic_curves = true;
+
+	if (f_v) {
+		cout << "orbits_create::do_classify_cubic_curves done" << endl;
+	}
+
+}
+
+void orbits_create::do_classify_cubic_surfaces(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbits_create::do_classify_cubic_surfaces" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "orbits_create::do_classify_cubic_surfaces classify = " << Descr->on_cubic_surfaces_classify << endl;
+	}
+
+	orbits::classify_cubic_surfaces_description *Classify_cubic_surfaces_description;
+
+	Classify_cubic_surfaces_description = Get_classify_cubic_surfaces(Descr->on_cubic_surfaces_classify);
+
+
+
+	if (!Classify_cubic_surfaces_description->f_use_double_sixes) {
+		cout << "please use the double six algorithm" << endl;
+		exit(1);
+	}
+
+	projective_geometry::projective_space_with_action *PA;
+
+	if (Classify_cubic_surfaces_description->f_projective_space == false) {
+		cout << "please specify a projective space" << endl;
+		exit(1);
+	}
+
+	PA = Get_projective_space(Classify_cubic_surfaces_description->projective_space_label);
+
+
+
+	if (Classify_cubic_surfaces_description->f_poset_classification_control == false) {
+		cout << "please specify a poset classification control object" << endl;
+		exit(1);
+	}
+
+	poset_classification::poset_classification_control *Control =
+			Get_poset_classification_control(
+					Classify_cubic_surfaces_description->poset_classification_control_object);
+
+	if (f_v) {
+		cout << "orbits_create::do_classify_cubic_surfaces "
+				"before classify_surfaces, control=" << endl;
+		Control->print();
+	}
+
+
+	SCW = NEW_OBJECT(applications_in_algebraic_geometry::cubic_surfaces_and_double_sixes::surface_classify_wedge);
+
+	if (f_v) {
+		cout << "orbits_create::do_classify_cubic_surfaces "
+				"before SCW->init" << endl;
+	}
+
+	SCW->init(PA,
+			Control,
+			verbose_level - 1);
+
+	if (f_v) {
+		cout << "orbits_create::do_classify_cubic_surfaces "
+				"after SCW->init" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "orbits_create::do_classify_cubic_surfaces "
+				"before SCW->do_classify_double_sixes" << endl;
+	}
+	SCW->do_classify_double_sixes(verbose_level);
+	if (f_v) {
+		cout << "orbits_create::do_classify_cubic_surfaces "
+				"after SCW->do_classify_double_sixes" << endl;
+	}
+
+	if (f_v) {
+		cout << "orbits_create::do_classify_cubic_surfaces "
+				"before SCW->do_classify_surfaces" << endl;
+	}
+	SCW->do_classify_surfaces(verbose_level);
+	if (f_v) {
+		cout << "orbits_create::do_classify_cubic_surfaces "
+				"after SCW->do_classify_surfaces" << endl;
+	}
+
+	if (f_v) {
+		cout << "orbits_create::do_classify_cubic_surfaces "
+				"after classify_surfaces" << endl;
+	}
+
+
+	f_has_cubic_surfaces = true;
+
+	if (f_v) {
+		cout << "orbits_create::do_classify_cubic_surfaces done" << endl;
+	}
+}
+
+void orbits_create::do_classify_arcs(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbits_create::do_classify_arcs" << endl;
+	}
+
+	if (f_v) {
+		cout << "orbits_create::do_classify_arcs control = " << Descr->on_arcs_control << endl;
+	}
+
+
+	Arc_generator_description_for_arcs = Get_object_of_type_arc_generator_control(
+			Descr->on_arcs_control);
+
+
+	projective_geometry::projective_space_with_action *PA;
+
+	if (!Arc_generator_description_for_arcs->f_projective_space) {
+		cout << "Please use option -projective_space in arc_generator" << endl;
+		exit(1);
+	}
+
+	PA = Get_projective_space(Arc_generator_description_for_arcs->projective_space_label);
+
+
+	Arc_generator = NEW_OBJECT(apps_geometry::arc_generator);
+
+
+	if (f_v) {
+		cout << "orbits_create::do_classify_arcs before Arc_generator->init" << endl;
+	}
+	Arc_generator->init(
+			Arc_generator_description_for_arcs,
+			PA,
+			PA->A->Strong_gens,
+			verbose_level);
+	if (f_v) {
+		cout << "orbits_create::do_classify_arcs after Arc_generator->init" << endl;
+	}
+
+	if (f_v) {
+		cout << "orbits_create::do_classify_arcs before Arc_generator->compute_starter" << endl;
+	}
+	Arc_generator->compute_starter(
+			verbose_level);
+	if (f_v) {
+		cout << "orbits_create::do_classify_arcs after Arc_generator->compute_starter" << endl;
+	}
+
+	f_has_arcs = true;
+
+	if (f_v) {
+		cout << "orbits_create::do_classify_arcs done" << endl;
+	}
+
+}
+
+void orbits_create::do_classify_semifields(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbits_create::do_classify_semifields" << endl;
+	}
+
+	projective_geometry::projective_space_with_action *PA;
+
+	PA = Get_projective_space(Descr->classify_semifields_PA);
+
+	poset_classification::poset_classification_control *Control =
+			Get_poset_classification_control(
+					Descr->classify_semifields_control);
+
+	if (f_v) {
+		cout << "orbits_create::do_classify_semifields "
+				"before classify_surfaces, control=" << endl;
+		Control->print();
+	}
+
+	Semifields = NEW_OBJECT(semifields::semifield_classify_with_substructure);
+
+	if (f_v) {
+		cout << "orbits_create::do_classify_semifields "
+				"before Semifields->init" << endl;
+	}
+	Semifields->init(
+			Descr->Classify_semifields_description,
+			PA,
+			Control,
+			verbose_level);
+	if (f_v) {
+		cout << "orbits_create::do_classify_semifields "
+				"after Semifields->init" << endl;
+	}
+
+	if (f_v) {
+		cout << "orbits_create::do_classify_semifields "
+				"before Semifields->classify_semifields" << endl;
+	}
+	Semifields->classify_semifields(verbose_level);
+	if (f_v) {
+		cout << "orbits_create::do_classify_semifields "
+				"after Semifields->classify_semifields" << endl;
+	}
+
+	f_has_semifields = true;
+
+	if (f_v) {
+		cout << "orbits_create::do_classify_semifields done" << endl;
+	}
+}
+
+void orbits_create::do_on_boolean_functions(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbits_create::do_on_boolean_functions" << endl;
+	}
+
+	projective_geometry::projective_space_with_action *PA;
+
+	PA = Get_projective_space(Descr->on_boolean_functions_PA);
+
+	if (PA->P->Subspaces->F->q != 2) {
+		cout << "orbits_create::do_on_boolean_functions "
+				"the field must have order 2" << endl;
+		exit(1);
+	}
+	if (PA->A->matrix_group_dimension() != PA->n + 1) {
+		cout << "orbits_create::do_on_boolean_functions "
+				"the dimension of the matrix group must be PA->n + 1" << endl;
+		exit(1);
+	}
+
+
+	BF = NEW_OBJECT(combinatorics::special_functions::boolean_function_domain);
+
+	if (f_v) {
+		cout << "orbits_create::do_on_boolean_functions before BF->init" << endl;
+	}
+	BF->init(PA->P->Subspaces->F, PA->n, verbose_level);
+	if (f_v) {
+		cout << "orbits_create::do_on_boolean_functions after BF->init" << endl;
+	}
+
+
+	BFC = NEW_OBJECT(apps_combinatorics::boolean_function_classify);
+
+	if (f_v) {
+		cout << "orbits_create::do_on_boolean_functions "
+				"before BFC->init_group" << endl;
+	}
+	BFC->init_group(BF, PA->A, verbose_level);
+	if (f_v) {
+		cout << "orbits_create::do_on_boolean_functions "
+				"after BFC->init_group" << endl;
+	}
+
+	if (f_v) {
+		cout << "orbits_create::do_on_boolean_functions "
+				"before BFC->search_for_bent_functions" << endl;
+	}
+	BFC->search_for_bent_functions(verbose_level);
+	if (f_v) {
+		cout << "orbits_create::do_on_boolean_functions "
+				"after BFC->search_for_bent_functions" << endl;
+	}
+
+	f_has_boolean_functions = true;
+
+	if (f_v) {
+		cout << "orbits_create::do_on_boolean_functions done" << endl;
+	}
+
+}
+
+void orbits_create::do_classification_by_canonical_form(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbits_create::do_classification_by_canonical_form" << endl;
+	}
+
+	if (!Descr->Canonical_form_classifier_description->f_output_fname) {
+		cout << "Please specify the output file name using -output_fname <fname>" << endl;
+		exit(1);
+	}
+
+	if (f_v) {
+		cout << "orbits_create::do_classification_by_canonical_form getting projective space "
+				<< Descr->Canonical_form_classifier_description->space_label << endl;
+	}
+
+	Canonical_form_classifier = NEW_OBJECT(canonical_form::canonical_form_classifier);
+
+	if (f_v) {
+		cout << "orbits_create::do_classification_by_canonical_form "
+				"before Canonical_form_classifier->init_objects_from_list_of_csv_files" << endl;
+	}
+	Canonical_form_classifier->init_objects_from_list_of_csv_files(
+			Descr->Canonical_form_classifier_description,
+			verbose_level - 2);
+	if (f_v) {
+		cout << "orbits_create::do_classification_by_canonical_form "
+				"after Canonical_form_classifier->init_objects_from_list_of_csv_files" << endl;
+	}
+
+	// now Input is set
+
+
+	std::string fname_base;
+
+	if (Descr->Canonical_form_classifier_description->f_output_fname) {
+		fname_base = Descr->Canonical_form_classifier_description->fname_base_out;
+	}
+	else {
+		fname_base = "classification_";
+	}
+
+	if (f_v) {
+		cout << "orbits_create::do_classification_by_canonical_form "
+				"fname_base = " << fname_base << endl;
+	}
+
+	if (f_v) {
+		cout << "orbits_create::do_classification_by_canonical_form "
+				"before Canonical_form_classifier->classify" << endl;
+	}
+	Canonical_form_classifier->classify(
+			Canonical_form_classifier->Input,
+			fname_base,
+			verbose_level - 2);
+	if (f_v) {
+		cout << "orbits_create::do_classification_by_canonical_form "
+				"after Classifier.classify" << endl;
+	}
+
+	//Descr->Canonical_form_classifier_description->Canonical_form_classifier = Canonical_form_classifier;
+
+
+	f_has_classification_by_canonical_form = true;
+
+	if (f_v) {
+		cout << "orbits_create::do_classification_by_canonical_form done" << endl;
+	}
+
+}
+
+void orbits_create::do_conjugacy_classes_by_magma(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbits_create::do_conjugacy_classes_by_magma" << endl;
+	}
+
+	if (!Descr->f_group) {
+		cout << "orbits_create::do_conjugacy_classes_by_magma please specify -group <label>" << endl;
+		exit(1);
+	}
+
+
+	groups::sims *Sims;
+	if (Group->Subgroup_sims == NULL) {
+		cout << "orbits_create::do_conjugacy_classes_by_magma "
+				"Subgroup_sims == NULL" << endl;
+		exit(1);
+	}
+
+	Sims = Group->Subgroup_sims;
+
+	//layer5_applications::apps_algebra::classes_of_elements_expanded *Classes_of_elements_expanded;
+	//data_structures_groups::vector_ge *Reps;
+
+	layer5_applications::apps_algebra::algebra_global_with_action Algebra_global_with_action;
+
+	int expand_by_go = 2000;
+
+	if (f_v) {
+		cout << "orbits_create::do_conjugacy_classes_by_magma "
+				"before Algebra_global_with_action.get_classses_expanded" << endl;
+	}
+	Algebra_global_with_action.get_classses_expanded(
+			Sims,
+			Group,
+			expand_by_go,
+			Classes_of_elements_expanded,
+			Classes_of_elements_expanded_Reps,
+			verbose_level);
+	if (f_v) {
+		cout << "orbits_create::do_conjugacy_classes_by_magma "
+				"after Algebra_global_with_action.get_classses_expanded" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "orbits_create::do_conjugacy_classes_by_magma "
+				"before Classes_of_elements_expanded->Classes->report" << endl;
+	}
+	Classes_of_elements_expanded->Classes->report(
+			Sims,
+			Group->label,
+			Group->label_tex,
+			verbose_level - 1);
+	if (f_v) {
+		cout << "orbits_create::do_conjugacy_classes_by_magma "
+				"after Classes_of_elements_expanded->Classes->report" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "orbits_create::do_conjugacy_classes_by_magma "
+				"before class_data->export_csv" << endl;
+	}
+	Classes_of_elements_expanded->Classes->export_csv(
+			Sims,
+			verbose_level);
+	if (f_v) {
+		cout << "orbits_create::do_conjugacy_classes_by_magma "
+				"after class_data->export_csv" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "orbits_create::do_conjugacy_classes_by_magma "
+				"before Classes_of_elements_expanded->report" << endl;
+	}
+	Classes_of_elements_expanded->report(
+			Group->label,
+			Group->label_tex,
+			verbose_level);
+	if (f_v) {
+		cout << "orbits_create::do_conjugacy_classes_by_magma "
+				"after Classes_of_elements_expanded->report" << endl;
+	}
+
+#if 0
+	nb_output = 1;
+	Output = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
+
+	string output_label;
+
+	output_label = Group->label + "_class_reps";
+
+	layer5_applications::apps_algebra::vector_ge_builder *VB;
+
+	VB = NEW_OBJECT(layer5_applications::apps_algebra::vector_ge_builder);
+
+	VB->V = Classes_of_elements_expanded_Reps;
+
+	Output->init_vector_ge(output_label, VB, verbose_level);
+#endif
+
+
+	f_has_conjugacy_classes_by_magma = true;
+
+
+	//FREE_OBJECT(Classes_of_elements_expanded->Classes);
+	//Classes_of_elements_expanded->Classes = NULL;
+	//FREE_OBJECT(Classes_of_elements_expanded);
+	//FREE_OBJECT(Reps);
+
+
+	if (f_v) {
+		cout << "orbits_create::do_conjugacy_classes_by_magma done" << endl;
+	}
+}
+
 
 
 }}}

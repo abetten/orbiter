@@ -962,6 +962,10 @@ public:
 	void make_all_valid_pairs_for_Siegel_Transformations(
 			std::vector<std::vector<long int> > &Valid_pairs,
 			int verbose_level);
+	// Makes pairs for Siegel transformations.
+	// The first entry is the rank of a point on the quadric.
+	// The second entry is the rank of an affine point.
+	// A pair is valid if the bilinear form evaluated between them is zero.
 	void make_Siegel_Transformation(
 			int *M, int *v, int *u,
 		int n, int *Gram, int verbose_level);

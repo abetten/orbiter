@@ -128,6 +128,7 @@ ORBITER_MODULES= \
 		layer1_foundations/combinatorics/knowledge_base/finite_field_tables.o \
 		layer1_foundations/combinatorics/knowledge_base/knowledge_base.o \
 		layer1_foundations/combinatorics/other_combinatorics/combinatorics_domain.o \
+		layer1_foundations/combinatorics/other_combinatorics/girth_finder.o \
 		layer1_foundations/combinatorics/solvers/diophant_create.o \
 		layer1_foundations/combinatorics/solvers/diophant_description.o \
 		layer1_foundations/combinatorics/solvers/diophant.o \

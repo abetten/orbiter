@@ -145,7 +145,8 @@ void graphical_output::draw_layered_graph_from_file(
 			cout << "graphical_output::draw_layered_graph_from_file "
 					"before LG->find_all_paths_between" << endl;
 		}
-		LG->find_all_paths_between(Opt->layer1, Opt->node1, Opt->layer2, Opt->node2,
+		LG->find_all_paths_between(
+				Opt->layer1, Opt->node1, Opt->layer2, Opt->node2,
 				All_Paths,
 				verbose_level - 2);
 		if (f_v) {
@@ -157,7 +158,8 @@ void graphical_output::draw_layered_graph_from_file(
 			cout << "graphical_output::draw_layered_graph_from_file "
 					"before LG->remove_edges" << endl;
 		}
-		LG->remove_edges(Opt->layer1, Opt->node1, Opt->layer2, Opt->node2,
+		LG->remove_edges(
+				Opt->layer1, Opt->node1, Opt->layer2, Opt->node2,
 				All_Paths,
 				verbose_level - 2);
 		if (f_v) {

@@ -455,6 +455,232 @@ void projective_space_global::do_lift_skew_hexagon_with_polarity(
 	}
 }
 
+
+void projective_space_global::create_all_transvections(
+		projective_space_with_action *PA,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space_global::create_all_transvections" << endl;
+	}
+
+	int q;
+	int d;
+	long int N, big_N;
+	long int rk1, rk2, a;
+
+	d = PA->P->Subspaces->n + 1;
+	q = PA->F->q;
+
+	geometry::other_geometry::geometry_global Geometry_global;
+
+	N = Geometry_global.nb_PG_elements(
+			d - 1, q);
+
+	big_N = N * N * (q - 1);
+
+	int *vec_v;
+	int *vec_u;
+
+	vec_v = NEW_int(d);
+	vec_u = NEW_int(d);
+
+
+	long int cur;
+	long int nb_transvections;
+
+	cur = 0;
+
+
+	for (rk1 = 0; rk1 < N; rk1++) {
+
+		PA->F->Projective_space_basic->PG_element_unrank_modified(
+				vec_v, 1 /*stride*/, d, rk1);
+
+		PA->F->Projective_space_basic->PG_element_normalize_from_front(
+					vec_v, 1, d);
+
+
+		for (rk2 = 0; rk2 < N; rk2++) {
+
+			PA->F->Projective_space_basic->PG_element_unrank_modified(
+					vec_u, 1 /*stride*/, d, rk2);
+
+			PA->F->Projective_space_basic->PG_element_normalize_from_front(
+						vec_u, 1, d);
+
+
+			for (a = 1; a < q; a++) {
+
+				data_structures_groups::vector_ge *vec;
+
+				if (PA->create_transvection(
+						a, vec_v, vec_u, d,
+						vec,
+						verbose_level - 2)) {
+
+					FREE_OBJECT(vec);
+
+					cur++;
+				}
+
+
+
+			}
+		}
+	}
+
+	nb_transvections = cur;
+
+
+	if (f_v) {
+		cout << "projective_space_global::create_all_transvections big_N = " << big_N << endl;
+		cout << "projective_space_global::create_all_transvections nb_transvections = " << nb_transvections << endl;
+	}
+
+
+	data_structures_groups::vector_ge *Vec;
+
+	Vec = NEW_OBJECT(data_structures_groups::vector_ge);
+
+	Vec->init(PA->A, 0 /* verbose_level */);
+	Vec->allocate(nb_transvections, 0 /* verbose_level */);
+
+
+
+	// save the data to a csv file:
+
+
+	other::orbiter_kernel_system::file_io Fio;
+	std::string fname;
+
+	fname = "PG_" + std::to_string(d - 1) + "_" + std::to_string(q) + "_all_transvections.csv";
+
+	std::string *Col_headings;
+
+	int nb_rows = nb_transvections;
+	int nb_cols = 8;
+
+	string *Table;
+
+
+	Table = new string[nb_rows * nb_cols];
+
+	cur = 0;
+
+	for (rk1 = 0; rk1 < N; rk1++) {
+
+		PA->F->Projective_space_basic->PG_element_unrank_modified(
+				vec_v, 1 /*stride*/, d, rk1);
+
+		PA->F->Projective_space_basic->PG_element_normalize_from_front(
+					vec_v, 1, d);
+
+		for (rk2 = 0; rk2 < N; rk2++) {
+
+			PA->F->Projective_space_basic->PG_element_unrank_modified(
+					vec_u, 1 /*stride*/, d, rk2);
+
+			PA->F->Projective_space_basic->PG_element_normalize_from_front(
+						vec_u, 1, d);
+
+			for (a = 1; a < q; a++) {
+
+
+				data_structures_groups::vector_ge *vec;
+
+				if (PA->create_transvection(
+						a, vec_v, vec_u, d,
+						vec,
+						verbose_level - 2)) {
+
+					PA->A->Group_element->element_move(vec->ith(0), Vec->ith(cur), 0 /* verbose_level */);
+
+
+					Table[cur * nb_cols + 0] = std::to_string(cur);
+					Table[cur * nb_cols + 1] = std::to_string(rk1);
+					Table[cur * nb_cols + 2] = std::to_string(rk2);
+					Table[cur * nb_cols + 3] = std::to_string(a);
+					Table[cur * nb_cols + 4] = "\"" + Int_vec_stringify(vec_v, d) + "\"";
+					Table[cur * nb_cols + 5] = "\"" + Int_vec_stringify(vec_u, d) + "\"";
+
+
+					{
+
+						Table[cur * nb_cols + 6] = "\"" + Int_vec_stringify(Vec->ith(cur), d * d) + "\"";
+					}
+#if 0
+					{
+					std::string options;
+					string s;
+
+					s = PA->A->Group_element->element_stringify(
+							Vec->ith(cur), options);
+
+
+					Table[cur * nb_cols + 7] = "\"" + s + "\"";
+					}
+#endif
+
+					FREE_OBJECT(vec);
+
+
+					cur++;
+				}
+
+
+
+
+			}
+		}
+	}
+
+
+	Col_headings = new string [nb_cols];
+
+	Col_headings[0] = "idx";
+	Col_headings[1] = "rk1";
+	Col_headings[2] = "rk2";
+	Col_headings[3] = "s";
+	Col_headings[4] = "v";
+	Col_headings[5] = "u";
+	Col_headings[6] = "Element";
+	Col_headings[7] = "ElementTex";
+
+
+	Fio.Csv_file_support->write_table_of_strings_with_col_headings(
+			fname,
+			nb_rows, nb_cols, Table,
+			Col_headings,
+			verbose_level);
+
+	if (f_v) {
+		cout << "orthogonal_group::create_all_transvections "
+				"written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+
+	delete [] Col_headings;
+	delete [] Table;
+
+
+
+
+
+
+	FREE_int(vec_v);
+	FREE_int(vec_u);
+
+	FREE_OBJECT(Vec);
+
+
+	if (f_v) {
+		cout << "projective_space_global::create_all_transvections done" << endl;
+	}
+}
+
 #if 0
 void projective_space_global::do_classify_arcs(
 		projective_space_with_action *PA,
