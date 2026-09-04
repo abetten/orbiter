@@ -3913,6 +3913,7 @@ void action_global::all_point_orbits_from_generators(
 		data_structures_groups::vector_ge *gens,
 		algebra::ring_theory::longinteger_object &go,
 		int verbose_level)
+// use vector_ge for generators, not strong generators
 {
 	int f_v = (verbose_level >= 1);
 
@@ -3929,19 +3930,18 @@ void action_global::all_point_orbits_from_generators(
 	}
 
 
-	//int print_interval = 10000;
 
 	Schreier.init(A, verbose_level - 2);
 
 	Schreier.Generators_and_images->init_generators(
-			*gens /* *strong_generators */,
+			*gens,
 			verbose_level);
 
 	if (f_v) {
 		cout << "action_global::all_point_orbits_from_generators "
 				"before Schreier.compute_all_point_orbits" << endl;
 	}
-	Schreier.compute_all_point_orbits(/*print_interval, */ verbose_level - 1);
+	Schreier.compute_all_point_orbits(verbose_level - 1);
 	if (f_v) {
 		cout << "action_global::all_point_orbits_from_generators "
 				"after Schreier.compute_all_point_orbits" << endl;
@@ -3959,6 +3959,7 @@ void action_global::all_point_orbits_Schreier_from_generators_first_next(
 		algebra::ring_theory::longinteger_object &go,
 		std::string &fname_bitvector,
 		int verbose_level)
+// use vector_ge for generators, not strong generators
 {
 	int f_v = (verbose_level >= 1);
 
@@ -3972,6 +3973,10 @@ void action_global::all_point_orbits_Schreier_from_generators_first_next(
 	if (f_v) {
 		cout << "action_global::all_point_orbits_Schreier_from_generators_first_next "
 				"group order = " << go << endl;
+	}
+	if (f_v) {
+		cout << "action_global::all_point_orbits_Schreier_from_generators_first_next "
+				"number of generators = " << gens->len << endl;
 	}
 
 
@@ -4031,6 +4036,17 @@ void action_global::all_point_orbits_Schreier_from_generators_first_next(
 			cout << "action_global::all_point_orbits_Schreier_from_generators_first_next "
 					"after Schreier.compute_next_point_orbit" << endl;
 		}
+		if (f_v) {
+			cout << "action_global::all_point_orbits_Schreier_from_generators_first_next "
+					"number of orbits = " << Schreier.Forest->nb_orbits << endl;
+
+			double d;
+
+			d = (double) Schreier.Forest->orbit_first[Schreier.Forest->nb_orbits] / (double) A->degree;
+			cout << "action_global::all_point_orbits_Schreier_from_generators_first_next "
+					"progress = " << d * 100. << " %"  << endl;
+		}
+
 
 		if (ret) {
 			break;

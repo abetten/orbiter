@@ -498,7 +498,9 @@ public:
 	data_structures_groups::vector_ge gens;
 	data_structures_groups::vector_ge gens_inv;
 
-	int nb_images; // this should be called nb_generators
+	int nb_generators;
+		// this was called nb_images, which is very confusing
+		// this should be called nb_generators
 	int **images;
 		// [nb_gens][2 * A->degree],
 		// allocated by init_images,
@@ -529,12 +531,12 @@ public:
 	void init2();
 	void delete_images();
 	void init_images(
-			int nb_images, int verbose_level);
+			int nb_generators, int verbose_level);
 	// sets all images to -1.
 	void init_images_known(
 			schreier *Schreier,
 			actions::action *A,
-			int nb_images,
+			int nb_generators,
 			int *known_images, int verbose_level);
 #if 0
 	void init_images_recycle(
@@ -543,7 +545,7 @@ public:
 			int verbose_level);
 #endif
 	void init_images_recycle(
-			int nb_images,
+			int nb_generators,
 			int **old_images, int verbose_level);
 	void images_append(
 			int verbose_level);

@@ -1,13 +1,13 @@
 ROW,C1,C2,C3
 0,"tab:graphactivities:2",,
 1,"Graph Theoretic Activities (Part 2)",,
-1,"\verb'-automorphism_group' ","   ","Compute the automorphism group and write a report. See Section~\ref{sec:canonical:form:objects:graphs}. "
-1,"\verb'-automorphism_group_colored_graph' ","   ","Compute the automorphism group of a vertex colored graph and write a report. See Section~\ref{sec:canonical:form:objects:graphs}. "
-1,"\verb'-properties' ","   ","Compute properties of the graph. "
-1,"\verb'-girth_assuming_vertex_transitivity' ","   ","Compute the girth the graph. Assumes that the graph is vertex transitive. "
-1,"\verb'-eigenvalues' ","   ","Compute the eigenvalues of the graph (ordinary and Laplace) and write to a csv file. "
-1,"\verb'-eigenvalues_report' ","   ","Compute the eigenvalues of the graph (ordinary and Laplace) and produce a latex report. "
-1,"\verb'-draw' "," options  ","Draw the graph. Uses a draw options object as in Table~\ref{tab:draw:options} for drawing. "
-1,"\verb'-create_distance_poset' "," v  ","Create the distance poset with respect to the vertex $v$. "
-1,"\verb'-test_if_distance_regular' "," v  ","Test if distance regular with respect to the vertex $v$. This is meaningful only if the graph is vertex transitive. "
+1,"\verb'-automorphism_group' ","   ","Computes the automorphism group and write a report. See Section~\ref{sec:canonical:form:objects:graphs}. "
+1,"\verb'-automorphism_group_colored_graph' ","   ","Computes the automorphism group of a vertex colored graph and write a report. See Section~\ref{sec:canonical:form:objects:graphs}. "
+1,"\verb'-properties' ","   ","Computes properties of the graph. "
+1,"\verb'-girth_assuming_vertex_transitivity' ","   ","Computes the girth of the graph (length of the shortest cycle). Assumes that the graph is vertex transitive. Once done, it also computes the shortest cycles themselves (complete list). "
+1,"\verb'-eigenvalues' ","   ","Computes the eigenvalues of the graph (ordinary and Laplace) and writes to a csv file. "
+1,"\verb'-eigenvalues_report' ","   ","Computes the eigenvalues of the graph (ordinary and Laplace) and produces a latex report. "
+1,"\verb'-draw' "," options  ","Draws the graph. Uses a ``draw options'' object as in Table~\ref{tab:draw:options} for drawing. "
+1,"\verb'-create_distance_poset' "," v  ","Creates the distance poset with respect to the vertex $v$. "
+1,"\verb'-test_if_distance_regular' "," v  ","Tests if the graph is distance regular with respect to the vertex $v$. This function assumes that the graph is vertex transitive. "
 END

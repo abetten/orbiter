@@ -2498,8 +2498,6 @@ public:
 	std::string restricted_incidence_matrix_col_objects;
 	std::string restricted_incidence_matrix_file_name;
 
-	//int f_make_relation;
-	//long int make_relation_plane_rk;
 
 	int f_plane_intersection_type;
 	int plane_intersection_type_threshold;
@@ -2561,30 +2559,8 @@ public:
 	int f_control_six_arcs;
 	std::string Control_six_arcs_label;
 
-#if 0
-	int f_six_arcs_not_on_conic;
-	int f_filter_by_nb_Eckardt_points;
-	int nb_Eckardt_points;
-#endif
-
-	//int f_classify_arcs;
-	//apps_geometry::arc_generator_description
-	//	*Arc_generator_description;
-
-	//int f_classify_cubic_curves;
 
 
-
-#if 0
-	int f_classify_semifields;
-	semifields::semifield_classify_description
-		*Semifield_classify_description;
-	poset_classification::poset_classification_control
-		*Semifield_classify_Control;
-
-	int f_classify_bent_functions;
-	int classify_bent_functions_n;
-#endif
 
 	projective_space_activity_description();
 	~projective_space_activity_description();

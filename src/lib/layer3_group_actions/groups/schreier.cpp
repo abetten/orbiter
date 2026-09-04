@@ -279,7 +279,6 @@ void schreier::extend_orbit(
 }
 
 void schreier::compute_all_point_orbits(
-		//int print_interval,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -944,12 +943,12 @@ void schreier::compute_point_orbit(
 					"expanding point " << cur_pt << endl;
 		}
 
-		for (i = 0; i < Generators_and_images->nb_images /* gens.len*/; i++) {
+		for (i = 0; i < Generators_and_images->nb_generators; i++) {
 			if (f_vv) {
 				cout << "schreier::compute_point_orbit "
 						"expanding point " << cur_pt
 						<< " using generator " << i
-						<< " / " << Generators_and_images->nb_images << endl;
+						<< " / " << Generators_and_images->nb_generators << endl;
 			}
 
 			if (f_vvv) {
@@ -985,7 +984,7 @@ void schreier::compute_point_orbit(
 						"expanding: cur_pt = "
 						<< cur_pt << " -> next_pt = " << next_pt
 						<< " under generator " << i
-						<< " / " << Generators_and_images->nb_images << endl;
+						<< " / " << Generators_and_images->nb_generators << endl;
 			}
 			Forest->swap_points(total, next_pt_loc, 0 /*verbose_level*/);
 			Forest->prev[total] = cur_pt;
@@ -1133,7 +1132,7 @@ void schreier::compute_point_orbit_with_limited_depth(
 					<< cur << " total=" << total
 					<< " applying generators to " << cur_pt << endl;
 		}
-		for (i = 0; i < Generators_and_images->nb_images /* gens.len */; i++) {
+		for (i = 0; i < Generators_and_images->nb_generators; i++) {
 
 			if (f_vv) {
 				cout << "schreier::compute_point_orbit_with_limited_depth "

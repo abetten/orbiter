@@ -505,6 +505,7 @@ void orbits_on_polynomials::init_memory_efficient(
 // Memory-efficient orbit computation using bitvector (~45 MB)
 // instead of Schreier forest (~10 GB).
 // Uses on-the-fly image computation (no caching).
+// Author: Sudenaz Ucar
 {
 	int f_v = (verbose_level >= 1);
 
@@ -531,6 +532,9 @@ void orbits_on_polynomials::init_memory_efficient(
 	}
 
 	A->Strong_gens->group_order(target_go);
+	if (f_v) {
+		cout << "orbits_on_polynomials::init_memory_efficient group order = " << target_go << endl;
+	}
 
 	target_go_log2 = target_go.log2();
 	if (f_v) {
@@ -570,7 +574,7 @@ void orbits_on_polynomials::init_memory_efficient(
 	fname_base =  "poly_orbits_d" + std::to_string(degree_of_poly)
 			+ "_n" + std::to_string(n - 1)
 			+ "_q" + std::to_string(F->q);
-	fname_csv = fname_base + ".csv";
+	fname_csv = fname_base + "_sude.csv";
 
 
 	// =========================================================
@@ -642,7 +646,7 @@ void orbits_on_polynomials::init_memory_efficient(
 		nb_orbits_found++;
 		total_covered += orbit_len;
 
-		if ((nb_orbits_found % print_interval == 0) || orbit_len > 10000) {
+		if (f_v || (nb_orbits_found % print_interval == 0) || orbit_len > 10000) {
 			int t1 = Os.os_ticks();
 			int elapsed = t1 - t0;
 			cout << "orbits_on_polynomials::init_memory_efficient "
@@ -652,7 +656,7 @@ void orbits_on_polynomials::init_memory_efficient(
 					<< " covered=" << total_covered
 					<< "/" << degree
 					<< " (" << (100.0 * total_covered / degree) << "%)"
-					<< " elapsed=" << (elapsed / 1000) << "s"
+					<< " elapsed=" << (elapsed / Os.os_ticks_per_second()) << "s"
 					<< endl;
 		}
 	}
@@ -666,7 +670,7 @@ void orbits_on_polynomials::init_memory_efficient(
 		cout << "orbits_on_polynomials::init_memory_efficient "
 				"total covered = " << total_covered << " / " << degree << endl;
 		cout << "orbits_on_polynomials::init_memory_efficient "
-				"elapsed time = " << (elapsed / 1000) << " seconds" << endl;
+				"elapsed time = " << (elapsed / Os.os_ticks_per_second()) << " seconds" << endl;
 	}
 
 	// Free bitvector
@@ -747,7 +751,7 @@ void orbits_on_polynomials::init_memory_efficient(
 			cout << "orbits_on_polynomials::init_memory_efficient "
 					"Phase 2: orbit " << (i + 1)
 					<< "/" << nb_orbits_found
-					<< " elapsed=" << (elapsed2 / 1000) << "s"
+					<< " elapsed=" << (elapsed2 / Os.os_ticks_per_second()) << "s"
 					<< endl;
 		}
 	}
@@ -761,7 +765,7 @@ void orbits_on_polynomials::init_memory_efficient(
 		cout << "orbits_on_polynomials::init_memory_efficient "
 				"Phase 2 done" << endl;
 		cout << "orbits_on_polynomials::init_memory_efficient "
-				"total elapsed time = " << (total_elapsed / 1000) << " seconds" << endl;
+				"total elapsed time = " << (total_elapsed / Os.os_ticks_per_second()) << " seconds" << endl;
 	}
 
 

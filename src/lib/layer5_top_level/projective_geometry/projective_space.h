@@ -57,34 +57,12 @@ public:
 			projective_space_with_action *PA,
 			int verbose_level);
 
-#if 0
-	void do_classify_arcs(
-			projective_space_with_action *PA,
-			apps_geometry::arc_generator_description
-				*Arc_generator_description,
-			int verbose_level);
-	void do_classify_cubic_curves(
-			projective_space_with_action *PA,
-			apps_geometry::arc_generator_description
-				*Arc_generator_description,
-			int verbose_level);
-#endif
 	void set_stabilizer(
 			projective_space_with_action *PA,
 			int intermediate_subset_size,
 			std::string &fname_mask, int nb, std::string &column_label,
 			std::string &fname_out,
 			int verbose_level);
-#if 0
-	void make_relation(
-			projective_space_with_action *PA,
-			long int plane_rk,
-			int verbose_level);
-	void classify_bent_functions(
-			projective_space_with_action *PA,
-			int n,
-			int verbose_level);
-#endif
 
 };
 

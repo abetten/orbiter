@@ -33,7 +33,7 @@ generators_and_images::generators_and_images()
 	A = NULL;
 	f_images_only = false;
 	degree = 0;
-	nb_images = 0;
+	nb_generators = 0;
 	images = NULL;
 
 	Elt1 = NULL;
@@ -113,17 +113,17 @@ void generators_and_images::delete_images()
 	int i;
 
 	if (images) {
-		for (i = 0; i < nb_images; i++) {
+		for (i = 0; i < nb_generators; i++) {
 			FREE_int(images[i]);
 		}
 		FREE_pint(images);
 		images = NULL;
-		nb_images = 0;
+		nb_generators = 0;
 	}
 }
 
 void generators_and_images::init_images(
-		int nb_images, int verbose_level)
+		int nb_generators, int verbose_level)
 // sets all images to -1.
 {
 	int f_v = (verbose_level >= 1);
@@ -139,9 +139,9 @@ void generators_and_images::init_images(
 		}
 #endif
 	delete_images();
-	generators_and_images::nb_images = nb_images;
-	images = NEW_pint(nb_images);
-	for (i = 0; i < nb_images; i++) {
+	generators_and_images::nb_generators = nb_generators;
+	images = NEW_pint(nb_generators);
+	for (i = 0; i < nb_generators; i++) {
 		if (f_v) {
 			cout << "generators_and_images::init_images "
 					"allocating images[i], i=" << i << endl;
@@ -157,7 +157,7 @@ void generators_and_images::init_images(
 void generators_and_images::init_images_known(
 		schreier *Schreier,
 		actions::action *A,
-		int nb_images,
+		int nb_generators,
 		int *known_images, int verbose_level)
 // known_images[nb_images * A->degree]
 {
@@ -173,9 +173,9 @@ void generators_and_images::init_images_known(
 	generators_and_images::Schreier = Schreier;
 	generators_and_images::A = A;
 	generators_and_images::degree = A->degree;
-	generators_and_images::nb_images = nb_images;
-	images = NEW_pint(nb_images);
-	for (i = 0; i < nb_images; i++) {
+	generators_and_images::nb_generators = nb_generators;
+	images = NEW_pint(nb_generators);
+	for (i = 0; i < nb_generators; i++) {
 		if (f_v) {
 			cout << "generators_and_images::init_images_known "
 					"allocating images[i], i=" << i << endl;
@@ -248,7 +248,7 @@ void generators_and_images::init_images_recycle(
 
 
 void generators_and_images::init_images_recycle(
-		int nb_images,
+		int nb_generators,
 		int **old_images, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -264,9 +264,9 @@ void generators_and_images::init_images_recycle(
 		}
 #endif
 	delete_images();
-	generators_and_images::nb_images = nb_images;
-	images = NEW_pint(nb_images);
-	for (i = 0; i < nb_images; i++) {
+	generators_and_images::nb_generators = nb_generators;
+	images = NEW_pint(nb_generators);
+	for (i = 0; i < nb_generators; i++) {
 		if (f_v) {
 			cout << "generators_and_images::init_images_recycle allocating "
 					"images[i], i=" << i << endl;
@@ -296,19 +296,19 @@ void generators_and_images::images_append(
 		cout << "generators_and_images::images_append" << endl;
 	}
 
-	int **new_images = NEW_pint(nb_images + 1);
+	int **new_images = NEW_pint(nb_generators + 1);
 	int i;
 
-	new_images[nb_images] = NEW_int(2 * degree);
+	new_images[nb_generators] = NEW_int(2 * degree);
 
-	Int_vec_mone(new_images[nb_images], 2 * degree);
+	Int_vec_mone(new_images[nb_generators], 2 * degree);
 
-	for (i = 0; i < nb_images; i++) {
+	for (i = 0; i < nb_generators; i++) {
 		new_images[i] = images[i];
 	}
 	FREE_pint(images);
 	images = new_images;
-	nb_images++;
+	nb_generators++;
 
 	if (f_v) {
 		cout << "generators_and_images::images_append done" << endl;

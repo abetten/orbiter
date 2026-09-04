@@ -15,6 +15,7 @@ ROW,C1,C2,C3
 1,"\verb'-report_Grassmannian' "," $k$  ","Produce a report on the Grassmannian of $k$-dimensional subspaces. "
 1,"\verb'-report_fixed_objects' "," data fname  ","Produce a report about the fixed points of the group element given by data in the action on objects of various types of the projective space. Writes a latex report using the given file name. "
 1,"\verb'-evaluation_matrix' "," ring  "," Computes the matrix whose $(i,j)$ entry is the value of the $i$-th monomial of the given ring on (a fixed representative of) the $j$-th projective point. "
-1,"\verb'-create_transvection' "," u v a  "," Creates the transvection asociated with the vectors u and v and the scalar a. See Taylor, The geometry of the classical groups, page 20. "
+1,"\verb'-polynomial_representation' "," $S$  ","  "
+1,"\verb'-create_transvection' "," a u v  "," Creates the transvection asociated with the vectors u and v and the scalar a. See Taylor, The geometry of the classical groups, page 20. "
 1,"\verb'-create_all_transvections' ","  "," Creates all transvections and writes them to a csv file. "
 END

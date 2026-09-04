@@ -3,14 +3,17 @@ ROW,C1,C2,C3
 1,"Projective Space Activities (Part 2)",,
 1,"\verb'-sweep' "," options surface  "," Perform a parameter sweep for all cubic surface, given a surface description. Options can be given to direct the sweep.  "
 1,"\verb'-set_stabilizer' "," $k$ fname-mask $N$  col-label fname-out ","Compute canonical form of sets using the substructure algorithm. "
-1,"\verb'-conic_type' "," $t$ set ","Compute the conic type of the given set (given by its label). Record intersections of size $\ge t$ only."
+1,"\verb'-conic_type' "," $t$ set ","Compute the conic type of the given set (given by its label). The value $t$ is a threshold. Only intersections of size at least $t$ are recorded. "
 1,"\verb'-arc_with_given_set_as_' \verb's_lines_after_dualizing' "," $sz$ $d$ $d_{\min}$ $s$  ","Finds arcs with the given set as $s$-lines. "
 1,"\verb'-arc_with_two_given_sets_' \verb'of_lines_after_dualizing' "," $sz$ $d$ $d_{\min}$ $s$  $t$ $T$ ","Finds arcs with the two given sets as $s$-lines and $t$-lines, respectively. "
 1,"\verb'-arc_with_three_given_sets_' \verb'of_lines_after_dualizing' "," $sz$ $d$ $d_{\min}$ $s$  $t$ $T$  $u$ $U$ ","Finds arcs with the three given sets as $s$-lines and $t$-lines and $u$-lines, respectively. "
-1,"\verb'-dualize_hyperplanes_to_points' "," ","Turns ranks of hyperplanes into ranks of points."
-1,"\verb'-dualize_points_to_hyperplanes' "," ","Turns ranks of points into ranks of hyperplanes. "
-1,"\verb'-dualize_rank_k_subspaces' "," $k$ ","Turns ranks of $k$-subspaces into ranks of $n-k$ subspaces. "
+1,"\verb'-dualize_hyperplanes_to_points' "," $S$ ","Turns ranks of hyperplanes in the given set $S$ into ranks of points under the standard null polarity."
+1,"\verb'-dualize_points_to_hyperplanes' "," $S$ ","Turns ranks of points in the given set $S$ into ranks of hyperplanes under the standard null polarity. "
+1,"\verb'-dualize_rank_k_subspaces' "," $k$ $S$ ","Turns ranks of $k$-subspaces in the given set $S$ into ranks of $n-k$ subspaces. "
 END
+1,"\verb'-lift_skew_hexagon' ","   ","   "
+1,"\verb'-lift_skew_hexagon_with_polarity' ","   ","   "
+
 1,"\verb'-sweep_4_15_lines' ","  fname surface-descr ","   "
 1,"\verb'-sweep_F_beta_9_lines' ","  fname surface-descr ","   "
 1,"\verb'-sweep_6_9_lines' ","  fname surface-descr ","   "
