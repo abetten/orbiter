@@ -840,6 +840,10 @@ public:
 		int *coeffs15,
 		long int *Lines_rk,
 		int verbose_level);
+	void do_bitmap(
+		std::string &fname_base,
+		kovalevski_points *Kovalevski,
+		int verbose_level);
 
 };
 

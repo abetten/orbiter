@@ -204,6 +204,10 @@ public:
 			std::ostream &ost);
 	void print_incma_latex(
 			std::ostream &ost);
+	void draw_incma_as_bitmap(
+			std::string fname_base,
+			int f_box_width, int box_width,
+			int bit_depth, int verbose_level);
 
 };
 
