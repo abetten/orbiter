@@ -115,6 +115,7 @@ namespace orbiter {
 			class classes_of_elements_expanded;
 			class classes_of_subgroups_expanded;
 			class element_processing_description;
+			class group_theory_with_magma;
 			class modified_group_init_layer5;
 			class orbit_of_elements;
 			class orbit_of_subgroups;

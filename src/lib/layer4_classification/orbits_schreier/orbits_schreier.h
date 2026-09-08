@@ -468,6 +468,10 @@ public:
 			int f_restricted,
 			std::string &fname_base,
 		int verbose_level);
+	void make_table_of_shortest_words(
+			other::data_structures::set_of_sets *SoS,
+			std::string &fname_base,
+			int verbose_level);
 	void add_edges(
 			int verbose_level);
 

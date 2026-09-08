@@ -45,6 +45,9 @@ permutation_representation_domain::permutation_representation_domain()
 	Eltrk3 = NULL;
 
 	Page_storage = NULL;
+
+	Combi = NULL;
+
 }
 
 
@@ -86,6 +89,9 @@ permutation_representation_domain::~permutation_representation_domain()
 	if (Eltrk3) {
 		FREE_int(Eltrk3);
 	}
+	if (Combi) {
+		FREE_OBJECT(Combi);
+	}
 }
 
 void permutation_representation_domain::allocate()
@@ -102,6 +108,8 @@ void permutation_representation_domain::allocate()
 	Eltrk3 = NEW_int(elt_size_int);
 
 	Page_storage = NEW_OBJECT(other::data_structures::page_storage);
+
+	Combi = NEW_OBJECT(combinatorics::other_combinatorics::combinatorics_domain);
 }
 
 void permutation_representation_domain::init_product_action(
@@ -181,8 +189,10 @@ void permutation_representation_domain::init_data(
 		cout << "permutation_representation_domain::init_data "
 				"calling Page_storage->init" << endl;
 	}
-	Page_storage->init(char_per_elt /* entry_size */,
-			page_length_log, verbose_level - 2);
+	Page_storage->init(
+			char_per_elt /* entry_size */,
+			page_length_log,
+			verbose_level - 2);
 	//Elts->add_elt_print_function(perm_group_elt_print, (void *) this);
 
 
@@ -359,10 +369,10 @@ int permutation_representation_domain::is_one(
 void permutation_representation_domain::mult(
 		int *A, int *B, int *AB)
 {
-	combinatorics::other_combinatorics::combinatorics_domain Combi;
+	//combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	//cout << "in perm_group::mult()" << endl;
-	Combi.Permutations->perm_mult(A, B, AB, degree);
+	Combi->Permutations->perm_mult(A, B, AB, degree);
 	//cout << "in perm_group::mult()
 	// finished with perm_mult" << endl;
 }
@@ -370,19 +380,23 @@ void permutation_representation_domain::mult(
 void permutation_representation_domain::copy(
 		int *A, int *B)
 {
+
+	Int_vec_copy(A, B, degree);
+#if 0
 	int i;
 	
 	for (i = 0; i < degree; i++) {
 		B[i] = A[i];
 	}
+#endif
 }
 
 void permutation_representation_domain::invert(
 		int *A, int *Ainv)
 {
-	combinatorics::other_combinatorics::combinatorics_domain Combi;
+	//combinatorics::other_combinatorics::combinatorics_domain Combi;
 
-	Combi.Permutations->perm_inverse(A, Ainv, degree);
+	Combi->Permutations->perm_inverse(A, Ainv, degree);
 }
 
 void permutation_representation_domain::unpack(
@@ -418,12 +432,12 @@ void permutation_representation_domain::pack(
 void permutation_representation_domain::print(
 		int *Elt, std::ostream &ost)
 {
-	combinatorics::other_combinatorics::combinatorics_domain Combi;
+	//combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	//cout << "perm_group::print before perm_print" << endl;
 
 	if (degree < 1024) {
-		Combi.Permutations->perm_print(ost, Elt, degree);
+		Combi->Permutations->perm_print(ost, Elt, degree);
 	}
 	else {
 		ost << "too large to print (change threshold in permutation\\_representation\\_domain::print)" << endl;
@@ -436,13 +450,13 @@ std::string permutation_representation_domain::stringify(
 		int *Elt, std::string &options)
 {
 
-	combinatorics::other_combinatorics::combinatorics_domain Combi;
+	//combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	string s;
 
 
 	//cout << "perm_group::print before perm_print" << endl;
-	s = Combi.Permutations->stringify(Elt, degree, options);
+	s = Combi->Permutations->stringify(Elt, degree, options);
 	//ost << endl;
 	//cout << "perm_group::print done" << endl;
 	return s;
@@ -453,10 +467,10 @@ void permutation_representation_domain::print_with_point_labels(
 		ostream &ost,
 		std::string *Point_labels, void *data)
 {
-	combinatorics::other_combinatorics::combinatorics_domain Combi;
+	//combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	//cout << "perm_group::print before perm_print" << endl;
-	Combi.Permutations->perm_print_with_point_labels(
+	Combi->Permutations->perm_print_with_point_labels(
 			ost, Elt, degree, Point_labels, data);
 	//ost << endl;
 	//cout << "perm_group::print done" << endl;
@@ -495,7 +509,7 @@ void permutation_representation_domain::print_with_action(
 	//ost << endl;
 	int i, bi, a;
 	int x1, y1, x2, y2; // if in product action
-	combinatorics::other_combinatorics::combinatorics_domain Combi;
+	//combinatorics::other_combinatorics::combinatorics_domain Combi;
 	
 	if (A->base_len() < A->degree) {
 		for (i = 0; i < A->base_len(); i++) {
@@ -532,14 +546,14 @@ void permutation_representation_domain::print_with_action(
 	}
 	//perm_print(ost, Elt, degree);
 	ost << " : ";
-	Combi.Permutations->perm_print_offset(
+	Combi->Permutations->perm_print_offset(
 			ost, Elt, degree, 0 /* offset */,
 			false /* f_print_cycles_of_length_one */,
 			false /* f_cycle_length */, false, 0,
 			false /* f_orbit_structure */,
 			NULL, NULL);
 	ost << " : ";
-	Combi.Permutations->perm_print_list_offset(ost, Elt, degree, 1);
+	Combi->Permutations->perm_print_list_offset(ost, Elt, degree, 1);
 	ost << endl;
 }
 
@@ -550,7 +564,7 @@ void permutation_representation_domain::make_element(
 	int f_vv = (verbose_level >= 2);
 	int i, a;
 	int *my_data;
-	combinatorics::other_combinatorics::combinatorics_domain Combi;
+	//combinatorics::other_combinatorics::combinatorics_domain Combi;
 	
 
 	if (f_v) {
@@ -570,7 +584,7 @@ void permutation_representation_domain::make_element(
 		Elt[i] = a;
 	}
 
-	if (!Combi.Permutations->is_permutation(my_data, elt_size_int)) {
+	if (!Combi->Permutations->is_permutation(my_data, elt_size_int)) {
 		cout << "permutation_representation_domain::make_element "
 				"The input is not a permutation" << endl;
 		exit(1);

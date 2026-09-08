@@ -154,7 +154,7 @@ public:
 	// the images of these generators are known.
 	// Using the right regular representation and a Schreier tree,
 	// we can then compute the automorphisms associated to the Images.
-	// Any automorphism is computed as a permutation of the elements
+	// An automorphism is computed as a permutation of the elements
 	// in the ordering defined by the sims object Subgroup_sims
 	// The images in Images[] and the generators
 	// in Subgroup_gens->gens must correspond.
@@ -180,6 +180,7 @@ public:
 			std::string &label_of_elements,
 			data_structures_groups::vector_ge *Elements,
 			int verbose_level);
+
 	void subgroup_lattice_identify_subgroup(
 			groups::any_group *Any_group,
 			std::string &group_label,
@@ -193,6 +194,20 @@ public:
 			int verbose_level);
 
 
+	void identify_groups_from_csv_file(
+			interfaces::conjugacy_classes_of_subgroups *Classes,
+			groups::sims *sims_G,
+			groups::any_group *Any_group,
+			int expand_by_go,
+			std::string &fname,
+			std::string &col_label,
+			int verbose_level);
+	classes_of_subgroups_expanded *get_classes_of_subgroups_expanded(
+			interfaces::conjugacy_classes_of_subgroups *Classes,
+			groups::sims *sims_G,
+			groups::any_group *Any_group,
+			int expand_by_go,
+			int verbose_level);
 
 	void find_overgroup(
 			groups::any_group *AG,
@@ -207,60 +222,13 @@ public:
 			std::string &col_label,
 			int expand_go,
 			int verbose_level);
-	void all_elements_by_class(
-			groups::sims *Sims,
-			groups::any_group *Any_group,
-			classes_of_elements_expanded *Classes_of_elements_expanded,
-			int class_order,
-			int class_id,
-			data_structures_groups::vector_ge *&vec,
-			int verbose_level);
-	classes_of_subgroups_expanded *get_classes_of_subgroups_expanded(
-			interfaces::conjugacy_classes_of_subgroups *Classes,
-			groups::sims *sims_G,
-			groups::any_group *Any_group,
-			int expand_by_go,
-			int verbose_level);
-	void identify_groups_from_csv_file(
-			interfaces::conjugacy_classes_of_subgroups *Classes,
-			groups::sims *sims_G,
-			groups::any_group *Any_group,
-			int expand_by_go,
-			std::string &fname,
-			std::string &col_label,
-			int verbose_level);
-	void get_classses_expanded(
-			groups::sims *Sims,
-			groups::any_group *Any_group,
-			int expand_by_go,
-			classes_of_elements_expanded *&Classes_of_elements_expanded,
-			data_structures_groups::vector_ge *&Reps,
-			int verbose_level);
-	void split_by_classes(
-			groups::sims *Sims,
-			groups::any_group *Any_group,
-			classes_of_elements_expanded *Classes_of_elements_expanded,
-			//int expand_by_go,
-			std::string &fname,
-			std::string &col_label,
-			int verbose_level);
-	void identify_elements_by_classes(
-			groups::sims *Sims,
-			groups::any_group *Any_group_H,
-			groups::any_group *Any_group_G,
-			classes_of_elements_expanded *Classes_of_elements_expanded,
-			//int expand_by_go,
-			std::string &fname, std::string &col_label,
-			int *&Class_index,
-			int verbose_level);
+
 	void element_ranks_in_overgroup(
 			groups::sims *Sims_G,
 			groups::strong_generators *subgroup_gens,
 			groups::sims *&Sims_P, long int *&Elements_P, long int &go_P,
 			int verbose_level);
-	void diagram_of_elements(
-			groups::any_group *AG,
-			int verbose_level);
+
 	void find_overgroup_wrapper(
 			groups::any_group *AG,
 			groups::any_group *Subgroup,
@@ -524,6 +492,67 @@ public:
 };
 
 
+
+
+// #############################################################################
+// group_theory_with_magma.cpp:
+// #############################################################################
+
+//! Group theoretic functions based on the Magma interface
+
+
+class group_theory_with_magma {
+
+public:
+
+	group_theory_with_magma();
+	~group_theory_with_magma();
+
+
+	// conjugacy classes:
+
+
+	void all_elements_by_class(
+			groups::sims *Sims,
+			groups::any_group *Any_group,
+			layer5_applications::apps_algebra::classes_of_elements_expanded *Classes_of_elements_expanded,
+			int class_order,
+			int class_id,
+			data_structures_groups::vector_ge *&vec,
+			int verbose_level);
+
+	void get_classses_expanded(
+			groups::sims *Sims,
+			groups::any_group *Any_group,
+			int expand_by_go,
+			classes_of_elements_expanded *&Classes_of_elements_expanded,
+			data_structures_groups::vector_ge *&Reps,
+			int verbose_level);
+	void split_by_classes(
+			groups::sims *Sims,
+			groups::any_group *Any_group,
+			classes_of_elements_expanded *Classes_of_elements_expanded,
+			std::string &fname,
+			std::string &col_label,
+			int verbose_level);
+	void identify_elements_by_classes(
+			groups::sims *Sims,
+			groups::any_group *Any_group_H,
+			groups::any_group *Any_group_G,
+			classes_of_elements_expanded *Classes_of_elements_expanded,
+			std::string &fname, std::string &col_label,
+			int *&Class_index,
+			int verbose_level);
+
+	void diagram_of_elements(
+			groups::any_group *AG,
+			classes_of_elements_expanded *Classes_of_elements_expanded,
+			int verbose_level);
+
+
+
+
+};
 
 
 

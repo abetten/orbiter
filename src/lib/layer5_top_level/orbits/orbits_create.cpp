@@ -1667,15 +1667,16 @@ void orbits_create::do_conjugacy_classes_by_magma(
 	//layer5_applications::apps_algebra::classes_of_elements_expanded *Classes_of_elements_expanded;
 	//data_structures_groups::vector_ge *Reps;
 
-	layer5_applications::apps_algebra::algebra_global_with_action Algebra_global_with_action;
+	//layer5_applications::apps_algebra::algebra_global_with_action Algebra_global_with_action;
+	apps_algebra::group_theory_with_magma Group_theory_with_magma;
 
 	int expand_by_go = 2000;
 
 	if (f_v) {
 		cout << "orbits_create::do_conjugacy_classes_by_magma "
-				"before Algebra_global_with_action.get_classses_expanded" << endl;
+				"before Group_theory_with_magma.get_classses_expanded" << endl;
 	}
-	Algebra_global_with_action.get_classses_expanded(
+	Group_theory_with_magma.get_classses_expanded(
 			Sims,
 			Group,
 			expand_by_go,
@@ -1684,7 +1685,7 @@ void orbits_create::do_conjugacy_classes_by_magma(
 			verbose_level);
 	if (f_v) {
 		cout << "orbits_create::do_conjugacy_classes_by_magma "
-				"after Algebra_global_with_action.get_classses_expanded" << endl;
+				"after Group_theory_with_magma.get_classses_expanded" << endl;
 	}
 
 

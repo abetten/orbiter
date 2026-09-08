@@ -12,6 +12,7 @@ MODULES = \
 	character_table_burnside.o \
 	classes_of_elements_expanded.o \
 	classes_of_subgroups_expanded.o \
+	group_theory_with_magma.o \
 	element_processing_description.o \
 	modified_group_init_layer5.o \
 	orbit_of_elements.o \

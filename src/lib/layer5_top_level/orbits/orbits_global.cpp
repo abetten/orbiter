@@ -204,33 +204,6 @@ void orbits_global::compute_orbit_of_set(
 	delete [] sTable;
 
 
-#if 0
-	// write as txt file:
-
-
-	fname = label_set + "_orbit_under_" + label_group + ".txt";
-
-	if (f_v) {
-		cout << "orbits_global::compute_orbit_of_set "
-				"Writing table to file " << fname << endl;
-	}
-	{
-		ofstream ost(fname);
-		int i;
-		for (i = 0; i < orbit_length; i++) {
-			ost << set_size;
-			for (int j = 0; j < set_size; j++) {
-				ost << " " << Table[i * set_size + j];
-			}
-			ost << endl;
-		}
-		ost << -1 << " " << orbit_length << endl;
-	}
-	if (f_v) {
-		cout << "Written file " << fname << " of size "
-				<< Fio.file_size(fname) << endl;
-	}
-#endif
 
 	if (f_v) {
 		cout << "orbits_global::compute_orbit_of_set "
@@ -342,6 +315,7 @@ void orbits_global::orbits_on_points_from_vector_ge(
 	}
 }
 
+#if 0
 void orbits_global::orbits_on_set_system_from_file(
 		groups::any_group *AG,
 		std::string &fname_csv,
@@ -450,7 +424,9 @@ void orbits_global::orbits_on_set_system_from_file(
 		cout << "orbits_global::orbits_on_set_system_from_file done" << endl;
 	}
 }
+#endif
 
+#if 0
 void orbits_global::orbits_on_set_from_file(
 		groups::any_group *AG,
 		std::string &fname_csv, int verbose_level)
@@ -516,7 +492,7 @@ void orbits_global::orbits_on_set_from_file(
 		cout << "orbits_global::orbits_on_set_from_file done" << endl;
 	}
 }
-
+#endif
 
 void orbits_global::orbit_of(
 		groups::any_group *AG,
@@ -705,6 +681,7 @@ void orbits_global::orbits_on_points_from_generators(
 		groups::orbits_on_something *&Orb,
 		int verbose_level)
 // compute orbits given generators as vector_ge, not as strong generating set.
+// called from orbits_create::do_orbits_on_points_with_generators
 {
 	int f_v = (verbose_level >= 1);
 

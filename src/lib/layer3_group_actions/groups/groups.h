@@ -721,7 +721,7 @@ public:
 // orbits_on_something.cpp
 // #############################################################################
 
-//! compute orbits of a group in a given action; allows file io; generators can be given as vector or as strong generators
+//! front-end to the schreier class. Computes orbits of a group in a given action; allows file io; generators can be given as vector or as strong generators
 
 class orbits_on_something {
 
@@ -1010,9 +1010,12 @@ public:
 		// computes non trivial random Schreier 
 		// generator into schreier_gen
 		// non-trivial is with respect to A_original
+#if 0
 	void get_path_and_labels(
 			std::vector<int> &path, std::vector<int> &labels,
 			int i, int verbose_level);
+	// moved to forest.cpp
+#endif
 	void orbits_on_invariant_subset_fast(
 			int len,
 		int *subset, int verbose_level);

@@ -1,0 +1,13 @@
+ROW,C1,C2,C3
+0,"tab:grouptasks7",,
+1,"Group theoretic activities based on Magma (Part 2)",,
+1,"\verb'-normalizer' ","  "," Computes the normalizer of a subgroup. "
+1,"\verb'-centralizer_of_element' ","  "," Computes the centralizer of a group element. "
+1,"\verb'-normalizer_of_cyclic_subgroup' ","  ","Computes the normalizer of a cyclic group."
+1,"\verb'-get_class_representatives' "," orbits ","Returns the chosen set of representatives of the conjugacy classes of the group. The classes must have been computed earlier using an orbits object, see Table~\ref{tab:orbits:2}. "
+1,"\verb'-elements_by_class' "," order i orbits ","Returns the elements of the i-th class whose elements have the given order. The classes must have been computed earlier using an orbits object, see Table~\ref{tab:orbits:2}. "
+1,"\verb'-split_by_classes' "," fname column orbits "," Splits the sets from the given csv file in the given column according to the different conjugacy classes of the group. The classes must have been computed earlier using an orbits object, see Table~\ref{tab:orbits:2}. "
+1,"\verb'-identify_elements_by_class' "," fname column supergroup orbits"," Identifies the conjugacy class of each of the elements in the given column in the given file. The classes must have been computed earlier using an orbits object, see Table~\ref{tab:orbits:2}. "
+1,"\verb'-find_subgroup' "," go"," Finds all subgroups of the given order. A latex report is produced."
+1,"\verb'-diagram' "," orbits"," Draws a diagram of group elements colored by conjugacy class. The classes must have been computed earlier using an orbits object, see Table~\ref{tab:orbits:2}. "
+END

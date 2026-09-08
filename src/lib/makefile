@@ -564,6 +564,7 @@ ORBITER_MODULES= \
 		layer5_top_level/apps_algebra/character_table_burnside.o \
 		layer5_top_level/apps_algebra/classes_of_elements_expanded.o \
 		layer5_top_level/apps_algebra/classes_of_subgroups_expanded.o \
+		layer5_top_level/apps_algebra/group_theory_with_magma.o \
 		layer5_top_level/apps_algebra/element_processing_description.o \
 		layer5_top_level/apps_algebra/modified_group_init_layer5.o \
 		layer5_top_level/apps_algebra/orbit_of_elements.o \

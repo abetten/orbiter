@@ -1016,398 +1016,6 @@ public:
 
 
 
-// #############################################################################
-// group_theoretic_activity_description.cpp
-// #############################################################################
-
-
-//! description of an activity associated with a group
-
-class group_theoretic_activity_description {
-public:
-
-	// TABLES/group_theoretic_activity_1.csv
-
-
-	int f_report;
-	std::string report_draw_options;
-
-	int f_order_invariant;
-
-	int f_group_table;
-	std::string group_table_draw_options;
-
-	int f_sylow;
-
-
-	int f_generators;
-
-	int f_elements;
-
-
-	int f_select_elements;
-	std::string select_elements_ranks;
-
-	int f_random_element;
-	std::string random_element_label;
-
-
-	int f_permutation_representation_of_element;
-	std::string permutation_representation_element_text;
-
-	int f_apply;
-	std::string apply_input;
-	std::string apply_element;
-
-	// ToDo: undocumented
-	int f_apply_to_set;
-	std::string apply_to_set_input;
-	std::string apply_to_set_element;
-
-	// ToDo: this should become a vector_ge_activity
-	int f_element_processing;
-	layer5_applications::apps_algebra::element_processing_description *element_processing_descr;
-
-	int f_multiply;
-	std::string multiply_a;
-	std::string multiply_b;
-
-	int f_inverse;
-	std::string inverse_a;
-
-	int f_consecutive_powers;
-	std::string consecutive_powers_a_text;
-	std::string consecutive_powers_exponent_text;
-
-	int f_raise_to_the_power;
-	std::string raise_to_the_power_a_text;
-	std::string raise_to_the_power_exponent_text;
-
-
-
-	int f_search_element_of_order;
-	int search_element_order;
-
-	int f_element_rank;
-	std::string element_rank_data;
-
-	int f_element_unrank;
-	std::string element_unrank_data;
-
-	int f_test_associativity;
-	int test_associativity_nb_tests;
-
-	int f_test_inverse;
-	int test_inverse_nb_tests;
-
-
-
-	// TABLES/group_theoretic_activity_2.csv
-
-
-	int f_find_singer_cycle;
-
-
-	// ToDo: currently disabled
-	int f_classes_based_on_normal_form;
-
-
-	// Magma:
-	int f_normalizer;
-
-
-	// Magma:
-	int f_centralizer_of_element;
-	std::string centralizer_of_element_label;
-	std::string centralizer_of_element_data;
-
-
-#if 0
-	int f_orbits_on_group_elements_under_conjugation;
-	std::string orbits_on_group_elements_under_conjugation_fname;
-	std::string orbits_on_group_elements_under_conjugation_transporter_fname;
-#endif
-
-	// Magma:
-	int f_normalizer_of_cyclic_subgroup;
-	std::string normalizer_of_cyclic_subgroup_label;
-	std::string normalizer_of_cyclic_subgroup_data;
-
-	// Magma (defunct), use -orbits instead
-	//int f_classes;
-
-
-	// ToDo undocumented
-	int f_get_class_representatives;
-	std::string get_class_representatives_orbits_object;
-
-	// ToDo: changed!
-	int f_elements_by_class;
-	int elements_by_class_order;
-	int elements_by_class_id;
-	std::string elements_by_class_orbits_object;
-
-
-	// ToDo: changed!
-	int f_split_by_classes;
-	std::string split_by_classes_fname;
-	std::string split_by_classes_column;
-	std::string split_by_classes_orbits_object;
-
-	// ToDo: changed!
-	int f_identify_elements_by_class;
-	std::string identify_elements_by_class_fname;
-	std::string identify_elements_by_class_column;
-	std::string identify_elements_by_class_supergroup;
-	std::string identify_elements_by_class_orbits_object;
-
-
-
-
-
-	// undocumented (too specialized):
-	int f_find_subgroup;
-	int find_subgroup_order;
-
-
-	//int f_test_if_geometric;
-	//int test_if_geometric_depth;
-
-	int f_conjugacy_class_of;
-	std::string conjugacy_class_of_label;
-	std::string conjugacy_class_of_data;
-
-	int f_isomorphism_Klein_quadric;
-	std::string isomorphism_Klein_quadric_fname;
-
-	int f_print_elements;
-	int f_print_elements_tex;
-	int f_make_element_tree;
-
-	int f_vector_ge_print_elements_tex;
-	std::string vector_ge_print_elements_tex_label;
-
-	int f_save_elements_csv;
-	std::string save_elements_csv_fname;
-
-	int f_export_inversion_graphs;
-	std::string export_inversion_graphs_fname;
-
-	int f_evaluate_word;
-	std::string evaluate_word_word;
-	std::string evaluate_word_gens;
-
-	int f_multiply_all_elements_in_lex_order;
-
-
-	int f_stats;
-	std::string stats_fname_base;
-
-	int f_move_a_to_b;
-	int move_a_to_b_a;
-	int move_a_to_b_b;
-
-
-	int f_rational_normal_form;
-	std::string rational_normal_form_input;
-
-
-
-
-	// TABLES/group_theoretic_activity_3
-
-
-
-
-	int f_find_standard_generators;
-	int find_standard_generators_order_a;
-	int find_standard_generators_order_b;
-	int find_standard_generators_order_ab;
-
-	int f_find_standard_generators_M24;
-
-
-	int f_find_small_generating_set;
-	int find_small_generating_set_desired_size;
-	int find_small_generating_set_max_attempts;
-
-	int f_proportion_of_generating_sets_of_size_k;
-	int proportion_of_generating_sets_of_size_k_k;
-
-	int f_proportion_of_generating_sets_of_size_k_using_orbits;
-	int proportion_of_generating_sets_of_size_k_using_orbits_k;
-	std::string proportion_of_generating_sets_of_size_k_using_orbits_fname;
-	std::string proportion_of_generating_sets_of_size_k_using_orbits_col_label_reps;
-	std::string proportion_of_generating_sets_of_size_k_using_orbits_col_label_orbit_length;
-
-
-	int f_export_group_table;
-
-	int f_export_orbiter;
-
-	int f_export_gap;
-
-	int f_export_magma;
-
-
-
-
-
-
-
-	// TABLES/group_theoretic_activity_4.csv
-
-
-	int f_find_conjugating_element;
-	std::string find_conjugating_element_element_from;
-	std::string find_conjugating_element_element_to;
-
-
-	int f_group_of_automorphisms_by_images_of_generators;
-	std::string group_of_automorphisms_by_images_of_generators_label;
-	std::string group_of_automorphisms_by_images_of_generators_elements;
-	std::string group_of_automorphisms_by_images_of_generators_images;
-
-
-
-	// this should become a vector_ge_activity:
-	int f_order_of_products;
-	std::string order_of_products_elements;
-
-	int f_reverse_isomorphism_exterior_square;
-	int reverse_isomorphism_exterior_square_f_lex_ordering;
-
-	int f_reverse_isomorphism_exterior_square_vector_of_ge;
-	std::string reverse_isomorphism_exterior_square_vector_of_ge_label;
-	int reverse_isomorphism_exterior_square_vector_of_ge_f_lex_ordering;
-
-	int f_is_subgroup_of;
-	int f_coset_reps;
-
-	// ToDo: not yet documented
-	int f_diagram;
-
-
-	// orbit stuff:
-
-	int f_subgroup_lattice;
-
-	int f_subgroup_lattice_load;
-	std::string subgroup_lattice_load_fname;
-
-	int f_subgroup_lattice_draw_by_orbits;
-	std::string subgroup_lattice_draw_by_orbits_draw_options;
-
-	int f_subgroup_lattice_draw_by_groups;
-	std::string subgroup_lattice_draw_by_groups_draw_options;
-
-
-
-	// TABLES/group_theoretic_activity_5.tex
-
-
-
-	int f_subgroup_lattice_intersection_orbit_orbit;
-	int subgroup_lattice_intersection_orbit_orbit_orbit1;
-	int subgroup_lattice_intersection_orbit_orbit_orbit2;
-
-	int f_subgroup_lattice_find_overgroup_in_orbit;
-	int subgroup_lattice_find_overgroup_in_orbit_orbit_global1;
-	int subgroup_lattice_find_overgroup_in_orbit_group1;
-	int subgroup_lattice_find_overgroup_in_orbit_orbit_global2;
-
-	int f_subgroup_lattice_create_flag_transitive_geometry_with_partition;
-	int subgroup_lattice_create_flag_transitive_geometry_with_partition_P_orbit;
-	int subgroup_lattice_create_flag_transitive_geometry_with_partition_Q_orbit;
-	int subgroup_lattice_create_flag_transitive_geometry_with_partition_R_orbit;
-	int subgroup_lattice_create_flag_transitive_geometry_with_partition_R_group;
-	int subgroup_lattice_create_flag_transitive_geometry_with_partition_intersection_size;
-
-	int f_subgroup_lattice_create_coset_geometry;
-	int subgroup_lattice_create_coset_geometry_P_orb_global;
-	int subgroup_lattice_create_coset_geometry_P_group;
-	int subgroup_lattice_create_coset_geometry_Q_orb_global;
-	int subgroup_lattice_create_coset_geometry_Q_group;
-	int subgroup_lattice_create_coset_geometry_intersection_size;
-
-
-	int f_subgroup_lattice_identify_subgroup;
-	std::string subgroup_lattice_identify_subgroup_subgroup_label;
-
-	int f_create_flag_transitive_geometry;
-	std::string create_flag_transitive_geometry_P;
-	std::string create_flag_transitive_geometry_Q;
-
-#if 0
-	int f_orbit_of;
-	int orbit_of_point_idx;
-
-	int f_orbits_on_set_system_from_file;
-	std::string orbits_on_set_system_from_file_fname;
-	int orbits_on_set_system_first_column;
-	int orbits_on_set_system_number_of_columns;
-
-	int f_orbit_of_set_from_file;
-	std::string orbit_of_set_from_file_fname;
-#endif
-
-	// classification stuff:
-
-
-	// classification of optimal linear codes using poset classification
-	int f_linear_codes;
-	std::string linear_codes_control;
-	int linear_codes_minimum_distance;
-	int linear_codes_target_size;
-
-
-	int f_tensor_permutations;
-
-	int f_classify_ovoids;
-	layer5_applications::apps_geometry::ovoid_classify_description *Ovoid_classify_description;
-
-	//int f_classify_cubic_curves;
-
-	int f_representation_on_polynomials;
-	std::string representation_on_polynomials_ring;
-
-	// GAP:
-	int f_canonical_image_GAP;
-	std::string canonical_image_GAP_input_set;
-
-	int f_canonical_image;
-	std::string canonical_image_input_set;
-
-
-	// TABLES/group_theoretic_activity_6.tex
-
-
-	int f_subgroup_lattice_magma;
-
-	int f_find_overgroup;
-	int find_overgroup_order;
-	std::string find_overgroup_of;
-
-
-	int f_identify_subgroups_from_file;
-	std::string identify_subgroups_from_file_fname;
-	std::string identify_subgroups_from_file_col_label;
-	int identify_subgroups_from_expand_go;
-
-	// ToDo undocumented
-	int f_permutation_subgroup;
-
-
-
-	group_theoretic_activity_description();
-	~group_theoretic_activity_description();
-	int read_arguments(
-		int argc, std::string *argv,
-		int verbose_level);
-	void print();
-
-};
-
 
 // #############################################################################
 // graph_classification_activity_description.cpp
@@ -1619,6 +1227,428 @@ public:
 };
 
 
+// #############################################################################
+// group_theoretic_activity_description.cpp
+// #############################################################################
+
+
+//! description of an activity associated with a group
+
+class group_theoretic_activity_description {
+public:
+
+	// TABLES/group_theoretic_activity_1.csv
+
+
+	int f_report;
+	std::string report_draw_options;
+
+	int f_order_invariant;
+
+	int f_group_table;
+	std::string group_table_draw_options;
+
+	int f_sylow;
+
+
+	int f_generators;
+
+	int f_elements;
+
+
+	int f_select_elements;
+	std::string select_elements_ranks;
+
+	int f_random_element;
+	std::string random_element_label;
+
+
+	int f_permutation_representation_of_element;
+	std::string permutation_representation_element_text;
+
+	int f_apply;
+	std::string apply_input;
+	std::string apply_element;
+
+	// ToDo: undocumented
+	int f_apply_to_set;
+	std::string apply_to_set_input;
+	std::string apply_to_set_element;
+
+	// ToDo: this should become a vector_ge_activity
+	int f_element_processing;
+	layer5_applications::apps_algebra::element_processing_description *element_processing_descr;
+
+	int f_multiply;
+	std::string multiply_a;
+	std::string multiply_b;
+
+	int f_inverse;
+	std::string inverse_a;
+
+	int f_consecutive_powers;
+	std::string consecutive_powers_a_text;
+	std::string consecutive_powers_exponent_text;
+
+	int f_raise_to_the_power;
+	std::string raise_to_the_power_a_text;
+	std::string raise_to_the_power_exponent_text;
+
+
+
+	int f_search_element_of_order;
+	int search_element_order;
+
+	int f_element_rank;
+	std::string element_rank_data;
+
+	int f_element_unrank;
+	std::string element_unrank_data;
+
+	int f_test_associativity;
+	int test_associativity_nb_tests;
+
+	int f_test_inverse;
+	int test_inverse_nb_tests;
+
+
+
+	// TABLES/group_theoretic_activity_2.csv
+
+
+	int f_find_singer_cycle;
+
+
+	// ToDo: currently disabled
+	int f_classes_based_on_normal_form;
+
+
+
+
+
+
+
+
+
+	//int f_test_if_geometric;
+	//int test_if_geometric_depth;
+
+	int f_conjugacy_class_of;
+	std::string conjugacy_class_of_label;
+	std::string conjugacy_class_of_data;
+
+	int f_isomorphism_Klein_quadric;
+	std::string isomorphism_Klein_quadric_fname;
+
+	int f_print_elements;
+	int f_print_elements_tex;
+	int f_make_element_tree;
+
+	int f_vector_ge_print_elements_tex;
+	std::string vector_ge_print_elements_tex_label;
+
+	int f_save_elements_csv;
+	std::string save_elements_csv_fname;
+
+	int f_export_inversion_graphs;
+	std::string export_inversion_graphs_fname;
+
+	int f_evaluate_word;
+	std::string evaluate_word_word;
+	std::string evaluate_word_gens;
+
+	int f_multiply_all_elements_in_lex_order;
+
+
+	int f_stats;
+	std::string stats_fname_base;
+
+	int f_move_a_to_b;
+	int move_a_to_b_a;
+	int move_a_to_b_b;
+
+
+	int f_rational_normal_form;
+	std::string rational_normal_form_input;
+
+
+
+
+	// TABLES/group_theoretic_activity_3
+
+
+
+
+	int f_find_standard_generators;
+	int find_standard_generators_order_a;
+	int find_standard_generators_order_b;
+	int find_standard_generators_order_ab;
+
+	int f_find_standard_generators_M24;
+
+
+	int f_find_small_generating_set;
+	int find_small_generating_set_desired_size;
+	int find_small_generating_set_max_attempts;
+
+	int f_proportion_of_generating_sets_of_size_k;
+	int proportion_of_generating_sets_of_size_k_k;
+
+	int f_proportion_of_generating_sets_of_size_k_using_orbits;
+	int proportion_of_generating_sets_of_size_k_using_orbits_k;
+	std::string proportion_of_generating_sets_of_size_k_using_orbits_fname;
+	std::string proportion_of_generating_sets_of_size_k_using_orbits_col_label_reps;
+	std::string proportion_of_generating_sets_of_size_k_using_orbits_col_label_orbit_length;
+
+
+	int f_export_group_table;
+
+	int f_export_orbiter;
+
+	int f_export_gap;
+
+	int f_export_magma;
+
+
+
+
+
+
+
+	// TABLES/group_theoretic_activity_4.csv
+
+
+	int f_find_conjugating_element;
+	std::string find_conjugating_element_element_from;
+	std::string find_conjugating_element_element_to;
+
+
+	int f_group_of_automorphisms_by_images_of_generators;
+	std::string group_of_automorphisms_by_images_of_generators_label;
+	std::string group_of_automorphisms_by_images_of_generators_elements;
+	std::string group_of_automorphisms_by_images_of_generators_images;
+
+
+
+	// this should become a vector_ge_activity:
+	int f_order_of_products;
+	std::string order_of_products_elements;
+
+	int f_reverse_isomorphism_exterior_square;
+	int reverse_isomorphism_exterior_square_f_lex_ordering;
+
+	int f_reverse_isomorphism_exterior_square_vector_of_ge;
+	std::string reverse_isomorphism_exterior_square_vector_of_ge_label;
+	int reverse_isomorphism_exterior_square_vector_of_ge_f_lex_ordering;
+
+	int f_is_subgroup_of;
+	int f_coset_reps;
+
+
+
+
+	// orbit stuff:
+
+	int f_subgroup_lattice;
+
+	int f_subgroup_lattice_load;
+	std::string subgroup_lattice_load_fname;
+
+	int f_subgroup_lattice_draw_by_orbits;
+	std::string subgroup_lattice_draw_by_orbits_draw_options;
+
+	int f_subgroup_lattice_draw_by_groups;
+	std::string subgroup_lattice_draw_by_groups_draw_options;
+
+
+
+	// TABLES/group_theoretic_activity_5.tex
+
+
+
+	int f_subgroup_lattice_intersection_orbit_orbit;
+	int subgroup_lattice_intersection_orbit_orbit_orbit1;
+	int subgroup_lattice_intersection_orbit_orbit_orbit2;
+
+	int f_subgroup_lattice_find_overgroup_in_orbit;
+	int subgroup_lattice_find_overgroup_in_orbit_orbit_global1;
+	int subgroup_lattice_find_overgroup_in_orbit_group1;
+	int subgroup_lattice_find_overgroup_in_orbit_orbit_global2;
+
+	int f_subgroup_lattice_create_flag_transitive_geometry_with_partition;
+	int subgroup_lattice_create_flag_transitive_geometry_with_partition_P_orbit;
+	int subgroup_lattice_create_flag_transitive_geometry_with_partition_Q_orbit;
+	int subgroup_lattice_create_flag_transitive_geometry_with_partition_R_orbit;
+	int subgroup_lattice_create_flag_transitive_geometry_with_partition_R_group;
+	int subgroup_lattice_create_flag_transitive_geometry_with_partition_intersection_size;
+
+	int f_subgroup_lattice_create_coset_geometry;
+	int subgroup_lattice_create_coset_geometry_P_orb_global;
+	int subgroup_lattice_create_coset_geometry_P_group;
+	int subgroup_lattice_create_coset_geometry_Q_orb_global;
+	int subgroup_lattice_create_coset_geometry_Q_group;
+	int subgroup_lattice_create_coset_geometry_intersection_size;
+
+
+	int f_subgroup_lattice_identify_subgroup;
+	std::string subgroup_lattice_identify_subgroup_subgroup_label;
+
+	int f_create_flag_transitive_geometry;
+	std::string create_flag_transitive_geometry_P;
+	std::string create_flag_transitive_geometry_Q;
+
+#if 0
+	int f_orbit_of;
+	int orbit_of_point_idx;
+
+	int f_orbits_on_set_system_from_file;
+	std::string orbits_on_set_system_from_file_fname;
+	int orbits_on_set_system_first_column;
+	int orbits_on_set_system_number_of_columns;
+
+	int f_orbit_of_set_from_file;
+	std::string orbit_of_set_from_file_fname;
+#endif
+
+	// classification stuff:
+
+
+	// classification of optimal linear codes using poset classification
+	int f_linear_codes;
+	std::string linear_codes_control;
+	int linear_codes_minimum_distance;
+	int linear_codes_target_size;
+
+
+	int f_tensor_permutations;
+
+	int f_classify_ovoids;
+	layer5_applications::apps_geometry::ovoid_classify_description *Ovoid_classify_description;
+
+	//int f_classify_cubic_curves;
+
+	int f_representation_on_polynomials;
+	std::string representation_on_polynomials_ring;
+
+	// GAP:
+	int f_canonical_image_GAP;
+	std::string canonical_image_GAP_input_set;
+
+	int f_canonical_image;
+	std::string canonical_image_input_set;
+
+
+
+
+
+
+	// Begin Magma stuff:
+
+
+
+	// TABLES/group_theoretic_activity_6.tex
+	// 6
+
+	int f_subgroup_lattice_magma;
+
+	int f_find_overgroup;
+	int find_overgroup_order;
+	std::string find_overgroup_of;
+
+
+	int f_identify_subgroups_from_file;
+	std::string identify_subgroups_from_file_fname;
+	std::string identify_subgroups_from_file_col_label;
+	int identify_subgroups_from_expand_go;
+
+
+
+	// ToDo undocumented
+	int f_permutation_subgroup;
+
+
+
+
+	// TABLES/group_theoretic_activity_7.tex
+	// 7
+
+
+
+	// Magma:
+	int f_normalizer;
+
+
+	// Magma:
+	int f_centralizer_of_element;
+	std::string centralizer_of_element_label;
+	std::string centralizer_of_element_data;
+
+
+#if 0
+	int f_orbits_on_group_elements_under_conjugation;
+	std::string orbits_on_group_elements_under_conjugation_fname;
+	std::string orbits_on_group_elements_under_conjugation_transporter_fname;
+#endif
+
+	// Magma:
+	int f_normalizer_of_cyclic_subgroup;
+	std::string normalizer_of_cyclic_subgroup_label;
+	std::string normalizer_of_cyclic_subgroup_data;
+
+	// Magma (defunct), use -orbits instead
+	//int f_classes;
+
+
+	// ToDo undocumented
+	int f_get_class_representatives;
+	std::string get_class_representatives_orbits_object;
+
+	// ToDo: changed!
+	int f_elements_by_class;
+	int elements_by_class_order;
+	int elements_by_class_id;
+	std::string elements_by_class_orbits_object;
+
+
+	// ToDo: changed!
+	int f_split_by_classes;
+	std::string split_by_classes_fname;
+	std::string split_by_classes_column;
+	std::string split_by_classes_orbits_object;
+
+	// ToDo: changed!
+	int f_identify_elements_by_class;
+	std::string identify_elements_by_class_fname;
+	std::string identify_elements_by_class_column;
+	std::string identify_elements_by_class_supergroup;
+	std::string identify_elements_by_class_orbits_object;
+
+
+
+
+
+	// undocumented (too specialized):
+	int f_find_subgroup;
+	int find_subgroup_order;
+
+
+	int f_diagram;
+	std::string diagram_orbits_object;
+
+
+	// End Magma stuff
+
+
+
+	group_theoretic_activity_description();
+	~group_theoretic_activity_description();
+	int read_arguments(
+		int argc, std::string *argv,
+		int verbose_level);
+	void print();
+
+};
+
 
 
 // #############################################################################
@@ -1664,6 +1694,8 @@ public:
 	int perform_activity_part5(
 			int verbose_level);
 	int perform_activity_part6(
+			int verbose_level);
+	int perform_activity_part7(
 			int verbose_level);
 
 };

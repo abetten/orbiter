@@ -150,6 +150,18 @@ void schreier_poset::init(
 	}
 
 
+	if (f_v) {
+		cout << "schreier_poset::init "
+				"before make_table_of_shortest_words" << endl;
+	}
+	make_table_of_shortest_words(
+			SoS,
+			fname_base,
+			verbose_level);
+	if (f_v) {
+		cout << "schreier_poset::init "
+				"after make_table_of_shortest_words" << endl;
+	}
 
 
 	if (f_v) {
@@ -216,6 +228,118 @@ void schreier_poset::init(
 		cout << "schreier_poset::init done" << endl;
 	}
 
+}
+
+void schreier_poset::make_table_of_shortest_words(
+		other::data_structures::set_of_sets *SoS,
+		std::string &fname_base,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+
+	if (f_v) {
+		cout << "schreier_poset::make_table_of_shortest_words" << endl;
+	}
+
+
+	string fname = fname_base + "_word_table.csv";
+
+	int l, n, nb, d;
+	int a;
+
+	int nb_nodes_total;
+
+	nb_nodes_total = Schreier->Forest->degree;
+
+	int nb_rows, nb_cols;
+
+	nb_rows = nb_nodes_total;
+	nb_cols = 7;
+
+	string *Table;
+
+	Table = new string [nb_rows * nb_cols];
+
+	int cur;
+
+	cur = 0;
+	for (l = 0; l < Distance_information->nb_layers; l++) {
+
+
+		nb = Distance_information->Nb_nodes[l];
+
+
+		for (n = 0; n < nb; n++, cur++) {
+
+			a = SoS->Sets[l][n];
+
+
+			Table[cur * nb_cols + 0] = std::to_string(cur);
+			Table[cur * nb_cols + 1] = std::to_string(l);
+			Table[cur * nb_cols + 2] = std::to_string(n);
+			Table[cur * nb_cols + 3] = std::to_string(a);
+
+			std::vector<int> path;
+			std::vector<int> labels;
+			int *Path;
+			int *Labels;
+
+			Schreier->Forest->get_path_and_labels(
+					path,
+					labels,
+					a, verbose_level - 3);
+
+			d = path.size();
+
+			Path = NEW_int(d);
+			Labels = NEW_int(d);
+
+			int i;
+			string word;
+
+			for (i = 0; i < d; i++) {
+				Path[i] = path[i];
+				Labels[i] = labels[i];
+				if (i) {
+					word += "*";
+				}
+				word += "t" + std::to_string(Labels[i]);
+			}
+
+			Table[cur * nb_cols + 4] = "\"" + Int_vec_stringify(Path, d) + "\"";
+			Table[cur * nb_cols + 5] = "\"" + Int_vec_stringify(Labels, d) + "\"";
+			Table[cur * nb_cols + 6] = "\"" + word + "\"";
+
+
+
+		}
+	}
+
+
+	std::string headings;
+
+	headings = "Idx,depth,local,node,path,labels,word";
+
+	other::orbiter_kernel_system::file_io Fio;
+
+
+	Fio.Csv_file_support->write_table_of_strings(
+			fname,
+			nb_rows, nb_cols, Table,
+			headings,
+			verbose_level);
+
+
+	if (f_v) {
+		cout << "schreier_poset::make_table_of_shortest_words "
+				"written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+
+	if (f_v) {
+		cout << "schreier_poset::make_table_of_shortest_words done" << endl;
+	}
 }
 
 void schreier_poset::add_edges(

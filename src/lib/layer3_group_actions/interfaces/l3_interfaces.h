@@ -132,13 +132,12 @@ public:
 
 
 
-
-
 // #############################################################################
-// nauty_interface_with_group.cpp:
+// l3_interface_gap.cpp:
 // #############################################################################
 
-//! Interface to GAP and fining at level 3
+//! Group theoretic functions based on GAP
+
 
 
 class l3_interface_gap {
@@ -498,6 +497,8 @@ public:
 	// labeling[n]
 
 };
+
+
 
 
 

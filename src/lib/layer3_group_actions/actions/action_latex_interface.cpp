@@ -221,20 +221,20 @@ void action_latex_interface::report(
 				cout << "action_latex_interface::report we have f_strong_gens" << endl;
 			}
 
-			action_global Global;
+			//action_global Global;
 
 			if (f_v) {
 				cout << "action_latex_interface::report "
-						"before Global.report_strong_generators" << endl;
+						"before report_strong_generators" << endl;
 			}
-			Global.report_strong_generators(
+			report_strong_generators(
 					ost,
 					SG,
 					A,
 					verbose_level);
 			if (f_v) {
 				cout << "action_latex_interface::report "
-						"after Global.report_strong_generators" << endl;
+						"after report_strong_generators" << endl;
 			}
 
 
@@ -684,6 +684,730 @@ void action_latex_interface::write_set_of_elements_latex_file(
 	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 
 }
+
+
+void action_latex_interface::report_strong_generators(
+		std::ostream &ost,
+		groups::strong_generators *SG,
+		action *A,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "action_latex_interface::report_strong_generators" << endl;
+	}
+
+	// GAP:
+
+	report_strong_generators_GAP(
+			ost,
+			SG,
+			A,
+			verbose_level - 1);
+
+
+	// Fining:
+
+	report_strong_generators_fining(
+			ost,
+			SG,
+			A,
+			verbose_level - 1);
+
+
+	// Magma:
+
+	report_strong_generators_magma(
+			ost,
+			SG,
+			A,
+			verbose_level - 1);
+
+
+	// Orbiter compact form:
+
+	report_strong_generators_orbiter(
+			ost,
+			SG,
+			A,
+			verbose_level - 1);
+
+
+
+
+	if (f_v) {
+		cout << "action_latex_interface::report_strong_generators done" << endl;
+	}
+}
+
+void action_latex_interface::report_strong_generators_GAP(
+		std::ostream &ost,
+		groups::strong_generators *SG,
+		action *A,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "action_latex_interface::report_strong_generators_GAP" << endl;
+	}
+
+
+	ost << endl;
+	ost << "\\bigskip" << endl;
+	ost << endl;
+
+	ost << "GAP export: \\\\" << endl;
+	ost << "\\begin{verbatim}" << endl;
+	if (f_v) {
+		cout << "action_global::report_strong_generators "
+				"before SG->print_generators_gap" << endl;
+	}
+	SG->print_generators_gap(ost, verbose_level - 1);
+	if (f_v) {
+		cout << "action_global::report_strong_generators "
+				"after SG->print_generators_gap" << endl;
+	}
+	ost << "\\end{verbatim}" << endl;
+	if (f_v) {
+		cout << "action_latex_interface::report_strong_generators_GAP done" << endl;
+	}
+}
+
+
+void action_latex_interface::report_strong_generators_fining(
+		std::ostream &ost,
+		groups::strong_generators *SG,
+		action *A,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "action_latex_interface::report_strong_generators_fining" << endl;
+	}
+
+	ost << "Fining export: \\\\" << endl;
+	ost << "\\begin{verbatim}" << endl;
+	if (f_v) {
+		cout << "action_latex_interface::report_strong_generators "
+				"before SG->export_fining" << endl;
+	}
+	SG->export_fining(A, ost, verbose_level);
+	if (f_v) {
+		cout << "action_latex_interface::report_strong_generators "
+				"after SG->export_fining" << endl;
+	}
+	ost << "\\end{verbatim}" << endl;
+
+	if (f_v) {
+		cout << "action_latex_interface::report_strong_generators_fining done" << endl;
+	}
+
+}
+
+
+void action_latex_interface::report_strong_generators_magma(
+		std::ostream &ost,
+		groups::strong_generators *SG,
+		action *A,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "action_latex_interface::report_strong_generators_magma" << endl;
+	}
+
+	ost << "Magma export: \\\\" << endl;
+	ost << "\\begin{verbatim}" << endl;
+	if (f_v) {
+		cout << "action_latex_interface::report_strong_generators "
+				"before SG->export_magma" << endl;
+	}
+	SG->export_magma(A, ost, verbose_level);
+	if (f_v) {
+		cout << "action_latex_interface::report_strong_generators "
+				"after SG->export_magma" << endl;
+	}
+	ost << "\\end{verbatim}" << endl;
+
+	if (f_v) {
+		cout << "action_latex_interface::report_strong_generators_magma done" << endl;
+	}
+}
+
+
+void action_latex_interface::report_strong_generators_orbiter(
+		std::ostream &ost,
+		groups::strong_generators *SG,
+		action *A,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "action_latex_interface::report_strong_generators_orbiter" << endl;
+	}
+
+	ost << "Compact form: \\\\" << endl;
+	ost << "\\begin{verbatim}" << endl;
+	if (f_v) {
+		cout << "action_latex_interface::report_strong_generators "
+				"before SG->print_generators_compact" << endl;
+	}
+	SG->print_generators_compact(ost, verbose_level - 1);
+	if (f_v) {
+		cout << "action_latex_interface::report_strong_generators "
+				"after SG->print_generators_compact" << endl;
+	}
+	ost << "\\end{verbatim}" << endl;
+
+	if (f_v) {
+		cout << "action_latex_interface::report_strong_generators_orbiter done" << endl;
+	}
+}
+
+
+void action_latex_interface::report(
+		std::ostream &ost,
+		std::string &label,
+		std::string &label_tex,
+		actions::action *A,
+		groups::strong_generators *Strong_gens,
+		groups::sims *Sims,
+		other::graphics::draw_options *LG_Draw_options,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	//actions::action *A;
+
+	//A = A2;
+	if (f_v) {
+		cout << "action_latex_interface::report" << endl;
+	}
+
+	//groups::sims *H;
+
+	if (f_v) {
+		cout << "action_latex_interface::report "
+				"creating report for group " << label << endl;
+	}
+
+#if 0
+	//G = initial_strong_gens->create_sims(verbose_level);
+	if (f_v) {
+		cout << "action_latex_interface::report "
+				"before Strong_gens->create_sims" << endl;
+	}
+	H = Strong_gens->create_sims(0 /*verbose_level*/);
+	if (f_v) {
+		cout << "action_latex_interface::report "
+				"after Strong_gens->create_sims" << endl;
+	}
+#endif
+
+	//cout << "group order G = " << G->group_order_int() << endl;
+	cout << "group order H = " << Sims->group_order_lint() << endl;
+
+	int *Elt;
+	algebra::ring_theory::longinteger_object go;
+
+	Elt = NEW_int(A->elt_size_in_int);
+	Sims->group_order(go);
+
+
+	{
+
+		//H->print_all_group_elements_tex(fp);
+
+		algebra::ring_theory::longinteger_object go;
+		//sims *G;
+		//sims *H;
+
+		//G = initial_strong_gens->create_sims(verbose_level);
+		//H = Strong_gens->create_sims(verbose_level);
+
+
+
+		ost << "\\section*{The Group $" << label_tex << "$}" << endl;
+
+
+		Sims->group_order(go);
+
+		ost << "\\noindent The order of the group $"
+				<< label_tex
+				<< "$ is " << go << "\\\\" << endl;
+
+
+#if 0
+		void stabilizer_chain_base_data::report_basic_orbits(
+				std::ostream &ost);
+#endif
+
+#if 0
+		fp << "\\noindent The field ${\\mathbb F}_{"
+				<< F->q
+				<< "}$ :\\\\" << endl;
+		if (f_v) {
+			cout << "action_latex_interface::report before F->cheat_sheet" << endl;
+		}
+		F->cheat_sheet(fp, verbose_level);
+		if (f_v) {
+			cout << "action_latex_interface::report after F->cheat_sheet" << endl;
+		}
+#endif
+
+
+#if 0
+		ost << "\\noindent The group acts on a set of size "
+				<< A->degree << "\\\\" << endl;
+#endif
+
+		if (f_v) {
+			cout << "action_latex_interface::report "
+					"before A->report_what_we_act_on" << endl;
+		}
+
+		A->Action_latex_interface->report_what_we_act_on(
+				ost,
+				verbose_level - 2);
+
+		if (f_v) {
+			cout << "action_latex_interface::report "
+					"after A->report_what_we_act_on" << endl;
+		}
+
+
+#if 0
+		if (A->degree < 1000) {
+
+			A->print_points(fp);
+		}
+#endif
+
+		//cout << "Order H = " << H->group_order_int() << "\\\\" << endl;
+
+#if 0
+		if (f_has_nice_gens) {
+			ost << "Nice generators:\\\\" << endl;
+			nice_gens->print_tex(ost);
+		}
+		else {
+		}
+#endif
+
+		cout << "Strong generators:\\\\" << endl;
+		ost << "\\section*{Strong generators}" << endl;
+		if (f_v) {
+			cout << "action_latex_interface::report "
+					"before Strong_gens->print_generators_tex" << endl;
+		}
+		Strong_gens->print_generators_tex(ost);
+		if (f_v) {
+			cout << "action_latex_interface::report "
+					"after Strong_gens->print_generators_tex" << endl;
+		}
+
+		if (A != Strong_gens->A) {
+
+			ost << "\\section*{Strong generators in the induced action}" << endl;
+			ost << "Strong generators in the induced action:\\\\" << endl;
+			Strong_gens->print_generators_in_different_action_tex(
+					ost, A);
+		}
+
+
+		if (f_v) {
+			cout << "action_latex_interface::report "
+					"before A->Action_latex_interface->report" << endl;
+		}
+
+		A->Action_latex_interface->report(
+				ost, true /*f_sims*/, Sims,
+				true /* f_strong_gens */, Strong_gens,
+				LG_Draw_options,
+				verbose_level - 2);
+
+		if (f_v) {
+			cout << "action_latex_interface::report "
+					"after A->Action_latex_interface->report" << endl;
+		}
+
+		if (f_v) {
+			cout << "action_latex_interface::report before A->report_basic_orbits" << endl;
+		}
+
+		A->Action_latex_interface->report_basic_orbits(ost);
+
+		if (f_v) {
+			cout << "action_latex_interface::report after A->report_basic_orbits" << endl;
+		}
+
+
+
+#if 0
+		if (f_conjugacy_classes_and_normalizers) {
+
+
+			interfaces::magma_interface M;
+
+
+			if (f_v) {
+				cout << "action_latex_interface::report f_conjugacy_classes_and_normalizers is true" << endl;
+			}
+
+			M.report_conjugacy_classes_and_normalizers(A2, ost, H,
+					verbose_level);
+
+			if (f_v) {
+				cout << "action_latex_interface::report A2->report_conjugacy_classes_and_normalizers" << endl;
+			}
+		}
+#endif
+
+
+		//L.foot(fp);
+	}
+
+	//FREE_OBJECT(H)
+	FREE_int(Elt);
+	if (f_v) {
+		cout << "action_latex_interface::report creating report for group " << label << " done" << endl;
+	}
+
+}
+
+
+void action_latex_interface::report_order_invariant(
+		std::ostream &ost,
+		std::string &label,
+		std::string &label_tex,
+		actions::action *A,
+		groups::strong_generators *Strong_gens,
+		groups::sims *Sims,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "action_latex_interface::report_order_invariant" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "action_latex_interface::report_order_invariant "
+				"creating report on the order invariant for group " << label << endl;
+	}
+
+
+	{
+
+
+		algebra::ring_theory::longinteger_object go;
+
+
+		ost << "\\section*{The Group $" << label_tex << "$}" << endl;
+
+
+		Sims->group_order(go);
+
+		ost << "\\noindent The order of the group $"
+				<< label_tex
+				<< "$ is " << go << "\\\\" << endl;
+
+
+		groups::group_theory_global Group_theory_global;
+		std::string s;
+
+			s = Group_theory_global.order_invariant(
+					A, Strong_gens,
+					verbose_level - 3);
+
+		ost << "The order invariant is ";
+		ost << "$" << s << "$";
+		ost << "\\\\" << endl;
+
+	}
+
+	if (f_v) {
+		cout << "action_latex_interface::report_order_invariant done" << endl;
+	}
+}
+
+void action_latex_interface::report_group_table(
+		std::ostream &ost,
+		std::string &label,
+		std::string &label_tex,
+		actions::action *A,
+		groups::strong_generators *Strong_gens,
+		other::graphics::draw_options *LG_Draw_options,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "action_latex_interface::report_group_table" << endl;
+	}
+
+
+	groups::sims *H;
+
+	if (f_v) {
+		cout << "action_latex_interface::report_group_table "
+				"creating report for group " << label << endl;
+	}
+
+	//G = initial_strong_gens->create_sims(verbose_level);
+	if (f_v) {
+		cout << "action_latex_interface::report_group_table "
+				"before Strong_gens->create_sims" << endl;
+	}
+	H = Strong_gens->create_sims(0 /*verbose_level*/);
+	if (f_v) {
+		cout << "action_latex_interface::report_group_table "
+				"after Strong_gens->create_sims" << endl;
+	}
+
+	//cout << "group order G = " << G->group_order_int() << endl;
+	cout << "group order H = " << H->group_order_lint() << endl;
+
+
+	int *Table;
+	long int n;
+	other::orbiter_kernel_system::file_io Fio;
+	string fname_group_table;
+	H->create_group_table(Table, n, verbose_level);
+
+	cout << "action_latex_interface::report_group_table The group table is:" << endl;
+	Int_matrix_print(Table, n, n);
+
+	fname_group_table = A->label + "_group_table.csv";
+	Fio.Csv_file_support->int_matrix_write_csv(
+			fname_group_table, Table, n, n);
+	cout << "Written file " << fname_group_table << " of size "
+			<< Fio.file_size(fname_group_table) << endl;
+
+	{
+		other::l1_interfaces::latex_interface L;
+
+		ost << "\\begin{sidewaystable}" << endl;
+		ost << "$$" << endl;
+		L.int_matrix_print_tex(ost, Table, n, n);
+		ost << "$$" << endl;
+		ost << "\\end{sidewaystable}" << endl;
+
+		//int f_with_permutation = false;
+		int f_override_action = false;
+		actions::action *A_special = NULL;
+
+		H->print_all_group_elements_tex(ost,
+				//f_with_permutation,
+				f_override_action, A_special);
+
+	}
+
+	{
+		string fname2;
+		//int x_min = 0, y_min = 0;
+		//int xmax = ONE_MILLION;
+		//int ymax = ONE_MILLION;
+
+		//int f_embedded = true;
+		//int f_sideways = false;
+		int *labels;
+
+		int i;
+
+		labels = NEW_int(2 * n);
+
+		for (i = 0; i < n; i++) {
+			labels[i] = i;
+		}
+		if (n > 100) {
+			for (i = 0; i < n; i++) {
+				labels[n + i] = n + i % 100;
+			}
+		}
+		else {
+			for (i = 0; i < n; i++) {
+				labels[n + i] = n + i;
+			}
+		}
+
+		fname2 = A->label + "_group_table_order_" + std::to_string(n);
+
+		{
+			other::graphics::mp_graphics G;
+
+			G.init(fname2, LG_Draw_options, verbose_level);
+
+#if 0
+			mp_graphics G(fname2, x_min, y_min, xmax, ymax, f_embedded, f_sideways, verbose_level - 1);
+			//G.setup(fname2, 0, 0, ONE_MILLION, ONE_MILLION, xmax, ymax, f_embedded, scale, line_width);
+			G.out_xmin() = 0;
+			G.out_ymin() = 0;
+			G.out_xmax() = xmax;
+			G.out_ymax() = ymax;
+			//cout << "xmax/ymax = " << xmax << " / " << ymax << endl;
+
+			//G.tikz_global_scale = LG_Draw_options->scale;
+			//G.tikz_global_line_width = LG_Draw_options->line_width;
+#endif
+
+			G.header();
+			G.begin_figure(1000 /* factor_1000*/);
+
+			int color_scale[] = {8,5,6,4,3,2,18,19, 7,9,10,11,12,13,14,15,16,17,20,21,22,23,24,25,1};
+			int nb_colors = sizeof(color_scale) / sizeof(int);
+
+			G.draw_matrix_in_color(
+				false /* f_row_grid */, false /* f_col_grid */,
+				Table  /* Table */, n /* nb_colors */,
+				n, n, //xmax, ymax,
+				color_scale, nb_colors,
+				true /* f_has_labels */, labels);
+
+			G.finish(cout, true);
+		}
+		FREE_int(labels);
+
+	}
+
+
+	FREE_int(Table);
+	FREE_OBJECT(H)
+
+
+	if (f_v) {
+		cout << "action_latex_interface::report_group_table done" << endl;
+	}
+
+}
+
+
+
+void action_latex_interface::report_sylow(
+		std::ostream &ost,
+		std::string &label,
+		std::string &label_tex,
+		actions::action *A,
+		groups::strong_generators *Strong_gens,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "action_latex_interface::report_sylow" << endl;
+	}
+
+
+	groups::sims *H;
+
+	if (f_v) {
+		cout << "action_latex_interface::report_sylow "
+				"creating report for group " << label << endl;
+	}
+
+	//G = initial_strong_gens->create_sims(verbose_level);
+	if (f_v) {
+		cout << "action_latex_interface::report_sylow "
+				"before Strong_gens->create_sims" << endl;
+	}
+	H = Strong_gens->create_sims(0 /*verbose_level*/);
+	if (f_v) {
+		cout << "action_latex_interface::report_sylow "
+				"after Strong_gens->create_sims" << endl;
+	}
+
+	//cout << "group order G = " << G->group_order_int() << endl;
+	cout << "group order H = " << H->group_order_lint() << endl;
+
+
+
+
+	groups::sylow_structure *Syl;
+
+	Syl = NEW_OBJECT(groups::sylow_structure);
+	if (f_v) {
+		cout << "action_latex_interface::report_sylow before Syl->init" << endl;
+	}
+	Syl->init(
+			H,
+			label,
+			label_tex,
+			verbose_level - 2);
+	if (f_v) {
+		cout << "action_latex_interface::report_sylow after Syl->init" << endl;
+	}
+	if (f_v) {
+		cout << "action_latex_interface::report_sylow before Syl->report" << endl;
+	}
+	Syl->report(ost);
+	if (f_v) {
+		cout << "action_latex_interface::report_sylow after Syl->report" << endl;
+	}
+
+
+
+	FREE_OBJECT(Syl)
+	FREE_OBJECT(H)
+
+	if (f_v) {
+		cout << "action_latex_interface::report_sylow done" << endl;
+	}
+
+}
+
+
+void action_latex_interface::report_groups_and_normalizers(
+		action *A,
+		std::ostream &ost,
+		int nb_subgroups,
+		groups::strong_generators *H_gens,
+		groups::strong_generators *N_gens,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int u;
+	algebra::ring_theory::longinteger_object go1, go2;
+
+	if (f_v) {
+		cout << "action_latex_interface::report_groups_and_normalizers" << endl;
+	}
+
+	for (u = 0; u < nb_subgroups; u++) {
+
+		ost << "\\subsection*{Class " << u << " / " << nb_subgroups << "}" << endl;
+
+		H_gens[u].group_order(go1);
+		N_gens[u].group_order(go2);
+
+		ost << "Group order = " << go1 << "\\\\" << endl;
+		ost << "Normalizer order = " << go2 << "\\\\" << endl;
+
+		ost << "Generators for $H$:\\\\" << endl;
+
+		H_gens[u].print_generators_in_latex_individually(ost, verbose_level - 1);
+		H_gens[u].print_generators_as_permutations_tex(ost, A);
+
+		ost << "\\bigskip" << endl;
+
+		ost << "Generators for $N(H)$:\\\\" << endl;
+
+		N_gens[u].print_generators_in_latex_individually(ost, verbose_level - 1);
+		N_gens[u].print_generators_as_permutations_tex(ost, A);
+
+	}
+
+
+	if (f_v) {
+		cout << "action_latex_interface::report_groups_and_normalizers done" << endl;
+	}
+}
+
+
 
 
 }}}

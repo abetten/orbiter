@@ -266,6 +266,45 @@ public:
 			void *data, int verbose_level),
 		void *early_test_func_callback_data,
 		int verbose_level);
+	void read_orbit_rep_and_candidates_from_files_and_process(
+			actions::action *A,
+			std::string &prefix,
+		int level, int orbit_at_level, int level_of_candidates_file,
+		void (*early_test_func_callback)(long int *S, int len,
+			long int *candidates, int nb_candidates,
+			long int *good_candidates, int &nb_good_candidates,
+			void *data, int verbose_level),
+		void *early_test_func_callback_data,
+		long int *&starter,
+		int &starter_sz,
+		groups::sims *&Stab,
+		groups::strong_generators *&Strong_gens,
+		long int *&candidates,
+		int &nb_candidates,
+		int &nb_cases,
+		int verbose_level);
+	// A needs to be the base action
+	void read_orbit_rep_and_candidates_from_files(
+			actions::action *A,
+			std::string &prefix,
+		int level, int orbit_at_level, int level_of_candidates_file,
+		long int *&starter,
+		int &starter_sz,
+		groups::sims *&Stab,
+		groups::strong_generators *&Strong_gens,
+		long int *&candidates,
+		int &nb_candidates,
+		int &nb_cases,
+		int verbose_level);
+	void read_set_and_stabilizer(
+			actions::action *A,
+			std::string &fname,
+		int no, long int *&set, int &set_sz, groups::sims *&stab,
+		groups::strong_generators *&Strong_gens,
+		int &nb_cases,
+		int verbose_level);
+	// reads an orbiter data file
+
 
 };
 

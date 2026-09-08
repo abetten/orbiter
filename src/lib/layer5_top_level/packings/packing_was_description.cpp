@@ -58,66 +58,87 @@ int packing_was_description::read_arguments(
 		int argc, std::string *argv,
 	int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+	if (f_v) {
+		cout << "packing_was_description::read_arguments" << endl;
+	}
+
 	int i;
 	other::data_structures::string_tools ST;
 
 
 
-	cout << "packing_was_description::read_arguments" << endl;
+	if (f_v) {
+		cout << "packing_was_description::read_arguments" << endl;
+	}
 	for (i = 0; i < argc; i++) {
 
 		if (ST.stringcmp(argv[i], "-H") == 0) {
 			f_H = true;
-			cout << "reading -H" << endl;
+			if (f_v) {
+				cout << "reading -H" << endl;
+			}
 			H_label.assign(argv[++i]);
 			H_Descr = NEW_OBJECT(group_constructions::linear_group_description);
 			i += H_Descr->read_arguments(argc - (i + 1),
 				argv + i + 1, verbose_level);
 
 			//i++;
-			cout << "done reading -H" << endl;
-			cout << "i = " << i << endl;
-			cout << "argc = " << argc << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
+			if (f_v) {
+				cout << "done reading -H" << endl;
+				cout << "i = " << i << endl;
+				cout << "argc = " << argc << endl;
+				if (i < argc) {
+					cout << "next argument is " << argv[i] << endl;
+				}
 			}
 		}
 
 		else if (ST.stringcmp(argv[i], "-N") == 0) {
 			f_N = true;
-			cout << "reading -N" << endl;
+			if (f_v) {
+				cout << "reading -N" << endl;
+			}
 			N_label.assign(argv[++i]);
 			N_Descr = NEW_OBJECT(group_constructions::linear_group_description);
 			i += N_Descr->read_arguments(argc - (i + 1),
 				argv + i + 1, verbose_level);
 
 			//i++;
-			cout << "done reading -N" << endl;
-			cout << "i = " << i << endl;
-			cout << "argc = " << argc << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
+			if (f_v) {
+				cout << "done reading -N" << endl;
+				cout << "i = " << i << endl;
+				cout << "argc = " << argc << endl;
+				if (i < argc) {
+					cout << "next argument is " << argv[i] << endl;
+				}
 			}
 		}
 
 		else if (ST.stringcmp(argv[i], "-fixp_clique_types_save_individually") == 0) {
 			f_fixp_clique_types_save_individually = true;
-			cout << "-fixp_clique_types_save_individually " << endl;
+			if (f_v) {
+				cout << "-fixp_clique_types_save_individually " << endl;
+			}
 		}
 
 
 		else if (ST.stringcmp(argv[i], "-process_long_orbits") == 0) {
 			f_process_long_orbits = true;
 			Long_Orbits_Descr = NEW_OBJECT(packing_long_orbits_description);
-			cout << "-process_long_orbits " << endl;
+			if (f_v) {
+				cout << "-process_long_orbits " << endl;
+			}
 			i += Long_Orbits_Descr->read_arguments(argc - (i + 1),
 				argv + i + 1, verbose_level);
 
-			cout << "done reading -process_long_orbits " << endl;
-			cout << "i = " << i << endl;
-			cout << "argc = " << argc << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
+			if (f_v) {
+				cout << "done reading -process_long_orbits " << endl;
+				cout << "i = " << i << endl;
+				cout << "argc = " << argc << endl;
+				if (i < argc) {
+					cout << "next argument is " << argv[i] << endl;
+				}
 			}
 		}
 
@@ -127,13 +148,17 @@ int packing_was_description::read_arguments(
 		else if (ST.stringcmp(argv[i], "-spread_tables_prefix") == 0) {
 			f_spread_tables_prefix = true;
 			spread_tables_prefix.assign(argv[++i]);
-			cout << "-spread_tables_prefix "
-				<< spread_tables_prefix << endl;
+			if (f_v) {
+				cout << "-spread_tables_prefix "
+					<< spread_tables_prefix << endl;
+			}
 		}
 
 		else if (ST.stringcmp(argv[i], "-report") == 0) {
 			f_report = true;
-			cout << "-report " << endl;
+			if (f_v) {
+				cout << "-report " << endl;
+			}
 		}
 
 		else if (ST.stringcmp(argv[i], "-exact_cover") == 0) {
@@ -142,13 +167,15 @@ int packing_was_description::read_arguments(
 			i += ECA->read_arguments(argc - (i + 1),
 				argv + i + 1, verbose_level);
 
-			cout << "done reading -exact_cover " << endl;
-			cout << "i = " << i << endl;
-			cout << "argc = " << argc << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
+			if (f_v) {
+				cout << "done reading -exact_cover " << endl;
+				cout << "i = " << i << endl;
+				cout << "argc = " << argc << endl;
+				if (i < argc) {
+					cout << "next argument is " << argv[i] << endl;
+				}
+				cout << "-exact_cover " << endl;
 			}
-			cout << "-exact_cover " << endl;
 		}
 
 		else if (ST.stringcmp(argv[i], "-isomorph") == 0) {
@@ -157,18 +184,22 @@ int packing_was_description::read_arguments(
 			i += IA->read_arguments(argc - (i + 1),
 				argv + i + 1, verbose_level);
 
-			cout << "done reading -isomorph " << endl;
-			cout << "i = " << i << endl;
-			cout << "argc = " << argc << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
+			if (f_v) {
+				cout << "done reading -isomorph " << endl;
+				cout << "i = " << i << endl;
+				cout << "argc = " << argc << endl;
+				if (i < argc) {
+					cout << "next argument is " << argv[i] << endl;
+				}
+				cout << "-isomorph " << endl;
 			}
-			cout << "-isomorph " << endl;
 		}
 
 		else if (ST.stringcmp(argv[i], "-regular_packing") == 0) {
 			f_regular_packing = true;
-			cout << "-regular_packing " << endl;
+			if (f_v) {
+				cout << "-regular_packing " << endl;
+			}
 		}
 
 
@@ -182,7 +213,9 @@ int packing_was_description::read_arguments(
 		}
 	} // next i
 
-	cout << "packing_was_description::read_arguments done" << endl;
+	if (f_v) {
+		cout << "packing_was_description::read_arguments done" << endl;
+	}
 	return i + 1;
 }
 

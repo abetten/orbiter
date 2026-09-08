@@ -399,14 +399,14 @@ void any_group::create_latex_report(
 
 
 
-			actions::action_global Action_global;
-
+			//actions::action_global Action_global;
+			actions::action_latex_interface Action_latex_interface;
 
 			if (f_v) {
 				cout << "any_group::create_latex_report "
-						"before Action_global.report" << endl;
+						"before Action_latex_interface.report" << endl;
 			}
-			Action_global.report(
+			Action_latex_interface.report(
 					ost,
 					label,
 					label_tex,
@@ -417,7 +417,7 @@ void any_group::create_latex_report(
 					verbose_level);
 			if (f_v) {
 				cout << "any_group::create_latex_report "
-						"after Action_global.report" << endl;
+						"after Action_latex_interface.report" << endl;
 			}
 
 			ost << endl;
@@ -500,14 +500,15 @@ void any_group::create_order_invariant(
 
 
 
-			actions::action_global Action_global;
+			//actions::action_global Action_global;
+			actions::action_latex_interface Action_latex_interface;
 
 
 			if (f_v) {
 				cout << "any_group::create_order_invariant "
-						"before Action_global.report" << endl;
+						"before Action_latex_interface.report" << endl;
 			}
-			Action_global.report_order_invariant(
+			Action_latex_interface.report_order_invariant(
 					ost,
 					label,
 					label_tex,
@@ -517,7 +518,7 @@ void any_group::create_order_invariant(
 					verbose_level);
 			if (f_v) {
 				cout << "any_group::create_order_invariant "
-						"after Action_global.report" << endl;
+						"after Action_latex_interface.report" << endl;
 			}
 
 			ost << endl;
@@ -601,14 +602,15 @@ void any_group::create_group_table_report(
 					extra_praeamble /* extra_praeamble */);
 
 
-			actions::action_global Action_global;
+			//actions::action_global Action_global;
+			actions::action_latex_interface Action_latex_interface;
 
 
 			if (f_v) {
 				cout << "any_group::create_group_table_report "
-						"before Action_global.report_group_table" << endl;
+						"before Action_latex_interface.report_group_table" << endl;
 			}
-			Action_global.report_group_table(
+			Action_latex_interface.report_group_table(
 					ost,
 					label,
 					label_tex,
@@ -618,7 +620,7 @@ void any_group::create_group_table_report(
 					verbose_level);
 			if (f_v) {
 				cout << "any_group::create_group_table_report "
-						"after Action_global.report_group_table" << endl;
+						"after Action_latex_interface.report_group_table" << endl;
 			}
 
 
@@ -684,14 +686,15 @@ void any_group::create_report_sylow_subgroups(
 					extra_praeamble /* extra_praeamble */);
 
 
-			actions::action_global Action_global;
+			//actions::action_global Action_global;
+			actions::action_latex_interface Action_latex_interface;
 
 
 			if (f_v) {
 				cout << "any_group::create_report_sylow_subgroups "
-						"before Action_global.report_sylow" << endl;
+						"before Action_latex_interface.report_sylow" << endl;
 			}
-			Action_global.report_sylow(
+			Action_latex_interface.report_sylow(
 					ost,
 					label,
 					label_tex,
@@ -700,7 +703,7 @@ void any_group::create_report_sylow_subgroups(
 					verbose_level);
 			if (f_v) {
 				cout << "any_group::create_report_sylow_subgroups "
-						"after Action_global.report_sylow" << endl;
+						"after Action_latex_interface.report_sylow" << endl;
 			}
 
 
@@ -1332,9 +1335,10 @@ void any_group::do_find_subgroups(
 			true /*f_enlarged_page*/, true /* f_pagenumbers*/,
 			extras_for_preamble);
 
-		actions::action_global Action_global;
+		//actions::action_global Action_global;
+		actions::action_latex_interface Action_latex_interface;
 
-		Action_global.report_groups_and_normalizers(
+		Action_latex_interface.report_groups_and_normalizers(
 				A, fp,
 				nb_subgroups, H_gens, N_gens,
 				verbose_level);
@@ -4677,7 +4681,7 @@ void any_group::test_inverse(
 
 
 	{
-		int i, j, k;
+		int i; //, j, k;
 		int ret;
 
 

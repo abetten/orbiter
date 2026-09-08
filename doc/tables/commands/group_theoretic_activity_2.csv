@@ -3,14 +3,6 @@ ROW,C1,C2,C3
 1,"Group theoretic activities (Part 2)",,
 1,"\verb'-find_singer_cycle' ","  ","Finds all Singer cycles whose matrix is a companion matrix. "
 1,"\verb'-classes_based_on_normal_form' "," "," Lists all possible rational normal forms of a general linear group. "
-1,"\verb'-normalizer' ","  ","See Section~\ref{sec:group:magma}."
-1,"\verb'-centralizer_of_element' ","  ","See Section~\ref{sec:group:magma}."
-1,"\verb'-normalizer_of_cyclic_subgroup' ","  ","Computes the normalizer of a cyclic group, see Section~\ref{sec:group:magma}."
-1,"\verb'-get_class_representatives' "," orbits ","Returns the chosen set of representatives of the conjugacy classes of the group. The classes must have been computed earlier using an orbits object, see Table~\ref{tab:orbits:2}. "
-1,"\verb'-elements_by_class' "," order i orbits ","Returns the elements of the i-th class whose elements have the given order. The classes must have been computed earlier using an orbits object, see Table~\ref{tab:orbits:2}. "
-1,"\verb'-split_by_classes' "," fname column orbits "," Splits the sets from the given csv file in the given column accoding to the different conjugacy classes of the group. The classes must have been computed earlier using an orbits object, see Table~\ref{tab:orbits:2}. "
-1,"\verb'-identify_elements_by_class' "," fname column supergroup orbits"," Identifies the conjugacy class of each of the elements in the given column in the given file. The classes must have been computed earlier using an orbits object, see Table~\ref{tab:orbits:2}. "
-1,"\verb'-find_subgroup' "," go"," Finds all subgroups of the given order. A latex report is produced."
 1,"\verb'-conjugacy_class_of' "," label $g$ "," Computes the conjugacy class of $g$. "
 1,"\verb'-isomorphism_Klein_quadric' "," fname "," "
 1,"\verb'-print_elements' "," ","Produces a printout of all group elements. "
@@ -25,4 +17,3 @@ ROW,C1,C2,C3
 1,"\verb'-move_a_b' "," a b ","Determine a group element mapping a to b. Computes the stabilizer of b in the given group $G$ (the group for which the activity is applied). "
 1,"\verb'-rational_normal_form' "," element ","Computes the rational normal form of the given group element (must be a matrix group). "
 END
-1,"\verb'-classes' ","  ","Computes the conjugacy classes of elements, see Section~\ref{sec:group:magma}."

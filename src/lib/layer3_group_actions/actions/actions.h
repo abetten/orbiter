@@ -759,7 +759,6 @@ public:
 			int verbose_level);
 	void rational_normal_form(
 			actions::action *A,
-			//std::string &element_given,
 			int *element_given,
 			int *Basis1,
 			int *Rational_normal_form,
@@ -773,59 +772,6 @@ public:
 
 
 
-	// orbiter data files:
-	void read_orbit_rep_and_candidates_from_files_and_process(
-			action *A,
-			std::string &prefix,
-		int level, int orbit_at_level, int level_of_candidates_file,
-		void (*early_test_func_callback)(long int *S, int len,
-			long int *candidates, int nb_candidates,
-			long int *good_candidates, int &nb_good_candidates,
-			void *data, int verbose_level),
-		void *early_test_func_callback_data,
-		long int *&starter,
-		int &starter_sz,
-		groups::sims *&Stab,
-		groups::strong_generators *&Strong_gens,
-		long int *&candidates,
-		int &nb_candidates,
-		int &nb_cases,
-		int verbose_level);
-	void read_orbit_rep_and_candidates_from_files(
-			action *A,
-			std::string &prefix,
-		int level, int orbit_at_level, int level_of_candidates_file,
-		long int *&starter,
-		int &starter_sz,
-		groups::sims *&Stab,
-		groups::strong_generators *&Strong_gens,
-		long int *&candidates,
-		int &nb_candidates,
-		int &nb_cases,
-		int verbose_level);
-	void read_representatives(
-			std::string &fname,
-		int *&Reps, int &nb_reps, int &size, int verbose_level);
-	void read_representatives_and_strong_generators(
-			std::string &fname,
-		int *&Reps,
-		char **&Aut_ascii, int &nb_reps,
-		int &size, int verbose_level);
-	void read_file_and_print_representatives(
-			action *A,
-			std::string &fname,
-		int f_print_stabilizer_generators, int verbose_level);
-	void read_set_and_stabilizer(
-			action *A,
-			std::string &fname,
-		int no, long int *&set, int &set_sz, groups::sims *&stab,
-		groups::strong_generators *&Strong_gens,
-		int &nb_cases,
-		int verbose_level);
-	// reads an orbiter data file
-
-
-
 	other::data_structures::set_of_sets *set_of_sets_copy_and_apply(
 			action *A,
 			int *Elt,
@@ -835,6 +781,118 @@ public:
 			actions::action *A_previous,
 			int k,
 			int verbose_level);
+
+	void compute_projectivity_subgroup(
+			action *A,
+			groups::strong_generators *&projectivity_gens,
+			groups::strong_generators *Aut_gens,
+			int verbose_level);
+
+#if 0
+	void all_elements(
+			action *A,
+			data_structures_groups::vector_ge *&vec,
+			int verbose_level);
+	// unused code
+	void all_elements_save_csv(
+			action *A,
+			std::string &fname, int verbose_level);
+	// unused code
+#endif
+
+	void report_induced_action_on_set_and_kernel(
+		std::ostream &file,
+		actions::action *A_base,
+		actions::action *A2,
+		groups::sims *Stab, int size, long int *set,
+		int verbose_level);
+	// called from isomorph
+	void products_of_pairs(
+			data_structures_groups::vector_ge *Elements,
+			data_structures_groups::vector_ge *&Products,
+			int verbose_level);
+	void order_of_products_of_pairs(
+			data_structures_groups::vector_ge *Elements,
+			std::string &label,
+			int verbose_level);
+	void apply_isomorphism_wedge_product_4to6_and_write_file(
+			actions::action *A_wedge,
+			data_structures_groups::vector_ge *vec_in,
+			std::string &label_in,
+			int verbose_level);
+	void conjugate_and_write_to_file(
+			actions::action *A,
+			std::string &label_of_elements,
+			int *conjugate_data,
+			data_structures_groups::vector_ge *Elements,
+			int verbose_level);
+	void map_a_set_based_on_hdl(
+			long int *set,
+			long int *image_set,
+			int set_size,
+			actions::action *A_base, actions::action *A_induced,
+			int hdl,
+			int verbose_level);
+
+
+};
+
+// ToDo: global function, to be used by function pointer in known_groups::init_orthogonal_group_with_O
+
+void callback_choose_random_generator_orthogonal(
+		int iteration,
+	int *Elt, void *data, int verbose_level);
+
+
+// #############################################################################
+// action_latex_interface.cpp
+// #############################################################################
+
+
+//! latex interface for the action class
+
+class action_latex_interface {
+
+public:
+	actions::action *A;
+
+	action_latex_interface();
+	~action_latex_interface();
+	void init(
+			actions::action *A, int verbose_level);
+	void report(
+			std::ostream &ost, int f_sims, groups::sims *S,
+			int f_strong_gens, groups::strong_generators *SG,
+			other::graphics::draw_options *LG_Draw_options,
+			int verbose_level);
+	// reports the sims object from the arguments
+	void report_base(
+			std::ostream &ost,
+			int verbose_level);
+	void report_group_name_and_degree(
+			std::ostream &ost,
+			int verbose_level);
+	void report_type_of_action(
+			std::ostream &ost,
+			int verbose_level);
+	void report_what_we_act_on(
+			std::ostream &ost,
+			int verbose_level);
+	void list_elements_as_permutations_vertically(
+			data_structures_groups::vector_ge *gens,
+			std::ostream &ost);
+	void report_basic_orbits(
+			std::ostream &ost);
+	void latex_all_points(
+			std::ostream &ost);
+	void latex_point_set(
+			std::ostream &ost,
+			long int *set, int sz, int verbose_level);
+	void write_set_of_elements_latex_file(
+			std::string &fname,
+			std::string &title, int *Elt, int nb_elts);
+
+
 	void report_strong_generators(
 			std::ostream &ost,
 			groups::strong_generators *SG,
@@ -899,110 +957,6 @@ public:
 			groups::strong_generators *H_gens,
 			groups::strong_generators *N_gens,
 			int verbose_level);
-	void compute_projectivity_subgroup(
-			action *A,
-			groups::strong_generators *&projectivity_gens,
-			groups::strong_generators *Aut_gens,
-			int verbose_level);
-	void all_elements(
-			action *A,
-			data_structures_groups::vector_ge *&vec,
-			int verbose_level);
-	// unused code
-	void all_elements_save_csv(
-			action *A,
-			std::string &fname, int verbose_level);
-	// unused code
-	void report_induced_action_on_set_and_kernel(
-		std::ostream &file,
-		actions::action *A_base,
-		actions::action *A2,
-		groups::sims *Stab, int size, long int *set,
-		int verbose_level);
-	// called from isomorph
-	void products_of_pairs(
-			data_structures_groups::vector_ge *Elements,
-			data_structures_groups::vector_ge *&Products,
-			int verbose_level);
-	void order_of_products_of_pairs(
-			data_structures_groups::vector_ge *Elements,
-			std::string &label,
-			int verbose_level);
-	void apply_isomorphism_wedge_product_4to6_and_write_file(
-			actions::action *A_wedge,
-			data_structures_groups::vector_ge *vec_in,
-			std::string &label_in,
-			int verbose_level);
-	void conjugate_and_write_to_file(
-			actions::action *A,
-			std::string &label_of_elements,
-			int *conjugate_data,
-			data_structures_groups::vector_ge *Elements,
-			int verbose_level);
-	void map_a_set_based_on_hdl(
-			long int *set,
-			long int *image_set,
-			int set_size,
-			actions::action *A_base, actions::action *A_induced,
-			int hdl,
-			int verbose_level);
-
-
-};
-
-void callback_choose_random_generator_orthogonal(
-		int iteration,
-	int *Elt, void *data, int verbose_level);
-	// for use in action_init.cpp
-
-
-// #############################################################################
-// action_latex_interface.cpp
-// #############################################################################
-
-
-//! latex interface for the action class
-
-class action_latex_interface {
-
-public:
-	actions::action *A;
-
-	action_latex_interface();
-	~action_latex_interface();
-	void init(
-			actions::action *A, int verbose_level);
-	void report(
-			std::ostream &ost, int f_sims, groups::sims *S,
-			int f_strong_gens, groups::strong_generators *SG,
-			other::graphics::draw_options *LG_Draw_options,
-			int verbose_level);
-	// reports the sims object from the arguments
-	void report_base(
-			std::ostream &ost,
-			int verbose_level);
-	void report_group_name_and_degree(
-			std::ostream &ost,
-			int verbose_level);
-	void report_type_of_action(
-			std::ostream &ost,
-			int verbose_level);
-	void report_what_we_act_on(
-			std::ostream &ost,
-			int verbose_level);
-	void list_elements_as_permutations_vertically(
-			data_structures_groups::vector_ge *gens,
-			std::ostream &ost);
-	void report_basic_orbits(
-			std::ostream &ost);
-	void latex_all_points(
-			std::ostream &ost);
-	void latex_point_set(
-			std::ostream &ost,
-			long int *set, int sz, int verbose_level);
-	void write_set_of_elements_latex_file(
-			std::string &fname,
-			std::string &title, int *Elt, int nb_elts);
 
 };
 

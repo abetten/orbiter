@@ -299,12 +299,17 @@ public:
 
 
 	int f_projective;
+
 	int f_general;
+
 	int f_affine;
+
 	int f_GL_d_q_wr_Sym_n;
+
 	int f_orthogonal;
 	int f_orthogonal_p;
 	int f_orthogonal_m;
+
 	int GL_wreath_Sym_d;
 	int GL_wreath_Sym_n;
 
@@ -345,16 +350,20 @@ public:
 	int f_identity_group;
 	std::string subgroup_fname;
 	std::string subgroup_label;
+
 	int f_orthogonal_group;
 	int orthogonal_group_epsilon;
 
 	int f_on_tensors;
 	int f_on_rank_one_tensors;
 
+
+
 	int f_subgroup_by_generators;
 	std::string subgroup_order_text;
 	int nb_subgroup_generators;
 	std::string subgroup_generators_label;
+
 
 	int f_Janko1;
 
@@ -684,6 +693,9 @@ public:
 
 	other::data_structures::page_storage *Page_storage;
 
+	combinatorics::other_combinatorics::combinatorics_domain *Combi;
+
+
 	permutation_representation_domain();
 	~permutation_representation_domain();
 	void allocate();
@@ -834,7 +846,7 @@ public:
 	actions::action *A_on_hyperplanes;
 
 
-	// The new permutation domain is partitioned into three parts:
+	// The new permutation domain is partitioned into two parts:
 	// A) the two element set {0,1},
 	// B) the new domain obtained from P,
 	// the projective space on which M acts.

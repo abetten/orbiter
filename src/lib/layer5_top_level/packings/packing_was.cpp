@@ -140,7 +140,7 @@ void packing_was::init(
 		cout << "packing_was::init "
 				"before init_H" << endl;
 	}
-	init_H(verbose_level - 3);
+	init_H(verbose_level - 1);
 	if (f_v) {
 		cout << "packing_was::init "
 				"after init_H" << endl;
@@ -156,7 +156,7 @@ void packing_was::init(
 		cout << "packing_was::init "
 				"before init_N" << endl;
 	}
-	init_N(verbose_level - 3);
+	init_N(verbose_level - 1);
 	if (f_v) {
 		cout << "packing_was::init "
 				"after init_N" << endl;
@@ -171,7 +171,7 @@ void packing_was::init(
 				"before compute_H_orbits_and_reduce" << endl;
 	}
 	compute_H_orbits_and_reduce(
-			verbose_level);
+			verbose_level - 2);
 	if (f_v) {
 		cout << "packing_was::init "
 				"after compute_H_orbits_and_reduce" << endl;
@@ -182,7 +182,8 @@ void packing_was::init(
 		cout << "packing_was::compute_N_orbits_and_reduce "
 				"before compute_N_orbits_on_lines" << endl;
 	}
-	compute_N_orbits_on_lines(verbose_level);
+	compute_N_orbits_on_lines(
+			verbose_level - 2);
 	if (f_v) {
 		cout << "packing_was::compute_N_orbits_and_reduce "
 				"after compute_N_orbits_on_lines" << endl;

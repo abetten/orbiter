@@ -404,6 +404,7 @@ public:
 			int print_interval,
 			groups::orbits_on_something *&Orb,
 			int verbose_level);
+#if 0
 	void orbits_on_set_system_from_file(
 			groups::any_group *AG,
 			std::string &fname_csv,
@@ -412,6 +413,7 @@ public:
 	void orbits_on_set_from_file(
 			groups::any_group *AG,
 			std::string &fname_csv, int verbose_level);
+#endif
 	void orbit_of(
 			groups::any_group *AG,
 			int point_idx, int verbose_level);
