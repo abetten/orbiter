@@ -1018,8 +1018,15 @@ void interface_combinatorics::worker(
 
 		combinatorics::tactical_decompositions::tactical_decomposition_domain Tactical_decomposition_domain;
 
+		// latex report:
+		Tactical_decomposition_domain.do_tdo_report(
+				tdo_print_fname, verbose_level);
+
+
+		// console output:
 		Tactical_decomposition_domain.do_tdo_print(
 				tdo_print_fname, verbose_level);
+
 	}
 	else if (f_convert_stack_to_tdo) {
 

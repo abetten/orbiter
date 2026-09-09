@@ -633,9 +633,9 @@ void diophant::print2(
 	}
 	//if (f_x_max) {
 		for (j = 0; j < n; j++) {
-			cout << x_min[j] << " \\le x_{" << j << "} \\le " << x_max[j] << ", ";
+			cout << x_min[j] << " \\le x_{" << j << "} \\le " << x_max[j] << ", " << endl;
 		}
-		cout << endl;
+		//cout << endl;
 	//}
 	if (f_has_sum) {
 		cout << "sum = " << sum << endl;

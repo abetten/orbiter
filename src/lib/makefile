@@ -151,6 +151,7 @@ ORBITER_MODULES= \
 		layer1_foundations/combinatorics/tactical_decompositions/tactical_decomposition_domain.o \
 		layer1_foundations/combinatorics/tactical_decompositions/tdo_data.o \
 		layer1_foundations/combinatorics/tactical_decompositions/tdo_refinement_description.o \
+		layer1_foundations/combinatorics/tactical_decompositions/tdo_refinement_output.o \
 		layer1_foundations/combinatorics/tactical_decompositions/tdo_refinement.o \
 		layer1_foundations/combinatorics/tactical_decompositions/tdo_scheme_compute.o \
 		layer1_foundations/combinatorics/tactical_decompositions/tdo_scheme_synthetic.o \

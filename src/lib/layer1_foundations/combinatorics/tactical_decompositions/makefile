@@ -14,6 +14,7 @@ MODULES = \
 		tactical_decomposition_domain.o \
 		tdo_data.o \
 		tdo_refinement_description.o \
+		tdo_refinement_output.o \
 		tdo_refinement.o \
 		tdo_scheme_compute.o \
 		tdo_scheme_synthetic.o 

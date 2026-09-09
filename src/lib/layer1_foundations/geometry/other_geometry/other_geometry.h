@@ -560,6 +560,8 @@ public:
 			int n, int q);
 	//void test_Orthogonal(int epsilon, int k, int q);
 	//void test_orthogonal(int n, int q);
+
+
 	int &TDO_upper_bound(
 			int i, int j);
 	int &TDO_upper_bound_internal(
@@ -587,6 +589,9 @@ public:
 	void maxfit_table_compute();
 	int packing_number_via_maxfit(
 			int n, int k);
+
+
+
 	void do_inverse_isomorphism_klein_quadric(
 			algebra::field_theory::finite_field *F,
 			std::string &inverse_isomorphism_klein_quadric_matrix_A6,

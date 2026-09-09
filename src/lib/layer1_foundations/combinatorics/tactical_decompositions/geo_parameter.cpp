@@ -291,7 +291,8 @@ void geo_parameter::convert_single_to_stack(
 		row_level = nb_V + nb_B;
 		for (i = 0; i < nb_V; i++) {
 			for (j = 0; j < nb_B; j++) {
-				append_to_entries(row_level, 
+				append_to_entries(
+						row_level,
 					partition_number_row(i),
 					partition_number_col(j), 
 					scheme[i * nb_B + j]);
@@ -324,7 +325,8 @@ void geo_parameter::convert_single_to_stack(
 					}
 					w = xy / z;
 				}
-				append_to_entries(col_level, 
+				append_to_entries(
+						col_level,
 					partition_number_col(j), 
 					partition_number_row(i), 
 					w);
@@ -454,14 +456,18 @@ int geo_parameter::input_mode_single(
 			mapkey = str.substr(0, eqpos);
 			mapval = str.substr(eqpos + 1, str.size() - eqpos - 1);
 			if (mapkey == "type") {
-				if (mapval == "pt")
+				if (mapval == "pt") {
 					decomposition_type = POINTTACTICAL;
-				else if (mapval == "bt")
+				}
+				else if (mapval == "bt") {
 					decomposition_type = BLOCKTACTICAL;
-				else if (mapval == "geo")
+				}
+				else if (mapval == "geo") {
 					decomposition_type = POINTANDBLOCKTACTICAL;
-				else
+				}
+				else {
 					decomposition_type = UNKNOWNTYPE;
+				}
 			}
 			else if (mapkey == "ptanz" || mapkey == "nb_V") {
 				nb_V = ST.str2int(mapval);
@@ -471,15 +477,19 @@ int geo_parameter::input_mode_single(
 			}
 			else if (mapkey == "fuse") {
 #if 0
-				if (mapval == "tdo")
+				if (mapval == "tdo") {
 					fuse_type = FUSE_TYPE_TDO;
-				else if (mapval == "multi")
+				}
+				else if (mapval == "multi") {
 					fuse_type = FUSE_TYPE_MULTI;
+				}
 #endif
-				if (mapval == "simple" || mapval == "single")
+				if (mapval == "simple" || mapval == "single") {
 					fuse_type = FUSE_TYPE_SIMPLE;
-				else if (mapval == "double")
+				}
+				else if (mapval == "double") {
 					fuse_type = FUSE_TYPE_DOUBLE;
+				}
 				else {
 					cout << "fuse type not recognized" << endl;
 					exit(1);
@@ -627,7 +637,7 @@ int geo_parameter::input_mode_stack(
 #if defined(SYSTEMUNIX) || defined(SYSTEM_IS_MACINTOSH)
 	int f_v = (verbose_level >= 1);
 	string str;
-	int i, l, val, v1, v2, v3, v4;
+	int val, v1, v2, v3, v4;
 	
 	//part.clear();
 	//entries.clear();
@@ -643,6 +653,8 @@ int geo_parameter::input_mode_stack(
 		cout << "geo_parameter::input_mode_stack "
 				"read \"" << str << "\"" << endl;
 	}
+	label = str;
+#if 0
 	l = str.length();
 	if (l >= 1000 - 1) {
 		cout << "geo_parameter::input_mode_stack "
@@ -653,6 +665,7 @@ int geo_parameter::input_mode_stack(
 		label[i] = str[i];
 	}
 	label[l] = 0;
+#endif
 	if (f_v) {
 		cout << "geo_parameter::input_mode_stack "
 				"label='" << label << "'" << endl;
@@ -792,29 +805,29 @@ void geo_parameter::print_schemes(
 }
 
 void geo_parameter::print_schemes_tex(
-		tdo_scheme_synthetic &G)
+		tdo_scheme_synthetic &G, int f_subscripts)
 {
 	cout << "decomposition " << label << ":" << endl;
-	G.print_scheme_tex_fancy(cout, LAMBDA_SCHEME, true, label);
+	G.print_scheme_tex_fancy(cout, LAMBDA_SCHEME, true, f_subscripts, label);
 	if (row_level >= 2) {
-		G.print_scheme_tex_fancy(cout, ROW_SCHEME, true, label);
+		G.print_scheme_tex_fancy(cout, ROW_SCHEME, true, f_subscripts, label);
 	}
 	if (col_level >= 2) {
-		G.print_scheme_tex_fancy(cout, COL_SCHEME, true, label);
+		G.print_scheme_tex_fancy(cout, COL_SCHEME, true, f_subscripts, label);
 	}
 	if (extra_row_level > 2) {
-		G.print_scheme_tex_fancy(cout, EXTRA_ROW_SCHEME, true, label);
+		G.print_scheme_tex_fancy(cout, EXTRA_ROW_SCHEME, true, f_subscripts, label);
 	}
 	if (extra_col_level > 2) {
-		G.print_scheme_tex_fancy(cout, EXTRA_COL_SCHEME, true, label);
+		G.print_scheme_tex_fancy(cout, EXTRA_COL_SCHEME, true, f_subscripts, label);
 	}
 }
 
 void geo_parameter::print_scheme_tex(
 		std::ostream &ost,
-		tdo_scheme_synthetic &G, int h)
+		tdo_scheme_synthetic &G, int h, int f_subscripts)
 {
-	G.print_scheme_tex_fancy(ost, h, true, label);
+	G.print_scheme_tex_fancy(ost, h, true, f_subscripts, label);
 }
 
 void geo_parameter::print_C_source()
@@ -823,8 +836,9 @@ void geo_parameter::print_C_source()
 	
 	cout << "char *name = \"" << label << "\";" << endl;
 	cout << "int part[] = {";
-	for (i = 0; i < nb_parts; i++) 
+	for (i = 0; i < nb_parts; i++) {
 		cout << part[i] << ",";
+	}
 	cout << "-1};" << endl;
 	cout << "// this is the partition of rows and columns" << endl;
 	cout << "int entries[] = {" << endl;
@@ -902,8 +916,11 @@ void geo_parameter::convert_single_to_stack_fuse_simple_pt(
 
 
 	prev_scheme = NEW_int(nb_classes * nb_B);
+
 	for (I = 0; I < nb_classes; I++) {
-		block_length[I] = tdo_scheme_get_row_class_length_fused(G, h, 
+
+		block_length[I] = tdo_scheme_get_row_class_length_fused(
+				G, h,
 			class_first[I], class_len[I]);
 #if 0
 		l = class_len[I];
@@ -956,7 +973,8 @@ void geo_parameter::convert_single_to_stack_fuse_simple_pt(
 	} // next j
 	if (f_v) {
 		cout << "the previous col scheme is" << endl;
-		Int_vec_print_integer_matrix_width(cout,
+		Int_vec_print_integer_matrix_width(
+				cout,
 			prev_scheme, nb_classes, nb_B, nb_B, 4);
 	}
 	//part.clear();
@@ -999,18 +1017,22 @@ void geo_parameter::convert_single_to_stack_fuse_simple_pt(
 	for (I = 0; I < nb_classes; I++) {
 		for (j = 0; j < nb_B; j++) {
 			c = prev_scheme[I * nb_B + j];
-			if (I == 0)
+			if (I == 0) {
 				c1 = 0;
-			else
+			}
+			else {
 				c1 = I + 1;
-			if (j == 0)
+			}
+			if (j == 0) {
 				c2 = 1;
-			else
-				c2 = nb_classes + j;	
+			}
+			else {
+				c2 = nb_classes + j;
+			}
 			if (f_v) {
 				cout << "entry " << nb_entries << " : " << prev_level
 					<< " " << c2 << " " << c1 << " " << c << endl;
-				}
+			}
 			append_to_entries(prev_level, c2, c1, c);
 		}
 	}
@@ -1101,8 +1123,11 @@ void geo_parameter::convert_single_to_stack_fuse_simple_bt(
 			fuse, nb_B, class_first, class_len, nb_classes);
 
 	prev_scheme = NEW_int(nb_V * nb_classes);
+
 	for (J = 0; J < nb_classes; J++) {
-		block_length[J] = tdo_scheme_get_col_class_length_fused(G, h, 
+
+		block_length[J] = tdo_scheme_get_col_class_length_fused(
+				G, h,
 			class_first[J], class_len[J]);
 #if 0
 		l = class_len[J];
@@ -1154,7 +1179,8 @@ void geo_parameter::convert_single_to_stack_fuse_simple_bt(
 	} // next j
 	if (f_v) {
 		cout << "the previous row scheme is" << endl;
-		Int_vec_print_integer_matrix_width(cout,
+		Int_vec_print_integer_matrix_width(
+				cout,
 				prev_scheme, nb_V, nb_classes, nb_classes, 4);
 	}
 	nb_parts = 0;
@@ -1625,7 +1651,8 @@ void geo_parameter::cut_off_two_lines(
 	}
 	Entries[4 * nb_entries] = -1;
 	
-	TDO.init_TDO(Part, Entries, row_level, col_level, 
+	TDO.init_TDO(
+			Part, Entries, row_level, col_level,
 		extra_row_level, extra_col_level, 
 		lambda_level, 0/*verbose_level - 1*/);
 
@@ -1853,17 +1880,22 @@ void geo_parameter::copy(
 	GP2.extra_row_level = extra_row_level;
 	GP2.extra_col_level = extra_col_level;
 	//GP2.part.clear();
+
 	GP2.nb_parts = 0;
+
 	for (i = 0; i < nb_parts; i++) {
 		GP2.append_to_part(part[i]);
 		//GP2.part.push_back(part[i]);
 	}
 	//GP2.part.push_back(-1);
 	//GP2.nb_parts = nb_parts;
+
 	GP2.nb_entries = 0;
 	//GP2.entries.clear();
+
 	for (i = 0; i < nb_entries; i++) {
-		GP2.append_to_entries(entries[4 * i + 0],
+		GP2.append_to_entries(
+				entries[4 * i + 0],
 				entries[4 * i + 1],
 				entries[4 * i + 2],
 				entries[4 * i + 3]);
@@ -1902,9 +1934,12 @@ void geo_parameter::print_schemes()
 	cout << "geo_parameter::print_schemes "
 			"before TDO.init_TDO" << endl;
 #endif
-	TDO.init_TDO(Part, Entries, row_level, col_level, 
+	TDO.init_TDO(
+			Part, Entries, row_level, col_level,
 		extra_row_level, extra_col_level, 
-		lambda_level, 0/*verbose_level - 1*/);
+		lambda_level,
+		0/*verbose_level - 1*/);
+
 	//cout << "geo_parameter::print_schemes
 	//after TDO.init_TDO" << endl;
 			

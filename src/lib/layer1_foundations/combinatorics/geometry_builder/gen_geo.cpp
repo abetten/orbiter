@@ -210,6 +210,14 @@ void gen_geo::generate_geometries_and_process(
 	it = inc->iso_type_at_line[V - 1];
 
 
+
+	if (f_v) {
+		cout << "gen_geo::generate_geometries_and_process number of isomorphism types at line V - 1 = " << it->Canonical_forms->Objects.size() << endl;
+	}
+
+
+
+
 #if 0
 	if (GB->Descr->f_save_canonical_forms) {
 

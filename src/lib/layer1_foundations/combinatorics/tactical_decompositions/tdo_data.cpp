@@ -523,7 +523,7 @@ void tdo_data::solve_second_system(
 	nb_sol = 0;
 
 	if (f_use_mckay_solver) {
-		ret = D2->solve_first_mckay_once_option/*betten*/(
+		ret = D2->solve_first_mckay_once_option(
 			f_once, 0/*verbose_level - 4*/);
 	}
 	else {
@@ -580,8 +580,7 @@ void tdo_data::solve_second_system(
 					if (f_scale) {
 						a *= scaling;
 					}
-					distributions[nb_distributions * nb_line_types
-						+ first + j] = a;
+					distributions[nb_distributions * nb_line_types + first + j] = a;
 				}
 			}
 			nb_distributions++;

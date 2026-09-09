@@ -374,10 +374,10 @@ public:
 	void print_schemes(
 			tdo_scheme_synthetic &G);
 	void print_schemes_tex(
-			tdo_scheme_synthetic &G);
+			tdo_scheme_synthetic &G, int f_subscripts);
 	void print_scheme_tex(
 			std::ostream &ost,
-			tdo_scheme_synthetic &G, int h);
+			tdo_scheme_synthetic &G, int h, int f_subscripts);
 	void print_C_source();
 	void convert_single_to_stack_fuse_simple_pt(
 			int verbose_level);
@@ -472,6 +472,8 @@ public:
 			tactical_decompositions::tdo_refinement_description *Descr, int verbose_level);
 	void do_tdo_print(
 			std::string &fname, int verbose_level);
+	void do_tdo_report(
+			std::string &fname, int verbose_level);
 	void convert_stack_to_tdo(
 			std::string &stack_fname, int verbose_level);
 	void do_parameters_maximal_arc(
@@ -527,13 +529,20 @@ public:
 
 class tdo_data {
 public:
+
+	// the refinement partition w.r.t. the previous decomposition of the same kind
 	int *types_first;
 	int *types_len;
+
+
 	int *only_one_type;
 	int nb_only_one_type;
+
 	int *multiple_types;
 	int nb_multiple_types;
+
 	int *types_first2;
+
 	solvers::diophant *D1;
 	solvers::diophant *D2;
 
@@ -571,6 +580,7 @@ public:
 		int *classes_len, int f_scale, int scaling,
 		int *&line_types, int &nb_line_types,
 		int *&distributions, int &nb_distributions);
+
 };
 
 // #############################################################################
@@ -584,9 +594,13 @@ public:
 class tdo_refinement_description {
 	public:
 
+
+	// tdo_refinement.csv
+
 	int f_lambda3;
 	int lambda3, block_size;
 
+	// ToDo: not yet documented
 	int f_scale;
 	int scaling;
 
@@ -634,6 +648,50 @@ class tdo_refinement_description {
 
 
 // #############################################################################
+// tdo_refinement_output.cpp
+// #############################################################################
+
+
+
+//! the type and distribution data computed during a TDO refinement process
+
+class tdo_refinement_output {
+	public:
+
+
+	// the types can be of two types:
+	// line types or point types
+
+	int *types; // line_types or point_types
+	int nb_types; // nb_line_types or nb_point_types
+	int types_allocated;
+	int type_len; // line_type_len or point_type_len
+
+
+
+	// the distributions tell us how many objects
+	// of each type have been chosen:
+
+	int *distributions;
+	int nb_distributions;
+
+	//int cnt_second_system;
+
+
+	tdo_refinement_output();
+	~tdo_refinement_output();
+	void print_distribution(
+			std::ostream &ost);
+	void distribution_reverse_sorting(
+			int f_increasing, int verbose_level);
+
+
+};
+
+
+
+
+// #############################################################################
 // tdo_refinement.cpp
 // #############################################################################
 
@@ -672,45 +730,54 @@ class tdo_refinement {
 	void main_loop(
 			int verbose_level);
 	void do_it(
-			std::ofstream &g, int verbose_level);
+			std::ofstream &ost, int verbose_level);
 	void do_row_refinement(
-			std::ofstream &g,
+			std::ofstream &ost,
 			tdo_scheme_synthetic &G,
 			other::data_structures::partitionstack &P,
 			int verbose_level);
 	void do_col_refinement(
-			std::ofstream &g,
+			std::ofstream &ost,
 			tdo_scheme_synthetic &G,
 			other::data_structures::partitionstack &P,
 			int verbose_level);
 	void do_all_row_refinements(
-			std::string &label_in, std::ofstream &g,
+			std::string &label_in,
+			std::ofstream &ost,
 			tdo_scheme_synthetic &G,
-		int *point_types, int nb_point_types, int point_type_len,
-		int *distributions, int nb_distributions, int &nb_tactical,
-		int verbose_level);
+			tdo_refinement_output *Output,
+		//int *point_types, int nb_point_types, int point_type_len,
+		//int *distributions, int nb_distributions,
+			int &nb_tactical,
+			int verbose_level);
 	void do_all_column_refinements(
-			std::string &label_in, std::ofstream &g,
+			std::string &label_in,
+			std::ofstream &ost,
 			tdo_scheme_synthetic &G,
-		int *line_types, int nb_line_types, int line_type_len,
-		int *distributions, int nb_distributions, int &nb_tactical,
-		int verbose_level);
+			tdo_refinement_output *Output,
+		//int *line_types, int nb_line_types, int line_type_len,
+		//int *distributions, int nb_distributions,
+			int &nb_tactical,
+			int verbose_level);
 	int do_row_refinement(
 			int t,
 			std::string &label_in,
-			std::ofstream &g,
+			std::ofstream &ost,
 			tdo_scheme_synthetic &G,
-		int *point_types, int nb_point_types, int point_type_len,
-		int *distributions, int nb_distributions,
+			tdo_refinement_output *Output,
+		//int *point_types, int nb_point_types, int point_type_len,
+		//int *distributions, int nb_distributions,
 		int verbose_level);
 		// returns true or false depending on whether the
 		// refinement gave a tactical decomposition
 	int do_column_refinement(
-			int t, std::string &label_in,
-			std::ofstream &g,
+			int t,
+			std::string &label_in,
+			std::ofstream &ost,
 			tdo_scheme_synthetic &G,
-		int *line_types, int nb_line_types, int line_type_len,
-		int *distributions, int nb_distributions,
+			tdo_refinement_output *Output,
+		//int *line_types, int nb_line_types, int line_type_len,
+		//int *distributions, int nb_distributions,
 		int verbose_level);
 		// returns true or false depending on whether the
 		// refinement gave a tactical decomposition
@@ -868,7 +935,7 @@ public:
 			std::ostream &ost, int h);
 	void print_scheme_tex_fancy(
 			std::ostream &ost,
-			int h, int f_label, std::string &label);
+			int h, int f_label, int f_subscripts, std::string &label);
 	void compute_whether_first_inc_must_be_moved(
 			int *f_first_inc_must_be_moved, int verbose_level);
 	int count_nb_inc_from_row_scheme(
@@ -877,11 +944,10 @@ public:
 			int verbose_level);
 
 
-	int geometric_test_for_row_scheme(
+	void geometric_test_for_row_scheme(
 			other::data_structures::partitionstack &P,
-		int *point_types, int nb_point_types, int point_type_len,
-		int *distributions, int nb_distributions,
-		int f_omit1, int omit1, int verbose_level);
+			tdo_refinement_output *Output,
+			int f_omit1, int omit1, int verbose_level);
 	int geometric_test_for_row_scheme_level_s(
 			other::data_structures::partitionstack &P, int s,
 		int *point_types, int nb_point_types, int point_type_len,
@@ -891,12 +957,16 @@ public:
 		int verbose_level);
 
 
+	// refine rows:
+
+
 	int refine_rows(
 			int verbose_level,
 		int f_use_mckay, int f_once,
 		other::data_structures::partitionstack &P,
-		int *&point_types, int &nb_point_types, int &point_type_len,
-		int *&distributions, int &nb_distributions,
+		tdo_refinement_output *&Output,
+		//int *&point_types, int &nb_point_types, int &point_type_len,
+		//int *&distributions, int &nb_distributions,
 		int &cnt_second_system, solution_file_data *Sol,
 		int f_omit1, int omit1, int f_omit2, int omit2,
 		int f_use_packing_numbers,
@@ -904,15 +974,17 @@ public:
 		int f_do_the_geometric_test);
 	int refine_rows_easy(
 			int verbose_level,
-		int *&point_types, int &nb_point_types, int &point_type_len,
-		int *&distributions, int &nb_distributions,
+			tdo_refinement_output *&Output,
+		//int *&point_types, int &nb_point_types, int &point_type_len,
+		//int *&distributions, int &nb_distributions,
 		int &cnt_second_system);
 	int refine_rows_hard(
 			other::data_structures::partitionstack &P,
 			int verbose_level,
 		int f_use_mckay, int f_once,
-		int *&point_types, int &nb_point_types, int &point_type_len,
-		int *&distributions, int &nb_distributions,
+		tdo_refinement_output *&Output,
+		//int *&point_types, int &nb_point_types, int &point_type_len,
+		//int *&distributions, int &nb_distributions,
 		int &cnt_second_system,
 		int f_omit1, int omit1, int f_omit, int omit,
 		int f_use_packing_numbers, int f_dual_is_linear_space);
@@ -956,12 +1028,18 @@ public:
 		int *point_types, int nb_point_types,
 		int eqn_start, int &nb_eqns_used);
 
+
+	// refine columns:
+
+
 	int refine_columns(
 			int verbose_level, int f_once,
 			other::data_structures::partitionstack &P,
-		int *&line_types, int &nb_line_types, int &line_type_len,
-		int *&distributions, int &nb_distributions,
-		int &cnt_second_system, solution_file_data *Sol,
+			tdo_refinement_output *&Output,
+		//int *&line_types, int &nb_line_types, int &line_type_len,
+		//int *&distributions, int &nb_distributions,
+		int &cnt_second_system,
+		solution_file_data *Sol,
 		int f_omit1, int omit1, int f_omit, int omit,
 		int f_D1_upper_bound_x0, int D1_upper_bound_x0,
 		int f_use_mckay_solver,
@@ -969,8 +1047,9 @@ public:
 	int refine_cols_hard(
 			other::data_structures::partitionstack &P,
 		int verbose_level, int f_once,
-		int *&line_types, int &nb_line_types, int &line_type_len,
-		int *&distributions, int &nb_distributions,
+		tdo_refinement_output *&Output,
+		//int *&line_types, int &nb_line_types, int &line_type_len,
+		//int *&distributions, int &nb_distributions,
 		int &cnt_second_system, solution_file_data *Sol,
 		int f_omit1, int omit1, int f_omit, int omit,
 		int f_D1_upper_bound_x0, int D1_upper_bound_x0,
@@ -1019,8 +1098,10 @@ public:
 	int td3_refine_rows(
 			int verbose_level, int f_once,
 		int lambda3, int block_size,
-		int *&point_types, int &nb_point_types, int &point_type_len,
-		int *&distributions, int &nb_distributions);
+		tdo_refinement_output *&Output
+		//int *&point_types, int &nb_point_types, int &point_type_len,
+		//int *&distributions, int &nb_distributions
+		);
 	int td3_rows_setup_first_system(
 			int verbose_level,
 		int lambda3, int block_size, int lambda2,
@@ -1044,8 +1125,9 @@ public:
 			int verbose_level, int f_once,
 		int lambda3, int block_size,
 		int f_scale, int scaling,
-		int *&line_types, int &nb_line_types, int &line_type_len,
-		int *&distributions, int &nb_distributions);
+		tdo_refinement_output *&Output);
+		//int *&line_types, int &nb_line_types, int &line_type_len,
+		//int *&distributions, int &nb_distributions);
 	int td3_columns_setup_first_system(
 			int verbose_level,
 		int lambda3, int block_size, int lambda2,

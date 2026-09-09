@@ -536,6 +536,7 @@ namespace combinatorics {
 		class tactical_decomposition_domain;
 		class tdo_data;
 		class tdo_refinement_description;
+		class tdo_refinement_output;
 		class tdo_refinement;
 		class tdo_scheme_compute;
 		class tdo_scheme_synthetic;

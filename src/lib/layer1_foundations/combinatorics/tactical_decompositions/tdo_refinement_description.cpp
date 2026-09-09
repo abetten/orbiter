@@ -83,25 +83,11 @@ int tdo_refinement_description::read_arguments(
 				cout << "-lambda3 " << lambda3 << " " << block_size << endl;
 			}
 		}
-		if (ST.stringcmp(argv[i], "-scale") == 0) {
+		else if (ST.stringcmp(argv[i], "-scale") == 0) {
 			f_scale = true;
 			scaling = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-scale " << scaling << endl;
-			}
-		}
-		if (ST.stringcmp(argv[i], "-solution") == 0) {
-			//f_solution = true;
-			Sol->system_no.push_back(ST.strtoi(argv[++i]));
-			string s;
-
-			s.assign(argv[++i]);
-			Sol->solution_file.push_back(s);
-
-			if (f_v) {
-				cout << "-solution " << Sol->system_no[Sol->system_no.size() - 1]
-					<< " " << Sol->solution_file[Sol->solution_file.size() - 1] << endl;
-				Sol->nb_solution_files++;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-range") == 0) {
@@ -133,7 +119,7 @@ int tdo_refinement_description::read_arguments(
 				cout << "-o2 " << omit2 << endl;
 			}
 		}
-		if (ST.stringcmp(argv[i], "-D1_upper_bound_x0") == 0) {
+		else if (ST.stringcmp(argv[i], "-D1_upper_bound_x0") == 0) {
 			f_D1_upper_bound_x0 = true;
 			D1_upper_bound_x0 = ST.strtoi(argv[++i]);
 			if (f_v) {
@@ -186,7 +172,21 @@ int tdo_refinement_description::read_arguments(
 			f_input_file = true;
 			fname_in.assign(argv[++i]);
 			if (f_v) {
-				cout << "-input_file" << fname_in << endl;
+				cout << "-input_file " << fname_in << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-solution") == 0) {
+			//f_solution = true;
+			Sol->system_no.push_back(ST.strtoi(argv[++i]));
+			string s;
+
+			s.assign(argv[++i]);
+			Sol->solution_file.push_back(s);
+
+			if (f_v) {
+				cout << "-solution " << Sol->system_no[Sol->system_no.size() - 1]
+					<< " " << Sol->solution_file[Sol->solution_file.size() - 1] << endl;
+				Sol->nb_solution_files++;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
@@ -215,20 +215,6 @@ void tdo_refinement_description::print()
 	if (f_scale) {
 		cout << "-scale " << scaling << endl;
 	}
-#if 0
-	if (stringcmp(argv[i], "-solution") == 0) {
-		//f_solution = true;
-		Sol->system_no.push_back(strtoi(argv[++i]));
-		string s;
-
-		s.assign(argv[++i]);
-		Sol->solution_file.push_back(s);
-
-		cout << "-solution " << Sol->system_no[Sol->system_no.size() - 1]
-			<< " " << Sol->solution_file[Sol->solution_file.size() - 1] << endl;
-		Sol->nb_solution_files++;
-	}
-#endif
 	if (f_range) {
 		cout << "-range " << range_first << " " << range_len << endl;
 	}
@@ -268,6 +254,20 @@ void tdo_refinement_description::print()
 	if (f_input_file) {
 		cout << "-input_file " << fname_in << endl;
 	}
+#if 0
+	if (stringcmp(argv[i], "-solution") == 0) {
+		//f_solution = true;
+		Sol->system_no.push_back(strtoi(argv[++i]));
+		string s;
+
+		s.assign(argv[++i]);
+		Sol->solution_file.push_back(s);
+
+		cout << "-solution " << Sol->system_no[Sol->system_no.size() - 1]
+			<< " " << Sol->solution_file[Sol->solution_file.size() - 1] << endl;
+		Sol->nb_solution_files++;
+	}
+#endif
 
 }
 

@@ -140,13 +140,17 @@ void tactical_decomposition_domain::do_tdo_print(
 	int cnt;
 	int f_widor = false;
 	int f_doit = false;
+	int f_subscripts = false;
 
 	if (f_v) {
 		cout << "tactical_decomposition_domain::do_tdo_print" << endl;
 	}
 
+
+
 	cout << "opening file " << fname << " for reading" << endl;
 	ifstream f(fname);
+
 
 
 
@@ -202,8 +206,8 @@ void tactical_decomposition_domain::do_tdo_print(
 		}
 #endif
 		if (true /* f_tex */) {
-			GP.print_scheme_tex(cout, G, ROW_SCHEME);
-			GP.print_scheme_tex(cout, G, COL_SCHEME);
+			GP.print_scheme_tex(cout, G, ROW_SCHEME, f_subscripts);
+			GP.print_scheme_tex(cout, G, COL_SCHEME, f_subscripts);
 		}
 	}
 
@@ -212,6 +216,144 @@ void tactical_decomposition_domain::do_tdo_print(
 		cout << "tactical_decomposition_domain::do_tdo_print done" << endl;
 	}
 }
+
+
+void tactical_decomposition_domain::do_tdo_report(
+		std::string &fname, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int cnt;
+	int f_widor = false;
+	int f_doit = false;
+
+	int f_subscripts = false;
+
+
+	if (f_v) {
+		cout << "tactical_decomposition_domain::do_tdo_report" << endl;
+	}
+
+	cout << "opening file " << fname << " for reading" << endl;
+	ifstream f(fname);
+
+
+
+	tactical_decompositions::geo_parameter GP;
+	tactical_decompositions::tdo_scheme_synthetic G;
+
+
+	other::data_structures::string_tools ST;
+	string fname_report;
+
+	fname_report = fname;
+
+	ST.chop_off_extension(fname_report);
+
+
+	fname_report += "_report.tex";
+
+
+	{
+		ofstream ost(fname_report);
+
+
+		string title, author, extra_praeamble;
+
+		title = "TDO";
+
+
+		other::l1_interfaces::latex_interface L;
+
+		//latex_head_easy(fp);
+		L.head(ost,
+			false /* f_book */,
+			true /* f_title */,
+			title, author,
+			false /*f_toc */,
+			false /* f_landscape */,
+			false /* f_12pt */,
+			true /*f_enlarged_page */,
+			true /* f_pagenumbers*/,
+			extra_praeamble /* extra_praeamble */);
+
+
+
+
+
+		for (cnt = 0; ; cnt++) {
+			if (f.eof()) {
+				cout << "eof reached" << endl;
+				break;
+			}
+			if (f_widor) {
+				if (!GP.input(f)) {
+					//cout << "GP.input returns false" << endl;
+					break;
+				}
+			}
+			else {
+				if (!GP.input_mode_stack(f, verbose_level - 1)) {
+					//cout << "GP.input_mode_stack returns false" << endl;
+					break;
+				}
+			}
+
+			f_doit = true;
+
+			if (!f_doit) {
+				continue;
+			}
+
+			//cout << "before convert_single_to_stack" << endl;
+			//GP.convert_single_to_stack();
+			//cout << "after convert_single_to_stack" << endl;
+			//GP.write(g, label);
+
+			if (f_vv) {
+				cout << "tactical_decomposition_domain::do_tdo_report "
+						"before init_tdo_scheme" << endl;
+			}
+			if (f_v) {
+				cout << "tactical_decomposition_domain::do_tdo_report decomposition " << cnt << endl;
+			}
+			GP.init_tdo_scheme(G, verbose_level - 1);
+			if (f_vv) {
+				cout << "combinatorics_domain::do_tdo_report "
+						"after init_tdo_scheme" << endl;
+			}
+			//GP.print_schemes(G);
+
+	#if 0
+			if (f_C) {
+				GP.print_C_source();
+			}
+	#endif
+
+			ost << "\\subsubsection*{TDO Decomposition " << cnt << " $=$ " << GP.label << "}" << endl;
+
+			//ost << GP.label << endl;
+
+			GP.print_scheme_tex(ost, G, ROW_SCHEME, f_subscripts);
+			GP.print_scheme_tex(ost, G, COL_SCHEME, f_subscripts);
+
+		}
+
+		L.foot(ost);
+	}
+
+	other::orbiter_kernel_system::file_io Fio;
+
+	cout << "Written file " << fname_report << " of size "
+			<< Fio.file_size(fname_report) << endl;
+
+
+	if (f_v) {
+		cout << "tactical_decomposition_domain::do_tdo_report done" << endl;
+	}
+}
+
+
 
 void tactical_decomposition_domain::convert_stack_to_tdo(
 		std::string &stack_fname, int verbose_level)
