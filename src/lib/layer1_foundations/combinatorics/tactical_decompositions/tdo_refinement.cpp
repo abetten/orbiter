@@ -316,7 +316,6 @@ void tdo_refinement::do_row_refinement(
 		}
 
 		f_success = Tdo_scheme_synthetic->td3_refine_rows(
-				//Descr,
 				Output,
 				verbose_level - 1);
 
@@ -328,25 +327,46 @@ void tdo_refinement::do_row_refinement(
 	else {
 		if (f_v) {
 			cout << "tdo_refinement::do_row_refinement "
-					"before G->refine_rows" << endl;
+					"refining rows" << endl;
 		}
 
-		f_success = Tdo_scheme_synthetic->refine_rows(
-				//Descr,
-				Output,
-			cnt_second_system,
-			verbose_level - 1);
+		tdo_refine_rows *Tdo_refine_rows;
+
+
+		Tdo_refine_rows = NEW_OBJECT(tdo_refine_rows);
+
+		Tdo_refine_rows->init(
+				Tdo_scheme_synthetic,
+				verbose_level);
+
 
 		if (f_v) {
 			cout << "tdo_refinement::do_row_refinement "
-					"after G->refine_rows, nb_distributions = " << Output->nb_distributions << endl;
+					"before Tdo_refine_rows->refine_rows" << endl;
 		}
+		f_success = Tdo_refine_rows->refine_rows(
+				Output,
+				cnt_second_system,
+				verbose_level - 1);
+		if (f_v) {
+			cout << "tdo_refinement::do_row_refinement "
+					"after Tdo_refine_rows->refine_rows" << endl;
+		}
+
+		if (f_v) {
+			cout << "tdo_refinement::do_row_refinement "
+					"nb_distributions = " << Output->nb_distributions << endl;
+		}
+
+		FREE_OBJECT(Tdo_refine_rows);
+
 	}
 
 	if (f_success) {
 		if (Descr->f_reverse || Descr->f_reverse_inverse) {
 
-			Output->distribution_reverse_sorting(Descr->f_reverse_inverse, verbose_level - 1);
+			Output->distribution_reverse_sorting(
+					Descr->f_reverse_inverse, verbose_level - 1);
 
 		}
 		if (verbose_level >= 5) {
@@ -412,7 +432,6 @@ void tdo_refinement::do_col_refinement(
 		}
 
 		f_success = Tdo_scheme_synthetic->td3_refine_columns(
-				//Descr,
 				Output,
 				verbose_level - 1);
 
@@ -425,19 +444,40 @@ void tdo_refinement::do_col_refinement(
 	else {
 		if (f_v) {
 			cout << "tdo_refinement::do_col_refinement "
-					"before G.refine_columns" << endl;
+					"refining columns" << endl;
 		}
-		f_success = Tdo_scheme_synthetic->refine_columns(
-				//Descr,
-				Output,
-				cnt_second_system,
-				verbose_level - 1);
+
+		tdo_refine_cols *Tdo_refine_cols;
+
+
+		Tdo_refine_cols = NEW_OBJECT(tdo_refine_cols);
+
+		Tdo_refine_cols->init(
+				Tdo_scheme_synthetic,
+				verbose_level);
+
+
 
 		if (f_v) {
 			cout << "tdo_refinement::do_col_refinement "
-					"after G.refine_columns, n"
-					"b_distributions = " << Output->nb_distributions << endl;
+					"before Tdo_refine_cols->refine_columns" << endl;
 		}
+		f_success = Tdo_refine_cols->refine_columns(
+				Output,
+				cnt_second_system,
+				verbose_level - 1);
+		if (f_v) {
+			cout << "tdo_refinement::do_col_refinement "
+					"after Tdo_refine_cols->refine_columns" << endl;
+		}
+
+
+		if (f_v) {
+			cout << "tdo_refinement::do_col_refinement "
+					"nb_distributions = " << Output->nb_distributions << endl;
+		}
+
+		FREE_OBJECT(Tdo_refine_cols);
 	}
 	if (f_success) {
 		if (Descr->f_reverse || Descr->f_reverse_inverse) {

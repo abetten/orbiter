@@ -584,6 +584,151 @@ public:
 
 };
 
+
+
+// #############################################################################
+// tdo_refine_cols.cpp
+// #############################################################################
+
+
+
+//! tdo refinement of the columns
+
+class tdo_refine_cols {
+	public:
+
+	tdo_scheme_synthetic *Tdo_scheme_synthetic;
+
+
+	other::data_structures::partitionstack *Row_split;
+
+
+	tdo_refine_cols();
+	~tdo_refine_cols();
+	void init(
+			tdo_scheme_synthetic *Tdo_scheme_synthetic,
+			int verbose_level);
+
+	int refine_columns(
+			tdo_refinement_output *&Output,
+			int &cnt_second_system,
+			int verbose_level);
+	int refine_cols_hard(
+			tdo_refinement_output *&Output,
+			int &cnt_second_system,
+			int verbose_level);
+	void column_refinement_L1_L2(
+			int f_omit, int omit,
+			int &L1, int &L2,
+			int verbose_level);
+	int tdo_columns_setup_first_system(
+			tdo_data &T, int r,
+			int *&line_types, int &nb_line_types,
+			int verbose_level);
+	int tdo_columns_setup_second_system(
+			tdo_data &T,
+			int *&line_types, int &nb_line_types,
+			int verbose_level);
+	int tdo_columns_setup_second_system_eqns_joining(
+			tdo_data &T,
+			int *line_types, int nb_line_types,
+			int eqn_start,
+			int verbose_level);
+	void tdo_columns_setup_second_system_eqns_counting(
+			tdo_data &T,
+			int *line_types, int nb_line_types,
+			int eqn_start,
+			int verbose_level);
+	int tdo_columns_setup_second_system_eqns_upper_bound(
+			tdo_data &T,
+			int *line_types, int nb_line_types,
+			int eqn_start, int &nb_eqns_used,
+			int verbose_level);
+
+
+};
+
+
+
+// #############################################################################
+// tdo_refine_rows.cpp
+// #############################################################################
+
+
+
+//! tdo refinement of the rows
+
+class tdo_refine_rows {
+	public:
+
+	tdo_scheme_synthetic *Tdo_scheme_synthetic;
+
+
+	other::data_structures::partitionstack *Col_split;
+
+
+	tdo_refine_rows();
+	~tdo_refine_rows();
+	void init(
+			tdo_scheme_synthetic *Tdo_scheme_synthetic,
+			int verbose_level);
+	int refine_rows(
+			tdo_refinement_output *&Output,
+			int &cnt_second_system,
+			int verbose_level);
+	// called from tdo_refinement::do_row_refinement
+	// Even if the function returns false, Output must be deallocated.
+	int refine_rows_easy(
+			tdo_refinement_output *&Output,
+			int &cnt_second_system, int verbose_level);
+
+	int refine_rows_hard(
+			tdo_refinement_output *&Output,
+			int &cnt_second_system,
+			int verbose_level);
+	void row_refinement_L1_L2(
+			int f_omit, int omit,
+			int &L1, int &L2,
+			int verbose_level);
+	int tdo_rows_setup_first_system(
+			tdo_data &T, int r,
+			int *&point_types, int &nb_point_types,
+			int verbose_level);
+	int tdo_rows_setup_second_system(
+			tdo_data &T,
+			int *&point_types, int &nb_point_types,
+			int verbose_level);
+	int tdo_rows_setup_second_system_eqns_joining(
+			tdo_data &T,
+			int *point_types, int nb_point_types,
+			int eqn_offset,
+			int verbose_level);
+	int tdo_rows_setup_second_system_eqns_counting(
+			tdo_data &T,
+			int *point_types, int nb_point_types,
+			int eqn_offset,
+			int verbose_level);
+	int tdo_rows_setup_second_system_eqns_packing(
+			tdo_data &T,
+			int *point_types, int nb_point_types,
+			int eqn_start, int &nb_eqns_used,
+			int verbose_level);
+	void geometric_test_for_row_scheme(
+			tdo_refinement_output *Output,
+		int f_omit1, int omit1, int verbose_level);
+	int geometric_test_for_row_scheme_level_s(
+			int s,
+		int *point_types, int nb_point_types, int point_type_len,
+		int *distribution,
+		int *non_zero_blocks, int nb_non_zero_blocks,
+		int f_omit1, int omit1,
+		int verbose_level);
+
+
+};
+
+
+
 // #############################################################################
 // tdo_refinement_description.cpp
 // #############################################################################
@@ -944,116 +1089,6 @@ public:
 	int count_nb_inc_from_extra_row_scheme(
 			int verbose_level);
 
-
-	void geometric_test_for_row_scheme(
-			other::data_structures::partitionstack *Col_split,
-			tdo_refinement_output *Output,
-			int f_omit1, int omit1, int verbose_level);
-	int geometric_test_for_row_scheme_level_s(
-			other::data_structures::partitionstack *Col_split,
-			int s,
-			int *point_types, int nb_point_types, int point_type_len,
-			int *distribution,
-			int *non_zero_blocks, int nb_non_zero_blocks,
-			int f_omit1, int omit1,
-			int verbose_level);
-
-
-	// TDO scheme for linear spaces, refine rows:
-
-
-	int refine_rows(
-			tdo_refinement_output *&Output,
-			int &cnt_second_system,
-			int verbose_level);
-	int refine_rows_easy(
-			tdo_refinement_output *&Output,
-			int &cnt_second_system, int verbose_level);
-	int refine_rows_hard(
-			other::data_structures::partitionstack *Col_split,
-			tdo_refinement_output *&Output,
-			int &cnt_second_system,
-			int verbose_level);
-	void row_refinement_L1_L2(
-			other::data_structures::partitionstack *Col_split,
-			int f_omit, int omit,
-			int &L1, int &L2,
-			int verbose_level);
-	int tdo_rows_setup_first_system(
-			tdo_data &T, int r,
-			other::data_structures::partitionstack *Col_split,
-			int *&point_types, int &nb_point_types,
-			int verbose_level);
-	int tdo_rows_setup_second_system(
-			tdo_data &T,
-			other::data_structures::partitionstack *Col_split,
-			int *&point_types, int &nb_point_types,
-			int verbose_level);
-	int tdo_rows_setup_second_system_eqns_joining(
-			tdo_data &T,
-			other::data_structures::partitionstack *Col_split,
-			int *point_types, int nb_point_types,
-			int eqn_offset,
-			int verbose_level);
-	int tdo_rows_setup_second_system_eqns_counting(
-			tdo_data &T,
-			other::data_structures::partitionstack *Col_split,
-			int *point_types, int nb_point_types,
-			int eqn_offset,
-			int verbose_level);
-	int tdo_rows_setup_second_system_eqns_packing(
-			tdo_data &T,
-			other::data_structures::partitionstack *Col_split,
-			int *point_types, int nb_point_types,
-			int eqn_start, int &nb_eqns_used,
-			int verbose_level);
-
-
-	// TDO scheme for linear spaces, refine columns:
-
-
-	int refine_columns(
-			tdo_refinement_output *&Output,
-			int &cnt_second_system,
-			int verbose_level);
-	int refine_cols_hard(
-			other::data_structures::partitionstack *Row_split,
-			tdo_refinement_output *&Output,
-			int &cnt_second_system,
-			int verbose_level);
-	void column_refinement_L1_L2(
-			other::data_structures::partitionstack *Row_split,
-			int f_omit, int omit,
-			int &L1, int &L2,
-			int verbose_level);
-	int tdo_columns_setup_first_system(
-			tdo_data &T, int r,
-			other::data_structures::partitionstack *Row_split,
-			int *&line_types, int &nb_line_types,
-			int verbose_level);
-	int tdo_columns_setup_second_system(
-			tdo_data &T,
-			other::data_structures::partitionstack *Row_split,
-			int *&line_types, int &nb_line_types,
-			int verbose_level);
-	int tdo_columns_setup_second_system_eqns_joining(
-			tdo_data &T,
-			other::data_structures::partitionstack *Row_split,
-			int *line_types, int nb_line_types,
-			int eqn_start,
-			int verbose_level);
-	void tdo_columns_setup_second_system_eqns_counting(
-			tdo_data &T,
-			other::data_structures::partitionstack *Row_split,
-			int *line_types, int nb_line_types,
-			int eqn_start,
-			int verbose_level);
-	int tdo_columns_setup_second_system_eqns_upper_bound(
-			tdo_data &T,
-			other::data_structures::partitionstack *Row_split,
-			int *line_types, int nb_line_types,
-			int eqn_start, int &nb_eqns_used,
-			int verbose_level);
 
 
 	// TDO decomposition for 3-designs:
