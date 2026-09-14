@@ -329,6 +329,21 @@ void create_graph::init(
 					"after create_cycle" << endl;
 		}
 	}
+	else if (description->f_double_cover) {
+
+		if (f_v) {
+			cout << "create_graph::init "
+					"before create_double_cover" << endl;
+		}
+		create_double_cover(description->double_cover_N,
+				verbose_level);
+
+
+		if (f_v) {
+			cout << "create_graph::init "
+					"after create_double_cover" << endl;
+		}
+	}
 	else if (description->f_inversion_graph) {
 
 		if (f_v) {
@@ -1108,6 +1123,60 @@ void create_graph::create_cycle(
 
 	if (f_v) {
 		cout << "create_graph::create_cycle done" << endl;
+	}
+}
+
+void create_graph::create_double_cover(
+		int nb_iterations, int verbose_level)
+// Starts from Gamma_0 = ({x}, emptyset) (a single vertex, no edge) and
+// applies the double cover construction nb_iterations times, producing
+// Gamma_{nb_iterations}. After i iterations the graph has 2^{i+1}-1 vertices.
+{
+	int f_v = (verbose_level >= 1);
+	int it;
+
+	if (f_v) {
+		cout << "create_graph::create_double_cover "
+				"nb_iterations=" << nb_iterations << endl;
+	}
+
+	combinatorics::graph_theory::graph_theory_domain GT;
+
+	// Gamma_0: a single vertex, no edge
+	int *Adj_cur;
+	int n_cur;
+
+	n_cur = 1;
+	Adj_cur = NEW_int(1);
+	Adj_cur[0] = 0;
+
+	for (it = 0; it < nb_iterations; it++) {
+
+		int *Adj_next;
+		int n_next;
+
+		if (f_v) {
+			cout << "create_graph::create_double_cover "
+					"iteration " << it << ", current N=" << n_cur << endl;
+		}
+
+		GT.make_double_cover(Adj_cur, n_cur,
+				Adj_next, n_next, verbose_level - 2);
+
+		FREE_int(Adj_cur);
+		Adj_cur = Adj_next;
+		n_cur = n_next;
+	}
+
+	N = n_cur;
+	Adj = Adj_cur;
+
+	label = "Double_cover_" + std::to_string(nb_iterations);
+	label_tex = "Double\\_cover\\_" + std::to_string(nb_iterations);
+
+	if (f_v) {
+		cout << "create_graph::create_double_cover done, "
+				"N=" << N << endl;
 	}
 }
 
