@@ -1939,7 +1939,7 @@ int diophant::j_fst(
 		// current vector x[] is in fact a 
 		// solution;
 		// this means:
-		// a) if eqn i is an inequation: 
+		// a) if eqn i is an inequality:
 		//          no restriction
 		// b) if eqn i is an equation: 
 		//          RHS[i] must be 0
@@ -2119,7 +2119,7 @@ int diophant::j_nxt(
 			return true;
 		}
 		if (f_vv) {
-			cout << "diophant::j_nxt() gcd restriction failed in "
+			cout << "diophant::j_nxt gcd restriction failed in "
 					"eqn " << i << " = " << eqn_label[i] << endl;
 		}
 	}
@@ -2142,7 +2142,8 @@ void diophant::solve_mckay(
 	if (f_v) {
 		cout << "diophant::solve_mckay" << endl;
 	}
-	solve_mckay_override_minrhs_in_inequalities(label, 
+	solve_mckay_override_minrhs_in_inequalities(
+			label,
 		maxresults, nb_backtrack_nodes, 0 /* minrhs */, nb_sol, 
 		verbose_level);
 	if (f_v) {
@@ -3677,7 +3678,8 @@ void diophant::multiply_A_x_to_RHS1()
 	}
 }
 
-void diophant::write_xml(std::ostream &ost, std::string &label)
+void diophant::write_xml(
+		std::ostream &ost, std::string &label)
 {
 	int i, j;
 	string equation_label;
@@ -3712,7 +3714,8 @@ void diophant::write_xml(std::ostream &ost, std::string &label)
 }
 
 
-void diophant::read_xml(ifstream &f, std::string &label, int verbose_level)
+void diophant::read_xml(
+		ifstream &f, std::string &label, int verbose_level)
 {
 #ifdef SYSTEMUNIX
 	int f_v = (verbose_level >= 1);
@@ -4163,6 +4166,10 @@ void diophant::draw_partitioned(
 	int f_col_grid = false;
 
 
+	if (f_v) {
+		cout << "diophant::draw_partitioned "
+				"before Graph.draw_bitmatrix" << endl;
+	}
 	Graph.draw_bitmatrix(
 			fname_base,
 			Draw_options,
@@ -4172,6 +4179,10 @@ void diophant::draw_partitioned(
 		f_bitmatrix, NULL,
 		A2, m, n,
 		false, NULL, verbose_level - 1);
+	if (f_v) {
+		cout << "diophant::draw_partitioned "
+				"after Graph.draw_bitmatrix" << endl;
+	}
 
 
 	FREE_int(T);
@@ -4278,7 +4289,8 @@ int diophant::test_solution(
 
 void diophant::get_columns(
 		int *col, int nb_col,
-		other::data_structures::set_of_sets *&S, int verbose_level)
+		other::data_structures::set_of_sets *&S,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, h, d;

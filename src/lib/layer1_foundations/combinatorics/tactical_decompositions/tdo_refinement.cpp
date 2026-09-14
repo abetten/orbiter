@@ -18,20 +18,6 @@ namespace layer1_foundations {
 namespace combinatorics {
 namespace tactical_decompositions {
 
-#if 0
-static void print_distribution(
-		std::ostream &ost,
-	int *types, int nb_types, int type_len,
-	int *distributions, int nb_distributions);
-static int compare_func_int_vec(
-		void *a, void *b, void *data);
-static int compare_func_int_vec_inverse(
-		void *a, void *b, void *data);
-static void distribution_reverse_sorting(
-		int f_increasing,
-	int *types, int nb_types, int type_len,
-	int *distributions, int nb_distributions);
-#endif
 
 
 tdo_refinement::tdo_refinement()
@@ -41,12 +27,13 @@ tdo_refinement::tdo_refinement()
 
 	t0 = 0;
 	cnt = 0;
-	//p_buf = NULL;
 
 
 	//geo_parameter GP;
 
 	//geo_parameter GP2;
+
+
 
 
 	f_doit = false;
@@ -55,11 +42,19 @@ tdo_refinement::tdo_refinement()
 	nb_tactical = 0;
 	cnt_second_system = 0;
 
+	Tdo_scheme_synthetic = NULL;
+
+	//P = NULL;
+
 }
 
 tdo_refinement::~tdo_refinement()
 {
 	Record_death();
+
+	if (Tdo_scheme_synthetic) {
+		FREE_OBJECT(Tdo_scheme_synthetic);
+	}
 }
 
 void tdo_refinement::init(
@@ -169,11 +164,6 @@ void tdo_refinement::main_loop(
 				if (GP.label != Descr->select_label) {
 					continue;
 				}
-#if 0
-				if (strcmp(GP.label.c_str(), Descr->select_label.c_str())) {
-					continue;
-				}
-#endif
 			}
 			if (f_doit) {
 				if (f_v) {
@@ -186,7 +176,15 @@ void tdo_refinement::main_loop(
 				if (false) {
 					cout << "after print_schemes" << endl;
 				}
-				do_it(ost, verbose_level - 1);
+				if (f_v) {
+					cout << "tdo_refinement::main_loop "
+							"before create_all_refinements" << endl;
+				}
+				create_all_refinements(ost, verbose_level - 1);
+				if (f_v) {
+					cout << "tdo_refinement::main_loop "
+							"after create_all_refinements" << endl;
+				}
 			}
 
 
@@ -203,39 +201,50 @@ void tdo_refinement::main_loop(
 	}
 }
 
-void tdo_refinement::do_it(
+void tdo_refinement::create_all_refinements(
 		std::ofstream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
 
-	tdo_scheme_synthetic G;
-	other::data_structures::partitionstack P;
+	//tdo_scheme_synthetic G;
+	//other::data_structures::partitionstack P;
+
+	Tdo_scheme_synthetic = NEW_OBJECT(tdo_scheme_synthetic);
+	//P = NEW_OBJECT(other::data_structures::partitionstack);
+
+
 
 	if (f_v) {
-		cout << "tdo_refinement::do_it "
+		cout << "tdo_refinement::create_all_refinements "
 				"read TDO " << cnt << " " << GP.label << endl;
 	}
 
-	GP.init_tdo_scheme(G, verbose_level - 1);
+	Tdo_scheme_synthetic->init(Descr, verbose_level - 1);
+
+
+	GP.init_tdo_scheme(*Tdo_scheme_synthetic, verbose_level - 1);
 
 	if (f_vv) {
-		cout << "tdo_refinement::do_it "
+		cout << "tdo_refinement::create_all_refinements "
 				"after init_tdo_scheme" << endl;
-		GP.print_schemes(G);
+		GP.print_schemes(*Tdo_scheme_synthetic);
 	}
 
 
 	if (f_vvv) {
-		cout << "tdo_refinement::do_it "
+		cout << "tdo_refinement::create_all_refinements "
 				"calling init_partition_stack" << endl;
 	}
 
-	G.init_partition_stack(verbose_level - 4);
+	Tdo_scheme_synthetic->init_partition_stack(verbose_level - 4);
+		// tdo_scheme_synthetic has a different partition,
+		// namely the refinement partition of the classes of
+		// the current partition w.r.t. the previous (coarser) partition
 
 	if (f_vvv) {
-		cout << "tdo_refinement::do_it "
+		cout << "tdo_refinement::create_all_refinements "
 				"row_level=" << GP.row_level << endl;
 		cout << "tdo_parameter_calculation::do_it "
 				"col_level=" << GP.col_level << endl;
@@ -243,12 +252,12 @@ void tdo_refinement::do_it(
 
 	if (GP.col_level > GP.row_level) {
 		if (f_vvv) {
-			cout << "tdo_refinement::do_it "
+			cout << "tdo_refinement::create_all_refinements "
 					"calling do_row_refinement" << endl;
 		}
-		do_row_refinement(ost, G, P, verbose_level);
+		do_row_refinement(ost, verbose_level);
 		if (f_vvv) {
-			cout << "tdo_refinement::do_it "
+			cout << "tdo_refinement::create_all_refinements "
 					"after do_row_refinement" << endl;
 		}
 	}
@@ -257,37 +266,36 @@ void tdo_refinement::do_it(
 			cout << "tdo_refinement::do_it "
 					"calling do_col_refinement" << endl;
 		}
-		do_col_refinement(ost, G, P, verbose_level);
+		do_col_refinement(ost, verbose_level);
 		if (f_vvv) {
-			cout << "tdo_refinement::do_it "
+			cout << "tdo_refinement::create_all_refinements "
 					"after do_col_refinement" << endl;
 		}
 	}
 	else {
 		GP.write_mode_stack(ost, GP.label);
-#if 0
-		tdo_write(g, GP.label, GP.part, GP.nb_parts, GP.entries, GP.nb_entries,
-			GP.row_level, GP.col_level, GP.lambda_level,
-			GP.extra_row_level, GP.extra_col_level);
-#endif
 		if (f_vv) {
-			cout << "tdo_refinement::do_it "
+			cout << "tdo_refinement::create_all_refinements "
 					<< GP.label << " written" << endl;
 		}
 		nb_written++;
 		nb_written_tactical++;
 	}
 
+	//FREE_OBJECT(G);
+	//FREE_OBJECT(P);
+
+	//G = NULL;
+	//P = NULL;
+
 	if (f_v) {
-		cout << "tdo_refinement::do_it done" << endl;
+		cout << "tdo_refinement::create_all_refinements done" << endl;
 	}
 
 }
 
 void tdo_refinement::do_row_refinement(
 	std::ofstream &ost,
-	tdo_scheme_synthetic &G,
-	other::data_structures::partitionstack &P,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -297,9 +305,6 @@ void tdo_refinement::do_row_refinement(
 				"col_level > row_level" << endl;
 	}
 
-	// the next could be a class called refinement_output:
-	//int *point_types, nb_point_types, point_type_len;
-	//int *distributions, nb_distributions;
 	int f_success;
 	tdo_refinement_output *Output = NULL;
 
@@ -307,44 +312,34 @@ void tdo_refinement::do_row_refinement(
 	if (Descr->f_lambda3) {
 		if (f_v) {
 			cout << "tdo_refinement::do_row_refinement "
-					"before G.td3_refine_rows" << endl;
+					"before G->td3_refine_rows" << endl;
 		}
 
-		f_success = G.td3_refine_rows(
-				verbose_level - 1,
-				Descr->f_once,
-				Descr->lambda3, Descr->block_size,
-				Output
-			//point_types, nb_point_types, point_type_len,
-			//distributions, nb_distributions
-				);
+		f_success = Tdo_scheme_synthetic->td3_refine_rows(
+				//Descr,
+				Output,
+				verbose_level - 1);
 
 		if (f_v) {
 			cout << "tdo_refinement::do_row_refinement "
-					"after G.td3_refine_rows, nb_distributions = " << Output->nb_distributions << endl;
+					"after G->td3_refine_rows, nb_distributions = " << Output->nb_distributions << endl;
 		}
 	}
 	else {
 		if (f_v) {
 			cout << "tdo_refinement::do_row_refinement "
-					"before G.refine_rows" << endl;
+					"before G->refine_rows" << endl;
 		}
 
-		f_success = G.refine_rows(
-				verbose_level - 1,
-				Descr->f_use_mckay_solver, Descr->f_once, P,
+		f_success = Tdo_scheme_synthetic->refine_rows(
+				//Descr,
 				Output,
-			//point_types, nb_point_types, point_type_len,
-			//distributions, nb_distributions,
-			cnt_second_system, Descr->Sol,
-			Descr->f_omit1, Descr->omit1, Descr->f_omit2, Descr->omit2,
-			Descr->f_use_packing_numbers,
-			Descr->f_dual_is_linear_space,
-			Descr->f_do_the_geometric_test);
+			cnt_second_system,
+			verbose_level - 1);
 
 		if (f_v) {
 			cout << "tdo_refinement::do_row_refinement "
-					"after G.refine_rows, nb_distributions = " << Output->nb_distributions << endl;
+					"after G->refine_rows, nb_distributions = " << Output->nb_distributions << endl;
 		}
 	}
 
@@ -353,21 +348,9 @@ void tdo_refinement::do_row_refinement(
 
 			Output->distribution_reverse_sorting(Descr->f_reverse_inverse, verbose_level - 1);
 
-#if 0
-			distribution_reverse_sorting(
-					Descr->f_reverse_inverse,
-				point_types, nb_point_types, point_type_len,
-				distributions, nb_distributions);
-#endif
 		}
 		if (verbose_level >= 5) {
 			Output->print_distribution(cout);
-#if 0
-			print_distribution(
-					cout,
-				point_types, nb_point_types, point_type_len,
-				distributions, nb_distributions);
-#endif
 		}
 
 		if (f_v) {
@@ -376,10 +359,8 @@ void tdo_refinement::do_row_refinement(
 		}
 
 		do_all_row_refinements(
-				GP.label, ost, G,
+				GP.label, ost,
 				Output,
-			//point_types, nb_point_types, point_type_len,
-			//distributions, nb_distributions,
 			nb_tactical,
 			verbose_level - 2);
 
@@ -391,8 +372,6 @@ void tdo_refinement::do_row_refinement(
 
 		nb_written += Output->nb_distributions;
 		nb_written_tactical += nb_tactical;
-		//FREE_int(point_types);
-		//FREE_int(distributions);
 	}
 	else {
 		if (f_v) {
@@ -414,18 +393,12 @@ void tdo_refinement::do_row_refinement(
 
 void tdo_refinement::do_col_refinement(
 		std::ofstream &ost,
-		tdo_scheme_synthetic &G,
-		other::data_structures::partitionstack &P,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	//int f_vv = (verbose_level >= 2);
-	//int f_vvv = (verbose_level >= 3);
 
 	tdo_refinement_output *Output = NULL;
 
-	//int *line_types, nb_line_types, line_type_len;
-	//int *distributions, nb_distributions;
 	int f_success;
 
 	if (f_v) {
@@ -435,22 +408,18 @@ void tdo_refinement::do_col_refinement(
 	if (Descr->f_lambda3) {
 		if (f_v) {
 			cout << "tdo_refinement::do_col_refinement "
-					"before G.td3_refine_columns" << endl;
+					"before G->td3_refine_columns" << endl;
 		}
 
-		f_success = G.td3_refine_columns(
-				verbose_level - 1,
-				Descr->f_once,
-				Descr->lambda3, Descr->block_size,
-				Descr->f_scale, Descr->scaling,
-				Output
-			//line_types, nb_line_types, line_type_len,
-			//distributions, nb_distributions
-				);
+		f_success = Tdo_scheme_synthetic->td3_refine_columns(
+				//Descr,
+				Output,
+				verbose_level - 1);
 
 		if (f_v) {
 			cout << "tdo_refinement::do_col_refinement "
-					"after G.td3_refine_columns, nb_distributions = " << Output->nb_distributions << endl;
+					"after G.td3_refine_columns, "
+					"nb_distributions = " << Output->nb_distributions << endl;
 		}
 	}
 	else {
@@ -458,22 +427,16 @@ void tdo_refinement::do_col_refinement(
 			cout << "tdo_refinement::do_col_refinement "
 					"before G.refine_columns" << endl;
 		}
-		f_success = G.refine_columns(
-				verbose_level - 1,
-				Descr->f_once, P,
+		f_success = Tdo_scheme_synthetic->refine_columns(
+				//Descr,
 				Output,
-			//line_types, nb_line_types, line_type_len,
-			//distributions, nb_distributions,
 				cnt_second_system,
-				Descr->Sol,
-			Descr->f_omit1, Descr->omit1, Descr->f_omit2, Descr->omit2,
-			Descr->f_D1_upper_bound_x0, Descr->D1_upper_bound_x0,
-			Descr->f_use_mckay_solver,
-			Descr->f_use_packing_numbers);
+				verbose_level - 1);
 
 		if (f_v) {
 			cout << "tdo_refinement::do_col_refinement "
-					"after G.refine_columns, nb_distributions = " << Output->nb_distributions << endl;
+					"after G.refine_columns, n"
+					"b_distributions = " << Output->nb_distributions << endl;
 		}
 	}
 	if (f_success) {
@@ -484,12 +447,6 @@ void tdo_refinement::do_col_refinement(
 			}
 
 			Output->distribution_reverse_sorting(Descr->f_reverse_inverse, verbose_level - 1);
-#if 0
-			distribution_reverse_sorting(
-					Descr->f_reverse_inverse,
-				line_types, nb_line_types, line_type_len,
-				distributions, nb_distributions);
-#endif
 
 			if (f_v) {
 				cout << "tdo_refinement::do_col_refinement "
@@ -499,12 +456,6 @@ void tdo_refinement::do_col_refinement(
 		if (verbose_level >= 5) {
 
 			Output->print_distribution(cout);
-#if 0
-			print_distribution(
-					cout,
-				line_types, nb_line_types, line_type_len,
-				distributions, nb_distributions);
-#endif
 		}
 
 		if (f_v) {
@@ -513,10 +464,8 @@ void tdo_refinement::do_col_refinement(
 		}
 
 		do_all_column_refinements(
-				GP.label, ost, G,
+				GP.label, ost,
 				Output,
-			//line_types, nb_line_types, line_type_len,
-			//distributions, nb_distributions,
 				nb_tactical,
 			verbose_level - 1);
 
@@ -527,8 +476,6 @@ void tdo_refinement::do_col_refinement(
 
 		nb_written += Output->nb_distributions;
 		nb_written_tactical += nb_tactical;
-		//FREE_int(line_types);
-		//FREE_int(distributions);
 	}
 	else {
 		if (f_v) {
@@ -551,10 +498,7 @@ void tdo_refinement::do_col_refinement(
 void tdo_refinement::do_all_row_refinements(
 	std::string &label_in,
 	std::ofstream &ost,
-	tdo_scheme_synthetic &G,
 	tdo_refinement_output *Output,
-	//int *point_types, int nb_point_types, int point_type_len,
-	//int *distributions, int nb_distributions,
 	int &nb_tactical,
 	int verbose_level)
 {
@@ -576,21 +520,21 @@ void tdo_refinement::do_all_row_refinements(
 	for (t = 0; t < Output->nb_distributions; t++) {
 
 		if (f_v) {
-			cout << "tdo_refinement::do_all_row_refinements case " << t << " / " << Output->nb_distributions
+			cout << "tdo_refinement::do_all_row_refinements "
+					"case " << t << " / " << Output->nb_distributions
 					<< " before do_row_refinement" << endl;
 		}
 
 		if (do_row_refinement(
-				t, label_in, ost, G,
+				t, label_in, ost,
 				Output,
-				//point_types, nb_point_types,
-				//point_type_len, distributions, nb_distributions,
 				verbose_level - 5)) {
 				nb_tactical++;
 		}
 
 		if (f_v) {
-			cout << "tdo_refinement::do_all_row_refinements case " << t << " / " << Output->nb_distributions
+			cout << "tdo_refinement::do_all_row_refinements "
+					"case " << t << " / " << Output->nb_distributions
 					<< " after do_row_refinement, nb_tactical = " << nb_tactical << endl;
 		}
 
@@ -610,12 +554,9 @@ void tdo_refinement::do_all_row_refinements(
 void tdo_refinement::do_all_column_refinements(
 		std::string &label_in,
 		std::ofstream &ost,
-		tdo_scheme_synthetic &G,
 		tdo_refinement_output *Output,
-	//int *line_types, int nb_line_types, int line_type_len,
-	//int *distributions, int nb_distributions,
 		int &nb_tactical,
-	int verbose_level)
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, t;
@@ -638,21 +579,21 @@ void tdo_refinement::do_all_column_refinements(
 
 		//cout << "tdo_refinement::do_all_column_refinements t=" << t << endl;
 		if (f_v) {
-			cout << "tdo_refinement::do_all_column_refinements case " << t << " / " << Output->nb_distributions
+			cout << "tdo_refinement::do_all_column_refinements "
+					"case " << t << " / " << Output->nb_distributions
 					<< " before do_column_refinement" << endl;
 		}
 
 		if (do_column_refinement(
-				t, label_in, ost, G,
+				t, label_in, ost,
 				Output,
-				//line_types, nb_line_types,
-			//line_type_len, distributions, nb_distributions,
-			verbose_level - 5)) {
+				verbose_level - 5)) {
 			nb_tactical++;
 		}
 
 		if (f_v) {
-			cout << "tdo_refinement::do_all_column_refinements case " << t << " / " << Output->nb_distributions
+			cout << "tdo_refinement::do_all_column_refinements "
+					"case " << t << " / " << Output->nb_distributions
 					<< " after do_column_refinement, nb_tactical = " << nb_tactical << endl;
 		}
 
@@ -672,13 +613,10 @@ int tdo_refinement::do_row_refinement(
 	int t,
 	std::string &label_in,
 	std::ofstream &ost,
-	tdo_scheme_synthetic &G,
 	tdo_refinement_output *Output,
-	//int *point_types, int nb_point_types, int point_type_len,
-	//int *distributions, int nb_distributions,
 	int verbose_level)
 // returns true or false depending on whether the
-// refinement gave a tactical decomposition
+// refinement has produced a tactical decomposition
 {
 	int r, i, j, h, a, l, R, c1, c2, S, s, idx, new_nb_parts, new_nb_entries;
 	int *type_index;
@@ -697,8 +635,8 @@ int tdo_refinement::do_row_refinement(
 	}
 
 	new_nb_parts = GP.nb_parts;
-	if (G.row_level >= 2) {
-		R = G.nb_row_classes[ROW_SCHEME];
+	if (Tdo_scheme_synthetic->row_level >= 2) {
+		R = Tdo_scheme_synthetic->nb_row_classes[ROW_SCHEME];
 	}
 	else {
 		R = 1;
@@ -707,12 +645,12 @@ int tdo_refinement::do_row_refinement(
 	h = 0;
 	S = 0;
 	for (r = 0; r < R; r++) {
-		if (G.row_level >= 2) {
-			l = G.row_classes_len[ROW_SCHEME][r];
+		if (Tdo_scheme_synthetic->row_level >= 2) {
+			l = Tdo_scheme_synthetic->row_classes_len[ROW_SCHEME][r];
 		}
 		else {
 			//partitionstack &P = G.PB.P;
-			l = G.P->startCell[1];
+			l = Tdo_scheme_synthetic->Partition_refinement->startCell[1];
 		}
 		s = 0;
 		if (f_vv) {
@@ -745,8 +683,8 @@ int tdo_refinement::do_row_refinement(
 		}
 		S += l;
 	}
-	if (S != G.m) {
-		cout << "tdo_refinement::do_row_refinement: S != G.m" << endl;
+	if (S != Tdo_scheme_synthetic->m) {
+		cout << "tdo_refinement::do_row_refinement: S != Tdo_scheme_synthetic->m" << endl;
 		exit(1);
 	}
 
@@ -769,23 +707,24 @@ int tdo_refinement::do_row_refinement(
 	{
 		tdo_scheme_synthetic G2;
 
-		G2.init_part_and_entries_int(GP2.part, GP2.entries, verbose_level - 2);
+		G2.init_part_and_entries(GP2.part, GP2.entries, verbose_level - 2);
 
 		G2.row_level = new_nb_parts;
-		G2.col_level = G.col_level;
-		G2.extra_row_level = G.row_level; // GP.extra_row_level;
+		G2.col_level = Tdo_scheme_synthetic->col_level;
+		G2.extra_row_level = Tdo_scheme_synthetic->row_level; // GP.extra_row_level;
 		G2.extra_col_level = GP.extra_col_level;
-		G2.lambda_level = G.lambda_level;
+		G2.lambda_level = Tdo_scheme_synthetic->lambda_level;
 		G2.level[ROW_SCHEME] = new_nb_parts;
-		G2.level[COL_SCHEME] = G.col_level;
-		G2.level[EXTRA_ROW_SCHEME] = G.row_level; // G.extra_row_level;
-		G2.level[EXTRA_COL_SCHEME] = G.extra_col_level;
-		G2.level[LAMBDA_SCHEME] = G.lambda_level;
+		G2.level[COL_SCHEME] = Tdo_scheme_synthetic->col_level;
+		G2.level[EXTRA_ROW_SCHEME] = Tdo_scheme_synthetic->row_level; // G.extra_row_level;
+		G2.level[EXTRA_COL_SCHEME] = Tdo_scheme_synthetic->extra_col_level;
+		G2.level[LAMBDA_SCHEME] = Tdo_scheme_synthetic->lambda_level;
 
 		G2.init_partition_stack(verbose_level - 2);
 
 		if (f_v) {
-			cout << "found a " << G2.nb_row_classes[ROW_SCHEME] << " x " << G2.nb_col_classes[ROW_SCHEME] << " scheme" << endl;
+			cout << "found a scheme of size "
+					<< G2.nb_row_classes[ROW_SCHEME] << " x " << G2.nb_col_classes[ROW_SCHEME] << endl;
 		}
 		for (i = 0; i < G2.nb_row_classes[ROW_SCHEME]; i++) {
 			c1 = G2.row_classes[ROW_SCHEME][i];
@@ -821,24 +760,18 @@ int tdo_refinement::do_row_refinement(
 		GP2.nb_parts = new_nb_parts;
 		GP2.nb_entries = new_nb_entries;
 		GP2.row_level = new_nb_parts;
-		GP2.col_level = G.col_level;
-		GP2.lambda_level = G.lambda_level;
-		GP2.extra_row_level = G.row_level;
-		GP2.extra_col_level = G.extra_col_level;
+		GP2.col_level = Tdo_scheme_synthetic->col_level;
+		GP2.lambda_level = Tdo_scheme_synthetic->lambda_level;
+		GP2.extra_row_level = Tdo_scheme_synthetic->row_level;
+		GP2.extra_col_level = Tdo_scheme_synthetic->extra_col_level;
 
 		GP2.write_mode_stack(ost, GP2.label);
 
-#if 0
-		tdo_write(g, GP2.label,
-			GP2.part, new_nb_parts, GP2.entries, new_nb_entries,
-			new_nb_parts, G.col_level, G.lambda_level,
-			G.row_level/*G.extra_row_level*/, G.extra_col_level);
-#endif
 
 		if (f_vv) {
 			cout << GP2.label << " written" << endl;
 		}
-		if (new_nb_parts == G.col_level) {
+		if (new_nb_parts == Tdo_scheme_synthetic->col_level) {
 			f_tactical = true;
 		}
 		else {
@@ -857,13 +790,10 @@ int tdo_refinement::do_column_refinement(
 	int t,
 	std::string &label_in,
 	std::ofstream &ost,
-	tdo_scheme_synthetic &G,
 	tdo_refinement_output *Output,
-	//int *line_types, int nb_line_types, int line_type_len,
-	//int *distributions, int nb_distributions,
 	int verbose_level)
 // returns true or false depending on whether the
-// refinement gave a tactical decomposition
+// refinement has produced a tactical decomposition
 {
 	int r, i, j, h, a, l, R, c1, c2, S, s, idx, new_nb_parts, new_nb_entries;
 	int *type_index;
@@ -883,13 +813,13 @@ int tdo_refinement::do_column_refinement(
 	}
 
 	new_nb_parts = GP.nb_parts;
-	R = G.nb_col_classes[COL_SCHEME];
+	R = Tdo_scheme_synthetic->nb_col_classes[COL_SCHEME];
 	i = 0;
 	h = 0;
-	S = G.m;
+	S = Tdo_scheme_synthetic->m;
 
 	for (r = 0; r < R; r++) {
-		l = G.col_classes_len[COL_SCHEME][r];
+		l = Tdo_scheme_synthetic->col_classes_len[COL_SCHEME][r];
 		s = 0;
 		if (f_vv) {
 			cout << "r=" << r << " l=" << l << endl;
@@ -927,12 +857,12 @@ int tdo_refinement::do_column_refinement(
 		}
 		S += l;
 	}
-	if (S != G.m + G.n) {
-		cout << "tdo_refinement::do_column_refinement: S != G.m + G.n" << endl;
+	if (S != Tdo_scheme_synthetic->m + Tdo_scheme_synthetic->n) {
+		cout << "tdo_refinement::do_column_refinement: S != Tdo_scheme_synthetic->m + Tdo_scheme_synthetic->n" << endl;
 		exit(1);
 	}
 
-	new_nb_entries = G.nb_entries;
+	new_nb_entries = Tdo_scheme_synthetic->nb_entries;
 	GP2.part[new_nb_parts] = -1;
 	GP2.entries[new_nb_entries * 4 + 0] = -1;
 	if (f_vv) {
@@ -953,23 +883,24 @@ int tdo_refinement::do_column_refinement(
 
 		G2 = NEW_OBJECT(tdo_scheme_synthetic);
 
-		G2->init_part_and_entries_int(GP2.part, GP2.entries, verbose_level - 2);
+		G2->init_part_and_entries(GP2.part, GP2.entries, verbose_level - 2);
 
 		G2->row_level = GP.row_level;
 		G2->col_level = new_nb_parts;
 		G2->extra_row_level = GP.extra_row_level;
 		G2->extra_col_level = GP.col_level; // GP.extra_col_level;
-		G2->lambda_level = G.lambda_level;
-		G2->level[ROW_SCHEME] = G.row_level;
+		G2->lambda_level = Tdo_scheme_synthetic->lambda_level;
+		G2->level[ROW_SCHEME] = Tdo_scheme_synthetic->row_level;
 		G2->level[COL_SCHEME] = new_nb_parts;
-		G2->level[EXTRA_ROW_SCHEME] = G.extra_row_level;
+		G2->level[EXTRA_ROW_SCHEME] = Tdo_scheme_synthetic->extra_row_level;
 		G2->level[EXTRA_COL_SCHEME] = GP.col_level; // G.extra_col_level;
-		G2->level[LAMBDA_SCHEME] = G.lambda_level;
+		G2->level[LAMBDA_SCHEME] = Tdo_scheme_synthetic->lambda_level;
 
 		G2->init_partition_stack(verbose_level - 2);
 
 		if (f_v) {
-			cout << "found a " << G2->nb_row_classes[COL_SCHEME] << " x " << G2->nb_col_classes[COL_SCHEME] << " scheme" << endl;
+			cout << "found a scheme of size "
+					<< G2->nb_row_classes[COL_SCHEME] << " x " << G2->nb_col_classes[COL_SCHEME] << endl;
 		}
 		for (i = 0; i < G2->nb_row_classes[COL_SCHEME]; i++) {
 			c1 = G2->row_classes[COL_SCHEME][i];
@@ -1004,25 +935,19 @@ int tdo_refinement::do_column_refinement(
 
 		GP2.nb_parts = new_nb_parts;
 		GP2.nb_entries = new_nb_entries;
-		GP2.row_level = G.row_level;
+		GP2.row_level = Tdo_scheme_synthetic->row_level;
 		GP2.col_level = new_nb_parts;
-		GP2.lambda_level = G.lambda_level;
-		GP2.extra_row_level = G.extra_row_level;
-		GP2.extra_col_level = G.col_level;
+		GP2.lambda_level = Tdo_scheme_synthetic->lambda_level;
+		GP2.extra_row_level = Tdo_scheme_synthetic->extra_row_level;
+		GP2.extra_col_level = Tdo_scheme_synthetic->col_level;
 
 		GP2.write_mode_stack(ost, GP2.label);
 
-#if 0
-
-		tdo_write(g, GP2.label, GP2.part, new_nb_parts, GP2.entries, new_nb_entries,
-			G.row_level, new_nb_parts, G.lambda_level,
-			G.extra_row_level, GP.col_level /*G.extra_col_level*/);
-#endif
 
 		if (f_vv) {
 			cout << GP2.label << " written" << endl;
 		}
-		if (new_nb_parts == G.row_level) {
+		if (new_nb_parts == Tdo_scheme_synthetic->row_level) {
 			f_tactical = true;
 		}
 		else {
@@ -1038,171 +963,6 @@ int tdo_refinement::do_column_refinement(
 	return f_tactical;
 }
 
-
-#if 0
-// global stuff:
-
-
-static void print_distribution(
-		std::ostream &ost,
-	int *types, int nb_types, int type_len,
-	int *distributions, int nb_distributions)
-{
-	int i, j;
-
-
-	ost << "types:" << endl;
-	for (i = 0; i < nb_types; i++) {
-		ost << setw(3) << i + 1 << " : ";
-		for (j = 0; j < type_len; j++) {
-			ost << setw(3) << types[i * type_len + j];
-		}
-		ost << endl;
-	}
-	ost << endl;
-
-
-	for (j = 0; j < type_len; j++) {
-		ost << setw(3) << j + 1 << " & ";
-		for (i = 0; i < nb_types; i++) {
-			ost << setw(2) << types[i * type_len + j];
-			if (i < nb_types - 1) {
-				ost << " & ";
-			}
-		}
-		ost << "\\\\" << endl;
-	}
-	ost << endl;
-
-	ost << "distributions:" << endl;
-	for (i = 0; i < nb_distributions; i++) {
-		ost << setw(3) << i + 1 << " : ";
-		for (j = 0; j < nb_types; j++) {
-			ost << setw(3) << distributions[i * nb_types + j];
-		}
-		ost << endl;
-	}
-	ost << endl;
-	for (i = 0; i < nb_distributions; i++) {
-		ost << setw(3) << i + 1 << " & ";
-		for (j = 0; j < nb_types; j++) {
-			ost << setw(2) << distributions[i * nb_types + j];
-			if (j < nb_types - 1) {
-				ost << " & ";
-			}
-		}
-		ost << "\\\\" << endl;
-	}
-	ost << endl;
-
-	ost << "distributions (in compact format):" << endl;
-	int f_first, a;
-	for (i = 0; i < nb_distributions; i++) {
-		ost << setw(3) << i + 1 << " & ";
-		f_first = true;
-		for (j = 0; j < nb_types; j++) {
-			a = distributions[i * nb_types + j];
-			if (a == 0) {
-				continue;
-			}
-			if (!f_first) {
-				ost << ",";
-			}
-			ost << nb_types - 1 - j << "^{" << a << "}";
-			f_first = false;
-		}
-		ost << "\\\\" << endl;
-	}
-	ost << endl;
-}
-
-
-int static compare_func_int_vec(
-		void *a, void *b, void *data)
-{
-	int *p = (int *)a;
-	int *q = (int *)b;
-	int *d = (int *) data;
-	int size = d[0];
-	int i;
-
-	for (i = 0; i < size; i++) {
-		if (p[i] > q[i]) {
-			return -1;
-		}
-		if (p[i] < q[i]) {
-			return 1;
-		}
-	}
-	return 0;
-}
-
-int static compare_func_int_vec_inverse(
-		void *a, void *b, void *data)
-{
-	int *p = (int *)a;
-	int *q = (int *)b;
-	int *d = (int *) data;
-	int size = d[0];
-	int i;
-
-	for (i = 0; i < size; i++) {
-		if (p[i] > q[i]) {
-			return 1;
-		}
-		if (p[i] < q[i]) {
-			return -1;
-		}
-	}
-	return 0;
-}
-
-static void distribution_reverse_sorting(
-		int f_increasing,
-	int *types, int nb_types, int type_len,
-	int *distributions, int nb_distributions)
-{
-	int i, j;
-	int *D;
-	int **P;
-	other::data_structures::sorting Sorting;
-
-	D = NEW_int(nb_distributions * nb_types);
-	P = NEW_pint(nb_distributions);
-
-	for (i = 0; i < nb_distributions; i++) {
-		P[i] = D + i * nb_types;
-		for (j = 0; j < nb_types; j++) {
-			D[i * nb_types + nb_types - 1 - j] = distributions[i * nb_types + j];
-		}
-	}
-
-	int p[1];
-
-	p[0] = nb_types;
-
-	if (f_increasing) {
-		Sorting.quicksort_array(
-				nb_distributions, (void **) P,
-				compare_func_int_vec_inverse, (void *)p);
-	}
-	else {
-		Sorting.quicksort_array(
-				nb_distributions, (void **) P,
-				compare_func_int_vec, (void *)p);
-	}
-
-	for (i = 0; i < nb_distributions; i++) {
-		for (j = 0; j < nb_types; j++) {
-			distributions[i * nb_types + j] = P[i][nb_types - 1 - j];
-		}
-	}
-	FREE_int(D);
-	FREE_pint(P);
-
-}
-
-#endif
 
 
 }}}}

@@ -95,18 +95,20 @@ void tdo_data::allocate(
 }
 
 int tdo_data::solve_first_system(
-		int verbose_level,
-	int *&line_types, int &nb_line_types, int &line_types_allocated)
+	int *&line_types, int &nb_line_types, int &line_types_allocated,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
-	int i, nb_sol, nb_vars;
 	
 	if (f_v) {
 		cout << "tdo_data::solve_first_system "
 				"D1->n=" << D1->n << endl;
 	}
+
+	int i, nb_sol, nb_vars;
+
 	nb_vars = D1->n;
 	nb_sol = 0;
 	if (D1->solve_first(0/*verbose_level - 4*/)) {
@@ -155,19 +157,20 @@ int tdo_data::solve_first_system(
 }
 
 void tdo_data::solve_second_system_omit(
-		int verbose_level,
 	int *classes_len, 
 	int *&line_types, int &nb_line_types, 
 	int *&distributions, int &nb_distributions,
-	int omit)
+	int omit,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int nb_sol;
 	
 	if (f_v) {
 		cout << "tdo_data::solve_second_system_omit omit=" << omit << endl;
 	}
+
+	int nb_sol;
 	int s, i, r = 0, f, l, h, j, u, first, len, N, a, ii, f_bad;
 	
 	f = types_first2[0];
@@ -192,7 +195,8 @@ void tdo_data::solve_second_system_omit(
 	}
 	D2->project(
 			&D, f, l, eqn_number, nb_eqns_replaced,
-			eqns_replaced, verbose_level - 1);
+			eqns_replaced,
+			verbose_level - 1);
 	D.f_has_sum = true;
 	D.sum = s;
 	if (f_vv) {
@@ -297,7 +301,7 @@ void tdo_data::solve_second_system_omit(
 		}
 		
 		if (false) {
-			// here we test if a givemn solution of the projected system 
+			// here we test if a given solution of the projected system
 			// extends to a global solution.
 			// Since out solver finds in fact all solutions, this test is 
 			// too expensive, hence we do not do it any more.
@@ -381,12 +385,12 @@ void tdo_data::solve_second_system_omit(
 }
 
 void tdo_data::solve_second_system_with_help(
-		int verbose_level,
 	int f_use_mckay_solver, int f_once, 
 	int *classes_len, int f_scale, int scaling,
 	int *&line_types, int &nb_line_types, 
 	int *&distributions, int &nb_distributions,
-	int cnt_second_system, solution_file_data *Sol)
+	int cnt_second_system, solution_file_data *Sol,
+	int verbose_level)
 {
 	int i;
 	
@@ -395,29 +399,39 @@ void tdo_data::solve_second_system_with_help(
 			if (cnt_second_system == Sol->system_no[i]) {
 				cout << "reading solutions from file "
 					<< Sol->solution_file[i] << endl;
+
 				solve_second_system_from_file(
-					verbose_level, classes_len,
-					f_scale, scaling, line_types, nb_line_types, 
+					classes_len,
+					f_scale, scaling,
+					line_types, nb_line_types,
 					distributions, nb_distributions,
-					Sol->solution_file[i]);
+					Sol->solution_file[i],
+					verbose_level);
 				return;
 				}
 			}
 		}
-	solve_second_system(verbose_level,
+	solve_second_system(
 		f_use_mckay_solver, f_once, classes_len,
 		f_scale, scaling, line_types, nb_line_types, 
-		distributions, nb_distributions);
+		distributions, nb_distributions,
+		verbose_level);
 }
 
 void tdo_data::solve_second_system_from_file(
-		int verbose_level,
-	int *classes_len, int f_scale, int scaling,
+	int *classes_len,
+	int f_scale, int scaling,
 	int *&line_types, int &nb_line_types, 
 	int *&distributions, int &nb_distributions,
-	std::string &solution_file_name)
+	std::string &solution_file_name,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "tdo_data::solve_second_system_from_file" << endl;
+	}
+
 	int cnt, i, j, a, nb_sol, *the_solution;
 	int h, r, u, f, l, first, distributions_allocated;
 	int Nb_vars; //, Nb_eqns;
@@ -444,7 +458,8 @@ void tdo_data::solve_second_system_from_file(
 	nb_sol = i;
 
 	if (f_v) {
-		cout << "the solution file " << solution_file_name
+		cout << "tdo_data::solve_second_system_from_file "
+				"the solution file " << solution_file_name
 			<< " contains " << nb_sol << " solutions" << endl;
 	}
 	distributions_allocated = nb_sol;
@@ -487,31 +502,36 @@ void tdo_data::solve_second_system_from_file(
 	}
 	FREE_int(the_solution);
 	if (f_v) {
-		cout << "solve_second_system_from_file: found "
+		cout << "tdo_data::solve_second_system_from_file found "
 				<< nb_distributions << " distributions." << endl;
+	}
+	if (f_v) {
+		cout << "tdo_data::solve_second_system_from_file done" << endl;
 	}
 }
 
 void tdo_data::solve_second_system(
-		int verbose_level,
 	int f_use_mckay_solver, int f_once, 
 	int *classes_len,
 	int f_scale, int scaling,
 	int *&line_types, int &nb_line_types, 
-	int *&distributions, int &nb_distributions)
+	int *&distributions, int &nb_distributions,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
-	int distributions_allocated, nb_sol, a;
-	int h, r, u, i, f, l, j, first, ret;
-	int Nb_vars, /*Nb_eqns,*/ nb_steps = 0;
 	
 	if (f_v) {
 		cout << "tdo_data::solve_second_system" << endl;
 		cout << "f_use_mckay_solver=" << f_use_mckay_solver << endl;
 		cout << "f_once=" << f_once << endl;
 	}
+
+	int distributions_allocated, nb_sol, a;
+	int h, r, u, i, f, l, j, first, ret;
+	int Nb_vars, /*Nb_eqns,*/ nb_steps = 0;
+
 	//Nb_eqns = D2->m;
 	Nb_vars = D2->n;
 
@@ -534,7 +554,7 @@ void tdo_data::solve_second_system(
 		nb_steps += D2->nb_steps_betten;
 		while (true) {
 			if (nb_distributions && (nb_distributions % 1000) == 0) {
-				cout << "solve_second_system: " << nb_distributions
+				cout << "tdo_data::solve_second_system " << nb_distributions
 					<< " distributions" << endl;
 			}
 			if (nb_distributions >= distributions_allocated) {
@@ -606,8 +626,11 @@ void tdo_data::solve_second_system(
 	
 	nb_steps += D2->nb_steps_betten;
 	if (f_v) {
-		cout << "solve_second_system: found " << nb_distributions
+		cout << "tdo_data::solve_second_system found " << nb_distributions
 			<< " distributions in " << nb_steps << " steps" << endl;
+	}
+	if (f_v) {
+		cout << "tdo_data::solve_second_system done" << endl;
 	}
 }
 

@@ -552,34 +552,35 @@ public:
 	void allocate(
 			int R);
 	int solve_first_system(
-			int verbose_level,
-		int *&line_types, int &nb_line_types,
-		int &line_types_allocated);
+		int *&line_types, int &nb_line_types, int &line_types_allocated,
+		int verbose_level);
 	void solve_second_system_omit(
-			int verbose_level,
 		int *classes_len,
 		int *&line_types, int &nb_line_types,
 		int *&distributions, int &nb_distributions,
-		int omit);
+		int omit,
+		int verbose_level);
 	void solve_second_system_with_help(
-			int verbose_level,
 		int f_use_mckay_solver, int f_once,
 		int *classes_len, int f_scale, int scaling,
 		int *&line_types, int &nb_line_types,
 		int *&distributions, int &nb_distributions,
-		int cnt_second_system, solution_file_data *Sol);
+		int cnt_second_system, solution_file_data *Sol,
+		int verbose_level);
 	void solve_second_system_from_file(
-			int verbose_level,
-		int *classes_len, int f_scale, int scaling,
+		int *classes_len,
+		int f_scale, int scaling,
 		int *&line_types, int &nb_line_types,
 		int *&distributions, int &nb_distributions,
-		std::string &solution_file_name);
+		std::string &solution_file_name,
+		int verbose_level);
 	void solve_second_system(
-			int verbose_level,
 		int f_use_mckay_solver, int f_once,
-		int *classes_len, int f_scale, int scaling,
+		int *classes_len,
+		int f_scale, int scaling,
 		int *&line_types, int &nb_line_types,
-		int *&distributions, int &nb_distributions);
+		int *&distributions, int &nb_distributions,
+		int verbose_level);
 
 };
 
@@ -712,15 +713,22 @@ class tdo_refinement {
 
 
 
-	geo_parameter GP;
+	geo_parameter GP; // input scheme, read from file
 
-	geo_parameter GP2;
+	geo_parameter GP2; // output scheme, a refinement of the input scheme
 
 
 
 	int f_doit;
 	int nb_written, nb_written_tactical, nb_tactical;
 	int cnt_second_system;
+
+
+	// temporary data structures, maintained by create_all_refinements:
+
+	tdo_scheme_synthetic *Tdo_scheme_synthetic;
+	//other::data_structures::partitionstack *P;
+
 
 	tdo_refinement();
 	~tdo_refinement();
@@ -729,58 +737,43 @@ class tdo_refinement {
 			int verbose_level);
 	void main_loop(
 			int verbose_level);
-	void do_it(
+	void create_all_refinements(
 			std::ofstream &ost, int verbose_level);
 	void do_row_refinement(
 			std::ofstream &ost,
-			tdo_scheme_synthetic &G,
-			other::data_structures::partitionstack &P,
 			int verbose_level);
 	void do_col_refinement(
 			std::ofstream &ost,
-			tdo_scheme_synthetic &G,
-			other::data_structures::partitionstack &P,
 			int verbose_level);
 	void do_all_row_refinements(
 			std::string &label_in,
 			std::ofstream &ost,
-			tdo_scheme_synthetic &G,
 			tdo_refinement_output *Output,
-		//int *point_types, int nb_point_types, int point_type_len,
-		//int *distributions, int nb_distributions,
 			int &nb_tactical,
 			int verbose_level);
 	void do_all_column_refinements(
 			std::string &label_in,
 			std::ofstream &ost,
-			tdo_scheme_synthetic &G,
 			tdo_refinement_output *Output,
-		//int *line_types, int nb_line_types, int line_type_len,
-		//int *distributions, int nb_distributions,
 			int &nb_tactical,
 			int verbose_level);
 	int do_row_refinement(
 			int t,
 			std::string &label_in,
 			std::ofstream &ost,
-			tdo_scheme_synthetic &G,
 			tdo_refinement_output *Output,
-		//int *point_types, int nb_point_types, int point_type_len,
-		//int *distributions, int nb_distributions,
-		int verbose_level);
+			int verbose_level);
 		// returns true or false depending on whether the
-		// refinement gave a tactical decomposition
+		// refinement has produced a tactical decomposition
 	int do_column_refinement(
 			int t,
 			std::string &label_in,
 			std::ofstream &ost,
-			tdo_scheme_synthetic &G,
 			tdo_refinement_output *Output,
-		//int *line_types, int nb_line_types, int line_type_len,
-		//int *distributions, int nb_distributions,
-		int verbose_level);
+			int verbose_level);
 		// returns true or false depending on whether the
-		// refinement gave a tactical decomposition
+		// refinement has produced a tactical decomposition
+
 };
 
 
@@ -847,7 +840,7 @@ struct solution_file_data {
 	std::vector<std::string> solution_file;
 };
 
-//! canonical tactical decomposition of an incidence structure
+//! synthetic tactical decomposition of an incidence structure, not necessarily realizable
 
 class tdo_scheme_synthetic {
 
@@ -859,8 +852,16 @@ public:
 
 	//partition_backtrack PB;
 
-	other::data_structures::partitionstack *P;
 
+	tdo_refinement_description *Descr;
+
+	other::data_structures::partitionstack *Partition_refinement;
+	// Partition_refinement is the refinement partition of the classes of
+	// the current partition w.r.t. the previous (coarser) partition
+	// The degree of Partition_refinement is m + n.
+
+
+	// perhaps this could be a class called tdo_scheme_coded ?
 	int part_length;
 	int *part;
 	int nb_entries;
@@ -887,10 +888,10 @@ public:
 	int *col_classes_len[NUMBER_OF_SCHEMES];
 	int *col_class_no[NUMBER_OF_SCHEMES];
 
-	int *the_row_scheme;
-	int *the_col_scheme;
-	int *the_extra_row_scheme;
-	int *the_extra_col_scheme;
+	int *the_row_scheme; // [l * l] where l = Partition_refinement->ht
+	int *the_col_scheme; // [l * l] where l = Partition_refinement->ht
+	int *the_extra_row_scheme; // [l * l] where l = Partition_refinement->ht
+	int *the_extra_col_scheme; // [l * l] where l = Partition_refinement->ht
 	int *the_row_scheme_cur; // [m * nb_col_classes[ROW_SCHEME]]
 	int *the_col_scheme_cur; // [n * nb_row_classes[COL_SCHEME]]
 	int *the_extra_row_scheme_cur; // [m * nb_col_classes[EXTRA_ROW_SCHEME]]
@@ -901,15 +902,17 @@ public:
 	tdo_scheme_synthetic();
 	~tdo_scheme_synthetic();
 
+
+	void init(
+			tdo_refinement_description *Descr, int verbose_level);
+	void check_init();
 	void init_part_and_entries(
-			int *part, int *entries, int verbose_level);
-	void init_part_and_entries_int(
 			int *part, int *entries, int verbose_level);
 	void init_TDO(
 			int *Part, int *Entries,
-		int Row_level, int Col_level,
-		int Extra_row_level, int Extra_col_level,
-		int Lambda_level, int verbose_level);
+			int Row_level, int Col_level,
+			int Extra_row_level, int Extra_col_level,
+			int Lambda_level, int verbose_level);
 	void exit_TDO();
 	void init_partition_stack(
 			int verbose_level);
@@ -922,12 +925,10 @@ public:
 			int h, int verbose_level);
 	void get_row_or_col_scheme(
 			int h, int l, int verbose_level);
-	void get_column_split_partition(
-			int verbose_level,
-			other::data_structures::partitionstack &P);
-	void get_row_split_partition(
-			int verbose_level,
-			other::data_structures::partitionstack &P);
+	other::data_structures::partitionstack *get_column_split_partition(
+			int verbose_level);
+	other::data_structures::partitionstack *get_row_split_partition(
+			int verbose_level);
 	void print_all_schemes();
 	void print_scheme(
 			int h, int verbose_level);
@@ -945,238 +946,193 @@ public:
 
 
 	void geometric_test_for_row_scheme(
-			other::data_structures::partitionstack &P,
+			other::data_structures::partitionstack *Col_split,
 			tdo_refinement_output *Output,
 			int f_omit1, int omit1, int verbose_level);
 	int geometric_test_for_row_scheme_level_s(
-			other::data_structures::partitionstack &P, int s,
-		int *point_types, int nb_point_types, int point_type_len,
-		int *distribution,
-		int *non_zero_blocks, int nb_non_zero_blocks,
-		int f_omit1, int omit1,
-		int verbose_level);
+			other::data_structures::partitionstack *Col_split,
+			int s,
+			int *point_types, int nb_point_types, int point_type_len,
+			int *distribution,
+			int *non_zero_blocks, int nb_non_zero_blocks,
+			int f_omit1, int omit1,
+			int verbose_level);
 
 
-	// refine rows:
+	// TDO scheme for linear spaces, refine rows:
 
 
 	int refine_rows(
-			int verbose_level,
-		int f_use_mckay, int f_once,
-		other::data_structures::partitionstack &P,
-		tdo_refinement_output *&Output,
-		//int *&point_types, int &nb_point_types, int &point_type_len,
-		//int *&distributions, int &nb_distributions,
-		int &cnt_second_system, solution_file_data *Sol,
-		int f_omit1, int omit1, int f_omit2, int omit2,
-		int f_use_packing_numbers,
-		int f_dual_is_linear_space,
-		int f_do_the_geometric_test);
-	int refine_rows_easy(
-			int verbose_level,
 			tdo_refinement_output *&Output,
-		//int *&point_types, int &nb_point_types, int &point_type_len,
-		//int *&distributions, int &nb_distributions,
-		int &cnt_second_system);
+			int &cnt_second_system,
+			int verbose_level);
+	int refine_rows_easy(
+			tdo_refinement_output *&Output,
+			int &cnt_second_system, int verbose_level);
 	int refine_rows_hard(
-			other::data_structures::partitionstack &P,
-			int verbose_level,
-		int f_use_mckay, int f_once,
-		tdo_refinement_output *&Output,
-		//int *&point_types, int &nb_point_types, int &point_type_len,
-		//int *&distributions, int &nb_distributions,
-		int &cnt_second_system,
-		int f_omit1, int omit1, int f_omit, int omit,
-		int f_use_packing_numbers, int f_dual_is_linear_space);
+			other::data_structures::partitionstack *Col_split,
+			tdo_refinement_output *&Output,
+			int &cnt_second_system,
+			int verbose_level);
 	void row_refinement_L1_L2(
-			other::data_structures::partitionstack &P,
+			other::data_structures::partitionstack *Col_split,
 			int f_omit, int omit,
-		int &L1, int &L2, int verbose_level);
+			int &L1, int &L2,
+			int verbose_level);
 	int tdo_rows_setup_first_system(
-			int verbose_level,
-		tdo_data &T, int r,
-		other::data_structures::partitionstack &P,
-		int f_omit, int omit,
-		int *&point_types, int &nb_point_types);
+			tdo_data &T, int r,
+			other::data_structures::partitionstack *Col_split,
+			int *&point_types, int &nb_point_types,
+			int verbose_level);
 	int tdo_rows_setup_second_system(
-			int verbose_level,
-		tdo_data &T,
-		other::data_structures::partitionstack &P,
-		int f_omit, int omit,
-		int f_use_packing_numbers,
-		int f_dual_is_linear_space,
-		int *&point_types, int &nb_point_types);
+			tdo_data &T,
+			other::data_structures::partitionstack *Col_split,
+			int *&point_types, int &nb_point_types,
+			int verbose_level);
 	int tdo_rows_setup_second_system_eqns_joining(
-			int verbose_level,
-		tdo_data &T,
-		other::data_structures::partitionstack &P,
-		int f_omit, int omit, int f_dual_is_linear_space,
-		int *point_types, int nb_point_types,
-		int eqn_offset);
+			tdo_data &T,
+			other::data_structures::partitionstack *Col_split,
+			int *point_types, int nb_point_types,
+			int eqn_offset,
+			int verbose_level);
 	int tdo_rows_setup_second_system_eqns_counting(
-			int verbose_level,
-		tdo_data &T,
-		other::data_structures::partitionstack &P,
-		int f_omit, int omit,
-		int *point_types, int nb_point_types,
-		int eqn_offset);
+			tdo_data &T,
+			other::data_structures::partitionstack *Col_split,
+			int *point_types, int nb_point_types,
+			int eqn_offset,
+			int verbose_level);
 	int tdo_rows_setup_second_system_eqns_packing(
-			int verbose_level,
-		tdo_data &T,
-		other::data_structures::partitionstack &P,
-		int f_omit, int omit,
-		int *point_types, int nb_point_types,
-		int eqn_start, int &nb_eqns_used);
+			tdo_data &T,
+			other::data_structures::partitionstack *Col_split,
+			int *point_types, int nb_point_types,
+			int eqn_start, int &nb_eqns_used,
+			int verbose_level);
 
 
-	// refine columns:
+	// TDO scheme for linear spaces, refine columns:
 
 
 	int refine_columns(
-			int verbose_level, int f_once,
-			other::data_structures::partitionstack &P,
 			tdo_refinement_output *&Output,
-		//int *&line_types, int &nb_line_types, int &line_type_len,
-		//int *&distributions, int &nb_distributions,
-		int &cnt_second_system,
-		solution_file_data *Sol,
-		int f_omit1, int omit1, int f_omit, int omit,
-		int f_D1_upper_bound_x0, int D1_upper_bound_x0,
-		int f_use_mckay_solver,
-		int f_use_packing_numbers);
+			int &cnt_second_system,
+			int verbose_level);
 	int refine_cols_hard(
-			other::data_structures::partitionstack &P,
-		int verbose_level, int f_once,
-		tdo_refinement_output *&Output,
-		//int *&line_types, int &nb_line_types, int &line_type_len,
-		//int *&distributions, int &nb_distributions,
-		int &cnt_second_system, solution_file_data *Sol,
-		int f_omit1, int omit1, int f_omit, int omit,
-		int f_D1_upper_bound_x0, int D1_upper_bound_x0,
-		int f_use_mckay_solver,
-		int f_use_packing_numbers);
+			other::data_structures::partitionstack *Row_split,
+			tdo_refinement_output *&Output,
+			int &cnt_second_system,
+			int verbose_level);
 	void column_refinement_L1_L2(
-			other::data_structures::partitionstack &P,
-		int f_omit, int omit,
-		int &L1, int &L2, int verbose_level);
+			other::data_structures::partitionstack *Row_split,
+			int f_omit, int omit,
+			int &L1, int &L2,
+			int verbose_level);
 	int tdo_columns_setup_first_system(
-			int verbose_level,
-		tdo_data &T, int r,
-		other::data_structures::partitionstack &P,
-		int f_omit, int omit,
-		int *&line_types, int &nb_line_types);
+			tdo_data &T, int r,
+			other::data_structures::partitionstack *Row_split,
+			int *&line_types, int &nb_line_types,
+			int verbose_level);
 	int tdo_columns_setup_second_system(
-			int verbose_level,
-		tdo_data &T,
-		other::data_structures::partitionstack &P,
-		int f_omit, int omit,
-		int f_use_packing_numbers,
-		int *&line_types, int &nb_line_types);
+			tdo_data &T,
+			other::data_structures::partitionstack *Row_split,
+			int *&line_types, int &nb_line_types,
+			int verbose_level);
 	int tdo_columns_setup_second_system_eqns_joining(
-			int verbose_level,
-		tdo_data &T,
-		other::data_structures::partitionstack &P,
-		int f_omit, int omit,
-		int *line_types, int nb_line_types,
-		int eqn_start);
+			tdo_data &T,
+			other::data_structures::partitionstack *Row_split,
+			int *line_types, int nb_line_types,
+			int eqn_start,
+			int verbose_level);
 	void tdo_columns_setup_second_system_eqns_counting(
-			int verbose_level,
-		tdo_data &T,
-		other::data_structures::partitionstack &P,
-		int f_omit, int omit,
-		int *line_types, int nb_line_types,
-		int eqn_start);
+			tdo_data &T,
+			other::data_structures::partitionstack *Row_split,
+			int *line_types, int nb_line_types,
+			int eqn_start,
+			int verbose_level);
 	int tdo_columns_setup_second_system_eqns_upper_bound(
-			int verbose_level,
-		tdo_data &T,
-		other::data_structures::partitionstack &P,
-		int f_omit, int omit,
-		int *line_types, int nb_line_types,
-		int eqn_start, int &nb_eqns_used);
+			tdo_data &T,
+			other::data_structures::partitionstack *Row_split,
+			int *line_types, int nb_line_types,
+			int eqn_start, int &nb_eqns_used,
+			int verbose_level);
 
+
+	// TDO decomposition for 3-designs:
 
 	int td3_refine_rows(
-			int verbose_level, int f_once,
-		int lambda3, int block_size,
-		tdo_refinement_output *&Output
-		//int *&point_types, int &nb_point_types, int &point_type_len,
-		//int *&distributions, int &nb_distributions
-		);
+			tdo_refinement_output *&Output,
+			int verbose_level);
 	int td3_rows_setup_first_system(
-			int verbose_level,
-		int lambda3, int block_size, int lambda2,
-		tdo_data &T, int r,
-		other::data_structures::partitionstack &P,
-		int &nb_vars,int &nb_eqns,
-		int *&point_types, int &nb_point_types);
+			int lambda3, int block_size, int lambda2,
+			tdo_data &T, int r,
+			other::data_structures::partitionstack *Col_split,
+			int &nb_vars,int &nb_eqns,
+			int *&point_types, int &nb_point_types,
+			int verbose_level);
 	int td3_rows_setup_second_system(
-			int verbose_level,
-		int lambda3, int block_size, int lambda2,
-		tdo_data &T,
-		int nb_vars, int &Nb_vars, int &Nb_eqns,
-		int *&point_types, int &nb_point_types);
+			int lambda3, int block_size, int lambda2,
+			tdo_data &T,
+			int nb_vars, int &Nb_vars, int &Nb_eqns,
+			int *&point_types, int &nb_point_types,
+			int verbose_level);
 	int td3_rows_counting_flags(
-			int verbose_level,
-		int lambda3, int block_size, int lambda2, int &S,
-		tdo_data &T,
-		int nb_vars, int Nb_vars,
-		int *&point_types, int &nb_point_types, int eqn_offset);
+			int lambda3, int block_size, int lambda2, int &S,
+			tdo_data &T,
+			int nb_vars, int Nb_vars,
+			int *&point_types, int &nb_point_types, int eqn_offset,
+			int verbose_level);
+
 	int td3_refine_columns(
-			int verbose_level, int f_once,
-		int lambda3, int block_size,
-		int f_scale, int scaling,
-		tdo_refinement_output *&Output);
-		//int *&line_types, int &nb_line_types, int &line_type_len,
-		//int *&distributions, int &nb_distributions);
+			tdo_refinement_output *&Output,
+			int verbose_level);
 	int td3_columns_setup_first_system(
-			int verbose_level,
-		int lambda3, int block_size, int lambda2,
-		tdo_data &T, int r,
-		other::data_structures::partitionstack &P,
-		int &nb_vars, int &nb_eqns,
-		int *&line_types, int &nb_line_types);
+			int lambda3, int block_size, int lambda2,
+			tdo_data &T, int r,
+			other::data_structures::partitionstack &P,
+			int &nb_vars, int &nb_eqns,
+			int *&line_types, int &nb_line_types,
+			int verbose_level);
 	int td3_columns_setup_second_system(
-			int verbose_level,
-		int lambda3, int block_size, int lambda2, int f_scale, int scaling,
-		tdo_data &T,
-		int nb_vars, int &Nb_vars, int &Nb_eqns,
-		int *&line_types, int &nb_line_types);
+			int lambda3, int block_size, int lambda2, int f_scale, int scaling,
+			tdo_data &T,
+			int nb_vars, int &Nb_vars, int &Nb_eqns,
+			int *&line_types, int &nb_line_types,
+			int verbose_level);
 	int td3_columns_triples_same_class(
-			int verbose_level,
-		int lambda3, int block_size,
-		tdo_data &T,
-		int nb_vars, int Nb_vars,
-		int *&line_types, int &nb_line_types, int eqn_offset);
+			int lambda3, int block_size,
+			tdo_data &T,
+			int nb_vars, int Nb_vars,
+			int *&line_types, int &nb_line_types, int eqn_offset,
+			int verbose_level);
 	int td3_columns_pairs_same_class(
-			int verbose_level,
-		int lambda3, int block_size, int lambda2,
-		tdo_data &T,
-		int nb_vars, int Nb_vars,
-		int *&line_types, int &nb_line_types, int eqn_offset);
+			int lambda3, int block_size, int lambda2,
+			tdo_data &T,
+			int nb_vars, int Nb_vars,
+			int *&line_types, int &nb_line_types, int eqn_offset,
+			int verbose_level);
 	int td3_columns_counting_flags(
-			int verbose_level,
-		int lambda3, int block_size, int lambda2, int &S,
-		tdo_data &T,
-		int nb_vars, int Nb_vars,
-		int *&line_types, int &nb_line_types, int eqn_offset);
+			int lambda3, int block_size, int lambda2, int &S,
+			tdo_data &T,
+			int nb_vars, int Nb_vars,
+			int *&line_types, int &nb_line_types, int eqn_offset,
+			int verbose_level);
 	int td3_columns_lambda2_joining_pairs_from_different_classes(
-		int verbose_level,
-		int lambda3, int block_size, int lambda2,
-		tdo_data &T,
-		int nb_vars, int Nb_vars,
-		int *&line_types, int &nb_line_types, int eqn_offset);
+			int lambda3, int block_size, int lambda2,
+			tdo_data &T,
+			int nb_vars, int Nb_vars,
+			int *&line_types, int &nb_line_types, int eqn_offset,
+			int verbose_level);
 	int td3_columns_lambda3_joining_triples_2_1(
-			int verbose_level,
-		int lambda3, int block_size, int lambda2,
-		tdo_data &T,
-		int nb_vars, int Nb_vars,
-		int *&line_types, int &nb_line_types, int eqn_offset);
+			int lambda3, int block_size, int lambda2,
+			tdo_data &T,
+			int nb_vars, int Nb_vars,
+			int *&line_types, int &nb_line_types, int eqn_offset,
+			int verbose_level);
 	int td3_columns_lambda3_joining_triples_1_1_1(
-			int verbose_level,
-		int lambda3, int block_size, int lambda2,
-		tdo_data &T,
-		int nb_vars, int Nb_vars,
-		int *&line_types, int &nb_line_types, int eqn_offset);
+			int lambda3, int block_size, int lambda2,
+			tdo_data &T,
+			int nb_vars, int Nb_vars,
+			int *&line_types, int &nb_line_types, int eqn_offset,
+			int verbose_level);
 
 
 };

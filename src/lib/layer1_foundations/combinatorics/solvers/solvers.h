@@ -397,7 +397,7 @@ public:
 	void get_columns(
 			int *col, int nb_col,
 			other::data_structures::set_of_sets *&S,
-		int verbose_level);
+			int verbose_level);
 	void test_solution_file(
 			std::string &solution_file,
 		int verbose_level);

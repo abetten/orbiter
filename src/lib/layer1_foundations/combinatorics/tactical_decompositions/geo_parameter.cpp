@@ -654,18 +654,6 @@ int geo_parameter::input_mode_stack(
 				"read \"" << str << "\"" << endl;
 	}
 	label = str;
-#if 0
-	l = str.length();
-	if (l >= 1000 - 1) {
-		cout << "geo_parameter::input_mode_stack "
-				"label too long" << endl;
-		exit(1);
-	}
-	for (i = 0; i < l; i++) {
-		label[i] = str[i];
-	}
-	label[l] = 0;
-#endif
 	if (f_v) {
 		cout << "geo_parameter::input_mode_stack "
 				"label='" << label << "'" << endl;
@@ -749,6 +737,8 @@ void geo_parameter::init_tdo_scheme(
 		cout << "nb_parts=" << nb_parts << endl;
 		cout << "nb_entries=" << nb_entries << endl;
 	}
+
+
 	G.part = NEW_int(nb_parts + 1);
 	for (i = 0; i < nb_parts; i++) {
 		G.part[i] = part[i];
@@ -762,6 +752,7 @@ void geo_parameter::init_tdo_scheme(
 	G.entries[4 * nb_entries] = -1;
 	G.nb_entries = nb_entries;
 	
+
 	G.row_level = row_level;
 	G.col_level = col_level;
 	G.extra_row_level = extra_row_level;
@@ -879,14 +870,15 @@ void geo_parameter::convert_single_to_stack_fuse_simple_pt(
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
-	int I, u, l, i, j, a, sum, s, M, c, e, h, c1, c2, f;
-	tdo_scheme_synthetic G;
-	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "geo_parameter::convert_single_to_stack_fuse_simple_pt" << endl;
 	}
-	
+
+	int I, u, l, i, j, a, sum, s, M, c, e, h, c1, c2, f;
+	tdo_scheme_synthetic G;
+	other::data_structures::sorting Sorting;
+
 
 	int *class_first, *class_len, nb_classes;
 	int *block_length;
@@ -895,10 +887,12 @@ void geo_parameter::convert_single_to_stack_fuse_simple_pt(
 	int prev_level;
 			
 	if (f_v) {
-		cout << "processing fuse simple for "
+		cout << "geo_parameter::convert_single_to_stack_fuse_simple_pt"
+				" processing fuse simple for "
 				"point-tactical decomposition" << endl;
 	}
 	init_tdo_scheme(G, verbose_level);
+
 	h = ROW_SCHEME;
 			
 	class_first = NEW_int(nb_V);
@@ -1089,14 +1083,15 @@ void geo_parameter::convert_single_to_stack_fuse_simple_bt(
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
-	int J, u, l, i, j, a, sum, s, M, c, e, h, c1, c2, f; // L
-	tdo_scheme_synthetic G;
-	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "geo_parameter::convert_single_to_stack_fuse_simple_bt" << endl;
 	}
-	
+
+	int J, u, l, i, j, a, sum, s, M, c, e, h, c1, c2, f; // L
+	tdo_scheme_synthetic G;
+	other::data_structures::sorting Sorting;
+
 	int *class_first, *class_len, nb_classes;
 	int *block_length;
 	int *prev_scheme;
@@ -1107,7 +1102,9 @@ void geo_parameter::convert_single_to_stack_fuse_simple_bt(
 		cout << "processing fuse simple for "
 				"block-tactical decomposition" << endl;
 	}
+
 	init_tdo_scheme(G, verbose_level);
+
 	h = COL_SCHEME;
 	class_first = NEW_int(nb_B);
 	class_len = NEW_int(nb_B);
@@ -1301,6 +1298,11 @@ void geo_parameter::convert_single_to_stack_fuse_double_pt(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
+
+	if (f_v) {
+		cout << "geo_parameter::convert_single_to_stack_fuse_double_pt" << endl;
+	}
+
 	int I, u, l, i, j, ii, jj, a, sum, s, M, c, e, h, c1, c2, f, d;
 	int fuse_block_first[2], fuse_block_len[2];
 	int *the_fuse[2];
@@ -1308,9 +1310,6 @@ void geo_parameter::convert_single_to_stack_fuse_double_pt(
 	
 	tdo_scheme_synthetic G;
 
-	if (f_v) {
-		cout << "geo_parameter::convert_single_to_stack_fuse_double_pt" << endl;
-	}
 	fuse_block_first[0] = fuse[0];
 	fuse_block_len[0] = fuse[1];
 	fuse_block_first[1] = fuse[2];
