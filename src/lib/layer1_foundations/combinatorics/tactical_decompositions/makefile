@@ -13,6 +13,7 @@ MODULES = \
 		row_and_col_partition.o \
 		tactical_decomposition_domain.o \
 		tdo_data.o \
+		tdo_refine_3designs.o \
 		tdo_refine_cols.o \
 		tdo_refine_rows.o \
 		tdo_refinement_description.o \

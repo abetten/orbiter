@@ -310,18 +310,40 @@ void tdo_refinement::do_row_refinement(
 
 
 	if (Descr->f_lambda3) {
+
 		if (f_v) {
 			cout << "tdo_refinement::do_row_refinement "
-					"before G->td3_refine_rows" << endl;
+					"refining 3-design" << endl;
 		}
 
-		f_success = Tdo_scheme_synthetic->td3_refine_rows(
+		tdo_refine_3designs *Tdo_refine_3designs;
+
+
+		Tdo_refine_3designs = NEW_OBJECT(tdo_refine_3designs);
+
+		Tdo_refine_3designs->init(
+				Tdo_scheme_synthetic,
+				verbose_level);
+
+
+
+		if (f_v) {
+			cout << "tdo_refinement::do_row_refinement "
+					"before Tdo_refine_3designs->td3_refine_rows" << endl;
+		}
+
+		f_success = Tdo_refine_3designs->td3_refine_rows(
 				Output,
 				verbose_level - 1);
 
 		if (f_v) {
 			cout << "tdo_refinement::do_row_refinement "
-					"after G->td3_refine_rows, nb_distributions = " << Output->nb_distributions << endl;
+					"after Tdo_refine_3designs->td3_refine_rows" << endl;
+		}
+
+		if (f_v) {
+			cout << "tdo_refinement::do_row_refinement "
+					"nb_distributions = " << Output->nb_distributions << endl;
 		}
 	}
 	else {
@@ -426,18 +448,41 @@ void tdo_refinement::do_col_refinement(
 				"col_level < row_level" << endl;
 	}
 	if (Descr->f_lambda3) {
+
 		if (f_v) {
 			cout << "tdo_refinement::do_col_refinement "
-					"before G->td3_refine_columns" << endl;
+					"refining 3-design" << endl;
 		}
 
-		f_success = Tdo_scheme_synthetic->td3_refine_columns(
+		tdo_refine_3designs *Tdo_refine_3designs;
+
+
+		Tdo_refine_3designs = NEW_OBJECT(tdo_refine_3designs);
+
+		Tdo_refine_3designs->init(
+				Tdo_scheme_synthetic,
+				verbose_level);
+
+
+
+
+		if (f_v) {
+			cout << "tdo_refinement::do_col_refinement "
+					"before Tdo_refine_3designs->td3_refine_columns" << endl;
+		}
+
+		f_success = Tdo_refine_3designs->td3_refine_columns(
 				Output,
 				verbose_level - 1);
 
 		if (f_v) {
 			cout << "tdo_refinement::do_col_refinement "
-					"after G.td3_refine_columns, "
+					"after Tdo_refine_3designs->td3_refine_columns" << endl;
+		}
+
+
+		if (f_v) {
+			cout << "tdo_refinement::do_col_refinement "
 					"nb_distributions = " << Output->nb_distributions << endl;
 		}
 	}
@@ -923,7 +968,8 @@ int tdo_refinement::do_column_refinement(
 
 		G2 = NEW_OBJECT(tdo_scheme_synthetic);
 
-		G2->init_part_and_entries(GP2.part, GP2.entries, verbose_level - 2);
+		G2->init_part_and_entries(
+				GP2.part, GP2.entries, verbose_level - 2);
 
 		G2->row_level = GP.row_level;
 		G2->col_level = new_nb_parts;

@@ -535,6 +535,7 @@ namespace combinatorics {
 		class row_and_col_partition;
 		class tactical_decomposition_domain;
 		class tdo_data;
+		class tdo_refine_3designs;
 		class tdo_refine_cols;
 		class tdo_refine_rows;
 		class tdo_refinement_description;

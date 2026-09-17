@@ -585,6 +585,111 @@ public:
 };
 
 
+// #############################################################################
+// tdo_refine_3designs.cpp
+// #############################################################################
+
+
+
+//! tdo refinement for 3-designs
+
+class tdo_refine_3designs {
+	public:
+
+	tdo_scheme_synthetic *Tdo_scheme_synthetic;
+
+
+	other::data_structures::partitionstack *Row_split;
+
+	other::data_structures::partitionstack *Col_split;
+
+
+	tdo_refine_3designs();
+	~tdo_refine_3designs();
+	void init(
+			tdo_scheme_synthetic *Tdo_scheme_synthetic,
+			int verbose_level);
+
+	// TDO decomposition for 3-designs:
+
+	int td3_refine_rows(
+			tdo_refinement_output *&Output,
+			int verbose_level);
+	int td3_rows_setup_first_system(
+			int lambda3, int block_size, int lambda2,
+			tdo_data &T, int r,
+			other::data_structures::partitionstack *Col_split,
+			int &nb_vars,int &nb_eqns,
+			int *&point_types, int &nb_point_types,
+			int verbose_level);
+	int td3_rows_setup_second_system(
+			int lambda3, int block_size, int lambda2,
+			tdo_data &T,
+			int nb_vars, int &Nb_vars, int &Nb_eqns,
+			int *&point_types, int &nb_point_types,
+			int verbose_level);
+	int td3_rows_counting_flags(
+			int lambda3, int block_size, int lambda2, int &S,
+			tdo_data &T,
+			int nb_vars, int Nb_vars,
+			int *&point_types, int &nb_point_types, int eqn_offset,
+			int verbose_level);
+
+	int td3_refine_columns(
+			tdo_refinement_output *&Output,
+			int verbose_level);
+	int td3_columns_setup_first_system(
+			int lambda3, int block_size, int lambda2,
+			tdo_data &T, int r,
+			other::data_structures::partitionstack &P,
+			int &nb_vars, int &nb_eqns,
+			int *&line_types, int &nb_line_types,
+			int verbose_level);
+	int td3_columns_setup_second_system(
+			int lambda3, int block_size, int lambda2, int f_scale, int scaling,
+			tdo_data &T,
+			int nb_vars, int &Nb_vars, int &Nb_eqns,
+			int *&line_types, int &nb_line_types,
+			int verbose_level);
+	int td3_columns_triples_same_class(
+			int lambda3, int block_size,
+			tdo_data &T,
+			int nb_vars, int Nb_vars,
+			int *&line_types, int &nb_line_types, int eqn_offset,
+			int verbose_level);
+	int td3_columns_pairs_same_class(
+			int lambda3, int block_size, int lambda2,
+			tdo_data &T,
+			int nb_vars, int Nb_vars,
+			int *&line_types, int &nb_line_types, int eqn_offset,
+			int verbose_level);
+	int td3_columns_counting_flags(
+			int lambda3, int block_size, int lambda2, int &S,
+			tdo_data &T,
+			int nb_vars, int Nb_vars,
+			int *&line_types, int &nb_line_types, int eqn_offset,
+			int verbose_level);
+	int td3_columns_lambda2_joining_pairs_from_different_classes(
+			int lambda3, int block_size, int lambda2,
+			tdo_data &T,
+			int nb_vars, int Nb_vars,
+			int *&line_types, int &nb_line_types, int eqn_offset,
+			int verbose_level);
+	int td3_columns_lambda3_joining_triples_2_1(
+			int lambda3, int block_size, int lambda2,
+			tdo_data &T,
+			int nb_vars, int Nb_vars,
+			int *&line_types, int &nb_line_types, int eqn_offset,
+			int verbose_level);
+	int td3_columns_lambda3_joining_triples_1_1_1(
+			int lambda3, int block_size, int lambda2,
+			tdo_data &T,
+			int nb_vars, int Nb_vars,
+			int *&line_types, int &nb_line_types, int eqn_offset,
+			int verbose_level);
+
+};
+
 
 // #############################################################################
 // tdo_refine_cols.cpp
@@ -872,7 +977,6 @@ class tdo_refinement {
 	// temporary data structures, maintained by create_all_refinements:
 
 	tdo_scheme_synthetic *Tdo_scheme_synthetic;
-	//other::data_structures::partitionstack *P;
 
 
 	tdo_refinement();
@@ -1091,83 +1195,6 @@ public:
 
 
 
-	// TDO decomposition for 3-designs:
-
-	int td3_refine_rows(
-			tdo_refinement_output *&Output,
-			int verbose_level);
-	int td3_rows_setup_first_system(
-			int lambda3, int block_size, int lambda2,
-			tdo_data &T, int r,
-			other::data_structures::partitionstack *Col_split,
-			int &nb_vars,int &nb_eqns,
-			int *&point_types, int &nb_point_types,
-			int verbose_level);
-	int td3_rows_setup_second_system(
-			int lambda3, int block_size, int lambda2,
-			tdo_data &T,
-			int nb_vars, int &Nb_vars, int &Nb_eqns,
-			int *&point_types, int &nb_point_types,
-			int verbose_level);
-	int td3_rows_counting_flags(
-			int lambda3, int block_size, int lambda2, int &S,
-			tdo_data &T,
-			int nb_vars, int Nb_vars,
-			int *&point_types, int &nb_point_types, int eqn_offset,
-			int verbose_level);
-
-	int td3_refine_columns(
-			tdo_refinement_output *&Output,
-			int verbose_level);
-	int td3_columns_setup_first_system(
-			int lambda3, int block_size, int lambda2,
-			tdo_data &T, int r,
-			other::data_structures::partitionstack &P,
-			int &nb_vars, int &nb_eqns,
-			int *&line_types, int &nb_line_types,
-			int verbose_level);
-	int td3_columns_setup_second_system(
-			int lambda3, int block_size, int lambda2, int f_scale, int scaling,
-			tdo_data &T,
-			int nb_vars, int &Nb_vars, int &Nb_eqns,
-			int *&line_types, int &nb_line_types,
-			int verbose_level);
-	int td3_columns_triples_same_class(
-			int lambda3, int block_size,
-			tdo_data &T,
-			int nb_vars, int Nb_vars,
-			int *&line_types, int &nb_line_types, int eqn_offset,
-			int verbose_level);
-	int td3_columns_pairs_same_class(
-			int lambda3, int block_size, int lambda2,
-			tdo_data &T,
-			int nb_vars, int Nb_vars,
-			int *&line_types, int &nb_line_types, int eqn_offset,
-			int verbose_level);
-	int td3_columns_counting_flags(
-			int lambda3, int block_size, int lambda2, int &S,
-			tdo_data &T,
-			int nb_vars, int Nb_vars,
-			int *&line_types, int &nb_line_types, int eqn_offset,
-			int verbose_level);
-	int td3_columns_lambda2_joining_pairs_from_different_classes(
-			int lambda3, int block_size, int lambda2,
-			tdo_data &T,
-			int nb_vars, int Nb_vars,
-			int *&line_types, int &nb_line_types, int eqn_offset,
-			int verbose_level);
-	int td3_columns_lambda3_joining_triples_2_1(
-			int lambda3, int block_size, int lambda2,
-			tdo_data &T,
-			int nb_vars, int Nb_vars,
-			int *&line_types, int &nb_line_types, int eqn_offset,
-			int verbose_level);
-	int td3_columns_lambda3_joining_triples_1_1_1(
-			int lambda3, int block_size, int lambda2,
-			tdo_data &T,
-			int nb_vars, int Nb_vars,
-			int *&line_types, int &nb_line_types, int eqn_offset,
-			int verbose_level);
 
 
 };
