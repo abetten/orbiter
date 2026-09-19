@@ -44,6 +44,9 @@ quartic_curve_activity_description::quartic_curve_activity_description()
 	extract_specific_orbit_on_kovalevski_points_by_length_index = 0;
 
 	f_get_Kovalevski_configuration = false;
+
+	f_draw_bitmap = false;
+	f_bitmap = false;
 }
 
 quartic_curve_activity_description::~quartic_curve_activity_description()
@@ -120,6 +123,13 @@ int quartic_curve_activity_description::read_arguments(
 				cout << "-get_Kovalevski_configuration " << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-draw_bitmap") == 0 || ST.stringcmp(argv[i], "-bitmap") == 0) {
+			f_draw_bitmap = true;
+			f_bitmap = true;
+			if (f_v) {
+				cout << "-draw_bitmap (-bitmap)" << endl;
+			}
+		}
 
 
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
@@ -164,6 +174,9 @@ void quartic_curve_activity_description::print()
 	}
 	if (f_get_Kovalevski_configuration) {
 		cout << "-get_Kovalevski_configuration " << endl;
+	}
+	if (f_draw_bitmap) {
+		cout << "-draw_bitmap " << endl;
 	}
 }
 

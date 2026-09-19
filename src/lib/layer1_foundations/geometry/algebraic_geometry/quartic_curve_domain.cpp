@@ -1917,6 +1917,30 @@ void quartic_curve_domain::create_quartic_curve_by_normal_form(
 	}
 }
 
+void quartic_curve_domain::do_bitmap(
+		std::string &fname_base,
+		kovalevski_points *Kovalevski,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "quartic_curve_domain::do_bitmap" << endl;
+	}
+
+	if (Kovalevski && Kovalevski->Incidence_structure_by_flags) {
+		Kovalevski->Incidence_structure_by_flags->draw_incma_as_bitmap(
+				fname_base,
+				true /* f_box_width */, 10 /* box_width */,
+				8 /* bit_depth */,
+				verbose_level);
+	}
+
+	if (f_v) {
+		cout << "quartic_curve_domain::do_bitmap done" << endl;
+	}
+}
+
 }}}}
 
 

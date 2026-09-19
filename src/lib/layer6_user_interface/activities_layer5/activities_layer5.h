@@ -2669,6 +2669,9 @@ public:
 
 	int f_get_Kovalevski_configuration;
 
+	int f_draw_bitmap;
+	int f_bitmap;
+
 	quartic_curve_activity_description();
 	~quartic_curve_activity_description();
 	int read_arguments(

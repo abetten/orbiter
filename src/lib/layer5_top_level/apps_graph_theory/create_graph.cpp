@@ -262,7 +262,17 @@ void create_graph::init(
 		}
 
 	}
-
+	else if (description->f_complete) {
+		if (f_v) {
+			cout << "create_graph::init before create_complete" << endl;
+		}
+		create_complete(
+				description->complete_n,
+				verbose_level);
+		if (f_v) {
+			cout << "create_graph::init after create_complete" << endl;
+		}
+	}
 	else if (description->f_edge_list) {
 
 		combinatorics::other_combinatorics::combinatorics_domain Combi;
@@ -704,8 +714,14 @@ void create_graph::init(
 					"after make_adjacency_bitvector" << endl;
 		}
 
-
-
+	}
+	else if (description->f_double_cover) {
+		if (f_v) {
+			cout << "create_graph::init f_double_cover" << endl;
+		}
+		create_double_cover(
+				description->double_cover_graph_label,
+				verbose_level);
 	}
 
 
@@ -2096,6 +2112,60 @@ void create_graph::make_adjacency_bitvector(
 
 	if (f_v) {
 		cout << "create_graph::make_adjacency_bitvector done" << endl;
+	}
+}
+
+void create_graph::create_double_cover(
+		std::string &graph_label,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	if (f_v) {
+		cout << "create_graph::create_double_cover" << endl;
+	}
+	combinatorics::graph_theory::colored_graph *G = Get_object_of_type_graph(graph_label);
+	int n = G->nb_points;
+	N = 2 * n + 1;
+	Adj = NEW_int(N * N);
+	Int_vec_zero(Adj, N * N);
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			int val = G->is_adjacent(i, j) ? 1 : 0;
+			Adj[i * N + j] = val;
+			Adj[(n + i) * N + (n + j)] = val;
+		}
+	}
+	for (int i = 0; i < n; i++) {
+		Adj[(2 * n) * N + (n + i)] = 1;
+		Adj[(n + i) * N + (2 * n)] = 1;
+	}
+	label = "double_cover_" + G->label;
+	label_tex = "{\\rm double\\_cover\\_{" + G->label + "}}";
+	if (f_v) {
+		cout << "create_graph::create_double_cover done" << endl;
+	}
+}
+
+void create_graph::create_complete(
+		int n, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	if (f_v) {
+		cout << "create_graph::create_complete" << endl;
+	}
+	N = n;
+	Adj = NEW_int(N * N);
+	Int_vec_zero(Adj, N * N);
+	for (int i = 0; i < N; i++) {
+		for (int j = i + 1; j < N; j++) {
+			Adj[i * N + j] = 1;
+			Adj[j * N + i] = 1;
+		}
+	}
+	label = "complete_" + std::to_string(n);
+	label_tex = "K_{" + std::to_string(n) + "}";
+	if (f_v) {
+		cout << "create_graph::create_complete done" << endl;
 	}
 }
 
