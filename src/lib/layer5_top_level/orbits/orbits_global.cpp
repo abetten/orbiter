@@ -513,7 +513,7 @@ void orbits_global::orbit_of(
 
 	//A->all_point_orbits(*Sch, verbose_level);
 
-	Sch->init(AG->A_base, verbose_level - 2);
+	Sch->init(AG->A_base, AG->A_base, verbose_level - 2);
 
 #if 0
 	if (!A->f_has_strong_generators) {

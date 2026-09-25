@@ -72,13 +72,13 @@ void action::coset_unrank(
 		U->print_transversal_lengths();
 	}
 
-	G_orb.init(this, verbose_level - 2);
+	G_orb.init(this, this, verbose_level - 2);
 	//G_orb.initialize_tables(); // not needed, already done in init
 	G_orb.Generators_and_images->init_generators(G->gens, verbose_level - 2);
 
 		// G_orb is used to determine representatives of the double cosets
 	
-	U_orb.init(this, verbose_level - 2);
+	U_orb.init(this, this, verbose_level - 2);
 	//U_orb.initialize_tables(); // not needed, already done in init
 	U_orb.Generators_and_images->init_generators(U->gens, verbose_level - 2);
 	
@@ -355,11 +355,11 @@ long int action::coset_rank(
 		U->print_transversal_lengths();
 	}
 
-	G_orb.init(this, verbose_level - 2);
+	G_orb.init(this, this, verbose_level - 2);
 	//G_orb.initialize_tables();
 	G_orb.Generators_and_images->init_generators(G->gens, verbose_level - 2);
 	
-	U_orb.init(this, verbose_level - 2);
+	U_orb.init(this, this, verbose_level - 2);
 	//U_orb.initialize_tables();
 	U_orb.Generators_and_images->init_generators(U->gens, verbose_level - 2);
 	

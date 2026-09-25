@@ -214,7 +214,7 @@ void orbit_based_testing::early_test_func_by_using_group(
 	groups::schreier Schreier;
 
 	//Schreier.init(PC->get_A2(), verbose_level - 2);
-	Schreier.init(Poset_with_group_action->A2, verbose_level - 2);
+	Schreier.init(Poset_with_group_action->A, Poset_with_group_action->A2, verbose_level - 2);
 
 
 	// ToDo: need to initialize the generators for the stabilizer

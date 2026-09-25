@@ -472,6 +472,7 @@ ORBITER_MODULES= \
 		layer3_group_actions/induced_actions/action_on_subgroups.o \
 		layer3_group_actions/induced_actions/action_on_wedge_product.o \
 		layer3_group_actions/induced_actions/product_action.o \
+		layer3_group_actions/induced_actions/wormhole_action.o \
 		layer3_group_actions/interfaces/conjugacy_classes_and_normalizers.o \
 		layer3_group_actions/interfaces/conjugacy_classes_of_subgroups.o \
 		layer3_group_actions/interfaces/l3_interface_gap.o \
@@ -690,7 +691,8 @@ ORBITER_MODULES= \
 		layer5_top_level/spreads/spread_lifting.o \
 		layer5_top_level/spreads/spread_table_with_selection.o \
 		layer5_top_level/user_interface/core_system/orbiter_top_level_session.o \
-		layer5_top_level/user_interface/core_system/symbol_definition.o
+		layer5_top_level/user_interface/core_system/symbol_definition.o \
+		layer5_top_level/wormhole/induced_action_on_specific_orbit.o
 
 
 ORBITER_USER_INTERFACE_MODULES= \

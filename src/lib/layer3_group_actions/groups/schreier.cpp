@@ -80,7 +80,9 @@ void schreier::init_preferred_choice_function(
 
 
 void schreier::init(
-		actions::action *A, int verbose_level)
+		actions::action *A_base,
+		actions::action *A,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -89,6 +91,10 @@ void schreier::init(
 	}
 
 
+	if (f_v) {
+		cout << "schreier::init A_base = " << A_base->label << endl;
+		cout << "schreier::init A = " << A->label << endl;
+	}
 
 	if (A->degree > INT_MAX) {
 		cout << "schreier::init A->degree > INT_MAX" << endl;
@@ -101,7 +107,7 @@ void schreier::init(
 		cout << "schreier::init "
 				"before Generators_and_images->init" << endl;
 	}
-	Generators_and_images->init(this, A, 0 /* verbose_level */);
+	Generators_and_images->init(this, A_base, A, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "schreier::init "
 				"after Generators_and_images->init" << endl;
@@ -126,6 +132,7 @@ void schreier::init(
 
 
 void schreier::init_images_known(
+		actions::action *A_base,
 		actions::action *A,
 		int nb_images, int *known_images,
 		int verbose_level)
@@ -134,35 +141,45 @@ void schreier::init_images_known(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "generators_and_images::init_images_known" << endl;
+		cout << "schreier::init_images_known" << endl;
 	}
+
+
+	if (f_v) {
+		cout << "schreier::init_images_known A_base = " << A_base->label << endl;
+		cout << "schreier::init_images_known A = " << A->label << endl;
+	}
+
+
+
 	Generators_and_images = NEW_OBJECT(generators_and_images);
 
 	if (f_v) {
-		cout << "generators_and_images::init_images_known "
+		cout << "schreier::init_images_known "
 				"before Generators_and_images->init_images_only" << endl;
 	}
 	Generators_and_images->init_images_known(
-			this, A,
+			this,
+			A_base, A,
 			nb_images, known_images,
 			0 /* verbose_level */);
 	if (f_v) {
-		cout << "generators_and_images::init_images_known "
+		cout << "schreier::init_images_known "
 				"after Generators_and_images->init_images_only" << endl;
 	}
 
 	if (f_v) {
-		cout << "generators_and_images::init_images_known "
+		cout << "schreier::init_images_known "
 				"before Forest->allocate_tables" << endl;
 	}
 	Forest->allocate_tables(verbose_level - 2);
 	if (f_v) {
-		cout << "generators_and_images::init_images_known "
+		cout << "schreier::init_images_known "
 				"after Forest->allocate_tables" << endl;
 	}
 
 	if (f_v) {
-		cout << "generators_and_images::init_images_known done" << endl;
+		cout << "schreier::init_images_known done" << endl;
 	}
 }
 
@@ -2027,7 +2044,7 @@ void schreier::shallow_tree_generators(
 		schreier *S;
 
 		S = NEW_OBJECT(schreier);
-		S->init(Generators_and_images->A, verbose_level - 2);
+		S->init(Generators_and_images->A_base, Generators_and_images->A, verbose_level - 2);
 		S->Generators_and_images->init_generators(*gens, verbose_level - 2);
 		if (f_v) {
 			cout << "schreier::shallow_tree_generators "

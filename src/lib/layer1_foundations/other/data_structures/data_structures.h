@@ -173,6 +173,8 @@ public:
 	void print_homogenized(
 			int *v, int len,
 			std::ostream &ost, int verbose_level);
+	void make_label(
+			std::string &fname, std::string &text, int verbose_level);
 
 };
 

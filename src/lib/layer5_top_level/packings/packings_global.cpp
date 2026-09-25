@@ -82,7 +82,7 @@ void packings_global::orbits_under_conjugation(
 
 
 	groups::schreier Classes;
-	Classes.init(A_conj_restricted, verbose_level - 2);
+	Classes.init(A_conj, A_conj_restricted, verbose_level - 2);
 	Classes.Generators_and_images->init_generators(*SG->gens, verbose_level - 2);
 
 

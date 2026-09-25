@@ -19,10 +19,5 @@ ROW,C1,C2,C3
 1,"\verb'-make_set_of_sets' "," fname-in col-label list ","   "
 1,"\verb'-copy_and_edit' "," fname-in fname-out-mask params search-and-replace ","   "
 1,"\verb'-join_columns' "," fname-in fname-out col1 col2 ","   "
-1,"\verb'-decomposition_matrix' "," fname-in po fst iso n1 n2 n3 ","   "
-1,"\verb'-stats' "," fname-base ","   "
-1,"\verb'-intersect_set_of_sets' "," fname col ","   "
-1,"\verb'-eliminate_duplicate_columns' "," fname "," Eliminates duplicate columns in the given file and writes a file with one column per each type.  "
-1,"\verb'-density_of_ones_in_bitvector_file' "," fname "," Computes the density of ones in the given bitvector file.  "
 END
 

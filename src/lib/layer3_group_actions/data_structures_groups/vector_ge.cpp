@@ -54,6 +54,9 @@ void vector_ge::init(
 		cout << "vector_ge::init" << endl;
 	}
 	vector_ge::A = A;
+	if (f_v) {
+		cout << "vector_ge::init action = " << A->label << endl;
+	}
 	data = NULL;
 	len = 0;
 	if (f_v) {
@@ -1676,7 +1679,7 @@ groups::schreier *vector_ge::compute_all_point_orbits_schreier(
 
 	Sch = NEW_OBJECT(groups::schreier);
 
-	Sch->init(A_given, verbose_level - 2);
+	Sch->init(A_given, A_given, verbose_level - 2);
 	//Sch->initialize_tables();
 	Sch->Generators_and_images->init_generators(
 			*this, verbose_level - 2);
@@ -1724,7 +1727,7 @@ groups::schreier *vector_ge::compute_all_point_orbits_schreier_with_print_interv
 
 	Sch = NEW_OBJECT(groups::schreier);
 
-	Sch->init(A_given, verbose_level - 2);
+	Sch->init(A_given, A_given, verbose_level - 2);
 	//Sch->initialize_tables();
 	Sch->Generators_and_images->init_generators(
 			*this, verbose_level - 2);

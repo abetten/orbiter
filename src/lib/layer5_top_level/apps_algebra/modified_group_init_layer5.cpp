@@ -133,9 +133,28 @@ void modified_group_init_layer5::modified_group_init(
 		// output in A_modified
 
 	}
+	else if (Descr->f_on_specific_orbit_of_polynomials) {
 
+		if (f_v) {
+			cout << "modified_group_init_layer5::modified_group_init "
+					"f_on_specific_orbit_of_polynomials label=" << Descr->on_specific_orbit_of_polynomials_label << endl;
+		}
 
+		if (f_v) {
+			cout << "modified_group_init_layer5::modified_group_init "
+					"before create_action_on_specific_orbit_of_polynomials" << endl;
+		}
+		create_action_on_specific_orbit_of_polynomials(
+				Modified_group_create,
+				Descr,
+				Descr->on_specific_orbit_of_polynomials_label,
+				verbose_level);
+		if (f_v) {
+			cout << "modified_group_init_layer5::modified_group_init "
+					"after create_action_on_specific_orbit_of_polynomials" << endl;
+		}
 
+	}
 
 	else {
 
@@ -162,11 +181,19 @@ void modified_group_init_layer5::modified_group_init(
 
 		algebra::ring_theory::longinteger_object go;
 
-		Modified_group_create->Strong_gens->group_order(go);
+		if (Modified_group_create->f_has_strong_generators) {
+			Modified_group_create->Strong_gens->group_order(go);
+			cout << "modified_group_init_layer5::modified_group_init "
+					"created a group of order " << go
+					<< " and degree " << Modified_group_create->A_modified->degree << endl;
+		}
+		else {
 
-		cout << "modified_group_init_layer5::modified_group_init "
-				"created a group of order " << go
-				<< " and degree " << Modified_group_create->A_modified->degree << endl;
+			cout << "modified_group_init_layer5::modified_group_init "
+					"created a group of degree " << Modified_group_create->A_modified->degree << endl;
+
+		}
+
 		cout << "modified_group_init_layer5::modified_group_init "
 				"A_base = " << Modified_group_create->A_base->label << endl;
 		cout << "modified_group_init_layer5::modified_group_init "
@@ -998,6 +1025,78 @@ void modified_group_init_layer5::create_subgroup_by_generators(
 	}
 }
 
+
+
+void modified_group_init_layer5::create_action_on_specific_orbit_of_polynomials(
+		group_constructions::modified_group_create *Modified_group_create,
+		group_constructions::group_modification_description *Descr,
+		std::string &orbit_label,
+		int verbose_level)
+// output in A_modified
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "modified_group_init_layer5::create_action_on_specific_orbit_of_polynomials" << endl;
+	}
+	if (Descr->from.size() != 1) {
+		cout << "modified_group_init_layer5::create_action_on_specific_orbit_of_polynomials "
+				"need exactly one argument of type -from" << endl;
+		exit(1);
+	}
+
+	groups::any_group *AG;
+
+	AG = Get_any_group(Descr->from[0]);
+
+
+
+
+	wormhole::induced_action_on_specific_orbit *Induced_action_on_specific_orbit;
+
+
+	Induced_action_on_specific_orbit = NEW_OBJECT(wormhole::induced_action_on_specific_orbit);
+
+	Induced_action_on_specific_orbit->init_action_on_polynomial_orbit(
+			orbit_label,
+			verbose_level);
+
+#if 0
+	actions::action *A_base;
+	actions::action *A_previous;
+	actions::action *A_modified;
+#endif
+
+	Modified_group_create->A_base = AG->A;
+	Modified_group_create->A_previous = AG->A;
+	Modified_group_create->A_modified = Induced_action_on_specific_orbit->A_induced;
+
+	Modified_group_create->label = AG->label;
+	Modified_group_create->label_tex = AG->label_tex;
+
+	if (f_v) {
+		cout << "modified_group_init_layer5::create_action_on_specific_orbit_of_polynomials "
+				"before AG->A->Strong_gens->create_copy" << endl;
+	}
+
+	Modified_group_create->Strong_gens = AG->A->Strong_gens->create_copy(0 /* verbose_level*/);
+
+	if (f_v) {
+		cout << "modified_group_init_layer5::create_action_on_specific_orbit_of_polynomials "
+				"after AG->A->Strong_gens->create_copy" << endl;
+	}
+
+	Modified_group_create->f_has_strong_generators = true;
+
+
+	Modified_group_create->label += "_onOrbitOfPoly";
+	Modified_group_create->label_tex += "{\\rm onOrbitOfPoly}";
+
+	if (f_v) {
+		cout << "modified_group_init_layer5::create_action_on_specific_orbit_of_polynomials "
+				"done" << endl;
+	}
+}
 
 
 

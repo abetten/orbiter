@@ -529,17 +529,23 @@ void group_container::point_stabilizer_with_action(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
+
+	if (f_v) {
+		cout << "group_container::point_stabilizer_with_action " << endl;
+	}
+
 	require_sims();
 
 	vector_ge stab_gens;
 	int *tl;
 	
+
 	if (f_v) {
 		cout << "group_container::point_stabilizer_with_action ";
-		cout << "computing stabilizer of point " << pt 
-			<< " in action " << A2->label 
-			<< " internal action is " << stab.A->label << endl;
-		cout << "verbose_level = " << verbose_level << endl;
+		cout << "group_container::point_stabilizer_with_action point " << pt << endl;
+		cout << "group_container::point_stabilizer_with_action action " << A2->label << endl;
+		cout << "group_container::point_stabilizer_with_action internal action is " << stab.A->label << endl;
+		cout << "group_container::point_stabilizer_with_action verbose_level = " << verbose_level << endl;
 	}
 	
 	
@@ -548,7 +554,11 @@ void group_container::point_stabilizer_with_action(
 		cout << "group_container::point_stabilizer_with_action "
 				"calling S->point_stabilizer_with_action" << endl;
 	}
-	S->point_stabilizer_with_action(A2, stab_gens, tl, pt, verbose_level - 1);
+
+	S->point_stabilizer_with_action(
+			A2, stab_gens, tl, pt,
+			verbose_level - 1);
+
 	if (f_v) {
 		cout << "group_container::point_stabilizer_with_action "
 				"after S->point_stabilizer_with_action" << endl;
@@ -573,6 +583,7 @@ void group_container::point_stabilizer_with_action(
 				"after stab.init_strong_generators" << endl;
 	}
 	FREE_int(tl);
+
 	if (f_v) {
 		cout << "stabilizer of point " << pt << " has order ";
 		stab.print_group_order(cout);
@@ -583,6 +594,11 @@ void group_container::point_stabilizer_with_action(
 			stab_gens.print(cout);
 		}
 	}
+
+	if (f_v) {
+		cout << "group_container::point_stabilizer_with_action done" << endl;
+	}
+
 }
 
 void group_container::induced_action(

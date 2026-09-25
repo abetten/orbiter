@@ -50,6 +50,11 @@ orbit_of_equations::orbit_of_equations()
 	f_has_reduction = false;
 	reduction_function = NULL;
 	reduction_function_data = NULL;
+
+	cur_eqn = NULL;
+
+	image_eqn = NULL;
+
 }
 
 orbit_of_equations::~orbit_of_equations()
@@ -71,6 +76,12 @@ orbit_of_equations::~orbit_of_equations()
 	}
 	if (data_tmp) {
 		FREE_int(data_tmp);
+	}
+	if (cur_eqn) {
+		FREE_int(cur_eqn);
+	}
+	if (image_eqn) {
+		FREE_int(image_eqn);
 	}
 }
 
@@ -102,7 +113,10 @@ void orbit_of_equations::init(
 	sz_for_compare = 1 + nb_monomials;
 	
 	data_tmp = NEW_int(sz);
-	
+
+	cur_eqn = NEW_int(sz);
+	image_eqn = NEW_int(sz);
+
 	if (f_v) {
 		cout << "orbit_of_equations::init "
 				"computing orbit of ";
@@ -525,7 +539,7 @@ void orbit_of_equations::get_table(
 		cout << "orbit_of_equations::get_table" << endl;
 	}
 	nb_rows = used_length;
-	nb_cols = 4;
+	nb_cols = 5;
 	int i;
 
 	Table = new string [nb_rows * nb_cols];
@@ -534,14 +548,21 @@ void orbit_of_equations::get_table(
 	for (i = 0; i < nb_rows; i++) {
 		Table[i * nb_cols + 0] = std::to_string(i);
 		Table[i * nb_cols + 1] = "\"" + Int_vec_stringify(Equations[i] + 1, sz - 1) + "\"";
-		Table[i * nb_cols + 2] = std::to_string(prev[i]);
-		Table[i * nb_cols + 3] = std::to_string(label[i]);
+
+		std::string eqn_s;
+
+		eqn_s = AonHPD->HPD->stringify_equation(Equations[i] + 1, 0 /* verbose_level */);
+
+		Table[i * nb_cols + 2] = "\"" + eqn_s + "\"";
+		Table[i * nb_cols + 3] = std::to_string(prev[i]);
+		Table[i * nb_cols + 4] = std::to_string(label[i]);
 	}
 
 	Headings[0] = "Row";
 	Headings[1] = "Equation";
-	Headings[2] = "Parent";
-	Headings[3] = "Label";
+	Headings[2] = "EquationAF";
+	Headings[3] = "Parent";
+	Headings[4] = "Label";
 
 	if (f_v) {
 		cout << "orbit_of_equations::get_table done" << endl;
@@ -1222,6 +1243,59 @@ void orbit_of_equations::save_csv(
 	Fio.Csv_file_support->int_matrix_write_csv(
 			fname, Data, used_length, nb_monomials);
 }
+
+
+
+
+
+
+int orbit_of_equations::compute_image_of(
+		int eqn_idx, int *Elt, int verbose_level)
+// uses cur_eqn, image_eqn
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbit_of_equations::compute_image_of" << endl;
+	}
+
+
+
+	Int_vec_copy(Equations[eqn_idx], cur_eqn, sz);
+
+
+	if (f_v) {
+		cout << "orbit_of_equations::compute_image_of before map_an_equation" << endl;
+	}
+	map_an_equation(
+			cur_eqn, image_eqn,
+			Elt, 0 /* verbose_level */);
+	if (f_v) {
+		cout << "orbit_of_equations::compute_image_of after map_an_equation" << endl;
+	}
+
+	int idx;
+
+	if (!search_data(
+			image_eqn, idx, 0 /*verbose_level */)) {
+
+		cout << "orbit_of_equations::compute_image_of "
+				"cannot find the image equation" << endl;
+		exit(1);
+	}
+
+	if (f_v) {
+		cout << "orbit_of_equations::compute_image_of "
+				"equation mapping " << eqn_idx << " -> " << idx << endl;
+	}
+
+	if (f_v) {
+		cout << "orbit_of_equations::compute_image_of done" << endl;
+	}
+	return idx;
+}
+
+
 
 
 static int orbit_of_equations_compare_func(

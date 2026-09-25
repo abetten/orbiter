@@ -1006,6 +1006,8 @@ public:
 			int *Elt, long int i, int verbose_level);
 };
 
+
+
 // #############################################################################
 // action_on_spread_set.cpp
 // #############################################################################
@@ -1218,6 +1220,46 @@ public:
 	void make_element(
 			int *Elt, int *data, int verbose_level);
 };
+
+// #############################################################################
+// wormhole_action.cpp
+// #############################################################################
+
+//! induced action using a class implemented at a higher level
+
+
+class wormhole_action {
+public:
+	actions::action *A;
+
+	int perm_degree;
+
+	void *Wormhole;
+
+	long int (*wormhole_compute_image)(
+			void *Wormhole,
+			int *Elt,
+			long int i, int verbose_level);
+
+	wormhole_action();
+	~wormhole_action();
+	void init(
+			actions::action *A,
+			void *Wormhole,
+			long int (*wormhole_compute_image)(
+					void *Wormhole,
+					int *Elt,
+					long int i, int verbose_level),
+			int verbose_level);
+	long int compute_image(
+			int *Elt,
+			long int i, int verbose_level);
+	void element_one(
+			int *Elt,
+			int verbose_level);
+
+};
+
 
 
 }}}

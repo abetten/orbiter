@@ -1007,6 +1007,11 @@ class interface_toolkit {
 	std::string join_columns_column1;
 	std::string join_columns_column2;
 
+
+	// interface_toolkit_4.csv:
+
+
+
 	int f_decomposition_matrix;
 	std::string decomposition_matrix_fname;
 	std::string decomposition_matrix_po_label;
@@ -1028,6 +1033,10 @@ class interface_toolkit {
 
 	int f_density_of_ones_in_bitvector_file;
 	std::string density_of_ones_in_bitvector_file_fname;
+
+	int f_make_label;
+	std::string make_label_fname;
+	std::string make_label_text;
 
 public:
 
@@ -1052,6 +1061,8 @@ public:
 	int worker2(
 			int verbose_level);
 	int worker3(
+			int verbose_level);
+	int worker4(
 			int verbose_level);
 
 };

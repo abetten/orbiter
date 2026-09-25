@@ -155,6 +155,7 @@ namespace induced_actions {
 	class action_on_subgroups;
 	class action_on_wedge_product;
 	class product_action;
+	class wormhole_action;
 
 }
 
@@ -212,6 +213,7 @@ enum symmetry_group_type {
 	action_on_set_partitions_t,
 	action_on_interior_direct_product_t,
 	action_on_cosets_of_subgroup_t,
+	action_by_wormhole_t,
 };
 
 //! enumeration specific to action_by_representation
@@ -281,6 +283,7 @@ union symmetry_group {
 	induced_actions::action_on_set_partitions *OnSetPartitions;
 	induced_actions::action_on_interior_direct_product *OnInteriorDirectProduct;
 	induced_actions::action_on_cosets_of_subgroup *A_on_cosets_of_subgroup;
+	induced_actions::wormhole_action *Wormhole_action;
 };
 
 

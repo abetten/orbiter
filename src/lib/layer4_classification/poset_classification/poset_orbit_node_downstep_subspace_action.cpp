@@ -150,7 +150,7 @@ void poset_orbit_node::compute_flag_orbits_subspace_action(
 	A_on_upset = A_factor_space;
 #endif
 
-	Schreier->init(A_factor_space, verbose_level - 2);
+	Schreier->init(gen->get_poset()->A, A_factor_space, verbose_level - 2);
 
 
 

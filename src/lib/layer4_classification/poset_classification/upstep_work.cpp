@@ -746,7 +746,7 @@ int upstep_work::upstep_for_sets(
 		cout << "initializing up_orbit with restricted action ";
 		A_by_restriction->print_info();
 	}
-	up_orbit.init(A_by_restriction, verbose_level - 2);
+	up_orbit.init(gen->get_poset()->A, A_by_restriction, verbose_level - 2);
 	//up_orbit.init(gen->A2);
 	if (f_v) {
 		print_level_extension_info();

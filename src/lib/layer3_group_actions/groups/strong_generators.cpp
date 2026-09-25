@@ -2361,7 +2361,7 @@ void strong_generators::compute_schreier_with_given_action(
 
 	//int print_interval = 10000;
 
-	Sch->init(A_given, verbose_level - 2);
+	Sch->init(A_given, A_given, verbose_level - 2);
 	//Sch->initialize_tables();
 	Sch->Generators_and_images->init_generators(
 			*gens, verbose_level - 2);
@@ -2387,7 +2387,7 @@ void strong_generators::compute_schreier_with_given_action_on_a_given_set(
 	}
 	Sch = NEW_OBJECT(schreier);
 
-	Sch->init(A_given, verbose_level - 2);
+	Sch->init(A_given, A_given, verbose_level - 2);
 	//Sch->initialize_tables();
 	Sch->Generators_and_images->init_generators(
 			*gens, verbose_level - 2);
@@ -2838,7 +2838,7 @@ schreier *strong_generators::compute_all_point_orbits_schreier(
 
 	Sch = NEW_OBJECT(schreier);
 
-	Sch->init(A_given, verbose_level - 2);
+	Sch->init(A_given, A_given, verbose_level - 2);
 	//Sch->initialize_tables();
 	if (f_v) {
 		cout << "strong_generators::compute_all_point_orbits_schreier "
@@ -2899,7 +2899,7 @@ schreier *strong_generators::compute_all_point_orbits_schreier_with_print_interv
 
 	Sch = NEW_OBJECT(schreier);
 
-	Sch->init(A_given, verbose_level - 2);
+	Sch->init(A_given, A_given, verbose_level - 2);
 	//Sch->initialize_tables();
 	if (f_v) {
 		cout << "strong_generators::compute_all_point_orbits_schreier "
@@ -2946,7 +2946,7 @@ schreier *strong_generators::orbit_of_one_point_schreier(
 		cout << "strong_generators::orbit_of_one_point_schreier "
 				"before Sch->init" << endl;
 	}
-	Sch->init(A_given, verbose_level - 2);
+	Sch->init(A_given, A_given, verbose_level - 2);
 	if (f_v) {
 		cout << "strong_generators::orbit_of_one_point_schreier "
 				"after Sch->init" << endl;

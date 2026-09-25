@@ -3145,7 +3145,7 @@ void wreath_product::orbits_restricted_compute(
 
 	Sch = NEW_OBJECT(groups::schreier);
 
-	Sch->init(A_perm, verbose_level - 2);
+	Sch->init(A_perm, A_perm, verbose_level - 2);
 	//Sch->initialize_tables();
 	Sch->Generators_and_images->init_generators(
 			*Gens, verbose_level - 2);

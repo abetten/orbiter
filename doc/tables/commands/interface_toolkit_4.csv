@@ -1,0 +1,11 @@
+ROW,C1,C2,C3
+0,"tab:misc:4",,
+1,"Miscellaneous Orbiter Commands (Part 4)",,
+1,"\verb'-decomposition_matrix' "," fname-in po fst iso n1 n2 n3 ","   "
+1,"\verb'-stats' "," fname-base ","   "
+1,"\verb'-intersect_set_of_sets' "," fname col ","   "
+1,"\verb'-eliminate_duplicate_columns' "," fname "," Eliminates duplicate columns in the given file and writes a file with one column per each type.  "
+1,"\verb'-density_of_ones_in_bitvector_file' "," fname "," Computes the density of ones in the given bitvector file.  "
+1,"\verb'-make_label' "," fname text"," Creates a single page latex file containing the given text centered and in a very large font.  "
+END
+

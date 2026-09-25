@@ -763,14 +763,24 @@ void poset_orbit_node::compute_point_stabilizer_in_standard_setting(
 						<< AR->degree << endl;
 			}
 			if (f_v) {
+
 				gen->print_level_extension_info(
 						size - 1, prev, prev_ex);
 				cout << " poset_orbit_node::compute_point_stabilizer_in_standard_setting "
 						"calling G.point_stabilizer_with_action"
 						<< endl;
+
+				cout << "poset_orbit_node::compute_point_stabilizer_in_standard_setting "
+						"idx_of_root_node = " << AR->G.ABR->idx_of_root_node << endl;
+				cout << "poset_orbit_node::compute_point_stabilizer_in_standard_setting "
+						"go_H = " << go_H << endl;
+				cout << "poset_orbit_node::compute_point_stabilizer_in_standard_setting "
+						"degree of restricted action is = " << AR->degree << endl;
+
 			}
 			G.point_stabilizer_with_action(
-					AR, H, AR->G.ABR->idx_of_root_node /* 0 */ /*pt */,
+					AR, H,
+					AR->G.ABR->idx_of_root_node /* 0 */ /*pt */,
 					verbose_level - 3);
 			if (f_v) {
 				gen->print_level_extension_info(size - 1, prev, prev_ex);

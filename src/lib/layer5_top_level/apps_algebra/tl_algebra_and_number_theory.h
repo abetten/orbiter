@@ -601,6 +601,11 @@ public:
 			group_constructions::group_modification_description *Descr,
 			std::string &subgroup_by_generators_label,
 			int verbose_level);
+	void create_action_on_specific_orbit_of_polynomials(
+			group_constructions::modified_group_create *Modified_group_create,
+			group_constructions::group_modification_description *Descr,
+			std::string &orbit_label,
+			int verbose_level);
 
 
 

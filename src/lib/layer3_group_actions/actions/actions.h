@@ -229,6 +229,9 @@ public:
 			groups::schreier &S,
 			data_structures_groups::vector_ge &gens,
 			int verbose_level);
+	// using the present action for both A_base and A_induced
+
+
 	
 	/** the index of the first base point which is moved */
 	int depth_in_stab_chain(
@@ -866,6 +869,7 @@ public:
 			other::graphics::draw_options *LG_Draw_options,
 			int verbose_level);
 	// reports the sims object from the arguments
+	// ToDo: there are two report functions in this class
 	void report_base(
 			std::ostream &ost,
 			int verbose_level);
@@ -927,6 +931,7 @@ public:
 			groups::sims *Sims,
 			other::graphics::draw_options *LG_Draw_options,
 			int verbose_level);
+	// ToDo: there are two report functions in this class
 	void report_order_invariant(
 			std::ostream &ost,
 			std::string &label,

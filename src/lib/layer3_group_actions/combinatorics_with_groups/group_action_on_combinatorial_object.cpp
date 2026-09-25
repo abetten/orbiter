@@ -227,7 +227,7 @@ void group_action_on_combinatorial_object::init(
 	}
 
 	Sch_points = NEW_OBJECT(groups::schreier);
-	Sch_points->init(A_on_points, verbose_level - 2);
+	Sch_points->init(A_on_points, A_on_points, verbose_level - 2);
 	//Sch_points->initialize_tables();
 	if (f_v) {
 		cout << "group_action_on_combinatorial_object::init "
@@ -265,7 +265,7 @@ void group_action_on_combinatorial_object::init(
 
 
 	Sch_lines = NEW_OBJECT(groups::schreier);
-	Sch_lines->init(A_on_lines, verbose_level - 2);
+	Sch_lines->init(A_on_lines, A_on_lines, verbose_level - 2);
 	//Sch_lines->initialize_tables();
 	Sch_lines->Generators_and_images->init_generators(
 			*gens->gens /* *generators */,

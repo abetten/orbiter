@@ -182,7 +182,7 @@ int upstep_work::upstep_subspace_action(
 		exit(1);
 	}
 
-	up_orbit.init(A_on_hyperplanes, verbose_level - 2);
+	up_orbit.init(gen->get_poset()->A, A_on_hyperplanes, verbose_level - 2);
 	up_orbit.Generators_and_images->init_generators(*H->SG, verbose_level - 2);
 	if (f_vvv) {
 		cout << "upstep_work::upstep_subspace_action "

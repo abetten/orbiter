@@ -456,7 +456,7 @@ public:
 // #############################################################################
 
 
-//! catch all class for everything related to tactical decomposition that does not fit elsewhere
+//! catch-sall class for everything related to tactical decompositions
 
 
 class tactical_decomposition_domain {
@@ -469,7 +469,8 @@ public:
 	void do_widor(
 				std::string &widor_fname, int verbose_level);
 	void do_tdo_refinement(
-			tactical_decompositions::tdo_refinement_description *Descr, int verbose_level);
+			tactical_decompositions::tdo_refinement_description *Descr,
+			int verbose_level);
 	void do_tdo_print(
 			std::string &fname, int verbose_level);
 	void do_tdo_report(
@@ -487,12 +488,15 @@ public:
 			long int *lines, int nb_lines,
 			std::vector<std::string> &file_names,
 			int verbose_level);
-	// called from quartic_curve_from_surface::TDO_decomposition
-	combinatorics::tactical_decompositions::decomposition_scheme *compute_TDO_decomposition_of_projective_space(
+	// called from quartic_curve_from_surface::compute_TDO_decomposition
+	combinatorics::tactical_decompositions::decomposition_scheme
+		*compute_TDO_decomposition_of_projective_space(
 			geometry::projective_geometry::projective_space *P,
 			long int *points, int nb_points,
 			long int *lines, int nb_lines,
 			int verbose_level);
+	// computed from
+	// variety_with_TDO_and_TDA::init_and_compute_tactical_decompositions
 	// returns NULL if the space is too large
 	void refine_the_partition(
 			int v, int k, int b, long int *Blocks_coded,
@@ -1088,6 +1092,8 @@ struct solution_file_data {
 	std::vector<int> system_no;
 	std::vector<std::string> solution_file;
 };
+
+
 
 //! synthetic tactical decomposition of an incidence structure, not necessarily realizable
 

@@ -282,7 +282,7 @@ void poset_orbit_node::compute_schreier_vector(
 	}
 	Schreier = NEW_OBJECT(groups::schreier);
 
-	Schreier->init(AR, verbose_level - 2);
+	Schreier->init(gen->get_poset()->A, AR, verbose_level - 2);
 
 
 
@@ -686,7 +686,7 @@ void poset_orbit_node::schreier_forest(
 			gen->print_level_info(lvl, node);
 			cout << " : poset_orbit_node::schreier_forest before Schreier.init" << endl;
 		}
-		Schreier.init(AR /*gen->A2*/, verbose_level - 2);
+		Schreier.init(gen->get_poset()->A, AR /*gen->A2*/, verbose_level - 2);
 		if (f_v) {
 			gen->print_level_info(lvl, node);
 			cout << " : poset_orbit_node::schreier_forest after Schreier.init" << endl;
@@ -695,7 +695,7 @@ void poset_orbit_node::schreier_forest(
 	else {
 		gen->print_level_info(lvl, node);
 		cout << " : poset_orbit_node::schreier_forest we are NOT using an invariant subset" << endl;
-		Schreier.init(gen->get_A2(), verbose_level - 2);
+		Schreier.init(gen->get_poset()->A, gen->get_A2(), verbose_level - 2);
 	}
 
 
@@ -1246,7 +1246,7 @@ int poset_orbit_node::downstep_get_invariant_subset(
 				pt = O->E[i].get_pt();
 				groups::schreier S;
 
-				S.init(gen->get_A2(), verbose_level - 2);
+				S.init(gen->get_poset()->A, gen->get_A2(), verbose_level - 2);
 
 				std::vector<int> gen_handle;
 

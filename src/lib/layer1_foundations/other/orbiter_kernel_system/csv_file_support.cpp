@@ -2543,7 +2543,8 @@ void csv_file_support::do_csv_file_latex(
 				extra_praeamble /* extras_for_preamble */);
 		}
 
-		S.print_table_latex(ost,
+		S.print_table_latex(
+				ost,
 				f_column_select,
 				false /* f_enclose_in_parentheses */,
 				nb_lines_per_table);

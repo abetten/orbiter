@@ -360,7 +360,16 @@ namespace orbiter {
 
 		}
 
+		//! classes that should be located at a lower level but cannot
 
+		namespace wormhole {
+
+
+
+			class induced_action_on_specific_orbit;
+
+
+		}
 
 	} // namespace layer5_applications
 
@@ -409,6 +418,7 @@ namespace orbiter {
 #include "semifields/semifields.h"
 #include "spreads/spreads.h"
 #include "user_interface/core_system/core_system.h"
+#include "wormhole/wormhole.h"
 
 
 

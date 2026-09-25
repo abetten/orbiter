@@ -340,7 +340,7 @@ void hall_system_classify::orbits_on_triples(
 
 		Orbits_on_triples = NEW_OBJECT(groups::schreier);
 
-		Orbits_on_triples->init(A_on_triples, verbose_level - 2);
+		Orbits_on_triples->init(A, A_on_triples, verbose_level - 2);
 		//Orbits_on_triples->initialize_tables();
 		Orbits_on_triples->Generators_and_images->init_generators(
 				*Strong_gens_Hall_reflection->gens, verbose_level - 2);

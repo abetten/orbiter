@@ -489,6 +489,8 @@ public:
 
 	schreier *Schreier;
 
+	actions::action *A_base;
+
 	actions::action *A;
 
 	int f_images_only; // why do we need this?
@@ -501,8 +503,9 @@ public:
 	int nb_generators;
 		// this was called nb_images, which is very confusing
 		// this should be called nb_generators
+
 	int **images;
-		// [nb_gens][2 * A->degree],
+		// [nb_generators][2 * A->degree],
 		// allocated by init_images,
 		// called from init_generators
 		// for each generator,
@@ -526,6 +529,7 @@ public:
 
 	void init(
 			schreier *Schreier,
+			actions::action *A_base,
 			actions::action *A,
 			int verbose_level);
 	void init2();
@@ -535,6 +539,7 @@ public:
 	// sets all images to -1.
 	void init_images_known(
 			schreier *Schreier,
+			actions::action *A_base,
 			actions::action *A,
 			int nb_generators,
 			int *known_images, int verbose_level);
@@ -971,8 +976,11 @@ public:
 			int preferred_choice_function_data2,
 			int verbose_level);
 	void init(
-			actions::action *A, int verbose_level);
+			actions::action *A_base,
+			actions::action *A,
+			int verbose_level);
 	void init_images_known(
+			actions::action *A_base,
 			actions::action *A,
 			int nb_images, int *known_images,
 			int verbose_level);
@@ -1010,12 +1018,6 @@ public:
 		// computes non trivial random Schreier 
 		// generator into schreier_gen
 		// non-trivial is with respect to A_original
-#if 0
-	void get_path_and_labels(
-			std::vector<int> &path, std::vector<int> &labels,
-			int i, int verbose_level);
-	// moved to forest.cpp
-#endif
 	void orbits_on_invariant_subset_fast(
 			int len,
 		int *subset, int verbose_level);
@@ -1634,6 +1636,22 @@ public:
 		// that are stored at present
 		// (using a temporary schreier object),
 		// then sifts random schreier generators into S
+	void point_stabilizer_stabchain_with_action_loop(
+			actions::action *A2,
+			sims &S, int pt,
+			schreier *Schreier,
+			int *Elt,
+			int orbit_len, int &cnt,
+			algebra::ring_theory::longinteger_object &go,
+			algebra::ring_theory::longinteger_object &stab_order,
+			algebra::ring_theory::longinteger_object &cur_stab_order,
+			int verbose_level);
+	void point_stabilizer_stabchain_with_action_loop_get_generator(
+			sims &S, int pt,
+			schreier *Schreier,
+			int cnt,
+			int *Elt,
+			int verbose_level);
 	void point_stabilizer(
 			data_structures_groups::vector_ge &SG, int *tl,
 		int pt, int verbose_level);

@@ -276,7 +276,7 @@ void singer_cycle::init_lines(
 
 
 	Sch = NEW_OBJECT(groups::schreier);
-	Sch->init(A2, verbose_level - 2);
+	Sch->init(A, A2, verbose_level - 2);
 	//Sch->initialize_tables();
 	Sch->Generators_and_images->init_single_generator(nice_gens->ith(0), verbose_level - 2);
 

@@ -88,6 +88,9 @@ group_modification_description::group_modification_description()
 	f_nauty_control = false;
 	Nauty_interface_control = NULL;
 
+	f_on_specific_orbit_of_polynomials = false;
+	//std::string on_specific_orbit_of_polynomials_label;
+
 	f_import = false;
 
 	//std::vector<std::string> from;
@@ -300,6 +303,13 @@ int group_modification_description::read_arguments(
 				}
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-on_specific_orbit_of_polynomials") == 0) {
+			f_on_specific_orbit_of_polynomials = true;
+			on_specific_orbit_of_polynomials_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-on_specific_orbit_of_polynomials " << on_specific_orbit_of_polynomials_label << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-import") == 0) {
 			f_import = true;
 			if (f_v) {
@@ -420,6 +430,10 @@ void group_modification_description::print()
 		cout << "-nauty_control " << endl;
 		Nauty_interface_control->print();
 	}
+	if (f_on_specific_orbit_of_polynomials) {
+		cout << "-on_specific_orbit_of_polynomials " << on_specific_orbit_of_polynomials_label << endl;
+	}
+
 	if (f_import) {
 		cout << "-import " << endl;
 	}

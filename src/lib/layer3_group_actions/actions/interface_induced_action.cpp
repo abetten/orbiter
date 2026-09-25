@@ -597,6 +597,15 @@ static long int induced_action_element_image_of(
 
 		b = A.G.A_on_cosets_of_subgroup->compute_image((int *)elt, a, verbose_level - 1);
 	}
+	else if (A.type_G == action_by_wormhole_t) {
+		if (f_v) {
+			cout << "induced_action_element_image_of "
+					"action_by_wormhole_t" << endl;
+		}
+		induced_actions::wormhole_action *Wormhole_action = A.G.Wormhole_action;
+
+		b = Wormhole_action->compute_image(Elt, a, verbose_level - 1);
+	}
 	else {
 		cout << "induced_action_element_image_of type_G "
 				"unknown:: type_G = " << A.type_G << endl;
@@ -970,6 +979,17 @@ static void induced_action_element_image_of_low_level(
 				"not yet implemented" << endl;
 		exit(1);
 	}
+	else if (A.type_G == action_by_wormhole_t) {
+		if (f_v) {
+			cout << "induced_action_element_image_of "
+					"action_by_wormhole_t" << endl;
+		}
+		induced_actions::wormhole_action *Wormhole_action = A.G.Wormhole_action;
+
+		cout << "action_by_wormhole_t "
+				"not yet implemented" << endl;
+		exit(1);
+	}
 	else {
 		cout << "induced_action_element_image_of_low_level "
 				"type_G unknown:: type_G = " << A.type_G << endl;
@@ -1001,6 +1021,13 @@ static void induced_action_element_one(
 		
 		PA = A.G.product_action_data;
 		PA->element_one(&A, (int *) elt, verbose_level);
+	}
+	else if (A.type_G == action_by_wormhole_t) {
+
+		induced_actions::wormhole_action *Wormhole_action = A.G.Wormhole_action;
+
+		Wormhole_action->element_one((int *) elt, verbose_level);
+
 	}
 	else {
 		sub = A.subaction;

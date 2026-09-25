@@ -491,6 +491,7 @@ void combinatorics_with_action::refine_decomposition_by_group_orbits_one_side(
 		Schreier = NEW_OBJECT(groups::schreier);
 		Schreier->init(
 				A_on_points_or_lines,
+				A_on_points_or_lines,
 				verbose_level - 2);
 		//Schreier->initialize_tables();
 		Schreier->Generators_and_images->init_generators(

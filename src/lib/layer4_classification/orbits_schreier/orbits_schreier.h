@@ -80,6 +80,10 @@ public:
 			void *reduction_function_data);
 	void *reduction_function_data;
 
+	int *cur_eqn; // for compute_image_of
+
+	int *image_eqn; // for compute_image_of
+
 
 	orbit_of_equations();
 	~orbit_of_equations();
@@ -144,6 +148,9 @@ public:
 			int *data, int &idx, int verbose_level);
 	void save_csv(
 			std::string &fname, int verbose_level);
+	int compute_image_of(
+			int eqn_idx, int *Elt, int verbose_level);
+
 };
 
 

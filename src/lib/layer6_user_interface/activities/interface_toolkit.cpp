@@ -24,6 +24,10 @@ interface_toolkit::interface_toolkit()
 {
 	Record_birth();
 
+
+	// interface_toolkit_1.csv:
+
+
 	f_create_files_direct = false;
 	//std::string create_files_direct_fname_mask;
 	//std::string create_files_direct_text;
@@ -292,6 +296,10 @@ interface_toolkit::interface_toolkit()
 	//std::string join_columns_column1;
 	//std::string join_columns_column2;
 
+
+	// interface_toolkit_4.csv:
+
+
 	f_decomposition_matrix = false;
 	//std::string decomposition_matrix_fname;
 	//std::string decomposition_matrix_po_label;
@@ -314,6 +322,10 @@ interface_toolkit::interface_toolkit()
 
 	f_density_of_ones_in_bitvector_file = false;
 	//std::string density_of_ones_in_bitvector_file_fname;
+
+	f_make_label = false;
+	//std::string make_label_fname;
+	//std::string make_label_text;
 
 }
 
@@ -505,6 +517,11 @@ void interface_toolkit::print_help(
 	else if (ST.stringcmp(argv[i], "-join_columns") == 0) {
 		cout << "-join_columns <string : fname_in> <string : fname_out> <string : col1> <string : col2>" << endl;
 	}
+
+	// interface_toolkit_4.csv:
+
+
+
 	else if (ST.stringcmp(argv[i], "-decomposition_matrix") == 0) {
 		cout << "-decomposition_matrix <string : fname> <string : po_label> "
 				"<string : f_fst_label> <string : iso_idx_label> "
@@ -521,6 +538,9 @@ void interface_toolkit::print_help(
 	}
 	else if (ST.stringcmp(argv[i], "-density_of_ones_in_bitvector_file") == 0) {
 		cout << "-density_of_ones_in_bitvector_file <string : fname>" << endl;
+	}
+	else if (ST.stringcmp(argv[i], "-make_label") == 0) {
+		cout << "-make_label <string : fname> <string : text>" << endl;
 	}
 
 }
@@ -712,6 +732,10 @@ int interface_toolkit::recognize_keyword(
 	else if (ST.stringcmp(argv[i], "-join_columns") == 0) {
 		return true;
 	}
+
+	// interface_toolkit_4.csv:
+
+
 	else if (ST.stringcmp(argv[i], "-decomposition_matrix") == 0) {
 		return true;
 	}
@@ -725,6 +749,9 @@ int interface_toolkit::recognize_keyword(
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-density_of_ones_in_bitvector_file") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-make_label") == 0) {
 		return true;
 	}
 	return false;
@@ -745,6 +772,13 @@ void interface_toolkit::read_arguments(
 		cout << "interface_toolkit::read_arguments "
 				"the next argument is " << argv[i] << endl;
 	}
+
+
+
+	// interface_toolkit_1.csv:
+
+
+
 	if (ST.stringcmp(argv[i], "-create_files_direct") == 0) {
 		f_create_files_direct = true;
 		create_files_direct_fname_mask.assign(argv[++i]);
@@ -1306,7 +1340,9 @@ void interface_toolkit::read_arguments(
 		}
 	}
 
+
 	// interface_toolkit_3.csv:
+
 
 	else if (ST.stringcmp(argv[i], "-plot_function") == 0) {
 		f_plot_function = true;
@@ -1562,6 +1598,12 @@ void interface_toolkit::read_arguments(
 					<< endl;
 		}
 	}
+
+
+	// interface_toolkit_4.csv:
+
+
+
 	else if (ST.stringcmp(argv[i], "-decomposition_matrix") == 0) {
 		f_decomposition_matrix = true;
 		decomposition_matrix_fname.assign(argv[++i]);
@@ -1617,6 +1659,17 @@ void interface_toolkit::read_arguments(
 		if (f_v) {
 			cout << "-density_of_ones_in_bitvector_file "
 					<< density_of_ones_in_bitvector_file_fname << " "
+					<< endl;
+		}
+	}
+	else if (ST.stringcmp(argv[i], "-make_label") == 0) {
+		f_make_label = true;
+		make_label_fname.assign(argv[++i]);
+		make_label_text.assign(argv[++i]);
+		if (f_v) {
+			cout << "-make_label "
+					<< make_label_fname << " "
+					<< make_label_text << " "
 					<< endl;
 		}
 	}
@@ -1957,6 +2010,9 @@ void interface_toolkit::print()
 				<< join_columns_column2 << " "
 				<< endl;
 	}
+
+	// interface_toolkit_4.csv:
+
 	if (f_decomposition_matrix) {
 		cout << "-decomposition_matrix "
 				<< decomposition_matrix_fname << " "
@@ -1988,6 +2044,12 @@ void interface_toolkit::print()
 				<< density_of_ones_in_bitvector_file_fname << " "
 				<< endl;
 	}
+	if (f_make_label) {
+		cout << "-make_label "
+				<< make_label_fname << " "
+				<< make_label_text << " "
+				<< endl;
+	}
 }
 
 
@@ -2009,6 +2071,9 @@ void interface_toolkit::worker(
 
 	}
 	else if (worker3(verbose_level)) {
+
+	}
+	else if (worker4(verbose_level)) {
 
 	}
 
@@ -3442,7 +3507,32 @@ int interface_toolkit::worker3(
 
 
 	}
-	else if (f_decomposition_matrix) {
+	else {
+		ret = false;
+	}
+
+	if (f_v) {
+		cout << "interface_toolkit::worker3 done" << endl;
+	}
+
+	return ret;
+
+}
+
+int interface_toolkit::worker4(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "interface_toolkit::worker4" << endl;
+	}
+
+	int ret = true;
+
+	// interface_toolkit_4.csv:
+
+	if (f_decomposition_matrix) {
 		if (f_v) {
 			cout << "interface_toolkit::worker decomposition_matrix "
 					" fname = " << decomposition_matrix_fname << endl;
@@ -3703,12 +3793,28 @@ int interface_toolkit::worker3(
 		cout << "density_of_ones_in_bitvector_file " << density_of_ones_in_bitvector_file_fname << " is " << d << endl;
 
 	}
+	else if (f_make_label) {
+		if (f_v) {
+			cout << "-make_label "
+					<< make_label_fname << " "
+					<< make_label_text << " "
+				<< endl;
+		}
+
+		other::data_structures::algorithms Algo;
+
+		Algo.make_label(
+				make_label_fname,
+				make_label_text, verbose_level);
+
+
+	}
 	else {
 		ret = false;
 	}
 
 	if (f_v) {
-		cout << "interface_toolkit::worker3 done" << endl;
+		cout << "interface_toolkit::worker4 done" << endl;
 	}
 
 	return ret;

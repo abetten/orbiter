@@ -265,6 +265,11 @@ public:
 	other::l1_interfaces::nauty_interface_control *Nauty_interface_control;
 
 
+	int f_on_specific_orbit_of_polynomials;
+	std::string on_specific_orbit_of_polynomials_label;
+
+
+
 	// ToDo undocumented:
 	int f_import;
 
@@ -512,7 +517,6 @@ public:
 	induced_actions::action_by_right_multiplication *Action_by_right_multiplication;
 
 	groups::sims *Action_by_conjugation_base_group;
-
 
 
 	modified_group_create();

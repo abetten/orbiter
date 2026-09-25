@@ -109,7 +109,7 @@ void character_table_burnside::do_it(
 
 	Sch = NEW_OBJECT(groups::schreier);
 
-	Sch->init(Aconj, verbose_level - 2);
+	Sch->init(Aconj, Aconj, verbose_level - 2);
 
 
 	SG = NEW_OBJECT(groups::strong_generators);

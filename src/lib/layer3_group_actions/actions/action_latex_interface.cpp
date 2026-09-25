@@ -55,6 +55,11 @@ void action_latex_interface::report(
 		cout << "action_latex_interface::report verbose_level = " << verbose_level << endl;
 	}
 
+
+	if (f_v) {
+		cout << "action_latex_interface::report stage 1" << endl;
+	}
+
 	ost << "\\section*{The Group and its Action}" << endl;
 
 
@@ -68,6 +73,11 @@ void action_latex_interface::report(
 	if (f_v) {
 		cout << "action_latex_interface::report "
 				"after report_group_name_and_degree" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "action_latex_interface::report stage 2" << endl;
 	}
 
 	if (f_strong_gens) {
@@ -90,6 +100,10 @@ void action_latex_interface::report(
 
 
 	if (f_v) {
+		cout << "action_latex_interface::report stage 3" << endl;
+	}
+
+	if (f_v) {
 		cout << "action_latex_interface::report before report_what_we_act_on" << endl;
 	}
 	report_what_we_act_on(
@@ -98,6 +112,12 @@ void action_latex_interface::report(
 	if (f_v) {
 		cout << "action_latex_interface::report after report_what_we_act_on" << endl;
 	}
+
+
+	if (f_v) {
+		cout << "action_latex_interface::report stage 4" << endl;
+	}
+
 
 	if (A->is_matrix_group()) {
 		ost << "The group is a matrix group.\\\\" << endl;
@@ -129,6 +149,11 @@ void action_latex_interface::report(
 
 	}
 
+	if (f_v) {
+		cout << "action_latex_interface::report stage 5" << endl;
+	}
+
+
 	if (A->type_G == wreath_product_t) {
 		group_constructions::wreath_product *W;
 
@@ -141,6 +166,12 @@ void action_latex_interface::report(
 			cout << "action_latex_interface::report after W->report" << endl;
 		}
 	}
+
+
+	if (f_v) {
+		cout << "action_latex_interface::report stage 6" << endl;
+	}
+
 
 	ost << "\\subsection*{Base and Stabilizer Chain}" << endl;
 
@@ -165,6 +196,11 @@ void action_latex_interface::report(
 			cout << "action_latex_interface::report printing group order done" << endl;
 		}
 	}
+
+	if (f_v) {
+		cout << "action_latex_interface::report stage 7" << endl;
+	}
+
 
 	if (A->Stabilizer_chain) {
 		if (f_v) {
@@ -202,6 +238,13 @@ void action_latex_interface::report(
 			ost << "Does not have strong generators.\\\\" << endl;
 		}
 	}
+
+
+	if (f_v) {
+		cout << "action_latex_interface::report stage 8" << endl;
+	}
+
+
 	if (f_sims) {
 		if (f_v) {
 			cout << "action_latex_interface::report before S->report" << endl;
@@ -211,6 +254,12 @@ void action_latex_interface::report(
 			cout << "action_latex_interface::report after S->report" << endl;
 		}
 	}
+
+
+	if (f_v) {
+		cout << "action_latex_interface::report stage 9" << endl;
+	}
+
 	if (A->Stabilizer_chain && A->base_len() > 0) {
 		if (f_v) {
 			cout << "action_latex_interface::report we have Stabilizer_chain" << endl;
@@ -243,6 +292,9 @@ void action_latex_interface::report(
 
 	ost << "\\bigskip" << endl;
 
+	if (f_v) {
+		cout << "action_latex_interface::report stage 10" << endl;
+	}
 
 	if (f_v) {
 		cout << "action_latex_interface::report done" << endl;
@@ -1012,10 +1064,37 @@ void action_latex_interface::report(
 
 		if (A != Strong_gens->A) {
 
+			if (f_v) {
+				cout << "action_latex_interface::report "
+						"A != Strong_gens->A" << endl;
+			}
+
+
+			// ToDo: disabled because of action_on_specific_orbit
+
+
+
+#if 0
 			ost << "\\section*{Strong generators in the induced action}" << endl;
 			ost << "Strong generators in the induced action:\\\\" << endl;
+
+
+			if (f_v) {
+				cout << "action_latex_interface::report "
+						"before Strong_gens->print_generators_in_different_action_tex" << endl;
+			}
+
 			Strong_gens->print_generators_in_different_action_tex(
 					ost, A);
+
+			if (f_v) {
+				cout << "action_latex_interface::report "
+						"after Strong_gens->print_generators_in_different_action_tex" << endl;
+			}
+#endif
+
+
+
 		}
 
 
@@ -1025,7 +1104,8 @@ void action_latex_interface::report(
 		}
 
 		A->Action_latex_interface->report(
-				ost, true /*f_sims*/, Sims,
+				ost,
+				true /*f_sims*/, Sims,
 				true /* f_strong_gens */, Strong_gens,
 				LG_Draw_options,
 				verbose_level - 2);

@@ -30,7 +30,10 @@ generators_and_images::generators_and_images()
 	Record_birth();
 
 	Schreier = NULL;
+
+	A_base = NULL;
 	A = NULL;
+
 	f_images_only = false;
 	degree = 0;
 	nb_generators = 0;
@@ -77,6 +80,7 @@ generators_and_images::~generators_and_images()
 
 void generators_and_images::init(
 		schreier *Schreier,
+		actions::action *A_base,
 		actions::action *A,
 		int verbose_level)
 {
@@ -87,11 +91,12 @@ void generators_and_images::init(
 	}
 
 	generators_and_images::Schreier = Schreier;
+	generators_and_images::A_base = A_base;
 	generators_and_images::A = A;
 	degree = A->degree;
 	//allocate_tables();
-	gens.init(A, verbose_level - 2);
-	gens_inv.init(A, verbose_level - 2);
+	gens.init(A_base, verbose_level - 2);
+	gens_inv.init(A_base, verbose_level - 2);
 	//initialize_tables();
 	init2();
 
@@ -99,13 +104,13 @@ void generators_and_images::init(
 
 void generators_and_images::init2()
 {
-	Elt1 = NEW_int(A->elt_size_in_int);
-	Elt2 = NEW_int(A->elt_size_in_int);
-	Elt3 = NEW_int(A->elt_size_in_int);
-	schreier_gen = NEW_int(A->elt_size_in_int);
-	schreier_gen1 = NEW_int(A->elt_size_in_int);
-	cosetrep = NEW_int(A->elt_size_in_int);
-	cosetrep_tmp = NEW_int(A->elt_size_in_int);
+	Elt1 = NEW_int(A_base->elt_size_in_int);
+	Elt2 = NEW_int(A_base->elt_size_in_int);
+	Elt3 = NEW_int(A_base->elt_size_in_int);
+	schreier_gen = NEW_int(A_base->elt_size_in_int);
+	schreier_gen1 = NEW_int(A_base->elt_size_in_int);
+	cosetrep = NEW_int(A_base->elt_size_in_int);
+	cosetrep_tmp = NEW_int(A_base->elt_size_in_int);
 }
 
 void generators_and_images::delete_images()
@@ -156,6 +161,7 @@ void generators_and_images::init_images(
 
 void generators_and_images::init_images_known(
 		schreier *Schreier,
+		actions::action *A_base,
 		actions::action *A,
 		int nb_generators,
 		int *known_images, int verbose_level)
@@ -171,6 +177,7 @@ void generators_and_images::init_images_known(
 	delete_images();
 	f_images_only = true;
 	generators_and_images::Schreier = Schreier;
+	generators_and_images::A_base = A_base;
 	generators_and_images::A = A;
 	generators_and_images::degree = A->degree;
 	generators_and_images::nb_generators = nb_generators;
@@ -338,9 +345,23 @@ void generators_and_images::init_generators(
 	if (f_v) {
 		cout << "generators_and_images::init_generators" << endl;
 	}
+
+	if (f_v) {
+		cout << "generators_and_images::init_generators A_base = " << A_base->label << endl;
+		cout << "generators_and_images::init_generators A_induced = " << A->label << endl;
+	}
+
+	if (generators.A != A_base) {
+		cout << "generators_and_images::init_generators generators.A != A_base" << endl;
+		exit(1);
+	}
+
+
 	if (generators.len) {
-		init_generators(generators.len,
-				generators.ith(0), verbose_level);
+		init_generators(
+				generators.len,
+				generators.ith(0),
+				verbose_level);
 	}
 	else {
 		init_generators(generators.len, NULL, verbose_level);
@@ -371,10 +392,10 @@ void generators_and_images::init_generators(
 			cout << "generators_and_images::init_generators i = " << i << " / " << nb << endl;
 		}
 
-		gens.copy_in(i, elt + i * A->elt_size_in_int);
+		gens.copy_in(i, elt + i * A_base->elt_size_in_int);
 
-		A->Group_element->element_invert(
-				elt + i * A->elt_size_in_int,
+		A_base->Group_element->element_invert(
+				elt + i * A_base->elt_size_in_int,
 				gens_inv.ith(i), 0);
 	}
 	if (f_v) {
@@ -413,14 +434,14 @@ void generators_and_images::init_generators_by_hdl(
 	for (i = 0; i < nb_gen; i++) {
 		//cout << "schreier::init_generators_by_hdl "
 		// "i = " << i << endl;
-		A->Group_element->element_retrieve(
+		A_base->Group_element->element_retrieve(
 				gen_hdl[i], gens.ith(i), 0);
 
 		//cout << "schreier::init_generators_by_hdl "
 		// "generator i = " << i << ":" << endl;
 		//A->element_print_quick(gens.ith(i), cout);
 
-		A->Group_element->element_invert(
+		A_base->Group_element->element_invert(
 				gens.ith(i), gens_inv.ith(i), 0);
 	}
 	if (f_vv) {
@@ -462,14 +483,14 @@ void generators_and_images::init_generators_by_handle(
 
 		//cout << "schreier::init_generators_by_hdl "
 		// "i = " << i << endl;
-		A->Group_element->element_retrieve(
+		A_base->Group_element->element_retrieve(
 				gen_hdl[i], gens.ith(i), 0);
 
 		//cout << "schreier::init_generators_by_hdl "
 		// "generator i = " << i << ":" << endl;
 		//A->element_print_quick(gens.ith(i), cout);
 
-		A->Group_element->element_invert(
+		A_base->Group_element->element_invert(
 				gens.ith(i), gens_inv.ith(i), 0);
 	}
 	if (f_vv) {
@@ -498,8 +519,8 @@ void generators_and_images::append_one(
 	}
 
 	gens.append(Elt, verbose_level - 2);
-	A->Group_element->element_invert(Elt, A->Group_element->Elt1, false);
-	gens_inv.append(A->Group_element->Elt1, verbose_level - 2);
+	A_base->Group_element->element_invert(Elt, A_base->Group_element->Elt1, false);
+	gens_inv.append(A_base->Group_element->Elt1, verbose_level - 2);
 	images_append(verbose_level - 2);
 
 	if (f_v) {
@@ -599,7 +620,7 @@ void generators_and_images::transporter_from_orbit_rep_to_point(
 	orbit_idx = Schreier->Forest->orbit_number(pt); //orbit_no[pos];
 	//cout << "lies in orbit " << orbit_idx << endl;
 	coset_rep(pos, verbose_level - 1);
-	A->Group_element->element_move(cosetrep, Elt, 0);
+	A_base->Group_element->element_move(cosetrep, Elt, 0);
 	if (f_v) {
 		cout << "generators_and_images::transporter_from_orbit_rep_to_point "
 				"done" << endl;
@@ -627,8 +648,8 @@ void generators_and_images::transporter_from_point_to_orbit_rep(
 
 	coset_rep(pos, verbose_level - 1);
 
-	A->Group_element->element_invert(cosetrep, Elt, 0);
-	//A->element_move(cosetrep, Elt, 0);
+	A_base->Group_element->element_invert(cosetrep, Elt, 0);
+	//A_base->element_move(cosetrep, Elt, 0);
 	if (f_v) {
 		cout << "generators_and_images::transporter_from_point_to_orbit_rep "
 				"done" << endl;
@@ -672,14 +693,14 @@ void generators_and_images::coset_rep(
 
 		gen = gens.ith(Schreier->Forest->label[j]);
 
-		A->Group_element->element_mult(
+		A_base->Group_element->element_mult(
 				cosetrep, gen, cosetrep_tmp, 0);
 
-		A->Group_element->element_move(
+		A_base->Group_element->element_move(
 				cosetrep_tmp, cosetrep, 0);
 	}
 	else {
-		A->Group_element->element_one(cosetrep, 0);
+		A_base->Group_element->element_one(cosetrep, 0);
 	}
 	if (f_v) {
 		cout << "generators_and_images::coset_rep "
@@ -717,11 +738,11 @@ void generators_and_images::coset_rep_inv(
 				verbose_level);
 
 		gen = gens_inv.ith(Schreier->Forest->label[j]);
-		A->Group_element->element_mult(gen, cosetrep, cosetrep_tmp, 0);
-		A->Group_element->element_move(cosetrep_tmp, cosetrep, 0);
+		A_base->Group_element->element_mult(gen, cosetrep, cosetrep_tmp, 0);
+		A_base->Group_element->element_move(cosetrep_tmp, cosetrep, 0);
 	}
 	else {
-		A->Group_element->element_one(cosetrep, 0);
+		A_base->Group_element->element_one(cosetrep, 0);
 	}
 	if (f_v) {
 		cout << "generators_and_images::coset_rep_inv j=" << j << " done" << endl;
@@ -736,10 +757,14 @@ void generators_and_images::random_schreier_generator(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
+		cout << "generators_and_images::random_schreier_generator " << endl;
+	}
+	if (f_v) {
 		cout << "generators_and_images::random_schreier_generator "
 				"orbit_len = "
 			<< Schreier->Forest->orbit_len[0] << " nb generators = "
 			<< gens.len << " in action " << A->label << endl;
+		cout << "generators_and_images::random_schreier_generator verbose_level = " << verbose_level << endl;
 	}
 
 	if (f_v) {
@@ -982,27 +1007,41 @@ void generators_and_images::random_schreier_generator_ith_orbit(
 // computes random Schreier generator
 // for the orbit orbit_no into Elt
 {
-	int first, len, r1, r2, pt, pt2, pt2_coset;
-	int *gen;
 	int f_v = (verbose_level >= 1);
-	int f_vv = false; //(verbose_level >= 2);
-	int f_vvv = false; //(verbose_level >= 3);
-	other::orbiter_kernel_system::os_interface Os;
+	int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
 
 	if (f_v) {
-		cout << "generators_and_images::random_schreier_generator_ith_orbit, "
-				"orbit " << orbit_no << " action=" << A->label << endl;
+		cout << "generators_and_images::random_schreier_generator_ith_orbit " << endl;
+		cout << "generators_and_images::random_schreier_generator_ith_orbit verbose_level = " << verbose_level << endl;
+	}
+
+
+	int first, len, r1, r2, pt, pt2, pt2_coset;
+	int *gen;
+	other::orbiter_kernel_system::os_interface Os;
+
+
+	if (f_v) {
+		cout << "generators_and_images::random_schreier_generator_ith_orbit "
+				"orbit " << orbit_no << endl;
+		cout << "generators_and_images::random_schreier_generator_ith_orbit "
+				"action=" << A->label << endl;
 	}
 	if (f_images_only) {
 		cout << "generators_and_images::random_schreier_generator_ith_orbit is not "
 				"allowed if f_images_only is true" << endl;
 		exit(1);
 	}
+
+#if 0
 	if (f_vvv) {
 		cout << "generators_and_images::random_schreier_generator_ith_orbit "
 				"generators are:" << endl;
 		gens.print(cout);
 	}
+#endif
+
 	first = Schreier->Forest->orbit_first[orbit_no];
 	len = Schreier->Forest->orbit_len[orbit_no];
 	pt = Schreier->Forest->orbit[first];
@@ -1024,19 +1063,32 @@ void generators_and_images::random_schreier_generator_ith_orbit(
 				"r1=" << r1 << endl;
 	}
 	//pt1 = orbit[r1];
+
+	if (f_vv) {
+		cout << "generators_and_images::random_schreier_generator_ith_orbit "
+				"before coset_rep" << endl;
+	}
 	coset_rep(
 			Schreier->Forest->orbit_first[orbit_no] + r1,
 			verbose_level - 1);
+	if (f_vv) {
+		cout << "generators_and_images::random_schreier_generator_ith_orbit "
+				"after coset_rep" << endl;
+	}
+
 	// coset rep now in cosetrep
+
 	if (f_vvv) {
 		cout << "generators_and_images::random_schreier_generator_ith_orbit "
 				"cosetrep " << Schreier->Forest->orbit_first[orbit_no] + r1 << endl;
-		A->Group_element->element_print_quick(cosetrep, cout);
+		A_base->Group_element->element_print_quick(cosetrep, cout);
 		if (A->degree < 100) {
 			A->Group_element->element_print_as_permutation(cosetrep, cout);
 			cout << endl;
 		}
 	}
+
+
 
 	// get a random generator:
 	r2 = Os.random_integer(gens.len);
@@ -1048,7 +1100,7 @@ void generators_and_images::random_schreier_generator_ith_orbit(
 	if (f_vvv) {
 		cout << "generators_and_images::random_schreier_generator_ith_orbit "
 				"generator " << r2 << endl;
-		A->Group_element->element_print(gen, cout);
+		A_base->Group_element->element_print(gen, cout);
 		if (A->degree < 100) {
 			A->Group_element->element_print_as_permutation(gen, cout);
 			cout << endl;
@@ -1060,11 +1112,11 @@ void generators_and_images::random_schreier_generator_ith_orbit(
 				<< ", random generator " << r2 << endl;
 	}
 
-	A->Group_element->element_mult(cosetrep, gen, schreier_gen1, 0);
+	A_base->Group_element->element_mult(cosetrep, gen, schreier_gen1, 0);
 	if (f_vvv) {
 		cout << "generators_and_images::random_schreier_generator_ith_orbit "
 				"cosetrep * generator " << endl;
-		A->Group_element->element_print_quick(schreier_gen1, cout);
+		A_base->Group_element->element_print_quick(schreier_gen1, cout);
 		if (A->degree < 100) {
 			A->Group_element->element_print_as_permutation(
 					schreier_gen1, cout);
@@ -1098,14 +1150,14 @@ void generators_and_images::random_schreier_generator_ith_orbit(
 	if (f_vvv) {
 		cout << "generators_and_images::random_schreier_generator_ith_orbit "
 				"cosetrep (inverse) " << pt2_coset << endl;
-		A->Group_element->element_print_quick(cosetrep, cout);
+		A_base->Group_element->element_print_quick(cosetrep, cout);
 		if (A->degree < 100) {
 			A->Group_element->element_print_as_permutation(cosetrep, cout);
 			cout << endl;
 		}
 	}
 
-	A->Group_element->element_mult(
+	A_base->Group_element->element_mult(
 			schreier_gen1, cosetrep, Elt, 0);
 
 	if (A->Group_element->element_image_of(pt, Elt, 0) != pt) {
@@ -1120,7 +1172,7 @@ void generators_and_images::random_schreier_generator_ith_orbit(
 	}
 
 	if (f_vvv) {
-		A->Group_element->element_print_quick(Elt, cout);
+		A_base->Group_element->element_print_quick(Elt, cout);
 		cout << endl;
 		if (A->degree < 100) {
 			A->Group_element->element_print_as_permutation(Elt, cout);
@@ -1143,7 +1195,7 @@ void generators_and_images::print_generators()
 	for (j = 0; j < gens.len; j++) {
 		cout << "generator " << j << ":" << endl;
 		//A->element_print(gens.ith(j), cout);
-		A->Group_element->element_print_quick(
+		A_base->Group_element->element_print_quick(
 				gens.ith(j), cout);
 		//A->element_print_as_permutation(gens.ith(j), cout);
 		if (j < gens.len - 1) {
@@ -1164,7 +1216,7 @@ void generators_and_images::print_generators_latex(
 		ost << "generator " << j << ":" << endl;
 		//A->element_print(gens.ith(j), cout);
 		ost << "$$" << endl;
-		A->Group_element->element_print_latex(gens.ith(j), ost);
+		A_base->Group_element->element_print_latex(gens.ith(j), ost);
 		//A->element_print_as_permutation(gens.ith(j), cout);
 		if (j < gens.len - 1) {
 			ost << ", " << endl;
@@ -1183,7 +1235,7 @@ void generators_and_images::print_generators_with_permutations()
 	for (j = 0; j < gens.len; j++) {
 		cout << "generator " << j << ":" << endl;
 		//A->element_print(gens.ith(j), cout);
-		A->Group_element->element_print_quick(gens.ith(j), cout);
+		A_base->Group_element->element_print_quick(gens.ith(j), cout);
 		A->Group_element->element_print_as_permutation(gens.ith(j), cout);
 		cout << endl;
 		if (j < gens.len - 1) {

@@ -605,6 +605,7 @@ void action::compute_strong_generators_from_sims(
 void action::compute_all_point_orbits(
 		groups::schreier &S,
 		data_structures_groups::vector_ge &gens, int verbose_level)
+// using the present action for both A_base and A_induced
 {
 	int f_v = (verbose_level >= 1);
 
@@ -613,7 +614,7 @@ void action::compute_all_point_orbits(
 	}
 
 
-	S.init(this, verbose_level - 2);
+	S.init(this, this, verbose_level - 2);
 	S.Generators_and_images->init_generators(gens, verbose_level - 2);
 	S.compute_all_point_orbits(verbose_level - 1);
 	if (f_v) {
@@ -954,6 +955,9 @@ int action::is_matrix_group()
 	}
 	else if (type_G == action_on_orthogonal_t) {
 			return true;
+	}
+	else if (type_G == action_by_wormhole_t) {
+			return false;
 	}
 	else {
 		if (f_has_subaction) {

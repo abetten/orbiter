@@ -225,6 +225,10 @@ void any_group::init_modified_group(
 				"!PGC->f_has_strong_generators" << endl;
 		exit(1);
 	}
+
+
+
+
 	Subgroup_gens = MGC->Strong_gens;
 
 	if (f_v) {
@@ -237,6 +241,7 @@ void any_group::init_modified_group(
 		cout << "any_group::init_modified_group "
 				"after Subgroup_gens->create_sims" << endl;
 	}
+
 
 	label.assign(MGC->label);
 	label_tex.assign(MGC->label_tex);

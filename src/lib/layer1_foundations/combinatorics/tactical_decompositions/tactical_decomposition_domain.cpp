@@ -110,7 +110,8 @@ void tactical_decomposition_domain::do_widor(
 }
 
 void tactical_decomposition_domain::do_tdo_refinement(
-		tactical_decompositions::tdo_refinement_description *Descr, int verbose_level)
+		tactical_decompositions::tdo_refinement_description *Descr,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -427,8 +428,11 @@ void tactical_decomposition_domain::convert_stack_to_tdo(
 	}
 	if (f_v) {
 		other::orbiter_kernel_system::file_io Fio;
-		cout << "written file " << fname_out
+		cout << "tactical_decomposition_domain::convert_stack_to_tdo "
+				"written file " << fname_out
 				<< " of size " << Fio.file_size(fname_out) << endl;
+	}
+	if (f_v) {
 		cout << "tactical_decomposition_domain::convert_stack_to_tdo done" << endl;
 	}
 }
@@ -463,6 +467,16 @@ void tactical_decomposition_domain::do_parameters_maximal_arc(
 
 	Fio.write_decomposition_stack(
 			fname, m, n, v, b, aij, verbose_level - 1);
+
+	if (f_v) {
+		other::orbiter_kernel_system::file_io Fio;
+		cout << "tactical_decomposition_domain::do_parameters_maximal_arc "
+				"written file " << fname
+				<< " of size " << Fio.file_size(fname) << endl;
+	}
+	if (f_v) {
+		cout << "tactical_decomposition_domain::do_parameters_maximal_arc done" << endl;
+	}
 }
 
 void tactical_decomposition_domain::do_parameters_arc(
@@ -475,7 +489,7 @@ void tactical_decomposition_domain::do_parameters_arc(
 	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
-		cout << "tactical_decomposition_domain::do_parameters_maximal_arc "
+		cout << "tactical_decomposition_domain::do_parameters_arc "
 				"q=" << q << " s=" << s << " r=" << r << endl;
 	}
 
@@ -491,6 +505,15 @@ void tactical_decomposition_domain::do_parameters_arc(
 
 	Fio.write_decomposition_stack(
 			fname, m, n, v, b, aij, verbose_level - 1);
+	if (f_v) {
+		other::orbiter_kernel_system::file_io Fio;
+		cout << "tactical_decomposition_domain::do_parameters_arc "
+				"written file " << fname
+				<< " of size " << Fio.file_size(fname) << endl;
+	}
+	if (f_v) {
+		cout << "tactical_decomposition_domain::do_parameters_arc done" << endl;
+	}
 }
 
 
@@ -503,6 +526,7 @@ void tactical_decomposition_domain::compute_TDO_decomposition_of_projective_spac
 		int verbose_level)
 // creates incidence_structure and data_structures::partitionstack objects
 // called from quartic_curve_from_surface::TDO_decomposition
+// This function creates files for the refinements.
 {
 	int f_v = (verbose_level >= 1);
 

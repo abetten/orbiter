@@ -103,7 +103,7 @@ void orbits_on_something::init(
 
 		Sch = NEW_OBJECT(schreier);
 
-		Sch->init(A, 0 /*verbose_level*/);
+		Sch->init(A, A, 0 /*verbose_level*/);
 		//Sch->initialize_tables();
 		Sch->Generators_and_images->init_generators(*SG->gens, 0 /*verbose_level*/);
 		//Orbits_on_lines->compute_all_point_orbits(verbose_level);
@@ -235,7 +235,7 @@ void orbits_on_something::init_from_vector_ge(
 
 		Sch = NEW_OBJECT(schreier);
 
-		Sch->init(A, 0 /*verbose_level*/);
+		Sch->init(A, A, 0 /*verbose_level*/);
 		//Sch->initialize_tables();
 		Sch->Generators_and_images->init_generators(*gens, 0 /*verbose_level*/);
 		//Orbits_on_lines->compute_all_point_orbits(verbose_level);

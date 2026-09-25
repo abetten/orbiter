@@ -2259,7 +2259,8 @@ void decomposition::print_schemes(
 	other::graphics::draw_incidence_structure_description *Draw_incidence_options;
 
 	if (Report_options->f_incidence_draw_options) {
-		Draw_incidence_options = Get_draw_incidence_structure_options(Report_options->incidence_draw_options_label);
+		Draw_incidence_options = Get_draw_incidence_structure_options(
+				Report_options->incidence_draw_options_label);
 	}
 	else {
 		cout << "decomposition::print_schemes please use -incidence_draw_options" << endl;

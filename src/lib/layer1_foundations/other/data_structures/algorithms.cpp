@@ -2308,6 +2308,56 @@ void algorithms::print_homogenized(
 }
 
 
+
+void algorithms::make_label(
+		std::string &fname, std::string &text, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algorithms::make_label" << endl;
+	}
+
+
+
+	other::orbiter_kernel_system::file_io Fio;
+	other::l1_interfaces::latex_interface Latex;
+	other::orbiter_kernel_system::os_interface Os_interface;
+
+	{
+		ofstream fp(fname);
+
+		Latex.head_easy(fp);
+		//latex_head_easy_sideways(fp);
+		fp << "\\thispagestyle{empty}" << endl;
+		fp << "\\vspace*{6cm}" << endl;
+		fp << "\\begin{center} " << endl;
+		fp << "{\\Huge " << endl;
+		fp << text << endl;
+		fp << "}" << endl;
+		fp << "\\end{center} " << endl;
+		Latex.foot(fp);
+	}
+	cout << "Written file " << fname
+			<< " of size " << Fio.file_size(fname) << endl;
+
+	string cmd;
+
+	cmd = "pdflatex " + fname;
+
+	//Os_interface.
+
+	system(cmd.c_str());
+
+	if (f_v) {
+		cout << "algorithms::make_label done" << endl;
+	}
+
+}
+
+
+
+
 }}}}
 
 

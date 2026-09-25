@@ -32,7 +32,8 @@ MODULES = \
 	action_on_spread_set.o \
 	action_on_subgroups.o \
 	action_on_wedge_product.o \
-	product_action.o
+	product_action.o \
+	wormhole_action.o
 
 
 all : $(MODULES)

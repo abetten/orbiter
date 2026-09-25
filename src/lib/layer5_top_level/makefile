@@ -17,7 +17,8 @@ all: \
 	projective_geometry \
 	semifields \
 	spreads \
-	user_interface
+	user_interface \
+	wormhole
 
 
 
@@ -36,6 +37,7 @@ projective_geometry : projective_geometry2 ;
 semifields : semifields2 ; 
 spreads : spreads2 ; 
 user_interface : user_interface2 ; 
+wormhole : wormhole2 ; 
 
 
 applications_in_algebraic_geometry2 :  ; cd applications_in_algebraic_geometry; $(MAKE)
@@ -52,6 +54,7 @@ projective_geometry2 :  ; cd projective_geometry; $(MAKE)
 semifields2 :  ; cd semifields; $(MAKE)
 spreads2 :  ; cd spreads; $(MAKE)
 user_interface2 :  ; cd user_interface; $(MAKE)
+wormhole2 :  ; cd wormhole; $(MAKE)
 
 
 
@@ -78,6 +81,7 @@ clean:
 	cd spreads; $(MAKE) clean
 	cd packings; $(MAKE) clean
 	cd user_interface; $(MAKE) clean
+	cd wormhole; $(MAKE) clean
 	- rm *.o *.a 
 
 
