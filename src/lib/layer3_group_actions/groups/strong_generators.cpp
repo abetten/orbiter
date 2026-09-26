@@ -2767,14 +2767,16 @@ void strong_generators::orbits_on_points_with_given_action(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	schreier *Sch;
-	int i, f, a;
 
 	if (f_v) {
 		cout << "strong_generators::orbits_on_points_with_given_action" << endl;
-		cout << "action=";
-		A->print_info();
+		cout << "action=" << A->label << endl;
+		//A->print_info();
 	}
+
+	schreier *Sch;
+	int i, f, a;
+
 	if (f_v) {
 		cout << "strong_generators::orbits_on_points_with_given_action "
 				"before compute_schreier_with_given_action" << endl;
@@ -2797,68 +2799,46 @@ void strong_generators::orbits_on_points_with_given_action(
 
 	if (f_v) {
 		cout << "strong_generators::orbits_on_points_with_given_action "
-				"done, we found "
+				"we found "
 				<< nb_orbits << " orbits" << endl;
+	}
+
+	if (f_v) {
+		cout << "strong_generators::orbits_on_points_with_given_action "
+				"done" << endl;
 	}
 }
 
 schreier *strong_generators::compute_all_point_orbits_schreier(
 		actions::action *A_given,
-		//int print_interval,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	schreier *Sch;
 
 	if (f_v) {
 		cout << "strong_generators::compute_all_point_orbits_schreier " << endl;
-		//cout << "strong_generators::compute_all_point_orbits_schreier print_interval = " << print_interval << endl;
-	}
-	if (f_v) {
-		cout << "strong_generators::compute_all_point_orbits_schreier "
-				"degree = " << A_given->degree << endl;
-		cout << "A_given=";
-		A_given->print_info();
 	}
 
-	algebra::ring_theory::longinteger_object go;
-	group_order(go);
+	schreier *Sch;
 
-	if (f_v) {
-		cout << "strong_generators::compute_all_point_orbits_schreier "
-				"go = " << go << endl;
-	}
+
+	int print_interval = 10000;
 
 
 	if (f_v) {
 		cout << "strong_generators::compute_all_point_orbits_schreier "
-				"generators:" << endl;
-		//print_generators_tex();
+				"before compute_all_point_orbits_schreier_with_print_interval" << endl;
+	}
+	Sch = compute_all_point_orbits_schreier_with_print_interval(
+			A_given, print_interval, verbose_level);
+	if (f_v) {
+		cout << "strong_generators::compute_all_point_orbits_schreier "
+				"after compute_all_point_orbits_schreier_with_print_interval" << endl;
 	}
 
-	Sch = NEW_OBJECT(schreier);
 
-	Sch->init(A_given, A_given, verbose_level - 2);
-	//Sch->initialize_tables();
-	if (f_v) {
-		cout << "strong_generators::compute_all_point_orbits_schreier "
-				"before Sch->Generators_and_images->init_generators" << endl;
-	}
-	Sch->Generators_and_images->init_generators(*gens, verbose_level - 2);
-	if (f_v) {
-		cout << "strong_generators::compute_all_point_orbits_schreier "
-				"before Sch->Generators_and_images->compute_all_point_orbits" << endl;
-	}
-	Sch->compute_all_point_orbits(/*print_interval,*/ verbose_level - 1);
-	if (f_v) {
-		cout << "strong_generators::compute_all_point_orbits_schreier "
-				"after Sch->compute_all_point_orbits" << endl;
-	}
 
-	if (f_v) {
-		cout << "strong_generators::compute_all_point_orbits_schreier "
-				"done, we found " << Sch->Forest->nb_orbits << " orbits" << endl;
-	}
+
 	return Sch;
 }
 
@@ -2872,53 +2852,63 @@ schreier *strong_generators::compute_all_point_orbits_schreier_with_print_interv
 	schreier *Sch;
 
 	if (f_v) {
-		cout << "strong_generators::compute_all_point_orbits_schreier " << endl;
+		cout << "strong_generators::compute_all_point_orbits_schreier_with_print_interval " << endl;
 		//cout << "strong_generators::compute_all_point_orbits_schreier print_interval = " << print_interval << endl;
 	}
 	if (f_v) {
 		cout << "strong_generators::compute_all_point_orbits_schreier "
 				"degree = " << A_given->degree << endl;
-		cout << "A_given=";
-		A_given->print_info();
+		cout << "strong_generators::compute_all_point_orbits_schreier "
+				"A_given=" << A_given->label << endl;
 	}
 
 	algebra::ring_theory::longinteger_object go;
 	group_order(go);
 
 	if (f_v) {
-		cout << "strong_generators::compute_all_point_orbits_schreier "
+		cout << "strong_generators::compute_all_point_orbits_schreier_with_print_interval "
 				"go = " << go << endl;
 	}
 
+	actions::action *A_base;
+
+
+	A_base = A_given->get_base_action();
 
 	if (f_v) {
 		cout << "strong_generators::compute_all_point_orbits_schreier "
+				"A_base=" << A_base->label << endl;
+	}
+
+	if (f_v) {
+		cout << "strong_generators::compute_all_point_orbits_schreier_with_print_interval "
 				"generators:" << endl;
 		//print_generators_tex();
 	}
 
 	Sch = NEW_OBJECT(schreier);
 
-	Sch->init(A_given, A_given, verbose_level - 2);
-	//Sch->initialize_tables();
+	Sch->init(A_base, A_given, verbose_level - 2);
+
+
 	if (f_v) {
-		cout << "strong_generators::compute_all_point_orbits_schreier "
+		cout << "strong_generators::compute_all_point_orbits_schreier_with_print_interval "
 				"before Sch->Generators_and_images->init_generators" << endl;
 	}
 	Sch->Generators_and_images->init_generators(*gens, verbose_level - 2);
 	Sch->print_interval = print_interval;
 	if (f_v) {
-		cout << "strong_generators::compute_all_point_orbits_schreier "
+		cout << "strong_generators::compute_all_point_orbits_schreier_with_print_interval "
 				"before Sch->Generators_and_images->compute_all_point_orbits" << endl;
 	}
 	Sch->compute_all_point_orbits(/*print_interval,*/ verbose_level - 1);
 	if (f_v) {
-		cout << "strong_generators::compute_all_point_orbits_schreier "
+		cout << "strong_generators::compute_all_point_orbits_schreier_with_print_interval "
 				"after Sch->compute_all_point_orbits" << endl;
 	}
 
 	if (f_v) {
-		cout << "strong_generators::compute_all_point_orbits_schreier "
+		cout << "strong_generators::compute_all_point_orbits_schreier_with_print_interval "
 				"done, we found " << Sch->Forest->nb_orbits << " orbits" << endl;
 	}
 	return Sch;
@@ -2946,7 +2936,7 @@ schreier *strong_generators::orbit_of_one_point_schreier(
 		cout << "strong_generators::orbit_of_one_point_schreier "
 				"before Sch->init" << endl;
 	}
-	Sch->init(A_given, A_given, verbose_level - 2);
+	Sch->init(A_given->get_base_action(), A_given, verbose_level - 2);
 	if (f_v) {
 		cout << "strong_generators::orbit_of_one_point_schreier "
 				"after Sch->init" << endl;

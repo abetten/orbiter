@@ -3999,12 +3999,18 @@ void action_global::all_point_orbits_Schreier_from_generators_first_next(
 
 	actions::action *A_base;
 
+
+	A_base = A->get_base_action();
+
+#if 0
 	if (A->f_has_subaction) {
 		A_base = A->subaction;
 	}
 	else {
 		A_base = A;
 	}
+#endif
+
 
 	if (f_v) {
 		cout << "action_global::all_point_orbits_Schreier_from_generators_first_next "

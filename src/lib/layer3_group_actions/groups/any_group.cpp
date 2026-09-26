@@ -220,6 +220,15 @@ void any_group::init_modified_group(
 	A_base = MGC->A_base;
 	A = MGC->A_modified;
 
+
+	if (f_v) {
+		cout << "any_group::init_modified_group A_base = " << A_base->label << endl;
+		cout << "any_group::init_modified_group A = " << A->label << endl;
+		cout << "any_group::init_modified_group base_action = " << A->get_base_action()->label << endl;
+	}
+
+
+
 	if (!MGC->f_has_strong_generators) {
 		cout << "any_group::init_linear_group "
 				"!PGC->f_has_strong_generators" << endl;

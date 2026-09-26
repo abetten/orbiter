@@ -157,11 +157,7 @@ void modified_group_init_layer5::modified_group_init(
 	}
 
 	else {
-
-
 		// go back to layer3:
-
-
 		if (f_v) {
 			cout << "modified_group_init_layer5::modified_group_init "
 					"before Modified_group_create->modified_group_init" << endl;
@@ -246,13 +242,13 @@ void modified_group_init_layer5::create_point_stabilizer_subgroup(
 
 	if (f_v) {
 		cout << "modified_group_init_layer5::create_point_stabilizer_subgroup "
-				"A_base=";
-		Modified_group_create->A_base->print_info();
-		cout << endl;
+				"A_base=" << Modified_group_create->A_base->label << endl;
+		//Modified_group_create->A_base->print_info();
+		//cout << endl;
 		cout << "modified_group_init_layer5::create_point_stabilizer_subgroup "
-				"A_previous=";
-		Modified_group_create->A_previous->print_info();
-		cout << endl;
+				"A_previous=" << Modified_group_create->A_previous->label << endl;
+		//Modified_group_create->A_previous->print_info();
+		//cout << endl;
 	}
 
 	Modified_group_create->A_modified = Modified_group_create->A_previous; // ToDo!
@@ -1078,6 +1074,18 @@ void modified_group_init_layer5::create_action_on_specific_orbit_of_polynomials(
 	Modified_group_create->A_base = AG->A;
 	Modified_group_create->A_previous = AG->A;
 	Modified_group_create->A_modified = Induced_action_on_specific_orbit->A_induced;
+
+
+
+	if (f_v) {
+		cout << "modified_group_init_layer5::create_action_on_specific_orbit_of_polynomials "
+				"A_base=" << Modified_group_create->A_base->label << endl;
+		cout << "modified_group_init_layer5::create_action_on_specific_orbit_of_polynomials "
+				"A_previous=" << Modified_group_create->A_previous->label << endl;
+		cout << "modified_group_init_layer5::create_action_on_specific_orbit_of_polynomials "
+				"A_modified=" << Modified_group_create->A_modified->label << endl;
+	}
+
 
 	Modified_group_create->label = AG->label;
 	Modified_group_create->label_tex = AG->label_tex;

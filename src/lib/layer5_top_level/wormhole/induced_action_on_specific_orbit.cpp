@@ -193,12 +193,31 @@ actions::action *induced_action_on_specific_orbit::compute_induced_action(
 
 
 	if (f_v) {
-		cout << "the old_action " << A_old->label
+		cout << "induced_action_on_specific_orbit::compute_induced_action "
+				"the old_action " << A_old->label
 				<< " has base_length = " << A_old->base_len()
 			<< " and degree " << A_old->degree << endl;
 	}
+
+
+	// set the subaction:
+
 	A->f_has_subaction = true;
-	A->subaction = A_old;
+
+
+	if (A_old->f_has_subaction) {
+		A->subaction = A_old->subaction;
+
+	}
+	else {
+		A->subaction = A_old;
+	}
+
+	if (f_v) {
+		cout << "induced_action_on_specific_orbit::compute_induced_action "
+				"subaction " << A->subaction->label << endl;
+	}
+
 	if (A_old->type_G != matrix_group_t) {
 		cout << "induced_action_on_specific_orbit::compute_induced_action "
 				"old action not of matrix group type" << endl;

@@ -412,6 +412,18 @@ void action::freeself()
 	}
 }
 
+
+actions::action *action::get_base_action()
+{
+	if (f_has_subaction) {
+		return subaction->get_base_action();
+	}
+	else {
+		return this;
+	}
+}
+
+
 int action::f_has_base()
 {
 	if (Stabilizer_chain) {

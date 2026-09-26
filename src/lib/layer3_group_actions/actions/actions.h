@@ -205,6 +205,7 @@ public:
 	void null();
 	void freeself();
 	
+	actions::action *get_base_action();
 	int f_has_base();
 	int base_len();
 	void set_base_len(
