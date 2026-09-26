@@ -3982,6 +3982,10 @@ void action_global::all_point_orbits_Schreier_from_generators_first_next(
 		cout << "action_global::all_point_orbits_Schreier_from_generators_first_next "
 				"number of generators = " << gens->len << endl;
 	}
+	if (f_v) {
+		cout << "action_global::all_point_orbits_Schreier_from_generators_first_next "
+				"A = " << A->label << endl;
+	}
 
 
 	other::data_structures::string_tools String;
@@ -3993,12 +3997,42 @@ void action_global::all_point_orbits_Schreier_from_generators_first_next(
 			fname_base);
 
 
+	actions::action *A_base;
 
-	Schreier.init(A, A, verbose_level - 2);
+	if (A->f_has_subaction) {
+		A_base = A->subaction;
+	}
+	else {
+		A_base = A;
+	}
 
+	if (f_v) {
+		cout << "action_global::all_point_orbits_Schreier_from_generators_first_next "
+				"A_base = " << A_base->label << endl;
+	}
+
+
+	if (f_v) {
+		cout << "action_global::all_point_orbits_Schreier_from_generators_first_next "
+				"before Schreier.init" << endl;
+	}
+	Schreier.init(A_base, A, verbose_level - 2);
+	if (f_v) {
+		cout << "action_global::all_point_orbits_Schreier_from_generators_first_next "
+				"after Schreier.init" << endl;
+	}
+
+	if (f_v) {
+		cout << "action_global::all_point_orbits_Schreier_from_generators_first_next "
+				"before Schreier.Generators_and_images->init_generators" << endl;
+	}
 	Schreier.Generators_and_images->init_generators(
 			*gens /* *strong_generators */,
 			verbose_level);
+	if (f_v) {
+		cout << "action_global::all_point_orbits_Schreier_from_generators_first_next "
+				"after Schreier.Generators_and_images->init_generators" << endl;
+	}
 
 	if (f_v) {
 		cout << "action_global::all_point_orbits_Schreier_from_generators_first_next "
