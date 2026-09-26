@@ -4565,7 +4565,8 @@ void action_global::make_canonical(
 			cout << "action_global::make_canonical iteration "
 						<< cnt << " before is_minimal_witness" << endl;
 		}
-		c = A->is_minimal_witness(
+		c = is_minimal_witness(
+				A,
 				/*default_action,*/ size, set1, Sims,
 			backtrack_level, set2, Elt2,
 			backtrack_nodes,

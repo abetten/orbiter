@@ -1180,11 +1180,19 @@ void schreier::non_trivial_random_schreier_generator(
 	while (true) {
 		if (f_v) {
 			cout << "schreier::non_trivial_random_schreier_generator "
-					"calling random_schreier_generator "
+					"before Generators_and_images->random_schreier_generator "
 					"(cnt=" << cnt << ")" << endl;
 		}
-		Generators_and_images->random_schreier_generator(Elt, verbose_level - 1);
+		Generators_and_images->random_schreier_generator(
+				Elt, verbose_level - 1);
+		if (f_v) {
+			cout << "schreier::non_trivial_random_schreier_generator "
+					"after Generators_and_images->random_schreier_generator "
+					"(cnt=" << cnt << ")" << endl;
+		}
+
 		cnt++;
+
 		if (!A_original->Group_element->element_is_one(
 				Generators_and_images->schreier_gen, verbose_level - 5)) {
 			if (f_vv) {
@@ -1193,14 +1201,14 @@ void schreier::non_trivial_random_schreier_generator(
 						<< cnt << " trials" << endl;
 			}
 			if (f_vvv) {
-				Generators_and_images->A->Group_element->element_print(Elt, cout);
+				Generators_and_images->A_base->Group_element->element_print(Elt, cout);
 				cout << endl;
 			}
 			return;
 		}
 		else {
 			if (f_v4) {
-				Generators_and_images->A->Group_element->element_print(Elt, cout);
+				Generators_and_images->A_base->Group_element->element_print(Elt, cout);
 				cout << endl;
 			}
 			if (f_vv) {
@@ -1339,9 +1347,8 @@ void schreier::orbits_on_invariant_subset(
 	int *&orbit_perm, int *&orbit_perm_inv)
 {
 	int i, j, a, pos;
-	//int print_interval = 100000;
 	
-	compute_all_point_orbits(/*print_interval,*/ 0);
+	compute_all_point_orbits(0);
 
 	nb_orbits_on_subset = 0;
 

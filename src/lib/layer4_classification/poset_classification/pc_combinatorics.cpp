@@ -1306,6 +1306,7 @@ void pc_combinatorics::pairwise_join_and_identify(
 		int lvl, int po, int *&M, int &ol,
 		int f_do_element_idx, long int *&Element_idx,
 		int verbose_level)
+// for poset_classification_activity f_pair_relations_within_orbit
 // this is for the subspace setting
 {
 	int f_v = (verbose_level >= 1);

@@ -270,13 +270,13 @@ void modified_group_init_layer5::create_point_stabilizer_subgroup(
 	{
 		groups::orbits_on_something *Orb;
 
+		orbits::orbits_global Orbits;
+		int print_interval = 10000;
+
 		if (f_v) {
 			cout << "modified_group_init_layer5::create_point_stabilizer_subgroup "
 					"before Orbits.orbits_on_points" << endl;
 		}
-
-		orbits::orbits_global Orbits;
-		int print_interval = 10000;
 
 		Orbits.orbits_on_points(AG, Orb, print_interval, verbose_level);
 
@@ -285,9 +285,17 @@ void modified_group_init_layer5::create_point_stabilizer_subgroup(
 					"after Orbits.orbits_on_points" << endl;
 		}
 
+		if (f_v) {
+			cout << "modified_group_init_layer5::create_point_stabilizer_subgroup "
+					"before Orb->stabilizer_any_point" << endl;
+		}
 		Orb->stabilizer_any_point(
 				Descr->point_stabilizer_point,
 				Modified_group_create->Strong_gens, verbose_level);
+		if (f_v) {
+			cout << "modified_group_init_layer5::create_point_stabilizer_subgroup "
+					"after Orb->stabilizer_any_point" << endl;
+		}
 
 
 		FREE_OBJECT(Orb);

@@ -73,6 +73,11 @@ poset_classification_activity_description::poset_classification_activity_descrip
 
 	f_export_orbits_long = false;
 
+
+	f_export_single_orbit_long = false;
+	export_single_orbit_long_level = -1;
+	export_single_orbit_long_index = -1;
+
 }
 
 poset_classification_activity_description::~poset_classification_activity_description()
@@ -287,6 +292,17 @@ int poset_classification_activity_description::read_arguments(
 				cout << "-export_orbits_long " << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-export_single_orbit_long") == 0) {
+			f_export_single_orbit_long = true;
+			export_single_orbit_long_level = ST.strtoi(argv[++i]);
+			export_single_orbit_long_index = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-export_single_orbit_long "
+						<< " " << export_single_orbit_long_level
+						<< " " << export_single_orbit_long_index
+						<< endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			break;
@@ -393,6 +409,12 @@ void poset_classification_activity_description::print()
 	}
 	if (f_export_orbits_long) {
 		cout << "-export_orbits_long " << endl;
+	}
+	if (f_export_single_orbit_long) {
+		cout << "-export_single_orbit_long "
+				<< " " << export_single_orbit_long_level
+				<< " " << export_single_orbit_long_index
+				<< endl;
 	}
 }
 

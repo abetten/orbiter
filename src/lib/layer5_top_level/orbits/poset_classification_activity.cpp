@@ -630,6 +630,7 @@ void poset_classification_activity::perform_work(
 
 
 	}
+
 	else if (Descr->f_export_orbits_long) {
 
 		if (f_v) {
@@ -722,6 +723,57 @@ void poset_classification_activity::perform_work(
 		FREE_OBJECT(All_orbits);
 
 	}
+	else if (Descr->f_export_single_orbit_long) {
+
+		if (f_v) {
+			cout << "poset_classification_activity::perform_work "
+					"f_export_single_orbit_long" << endl;
+		}
+
+		int lvl;
+		int idx;
+
+		lvl = Descr->export_single_orbit_long_level;
+		idx = Descr->export_single_orbit_long_index;
+
+
+		if (f_v) {
+			cout << "poset_classification_activity::perform_work "
+					"f_export_single_orbit_long" << endl;
+			cout << "poset_classification_activity::perform_work "
+					"level = " << lvl << " index = " << idx << endl;
+		}
+
+		other::data_structures::lint_matrix *Elements;
+
+		if (f_v) {
+			cout << "poset_classification_activity::perform_work "
+					"before get_all_orbit_elements" << endl;
+		}
+		Elements = PC->get_Poo()->get_all_orbit_elements(
+				lvl, idx,
+				verbose_level);
+		if (f_v) {
+			cout << "poset_classification_activity::perform_work "
+					"after get_all_orbit_elements" << endl;
+		}
+
+		other::orbiter_kernel_system::file_io Fio;
+		std::string fname_prefix, fname;
+
+		fname_prefix = PC->get_problem_label_with_path() + "_orbit_lvl" + std::to_string(lvl) + "_idx" + std::to_string(idx);
+		fname = fname_prefix + ".csv";
+
+		Elements->write_csv_vectorized(
+					fname, verbose_level);
+
+		if (f_v) {
+			cout << "poset_classification_activity::perform_work written file " << fname << " of size "
+					<< Fio.file_size(fname) << endl;
+		}
+
+	}
+
 
 	if (f_v) {
 		cout << "poset_classification_activity::perform_work done" << endl;

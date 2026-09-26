@@ -650,7 +650,7 @@ static void induced_action_element_image_of_low_level(
 		
 		sub = A.subaction;
 		if (sub == NULL) {
-			cout << "induced_action_element_image_of "
+			cout << "induced_action_element_image_of_low_level "
 					"no subaction" << endl;
 			exit(1);
 		}
@@ -697,7 +697,8 @@ static void induced_action_element_image_of_low_level(
 	}
 	else if (A.type_G == action_by_representation_t) {
 		if (f_v) {
-			cout << "action_by_representation_t" << endl;
+			cout << "induced_action_element_image_of_low_level "
+					"action_by_representation_t" << endl;
 		}
 		induced_actions::action_by_representation *Rep = A.G.Rep;
 
@@ -803,7 +804,8 @@ static void induced_action_element_image_of_low_level(
 	}
 	else if (A.type_G == action_by_subfield_structure_t) {
 		if (f_v) {
-			cout << "action_by_subfield_structure_t" << endl;
+			cout << "induced_action_element_image_of_low_level "
+					"action_by_subfield_structure_t" << endl;
 		}
 		induced_actions::action_by_subfield_structure *SubfieldStructure =
 				A.G.SubfieldStructure;
@@ -965,7 +967,8 @@ static void induced_action_element_image_of_low_level(
 		}
 		//action_on_interior_direct_product *IDP;
 
-		cout << "action_on_interior_direct_product_t "
+		cout << "induced_action_element_image_of_low_level "
+				"action_on_interior_direct_product_t "
 				"not yet implemented" << endl;
 		exit(1);
 	}
@@ -975,16 +978,18 @@ static void induced_action_element_image_of_low_level(
 		}
 		//action_on_interior_direct_product *IDP;
 
-		cout << "action_on_cosets_of_subgroup_t "
+		cout << "induced_action_element_image_of_low_level "
+				"action_on_cosets_of_subgroup_t "
 				"not yet implemented" << endl;
 		exit(1);
 	}
 	else if (A.type_G == action_by_wormhole_t) {
 		if (f_v) {
-			cout << "induced_action_element_image_of "
+			cout << "induced_action_element_image_of_low_level "
+					"induced_action_element_image_of "
 					"action_by_wormhole_t" << endl;
 		}
-		induced_actions::wormhole_action *Wormhole_action = A.G.Wormhole_action;
+		//induced_actions::wormhole_action *Wormhole_action = A.G.Wormhole_action;
 
 		cout << "action_by_wormhole_t "
 				"not yet implemented" << endl;
@@ -1022,6 +1027,7 @@ static void induced_action_element_one(
 		PA = A.G.product_action_data;
 		PA->element_one(&A, (int *) elt, verbose_level);
 	}
+#if 0
 	else if (A.type_G == action_by_wormhole_t) {
 
 		induced_actions::wormhole_action *Wormhole_action = A.G.Wormhole_action;
@@ -1029,6 +1035,7 @@ static void induced_action_element_one(
 		Wormhole_action->element_one((int *) elt, verbose_level);
 
 	}
+#endif
 	else {
 		sub = A.subaction;
 		if (sub == NULL) {

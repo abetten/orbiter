@@ -809,6 +809,10 @@ public:
 
 	int f_export_orbits_long;
 
+	int f_export_single_orbit_long;
+	int export_single_orbit_long_level;
+	int export_single_orbit_long_index;
+
 	poset_classification_activity_description();
 	~poset_classification_activity_description();
 	int read_arguments(

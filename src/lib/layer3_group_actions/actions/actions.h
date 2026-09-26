@@ -402,18 +402,6 @@ public:
 			groups::strong_generators *SG, int verbose_level);
 
 
-	// in backtrack.cpp
-	int is_minimal(
-		int size, long int *set, groups::sims *old_Sims,
-		int &backtrack_level,
-		int verbose_level);
-	int is_minimal_witness(
-		int size, long int *set, groups::sims *old_Sims,
-		int &backtrack_level, long int *witness,
-		int *transporter_witness, 
-		long int &backtrack_nodes,
-		int f_get_automorphism_group, groups::sims &Aut,
-		int verbose_level);
 
 };
 
@@ -835,6 +823,19 @@ public:
 			int set_size,
 			actions::action *A_base, actions::action *A_induced,
 			int hdl,
+			int verbose_level);
+
+	// in backtrack.cpp
+	int is_minimal(
+			action *A,
+			int size, long int *set, groups::sims *old_Sims,
+			int &backtrack_level, int verbose_level);
+	int is_minimal_witness(
+			action *A,
+			int size, long int *set, groups::sims *old_Sims,
+			int &backtrack_level, long int *witness, int *transporter_witness,
+			long int &backtrack_nodes,
+			int f_get_automorphism_group, groups::sims &Aut,
 			int verbose_level);
 
 

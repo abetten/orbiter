@@ -643,7 +643,7 @@ void orbits_global::orbits_on_points(
 		cout << "orbits_global::orbits_on_points" << endl;
 		cout << "orbits_global::orbits_on_points print_interval = " << print_interval << endl;
 	}
-	orbits::orbits_global Orbits;
+	//orbits::orbits_global Orbits;
 
 
 	int f_load_save = false;
@@ -653,9 +653,9 @@ void orbits_global::orbits_on_points(
 
 	if (f_v) {
 		cout << "orbits_global::orbits_on_points "
-				"before Orbits.orbits_on_points" << endl;
+				"before orbits_on_points" << endl;
 	}
-	Orbits.orbits_on_points(
+	orbits_on_points(
 			AG->A,
 			AG->Subgroup_gens,
 			f_load_save,
@@ -665,7 +665,7 @@ void orbits_global::orbits_on_points(
 			verbose_level);
 	if (f_v) {
 		cout << "orbits_global::orbits_on_points "
-				"after Orbits.orbits_on_points" << endl;
+				"after orbits_on_points" << endl;
 	}
 
 

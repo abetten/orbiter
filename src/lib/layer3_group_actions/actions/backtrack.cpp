@@ -55,13 +55,13 @@ struct action_is_minimal_data {
 		// under the (i-1)-th group in the stabilizer chain.
 };
 
-void action_is_minimal_reallocate_aut_data(
+static void action_is_minimal_reallocate_aut_data(
 		action_is_minimal_data &D);
-int action_is_minimal_recursion(
+static int action_is_minimal_recursion(
 		action_is_minimal_data *D,
 		int depth, int verbose_level);
 
-void action_is_minimal_reallocate_aut_data(
+static void action_is_minimal_reallocate_aut_data(
 		action_is_minimal_data &D)
 {
 	int nb_auts_allocated2;
@@ -78,7 +78,7 @@ void action_is_minimal_reallocate_aut_data(
 	D.nb_auts_allocated = nb_auts_allocated2;
 }
 
-int action_is_minimal_recursion(
+static int action_is_minimal_recursion(
 		action_is_minimal_data *D,
 		int depth, int verbose_level)
 {
@@ -351,10 +351,17 @@ int action_is_minimal_recursion(
 	return true;
 }
 
-int action::is_minimal(
+int action_global::is_minimal(
+		action *A,
 		int size, long int *set, groups::sims *old_Sims,
-	int &backtrack_level, int verbose_level)
+		int &backtrack_level, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "action_global::is_minimal" << endl;
+	}
+
 	long int *witness;
 	int *transporter_witness;
 	int ret;
@@ -363,9 +370,10 @@ int action::is_minimal(
 	groups::sims Aut;
 	
 	witness = NEW_lint(size);
-	transporter_witness = NEW_int(elt_size_in_int);
+	transporter_witness = NEW_int(A->elt_size_in_int);
 	
 	ret = is_minimal_witness(
+			A,
 			size, set, old_Sims,
 			backtrack_level,
 		witness, transporter_witness, backtrack_nodes, 
@@ -374,17 +382,21 @@ int action::is_minimal(
 	
 	FREE_lint(witness);
 	FREE_int(transporter_witness);
+	if (f_v) {
+		cout << "action_global::is_minimal done" << endl;
+	}
 	return ret;
 }
 
-int action::is_minimal_witness(
+int action_global::is_minimal_witness(
+		action *A,
 		int size, long int *set, groups::sims *old_Sims,
-	int &backtrack_level, long int *witness, int *transporter_witness,
-	long int &backtrack_nodes,
-	int f_get_automorphism_group, groups::sims &Aut,
-	int verbose_level)
+		int &backtrack_level, long int *witness, int *transporter_witness,
+		long int &backtrack_nodes,
+		int f_get_automorphism_group, groups::sims &Aut,
+		int verbose_level)
 {
-	action *A;
+	action *A_base_changed;
 	action_is_minimal_data D;
 	int ret = true;
 	int i;
@@ -395,11 +407,11 @@ int action::is_minimal_witness(
 	other::data_structures::sorting Sorting;
 
 	if (f_v) {
-		cout << "action::is_minimal_witness" << endl;
+		cout << "action_global::is_minimal_witness" << endl;
 		cout << "verbose_level=" << verbose_level << endl;
 	}
 	if (f_v) {
-		cout << "action::is_minimal_witness the input set is ";
+		cout << "action_global::is_minimal_witness the input set is ";
 		Lint_vec_print(cout, set, size);
 		cout << endl;
 	}
@@ -410,27 +422,27 @@ int action::is_minimal_witness(
 	//"size - 1 = " << backtrack_level << endl;
 
 	if (f_v) {
-		cout << "action::is_minimal_witness "
+		cout << "action_global::is_minimal_witness "
 				"current base is ";
-		print_base();
-		cout << "action::is_minimal_witness "
+		A->print_base();
+		cout << "action_global::is_minimal_witness "
 				"doing base change" << endl;
 	}
 	if (f_v) {
-		cout << "action::is_minimal_witness "
+		cout << "action_global::is_minimal_witness "
 				"before Induced_action->base_change" << endl;
 	}
-	A = Induced_action->base_change(
+	A_base_changed = A->Induced_action->base_change(
 			size, set, old_Sims, verbose_level - 1);
 	if (f_v) {
 		cout << "action::is_minimal_witness "
 				"after Induced_action->base_change" << endl;
 	}
-	//A.eliminate_redundant_base_points(verbose_level - 4); 
+	//A_base_changed.eliminate_redundant_base_points(verbose_level - 4);
 	// !!! A Betten July 10, 2014
 	if (f_v) {
-		cout << "action::is_minimal_witness base changed to ";
-		A->print_base();
+		cout << "action_global::is_minimal_witness base changed to ";
+		A_base_changed->print_base();
 	}
 	
 	//cout << "action::is_minimal_witness testing membership" << endl;
@@ -441,7 +453,7 @@ int action::is_minimal_witness(
 	
 #if 0
 	if (f_vvvv) {
-		cout << "action::is_minimal_witness action " << A.label << endl;
+		cout << "action_global::is_minimal_witness action " << A.label << endl;
 		cout << "we have the following strong generators:" << endl;
 		A.strong_generators->print_as_permutation(cout);
 		cout << "and Sims:" << endl;
@@ -457,52 +469,52 @@ int action::is_minimal_witness(
 	}
 #endif
 
-	D.A = A;
+	D.A = A_base_changed;
 	D.size = size;
 	D.set = set;
 
 
 	D.nb_auts = 0;
 	D.nb_auts_allocated = AUTS_ALLOCATE_BLOCK_SIZE;
-	D.aut_data = NEW_int(D.nb_auts_allocated * A->base_len());
-	D.first_moved = A->base_len();
+	D.aut_data = NEW_int(D.nb_auts_allocated * A_base_changed->base_len());
+	D.first_moved = A_base_changed->base_len();
 	D.f_automorphism_seen = false;
 	
 	if (f_vv) {
-		cout << "action::is_minimal_witness "
+		cout << "action_global::is_minimal_witness "
 				"computing stabilizer orbits" << endl;
 	}
 	
-	A->compute_stabilizer_orbits(D.Staborbits, verbose_level - 4);
+	A_base_changed->compute_stabilizer_orbits(D.Staborbits, verbose_level - 4);
 	
 	if (f_vv) {
-		cout << "action::is_minimal_witness "
+		cout << "action_global::is_minimal_witness "
 				"computing stabilizer orbits finished" << endl;
 	}
 
-	D.the_set = NEW_lint((A->base_len() + 1) * size);
+	D.the_set = NEW_lint((A_base_changed->base_len() + 1) * size);
 	Lint_vec_copy(set, D.the_set, size);
 	Sorting.lint_vec_quicksort_increasingly(D.the_set, size);
 	
 	D.backtrack_node = 0;
-	D.choices = NEW_int(A->base_len() * A->degree);
-	D.nb_choices = NEW_int(A->base_len());
-	D.current_choice = NEW_int(A->base_len());
+	D.choices = NEW_int(A_base_changed->base_len() * A_base_changed->degree);
+	D.nb_choices = NEW_int(A_base_changed->base_len());
+	D.current_choice = NEW_int(A_base_changed->base_len());
 	D.witness = witness;
-	D.coset_rep = NEW_int(A->elt_size_in_int);
+	D.coset_rep = NEW_int(A_base_changed->elt_size_in_int);
 	D.transporter_witness = transporter_witness;
-	D.is_minimal_base_point = NEW_int(A->base_len());
+	D.is_minimal_base_point = NEW_int(A_base_changed->base_len());
 
 	if (f_vv) {
-		cout << "action::is_minimal_witness "
+		cout << "action_global::is_minimal_witness "
 				"starting backtrack" << endl;
 	}
 
-	for (i = 0; i < A->base_len(); i++) {
+	for (i = 0; i < A_base_changed->base_len(); i++) {
 		other::data_structures::partitionstack *S;
 		int b, c, f, l, j, p;
 		
-		b = A->base_i(i);
+		b = A_base_changed->base_i(i);
 		if (i == size) {
 			break;
 		}
@@ -522,20 +534,20 @@ int action::is_minimal_witness(
 			p = S->pointList[f + j];
 			if (p < b) {
 				if (f_vv) {
-					cout << "action::is_minimal_witness level " << i 
+					cout << "action_global::is_minimal_witness level " << i
 						<< ", orbit of base_point " << b 
 						<< " contains " << p 
 						<< " which is a smaller point" << endl;
 				}
 				if (false) {
-					cout << "action::is_minimal_witness partitionstack:" << endl;
+					cout << "action_global::is_minimal_witness partitionstack:" << endl;
 					S->print(cout);
 					S->print_raw();
 				}
 				int k;
-				Int_vec_zero(A->Sims->path, A->base_len());
-				A->Sims->path[i] = A->orbit_inv_ij(i, p);
-				A->Sims->element_from_path(transporter_witness, 0);
+				Int_vec_zero(A_base_changed->Sims->path, A_base_changed->base_len());
+				A_base_changed->Sims->path[i] = A_base_changed->orbit_inv_ij(i, p);
+				A_base_changed->Sims->element_from_path(transporter_witness, 0);
 
 
 				for (k = 0; k < size; k++) {
@@ -557,11 +569,11 @@ int action::is_minimal_witness(
 		}
 	}
 	// now we compute is_minimal_base_point array:
-	for (i = 0; i < A->base_len(); i++) {
+	for (i = 0; i < A_base_changed->base_len(); i++) {
 		int j, b, c, l;
 		other::data_structures::partitionstack *S;
 		S = &D.Staborbits[i];
-		b = A->base_i(i);
+		b = A_base_changed->base_i(i);
 		for (j = 0; j < b; j++) {
 			c = S->cellNumber[S->invPointList[j]];
 			l = S->cellSize[c];
@@ -577,20 +589,20 @@ int action::is_minimal_witness(
 		}
 	}
 	if (f_v) {
-		cout << "action::is_minimal_witness: "
+		cout << "action_global::is_minimal_witness: "
 				"D.is_minimal_base_point=";
-		Int_vec_print(cout, D.is_minimal_base_point, A->base_len());
+		Int_vec_print(cout, D.is_minimal_base_point, A_base_changed->base_len());
 		cout << endl;
 	}
 	
 	if (f_vv) {
-		cout << "action::is_minimal_witness calling "
+		cout << "action_global::is_minimal_witness calling "
 				"action_is_minimal_recursion" << endl;
 	}
 	ret = action_is_minimal_recursion(&D,
 			0 /* depth */, verbose_level /* -3 */);
 	if (f_vv) {
-		cout << "action::is_minimal_witness "
+		cout << "action_global::is_minimal_witness "
 				"action_is_minimal_recursion "
 				"returns " << ret << endl;
 	}
@@ -598,11 +610,11 @@ int action::is_minimal_witness(
 finish:
 	if (!ret) {
 		if (f_vv) {
-			cout << "action::is_minimal_witness "
+			cout << "action_global::is_minimal_witness "
 					"computing witness" << endl;
 		}
 		for (i = 0; i < size; i++) {
-			witness[i] = A->Group_element->image_of(
+			witness[i] = A_base_changed->Group_element->image_of(
 					transporter_witness, set[i]);
 		}
 		//int_vec_sort(size, witness);
@@ -614,16 +626,16 @@ finish:
 		if (f_vv) {
 			int j, /*image_point,*/ coset;
 			
-			cout << "action::is_minimal_witness "
+			cout << "action_global::is_minimal_witness "
 					"automorphism generators:" << endl;
 			for (i = 0; i < D.nb_auts; i++) {
 				cout << setw(3) << i << " : (";
-				for (j = 0; j < base_len(); j++) {
-					coset = D.aut_data[i * base_len() + j];
+				for (j = 0; j < A->base_len(); j++) {
+					coset = D.aut_data[i * A->base_len() + j];
 					cout << coset;
 					//image_point = Sims->orbit[i][coset];
 					//cout << image_point;
-					if (j < base_len() - 1) {
+					if (j < A->base_len() - 1) {
 						cout << ", ";
 					}
 				}
@@ -635,10 +647,10 @@ finish:
 		algebra::ring_theory::longinteger_object go, go2;
 		
 		if (f_vv) {
-			cout << "action::is_minimal_witness "
+			cout << "action_global::is_minimal_witness "
 					"building up automorphism group" << endl;
 		}
-		A->build_up_automorphism_group_from_aut_data(
+		A_base_changed->build_up_automorphism_group_from_aut_data(
 				D.nb_auts, D.aut_data,
 				Aut2, verbose_level - 3);
 		Aut2.group_order(go2);
@@ -649,19 +661,19 @@ finish:
 		}
 		
 		if (f_v) {
-			cout << "action::is_minimal_witness before Aut.init" << endl;
+			cout << "action_global::is_minimal_witness before Aut.init" << endl;
 		}
-		Aut.init(this, verbose_level - 2);
+		Aut.init(A, verbose_level - 2);
 		Aut.init_trivial_group(0 /*verbose_level - 1*/);
 		if (f_v) {
-			cout << "action::is_minimal_witness before K.init" << endl;
+			cout << "action_global::is_minimal_witness before K.init" << endl;
 		}
-		K.init(this, verbose_level - 2);
+		K.init(A, verbose_level - 2);
 		K.init_trivial_group(0 /*verbose_level - 1*/);
 		
 		
 		if (f_v) {
-			cout << "action::is_minimal_witness "
+			cout << "action_global::is_minimal_witness "
 					"before Aut.build_up_group_random_process" << endl;
 		}
 		Aut.build_up_group_random_process(
@@ -670,19 +682,19 @@ finish:
 			NULL, 
 			verbose_level - 4);	
 		if (f_v) {
-			cout << "action::is_minimal_witness "
+			cout << "action_global::is_minimal_witness "
 					"after Aut.build_up_group_random_process" << endl;
 		}
 		//Aut.build_up_group_random_process_no_kernel(&Aut2, verbose_level);
 		Aut.group_order(go);
 		if (f_v) {
-			cout << "action::is_minimal_witness "
+			cout << "action_global::is_minimal_witness "
 					"automorphism group has order " << go << endl;
 		}
 	}
 	
 	if (false) {
-		cout << "action::is_minimal_witness freeing memory" << endl;
+		cout << "action_global::is_minimal_witness freeing memory" << endl;
 	}
 	
 	FREE_int(D.aut_data);
@@ -694,10 +706,10 @@ finish:
 	FREE_int(D.is_minimal_base_point);
 	FREE_int(D.coset_rep);
 
-	FREE_OBJECT(A);
+	FREE_OBJECT(A_base_changed);
 
 	if (f_v) {
-		cout << "action::is_minimal_witness done" << endl;
+		cout << "action_global::is_minimal_witness done" << endl;
 	}
 
 

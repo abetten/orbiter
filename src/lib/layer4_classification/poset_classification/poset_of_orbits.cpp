@@ -3296,6 +3296,7 @@ void poset_of_orbits::get_all_orbits_expanded(
 other::data_structures::lint_matrix *poset_of_orbits::get_all_orbit_elements(
 		int lvl, int po,
 		int verbose_level)
+// called from pc_combinatorics::pairwise_join_and_identify
 {
 	int f_v = (verbose_level >= 1);
 
