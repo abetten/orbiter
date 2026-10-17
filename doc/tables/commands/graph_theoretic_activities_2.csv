@@ -3,6 +3,8 @@ ROW,C1,C2,C3
 1,"Graph Theoretic Activities (Part 2)",,
 1,"\verb'-automorphism_group' ","   ","Computes the automorphism group and write a report. See Section~\ref{sec:canonical:form:objects:graphs}. "
 1,"\verb'-automorphism_group_colored_graph' ","   ","Computes the automorphism group of a vertex colored graph and write a report. See Section~\ref{sec:canonical:form:objects:graphs}. "
+1,"\verb'-canonical_form' ","   ","Computes the canonical form of a vertex colored graph and saves it to file. See Section~\ref{sec:canonical:form:objects:graphs}. "
+1,"\verb'-classify' ","   ","Computes the transversal of isomorphism types of the given graphs. The graphs must be given in canonical form. "
 1,"\verb'-properties' ","   ","Computes properties of the graph. "
 1,"\verb'-girth_assuming_vertex_transitivity' ","   ","Computes the girth of the graph (length of the shortest cycle). Assumes that the graph is vertex transitive. Once done, it also computes the shortest cycles themselves (complete list). "
 1,"\verb'-eigenvalues' ","   ","Computes the eigenvalues of the graph (ordinary and Laplace) and writes to a csv file. "
@@ -10,4 +12,5 @@ ROW,C1,C2,C3
 1,"\verb'-draw' "," options  ","Draws the graph. Uses a ``draw options'' object as in Table~\ref{tab:draw:options} for drawing. "
 1,"\verb'-create_distance_poset' "," v  ","Creates the distance poset with respect to the vertex $v$. "
 1,"\verb'-test_if_distance_regular' "," v  ","Tests if the graph is distance regular with respect to the vertex $v$. This function assumes that the graph is vertex transitive. "
+1,"\verb'-test_if_almost_distance_regular' "," v  ","Tests if the graph is almost distance regular with respect to the vertex $v$. This function assumes that the graph is vertex transitive. "
 END
