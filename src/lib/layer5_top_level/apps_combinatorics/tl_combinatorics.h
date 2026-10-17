@@ -1206,7 +1206,7 @@ class large_set_was_description {
 public:
 
 
-	// TABLSE/large_set_was.tex
+	// TABLES/large_set_was.tex
 
 	int f_H;
 	std::string H_go;

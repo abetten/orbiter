@@ -333,7 +333,9 @@ void classes_of_elements_expanded::report2(
 
 			class_label = Classes->Conjugacy_class[h]->class_label();
 
-			ost << "Class " << h << " / " << nb_idx << " is class " << idx << " = " << class_label << " of size " << Orbit_of_elements[h]->orbit_length << "\\\\" << endl;
+			ost << "Class " << h << " / " << nb_idx << " is class "
+					<< idx << " = " << class_label
+					<< " of size " << Orbit_of_elements[h]->orbit_length << "\\\\" << endl;
 			cout << "classes_of_subgroups_expanded::init "
 					"Class size = " << Orbit_of_elements[h]->orbit_length << endl;
 
@@ -398,6 +400,45 @@ void classes_of_elements_expanded::report2(
 	}
 }
 
+
+int classes_of_elements_expanded::find_element(
+			long int elt_rk,
+			int &class_idx, int &position, int verbose_level)
+// returns true if the element was found
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "classes_of_elements_expanded::find_element" << endl;
+	}
+
+	other::data_structures::sorting Sorting;
+
+
+	int f_found;
+	int j;
+
+	f_found = false;
+
+	class_idx = -1;
+	position = -1;
+
+	for (j = 0; j < nb_idx; j++) {
+		if (Sorting.lint_vec_search(
+				Orbit_of_elements[j]->Table_of_elements,
+				Orbit_of_elements[j]->orbit_length,
+				elt_rk, position, 0 /*verbose_level*/)) {
+			f_found = true;
+			class_idx = j;
+			break;
+		}
+	}
+
+	if (f_v) {
+		cout << "classes_of_elements_expanded::find_element done" << endl;
+	}
+	return f_found;
+}
 
 
 

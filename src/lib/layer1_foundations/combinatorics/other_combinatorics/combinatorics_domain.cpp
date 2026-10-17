@@ -786,6 +786,34 @@ void combinatorics_domain::unrank_k_subset(
 	}
 }
 
+
+void combinatorics_domain::unrank_k_subset_lint(
+		long int rk, long int *set, int n, int k)
+{
+	long int r1, i, j;
+	algebra::ring_theory::longinteger_object a, b;
+
+	if (k == 0) {
+		return;
+	}
+	j = 0;
+	for (i = 0; i < n; i++) {
+		binomial(
+				a, n - i - 1, k - j - 1, false);
+		r1 = a.as_int();
+		if (rk >= r1) {
+			rk -= r1;
+			continue;
+		}
+		set[j] = i;
+		j++;
+		if (j == k) {
+			break;
+		}
+	}
+}
+
+
 void combinatorics_domain::unrank_k_subset_and_complement(
 		int rk, int *set, int n, int k)
 {
@@ -3417,15 +3445,19 @@ int combinatorics_domain::load_layered_graph_and_test_if_distance_regular(
 	nb_layers = LG->nb_layers;
 
 	if (f_drg) {
-		cout << "combinatorics_domain::load_layered_graph_and_test_if_distance_regular The graph is distance regular" << endl;
+		cout << "combinatorics_domain::load_layered_graph_and_test_if_distance_regular "
+				"The graph is distance regular" << endl;
 
-		cout << "combinatorics_domain::load_layered_graph_and_test_if_distance_regular nb_layers = " << LG->nb_layers << endl;
-		cout << "combinatorics_domain::load_layered_graph_and_test_if_distance_regular ABC_by_layer:" << endl;
+		cout << "combinatorics_domain::load_layered_graph_and_test_if_distance_regular "
+				"nb_layers = " << LG->nb_layers << endl;
+		cout << "combinatorics_domain::load_layered_graph_and_test_if_distance_regular "
+				"ABC_by_layer:" << endl;
 		Int_matrix_print(ABC_by_layer, LG->nb_layers, 3);
 
 	}
 	else {
-		cout << "combinatorics_domain::load_layered_graph_and_test_if_distance_regular The graph is *not* distance regular" << endl;
+		cout << "combinatorics_domain::load_layered_graph_and_test_if_distance_regular "
+				"The graph is *not* distance regular" << endl;
 	}
 	//cout << "f_drg = " << f_drg << endl;
 

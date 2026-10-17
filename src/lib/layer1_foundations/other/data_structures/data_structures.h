@@ -1797,6 +1797,54 @@ public:
 
 
 // #############################################################################
+// set_partition.cpp
+// #############################################################################
+
+//! an ordered set partition
+
+
+class set_partition {
+
+public:
+
+	int underlying_set_size;
+	// equal to he sum of Class_size over all classes
+
+	int nb_classes;
+	int *Class_size; // [nb_classes]
+
+	int *perm; // [nb_elements_total]
+	// list of nodes arranged by layers
+
+	int *perm_inv; // [nb_elements_total]
+	// inverse of perm
+
+	int *class_index; // [nb_elements_total]
+	// the index of the class containing a particular element
+
+	int *Fst; // [nb_classes]
+	// index of first element at level
+
+
+
+	set_partition();
+	~set_partition();
+	void init_SoS(
+			other::data_structures::set_of_sets *SoS,
+			int verbose_level);
+	void print();
+	void init_layered_graph(
+			layer1_foundations::combinatorics::graph_theory::layered_graph *Layered_graph,
+			int verbose_level);
+	void split_last_class(
+			other::data_structures::tally_vector_data *T,
+			int verbose_level);
+
+};
+
+
+
+// #############################################################################
 // sorting.cpp
 // #############################################################################
 

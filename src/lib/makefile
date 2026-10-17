@@ -275,6 +275,7 @@ ORBITER_MODULES= \
 		layer1_foundations/other/data_structures/set_builder.o \
 		layer1_foundations/other/data_structures/set_of_sets_lint.o \
 		layer1_foundations/other/data_structures/set_of_sets.o \
+		layer1_foundations/other/data_structures/set_partition.o \
 		layer1_foundations/other/data_structures/sorting.o \
 		layer1_foundations/other/data_structures/spreadsheet.o \
 		layer1_foundations/other/data_structures/string_tools.o \

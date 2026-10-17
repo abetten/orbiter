@@ -29,6 +29,142 @@ graph_theory_apps::~graph_theory_apps()
 }
 
 
+void graph_theory_apps::canonical_form(
+		combinatorics::graph_theory::colored_graph *CG,
+		combinatorics::graph_theory::colored_graph *&CG_canonical,
+		std::vector<std::string> &feedback,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "graph_theory_apps::canonical_form" << endl;
+	}
+
+
+	interfaces::nauty_interface_for_graphs Nauty;
+	other::l1_interfaces::nauty_interface_control Nauty_control;
+
+
+
+	actions::action *Aut;
+	int *labeling;
+
+	if (f_v) {
+		cout << "graph_theory_apps::canonical_form" << endl;
+	}
+
+	labeling = NEW_int(CG->nb_points);
+
+
+	Aut = Nauty.create_automorphism_group_and_canonical_labeling_of_colored_graph(
+		CG->nb_points,
+		true /* f_bitvec */, CG->Bitvec, NULL /* int  *Adj */,
+		CG->point_color,
+		labeling,
+		&Nauty_control,
+		verbose_level);
+
+
+	if (f_v) {
+		cout << "graph_theory_apps::canonical_form done" << endl;
+	}
+	//return A;
+
+	//combinatorics::graph_theory::colored_graph *CG_canonical;
+
+	CG_canonical = NEW_OBJECT(combinatorics::graph_theory::colored_graph);
+
+	int *colors;
+	int *Adj;
+	int i, j, ii, jj;
+
+
+	colors = NEW_int(CG->nb_points);
+
+	Adj = NEW_int(CG->nb_points * CG->nb_points);
+	Int_vec_zero(Adj, CG->nb_points * CG->nb_points);
+
+	for (i = 0; i < CG->nb_points; i++) {
+		ii = labeling[i];
+
+		for (j = i + 1; j < CG->nb_points; j++) {
+			jj = labeling[j];
+
+			Adj[i * CG->nb_points + j] = Adj[j * CG->nb_points + i] = CG->is_adjacent(ii, jj);
+
+		}
+
+	}
+	for (i = 0; i < CG->nb_points; i++) {
+		ii = labeling[i];
+		colors[i] = CG->point_color[ii];
+	}
+
+	CG_canonical->init_adjacency(
+			CG->nb_points, CG->nb_colors, CG->nb_colors_per_vertex,
+			colors, Adj,
+			CG->label, CG->label_tex,
+			verbose_level);
+
+	FREE_int(colors);
+	FREE_int(Adj);
+	FREE_int(labeling);
+
+	if (f_v) {
+		cout << "graph_theory_apps::canonical_form done" << endl;
+	}
+}
+
+void graph_theory_apps::classify(
+		int nb,
+		combinatorics::graph_theory::colored_graph **CG,
+		int &N,
+		int *&Idx,
+		std::vector<std::string> &feedback,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "graph_theory_apps::classify" << endl;
+	}
+
+	N = 0;
+	//int *Idx;
+	int i, j, idx;
+	int f_isomorphic;
+
+	Idx = NEW_int(nb);
+
+	for (i = 0; i < nb; i++) {
+
+		f_isomorphic = false;
+
+		for (j = 0; j < N; j++) {
+			idx = Idx[j];
+			if (CG[i]->is_equal(CG[idx], verbose_level)) {
+				cout << "graph " << i << " is equal to graph " << idx << endl;
+				f_isomorphic = true;
+				break;
+			}
+			else {
+				cout << "graph " << i << " is *not* equal to graph " << idx << endl;
+			}
+		}
+
+		if (!f_isomorphic) {
+			Idx[N++] = i;
+		}
+
+	}
+
+	cout << "graph_theory_apps::classify the number of isomorphism types is " << N << endl;
+
+}
+
+
+
 void graph_theory_apps::automorphism_group(
 		combinatorics::graph_theory::colored_graph *CG,
 		std::vector<std::string> &feedback,
@@ -1161,7 +1297,187 @@ void graph_theory_apps::combine_by_starters(
 
 }
 
+void graph_theory_apps::equitable_partition(
+		int vertex,
+		combinatorics::graph_theory::colored_graph *CG,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
 
+
+	if (f_v) {
+		cout << "graph_theory_apps::equitable_partition" << endl;
+	}
+
+	layer1_foundations::combinatorics::graph_theory::distance_information *Distance_information;
+	layer1_foundations::combinatorics::graph_theory::layered_graph *Layered_graph;
+	other::data_structures::set_partition *Set_partition;
+
+
+	if (f_v) {
+		cout << "graph_theory_apps::equitable_partition "
+				"before create_distance_poset_and_equitable_partition" << endl;
+	}
+
+	CG->create_distance_poset_and_equitable_partition(
+			vertex,
+			Distance_information,
+			Layered_graph,
+			Set_partition,
+			verbose_level);
+
+	if (f_v) {
+		cout << "graph_theory_apps::equitable_partition "
+				"after create_distance_poset_and_equitable_partition" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "graph_theory_apps::equitable_partition "
+				"Set_partition:" << endl;
+		Set_partition->print();
+	}
+
+	int *Types;
+	int nb_rows;
+	int nb_cols;
+
+
+	if (f_v) {
+		cout << "graph_theory_apps::equitable_partition "
+				"before CG->partition_types" << endl;
+	}
+	CG->partition_types(
+			Set_partition,
+			Types, nb_rows, nb_cols,
+			verbose_level);
+	if (f_v) {
+		cout << "graph_theory_apps::equitable_partition "
+				"after CG->partition_types" << endl;
+	}
+
+	if (f_v) {
+		cout << "graph_theory_apps::equitable_partition "
+				"Types:" << endl;
+
+		int i;
+
+
+		for (i = 0; i < Set_partition->nb_classes; i++) {
+			cout << "class " << i << " of size "
+					<< Set_partition->Class_size[i]
+					<< " Fst = " << Set_partition->Fst[i] << endl;
+
+			Int_matrix_print(
+					Types + Set_partition->Fst[i] * nb_cols,
+					Set_partition->Class_size[i],
+					nb_cols);
+		}
+	}
+
+	other::data_structures::tally_vector_data *T;
+
+	T = NEW_OBJECTS(other::data_structures::tally_vector_data, Set_partition->nb_classes);
+
+	int i, fst;
+
+
+	for (i = 0; i < Set_partition->nb_classes; i++) {
+
+		fst = Distance_information->Set_partition->class_index[i];
+
+		if (f_v) {
+			cout << "graph_theory_apps::equitable_partition "
+					"before T[i].init" << endl;
+		}
+
+
+		T[i].init(
+				Types + Set_partition->Fst[i] * nb_cols,
+				Set_partition->Class_size[i] /* data_length */,
+				nb_cols /* data_set_sz */,
+				verbose_level);
+		// data[data_length * data_set_sz]
+
+	}
+
+	int *Nb_types;
+
+	Nb_types = NEW_int(Set_partition->nb_classes);
+
+	for (i = 0; i < Set_partition->nb_classes; i++) {
+		Nb_types[i] = T[i].nb_types;
+	}
+
+	for (i = 0; i < Set_partition->nb_classes; i++) {
+		cout << i << " : " << Nb_types[i] << endl;
+	}
+
+
+	int f_is_equitable = true;
+
+	int nb_of_types;
+	int *Type_first;
+
+
+	nb_of_types = 0;
+	Type_first = NEW_int(Set_partition->nb_classes);
+	for (i = 0; i < Set_partition->nb_classes; i++) {
+
+		Type_first[i] = nb_of_types;
+		nb_of_types += T[i].nb_types;
+
+		if (T[i].nb_types > 1) {
+			f_is_equitable = false;
+			break;
+		}
+	}
+
+
+	if (f_is_equitable) {
+		cout << "The partition is equitable" << endl;
+	}
+	else {
+		cout << "The partition is *not* equitable" << endl;
+	}
+
+
+
+	int *Types_reduced;
+	int j, f, a;
+
+	Types_reduced = NEW_int(nb_of_types * nb_cols);
+	for (i = 0; i < Set_partition->nb_classes; i++) {
+
+		for (j = 0; j < T[i].nb_types; j++) {
+			f = T[i].type_first[j];
+			//l = T[i].Frequency[j];
+			a = T[i].sorting_perm_inv[f + 0];
+			Int_vec_copy(
+					Types + (Set_partition->Fst[i] + a) * nb_cols,
+					Types_reduced + (Type_first[i] + j) * nb_cols,
+					nb_cols);
+		}
+	}
+
+	cout << "Types_reduced=" << endl;
+	Int_matrix_print(Types_reduced, nb_of_types, nb_cols);
+
+	cout << "Type_first=";
+	Int_vec_print(cout, Type_first, Set_partition->nb_classes);
+	cout << endl;
+
+
+
+
+	FREE_OBJECT(Distance_information);
+	FREE_OBJECT(Layered_graph);
+	FREE_OBJECT(Set_partition);
+
+	if (f_v) {
+		cout << "graph_theory_apps::equitable_partition done" << endl;
+	}
+}
 
 }}}
 

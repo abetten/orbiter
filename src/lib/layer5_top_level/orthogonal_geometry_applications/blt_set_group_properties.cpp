@@ -101,8 +101,9 @@ void blt_set_group_properties::init_orbits_on_points(
 
 
 	if (f_v) {
-		cout << "blt_set_with_action::init_orbits_on_points action "
-				"on points. Before Blt_set_with_action->A->Induced_action->restricted_action" << endl;
+		cout << "blt_set_with_action::init_orbits_on_points "
+				"action on points. "
+				"Before Blt_set_with_action->A->Induced_action->restricted_action" << endl;
 	}
 	A_on_points = Blt_set_with_action->A->Induced_action->restricted_action(
 			Blt_set_with_action->Inv->the_set_in_orthogonal,
@@ -120,6 +121,13 @@ void blt_set_group_properties::init_orbits_on_points(
 	int f_load_save = false;
 	std::string prefix;
 	int print_interval = 10000;
+
+	if (f_v) {
+		cout << "blt_set_group_properties::init_orbits_on_points "
+				"A_on_points = " << A_on_points->label << endl;
+		cout << "blt_set_group_properties::init_orbits_on_points "
+				"Blt_set_with_action->Aut_gens = " << Blt_set_with_action->Aut_gens->A->label << endl;
+	}
 
 	if (f_v) {
 		cout << "blt_set_group_properties::init_orbits_on_points "

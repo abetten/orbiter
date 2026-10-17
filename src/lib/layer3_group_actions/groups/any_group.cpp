@@ -1081,28 +1081,38 @@ void any_group::normalizer(
 
 
 	if (f_v) {
-		cout << "group order G = " << G->group_order_lint() << endl;
-			cout << "group order H = " << H->group_order_lint() << endl;
-			cout << "before M.normalizer_using_MAGMA" << endl;
+		cout << "any_group::normalizer group order G = " << G->group_order_lint() << endl;
+		cout << "any_group::normalizer group order H = " << H->group_order_lint() << endl;
 	}
+
+	if (f_v) {
+		cout << "any_group::normalizer before M.normalizer_using_MAGMA" << endl;
+	}
+
 	M.normalizer_using_MAGMA(
 			A, fname_magma_prefix,
 			G, H, gens_N, verbose_level);
 
 
+	if (f_v) {
+		cout << "any_group::normalizer after M.normalizer_using_MAGMA" << endl;
+	}
 
 	G->group_order(G_order);
 	H->group_order(H_order);
 	gens_N->group_order(N_order);
+
 	if (f_v) {
-		cout << "group order G = " << G->group_order_lint() << endl;
-		cout << "group order H = " << H_order << endl;
+		cout << "any_group::normalizer group order G = " << G->group_order_lint() << endl;
+		cout << "any_group::normalizer group order H = " << H_order << endl;
 	}
 	if (f_v) {
-		cout << "group order N = " << N_order << endl;
-		cout << "Strong generators for the normalizer of H are:" << endl;
+		cout << "any_group::normalizer group order N = " << N_order << endl;
+		cout << "any_group::normalizer "
+				"Strong generators for the normalizer of H are:" << endl;
 		gens_N->print_generators_tex(cout);
-		cout << "Strong generators for the normalizer of H as permutations are:" << endl;
+		cout << "any_group::normalizer "
+				"Strong generators for the normalizer of H as permutations are:" << endl;
 		gens_N->print_generators_as_permutations();
 	}
 
@@ -1341,15 +1351,15 @@ void any_group::do_find_subgroups(
 	{
 		ofstream fp(fname);
 		other::l1_interfaces::latex_interface L;
-		//latex_head_easy(fp);
-		L.head(fp,
-			false /* f_book */, true /* f_title */,
-			title, author,
-			false /*f_toc*/, false /* f_landscape*/, false /* f_12pt*/,
-			true /*f_enlarged_page*/, true /* f_pagenumbers*/,
-			extras_for_preamble);
 
-		//actions::action_global Action_global;
+		L.head(
+				fp,
+				false /* f_book */, true /* f_title */,
+				title, author,
+				false /*f_toc*/, false /* f_landscape*/, false /* f_12pt*/,
+				true /*f_enlarged_page*/, true /* f_pagenumbers*/,
+				extras_for_preamble);
+
 		actions::action_latex_interface Action_latex_interface;
 
 		Action_latex_interface.report_groups_and_normalizers(
@@ -1392,13 +1402,9 @@ void any_group::proportion_of_generating_sets_of_size_k(
 
 	algebra::ring_theory::longinteger_domain D;
 	groups::sims *Sims;
-	//groups::strong_generators *SG;
-
-	//SG = get_strong_generators();
 
 
 	Sims = get_sims();
-	//Sims = SG->create_sims(verbose_level);
 
 
 	algebra::ring_theory::longinteger_object target_go;
@@ -1407,7 +1413,7 @@ void any_group::proportion_of_generating_sets_of_size_k(
 
 	combinatorics::other_combinatorics::combinatorics_domain Combinatorics_domain;
 
-	int *set;
+	long int *set;
 	long int n, rk, N;
 
 	n = target_go.as_lint();
@@ -1417,19 +1423,24 @@ void any_group::proportion_of_generating_sets_of_size_k(
 
 	nb_total = N;
 
-	set = NEW_int(k);
+	set = NEW_lint(k);
 
 	for (rk = 0; rk < N; rk++) {
 
-		Combinatorics_domain.unrank_k_subset(
+		Combinatorics_domain.unrank_k_subset_lint(
 			rk, set, n, k);
 
 		if (f_v) {
-			cout << "any_group::proportion_of_generating_sets_of_size_k attempt " << rk << " / " << N << endl;
+			cout << "any_group::proportion_of_generating_sets_of_size_k "
+					"subset " << rk << " / " << N << endl;
 		}
 
 		data_structures_groups::vector_ge *gens;
 
+		gens = Sims->get_vector_of_elements_by_rank(
+				set, k, 0 /* verbose_level */);
+
+#if 0
 		gens = NEW_OBJECT(data_structures_groups::vector_ge);
 
 		gens->init(A, 0/*verbose_level*/);
@@ -1443,6 +1454,7 @@ void any_group::proportion_of_generating_sets_of_size_k(
 					set[i], gens->ith(i), verbose_level - 2);
 
 		}
+#endif
 
 
 		algebra::ring_theory::longinteger_object go;
@@ -1465,14 +1477,24 @@ void any_group::proportion_of_generating_sets_of_size_k(
 						"target_go = " << target_go << endl;
 				cout << "any_group::proportion_of_generating_sets_of_size_k success "
 						"generating subset: ";
-				Int_vec_print(cout, set, k);
+				Lint_vec_print(cout, set, k);
 				cout << endl;
+
+
+
+#if 0
+				int i;
+
 				for (i = 0; i < k; i++) {
 
 					Sims->element_unrank_lint(
 							set[i], gens->ith(i), verbose_level - 2);
 
 				}
+#endif
+
+				int i;
+
 				for (i = 0; i < k; i++) {
 
 					A->Group_element->element_print_quick(
@@ -1492,7 +1514,7 @@ void any_group::proportion_of_generating_sets_of_size_k(
 
 	}
 
-	FREE_int(set);
+	FREE_lint(set);
 	//FREE_OBJECT(Sims);
 
 
@@ -1531,13 +1553,9 @@ void any_group::proportion_of_generating_sets_of_size_k_using_orbits(
 
 	algebra::ring_theory::longinteger_domain D;
 	groups::sims *Sims;
-	//groups::strong_generators *SG;
-
-	//SG = get_strong_generators();
 
 
 	Sims = get_sims();
-	//Sims = SG->create_sims(verbose_level);
 
 
 	algebra::ring_theory::longinteger_object target_go;
@@ -1549,17 +1567,28 @@ void any_group::proportion_of_generating_sets_of_size_k_using_orbits(
 	std::string *Table;
 	int m, nb_cols;
 
+	if (f_v) {
+		cout << "any_group::proportion_of_generating_sets_of_size_k_using_orbits "
+				"before Fio.Csv_file_support->read_table_of_strings" << endl;
+	}
+
 	Fio.Csv_file_support->read_table_of_strings(
 			fname_orbits, col_label,
 			Table, m, nb_cols,
 			verbose_level);
+
+	if (f_v) {
+		cout << "any_group::proportion_of_generating_sets_of_size_k_using_orbits "
+				"after Fio.Csv_file_support->read_table_of_strings" << endl;
+	}
 
 
 	nb_orbits = m;
 
 
 	if (f_v) {
-		cout << "any_group::proportion_of_generating_sets_of_size_k_using_orbits Number of orbits = " << nb_orbits << endl;
+		cout << "any_group::proportion_of_generating_sets_of_size_k_using_orbits "
+				"Number of orbits = " << nb_orbits << endl;
 	}
 
 
@@ -1577,7 +1606,8 @@ void any_group::proportion_of_generating_sets_of_size_k_using_orbits(
 		}
 	}
 	if (idx_reps == -1) {
-		cout << "any_group::proportion_of_generating_sets_of_size_k_using_orbits could not find column " << column_label_representatives << endl;
+		cout << "any_group::proportion_of_generating_sets_of_size_k_using_orbits "
+				"could not find column " << column_label_representatives << endl;
 		exit(1);
 	}
 
@@ -1588,7 +1618,8 @@ void any_group::proportion_of_generating_sets_of_size_k_using_orbits(
 		}
 	}
 	if (idx_OL == -1) {
-		cout << "any_group::proportion_of_generating_sets_of_size_k_using_orbits could not find column " << column_label_orbit_length << endl;
+		cout << "any_group::proportion_of_generating_sets_of_size_k_using_orbits "
+				"could not find column " << column_label_orbit_length << endl;
 		exit(1);
 	}
 
@@ -1614,7 +1645,8 @@ void any_group::proportion_of_generating_sets_of_size_k_using_orbits(
 		//Combinatorics_domain.unrank_k_subset(rk, set, n, k);
 
 		if (f_v) {
-			cout << "any_group::proportion_of_generating_sets_of_size_k_using_orbits orbit " << row << " / " << nb_orbits
+			cout << "any_group::proportion_of_generating_sets_of_size_k_using_orbits "
+					"orbit " << row << " / " << nb_orbits
 					<< " nb_good_orbits = " << nb_good_orbits
 					<< " nb_win = " << nb_win
 					<< endl;
@@ -1671,7 +1703,9 @@ void any_group::proportion_of_generating_sets_of_size_k_using_orbits(
 
 			if (f_v) {
 				cout << "any_group::proportion_of_generating_sets_of_size_k_using_orbits success "
-						"success: orbit " << row << " / " << nb_orbits << " is a generating set of size " << k << " nb_good_orbits=" << nb_good_orbits << endl;
+						"success: orbit " << row << " / " << nb_orbits
+						<< " is a generating set of size " << k
+						<< " nb_good_orbits=" << nb_good_orbits << endl;
 				cout << "any_group::proportion_of_generating_sets_of_size_k_using_orbits success "
 						"go = " << go << endl;
 				cout << "any_group::proportion_of_generating_sets_of_size_k_using_orbits success "
@@ -1687,6 +1721,7 @@ void any_group::proportion_of_generating_sets_of_size_k_using_orbits(
 							set[i], gens->ith(i), verbose_level - 2);
 
 				}
+
 				for (i = 0; i < k; i++) {
 
 					A->Group_element->element_print_quick(
@@ -3782,7 +3817,6 @@ void any_group::subgroup_lattice_intersection_orbit_orbit(
 			intersection_matrix,
 			len1, len2,
 			verbose_level);
-
 	if (f_v) {
 		cout << "any_group::subgroup_lattice_intersection_orbit_orbit "
 				"after Subgroup_lattice->intersection_orbit_orbit" << endl;
@@ -3821,6 +3855,7 @@ void any_group::subgroup_lattice_find_overgroup_in_orbit(
 	Subgroup_lattice->orb_global_to_orb_local(
 			orbit_global1, layer1, orb_local1,
 			verbose_level - 2);
+
 	Subgroup_lattice->orb_global_to_orb_local(
 			orbit_global2, layer2, orb_local2,
 			verbose_level - 2);
@@ -3836,6 +3871,7 @@ void any_group::subgroup_lattice_find_overgroup_in_orbit(
 		cout << "any_group::subgroup_lattice_find_overgroup_in_orbit "
 				"before Subgroup_lattice->find_overgroup_in_orbit" << endl;
 	}
+
 	Subgroup_lattice->find_overgroup_in_orbit(
 			layer1, orb_local1, group1,
 			layer2, orb_local2, group2,

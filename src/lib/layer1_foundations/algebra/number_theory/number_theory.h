@@ -286,7 +286,7 @@ public:
 	long int gcd_lint(
 			long int m, long int n);
 	void extended_gcd_int(
-			int m, int n, int &g, int &u, int &v);
+			int m, int n, int &g, int &u, int &v, int verbose_level);
 	void extended_gcd_lint(
 			long int m, long int n,
 			long int &g, long int &u, long int &v);

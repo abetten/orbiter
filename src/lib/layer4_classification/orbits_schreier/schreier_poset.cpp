@@ -124,7 +124,7 @@ void schreier_poset::init(
 				"before Layered_graph->init" << endl;
 	}
 	Layered_graph->init(
-			Distance_information->nb_layers, Distance_information->Nb_nodes, fname_base,
+			Distance_information->Set_partition->nb_classes, Distance_information->Set_partition->Class_size, fname_base,
 			verbose_level - 2);
 	if (f_v) {
 		cout << "schreier_poset::init "
@@ -134,8 +134,8 @@ void schreier_poset::init(
 	int l, n;
 	int a;
 
-	for (l = 0; l < Distance_information->nb_layers; l++) {
-		for (n = 0; n < Distance_information->Nb_nodes[l]; n++) {
+	for (l = 0; l < Distance_information->Set_partition->nb_classes; l++) {
+		for (n = 0; n < Distance_information->Set_partition->Class_size[l]; n++) {
 			a = SoS->Sets[l][n];
 			Layered_graph->L[l].Nodes[n].f_has_data1 = true;
 			Layered_graph->L[l].Nodes[n].data1 = a;
@@ -264,10 +264,10 @@ void schreier_poset::make_table_of_shortest_words(
 	int cur;
 
 	cur = 0;
-	for (l = 0; l < Distance_information->nb_layers; l++) {
+	for (l = 0; l < Distance_information->Set_partition->nb_classes; l++) {
 
 
-		nb = Distance_information->Nb_nodes[l];
+		nb = Distance_information->Set_partition->Class_size[l];
 
 
 		for (n = 0; n < nb; n++, cur++) {
@@ -366,8 +366,8 @@ void schreier_poset::add_edges(
 
 	nb_gens = Schreier->Generators_and_images->gens.len;
 
-	for (l = 0; l < Distance_information->nb_layers; l++) {
-		for (n = 0; n < Distance_information->Nb_nodes[l]; n++) {
+	for (l = 0; l < Distance_information->Set_partition->nb_classes; l++) {
+		for (n = 0; n < Distance_information->Set_partition->Class_size[l]; n++) {
 
 			a = Layered_graph->L[l].Nodes[n].data1;
 			//a = SoS->Sets[l][n];
@@ -383,9 +383,9 @@ void schreier_poset::add_edges(
 				prev_pt = Schreier->Forest->prev[coset];
 
 
-				location = Distance_information->perm_inv[next_pt];
-				l2 = Distance_information->depth[location];
-				n2 = location - Distance_information->Fst[l2];
+				location = Distance_information->Set_partition->perm_inv[next_pt];
+				l2 = Distance_information->Set_partition->class_index[location];
+				n2 = location - Distance_information->Set_partition->Fst[l2];
 
 
 				if (f_restricted) {

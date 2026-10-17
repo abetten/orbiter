@@ -703,6 +703,7 @@ namespace other {
 		class set_builder;
 		class set_of_sets_lint;
 		class set_of_sets;
+		class set_partition;
 		class sorting;
 		class spreadsheet;
 		class string_tools;

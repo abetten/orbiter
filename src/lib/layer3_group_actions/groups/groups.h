@@ -81,6 +81,10 @@ public:
 
 	any_group_linear *Any_group_linear;
 
+
+
+	// group properties that may or may not have been computed:
+
 	int f_has_subgroup_lattice;
 	groups::subgroup_lattice *Subgroup_lattice;
 
@@ -164,15 +168,6 @@ public:
 			std::string &fname_orbits,
 			std::string &column_label_representatives,
 			std::string &column_label_orbit_length,
-			long int &nb_orbits,
-			long int &nb_good_orbits,
-			long int &nb_win,
-			long int &nb_total,
-			long int &goi,
-			int verbose_level);
-	void proportion_of_generating_sets_of_size_k_using_orbits(
-			int k,
-			std::string &fname_orbits,
 			long int &nb_orbits,
 			long int &nb_good_orbits,
 			long int &nb_win,
@@ -480,7 +475,7 @@ public:
 // generators_and_images.cpp
 // #############################################################################
 
-//! generators for a group and their precomputed permutation representation
+//! generators for a group and their precomputed permutation representation; to be used in class schreier
 
 
 class generators_and_images {
@@ -502,7 +497,6 @@ public:
 
 	int nb_generators;
 		// this was called nb_images, which is very confusing
-		// this should be called nb_generators
 
 	int **images;
 		// [nb_generators][2 * A->degree],
@@ -1457,6 +1451,8 @@ public:
 			long int rk, int *Elt);
 	long int element_rank_lint(
 			int *Elt);
+	data_structures_groups::vector_ge *get_vector_of_elements_by_rank(
+			long int *Ranks, int nb, int verbose_level);
 	int is_element_of(
 			int *elt, int verbose_level);
 	void test_element_rank_unrank();

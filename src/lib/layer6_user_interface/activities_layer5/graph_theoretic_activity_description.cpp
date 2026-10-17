@@ -81,6 +81,10 @@ graph_theoretic_activity_description::graph_theoretic_activity_description()
 	f_automorphism_group_colored_graph = false;
 	f_automorphism_group = false;
 
+	f_canonical_form = false;
+
+	f_classify = false;
+
 	f_properties = false;
 
 	f_girth_assuming_vertex_transitivity = false;
@@ -100,6 +104,9 @@ graph_theoretic_activity_description::graph_theoretic_activity_description()
 
 	f_test_if_almost_distance_regular = false;
 	test_if_almost_distance_regular_vertex = 0;
+
+	f_equitable_partition = false;
+	equitable_partition_vertex = 0;
 
 }
 
@@ -268,6 +275,18 @@ int graph_theoretic_activity_description::read_arguments(
 				cout << "-automorphism_group " << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-canonical_form") == 0) {
+			f_canonical_form = true;
+			if (f_v) {
+				cout << "-canonical_form " << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-classify") == 0) {
+			f_classify = true;
+			if (f_v) {
+				cout << "-classify " << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-properties") == 0) {
 			f_properties = true;
 			if (f_v) {
@@ -329,6 +348,15 @@ int graph_theoretic_activity_description::read_arguments(
 						<< test_if_almost_distance_regular_vertex << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-equitable_partition") == 0) {
+			f_equitable_partition = true;
+			equitable_partition_vertex = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-equitable_partition "
+						<< equitable_partition_vertex << endl;
+			}
+		}
+
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
 				cout << "-end" << endl;
@@ -422,6 +450,12 @@ void graph_theoretic_activity_description::print()
 	if (f_automorphism_group) {
 		cout << "-automorphism_group " << endl;
 	}
+	if (f_canonical_form) {
+		cout << "-canonical_form " << endl;
+	}
+	if (f_classify) {
+		cout << "-classify " << endl;
+	}
 	if (f_properties) {
 		cout << "-properties " << endl;
 	}
@@ -447,6 +481,10 @@ void graph_theoretic_activity_description::print()
 	if (f_test_if_almost_distance_regular) {
 		cout << "-test_if_almost_distance_regular "
 				<< test_if_almost_distance_regular_vertex << endl;
+	}
+	if (f_equitable_partition) {
+		cout << "-equitable_partition "
+				<< equitable_partition_vertex << endl;
 	}
 }
 

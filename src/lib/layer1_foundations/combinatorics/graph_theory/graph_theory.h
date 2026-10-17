@@ -645,8 +645,24 @@ public:
 	void create_distance_poset(
 			int given_vertex,
 			layer1_foundations::combinatorics::graph_theory::distance_information *&Distance_information,
+			other::data_structures::set_of_sets *&SoS,
 			layer1_foundations::combinatorics::graph_theory::layered_graph *&Layered_graph,
 			int verbose_level);
+	void create_distance_poset_and_equitable_partition(
+			int given_vertex,
+			layer1_foundations::combinatorics::graph_theory::distance_information *&Distance_information,
+			layer1_foundations::combinatorics::graph_theory::layered_graph *&Layered_graph,
+			other::data_structures::set_partition *&Set_partition,
+			int verbose_level);
+	void partition_types(
+			other::data_structures::set_partition *Set_partition,
+			int *&Types, int &nb_rows, int &nb_cols,
+			int verbose_level);
+	layer1_foundations::combinatorics::graph_theory::layered_graph
+		*create_layered_graph(
+				layer1_foundations::combinatorics::graph_theory::distance_information *Distance_information,
+				other::data_structures::set_of_sets *SoS,
+				int verbose_level);
 	void test_if_distance_regular_assuming_vertex_transitive(
 			int vertex,
 			int &f_drg,
@@ -658,6 +674,9 @@ public:
 			int *&ABC_by_layer, int &nb_layers,
 			int *&NABC_last_layer, int &nb_types,
 			other::data_structures::tally_vector_data *&T,
+			int verbose_level);
+	int is_equal(
+			colored_graph *CG2,
 			int verbose_level);
 
 
@@ -678,14 +697,29 @@ class distance_information {
 
 public:
 
+
+	other::data_structures::set_partition *Set_partition;
+
+
+#if 0
 	int nb_layers;
-	int *Nb_nodes;
+	int *Nb_nodes; // [nb_layers]
 
 	int nb_nodes_total;
-	int *perm;
-	int *perm_inv;
-	int *depth;
-	int *Fst;
+	// equal to he sum of Nb_nodes over all layers
+
+	int *perm; // [nb_nodes_total]
+	// list of nodes arranged by layers
+
+	int *perm_inv; // [nb_nodes_total]
+	// inverse of perm
+
+	int *depth; // [nb_nodes_total]
+	// level of a particular node
+
+	int *Fst; // [nb_layers]
+	// index of first node at level
+#endif
 
 	distance_information();
 	~distance_information();
@@ -1142,7 +1176,7 @@ public:
 // #############################################################################
 
 
-//! a data structure to store layered graphs or Hasse diagrams
+//! a data structure to store layered graphs or partially ordered sets (aka Hasse diagrams)
 
 
 class layered_graph {

@@ -253,10 +253,15 @@ void blt_set_domain::create_extension_fields(
 
 	F3 = NEW_OBJECT(algebra::field_theory::finite_field);
 
+	int f_without_tables = false;
+
+	if (Q3 > 1024) {
+		f_without_tables = true;
+	}
 
 	F3->finite_field_init_small_order(
 			Q3,
-			false /* f_without_tables */,
+			f_without_tables,
 			true /* f_compute_related_fields */,
 			verbose_level);
 

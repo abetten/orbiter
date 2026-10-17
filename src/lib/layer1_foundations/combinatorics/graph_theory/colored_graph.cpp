@@ -3790,9 +3790,12 @@ int colored_graph::girth_assuming_vertex_transitive(
 	g = GF->g;
 
 	if (f_v) {
-		cout << "colored_graph::girth_assuming_vertex_transitive found nb_points = " << nb_points << endl;
-		cout << "colored_graph::girth_assuming_vertex_transitive found g = " << g << endl;
-		cout << "colored_graph::girth_assuming_vertex_transitive short cycle = ";
+		cout << "colored_graph::girth_assuming_vertex_transitive "
+				"found nb_points = " << nb_points << endl;
+		cout << "colored_graph::girth_assuming_vertex_transitive "
+				"found g = " << g << endl;
+		cout << "colored_graph::girth_assuming_vertex_transitive "
+				"short cycle = ";
 		Int_vec_print(cout, GF->short_cycle, g);
 		cout << endl;
 	}
@@ -3806,7 +3809,8 @@ int colored_graph::girth_assuming_vertex_transitive(
 		int N;
 
 		N = Cycles.size();
-		cout << "colored_graph::girth_assuming_vertex_transitive number of short cycles found is " << N << endl;
+		cout << "colored_graph::girth_assuming_vertex_transitive "
+				"number of short cycles found is " << N << endl;
 		cout << "The short cycles are:" << endl;
 
 		int i, l, j;
@@ -4171,6 +4175,7 @@ void colored_graph::distance_from_vertex(
 void colored_graph::create_distance_poset(
 		int given_vertex,
 		layer1_foundations::combinatorics::graph_theory::distance_information *&Distance_information,
+		other::data_structures::set_of_sets *&SoS,
 		layer1_foundations::combinatorics::graph_theory::layered_graph *&Layered_graph,
 		int verbose_level)
 {
@@ -4213,7 +4218,7 @@ void colored_graph::create_distance_poset(
 			false /* f_second */,
 			0 /* verbose_level */);
 
-	other::data_structures::set_of_sets *SoS;
+	//other::data_structures::set_of_sets *SoS;
 	int *types;
 	int nb_types;
 
@@ -4249,29 +4254,219 @@ void colored_graph::create_distance_poset(
 	//layer1_foundations::combinatorics::graph_theory::layered_graph *Layered_graph;
 
 
+	if (f_v) {
+		cout << "colored_graph::create_distance_poset "
+				"before create_layered_graph" << endl;
+	}
+	Layered_graph = create_layered_graph(Distance_information, SoS, verbose_level - 2);
+	if (f_v) {
+		cout << "colored_graph::create_distance_poset "
+				"after create_layered_graph" << endl;
+	}
+
+
+
+
+	FREE_OBJECT(Tally);
+	//FREE_OBJECT(SoS);
+	FREE_int(types);
+	FREE_int(Distance);
+
+	if (f_v) {
+		cout << "colored_graph::create_distance_poset done" << endl;
+	}
+}
+
+
+
+void colored_graph::create_distance_poset_and_equitable_partition(
+		int given_vertex,
+		layer1_foundations::combinatorics::graph_theory::distance_information *&Distance_information,
+		layer1_foundations::combinatorics::graph_theory::layered_graph *&Layered_graph,
+		other::data_structures::set_partition *&Set_partition,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "colored_graph::create_distance_poset_and_equitable_partition" << endl;
+	}
+
+
+	other::data_structures::set_of_sets *SoS;
+
+	create_distance_poset(
+			given_vertex,
+			Distance_information,
+			SoS,
+			Layered_graph,
+			verbose_level);
+
+
+	if (f_v) {
+		cout << "colored_graph::create_distance_poset_and_equitable_partition "
+				"SoS->underlying_set_size = " << SoS->underlying_set_size << endl;
+	}
+
+
+	Set_partition = NEW_OBJECT(other::data_structures::set_partition);
+
+	Set_partition->init_SoS(
+				SoS,
+				verbose_level);
+
+	int *ABC_by_layer;
+	int nb_layers;
+	int *NABC_last_layer;
+	int nb_types;
+	other::data_structures::tally_vector_data *T;
+
+
+	if (!Layered_graph->test_if_almost_distance_regular(
+			ABC_by_layer, nb_layers,
+			NABC_last_layer, nb_types,
+			T,
+			verbose_level)) {
+		cout << "colored_graph::create_distance_poset_and_equitable_partition not almost distance regular" << endl;
+		exit(1);
+	}
+
+	// we are assuming that the graph is vertex transitive
+	// ABC_by_layer[(nb_layers - 1) * 3]
+	// NABC_last_layer[nb_types * 4]
+	// T[nb_layers]
+
+
+	Set_partition->split_last_class(&T[nb_layers - 1], verbose_level);
+
+
+	if (f_v) {
+		cout << "colored_graph::create_distance_poset_and_equitable_partition "
+				"The refined partition is: " << endl;
+		Set_partition->print();
+	}
+
+	FREE_OBJECT(SoS);
+	FREE_int(ABC_by_layer);
+	FREE_int(NABC_last_layer);
+	FREE_OBJECTS(T);
+
+
+
+
+
+	if (f_v) {
+		cout << "colored_graph::create_distance_poset done" << endl;
+	}
+}
+
+
+
+void colored_graph::partition_types(
+		other::data_structures::set_partition *Set_partition,
+		int *&Types, int &nb_rows, int &nb_cols,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "colored_graph::partition_types" << endl;
+	}
+
+	int nb_classes;
+	int N;
+
+	if (f_v) {
+		cout << "colored_graph::partition_types Set_partition:" << endl;
+		Set_partition->print();
+	}
+
+	nb_classes = Set_partition->nb_classes;
+	N = Set_partition->underlying_set_size;
+
+	nb_rows = N;
+	nb_cols = nb_classes;
+
+	if (f_v) {
+		cout << "colored_graph::partition_types Set_partition->underlying_set_size="
+				<< Set_partition->underlying_set_size << endl;
+		cout << "colored_graph::partition_types N=" << N << endl;
+		cout << "colored_graph::partition_types nb_classes=" << nb_classes << endl;
+		cout << "colored_graph::partition_types nb_points=" << nb_points << endl;
+	}
+	if (N != nb_points) {
+		cout << "colored_graph::partition_types N != nb_points" << endl;
+		cout << "colored_graph::partition_types N=" << N << endl;
+		cout << "colored_graph::partition_types nb_classes=" << nb_classes << endl;
+		cout << "colored_graph::partition_types nb_points=" << nb_points << endl;
+		exit(1);
+	}
+
+	Types = NEW_int(N * nb_classes);
+	Int_vec_zero(Types, N * nb_classes);
+
+	int i, h, j;
+	int a, b;
+
+	for (i = 0; i < N; i++) {
+		a = Set_partition->perm[i];
+		for (h = 0; h < nb_points; h++) {
+			if (is_adjacent(a, h)) {
+				b = Set_partition->perm_inv[h];
+				j = Set_partition->class_index[b];
+				Types[i * nb_classes + j]++;
+			}
+		}
+	}
+
+	if (f_v) {
+		cout << "colored_graph::partition_types done" << endl;
+	}
+}
+
+
+layer1_foundations::combinatorics::graph_theory::layered_graph
+	*colored_graph::create_layered_graph(
+			layer1_foundations::combinatorics::graph_theory::distance_information *Distance_information,
+			other::data_structures::set_of_sets *SoS,
+			int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "colored_graph::create_layered_graph" << endl;
+	}
+
+	layer1_foundations::combinatorics::graph_theory::layered_graph *Layered_graph;
+
+
 	Layered_graph = NEW_OBJECT(layer1_foundations::combinatorics::graph_theory::layered_graph);
 
 
 
 
 	if (f_v) {
-		cout << "colored_graph::create_distance_poset "
+		cout << "colored_graph::create_layered_graph "
 				"before Layered_graph->init" << endl;
 	}
 	Layered_graph->init(
-			Distance_information->nb_layers,
-			Distance_information->Nb_nodes, fname_base,
+			Distance_information->Set_partition->nb_classes,
+			Distance_information->Set_partition->Class_size,
+			fname_base,
 			verbose_level - 2);
 	if (f_v) {
-		cout << "colored_graph::create_distance_poset "
+		cout << "colored_graph::create_layered_graph "
 				"after Layered_graph->init" << endl;
 	}
 
 	int l, n;
 	int a;
 
-	for (l = 0; l < Distance_information->nb_layers; l++) {
-		for (n = 0; n < Distance_information->Nb_nodes[l]; n++) {
+	for (l = 0; l < Distance_information->Set_partition->nb_classes; l++) {
+		for (n = 0; n < Distance_information->Set_partition->Class_size[l]; n++) {
 			a = SoS->Sets[l][n];
 			//Layered_graph->L[l].Nodes[n].id = a;
 			Layered_graph->L[l].Nodes[n].f_has_data1 = true;
@@ -4286,7 +4481,7 @@ void colored_graph::create_distance_poset(
 
 
 	if (f_v) {
-		cout << "colored_graph::create_distance_poset "
+		cout << "colored_graph::create_layered_graph "
 				"adding edges" << endl;
 	}
 
@@ -4294,8 +4489,8 @@ void colored_graph::create_distance_poset(
 	int location, l2, n2;
 
 
-	for (l = 0; l < Distance_information->nb_layers; l++) {
-		for (n = 0; n < Distance_information->Nb_nodes[l]; n++) {
+	for (l = 0; l < Distance_information->Set_partition->nb_classes; l++) {
+		for (n = 0; n < Distance_information->Set_partition->Class_size[l]; n++) {
 
 			a = Layered_graph->L[l].Nodes[n].data1;
 			//a = SoS->Sets[l][n];
@@ -4308,9 +4503,9 @@ void colored_graph::create_distance_poset(
 
 				//cout << "adding edge " << a << " - " << b << endl;
 
-				location = Distance_information->perm_inv[b];
-				l2 = Distance_information->depth[location];
-				n2 = location - Distance_information->Fst[l2];
+				location = Distance_information->Set_partition->perm_inv[b];
+				l2 = Distance_information->Set_partition->class_index[location];
+				n2 = location - Distance_information->Set_partition->Fst[l2];
 
 				if (false) {
 					cout << "adding edge " << a << " - " << b << " : "
@@ -4326,18 +4521,12 @@ void colored_graph::create_distance_poset(
 		}
 	}
 
-
-
-	FREE_OBJECT(Tally);
-	FREE_OBJECT(SoS);
-	FREE_int(types);
-	FREE_int(Distance);
-
 	if (f_v) {
-		cout << "colored_graph::create_distance_poset done" << endl;
+		cout << "colored_graph::create_layered_graph done" << endl;
 	}
-}
 
+	return Layered_graph;
+}
 
 void colored_graph::test_if_distance_regular_assuming_vertex_transitive(
 		int vertex,
@@ -4357,6 +4546,7 @@ void colored_graph::test_if_distance_regular_assuming_vertex_transitive(
 
 	layer1_foundations::combinatorics::graph_theory::distance_information *Distance_information;
 	layer1_foundations::combinatorics::graph_theory::layered_graph *Layered_graph;
+	other::data_structures::set_of_sets *SoS;
 
 	if (f_v) {
 		cout << "colored_graph::test_if_distance_regular_assuming_vertex_transitive "
@@ -4365,6 +4555,7 @@ void colored_graph::test_if_distance_regular_assuming_vertex_transitive(
 	create_distance_poset(
 			given_vertex,
 			Distance_information,
+			SoS,
 			Layered_graph,
 			verbose_level);
 	if (f_v) {
@@ -4372,6 +4563,7 @@ void colored_graph::test_if_distance_regular_assuming_vertex_transitive(
 				"after create_distance_poset" << endl;
 	}
 
+	FREE_OBJECT(SoS);
 
 
 
@@ -4440,6 +4632,7 @@ void colored_graph::test_if_almost_distance_regular_assuming_vertex_transitive(
 
 	layer1_foundations::combinatorics::graph_theory::distance_information *Distance_information;
 	layer1_foundations::combinatorics::graph_theory::layered_graph *Layered_graph;
+	other::data_structures::set_of_sets *SoS;
 
 	if (f_v) {
 		cout << "colored_graph::test_if_almost_distance_regular_assuming_vertex_transitive "
@@ -4448,6 +4641,7 @@ void colored_graph::test_if_almost_distance_regular_assuming_vertex_transitive(
 	create_distance_poset(
 			given_vertex,
 			Distance_information,
+			SoS,
 			Layered_graph,
 			verbose_level);
 	if (f_v) {
@@ -4455,6 +4649,7 @@ void colored_graph::test_if_almost_distance_regular_assuming_vertex_transitive(
 				"after create_distance_poset" << endl;
 	}
 
+	FREE_OBJECT(SoS);
 
 
 
@@ -4504,6 +4699,93 @@ void colored_graph::test_if_almost_distance_regular_assuming_vertex_transitive(
 	}
 
 }
+
+#if 0
+void colored_graph::create_distance_poset_and_equitable_partition(
+		int vertex,
+		layer1_foundations::combinatorics::graph_theory::distance_information *&Distance_information,
+		layer1_foundations::combinatorics::graph_theory::layered_graph *&Layered_graph,
+		other::data_structures::set_partition *&Set_partition,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "colored_graph::create_distance_poset_and_equitable_partition" << endl;
+		cout << "colored_graph::create_distance_poset_and_equitable_partition vertex = " << vertex << endl;
+	}
+
+	int given_vertex = vertex;
+
+
+	if (f_v) {
+		cout << "colored_graph::create_distance_poset_and_equitable_partition "
+				"before create_distance_poset_and_equitable_partition" << endl;
+	}
+	create_distance_poset_and_equitable_partition(
+			given_vertex,
+			Distance_information,
+			Layered_graph,
+			Set_partition,
+			verbose_level);
+	if (f_v) {
+		cout << "colored_graph::create_distance_poset_and_equitable_partition "
+				"after create_distance_poset_and_equitable_partition" << endl;
+	}
+
+	//FREE_OBJECT(Distance_information);
+	//FREE_OBJECT(Layered_graph);
+	//FREE_OBJECT(Set_partition);
+
+	if (f_v) {
+		cout << "colored_graph::create_distance_poset_and_equitable_partition" << endl;
+	}
+
+}
+#endif
+
+
+int colored_graph::is_equal(
+		colored_graph *CG2,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "colored_graph::is_equal" << endl;
+		cout << "nb_points=" << nb_points << endl;
+	}
+
+	int f_equal = true;
+
+
+	if (CG2->nb_points != nb_points) {
+		return false;
+	}
+
+	int i, j;
+
+	for (i = 0; i < nb_points; i++) {
+		for (j = i + 1; j < nb_points; j++) {
+			if (is_adjacent(i, j) != CG2->is_adjacent(i, j)) {
+				if (f_v) {
+					cout << "colored_graph::is_equal adjacency "
+							"differs in position i=" << i << " j=" << j << endl;
+				}
+				f_equal = false;
+				break;
+			}
+		}
+		if (!f_equal) {
+			break;
+		}
+	}
+
+	return f_equal;
+}
+
 
 
 

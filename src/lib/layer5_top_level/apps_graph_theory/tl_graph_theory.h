@@ -529,6 +529,18 @@ public:
 
 	graph_theory_apps();
 	~graph_theory_apps();
+	void canonical_form(
+			combinatorics::graph_theory::colored_graph *CG,
+			combinatorics::graph_theory::colored_graph *&CG_canonical,
+			std::vector<std::string> &feedback,
+			int verbose_level);
+	void classify(
+			int nb,
+			combinatorics::graph_theory::colored_graph **CG,
+			int &N,
+			int *&Idx,
+			std::vector<std::string> &feedback,
+			int verbose_level);
 	void automorphism_group(
 			combinatorics::graph_theory::colored_graph *CG,
 			std::vector<std::string> &feedback,
@@ -560,6 +572,10 @@ public:
 			std::string &fname_reps,
 			std::string &fname_reps_col_label,
 			std::string &mask_fname_solutions,
+			int verbose_level);
+	void equitable_partition(
+			int vertex,
+			combinatorics::graph_theory::colored_graph *CG,
 			int verbose_level);
 
 

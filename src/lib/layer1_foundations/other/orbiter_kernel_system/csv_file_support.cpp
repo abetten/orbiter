@@ -1452,7 +1452,7 @@ void csv_file_support::do_csv_file_select_rows_worker(
 		cout << endl;
 	}
 
-	int i;
+	//int i;
 
 
 #if 1

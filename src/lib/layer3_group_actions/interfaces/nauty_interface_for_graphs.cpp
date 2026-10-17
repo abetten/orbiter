@@ -129,7 +129,7 @@ actions::action *nauty_interface_for_graphs::create_automorphism_group_and_canon
 				"nb_types = " << C.nb_types << endl;
 	}
 
-	// create a new graph with more vertices
+	// create a new graph with C.nb_types additional vertices
 	// to be able to represent the color classes:
 
 	n1 = n + C.nb_types;

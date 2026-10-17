@@ -365,17 +365,23 @@ void isomorph_worker::build_db(
 	int i;
 
 	for (i = 0; i <= Iso->level; i++) {
+
 		if (f_v) {
 			cout << "isomorph_worker::build_db "
-					"creating level database for "
 					"level " << i << " / " << Iso->level << endl;
 		}
-		Iso->Sub->create_level_database(
-				i, 0 /*verbose_level*/);
+
 		if (f_v) {
 			cout << "isomorph_worker::build_db "
-					"creating level database for "
-					"level " << i << " / " << Iso->level << " done" << endl;
+					"before Iso->Sub->create_level_database" << endl;
+		}
+
+		Iso->Sub->create_level_database(
+				i, 0 /*verbose_level*/);
+
+		if (f_v) {
+			cout << "isomorph_worker::build_db "
+					"after Iso->Sub->create_level_database" << endl;
 		}
 	}
 	if (f_v) {
@@ -404,7 +410,7 @@ void isomorph_worker::read_solutions(
 	if (Isomorph_context->Descr->f_list_of_cases) {
 
 		if (f_v) {
-			cout << "-list_of_cases "
+			cout << "isomorph_worker::read_solutions list_of_cases_fname "
 					<< Isomorph_context->Descr->list_of_cases_fname << endl;
 		}
 
@@ -414,19 +420,32 @@ void isomorph_worker::read_solutions(
 		other::orbiter_kernel_system::file_io Fio;
 
 
+		if (f_v) {
+			cout << "isomorph_worker::read_solutions "
+					"before Fio.Csv_file_support->int_matrix_read_csv" << endl;
+		}
 		Fio.Csv_file_support->int_matrix_read_csv(
 				Isomorph_context->Descr->list_of_cases_fname,
 				List_of_cases,
 				m, n, verbose_level);
+		if (f_v) {
+			cout << "isomorph_worker::read_solutions "
+					"after Fio.Csv_file_support->int_matrix_read_csv" << endl;
+		}
 
 		nb_files = m;
 		fname_array = new string[nb_files];
+
+		if (f_v) {
+			cout << "isomorph_worker::read_solutions "
+					"nb_files = " << nb_files << endl;
+		}
 
 		for (i = 0; i < nb_files; i++) {
 
 			a = List_of_cases[i];
 			fname = Isomorph_context->Descr->solution_prefix + Isomorph_context->Descr->base_fname
-					+ "_" + std::to_string(Iso->level) + "_" + std::to_string(a) + "_sol.txt";
+					+ "_" + std::to_string(Iso->level) + "_" + std::to_string(a) + "_sol.csv";
 
 			fname_array[i] = fname;
 
@@ -439,7 +458,7 @@ void isomorph_worker::read_solutions(
 
 		string fname;
 		fname = Isomorph_context->Descr->solution_prefix + Isomorph_context->Descr->base_fname
-				+ "_" + std::to_string(Iso->level) + "_sol.txt";
+				+ "_" + std::to_string(Iso->level) + "_sol.csv";
 
 
 		int i;
@@ -455,7 +474,7 @@ void isomorph_worker::read_solutions(
 			List_of_cases[i] = i;
 
 			fname = Isomorph_context->Descr->solution_prefix + Isomorph_context->Descr->base_fname
-					+ "_" + std::to_string(i) + "_sol.txt";
+					+ "_" + std::to_string(i) + "_sol.csv";
 
 			fname_array[i] = fname;
 
@@ -464,7 +483,7 @@ void isomorph_worker::read_solutions(
 	}
 	if (f_v) {
 		int i;
-		cout << "list of cases, file names:" << endl;
+		cout << "isomorph_worker::read_solutions list of cases, file names:" << endl;
 		for (i = 0; i < nb_files; i++) {
 			cout << i << " : " << fname_array[i] << endl;
 		}
@@ -487,14 +506,14 @@ void isomorph_worker::read_solutions(
 
 #endif
 
-	if (f_v) {
-		cout << "isomorph_global::read_solutions "
-				"before Iso->Lifting->count_solutions" << endl;
-	}
 	int f_get_statistics = false;
 	int f_has_final_test_function = false;
 	int *Nb_sol_per_file;
 
+	if (f_v) {
+		cout << "isomorph_global::read_solutions "
+				"before Iso->Lifting->count_solutions" << endl;
+	}
 	Iso->Lifting->count_solutions(
 			nb_files, fname_array, List_of_cases, Nb_sol_per_file,
 			f_get_statistics,
@@ -507,7 +526,10 @@ void isomorph_worker::read_solutions(
 
 	if (f_v) {
 		cout << "isomorph_global::read_solutions "
-				"after Iso.count_solutions "
+				"after Iso->Lifting->count_solutions " << endl;
+	}
+	if (f_v) {
+		cout << "isomorph_global::read_solutions "
 				"Iso->Lifting->N = " << Iso->Lifting->N << endl;
 	}
 	//registry_dump_sorted_by_size();
@@ -526,6 +548,9 @@ void isomorph_worker::read_solutions(
 				"after Iso->read_solutions_from_clique_finder" << endl;
 	}
 
+	if (f_v) {
+		cout << "isomorph_worker::read_solutions done" << endl;
+	}
 }
 
 
@@ -750,8 +775,11 @@ void isomorph_worker::isomorph_testing(
 
 	}
 
-	cout << "Written file " << fname << " of size "
-			<< Fio.file_size(fname) << endl;
+	if (f_v) {
+		cout << "isomorph_worker::isomorph_testing "
+				<< "Written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
 
 	Iso->Lifting->close_solution_database(verbose_level - 1);
 

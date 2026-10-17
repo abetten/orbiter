@@ -28,6 +28,7 @@ MODULES = \
 	set_builder.o \
 	set_of_sets_lint.o \
 	set_of_sets.o \
+	set_partition.o \
 	sorting.o \
 	spreadsheet.o \
 	string_tools.o \

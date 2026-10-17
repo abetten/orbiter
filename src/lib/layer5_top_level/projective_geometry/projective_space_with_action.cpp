@@ -1520,6 +1520,7 @@ int projective_space_with_action::create_transvection(
 void projective_space_with_action::make_transvection(
 		int *M, int a, int *v, int *u,
 	int n, int verbose_level)
+// M := I + v^T * u
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -1529,11 +1530,11 @@ void projective_space_with_action::make_transvection(
 		cout << "projective_space_with_action::make_transvection" << endl;
 	}
 
+
 	F->Linear_algebra->identity_matrix(M, n);
 
 
-
-	// M := M + v^T * u
+	// M := I + v^T * u
 
 	for (i = 0; i < n; i++) {
 		for (j = 0; j < n; j++) {

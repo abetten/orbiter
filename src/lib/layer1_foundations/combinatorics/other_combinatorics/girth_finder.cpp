@@ -61,7 +61,7 @@ void girth_finder::init_graph_and_find_girth(
 		int *Adj, int n,
 		int verbose_level)
 // We assume that the shortest cycle passes through vertex 0,
-// which is valid if the graph is vertex ransitive.
+// which is valid if the graph is vertex transitive.
 {
 	int f_v = (verbose_level >= 1);
 
@@ -113,7 +113,9 @@ void girth_finder::compute_girth_recursion(
 
 		if (false) {
 			cout << "girth_finder::compute_girth_recursion d=" << d
-					<< " perm[d - 1] = " << perm[d - 1] << " i=" << i << " adjacency = " << is_adjacent(perm[d - 1], i) << endl;
+					<< " perm[d - 1] = " << perm[d - 1]
+					<< " i=" << i << " adjacency = "
+					<< is_adjacent(perm[d - 1], i) << endl;
 			cout << "perm=";
 			Int_vec_print(cout, perm, n);
 			cout << endl;
@@ -128,7 +130,8 @@ void girth_finder::compute_girth_recursion(
 
 		if (j < d) {
 			if (f_v) {
-				cout << "girth_finder::compute_girth_recursion d=" << d << " i = " << i << " j=" << j << " is less than d" << endl;
+				cout << "girth_finder::compute_girth_recursion "
+						"d=" << d << " i = " << i << " j=" << j << " is less than d" << endl;
 			}
 			if (j == d - 2) {
 				if (f_v) {
@@ -204,7 +207,8 @@ void girth_finder::find_all_shortest_cycles(
 		int N;
 
 		N = Cycles.size();
-		cout << "girth_finder::find_all_shortest_cycles number of short cycles found is " << N << endl;
+		cout << "girth_finder::find_all_shortest_cycles "
+				"number of short cycles found is " << N << endl;
 		cout << "The short cycles are:" << endl;
 
 		int i, l, j;
@@ -259,7 +263,9 @@ void girth_finder::find_all_shortest_cycles_recursion(
 
 		if (f_v) {
 			cout << "girth_finder::find_all_shortest_cycles_recursion d=" << d
-					<< " perm[d - 1] = " << perm[d - 1] << " i=" << i << " adjacency = " << is_adjacent(perm[d - 1], i) << endl;
+					<< " perm[d - 1] = " << perm[d - 1]
+					<< " i=" << i << " adjacency = "
+					<< is_adjacent(perm[d - 1], i) << endl;
 			cout << "perm=";
 			Int_vec_print(cout, perm, d);
 			cout << endl;
@@ -277,7 +283,8 @@ void girth_finder::find_all_shortest_cycles_recursion(
 
 		if (j < d) {
 			if (f_v) {
-				cout << "girth_finder::find_all_shortest_cycles_recursion d=" << d << " i = " << i << " j=" << j << " is less than d" << endl;
+				cout << "girth_finder::find_all_shortest_cycles_recursion "
+						"d=" << d << " i = " << i << " j=" << j << " is less than d" << endl;
 			}
 			if (j == d - 2) {
 				if (f_v) {
@@ -293,7 +300,8 @@ void girth_finder::find_all_shortest_cycles_recursion(
 			}
 			l = d - j;
 			if (l < g) {
-				cout << "found a new shortest cycle of length l=" << l << " this is not allowed" << endl;
+				cout << "found a new shortest cycle of length "
+						"l=" << l << " this is not allowed" << endl;
 				exit(1);
 #if 0
 				Int_vec_copy(perm + j, short_cycle, l);

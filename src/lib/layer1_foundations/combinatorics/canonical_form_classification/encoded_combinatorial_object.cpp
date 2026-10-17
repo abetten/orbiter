@@ -329,8 +329,13 @@ void encoded_combinatorial_object::init_canonical_form(
 void encoded_combinatorial_object::print_incma()
 {
 	cout << "encoded_combinatorial_object::print_incma" << endl;
-	other::orbiter_kernel_system::Orbiter->Int_vec->matrix_print_tight(Incma, nb_rows, nb_cols);
 
+	if (nb_rows < 20 && nb_cols < 20) {
+		other::orbiter_kernel_system::Orbiter->Int_vec->matrix_print_tight(Incma, nb_rows, nb_cols);
+	}
+	else {
+		cout << "too large to print (see encoded_combinatorial_object::print_incma for threshold constants)" << endl;
+	}
 }
 
 void encoded_combinatorial_object::save_incma(

@@ -122,6 +122,8 @@ public:
 			int *set, int n, int k);
 	void unrank_k_subset(
 			int rk, int *set, int n, int k);
+	void unrank_k_subset_lint(
+			long int rk, long int *set, int n, int k);
 	void unrank_k_subset_and_complement(
 			int rk, int *set, int n, int k);
 	int first_k_subset(
@@ -307,6 +309,8 @@ public:
 	void init_graph_and_find_girth(
 			int *Adj, int n,
 			int verbose_level);
+	// We assume that the shortest cycle passes through vertex 0,
+	// which is valid if the graph is vertex transitive.
 	void compute_girth_recursion(
 			int d,
 			int verbose_level);

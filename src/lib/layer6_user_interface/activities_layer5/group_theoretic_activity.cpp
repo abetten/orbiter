@@ -1999,10 +1999,6 @@ int group_theoretic_activity::perform_activity_part5(
 		}
 	}
 
-
-
-
-
 	else if (Descr->f_linear_codes) {
 
 		if (f_v) {
@@ -2660,6 +2656,7 @@ int group_theoretic_activity::perform_activity_part7(
 	}
 
 	else if (Descr->f_identify_elements_by_class) {
+
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
 					"f_identify_elements_by_classes" << endl;

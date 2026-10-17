@@ -686,18 +686,43 @@ long int number_theory_domain::gcd_lint(
 }
 
 void number_theory_domain::extended_gcd_int(
-		int m, int n, int &g, int &u, int &v)
+		int m, int n, int &g, int &u, int &v, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+
+	if (f_v) {
+		cout << "number_theory_domain::extended_gcd_int "
+				"m=" << m << " n=" << n << endl;
+	}
+
 	ring_theory::longinteger_domain D;
 	ring_theory::longinteger_object M, N, G, U, V;
 
 
 	M.create(m);
 	N.create(n);
-	D.extended_gcd(M, N, G, U, V, 0);
+	if (f_v) {
+		cout << "number_theory_domain::extended_gcd_int "
+				"before D.extended_gcd" << endl;
+	}
+	D.extended_gcd(M, N, G, U, V, verbose_level - 1);
+	if (f_v) {
+		cout << "number_theory_domain::extended_gcd_int "
+				"after D.extended_gcd" << endl;
+	}
 	g = G.as_int();
 	u = U.as_int();
 	v = V.as_int();
+
+	if (f_v) {
+		cout << "number_theory_domain::extended_gcd_int "
+				"gcd(" << m << "," << n << ") = " << g << endl;
+	}
+
+	if (f_v) {
+		cout << "number_theory_domain::extended_gcd_int done" << endl;
+	}
 }
 
 void number_theory_domain::extended_gcd_lint(

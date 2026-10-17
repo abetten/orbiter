@@ -1826,7 +1826,7 @@ int layered_graph::test_if_distance_regular(
 
 	for (l = 0; l < nb_layers; l++) {
 
-		fst = Distance_information->Fst[l];
+		fst = Distance_information->Set_partition->Fst[l];
 
 		if (f_v) {
 			cout << "layered_graph::test_if_distance_regular "
@@ -1835,7 +1835,9 @@ int layered_graph::test_if_distance_regular(
 
 
 		T[l].init(
-				ABC + fst * 3, L[l].nb_nodes /* data_length */, 3 /* data_set_sz */,
+				ABC + fst * 3,
+				L[l].nb_nodes /* data_length */,
+				3 /* data_set_sz */,
 				verbose_level);
 		// data[data_length * data_set_sz]
 
@@ -1849,9 +1851,30 @@ int layered_graph::test_if_distance_regular(
 		Nb_types[l] = T[l].nb_types;
 	}
 
+	cout << "the number of types per layers:" << endl;
+	cout << "layer : nb_types" << endl;
 	for (l = 0; l < nb_layers; l++) {
 		cout << l << " : " << Nb_types[l] << endl;
 	}
+
+
+	cout << "the types themselves:" << endl;
+	for (l = 0; l < nb_layers; l++) {
+
+		int i;
+
+
+		//cout << "layer " << l << ":" << endl;
+
+		for (i = 0; i < Nb_types[l]; i++) {
+			cout << l << " & " << T[l].Frequency[i] << " x ";
+			Int_vec_print(cout, T[l].Reps + i * T[l].data_set_sz, T[l].data_set_sz);
+			cout << endl;
+		}
+
+	}
+
+
 
 	int f_drg;
 
@@ -1876,6 +1899,7 @@ int layered_graph::test_if_distance_regular(
 			int i;
 
 			i = 0;
+
 
 
 			cout << T[l].Frequency[i] << " x ";
@@ -1961,7 +1985,7 @@ int layered_graph::test_if_almost_distance_regular(
 	}
 
 
-	nb_layers = Distance_information->nb_layers;
+	nb_layers = Distance_information->Set_partition->nb_classes;
 
 	//other::data_structures::tally_vector_data *T;
 
@@ -1972,7 +1996,7 @@ int layered_graph::test_if_almost_distance_regular(
 
 	for (l = 0; l < nb_layers; l++) {
 
-		fst = Distance_information->Fst[l];
+		fst = Distance_information->Set_partition->Fst[l];
 
 		if (f_v) {
 			cout << "layered_graph::test_if_almost_distance_regular "
@@ -2005,10 +2029,20 @@ int layered_graph::test_if_almost_distance_regular(
 
 	for (l = 0; l < nb_layers - 1; l++) {
 		if (Nb_types[l] != 1) {
+
+			cout << "layered_graph::test_if_almost_distance_regular "
+					"The graph is not almost distance regular because in layer " << l << " there are too many types" << endl;
 			f_almost_drg = false;
 		}
 	}
 
+	if (f_almost_drg) {
+		if (Nb_types[nb_layers - 1] == 1) {
+			cout << "layered_graph::test_if_almost_distance_regular "
+					"The graph is not almost distance regular because in layer " << nb_layers - 1 << " there is only type." << endl;
+			f_almost_drg = false;
+		}
+	}
 
 	if (f_almost_drg) {
 
@@ -2018,6 +2052,9 @@ int layered_graph::test_if_almost_distance_regular(
 		Int_vec_zero(ABC_by_layer, nb_layers * 3);
 
 
+		cout << "layered_graph::test_if_almost_distance_regular "
+				"The graph is almost distance regular" << endl;
+
 		for (l = 0; l < nb_layers - 1; l++) {
 
 			int i;
@@ -2025,7 +2062,7 @@ int layered_graph::test_if_almost_distance_regular(
 			i = 0;
 
 
-			cout << T[l].Frequency[i] << " x ";
+			cout << l << " : " << T[l].Frequency[i] << " x ";
 			Int_vec_print(cout, T[l].Reps + i * T[l].data_set_sz, T[l].data_set_sz);
 			cout << endl;
 
@@ -2055,6 +2092,13 @@ int layered_graph::test_if_almost_distance_regular(
 			cout << "layered_graph::test_if_almost_distance_regular NABC_last_layer:" << endl;
 			Int_matrix_print(NABC_last_layer, nb_types, 4);
 		}
+	}
+
+	else {
+
+		cout << "layered_graph::test_if_almost_distance_regular "
+				"The graph is *not* almost distance regular" << endl;
+
 	}
 
 

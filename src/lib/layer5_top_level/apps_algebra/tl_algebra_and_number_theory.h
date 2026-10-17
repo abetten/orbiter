@@ -387,6 +387,10 @@ public:
 	void report2(
 			std::ostream &ost,
 			int verbose_level);
+	int find_element(
+				long int elt_rk,
+				int &class_idx, int &position, int verbose_level);
+	// returns true if the element was found
 
 
 };

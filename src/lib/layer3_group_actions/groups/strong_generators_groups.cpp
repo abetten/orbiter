@@ -413,8 +413,8 @@ void strong_generators::projectivity_subgroup(
 	}
 	actions::action *A_on_Galois;
 	if (f_v) {
-		cout << "strong_generators::projectivity_subgroup A->A=" << endl;
-		S->A->print_info();
+		cout << "strong_generators::projectivity_subgroup S->A=" << S->A->label << endl;
+		//S->A->print_info();
 	}
 	algebra::ring_theory::longinteger_object go;
 
@@ -516,9 +516,12 @@ void strong_generators::init_single(
 	if (f_v) {
 		cout << "strong_generators::init_single" << endl;
 	}
+
 	S = A->create_sims_from_single_generator_without_target_group_order(
 		Elt, verbose_level);
+
 	init_from_sims(S, verbose_level);
+
 	FREE_OBJECT(S);
 
 	if (f_v) {
@@ -537,9 +540,12 @@ void strong_generators::init_single_with_target_go(
 	if (f_v) {
 		cout << "strong_generators::init_single_with_target_go" << endl;
 	}
+
 	S = A->create_sims_from_single_generator_without_target_group_order(
 		Elt, verbose_level);
+
 	init_from_sims(S, verbose_level);
+
 	FREE_OBJECT(S);
 
 	if (f_v) {
@@ -558,6 +564,7 @@ void strong_generators::init_trivial_group(
 	if (f_v) {
 		cout << "strong_generators::init_trivial_group" << endl;
 	}
+
 	strong_generators::A = A;
 	tl = NEW_int(A->base_len());
 	Int_vec_one(tl, A->base_len());
@@ -565,8 +572,10 @@ void strong_generators::init_trivial_group(
 	gens = NEW_OBJECT(data_structures_groups::vector_ge);
 	gens->init(A, verbose_level - 2);
 	gens->allocate(0, verbose_level - 2);
+
 	//S->extract_strong_generators_in_order(*gens,
 	// tl, 0 /*verbose_level*/);
+
 	if (f_v) {
 		cout << "strong_generators::init_trivial_group done" << endl;
 	}
@@ -664,7 +673,8 @@ void strong_generators::generators_for_the_monomial_group(
 	else {
 		go_factored[3 * n] = 1;
 	}
-	D.multiply_up(target_go,
+	D.multiply_up(
+			target_go,
 			go_factored, 3 * n + 1,
 			0 /* verbose_level */);
 	if (f_v) {
@@ -930,11 +940,19 @@ void strong_generators::generators_for_the_diagonal_group(
 void strong_generators::generators_for_the_singer_cycle(
 		actions::action *A,
 		algebra::basic_algebra::matrix_group *Mtx, int power_of_singer,
-	data_structures_groups::vector_ge *&nice_gens,
-	int verbose_level)
+		data_structures_groups::vector_ge *&nice_gens,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
+
+	if (f_v) {
+		cout << "strong_generators::generators_for_the_singer_cycle "
+				"initializing singer group "
+				"power_of_singer=" << power_of_singer << endl;
+	}
+
+
 	int *Elt1;
 	sims *S;
 	algebra::field_theory::finite_field *F;
@@ -947,12 +965,8 @@ void strong_generators::generators_for_the_singer_cycle(
 	int i;
 	algebra::number_theory::number_theory_domain NT;
 	geometry::other_geometry::geometry_global Gg;
+
 	
-	if (f_v) {
-		cout << "strong_generators::generators_for_the_singer_cycle "
-				"initializing singer group "
-				"power_of_singer=" << power_of_singer << endl;
-	}
 	F = Mtx->GFq;
 	q = F->q;
 	n = Mtx->n;
@@ -1001,6 +1015,7 @@ void strong_generators::generators_for_the_singer_cycle(
 				false /* f_without_tables */,
 				false /* f_compute_related_fields */,
 				0 /*verbose_level*/);
+
 		algebra::ring_theory::unipoly_domain FX(&Fq);
 
 		algebra::ring_theory::unipoly_object m;
@@ -1115,8 +1130,8 @@ void strong_generators::generators_for_the_singer_cycle(
 void strong_generators::generators_for_the_singer_cycle_and_the_Frobenius(
 		actions::action *A,
 		algebra::basic_algebra::matrix_group *Mtx, int power_of_singer,
-	data_structures_groups::vector_ge *&nice_gens,
-	int verbose_level)
+		data_structures_groups::vector_ge *&nice_gens,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -1184,7 +1199,8 @@ void strong_generators::generators_for_the_singer_cycle_and_the_Frobenius(
 			exit(1);
 		}
 
-		Fp.finite_field_init_small_order(q,
+		Fp.finite_field_init_small_order(
+				q,
 				false /* f_without_tables */,
 				false /* f_compute_related_fields */,
 				0 /*verbose_level*/);
@@ -1293,7 +1309,7 @@ void strong_generators::generators_for_the_singer_cycle_and_the_Frobenius(
 
 		cout << "strong generators are:" << endl;
 		gens->print(cout,
-				f_print_as_permutation,
+			f_print_as_permutation,
 			f_offset, offset,
 			f_do_it_anyway_even_for_big_degree,
 			f_print_cycles_of_length_one,
@@ -1305,6 +1321,7 @@ void strong_generators::generators_for_the_singer_cycle_and_the_Frobenius(
 	FREE_int(data2);
 	FREE_lint(go_factored);
 	FREE_int(Elt1);
+
 	if (f_v) {
 		cout << "strong_generators::generators_for_the_singer_cycle_and_the_Frobenius done" << endl;
 	}
@@ -2131,7 +2148,8 @@ void strong_generators::regulus_stabilizer(
 		cout << "strong_generators::regulus_stabilizer "
 				"before A_PGL_k_q->Known_groups->init_projective_group" << endl;
 	}
-	A_PGL_k_q->Known_groups->init_projective_group(k,
+	A_PGL_k_q->Known_groups->init_projective_group(
+			k,
 		F, false /*f_semilinear */, true /* f_init_sims */,
 		true /* f_basis */,
 		nice_gens,

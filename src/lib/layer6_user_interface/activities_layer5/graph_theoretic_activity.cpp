@@ -1109,6 +1109,73 @@ void graph_theoretic_activity::perform_activity(
 
 	}
 
+	else if (Descr->f_canonical_form) {
+
+		if (f_v) {
+			cout << "graph_theoretic_activity::perform_activity "
+					"f_canonical_form" << endl;
+		}
+
+		layer5_applications::apps_graph_theory::graph_theory_apps GTA;
+		combinatorics::graph_theory::colored_graph *CG_canonical;
+
+		if (f_v) {
+			cout << "graph_theoretic_activity::perform_activity "
+					"before GTA.canonical_form" << endl;
+		}
+
+		GTA.canonical_form(CG[0], CG_canonical, feedback, verbose_level);
+
+		if (f_v) {
+			cout << "graph_theoretic_activity::perform_activity "
+					"after GTA.canonical_form" << endl;
+		}
+
+		std::string fname_out;
+
+		fname_out = CG[0]->label + "_canonical.colored_graph";
+
+		CG_canonical->save(
+				fname_out, verbose_level);
+
+		FREE_OBJECT(CG_canonical);
+
+	}
+
+	else if (Descr->f_classify) {
+
+		if (f_v) {
+			cout << "graph_theoretic_activity::perform_activity "
+					"f_classify" << endl;
+		}
+
+		layer5_applications::apps_graph_theory::graph_theory_apps GTA;
+
+		if (f_v) {
+			cout << "graph_theoretic_activity::perform_activity "
+					"before GTA.canonical_form" << endl;
+		}
+
+		int N;
+		int *Idx;
+
+		GTA.classify(nb, CG, N, Idx, feedback, verbose_level);
+
+		if (f_v) {
+			cout << "graph_theoretic_activity::perform_activity "
+					"after GTA.canonical_form" << endl;
+		}
+
+		cout << "The number of isomorphism types is " << N << endl;
+		cout << "Idx = ";
+		Int_vec_print(cout, Idx, N);
+		cout << endl;
+
+		FREE_int(Idx);
+
+
+	}
+
 	else if (Descr->f_properties) {
 
 		if (f_v) {
@@ -1229,13 +1296,25 @@ void graph_theoretic_activity::perform_activity(
 
 		layer1_foundations::combinatorics::graph_theory::layered_graph *Layered_graph;
 		layer1_foundations::combinatorics::graph_theory::distance_information *Distance_information;
+		other::data_structures::set_of_sets *SoS;
 
+		if (f_v) {
+			cout << "graph_theoretic_activity::perform_activity "
+					"before CG[0]->create_distance_poset" << endl;
+		}
 		CG[0]->create_distance_poset(
 				Descr->create_distance_poset_vertex,
 				Distance_information,
+				SoS,
 				Layered_graph,
 				verbose_level);
+		if (f_v) {
+			cout << "graph_theoretic_activity::perform_activity "
+					"after CG[0]->create_distance_poset" << endl;
+		}
 
+
+		FREE_OBJECT(SoS);
 
 		if (f_v) {
 			cout << "colored_graph::create_distance_poset "
@@ -1346,6 +1425,107 @@ void graph_theoretic_activity::perform_activity(
 			cout << "The graph is *not* almost distance regular" << endl;
 
 		}
+
+
+
+	}
+
+	else if (Descr->f_equitable_partition) {
+
+		if (f_v) {
+			cout << "graph_theoretic_activity::perform_activity "
+					"-equitable_partition" << endl;
+			cout << "graph_theoretic_activity::perform_activity "
+					"vertex = " << Descr->equitable_partition_vertex << endl;
+		}
+
+		layer5_applications::apps_graph_theory::graph_theory_apps Graph_theory_apps;
+		int vertex;
+
+		vertex = Descr->equitable_partition_vertex;
+
+		if (f_v) {
+			cout << "graph_theoretic_activity::perform_activity "
+					"before Graph_theory_apps.equitable_partition" << endl;
+		}
+		Graph_theory_apps.equitable_partition(
+				vertex,
+				CG[0],
+				verbose_level);
+		if (f_v) {
+			cout << "graph_theoretic_activity::perform_activity "
+					"after Graph_theory_apps.equitable_partition" << endl;
+		}
+
+
+#if 0
+
+		layer1_foundations::combinatorics::graph_theory::distance_information *Distance_information;
+		layer1_foundations::combinatorics::graph_theory::layered_graph *Layered_graph;
+		other::data_structures::set_partition *Set_partition;
+
+
+		if (f_v) {
+			cout << "graph_theoretic_activity::perform_activity "
+					"before create_distance_poset_and_equitable_partition" << endl;
+		}
+
+		CG[0]->create_distance_poset_and_equitable_partition(
+				vertex,
+				Distance_information,
+				Layered_graph,
+				Set_partition,
+				verbose_level);
+
+		if (f_v) {
+			cout << "graph_theoretic_activity::perform_activity "
+					"after create_distance_poset_and_equitable_partition" << endl;
+		}
+
+
+		if (f_v) {
+			cout << "graph_theoretic_activity::perform_activity "
+					"Set_partition:" << endl;
+			Set_partition->print();
+		}
+
+		int *Types;
+		int nb_rows;
+		int nb_cols;
+
+
+		if (f_v) {
+			cout << "graph_theoretic_activity::perform_activity "
+					"before CG[0]->partition_types" << endl;
+		}
+		CG[0]->partition_types(
+				Set_partition,
+				Types, nb_rows, nb_cols,
+				verbose_level);
+		if (f_v) {
+			cout << "graph_theoretic_activity::perform_activity "
+					"after CG[0]->partition_types" << endl;
+		}
+
+		if (f_v) {
+			cout << "graph_theoretic_activity::perform_activity "
+					"Types:" << endl;
+
+			int i;
+
+
+			for (i = 0; i < Set_partition->nb_classes; i++) {
+				cout << "class " << i << " of size " << Set_partition->Class_size[i] << " Fst = " << Set_partition->Fst[i] << endl;
+				Int_matrix_print(Types + Set_partition->Fst[i] * nb_cols, Set_partition->Class_size[i], nb_cols);
+			}
+		}
+
+
+		FREE_OBJECT(Distance_information);
+		FREE_OBJECT(Layered_graph);
+		FREE_OBJECT(Set_partition);
+#endif
+
 
 	}
 

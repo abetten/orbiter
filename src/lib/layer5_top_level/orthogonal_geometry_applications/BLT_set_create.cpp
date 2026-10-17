@@ -441,11 +441,11 @@ void BLT_set_create::init(
 
 		string str_q;
 
-		str_q = "q" + std::to_string(OA->Descr->F->q);
+		str_q = std::to_string(OA->Descr->F->q);
 
 		string str_iso;
 
-		str_iso = "iso" + std::to_string(Descr->iso);
+		str_iso = std::to_string(Descr->iso);
 
 
 		prefix = "catalogue_q" + str_q + "_iso" + str_iso;

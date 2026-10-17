@@ -36,11 +36,13 @@ blt_set_classify_activity_description::blt_set_classify_activity_description()
 	f_isomorph = false;
 	//std::string isomorph_label;
 
+#if 0
 	f_build_db = false;
 	f_read_solutions = false;
 	f_compute_orbits = false;
 	f_isomorph_testing = false;
 	f_isomorph_report = false;
+#endif
 
 }
 
@@ -102,6 +104,7 @@ int blt_set_classify_activity_description::read_arguments(
 				cout << "-isomorph " << isomorph_label << endl;
 			}
 		}
+#if 0
 		else if (ST.stringcmp(argv[i], "-build_db") == 0) {
 			f_build_db = true;
 			if (f_v) {
@@ -132,6 +135,7 @@ int blt_set_classify_activity_description::read_arguments(
 				cout << "-isomorph_report " << endl;
 			}
 		}
+#endif
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			break;
@@ -166,6 +170,7 @@ void blt_set_classify_activity_description::print()
 	if (f_isomorph) {
 		cout << "-isomorph " << isomorph_label << endl;
 	}
+#if 0
 	if (f_build_db) {
 		cout << "-build_db " << endl;
 	}
@@ -181,6 +186,7 @@ void blt_set_classify_activity_description::print()
 	if (f_isomorph_report) {
 		cout << "-isomorph_report " << endl;
 	}
+#endif
 }
 
 

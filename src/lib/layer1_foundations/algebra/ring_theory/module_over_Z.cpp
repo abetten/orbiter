@@ -185,7 +185,7 @@ int module_over_Z::clean_column_below(
 			cout << "x=" << x << endl;
 			cout << "y=" << y << endl;
 		}
-		Num.extended_gcd_int(x, y, g, u, v);
+		Num.extended_gcd_int(x, y, g, u, v, verbose_level - 2);
 		//x.extended_gcd(y, u, v, g, verbose_level);
 		if (f_vv) {
 			//cout << *this;
@@ -343,7 +343,7 @@ int module_over_Z::clean_column_above(
 			cout << "x=" << x << endl;
 			cout << "y=" << y << endl;
 		}
-		Num.extended_gcd_int(x, y, g, u, v);
+		Num.extended_gcd_int(x, y, g, u, v, verbose_level);
 		//x.extended_gcd(y, u, v, g, verbose_level);
 		if (f_vv) {
 			//cout << *this;
@@ -486,7 +486,7 @@ int module_over_Z::clean_row(
 		if (y == 0) {
 			continue;
 		}
-		Num.extended_gcd_int(x, y, g, u, v);
+		Num.extended_gcd_int(x, y, g, u, v, verbose_level - 2);
 		//x.extended_gcd(y, u, v, g, verbose_level - 2);
 		if (f_vv) {
 			//cout << *this;

@@ -65,10 +65,24 @@ void create_graph::init(
 
 		Get_vector_or_set(description->adjacency_matrix_label, adj, sz);
 
+		if (f_v) {
+			cout << "create_graph::init sz = " << sz << endl;
+		}
+
+		int nb_vertices;
+
+		nb_vertices = sqrt((double) sz);
+
+
+		if (f_v) {
+			cout << "create_graph::init nb_vertices = " << nb_vertices << endl;
+		}
 
 		M = NEW_int(sz);
 		Lint_vec_copy_to_int(adj, M, sz);
 
+
+#if 0
 		algebra::number_theory::number_theory_domain NT;
 
 		int *primes;
@@ -86,13 +100,14 @@ void create_graph::init(
 		}
 		nb_vertices = 1;
 		for (i = 0; i < len; i++) {
-			for (j = 0; j < exponents[i] >> 1; i++) {
+			for (j = 0; j < exponents[i] >> 1; j++) {
 				nb_vertices *= primes[i];
 			}
 		}
 		if (f_v) {
 			cout << "create_graph::init nb_vertices = " << nb_vertices << endl;
 		}
+#endif
 
 
 		Adj = M;

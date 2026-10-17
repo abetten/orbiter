@@ -564,6 +564,8 @@ void group_theory_with_magma::identify_elements_by_classes(
 		std::string &fname, std::string &col_label,
 		int *&Class_index,
 		int verbose_level)
+// Reads elements from one column of a csv file and computes conjugacy class membership.
+// Writes new spreadsheet with an extra column containing the index of conjugacy class of any element.
 {
 	int f_v = (verbose_level >= 1);
 
@@ -636,7 +638,7 @@ void group_theory_with_magma::identify_elements_by_classes(
 	int *Elt;
 	int *data;
 	int i, j, idx;
-	long int a;
+	long int elt_rk;
 	int f_found;
 	int f_is_member;
 
@@ -667,20 +669,43 @@ void group_theory_with_magma::identify_elements_by_classes(
 
 		if (f_is_member) {
 
-			a = rk.as_lint();
+			elt_rk = rk.as_lint();
 
 			f_found = false;
+
+			int position;
+
+
+			if (f_v) {
+				cout << "group_theory_with_magma::identify_elements_by_classes "
+						"before Classes_of_elements_expanded->find_element" << endl;
+			}
+
+			f_found = Classes_of_elements_expanded->find_element(
+						elt_rk,
+						Class_index[i], position,
+						verbose_level - 2);
+
+			if (f_v) {
+				cout << "group_theory_with_magma::identify_elements_by_classes "
+						"after Classes_of_elements_expanded->find_element" << endl;
+			}
+
+
+#if 0
 
 			for (j = 0; j < Classes_of_elements_expanded->nb_idx; j++) {
 				if (Sorting.lint_vec_search(
 						Classes_of_elements_expanded->Orbit_of_elements[j]->Table_of_elements,
 						Classes_of_elements_expanded->Orbit_of_elements[j]->orbit_length,
-						a, idx, 0 /*verbose_level*/)) {
+						elt_rk, idx, 0 /*verbose_level*/)) {
 					Class_index[i] = j;
 					f_found = true;
 					break;
 				}
 			}
+#endif
+
 			if (!f_found) {
 				if (f_v) {
 					cout << "group_theory_with_magma::identify_elements_by_classes "
@@ -751,6 +776,7 @@ void group_theory_with_magma::diagram_of_elements(
 	//groups::sims *Subgroup_sims;
 
 	groups::sims *Sims;
+
 	if (AG->Subgroup_sims == NULL) {
 		cout << "group_theory_with_magma::diagram_of_elements "
 				"Subgroup_sims == NULL" << endl;
@@ -777,28 +803,6 @@ void group_theory_with_magma::diagram_of_elements(
 
 
 
-	// classes_of_elements_expanded *Classes_of_elements_expanded;
-	//data_structures_groups::vector_ge *Reps;
-
-#if 0
-	int expand_by_go = Sims->group_order_lint();
-
-	if (f_v) {
-		cout << "group_theory_with_magma::diagram_of_elements "
-				"before get_classses_expanded" << endl;
-	}
-	get_classses_expanded(
-			Sims,
-			AG,
-			expand_by_go,
-			Classes_of_elements_expanded,
-			Reps,
-			verbose_level - 2);
-	if (f_v) {
-		cout << "group_theory_with_magma::diagram_of_elements "
-				"after get_classses_expanded" << endl;
-	}
-#endif
 
 	other::data_structures::set_of_sets_lint *Classes;
 
@@ -824,12 +828,16 @@ void group_theory_with_magma::diagram_of_elements(
 
 
 	for (i = 0; i < Classes->nb_sets; i++) {
+
 		len = Classes->Set_size[i];
+
 		for (j = 0; j < len; j++) {
+
 			a = Classes->Sets[i][j];
 
 			Group_diagram->place_element_by_rank(
 					a, pos_i, pos_j);
+
 			Coloring[pos_i * Group_diagram->nb_cols + pos_j] = i;
 
 		}

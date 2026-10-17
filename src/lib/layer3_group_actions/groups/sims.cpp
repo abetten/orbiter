@@ -1579,6 +1579,35 @@ long int sims::element_rank_lint(
 	return a.as_lint();
 }
 
+data_structures_groups::vector_ge *sims::get_vector_of_elements_by_rank(
+		long int *Ranks, int nb, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "sims::get_vector_of_elements_by_rank" << endl;
+	}
+
+	data_structures_groups::vector_ge *vec;
+
+
+	vec = NEW_OBJECT(data_structures_groups::vector_ge);
+
+	vec->init(A, 0/*verbose_level*/);
+	vec->allocate(nb, 0/*verbose_level*/);
+
+	int i;
+
+	for (i = 0; i < nb; i++) {
+
+		element_unrank_lint(
+				Ranks[i], vec->ith(i), verbose_level - 2);
+
+	}
+	return vec;
+
+}
+
 int sims::is_element_of(
 		int *elt, int verbose_level)
 {

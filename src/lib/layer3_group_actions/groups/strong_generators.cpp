@@ -423,7 +423,6 @@ void strong_generators::init_from_data_with_target_go(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	//int i;
 
 	if (f_v) {
 		cout << "strong_generators::init_from_data_with_target_go" << endl;
@@ -900,8 +899,8 @@ void strong_generators::init_group_extension(
 	if (f_v) {
 		cout << "strong_generators::init_group_extension "
 				"target_go=" << target_go << endl;
-		cout << "A=" << endl;
-		A->print_info();
+		cout << "A=" << A->label << endl;
+		//A->print_info();
 	}
 	
 	strong_generators *SG;
@@ -1241,9 +1240,8 @@ void strong_generators::add_generators(
 		cout << "strong_generators::add_generators" << endl;
 	}
 	if (f_vv) {
-		cout << "group_index=" << group_index << endl;
-		cout << "action=";
-		A->print_info();
+		cout << "strong_generators::add_generators group_index=" << group_index << endl;
+		cout << "strong_generators::add_generatorsaction = " << A->label << endl;
 	}
 
 	coset_reps_vec = NEW_int(group_index * A->elt_size_in_int);
@@ -1297,8 +1295,8 @@ void strong_generators::add_single_generator(
 
 	if (f_v) {
 		cout << "strong_generators::add_single_generator" << endl;
-		cout << "action=";
-		A->print_info();
+		cout << "action = " << A->label << endl;
+		//A->print_info();
 	}
 
 	gens1 = NEW_OBJECT(data_structures_groups::vector_ge);
@@ -1740,7 +1738,6 @@ void strong_generators::export_magma(
 void strong_generators::export_fining(
 		actions::action *A, std::ostream &ost,
 		int verbose_level)
-// at the moment, A is not used
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1753,7 +1750,7 @@ void strong_generators::export_fining(
 	if (A->is_matrix_group()) {
 		if (f_v) {
 			cout << "strong_generators::export_fining "
-					"before M.export_group" << endl;
+					"before Interface.export_collineation_group_to_fining" << endl;
 		}
 		Interface.export_collineation_group_to_fining(
 				ost,
@@ -1761,7 +1758,7 @@ void strong_generators::export_fining(
 				verbose_level);
 		if (f_v) {
 			cout << "strong_generators::export_fining "
-					"after M.export_group" << endl;
+					"after Interface.export_collineation_group_to_fining" << endl;
 		}
 	}
 	else {
@@ -1791,7 +1788,9 @@ void strong_generators::canonical_image_GAP(
 	long int *set;
 	int sz;
 
-	Get_lint_vector_from_label(input_set_text, set, sz, 0 /* verbose_level */);
+	Get_lint_vector_from_label(
+			input_set_text, set, sz,
+			0 /* verbose_level */);
 
 	if (f_v) {
 		cout << "strong_generators::canonical_image_GAP "
@@ -1831,7 +1830,9 @@ void strong_generators::canonical_image_orbiter(
 	long int *set;
 	int sz;
 
-	Get_lint_vector_from_label(input_set_text, set, sz, 0 /* verbose_level */);
+	Get_lint_vector_from_label(
+			input_set_text, set, sz,
+			0 /* verbose_level */);
 
 	if (f_v) {
 		cout << "strong_generators::canonical_image_orbiter "
@@ -2354,8 +2355,8 @@ void strong_generators::compute_schreier_with_given_action(
 
 	if (f_v) {
 		cout << "strong_generators::compute_schreier_with_given_action" << endl;
-		cout << "action=";
-		A->print_info();
+		cout << "action = " << A->label << endl;
+		//A->print_info();
 	}
 	Sch = NEW_OBJECT(schreier);
 
@@ -2382,8 +2383,8 @@ void strong_generators::compute_schreier_with_given_action_on_a_given_set(
 
 	if (f_v) {
 		cout << "strong_generators::compute_schreier_with_given_action_on_a_given_set" << endl;
-		cout << "action=";
-		A->print_info();
+		cout << "action = " << A->label << endl;
+		//A->print_info();
 	}
 	Sch = NEW_OBJECT(schreier);
 
@@ -2414,8 +2415,8 @@ void strong_generators::orbits_on_points(
 
 	if (f_v) {
 		cout << "strong_generators::orbits_on_points" << endl;
-		cout << "action=";
-		A->print_info();
+		cout << "action=" << A->label << endl;
+		//A->print_info();
 	}
 
 	if (f_v) {
@@ -2455,10 +2456,11 @@ void strong_generators::orbits_on_set_with_given_action_after_restriction(
 
 	if (f_v) {
 		cout << "strong_generators::orbits_on_set_with_given_action_after_restriction" << endl;
-		cout << "action=";
-		A->print_info();
-		cout << "set=";
+		cout << "action=" << A->label << endl;
+		//A->print_info();
+		cout << "strong_generators::orbits_on_set_with_given_action_after_restriction set=";
 		Lint_vec_print(cout, Set, set_sz);
+		cout << endl;
 	}
 
 	actions::action *Ar;
@@ -2476,9 +2478,11 @@ void strong_generators::orbits_on_set_with_given_action_after_restriction(
 		cout << "strong_generators::orbits_on_set_with_given_action_after_restriction "
 				"before A_given->Induced_action->restricted_action" << endl;
 	}
+
 	Ar = A_given->Induced_action->restricted_action(
 			Set, set_sz, label_of_set, label_of_set_tex,
 			verbose_level - 2);
+
 	if (f_v) {
 		cout << "strong_generators::orbits_on_set_with_given_action_after_restriction "
 				"after A_given->Induced_action->restricted_action" << endl;
@@ -2494,12 +2498,14 @@ void strong_generators::orbits_on_set_with_given_action_after_restriction(
 		cout << "strong_generators::orbits_on_set_with_given_action_after_restriction "
 				"before Orb->init" << endl;
 	}
+
 	Orb->init(Ar,
 			this,
 			false /* f_load_save */,
 			prefix,
 			print_interval,
 			verbose_level - 2);
+
 	if (f_v) {
 		cout << "strong_generators::orbits_on_set_with_given_action_after_restriction "
 				"after Orb->init" << endl;
@@ -2532,11 +2538,15 @@ void strong_generators::extract_orbit_on_set_with_given_action_after_restriction
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
+
 		cout << "strong_generators::extract_orbit_on_set_with_given_action_after_restriction" << endl;
-		cout << "action=";
-		A->print_info();
-		cout << "set=";
+		cout << "action=" << A->label << endl;
+		//A->print_info();
+
+		cout << "strong_generators::extract_orbit_on_set_with_given_action_after_restriction "
+				"set=";
 		Lint_vec_print(cout, Set, set_sz);
+		cout << endl;
 	}
 
 	actions::action *Ar;
@@ -2607,11 +2617,13 @@ void strong_generators::extract_orbit_on_set_with_given_action_after_restriction
 		}
 	}
 	if (idx == nb_types) {
-		cout << "could not find orbit of length " << desired_orbit_length << endl;
+		cout << "strong_generators::extract_orbit_on_set_with_given_action_after_restriction "
+				"could not find orbit of length " << desired_orbit_length << endl;
 		exit(1);
 	}
 	if (SoS->Set_size[idx] != 1) {
-		cout << "Orbit of length " << desired_orbit_length << " is not unique" << endl;
+		cout << "strong_generators::extract_orbit_on_set_with_given_action_after_restriction "
+				"Orbit of length " << desired_orbit_length << " is not unique" << endl;
 		exit(1);
 
 	}
@@ -2619,9 +2631,13 @@ void strong_generators::extract_orbit_on_set_with_given_action_after_restriction
 	orb_idx = SoS->Sets[idx][0];
 	extracted_set = NEW_lint(desired_orbit_length);
 
-	Orb->Sch->Forest->get_orbit(orb_idx, extracted_set, len, verbose_level);
+	Orb->Sch->Forest->get_orbit(
+			orb_idx, extracted_set, len,
+			verbose_level);
+
 	if (len != desired_orbit_length) {
-		cout << "len != desired_orbit_length" << endl;
+		cout << "strong_generators::extract_orbit_on_set_with_given_action_after_restriction "
+				"len != desired_orbit_length" << endl;
 		exit(1);
 	}
 
@@ -2650,10 +2666,12 @@ void strong_generators::extract_specific_orbit_on_set_with_given_action_after_re
 
 	if (f_v) {
 		cout << "strong_generators::extract_specific_orbit_on_set_with_given_action_after_restriction_by_length" << endl;
-		cout << "action=";
-		A->print_info();
-		cout << "set=";
+		cout << "action = " << A->label << endl;
+		//A->print_info();
+		cout << "strong_generators::extract_specific_orbit_on_set_with_given_action_after_restriction_by_length "
+				"set = ";
 		Lint_vec_print(cout, Set, set_sz);
+		cout << endl;
 	}
 
 	actions::action *Ar;
@@ -2690,7 +2708,8 @@ void strong_generators::extract_specific_orbit_on_set_with_given_action_after_re
 		cout << "strong_generators::extract_specific_orbit_on_set_with_given_action_after_restriction_by_length "
 				"before Orb->init" << endl;
 	}
-	Orb->init(Ar,
+	Orb->init(
+			Ar,
 			this,
 			false /* f_load_save */,
 			prefix,
@@ -2708,6 +2727,7 @@ void strong_generators::extract_specific_orbit_on_set_with_given_action_after_re
 	int idx, orb_idx, len;
 
 	Classify_orbits_by_length = NEW_OBJECT(other::data_structures::tally);
+
 	Classify_orbits_by_length->init(
 			Orb->Sch->Forest->orbit_len,
 			Orb->Sch->Forest->nb_orbits,
@@ -2733,14 +2753,18 @@ void strong_generators::extract_specific_orbit_on_set_with_given_action_after_re
 		exit(1);
 	}
 	if (desired_orbit_idx >= SoS->Set_size[idx]) {
-		cout << "Orbit of length " << desired_orbit_length << ": desired index is out of range" << endl;
+		cout << "strong_generators::extract_specific_orbit_on_set_with_given_action_after_restriction_by_length "
+				"Orbit of length " << desired_orbit_length << ": desired index is out of range" << endl;
 		exit(1);
 	}
 
 	orb_idx = SoS->Sets[idx][desired_orbit_idx];
 	extracted_set = NEW_lint(desired_orbit_length);
 
-	Orb->Sch->Forest->get_orbit(orb_idx, extracted_set, len, verbose_level);
+	Orb->Sch->Forest->get_orbit(
+			orb_idx, extracted_set, len,
+			verbose_level);
+
 	if (len != desired_orbit_length) {
 		cout << "len != desired_orbit_length" << endl;
 		exit(1);
@@ -2771,6 +2795,7 @@ void strong_generators::orbits_on_points_with_given_action(
 	if (f_v) {
 		cout << "strong_generators::orbits_on_points_with_given_action" << endl;
 		cout << "action=" << A->label << endl;
+		cout << "A_given=" << A_given->label << endl;
 		//A->print_info();
 	}
 
@@ -2830,7 +2855,8 @@ schreier *strong_generators::compute_all_point_orbits_schreier(
 				"before compute_all_point_orbits_schreier_with_print_interval" << endl;
 	}
 	Sch = compute_all_point_orbits_schreier_with_print_interval(
-			A_given, print_interval, verbose_level);
+			A_given, print_interval,
+			verbose_level);
 	if (f_v) {
 		cout << "strong_generators::compute_all_point_orbits_schreier "
 				"after compute_all_point_orbits_schreier_with_print_interval" << endl;
@@ -2853,13 +2879,14 @@ schreier *strong_generators::compute_all_point_orbits_schreier_with_print_interv
 
 	if (f_v) {
 		cout << "strong_generators::compute_all_point_orbits_schreier_with_print_interval " << endl;
-		//cout << "strong_generators::compute_all_point_orbits_schreier print_interval = " << print_interval << endl;
 	}
 	if (f_v) {
-		cout << "strong_generators::compute_all_point_orbits_schreier "
+		cout << "strong_generators::compute_all_point_orbits_schreier_with_print_interval "
 				"degree = " << A_given->degree << endl;
-		cout << "strong_generators::compute_all_point_orbits_schreier "
+		cout << "strong_generators::compute_all_point_orbits_schreier_with_print_interval "
 				"A_given=" << A_given->label << endl;
+		cout << "strong_generators::compute_all_point_orbits_schreier_with_print_interval "
+				"print_interval = " << print_interval << endl;
 	}
 
 	algebra::ring_theory::longinteger_object go;
@@ -2876,11 +2903,11 @@ schreier *strong_generators::compute_all_point_orbits_schreier_with_print_interv
 	A_base = A_given->get_base_action();
 
 	if (f_v) {
-		cout << "strong_generators::compute_all_point_orbits_schreier "
+		cout << "strong_generators::compute_all_point_orbits_schreier_with_print_interval "
 				"A_base=" << A_base->label << endl;
 	}
 
-	if (f_v) {
+	if (false) {
 		cout << "strong_generators::compute_all_point_orbits_schreier_with_print_interval "
 				"generators:" << endl;
 		//print_generators_tex();
@@ -2918,7 +2945,8 @@ schreier *strong_generators::compute_all_point_orbits_schreier_with_print_interv
 
 
 schreier *strong_generators::orbit_of_one_point_schreier(
-		actions::action *A_given, int pt, int verbose_level)
+		actions::action *A_given, int pt,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	schreier *Sch;
@@ -3259,7 +3287,9 @@ void strong_generators::read_from_file_binary(
 	if (f_v) {
 		cout << "strong_generators::read_from_file_binary" << endl;
 	}
+
 	init(A, 0);
+
 	if (f_v) {
 		cout << "strong_generators::read_from_file_binary "
 				"action A=" << A->label << endl;
@@ -3331,7 +3361,7 @@ void strong_generators::read_file(
 		cout << "strong_generators::read_file "
 				"file " << fname << " does not exist" << endl;
 		exit(1);
-		}
+	}
 	if (f_v) {
 		cout << "strong_generators::read_file "
 				"reading file " << fname << endl;
@@ -3342,6 +3372,7 @@ void strong_generators::read_file(
 
 		read_from_file_binary(A, fp, 0 /*verbose_level*/);
 	}
+
 	if (f_v) {
 		cout << "strong_generators::read_file "
 			"Read file " << fname << " of size "
@@ -3488,6 +3519,7 @@ void strong_generators::compute_and_print_orbits_on_a_given_set(
 	if (f_v) {
 		cout << "strong_generators::compute_and_print_orbits_on_a_given_set" << endl;
 	}
+
 	compute_schreier_with_given_action_on_a_given_set(
 			A_given, Sch, set, len, verbose_level - 2);
 
@@ -3536,6 +3568,7 @@ void strong_generators::compute_and_print_orbits(
 	if (f_v) {
 		cout << "strong_generators::compute_and_print_orbits" << endl;
 	}
+
 	compute_schreier_with_given_action(A_given, Sch, verbose_level - 2);
 
 	cout << "orbits on the set: " << endl;

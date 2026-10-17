@@ -187,12 +187,13 @@ public:
 	int f_isomorph;
 	std::string isomorph_label;
 
+#if 0
 	int f_build_db;
 	int f_read_solutions;
 	int f_compute_orbits;
 	int f_isomorph_testing;
 	int f_isomorph_report;
-
+#endif
 
 	blt_set_classify_activity_description();
 	~blt_set_classify_activity_description();
@@ -1098,7 +1099,7 @@ class graph_theoretic_activity_description {
 
 public:
 
-	// TABLES/graph_theoretic_activities_1.tex
+	// TABLES/graph_theoretic_activities_1.csv
 
 	int f_find_cliques;
 	combinatorics::graph_theory::clique_finder_control *Clique_finder_control;
@@ -1151,14 +1152,21 @@ public:
 	int f_save;
 
 
-	// TABLES/graph_theoretic_activities_2.tex
+	// TABLES/graph_theoretic_activities_2.csv
 
 
 	int f_automorphism_group;
 	int f_automorphism_group_colored_graph;
 
+
+	int f_canonical_form;
+
+	int f_classify;
+
 	int f_properties;
+
 	int f_girth_assuming_vertex_transitivity;
+
 	int f_eigenvalues;
 	int f_eigenvalues_report;
 
@@ -1171,9 +1179,11 @@ public:
 	int f_test_if_distance_regular;
 	int test_if_distance_regular_vertex;
 
-	// ToDo: not yet documented
 	int f_test_if_almost_distance_regular;
 	int test_if_almost_distance_regular_vertex;
+
+	int f_equitable_partition;
+	int equitable_partition_vertex;
 
 
 	graph_theoretic_activity_description();
@@ -1616,12 +1626,13 @@ public:
 	std::string split_by_classes_column;
 	std::string split_by_classes_orbits_object;
 
+
 	// ToDo: changed!
 	int f_identify_elements_by_class;
 	std::string identify_elements_by_class_fname;
 	std::string identify_elements_by_class_column;
 	std::string identify_elements_by_class_supergroup;
-	std::string identify_elements_by_class_orbits_object;
+	std::string identify_elements_by_class_orbits_object; // for the conjugacy classes
 
 
 

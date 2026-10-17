@@ -416,7 +416,13 @@ void action::freeself()
 actions::action *action::get_base_action()
 {
 	if (f_has_subaction) {
-		return subaction->get_base_action();
+
+		if (type_G == action_on_orthogonal_t) {
+			return this;
+		}
+		else {
+			return subaction->get_base_action();
+		}
 	}
 	else {
 		return this;

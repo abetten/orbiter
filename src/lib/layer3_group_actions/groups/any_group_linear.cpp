@@ -111,7 +111,8 @@ void any_group_linear::find_singer_cycle(
 		cout << "any_group_linear::find_singer_cycle "
 				"before Group_theory_global.find_singer_cycle" << endl;
 	}
-	Group_theory_global.find_singer_cycle(Any_group,
+	Group_theory_global.find_singer_cycle(
+			Any_group,
 			Any_group->A, Any_group->A,
 			verbose_level);
 	if (f_v) {
@@ -429,8 +430,10 @@ int any_group_linear::subspace_orbits_test_set(
 				orbits_on_subspaces_M, len, n, n, F->log10_of_q);
 	}
 
-	rk = F->Linear_algebra->Gauss_simple(orbits_on_subspaces_M, len, n,
-			orbits_on_subspaces_base_cols, 0 /*verbose_level - 2*/);
+	rk = F->Linear_algebra->Gauss_simple(
+			orbits_on_subspaces_M, len, n,
+			orbits_on_subspaces_base_cols,
+			0 /*verbose_level - 2*/);
 
 	if (f_v) {
 		cout << "the matrix has rank " << rk << endl;
