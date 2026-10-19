@@ -443,17 +443,18 @@ void substructure_lifting_data::orbits_of_stabilizer(
 	int i, j, f, l, nb_orbits_prev = 0;
 	algebra::ring_theory::longinteger_object go;
 
+
 	if (f_v) {
 		cout << "substructure_lifting_data::orbits_of_stabilizer" << endl;
 		cout << "number of starters = nb_starter = "
 				<< Iso->Sub->nb_starter << endl;
 		cout << "number of solutions (= N) = " << N << endl;
-		cout << "action A_base=";
-		Iso->A_base->print_info();
-		cout << endl;
-		cout << "action A=";
-		Iso->A->print_info();
-		cout << endl;
+		cout << "action A_base=" << Iso->A_base->label << endl;
+		//Iso->A_base->print_info();
+		//cout << endl;
+		cout << "action A=" << Iso->A->label << endl;
+		//Iso->A->print_info();
+		//cout << endl;
 	}
 
 	if (f_v) {
@@ -507,7 +508,9 @@ void substructure_lifting_data::orbits_of_stabilizer(
 	}
 
 	flag_orbit_solution_first[0] = 0;
+
 	for (i = 0; i < Iso->Sub->nb_starter; i++) {
+
 		if (f_v) {
 			cout << "substructure_lifting_data::orbits_of_stabilizer case "
 					"i=" << i << " / " << Iso->Sub->nb_starter << endl;
@@ -518,13 +521,17 @@ void substructure_lifting_data::orbits_of_stabilizer(
 
 		data_structures_groups::vector_ge gens;
 
-
-
 		Iso->Sub->load_strong_generators(
 				Iso->level,
 			i,
-			gens, go,
+			gens,
+			go,
 			verbose_level - 2);
+
+		if (f_v5) {
+			cout << "substructure_lifting_data::orbits_of_stabilizer action in gens =" << gens.A->label << endl;
+		}
+
 		if (f_v5) {
 			cout << "substructure_lifting_data::orbits_of_stabilizer "
 					"after load_strong_generators" << endl;
@@ -806,12 +813,15 @@ void substructure_lifting_data::orbits_of_stabilizer_case(
 		load_solution(
 				f + j, sets + j * Iso->size,
 				verbose_level - 1);
+
 		if (false && f_vv) {
 			cout << "solution " << j << "        : ";
 			Lint_vec_print(cout, sets + j * Iso->size, Iso->size);
 			cout << endl;
 		}
+
 		Sorting.lint_vec_heapsort(sets + j * Iso->size, Iso->size);
+
 		if (false && f_vv) {
 			cout << "solution " << j << " sorted : ";
 			Lint_vec_print(cout, sets + j * Iso->size, Iso->size);
@@ -866,18 +876,24 @@ void substructure_lifting_data::orbits_of_stabilizer_case(
 #endif
 	}
 
+	actions::action_global Action_global;
+
 	if (f_v) {
 		cout << "substructure_lifting_data::orbits_of_stabilizer_case "
-				"before AA->compute_all_point_orbits" << endl;
+				"before Action_global.compute_all_point_orbits" << endl;
 	}
-	A_induced->compute_all_point_orbits(
+
+	Action_global.compute_all_point_orbits(
+			Iso->A_base, A_induced,
 			*Schreier, gens, 0 /*verbose_level - 4*/);
+
 	//AA->all_point_orbits(*Schreier, verbose_level - 2);
 
 	if (f_v) {
 		cout << "substructure_lifting_data::orbits_of_stabilizer_case "
-				"after AA->compute_all_point_orbits" << endl;
+				"after Action_global.compute_all_point_orbits" << endl;
 	}
+
 	if (f_v4) {
 		Schreier->print_tables(cout, true);
 	}
@@ -1351,9 +1367,10 @@ void substructure_lifting_data::load_solution_by_btree(
 }
 
 
-void substructure_lifting_data::count_solutions(
+void substructure_lifting_data::count_solutions_in_list_of_files(
 		int nb_files,
 		std::string *fname,
+		std::string &col_label,
 		int *List_of_cases, int *&Nb_sol_per_file,
 		int f_get_statistics,
 		int f_has_final_test_function,
@@ -1369,52 +1386,67 @@ void substructure_lifting_data::count_solutions(
 	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
-		cout << "substructure_lifting_data::count_solutions" << endl;
+		cout << "substructure_lifting_data::count_solutions_in_list_of_files" << endl;
 	}
 	if (Iso->Sub->nb_starter == 0) {
-		cout << "substructure_lifting_data::count_solutions "
+		cout << "substructure_lifting_data::count_solutions_in_list_of_files "
 				"nb_starter == 0" << endl;
 		exit(1);
 	}
 	if (f_v) {
-		cout << "substructure_lifting_data::count_solutions "
+		cout << "substructure_lifting_data::count_solutions_in_list_of_files "
 				"nb_starter = " << Iso->Sub->nb_starter << endl;
 	}
-	starter_solution_first = NEW_int(Iso->Sub->nb_starter + 1);
+	starter_solution_first = NEW_int(Iso->Sub->nb_starter + 1); // +1 because we initialize one more entry at the end
 	starter_solution_len = NEW_int(Iso->Sub->nb_starter);
 
+	Int_vec_zero(starter_solution_first, Iso->Sub->nb_starter);
+	Int_vec_zero(starter_solution_len, Iso->Sub->nb_starter);
+
+#if 0
 	for (i = 0; i < Iso->Sub->nb_starter; i++) {
 		starter_solution_first[i] = 0;
 		starter_solution_len[i] = 0;
 	}
+#endif
+
 
 	stats_nb_backtrack = NEW_int(Iso->Sub->nb_starter);
 	stats_nb_backtrack_decision = NEW_int(Iso->Sub->nb_starter);
 	stats_graph_size = NEW_int(Iso->Sub->nb_starter);
 	stats_time = NEW_int(Iso->Sub->nb_starter);
 
+	Int_vec_mone(stats_nb_backtrack, Iso->Sub->nb_starter);
+	Int_vec_mone(stats_nb_backtrack_decision, Iso->Sub->nb_starter);
+	Int_vec_mone(stats_graph_size, Iso->Sub->nb_starter);
+	Int_vec_mone(stats_time, Iso->Sub->nb_starter);
+
+#if 0
 	for (i = 0; i < Iso->Sub->nb_starter; i++) {
 		stats_nb_backtrack[i] = -1;
 		stats_nb_backtrack_decision[i] = -1;
 		stats_graph_size[i] = -1;
 		stats_time[i] = -1;
 	}
+#endif
 
 	int a, b;
 
 	if (f_v) {
-		cout << "substructure_lifting_data::count_solutions "
+		cout << "substructure_lifting_data::count_solutions_in_list_of_files "
 				"before Fio.count_solutions_in_list_of_files" << endl;
 	}
 	Fio.count_solutions_in_list_of_files(
-			nb_files, fname, List_of_cases, Nb_sol_per_file,
-			Iso->size,
-			f_has_final_test_function,
-			final_test_function,
-			final_test_data,
+			nb_files, fname, col_label,
+			//List_of_cases,
+			Nb_sol_per_file,
+			//Iso->size,
+			//f_has_final_test_function,
+			//final_test_function,
+			//final_test_data,
 			verbose_level);
 	if (f_v) {
-		cout << "substructure_lifting_data::count_solutions "
+		cout << "substructure_lifting_data::count_solutions_in_list_of_files "
 				"after Fio.count_solutions_in_list_of_files" << endl;
 	}
 
@@ -1424,11 +1456,11 @@ void substructure_lifting_data::count_solutions(
 		starter_solution_len[a] = b;
 	}
 	if (f_v) {
-		cout << "substructure_lifting_data::count_solutions "
+		cout << "substructure_lifting_data::count_solutions_in_list_of_files "
 				"after Fio.count_solutions_in_list_of_files" << endl;
 		cout << "case_len: ";
 		Int_vec_print(cout, starter_solution_len, Iso->Sub->nb_starter);
-		cout << "substructure_lifting_data::count_solutions "
+		cout << "substructure_lifting_data::count_solutions_in_list_of_files "
 				"solution_len[]:" << endl;
 		for (i = 0; i < Iso->Sub->nb_starter; i++) {
 			cout << i << " : " << starter_solution_len[i] << endl;
@@ -1446,19 +1478,21 @@ void substructure_lifting_data::count_solutions(
 
 	N = starter_solution_first[Iso->Sub->nb_starter];
 	if (f_v) {
-		cout << "substructure_lifting_data::count_solutions "
+		cout << "substructure_lifting_data::count_solutions_in_list_of_files "
 				"N=" << N << endl;
 	}
 
 	init_starter_number(verbose_level);
+
 	if (f_v) {
-		cout << "substructure_lifting_data::count_solutions "
+		cout << "substructure_lifting_data::count_solutions_in_list_of_files "
 				"after init_starter_number" << endl;
 	}
 
 	write_solution_first_and_len(verbose_level);
+
 	if (f_v) {
-		cout << "substructure_lifting_data::count_solutions "
+		cout << "substructure_lifting_data::count_solutions_in_list_of_files "
 				"after write_solution_first_and_len" << endl;
 	}
 
@@ -1469,7 +1503,7 @@ void substructure_lifting_data::count_solutions(
 		evaluate_statistics(verbose_level);
 	}
 	if (f_v) {
-		cout << "substructure_lifting_data::count_solutions done" << endl;
+		cout << "substructure_lifting_data::count_solutions_in_list_of_files done" << endl;
 	}
 }
 
@@ -1895,6 +1929,7 @@ void substructure_lifting_data::read_solutions_from_clique_finder_case_by_case(
 void substructure_lifting_data::read_solutions_from_clique_finder(
 		int nb_files,
 		std::string *fname,
+		std::string &solution_col_label,
 		int *substructure_case_number, int *Nb_sol_per_file,
 		int verbose_level)
 // Called from isomorph_read_solution_files_from_clique_finder
@@ -1964,10 +1999,19 @@ void substructure_lifting_data::read_solutions_from_clique_finder(
 
 		the_case = substructure_case_number[i];
 
+#if 0
 		Fio.read_solutions_from_file_and_get_solution_size(
 				fname[i],
 			nb_solutions, Solutions, solution_size,
 			verbose_level);
+#endif
+
+
+		Fio.read_solutions_from_csv_file(
+				fname[i], solution_col_label,
+				nb_solutions, Solutions, solution_size,
+				verbose_level);
+
 
 		if (f_vv) {
 			cout << "substructure_lifting_data::read_solutions_from_clique_finder "
@@ -2022,6 +2066,10 @@ void substructure_lifting_data::read_solutions_from_clique_finder(
 		if (f_vv) {
 			cout << "substructure_lifting_data::read_solutions_from_clique_finder "
 					"file " << fname[i] << " done number = " << no << endl;
+		}
+
+		if (nb_solutions) {
+			FREE_lint(Solutions);
 		}
 	}
 

@@ -1262,8 +1262,13 @@ void arc_generator::report_do_the_work(
 
 		groups::schreier Orb;
 		//longinteger_object go2;
-		
-		Iso.Folding->AA->compute_all_point_orbits(Orb,
+
+		actions::action_global Action_global;
+
+
+		Action_global.compute_all_point_orbits(
+				Iso.Folding->AA, Iso.Folding->AA,
+				Orb,
 				Stab->gens, verbose_level - 2);
 		ost << "With " << Orb.Forest->nb_orbits
 				<< " orbits on the set.\\\\" << endl;

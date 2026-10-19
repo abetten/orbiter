@@ -2,6 +2,7 @@ ROW,C1,C2,C3
 0,"tab:isomorph",,
 1,"Isomorph Testing",,
 1,"\verb'-prefix_iso' "," prefix "," Set a prefix for files related to isomorph testing. "
+1,"\verb'-solution_col_label' "," label "," Set the label for the column containing the solutions in the solution files. "
 1,"\verb'-prefix_with_directory' "," prefix "," Set a prefix for files related to isomorph testing. "
 1,"\verb'-prefix_classify' "," prefix "," Set a prefix for files related to classification. "
 1,"\verb'-solution_prefix' "," prefix "," Set a prefix for solution files. "

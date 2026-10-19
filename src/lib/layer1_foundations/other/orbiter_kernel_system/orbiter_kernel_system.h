@@ -180,6 +180,89 @@ public:
 
 	void init(
 			file_io *Fio);
+
+
+	int read_column_and_count_nb_sets(
+			std::string &fname, std::string &col_label,
+			int verbose_level);
+	void read_column_as_set_of_sets(
+			std::string &fname, std::string &col_label,
+			data_structures::set_of_sets *&SoS,
+			int verbose_level);
+	void join_columns(
+			std::string &fname,
+			std::string &col1_label, std::string &col2_label,
+			data_structures::set_of_sets *&SoS,
+			int verbose_level);
+
+
+
+
+	void write_table_of_strings(
+			std::string &fname,
+			int nb_rows, int nb_cols, std::string *Table,
+			std::string &headings,
+			int verbose_level);
+	void write_table_of_strings_with_headings(
+			std::string &fname,
+			int nb_rows, int nb_cols, std::string *Table,
+			std::string *Row_headings,
+			std::string *Col_headings,
+			int verbose_level);
+	void write_table_of_strings_with_col_headings(
+			std::string &fname,
+			int nb_rows, int nb_cols, std::string *Table,
+			std::string *Col_headings,
+			int verbose_level);
+
+
+
+
+
+	void read_table_of_strings_and_drop_quotes(
+			std::string &fname, std::string *&col_label,
+			std::string *&Table, int &m, int &n,
+			int verbose_level);
+	void read_table_of_strings(
+			std::string &fname, std::string *&col_label,
+			std::string *&Table, int &m, int &n,
+			int verbose_level);
+	void read_column_of_strings(
+			std::string &fname, std::string &col_label,
+			std::string *&Column, int &len,
+			int verbose_level);
+	void read_table_of_strings_as_matrix(
+			std::string &fname, std::string &col_label,
+			int *&M, int &m, int &n, int verbose_level);
+	void read_csv_file_and_get_column(
+			std::string &fname, std::string &col_header,
+			long int *&Data, int &data_size,
+			int verbose_level);
+	void collect_stats(
+			std::string &fname_mask,
+			std::string &fname_out,
+			int from, int last, int step,
+			int verbose_level);
+	void append_column_of_int(
+			std::string &fname,
+			std::string &fname_out,
+			int *Data, int data_sz,
+			std::string &new_col_label,
+			int verbose_level);
+	void append_column_of_int_from_set_of_sets(
+			std::string &fname,
+			std::string &fname_out,
+			other::data_structures::set_of_sets_lint *SoS,
+			std::string &new_col_label,
+			int verbose_level);
+	void write_STL_lint_vec(
+			std::string &fname_out,
+			std::vector<long int> &Gens,
+			int verbose_level);
+
+
+
+
 	void int_vec_write_csv(
 			int *v, int len,
 			std::string &fname, std::string &label);
@@ -375,35 +458,7 @@ public:
 	void csv_file_sort_rows_and_remove_duplicates(
 			std::string &fname,
 			int verbose_level);
-	void write_table_of_strings(
-			std::string &fname,
-			int nb_rows, int nb_cols, std::string *Table,
-			std::string &headings,
-			int verbose_level);
-	void write_table_of_strings_with_headings(
-			std::string &fname,
-			int nb_rows, int nb_cols, std::string *Table,
-			std::string *Row_headings,
-			std::string *Col_headings,
-			int verbose_level);
-	void write_table_of_strings_with_col_headings(
-			std::string &fname,
-			int nb_rows, int nb_cols, std::string *Table,
-			std::string *Col_headings,
-			int verbose_level);
 
-	int read_column_and_count_nb_sets(
-			std::string &fname, std::string &col_label,
-			int verbose_level);
-	void join_columns(
-			std::string &fname,
-			std::string &col1_label, std::string &col2_label,
-			data_structures::set_of_sets *&SoS,
-			int verbose_level);
-	void read_column_as_set_of_sets(
-			std::string &fname, std::string &col_label,
-			data_structures::set_of_sets *&SoS,
-			int verbose_level);
 
 #if 0
 	void save_fibration(
@@ -449,46 +504,9 @@ public:
 			data_structures::ancestry_indi **Individual,
 			data_structures::ancestry_family **Family,
 		int verbose_level);
-	void read_table_of_strings_and_drop_quotes(
-			std::string &fname, std::string *&col_label,
-			std::string *&Table, int &m, int &n,
-			int verbose_level);
-	void read_table_of_strings(
-			std::string &fname, std::string *&col_label,
-			std::string *&Table, int &m, int &n,
-			int verbose_level);
-	void read_column_of_strings(
-			std::string &fname, std::string &col_label,
-			std::string *&Column, int &len,
-			int verbose_level);
-	void read_table_of_strings_as_matrix(
-			std::string &fname, std::string &col_label,
-			int *&M, int &m, int &n, int verbose_level);
-	void read_csv_file_and_get_column(
-			std::string &fname, std::string &col_header,
-			long int *&Data, int &data_size,
-			int verbose_level);
-	void collect_stats(
-			std::string &fname_mask,
-			std::string &fname_out,
-			int from, int last, int step,
-			int verbose_level);
-	void append_column_of_int(
-			std::string &fname,
-			std::string &fname_out,
-			int *Data, int data_sz,
-			std::string &new_col_label,
-			int verbose_level);
-	void append_column_of_int_from_set_of_sets(
-			std::string &fname,
-			std::string &fname_out,
-			other::data_structures::set_of_sets_lint *SoS,
-			std::string &new_col_label,
-			int verbose_level);
-	void write_STL_lint_vec(
-			std::string &fname_out,
-			std::vector<long int> &Gens,
-			int verbose_level);
+
+
+
 
 
 };
@@ -517,48 +535,22 @@ public:
 	file_io();
 	~file_io();
 
-	void concatenate_files(
-			std::string &fname_in_mask, int N,
-			std::string &fname_out, std::string &EOF_marker,
-			int f_title_line,
-		int &cnt_total,
-		std::vector<int> missing_idx,
-		int verbose_level);
-	void concatenate_files_into(
-			std::string &fname_in_mask, int N,
-		std::ofstream &fp_out, std::string &EOF_marker,
-		int f_title_line,
-		int &cnt_total,
-		std::vector<int> &missing_idx,
-		int verbose_level);
 
-	void poset_classification_read_candidates_of_orbit(
-			std::string &fname, int orbit_at_level,
-		long int *&candidates, int &nb_candidates, int verbose_level);
-	void read_candidates_for_one_orbit_from_file(
-			std::string &prefix,
-			int level, int orbit_at_level, int level_of_candidates_file,
-			long int *S,
-			void (*early_test_func_callback)(long int *S, int len,
-				long int *candidates, int nb_candidates,
-				long int *good_candidates, int &nb_good_candidates,
-				void *data, int verbose_level),
-			void *early_test_func_callback_data,
-			long int *&candidates,
-			int &nb_candidates,
+	// solution file support:
+
+	void count_solutions_in_list_of_files(
+			int nb_files, std::string *fname,
+			std::string &col_label,
+			//int *List_of_cases,
+			int *&Nb_sol_per_file,
+#if 0
+			int solution_size,
+			int f_has_final_test_function,
+			int (*final_test_function)(long int *data, int sz,
+					void *final_test_data, int verbose_level),
+			void *final_test_data,
+#endif
 			int verbose_level);
-	int find_orbit_index_in_data_file(
-			std::string &prefix,
-			int level_of_candidates_file, long int *starter,
-			int verbose_level);
-	void write_exact_cover_problem_to_file(
-			int *Inc, int nb_rows,
-		int nb_cols, std::string &fname);
-	void read_solution_file(
-			std::string &fname,
-		int *Inc, int nb_rows, int nb_cols,
-		int *&Solutions, int &sol_length, int &nb_sol,
-		int verbose_level);
 	void count_number_of_solutions_in_file_and_get_solution_size(
 			std::string &fname,
 		int &nb_solutions, int &solution_size,
@@ -567,14 +559,29 @@ public:
 			std::string &fname,
 		int &nb_solutions,
 		int verbose_level);
+
 	void count_number_of_solutions_in_file_by_case(
 			std::string &fname,
 		int *&nb_solutions, int *&case_nb, int &nb_cases,
+		int verbose_level);
+	// called from orbiter::layer4_classification::isomorph::substructure_lifting_data::count_solutions_from_clique_finder
+
+
+	void read_solutions_from_csv_file(
+			std::string &fname, std::string &col_label,
+		int &nb_solutions, long int *&Solutions, int &solution_size,
+		int verbose_level);
+
+	void read_solution_file(
+			std::string &fname,
+		int *Inc, int nb_rows, int nb_cols,
+		int *&Solutions, int &sol_length, int &nb_sol,
 		int verbose_level);
 	void read_solutions_from_file_and_get_solution_size(
 			std::string &fname,
 		int &nb_solutions, long int *&Solutions, int &solution_size,
 		int verbose_level);
+
 	void read_solutions_from_file(
 			std::string &fname,
 		int &nb_solutions, long int *&Solutions, int solution_size,
@@ -589,6 +596,12 @@ public:
 		int *nb_solutions, int *case_nb, int nb_cases,
 		long int **&Solutions, int solution_size,
 		int verbose_level);
+	void read_solutions_and_tally(
+			std::string &fname, int sz, int verbose_level);
+
+
+
+
 	void copy_file_to_ostream(
 			std::ostream &ost, std::string &fname);
 
@@ -735,8 +748,6 @@ public:
 
 
 
-	void read_solutions_and_tally(
-			std::string &fname, int sz, int verbose_level);
 	void extract_from_makefile(
 			std::string &fname,
 			std::string &label,
@@ -754,15 +765,8 @@ public:
 
 
 
-	void count_solutions_in_list_of_files(
-			int nb_files, std::string *fname,
-			int *List_of_cases, int *&Nb_sol_per_file,
-			int solution_size,
-			int f_has_final_test_function,
-			int (*final_test_function)(long int *data, int sz,
-					void *final_test_data, int verbose_level),
-			void *final_test_data,
-			int verbose_level);
+
+
 	void read_file_as_array_of_strings(
 			std::string &fname,
 		std::vector<std::string> &Lines,
@@ -817,6 +821,45 @@ public:
 			other::data_structures::bitvector *&Bitvec,
 			int verbose_level);
 
+
+
+	void concatenate_files(
+			std::string &fname_in_mask, int N,
+			std::string &fname_out, std::string &EOF_marker,
+			int f_title_line,
+		int &cnt_total,
+		std::vector<int> missing_idx,
+		int verbose_level);
+	void concatenate_files_into(
+			std::string &fname_in_mask, int N,
+		std::ofstream &fp_out, std::string &EOF_marker,
+		int f_title_line,
+		int &cnt_total,
+		std::vector<int> &missing_idx,
+		int verbose_level);
+
+	void poset_classification_read_candidates_of_orbit(
+			std::string &fname, int orbit_at_level,
+		long int *&candidates, int &nb_candidates, int verbose_level);
+	void read_candidates_for_one_orbit_from_file(
+			std::string &prefix,
+			int level, int orbit_at_level, int level_of_candidates_file,
+			long int *S,
+			void (*early_test_func_callback)(long int *S, int len,
+				long int *candidates, int nb_candidates,
+				long int *good_candidates, int &nb_good_candidates,
+				void *data, int verbose_level),
+			void *early_test_func_callback_data,
+			long int *&candidates,
+			int &nb_candidates,
+			int verbose_level);
+	int find_orbit_index_in_data_file(
+			std::string &prefix,
+			int level_of_candidates_file, long int *starter,
+			int verbose_level);
+	void write_exact_cover_problem_to_file(
+			int *Inc, int nb_rows,
+		int nb_cols, std::string &fname);
 
 
 

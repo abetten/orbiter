@@ -80,25 +80,29 @@ substructure_classification::~substructure_classification()
 
 void substructure_classification::init(
 		isomorph *Iso,
-		poset_classification::poset_classification *gen,
-		int f_use_database_for_starter,
-		int f_implicit_fusion,
+		//poset_classification::poset_classification *gen,
+		//int f_use_database_for_starter,
+		//int f_implicit_fusion,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "substructure_classification::init" << endl;
-		cout << "f_use_database_for_starter="
-				<< f_use_database_for_starter << endl;
-		cout << "f_implicit_fusion=" << f_implicit_fusion << endl;
 	}
 
 	substructure_classification::Iso = Iso;
-	substructure_classification::f_use_database_for_starter = f_use_database_for_starter;
-	substructure_classification::gen = gen;
+	f_use_database_for_starter = Iso->Isomorph_context->Descr->f_use_database_for_starter;
+	gen = Iso->Isomorph_context->gen;
 
-	f_use_implicit_fusion = f_implicit_fusion;
+	f_use_implicit_fusion = Iso->Isomorph_context->Descr->f_implicit_fusion;
+
+	if (f_v) {
+		cout << "substructure_classification::init" << endl;
+		cout << "f_use_database_for_starter="
+				<< f_use_database_for_starter << endl;
+		cout << "f_implicit_fusion=" << f_use_implicit_fusion << endl;
+	}
 
 	nb_starter = 0;
 
@@ -1203,7 +1207,9 @@ void substructure_classification::load_strong_generators_database(
 				"loading object " << cur_node_local << endl;
 	}
 	DB_level->ith_object(
-			cur_node_local, 0/* btree_idx*/, v,
+			cur_node_local,
+			0/* btree_idx*/,
+			v,
 			0 /*MINIMUM(1, verbose_level - 2)*/);
 
 	if (f_vvv) {

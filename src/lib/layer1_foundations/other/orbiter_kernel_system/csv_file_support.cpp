@@ -38,6 +38,992 @@ void csv_file_support::init(
 	csv_file_support::Fio = Fio;
 }
 
+
+int csv_file_support::read_column_and_count_nb_sets(
+		std::string &fname, std::string &col_label,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "csv_file_support::read_column_and_count_nb_sets "
+				"reading file " << fname << endl;
+	}
+	if (Fio->file_size(fname) <= 0) {
+		cout << "csv_file_support::read_column_and_count_nb_sets file " << fname
+			<< " does not exist or is empty" << endl;
+		cout << "file_size(fname)=" << Fio->file_size(fname) << endl;
+		exit(1);
+	}
+
+	int nb_sets;
+
+	{
+		data_structures::spreadsheet S;
+		int idx;
+
+		S.read_spreadsheet(fname, 0/*verbose_level - 1*/);
+
+		idx = S.find_column(col_label);
+		if (idx == -1) {
+			cout << "csv_file_support::read_column_and_count_nb_sets "
+					"cannot find column " << col_label << endl;
+			exit(1);
+		}
+		nb_sets = S.nb_rows - 1;
+
+	}
+	if (f_v) {
+		cout << "csv_file_support::read_column_and_count_nb_sets "
+				"The file " << fname << " has nb_sets = " << nb_sets << endl;
+	}
+
+	return nb_sets;
+}
+
+
+void csv_file_support::read_column_as_set_of_sets(
+		std::string &fname, std::string &col_label,
+		data_structures::set_of_sets *&SoS,
+		int verbose_level)
+// previously read_column_and_parse
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+
+	if (f_v) {
+		cout << "csv_file_support::read_column_as_set_of_sets "
+				"reading file " << fname << endl;
+	}
+	if (Fio->file_size(fname) <= 0) {
+		cout << "csv_file_support::read_column_as_set_of_sets file " << fname
+			<< " does not exist or is empty" << endl;
+		cout << "file_size(fname)=" << Fio->file_size(fname) << endl;
+		exit(1);
+	}
+	{
+		data_structures::spreadsheet S;
+		data_structures::string_tools ST;
+		int idx;
+		int nb_sets;
+		int i;
+
+		S.read_spreadsheet(fname, 0/*verbose_level - 1*/);
+
+		idx = S.find_column(col_label);
+		if (idx == -1) {
+			cout << "csv_file_support::read_column_as_set_of_sets "
+					"cannot find column " << col_label << endl;
+			exit(1);
+		}
+		nb_sets = S.nb_rows - 1;
+
+		int underlying_set_size = INT_MAX;
+
+		SoS = NEW_OBJECT(data_structures::set_of_sets);
+
+		SoS->init_simple(underlying_set_size,
+				nb_sets, verbose_level);
+
+		for (i = 0; i < nb_sets; i++) {
+
+			if (f_vv) {
+				cout << "csv_file_support::read_column_as_set_of_sets "
+						"i= " << i << " / " << nb_sets << endl;
+			}
+
+
+			string str1, str2;
+			long int *set;
+			int sz;
+
+			S.get_string(str1, i + 1, idx);
+
+			if (f_vv) {
+				cout << "csv_file_support::read_column_as_set_of_sets "
+						"str1 = " << str1 << endl;
+			}
+
+			ST.drop_quotes(
+				str1, str2);
+
+			if (f_vv) {
+				cout << "csv_file_support::read_column_as_set_of_sets "
+						"str2 = " << str2 << endl;
+			}
+
+			Lint_vec_scan(str2, set, sz);
+
+			if (f_vv) {
+				cout << "csv_file_support::read_column_as_set_of_sets "
+						"str = ";
+				Lint_vec_print(cout, set, sz);
+				cout << endl;
+			}
+			SoS->Sets[i] = set;
+			SoS->Set_size[i] = sz;
+
+		}
+	}
+	if (f_v) {
+		cout << "csv_file_support::read_column_as_set_of_sets done" << endl;
+	}
+
+}
+
+
+void csv_file_support::join_columns(
+		std::string &fname,
+		std::string &col1_label, std::string &col2_label,
+		data_structures::set_of_sets *&SoS,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "csv_file_support::join_columns "
+				"reading file " << fname << endl;
+	}
+
+	data_structures::set_of_sets *SoS1;
+	data_structures::set_of_sets *SoS2;
+	int underlying_set_size;
+
+
+	read_column_as_set_of_sets(
+			fname, col1_label,
+			SoS1,
+			verbose_level);
+	read_column_as_set_of_sets(
+			fname, col2_label,
+			SoS2,
+			verbose_level);
+
+	int nb_sets;
+
+	nb_sets = SoS1->nb_sets;
+
+	underlying_set_size = MAXIMUM(SoS1->underlying_set_size, SoS2->underlying_set_size);
+	if (SoS1->nb_sets != SoS2->nb_sets) {
+		cout << "csv_file_support::join_columns SoS1->nb_sets != SoS2->nb_sets" << endl;
+		exit(1);
+	}
+
+	if (!SoS1->has_constant_size_property()) {
+		cout << "csv_file_support::join_columns !SoS1->has_constant_size_property()" << endl;
+		exit(1);
+	}
+	if (!SoS2->has_constant_size_property()) {
+		cout << "csv_file_support::join_columns !SoS2->has_constant_size_property()" << endl;
+		exit(1);
+	}
+
+	int sz1, sz2, sz;
+	sz1 = SoS1->get_constant_size();
+	sz2 = SoS2->get_constant_size();
+	sz = sz1 + sz2;
+
+	SoS = NEW_OBJECT(data_structures::set_of_sets);
+	SoS->init_basic_constant_size(underlying_set_size, SoS1->nb_sets, sz, verbose_level - 2);
+
+	int i;
+
+	for (i = 0; i < nb_sets; i++) {
+		Lint_vec_copy(SoS1->Sets[i], SoS->Sets[i], sz1);
+		Lint_vec_copy(SoS2->Sets[i], SoS->Sets[i] + sz1, sz2);
+	}
+
+	FREE_OBJECT(SoS1);
+	FREE_OBJECT(SoS2);
+
+
+	if (f_v) {
+		cout << "csv_file_support::join_columns done" << endl;
+	}
+}
+
+
+
+
+
+
+void csv_file_support::write_table_of_strings(
+		std::string &fname,
+		int nb_rows, int nb_cols, std::string *Table,
+		std::string &headings,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "csv_file_support::write_table_of_strings "
+				"fname = "<< fname << endl;
+	}
+
+
+	{
+		ofstream f(fname);
+		int i, j;
+
+		f << "Row," << headings;
+		f << endl;
+		for (i = 0; i < nb_rows; i++) {
+			f << i;
+
+			for (j = 0; j < nb_cols; j++) {
+				f << "," << Table[i * nb_cols + j];
+			}
+			f << endl;
+		}
+		f << "END" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "Written file " << fname << " of size " << Fio->file_size(fname) << endl;
+	}
+
+	if (f_v) {
+		cout << "csv_file_support::write_table_of_strings done" << endl;
+	}
+}
+
+void csv_file_support::write_table_of_strings_with_headings(
+		std::string &fname,
+		int nb_rows, int nb_cols, std::string *Table,
+		std::string *Row_headings,
+		std::string *Col_headings,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "csv_file_support::write_table_of_strings_with_headings "
+				"fname = "<< fname << endl;
+	}
+
+
+	{
+		ofstream f(fname);
+		int i, j;
+
+		f << "Row";
+		for (j = 0; j < nb_cols; j++) {
+			f << "," << Col_headings[j];
+		}
+		f << endl;
+
+
+		for (i = 0; i < nb_rows; i++) {
+			f << i << "," << Row_headings[i];
+
+			for (j = 0; j < nb_cols; j++) {
+				f << "," << Table[i * nb_cols + j];
+			}
+			f << endl;
+		}
+		f << "END" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "Written file " << fname << " of size " << Fio->file_size(fname) << endl;
+	}
+
+	if (f_v) {
+		cout << "csv_file_support::write_table_of_strings_with_headings done" << endl;
+	}
+}
+
+void csv_file_support::write_table_of_strings_with_col_headings(
+		std::string &fname,
+		int nb_rows, int nb_cols, std::string *Table,
+		std::string *Col_headings,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "csv_file_support::write_table_of_strings_with_col_headings "
+				"fname = "<< fname << endl;
+	}
+
+
+	{
+		ofstream f(fname);
+		int i, j;
+
+		f << "Row";
+		for (j = 0; j < nb_cols; j++) {
+			f << "," << Col_headings[j];
+		}
+		f << endl;
+
+
+		for (i = 0; i < nb_rows; i++) {
+			f << i;
+
+			for (j = 0; j < nb_cols; j++) {
+				f << "," << Table[i * nb_cols + j];
+			}
+			f << endl;
+		}
+		f << "END" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "Written file " << fname << " of size " << Fio->file_size(fname) << endl;
+	}
+
+	if (f_v) {
+		cout << "csv_file_support::write_table_of_strings_with_col_headings done" << endl;
+	}
+}
+
+
+
+
+
+void csv_file_support::read_table_of_strings_and_drop_quotes(
+		std::string &fname, std::string *&col_label,
+		std::string *&Table, int &m, int &n,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "csv_file_support::read_table_of_strings_and_drop_quotes "
+				"reading file " << fname << endl;
+	}
+
+	read_table_of_strings(
+			fname, col_label,
+			Table, m, n,
+			verbose_level);
+
+	data_structures::string_tools ST;
+	int i, j;
+
+	for (i = 0; i < m; i++) {
+		for (j = 0; j < n; j++) {
+			string s1, s2;
+
+			s1 = Table[i * n + j];
+			ST.drop_quotes(s1, s2);
+			Table[i * n + j] = s2;
+		}
+	}
+
+
+	if (f_v) {
+		cout << "csv_file_support::read_table_of_strings_and_drop_quotes done" << endl;
+	}
+}
+
+void csv_file_support::read_table_of_strings(
+		std::string &fname, std::string *&col_label,
+		std::string *&Table, int &m, int &n,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "csv_file_support::read_table_of_strings "
+				"reading file " << fname << endl;
+	}
+	if (Fio->file_size(fname) <= 0) {
+		cout << "csv_file_support::read_table_of_strings file " << fname
+			<< " does not exist or is empty" << endl;
+		cout << "file_size(fname)=" << Fio->file_size(fname) << endl;
+		exit(1);
+	}
+	{
+		data_structures::spreadsheet S;
+		data_structures::string_tools ST;
+		int i, j;
+
+		S.read_spreadsheet(fname, 0/*verbose_level - 1*/);
+
+		m = S.nb_rows - 1;
+		n = S.nb_cols - 1;
+		col_label = new std::string[n];
+		Table = new std::string [m * n];
+		for (j = 0; j < n; j++) {
+			col_label[j] = S.get_entry_ij(
+						0, 1 + j);
+		}
+		for (i = 0; i < m; i++) {
+			for (j = 0; j < n; j++) {
+				Table[i * n + j] = S.get_entry_ij(
+							1 + i, 1 + j);
+			}
+		}
+	}
+}
+
+
+void csv_file_support::read_column_of_strings(
+		std::string &fname, std::string &col_label,
+		std::string *&Column, int &len,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "csv_file_support::read_table_of_strings "
+				"reading file " << fname << endl;
+	}
+
+	std::string *Col_label;
+	std::string *Table;
+	int m, n;
+
+	read_table_of_strings(
+			fname, Col_label,
+			Table, m, n,
+			verbose_level);
+
+	int j;
+
+	for (j = 0; j < n; j++) {
+		if (Col_label[j] == col_label) {
+			break;
+		}
+	}
+	if (j == n) {
+		cout << "csv_file_support::read_column_of_strings "
+				"did not find column with label " << col_label << endl;
+		exit(1);
+	}
+
+	int i;
+
+	len = m;
+	Column = new string[len];
+	for (i = 0; i < len; i++) {
+		Column[i] = Table[i * n + j];
+	}
+
+	delete [] Table;
+	delete [] Col_label;
+
+	if (f_v) {
+		cout << "csv_file_support::read_table_of_strings done" << endl;
+	}
+}
+
+void csv_file_support::read_table_of_strings_as_matrix(
+		std::string &fname, std::string &col_label,
+		int *&M, int &m, int &n, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "csv_file_support::read_table_of_strings_as_matrix "
+				"reading file " << fname << endl;
+	}
+
+	data_structures::string_tools ST;
+
+	int i;
+
+
+	std::string *Column;
+	int len;
+
+	if (f_v) {
+		cout << "csv_file_support::read_table_of_strings_as_matrix "
+				"before read_column_of_strings" << endl;
+	}
+	read_column_of_strings(
+			fname, col_label,
+			Column, len,
+			verbose_level);
+
+	if (f_v) {
+		cout << "csv_file_support::read_table_of_strings_as_matrix "
+				"after read_column_of_strings" << endl;
+	}
+
+	m = len;
+
+	if (m == 0) {
+		M = NEW_int(1);
+		n = 0;
+	}
+	else {
+		{
+			int *data;
+			Int_vec_scan(Column[0], data, n);
+			FREE_int(data);
+		}
+
+		M = NEW_int(m * n);
+		for (i = 0; i < m; i++) {
+			std::string s;
+
+			ST.drop_quotes(
+					Column[i], s);
+			Column[i] = s;
+		}
+		{
+			int *data;
+			Int_vec_scan(Column[0], data, n);
+			Int_vec_copy(data, M + i * n, n);
+			FREE_int(data);
+		}
+	}
+
+	delete [] Column;
+
+	if (f_v) {
+		cout << "csv_file_support::read_table_of_strings_as_matrix "
+				"done" << endl;
+	}
+
+}
+
+void csv_file_support::read_csv_file_and_get_column(
+		std::string &fname, std::string &col_header,
+		long int *&Data, int &data_size, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "csv_file_support::read_csv_file_and_get_column" << endl;
+		cout << "csv_file_support::read_csv_file_and_get_column fname = " << fname << endl;
+		cout << "csv_file_support::read_csv_file_and_get_column col_header = " << col_header << endl;
+	}
+
+	data_structures::string_tools ST;
+
+	std::string *col_labels;
+	std::string *Table;
+	int m, n;
+
+	read_table_of_strings(
+			fname, col_labels,
+			Table, m, n,
+			verbose_level);
+
+	int i, j;
+
+	for (j = 0; j < n; j++) {
+		if (col_labels[j] == col_header) {
+			break;
+		}
+	}
+	if (j == n) {
+		cout << "csv_file_support::read_csv_file_and_get_column "
+				"did not find column heading " << col_header << endl;
+		exit(1);
+	}
+
+	data_size = m;
+	Data = NEW_lint(m);
+	for (i = 0; i < m; i++) {
+		cout << "row << " << i << " / " << m << " reading " << Table[i * n + j] << endl;
+
+		std::string s;
+
+		ST.drop_quotes(
+				Table[i * n + j], s);
+
+
+		Data[i] = std::stol(s, NULL, 10);
+	}
+
+#if 0
+	data_structures::tally T;
+
+	T.init_lint(Data, m, true, 0);
+	cout << "tally:" << endl;
+	T.print(true);
+	cout << endl;
+
+
+	data_structures::set_of_sets *SoS;
+	int *types;
+	int nb_types;
+	int i;
+
+	SoS = T.get_set_partition_and_types(
+			types, nb_types, verbose_level);
+
+	cout << "fibers:" << endl;
+	for (i = 0; i < nb_types; i++) {
+		cout << i << " : " << types[i] << " : ";
+		Lint_vec_print(cout, SoS->Sets[i], SoS->Set_size[i]);
+		cout << endl;
+	}
+
+	//cout << "set partition:" << endl;
+	//SoS->print_table();
+#endif
+
+	delete [] Table;
+
+	if (f_v) {
+		cout << "csv_file_support::read_csv_file_and_get_column done" << endl;
+	}
+}
+
+
+void csv_file_support::collect_stats(
+		std::string &fname_mask,
+		std::string &fname_out,
+		int from, int last, int step,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "csv_file_support::collect_stats" << endl;
+	}
+
+	data_structures::string_tools ST;
+	int h, j;
+
+	int N;
+	int *Data;
+	int nb_sol_total = 0;
+
+	for (h = 0, j = from; j < last; j += step, h++) {
+	}
+	N = h;
+
+	Data = NEW_int(N);
+
+	for (h = 0, j = from; j < last; j += step, h++) {
+
+		std::string fname;
+
+		fname = ST.printf_d(
+			fname_mask, j);
+
+		{
+
+			if (f_v) {
+				cout << "csv_file_support::collect_stats "
+						"file " << fname << endl;
+			}
+
+			Data[h] = Fio->count_number_of_data_lines_in_spreadsheet(
+					fname, 0 /* verbose_level */);
+
+			if (Data[h] == -1) {
+				cout << "csv_file_support::collect_stats "
+						"cannot open the file " << fname << endl;
+				exit(1);
+			}
+
+			nb_sol_total += Data[h];
+
+		}
+
+
+
+	}
+
+	if (f_v) {
+		cout << "csv_file_support::collect_stats "
+				"nb_sol_total = " << nb_sol_total << endl;
+	}
+
+	std::string *Table;
+	int nb_rows, nb_cols;
+
+	nb_rows = N;
+	nb_cols = 2;
+
+	Table = new string [nb_rows * nb_cols];
+
+	for (h = 0, j = from; j < last; j += step, h++) {
+		Table[h * nb_cols + 0] = std::to_string(j);
+		Table[h * nb_cols + 1] = std::to_string(Data[h]);
+	}
+
+	std::string headings;
+
+	headings = "case,nb_sol";
+
+	write_table_of_strings(
+			fname_out,
+			nb_rows, nb_cols, Table,
+			headings,
+			verbose_level);
+
+	if (f_v) {
+		cout << "Written file " << fname_out << " of size "
+			<< Fio->file_size(fname_out) << endl;
+	}
+
+	delete [] Table;
+
+	FREE_int(Data);
+
+	if (f_v) {
+		cout << "csv_file_support::collect_stats done" << endl;
+	}
+
+}
+
+
+void csv_file_support::append_column_of_int(
+		std::string &fname,
+		std::string &fname_out,
+		int *Data, int data_sz,
+		std::string &new_col_label,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "csv_file_support::append_column_of_int "
+				"reading file " << fname << endl;
+	}
+
+
+	std::string *col_labels;
+	std::string *Table;
+	int m, n;
+
+	read_table_of_strings(
+			fname, col_labels,
+			Table, m, n,
+			verbose_level);
+
+	if (f_v) {
+		cout << "csv_file_support::append_column_of_int "
+				"nb_rows = " << m << endl;
+	}
+
+	if (m != data_sz) {
+		cout << "csv_file_support::append_column_of_int "
+				"m != data_sz" << endl;
+		exit(1);
+	}
+
+	std::string *Table_out;
+	std::string *Col_headings;
+	int nb_rows = m;
+	int nb_cols = n + 1;
+	int i, j;
+
+	Table_out = new std::string[nb_rows * nb_cols];
+	for (i = 0; i < nb_rows; i++) {
+		for (j = 0; j < n; j++) {
+			Table_out[i * nb_cols + j] = Table[i * n + j];
+		}
+		Table_out[i * nb_cols + n] = std::to_string(Data[i]);
+	}
+
+	Col_headings = new std::string[nb_cols];
+	for (j = 0; j < n; j++) {
+		Col_headings[j] = col_labels[j];
+	}
+	Col_headings[n] = new_col_label;
+
+	other::data_structures::string_tools ST;
+
+	fname_out = fname;
+
+	ST.chop_off_extension(fname_out);
+
+	fname_out += "_append.csv";
+
+	write_table_of_strings_with_col_headings(
+			fname_out,
+			nb_rows, nb_cols, Table_out,
+			Col_headings,
+			verbose_level);
+
+	delete [] Table;
+	delete [] col_labels;
+	delete [] Table_out;
+	delete [] Col_headings;
+
+	if (f_v) {
+		cout << "csv_file_support::append_column_of_int done" << endl;
+	}
+}
+
+
+void csv_file_support::append_column_of_int_from_set_of_sets(
+		std::string &fname,
+		std::string &fname_out,
+		other::data_structures::set_of_sets_lint *SoS,
+		std::string &new_col_label,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "csv_file_support::append_column_of_int_from_set_of_sets "
+				"file " << fname << endl;
+	}
+
+	std::string *Table_out;
+	std::string *Col_headings;
+	int nb_rows;
+	int nb_cols;
+	int idx_new_col;
+
+	if (Fio->file_size(fname) <= 0) {
+
+		if (f_v) {
+			cout << "csv_file_support::append_column_of_int_from_set_of_sets "
+					" file " << fname << " is empty" << endl;
+		}
+
+		nb_rows = SoS->nb_sets;
+		nb_cols = 1;
+
+
+		Table_out = new std::string[nb_rows * nb_cols];
+
+		Col_headings = new std::string[nb_cols];
+		idx_new_col = 0;
+
+	}
+	else {
+
+		if (f_v) {
+			cout << "csv_file_support::append_column_of_int_from_set_of_sets "
+					"reading file " << fname << endl;
+		}
+
+		std::string *col_labels;
+		std::string *Table;
+		int m, n;
+
+		read_table_of_strings(
+				fname, col_labels,
+				Table, m, n,
+				verbose_level);
+
+		if (f_v) {
+			cout << "csv_file_support::append_column_of_int_from_set_of_sets "
+					"nb_rows = " << m << endl;
+		}
+
+		if (m != SoS->nb_sets) {
+			cout << "csv_file_support::append_column_of_int_from_set_of_sets "
+					"m != SoS->nb_sets" << endl;
+			exit(1);
+		}
+
+		nb_rows = m;
+		nb_cols = n + 1;
+		int i, j;
+
+		Table_out = new std::string[nb_rows * nb_cols];
+		for (i = 0; i < nb_rows; i++) {
+			for (j = 0; j < n; j++) {
+				Table_out[i * nb_cols + j] = Table[i * n + j];
+			}
+		}
+		idx_new_col = n;
+
+		Col_headings = new std::string[nb_cols];
+		for (j = 0; j < n; j++) {
+			Col_headings[j] = col_labels[j];
+		}
+
+		delete [] Table;
+		delete [] col_labels;
+
+	}
+
+	int i;
+
+	for (i = 0; i < nb_rows; i++) {
+		Table_out[i * nb_cols + idx_new_col] = "\"" + SoS->stringify_set(i) + "\"";
+	}
+
+	Col_headings[idx_new_col] = new_col_label;
+
+	other::data_structures::string_tools ST;
+
+	fname_out = fname;
+
+	ST.chop_off_extension(fname_out);
+
+	fname_out += "_append.csv";
+
+	write_table_of_strings_with_col_headings(
+			fname_out,
+			nb_rows, nb_cols, Table_out,
+			Col_headings,
+			verbose_level);
+
+	delete [] Table_out;
+	delete [] Col_headings;
+
+	if (f_v) {
+		cout << "csv_file_support::append_column_of_int_from_set_of_sets done" << endl;
+	}
+}
+
+
+void csv_file_support::write_STL_lint_vec(
+		std::string &fname_out,
+		std::vector<long int> &Gens,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "csv_file_support::write_STL_lint_vec "
+				"writing file " << fname_out << endl;
+	}
+
+
+	int h;
+	std::string *Table;
+	int nb_rows, nb_cols;
+
+	nb_rows = Gens.size();
+	nb_cols = 2;
+
+	Table = new string [nb_rows * nb_cols];
+
+	for (h = 0; h < nb_rows; h++) {
+		Table[h * nb_cols + 0] = std::to_string(h);
+		Table[h * nb_cols + 1] = std::to_string(Gens[h]);
+	}
+
+	std::string headings;
+
+	headings = "case,number";
+
+	write_table_of_strings(
+			fname_out,
+			nb_rows, nb_cols, Table,
+			headings,
+			verbose_level);
+
+	if (f_v) {
+		cout << "Written file " << fname_out << " of size "
+			<< Fio->file_size(fname_out) << endl;
+	}
+
+	delete [] Table;
+
+
+	if (f_v) {
+		cout << "csv_file_support::write_STL_lint_vec done" << endl;
+	}
+
+}
+
+
+
+
+
+
+
 void csv_file_support::int_vec_write_csv(
 		int *v, int len,
 	std::string &fname, std::string &label)
@@ -3562,337 +4548,6 @@ void csv_file_support::csv_file_sort_rows_and_remove_duplicates(
 		cout << "csv_file_support::csv_file_sort_rows_and_remove_duplicates done" << endl;
 	}
 }
-
-void csv_file_support::write_table_of_strings(
-		std::string &fname,
-		int nb_rows, int nb_cols, std::string *Table,
-		std::string &headings,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "csv_file_support::write_table_of_strings "
-				"fname = "<< fname << endl;
-	}
-
-
-	{
-		ofstream f(fname);
-		int i, j;
-
-		f << "Row," << headings;
-		f << endl;
-		for (i = 0; i < nb_rows; i++) {
-			f << i;
-
-			for (j = 0; j < nb_cols; j++) {
-				f << "," << Table[i * nb_cols + j];
-			}
-			f << endl;
-		}
-		f << "END" << endl;
-	}
-
-
-	if (f_v) {
-		cout << "Written file " << fname << " of size " << Fio->file_size(fname) << endl;
-	}
-
-	if (f_v) {
-		cout << "csv_file_support::write_table_of_strings done" << endl;
-	}
-}
-
-void csv_file_support::write_table_of_strings_with_headings(
-		std::string &fname,
-		int nb_rows, int nb_cols, std::string *Table,
-		std::string *Row_headings,
-		std::string *Col_headings,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "csv_file_support::write_table_of_strings_with_headings "
-				"fname = "<< fname << endl;
-	}
-
-
-	{
-		ofstream f(fname);
-		int i, j;
-
-		f << "Row";
-		for (j = 0; j < nb_cols; j++) {
-			f << "," << Col_headings[j];
-		}
-		f << endl;
-
-
-		for (i = 0; i < nb_rows; i++) {
-			f << i << "," << Row_headings[i];
-
-			for (j = 0; j < nb_cols; j++) {
-				f << "," << Table[i * nb_cols + j];
-			}
-			f << endl;
-		}
-		f << "END" << endl;
-	}
-
-
-	if (f_v) {
-		cout << "Written file " << fname << " of size " << Fio->file_size(fname) << endl;
-	}
-
-	if (f_v) {
-		cout << "csv_file_support::write_table_of_strings_with_headings done" << endl;
-	}
-}
-
-void csv_file_support::write_table_of_strings_with_col_headings(
-		std::string &fname,
-		int nb_rows, int nb_cols, std::string *Table,
-		std::string *Col_headings,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "csv_file_support::write_table_of_strings_with_col_headings "
-				"fname = "<< fname << endl;
-	}
-
-
-	{
-		ofstream f(fname);
-		int i, j;
-
-		f << "Row";
-		for (j = 0; j < nb_cols; j++) {
-			f << "," << Col_headings[j];
-		}
-		f << endl;
-
-
-		for (i = 0; i < nb_rows; i++) {
-			f << i;
-
-			for (j = 0; j < nb_cols; j++) {
-				f << "," << Table[i * nb_cols + j];
-			}
-			f << endl;
-		}
-		f << "END" << endl;
-	}
-
-
-	if (f_v) {
-		cout << "Written file " << fname << " of size " << Fio->file_size(fname) << endl;
-	}
-
-	if (f_v) {
-		cout << "csv_file_support::write_table_of_strings_with_col_headings done" << endl;
-	}
-}
-
-int csv_file_support::read_column_and_count_nb_sets(
-		std::string &fname, std::string &col_label,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "csv_file_support::count_nb_sets "
-				"reading file " << fname << endl;
-	}
-	if (Fio->file_size(fname) <= 0) {
-		cout << "csv_file_support::count_nb_sets file " << fname
-			<< " does not exist or is empty" << endl;
-		cout << "file_size(fname)=" << Fio->file_size(fname) << endl;
-		exit(1);
-	}
-	int nb_sets;
-	{
-		data_structures::spreadsheet S;
-		int idx;
-
-		S.read_spreadsheet(fname, 0/*verbose_level - 1*/);
-
-		idx = S.find_column(col_label);
-		if (idx == -1) {
-			cout << "csv_file_support::count_nb_sets "
-					"cannot find column " << col_label << endl;
-			exit(1);
-		}
-		nb_sets = S.nb_rows - 1;
-
-	}
-
-	return nb_sets;
-}
-
-void csv_file_support::join_columns(
-		std::string &fname,
-		std::string &col1_label, std::string &col2_label,
-		data_structures::set_of_sets *&SoS,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "csv_file_support::join_columns "
-				"reading file " << fname << endl;
-	}
-
-	data_structures::set_of_sets *SoS1;
-	data_structures::set_of_sets *SoS2;
-	int underlying_set_size;
-
-
-	read_column_as_set_of_sets(
-			fname, col1_label,
-			SoS1,
-			verbose_level);
-	read_column_as_set_of_sets(
-			fname, col2_label,
-			SoS2,
-			verbose_level);
-
-	int nb_sets;
-
-	nb_sets = SoS1->nb_sets;
-
-	underlying_set_size = MAXIMUM(SoS1->underlying_set_size, SoS2->underlying_set_size);
-	if (SoS1->nb_sets != SoS2->nb_sets) {
-		cout << "csv_file_support::join_columns SoS1->nb_sets != SoS2->nb_sets" << endl;
-		exit(1);
-	}
-
-	if (!SoS1->has_constant_size_property()) {
-		cout << "csv_file_support::join_columns !SoS1->has_constant_size_property()" << endl;
-		exit(1);
-	}
-	if (!SoS2->has_constant_size_property()) {
-		cout << "csv_file_support::join_columns !SoS2->has_constant_size_property()" << endl;
-		exit(1);
-	}
-
-	int sz1, sz2, sz;
-	sz1 = SoS1->get_constant_size();
-	sz2 = SoS2->get_constant_size();
-	sz = sz1 + sz2;
-
-	SoS = NEW_OBJECT(data_structures::set_of_sets);
-	SoS->init_basic_constant_size(underlying_set_size, SoS1->nb_sets, sz, verbose_level - 2);
-
-	int i;
-
-	for (i = 0; i < nb_sets; i++) {
-		Lint_vec_copy(SoS1->Sets[i], SoS->Sets[i], sz1);
-		Lint_vec_copy(SoS2->Sets[i], SoS->Sets[i] + sz1, sz2);
-	}
-
-	FREE_OBJECT(SoS1);
-	FREE_OBJECT(SoS2);
-
-
-	if (f_v) {
-		cout << "csv_file_support::join_columns done" << endl;
-	}
-}
-
-
-void csv_file_support::read_column_as_set_of_sets(
-		std::string &fname, std::string &col_label,
-		data_structures::set_of_sets *&SoS,
-		int verbose_level)
-// previously read_column_and_parse
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-
-	if (f_v) {
-		cout << "csv_file_support::read_column_as_set_of_sets "
-				"reading file " << fname << endl;
-	}
-	if (Fio->file_size(fname) <= 0) {
-		cout << "csv_file_support::read_column_as_set_of_sets file " << fname
-			<< " does not exist or is empty" << endl;
-		cout << "file_size(fname)=" << Fio->file_size(fname) << endl;
-		exit(1);
-	}
-	{
-		data_structures::spreadsheet S;
-		data_structures::string_tools ST;
-		int idx;
-		int nb_sets;
-		int i;
-
-		S.read_spreadsheet(fname, 0/*verbose_level - 1*/);
-
-		idx = S.find_column(col_label);
-		if (idx == -1) {
-			cout << "csv_file_support::read_column_as_set_of_sets "
-					"cannot find column " << col_label << endl;
-			exit(1);
-		}
-		nb_sets = S.nb_rows - 1;
-
-		int underlying_set_size = INT_MAX;
-
-		SoS = NEW_OBJECT(data_structures::set_of_sets);
-
-		SoS->init_simple(underlying_set_size,
-				nb_sets, verbose_level);
-
-		for (i = 0; i < nb_sets; i++) {
-
-			if (f_vv) {
-				cout << "csv_file_support::read_column_as_set_of_sets "
-						"i= " << i << " / " << nb_sets << endl;
-			}
-
-
-			string str1, str2;
-			long int *set;
-			int sz;
-
-			S.get_string(str1, i + 1, idx);
-
-			if (f_vv) {
-				cout << "csv_file_support::read_column_as_set_of_sets "
-						"str1 = " << str1 << endl;
-			}
-
-			ST.drop_quotes(
-				str1, str2);
-
-			if (f_vv) {
-				cout << "csv_file_support::read_column_as_set_of_sets "
-						"str2 = " << str2 << endl;
-			}
-
-			Lint_vec_scan(str2, set, sz);
-
-			if (f_vv) {
-				cout << "csv_file_support::read_column_as_set_of_sets "
-						"str = ";
-				Lint_vec_print(cout, set, sz);
-				cout << endl;
-			}
-			SoS->Sets[i] = set;
-			SoS->Set_size[i] = sz;
-
-		}
-	}
-	if (f_v) {
-		cout << "csv_file_support::read_column_as_set_of_sets done" << endl;
-	}
-
-}
-
 #if 0
 void csv_file_support::save_fibration(
 		std::vector<std::vector<std::pair<int, int> > > &Fibration,
@@ -4439,638 +5094,6 @@ std::vector<int> topo_downlink;
 #endif
 
 
-void csv_file_support::read_table_of_strings_and_drop_quotes(
-		std::string &fname, std::string *&col_label,
-		std::string *&Table, int &m, int &n,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "csv_file_support::read_table_of_strings_and_drop_quotes "
-				"reading file " << fname << endl;
-	}
-
-	read_table_of_strings(
-			fname, col_label,
-			Table, m, n,
-			verbose_level);
-
-	data_structures::string_tools ST;
-	int i, j;
-
-	for (i = 0; i < m; i++) {
-		for (j = 0; j < n; j++) {
-			string s1, s2;
-
-			s1 = Table[i * n + j];
-			ST.drop_quotes(s1, s2);
-			Table[i * n + j] = s2;
-		}
-	}
-
-
-	if (f_v) {
-		cout << "csv_file_support::read_table_of_strings_and_drop_quotes done" << endl;
-	}
-}
-
-void csv_file_support::read_table_of_strings(
-		std::string &fname, std::string *&col_label,
-		std::string *&Table, int &m, int &n,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "csv_file_support::read_table_of_strings "
-				"reading file " << fname << endl;
-	}
-	if (Fio->file_size(fname) <= 0) {
-		cout << "csv_file_support::read_table_of_strings file " << fname
-			<< " does not exist or is empty" << endl;
-		cout << "file_size(fname)=" << Fio->file_size(fname) << endl;
-		exit(1);
-	}
-	{
-		data_structures::spreadsheet S;
-		data_structures::string_tools ST;
-		int i, j;
-
-		S.read_spreadsheet(fname, 0/*verbose_level - 1*/);
-
-		m = S.nb_rows - 1;
-		n = S.nb_cols - 1;
-		col_label = new std::string[n];
-		Table = new std::string [m * n];
-		for (j = 0; j < n; j++) {
-			col_label[j] = S.get_entry_ij(
-						0, 1 + j);
-		}
-		for (i = 0; i < m; i++) {
-			for (j = 0; j < n; j++) {
-				Table[i * n + j] = S.get_entry_ij(
-							1 + i, 1 + j);
-			}
-		}
-	}
-}
-
-
-void csv_file_support::read_column_of_strings(
-		std::string &fname, std::string &col_label,
-		std::string *&Column, int &len,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "csv_file_support::read_table_of_strings "
-				"reading file " << fname << endl;
-	}
-
-	std::string *Col_label;
-	std::string *Table;
-	int m, n;
-
-	read_table_of_strings(
-			fname, Col_label,
-			Table, m, n,
-			verbose_level);
-
-	int j;
-
-	for (j = 0; j < n; j++) {
-		if (Col_label[j] == col_label) {
-			break;
-		}
-	}
-	if (j == n) {
-		cout << "csv_file_support::read_column_of_strings "
-				"did not find column with label " << col_label << endl;
-		exit(1);
-	}
-
-	int i;
-
-	len = m;
-	Column = new string[len];
-	for (i = 0; i < len; i++) {
-		Column[i] = Table[i * n + j];
-	}
-
-	delete [] Table;
-	delete [] Col_label;
-
-	if (f_v) {
-		cout << "csv_file_support::read_table_of_strings done" << endl;
-	}
-}
-
-void csv_file_support::read_table_of_strings_as_matrix(
-		std::string &fname, std::string &col_label,
-		int *&M, int &m, int &n, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "csv_file_support::read_table_of_strings_as_matrix "
-				"reading file " << fname << endl;
-	}
-
-	data_structures::string_tools ST;
-
-	int i;
-
-
-	std::string *Column;
-	int len;
-
-	if (f_v) {
-		cout << "csv_file_support::read_table_of_strings_as_matrix "
-				"before read_column_of_strings" << endl;
-	}
-	read_column_of_strings(
-			fname, col_label,
-			Column, len,
-			verbose_level);
-
-	if (f_v) {
-		cout << "csv_file_support::read_table_of_strings_as_matrix "
-				"after read_column_of_strings" << endl;
-	}
-
-	m = len;
-
-	if (m == 0) {
-		M = NEW_int(1);
-		n = 0;
-	}
-	else {
-		{
-			int *data;
-			Int_vec_scan(Column[0], data, n);
-			FREE_int(data);
-		}
-
-		M = NEW_int(m * n);
-		for (i = 0; i < m; i++) {
-			std::string s;
-
-			ST.drop_quotes(
-					Column[i], s);
-			Column[i] = s;
-		}
-		{
-			int *data;
-			Int_vec_scan(Column[0], data, n);
-			Int_vec_copy(data, M + i * n, n);
-			FREE_int(data);
-		}
-	}
-
-	delete [] Column;
-
-	if (f_v) {
-		cout << "csv_file_support::read_table_of_strings_as_matrix "
-				"done" << endl;
-	}
-
-}
-
-void csv_file_support::read_csv_file_and_get_column(
-		std::string &fname, std::string &col_header,
-		long int *&Data, int &data_size, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "csv_file_support::read_csv_file_and_get_column" << endl;
-		cout << "csv_file_support::read_csv_file_and_get_column fname = " << fname << endl;
-		cout << "csv_file_support::read_csv_file_and_get_column col_header = " << col_header << endl;
-	}
-
-	data_structures::string_tools ST;
-
-	std::string *col_labels;
-	std::string *Table;
-	int m, n;
-
-	read_table_of_strings(
-			fname, col_labels,
-			Table, m, n,
-			verbose_level);
-
-	int i, j;
-
-	for (j = 0; j < n; j++) {
-		if (col_labels[j] == col_header) {
-			break;
-		}
-	}
-	if (j == n) {
-		cout << "csv_file_support::read_csv_file_and_get_column "
-				"did not find column heading " << col_header << endl;
-		exit(1);
-	}
-
-	data_size = m;
-	Data = NEW_lint(m);
-	for (i = 0; i < m; i++) {
-		cout << "row << " << i << " / " << m << " reading " << Table[i * n + j] << endl;
-
-		std::string s;
-
-		ST.drop_quotes(
-				Table[i * n + j], s);
-
-
-		Data[i] = std::stol(s, NULL, 10);
-	}
-
-#if 0
-	data_structures::tally T;
-
-	T.init_lint(Data, m, true, 0);
-	cout << "tally:" << endl;
-	T.print(true);
-	cout << endl;
-
-
-	data_structures::set_of_sets *SoS;
-	int *types;
-	int nb_types;
-	int i;
-
-	SoS = T.get_set_partition_and_types(
-			types, nb_types, verbose_level);
-
-	cout << "fibers:" << endl;
-	for (i = 0; i < nb_types; i++) {
-		cout << i << " : " << types[i] << " : ";
-		Lint_vec_print(cout, SoS->Sets[i], SoS->Set_size[i]);
-		cout << endl;
-	}
-
-	//cout << "set partition:" << endl;
-	//SoS->print_table();
-#endif
-
-	delete [] Table;
-
-	if (f_v) {
-		cout << "csv_file_support::read_csv_file_and_get_column done" << endl;
-	}
-}
-
-
-void csv_file_support::collect_stats(
-		std::string &fname_mask,
-		std::string &fname_out,
-		int from, int last, int step,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "csv_file_support::collect_stats" << endl;
-	}
-
-	data_structures::string_tools ST;
-	int h, j;
-
-	int N;
-	int *Data;
-	int nb_sol_total = 0;
-
-	for (h = 0, j = from; j < last; j += step, h++) {
-	}
-	N = h;
-
-	Data = NEW_int(N);
-
-	for (h = 0, j = from; j < last; j += step, h++) {
-
-		std::string fname;
-
-		fname = ST.printf_d(
-			fname_mask, j);
-
-		{
-
-			if (f_v) {
-				cout << "csv_file_support::collect_stats "
-						"file " << fname << endl;
-			}
-
-			Data[h] = Fio->count_number_of_data_lines_in_spreadsheet(
-					fname, 0 /* verbose_level */);
-
-			if (Data[h] == -1) {
-				cout << "csv_file_support::collect_stats "
-						"cannot open the file " << fname << endl;
-				exit(1);
-			}
-
-			nb_sol_total += Data[h];
-
-		}
-
-
-
-	}
-
-	if (f_v) {
-		cout << "csv_file_support::collect_stats "
-				"nb_sol_total = " << nb_sol_total << endl;
-	}
-
-	std::string *Table;
-	int nb_rows, nb_cols;
-
-	nb_rows = N;
-	nb_cols = 2;
-
-	Table = new string [nb_rows * nb_cols];
-
-	for (h = 0, j = from; j < last; j += step, h++) {
-		Table[h * nb_cols + 0] = std::to_string(j);
-		Table[h * nb_cols + 1] = std::to_string(Data[h]);
-	}
-
-	std::string headings;
-
-	headings = "case,nb_sol";
-
-	write_table_of_strings(
-			fname_out,
-			nb_rows, nb_cols, Table,
-			headings,
-			verbose_level);
-
-	if (f_v) {
-		cout << "Written file " << fname_out << " of size "
-			<< Fio->file_size(fname_out) << endl;
-	}
-
-	delete [] Table;
-
-	FREE_int(Data);
-
-	if (f_v) {
-		cout << "csv_file_support::collect_stats done" << endl;
-	}
-
-}
-
-
-void csv_file_support::append_column_of_int(
-		std::string &fname,
-		std::string &fname_out,
-		int *Data, int data_sz,
-		std::string &new_col_label,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "csv_file_support::append_column_of_int "
-				"reading file " << fname << endl;
-	}
-
-
-	std::string *col_labels;
-	std::string *Table;
-	int m, n;
-
-	read_table_of_strings(
-			fname, col_labels,
-			Table, m, n,
-			verbose_level);
-
-	if (f_v) {
-		cout << "csv_file_support::append_column_of_int "
-				"nb_rows = " << m << endl;
-	}
-
-	if (m != data_sz) {
-		cout << "csv_file_support::append_column_of_int "
-				"m != data_sz" << endl;
-		exit(1);
-	}
-
-	std::string *Table_out;
-	std::string *Col_headings;
-	int nb_rows = m;
-	int nb_cols = n + 1;
-	int i, j;
-
-	Table_out = new std::string[nb_rows * nb_cols];
-	for (i = 0; i < nb_rows; i++) {
-		for (j = 0; j < n; j++) {
-			Table_out[i * nb_cols + j] = Table[i * n + j];
-		}
-		Table_out[i * nb_cols + n] = std::to_string(Data[i]);
-	}
-
-	Col_headings = new std::string[nb_cols];
-	for (j = 0; j < n; j++) {
-		Col_headings[j] = col_labels[j];
-	}
-	Col_headings[n] = new_col_label;
-
-	other::data_structures::string_tools ST;
-
-	fname_out = fname;
-
-	ST.chop_off_extension(fname_out);
-
-	fname_out += "_append.csv";
-
-	write_table_of_strings_with_col_headings(
-			fname_out,
-			nb_rows, nb_cols, Table_out,
-			Col_headings,
-			verbose_level);
-
-	delete [] Table;
-	delete [] col_labels;
-	delete [] Table_out;
-	delete [] Col_headings;
-
-	if (f_v) {
-		cout << "csv_file_support::append_column_of_int done" << endl;
-	}
-}
-
-
-void csv_file_support::append_column_of_int_from_set_of_sets(
-		std::string &fname,
-		std::string &fname_out,
-		other::data_structures::set_of_sets_lint *SoS,
-		std::string &new_col_label,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "csv_file_support::append_column_of_int_from_set_of_sets "
-				"file " << fname << endl;
-	}
-
-	std::string *Table_out;
-	std::string *Col_headings;
-	int nb_rows;
-	int nb_cols;
-	int idx_new_col;
-
-	if (Fio->file_size(fname) <= 0) {
-
-		if (f_v) {
-			cout << "csv_file_support::append_column_of_int_from_set_of_sets "
-					" file " << fname << " is empty" << endl;
-		}
-
-		nb_rows = SoS->nb_sets;
-		nb_cols = 1;
-
-
-		Table_out = new std::string[nb_rows * nb_cols];
-
-		Col_headings = new std::string[nb_cols];
-		idx_new_col = 0;
-
-	}
-	else {
-
-		if (f_v) {
-			cout << "csv_file_support::append_column_of_int_from_set_of_sets "
-					"reading file " << fname << endl;
-		}
-
-		std::string *col_labels;
-		std::string *Table;
-		int m, n;
-
-		read_table_of_strings(
-				fname, col_labels,
-				Table, m, n,
-				verbose_level);
-
-		if (f_v) {
-			cout << "csv_file_support::append_column_of_int_from_set_of_sets "
-					"nb_rows = " << m << endl;
-		}
-
-		if (m != SoS->nb_sets) {
-			cout << "csv_file_support::append_column_of_int_from_set_of_sets "
-					"m != SoS->nb_sets" << endl;
-			exit(1);
-		}
-
-		nb_rows = m;
-		nb_cols = n + 1;
-		int i, j;
-
-		Table_out = new std::string[nb_rows * nb_cols];
-		for (i = 0; i < nb_rows; i++) {
-			for (j = 0; j < n; j++) {
-				Table_out[i * nb_cols + j] = Table[i * n + j];
-			}
-		}
-		idx_new_col = n;
-
-		Col_headings = new std::string[nb_cols];
-		for (j = 0; j < n; j++) {
-			Col_headings[j] = col_labels[j];
-		}
-
-		delete [] Table;
-		delete [] col_labels;
-
-	}
-
-	int i;
-
-	for (i = 0; i < nb_rows; i++) {
-		Table_out[i * nb_cols + idx_new_col] = "\"" + SoS->stringify_set(i) + "\"";
-	}
-
-	Col_headings[idx_new_col] = new_col_label;
-
-	other::data_structures::string_tools ST;
-
-	fname_out = fname;
-
-	ST.chop_off_extension(fname_out);
-
-	fname_out += "_append.csv";
-
-	write_table_of_strings_with_col_headings(
-			fname_out,
-			nb_rows, nb_cols, Table_out,
-			Col_headings,
-			verbose_level);
-
-	delete [] Table_out;
-	delete [] Col_headings;
-
-	if (f_v) {
-		cout << "csv_file_support::append_column_of_int_from_set_of_sets done" << endl;
-	}
-}
-
-
-void csv_file_support::write_STL_lint_vec(
-		std::string &fname_out,
-		std::vector<long int> &Gens,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "csv_file_support::write_STL_lint_vec "
-				"writing file " << fname_out << endl;
-	}
-
-
-	int h;
-	std::string *Table;
-	int nb_rows, nb_cols;
-
-	nb_rows = Gens.size();
-	nb_cols = 2;
-
-	Table = new string [nb_rows * nb_cols];
-
-	for (h = 0; h < nb_rows; h++) {
-		Table[h * nb_cols + 0] = std::to_string(h);
-		Table[h * nb_cols + 1] = std::to_string(Gens[h]);
-	}
-
-	std::string headings;
-
-	headings = "case,number";
-
-	write_table_of_strings(
-			fname_out,
-			nb_rows, nb_cols, Table,
-			headings,
-			verbose_level);
-
-	if (f_v) {
-		cout << "Written file " << fname_out << " of size "
-			<< Fio->file_size(fname_out) << endl;
-	}
-
-	delete [] Table;
-
-
-	if (f_v) {
-		cout << "csv_file_support::write_STL_lint_vec done" << endl;
-	}
-
-}
 
 
 }}}}

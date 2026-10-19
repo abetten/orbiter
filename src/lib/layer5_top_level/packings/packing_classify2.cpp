@@ -567,8 +567,10 @@ void packing_classify::report_isomorphism_type(
 
 	groups::schreier Orb;
 	//longinteger_object go;
+	actions::action_global Action_global;
 		
-	Iso->Folding->AA->compute_all_point_orbits(
+	Action_global.compute_all_point_orbits(
+			Iso->Folding->AA, Iso->Folding->AA,
 			Orb,
 			Stab->gens, verbose_level - 2);
 	//cout << "Computed all orbits on the set, "

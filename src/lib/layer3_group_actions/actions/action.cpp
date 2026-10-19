@@ -620,6 +620,7 @@ void action::compute_strong_generators_from_sims(
 	}
 }
 
+#if 0
 void action::compute_all_point_orbits(
 		groups::schreier &S,
 		data_structures_groups::vector_ge &gens, int verbose_level)
@@ -639,6 +640,7 @@ void action::compute_all_point_orbits(
 		cout << "action::compute_all_point_orbits done" << endl;
 	}
 }
+#endif
 
 int action::depth_in_stab_chain(
 		int *Elt)
@@ -724,7 +726,9 @@ void action::compute_stabilizer_orbits(
 			cout << "computing point orbits" << endl;
 		}
 
-		compute_all_point_orbits(Schreier, gen, 0 /*verbose_level - 2*/);
+		action_global Action_global;
+
+		Action_global.compute_all_point_orbits(this, this, Schreier, gen, 0 /*verbose_level - 2*/);
 
 		if (false) {
 			Schreier.Forest->print(cout);

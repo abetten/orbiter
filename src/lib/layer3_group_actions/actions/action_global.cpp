@@ -6573,8 +6573,11 @@ void action_global::report_induced_action_on_set_and_kernel(
 		}
 
 		if (!ko.is_one()) {
+
 			groups::schreier Orb;
-			A_base->compute_all_point_orbits(
+
+			compute_all_point_orbits(
+					A_base, A_base,
 					Orb,
 					AAA->Kernel->gens, verbose_level - 2);
 			int *val, *mult, len;
@@ -7104,6 +7107,55 @@ void action_global::map_a_set_based_on_hdl(
 	FREE_int(Elt);
 	if (f_v) {
 		cout << "action_global::map_a_set_based_on_hdl done" << endl;
+	}
+}
+
+
+
+void action_global::compute_all_point_orbits(
+		actions::action *A_base, actions::action *A_induced,
+		groups::schreier &S,
+		data_structures_groups::vector_ge &gens, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "action_global::compute_all_point_orbits" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "action_global::compute_all_point_orbits "
+				"before S.init" << endl;
+	}
+	S.init(A_base, A_induced, verbose_level - 2);
+	if (f_v) {
+		cout << "action_global::compute_all_point_orbits "
+				"after S.init" << endl;
+	}
+
+	if (f_v) {
+		cout << "action_global::compute_all_point_orbits "
+				"before S.Generators_and_images->init_generators" << endl;
+	}
+	S.Generators_and_images->init_generators(gens, verbose_level - 2);
+	if (f_v) {
+		cout << "action_global::compute_all_point_orbits "
+				"after S.Generators_and_images->init_generators" << endl;
+	}
+
+	if (f_v) {
+		cout << "action_global::compute_all_point_orbits "
+				"before S.compute_all_point_orbits" << endl;
+	}
+	S.compute_all_point_orbits(verbose_level - 1);
+	if (f_v) {
+		cout << "action_global::compute_all_point_orbits "
+				"after S.compute_all_point_orbits" << endl;
+	}
+
+	if (f_v) {
+		cout << "action_global::compute_all_point_orbits done" << endl;
 	}
 }
 

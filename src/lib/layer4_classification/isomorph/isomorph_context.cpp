@@ -26,7 +26,7 @@ isomorph_context::isomorph_context()
 
 	Descr = NULL;
 
-	A = NULL;
+	A_base = NULL;
 	A2 = NULL;
 	gen = NULL;
 	target_size = 0;
@@ -51,7 +51,7 @@ isomorph_context::~isomorph_context()
 
 void isomorph_context::init(
 		isomorph_arguments *Descr,
-		actions::action *A,
+		actions::action *A_base,
 		actions::action *A2,
 		poset_classification::poset_classification *gen,
 	int target_size,
@@ -70,7 +70,7 @@ void isomorph_context::init(
 		cout << "isomorph_context::init" << endl;
 	}
 	isomorph_context::Descr = Descr;
-	isomorph_context::A = A;
+	isomorph_context::A_base = A_base;
 	isomorph_context::A2 = A2;
 	isomorph_context::gen = gen;
 	isomorph_context::target_size = target_size;

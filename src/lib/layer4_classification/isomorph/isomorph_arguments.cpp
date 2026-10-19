@@ -18,10 +18,10 @@ namespace isomorph {
 isomorph_arguments::isomorph_arguments()
 {
 	Record_birth();
+
 	f_prefix_iso = false;
 	//std::string prefix_iso;
 	//prefix_iso = "./ISO/";
-
 
 	f_prefix_with_directory = false;
 	//std::string prefix_with_directory;
@@ -31,6 +31,9 @@ isomorph_arguments::isomorph_arguments()
 
 	f_solution_prefix = false;
 	//std::string solution_prefix;
+
+	f_solution_col_label = false;
+	//std::string solution_col_label;
 
 	f_base_fname = false;
 	//std::string base_fname;
@@ -109,6 +112,11 @@ int isomorph_arguments::read_arguments(
 			f_solution_prefix = true;
 			solution_prefix.assign(argv[++i]);
 			cout << "-solution_prefix " << solution_prefix << endl;
+		}
+		else if (ST.stringcmp(argv[i], "-solution_col_label") == 0) {
+			f_solution_col_label = true;
+			solution_col_label.assign(argv[++i]);
+			cout << "-solution_col_label " << solution_col_label << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-base_fname") == 0) {
 			f_base_fname = true;
@@ -226,6 +234,9 @@ void isomorph_arguments::print()
 	}
 	if (f_solution_prefix) {
 		cout << "-solution_prefix " << solution_prefix << endl;
+	}
+	if (f_solution_col_label) {
+		cout << "-solution_col_label " << solution_col_label << endl;
 	}
 	if (f_base_fname) {
 		cout << "-base_fname " << base_fname << endl;

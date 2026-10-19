@@ -359,6 +359,9 @@ public:
 	int f_solution_prefix;
 	std::string solution_prefix;
 
+	int f_solution_col_label;
+	std::string solution_col_label;
+
 	int f_base_fname;
 	std::string base_fname;
 
@@ -376,6 +379,8 @@ public:
 	//int f_read_solutions_from_clique_finder;
 	//int f_read_solutions_from_clique_finder_list_of_cases;
 	//std::string fname_list_of_cases;
+
+
 	int f_read_solutions_after_split;
 	int read_solutions_split_m;
 
@@ -430,8 +435,11 @@ public:
 
 	isomorph_arguments *Descr;
 
-	actions::action *A;
+	actions::action *A_base;
+
 	actions::action *A2;
+
+
 	poset_classification::poset_classification *gen;
 	int target_size;
 	poset_classification::poset_classification_control *Control;
@@ -457,7 +465,7 @@ public:
 	~isomorph_context();
 	void init(
 			isomorph_arguments *Descr,
-			actions::action *A,
+			actions::action *A_base,
 			actions::action *A2,
 			poset_classification::poset_classification *gen,
 		int target_size,
@@ -634,6 +642,12 @@ struct isomorph_worker_data {
 
 class isomorph {
 public:
+
+
+	isomorph_context *Isomorph_context;
+
+
+
 	int size; // size of one solution
 	int level; // size of one subobject
 
@@ -677,17 +691,21 @@ public:
 	isomorph();
 	~isomorph();
 	void init(
-			std::string &prefix,
-			actions::action *A_base,
-			actions::action *A,
-			poset_classification::poset_classification *gen,
-		int size, int level, 
-		int f_use_database_for_starter, 
-		int f_implicit_fusion, int verbose_level);
+			isomorph_context *Isomorph_context,
+			//std::string &prefix,
+			//actions::action *A_base,
+			//actions::action *A,
+			//poset_classification::poset_classification *gen,
+		//int size,
+		int level,
+		//int f_use_database_for_starter,
+		//int f_implicit_fusion,
+		int verbose_level);
 	void print_node_local(
 			int level, int node_local);
 	void print_node_global(
 			int level, int node_global);
+#if 0
 	void init_high_level(
 			actions::action *A,
 			poset_classification::poset_classification *gen,
@@ -696,6 +714,8 @@ public:
 		std::string &prefix,
 		int level, int verbose_level);
 	// calls layer2_discreta::typed_objects::discreta_init();
+#endif
+
 	void report_induced_action_on_set_and_kernel(
 			std::ostream &file,
 			actions::action *A_base,
@@ -854,9 +874,6 @@ public:
 	~substructure_classification();
 	void init(
 			isomorph *Iso,
-			poset_classification::poset_classification *gen,
-			int f_use_database_for_starter,
-			int f_implicit_fusion,
 			int verbose_level);
 	void read_data_files_for_starter(
 			int level,
@@ -1148,9 +1165,10 @@ public:
 	void load_solution_by_btree(
 			int btree_idx,
 		int idx, int &id, long int *data);
-	void count_solutions(
+	void count_solutions_in_list_of_files(
 			int nb_files,
 			std::string *fname,
+			std::string &col_label,
 			int *List_of_cases, int *&Nb_sol_per_file,
 			int f_get_statistics,
 			int f_has_final_test_function,
@@ -1183,6 +1201,7 @@ public:
 	void read_solutions_from_clique_finder(
 			int nb_files,
 			std::string *fname,
+			std::string &solution_col_label,
 			int *substructure_case_number, int *Nb_sol_per_file,
 			int verbose_level);
 	void build_up_database(

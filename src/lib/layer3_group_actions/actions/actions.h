@@ -226,12 +226,14 @@ public:
 			groups::sims *G, int verbose_level);
 	void compute_strong_generators_from_sims(
 			int verbose_level);
+#if 0
 	void compute_all_point_orbits(
 			groups::schreier &S,
 			data_structures_groups::vector_ge &gens,
 			int verbose_level);
+	// outdated. use action_global::compute_all_point_orbits instead
 	// using the present action for both A_base and A_induced
-
+#endif
 
 	
 	/** the index of the first base point which is moved */
@@ -825,6 +827,10 @@ public:
 			actions::action *A_base, actions::action *A_induced,
 			int hdl,
 			int verbose_level);
+	void compute_all_point_orbits(
+			actions::action *A_base, actions::action *A_induced,
+			groups::schreier &S,
+			data_structures_groups::vector_ge &gens, int verbose_level);
 
 	// in backtrack.cpp
 	int is_minimal(

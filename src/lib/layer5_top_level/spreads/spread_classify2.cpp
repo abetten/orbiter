@@ -840,8 +840,11 @@ void spread_classify::report3(
 
 		groups::schreier Orb;
 		//longinteger_object go2;
+		actions::action_global Action_global;
 		
-		Iso.Folding->AA->compute_all_point_orbits(Orb,
+		Action_global.compute_all_point_orbits(
+				Iso.Folding->AA, Iso.Folding->AA,
+				Orb,
 				Stab->gens, verbose_level - 2);
 		ost << "With " << Orb.Forest->nb_orbits
 				<< " orbits on the subspaces\\\\" << endl;
@@ -1180,7 +1183,11 @@ void spread_classify::cooperstein_thas_quotients(
 				"before compute_all_point_orbits" << endl;
 	}
 
-	Iso.A_base->compute_all_point_orbits(Orb,
+	actions::action_global Action_global;
+
+	Action_global.compute_all_point_orbits(
+			Iso.A_base, Iso.A_base,
+			Orb,
 			Stab->gens, 0 /*verbose_level - 2*/);
 
 	if (f_vv) {
@@ -1373,8 +1380,12 @@ void spread_classify::orbit_info_short(
 
 	groups::schreier Orb;
 	//longinteger_object go2;
-		
-	Iso.Folding->AA->compute_all_point_orbits(Orb, Stab->gens, 0 /*verbose_level - 2*/);
+
+	actions::action_global Action_global;
+
+	Action_global.compute_all_point_orbits(
+			Iso.Folding->AA, Iso.Folding->AA,
+			Orb, Stab->gens, 0 /*verbose_level - 2*/);
 	//f << "With " << Orb.nb_orbits << " orbits on the subspaces\\\\" << endl;
 
 	ost << " & " << Orb.Forest->nb_orbits << " & ";

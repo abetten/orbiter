@@ -24,6 +24,9 @@ namespace isomorph {
 isomorph::isomorph()
 {
 	Record_birth();
+
+	Isomorph_context = NULL;
+
 	size = 0;
 	level = 0;
 
@@ -75,16 +78,58 @@ isomorph::~isomorph()
 }
 
 void isomorph::init(
-		std::string &prefix,
-		actions::action *A_base,
-		actions::action *A,
-		poset_classification::poset_classification *gen,
-	int size, int level, 
-	int f_use_database_for_starter, 
-	int f_implicit_fusion,
+		isomorph_context *Isomorph_context,
+		//std::string &prefix,
+		//actions::action *A_base,
+		//actions::action *A,
+		//poset_classification::poset_classification *gen,
+	//int size,
+	int level,
+	//int f_use_database_for_starter,
+	//int f_implicit_fusion,
 	int verbose_level)
+
+// called from isomorph_worker::init
+
+//Isomorph_context->Descr->prefix_iso,
+//Isomorph_context->A_base, //A_base,
+//Isomorph_context->A2, // A
+//Isomorph_context->gen,
+//Isomorph_context->target_size, // size,
+//level,
+//Isomorph_context->Descr->f_use_database_for_starter,
+//Isomorph_context->Descr->f_implicit_fusion,
+//verbose_level);
 {
 	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "isomorph::init" << endl;
+	}
+
+
+	isomorph::Isomorph_context = Isomorph_context;
+
+
+
+	//isomorph::size = size; //Isomorph_context->target_size
+	isomorph::size = Isomorph_context->target_size;
+	isomorph::level = level;
+
+
+
+	isomorph::prefix = Isomorph_context->Descr->prefix_iso;
+
+	prefix_invariants = prefix + "INVARIANTS/";
+
+
+	prefix_tex = prefix + "TEX/";
+
+
+	isomorph::A_base = Isomorph_context->A_base; //Isomorph_context->A_base
+	isomorph::A = Isomorph_context->A2; //Isomorph_context->A2
+
+
 
 	if (f_v) {
 		cout << "isomorph::init" << endl;
@@ -93,25 +138,11 @@ void isomorph::init(
 		cout << "A=" << A->label << endl;
 		cout << "size=" << size << endl;
 		cout << "level=" << level << endl;
-		cout << "f_use_database_for_starter="
-				<< f_use_database_for_starter << endl;
-		cout << "f_implicit_fusion=" << f_implicit_fusion << endl;
+		cout << "f_use_database_for_starter=" << Isomorph_context->Descr->f_use_database_for_starter << endl;
+		cout << "f_implicit_fusion=" << Isomorph_context->Descr->f_implicit_fusion << endl;
 	}
 
-	isomorph::size = size;
-	isomorph::level = level;
 
-
-	isomorph::prefix = prefix;
-
-	prefix_invariants = prefix + "INVARIANTS/";
-
-
-	prefix_tex = prefix + "TEX/";
-
-
-	isomorph::A_base = A_base;
-	isomorph::A = A;
 
 
 	Sub = NEW_OBJECT(substructure_classification);
@@ -123,9 +154,9 @@ void isomorph::init(
 
 	Sub->init(
 			this,
-			gen,
-			f_use_database_for_starter,
-			f_implicit_fusion,
+			//Isomorph_context->gen,
+			//Isomorph_context->Descr->f_use_database_for_starter,
+			//Isomorph_context->Descr->f_implicit_fusion,
 			verbose_level - 1);
 
 	if (f_v) {
@@ -181,6 +212,7 @@ void isomorph::print_node_global(
 }
 
 
+#if 0
 void isomorph::init_high_level(
 		actions::action *A,
 		poset_classification::poset_classification *gen,
@@ -301,6 +333,7 @@ void isomorph::init_high_level(
 		cout << "isomorph::init_high_level done" << endl;
 	}
 }
+#endif
 
 void isomorph::report_induced_action_on_set_and_kernel(
 	std::ostream &file,

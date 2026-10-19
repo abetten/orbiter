@@ -75,14 +75,15 @@ void isomorph_worker::init(
 		cout << "isomorph_worker::init before Iso->init" << endl;
 	}
 	Iso->init(
-			Isomorph_context->Descr->prefix_iso,
-			Isomorph_context->A, //A_base,
-			Isomorph_context->A2, // A
-			Isomorph_context->gen,
-			Isomorph_context->target_size, // size,
+			Isomorph_context,
+			//Isomorph_context->Descr->prefix_iso,
+			//Isomorph_context->A_base, //A_base,
+			//Isomorph_context->A2, // A
+			//Isomorph_context->gen,
+			//Isomorph_context->target_size, // size,
 			level,
-			Isomorph_context->Descr->f_use_database_for_starter,
-			Isomorph_context->Descr->f_implicit_fusion,
+			//Isomorph_context->Descr->f_use_database_for_starter,
+			//Isomorph_context->Descr->f_implicit_fusion,
 			verbose_level);
 		// sets size, level and initializes file names
 
@@ -512,10 +513,12 @@ void isomorph_worker::read_solutions(
 
 	if (f_v) {
 		cout << "isomorph_global::read_solutions "
-				"before Iso->Lifting->count_solutions" << endl;
+				"before Iso->Lifting->count_solutions_in_list_of_files" << endl;
 	}
-	Iso->Lifting->count_solutions(
-			nb_files, fname_array, List_of_cases, Nb_sol_per_file,
+	Iso->Lifting->count_solutions_in_list_of_files(
+			nb_files, fname_array,
+			Isomorph_context->Descr->solution_col_label,
+			List_of_cases, Nb_sol_per_file,
 			f_get_statistics,
 			f_has_final_test_function,
 			NULL /* final_test_function */, NULL /* final_test_data */,
@@ -526,7 +529,7 @@ void isomorph_worker::read_solutions(
 
 	if (f_v) {
 		cout << "isomorph_global::read_solutions "
-				"after Iso->Lifting->count_solutions " << endl;
+				"after Iso->Lifting->count_solutions_in_list_of_files " << endl;
 	}
 	if (f_v) {
 		cout << "isomorph_global::read_solutions "
@@ -540,7 +543,9 @@ void isomorph_worker::read_solutions(
 	}
 
 	Iso->Lifting->read_solutions_from_clique_finder(
-			nb_files, fname_array, List_of_cases, Nb_sol_per_file,
+			nb_files, fname_array,
+			Isomorph_context->Descr->solution_col_label,
+			List_of_cases, Nb_sol_per_file,
 			verbose_level);
 
 	if (f_v) {
@@ -669,6 +674,8 @@ void isomorph_worker::isomorph_testing(
 	Iso.gen->root[28].print_node(Iso.gen);
 #endif
 
+	// allocate Reps:
+
 	if (f_v) {
 		cout << "isomorph_worker::isomorph_testing "
 				"before Iso->Folding->iso_test_init" << endl;
@@ -795,6 +802,24 @@ void isomorph_worker::isomorph_testing(
 		ECA->starter_size,
 		f_event_file, event_file_name, print_mod,
 		verbose_level);
+#endif
+
+
+#if 0
+
+	if (f_v) {
+		cout << "isomorph_worker::isomorph_testing "
+				<< "before isomorph_report" << endl;
+	}
+
+	isomorph_report(
+			verbose_level);
+
+	if (f_v) {
+		cout << "isomorph_worker::isomorph_testing "
+				<< "after isomorph_report" << endl;
+	}
+
 #endif
 
 	if (f_v) {
@@ -976,6 +1001,11 @@ void isomorph_worker::report(
 	int id;
 	algebra::ring_theory::longinteger_object go;
 
+	if (Iso->Folding->Reps == NULL) {
+		cout << "isomorph_worker::report "
+				"Iso->Folding->Reps == NULL" << endl;
+		exit(1);
+	}
 	Reps = Iso->Folding->Reps;
 
 	int h, i;

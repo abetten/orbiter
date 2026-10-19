@@ -1543,7 +1543,10 @@ void flag_orbit_folding::print_isomorphism_types(
 		groups::schreier Orb;
 		algebra::ring_theory::longinteger_object go;
 
-		AA->compute_all_point_orbits(Orb, Stab->gens, verbose_level - 2);
+		actions::action_global Action_global;
+
+		Action_global.compute_all_point_orbits(AA, AA, Orb, Stab->gens, verbose_level - 2);
+
 		cout << "Computed all orbits on the set, found "
 				<< Orb.Forest->nb_orbits << " orbits" << endl;
 		cout << "orbit lengths: ";
@@ -4460,7 +4463,10 @@ void flag_orbit_folding::compute_stabilizer(
 				"before A_induced->compute_all_point_orbits" << endl;
 	}
 
-	A_induced->compute_all_point_orbits(
+	actions::action_global Action_global;
+
+	Action_global.compute_all_point_orbits(
+			Iso->A, A_induced,
 			*Schreier, *gens,
 			0/*verbose_level - 2*/);
 
@@ -4524,6 +4530,7 @@ void flag_orbit_folding::compute_stabilizer(
 
 void flag_orbit_folding::iso_test_init(
 		int verbose_level)
+// allocates Reps
 {
 	int f_v = (verbose_level >= 1);
 
