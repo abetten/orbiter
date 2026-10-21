@@ -835,7 +835,7 @@ all:
 	cd layer6_user_interface; $(MAKE)
 	ar ruvs liborbiter.a $(ORBITER_MODULES)
 	ar ruvs liborbiterui.a $(ORBITER_USER_INTERFACE_MODULES)
-	ar ruvs libjeffreyleon.a $(JL_MODULES)
+	#ar ruvs libjeffreyleon.a $(JL_MODULES)
 
 
 clean:

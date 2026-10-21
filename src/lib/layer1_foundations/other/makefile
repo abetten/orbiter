@@ -9,12 +9,12 @@ all: \
 	bitset1 \
 	data_structures1 \
 	graphics1 \
-	Jeffrey_Leon_partition_backtrack1 \
 	l1_interfaces1 \
 	orbiter_kernel_system1 \
 	polish1
 
 
+#	Jeffrey_Leon_partition_backtrack1 \
 #	bitset1 \
 #	Eigen_interface1 \
 
