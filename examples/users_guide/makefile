@@ -25536,6 +25536,7 @@ BLT_13_cliques:
 				-find_cliques \
 				-Sajeeb \
 				-rainbow -target_size 9 \
+				-output_file BLT_q13_graph_5_%L_sol.csv \
 			-end \
 		-end_loop L
 
@@ -25559,14 +25560,16 @@ BLT_13_isomorph_read_DB:
 				-W -depth 5 \
 			-end \
 		-end \
+		-define Iso -isomorph_arguments \
+			-prefix_iso "BLT_q13" \
+			-summary_file BLT_q13_list_of_cases.csv \
+			-use_database_for_starter \
+			-build_db \
+			-solution_prefix "" \
+			-base_fname "" \
+		-end \
 		-with C -do -BLT_set_classify_activity \
-			-isomorph \
-				-prefix_iso "./BLT_q13" \
-				-use_database_for_starter \
-				-build_db \
-				-solution_prefix "" \
-				-base_fname "" \
-			-end \
+			-isomorph Iso \
 		-end
 
 #blt_set_classify_activity_description::read_arguments
@@ -25587,15 +25590,18 @@ BLT_13_isomorph_read_solutions:
 				-W -depth 5 \
 			-end \
 		-end \
+		-define Iso -isomorph_arguments \
+			-prefix_iso "BLT_q13" \
+			-use_database_for_starter \
+			-summary_file BLT_q13_list_of_cases.csv \
+			-read_solutions \
+			-list_of_cases BLT_q13_list_of_cases_5_0_1.csv \
+			-solution_prefix "" \
+			-solution_col_label "Solution" \
+			-base_fname "BLT_q13_graph" \
+		-end \
 		-with C -do -BLT_set_classify_activity \
-			-isomorph \
-				-prefix_iso "./BLT_q13" \
-				-use_database_for_starter \
-				-read_solutions \
-				-list_of_cases BLT_q13_list_of_cases_5_0_1.csv \
-				-solution_prefix "" \
-				-base_fname "BLT_q13_graph" \
-			-end \
+			-isomorph Iso \
 		-end
 
 
@@ -25612,19 +25618,20 @@ BLT_13_isomorph_stabilizer_orbits:
 				-W -depth 5 \
 			-end \
 		-end \
+		-define Iso -isomorph_arguments \
+			-prefix_iso "BLT_q13" \
+			-use_database_for_starter \
+			-summary_file BLT_q13_list_of_cases.csv \
+			-compute_orbits \
+			-solution_prefix "" \
+			-base_fname "BLT_q13_graph" \
+		-end \
 		-with C -do -BLT_set_classify_activity \
-			-isomorph \
-				-prefix_iso "./BLT_q13" \
-				-use_database_for_starter \
-				-compute_orbits \
-				-list_of_cases BLT_q13_list_of_cases_5_0_1.csv \
-				-solution_prefix "" \
-				-base_fname "BLT_q13_graph" \
-			-end \
+			-isomorph Iso \
 		-end
 
 BLT_13_isomorph_testing:
-	$(ORBITER) -v 4 \
+	$(ORBITER) -v 2 \
 		-define F -finite_field -q 13 -end \
 		-define O -orthogonal_space 0 5 F -end \
 		-define C -BLT_set_classifier \
@@ -25636,33 +25643,44 @@ BLT_13_isomorph_testing:
 				-W -depth 5 \
 			-end \
 		-end \
-		-define Iso1 -isomorph_arguments \
-			-prefix_iso "./BLT_q13" \
+		-define Iso -isomorph_arguments \
+			-prefix_iso "BLT_q13" \
 			-use_database_for_starter \
+			-summary_file BLT_q13_list_of_cases.csv \
 			-isomorph_testing \
 			-solution_prefix "" \
 			-base_fname "BLT_q13_graph" \
 		-end \
 		-with C -do -BLT_set_classify_activity \
-			-isomorph Iso1 \
-			-end \
+			-isomorph Iso \
 		-end \
 		-define Iso2 -isomorph_arguments \
-			-prefix_iso "./BLT_q13" \
+			-prefix_iso "BLT_q13" \
 			-use_database_for_starter \
+			-summary_file BLT_q13_list_of_cases.csv \
 			-isomorph_report \
 			-solution_prefix "" \
 			-base_fname "BLT_q13_graph" \
 		-end \
 		-with C -do -BLT_set_classify_activity \
 			-isomorph Iso2 \
-			-end \
 		-end \
-		-print_symbols
+		-define Iso3 -isomorph_arguments \
+			-prefix_iso "BLT_q13" \
+			-use_database_for_starter \
+			-summary_file BLT_q13_list_of_cases.csv \
+			-export_source_code \
+			-solution_prefix "" \
+			-base_fname "BLT_q13_graph" \
+		-end \
+		-with C -do -BLT_set_classify_activity \
+			-isomorph Iso3 \
+		-end
 	$(PDFLATEX) BLT_q13_isomorphism_types.tex
 	$(OPEN) BLT_q13_isomorphism_types.pdf
 
 
+#BLT_q13_classification.cpp
 
 
 

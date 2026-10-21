@@ -104,7 +104,13 @@ void substructure_classification::init(
 		cout << "f_implicit_fusion=" << f_use_implicit_fusion << endl;
 	}
 
-	nb_starter = 0;
+	if (f_v) {
+		cout << "substructure_classification::init level = " << Iso->level << endl;
+	}
+	nb_starter = Iso->Isomorph_context->gen->get_Poo()->nb_orbits_at_level(Iso->level);
+	if (f_v) {
+		cout << "substructure_classification::init nb_starter = " << nb_starter << endl;
+	}
 
 
 

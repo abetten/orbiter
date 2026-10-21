@@ -19,6 +19,9 @@ isomorph_arguments::isomorph_arguments()
 {
 	Record_birth();
 
+	f_summary_file = false;
+	//std::string summary_file_name;
+
 	f_prefix_iso = false;
 	//std::string prefix_iso;
 	//prefix_iso = "./ISO/";
@@ -93,7 +96,13 @@ int isomorph_arguments::read_arguments(
 	other::data_structures::string_tools ST;
 
 	for (i = 0; i < argc; i++) {
-		if (ST.stringcmp(argv[i], "-prefix_iso") == 0) {
+
+		if (ST.stringcmp(argv[i], "-summary_file") == 0) {
+			f_summary_file = true;
+			summary_file_name.assign(argv[++i]);
+			cout << "-summary_file " << summary_file_name << endl;
+		}
+		else if (ST.stringcmp(argv[i], "-prefix_iso") == 0) {
 			f_prefix_iso = true;
 			prefix_iso.assign(argv[++i]);
 			cout << "-prefix_iso " << prefix_iso << endl;
@@ -223,6 +232,9 @@ int isomorph_arguments::read_arguments(
 
 void isomorph_arguments::print()
 {
+	if (f_summary_file) {
+		cout << "-summary_file " << summary_file_name << endl;
+	}
 	if (f_prefix_iso) {
 		cout << "-prefix_iso " << prefix_iso << endl;
 	}

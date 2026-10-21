@@ -507,6 +507,19 @@ void blt_set_classify::create_graphs(
 
 	nb_of_cases = 0;
 	list_of_cases = NEW_lint(nb_orbits);
+
+	int nb_rows, nb_cols;
+	string *Table;
+
+	nb_rows = nb_orbits;
+	nb_cols = 8;
+
+	Table = new string [nb_rows * nb_cols];
+
+
+
+
+
 	for (orbit = 0; orbit < nb_orbits; orbit++) {
 		if ((orbit % orbit_at_level_m) != orbit_at_level_r) {
 			continue;
@@ -530,13 +543,23 @@ void blt_set_classify::create_graphs(
 					"with orbit " << orbit << " / " << nb_orbits
 					<< ": before create_graph" << endl;
 		}
+
+
+		data_structures_groups::orbit_rep *R;
+
+		R = get_orbit_rep_from_file(
+				orbit, level_of_candidates_file,
+				verbose_level);
+
+
 		if (create_graph(
 				orbit, level_of_candidates_file,
+				R,
 			f_lexorder_test, f_eliminate_graphs_if_possible, 
 			nb_vertices,
 			CG,  
 			verbose_level - 2)) {
-			list_of_cases[nb_of_cases++] = orbit;
+			list_of_cases[nb_of_cases] = orbit;
 
 			string fname;
 
@@ -544,7 +567,30 @@ void blt_set_classify::create_graphs(
 			CG->save(fname, verbose_level - 2);
 			
 			nb_vertices = CG->nb_points;
+
+			string fname_sol;
+
+
+			fname_sol = Worker->Isomorph_context->Descr->solution_prefix
+					+ Worker->Isomorph_context->Descr->base_fname
+					+ "_" + std::to_string(Worker->Iso->level) + "_" + std::to_string(orbit) + "_sol.csv";
+
+
+			Table[nb_of_cases * nb_cols + 0] = std::to_string(nb_of_cases);
+			Table[nb_of_cases * nb_cols + 1] = std::to_string(orbit);
+			Table[nb_of_cases * nb_cols + 2] = "\"" + Lint_vec_stringify(CG->user_data, CG->user_data_size) + "\"";
+			Table[nb_of_cases * nb_cols + 3] = R->stab_go->stringify();
+			Table[nb_of_cases * nb_cols + 4] = fname;
+			Table[nb_of_cases * nb_cols + 5] = std::to_string(nb_vertices);
+			Table[nb_of_cases * nb_cols + 6] = std::to_string(CG->nb_colors);
+			Table[nb_of_cases * nb_cols + 7] = fname_sol;
+
+			nb_of_cases++;
+
 		}
+
+		FREE_OBJECT(R);
+
 		if (f_v3) {
 			cout << "blt_set_classify::create_graphs "
 					"creating graph associated "
@@ -578,6 +624,46 @@ void blt_set_classify::create_graphs(
 			}
 		}
 	}
+
+	nb_rows = nb_of_cases;
+
+
+	string fname_cases;
+	string *Col_headings;
+
+
+	Col_headings = new string [nb_cols];
+	Col_headings[0] = "Case";
+	Col_headings[1] = "Po";
+	Col_headings[2] = "Starter";
+	Col_headings[3] = "StarterStab";
+	Col_headings[4] = "GraphFile";
+	Col_headings[5] = "GraphNbV";
+	Col_headings[6] = "GraphNbC";
+	Col_headings[7] = "SolFile";
+
+
+	fname_cases = Blt_set_domain->prefix +  + "_list_of_cases.csv";
+
+	//other::orbiter_kernel_system::file_io Fio;
+
+
+	Fio.Csv_file_support->write_table_of_strings_with_col_headings(
+			fname_cases,
+			nb_rows, nb_cols, Table,
+			Col_headings,
+			verbose_level);
+
+	delete [] Table;
+	delete [] Col_headings;
+
+	if (f_v) {
+		cout << "blt_set_classify::create_graphs "
+				"Written file "
+				<< fname_cases << " of size "
+				<< Fio.file_size(fname_cases) << endl;
+	}
+
 
 	if (f_v) {
 		cout << "blt_set_classify::create_graphs "
@@ -690,8 +776,16 @@ void blt_set_classify::create_graphs_list_of_cases(
 		int nb_vertices = -1;
 
 
+		data_structures_groups::orbit_rep *R;
+
+		R = get_orbit_rep_from_file(
+				orbit, level_of_candidates_file,
+				verbose_level);
+
+
 		if (create_graph(
 				orbit, level_of_candidates_file,
+				R,
 			f_lexorder_test, f_eliminate_graphs_if_possible, 
 			nb_vertices,
 			CG,  
@@ -707,6 +801,8 @@ void blt_set_classify::create_graphs_list_of_cases(
 			nb_vertices = CG->nb_points;
 			//delete CG;
 		}
+
+		FREE_OBJECT(R);
 
 		if (CG) {
 			cout << "before FREE_OBJECT(CG)" << endl;
@@ -752,8 +848,49 @@ void blt_set_classify::create_graphs_list_of_cases(
 }
 
 
+data_structures_groups::orbit_rep *blt_set_classify::get_orbit_rep_from_file(
+	int orbit_at_level, int level_of_candidates_file,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "blt_set_classify::get_orbit_rep_from_file" << endl;
+	}
+
+
+	data_structures_groups::orbit_rep *R;
+
+	R = NEW_OBJECT(data_structures_groups::orbit_rep);
+	if (f_v) {
+		cout << "blt_set_classify::get_orbit_rep_from_file "
+				"before R->init_from_file" << endl;
+	}
+
+	R->init_from_file(
+			A, Blt_set_domain->prefix,
+		starter_size, orbit_at_level, level_of_candidates_file,
+		blt_set_classify_early_test_func_callback,
+		this /* early_test_func_callback_data */,
+		verbose_level - 2);
+
+	if (f_v) {
+		cout << "blt_set_classify::get_orbit_rep_from_file "
+				"after R->init_from_file" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "blt_set_classify::get_orbit_rep_from_file done" << endl;
+	}
+	return R;
+}
+
+
 int blt_set_classify::create_graph(
 	int orbit_at_level, int level_of_candidates_file, 
+	data_structures_groups::orbit_rep *R,
 	int f_lexorder_test, int f_eliminate_graphs_if_possible, 
 	int &nb_vertices,
 	combinatorics::graph_theory::colored_graph *&CG,
@@ -780,7 +917,7 @@ int blt_set_classify::create_graph(
 	
 	int ret;
 
-	data_structures_groups::orbit_rep *R;
+	//data_structures_groups::orbit_rep *R;
 	actions::action_global AG;
 
 
@@ -791,6 +928,7 @@ int blt_set_classify::create_graph(
 	nb_vertices = 0;
 
 
+#if 0
 	R = NEW_OBJECT(data_structures_groups::orbit_rep);
 	if (f_v) {
 		cout << "blt_set_classify::create_graph "
@@ -807,6 +945,9 @@ int blt_set_classify::create_graph(
 		cout << "blt_set_classify::create_graph "
 				"after R->init_from_file" << endl;
 	}
+#endif
+
+
 	nb = q + 1 - starter_size;
 
 
@@ -872,7 +1013,7 @@ int blt_set_classify::create_graph(
 					<< R->nb_cases << " nb_candidates < nb, "
 							"the case is eliminated" << endl;
 		}
-		FREE_OBJECT(R);
+		//FREE_OBJECT(R);
 		return false;
 	}
 		//}
@@ -884,7 +1025,7 @@ int blt_set_classify::create_graph(
 	if (f_v) {
 		cout << "blt_set_classify::create_graph before "
 				"Blt_set_domain->create_graph" << endl;
-		}
+	}
 	ret = Blt_set_domain->create_graph(
 			orbit_at_level, R->nb_cases,
 			R->rep, starter_size,
@@ -897,7 +1038,7 @@ int blt_set_classify::create_graph(
 				"Blt_set_domain->create_graph" << endl;
 	}
 
-	FREE_OBJECT(R);
+	//FREE_OBJECT(R);
 	return ret;
 }
 

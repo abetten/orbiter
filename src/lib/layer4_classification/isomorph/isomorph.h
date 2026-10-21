@@ -347,6 +347,10 @@ public:
 
 	// TABLES/isomorph.tex
 
+	int f_summary_file;
+	std::string summary_file_name;
+
+
 	int f_prefix_iso;
 	std::string prefix_iso;
 
@@ -591,6 +595,13 @@ public:
 	isomorph_global *Isomorph_global;
 
 	isomorph *Iso;
+
+
+	int nb_rows, nb_cols;
+	std::string *Table;
+	std::string *col_label;
+
+	int *List_of_cases;
 
 	isomorph_worker();
 	~isomorph_worker();

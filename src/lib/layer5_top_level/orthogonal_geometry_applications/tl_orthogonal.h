@@ -120,8 +120,12 @@ public:
 		int level_of_candidates_file,
 		int f_lexorder_test, int f_eliminate_graphs_if_possible,
 		int verbose_level);
+	data_structures_groups::orbit_rep *get_orbit_rep_from_file(
+		int orbit_at_level, int level_of_candidates_file,
+		int verbose_level);
 	int create_graph(
 		int orbit_at_level, int level_of_candidates_file,
+		data_structures_groups::orbit_rep *R,
 		int f_lexorder_test, int f_eliminate_graphs_if_possible,
 		int &nb_vertices,
 		combinatorics::graph_theory::colored_graph *&CG,

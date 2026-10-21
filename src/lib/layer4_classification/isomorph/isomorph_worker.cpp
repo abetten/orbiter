@@ -31,6 +31,14 @@ isomorph_worker::isomorph_worker()
 	Isomorph_global = NULL;
 	Iso = NULL;
 
+	nb_rows = -1;
+	nb_cols = -1;
+	Table = NULL;
+	col_label = NULL;
+
+	List_of_cases = NULL;
+
+
 	if (f_v) {
 		cout << "isomorph_worker::isomorph_worker "
 				"before layer2_discreta::discreta_init" << endl;
@@ -112,30 +120,61 @@ void isomorph_worker::execute(
 		cout << "isomorph_worker::execute" << endl;
 	}
 
-#if 0
-	if (!Isomorph_context->f_init_has_been_called) {
-		cout << "isomorph_worker::execute please "
-				"call Isomorph_context->init before execute" << endl;
+
+	//other::orbiter_kernel_system::file_io Fio;
+
+
+	string fname_cases;
+
+	if (Isomorph_context->Descr->f_summary_file) {
+		cout << "isomorph_worker::execute summary_file " << Isomorph_context->Descr->summary_file_name << endl;
+
+
+	}
+	else {
+		cout << "isomorph_worker::execute summary_file please use option -summary_file" << endl;
 		exit(1);
 	}
-#endif
 
-#if 0
-	Iso->read_data_files_for_starter(Iso->level, Isomorph_context->prefix_classify,
+	fname_cases = Isomorph_context->Descr->summary_file_name;
+
+	if (f_v) {
+		cout << "isomorph_worker::execute "
+				"before read_table_of_strings" << endl;
+	}
+
+	Fio.Csv_file_support->read_table_of_strings(
+			fname_cases, col_label,
+			Table, nb_rows, nb_cols,
 			verbose_level);
-#else
-	if (f_v) {
-		cout << "isomorph_worker::execute "
-				"before Iso->Sub->compute_nb_starter" << endl;
-	}
-	Iso->Sub->compute_nb_starter(
-			Iso->level, verbose_level);
-	if (f_v) {
-		cout << "isomorph_worker::execute "
-				"after Iso->Sub->compute_nb_starter" << endl;
-	}
-#endif
 
+	if (f_v) {
+		cout << "isomorph_worker::execute "
+				"after read_table_of_strings" << endl;
+	}
+
+	int i;
+	List_of_cases = NEW_int(nb_rows);
+	other::data_structures::string_tools String;
+
+	string header;
+
+	header = "Case";
+
+	int col_idx;
+
+	if (!String.find_string_in_array(
+			col_label, nb_cols,
+			header, col_idx)) {
+		cout << "isomorph_worker::execute "
+				"summary_file Cannot find column with label " << header << endl;
+		exit(1);
+	}
+
+
+	for (i = 0; i < nb_rows; i++) {
+		List_of_cases[i] = std::stoi(Table[i * nb_cols + col_idx]);
+	}
 
 	if (Isomorph_context->Descr->f_build_db) {
 
@@ -403,11 +442,50 @@ void isomorph_worker::read_solutions(
 	if (f_v) {
 		cout << "isomorph_worker::read_solutions" << endl;
 	}
+
+	other::data_structures::string_tools String;
+
 	string *fname_array;
-	int nb_files = 1;
-	int *List_of_cases;
+	int nb_files;
+	//int *List_of_cases;
+	int i;
 
 
+	nb_files = nb_rows;
+
+	string header;
+
+	header = "GraphFile";
+
+	int col_idx;
+
+	if (!String.find_string_in_array(
+			col_label, nb_cols,
+			header, col_idx)) {
+		cout << "isomorph_worker::read_solutions "
+				"Cannot find column with label " << header << endl;
+		exit(1);
+	}
+
+
+	fname_array = new string[nb_rows];
+
+	for (i = 0; i < nb_files; i++) {
+
+		string fname;
+		string fname_sol;
+
+		fname = Table[i * nb_cols + col_idx];
+		fname_sol = fname;
+
+		String.chop_off_extension(fname_sol);
+		fname_sol += "_sol.csv";
+
+		fname_array[i] = fname_sol;
+
+	}
+
+#if 0
 	if (Isomorph_context->Descr->f_list_of_cases) {
 
 		if (f_v) {
@@ -482,6 +560,9 @@ void isomorph_worker::read_solutions(
 		}
 
 	}
+#endif
+
+
 	if (f_v) {
 		int i;
 		cout << "isomorph_worker::read_solutions list of cases, file names:" << endl;
@@ -501,8 +582,9 @@ void isomorph_worker::read_solutions(
 		cout << "isomorph_global::read_solutions "
 				"before Iso.read_data_files_for_starter" << endl;
 	}
-	Iso->read_data_files_for_starter(Iso->level,
-			Isomorph_arguments->prefix_classify,
+	Iso->Sub->read_data_files_for_starter(
+			Iso->level,
+			Iso->Isomorph_context->Descr->prefix_classify,
 			verbose_level);
 
 #endif
@@ -552,6 +634,14 @@ void isomorph_worker::read_solutions(
 		cout << "isomorph_global::read_solutions "
 				"after Iso->read_solutions_from_clique_finder" << endl;
 	}
+
+	if (f_v) {
+		cout << "isomorph_global::read_solutions "
+				"Iso->Lifting->N = " << Iso->Lifting->N << endl;
+	}
+
+	delete [] fname_array;
+
 
 	if (f_v) {
 		cout << "isomorph_worker::read_solutions done" << endl;
