@@ -506,6 +506,7 @@ void blt_set_classify::create_graphs(
 	time_idx = 0;
 
 	nb_of_cases = 0;
+
 	list_of_cases = NEW_lint(nb_orbits);
 
 	int nb_rows, nb_cols;
@@ -547,40 +548,92 @@ void blt_set_classify::create_graphs(
 
 		data_structures_groups::orbit_rep *R;
 
+		if (f_v) {
+			cout << "blt_set_classify::create_graphs "
+					"before get_orbit_rep_from_file" << endl;
+		}
 		R = get_orbit_rep_from_file(
 				orbit, level_of_candidates_file,
 				verbose_level);
+		if (f_v) {
+			cout << "blt_set_classify::create_graphs "
+					"after get_orbit_rep_from_file" << endl;
+		}
 
 
-		if (create_graph(
+		int f_success;
+
+		if (f_v) {
+			cout << "blt_set_classify::create_graphs "
+					"before create_graph" << endl;
+		}
+		f_success = create_graph(
 				orbit, level_of_candidates_file,
 				R,
 			f_lexorder_test, f_eliminate_graphs_if_possible, 
 			nb_vertices,
 			CG,  
-			verbose_level - 2)) {
+			verbose_level - 2);
+		if (f_v) {
+			cout << "blt_set_classify::create_graphs "
+					"after create_graph" << endl;
+		}
+
+		if (f_success) {
+
+			if (f_v) {
+				cout << "blt_set_classify::create_graphs "
+						"f_success" << endl;
+			}
+
+
+			if (f_v) {
+				cout << "blt_set_classify::create_graphs "
+						"CG->fname_base = " << CG->fname_base << endl;
+			}
+
 			list_of_cases[nb_of_cases] = orbit;
 
-			string fname;
+			string fname_graph;
 
-			fname = CG->fname_base + ".bin";
-			CG->save(fname, verbose_level - 2);
+			fname_graph = CG->fname_base + ".bin";
+
+			if (f_v) {
+				cout << "blt_set_classify::create_graphs "
+						"fname_graph = " << fname_graph << endl;
+			}
+
+			if (f_v) {
+				cout << "blt_set_classify::create_graphs "
+						"before CG->save" << endl;
+			}
+			CG->save(fname_graph, verbose_level - 2);
+			if (f_v) {
+				cout << "blt_set_classify::create_graphs "
+						"after CG->save" << endl;
+			}
 			
 			nb_vertices = CG->nb_points;
 
 			string fname_sol;
 
-
+			// we may not have Worker
+#if 0
 			fname_sol = Worker->Isomorph_context->Descr->solution_prefix
-					+ Worker->Isomorph_context->Descr->base_fname
-					+ "_" + std::to_string(Worker->Iso->level) + "_" + std::to_string(orbit) + "_sol.csv";
+					+ CG->fname_base + "_sol.csv";
+#endif
+			fname_sol = CG->fname_base + "_sol.csv";
 
+			if (f_v) {
+				cout << "blt_set_classify::create_graphs "
+						"fname_sol = " << fname_sol << endl;
+			}
 
 			Table[nb_of_cases * nb_cols + 0] = std::to_string(nb_of_cases);
 			Table[nb_of_cases * nb_cols + 1] = std::to_string(orbit);
 			Table[nb_of_cases * nb_cols + 2] = "\"" + Lint_vec_stringify(CG->user_data, CG->user_data_size) + "\"";
 			Table[nb_of_cases * nb_cols + 3] = R->stab_go->stringify();
-			Table[nb_of_cases * nb_cols + 4] = fname;
+			Table[nb_of_cases * nb_cols + 4] = fname_graph;
 			Table[nb_of_cases * nb_cols + 5] = std::to_string(nb_vertices);
 			Table[nb_of_cases * nb_cols + 6] = std::to_string(CG->nb_colors);
 			Table[nb_of_cases * nb_cols + 7] = fname_sol;
@@ -778,18 +831,41 @@ void blt_set_classify::create_graphs_list_of_cases(
 
 		data_structures_groups::orbit_rep *R;
 
+		if (f_v) {
+			cout << "blt_set_classify::create_graphs_list_of_cases "
+					"before get_orbit_rep_from_file" << endl;
+		}
 		R = get_orbit_rep_from_file(
 				orbit, level_of_candidates_file,
 				verbose_level);
+		if (f_v) {
+			cout << "blt_set_classify::create_graphs_list_of_cases "
+					"after get_orbit_rep_from_file" << endl;
+		}
 
 
-		if (create_graph(
-				orbit, level_of_candidates_file,
-				R,
-			f_lexorder_test, f_eliminate_graphs_if_possible, 
-			nb_vertices,
-			CG,  
-			verbose_level - 2)) {
+		if (f_v) {
+			cout << "blt_set_classify::create_graphs_list_of_cases "
+					"before create_graph" << endl;
+		}
+
+		int f_success;
+
+		f_success = create_graph(
+						orbit, level_of_candidates_file,
+						R,
+					f_lexorder_test, f_eliminate_graphs_if_possible,
+					nb_vertices,
+					CG,
+					verbose_level - 2);
+		if (f_v) {
+			cout << "blt_set_classify::create_graphs_list_of_cases "
+					"after create_graph" << endl;
+		}
+
+
+
+		if (f_success) {
 			list_of_cases_created[nb_of_cases_created++] = orbit;
 
 			string fname;
@@ -873,7 +949,7 @@ data_structures_groups::orbit_rep *blt_set_classify::get_orbit_rep_from_file(
 		starter_size, orbit_at_level, level_of_candidates_file,
 		blt_set_classify_early_test_func_callback,
 		this /* early_test_func_callback_data */,
-		verbose_level - 2);
+		verbose_level);
 
 	if (f_v) {
 		cout << "blt_set_classify::get_orbit_rep_from_file "

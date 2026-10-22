@@ -132,6 +132,9 @@ void orbit_rep::init_from_file(
 				<< orbit_at_level << " done, "
 				"stabilizer order = " << *stab_go << endl;
 	}
+	if (f_v) {
+		cout << "orbit_rep::init_from_file done" << endl;
+	}
 
 }
 
