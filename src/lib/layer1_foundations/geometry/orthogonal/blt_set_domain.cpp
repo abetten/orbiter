@@ -531,6 +531,12 @@ void blt_set_domain::compute_colors(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
+
+
+	if (f_v) {
+		cout << "blt_set_domain::compute_colors" << endl;
+	}
+
 	long int p1, p2;
 	int v1[5];
 	int v2[5];
@@ -539,10 +545,6 @@ void blt_set_domain::compute_colors(
 	int idx, i;
 	other::data_structures::sorting Sorting;
 
-
-	if (f_v) {
-		cout << "blt_set_domain::compute_colors" << endl;
-	}
 	O->Hyperbolic_pair->unrank_line(p1, p2,
 			special_line, 0/*verbose_level*/);
 	if (f_vv) {
@@ -580,9 +582,18 @@ void blt_set_domain::compute_colors(
 		cout << "cannot find the first point on the line" << endl;
 		exit(1);
 	}
-	for (i = idx; i < q + 1; i++) {
+
+
+	// the upper bound should be q, not q + 1 (corrected 10/23/2026):
+
+
+	for (i = idx; i < q; i++) {
 		pts_on_special_line[i] = pts_on_special_line[i + 1];
 	}
+
+
+	// now pts_on_special_line is an array of q elements.
+
 	if (f_vv) {
 		cout << "pts_on_special_line without the first "
 				"starter point:" << endl;
@@ -675,14 +686,20 @@ void blt_set_domain::compute_colors(
 	}
 
 
+	// Compute the color of a point:
+	// The color is an index into the array open_colors[].
+
 	for (i = 0; i < nb_candidates; i++) {
+
 		O->Hyperbolic_pair->unrank_point(v3, 1, candidates[i], 0);
+
 		if (f_vv) {
 			cout << "candidate " << i << " / " << nb_candidates
 					<< " is " << candidates[i] << " = ";
 			Int_vec_print(cout, v3, 5);
 			cout << endl;
 		}
+
 		a = O->Quadratic_form->evaluate_bilinear_form(
 				v1, v3, 1);
 		b = O->Quadratic_form->evaluate_bilinear_form(

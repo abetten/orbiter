@@ -748,6 +748,8 @@ void blt_set_classify::create_graphs(
 	//registry_dump_sorted();
 }
 
+
+#if 0
 void blt_set_classify::create_graphs_list_of_cases(
 	std::string &case_label,
 	std::string &list_of_cases_text,
@@ -922,6 +924,7 @@ void blt_set_classify::create_graphs_list_of_cases(
 
 	//registry_dump_sorted();
 }
+#endif
 
 
 data_structures_groups::orbit_rep *blt_set_classify::get_orbit_rep_from_file(

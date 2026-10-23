@@ -114,12 +114,14 @@ public:
 		int level_of_candidates_file,
 		int f_lexorder_test, int f_eliminate_graphs_if_possible,
 		int verbose_level);
+#if 0
 	void create_graphs_list_of_cases(
 			std::string &case_label,
 			std::string &list_of_cases_text,
 		int level_of_candidates_file,
 		int f_lexorder_test, int f_eliminate_graphs_if_possible,
 		int verbose_level);
+#endif
 	data_structures_groups::orbit_rep *get_orbit_rep_from_file(
 		int orbit_at_level, int level_of_candidates_file,
 		int verbose_level);
