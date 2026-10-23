@@ -159,13 +159,13 @@ void isomorph_worker::execute(
 
 	string header;
 
-	header = "Case";
+	header = "Po";
 
-	int col_idx;
+	int col_idx_po;
 
 	if (!String.find_string_in_array(
 			col_label, nb_cols,
-			header, col_idx)) {
+			header, col_idx_po)) {
 		cout << "isomorph_worker::execute "
 				"summary_file Cannot find column with label " << header << endl;
 		exit(1);
@@ -173,7 +173,7 @@ void isomorph_worker::execute(
 
 
 	for (i = 0; i < nb_rows; i++) {
-		List_of_cases[i] = std::stoi(Table[i * nb_cols + col_idx]);
+		List_of_cases[i] = std::stoi(Table[i * nb_cols + col_idx_po]);
 	}
 
 	if (Isomorph_context->Descr->f_build_db) {
