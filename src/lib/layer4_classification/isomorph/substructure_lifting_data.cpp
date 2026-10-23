@@ -207,7 +207,16 @@ void substructure_lifting_data::read_solution_first_and_len(
 				starter_solution_len[Iso->Sub->nb_starter - 1];
 		f >> a;
 		if (a != -1) {
-			cout << "problem in read_solution_first_and_len" << endl;
+
+			cout << "substructure_lifting_data::read_solution_first_and_len "
+					"problem in read_solution_first_and_len, fname_case_len = " << fname_case_len << endl;
+
+			cout << "substructure_lifting_data::read_solution_first_and_len "
+					"N = " << N << endl;
+
+			cout << "substructure_lifting_data::read_solution_first_and_len "
+					"Iso->Sub->nb_starter = " << Iso->Sub->nb_starter << endl;
+
 			exit(1);
 		}
 	}
