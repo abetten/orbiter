@@ -1379,7 +1379,7 @@ finish:
 }
 
 
-std::string &blt_set_domain::make_graph_file_name(
+std::string blt_set_domain::make_graph_file_name(
 		int starter_size, int case_number)
 {
 	std::string fname;
