@@ -594,9 +594,19 @@ void blt_set_classify::create_graphs(
 
 			list_of_cases[nb_of_cases] = orbit;
 
+			string fname_graph_base;
+
 			string fname_graph;
 
-			fname_graph = CG->fname_base + ".bin";
+			//fname_graph = CG->fname_base + ".bin";
+
+
+			fname_graph_base = Blt_set_domain->make_graph_file_name(
+					starter_size,
+					nb_of_cases);
+			fname_graph = fname_graph_base + ".bin";
+
+
 
 			if (f_v) {
 				cout << "blt_set_classify::create_graphs "
@@ -622,7 +632,7 @@ void blt_set_classify::create_graphs(
 			fname_sol = Worker->Isomorph_context->Descr->solution_prefix
 					+ CG->fname_base + "_sol.csv";
 #endif
-			fname_sol = CG->fname_base + "_sol.csv";
+			fname_sol = fname_graph_base + "_sol.csv";
 
 			if (f_v) {
 				cout << "blt_set_classify::create_graphs "

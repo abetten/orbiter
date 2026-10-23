@@ -1351,9 +1351,12 @@ int blt_set_domain::create_graph(
 
 		std::string fname;
 
+		fname = make_graph_file_name(starter_size, case_number);
+#if 0
 		fname = prefix + "_graph_"
 				+ std::to_string(starter_size)
 				+ "_" + std::to_string(case_number);
+#endif
 		CG->init_user_data(
 				Starter_set, starter_size, verbose_level - 2);
 		CG->fname_base.assign(fname);
@@ -1375,6 +1378,17 @@ finish:
 	return ret;
 }
 
+
+std::string &blt_set_domain::make_graph_file_name(
+		int starter_size, int case_number)
+{
+	std::string fname;
+
+	fname = prefix + "_graph_"
+			+ std::to_string(starter_size)
+			+ "_" + std::to_string(case_number);
+	return fname;
+}
 
 void blt_set_domain::test_flock_condition(
 		algebra::field_theory::finite_field *F,

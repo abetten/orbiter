@@ -131,6 +131,8 @@ public:
 		int f_eliminate_graphs_if_possible,
 		combinatorics::graph_theory::colored_graph *&CG,
 		int verbose_level);
+	std::string &make_graph_file_name(
+			int starter_size, int case_number);
 	void test_flock_condition(
 			algebra::field_theory::finite_field *F,
 			int *ABC,
