@@ -697,6 +697,7 @@ namespace other {
 		class int_vector;
 		class lint_matrix;
 		class lint_vec;
+		class orbiter_data_file;
 		class page_storage;
 		class partitionstack;
 		class set_builder_description;

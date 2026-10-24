@@ -256,6 +256,7 @@ public:
 	orbit_rep();
 	~orbit_rep();
 	void init_from_file(
+			other::data_structures::orbiter_data_file *Orbiter_data_file,
 			actions::action *A,
 			std::string &prefix,
 		int level, int orbit_at_level,
@@ -267,6 +268,7 @@ public:
 		void *early_test_func_callback_data,
 		int verbose_level);
 	void read_orbit_rep_and_candidates_from_files_and_process(
+			other::data_structures::orbiter_data_file *Orbiter_data_file,
 			actions::action *A,
 			std::string &prefix,
 		int level, int orbit_at_level, int level_of_candidates_file,
@@ -285,6 +287,7 @@ public:
 		int verbose_level);
 	// A needs to be the base action
 	void read_orbit_rep_and_candidates_from_files(
+			other::data_structures::orbiter_data_file *Orbiter_data_file,
 			actions::action *A,
 			std::string &prefix,
 		int level, int orbit_at_level, int level_of_candidates_file,
@@ -297,6 +300,7 @@ public:
 		int &nb_cases,
 		int verbose_level);
 	void read_set_and_stabilizer(
+			other::data_structures::orbiter_data_file *Orbiter_data_file,
 			actions::action *A,
 			std::string &fname,
 		int no, long int *&set, int &set_sz, groups::sims *&stab,

@@ -221,6 +221,10 @@ public:
 			long int *&col_labels,
 			int &f_ruled_out,
 			int verbose_level);
+	other::data_structures::orbiter_data_file *read_orbiter_file(
+			std::string &prefix,
+			int level,
+			int verbose_level);
 	void setup_lifting(
 			data_structures_groups::orbit_rep *R,
 			std::string &output_prefix,

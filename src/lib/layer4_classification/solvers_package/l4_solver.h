@@ -156,6 +156,10 @@ public:
 		std::string &fname_system,
 		int f_write_tree, std::string &fname_tree,
 		int verbose_level);
+	other::data_structures::orbiter_data_file *read_orbiter_file(
+			std::string &prefix,
+			int level,
+			int verbose_level);
 	void lexorder_test(
 			long int *live_blocks2, int &nb_live_blocks2,
 			data_structures_groups::vector_ge *stab_gens,

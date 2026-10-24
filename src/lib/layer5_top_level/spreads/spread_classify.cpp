@@ -800,6 +800,17 @@ void spread_classify::lifting(
 	nb_vertices = 0;
 
 
+
+
+	other::data_structures::orbiter_data_file *Orbiter_data_file;
+
+	Orbiter_data_file = read_orbiter_file(
+			prefix,
+			starter_size,
+		verbose_level);
+
+
+
 	R = NEW_OBJECT(data_structures_groups::orbit_rep);
 	if (f_v) {
 		cout << "spread_classify::lifting "
@@ -807,6 +818,7 @@ void spread_classify::lifting(
 	}
 
 	R->init_from_file(
+			Orbiter_data_file,
 			A, prefix,
 		starter_size, orbit_at_level, level_of_candidates_file,
 		spread_early_test_func_callback,
@@ -934,10 +946,53 @@ void spread_classify::lifting(
 	}
 
 	FREE_OBJECT(R);
+	FREE_OBJECT(Orbiter_data_file);
+
 	if (f_v) {
 		cout << "spread_classify::lifting done" << endl;
 	}
 }
+
+
+other::data_structures::orbiter_data_file *spread_classify::read_orbiter_file(
+		std::string &prefix,
+		int level,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "spread_classify::read_orbiter_file" << endl;
+	}
+
+	other::data_structures::orbiter_data_file *Orbiter_data_file;
+
+
+	Orbiter_data_file = NEW_OBJECT(other::data_structures::orbiter_data_file);
+
+	string fname;
+
+	fname = prefix + "_lvl_" + std::to_string(level);
+
+	if (f_v) {
+		cout << "spread_classify::read_orbiter_file "
+				"before Orbiter_data_file->init_from_file" << endl;
+	}
+	Orbiter_data_file->init_from_file(fname, verbose_level);
+	if (f_v) {
+		cout << "spread_classify::read_orbiter_file "
+				"after Orbiter_data_file->init_from_file" << endl;
+	}
+
+	if (f_v) {
+		cout << "spread_classify::read_orbiter_file done" << endl;
+	}
+
+	return Orbiter_data_file;
+}
+
+
 
 void spread_classify::setup_lifting(
 		data_structures_groups::orbit_rep *R,

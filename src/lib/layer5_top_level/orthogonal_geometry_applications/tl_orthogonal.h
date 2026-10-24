@@ -122,9 +122,13 @@ public:
 		int f_lexorder_test, int f_eliminate_graphs_if_possible,
 		int verbose_level);
 #endif
-	data_structures_groups::orbit_rep *get_orbit_rep_from_file(
-		int orbit_at_level, int level_of_candidates_file,
+	other::data_structures::orbiter_data_file *read_orbiter_file(
+		int level,
 		int verbose_level);
+	data_structures_groups::orbit_rep *get_orbit_rep_from_file(
+			other::data_structures::orbiter_data_file *Orbiter_data_file,
+			int orbit_at_level, int level_of_candidates_file,
+			int verbose_level);
 	int create_graph(
 		int orbit_at_level, int level_of_candidates_file,
 		data_structures_groups::orbit_rep *R,

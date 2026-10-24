@@ -269,6 +269,7 @@ ORBITER_MODULES= \
 		layer1_foundations/other/data_structures/int_vector.o \
 		layer1_foundations/other/data_structures/lint_matrix.o \
 		layer1_foundations/other/data_structures/lint_vec.o \
+		layer1_foundations/other/data_structures/orbiter_data_file.o \
 		layer1_foundations/other/data_structures/page_storage.o \
 		layer1_foundations/other/data_structures/partitionstack.o \
 		layer1_foundations/other/data_structures/set_builder_description.o \

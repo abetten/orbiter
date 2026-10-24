@@ -605,7 +605,20 @@ void exact_cover::compute_liftings_single_case_new(
 	}
 
 
+
+
 	prefix = input_prefix + base_fname;
+
+
+
+	other::data_structures::orbiter_data_file *Orbiter_data_file;
+
+	Orbiter_data_file = read_orbiter_file(
+			prefix,
+			starter_size,
+		verbose_level);
+
+
 
 	data_structures_groups::orbit_rep *R;
 	R = NEW_OBJECT(data_structures_groups::orbit_rep);
@@ -617,7 +630,9 @@ void exact_cover::compute_liftings_single_case_new(
 				<< " before R->init_from_file prefix=" << prefix << endl;
 	}
 
-	R->init_from_file(A_base, prefix,
+	R->init_from_file(
+			Orbiter_data_file,
+			A_base, prefix,
 		starter_size, starter_case, starter_size - 1,
 		early_test_func, 
 		early_test_func_data, 
@@ -878,6 +893,8 @@ void exact_cover::compute_liftings_single_case_new(
 
 	delete R;
 
+	FREE_OBJECT(Orbiter_data_file);
+
 	if (f_v) {
 		cout << "exact_cover::compute_liftings_single_case_new "
 				"case " << starter_case << " / " << starter_nb_cases
@@ -885,6 +902,47 @@ void exact_cover::compute_liftings_single_case_new(
 	}
 
 }
+
+
+other::data_structures::orbiter_data_file *exact_cover::read_orbiter_file(
+		std::string &prefix,
+		int level,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "exact_cover::read_orbiter_file" << endl;
+	}
+
+	other::data_structures::orbiter_data_file *Orbiter_data_file;
+
+
+	Orbiter_data_file = NEW_OBJECT(other::data_structures::orbiter_data_file);
+
+	string fname;
+
+	fname = prefix + "_lvl_" + std::to_string(level);
+
+	if (f_v) {
+		cout << "exact_cover::read_orbiter_file "
+				"before Orbiter_data_file->init_from_file" << endl;
+	}
+	Orbiter_data_file->init_from_file(fname, verbose_level);
+	if (f_v) {
+		cout << "exact_cover::read_orbiter_file "
+				"after Orbiter_data_file->init_from_file" << endl;
+	}
+
+	if (f_v) {
+		cout << "exact_cover::read_orbiter_file done" << endl;
+	}
+
+	return Orbiter_data_file;
+}
+
+
 
 void exact_cover::lexorder_test(
 		long int *live_blocks2,

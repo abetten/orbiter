@@ -178,7 +178,8 @@ void flag_orbit_folding::init(
 void flag_orbit_folding::isomorph_testing(
 		int t0,
 	int f_play_back, std::string &play_back_file_name,
-	int f_implicit_fusion, int print_mod, int verbose_level)
+	int f_implicit_fusion, int print_mod,
+	int verbose_level)
 // calls do_iso_test
 {
 	int f_v = (verbose_level >= 1);

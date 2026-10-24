@@ -57,6 +57,7 @@ orbit_rep::~orbit_rep()
 }
 
 void orbit_rep::init_from_file(
+		other::data_structures::orbiter_data_file *Orbiter_data_file,
 		actions::action *A,
 		std::string &prefix,
 	int level, int orbit_at_level,
@@ -87,6 +88,7 @@ void orbit_rep::init_from_file(
 				"before read_orbit_rep_and_candidates_from_files_and_process" << endl;
 	}
 	read_orbit_rep_and_candidates_from_files_and_process(
+			Orbiter_data_file,
 			A,
 			prefix,
 		level, orbit_at_level, level_of_candidates_file, 
@@ -140,6 +142,7 @@ void orbit_rep::init_from_file(
 
 
 void orbit_rep::read_orbit_rep_and_candidates_from_files_and_process(
+		other::data_structures::orbiter_data_file *Orbiter_data_file,
 		actions::action *A,
 		std::string &prefix,
 	int level, int orbit_at_level, int level_of_candidates_file,
@@ -173,6 +176,7 @@ void orbit_rep::read_orbit_rep_and_candidates_from_files_and_process(
 				"before read_orbit_rep_and_candidates_from_files" << endl;
 	}
 	read_orbit_rep_and_candidates_from_files(
+			Orbiter_data_file,
 			A, prefix,
 		level, orbit_at_level, level_of_candidates_file,
 		starter,
@@ -230,6 +234,7 @@ void orbit_rep::read_orbit_rep_and_candidates_from_files_and_process(
 
 
 void orbit_rep::read_orbit_rep_and_candidates_from_files(
+		other::data_structures::orbiter_data_file *Orbiter_data_file,
 		actions::action *A,
 		std::string &prefix,
 	int level, int orbit_at_level, int level_of_candidates_file,
@@ -265,6 +270,7 @@ void orbit_rep::read_orbit_rep_and_candidates_from_files(
 					"before read_set_and_stabilizer fname1=" << fname1 << endl;
 		}
 		read_set_and_stabilizer(
+				Orbiter_data_file,
 				A,
 				fname1,
 			orbit_at_level, starter, starter_sz, Stab,
@@ -356,6 +362,7 @@ void orbit_rep::read_orbit_rep_and_candidates_from_files(
 }
 
 void orbit_rep::read_set_and_stabilizer(
+		other::data_structures::orbiter_data_file *Orbiter_data_file,
 		actions::action *A,
 		std::string &fname,
 	int no, long int *&set, int &set_sz, groups::sims *&stab,
@@ -366,6 +373,9 @@ void orbit_rep::read_set_and_stabilizer(
 {
 	int f_v = (verbose_level  >= 1);
 	int f_vv = (verbose_level  >= 2);
+
+
+#if 0
 	int f_casenumbers = false;
 	//int nb_cases;
 	int *Set_sizes;
@@ -373,17 +383,18 @@ void orbit_rep::read_set_and_stabilizer(
 	char **Ago_ascii;
 	char **Aut_ascii;
 	int *Casenumbers;
+#endif
+
 	data_structures_groups::group_container *G;
 	int i;
 	other::orbiter_kernel_system::file_io Fio;
 
 
 	if (f_v) {
-		cout << "orbit_rep::read_set_and_stabilizer "
-				"reading file " << fname
-				<< " no=" << no << endl;
+		cout << "orbit_rep::read_set_and_stabilizer " << endl;
 	}
 
+#if 0
 	Fio.read_and_parse_data_file_fancy(
 			fname,
 		f_casenumbers,
@@ -398,11 +409,12 @@ void orbit_rep::read_set_and_stabilizer(
 		cout << "Aut_ascii[no]=" << Aut_ascii[no] << endl;
 		cout << "Set_sizes[no]=" << Set_sizes[no] << endl;
 	}
+#endif
 
-	set_sz = Set_sizes[no];
+	set_sz = Orbiter_data_file->Set_sizes[no];
 	set = NEW_lint(set_sz);
 	for (i = 0; i < set_sz; i ++) {
-		set[i] = Sets[no][i];
+		set[i] = Orbiter_data_file->Sets[no][i];
 	}
 
 
@@ -415,7 +427,7 @@ void orbit_rep::read_set_and_stabilizer(
 
 	string s;
 
-	s.assign(Aut_ascii[no]);
+	s.assign(Orbiter_data_file->Aut_ascii[no]);
 	G->init_ascii_coding_to_sims(s, verbose_level - 2);
 	if (f_vv) {
 		cout << "orbit_rep::read_set_and_stabilizer "
@@ -445,11 +457,15 @@ void orbit_rep::read_set_and_stabilizer(
 		cout << "orbit_rep::read_set_and_stabilizer "
 				"after FREE_OBJECT  G" << endl;
 	}
+
+#if 0
 	Fio.free_data_fancy(
 			nb_cases,
 		Set_sizes, Sets,
 		Ago_ascii, Aut_ascii,
 		Casenumbers);
+#endif
+
 	if (f_v) {
 		cout << "orbit_rep::read_set_and_stabilizer done" << endl;
 	}

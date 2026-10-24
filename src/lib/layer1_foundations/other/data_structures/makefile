@@ -22,6 +22,7 @@ MODULES = \
 	int_vector.o \
 	lint_matrix.o \
 	lint_vec.o \
+	orbiter_data_file.o \
 	page_storage.o \
 	partitionstack.o \
 	set_builder_description.o \

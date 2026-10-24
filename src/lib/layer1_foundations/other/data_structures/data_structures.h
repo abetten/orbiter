@@ -1261,6 +1261,37 @@ public:
 
 
 
+// #############################################################################
+// orbiter_data_file.cpp
+// #############################################################################
+
+//! orbiter data file in ascii (unparsed data)
+
+class orbiter_data_file {
+
+public:
+
+	std::string fname;
+
+	int f_casenumbers;
+	int nb_cases;
+	int *Set_sizes;
+	long int **Sets;
+	char **Ago_ascii;
+	char **Aut_ascii;
+	int *Casenumbers;
+
+
+	orbiter_data_file();
+	~orbiter_data_file();
+	void init_from_file(
+			std::string &fname, int verbose_level);
+
+};
+
+
+
+
 
 // #############################################################################
 // page_storage.cpp

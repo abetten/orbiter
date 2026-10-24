@@ -117,7 +117,8 @@ public:
 	void isomorph_testing(
 			int t0, int f_play_back,
 			std::string &play_back_file_name,
-		int f_implicit_fusion, int print_mod, int verbose_level);
+			int f_implicit_fusion, int print_mod,
+			int verbose_level);
 		// calls do_iso_test
 	void do_iso_test(
 			int t0, groups::sims *&Stab,
