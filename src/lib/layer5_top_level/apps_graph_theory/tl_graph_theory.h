@@ -152,6 +152,9 @@ public:
 	int f_cycle;
 	int cycle_n;
 
+	int f_double_cover;
+	int double_cover_N;
+
 	int f_inversion_graph;
 	std::string inversion_graph_text;
 
@@ -292,6 +295,8 @@ public:
 			int verbose_level);
 	void create_cycle(
 			int n, int verbose_level);
+	void create_double_cover(
+			int nb_iterations, int verbose_level);
 	void create_inversion_graph(
 			std::string &perm_text, int verbose_level);
 	void create_Hamming(
