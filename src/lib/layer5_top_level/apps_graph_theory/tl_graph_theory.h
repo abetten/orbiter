@@ -139,6 +139,9 @@ public:
 	int f_load_dimacs;
 	std::string load_dimacs_fname;
 
+	int f_complete;
+	int complete_n;
+
 	int f_load_Brouwer;
 	std::string load_Brouwer_fname;
 
@@ -228,6 +231,8 @@ public:
 	std::string adjacency_bitvector_data_text;
 	int adjacency_bitvector_N;
 
+	int f_double_cover;
+	std::string double_cover_graph_label;
 
 	int f_Cayley_graph;
 	std::string Cayley_graph_group;
@@ -310,6 +315,8 @@ public:
 	void create_Winnie_Li(
 			std::string &label_Fq, int index,
 			int verbose_level);
+	void create_complete(
+			int n, int verbose_level);
 	void create_Grassmann(
 			int n, int k, std::string &label_Fq,
 			int r, int verbose_level);
@@ -342,6 +349,9 @@ public:
 			int verbose_level);
 	void make_adjacency_bitvector(
 			std::string &data_text, int N,
+			int verbose_level);
+	void create_double_cover(
+			std::string &graph_label,
 			int verbose_level);
 
 };

@@ -119,9 +119,49 @@ void incidence_structure_by_flags::print_incma_latex(
 	FREE_int(Incma);
 }
 
+void incidence_structure_by_flags::draw_incma_as_bitmap(
+		std::string fname_base,
+		int f_box_width, int box_width,
+		int bit_depth, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
 
+	if (f_v) {
+		cout << "incidence_structure_by_flags::draw_incma_as_bitmap" << endl;
+	}
 
+	int *Incma;
+	int a, h, i, j;
 
+	Incma = NEW_int(nb_rows * nb_cols);
+	Int_vec_zero(Incma, nb_rows * nb_cols);
+	for (h = 0; h < nb_flags; h++) {
+		a = flags[h];
+		i = a / nb_cols;
+		j = a % nb_cols;
+		Incma[i * nb_cols + j] = 1;
+	}
+
+	other::l1_interfaces::easy_BMP_interface BMP;
+	other::graphics::draw_bitmap_control Draw_bitmap_control;
+
+	Draw_bitmap_control.M = Incma;
+	Draw_bitmap_control.m = nb_rows;
+	Draw_bitmap_control.n = nb_cols;
+	Draw_bitmap_control.input_csv_file_name = fname_base + ".csv";
+	Draw_bitmap_control.f_box_width = f_box_width;
+	Draw_bitmap_control.box_width = box_width;
+	Draw_bitmap_control.bit_depth = bit_depth;
+	Draw_bitmap_control.f_invert_colors = false;
+
+	BMP.draw_bitmap(&Draw_bitmap_control, verbose_level);
+
+	FREE_int(Incma);
+
+	if (f_v) {
+		cout << "incidence_structure_by_flags::draw_incma_as_bitmap done" << endl;
+	}
+}
 
 }}}}
 
