@@ -24280,6 +24280,7 @@ classify_spreads_25_isomorph:
 			-draw_options Do \
 		-end \
 		-define Iso -isomorph_arguments \
+			-init_substructure \
 			-prefix_iso "./spreads_25" \
 			-use_database_for_starter \
 			-solution_prefix "spreads_25_graph" \
@@ -25561,6 +25562,7 @@ BLT_13_isomorph_read_DB:
 			-end \
 		-end \
 		-define Iso -isomorph_arguments \
+			-init_substructure \
 			-prefix_iso "BLT_q13" \
 			-summary_file BLT_q13_list_of_cases.csv \
 			-use_database_for_starter \
@@ -25591,6 +25593,7 @@ BLT_13_isomorph_read_solutions:
 			-end \
 		-end \
 		-define Iso -isomorph_arguments \
+			-init_substructure \
 			-prefix_iso "BLT_q13" \
 			-use_database_for_starter \
 			-summary_file BLT_q13_list_of_cases.csv \
@@ -25619,6 +25622,7 @@ BLT_13_isomorph_stabilizer_orbits:
 			-end \
 		-end \
 		-define Iso -isomorph_arguments \
+			-init_substructure \
 			-prefix_iso "BLT_q13" \
 			-use_database_for_starter \
 			-summary_file BLT_q13_list_of_cases.csv \
@@ -25644,6 +25648,7 @@ BLT_13_isomorph_testing:
 			-end \
 		-end \
 		-define Iso -isomorph_arguments \
+			-init_substructure \
 			-prefix_iso "BLT_q13" \
 			-use_database_for_starter \
 			-summary_file BLT_q13_list_of_cases.csv \
@@ -25655,6 +25660,7 @@ BLT_13_isomorph_testing:
 			-isomorph Iso \
 		-end \
 		-define Iso2 -isomorph_arguments \
+			-init_substructure \
 			-prefix_iso "BLT_q13" \
 			-use_database_for_starter \
 			-summary_file BLT_q13_list_of_cases.csv \
@@ -25666,6 +25672,7 @@ BLT_13_isomorph_testing:
 			-isomorph Iso2 \
 		-end \
 		-define Iso3 -isomorph_arguments \
+			-init_substructure \
 			-prefix_iso "BLT_q13" \
 			-use_database_for_starter \
 			-summary_file BLT_q13_list_of_cases.csv \
