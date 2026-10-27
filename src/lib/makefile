@@ -399,6 +399,7 @@ ORBITER_MODULES= \
 		layer3_group_actions/combinatorics_with_groups/orbit_type_repository.o \
 		layer3_group_actions/combinatorics_with_groups/poset_with_group_action.o \
 		layer3_group_actions/combinatorics_with_groups/translation_plane_via_andre_model.o \
+		layer3_group_actions/data_structures_groups/data_structures_group_global.o \
 		layer3_group_actions/data_structures_groups/export_group.o \
 		layer3_group_actions/data_structures_groups/group_container.o \
 		layer3_group_actions/data_structures_groups/group_table_and_generators.o \

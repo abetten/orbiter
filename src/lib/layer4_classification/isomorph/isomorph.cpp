@@ -143,7 +143,41 @@ void isomorph::init(
 	}
 
 
+	if (Isomorph_context->Descr->f_init_substructure) {
 
+		if (f_v) {
+			cout << "isomorph::init before init_substructure" << endl;
+		}
+
+		init_substructure(verbose_level - 1);
+
+		if (f_v) {
+			cout << "isomorph::init after init_substructure" << endl;
+		}
+
+	}
+	else {
+
+		if (f_v) {
+			cout << "isomorph::init -init_substructure has not been given" << endl;
+		}
+
+
+	}
+
+	if (f_v) {
+		cout << "isomorph::init done" << endl;
+	}
+}
+
+void isomorph::init_substructure(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "isomorph::init_substructure" << endl;
+	}
 
 	Sub = NEW_OBJECT(substructure_classification);
 
@@ -154,9 +188,6 @@ void isomorph::init(
 
 	Sub->init(
 			this,
-			//Isomorph_context->gen,
-			//Isomorph_context->Descr->f_use_database_for_starter,
-			//Isomorph_context->Descr->f_implicit_fusion,
 			verbose_level - 1);
 
 	if (f_v) {
@@ -193,11 +224,11 @@ void isomorph::init(
 				"after Folding->init" << endl;
 	}
 
-
 	if (f_v) {
-		cout << "isomorph::init done" << endl;
+		cout << "isomorph::init_substructure done" << endl;
 	}
 }
+
 
 void isomorph::print_node_local(
 		int level, int node_local)

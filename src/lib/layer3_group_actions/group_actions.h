@@ -57,6 +57,7 @@ namespace combinatorics_with_groups {
 
 namespace data_structures_groups {
 
+	class data_structures_group_global;
 	class export_group;
 	class group_container;
 	class group_table_and_generators;

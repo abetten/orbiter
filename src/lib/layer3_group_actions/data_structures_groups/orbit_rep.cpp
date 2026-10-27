@@ -82,6 +82,9 @@ void orbit_rep::init_from_file(
 	orbit_rep::early_test_func_callback_data = early_test_func_callback_data;
 
 
+
+
+
 	//actions::action_global AGlobal;
 	if (f_v) {
 		cout << "orbit_rep::init_from_file "
@@ -173,24 +176,43 @@ void orbit_rep::read_orbit_rep_and_candidates_from_files_and_process(
 
 	if (f_v) {
 		cout << "orbit_rep::read_orbit_rep_and_candidates_from_files_and_process "
-				"before read_orbit_rep_and_candidates_from_files" << endl;
+				"before Data_structures_group_global.orbiter_data_file_get_orbit_rep_and_candidates" << endl;
 	}
-	read_orbit_rep_and_candidates_from_files(
+
+	orbit_rep *Orbit_rep;
+
+	data_structures_group_global Data_structures_group_global;
+
+	Orbit_rep = Data_structures_group_global.orbiter_data_file_get_orbit_rep_and_candidates(
 			Orbiter_data_file,
 			A, prefix,
 		level, orbit_at_level, level_of_candidates_file,
-		starter,
-		starter_sz,
-		Stab,
-		Strong_gens,
+		//starter,
+		//starter_sz,
+		//Stab,
+		//Strong_gens,
 		candidates1,
 		nb_candidates1,
 		nb_cases,
 		verbose_level);
 	if (f_v) {
 		cout << "orbit_rep::read_orbit_rep_and_candidates_from_files_and_process "
-				"after read_orbit_rep_and_candidates_from_files" << endl;
+				"after Data_structures_group_global.orbiter_data_file_get_orbit_rep_and_candidates" << endl;
 	}
+
+	starter = Orbit_rep->rep;
+	starter_sz = Orbit_rep->level;
+	Stab = Orbit_rep->Stab;
+	Strong_gens = Orbit_rep->Strong_gens;
+
+	Orbit_rep->rep = NULL;
+	Orbit_rep->level = 0;
+	Orbit_rep->Stab = NULL;
+	Orbit_rep->Strong_gens = NULL;
+
+	FREE_OBJECT(Orbit_rep);
+
+
 
 	for (h = level_of_candidates_file; h < level; h++) {
 
@@ -232,7 +254,7 @@ void orbit_rep::read_orbit_rep_and_candidates_from_files_and_process(
 	}
 }
 
-
+#if 0
 void orbit_rep::read_orbit_rep_and_candidates_from_files(
 		other::data_structures::orbiter_data_file *Orbiter_data_file,
 		actions::action *A,
@@ -267,8 +289,21 @@ void orbit_rep::read_orbit_rep_and_candidates_from_files(
 
 		if (f_v) {
 			cout << "orbit_rep::read_orbit_rep_and_candidates_from_files "
-					"before read_set_and_stabilizer fname1=" << fname1 << endl;
+					"before Data_structures_group_global.orbiter_data_file_extract_representative_with_group fname1=" << fname1 << endl;
 		}
+
+		data_structures_group_global Data_structures_group_global;
+
+		Data_structures_group_global.orbiter_data_file_extract_representative_with_group(
+					Orbiter_data_file,
+						A,
+						fname1,
+						orbit_at_level, starter, starter_sz, Stab,
+						Strong_gens,
+						verbose_level);
+
+#if 0
+
 		read_set_and_stabilizer(
 				Orbiter_data_file,
 				A,
@@ -277,9 +312,11 @@ void orbit_rep::read_orbit_rep_and_candidates_from_files(
 			Strong_gens,
 			nb_cases,
 			verbose_level);
+#endif
+
 		if (f_v) {
 			cout << "orbit_rep::read_orbit_rep_and_candidates_from_files "
-					"after read_set_and_stabilizer" << endl;
+					"after Data_structures_group_global.orbiter_data_file_extract_representative_with_group" << endl;
 		}
 
 
@@ -387,7 +424,7 @@ void orbit_rep::read_set_and_stabilizer(
 
 	data_structures_groups::group_container *G;
 	int i;
-	other::orbiter_kernel_system::file_io Fio;
+	//other::orbiter_kernel_system::file_io Fio;
 
 
 	if (f_v) {
@@ -472,7 +509,7 @@ void orbit_rep::read_set_and_stabilizer(
 
 }
 
-
+#endif
 
 
 }}}

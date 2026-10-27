@@ -6,6 +6,7 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
+	data_structures_group_global.o \
 	export_group.o \
 	group_container.o \
 	group_table_and_generators.o \

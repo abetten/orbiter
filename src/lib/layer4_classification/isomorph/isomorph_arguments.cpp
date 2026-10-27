@@ -79,7 +79,10 @@ isomorph_arguments::isomorph_arguments()
 	f_eliminate_graphs_if_possible = false;
 	f_down_orbits = false;
 
+	f_delete_graph_files = false;
+	f_delete_solution_files = false;
 
+	f_init_substructure = false;
 
 }
 
@@ -214,6 +217,19 @@ int isomorph_arguments::read_arguments(
 			f_down_orbits = true;
 			cout << "-down_orbits " << endl;
 		}
+		else if (ST.stringcmp(argv[i], "-delete_graph_files") == 0) {
+			f_delete_graph_files = true;
+			cout << "-delete_graph_files " << endl;
+		}
+		else if (ST.stringcmp(argv[i], "-delete_solution_files") == 0) {
+			f_delete_solution_files = true;
+			cout << "-delete_solution_files " << endl;
+		}
+		else if (ST.stringcmp(argv[i], "-init_substructure") == 0) {
+			f_init_substructure = true;
+			cout << "-init_substructure " << endl;
+		}
+
 
 
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
@@ -307,6 +323,15 @@ void isomorph_arguments::print()
 	}
 	if (f_down_orbits) {
 		cout << "-down_orbits " << endl;
+	}
+	if (f_delete_graph_files) {
+		cout << "-delete_graph_files " << endl;
+	}
+	if (f_delete_solution_files) {
+		cout << "-delete_solution_files " << endl;
+	}
+	if (f_init_substructure) {
+		cout << "-init_substructure " << endl;
 	}
 
 }

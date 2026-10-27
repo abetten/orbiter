@@ -18,6 +18,46 @@ namespace data_structures_groups {
 
 
 // #############################################################################
+// data_structures_group_global.cpp
+// #############################################################################
+
+//! global functions related to namespace data_structures_groups
+
+class data_structures_group_global {
+
+public:
+
+	data_structures_group_global();
+	~data_structures_group_global();
+	data_structures_groups::orbit_rep *orbiter_data_file_extract_representative_with_group(
+			other::data_structures::orbiter_data_file *Orbiter_data_file,
+			actions::action *A,
+			//std::string &fname,
+		int orbit_idx,
+		//long int *&set, int &set_sz, groups::sims *&stab,
+		//groups::strong_generators *&Strong_gens,
+		int verbose_level);
+	data_structures_groups::orbit_rep *orbiter_data_file_get_orbit_rep_and_candidates(
+			other::data_structures::orbiter_data_file *Orbiter_data_file,
+			actions::action *A,
+			std::string &prefix,
+		int level, int orbit_at_level, int level_of_candidates_file,
+		//long int *&starter,
+		//int &starter_sz,
+		//groups::sims *&Stab,
+		//groups::strong_generators *&Strong_gens,
+		long int *&candidates,
+		int &nb_candidates,
+		int nb_cases,
+		int verbose_level);
+	std::string make_fname_candidates(
+			std::string &prefix, int level_of_candidates_file);
+
+
+};
+
+
+// #############################################################################
 // export_group.cpp
 // #############################################################################
 
@@ -243,7 +283,7 @@ public:
 	int orbit_at_level;
 	int nb_cases;
 
-	long int *rep;
+	long int *rep; // [Orbit_rep->level]
 
 	groups::sims *Stab;
 	groups::strong_generators *Strong_gens;
@@ -286,6 +326,7 @@ public:
 		int &nb_cases,
 		int verbose_level);
 	// A needs to be the base action
+#if 0
 	void read_orbit_rep_and_candidates_from_files(
 			other::data_structures::orbiter_data_file *Orbiter_data_file,
 			actions::action *A,
@@ -308,7 +349,7 @@ public:
 		int &nb_cases,
 		int verbose_level);
 	// reads an orbiter data file
-
+#endif
 
 };
 

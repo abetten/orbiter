@@ -413,6 +413,11 @@ public:
 	int f_eliminate_graphs_if_possible;
 	int f_down_orbits;
 
+	int f_delete_graph_files;
+	int f_delete_solution_files;
+
+	int f_init_substructure;
+
 
 
 	isomorph_arguments();
@@ -629,6 +634,10 @@ public:
 			std::ostream &ost, int verbose_level);
 	void recognize(
 			std::string &label, int verbose_level);
+	void delete_graph_files(
+			int verbose_level);
+	void delete_solution_files(
+			int verbose_level);
 
 };
 
@@ -713,6 +722,8 @@ public:
 		//int f_use_database_for_starter,
 		//int f_implicit_fusion,
 		int verbose_level);
+	void init_substructure(
+			int verbose_level);
 	void print_node_local(
 			int level, int node_local);
 	void print_node_global(

@@ -127,7 +127,8 @@ void isomorph_worker::execute(
 	string fname_cases;
 
 	if (Isomorph_context->Descr->f_summary_file) {
-		cout << "isomorph_worker::execute summary_file " << Isomorph_context->Descr->summary_file_name << endl;
+		cout << "isomorph_worker::execute "
+				"summary_file " << Isomorph_context->Descr->summary_file_name << endl;
 
 
 	}
@@ -301,6 +302,51 @@ void isomorph_worker::execute(
 					"after Iso->Folding->write_classification_matrix" << endl;
 		}
 	}
+
+	else if (Isomorph_context->Descr->f_delete_graph_files) {
+
+		if (f_v) {
+			cout << "isomorph_worker::execute "
+					"-delete_graph_files" << endl;
+		}
+
+		if (f_v) {
+			cout << "isomorph_worker::execute "
+					"before delete_graph_files" << endl;
+		}
+
+		delete_graph_files(verbose_level);
+
+		if (f_v) {
+			cout << "isomorph_worker::execute "
+					"after delete_graph_files" << endl;
+		}
+
+
+	}
+
+	else if (Isomorph_context->Descr->f_delete_solution_files) {
+
+		if (f_v) {
+			cout << "isomorph_worker::execute "
+					"-delete_solution_files" << endl;
+		}
+
+		if (f_v) {
+			cout << "isomorph_worker::execute "
+					"before delete_solution_files" << endl;
+		}
+
+		delete_solution_files(verbose_level);
+
+		if (f_v) {
+			cout << "isomorph_worker::execute "
+					"after delete_solution_files" << endl;
+		}
+
+	}
+
+
 #if 0
 	else if (Isomorph_context->Descr->f_classification_graph) {
 
@@ -1416,6 +1462,175 @@ void isomorph_worker::recognize(
 		cout << "isomorph_worker::recognize done" << endl;
 	}
 }
+
+
+void isomorph_worker::delete_graph_files(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "isomorph_worker::delete_graph_files" << endl;
+	}
+
+	other::data_structures::string_tools String;
+
+	string *fname_array;
+	int nb_files;
+	//int *List_of_cases;
+	int i;
+
+
+	nb_files = nb_rows;
+
+	string header;
+
+	header = "GraphFile";
+
+	int col_idx;
+
+	if (!String.find_string_in_array(
+			col_label, nb_cols,
+			header, col_idx)) {
+		cout << "isomorph_worker::delete_graph_files "
+				"Cannot find column with label " << header << endl;
+		exit(1);
+	}
+
+
+	fname_array = new string[nb_rows];
+
+	for (i = 0; i < nb_files; i++) {
+
+		string fname;
+		//string fname_sol;
+
+		fname = Table[i * nb_cols + col_idx];
+
+#if 0
+		fname_sol = fname;
+
+		String.chop_off_extension(fname_sol);
+		fname_sol += "_sol.csv";
+#endif
+
+		fname_array[i] = fname;
+
+	}
+
+
+	if (false) {
+		int i;
+		cout << "isomorph_worker::delete_graph_files list of cases, file names:" << endl;
+		for (i = 0; i < nb_files; i++) {
+			cout << i << " : " << fname_array[i] << endl;
+		}
+		cout << "nb_files = " << nb_files << endl;
+	}
+
+
+	for (i = 0; i < nb_files; i++) {
+		string cmd;
+
+		cmd = "rm " + fname_array[i];
+		system(cmd.c_str());
+	}
+	if (f_v) {
+		cout << "isomorph_worker::delete_graph_files "
+				"Deleted " << nb_files << " files" << endl;
+	}
+
+	delete [] fname_array;
+
+	if (f_v) {
+		cout << "isomorph_worker::delete_graph_files done" << endl;
+	}
+}
+
+void isomorph_worker::delete_solution_files(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "isomorph_worker::delete_solution_files" << endl;
+	}
+
+	other::data_structures::string_tools String;
+
+	string *fname_array;
+	int nb_files;
+	int i;
+
+
+	nb_files = nb_rows;
+
+	string header;
+
+	header = "GraphFile";
+
+	int col_idx;
+
+	if (!String.find_string_in_array(
+			col_label, nb_cols,
+			header, col_idx)) {
+		cout << "isomorph_worker::delete_solution_files "
+				"Cannot find column with label " << header << endl;
+		exit(1);
+	}
+
+
+	fname_array = new string[nb_rows];
+
+	for (i = 0; i < nb_files; i++) {
+
+		string fname;
+		string fname_sol;
+
+		fname = Table[i * nb_cols + col_idx];
+
+#if 1
+		fname_sol = fname;
+
+		String.chop_off_extension(fname_sol);
+		fname_sol += "_sol.csv";
+#endif
+
+		fname_array[i] = fname_sol;
+
+	}
+
+
+	if (false) {
+		int i;
+		cout << "isomorph_worker::delete_solution_files "
+				"list of cases, file names:" << endl;
+		for (i = 0; i < nb_files; i++) {
+			cout << i << " : " << fname_array[i] << endl;
+		}
+		cout << "nb_files = " << nb_files << endl;
+	}
+
+
+	for (i = 0; i < nb_files; i++) {
+		string cmd;
+
+		cmd = "rm " + fname_array[i];
+		system(cmd.c_str());
+	}
+	if (f_v) {
+		cout << "isomorph_worker::delete_solution_files "
+				"Deleted " << nb_files << " files" << endl;
+	}
+
+	delete [] fname_array;
+
+	if (f_v) {
+		cout << "isomorph_worker::delete_solution_files done" << endl;
+	}
+}
+
+
 
 
 }}}

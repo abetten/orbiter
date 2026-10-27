@@ -19,12 +19,15 @@ ROW,C1,C2,C3
 1,"\verb'-isomorph_testing' ","  "," Apply isomorphism testing to the flag orbits to produce the classification. "
 1,"\verb'-classification_graph' ","  "," Compute the classification graph (after classification). "
 1,"\verb'-event_file' "," fname "," Reuse a previously written event file during the classification. "
-1,"\verb'-print_mod' "," N "," Set print internal to N.  "
+1,"\verb'-print_mod' "," N "," Set print interval to N.  "
 1,"\verb'-isomorph_report' ","  "," Write a report on the classification. "
 1,"\verb'-export_source_code' ","  "," Export the classification as C++ source code. "
 1,"\verb'-subset_orbits' ","  ","  "
 1,"\verb'-subset_orbits_file' "," fname ","  "
 1,"\verb'-eliminate_graphs_if_possible' ","  ","  "
 1,"\verb'-down_orbits' ","  ","  "
+1,"\verb'-delete_graph_files' ","  "," Deletes all temporary graph files. "
+1,"\verb'-delete_solution_files' ","  "," Deletes all temporary solution files. "
+1,"\verb'-init_substructure' ","  "," Use substructures for classification. "
 END
 
