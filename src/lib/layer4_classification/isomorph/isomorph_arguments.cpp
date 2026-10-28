@@ -54,10 +54,13 @@ isomorph_arguments::isomorph_arguments()
 	//f_read_solutions_from_clique_finder = false;
 	//f_read_solutions_from_clique_finder_list_of_cases = false;
 	//fname_list_of_cases = NULL;
+
+#if 0
 	f_read_solutions_after_split = false;
 	read_solutions_split_m = 0;
 	
 	f_read_statistics_after_split = false;
+#endif
 
 	f_recognize = false;
 	//std::string recognize_label;
@@ -81,6 +84,10 @@ isomorph_arguments::isomorph_arguments()
 
 	f_delete_graph_files = false;
 	f_delete_solution_files = false;
+
+	// ToDo not yet documented
+	f_distribute_graph_files = false;
+	distribute_graph_files_modulus = 0;
 
 	f_init_substructure = false;
 
@@ -157,7 +164,7 @@ int isomorph_arguments::read_arguments(
 			cout << "-list_of_cases " << list_of_cases_fname << endl;
 		}
 
-
+#if 0
 		else if (ST.stringcmp(argv[i], "-read_solutions_after_split") == 0) {
 			f_read_solutions_after_split = true;
 			read_solutions_split_m = ST.strtoi(argv[++i]);
@@ -168,6 +175,7 @@ int isomorph_arguments::read_arguments(
 			read_solutions_split_m = ST.strtoi(argv[++i]);
 			cout << "-read_statistics_after_split " << read_solutions_split_m << endl;
 		}
+#endif
 		else if (ST.stringcmp(argv[i], "-recognize") == 0) {
 			f_recognize = true;
 			recognize_label.assign(argv[++i]);
@@ -225,11 +233,15 @@ int isomorph_arguments::read_arguments(
 			f_delete_solution_files = true;
 			cout << "-delete_solution_files " << endl;
 		}
+		else if (ST.stringcmp(argv[i], "-distribute_graph_files") == 0) {
+			f_distribute_graph_files = true;
+			distribute_graph_files_modulus = ST.strtoi(argv[++i]);
+			cout << "-distribute_graph_files " << distribute_graph_files_modulus << endl;
+		}
 		else if (ST.stringcmp(argv[i], "-init_substructure") == 0) {
 			f_init_substructure = true;
 			cout << "-init_substructure " << endl;
 		}
-
 
 
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
@@ -284,12 +296,14 @@ void isomorph_arguments::print()
 	if (f_list_of_cases) {
 		cout << "-list_of_cases " << list_of_cases_fname << endl;
 	}
+#if 0
 	if (f_read_solutions_after_split) {
 		cout << "-read_solutions_after_split " << read_solutions_split_m << endl;
 	}
 	if (f_read_statistics_after_split) {
 		cout << "-read_statistics_after_split " << read_solutions_split_m << endl;
 	}
+#endif
 	if (f_recognize) {
 		cout << "-recognize " << recognize_label << endl;
 	}
@@ -330,6 +344,10 @@ void isomorph_arguments::print()
 	if (f_delete_solution_files) {
 		cout << "-delete_solution_files " << endl;
 	}
+	if (f_distribute_graph_files) {
+		cout << "-distribute_graph_files " << distribute_graph_files_modulus << endl;
+	}
+
 	if (f_init_substructure) {
 		cout << "-init_substructure " << endl;
 	}

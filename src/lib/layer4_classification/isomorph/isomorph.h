@@ -385,12 +385,14 @@ public:
 	//int f_read_solutions_from_clique_finder_list_of_cases;
 	//std::string fname_list_of_cases;
 
-
+#if 0
 	int f_read_solutions_after_split;
 	int read_solutions_split_m;
 
 	int f_read_statistics_after_split;
 	//int read_statistics_split_m;
+#endif
+
 
 	int f_recognize;
 	std::string recognize_label;
@@ -415,6 +417,9 @@ public:
 
 	int f_delete_graph_files;
 	int f_delete_solution_files;
+
+	int f_distribute_graph_files;
+	int distribute_graph_files_modulus;
 
 	int f_init_substructure;
 
@@ -609,6 +614,8 @@ public:
 
 	int *List_of_cases;
 
+	int f_summary_file_has_changed;
+
 	isomorph_worker();
 	~isomorph_worker();
 	void init(
@@ -637,6 +644,9 @@ public:
 	void delete_graph_files(
 			int verbose_level);
 	void delete_solution_files(
+			int verbose_level);
+	void distribute_graph_files(
+			int modulus,
 			int verbose_level);
 
 };

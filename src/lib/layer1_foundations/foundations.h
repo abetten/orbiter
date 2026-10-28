@@ -93,6 +93,10 @@
 #include <cstdint>
 	// for uint32_t
 
+#include <cstdlib>
+#include <filesystem>
+// C++ 17
+
 
 
 /*--------------------------------------------------------------------*/

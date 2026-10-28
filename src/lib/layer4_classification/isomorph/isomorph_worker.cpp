@@ -38,6 +38,8 @@ isomorph_worker::isomorph_worker()
 
 	List_of_cases = NULL;
 
+	f_summary_file_has_changed = false;
+
 
 	if (f_v) {
 		cout << "isomorph_worker::isomorph_worker "
@@ -124,7 +126,7 @@ void isomorph_worker::execute(
 	//other::orbiter_kernel_system::file_io Fio;
 
 
-	string fname_cases;
+	string fname_summary;
 
 	if (Isomorph_context->Descr->f_summary_file) {
 		cout << "isomorph_worker::execute "
@@ -137,7 +139,7 @@ void isomorph_worker::execute(
 		exit(1);
 	}
 
-	fname_cases = Isomorph_context->Descr->summary_file_name;
+	fname_summary = Isomorph_context->Descr->summary_file_name;
 
 	if (f_v) {
 		cout << "isomorph_worker::execute "
@@ -145,7 +147,7 @@ void isomorph_worker::execute(
 	}
 
 	Fio.Csv_file_support->read_table_of_strings(
-			fname_cases, col_label,
+			fname_summary, col_label,
 			Table, nb_rows, nb_cols,
 			verbose_level);
 
@@ -346,6 +348,72 @@ void isomorph_worker::execute(
 
 	}
 
+
+	else if (Isomorph_context->Descr->f_distribute_graph_files) {
+
+		if (f_v) {
+			cout << "isomorph_worker::execute "
+					"-distribute_graph_files" << endl;
+		}
+
+		if (f_v) {
+			cout << "isomorph_worker::execute "
+					"before distribute_graph_files" << endl;
+		}
+
+		distribute_graph_files(
+				Isomorph_context->Descr->distribute_graph_files_modulus,
+				verbose_level);
+
+		if (f_v) {
+			cout << "isomorph_worker::execute "
+					"after distribute_graph_files" << endl;
+		}
+
+	}
+
+
+	if (f_summary_file_has_changed) {
+
+		other::data_structures::string_tools ST;
+
+		string fname_summary2;
+
+		fname_summary2 = Isomorph_context->Descr->summary_file_name;
+
+		ST.chop_off_extension(fname_summary2);
+
+		fname_summary2 += "_c.csv";
+
+		if (f_v) {
+			cout << "isomorph_worker::execute "
+					"before write_table_of_strings" << endl;
+		}
+
+		Fio.Csv_file_support->write_table_of_strings_with_col_headings(
+				fname_summary2,
+				nb_rows, nb_cols, Table,
+				col_label,
+				verbose_level);
+
+
+
+		if (f_v) {
+			cout << "isomorph_worker::execute "
+					"after write_table_of_strings" << endl;
+		}
+
+
+		other::orbiter_kernel_system::file_io Fio;
+
+		cout << "isomorph_worker::execute "
+				"Written file " << fname_summary2 << " of size "
+				<< Fio.file_size(fname_summary2) << endl;
+
+
+		Isomorph_context->Descr->summary_file_name = fname_summary2;
+
+	}
 
 #if 0
 	else if (Isomorph_context->Descr->f_classification_graph) {
@@ -1630,6 +1698,129 @@ void isomorph_worker::delete_solution_files(
 	}
 }
 
+
+void isomorph_worker::distribute_graph_files(
+		int modulus,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "isomorph_worker::distribute_graph_files" << endl;
+	}
+	if (f_v) {
+		cout << "isomorph_worker::distribute_graph_files modulus = " << modulus << endl;
+	}
+
+	other::data_structures::string_tools String;
+
+	string *fname_array;
+	int nb_files;
+	//int *List_of_cases;
+	int i;
+
+
+	nb_files = nb_rows;
+
+	string header;
+
+	header = "GraphFile";
+
+	int col_idx;
+
+	if (!String.find_string_in_array(
+			col_label, nb_cols,
+			header, col_idx)) {
+		cout << "isomorph_worker::distribute_graph_files "
+				"Cannot find column with label " << header << endl;
+		exit(1);
+	}
+
+
+	fname_array = new string[nb_rows];
+
+	for (i = 0; i < nb_files; i++) {
+
+		string fname;
+
+		fname = Table[i * nb_cols + col_idx];
+
+		fname_array[i] = fname;
+
+	}
+
+
+	if (false) {
+		int i;
+		cout << "isomorph_worker::distribute_graph_files list of cases, file names:" << endl;
+		for (i = 0; i < nb_files; i++) {
+			cout << i << " : " << fname_array[i] << endl;
+		}
+		cout << "nb_files = " << nb_files << endl;
+	}
+
+
+	int j;
+
+	for (j = 0; j < modulus; j++) {
+
+		std::filesystem::path p;
+
+		if (Isomorph_context->Descr->f_solution_prefix) {
+			p = Isomorph_context->Descr->solution_prefix +  "/" + std::to_string(j);
+		}
+		else {
+			p = std::to_string(j);
+
+		}
+		create_directories( p );
+
+
+	}
+
+
+	for (i = 0; i < nb_files; i++) {
+
+		j = i % modulus;
+
+		std::filesystem::path p1;
+
+		std::filesystem::path p2;
+
+
+		p1 = fname_array[i];
+
+
+
+
+		if (Isomorph_context->Descr->f_solution_prefix) {
+			p2 = Isomorph_context->Descr->solution_prefix + "/" + std::to_string(j);
+		}
+		else {
+			p2 = std::to_string(j);
+
+		}
+		p2 += "/" + fname_array[i];
+
+		std::filesystem::rename(p1, p2);
+
+		Table[i * nb_cols + col_idx] = p2;
+
+	}
+
+	f_summary_file_has_changed = true;
+
+	if (f_v) {
+		cout << "isomorph_worker::distribute_graph_files "
+				"renamed " << nb_files << " files" << endl;
+	}
+
+	delete [] fname_array;
+
+	if (f_v) {
+		cout << "isomorph_worker::distribute_graph_files done" << endl;
+	}
+}
 
 
 
