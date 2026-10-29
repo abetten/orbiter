@@ -121,6 +121,10 @@ public:
 			int &nb_pts, long int *&Pts,
 			int verbose_level);
 
+	int get_small_generating_set_PGL(
+			int n, int q, int *&Data, int &size_element, int &nb_generators, int verbose_level);
+
+
 	// finitefield_tables.cpp:
 	void get_primitive_polynomial(
 			std::string &poly, int p, int e,

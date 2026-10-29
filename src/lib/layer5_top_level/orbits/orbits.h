@@ -682,9 +682,10 @@ public:
 			std::string &extra,
 			std::string &fname,
 			int verbose_level);
+#if 0
 	void compute_small_generating_set(
 			int verbose_level);
-
+#endif
 
 };
 

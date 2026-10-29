@@ -73,9 +73,11 @@ void vector_ge_builder::init(
 		V = NEW_OBJECT(data_structures_groups::vector_ge);
 		//int col_idx;
 
-		V->read_column_csv_using_column_label(Descr->read_csv_fname,
+		V->read_column_csv_using_column_label(
+				Descr->read_csv_fname,
 				A,
-				Descr->read_csv_column_label, verbose_level - 2);
+				Descr->read_csv_column_label,
+				verbose_level - 2);
 
 		if (f_v) {
 			cout << "vector_ge_builder::init "
@@ -86,7 +88,7 @@ void vector_ge_builder::init(
 			int i;
 			for (i = 0; i < V->len; i++) {
 				if (f_v) {
-					cout << "polynomial_ring_activity::perform_activity "
+					cout << "vector_ge_builder::init "
 							"i=" << i << " / " << V->len << endl;
 					cout << "Group element:" << endl;
 					A->Group_element->element_print_quick(V->ith(i), cout);
@@ -103,8 +105,10 @@ void vector_ge_builder::init(
 		int *data;
 		int sz;
 
-		Get_int_vector_from_label(Descr->vector_data_label,
-				data, sz, verbose_level);
+		Get_int_vector_from_label(
+				Descr->vector_data_label,
+				data, sz,
+				verbose_level);
 
 		V = NEW_OBJECT(data_structures_groups::vector_ge);
 
@@ -119,8 +123,10 @@ void vector_ge_builder::init(
 			cout << "sz = " << sz << endl;
 			exit(1);
 		}
-		V->init_from_data(A, data,
-				nb_elements, A->make_element_size, verbose_level - 2);
+		V->init_from_data(
+				A, data,
+				nb_elements, A->make_element_size,
+				verbose_level - 2);
 
 
 	}

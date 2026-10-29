@@ -936,7 +936,7 @@ void activity_description::worker(
 		if (f_v) {
 			cout << "activity_description::worker f_projective_space_activity" << endl;
 		}
-		do_projective_space_activity(verbose_level);
+		do_projective_space_activity(nb_output, Output, verbose_level);
 
 	}
 	else if (f_orthogonal_space_activity) {
@@ -1464,6 +1464,8 @@ void activity_description::do_ring_theoretic_activity(
 
 
 void activity_description::do_projective_space_activity(
+		int &nb_output,
+		other::orbiter_kernel_system::orbiter_symbol_table_entry *&Output,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1511,6 +1513,9 @@ void activity_description::do_projective_space_activity(
 	}
 
 	FREE_int(Idx);
+
+	nb_output = Activity.nb_output;
+	Output = Activity.Output;
 
 }
 

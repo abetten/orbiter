@@ -298,5 +298,427 @@ std::string data_structures_group_global::make_fname_candidates(
 }
 
 
+
+int data_structures_group_global::create_transvection(
+		geometry::projective_geometry::projective_space *P,
+		actions::action *A,
+		int f_semilinear,
+		int a, int *v, int *u, int len,
+		data_structures_groups::vector_ge *&vec,
+		int verbose_level)
+// vec is only allocated if the return value is true
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "data_structures_group_global::create_transvection" << endl;
+	}
+	if (f_v) {
+		cout << "data_structures_group_global::create_transvection "
+				"v = ";
+		Int_vec_print(cout, v, len);
+		cout << endl;
+		cout << "data_structures_group_global::create_transvection "
+				"u = ";
+		Int_vec_print(cout, u, len);
+		cout << endl;
+	}
+
+	if (len != P->Subspaces->n + 1) {
+		cout << "data_structures_group_global::create_transvection "
+				"len != P->Subspaces->n + 1" << endl;
+		exit(1);
+	}
+
+
+	int *z;
+	int *Data;
+	int i, d, sz;
+
+	d = P->Subspaces->n + 1;
+
+	sz = d * d;
+	if (f_semilinear) {
+		sz++;
+	}
+
+	z = NEW_int(d);
+	Data = NEW_int(sz);
+
+	int ret = true;
+
+
+
+	if (f_v) {
+		cout << "data_structures_group_global::create_transvection "
+				"i = " << i << endl;
+	}
+
+
+	P->Subspaces->F->Linear_algebra->make_transvection(
+			Data + i * sz, a, v, u,
+			len, verbose_level - 2);
+
+
+	if (P->Subspaces->F->Linear_algebra->matrix_determinant(
+			Data, d, 0 /* verbose_level */) == 0) {
+		ret = false;
+	}
+
+
+	if (ret) {
+		if (f_semilinear) {
+			Data[d * d] = 0;
+		}
+
+
+
+
+		vec = NEW_OBJECT(data_structures_groups::vector_ge);
+
+		if (f_v) {
+			cout << "data_structures_group_global::create_transvection "
+					"A = " << endl;
+			A->print_info();
+		}
+
+		if (f_v) {
+			cout << "data_structures_group_global::create_transvection "
+					"before vec->init_from_data" << endl;
+		}
+		vec->init_from_data(
+				A, Data,
+				1, sz, verbose_level);
+		if (f_v) {
+			cout << "data_structures_group_global::create_transvection "
+					"after vec->init_from_data" << endl;
+		}
+	}
+
+	FREE_int(Data);
+	FREE_int(z);
+
+
+
+	if (f_v) {
+		cout << "data_structures_group_global::create_transvection done" << endl;
+	}
+	return ret;
+}
+
+void data_structures_group_global::create_all_transvections(
+		geometry::projective_geometry::projective_space *P,
+		actions::action *A,
+		int f_semilinear,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "data_structures_group_global::create_all_transvections" << endl;
+	}
+
+	int q;
+	int d;
+	long int N, big_N;
+	long int rk1, rk2, a;
+
+	d = P->Subspaces->n + 1;
+	q = P->Subspaces->F->q;
+
+	geometry::other_geometry::geometry_global Geometry_global;
+
+	N = Geometry_global.nb_PG_elements(
+			d - 1, q);
+
+	big_N = N * N * (q - 1);
+
+	int *vec_v;
+	int *vec_u;
+
+	vec_v = NEW_int(d);
+	vec_u = NEW_int(d);
+
+
+
+	// First, we count the number of transvections:
+
+
+
+
+	long int cur;
+	long int nb_transvections;
+
+	cur = 0;
+
+
+	for (rk1 = 0; rk1 < N; rk1++) {
+
+		P->Subspaces->F->Projective_space_basic->PG_element_unrank_modified(
+				vec_v, 1 /*stride*/, d, rk1);
+
+		P->Subspaces->F->Projective_space_basic->PG_element_normalize_from_front(
+					vec_v, 1, d);
+
+
+		for (rk2 = 0; rk2 < N; rk2++) {
+
+			P->Subspaces->F->Projective_space_basic->PG_element_unrank_modified(
+					vec_u, 1 /*stride*/, d, rk2);
+
+			P->Subspaces->F->Projective_space_basic->PG_element_normalize_from_front(
+						vec_u, 1, d);
+
+
+			for (a = 1; a < q; a++) {
+
+				data_structures_groups::vector_ge *vec;
+
+				if (create_transvection(
+						P,
+						A,
+						f_semilinear,
+						a, vec_v, vec_u, d,
+						vec,
+						verbose_level - 2)) {
+
+					FREE_OBJECT(vec);
+
+					cur++;
+				}
+
+
+
+			}
+		}
+	}
+
+	nb_transvections = cur;
+
+
+
+
+	if (f_v) {
+		cout << "data_structures_group_global::create_all_transvections big_N = " << big_N << endl;
+		cout << "data_structures_group_global::create_all_transvections nb_transvections = " << nb_transvections << endl;
+	}
+
+
+
+	// Now we create the transvections themselves
+	// and save the data to a csv file:
+
+
+
+	data_structures_groups::vector_ge *Vec;
+
+	Vec = NEW_OBJECT(data_structures_groups::vector_ge);
+
+	Vec->init(A, 0 /* verbose_level */);
+	Vec->allocate(nb_transvections, 0 /* verbose_level */);
+
+
+
+
+	// save the data to a csv file:
+
+
+	other::orbiter_kernel_system::file_io Fio;
+	std::string fname;
+
+	fname = "PG_" + std::to_string(d - 1) + "_" + std::to_string(q) + "_all_transvections.csv";
+
+	std::string *Col_headings;
+
+	int nb_rows = nb_transvections;
+	int nb_cols = 8;
+
+	string *Table;
+
+
+	Table = new string[nb_rows * nb_cols];
+
+	cur = 0;
+
+	for (rk1 = 0; rk1 < N; rk1++) {
+
+		P->Subspaces->F->Projective_space_basic->PG_element_unrank_modified(
+				vec_v, 1 /*stride*/, d, rk1);
+
+		P->Subspaces->F->Projective_space_basic->PG_element_normalize_from_front(
+					vec_v, 1, d);
+
+		for (rk2 = 0; rk2 < N; rk2++) {
+
+			P->Subspaces->F->Projective_space_basic->PG_element_unrank_modified(
+					vec_u, 1 /*stride*/, d, rk2);
+
+			P->Subspaces->F->Projective_space_basic->PG_element_normalize_from_front(
+						vec_u, 1, d);
+
+			for (a = 1; a < q; a++) {
+
+
+				data_structures_groups::vector_ge *vec;
+
+				if (create_transvection(
+						P,
+						A,
+						f_semilinear,
+						a, vec_v, vec_u, d,
+						vec,
+						verbose_level - 2)) {
+
+					A->Group_element->element_move(vec->ith(0), Vec->ith(cur), 0 /* verbose_level */);
+
+
+					Table[cur * nb_cols + 0] = std::to_string(cur);
+					Table[cur * nb_cols + 1] = std::to_string(rk1);
+					Table[cur * nb_cols + 2] = std::to_string(rk2);
+					Table[cur * nb_cols + 3] = std::to_string(a);
+					Table[cur * nb_cols + 4] = "\"" + Int_vec_stringify(vec_v, d) + "\"";
+					Table[cur * nb_cols + 5] = "\"" + Int_vec_stringify(vec_u, d) + "\"";
+
+
+					{
+
+						Table[cur * nb_cols + 6] = "\"" + Int_vec_stringify(Vec->ith(cur), d * d) + "\"";
+					}
+#if 0
+					{
+					std::string options;
+					string s;
+
+					s = PA->A->Group_element->element_stringify(
+							Vec->ith(cur), options);
+
+
+					Table[cur * nb_cols + 7] = "\"" + s + "\"";
+					}
+#endif
+
+					FREE_OBJECT(vec);
+
+
+					cur++;
+				}
+
+
+
+
+			}
+		}
+	}
+
+
+	Col_headings = new string [nb_cols];
+
+	Col_headings[0] = "idx";
+	Col_headings[1] = "rk1";
+	Col_headings[2] = "rk2";
+	Col_headings[3] = "s";
+	Col_headings[4] = "v";
+	Col_headings[5] = "u";
+	Col_headings[6] = "Element";
+	Col_headings[7] = "ElementTex";
+
+
+	Fio.Csv_file_support->write_table_of_strings_with_col_headings(
+			fname,
+			nb_rows, nb_cols, Table,
+			Col_headings,
+			verbose_level);
+
+	if (f_v) {
+		cout << "data_structures_group_global::create_all_transvections "
+				"written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+
+	delete [] Col_headings;
+	delete [] Table;
+
+
+
+
+
+
+	FREE_int(vec_v);
+	FREE_int(vec_u);
+
+	FREE_OBJECT(Vec);
+
+
+	if (f_v) {
+		cout << "data_structures_group_global::create_all_transvections done" << endl;
+	}
+}
+
+int data_structures_group_global::small_generating_set_collineation_group(
+		actions::action *A,
+		int n, int q, int f_semilinear,
+		data_structures_groups::vector_ge *&vec,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "data_structures_group_global::small_generating_set_collineation_group" << endl;
+	}
+	//data_structures_groups::vector_ge *vec;
+
+	vec = NEW_OBJECT(data_structures_groups::vector_ge);
+
+	if (f_v) {
+		cout << "projective_space_activity::perform_activity "
+				"A = " << A->label << endl;
+	}
+
+
+	combinatorics::knowledge_base::knowledge_base K;
+
+	int *Data;
+	int size_element;
+	int nb_generators;
+
+	if (f_v) {
+		cout << "data_structures_group_global::small_generating_set_collineation_group "
+				"before K.get_small_generating_set_PGL" << endl;
+	}
+	if (!K.get_small_generating_set_PGL(
+			n, q, Data, size_element, nb_generators, verbose_level)) {
+		if (f_v) {
+			cout << "data_structures_group_global::small_generating_set_collineation_group "
+					"I don't have a small generating set for this group" << endl;
+		}
+		FREE_OBJECT(vec);
+		return false;
+	}
+	if (f_v) {
+		cout << "data_structures_group_global::small_generating_set_collineation_group "
+				"after K.get_small_generating_set_PGL" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "projective_space_activity::perform_activity "
+				"before vec->init_from_data" << endl;
+	}
+	vec->init_from_data(
+			A, Data,
+			nb_generators, size_element, verbose_level);
+	if (f_v) {
+		cout << "projective_space_activity::perform_activity "
+				"after vec->init_from_data" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "data_structures_group_global::small_generating_set_collineation_group done" << endl;
+	}
+	return true;
+}
+
+
 }}}
 

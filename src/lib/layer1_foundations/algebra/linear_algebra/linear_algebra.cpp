@@ -1876,6 +1876,43 @@ void linear_algebra::lift_to_Klein_quadric(
 
 }
 
+void linear_algebra::make_transvection(
+		int *M, int a, int *v, int *u,
+	int n, int verbose_level)
+// M := I + v^T * u
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i, j, Qv, e;
+
+	if (f_v) {
+		cout << "linear_algebra::make_transvection" << endl;
+	}
+
+
+	identity_matrix(M, n);
+
+
+	// M := I + v^T * u
+
+	for (i = 0; i < n; i++) {
+		for (j = 0; j < n; j++) {
+			e = F->mult3(a, v[i], u[j]);
+			M[i * n + j] = F->add(M[i * n + j], e);
+		}
+	}
+	if (f_vv) {
+		cout << "linear_algebra::make_transvection matrix:" << endl;
+		Int_vec_print_integer_matrix_width(cout, M, n, n, n, 2);
+	}
+
+	if (f_v) {
+		cout << "linear_algebra::make_transvection done" << endl;
+	}
+
+}
+
+
 
 
 }}}}

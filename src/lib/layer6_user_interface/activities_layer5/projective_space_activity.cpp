@@ -24,6 +24,10 @@ projective_space_activity::projective_space_activity()
 	Record_birth();
 	Descr = NULL;
 	PA = NULL;
+
+	nb_output = 0;
+	Output = NULL;
+
 }
 
 projective_space_activity::~projective_space_activity()
@@ -816,6 +820,55 @@ void projective_space_activity::perform_activity(
 		FREE_lint(the_set_out);
 
 	}
+	else if (Descr->f_get_small_generating_set_for_collineation_group) {
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"f_get_small_generating_set_for_collineation_group" << endl;
+		}
+
+		data_structures_groups::data_structures_group_global Data_structures_group_global;
+
+		data_structures_groups::vector_ge *vec;
+
+
+		int n, q;
+
+		n = PA->P->Subspaces->n + 1;
+		q = PA->P->Subspaces->F->q;
+
+
+		if (!Data_structures_group_global.small_generating_set_collineation_group(
+				PA->A,
+				n, q, PA->f_semilinear,
+				vec,
+				verbose_level)) {
+			cout << "projective_space_activity::perform_activity "
+					"I don't have a small generating set for this group, "
+					"n=" << n << ", q = " << q << endl;
+			exit(1);
+		}
+
+
+		nb_output = 1;
+		Output = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
+
+		string output_label;
+
+		output_label = PA->P->label_txt + "_small_gen_set_coll_group";
+
+		layer5_applications::apps_algebra::vector_ge_builder *VB;
+
+		VB = NEW_OBJECT(layer5_applications::apps_algebra::vector_ge_builder);
+
+		VB->V = vec;
+
+		Output->init_vector_ge(output_label, VB, verbose_level);
+
+
+	}
+
+
+
 
 
 	// TABLES/projective_space_activity_3.tex
@@ -1253,7 +1306,7 @@ void projective_space_activity::perform_activity(
 				fname, M, nb_rows, nb_cols);
 
 		if (f_v) {
-			cout << "partial_derivative::do_export "
+			cout << "projective_space_activity::perform_activity "
 					"Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 		}
 
@@ -1261,7 +1314,7 @@ void projective_space_activity::perform_activity(
 
 		if (f_v) {
 			cout << "projective_space_activity::perform_activity "
-					"after PA->report_fixed_objects" << endl;
+					"after f_evaluation_matrix" << endl;
 		}
 	}
 
@@ -1325,14 +1378,16 @@ void projective_space_activity::perform_activity(
 		Int_vec_scan(Descr->create_transvection_v, vec_v, d);
 
 		if (d != PA->P->Subspaces->n + 1) {
-			cout << "projective_space_activity::perform_activity d != PA->P->Subspaces->n + 1 while scanning v" << endl;
+			cout << "projective_space_activity::perform_activity "
+					"d != PA->P->Subspaces->n + 1 while scanning v" << endl;
 			exit(1);
 		}
 
 		Int_vec_scan(Descr->create_transvection_u, vec_u, d);
 
 		if (d != PA->P->Subspaces->n + 1) {
-			cout << "projective_space_activity::perform_activity d != PA->P->Subspaces->n + 1 while scanning u" << endl;
+			cout << "projective_space_activity::perform_activity "
+					"d != PA->P->Subspaces->n + 1 while scanning u" << endl;
 			exit(1);
 		}
 
@@ -1355,20 +1410,24 @@ void projective_space_activity::perform_activity(
 		}
 
 
+		data_structures_groups::data_structures_group_global Data_structures_group_global;
 		data_structures_groups::vector_ge *vec;
 
 		if (f_v) {
 			cout << "projective_space_activity::perform_activity "
-					"before PA->create_transvection" << endl;
+					"before Data_structures_group_global.create_transvection" << endl;
 		}
-		PA->create_transvection(
+		Data_structures_group_global.create_transvection(
+				PA->P,
+				PA->A,
+				PA->f_semilinear,
 				Descr->create_transvection_a, vec_v, vec_u, d,
 				vec,
 				verbose_level - 2);
 
 		if (f_v) {
 			cout << "projective_space_activity::perform_activity "
-					"after PA->create_transvection" << endl;
+					"after Data_structures_group_global.create_transvection" << endl;
 		}
 
 
@@ -1399,20 +1458,22 @@ void projective_space_activity::perform_activity(
 		}
 
 
-		layer5_applications::projective_geometry::projective_space_global Projective_space_global;
-
+		//layer5_applications::projective_geometry::projective_space_global Projective_space_global;
+		data_structures_groups::data_structures_group_global Data_structures_group_global;
 
 
 		if (f_v) {
 			cout << "projective_space_activity::perform_activity "
-					"before Projective_space_global.create_all_transvections" << endl;
+					"before Data_structures_group_global.create_all_transvections" << endl;
 		}
-		Projective_space_global.create_all_transvections(
-				PA,
+		Data_structures_group_global.create_all_transvections(
+				PA->P,
+				PA->A,
+				PA->f_semilinear,
 				verbose_level);
 		if (f_v) {
 			cout << "projective_space_activity::perform_activity "
-					"after Projective_space_global.create_all_transvections" << endl;
+					"after Data_structures_group_global.create_all_transvections" << endl;
 		}
 
 

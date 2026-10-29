@@ -351,8 +351,21 @@ void generators_and_images::init_generators(
 		cout << "generators_and_images::init_generators A_induced = " << A->label << endl;
 	}
 
+
+#if 0
 	if (generators.A != A_base) {
 		cout << "generators_and_images::init_generators generators.A != A_base" << endl;
+		cout << "generators_and_images::init_generators A_base = " << A_base->label << endl;
+		cout << "generators_and_images::init_generators A_induced = " << A->label << endl;
+		cout << "generators_and_images::init_generators generators.A = " << generators.A->label << endl;
+		exit(1);
+	}
+#endif
+
+	// weaker form of testing for equivalence:
+
+	if (generators.A->label != A_base->label) {
+		cout << "generators_and_images::init_generators generators.A->label != A_base->label" << endl;
 		cout << "generators_and_images::init_generators A_base = " << A_base->label << endl;
 		cout << "generators_and_images::init_generators A_induced = " << A->label << endl;
 		cout << "generators_and_images::init_generators generators.A = " << generators.A->label << endl;

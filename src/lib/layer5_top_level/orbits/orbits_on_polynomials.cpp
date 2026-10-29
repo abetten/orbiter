@@ -37,6 +37,8 @@ orbits_on_polynomials::orbits_on_polynomials()
 
 	f_has_small_generating_set = false;
 	generating_set_small = NULL;
+	//algebra::ring_theory::longinteger_object target_go;
+	target_go_log2 = -1;
 
 
 	f_has_Sch = false;
@@ -53,6 +55,10 @@ orbits_on_polynomials::orbits_on_polynomials()
 	Nb_pts = NULL;
 
 }
+
+
+
+
 
 orbits_on_polynomials::~orbits_on_polynomials()
 {
@@ -155,7 +161,7 @@ void orbits_on_polynomials::init_Schreier(
 	//A2->all_point_orbits(*Sch, verbose_level);
 
 
-
+#if 0
 	if (f_v) {
 		cout << "orbits_on_polynomials::init_Schreier "
 				"before compute_small_generating_set" << endl;
@@ -165,7 +171,7 @@ void orbits_on_polynomials::init_Schreier(
 		cout << "orbits_on_polynomials::init_Schreier "
 				"after compute_small_generating_set" << endl;
 	}
-
+#endif
 
 	actions::action_global Action_global;
 
@@ -2537,6 +2543,7 @@ void orbits_on_polynomials::export_something_worker(
 }
 
 
+#if 0
 void orbits_on_polynomials::compute_small_generating_set(
 		int verbose_level)
 {
@@ -2570,6 +2577,7 @@ void orbits_on_polynomials::compute_small_generating_set(
 		cout << "orbits_on_polynomials::compute_small_generating_set done" << endl;
 	}
 }
+#endif
 
 
 

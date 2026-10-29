@@ -52,6 +52,24 @@ public:
 		int verbose_level);
 	std::string make_fname_candidates(
 			std::string &prefix, int level_of_candidates_file);
+	int create_transvection(
+			geometry::projective_geometry::projective_space *P,
+			actions::action *A,
+			int f_semilinear,
+			int a, int *v, int *u, int len,
+			data_structures_groups::vector_ge *&vec,
+			int verbose_level);
+	// vec is only allocated if the return value is true
+	void create_all_transvections(
+			geometry::projective_geometry::projective_space *P,
+			actions::action *A,
+			int f_semilinear,
+			int verbose_level);
+	int small_generating_set_collineation_group(
+			actions::action *A,
+			int n, int q, int f_semilinear,
+			data_structures_groups::vector_ge *&vec,
+			int verbose_level);
 
 
 };

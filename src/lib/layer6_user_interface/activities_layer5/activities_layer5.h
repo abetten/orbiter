@@ -2495,6 +2495,10 @@ public:
 	int dualize_rank_k_subspaces_k;
 
 
+	int f_get_small_generating_set_for_collineation_group;
+
+
+
 	// TABLES/projective_space_activity_3.tex
 
 
@@ -2629,6 +2633,12 @@ public:
 	projective_space_activity_description *Descr;
 
 	layer5_applications::projective_geometry::projective_space_with_action *PA;
+
+
+
+	int nb_output;
+	other::orbiter_kernel_system::orbiter_symbol_table_entry *Output;
+
 
 
 	projective_space_activity();

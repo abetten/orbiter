@@ -817,6 +817,7 @@ int permutations::number_of_cycles_and_cycle_type(
 
 int permutations::number_of_cycles_and_cycle_partition(
 		int *perm, long int degree, int *cycle_partition, int &cycle_partition_len)
+// ToDo: is the return value equal to cycle_partition_len ?
 {
 	int *have_seen;
 	long int i, l, l1, first, next, len;

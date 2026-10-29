@@ -110,6 +110,8 @@ namespace knowledge_base {
 
 #include "DATA/planes_16.cpp"
 
+#include "DATA/data_small_generating_sets.cpp"
+
 
 knowledge_base::knowledge_base()
 {
@@ -3020,6 +3022,100 @@ void knowledge_base::retrieve_BLT_set_from_database(
 	}
 }
 
+
+
+// #############################################################################
+// small generating sets:
+// #############################################################################
+
+
+int knowledge_base::get_small_generating_set_PGL(
+		int n, int q, int *&Data, int &size_element, int &nb_generators, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "knowledge_base::get_small_generating_set_PGL" << endl;
+	}
+
+	algebra::number_theory::number_theory_domain NT;
+
+	int p, h;
+
+	if (!NT.is_prime_power(q, p, h)) {
+		cout << "knowledge_base::get_small_generating_set_PGL "
+				"q is not a prime power" << endl;
+		exit(1);
+	}
+
+	int f_semilinear;
+
+	if (h > 1) {
+		f_semilinear = true;
+	}
+	else {
+		f_semilinear = false;
+	}
+
+	Data = NULL;
+
+	int ret = false;
+
+	if (n == 3) {
+		other::data_structures::sorting Sorting;
+		int idx;
+
+		if (f_v) {
+			cout << "knowledge_base::get_small_generating_set_PGL" << endl;
+		}
+
+		if (!Sorting.int_vec_search(PGL3q_q, PGL3q_length, q, idx)) {
+				cout << "knowledge_base::get_small_generating_set_PGL "
+						"I don't have prime power " << q << " in the tables" << endl;
+			ret = false;
+		}
+		else {
+			Data = PGL3q_generators[idx];
+			ret = true;
+		}
+
+		nb_generators = 2;
+		size_element = 3 * 3;
+		if (f_semilinear) {
+			size_element++;
+		}
+	}
+	else if (n == 4) {
+		other::data_structures::sorting Sorting;
+		int idx;
+
+		if (f_v) {
+			cout << "knowledge_base::get_small_generating_set_PGL" << endl;
+		}
+
+		if (!Sorting.int_vec_search(PGL4q_q, PGL4q_length, q, idx)) {
+				cout << "knowledge_base::get_small_generating_set_PGL "
+						"I don't have prime power " << q << " in the tables" << endl;
+			ret = false;
+		}
+		else {
+			Data = PGL4q_generators[idx];
+			ret = true;
+		}
+
+		nb_generators = 2;
+		size_element = 4 * 4;
+		if (f_semilinear) {
+			size_element++;
+		}
+
+	}
+	else {
+		cout << "knowledge_base::get_small_generating_set_PGL the value of n is not recognized" << endl;
+		ret = false;
+	}
+	return ret;
+}
 
 
 }}}}

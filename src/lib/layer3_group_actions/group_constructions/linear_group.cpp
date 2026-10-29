@@ -554,7 +554,7 @@ int linear_group::linear_group_apply_modification(
 					"after init_PGL2q_OnConic" << endl;
 		}
 		f_OK = true;
-		}
+	}
 	if (description->f_wedge_action) {
 		if (f_v) {
 			cout << "linear_group::linear_group_apply_modification "
@@ -566,7 +566,7 @@ int linear_group::linear_group_apply_modification(
 					"after init_wedge_action" << endl;
 		}
 		f_OK = true;
-		}
+	}
 	if (description->f_wedge_action_detached) {
 		if (f_v) {
 			cout << "linear_group::linear_group_apply_modification "
@@ -578,7 +578,7 @@ int linear_group::linear_group_apply_modification(
 					"after init_wedge_action_detached" << endl;
 		}
 		f_OK = true;
-		}
+	}
 	if (description->f_monomial_group) {
 		if (f_v) {
 			cout << "linear_group::linear_group_apply_modification "
@@ -590,7 +590,7 @@ int linear_group::linear_group_apply_modification(
 					"after init_monomial_group" << endl;
 		}
 		f_OK = true;
-		}
+	}
 	if (description->f_diagonal_group) {
 		if (f_v) {
 			cout << "linear_group::linear_group_apply_modification "
@@ -602,7 +602,7 @@ int linear_group::linear_group_apply_modification(
 					"after init_diagonal_group" << endl;
 		}
 		f_OK = true;
-		}
+	}
 	if (description->f_null_polarity_group) {
 		if (f_v) {
 			cout << "linear_group::linear_group_apply_modification "
@@ -614,7 +614,7 @@ int linear_group::linear_group_apply_modification(
 					"after init_null_polarity_group" << endl;
 		}
 		f_OK = true;
-		}
+	}
 	if (description->f_symplectic_group) {
 		if (f_v) {
 			cout << "linear_group::linear_group_apply_modification "
@@ -626,7 +626,7 @@ int linear_group::linear_group_apply_modification(
 					"after init_symplectic_group" << endl;
 		}
 		f_OK = true;
-		}
+	}
 	if (description->f_borel_subgroup_upper) {
 		if (f_v) {
 			cout << "linear_group::linear_group_apply_modification "
@@ -638,12 +638,12 @@ int linear_group::linear_group_apply_modification(
 					"after init_borel_subgroup_upper" << endl;
 		}
 		f_OK = true;
-		}
+	}
 	if (description->f_borel_subgroup_lower) {
 		cout << "linear_group::linear_group_apply_modification borel_subgroup_lower "
 				"not yet implemented" << endl;
 		exit(1);
-		}
+	}
 	if (description->f_singer_group) {
 		if (f_v) {
 			cout << "linear_group::linear_group_apply_modification "
@@ -656,7 +656,7 @@ int linear_group::linear_group_apply_modification(
 					"after init_singer_group" << endl;
 		}
 		f_OK = true;
-		}
+	}
 	if (description->f_singer_group_and_frobenius) {
 		if (f_v) {
 			cout << "linear_group::linear_group_apply_modification "
@@ -669,7 +669,7 @@ int linear_group::linear_group_apply_modification(
 					"after init_singer_group_and_frobenius" << endl;
 		}
 		f_OK = true;
-		}
+	}
 	if (description->f_identity_group) {
 		if (f_v) {
 			cout << "linear_group::linear_group_apply_modification "
@@ -681,7 +681,7 @@ int linear_group::linear_group_apply_modification(
 					"after init_identity_subgroup" << endl;
 		}
 		f_OK = true;
-		}
+	}
 	if (description->f_subfield_structure_action) {
 		if (f_v) {
 			cout << "linear_group::linear_group_apply_modification "
@@ -694,7 +694,7 @@ int linear_group::linear_group_apply_modification(
 					"after init_subfield_structure_action" << endl;
 		}
 		f_OK = true;
-		}
+	}
 	if (description->f_orthogonal_group) {
 		if (f_v) {
 			cout << "linear_group::linear_group_apply_modification "
@@ -708,7 +708,7 @@ int linear_group::linear_group_apply_modification(
 					"after init_orthogonal_group" << endl;
 		}
 		f_OK = true;
-		}
+	}
 	if (description->f_subgroup_from_file) {
 		if (f_v) {
 			cout << "linear_group::linear_group_apply_modification "
@@ -723,7 +723,7 @@ int linear_group::linear_group_apply_modification(
 					"after init_subgroup_from_file" << endl;
 		}
 		f_OK = true;
-		}
+	}
 	if (description->f_subgroup_by_generators) {
 		if (f_v) {
 			cout << "linear_group::linear_group_apply_modification "

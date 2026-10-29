@@ -441,6 +441,10 @@ public:
 			int *A4, int *A6, int f_lex_ordering, int verbose_level);
 	void lift_to_Klein_quadric(
 			int *A4, int *A6, int verbose_level);
+	void make_transvection(
+			int *M, int a, int *v, int *u,
+		int n, int verbose_level);
+	// M := I + v^T * u
 
 
 	// linear_algebra2.cpp

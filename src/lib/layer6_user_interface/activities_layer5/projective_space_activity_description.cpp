@@ -162,6 +162,7 @@ projective_space_activity_description::projective_space_activity_description()
 	f_dualize_rank_k_subspaces = false;
 	dualize_rank_k_subspaces_k = 0;
 
+	f_get_small_generating_set_for_collineation_group = false;
 
 
 	// TABLES/projective_space_activity_3.tex
@@ -699,6 +700,12 @@ int projective_space_activity_description::read_arguments(
 						<< " " << dualize_input_set << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-get_small_generating_set_for_collineation_group") == 0) {
+			f_get_small_generating_set_for_collineation_group = true;
+			if (f_v) {
+				cout << "-get_small_generating_set_for_collineation_group " << endl;
+			}
+		}
 
 
 		// TABLES/projective_space_activity_3.tex
@@ -1184,6 +1191,9 @@ void projective_space_activity_description::print()
 		cout << "-dualize_rank_k_subspaces "
 				<< dualize_rank_k_subspaces_k
 				<< " " << dualize_input_set << endl;
+	}
+	if (f_get_small_generating_set_for_collineation_group) {
+		cout << "-get_small_generating_set_for_collineation_group " << endl;
 	}
 
 	// TABLES/projective_space_activity_3.tex
