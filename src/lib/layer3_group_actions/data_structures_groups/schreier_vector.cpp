@@ -909,7 +909,7 @@ void schreier_vector::init_shallow_schreier_forest(
 			}
 			fst = Shallow_tree->Forest->orbit_first[0];
 			len = Shallow_tree->Forest->orbit_len[0];
-			nb_gens = Shallow_tree->Generators_and_images->gens.len;
+			nb_gens = Shallow_tree->Generators_and_images->gens->len;
 			if (f_v) {
 				cout << "schreier_vector::init_shallow_schreier_forest "
 					"orbit " << orbit_idx << " has length " << len << " and "
@@ -917,7 +917,7 @@ void schreier_vector::init_shallow_schreier_forest(
 			}
 			for (i = 0; i < nb_gens; i++) {
 				local_gens->append(
-						Shallow_tree->Generators_and_images->gens.ith(i), verbose_level - 2);
+						Shallow_tree->Generators_and_images->gens->ith(i), verbose_level - 2);
 			}
 			for (i = 0; i < len; i++) {
 				pt = Shallow_tree->Forest->orbit[fst + i];

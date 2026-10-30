@@ -171,7 +171,7 @@ void vector_ge::init_by_hdl(
 	}
 }
 
-void vector_ge::init_by_hdl(
+void vector_ge::init_by_handle_STL(
 		actions::action *A,
 		std::vector<int> &gen_hdl, int verbose_level)
 {
@@ -179,23 +179,23 @@ void vector_ge::init_by_hdl(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "vector_ge::init_by_hdl" << endl;
+		cout << "vector_ge::init_by_handle_STL" << endl;
 	}
 	init(A, verbose_level);
 
 	if (f_v) {
-		cout << "vector_ge::init_by_hdl before allocate" << endl;
+		cout << "vector_ge::init_by_handle_STL before allocate" << endl;
 	}
 	allocate(gen_hdl.size(), verbose_level);
 	if (f_v) {
-		cout << "vector_ge::init_by_hdl after allocate" << endl;
+		cout << "vector_ge::init_by_handle_STL after allocate" << endl;
 	}
 
 	for (i = 0; i < gen_hdl.size(); i++) {
 		A->Group_element->element_retrieve(gen_hdl[i], ith(i), 0);
 	}
 	if (f_v) {
-		cout << "vector_ge::init_by_hdl done" << endl;
+		cout << "vector_ge::init_by_handle_STL done" << endl;
 	}
 }
 
@@ -2612,6 +2612,36 @@ void vector_ge::filter_subfield_elements(
 	}
 }
 
+
+
+data_structures_groups::vector_ge *vector_ge::create_vector_of_elements_inverted(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "vector_ge::create_vector_of_elements_inverted" << endl;
+	}
+
+	data_structures_groups::vector_ge *vec2;
+
+	vec2 = NEW_OBJECT(data_structures_groups::vector_ge);
+
+	vec2->init(A, verbose_level - 2);
+
+	//vec2->make_inverses(verbose_level);
+
+
+	vec2->allocate(len, verbose_level);
+
+	int i;
+
+	for (i = 0; i < len; i++) {
+		A->Group_element->invert(ith(i), vec2->ith(i));
+	}
+
+	return vec2;
+}
 
 
 

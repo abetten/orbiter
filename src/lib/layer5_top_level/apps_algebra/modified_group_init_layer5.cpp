@@ -173,6 +173,21 @@ void modified_group_init_layer5::modified_group_init(
 
 	}
 
+	if (Modified_group_create->A_base == NULL) {
+		cout << "algebra_global_with_action::modified_group_init Modified_group_create->A_base == NULL" << endl;
+		exit(1);
+	}
+
+	if (Modified_group_create->A_previous == NULL) {
+		cout << "algebra_global_with_action::modified_group_init Modified_group_create->A_previous == NULL" << endl;
+		exit(1);
+	}
+
+	if (Modified_group_create->A_modified == NULL) {
+		cout << "algebra_global_with_action::modified_group_init Modified_group_create->A_modified == NULL" << endl;
+		exit(1);
+	}
+
 	if (f_v) {
 
 		algebra::ring_theory::longinteger_object go;
@@ -192,8 +207,10 @@ void modified_group_init_layer5::modified_group_init(
 
 		cout << "modified_group_init_layer5::modified_group_init "
 				"A_base = " << Modified_group_create->A_base->label << endl;
+
 		cout << "modified_group_init_layer5::modified_group_init "
 				"A_previous = " << Modified_group_create->A_previous->label << endl;
+
 		cout << "modified_group_init_layer5::modified_group_init "
 				"A_modified = " << Modified_group_create->A_modified->label << endl;
 

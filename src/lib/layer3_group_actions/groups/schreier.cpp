@@ -230,7 +230,7 @@ void schreier::extend_orbit(
 #endif
 		gen_first = 0;
 
-		for (i = gen_first; i < Generators_and_images->gens.len; i++) {
+		for (i = gen_first; i < Generators_and_images->gens->len; i++) {
 
 			next_pt = Generators_and_images->get_image(
 					cur_pt, i, 0/*verbose_level - 3*/);
@@ -1735,7 +1735,7 @@ strong_generators *schreier::stabilizer_orbit_rep(
 	point_stabilizer(
 			default_action, full_group_order,
 		Stab, orbit_idx,
-		verbose_level - 2);
+		verbose_level);
 
 	if (f_v) {
 		cout << "schreier::stabilizer_orbit_rep "
@@ -1781,7 +1781,12 @@ void schreier::point_stabilizer(
 		cout << "default_action=" << default_action->label << endl;
 		cout << "default_action->elt_size_in_int="
 				<< default_action->elt_size_in_int << endl;
+		cout << "A_base=" << Generators_and_images->A_base->label << endl;
+		cout << "A=" << Generators_and_images->A->label << endl;
 	}
+
+
+
 	if (Generators_and_images->f_images_only) {
 		cout << "schreier::point_stabilizer is not "
 				"allowed if f_images_only is true" << endl;
@@ -1796,7 +1801,7 @@ void schreier::point_stabilizer(
 	int *Elt1;
 
 	Elt = NEW_int(default_action->elt_size_in_int);
-	Elt1 = NEW_int(Generators_and_images->A->elt_size_in_int);
+	Elt1 = NEW_int(Generators_and_images->A_base->elt_size_in_int);
 
 		// the schreier generator must be computed in the action
 		// attached to the this instance of the schreier class
@@ -1814,7 +1819,8 @@ void schreier::point_stabilizer(
 		cout << "schreier::point_stabilizer "
 				"computing stabilizer of representative of orbit "
 			<< orbit_no << " inside a group of "
-					"order " << go << " in action ";
+					"order " << go << " in action " << endl;
+		cout << "schreier::point_stabilizer default_action = ";
 		default_action->print_info();
 		cout << endl;
 	}
@@ -1874,6 +1880,26 @@ void schreier::point_stabilizer(
 		if (D.compare(cur_go, target_go) == 0) {
 			break;
 		}
+
+
+
+		if (f_vv) {
+			cout << "schreier::point_stabilizer cnt=" << cnt << " before get_a_generator_for_point_stabilizer" << endl;
+		}
+		get_a_generator_for_point_stabilizer(
+				cnt,
+				orbit_no,
+				Stab,
+				default_action,
+				Elt,
+				Elt1,
+				verbose_level - 2);
+		if (f_vv) {
+			cout << "schreier::point_stabilizer cnt=" << cnt << " after get_a_generator_for_point_stabilizer" << endl;
+		}
+
+
+#if 0
 		if (cnt % 2 || Stab->nb_gen[0] == 0) {
 			if (f_vv) {
 				cout << "schreier::point_stabilizer "
@@ -1927,6 +1953,7 @@ void schreier::point_stabilizer(
 				default_action->Group_element->element_print_quick(Elt, cout);
 			}
 		}
+#endif
 
 
 
@@ -2003,6 +2030,104 @@ void schreier::point_stabilizer(
 	}
 }
 
+void schreier::get_a_generator_for_point_stabilizer(
+		int cnt,
+		int orbit_no,
+		groups::sims *Stab,
+		actions::action *default_action,
+		int *Elt,
+		int *Elt_tmp,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
+	int f_v4 = (verbose_level >= 4);
+
+	if (f_v) {
+		cout << "schreier::get_a_generator_for_point_stabilizer" << endl;
+		cout << "schreier::get_a_generator_for_point_stabilizer verbose_level = " << verbose_level << endl;
+	}
+	if (f_v) {
+		cout << "schreier::get_a_generator_for_point_stabilizer cnt = " << cnt << endl;
+		cout << "schreier::get_a_generator_for_point_stabilizer orbit_no = " << orbit_no << endl;
+		cout << "schreier::get_a_generator_for_point_stabilizer Stab->nb_gen[0] = " << Stab->nb_gen[0] << endl;
+	}
+	if (cnt % 2 || Stab->nb_gen[0] == 0) {
+		if (f_vv) {
+			cout << "schreier::get_a_generator_for_point_stabilizer "
+					"before random_schreier_generator_ith_orbit" << endl;
+			cout << "schreier::get_a_generator_for_point_stabilizer "
+					"Stab->my_base_len=" << Stab->my_base_len << endl;
+		}
+		if (f_v) {
+			cout << "schreier::get_a_generator_for_point_stabilizer "
+					"before Generators_and_images->random_schreier_generator_ith_orbit" << endl;
+		}
+		Generators_and_images->random_schreier_generator_ith_orbit(
+				Elt_tmp,
+				orbit_no,
+				verbose_level - 1);
+		if (f_v) {
+			cout << "schreier::get_a_generator_for_point_stabilizer "
+					"after Generators_and_images->random_schreier_generator_ith_orbit" << endl;
+		}
+
+		// this creates a Schreier generator in action A,
+		// not in default_action
+
+
+		if (f_vv) {
+			cout << "schreier::get_a_generator_for_point_stabilizer "
+					"after random_schreier_generator_ith_orbit" << endl;
+			cout << "schreier::get_a_generator_for_point_stabilizer "
+					"Stab->my_base_len=" << Stab->my_base_len << endl;
+		}
+
+		// and now we copy over the part of Elt1 that belongs to default_action:
+
+		default_action->Group_element->element_move(Elt_tmp, Elt, 0);
+
+
+		if (f_vvv) {
+			cout << "schreier::get_a_generator_for_point_stabilizer "
+					"random Schreier generator from the orbit:" << endl;
+			default_action->Group_element->element_print_quick(Elt, cout);
+		}
+	}
+	else {
+		if (f_vv) {
+			cout << "schreier::get_a_generator_for_point_stabilizer "
+					"before Stab->random_schreier_generator" << endl;
+			cout << "schreier::get_a_generator_for_point_stabilizer "
+					"Stab->my_base_len=" << Stab->my_base_len << endl;
+		}
+		if (f_v) {
+			cout << "schreier::get_a_generator_for_point_stabilizer "
+					"before Stab->random_schreier_generator" << endl;
+		}
+		Stab->random_schreier_generator(Elt, verbose_level - 1);
+		if (f_v) {
+			cout << "schreier::get_a_generator_for_point_stabilizer "
+					"after Stab->random_schreier_generator" << endl;
+		}
+		if (f_vv) {
+			cout << "schreier::get_a_generator_for_point_stabilizer "
+					"after Stab->random_schreier_generator" << endl;
+			cout << "schreier::get_a_generator_for_point_stabilizer "
+					"Stab->my_base_len=" << Stab->my_base_len << endl;
+		}
+		if (f_v4) {
+			cout << "schreier::get_a_generator_for_point_stabilizer "
+					"random schreier generator from sims:" << endl;
+			default_action->Group_element->element_print_quick(Elt, cout);
+		}
+	}
+
+	if (f_v) {
+		cout << "schreier::get_a_generator_for_point_stabilizer done" << endl;
+	}
+}
 
 void schreier::shallow_tree_generators(
 		int orbit_idx,
@@ -2383,7 +2508,7 @@ data_structures_groups::schreier_vector *schreier::get_schreier_vector(
 
 
 	if (nb_gen) {
-		Schreier_vector->init_local_generators(&Generators_and_images->gens, 0 /*verbose_level */);
+		Schreier_vector->init_local_generators(Generators_and_images->gens, 0 /*verbose_level */);
 	}
 
 	return Schreier_vector;

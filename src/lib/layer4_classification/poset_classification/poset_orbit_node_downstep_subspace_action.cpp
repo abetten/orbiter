@@ -164,7 +164,7 @@ void poset_orbit_node::compute_flag_orbits_subspace_action(
 
 	get_strong_generators_handle(gen_handle, verbose_level - 2);
 
-	Schreier->Generators_and_images->init_generators_by_handle(
+	Schreier->Generators_and_images->init_generators_by_handle_STL(
 			gen_handle,
 			verbose_level - 1);
 

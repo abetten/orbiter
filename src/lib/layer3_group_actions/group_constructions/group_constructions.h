@@ -506,8 +506,8 @@ public:
 	std::string label_tex;
 
 
-	actions::action *A_base;
-	actions::action *A_previous;
+	actions::action *A_base; // may be NULL, for instance for direct product group actions
+	actions::action *A_previous; // may be NULL, for instance for direct product group actions
 	actions::action *A_modified;
 
 	int f_has_strong_generators;

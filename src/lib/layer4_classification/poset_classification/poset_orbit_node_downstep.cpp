@@ -381,7 +381,7 @@ void poset_orbit_node::compute_schreier_vector(
 	get_strong_generators_handle(gen_handle, verbose_level - 2);
 
 
-	Schreier->Generators_and_images->init_generators_by_handle(
+	Schreier->Generators_and_images->init_generators_by_handle_STL(
 			gen_handle,
 			verbose_level - 1);
 	if (f_v) {
@@ -715,14 +715,16 @@ void poset_orbit_node::schreier_forest(
 
 	if (f_v) {
 		gen->print_level_info(lvl, node);
-		cout << " : poset_orbit_node::schreier_forest before Schreier.Generators_and_images->init_generators_by_handle" << endl;
+		cout << " : poset_orbit_node::schreier_forest "
+				"before Schreier.Generators_and_images->init_generators_by_handle_STL" << endl;
 	}
-	Schreier.Generators_and_images->init_generators_by_handle(
+	Schreier.Generators_and_images->init_generators_by_handle_STL(
 			gen_handle,
 			verbose_level - 1);
 	if (f_v) {
 		gen->print_level_info(lvl, node);
-		cout << " : poset_orbit_node::schreier_forest after Schreier.Generators_and_images->init_generators_by_handle" << endl;
+		cout << " : poset_orbit_node::schreier_forest "
+				"after Schreier.Generators_and_images->init_generators_by_handle_STL" << endl;
 	}
 
 	if (f_v) {
@@ -1252,7 +1254,7 @@ int poset_orbit_node::downstep_get_invariant_subset(
 
 				O->get_strong_generators_handle(gen_handle, verbose_level - 2);
 
-				S.Generators_and_images->init_generators_by_handle(
+				S.Generators_and_images->init_generators_by_handle_STL(
 						gen_handle,
 						verbose_level - 1);
 

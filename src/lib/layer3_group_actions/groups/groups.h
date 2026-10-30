@@ -492,8 +492,8 @@ public:
 
 	long int degree;
 
-	data_structures_groups::vector_ge gens;
-	data_structures_groups::vector_ge gens_inv;
+	data_structures_groups::vector_ge *gens;
+	data_structures_groups::vector_ge *gens_inv;
 
 	int nb_generators;
 		// this was called nb_images, which is very confusing
@@ -553,13 +553,15 @@ public:
 	void init_generators(
 			data_structures_groups::vector_ge &generators,
 			int verbose_level);
-	void init_generators(
+
+	void init_generators_raw(
 			int nb, int *elt, int verbose_level);
+
 
 	void init_generators_by_hdl(
 			int nb_gen, int *gen_hdl,
 		int verbose_level);
-	void init_generators_by_handle(
+	void init_generators_by_handle_STL(
 			std::vector<int> &gen_hdl,
 			int verbose_level);
 	void append_one(
@@ -1053,6 +1055,14 @@ public:
 			groups::sims *&Stab,
 			int orbit_no, int verbose_level);
 		// this function allocates a sims structure into Stab.
+	void get_a_generator_for_point_stabilizer(
+			int cnt,
+			int orbit_no,
+			groups::sims *Stab,
+			actions::action *default_action,
+			int *Elt,
+			int *Elt1,
+			int verbose_level);
 	void shallow_tree_generators(
 			int orbit_idx,
 			int f_randomized,

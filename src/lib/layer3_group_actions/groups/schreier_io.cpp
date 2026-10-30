@@ -55,7 +55,7 @@ void schreier::print_and_list_orbits_and_stabilizer(
 	int i;
 
 	ost << Forest->nb_orbits << " orbits" << endl;
-	ost << "orbit group with " << Generators_and_images->gens.len << " generators:" << endl;
+	ost << "orbit group with " << Generators_and_images->gens->len << " generators:" << endl;
 	ost << "i : orbit_first[i] : orbit_len[i]" << endl;
 	for (i = 0; i < Forest->nb_orbits; i++) {
 
@@ -146,17 +146,26 @@ void schreier::write_orbit_summary(
 	Orbit_length = NEW_lint(Forest->nb_orbits);
 
 	for (orbit_no = 0; orbit_no < Forest->nb_orbits; orbit_no++) {
+		if (f_v) {
+			cout << "schreier::write_orbit_summary orbit " << orbit_no << " / " << Forest->nb_orbits << endl;
+		}
 		Rep[orbit_no] = Forest->orbit[Forest->orbit_first[orbit_no]];
 		Orbit_length[orbit_no] = Forest->orbit_len[orbit_no];
 
 		strong_generators *gens;
 
+		if (f_v) {
+			cout << "schreier::write_orbit_summary orbit " << orbit_no << " / " << Forest->nb_orbits << " before stabilizer_orbit_rep" << endl;
+		}
 		gens = stabilizer_orbit_rep(
 				default_action,
 			full_group_order, orbit_no,
-			0 /*verbose_level */);
+			verbose_level);
 
 		Stab_order[orbit_no] = gens->group_order_as_lint();
+
+
+		FREE_OBJECT(gens);
 
 	}
 
@@ -295,7 +304,7 @@ void schreier::print_and_list_orbits_and_stabilizer_sorted_by_length(
 			Perm, Perm_inv, true /*f_increasingly*/);
 
 	ost << "There are " << Forest->nb_orbits << " orbits under a group with "
-			<< Generators_and_images->gens.len << " generators:";
+			<< Generators_and_images->gens->len << " generators:";
 	if (f_tex) {
 		ost << "\\\\" << endl;
 	}
@@ -356,7 +365,7 @@ void schreier::print_fancy(
 			Perm, Perm_inv, true /*f_increasingly*/);
 
 	ost << "There are " << Forest->nb_orbits << " orbits under a group with "
-			<< Generators_and_images->gens.len << " generators:";
+			<< Generators_and_images->gens->len << " generators:";
 	if (f_tex) {
 		ost << "\\\\" << endl;
 	}
@@ -404,7 +413,7 @@ void schreier::print_and_list_orbits_using_labels(
 	int i;
 
 	ost << Forest->nb_orbits << " orbits" << endl;
-	ost << "orbit group with " << Generators_and_images->gens.len << " generators:" << endl;
+	ost << "orbit group with " << Generators_and_images->gens->len << " generators:" << endl;
 	ost << "i : orbit_first[i] : orbit_len[i]" << endl;
 	for (i = 0; i < Forest->nb_orbits; i++) {
 		ost << i << " : " << Forest->orbit_first[i]

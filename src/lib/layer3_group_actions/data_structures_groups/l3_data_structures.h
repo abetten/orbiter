@@ -70,6 +70,9 @@ public:
 			int n, int q, int f_semilinear,
 			data_structures_groups::vector_ge *&vec,
 			int verbose_level);
+	data_structures_groups::vector_ge *create_vector_from_elements_by_handle_STL(
+			actions::action *A,
+			std::vector<int> &gen_hdl, int verbose_level);
 
 
 };
@@ -797,7 +800,7 @@ public:
 	void init_by_hdl(
 			actions::action *A,
 			int *gen_hdl, int nb_gen, int verbose_level);
-	void init_by_hdl(
+	void init_by_handle_STL(
 			actions::action *A,
 			std::vector<int> &gen_hdl, int verbose_level);
 	void init_single(
@@ -965,6 +968,8 @@ public:
 			int verbose_level);
 	void filter_subfield_elements(
 			int subfield_index, vector_ge *&result, int verbose_level);
+	data_structures_groups::vector_ge *create_vector_of_elements_inverted(
+			int verbose_level);
 
 };
 

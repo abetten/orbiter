@@ -124,7 +124,8 @@ void schreier_poset::init(
 				"before Layered_graph->init" << endl;
 	}
 	Layered_graph->init(
-			Distance_information->Set_partition->nb_classes, Distance_information->Set_partition->Class_size, fname_base,
+			Distance_information->Set_partition->nb_classes, Distance_information->Set_partition->Class_size,
+			fname_base,
 			verbose_level - 2);
 	if (f_v) {
 		cout << "schreier_poset::init "
@@ -364,7 +365,7 @@ void schreier_poset::add_edges(
 	long int a;
 	//int next_pt_loc;
 
-	nb_gens = Schreier->Generators_and_images->gens.len;
+	nb_gens = Schreier->Generators_and_images->gens->len;
 
 	for (l = 0; l < Distance_information->Set_partition->nb_classes; l++) {
 		for (n = 0; n < Distance_information->Set_partition->Class_size[l]; n++) {

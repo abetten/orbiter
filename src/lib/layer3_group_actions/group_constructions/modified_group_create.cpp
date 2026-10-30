@@ -1746,6 +1746,10 @@ void modified_group_create::create_product_action(
 	}
 
 
+
+
+
+
 	groups::any_group *AG1, *AG2;
 
 	AG1 = (groups::any_group *) Get_any_group_opaque(Input[0]);
@@ -1814,6 +1818,8 @@ void modified_group_create::create_product_action(
 	f_has_strong_generators = true;
 
 
+	A_base = A_modified;
+	A_previous = A_modified;
 
 
 

@@ -120,6 +120,10 @@ void orbits_on_polynomials::init_Schreier(
 	}
 
 	A->Strong_gens->group_order(target_go);
+	if (f_v) {
+		cout << "orbits_on_polynomials::init_Schreier "
+				"group order = " << target_go << endl;
+	}
 
 
 	degree_of_poly = HPD->degree;
@@ -193,7 +197,7 @@ void orbits_on_polynomials::init_Schreier(
 	Action_global.all_point_orbits_Schreier_from_generators_first_next(
 			A2,
 			*Sch,
-			generating_set_small,
+			A->Strong_gens->gens, //generating_set_small,
 			target_go,
 			fname_bitvector,
 			verbose_level - 2);

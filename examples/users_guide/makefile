@@ -49,12 +49,12 @@ MAGMA_PATH=""
 MAGMA_EXE=$(MAGMA_PATH)magma
 #MAGMA_EXE=echo
 
-OPEN=open
-#OPEN=echo
+#OPEN=open
+OPEN=echo
 
 
-PDFLATEX=pdflatex
-#PDFLATEX=echo
+#PDFLATEX=pdflatex
+PDFLATEX=echo
 
 ###############################################################################
 # End of configuration part
@@ -5478,6 +5478,7 @@ test_5_2:
 	make NullPolarity_6_2
 	make M24_matrix_group
 	make PGL_4_2_classes_rnf
+	make PG_3_2_sgs
 
 
 GL_2_3_elements_dense:
@@ -6112,9 +6113,25 @@ PGL_4_2_classes_rnf:
 		-group_theoretic_activity \
 			-classes_based_on_normal_form \
 		-end
-	pdflatex PGL_4_2_classes_based_on_normal_forms_4_2.tex
-	open PGL_4_2_classes_based_on_normal_forms_4_2.pdf
+	$(PDFLATEX) PGL_4_2_classes_based_on_normal_forms_4_2.tex
+	$(OPEN) PGL_4_2_classes_based_on_normal_forms_4_2.pdf
 
+
+PG_3_2_sgs:
+	$(ORBITER) -v 4 \
+		-define F -finite_field -q 2 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-assign gens -from \
+		-with P -do -projective_space_activity \
+			-get_small_generating_set_for_collineation_group \
+		-end \
+		-with gens -do \
+		-vector_ge_activity \
+			-report_with_options "dense=on,permutation=off" \
+		-end \
+		-print_symbols
+	$(PDFLATEX) PGL_4_2_gens_elements.tex
+	$(OPEN) PGL_4_2_gens_elements.pdf
 
 
 ###############################################################################
@@ -8031,8 +8048,6 @@ test_5_6:
 	#make PGOm_6_2_Class_2A_print
 	#make PGOm_6_2_Class_2A_centralizer
 	#make PGOm_6_2_Class_2A_centralizer_recover
-	make PGL_3_2_transvection
-	make PGL_3_2_create_all_transvections
 	make PGL_3_2_products_of_pairs
 	make PGL_3_2_products_of_pairs_identify
 
@@ -8573,28 +8588,14 @@ PGOm_6_2_Class_2A_centralizer_recover:
 
 
 
-PGL_3_2_transvection:
-	$(ORBITER) -v 2 \
-		-define F -finite_field -q 2 -end \
-		-define P -projective_space -n 2 -field F -v 0 -end \
-		-with P -do -projective_space_activity \
-			-create_transvection 1 "0,1,0" "1,0,0" \
-		-end
 
-
-PGL_3_2_create_all_transvections:
+PGL_3_2_products_of_pairs:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 2 -end \
 		-define P -projective_space -n 2 -field F -v 0 -end \
 		-with P -do -projective_space_activity \
 			-create_all_transvections \
 		-end
-
-
-#PG_2_2_all_transvections.csv
-
-
-PGL_3_2_products_of_pairs:
 	$(ORBITER) -v 5 \
 		-define F -finite_field -q 2 -end \
 		-define G -linear_group -PGL 3 F -end \
@@ -11526,7 +11527,7 @@ test_8_1:
 	make orbits_cubic_curves_q2
 	make orbits_cubic_curves_q2_with_draw_tree
 	make poly_orbits_d3_n2_q2_compute
-	make poly_orbits_d3_n3_q2.csv
+	make poly_orbits_d3_n3_q2_compute_with_sgs
 	make poly_orbits_d3_n3_q2_get_ranks
 	make T4_orbits
 	make T4r1_orbits
@@ -11534,7 +11535,7 @@ test_8_1:
 	make T4r1_orbits_4
 	make PGGL_7_8_orbits
 	make PGL_3_2_matrix_group_action_by_rm
-	make PGL_3_2_schreier_poset_draw
+	#make PGL_3_2_schreier_poset_draw
 	make PGL_3_2_schreier_poset2_draw
 
 
@@ -11543,7 +11544,8 @@ orbits_PGL_4_2_on_points_draw_tree:
 	$(ORBITER) -v 8 \
 		-define Do -draw_options -embedded -end \
 		-define G -linear_group -PGL 4 2 -end \
-		-define Orb -orbits -group G \
+		-define Orb -orbits \
+			-group G \
 			-on_points \
 		-end \
 		-with Orb -do -orbits_activity \
@@ -11556,7 +11558,7 @@ orbits_PGL_4_2_on_points_draw_tree:
 			-draw_tree 0 Do \
 		-end \
 		-with Orb -do -orbits_activity \
-			-schreier_poset 0 PGL_4_2_on_points \
+			-schreier_poset 1 0 PGL_4_2_on_points \
 		-end
 	$(ORBITER) -v 3 \
 		-draw_layered_graph \
@@ -11692,6 +11694,8 @@ T3r1_orbits_draw:
 
 
 
+# error: 
+
 orbits_on_conics_q13:
 	$(ORBITER) -v 4 \
 		-define F -finite_field -q 13 -end \
@@ -11703,7 +11707,8 @@ orbits_on_conics_q13:
 			-monomial_ordering_partition \
 			-variables "X,Y,Z" "X,Y,Z" \
 		-end \
-		-define Orb -orbits -group G \
+		-define Orb -orbits \
+			-group G \
 			-print_interval 1000000 \
 			-on_polynomials R \
 		-end
@@ -11759,7 +11764,7 @@ orbits_cubic_curves_q2_with_draw_tree:
 
 
 poly_orbits_d3_n2_q2_compute:
-	$(ORBITER) -v 4 \
+	$(ORBITER) -v 40 \
 		-define Do -draw_options \
 			-yout 500000 -radius 15 -nodes_empty \
 			-line_width 0.5 -y_stretch 0.25 -embedded \
@@ -11774,7 +11779,8 @@ poly_orbits_d3_n2_q2_compute:
 			-monomial_ordering_partition \
 			-variables "X,Y,Z" "X,Y,Z" \
 		-end \
-		-define Orb -orbits -group G \
+		-define Orb -orbits \
+			-group G \
 			-print_interval 1000000 \
 			-on_polynomials R \
 		-end \
@@ -11789,16 +11795,24 @@ poly_orbits_d3_n2_q2_compute:
 	$(OPEN) poly_orbits_d3_n2_q2.pdf
 
 
+# sgs = small generating set
 
-# slow:
-
-poly_orbits_d3_n3_q2.csv:
-	$(ORBITER) -v 4 \
+poly_orbits_d3_n3_q2_compute_with_sgs:
+	$(ORBITER) -v 7 \
 		-define Do -draw_options \
 			-yout 500000 -radius 15 -nodes_empty \
 			-line_width 0.5 -y_stretch 0.25 -embedded \
 		-end \
 		-define F -finite_field -q 2 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-assign gens -from \
+		-with P -do -projective_space_activity \
+			-get_small_generating_set_for_collineation_group \
+		-end \
+		-with gens -do \
+		-vector_ge_activity \
+			-report_with_options "dense=on,permutation=off" \
+		-end \
 		-define G -linear_group -PGL 4 F -end \
 		-define R -polynomial_ring \
 			-field F \
@@ -11807,7 +11821,9 @@ poly_orbits_d3_n3_q2.csv:
 			-monomial_ordering_partition \
 			-variables "X,Y,Z,W" "X,Y,Z,W" \
 		-end \
-		-define Orb -orbits -group G \
+		-define Orb -orbits \
+			-group G \
+			-generators gens \
 			-print_interval 1000000 \
 			-on_polynomials R \
 		-end \
@@ -11817,8 +11833,8 @@ poly_orbits_d3_n3_q2.csv:
 		-with Orb -do -orbits_activity \
 			-draw_tree 6 Do \
 		-end
-	$(PDFLATEX) PGL_4_2_orbit_6_tree.tex
-	$(OPEN) PGL_4_2_orbit_6_tree.pdf
+	$(PDFLATEX) PGL_4_2_gens_gens_orbit_6_tree.tex
+	$(OPEN) PGL_4_2_gens_gens_orbit_6_tree.pdf
 
 #written file PGL_4_2_orbit_6_tree.tex of size 79891
 
@@ -11951,10 +11967,12 @@ PGL_3_2_matrix_group_action_by_rm:
 		-vector_ge_activity \
 			-report \
 		-end \
-		-define R -modified_group -from G \
+		-define GR -modified_group -from G \
 			-action_on_self_by_right_multiplication \
 		-end \
-		-define Orb -orbits -group R \
+		-define Orb -orbits \
+			-group G \
+			-group_action GR \
 			-on_points_with_generators gens \
 			-print_interval 100 \
 		-end \
@@ -11962,7 +11980,7 @@ PGL_3_2_matrix_group_action_by_rm:
 			-report Do \
 		-end \
 		-with Orb -do -orbits_activity \
-			-schreier_poset 0 PGL_3_2_on_self_by_rm \
+			-schreier_poset 1 0 PGL_3_2_on_self_by_rm \
 		-end \
 		-with Orb -do -orbits_activity \
 			-export_trees \
@@ -11972,6 +11990,12 @@ PGL_3_2_matrix_group_action_by_rm:
 	#open PGL_4_2_ByRightMult_orbits_report.pdf
 	#pdflatex PGL_4_2_gens_elements.tex
 	#open PGL_4_2_gens_elements.pdf
+
+#error:
+#generators_and_images::init_generators generators.A->label != A_base->label
+#generators_and_images::init_generators A_base = PGL_3_2_E168
+#generators_and_images::init_generators A_induced = PGL_3_2_E168
+#generators_and_images::init_generators generators.A = PGL_3_2
 
 
 #PGL_3_2_on_self_by_rm_poset.layered_graph
@@ -11991,6 +12015,8 @@ PGL_3_2_schreier_poset_draw:
 	dvips view.dvi -o
 	magick -density 240 view.ps view.png
 	open view.png
+
+#error
 
 
 PGL_3_2_schreier_poset2_draw:

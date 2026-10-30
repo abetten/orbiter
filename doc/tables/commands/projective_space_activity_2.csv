@@ -10,6 +10,7 @@ ROW,C1,C2,C3
 1,"\verb'-dualize_hyperplanes_to_points' "," $S$ ","Turns ranks of hyperplanes in the given set $S$ into ranks of points under the standard null polarity."
 1,"\verb'-dualize_points_to_hyperplanes' "," $S$ ","Turns ranks of points in the given set $S$ into ranks of hyperplanes under the standard null polarity. "
 1,"\verb'-dualize_rank_k_subspaces' "," $k$ $S$ ","Turns ranks of $k$-subspaces in the given set $S$ into ranks of $n-k$ subspaces. "
+1,"\verb'-get_small_generating_set_for_collineation_group' ","  ","Returns a small generating set for the collineation group. The set is an object of type vector of group elements. It is not a stong generating set."
 END
 1,"\verb'-lift_skew_hexagon' ","   ","   "
 1,"\verb'-lift_skew_hexagon_with_polarity' ","   ","   "

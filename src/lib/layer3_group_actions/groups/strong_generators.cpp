@@ -228,13 +228,13 @@ void strong_generators::init_by_hdl_and_with_tl(
 	}
 	gens = NEW_OBJECT(data_structures_groups::vector_ge);
 	if (f_v) {
-		cout << "strong_generators::init_by_hdl_and_with_tl "
+		cout << "strong_generators::init_by_handle_STL "
 				"before gens->init_by_hdl" << endl;
 	}
-	gens->init_by_hdl(A, gen_handle, verbose_level);
+	gens->init_by_handle_STL(A, gen_handle, verbose_level);
 	if (f_v) {
 		cout << "strong_generators::init_by_hdl_and_with_tl "
-				"after gens->init_by_hdl" << endl;
+				"after gens->init_by_handle_STL" << endl;
 	}
 
 	if (f_v) {

@@ -720,5 +720,40 @@ int data_structures_group_global::small_generating_set_collineation_group(
 }
 
 
+data_structures_groups::vector_ge *data_structures_group_global::create_vector_from_elements_by_handle_STL(
+		actions::action *A,
+		std::vector<int> &gen_hdl, int verbose_level)
+{
+	int i;
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "data_structures_group_global::create_vector_from_elements_by_handle_STL" << endl;
+	}
+
+	data_structures_groups::vector_ge *vec;
+
+	vec = NEW_OBJECT(data_structures_groups::vector_ge);
+
+	vec->init(A, verbose_level);
+
+	if (f_v) {
+		cout << "data_structures_group_global::create_vector_from_elements_by_handle_STL "
+				"before vec->init_by_handle_STL" << endl;
+	}
+	vec->init_by_handle_STL(
+			A,
+			gen_hdl, verbose_level);
+	if (f_v) {
+		cout << "data_structures_group_global::create_vector_from_elements_by_handle_STL "
+				"after vec->init_by_handle_STL" << endl;
+	}
+
+	return vec;
+}
+
+
+
+
 }}}
 
