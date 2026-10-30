@@ -1706,6 +1706,7 @@ groups::schreier *vector_ge::compute_all_point_orbits_schreier(
 }
 
 groups::schreier *vector_ge::compute_all_point_orbits_schreier_with_print_interval(
+		actions::action *A_base,
 		actions::action *A_given,
 		int print_interval,
 		int verbose_level)
@@ -1714,9 +1715,16 @@ groups::schreier *vector_ge::compute_all_point_orbits_schreier_with_print_interv
 	groups::schreier *Sch;
 
 	if (f_v) {
-		cout << "vector_ge::compute_all_point_orbits_schreier "
-				"degree = " << A_given->degree << endl;
+		cout << "vector_ge::compute_all_point_orbits_schreier" << endl;
 	}
+
+	if (f_v) {
+		cout << "vector_ge::compute_all_point_orbits_schreier "
+				"A_given = " << A_given->label << endl;
+		cout << "vector_ge::compute_all_point_orbits_schreier "
+				"A_base = " << A_base->label << endl;
+	}
+
 	if (f_v) {
 		cout << "vector_ge::compute_all_point_orbits_schreier "
 				"action ";
@@ -1727,7 +1735,7 @@ groups::schreier *vector_ge::compute_all_point_orbits_schreier_with_print_interv
 
 	Sch = NEW_OBJECT(groups::schreier);
 
-	Sch->init(A_given, A_given, verbose_level - 2);
+	Sch->init(A_base, A_given, verbose_level - 2);
 	//Sch->initialize_tables();
 	Sch->Generators_and_images->init_generators(
 			*this, verbose_level - 2);

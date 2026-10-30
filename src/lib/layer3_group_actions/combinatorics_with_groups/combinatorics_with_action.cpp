@@ -37,7 +37,7 @@ void combinatorics_with_action::report_TDO_and_TDA_projective_space(
 		std::ostream &ost,
 		geometry::projective_geometry::projective_space *P,
 		long int *points, int nb_points,
-		actions::action *A_on_points, actions::action *A_on_lines,
+		actions::action *A_base, actions::action *A_on_points, actions::action *A_on_lines,
 		groups::strong_generators *gens, int size_limit_for_printing,
 		int verbose_level)
 {
@@ -70,7 +70,7 @@ void combinatorics_with_action::report_TDO_and_TDA_projective_space(
 			ost,
 			Inc,
 			points, nb_points,
-			A_on_points, A_on_lines,
+			A_base, A_on_points, A_on_lines,
 			gens, size_limit_for_printing,
 			verbose_level);
 	if (f_v) {
@@ -90,7 +90,7 @@ void combinatorics_with_action::report_TDO_and_TDA_projective_space(
 void combinatorics_with_action::report_TDA_projective_space(
 		std::ostream &ost,
 		geometry::projective_geometry::projective_space *P,
-		actions::action *A_on_points, actions::action *A_on_lines,
+		actions::action *A_base, actions::action *A_on_points, actions::action *A_on_lines,
 		groups::strong_generators *gens, int size_limit_for_printing,
 		int verbose_level)
 {
@@ -122,7 +122,7 @@ void combinatorics_with_action::report_TDA_projective_space(
 	report_TDA(
 			ost,
 			Inc,
-			A_on_points, A_on_lines,
+			A_base, A_on_points, A_on_lines,
 			gens, size_limit_for_printing,
 			verbose_level);
 	if (f_v) {
@@ -141,7 +141,7 @@ void combinatorics_with_action::report_TDA_projective_space(
 void combinatorics_with_action::report_TDA_combinatorial_object(
 		std::ostream &ost,
 		combinatorics::canonical_form_classification::encoded_combinatorial_object *Enc,
-		actions::action *A_on_points, actions::action *A_on_lines,
+		actions::action *A_base, actions::action *A_on_points, actions::action *A_on_lines,
 		groups::strong_generators *gens, int size_limit_for_printing,
 		int verbose_level)
 {
@@ -166,7 +166,7 @@ void combinatorics_with_action::report_TDA_combinatorial_object(
 	report_TDA(
 			ost,
 			Inc,
-			A_on_points, A_on_lines,
+			A_base, A_on_points, A_on_lines,
 			gens, size_limit_for_printing,
 			verbose_level);
 
@@ -189,7 +189,7 @@ void combinatorics_with_action::report_TDO_and_TDA(
 		std::ostream &ost,
 		geometry::other_geometry::incidence_structure *Inc,
 		long int *points, int nb_points,
-		actions::action *A_on_points, actions::action *A_on_lines,
+		actions::action *A_base, actions::action *A_on_points, actions::action *A_on_lines,
 		groups::strong_generators *gens, int size_limit_for_printing,
 		int verbose_level)
 {
@@ -266,7 +266,7 @@ void combinatorics_with_action::report_TDO_and_TDA(
 	}
 	refine_decomposition_by_group_orbits(
 			Decomposition,
-			A_on_points, A_on_lines,
+			A_base, A_on_points, A_on_lines,
 			gens,
 			verbose_level);
 	if (f_v) {
@@ -310,7 +310,7 @@ void combinatorics_with_action::report_TDO_and_TDA(
 void combinatorics_with_action::report_TDA(
 		std::ostream &ost,
 		geometry::other_geometry::incidence_structure *Inc,
-		actions::action *A_on_points, actions::action *A_on_lines,
+		actions::action *A_base, actions::action *A_on_points, actions::action *A_on_lines,
 		groups::strong_generators *gens, int size_limit_for_printing,
 		int verbose_level)
 {
@@ -373,7 +373,7 @@ void combinatorics_with_action::report_TDA(
 	}
 	refine_decomposition_by_group_orbits(
 			Decomposition,
-			A_on_points, A_on_lines,
+			A_base, A_on_points, A_on_lines,
 			gens,
 			verbose_level);
 	if (f_v) {
@@ -418,7 +418,7 @@ void combinatorics_with_action::report_TDA(
 
 void combinatorics_with_action::refine_decomposition_by_group_orbits(
 		combinatorics::tactical_decompositions::decomposition *Decomposition,
-		actions::action *A_on_points, actions::action *A_on_lines,
+		actions::action *A_base, actions::action *A_on_points, actions::action *A_on_lines,
 		groups::strong_generators *gens,
 		int verbose_level)
 {
@@ -434,6 +434,7 @@ void combinatorics_with_action::refine_decomposition_by_group_orbits(
 	}
 	refine_decomposition_by_group_orbits_one_side(
 			Decomposition,
+			A_base,
 			A_on_points,
 			false /* f_lines */,
 			gens,
@@ -449,6 +450,7 @@ void combinatorics_with_action::refine_decomposition_by_group_orbits(
 	}
 	refine_decomposition_by_group_orbits_one_side(
 			Decomposition,
+			A_base,
 			A_on_lines,
 			true /* f_lines */,
 			gens,
@@ -465,6 +467,7 @@ void combinatorics_with_action::refine_decomposition_by_group_orbits(
 
 void combinatorics_with_action::refine_decomposition_by_group_orbits_one_side(
 		combinatorics::tactical_decompositions::decomposition *Decomposition,
+		actions::action *A_base,
 		actions::action *A_on_points_or_lines,
 		int f_lines,
 		groups::strong_generators *gens,
@@ -490,7 +493,7 @@ void combinatorics_with_action::refine_decomposition_by_group_orbits_one_side(
 
 		Schreier = NEW_OBJECT(groups::schreier);
 		Schreier->init(
-				A_on_points_or_lines,
+				A_base,
 				A_on_points_or_lines,
 				verbose_level - 2);
 		//Schreier->initialize_tables();

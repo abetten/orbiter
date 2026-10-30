@@ -33,41 +33,42 @@ public:
 			std::ostream &ost,
 			geometry::projective_geometry::projective_space *P,
 			long int *points, int nb_points,
-			actions::action *A_on_points, actions::action *A_on_lines,
+			actions::action *A_base, actions::action *A_on_points, actions::action *A_on_lines,
 			groups::strong_generators *gens, int size_limit_for_printing,
 			int verbose_level);
 	void report_TDA_projective_space(
 			std::ostream &ost,
 			geometry::projective_geometry::projective_space *P,
-			actions::action *A_on_points, actions::action *A_on_lines,
+			actions::action *A_base, actions::action *A_on_points, actions::action *A_on_lines,
 			groups::strong_generators *gens, int size_limit_for_printing,
 			int verbose_level);
 	void report_TDA_combinatorial_object(
 			std::ostream &ost,
 			combinatorics::canonical_form_classification::encoded_combinatorial_object *Enc,
-			actions::action *A_on_points, actions::action *A_on_lines,
+			actions::action *A_base, actions::action *A_on_points, actions::action *A_on_lines,
 			groups::strong_generators *gens, int size_limit_for_printing,
 			int verbose_level);
 	void report_TDO_and_TDA(
 			std::ostream &ost,
 			geometry::other_geometry::incidence_structure *Inc,
 			long int *points, int nb_points,
-			actions::action *A_on_points, actions::action *A_on_lines,
+			actions::action *A_base, actions::action *A_on_points, actions::action *A_on_lines,
 			groups::strong_generators *gens, int size_limit_for_printing,
 			int verbose_level);
 	void report_TDA(
 			std::ostream &ost,
 			geometry::other_geometry::incidence_structure *Inc,
-			actions::action *A_on_points, actions::action *A_on_lines,
+			actions::action *A_base, actions::action *A_on_points, actions::action *A_on_lines,
 			groups::strong_generators *gens, int size_limit_for_printing,
 			int verbose_level);
 	void refine_decomposition_by_group_orbits(
 			combinatorics::tactical_decompositions::decomposition *Decomposition,
-			actions::action *A_on_points, actions::action *A_on_lines,
+			actions::action *A_base, actions::action *A_on_points, actions::action *A_on_lines,
 			groups::strong_generators *gens,
 			int verbose_level);
 	void refine_decomposition_by_group_orbits_one_side(
 			combinatorics::tactical_decompositions::decomposition *Decomposition,
+			actions::action *A_base,
 			actions::action *A_on_points_or_lines,
 			int f_lines,
 			groups::strong_generators *gens,

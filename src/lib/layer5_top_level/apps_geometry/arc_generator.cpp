@@ -1369,7 +1369,7 @@ void arc_generator::report_decompositions(
 	
 	CombiA.report_TDA_projective_space(
 			ost, PA->P,
-			PA->A /* A_on_points */, PA->A_on_lines,
+			PA->A /* A_base */, PA->A /* A_on_points */, PA->A_on_lines,
 			gens, 25 /* size_limit_for_printing */,
 			verbose_level);
 

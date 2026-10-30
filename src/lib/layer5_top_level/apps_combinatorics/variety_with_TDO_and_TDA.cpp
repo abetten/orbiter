@@ -153,6 +153,7 @@ void variety_with_TDO_and_TDA::init_and_compute_tactical_decompositions(
 	}
 	CombiA.refine_decomposition_by_group_orbits(
 			Decomposition_scheme_TDO->Decomposition,
+			PA->A,
 			A_on_points,
 			A_on_lines,
 			Aut_gens,

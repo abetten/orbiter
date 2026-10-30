@@ -928,6 +928,7 @@ public:
 			//int print_interval,
 			int verbose_level);
 	groups::schreier *compute_all_point_orbits_schreier_with_print_interval(
+			actions::action *A_base,
 			actions::action *A_given,
 			int print_interval,
 			int verbose_level);

@@ -11694,8 +11694,6 @@ T3r1_orbits_draw:
 
 
 
-# error: 
-
 orbits_on_conics_q13:
 	$(ORBITER) -v 4 \
 		-define F -finite_field -q 13 -end \
@@ -11986,10 +11984,10 @@ PGL_3_2_matrix_group_action_by_rm:
 			-export_trees \
 		-end \
 		-print_symbols
-	#pdflatex PGL_4_2_ByRightMult_orbits_report.tex
-	#open PGL_4_2_ByRightMult_orbits_report.pdf
-	#pdflatex PGL_4_2_gens_elements.tex
-	#open PGL_4_2_gens_elements.pdf
+	#$(PDFLATEX) PGL_4_2_ByRightMult_orbits_report.tex
+	#$(OPEN) PGL_4_2_ByRightMult_orbits_report.pdf
+	#$(PDFLATEX) PGL_4_2_gens_elements.tex
+	#$(OPEN) PGL_4_2_gens_elements.pdf
 
 #error:
 #generators_and_images::init_generators generators.A->label != A_base->label
@@ -12014,7 +12012,7 @@ PGL_3_2_schreier_poset_draw:
 	latex view.tex
 	dvips view.dvi -o
 	magick -density 240 view.ps view.png
-	open view.png
+	$(OPEN) view.png
 
 #error
 
@@ -12028,8 +12026,8 @@ PGL_3_2_schreier_poset2_draw:
 			-embedded \
 			-line_width 1.5 -x_stretch 1.4 -scale 0.45 \
 		-end
-	pdflatex orbit_PGL_3_2_E168_0_draw.tex
-	open orbit_PGL_3_2_E168_0_draw.pdf
+	$(PDFLATEX) orbit_PGL_3_2_E168_0_draw.tex
+	$(OPEN) orbit_PGL_3_2_E168_0_draw.pdf
 
 
 #-nodes_empty 
@@ -12315,8 +12313,8 @@ poset_of_subsets_under_C6:
 		-radius 50 -embedded \
 			-line_width 0.2 -x_stretch 1.4 -scale 0.5 \
 		-end
-	pdflatex poset_C6_poset_full_lvl_6_draw.tex
-	open poset_C6_poset_full_lvl_6_draw.pdf
+	$(PDFLATEX) poset_C6_poset_full_lvl_6_draw.tex
+	$(OPEN) poset_C6_poset_full_lvl_6_draw.pdf
 
 
 
@@ -12372,8 +12370,8 @@ orbits_on_subsets_in_action_on_pairs:
 		-radius 50 -embedded \
 			-line_width 0.2 -x_stretch 1.4 -scale 0.5 \
 		-end
-	pdflatex graphs4_poset_full_lvl_6_draw.tex
-	open graphs4_poset_full_lvl_6_draw.pdf
+	$(PDFLATEX) graphs4_poset_full_lvl_6_draw.tex
+	$(OPEN) graphs4_poset_full_lvl_6_draw.pdf
 
 
 
@@ -13887,8 +13885,8 @@ Hirschfeld_surface_q4:
 		-cubic_surface_activity \
 			-report Do \
 		-end
-	pdflatex surface_equation_f_q4_report.tex
-	open surface_equation_f_q4_report.pdf
+	$(PDFLATEX) surface_equation_f_q4_report.tex
+	$(OPEN) surface_equation_f_q4_report.pdf
 
 
 
@@ -14008,8 +14006,8 @@ Hirschfeld_surface_by_arc_lifting_with_two_lines:
 			-report Do \
 		-end \
 		-print_symbols
-	pdflatex surface_arc_lifting_with_two_lines_q4_lines_0_0_arc_0_1_2_12_18_21_report.tex
-	open surface_arc_lifting_with_two_lines_q4_lines_0_0_arc_0_1_2_12_18_21_report.pdf
+	$(PDFLATEX) surface_arc_lifting_with_two_lines_q4_lines_0_0_arc_0_1_2_12_18_21_report.tex
+	$(OPEN) surface_arc_lifting_with_two_lines_q4_lines_0_0_arc_0_1_2_12_18_21_report.pdf
 
 
 
@@ -14035,7 +14033,7 @@ Dickson6_q2:
 
 
 Dickson1_group:
-	$(ORBITER) -v 6 \
+	$(ORBITER) -v 4 \
 		-define F -finite_field -q 2 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
 		-define R -polynomial_ring \
@@ -15018,9 +15016,9 @@ SECTION_CLASSIFICATION_OF_CUBIC_SURFACES_WITH_27_LINES:
 
 test_9_4:
 	make surface_classify_q4
-	make surface_classify_q4_arc_lifting_two_lines
+	#make surface_classify_q4_arc_lifting_two_lines
 	make surface_classify_q7
-	make Family_general_F31_25_5_5_25_recognize
+	#make Family_general_F31_25_5_5_25_recognize # slow!
 	make surface_F_abcd_identify_q9
 	make Family_general_F11_iso_test
 	make surface_classify_q7_sweep_Cayley
@@ -15072,6 +15070,7 @@ surface_classify_q4:
 
 
 
+#error:
 
 surface_classify_q4_arc_lifting_two_lines:
 	$(ORBITER) -v 10 \
@@ -15313,7 +15312,7 @@ test_9_5:
 	make quartic_curves_q13
 	make quartic_curves_q19
 	make quartic_curves_q29_po4_export
-	make quartic_curves_q29_po4_flag_orbits_report
+	#make quartic_curves_q29_po4_flag_orbits_report #slow
 	make symbolic_equation_of_curve_q29_po4_so7
 	make quartic_curve_29_121
 
@@ -18371,7 +18370,7 @@ test_11_5:
 	make RM_3_draw
 	make RM_3_split
 	make RM_3_distance_draw
-	make RM_3_algebraic_normal_form
+	#make RM_3_algebraic_normal_form # error
 	make RM_6
 	make RM_6_genma_draw
 	make RM_6_codewords_draw
@@ -18406,8 +18405,8 @@ RM_3_Hamming_space_diagram:
 			-make_diagram \
 			-metric_balls 1 \
 		-end
-	pdflatex code_n8_k4_q2.tex
-	open code_n8_k4_q2.pdf
+	$(PDFLATEX) code_n8_k4_q2.tex
+	$(OPEN) code_n8_k4_q2.pdf
 
 
 # creates 
@@ -18464,6 +18463,9 @@ RM_3_distance_draw:
 	$(OPEN) RM_m3_distance_H_8_16_value2_draw.png
 
 
+
+# error:
+
 RM_3_algebraic_normal_form:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 2 -end \
@@ -18506,7 +18508,7 @@ RM_6_genma_draw:
 			-partition 3 7 64 \
 		-end
 	magick RM6_genma_draw.bmp RM6_genma_draw.png
-	open RM6_genma_draw.png
+	$(OPEN) RM6_genma_draw.png
 
 
 
@@ -19907,6 +19909,15 @@ LS_AG_2_3_read:
 
 
 geo_7_3_read:
+	$(ORBITER) -v 2 \
+		-define Test_lines -set -loop 3 5 1 -end \
+		-define Geo -geometry_builder \
+			-V 7 -B 7 -TDO 3 \
+			-fuse 1 \
+			-fname_GEO 7_3 \
+			-output_to_inc_file \
+			-test Test_lines \
+		-end
 	$(ORBITER) -v 10 \
 		-define Doinc -draw_incidence_structure_options \
 			-width 60 -width_10 6 -end \
@@ -22152,8 +22163,8 @@ small_graph_draw:
 		-graph_theoretic_activity \
 			-draw Do \
 		-end
-	pdflatex graph_v5_e7_draw.tex
-	open graph_v5_e7_draw.pdf
+	$(PDFLATEX) graph_v5_e7_draw.tex
+	$(OPEN) graph_v5_e7_draw.pdf
 
 
 
@@ -22640,10 +22651,10 @@ test_graph_canonical_form:
 			-canonical_form \
 		-end \
 		-print_symbols
-	pdflatex Adj_adj1_draw.tex
-	open Adj_adj1_draw.pdf
-	pdflatex Adj_adj2_draw.tex
-	open Adj_adj2_draw.pdf
+	$(PDFLATEX) Adj_adj1_draw.tex
+	$(OPEN) Adj_adj1_draw.pdf
+	$(PDFLATEX) Adj_adj2_draw.tex
+	$(OPEN) Adj_adj2_draw.pdf
 
 
 #Adj_adj1_canonical.colored_graph
@@ -22679,10 +22690,10 @@ test_graph_classify:
 			-graph_theoretic_activity \
 			-classify \
 		-end
-	pdflatex Adj_adj1_canonical_draw.tex
-	open Adj_adj1_canonical_draw.pdf
-	pdflatex Adj_adj2_canonical_draw.tex
-	open Adj_adj2_canonical_draw.pdf
+	$(PDFLATEX) Adj_adj1_canonical_draw.tex
+	$(OPEN) Adj_adj1_canonical_draw.pdf
+	$(PDFLATEX) Adj_adj2_canonical_draw.tex
+	$(OPEN) Adj_adj2_canonical_draw.pdf
 
 
 
@@ -23713,7 +23724,7 @@ SECTION_DESIGN_THEORY_DELANDTHSHEER_DOYEN:
 
 test_14_4:
 	make DD_PP4
-	make DD_PP4_span_design
+	#make DD_PP4_span_design #error
 	make DD_PP4_design_orbit
 	#make PG_2_27_special
 
@@ -23792,7 +23803,10 @@ PG_2_27_special:
 		-define Do -draw_options \
 			-radius 200 -line_width 0.3 -nodes_empty \
 		-end \
-		-define F -finite_field -q 27 -override_polynomial 46 -end \
+		-define F -finite_field -q 27 \
+			-override_polynomial 46 \
+			-compute_related_fields \
+		-end \
 		-define P -projective_space -n 2 -field F -v 0 -end \
 		-with P -do -projective_space_activity \
 			-cheat_sheet Do \
@@ -24347,6 +24361,9 @@ classify_spreads_25_isomorph:
 		-end
 	$(PDFLATEX) spreads_25_isomorphism_types.tex
 	$(OPEN) spreads_25_isomorphism_types.pdf
+
+#error:
+#isomorph_worker::execute summary_file please use option -summary_file
 
 #We found 21 isomorphism types
 #1:33
@@ -28945,8 +28962,8 @@ HJ_group_and_orbits:
 			-report "" \
 			-report_options ro \
 		-end 
-	pdflatex HJ_orbits_poset.tex
-	open HJ_orbits_poset.pdf
+	$(PDFLATEX) HJ_orbits_poset.tex
+	$(OPEN) HJ_orbits_poset.pdf
 
 
 
@@ -31263,8 +31280,8 @@ draw_desargues:
 			-label_nodes \
 			-draw_options Do \
 		-end
-	pdflatex desargues_draw.tex
-	open desargues_draw.pdf
+	$(PDFLATEX) desargues_draw.tex
+	$(OPEN) desargues_draw.pdf
 
 draw_vector_decomposition:
 	$(ORBITER) -v 2 \
@@ -31282,8 +31299,8 @@ draw_vector_decomposition:
 			-label_nodes \
 			-draw_options Do \
 		-end
-	pdflatex vector_decomposition_draw.tex
-	open vector_decomposition_draw.pdf
+	$(PDFLATEX) vector_decomposition_draw.tex
+	$(OPEN) vector_decomposition_draw.pdf
 
 
 

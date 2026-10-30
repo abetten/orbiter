@@ -1074,6 +1074,7 @@ void classification_of_varieties_nauty::report_iso_types(
 					Vo->Variety_object->Point_sets->Sets[0],
 					Vo->Variety_object->Point_sets->Set_size[0],
 					Classifier->Ring_with_action->PA->A,
+					Classifier->Ring_with_action->PA->A,
 					Classifier->Ring_with_action->PA->A_on_lines,
 					gens, size_limit_for_printing,
 					verbose_level);

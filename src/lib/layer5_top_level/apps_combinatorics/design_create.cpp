@@ -100,6 +100,8 @@ void design_create::init(
 
 			Design_object->v = Design_object->q * Design_object->q + Design_object->q + 1;
 			Design_object->b = Design_object->v;
+			Design_object->f_has_k = true;
+			Design_object->k = Design_object->q + 1;
 
 
 			Design_object->prefix = "PG_2_q" + std::to_string(Design_object->q);

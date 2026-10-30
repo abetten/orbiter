@@ -262,7 +262,7 @@ void orbits_on_something::init_from_vector_ge(
 		}
 
 		Sch = gens->compute_all_point_orbits_schreier_with_print_interval(
-				A, print_interval, verbose_level - 2);
+				A, A, print_interval, verbose_level - 2);
 
 		if (f_v) {
 			cout << "orbits_on_something::init_from_vector_ge "
