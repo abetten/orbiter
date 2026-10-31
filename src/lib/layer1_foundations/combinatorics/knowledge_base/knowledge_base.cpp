@@ -103,10 +103,24 @@ namespace knowledge_base {
 #include "DATA/data_tensor.cpp"
 
 #include "DATA/data_BLT.cpp"
+#include "DATA/BLT_sets/BLT_q5_classification.cpp"
+#include "DATA/BLT_sets/BLT_q7_classification.cpp"
 #include "DATA/BLT_sets/BLT_q9_level_10.cpp"
+#include "DATA/BLT_sets/BLT_q11_classification.cpp"
+#include "DATA/BLT_sets/BLT_q13_classification.cpp"
+#include "DATA/BLT_sets/BLT_q17_classification.cpp"
+#include "DATA/BLT_sets/BLT_q19_classification.cpp"
+#include "DATA/BLT_sets/BLT_q23_classification.cpp"
 #include "DATA/BLT_sets/BLT_q25_classification.cpp"
 #include "DATA/BLT_sets/BLT_q27_classification.cpp"
+#include "DATA/BLT_sets/BLT_q29_classification.cpp"
+#include "DATA/BLT_sets/BLT_q31_classification.cpp"
+#include "DATA/BLT_sets/BLT_q37_classification.cpp"
+#include "DATA/BLT_sets/BLT_q41_classification.cpp"
+#include "DATA/BLT_sets/BLT_q43_classification.cpp"
+#include "DATA/BLT_sets/BLT_q47_classification.cpp"
 #include "DATA/BLT_sets/BLT_q49_classification.cpp"
+#include "DATA/BLT_sets/BLT_q53_classification.cpp"
 
 #include "DATA/planes_16.cpp"
 
@@ -2074,28 +2088,28 @@ int knowledge_base::BLT_nb_reps(
 		nb = BLT_3_nb_reps;
 		}
 	else if (q == 5) {
-		nb = BLT_5_nb_reps;
+		nb = BLT_q5_nb_reps;
 		}
 	else if (q == 7) {
-		nb = BLT_7_nb_reps;
+		nb = BLT_q7_nb_reps;
 		}
 	else if (q == 9) {
 		nb = BLT_q9_nb_reps;
 		}
 	else if (q == 11) {
-		nb = BLT_11_nb_reps;
+		nb = BLT_q11_nb_reps;
 		}
 	else if (q == 13) {
-		nb = BLT_13_nb_reps;
+		nb = BLT_q13_nb_reps;
 		}
 	else if (q == 17) {
-		nb = BLT_17_nb_reps;
+		nb = BLT_q17_nb_reps;
 		}
 	else if (q == 19) {
-		nb = BLT_19_nb_reps;
+		nb = BLT_q19_nb_reps;
 		}
 	else if (q == 23) {
-		nb = BLT_23_nb_reps;
+		nb = BLT_q23_nb_reps;
 		}
 	else if (q == 25) {
 		nb = BLT_q25_nb_reps;
@@ -2104,28 +2118,28 @@ int knowledge_base::BLT_nb_reps(
 		nb = BLT_q27_nb_reps;
 		}
 	else if (q == 29) {
-		nb = BLT_29_nb_reps;
+		nb = BLT_q29_nb_reps;
 		}
 	else if (q == 31) {
-		nb = BLT_31_nb_reps;
+		nb = BLT_q31_nb_reps;
 		}
 	else if (q == 37) {
-		nb = BLT_37_nb_reps;
+		nb = BLT_q37_nb_reps;
 		}
 	else if (q == 41) {
-		nb = BLT_41_nb_reps;
+		nb = BLT_q41_nb_reps;
 		}
 	else if (q == 43) {
-		nb = BLT_43_nb_reps;
+		nb = BLT_q43_nb_reps;
 		}
 	else if (q == 47) {
-		nb = BLT_47_nb_reps;
+		nb = BLT_q47_nb_reps;
 		}
 	else if (q == 49) {
 		nb = BLT_q49_nb_reps;
 		}
 	else if (q == 53) {
-		nb = BLT_53_nb_reps;
+		nb = BLT_q53_nb_reps;
 		}
 	else if (q == 59) {
 		nb = BLT_59_nb_reps;
@@ -2163,14 +2177,14 @@ long int *knowledge_base::BLT_representative(
 		sz = BLT_3_size;
 		}
 	else if (q == 5) {
-		p = BLT_5_reps;
-		nb = BLT_5_nb_reps;
-		sz = BLT_5_size;
+		p = BLT_q5_reps;
+		nb = BLT_q5_nb_reps;
+		sz = BLT_q5_size;
 		}
 	else if (q == 7) {
-		p = BLT_7_reps;
-		nb = BLT_7_nb_reps;
-		sz = BLT_7_size;
+		p = BLT_q7_reps;
+		nb = BLT_q7_nb_reps;
+		sz = BLT_q7_size;
 		}
 	else if (q == 9) {
 		p = BLT_q9_reps;
@@ -2178,29 +2192,29 @@ long int *knowledge_base::BLT_representative(
 		sz = BLT_q9_size;
 		}
 	else if (q == 11) {
-		p = BLT_11_reps;
-		nb = BLT_11_nb_reps;
-		sz = BLT_11_size;
+		p = BLT_q11_reps;
+		nb = BLT_q11_nb_reps;
+		sz = BLT_q11_size;
 		}
 	else if (q == 13) {
-		p = BLT_13_reps;
-		nb = BLT_13_nb_reps;
-		sz = BLT_13_size;
+		p = BLT_q13_reps;
+		nb = BLT_q13_nb_reps;
+		sz = BLT_q13_size;
 		}
 	else if (q == 17) {
-		p = BLT_17_reps;
-		nb = BLT_17_nb_reps;
-		sz = BLT_17_size;
+		p = BLT_q17_reps;
+		nb = BLT_q17_nb_reps;
+		sz = BLT_q17_size;
 		}
 	else if (q == 19) {
-		p = BLT_19_reps;
-		nb = BLT_19_nb_reps;
-		sz = BLT_19_size;
+		p = BLT_q19_reps;
+		nb = BLT_q19_nb_reps;
+		sz = BLT_q19_size;
 		}
 	else if (q == 23) {
-		p = BLT_23_reps;
-		nb = BLT_23_nb_reps;
-		sz = BLT_23_size;
+		p = BLT_q23_reps;
+		nb = BLT_q23_nb_reps;
+		sz = BLT_q23_size;
 		}
 	else if (q == 25) {
 		p = BLT_q25_reps;
@@ -2213,34 +2227,34 @@ long int *knowledge_base::BLT_representative(
 		sz = BLT_q27_size;
 		}
 	else if (q == 29) {
-		p = BLT_29_reps;
-		nb = BLT_29_nb_reps;
-		sz = BLT_29_size;
+		p = BLT_q29_reps;
+		nb = BLT_q29_nb_reps;
+		sz = BLT_q29_size;
 		}
 	else if (q == 31) {
-		p = BLT_31_reps;
-		nb = BLT_31_nb_reps;
-		sz = BLT_31_size;
+		p = BLT_q31_reps;
+		nb = BLT_q31_nb_reps;
+		sz = BLT_q31_size;
 		}
 	else if (q == 37) {
-		p = BLT_37_reps;
-		nb = BLT_37_nb_reps;
-		sz = BLT_37_size;
+		p = BLT_q37_reps;
+		nb = BLT_q37_nb_reps;
+		sz = BLT_q37_size;
 		}
 	else if (q == 41) {
-		p = BLT_41_reps;
-		nb = BLT_41_nb_reps;
-		sz = BLT_41_size;
+		p = BLT_q41_reps;
+		nb = BLT_q41_nb_reps;
+		sz = BLT_q41_size;
 		}
 	else if (q == 43) {
-		p = BLT_43_reps;
-		nb = BLT_43_nb_reps;
-		sz = BLT_43_size;
+		p = BLT_q43_reps;
+		nb = BLT_q43_nb_reps;
+		sz = BLT_q43_size;
 		}
 	else if (q == 47) {
-		p = BLT_47_reps;
-		nb = BLT_47_nb_reps;
-		sz = BLT_47_size;
+		p = BLT_q47_reps;
+		nb = BLT_q47_nb_reps;
+		sz = BLT_q47_size;
 		}
 	else if (q == 49) {
 		p = BLT_q49_reps;
@@ -2248,9 +2262,9 @@ long int *knowledge_base::BLT_representative(
 		sz = BLT_q49_size;
 		}
 	else if (q == 53) {
-		p = BLT_53_reps;
-		nb = BLT_53_nb_reps;
-		sz = BLT_53_size;
+		p = BLT_q53_reps;
+		nb = BLT_q53_nb_reps;
+		sz = BLT_q53_size;
 		}
 	else if (q == 59) {
 		p = BLT_59_reps;
@@ -2314,20 +2328,20 @@ void knowledge_base::BLT_stab_gens(
 		stab_order = BLT_3_stab_order[no];
 		}
 	else if (q == 5) {
-		Reps = BLT_5_stab_gens;
-		nb = BLT_5_nb_reps;
-		make_element_size = BLT_5_make_element_size;
-		f = BLT_5_stab_gens_fst[no];
-		l = BLT_5_stab_gens_len[no];
-		stab_order = BLT_5_stab_order[no];
+		Reps = BLT_q5_stab_gens;
+		nb = BLT_q5_nb_reps;
+		make_element_size = BLT_q5_make_element_size;
+		f = BLT_q5_stab_gens_fst[no];
+		l = BLT_q5_stab_gens_len[no];
+		stab_order = BLT_q5_stab_order[no];
 		}
 	else if (q == 7) {
-		Reps = BLT_7_stab_gens;
-		nb = BLT_7_nb_reps;
-		make_element_size = BLT_7_make_element_size;
-		f = BLT_7_stab_gens_fst[no];
-		l = BLT_7_stab_gens_len[no];
-		stab_order = BLT_7_stab_order[no];
+		Reps = BLT_q7_stab_gens;
+		nb = BLT_q7_nb_reps;
+		make_element_size = BLT_q7_make_element_size;
+		f = BLT_q7_stab_gens_fst[no];
+		l = BLT_q7_stab_gens_len[no];
+		stab_order = BLT_q7_stab_order[no];
 		}
 	else if (q == 9) {
 		Reps = BLT_q9_stab_gens;
@@ -2338,44 +2352,44 @@ void knowledge_base::BLT_stab_gens(
 		stab_order = BLT_q9_stab_order[no];
 		}
 	else if (q == 11) {
-		Reps = BLT_11_stab_gens;
-		nb = BLT_11_nb_reps;
-		make_element_size = BLT_11_make_element_size;
-		f = BLT_11_stab_gens_fst[no];
-		l = BLT_11_stab_gens_len[no];
-		stab_order = BLT_11_stab_order[no];
+		Reps = BLT_q11_stab_gens;
+		nb = BLT_q11_nb_reps;
+		make_element_size = BLT_q11_make_element_size;
+		f = BLT_q11_stab_gens_fst[no];
+		l = BLT_q11_stab_gens_len[no];
+		stab_order = BLT_q11_stab_order[no];
 		}
 	else if (q == 13) {
-		Reps = BLT_13_stab_gens;
-		nb = BLT_13_nb_reps;
-		make_element_size = BLT_13_make_element_size;
-		f = BLT_13_stab_gens_fst[no];
-		l = BLT_13_stab_gens_len[no];
-		stab_order = BLT_13_stab_order[no];
+		Reps = BLT_q13_stab_gens;
+		nb = BLT_q13_nb_reps;
+		make_element_size = BLT_q13_make_element_size;
+		f = BLT_q13_stab_gens_fst[no];
+		l = BLT_q13_stab_gens_len[no];
+		stab_order = BLT_q13_stab_order[no];
 		}
 	else if (q == 17) {
-		Reps = BLT_17_stab_gens;
-		nb = BLT_17_nb_reps;
-		make_element_size = BLT_17_make_element_size;
-		f = BLT_17_stab_gens_fst[no];
-		l = BLT_17_stab_gens_len[no];
-		stab_order = BLT_17_stab_order[no];
+		Reps = BLT_q17_stab_gens;
+		nb = BLT_q17_nb_reps;
+		make_element_size = BLT_q17_make_element_size;
+		f = BLT_q17_stab_gens_fst[no];
+		l = BLT_q17_stab_gens_len[no];
+		stab_order = BLT_q17_stab_order[no];
 		}
 	else if (q == 19) {
-		Reps = BLT_19_stab_gens;
-		nb = BLT_19_nb_reps;
-		make_element_size = BLT_19_make_element_size;
-		f = BLT_19_stab_gens_fst[no];
-		l = BLT_19_stab_gens_len[no];
-		stab_order = BLT_19_stab_order[no];
+		Reps = BLT_q19_stab_gens;
+		nb = BLT_q19_nb_reps;
+		make_element_size = BLT_q19_make_element_size;
+		f = BLT_q19_stab_gens_fst[no];
+		l = BLT_q19_stab_gens_len[no];
+		stab_order = BLT_q19_stab_order[no];
 		}
 	else if (q == 23) {
-		Reps = BLT_23_stab_gens;
-		nb = BLT_23_nb_reps;
-		make_element_size = BLT_23_make_element_size;
-		f = BLT_23_stab_gens_fst[no];
-		l = BLT_23_stab_gens_len[no];
-		stab_order = BLT_23_stab_order[no];
+		Reps = BLT_q23_stab_gens;
+		nb = BLT_q23_nb_reps;
+		make_element_size = BLT_q23_make_element_size;
+		f = BLT_q23_stab_gens_fst[no];
+		l = BLT_q23_stab_gens_len[no];
+		stab_order = BLT_q23_stab_order[no];
 		}
 	else if (q == 25) {
 		Reps = BLT_q25_stab_gens;
@@ -2394,52 +2408,52 @@ void knowledge_base::BLT_stab_gens(
 		stab_order = BLT_q27_stab_order[no];
 		}
 	else if (q == 29) {
-		Reps = BLT_29_stab_gens;
-		nb = BLT_29_nb_reps;
-		make_element_size = BLT_29_make_element_size;
-		f = BLT_29_stab_gens_fst[no];
-		l = BLT_29_stab_gens_len[no];
-		stab_order = BLT_29_stab_order[no];
+		Reps = BLT_q29_stab_gens;
+		nb = BLT_q29_nb_reps;
+		make_element_size = BLT_q29_make_element_size;
+		f = BLT_q29_stab_gens_fst[no];
+		l = BLT_q29_stab_gens_len[no];
+		stab_order = BLT_q29_stab_order[no];
 		}
 	else if (q == 31) {
-		Reps = BLT_31_stab_gens;
-		nb = BLT_31_nb_reps;
-		make_element_size = BLT_31_make_element_size;
-		f = BLT_31_stab_gens_fst[no];
-		l = BLT_31_stab_gens_len[no];
-		stab_order = BLT_31_stab_order[no];
+		Reps = BLT_q31_stab_gens;
+		nb = BLT_q31_nb_reps;
+		make_element_size = BLT_q31_make_element_size;
+		f = BLT_q31_stab_gens_fst[no];
+		l = BLT_q31_stab_gens_len[no];
+		stab_order = BLT_q31_stab_order[no];
 		}
 	else if (q == 37) {
-		Reps = BLT_37_stab_gens;
-		nb = BLT_37_nb_reps;
-		make_element_size = BLT_37_make_element_size;
-		f = BLT_37_stab_gens_fst[no];
-		l = BLT_37_stab_gens_len[no];
-		stab_order = BLT_37_stab_order[no];
+		Reps = BLT_q37_stab_gens;
+		nb = BLT_q37_nb_reps;
+		make_element_size = BLT_q37_make_element_size;
+		f = BLT_q37_stab_gens_fst[no];
+		l = BLT_q37_stab_gens_len[no];
+		stab_order = BLT_q37_stab_order[no];
 		}
 	else if (q == 41) {
-		Reps = BLT_41_stab_gens;
-		nb = BLT_41_nb_reps;
-		make_element_size = BLT_41_make_element_size;
-		f = BLT_41_stab_gens_fst[no];
-		l = BLT_41_stab_gens_len[no];
-		stab_order = BLT_41_stab_order[no];
+		Reps = BLT_q41_stab_gens;
+		nb = BLT_q41_nb_reps;
+		make_element_size = BLT_q41_make_element_size;
+		f = BLT_q41_stab_gens_fst[no];
+		l = BLT_q41_stab_gens_len[no];
+		stab_order = BLT_q41_stab_order[no];
 		}
 	else if (q == 43) {
-		Reps = BLT_43_stab_gens;
-		nb = BLT_43_nb_reps;
-		make_element_size = BLT_43_make_element_size;
-		f = BLT_43_stab_gens_fst[no];
-		l = BLT_43_stab_gens_len[no];
-		stab_order = BLT_43_stab_order[no];
+		Reps = BLT_q43_stab_gens;
+		nb = BLT_q43_nb_reps;
+		make_element_size = BLT_q43_make_element_size;
+		f = BLT_q43_stab_gens_fst[no];
+		l = BLT_q43_stab_gens_len[no];
+		stab_order = BLT_q43_stab_order[no];
 		}
 	else if (q == 47) {
-		Reps = BLT_47_stab_gens;
-		nb = BLT_47_nb_reps;
-		make_element_size = BLT_47_make_element_size;
-		f = BLT_47_stab_gens_fst[no];
-		l = BLT_47_stab_gens_len[no];
-		stab_order = BLT_47_stab_order[no];
+		Reps = BLT_q47_stab_gens;
+		nb = BLT_q47_nb_reps;
+		make_element_size = BLT_q47_make_element_size;
+		f = BLT_q47_stab_gens_fst[no];
+		l = BLT_q47_stab_gens_len[no];
+		stab_order = BLT_q47_stab_order[no];
 		}
 	else if (q == 49) {
 		Reps = BLT_q49_stab_gens;
@@ -2450,12 +2464,12 @@ void knowledge_base::BLT_stab_gens(
 		stab_order = BLT_q49_stab_order[no];
 		}
 	else if (q == 53) {
-		Reps = BLT_53_stab_gens;
-		nb = BLT_53_nb_reps;
-		make_element_size = BLT_53_make_element_size;
-		f = BLT_53_stab_gens_fst[no];
-		l = BLT_53_stab_gens_len[no];
-		stab_order = BLT_53_stab_order[no];
+		Reps = BLT_q53_stab_gens;
+		nb = BLT_q53_nb_reps;
+		make_element_size = BLT_q53_make_element_size;
+		f = BLT_q53_stab_gens_fst[no];
+		l = BLT_q53_stab_gens_len[no];
+		stab_order = BLT_q53_stab_order[no];
 		}
 	else if (q == 59) {
 		Reps = BLT_59_stab_gens;

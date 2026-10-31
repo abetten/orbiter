@@ -1128,9 +1128,11 @@ void isomorph_global::export_source_code_with_selection(
 	}
 #endif
 
-	fp << "int " << prefix << "_size = " << Iso.size << ";" << endl;
-	fp << "int " << prefix << "_nb_reps = " << selection_size << ";" << endl;
-	fp << "long int " << prefix << "_reps[] = {" << endl;
+	fp << "static int " << prefix << "_size = " << Iso.size << ";" << endl;
+
+	fp << "static int " << prefix << "_nb_reps = " << selection_size << ";" << endl;
+
+	fp << "static long int " << prefix << "_reps[] = {" << endl;
 	for (s = 0; s < selection_size; s++) {
 		h = selection[s];
 		rep = Iso.Folding->Reps->rep[h];
@@ -1146,7 +1148,8 @@ void isomorph_global::export_source_code_with_selection(
 		fp << endl;
 	}
 	fp << "};" << endl;
-	fp << "const char *" << prefix << "_stab_order[] = {" << endl;
+
+	fp << "static const char *" << prefix << "_stab_order[] = {" << endl;
 	for (s = 0; s < selection_size; s++) {
 		h = selection[s];
 
@@ -1179,7 +1182,8 @@ void isomorph_global::export_source_code_with_selection(
 		stab_gens_first = NEW_int(selection_size);
 		stab_gens_len = NEW_int(selection_size);
 		fst = 0;
-		fp << "int " << prefix << "_stab_gens[] = {" << endl;
+
+		fp << "static int " << prefix << "_stab_gens[] = {" << endl;
 		for (s = 0; s < selection_size; s++) {
 			h = selection[s];
 			data_structures_groups::vector_ge *gens;
@@ -1210,6 +1214,7 @@ void isomorph_global::export_source_code_with_selection(
 				fp << "";
 				Iso.A_base->Group_element->element_print_for_make_element(
 						gens->ith(j), fp);
+				fp << ",";
 				fp << endl;
 			}
 
@@ -1217,7 +1222,8 @@ void isomorph_global::export_source_code_with_selection(
 			FREE_OBJECT(gens);
 		}
 		fp << "};" << endl;
-		fp << "int " << prefix << "_stab_gens_fst[] = { ";
+
+		fp << "static int " << prefix << "_stab_gens_fst[] = { ";
 		for (s = 0; s < selection_size; s++) {
 			fp << stab_gens_first[s];
 			if (s < selection_size - 1) {
@@ -1225,7 +1231,7 @@ void isomorph_global::export_source_code_with_selection(
 			}
 		}
 		fp << "};" << endl;
-		fp << "int " << prefix << "_stab_gens_len[] = { ";
+		fp << "static int " << prefix << "_stab_gens_len[] = { ";
 		for (s = 0; s < selection_size; s++) {
 			fp << stab_gens_len[s];
 			if (s < selection_size - 1) {
@@ -1233,7 +1239,7 @@ void isomorph_global::export_source_code_with_selection(
 			}
 		}
 		fp << "};" << endl;
-		fp << "int " << prefix << "_make_element_size = "
+		fp << "static int " << prefix << "_make_element_size = "
 				<< Iso.A_base->make_element_size << ";" << endl;
 	}
 	if (f_v) {
