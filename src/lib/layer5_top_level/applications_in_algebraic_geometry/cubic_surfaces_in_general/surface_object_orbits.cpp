@@ -402,7 +402,9 @@ void surface_object_orbits::init_orbits_on_points(
 		}
 
 		Orbits_on_points = SOG->Aut_gens->compute_all_point_orbits_schreier_with_print_interval(
-				A_on_points, print_interval, verbose_level - 2);
+				SOG->Surf_A->A,
+				A_on_points,
+				print_interval, verbose_level - 2);
 		if (f_v) {
 			cout << "surface_object_orbits::init_orbits_on_points "
 					"after Aut_gens->compute_all_point_orbits_schreier" << endl;
@@ -463,7 +465,9 @@ void surface_object_orbits::init_orbits_on_Eckardt_points(
 	}
 	else {
 		Orbits_on_Eckardt_points = SOG->Aut_gens->compute_all_point_orbits_schreier_with_print_interval(
-				A_on_Eckardt_points, print_interval, 0 /*verbose_level*/);
+				SOG->Surf_A->A,
+				A_on_Eckardt_points,
+				print_interval, 0 /*verbose_level*/);
 	}
 	if (f_v) {
 		cout << "We found " << Orbits_on_Eckardt_points->Forest->nb_orbits
@@ -515,7 +519,9 @@ void surface_object_orbits::init_orbits_on_Double_points(
 	}
 	else {
 		Orbits_on_Double_points = SOG->Aut_gens->compute_all_point_orbits_schreier_with_print_interval(
-				A_on_Double_points, print_interval, 0 /*verbose_level*/);
+				SOG->Surf_A->A,
+				A_on_Double_points,
+				print_interval, 0 /*verbose_level*/);
 	}
 	if (f_v) {
 		cout << "We found " << Orbits_on_Double_points->Forest->nb_orbits
@@ -567,7 +573,9 @@ void surface_object_orbits::init_orbits_on_Single_points(
 	}
 	else {
 		Orbits_on_Single_points = SOG->Aut_gens->compute_all_point_orbits_schreier_with_print_interval(
-				A_on_Single_points, print_interval, 0 /*verbose_level*/);
+				SOG->Surf_A->A,
+				A_on_Single_points,
+				print_interval, 0 /*verbose_level*/);
 	}
 	if (f_v) {
 		cout << "We found " << Orbits_on_Single_points->Forest->nb_orbits
@@ -620,7 +628,9 @@ void surface_object_orbits::init_orbits_on_lines(
 	}
 	else {
 		Orbits_on_lines = SOG->Aut_gens->compute_all_point_orbits_schreier_with_print_interval(
-				A_on_the_lines, print_interval, 0 /*verbose_level*/);
+				SOG->Surf_A->A,
+				A_on_the_lines,
+				print_interval, 0 /*verbose_level*/);
 	}
 	if (f_v) {
 		cout << "We found " << Orbits_on_lines->Forest->nb_orbits
@@ -663,7 +673,9 @@ void surface_object_orbits::init_orbits_on_half_double_sixes(
 	}
 	else {
 		Orbits_on_single_sixes = SOG->Aut_gens->compute_all_point_orbits_schreier_with_print_interval(
-				A_single_sixes, print_interval, 0 /*verbose_level*/);
+				SOG->Surf_A->A,
+				A_single_sixes,
+				print_interval, 0 /*verbose_level*/);
 	}
 	if (f_v) {
 		cout << "computing orbits on single sixes done" << endl;
@@ -720,7 +732,9 @@ void surface_object_orbits::init_orbits_on_double_sixes(
 	}
 	else {
 		Orbits_on_double_sixes = SOG->Aut_gens->compute_all_point_orbits_schreier_with_print_interval(
-				A_double_sixes, print_interval, 0 /*verbose_level*/);
+				SOG->Surf_A->A,
+				A_double_sixes,
+				print_interval, 0 /*verbose_level*/);
 	}
 	if (f_v) {
 		cout << "computing orbits on double sixes done" << endl;
@@ -766,7 +780,9 @@ void surface_object_orbits::init_orbits_on_tritangent_planes(
 	}
 	else {
 		Orbits_on_tritangent_planes = SOG->Aut_gens->compute_all_point_orbits_schreier_with_print_interval(
-				A_on_tritangent_planes, print_interval, 0 /*verbose_level*/);
+				SOG->Surf_A->A,
+				A_on_tritangent_planes,
+				print_interval, 0 /*verbose_level*/);
 	}
 	if (f_v) {
 		cout << "We found " << Orbits_on_tritangent_planes->Forest->nb_orbits
@@ -821,7 +837,9 @@ void surface_object_orbits::init_orbits_on_Hesse_planes(
 	}
 	else {
 		Orbits_on_Hesse_planes = SOG->Aut_gens->compute_all_point_orbits_schreier_with_print_interval(
-				A_on_Hesse_planes, print_interval, 0 /*verbose_level*/);
+				SOG->Surf_A->A,
+				A_on_Hesse_planes,
+				print_interval, 0 /*verbose_level*/);
 	}
 	if (f_v) {
 		cout << "We found " << Orbits_on_Hesse_planes->Forest->nb_orbits
@@ -884,7 +902,9 @@ void surface_object_orbits::init_orbits_on_axes(
 	}
 	else {
 		Orbits_on_axes = SOG->Aut_gens->compute_all_point_orbits_schreier_with_print_interval(
-				A_on_axes, print_interval, 0 /*verbose_level*/);
+				SOG->Surf_A->A,
+				A_on_axes,
+				print_interval, 0 /*verbose_level*/);
 	}
 	if (f_v) {
 		cout << "We found " << Orbits_on_axes->Forest->nb_orbits
@@ -931,7 +951,9 @@ void surface_object_orbits::init_orbits_on_trihedral_pairs(
 	}
 	else {
 		Orbits_on_trihedral_pairs = SOG->Aut_gens->compute_all_point_orbits_schreier_with_print_interval(
-				A_on_trihedral_pairs, print_interval, 0 /*verbose_level*/);
+				SOG->Surf_A->A,
+				A_on_trihedral_pairs,
+				print_interval, 0 /*verbose_level*/);
 	}
 	if (f_v) {
 		cout << "We found " << Orbits_on_trihedral_pairs->Forest->nb_orbits
@@ -986,7 +1008,9 @@ void surface_object_orbits::init_orbits_on_points_not_on_lines(
 	else {
 		Orbits_on_points_not_on_lines =
 				SOG->Aut_gens->compute_all_point_orbits_schreier_with_print_interval(
-						A_on_pts_not_on_lines,  print_interval, 0 /*verbose_level*/);
+						SOG->Surf_A->A,
+						A_on_pts_not_on_lines,
+						print_interval, 0 /*verbose_level*/);
 	}
 	if (f_v) {
 		cout << "We found " << Orbits_on_points_not_on_lines->Forest->nb_orbits

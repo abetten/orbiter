@@ -27,6 +27,7 @@ namespace groups {
 orbits_on_something::orbits_on_something()
 {
 	Record_birth();
+	A_base = NULL;
 	A = NULL;
 
 	f_has_SG = false;
@@ -62,6 +63,7 @@ orbits_on_something::~orbits_on_something()
 }
 
 void orbits_on_something::init(
+		actions::action *A_base,
 		actions::action *A,
 		strong_generators *SG,
 		int f_load_save,
@@ -75,6 +77,7 @@ void orbits_on_something::init(
 	if (f_v) {
 		cout << "orbits_on_something::init" << endl;
 	}
+	orbits_on_something::A_base = A_base;
 	orbits_on_something::A = A;
 
 	f_has_SG = true;
@@ -131,7 +134,9 @@ void orbits_on_something::init(
 
 
 		Sch = SG->compute_all_point_orbits_schreier_with_print_interval(
-				A, print_interval, verbose_level - 2);
+				A_base, A,
+				print_interval,
+				verbose_level - 2);
 		if (f_v) {
 			cout << "orbits_on_something::init "
 					"after compute_all_point_orbits_schreier_with_print_interval" << endl;
@@ -193,6 +198,7 @@ void orbits_on_something::init(
 
 
 void orbits_on_something::init_from_vector_ge(
+		actions::action *A_base,
 		actions::action *A,
 		data_structures_groups::vector_ge *gens,
 		int f_load_save,
@@ -207,6 +213,7 @@ void orbits_on_something::init_from_vector_ge(
 	if (f_v) {
 		cout << "orbits_on_something::init_from_vector_ge" << endl;
 	}
+	orbits_on_something::A_base = A_base;
 	orbits_on_something::A = A;
 	f_has_SG = false;
 	orbits_on_something::SG = NULL;

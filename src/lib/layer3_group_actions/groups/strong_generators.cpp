@@ -2499,7 +2499,9 @@ void strong_generators::orbits_on_set_with_given_action_after_restriction(
 				"before Orb->init" << endl;
 	}
 
-	Orb->init(Ar,
+	Orb->init(
+			A_given,
+			Ar,
 			this,
 			false /* f_load_save */,
 			prefix,
@@ -2581,7 +2583,9 @@ void strong_generators::extract_orbit_on_set_with_given_action_after_restriction
 		cout << "strong_generators::extract_orbit_on_set_with_given_action_after_restriction "
 				"before Orb->init" << endl;
 	}
-	Orb->init(Ar,
+	Orb->init(
+			A_given,
+			Ar,
 			this,
 			false /* f_load_save */,
 			prefix,
@@ -2709,6 +2713,7 @@ void strong_generators::extract_specific_orbit_on_set_with_given_action_after_re
 				"before Orb->init" << endl;
 	}
 	Orb->init(
+			A_given,
 			Ar,
 			this,
 			false /* f_load_save */,
@@ -2835,6 +2840,7 @@ void strong_generators::orbits_on_points_with_given_action(
 }
 
 schreier *strong_generators::compute_all_point_orbits_schreier(
+		actions::action *A_base,
 		actions::action *A_given,
 		int verbose_level)
 {
@@ -2855,7 +2861,7 @@ schreier *strong_generators::compute_all_point_orbits_schreier(
 				"before compute_all_point_orbits_schreier_with_print_interval" << endl;
 	}
 	Sch = compute_all_point_orbits_schreier_with_print_interval(
-			A_given, print_interval,
+			A_base, A_given, print_interval,
 			verbose_level);
 	if (f_v) {
 		cout << "strong_generators::compute_all_point_orbits_schreier "
@@ -2870,6 +2876,7 @@ schreier *strong_generators::compute_all_point_orbits_schreier(
 
 
 schreier *strong_generators::compute_all_point_orbits_schreier_with_print_interval(
+		actions::action *A_base,
 		actions::action *A_given,
 		int print_interval,
 		int verbose_level)
@@ -2884,6 +2891,8 @@ schreier *strong_generators::compute_all_point_orbits_schreier_with_print_interv
 		cout << "strong_generators::compute_all_point_orbits_schreier_with_print_interval "
 				"degree = " << A_given->degree << endl;
 		cout << "strong_generators::compute_all_point_orbits_schreier_with_print_interval "
+				"A_base=" << A_base->label << endl;
+		cout << "strong_generators::compute_all_point_orbits_schreier_with_print_interval "
 				"A_given=" << A_given->label << endl;
 		cout << "strong_generators::compute_all_point_orbits_schreier_with_print_interval "
 				"print_interval = " << print_interval << endl;
@@ -2897,10 +2906,10 @@ schreier *strong_generators::compute_all_point_orbits_schreier_with_print_interv
 				"go = " << go << endl;
 	}
 
-	actions::action *A_base;
+	//actions::action *A_base;
 
 
-	A_base = A_given->get_base_action();
+	//A_base = A_given->get_base_action();
 
 	if (f_v) {
 		cout << "strong_generators::compute_all_point_orbits_schreier_with_print_interval "
@@ -2945,7 +2954,9 @@ schreier *strong_generators::compute_all_point_orbits_schreier_with_print_interv
 
 
 schreier *strong_generators::orbit_of_one_point_schreier(
-		actions::action *A_given, int pt,
+		actions::action *A_base,
+		actions::action *A_given,
+		int pt,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2964,7 +2975,10 @@ schreier *strong_generators::orbit_of_one_point_schreier(
 		cout << "strong_generators::orbit_of_one_point_schreier "
 				"before Sch->init" << endl;
 	}
-	Sch->init(A_given->get_base_action(), A_given, verbose_level - 2);
+	Sch->init(
+			A_base, /*A_given->get_base_action(),*/
+			A_given,
+			verbose_level - 2);
 	if (f_v) {
 		cout << "strong_generators::orbit_of_one_point_schreier "
 				"after Sch->init" << endl;
@@ -3910,12 +3924,19 @@ strong_generators *strong_generators::point_stabilizer(
 	strong_generators *Stab_gens;
 	algebra::ring_theory::longinteger_object G_order, stab_go;
 
+	actions::action *A_base;
+	actions::action *A_given;
+
+	A_given = A;
+
+	A_base = A_given->get_base_action();
+
 	if (f_v) {
 		cout << "strong_generators::point_stabilizer "
 				"computing orbit of point " << pt << ":" << endl;
 	}
 	group_order(G_order);
-	Sch = orbit_of_one_point_schreier(A, pt, 0 /*verbose_level*/);
+	Sch = orbit_of_one_point_schreier(A_base, A_given, pt, 0 /*verbose_level*/);
 	if (f_v) {
 		cout << "strong_generators::point_stabilizer "
 				"orbit of point " << pt << " has length "
@@ -4000,6 +4021,7 @@ strong_generators *strong_generators::find_cyclic_subgroup_with_exactly_n_fixpoi
 
 
 void strong_generators::make_element_which_moves_a_point_from_A_to_B(
+		actions::action *A_base,
 		actions::action *A_given,
 	int pt_A, int pt_B, int *Elt, int verbose_level)
 {
@@ -4020,7 +4042,7 @@ void strong_generators::make_element_which_moves_a_point_from_A_to_B(
 
 
 	Orb = orbit_of_one_point_schreier(
-			A_given, pt_A,
+			A_base, A_given, pt_A,
 			verbose_level);
 
 	if (f_v) {

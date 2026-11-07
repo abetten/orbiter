@@ -230,6 +230,7 @@ typedef void *pvoid;
 #define SINGLYEVEN(x)     ( ((x) % 4) == 2 )
 #define ONE_MILLION 1000000
 #define ONE_HUNDRED_THOUSAND 100000
+#define BINOMIAL2(N)   ( (N * (N - 1)) >> 1 )
 
 
 #ifndef true
@@ -623,6 +624,8 @@ namespace geometry {
 		// orthogonal:
 		class blt_set_domain;
 		class blt_set_invariants;
+		class blt_set;
+		class flock_from_blt_set;
 		class linear_complex;
 		class orthogonal_global;
 		class orthogonal_group;
@@ -692,7 +695,6 @@ namespace other {
 		class ancestry_tree;
 		class bitmatrix;
 		class bitvector;
-		class data_file;
 		class data_structures_global;
 		class fancy_set;
 		class forest;
@@ -1026,6 +1028,7 @@ namespace other {
 
 #define Int_vec_print_integer_matrix(A,B,C,D) other::orbiter_kernel_system::Orbiter->Int_vec->print_integer_matrix(A, B, C, D)
 #define Int_vec_print_integer_matrix_width(A,B,C,D,E,F) other::orbiter_kernel_system::Orbiter->Int_vec->print_integer_matrix_width(A, B, C, D, E, F)
+#define Int_vec_print_integer_matrix_width_easy(A,B,C,D,E) other::orbiter_kernel_system::Orbiter->Int_vec->print_integer_matrix_width_easy(A, B, C, D, E)
 #define Int_matrix_print_width(A,B,C,D,E) other::orbiter_kernel_system::Orbiter->Int_vec->print_integer_matrix_width(A, B, C, D, D, E)
 
 #define Int_vec_copy(from, to, len) other::orbiter_kernel_system::Orbiter->Int_vec->copy(from, to, len)

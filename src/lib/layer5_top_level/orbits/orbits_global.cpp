@@ -222,6 +222,7 @@ void orbits_global::compute_orbit_of_set(
 
 
 void orbits_global::orbits_on_points(
+		actions::action *A_base,
 		actions::action *A2,
 		groups::strong_generators *Strong_gens,
 		int f_load_save,
@@ -247,6 +248,7 @@ void orbits_global::orbits_on_points(
 				"before Orb->init" << endl;
 	}
 	Orb->init(
+			A_base,
 			A2,
 			Strong_gens,
 			f_load_save,
@@ -270,6 +272,7 @@ void orbits_global::orbits_on_points(
 
 
 void orbits_global::orbits_on_points_from_vector_ge(
+		actions::action *A_base,
 		actions::action *A2,
 		data_structures_groups::vector_ge *gens,
 		int f_load_save,
@@ -296,6 +299,7 @@ void orbits_global::orbits_on_points_from_vector_ge(
 				"before Orb->init_from_vector_ge" << endl;
 	}
 	Orb->init_from_vector_ge(
+			A_base,
 			A2,
 			gens,
 			f_load_save,
@@ -656,6 +660,7 @@ void orbits_global::orbits_on_points(
 				"before orbits_on_points" << endl;
 	}
 	orbits_on_points(
+			AG->A_base,
 			AG->A,
 			AG->Subgroup_gens,
 			f_load_save,
@@ -701,6 +706,7 @@ void orbits_global::orbits_on_points_from_generators(
 				"before Orbits.orbits_on_points_from_vector_ge" << endl;
 	}
 	Orbits.orbits_on_points_from_vector_ge(
+			AG->A,
 			AG->A,
 			gens,
 			f_load_save,

@@ -25,7 +25,7 @@ blt_set_group_properties::blt_set_group_properties()
 	A_on_points = NULL;
 	Orbits_on_points = NULL;
 
-	Flock = NULL;
+	Flocks_by_orbit = NULL;
 	Point_idx = NULL;
 }
 
@@ -38,8 +38,8 @@ blt_set_group_properties::~blt_set_group_properties()
 	if (Orbits_on_points) {
 		FREE_OBJECT(Orbits_on_points);
 	}
-	if (Flock) {
-		FREE_OBJECTS(Flock);
+	if (Flocks_by_orbit) {
+		FREE_OBJECTS(Flocks_by_orbit);
 	}
 	if (Point_idx) {
 		FREE_int(Point_idx);
@@ -67,15 +67,19 @@ void blt_set_group_properties::init_blt_set_group_properties(
 				"after init_orbits_on_points" << endl;
 	}
 
-	if (f_v) {
-		cout << "blt_set_group_properties::init_blt_set_group_properties "
-				"before init_flocks" << endl;
+
+#if 0
+		if (f_v) {
+			cout << "blt_set_group_properties::init_blt_set_group_properties "
+					"before init_flocks_by_orbits" << endl;
+		}
+		init_flocks_by_orbits(verbose_level - 1);
+		if (f_v) {
+			cout << "blt_set_group_properties::init_blt_set_group_properties "
+					"after init_flocks_by_orbits" << endl;
+		}
 	}
-	init_flocks(verbose_level - 1);
-	if (f_v) {
-		cout << "blt_set_group_properties::init_blt_set_group_properties "
-				"after init_flocks" << endl;
-	}
+#endif
 
 
 	if (f_v) {
@@ -106,7 +110,7 @@ void blt_set_group_properties::init_orbits_on_points(
 				"Before Blt_set_with_action->A->Induced_action->restricted_action" << endl;
 	}
 	A_on_points = Blt_set_with_action->A->Induced_action->restricted_action(
-			Blt_set_with_action->Inv->the_set_in_orthogonal,
+			Blt_set_with_action->Blt_set->Invariants->the_set_in_orthogonal,
 			Blt_set_with_action->Blt_set_domain_with_action->Blt_set_domain->target_size,
 			label_of_set, label_of_set_tex,
 			verbose_level - 1);
@@ -134,6 +138,7 @@ void blt_set_group_properties::init_orbits_on_points(
 				"before Orbits_on_points->init" << endl;
 	}
 	Orbits_on_points->init(
+			Blt_set_with_action->A,
 			A_on_points,
 			Blt_set_with_action->Aut_gens,
 			f_load_save,
@@ -175,13 +180,13 @@ void blt_set_group_properties::init_orbits_on_points(
 	}
 }
 
-void blt_set_group_properties::init_flocks(
+void blt_set_group_properties::init_flocks_by_orbits(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "blt_set_with_action::init_flocks" << endl;
+		cout << "blt_set_group_properties::init_flocks_by_orbits" << endl;
 	}
 
 	int orb_idx;
@@ -189,17 +194,20 @@ void blt_set_group_properties::init_flocks(
 	int point_idx;
 
 	if (f_v) {
-		cout << "blt_set_with_action::init_flocks nb of orbits = " << Orbits_on_points->Sch->Forest->nb_orbits << endl;
+		cout << "blt_set_group_properties::init_flocks_by_orbits "
+				"nb of orbits = " << Orbits_on_points->Sch->Forest->nb_orbits << endl;
 	}
 
 
-	Flock = NEW_OBJECTS(flock_from_blt_set, Orbits_on_points->Sch->Forest->nb_orbits);
+	Flocks_by_orbit = NEW_OBJECTS(geometry::orthogonal_geometry::flock_from_blt_set,
+			Orbits_on_points->Sch->Forest->nb_orbits);
+
 	Point_idx = NEW_int(Orbits_on_points->Sch->Forest->nb_orbits);
 
 	for (orb_idx = 0; orb_idx < Orbits_on_points->Sch->Forest->nb_orbits; orb_idx++) {
 
 		if (f_v) {
-			cout << "blt_set_with_action::init_flocks "
+			cout << "blt_set_group_properties::init_flocks_by_orbits "
 					"orbit " << orb_idx << " / " << Orbits_on_points->Sch->Forest->nb_orbits << endl;
 		}
 
@@ -208,18 +216,23 @@ void blt_set_group_properties::init_flocks(
 		Point_idx[orb_idx] = point_idx;
 
 		if (f_v) {
-			cout << "blt_set_group_properties::init_flocks "
+			cout << "blt_set_group_properties::init_flocks_by_orbits "
 					"computing flock associated with orbit "
 					<< orb_idx << " / " << Orbits_on_points->Sch->Forest->nb_orbits << endl;
 		}
 
 		if (f_v) {
-			cout << "blt_set_group_properties::init_flocks "
+			cout << "blt_set_group_properties::init_flocks_by_orbits "
 					"before Flock->init" << endl;
 		}
-		Flock[orb_idx].init(Blt_set_with_action, point_idx, verbose_level);
+		Flocks_by_orbit[orb_idx].init(
+				Blt_set_with_action->Blt_set,
+				//Blt_set_with_action->Blt_set_domain_with_action->Blt_set_domain,
+				//Blt_set_with_action->Blt_set->Pi_ij,
+				point_idx,
+				verbose_level - 2);
 		if (f_v) {
-			cout << "blt_set_group_properties::init_flocks "
+			cout << "blt_set_group_properties::init_flocks_by_orbits "
 					"after Flock->init" << endl;
 		}
 
@@ -227,7 +240,7 @@ void blt_set_group_properties::init_flocks(
 	}
 
 	if (f_v) {
-		cout << "blt_set_with_action::init_flocks done" << endl;
+		cout << "blt_set_with_action::init_flocks_by_orbits done" << endl;
 	}
 }
 
@@ -302,7 +315,7 @@ void blt_set_group_properties::report(
 
 		ost << "\\subsubsection*{Flock " << orb_idx << " / " << Orbits_on_points->Sch->Forest->nb_orbits << "}" << endl;
 
-		Flock[orb_idx].report(ost, verbose_level);
+		Flocks_by_orbit[orb_idx].report(ost, verbose_level);
 
 	}
 

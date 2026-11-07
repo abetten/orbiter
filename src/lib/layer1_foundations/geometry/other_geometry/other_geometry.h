@@ -639,7 +639,7 @@ public:
 	void create_BLT_point_from_flock(
 			algebra::field_theory::finite_field *F,
 			int *v5, int a, int b, int c, int verbose_level);
-	// creates the point (a/2,-a^2/4-bc,1,c,b)
+	// creates the point (c/2,-c^2/4-ab,1,b,a)
 #if 0
 	void andre_preimage(
 			projective_space *P2, projective_space *P4,

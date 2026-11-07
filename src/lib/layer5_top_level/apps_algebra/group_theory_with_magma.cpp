@@ -637,7 +637,7 @@ void group_theory_with_magma::identify_elements_by_classes(
 
 	int *Elt;
 	int *data;
-	int i, j, idx;
+	int i; //, j, idx;
 	long int elt_rk;
 	int f_found;
 	int f_is_member;

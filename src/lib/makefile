@@ -214,6 +214,8 @@ ORBITER_MODULES= \
 		layer1_foundations/geometry/finite_geometries/w3q.o \
 		layer1_foundations/geometry/orthogonal/blt_set_domain.o \
 		layer1_foundations/geometry/orthogonal/blt_set_invariants.o \
+		layer1_foundations/geometry/orthogonal/blt_set.o \
+		layer1_foundations/geometry/orthogonal/flock_from_blt_set.o \
 		layer1_foundations/geometry/orthogonal/hyperbolic_pair_hyperbolic.o \
 		layer1_foundations/geometry/orthogonal/hyperbolic_pair_parabolic.o \
 		layer1_foundations/geometry/orthogonal/hyperbolic_pair_rank_unrank.o \
@@ -259,7 +261,6 @@ ORBITER_MODULES= \
 		layer1_foundations/other/data_structures/ancestry_tree.o \
 		layer1_foundations/other/data_structures/bitmatrix.o \
 		layer1_foundations/other/data_structures/bitvector.o \
-		layer1_foundations/other/data_structures/data_file.o \
 		layer1_foundations/other/data_structures/data_structures_global.o \
 		layer1_foundations/other/data_structures/fancy_set.o \
 		layer1_foundations/other/data_structures/forest_io.o \
@@ -655,7 +656,6 @@ ORBITER_MODULES= \
 		layer5_top_level/orthogonal_geometry_applications/blt_set_domain_with_action.o \
 		layer5_top_level/orthogonal_geometry_applications/blt_set_group_properties.o \
 		layer5_top_level/orthogonal_geometry_applications/blt_set_with_action.o \
-		layer5_top_level/orthogonal_geometry_applications/flock_from_blt_set.o \
 		layer5_top_level/orthogonal_geometry_applications/orthogonal_space_with_action_description.o \
 		layer5_top_level/orthogonal_geometry_applications/orthogonal_space_with_action.o \
 		layer5_top_level/orthogonal_geometry_applications/table_of_blt_sets.o \

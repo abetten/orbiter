@@ -27,16 +27,11 @@ blt_set_domain_with_action::blt_set_domain_with_action()
 	O = NULL;
 	Blt_set_domain = NULL;
 
-	PF = NULL;
-
 }
 
 blt_set_domain_with_action::~blt_set_domain_with_action()
 {
 	Record_death();
-	if (PF) {
-		FREE_OBJECT(PF);
-	}
 }
 
 void blt_set_domain_with_action::init(
@@ -62,33 +57,15 @@ void blt_set_domain_with_action::init(
 		cout << "blt_set_domain_with_action::init "
 				"before Blt_set_domain->init_blt_set_domain" << endl;
 	}
-	Blt_set_domain->init_blt_set_domain(O, P, f_create_extension_fields, verbose_level);
+	Blt_set_domain->init_blt_set_domain(
+			O, P, f_create_extension_fields,
+			verbose_level);
 	if (f_v) {
 		cout << "blt_set_domain_with_action::init "
 				"after Blt_set_domain->init" << endl;
 	}
 
 
-	if (f_create_extension_fields) {
-		PF = NEW_OBJECT(combinatorics::special_functions::polynomial_function_domain);
-
-		if (f_v) {
-			cout << "blt_set_domain_with_action::init "
-					"before PF->init" << endl;
-		}
-		PF->init(Blt_set_domain->F, 1 /*n*/, verbose_level);
-		if (f_v) {
-			cout << "blt_set_domain_with_action::init "
-					"after PF->init" << endl;
-		}
-	}
-	else {
-		if (f_v) {
-			cout << "blt_set_domain_with_action::init "
-					"not setting up polynomial_function_domain" << endl;
-		}
-
-	}
 
 
 	if (f_v) {

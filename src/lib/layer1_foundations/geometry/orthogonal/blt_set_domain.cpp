@@ -42,6 +42,8 @@ blt_set_domain::blt_set_domain()
 	G54 = NULL;
 	G43 = NULL;
 
+	PF = NULL;
+
 	Q2 = 0;
 	F2 = NULL;
 	Poly2 = NULL;
@@ -77,8 +79,17 @@ blt_set_domain::~blt_set_domain()
 	if (Candidates) {
 		FREE_int(Candidates);
 	}
+	if (G53) {
+		FREE_OBJECT(G53);
+	}
+	if (G54) {
+		FREE_OBJECT(G54);
+	}
 	if (G43) {
 		FREE_OBJECT(G43);
+	}
+	if (PF) {
+		FREE_OBJECT(PF);
 	}
 
 	if (F2) {
@@ -105,7 +116,8 @@ void blt_set_domain::init_blt_set_domain(
 		geometry::projective_geometry::projective_space *P4,
 		int f_create_extension_fields,
 	int verbose_level)
-// creates a grassmann G43.
+// creates grassmann objects G43, G53, G54,
+// extension fields F2 and F3 and polynomial rings Poly2 and Poly3.
 {
 	int f_v = (verbose_level >= 1);
 	algebra::number_theory::number_theory_domain NT;
@@ -202,6 +214,7 @@ void blt_set_domain::init_blt_set_domain(
 	}
 
 
+
 	if (f_v) {
 		cout << "blt_set_domain::init_blt_set_domain finished" << endl;
 	}
@@ -210,7 +223,7 @@ void blt_set_domain::init_blt_set_domain(
 void blt_set_domain::create_extension_fields(
 	int verbose_level)
 // Creates the extension field of degree 2 and 3 over GF(q), F2 and F3, respectively.
-// Also creates the associated polynomial rings poly2 and poly3
+// Also creates the associated polynomial rings Poly2 and Poly3
 {
 	int f_v = (verbose_level >= 1);
 	algebra::number_theory::number_theory_domain NT;
@@ -282,6 +295,17 @@ void blt_set_domain::create_extension_fields(
 				"after Poly3->init_without_description" << endl;
 	}
 
+	PF = NEW_OBJECT(combinatorics::special_functions::polynomial_function_domain);
+
+	if (f_v) {
+		cout << "blt_set_domain::create_extension_fields "
+				"before PF->init" << endl;
+	}
+	PF->init(F, 1 /*n*/, verbose_level);
+	if (f_v) {
+		cout << "blt_set_domain::create_extension_fields "
+				"after PF->init" << endl;
+	}
 
 
 	if (f_v) {
@@ -290,8 +314,9 @@ void blt_set_domain::create_extension_fields(
 }
 
 long int blt_set_domain::intersection_of_hyperplanes(
-		long int plane_rk1, long int plane_rk2,
+		long int hyper_plane_rk1, long int hyper_plane_rk2,
 		int verbose_level)
+// Computes the plane of intersection of two hyperplanes.
 {
 	int f_v = (verbose_level >= 1);
 	long int plane_rk = 0;
@@ -304,8 +329,8 @@ long int blt_set_domain::intersection_of_hyperplanes(
 		cout << "blt_set_domain::intersection_of_hyperplanes" << endl;
 	}
 
-	G54->unrank_lint_here(B1, plane_rk1, verbose_level);
-	G54->unrank_lint_here(B2, plane_rk2, verbose_level);
+	G54->unrank_lint_here(B1, hyper_plane_rk1, verbose_level);
+	G54->unrank_lint_here(B2, hyper_plane_rk2, verbose_level);
 
 	F->Linear_algebra->intersect_subspaces(5, 4,
 		B1, 4, B2,
@@ -330,6 +355,8 @@ long int blt_set_domain::intersection_of_hyperplanes(
 long int blt_set_domain::compute_tangent_hyperplane(
 	long int pt,
 	int verbose_level)
+// Computes the tangent plane of the point with respect to the quadratic form.
+// The computation is done by using the form matrix (Gram matrix).
 {
 	int f_v = (verbose_level >= 1);
 	long int plane_rk = 0;
@@ -396,6 +423,10 @@ void blt_set_domain::report_given_point_set(
 	}
 	//ost << endl;
 }
+
+
+
+
 
 
 
@@ -1398,6 +1429,7 @@ void blt_set_domain::test_flock_condition(
 		int verbose_level)
 // F is given because the field might be
 // an extension field of the current field
+// writes the results to outcome[N] where N = {q choose 2}
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = false; //(verbose_level >= 2);
@@ -1439,6 +1471,14 @@ void blt_set_domain::test_flock_condition(
 			a = F->add(ai, F->negate(aj));
 			b = F->add(bi, F->negate(bj));
 			c = F->add(ci, F->negate(cj));
+
+			// test if c^2 + 4 * a * b is a square in the field,
+			// where
+			// a = (ai - aj)
+			// b = (bi - bj)
+			// c = (ci - cj)
+			// store the result in outcome[cnt] where cnt is the rank of the pair (i,j)
+
 			x = F->add(F->mult(c, c), F->mult(four, F->mult(a, b)));
 			outcome[cnt] = F->is_square(x);
 
@@ -1653,6 +1693,82 @@ void blt_set_domain::cubic_lift(
 	}
 }
 
+
+long int *blt_set_domain::compute_T(
+		long int *set,
+		int verbose_level)
+// returns T[target_size]
+// used by blt_set_with_action::init_set
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "blt_set_domain::compute_T" << endl;
+	}
+
+	long int *T; // [target_size]
+
+	int i;
+
+	T = NEW_lint(target_size);
+	for (i = 0; i < target_size; i++) {
+		T[i] = compute_tangent_hyperplane(
+				set[i],
+				0 /* verbose_level */);
+	}
+
+	if (f_v) {
+		cout << "blt_set_domain::compute_T done" << endl;
+	}
+	return T;
+}
+
+
+long int *blt_set_domain::compute_Pi_ij(
+		long int *set,
+		long int *T,
+		int verbose_level)
+// returns Pi_ij[target_size * target_size]
+// used by blt_set_with_action::init_set
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "blt_set_domain::compute_Pi_ij" << endl;
+	}
+	int i, j;
+	long int plane_rk1, plane_rk2, a;
+	long int *Pi_ij; // [target_size * target_size]
+
+
+	Pi_ij = NEW_lint(target_size * target_size);
+
+	Lint_vec_zero(Pi_ij, target_size * target_size);
+
+	for (i = 0; i < target_size; i++) {
+
+		plane_rk1 = T[i];
+
+		for (j = 0; j < target_size; j++) {
+			if (i == j) {
+				continue;
+			}
+
+			plane_rk2 = T[j];
+
+			a = intersection_of_hyperplanes(
+					plane_rk1, plane_rk2,
+					0 /* verbose_level */);
+
+			Pi_ij[i * target_size + j] = a;
+		}
+	}
+
+	if (f_v) {
+		cout << "blt_set_domain::compute_Pi_ij done" << endl;
+	}
+	return Pi_ij;
+}
 
 }}}}
 

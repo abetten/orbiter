@@ -262,7 +262,6 @@ namespace orbiter {
 			class blt_set_domain_with_action;
 			class blt_set_group_properties;
 			class blt_set_with_action;
-			class flock_from_blt_set;
 			class orthogonal_space_with_action_description;
 			class orthogonal_space_with_action;
 			class table_of_blt_sets;

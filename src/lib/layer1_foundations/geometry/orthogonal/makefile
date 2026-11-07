@@ -8,6 +8,8 @@ LFLAGS = -lm
 MODULES = \
 	blt_set_domain.o \
 	blt_set_invariants.o \
+	blt_set.o \
+	flock_from_blt_set.o \
 	hyperbolic_pair_hyperbolic.o \
 	hyperbolic_pair_parabolic.o \
 	hyperbolic_pair_rank_unrank.o \

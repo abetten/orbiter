@@ -1442,7 +1442,8 @@ void longinteger_domain::create_order_of_group_Anq(
 {
 	int e, g, i, r;
 
-	e = (n * (n + 1)) >> 1;
+	e = BINOMIAL2(n + 1);
+	//e = (n * (n + 1)) >> 1;
 
 	algebra::number_theory::number_theory_domain NT;
 

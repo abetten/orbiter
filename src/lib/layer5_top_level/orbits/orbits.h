@@ -389,6 +389,7 @@ public:
 			int verbose_level);
 	// called by any_group::orbits_on_set_from_file
 	void orbits_on_points(
+			actions::action *A_base,
 			actions::action *A2,
 			groups::strong_generators *Strong_gens,
 			int f_load_save,
@@ -397,6 +398,7 @@ public:
 			groups::orbits_on_something *&Orb,
 			int verbose_level);
 	void orbits_on_points_from_vector_ge(
+			actions::action *A_base,
 			actions::action *A2,
 			data_structures_groups::vector_ge *gens,
 			int f_load_save,

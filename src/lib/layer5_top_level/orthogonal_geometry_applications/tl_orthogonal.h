@@ -209,16 +209,21 @@ public:
 	BLT_set_create_description *Descr;
 
 	std::string prefix;
-	std::string label_txt;
-	std::string label_tex;
+	//std::string label_txt;
+	//std::string label_tex;
 
 
 
 	orthogonal_space_with_action *OA;
 
+	geometry::orthogonal_geometry::blt_set *Blt_set;
+
+#if 0
 	long int *set;
 
 	int *ABC;
+
+#endif
 
 
 	int f_has_group;
@@ -230,11 +235,28 @@ public:
 	blt_set_with_action *BA;
 
 
+
+	// specific data for certain families:
+
+	algebra::field_theory::finite_field *FQ;
+	int q, Q;
+
+	geometry::orthogonal_geometry::unusual_model *U;
+
+
+
+
 	BLT_set_create();
 	~BLT_set_create();
 	void init(
 			BLT_set_create_description *Descr,
 			orthogonal_space_with_action *OA,
+			int verbose_level);
+	void create_family(
+			int verbose_level);
+	void make_from_catalogue(
+			int verbose_level);
+	void create_quadratic_field_extension(
 			int verbose_level);
 	void apply_transformations(
 			std::vector<std::string> transform_coeffs,
@@ -246,8 +268,6 @@ public:
 	void create_flock(
 			int point_idx, int verbose_level);
 	void BLT_test(
-			int verbose_level);
-	void export_set_in_PG(
 			int verbose_level);
 	void plane_invariant(
 			int verbose_level);
@@ -280,10 +300,10 @@ public:
 
 	geometry::orthogonal_geometry::blt_set_domain *Blt_set_domain;
 
-	combinatorics::special_functions::polynomial_function_domain *PF;
 
 	blt_set_domain_with_action();
 	~blt_set_domain_with_action();
+
 	void init(
 			actions::action *A,
 			geometry::projective_geometry::projective_space *P,
@@ -310,10 +330,10 @@ public:
 	blt_set_with_action *Blt_set_with_action;
 
 	actions::action *A_on_points;
-	//groups::schreier *Orbits_on_points;
+
 	groups::orbits_on_something *Orbits_on_points;
 
-	flock_from_blt_set *Flock; // [Orbits_on_points->Sch->nb_orbits]
+	geometry::orthogonal_geometry::flock_from_blt_set *Flocks_by_orbit; // [Orbits_on_points->Sch->nb_orbits]
 	int *Point_idx; // [Orbits_on_points->Sch->nb_orbits]
 
 
@@ -324,7 +344,7 @@ public:
 			int verbose_level);
 	void init_orbits_on_points(
 			int verbose_level);
-	void init_flocks(
+	void init_flocks_by_orbits(
 			int verbose_level);
 	void print_automorphism_group(
 		std::ostream &ost);
@@ -353,16 +373,13 @@ public:
 	actions::action *A;
 	orthogonal_geometry_applications::blt_set_domain_with_action *Blt_set_domain_with_action;
 
-	long int *set;
+	geometry::orthogonal_geometry::blt_set *Blt_set;
 
-	std::string label_txt;
-	std::string label_tex;
+	//long int *set;
 
 	groups::strong_generators *Aut_gens;
-	geometry::orthogonal_geometry::blt_set_invariants *Inv;
+	//geometry::orthogonal_geometry::blt_set_invariants *Inv;
 
-	long int *T; // [target_size]
-	long int *Pi_ij; // [target_size * target_size]
 
 	blt_set_group_properties *Blt_set_group_properties;
 
@@ -371,15 +388,8 @@ public:
 	void init_set(
 			actions::action *A,
 			orthogonal_geometry_applications::blt_set_domain_with_action *Blt_set_domain_with_action,
-			long int *set,
-			std::string &label_txt,
-			std::string &label_tex,
+			geometry::orthogonal_geometry::blt_set *Blt_set, //long int *set,
 			groups::strong_generators *Aut_gens,
-			int f_invariants,
-			int verbose_level);
-	void compute_T(
-			int verbose_level);
-	void compute_Pi_ij(
 			int verbose_level);
 	void report(
 			std::ostream &ost, int verbose_level);
@@ -390,53 +400,6 @@ public:
 
 
 
-// #############################################################################
-// flock_from_blt_set.cpp
-// #############################################################################
-
-
-//! a flock of a quadratic cone arising from a BLT-set
-
-
-class flock_from_blt_set {
-
-public:
-
-	blt_set_with_action *BLT_set;
-
-	int point_idx;
-
-	long int *Flock; // [q]
-	long int *Flock_reduced; // [q]
-	long int *Flock_affine; // [q]
-
-	int *ABC; // [q * 3]
-
-	other::data_structures::int_matrix *Table_of_ABC;
-		// same as ABC, but sorted by rows.
-
-	int *func_f; // second column of ABC
-	int *func_g; // third column of ABC
-
-	//combinatorics::polynomial_function_domain *PF;
-
-	int q;
-	int degree; // = PF->max_degree
-	int nb_coeff; // = PF->Poly[degree].get_nb_monomials()
-	int *coeff_f; // [nb_coeff]
-	int *coeff_g; // [nb_coeff]
-
-
-	flock_from_blt_set();
-	~flock_from_blt_set();
-	void init(
-				blt_set_with_action *BLT_set,
-				int point_idx,
-				int verbose_level);
-	void report(
-			std::ostream &ost, int verbose_level);
-
-};
 
 
 
@@ -570,7 +533,7 @@ public:
 
 	BLT_set_create *Object_create;
 
-	blt_set_with_action *Object_with_action;
+	//blt_set_with_action *Object_with_action;
 
 
 
@@ -581,14 +544,6 @@ public:
 			orthogonal_geometry_applications::orthogonal_space_with_action *Space,
 		int verbose_level);
 	void do_export(
-			int verbose_level);
-	void export_csv(
-			std::string *Table,
-			int nb_cols,
-			int verbose_level);
-	void export_sql(
-			std::string *Table,
-			int nb_cols,
 			int verbose_level);
 
 };

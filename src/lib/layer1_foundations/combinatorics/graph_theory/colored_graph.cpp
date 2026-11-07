@@ -194,7 +194,9 @@ long int colored_graph::hash()
 	int N;
 	long int hash;
 
-	N = (nb_points * (nb_points - 1)) >> 1;
+	N = BINOMIAL2(nb_points);
+
+	//N = (nb_points * (nb_points - 1)) >> 1;
 
 	adj = NEW_int(N);
 	Int_vec_zero(adj, N);
@@ -219,7 +221,9 @@ std::string colored_graph::stringify_adjacency_list()
 	int N;
 	string s;
 
-	N = (nb_points * (nb_points - 1)) >> 1;
+	N = BINOMIAL2(nb_points);
+
+	//N = (nb_points * (nb_points - 1)) >> 1;
 
 	adj = NEW_int(N);
 	Int_vec_zero(adj, N);

@@ -684,20 +684,22 @@ void polynomial_function_domain::algebraic_normal_form(
 				"after PF->compute_polynomial_representation" << endl;
 	}
 
-	cout << "polynomial_function_domain::algebraic_normal_form "
-			"algebraic normal form:" << endl;
-	Poly[max_degree].print_equation(cout, coeff);
-	cout << endl;
+	if (f_v) {
+		cout << "polynomial_function_domain::algebraic_normal_form "
+				"algebraic normal form:" << endl;
+		Poly[max_degree].print_equation(cout, coeff);
+		cout << endl;
 
-	cout << "polynomial_function_domain::algebraic_normal_form "
-			"algebraic normal form in tex:" << endl;
-	Poly[max_degree].print_equation_tex(cout, coeff);
-	cout << endl;
+		cout << "polynomial_function_domain::algebraic_normal_form "
+				"algebraic normal form in tex:" << endl;
+		Poly[max_degree].print_equation_tex(cout, coeff);
+		cout << endl;
 
-	cout << "polynomial_function_domain::algebraic_normal_form "
-			"algebraic normal form in numerical form:" << endl;
-	Poly[max_degree].print_equation_numerical(cout, coeff);
-	cout << endl;
+		cout << "polynomial_function_domain::algebraic_normal_form "
+				"algebraic normal form in numerical form:" << endl;
+		Poly[max_degree].print_equation_numerical(cout, coeff);
+		cout << endl;
+	}
 
 
 	if (f_v) {

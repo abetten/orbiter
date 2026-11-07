@@ -943,6 +943,7 @@ void difference_set_in_heisenberg_group::create_minimal_overgroups(
 						"computing orbit of conjugate subgroups:" << endl;
 			}
 			Sch_subgroups = N->Strong_gens->orbit_of_one_point_schreier(
+					N,
 				A_on_subgroups, idx_E1, verbose_level);
 
 			if (f_v) {
@@ -1073,6 +1074,7 @@ void difference_set_in_heisenberg_group::create_minimal_overgroups(
 							"overgroups of order " << oo << ":" << endl;
 				}
 				Sch_overgroups = N->Strong_gens->compute_all_point_orbits_schreier(
+						N,
 						A_on_overgroups, 0 /*verbose_level*/);
 
 				if (f_v) {

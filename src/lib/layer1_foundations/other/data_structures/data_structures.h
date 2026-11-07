@@ -414,38 +414,6 @@ public:
 };
 
 
-// #############################################################################
-// data_file.cpp
-// #############################################################################
-
-//! to read data files from the poset classification algorithm
-
-
-class data_file {
-	
-	public:
-
-	std::string fname;
-	int nb_cases;
-	int *set_sizes;
-	long int **sets;
-	int *casenumbers;
-	char **Ago_ascii;
-	char **Aut_ascii;
-
-	int f_has_candidates;
-	int *nb_candidates;
-	int **candidates;
-
-	data_file();
-	~data_file();
-	void read(
-			std::string &fname, int f_casenumbers,
-			int verbose_level);
-	void read_candidates(
-			std::string &candidates_fname,
-			int verbose_level);
-};
 
 
 
@@ -999,6 +967,9 @@ public:
 	void print_integer_matrix_width(
 			std::ostream &ost,
 		int *p, int m, int n, int dim_n, int w);
+	void print_integer_matrix_width_easy(
+			std::ostream &ost,
+		int *p, int m, int n, int w);
 	void print_integer_matrix_in_C_source(
 			std::ostream &ost,
 		int *p, int m, int n);

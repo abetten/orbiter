@@ -12,7 +12,6 @@ MODULES = \
 	ancestry_tree.o \
 	bitmatrix.o \
 	bitvector.o \
-	data_file.o \
 	data_structures_global.o \
 	fancy_set.o \
 	forest_io.o \

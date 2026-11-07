@@ -53,38 +53,41 @@ public:
 
 	std::string set_as_string;
 
-	long int *set;
-	int sz;
-		// set[sz] is used by t_PTS, t_LNS, t_INC
 
-	// for t_PNL:
-	long int *set2;
-	int sz2;
+		// used by t_PTS, t_LNS, t_INC:
+		long int *set; // set[sz]
+		int sz;
+
+		// for t_PNL:
+		long int *set2;
+		int sz2;
 
 
-		// if t_INC or t_LS
-	int v;
-	int b;
-	int f_partition;
-	int *partition; // [v + b], do not free !
-	int f_inc_representation_of_graph;
+		// for t_INC or t_LS
+		int v;
+		int b;
+		int f_partition;
+		int *partition; // [v + b], do not free !
+		int f_inc_representation_of_graph;
 
-		// if t_LS
+		// for t_LS
 		int design_k;
 		int design_sz;
 
-		// t_PAC = packing, uses SoS
+		// for t_PAC = packing, uses SoS
 		other::data_structures::set_of_sets *SoS;
 		long int *original_data; // [SoS->nb_sets]
 		// SoS is used by t_PAC
 
-		int f_extended_incma;
+		int f_extended_incma; // add incidence matrix of lines vs planes
 
-		// t_MMX = multi matrix
+		// for t_MMX = multi matrix
 		int m, n, max_val;
 
-		other::data_structures::tally *C;
-		// used to determine multiplicities in the set of points
+
+	other::data_structures::tally *C;
+	// used to determine multiplicities in the set of points
+
 
 	any_combinatorial_object();
 	~any_combinatorial_object();

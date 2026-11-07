@@ -1468,12 +1468,12 @@ void any_combinatorial_object::init_graph_by_adjacency_matrix_text(
 
 	int N2;
 
-	N2 = (N * (N - 1)) >> 1;
+	N2 = BINOMIAL2(N);
+
+	//N2 = (N * (N - 1)) >> 1;
 
 	long int *adjacency_matrix;
 	int adj_sz;
-	//int nb_edges;
-	//int i;
 
 	if (f_v) {
 		cout << "any_combinatorial_object::init_graph_by_adjacency_matrix_text "

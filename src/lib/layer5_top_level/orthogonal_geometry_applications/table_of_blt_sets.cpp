@@ -28,7 +28,7 @@ table_of_blt_sets::table_of_blt_sets()
 
 	Object_create = NULL;
 
-	Object_with_action = NULL;
+	//Object_with_action = NULL;
 
 
 }
@@ -54,9 +54,11 @@ table_of_blt_sets::~table_of_blt_sets()
 	if (f_v) {
 		cout << "table_of_blt_sets::~table_of_blt_sets 3" << endl;
 	}
+#if 0
 	if (Object_with_action) {
 		FREE_OBJECTS(Object_with_action);
 	}
+#endif
 	if (f_v) {
 		cout << "table_of_blt_sets::~table_of_blt_sets 4" << endl;
 	}
@@ -89,8 +91,9 @@ void table_of_blt_sets::init(
 	Object_create = NEW_OBJECTS(BLT_set_create, nb_objects);
 
 
-
+#if 0
 	Object_with_action = NEW_OBJECTS(blt_set_with_action, nb_objects);
+#endif
 
 
 	for (h = 0; h < nb_objects; h++) {
@@ -102,6 +105,7 @@ void table_of_blt_sets::init(
 
 		Object_create_description[h].f_catalogue = true;
 		Object_create_description[h].iso = h;
+		Object_create_description[h].f_invariants = false; //true;
 
 
 		if (f_v) {
@@ -127,16 +131,17 @@ void table_of_blt_sets::init(
 			exit(1);
 		}
 
+#if 0
 		string label_txt;
 		string label_tex;
 
-
-		label_txt = "BLT_set_" + std::to_string(Space->P->Subspaces->F->q) + "_iso" + std::to_string(h);
-		label_tex = "BLT\\_set\\_" + std::to_string(Space->P->Subspaces->F->q) + "\\_iso" + std::to_string(h);
-
-
+		Object_create[h].Blt_set->label_txt = "BLT_set_" + std::to_string(Space->P->Subspaces->F->q) + "_iso" + std::to_string(h);
+		Object_create[h].Blt_set->label_tex = "BLT\\_set\\_" + std::to_string(Space->P->Subspaces->F->q) + "\\_iso" + std::to_string(h);
+#endif
 
 
+
+#if 0
 		if (f_v) {
 			cout << "table_of_blt_sets::init "
 					"before Object_with_action[h].init_with_surface_object" << endl;
@@ -144,17 +149,20 @@ void table_of_blt_sets::init(
 		Object_with_action[h].init_set(
 				Space->A,
 				Space->Blt_set_domain_with_action,
-				Object_create[h].set,
-				label_txt,
-				label_tex,
+				Object_create[h].Blt_set,
+				//label_txt,
+				//label_tex,
 				Object_create[h].Sg,
-				true /* f_invariants */,
+				//true /* f_invariants */,
 				verbose_level);
 
 		if (f_v) {
 			cout << "table_of_blt_sets::init "
 					"after Object_with_action[h].init_with_surface_object" << endl;
 		}
+#endif
+
+
 	}
 
 
@@ -178,16 +186,16 @@ void table_of_blt_sets::do_export(
 
 	int h;
 	std::string *Table;
+	int nb_rows;
 	int nb_cols;
+	std::string *ColHeadings;
 
-	nb_cols = 4;
+	nb_rows = nb_objects;
+	nb_cols = 6;
 
-	Table = new string[nb_objects * nb_cols];
+	Table = new string[nb_rows * nb_cols];
+	ColHeadings = new string[nb_cols];
 
-	long int *Row;
-
-
-	Row = NEW_lint(nb_cols);
 
 	for (h = 0; h < nb_objects; h++) {
 
@@ -196,119 +204,89 @@ void table_of_blt_sets::do_export(
 					<< h << " / " << nb_objects << endl;
 		}
 
-		Row[0] = h;
+
+		Table[h * nb_cols + 0] = std::to_string(h);
+
+
+
+		Table[h * nb_cols + 1] = std::to_string(Space->O->F->q);
+
+
+		Table[h * nb_cols + 2] = std::to_string(h);
 
 
 		if (f_v) {
 			cout << "collineation stabilizer order" << endl;
 		}
 		if (Object_create[h].f_has_group) {
-			Row[1] = Object_create[h].Sg->group_order_as_lint();
-		}
-		else {
-			Row[1] = 0;
-		}
-#if 0
-		if (f_v) {
-			cout << "projectivity stabilizer order" << endl;
-		}
-		if (Space->A->is_semilinear_matrix_group()) {
 
-
-			Row[2] = Object_with_action[h].projectivity_group_gens->group_order_as_lint();
+			Table[h * nb_cols + 3] = Object_create[h].Sg->group_order_stringify();
 
 		}
-		else {
-			Row[2] = Object_create[h].Sg->group_order_as_lint();
-		}
-#endif
 
-		Row[2] = Object_create[h].OA->Blt_set_domain_with_action->Blt_set_domain->target_size;
+
+		Table[h * nb_cols + 4] = "\"" + Lint_vec_stringify(Object_create[h].BA->Blt_set->set, Object_create[h].OA->Blt_set_domain_with_action->Blt_set_domain->target_size) + "\"";
+
+
 		if (f_v) {
 			cout << "table_of_blt_sets::do_export before Row[3]" << endl;
 		}
-		Row[3] = Object_with_action[h].Blt_set_group_properties->Orbits_on_points->Sch->Forest->nb_orbits;
 
+		Table[h * nb_cols + 5] = std::to_string(Object_create[h].BA->Blt_set_group_properties->Orbits_on_points->Sch->Forest->nb_orbits);
 
-
-		int j;
-
-		for (j = 0; j < nb_cols; j++) {
-			Table[h * nb_cols + j] = std::to_string(Row[j]);
-		}
 
 
 	}
 
-	FREE_lint(Row);
-
-	if (f_v) {
-		cout << "table_of_blt_sets::do_export "
-				"before export_csv" << endl;
-	}
-
-	export_csv(Table,
-			nb_cols,
-			verbose_level);
-
-	if (f_v) {
-		cout << "table_of_blt_sets::do_export "
-				"after export_csv" << endl;
-	}
+	ColHeadings[0] = "Line";
+	ColHeadings[1] = "Q";
+	ColHeadings[2] = "OCN";
+	ColHeadings[3] = "AGO";
+	ColHeadings[4] = "Rep";
+	ColHeadings[5] = "NbOrbPoints";
 
 
-	delete [] Table;
-
-	if (f_v) {
-		cout << "table_of_blt_sets::do_export done" << endl;
-	}
-}
 
 
-void table_of_blt_sets::export_csv(
-		std::string *Table,
-		int nb_cols,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
 
-	if (f_v) {
-		cout << "table_of_blt_sets::export_csv" << endl;
-	}
+
 
 	other::orbiter_kernel_system::file_io Fio;
 
 	string fname;
 	fname = "table_of_blt_sets_q" + std::to_string(Space->O->F->q) + ".csv";
 
-	//Fio.lint_matrix_write_csv(fname, Table, nb_quartic_curves, nb_cols);
-
-	{
-		ofstream f(fname);
-		int i, j;
-
-		f << "Row,OCN,Ago,NbOrbPts";
-
-
-
-		f << endl;
-		for (i = 0; i < nb_objects; i++) {
-			f << i;
-			for (j = 0; j < nb_cols; j++) {
-				f << "," << Table[i * nb_cols + j];
-			}
-			f << endl;
-		}
-		f << "END" << endl;
-	}
-
-
-	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 
 	if (f_v) {
-		cout << "table_of_blt_sets::export_csv done" << endl;
+		cout << "table_of_blt_sets::do_export "
+				"before Fio.Csv_file_support->write_table_of_strings_with_col_headings" << endl;
+	}
+	Fio.Csv_file_support->write_table_of_strings_with_col_headings(
+			fname,
+			nb_rows, nb_cols, Table,
+			ColHeadings,
+			verbose_level);
+	if (f_v) {
+		cout << "table_of_blt_sets::do_export "
+				"after Fio.Csv_file_support->write_table_of_strings_with_col_headings" << endl;
+	}
+
+	if (f_v) {
+		cout << "table_of_blt_sets::do_export "
+				"written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+
+
+
+	delete [] Table;
+	delete [] ColHeadings;
+
+	if (f_v) {
+		cout << "table_of_blt_sets::do_export done" << endl;
 	}
 }
+
 
 
 

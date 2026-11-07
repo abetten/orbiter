@@ -728,6 +728,7 @@ class orbits_on_something {
 
 public:
 
+	actions::action *A_base;
 	actions::action *A;
 
 	int f_has_SG;
@@ -748,6 +749,7 @@ public:
 	orbits_on_something();
 	~orbits_on_something();
 	void init(
+			actions::action *A_base,
 			actions::action *A,
 			strong_generators *SG,
 			int f_load_save,
@@ -755,6 +757,7 @@ public:
 			int print_interval,
 			int verbose_level);
 	void init_from_vector_ge(
+			actions::action *A_base,
 			actions::action *A,
 			data_structures_groups::vector_ge *gens,
 			int f_load_save,
@@ -2113,14 +2116,17 @@ public:
 			actions::action *A_given,
 		int &nb_orbits, int *&orbit_reps, int verbose_level);
 	schreier *compute_all_point_orbits_schreier(
+			actions::action *A_base,
 			actions::action *A_given,
 			//int print_interval,
 			int verbose_level);
 	schreier *compute_all_point_orbits_schreier_with_print_interval(
+			actions::action *A_base,
 			actions::action *A_given,
 			int print_interval,
 			int verbose_level);
 	schreier *orbit_of_one_point_schreier(
+			actions::action *A_base,
 			actions::action *A_given,
 		int pt, int verbose_level);
 	void orbits_light(
@@ -2169,6 +2175,7 @@ public:
 			int nb_fixpoints,
 			actions::action *A_given, int verbose_level);
 	void make_element_which_moves_a_point_from_A_to_B(
+			actions::action *A_base,
 			actions::action *A_given,
 		int pt_A, int pt_B, int *Elt, int verbose_level);
 	void export_group_and_copy_to_latex(

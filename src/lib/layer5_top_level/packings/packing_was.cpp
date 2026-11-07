@@ -625,7 +625,9 @@ void packing_was::compute_H_orbits_on_points(
 	int print_interval = 10000;
 
 	Point_orbits_under_H->init(
-			P->T->A, H_gens, true /*f_load_save*/,
+			P->T->A,
+			P->T->A,
+			H_gens, true /*f_load_save*/,
 			prefix_point_orbits_under_H,
 			print_interval,
 			verbose_level - 2);
@@ -666,7 +668,10 @@ void packing_was::compute_N_orbits_on_points(
 				"prefix_point_orbits_under_N=" << prefix_point_orbits_under_N << endl;
 	}
 
-	Point_orbits_under_N->init(P->T->A, N_gens, true /*f_load_save*/,
+	Point_orbits_under_N->init(
+			P->T->A,
+			P->T->A,
+			N_gens, true /*f_load_save*/,
 			prefix_point_orbits_under_N,
 			print_interval,
 			verbose_level - 2);
@@ -714,7 +719,9 @@ void packing_was::compute_H_orbits_on_lines(
 	int print_interval = 10000;
 
 	Line_orbits_under_H->init(
-			P->T->A2, H_gens,
+			P->T->A,
+			P->T->A2,
+			H_gens,
 			true /*f_load_save*/,
 			prefix_line_orbits_under_H,
 			print_interval,
@@ -756,7 +763,10 @@ void packing_was::compute_N_orbits_on_lines(
 				"prefix_line_orbits_under_N=" << prefix_line_orbits_under_N << endl;
 	}
 
-	Line_orbits_under_N->init(P->T->A2, N_gens, true /*f_load_save*/,
+	Line_orbits_under_N->init(
+			P->T->A,
+			P->T->A2,
+			N_gens, true /*f_load_save*/,
 			prefix_line_orbits_under_N,
 			print_interval,
 			verbose_level - 2);
@@ -831,7 +841,9 @@ void packing_was::compute_H_orbits_on_spreads(
 		cout << "packing_was::compute_H_orbits_on_spreads "
 				"before Spread_orbits_under_H->init" << endl;
 	}
-	Spread_orbits_under_H->init(P->Spread_table_with_selection->A_on_spreads,
+	Spread_orbits_under_H->init(
+			P->T->A,
+			P->Spread_table_with_selection->A_on_spreads,
 			H_gens,
 			true /*f_load_save*/, prefix_spread_orbits,
 			print_interval,
@@ -1162,6 +1174,7 @@ void packing_was::compute_H_orbits_on_reduced_spreads(
 				"before reduced_spread_orbits_under_H->init" << endl;
 	}
 	reduced_spread_orbits_under_H->init(
+			P->T->A,
 			A_on_reduced_spreads,
 			H_gens, true /*f_load_save*/,
 			prefix_reduced_spread_orbits,

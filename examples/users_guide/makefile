@@ -49,12 +49,12 @@ MAGMA_PATH=""
 MAGMA_EXE=$(MAGMA_PATH)magma
 #MAGMA_EXE=echo
 
-#OPEN=open
-OPEN=echo
+OPEN=open
+#OPEN=echo
 
 
-#PDFLATEX=pdflatex
-PDFLATEX=echo
+PDFLATEX=pdflatex
+#PDFLATEX=echo
 
 ###############################################################################
 # End of configuration part
@@ -25297,9 +25297,6 @@ BLT_5_1:
 	$(OPEN) BLT_catalogue_q5_iso1.pdf
 
 
-#blt_set_domain::test_flock_condition done
-#outcome : ( 0^10 )
-#make: *** [BLT_5_1] Segmentation fault: 11
 
 
 

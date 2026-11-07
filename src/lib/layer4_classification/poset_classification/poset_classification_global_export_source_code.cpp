@@ -138,6 +138,7 @@ void poset_classification_global::generate_source_code(
 				fp << "\t";
 				PC->get_poset()->A->Group_element->element_print_for_make_element(
 						SaS->Strong_gens->gens->ith(j), fp);
+				fp << ",";
 				fp << endl;
 			}
 

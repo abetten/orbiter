@@ -132,11 +132,11 @@ void blt_set_activity::perform_activity(
 		}
 
 		if (f_v) {
-			cout << "blt_set_activity::perform_activity before BC->export_set_in_PG" << endl;
+			cout << "blt_set_activity::perform_activity before BC->Blt_set->export_set_in_PG" << endl;
 		}
-		BC->export_set_in_PG(verbose_level);
+		BC->Blt_set->export_set_in_PG(verbose_level);
 		if (f_v) {
-			cout << "blt_set_activity::perform_activity after BC->export_set_in_PG" << endl;
+			cout << "blt_set_activity::perform_activity after BC->Blt_set->export_set_in_PG" << endl;
 		}
 
 	}

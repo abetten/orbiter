@@ -1011,6 +1011,24 @@ void int_vec::print_integer_matrix_width(
 	}
 }
 
+void int_vec::print_integer_matrix_width_easy(
+		std::ostream &ost,
+	int *p, int m, int n, int w)
+{
+	int i, j;
+
+	for (i = 0; i < m; i++) {
+		for (j = 0; j < n; j++) {
+			ost << setw((int) w) << p[i * n + j];
+			if (w) {
+				ost << " ";
+			}
+		}
+		ost << endl;
+	}
+}
+
+
 void int_vec::print_integer_matrix_in_C_source(
 		std::ostream &ost,
 	int *p, int m, int n)

@@ -2253,6 +2253,7 @@ void action_global::orbits_on_equations(
 				"before compute_all_point_orbits_schreier" << endl;
 	}
 	Orb = gens->compute_all_point_orbits_schreier(
+			A,
 			A_on_equations,
 			//print_interval,
 			verbose_level - 2);
@@ -5586,6 +5587,7 @@ void action_global::compute_orbits_on_points(
 }
 
 void action_global::point_stabilizer_any_point(
+		action *A_base,
 		action *A,
 		int &pt,
 		groups::schreier *&Sch, groups::sims *&Stab,
@@ -5607,6 +5609,7 @@ void action_global::point_stabilizer_any_point(
 				"before compute_all_point_orbits_schreier" << endl;
 	}
 	Sch = A->Strong_gens->compute_all_point_orbits_schreier(
+			A_base,
 			A, //print_interval,
 			0 /* verbose_level */);
 	if (f_v) {
@@ -5665,6 +5668,7 @@ void action_global::point_stabilizer_any_point(
 }
 
 void action_global::point_stabilizer_any_point_with_given_group(
+		action *A_base,
 		action *A,
 		groups::strong_generators *input_gens,
 	int &pt,
@@ -5686,7 +5690,9 @@ void action_global::point_stabilizer_any_point_with_given_group(
 		cout << "action_global::point_stabilizer_any_point_with_given_group "
 				"before compute_all_point_orbits_schreier" << endl;
 	}
-	Sch = input_gens->compute_all_point_orbits_schreier(A, //print_interval,
+	Sch = input_gens->compute_all_point_orbits_schreier(
+			A_base,
+			A, //print_interval,
 			0 /* verbose_level */);
 	if (f_v) {
 		cout << "action_global::point_stabilizer_any_point_with_given_group "

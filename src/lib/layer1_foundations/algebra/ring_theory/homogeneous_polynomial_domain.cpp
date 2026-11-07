@@ -1476,7 +1476,7 @@ void homogeneous_polynomial_domain::print_monomial_latex_str(
 void homogeneous_polynomial_domain::print_equation(
 		std::ostream &ost, int *coeffs)
 {
-	int verbose_level = 1;
+	int verbose_level = 0;
 	std::string s;
 
 	s = stringify_equation(coeffs, verbose_level);

@@ -1,5 +1,5 @@
 /*
- * flock.cpp
+ * flock_from_blt_set.cpp
  *
  *  Created on: Jan 14, 2023
  *      Author: betten
@@ -7,23 +7,29 @@
 
 
 
-#include "orbiter.h"
+#include "foundations.h"
 
 using namespace std;
 
+
 namespace orbiter {
-namespace layer5_applications {
-namespace orthogonal_geometry_applications {
+namespace layer1_foundations {
+namespace geometry {
+namespace orthogonal_geometry {
+
+
+
 
 
 flock_from_blt_set::flock_from_blt_set()
 {
 	Record_birth();
-	BLT_set = NULL;
+
+	Blt_set = NULL;
 
 	point_idx = 0;
 
-	Flock = NULL;
+	Flock_planes = NULL;
 	Flock_reduced = NULL;
 	Flock_affine = NULL;
 	ABC = NULL;
@@ -45,8 +51,8 @@ flock_from_blt_set::~flock_from_blt_set()
 {
 	Record_death();
 
-	if (Flock) {
-		FREE_lint(Flock);
+	if (Flock_planes) {
+		FREE_lint(Flock_planes);
 	}
 	if (Flock_reduced) {
 		FREE_lint(Flock_reduced);
@@ -76,8 +82,11 @@ flock_from_blt_set::~flock_from_blt_set()
 }
 
 void flock_from_blt_set::init(
-		blt_set_with_action *BLT_set,
-		int point_idx, int verbose_level)
+		geometry::orthogonal_geometry::blt_set *Blt_set,
+		//blt_set_domain *BLT_set,
+		//long int *Pi_ij,
+		int point_idx,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_v5 = (verbose_level >= 5);
@@ -89,28 +98,63 @@ void flock_from_blt_set::init(
 	geometry::other_geometry::geometry_global Gg;
 
 
-	flock_from_blt_set::BLT_set = BLT_set;
+	flock_from_blt_set::Blt_set = Blt_set;
+
 	flock_from_blt_set::point_idx = point_idx;
 
-	q = BLT_set->Blt_set_domain_with_action->Blt_set_domain->F->q;
+	q = Blt_set->Blt_set_domain->F->q;
 	if (f_v) {
-		cout << "flock::init q = " << q << " point_idx = " << point_idx << endl;
+		cout << "flock_from_blt_set::init q = " << q << " point_idx = " << point_idx << endl;
+	}
+
+	if (Blt_set->Pi_ij == NULL) {
+		cout << "flock_from_blt_set::init Pi_ij has not yet been computed" << endl;
+		exit(1);
 	}
 
 	int target_size;
 	int i, j;
 	long int plane, plane_reduced;
-	int B[3 * 5]; // generator matrix for the plane \Pi_i
+	int B[3 * 5]; // generator matrix for the hyperplane \Pi_i
 	int C[3 * 4]; // generator matrix of \Pi_i after column 2 has been deleted
 	int D[4 * 4]; // to compute the dual coordinates of the plane C
 	int E[4]; // the last row of D will contain the dual coordinates of the plane C.
 	int F[3]; // the flock function values aj, bj, cj for one j corresponding to \Pi_i
 
-	target_size = BLT_set->Blt_set_domain_with_action->Blt_set_domain->target_size;
-	Flock = NEW_lint(q);
+	target_size = Blt_set->Blt_set_domain->target_size;
+	Flock_planes = NEW_lint(q);
 	Flock_reduced = NEW_lint(q);
 	Flock_affine = NEW_lint(q);
 	ABC = NEW_int(q * 3);
+
+
+	if (f_v) {
+		Blt_set->report_points_and_tangent_hyperplanes(
+			cout,
+			verbose_level - 2);
+	}
+
+	if (f_v) {
+		cout << "flock_from_blt_set::init Pi_ij with i=point_idx: " << endl;
+
+		Blt_set->print_Pi_ij_one_row(
+				point_idx);
+
+#if 0
+		Lint_vec_print(cout, Blt_set->Pi_ij + point_idx * target_size, target_size);
+		cout << endl;
+		for (i = 0; i < target_size; i++) {
+			plane = Blt_set->Pi_ij[point_idx * target_size + i];
+
+			Blt_set->Blt_set_domain->G53->unrank_lint_here(
+					B, plane, 0 /*verbose_level*/);
+			cout << "flock_from_blt_set::init point_idx = " << point_idx << " i=" << i << " / "
+					<< target_size << " plane=" << plane << " : " << endl;
+			Int_matrix_print(B, 3, 5);
+		}
+#endif
+
+	}
 
 
 	j = 0;
@@ -118,23 +162,24 @@ void flock_from_blt_set::init(
 		if (i == point_idx) {
 			continue;
 		}
-		plane = BLT_set->Pi_ij[point_idx * target_size + i];
+		plane = Blt_set->Pi_ij[point_idx * target_size + i];
 
-		BLT_set->Blt_set_domain_with_action->Blt_set_domain->G53->unrank_lint_here(
+		Blt_set->Blt_set_domain->G53->unrank_lint_here(
 				B, plane, 0 /*verbose_level*/);
 
 		if (f_v5) {
-			cout << "flock_from_blt_set::init " << i << " / "
+			cout << "flock_from_blt_set::init point_idx = " << point_idx << " i=" << i << " / "
 					<< target_size << " B:" << endl;
 			Int_matrix_print(B, 3, 5);
 		}
 
-		Flock[j] = plane;
+		Flock_planes[j] = plane;
 
 		int u, v, w;
 
 		// delete column 2 from the generator matrix of the hyperplane B[]
 		// and copy into C[]
+
 		for (u = 0; u < 3; u++) {
 			w = 0;
 			for (v = 0; v < 5; v++) {
@@ -147,21 +192,21 @@ void flock_from_blt_set::init(
 		}
 
 		if (f_v5) {
-			cout << "flock_from_blt_set::init " << i << " / "
+			cout << "flock_from_blt_set::init point_idx = " << point_idx << " i=" << i << " / "
 					<< target_size << " C:" << endl;
 			Int_matrix_print(C, 3, 4);
 		}
 		Int_vec_copy(C, D, 3 * 4);
 
 
-		plane_reduced = BLT_set->Blt_set_domain_with_action->Blt_set_domain->G43->rank_lint_here(
+		plane_reduced = Blt_set->Blt_set_domain->G43->rank_lint_here(
 				D, 0 /*verbose_level*/);
 
 		Flock_reduced[j] = plane_reduced;
 
 		Int_vec_copy(C, D, 3 * 4);
 
-		BLT_set->Blt_set_domain_with_action->Blt_set_domain->F->Linear_algebra->perp_standard(
+		Blt_set->Blt_set_domain->F->Linear_algebra->perp_standard(
 				4, 3,
 				D, 0 /* verbose_level */);
 
@@ -169,20 +214,22 @@ void flock_from_blt_set::init(
 				D + 3 * 4, E, 4);
 
 		if (f_v5) {
-			cout << "flock_from_blt_set::init " << i << " / "
+			cout << "flock_from_blt_set::init point_idx = " << point_idx << " i=" << i << " / "
 					<< target_size << " E:" << endl;
 			Int_matrix_print(E, 1, 4);
 		}
 
-		BLT_set->Blt_set_domain_with_action->Blt_set_domain->F->Projective_space_basic->
+		Blt_set->Blt_set_domain->F->Projective_space_basic->
 			PG_element_normalize_from_a_given_position(
 				E, 1, 4, 1);
 
 		if (f_v5) {
-			cout << "flock_from_blt_set::init " << i << " / "
+			cout << "flock_from_blt_set::init point_idx = " << point_idx << " i=" << i << " / "
 					<< target_size << " E:" << endl;
 			Int_matrix_print(E, 1, 4);
 		}
+
+		// Now E = (ci, 1, ai, bi)
 
 
 		F[0] = E[2]; // ai
@@ -190,7 +237,7 @@ void flock_from_blt_set::init(
 		F[2] = E[0]; // ci
 
 		if (f_v5) {
-			cout << "flock_from_blt_set::init " << i << " / "
+			cout << "flock_from_blt_set::init point_idx = " << point_idx << " i=" << i << " / "
 					<< target_size << " F:" << endl;
 			Int_matrix_print(F, 1, 3);
 		}
@@ -202,7 +249,7 @@ void flock_from_blt_set::init(
 		Flock_affine[j] = Gg.AG_element_rank(q, F, 1, 3);
 
 		if (f_v5) {
-			cout << "flock_from_blt_set::init " << i << " / "
+			cout << "flock_from_blt_set::init point_idx = " << point_idx << " i=" << i << " / "
 					<< target_size
 					<< " Flock_affine=" << endl;
 			cout << Flock_affine[j] << endl;
@@ -232,7 +279,7 @@ void flock_from_blt_set::init(
 		cout << "flock_from_blt_set::init "
 				"before Table_of_ABC->sort_rows" << endl;
 	}
-	Table_of_ABC->sort_rows(verbose_level);
+	Table_of_ABC->sort_rows(0 /*verbose_level*/);
 	if (f_v) {
 		cout << "flock_from_blt_set::init "
 				"after Table_of_ABC->sort_rows" << endl;
@@ -249,13 +296,13 @@ void flock_from_blt_set::init(
 	if (f_v) {
 		cout << "flock_from_blt_set::init Flock:" << endl;
 		if (f_v5) {
-			BLT_set->Blt_set_domain_with_action->Blt_set_domain->G53->print_set(
-				Flock, q);
+			Blt_set->Blt_set_domain->G53->print_set(
+					Flock_planes, q);
 		}
 
 		cout << "flock_from_blt_set::init Flock_reduced:" << endl;
 		if (f_v5) {
-			BLT_set->Blt_set_domain_with_action->Blt_set_domain->G43->print_set(
+			Blt_set->Blt_set_domain->G43->print_set(
 				Flock_reduced, q);
 		}
 
@@ -285,8 +332,8 @@ void flock_from_blt_set::init(
 					"before BLT_set->Blt_set_domain_with_action->Blt_set_domain->test_flock_condition" << endl;
 		}
 
-		BLT_set->Blt_set_domain_with_action->Blt_set_domain->test_flock_condition(
-				BLT_set->Blt_set_domain_with_action->Blt_set_domain->F,
+		Blt_set->Blt_set_domain->test_flock_condition(
+				Blt_set->Blt_set_domain->F,
 				ABC, outcome, N, verbose_level - 2);
 
 		if (f_v) {
@@ -311,13 +358,14 @@ void flock_from_blt_set::init(
 		cout << "flock_from_blt_set::init after FREE_int(outcome)" << endl;
 	}
 
-	if (BLT_set->Blt_set_domain_with_action->PF == NULL) {
+	if (Blt_set->Blt_set_domain->PF == NULL) {
 		cout << "flock_from_blt_set::init PF == NULL" << endl;
-		cout << "please us option -create_extension_fields when you create -orthogonal_space" << endl;
+		cout << "please use option -create_extension_fields "
+				"when you create -orthogonal_space" << endl;
 		exit(1);
 	}
 
-	degree = BLT_set->Blt_set_domain_with_action->PF->max_degree;
+	degree = Blt_set->Blt_set_domain->PF->max_degree;
 
 	if (f_v) {
 		cout << "flock_from_blt_set::init degree = " << degree << endl;
@@ -329,7 +377,7 @@ void flock_from_blt_set::init(
 		cout << "flock_from_blt_set::init "
 				"before PF->algebraic_normal_form" << endl;
 	}
-	BLT_set->Blt_set_domain_with_action->PF->algebraic_normal_form(
+	Blt_set->Blt_set_domain->PF->algebraic_normal_form(
 			func_f, q,
 			coeff_f, nb_coeff,
 			verbose_level);
@@ -342,7 +390,7 @@ void flock_from_blt_set::init(
 		cout << "flock_from_blt_set::init "
 				"before PF->algebraic_normal_form" << endl;
 	}
-	BLT_set->Blt_set_domain_with_action->PF->algebraic_normal_form(
+	Blt_set->Blt_set_domain->PF->algebraic_normal_form(
 			func_g, q,
 			coeff_g, nb_coeff,
 			verbose_level);
@@ -406,8 +454,8 @@ void flock_from_blt_set::report(
 
 	ost << "polynomial function associated with $f$ is" << endl;
 	ost << "$$" << endl;
-	BLT_set->Blt_set_domain_with_action->PF->Poly[
-				BLT_set->Blt_set_domain_with_action->PF->max_degree
+	Blt_set->Blt_set_domain->PF->Poly[
+				Blt_set->Blt_set_domain->PF->max_degree
 				].print_equation_tex(ost, coeff_f);
 	ost << endl;
 	ost << "$$" << endl;
@@ -415,8 +463,8 @@ void flock_from_blt_set::report(
 
 	ost << "polynomial function associated with $g$ is" << endl;
 	ost << "$$" << endl;
-	BLT_set->Blt_set_domain_with_action->PF->Poly[
-				BLT_set->Blt_set_domain_with_action->PF->max_degree
+	Blt_set->Blt_set_domain->PF->Poly[
+									  Blt_set->Blt_set_domain->PF->max_degree
 				].print_equation_tex(ost, coeff_g);
 	ost << endl;
 	ost << "$$" << endl;
@@ -424,8 +472,8 @@ void flock_from_blt_set::report(
 	int *outcome;
 	int N;
 
-	BLT_set->Blt_set_domain_with_action->Blt_set_domain->test_flock_condition(
-			BLT_set->Blt_set_domain_with_action->Blt_set_domain->F,
+	Blt_set->Blt_set_domain->test_flock_condition(
+			Blt_set->Blt_set_domain->F,
 			ABC, outcome, N, verbose_level - 2);
 
 	other::data_structures::tally T;
@@ -447,5 +495,7 @@ void flock_from_blt_set::report(
 
 
 
-}}}
+}}}}
+
+
 

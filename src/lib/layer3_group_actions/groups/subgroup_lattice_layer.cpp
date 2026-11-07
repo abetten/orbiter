@@ -286,6 +286,7 @@ void subgroup_lattice_layer::orbits_under_conjugation(
 				<< " before SG->compute_all_point_orbits_schreier" << endl;
 	}
 	Sch_on_groups = Subgroup_lattice->SG->compute_all_point_orbits_schreier(
+			Subgroup_lattice->A,
 			A_on_groups, //print_interval,
 			verbose_level - 2);
 

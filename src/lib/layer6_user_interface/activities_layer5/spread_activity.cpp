@@ -325,7 +325,9 @@ void spread_activity::report2(
 
 		O1 = NEW_OBJECT(groups::orbits_on_something);
 
-		O1->init(A2,
+		O1->init(
+				A,
+				A2,
 				Spread_create->Sg,
 				false /* f_load_save */,
 				prefix1,
@@ -338,7 +340,9 @@ void spread_activity::report2(
 
 		O2 = NEW_OBJECT(groups::orbits_on_something);
 
-		O2->init(AGr,
+		O2->init(
+				A,
+				AGr,
 				Spread_create->Sg,
 				false /* f_load_save */,
 				prefix2,

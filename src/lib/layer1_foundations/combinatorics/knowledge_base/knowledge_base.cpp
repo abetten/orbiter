@@ -103,6 +103,7 @@ namespace knowledge_base {
 #include "DATA/data_tensor.cpp"
 
 #include "DATA/data_BLT.cpp"
+#include "DATA/BLT_sets/BLT_q3_level_4.cpp"
 #include "DATA/BLT_sets/BLT_q5_classification.cpp"
 #include "DATA/BLT_sets/BLT_q7_classification.cpp"
 #include "DATA/BLT_sets/BLT_q9_level_10.cpp"
@@ -2085,7 +2086,7 @@ int knowledge_base::BLT_nb_reps(
 	int nb;
 
 	if (q == 3) {
-		nb = BLT_3_nb_reps;
+		nb = BLT_q3_nb_reps;
 		}
 	else if (q == 5) {
 		nb = BLT_q5_nb_reps;
@@ -2172,9 +2173,9 @@ long int *knowledge_base::BLT_representative(
 	int nb, sz;
 
 	if (q == 3) {
-		p = BLT_3_reps;
-		nb = BLT_3_nb_reps;
-		sz = BLT_3_size;
+		p = BLT_q3_reps;
+		nb = BLT_q3_nb_reps;
+		sz = BLT_q3_size;
 		}
 	else if (q == 5) {
 		p = BLT_q5_reps;
@@ -2320,12 +2321,12 @@ void knowledge_base::BLT_stab_gens(
 	const char *stab_order;
 	
 	if (q == 3) {
-		Reps = BLT_3_stab_gens;
-		nb = BLT_3_nb_reps;
-		make_element_size = BLT_3_make_element_size;
-		f = BLT_3_stab_gens_fst[no];
-		l = BLT_3_stab_gens_len[no];
-		stab_order = BLT_3_stab_order[no];
+		Reps = BLT_q3_stab_gens;
+		nb = BLT_q3_nb_reps;
+		make_element_size = BLT_q3_make_element_size;
+		f = BLT_q3_stab_gens_fst[no];
+		l = BLT_q3_stab_gens_len[no];
+		stab_order = BLT_q3_stab_order[no];
 		}
 	else if (q == 5) {
 		Reps = BLT_q5_stab_gens;

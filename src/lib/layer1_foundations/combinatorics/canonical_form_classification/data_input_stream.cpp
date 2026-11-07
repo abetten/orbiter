@@ -2017,7 +2017,11 @@ void data_input_stream::read_objects(
 			int N2;
 			int sz;
 
-			N2 = (N * (N - 1)) >> 1;
+			N2 = BINOMIAL2(N);
+
+			//N2 = (N * (N - 1)) >> 1;
+
+
 			sz = Reps->Set_size[0];
 			if (sz != N2) {
 				cout << "data_input_stream::read_objects sz != N2" << endl;

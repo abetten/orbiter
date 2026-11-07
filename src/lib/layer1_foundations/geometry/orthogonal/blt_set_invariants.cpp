@@ -58,7 +58,8 @@ blt_set_invariants::~blt_set_invariants()
 }
 
 void blt_set_invariants::init(
-		blt_set_domain *D, long int *the_set,
+		blt_set_domain *D,
+		long int *the_set,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -134,21 +135,25 @@ void blt_set_invariants::compute(
 			cout << "blt_set_invariants::compute before "
 					"extract_largest_sets" << endl;
 		}
-		Sos->extract_largest_sets(*Sos2,
+		Sos->extract_largest_sets(
+				*Sos2,
 				Sos2_idx, verbose_level - 1);
 
 		if (f_v) {
 			cout << "blt_set_invariants::compute before "
 					"remove_sets_of_given_size" << endl;
 		}
-		Sos->remove_sets_of_given_size(3,
-				*Sos3, Sos3_idx, verbose_level - 1);
+		Sos->remove_sets_of_given_size(
+				3,
+				*Sos3, Sos3_idx,
+				verbose_level - 1);
 
 		if (f_v) {
 			cout << "blt_set_invariants::compute before "
 					"Sos2->compute_tdo_decomposition" << endl;
 		}
-		Sos2->compute_tdo_decomposition(*D2, verbose_level - 1);
+		Sos2->compute_tdo_decomposition(
+				*D2, verbose_level - 1);
 
 
 		D2->get_row_scheme(verbose_level);
@@ -158,7 +163,8 @@ void blt_set_invariants::compute(
 				cout << "blt_set_invariants::compute before "
 						"Sos3[h].compute_tdo_decomposition" << endl;
 			}
-			Sos3->compute_tdo_decomposition(*D3, verbose_level - 1);
+			Sos3->compute_tdo_decomposition(
+					*D3, verbose_level - 1);
 			D3->get_row_scheme(verbose_level - 1);
 			D3->get_col_scheme(verbose_level - 1);
 		}
@@ -228,7 +234,7 @@ void blt_set_invariants::latex(
 		ost << "$$" << endl;
 	}
 	else {
-		ost << "too big (" << nb_planes << " planes)\\\\" << endl;
+		ost << "too big (" << nb_planes << " planes, threshold = 10)\\\\" << endl;
 	}
 
 	int f_enter_math = false;
@@ -236,10 +242,12 @@ void blt_set_invariants::latex(
 
 	ost << "$$" << endl;
 	D2->Scheme->print_row_decomposition_tex(
-		ost, f_enter_math, f_print_subscripts, verbose_level - 1);
+		ost, f_enter_math, f_print_subscripts,
+		verbose_level - 1);
 	ost << "\\quad" << endl;
 	D2->Scheme->print_column_decomposition_tex(
-		ost, f_enter_math, f_print_subscripts, verbose_level - 1);
+		ost, f_enter_math, f_print_subscripts,
+		verbose_level - 1);
 	ost << "$$" << endl;
 	D2->Stack->print_classes_tex(ost);
 
@@ -247,11 +255,13 @@ void blt_set_invariants::latex(
 		ost << "$$" << endl;
 
 		D3->Scheme->print_row_decomposition_tex(
-			ost, f_enter_math, f_print_subscripts, verbose_level - 1);
+			ost, f_enter_math, f_print_subscripts,
+			verbose_level - 1);
 		ost << "$$" << endl;
 		ost << "$$" << endl;
 		D3->Scheme->print_column_decomposition_tex(
-			ost, f_enter_math, f_print_subscripts, verbose_level - 1);
+			ost, f_enter_math, f_print_subscripts,
+			verbose_level - 1);
 		ost << "$$" << endl;
 		D3->Stack->print_classes_tex(ost);
 
@@ -324,10 +334,15 @@ void blt_set_invariants::latex(
 	ost << "\\end{center}" << endl;
 
 	ost << "The points:\\\\" << endl;
+
 	int v5[5];
+
 	for (i = 0; i < set_size; i++) {
+
 		D->O->Hyperbolic_pair->unrank_point(
-				v5, 1, the_set_in_orthogonal[i], 0 /* verbose_level */);
+				v5, 1, the_set_in_orthogonal[i],
+				0 /* verbose_level */);
+
 		//Grass->unrank_int(data[i], 0/*verbose_level - 4*/);
 		if ((i % 4) == 0) {
 			if (i) {

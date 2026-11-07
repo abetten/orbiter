@@ -144,6 +144,7 @@ void flag_orbits_incidence_structure::init(
 				"before Orb->init" << endl;
 	}
 	Orb->init(
+			A_perm,
 			A_on_flags,
 			SG,
 			false /* f_load_save */,

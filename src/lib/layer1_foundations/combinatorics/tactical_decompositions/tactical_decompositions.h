@@ -91,8 +91,10 @@ public:
 			std::string *&Table, int f_print_subscripts);
 		// Table[(nb_row_classes + 1) * (nb_col_classes + 1)]
 	void write_csv(
-			std::string &fname_row, std::string &fname_col,
-			std::string &fname_row_classes, std::string &fname_col_classes,
+			std::string &fname_row,
+			std::string &fname_col,
+			std::string &fname_row_classes,
+			std::string &fname_col_classes,
 			int verbose_level);
 	void report_latex_with_external_files(
 			std::ostream &ost,

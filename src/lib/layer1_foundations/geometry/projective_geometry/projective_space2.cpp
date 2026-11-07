@@ -504,6 +504,10 @@ int projective_space::plane_intersections(
 	algebra::ring_theory::longinteger_object *&R,
 	other::data_structures::set_of_sets &SoS,
 	int verbose_level)
+// used by blt_set_invariants::compute
+// output R[N] where N = {set_size \choose 3},
+// the plane rank of the plane defined by any given 3-subset of points of the set.
+// And SoS, the intersections defined by planes with intersection count 3 or higher.
 {
 	int f_v = (verbose_level >= 1);
 	long int **Pts_on_plane;
@@ -649,7 +653,7 @@ void projective_space::plane_intersection_type_fast(
 		Combi.unrank_k_subset(
 				rk, subset, set_size, 3);
 		if (f_v3) {
-			cout << rk << "-th subset ";
+			cout << "projective_space::plane_intersection_type_fast subset " << rk << ":";
 			Int_vec_print(cout, subset, 3);
 			cout << endl;
 		}
@@ -666,7 +670,7 @@ void projective_space::plane_intersection_type_fast(
 			//unrank_point(Basis + j * d, a);
 		}
 		if (f_v3) {
-			cout << "subset: ";
+			cout << "projective_space::plane_intersection_type_fast subset: ";
 			Int_vec_print(cout, subset, 3);
 			cout << " corresponds to Basis:" << endl;
 			Int_matrix_print(Basis, 3, d);
@@ -687,7 +691,7 @@ void projective_space::plane_intersection_type_fast(
 		G->rank_longinteger_here(
 				Basis, plane_rk, 0 /* verbose_level */);
 		if (f_v3) {
-			cout << rk << "-th subset ";
+			cout << "projective_space::plane_intersection_type_fast subset " << rk << ":";
 			Int_vec_print(cout, subset, 3);
 			cout << " plane_rk=" << plane_rk << endl;
 		}
@@ -703,7 +707,8 @@ void projective_space::plane_intersection_type_fast(
 		}
 		else {
 			if (f_v3) {
-				cout << "plane_rk=" << plane_rk
+				cout << "projective_space::plane_intersection_type_fast "
+						"plane_rk=" << plane_rk
 						<< " was not found" << endl;
 			}
 
@@ -719,7 +724,8 @@ void projective_space::plane_intersection_type_fast(
 			G->unrank_longinteger_here(Basis_save, aa,
 					0 /* verbose_level */);
 			if (f_v3) {
-				cout << "after unrank " << plane_rk
+				cout << "projective_space::plane_intersection_type_fast "
+						"after unrank " << plane_rk
 						<< ", Basis:" << endl;
 				Int_matrix_print(Basis_save, 3, d);
 			}
@@ -735,15 +741,17 @@ void projective_space::plane_intersection_type_fast(
 			// Pt_coords[nb_pts * n]
 			// Basis_save[m * n]
 			// Basis[(m + 1) * n]
-			// Intersection_idx[nb_pts]
+			// pts_on_plane[intersection_sz], allocated as pts_on_plane[set_size]
 
 
 
 			if (intersection_sz >= 3) {
 				if (f_vv) {
-					cout << "We found an " << intersection_sz << "-plane, "
+					cout << "projective_space::plane_intersection_type_fast "
+							"We found an " << intersection_sz << "-plane, "
 							"its rank is " << plane_rk << endl;
-					cout << "The ranks of points on that plane are : ";
+					cout << "projective_space::plane_intersection_type_fast "
+							"The ranks of points on that plane are : ";
 					Lint_vec_print(cout, pts_on_plane, intersection_sz);
 					cout << endl;
 				}
@@ -760,7 +768,8 @@ void projective_space::plane_intersection_type_fast(
 				}
 				plane_rk.assign_to(R[idx]);
 				if (f_vv) {
-					cout << "after assign_to, "
+					cout << "projective_space::plane_intersection_type_fast "
+							"after assign_to, "
 							"plane_rk=" << plane_rk << endl;
 				}
 				rank_idx[rk] = idx;
@@ -776,8 +785,9 @@ void projective_space::plane_intersection_type_fast(
 						subset3[h] = pts_on_plane[subset2[h]];
 					}
 					rr = Combi.rank_k_subset(subset3, set_size, 3);
-					if (f_vv) {
-						cout << i << "-th subset3 ";
+					if (false) {
+						cout << "projective_space::plane_intersection_type_fast "
+								"subset3 " << i << " / " << N2 << " is ";
 						Int_vec_print(cout, subset3, 3);
 						cout << " rr=" << rr << endl;
 					}

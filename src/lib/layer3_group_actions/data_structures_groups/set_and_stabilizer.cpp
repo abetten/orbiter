@@ -473,6 +473,7 @@ void set_and_stabilizer::rearrange_by_orbits(
 				"before compute_all_point_orbits_schreier" << endl;
 	}
 	Orb = Strong_gens->compute_all_point_orbits_schreier(
+			A,
 			A_on_set, verbose_level);
 	if (f_v) {
 		cout << "set_and_stabilizer::rearrange_by_orbits "

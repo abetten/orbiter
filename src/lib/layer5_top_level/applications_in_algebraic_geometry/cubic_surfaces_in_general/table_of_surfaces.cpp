@@ -122,7 +122,8 @@ void table_of_surfaces::init(
 			cout << "table_of_surfaces::init "
 					"before SOG[h].init_with_surface_object" << endl;
 		}
-		SOG[h].init_with_surface_object(PA->Surf_A,
+		SOG[h].init_with_surface_object(
+				PA->Surf_A,
 				SC[h].SO,
 				SC[h].Sg,
 				false /* f_has_nice_gens */,

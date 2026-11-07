@@ -59,6 +59,9 @@ public:
 	geometry::projective_geometry::grassmann *G43;
 
 
+	combinatorics::special_functions::polynomial_function_domain *PF;
+
+
 	// for the lifting of flocks:
 
 	int Q2; // = q * q
@@ -86,11 +89,13 @@ public:
 	// Creates the extension field of degree 2 and 3 over GF(q), F2 and F3, respectively.
 	// Also creates the associated polynomial rings poly2 and poly3
 	long int intersection_of_hyperplanes(
-			long int plane_rk1, long int plane_rk2,
+			long int hyper_plane_rk1, long int hyper_plane_rk2,
 			int verbose_level);
 	long int compute_tangent_hyperplane(
 		long int pt,
 		int verbose_level);
+	// Computes the tangent plane of the point with respect to the quadratic form.
+	// The computation is done by using the form matrix (Gram matrix).
 	void report_given_point_set(
 			std::ostream &ost,
 			long int *Pts, int nb_pts,
@@ -146,6 +151,13 @@ public:
 	void cubic_lift(
 			int *coeff_f, int *coeff_g, int nb_coeff,
 			int verbose_level);
+	long int *compute_T(
+			long int *set,
+			int verbose_level);
+	long int *compute_Pi_ij(
+			long int *set,
+			long int *T,
+			int verbose_level);
 
 };
 
@@ -195,6 +207,112 @@ public:
 			std::ostream &ost, int verbose_level);
 };
 
+
+
+
+// #############################################################################
+// blt_set.cpp
+// #############################################################################
+
+//! A BLT-set of Q(4,q)
+
+
+
+class blt_set {
+
+public:
+
+	blt_set_domain *Blt_set_domain;
+
+	std::string label_txt;
+	std::string label_tex;
+
+	long int *set; // [Blt_set_domain->target_size]
+
+	int *ABC; // [3 * (Blt_set_domain->q + 1)]
+
+	long int *T; // [target_size]
+	long int *Pi_ij; // [target_size * target_size]
+
+	geometry::orthogonal_geometry::blt_set_invariants *Invariants;
+
+
+	blt_set();
+	~blt_set();
+	void init(
+			blt_set_domain *Blt_set_domain,
+			int verbose_level);
+	void compute_properties(
+			int f_invariants,
+			int verbose_level);
+	void report(
+			std::ostream &ost, int verbose_level);
+	void print_Pi_ij_one_row(
+			int row_idx);
+	void report_points_and_tangent_hyperplanes(
+			std::ostream &ost,
+			int verbose_level);
+	void export_set_in_PG(
+			int verbose_level);
+
+
+
+};
+
+
+// #############################################################################
+// flock_from_blt_set.cpp
+// #############################################################################
+
+
+//! a flock of a quadratic cone arising from a BLT-set
+
+
+class flock_from_blt_set {
+
+public:
+
+	geometry::orthogonal_geometry::blt_set *Blt_set;
+
+	//blt_set_domain *BLT_set;
+
+	int point_idx;
+
+	long int *Flock_planes; // [q]
+	long int *Flock_reduced; // [q]
+	long int *Flock_affine; // [q]
+
+	int *ABC; // [q * 3]
+
+	other::data_structures::int_matrix *Table_of_ABC;
+		// same as ABC, but sorted by rows.
+		// the rows of Table_of_ABC are
+		// (i, func_f[i], func_g[i])
+
+	int *func_f; // second column of ABC
+	int *func_g; // third column of ABC
+
+	//combinatorics::polynomial_function_domain *PF;
+
+	int q;
+	int degree; // = PF->max_degree
+	int nb_coeff; // = PF->Poly[degree].get_nb_monomials()
+	int *coeff_f; // [nb_coeff]
+	int *coeff_g; // [nb_coeff]
+
+
+	flock_from_blt_set();
+	~flock_from_blt_set();
+	void init(
+			geometry::orthogonal_geometry::blt_set *Blt_set,
+			//blt_set_domain *BLT_set,
+			//long int *Pi_ij,
+			int point_idx,
+			int verbose_level);
+	void report(
+			std::ostream &ost, int verbose_level);
+
+};
 
 
 // #############################################################################
@@ -856,6 +974,7 @@ public:
 	int collinearity_test(
 			orthogonal *O,
 			int size, long int *set, int verbose_level);
+#if 0
 	void create_Fisher_BLT_set(
 			long int *Fisher_BLT, int *ABC,
 			algebra::field_theory::finite_field *FQ,
@@ -871,6 +990,7 @@ public:
 			algebra::field_theory::finite_field *FQ,
 			algebra::field_theory::finite_field *Fq,
 			int verbose_level);
+#endif
 
 
 };
@@ -1285,7 +1405,7 @@ public:
 			int f_sum_of_squares, int verbose_level);
 	void print_quadratic_form_list_coded(
 			int form_nb_terms,
-		int *form_i, int *form_j, int *form_coeff);
+			int *form_i, int *form_j, int *form_coeff);
 	void make_Gram_matrix_from_list_coded_quadratic_form(
 		int n, algebra::field_theory::finite_field &F,
 		int nb_terms, int *form_i, int *form_j,
@@ -1443,19 +1563,19 @@ public:
 			algebra::field_theory::finite_field *FQ,
 			algebra::field_theory::finite_field *Fq,
 			int f_sum_of_squares, int verbose_level);
-	void convert_to_ranks(
+	void convert_to_orthogonal_ranks(
 			int n,
 			int *unusual_coordinates,
 		long int *ranks, int verbose_level);
-	void convert_from_ranks(
+	void convert_from_orthogonal_ranks(
 			int n,
 			long int *ranks,
 		int *unusual_coordinates,
 		int verbose_level);
-	long int convert_to_rank(
+	long int convert_to_orthogonal_rank(
 			int *unusual_coordinates,
 			int verbose_level);
-	void convert_from_rank(
+	void convert_from_orthogonal_rank(
 			long int rank,
 			int *unusual_coordinates,
 		int verbose_level);

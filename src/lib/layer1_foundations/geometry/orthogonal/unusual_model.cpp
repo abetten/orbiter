@@ -268,7 +268,7 @@ void unusual_model::setup2(
 	
 }
 
-void unusual_model::convert_to_ranks(
+void unusual_model::convert_to_orthogonal_ranks(
 		int n,
 		int *unusual_coordinates,
 		long int *ranks, int verbose_level)
@@ -279,10 +279,10 @@ void unusual_model::convert_to_ranks(
 	int i;
 	
 	if (f_v) {
-		cout << "unusual_model::convert_to_ranks" << endl;
+		cout << "unusual_model::convert_to_orthogonal_ranks" << endl;
 	}
 	if (f_v) {
-		cout << "unusual_model::convert_to_ranks "
+		cout << "unusual_model::convert_to_orthogonal_ranks "
 				"unusual_coordinates:" << endl;
 		Int_vec_print_integer_matrix_width(cout,
 				unusual_coordinates, n, 3, 3, 2);
@@ -302,7 +302,7 @@ void unusual_model::convert_to_ranks(
 	}
 	
 	if (f_v) {
-		cout << "unusual_model::convert_to_ranks ranks:" << endl;
+		cout << "unusual_model::convert_to_orthogonal_ranks ranks:" << endl;
 		Lint_vec_print(cout, ranks, n);
 		cout << endl;
 	}
@@ -310,7 +310,7 @@ void unusual_model::convert_to_ranks(
 	FREE_int(usual);
 }
 
-void unusual_model::convert_from_ranks(
+void unusual_model::convert_from_orthogonal_ranks(
 		int n,
 	long int *ranks,
 	int *unusual_coordinates,
@@ -321,10 +321,10 @@ void unusual_model::convert_from_ranks(
 	int i;
 	
 	if (f_v) {
-		cout << "unusual_model::convert_from_ranks" << endl;
+		cout << "unusual_model::convert_from_orthogonal_ranks" << endl;
 	}
 	if (f_v) {
-		cout << "unusual_model::convert_from_ranks ranks:" << endl;
+		cout << "unusual_model::convert_from_orthogonal_ranks ranks:" << endl;
 		Lint_vec_print(cout, ranks, n);
 		cout << endl;
 	}
@@ -341,7 +341,7 @@ void unusual_model::convert_from_ranks(
 			unusual_coordinates, verbose_level - 1);
 
 	if (f_v) {
-		cout << "unusual_model::convert_from_ranks "
+		cout << "unusual_model::convert_from_orthogonal_ranks "
 				"unusual_coordinates:" << endl;
 		Int_vec_print_integer_matrix_width(cout,
 				unusual_coordinates, n, 3, 3, 2);
@@ -351,7 +351,7 @@ void unusual_model::convert_from_ranks(
 	FREE_int(usual);
 }
 
-long int unusual_model::convert_to_rank(
+long int unusual_model::convert_to_orthogonal_rank(
 	int *unusual_coordinates,
 	int verbose_level)
 {
@@ -366,7 +366,7 @@ long int unusual_model::convert_to_rank(
 	return rank;
 }
 
-void unusual_model::convert_from_rank(
+void unusual_model::convert_from_orthogonal_rank(
 		long int rank,
 	int *unusual_coordinates, int verbose_level)
 {
@@ -561,7 +561,7 @@ void unusual_model::create_Fisher_BLT_set(
 		Int_vec_print_integer_matrix_width(cout, ABC, q + 1, 3, 3, 2);
 	}
 	
-	convert_to_ranks(q + 1, ABC, Fisher_BLT, verbose_level);
+	convert_to_orthogonal_ranks(q + 1, ABC, Fisher_BLT, verbose_level);
 	
 	if (f_v) {
 		cout << "Fisher BLT set:" << endl;
@@ -614,7 +614,7 @@ void unusual_model::create_Linear_BLT_set(
 		Int_vec_print_integer_matrix_width(cout, ABC, q + 1, 3, 3, 2);
 	}
 	
-	convert_to_ranks(q + 1, ABC, BLT, verbose_level);
+	convert_to_orthogonal_ranks(q + 1, ABC, BLT, verbose_level);
 	
 	if (f_v) {
 		cout << "Linear BLT set:" << endl;
@@ -700,7 +700,7 @@ void unusual_model::create_Mondello_BLT_set(
 		Int_vec_print_integer_matrix_width(cout, ABC, q + 1, 3, 3, 2);
 	}
 	
-	convert_to_ranks(q + 1, ABC, BLT, verbose_level);
+	convert_to_orthogonal_ranks(q + 1, ABC, BLT, verbose_level);
 	
 	if (f_v) {
 		cout << "Mondello BLT set:" << endl;
@@ -735,8 +735,8 @@ int unusual_model::evaluate_quadratic_form(
 	int w, x, y, z;
 	
 	if (f_v) {
-		cout << "unusual_model::evaluate_quadratic_form a=" << a << " b=" << b
-				<< " c=" << c << endl;
+		cout << "unusual_model::evaluate_quadratic_form "
+				"a=" << a << " b=" << b << " c=" << c << endl;
 	}
 	x = N2(a);
 	y = N2(b);
@@ -897,7 +897,7 @@ int unusual_model::build_candidate_set_with_or_without_test(
 		Table[i * 3 + 2] = 1;
 	}
 	Len += len;
-	convert_to_ranks(Len, Table, Set, verbose_level - 2);
+	convert_to_orthogonal_ranks(Len, Table, Set, verbose_level - 2);
 
 	if (f_vvv) {
 		cout << "created the following 1st half:" << endl;
@@ -932,7 +932,7 @@ int unusual_model::build_candidate_set_with_or_without_test(
 			Table[(len + i) * 3 + 2] = 1;
 		}
 		Len += len;
-		convert_to_ranks(Len, Table, Set, verbose_level - 2);
+		convert_to_orthogonal_ranks(Len, Table, Set, verbose_level - 2);
 		if (f_test) {
 			for (i = 1; i < len; i++) {
 				if (!OG.BLT_test_full(&O, i, Set + len,
@@ -953,7 +953,7 @@ int unusual_model::build_candidate_set_with_or_without_test(
 		Int_vec_print_integer_matrix_width(cout, Table, Len, 3, 3, 2);
 	}
 	
-	convert_to_ranks(Len, Table, Set, verbose_level - 2);
+	convert_to_orthogonal_ranks(Len, Table, Set, verbose_level - 2);
 	
 	if (f_vvv) {
 		cout << "created the following set:" << endl;
@@ -1018,7 +1018,7 @@ int unusual_model::create_orbit_of_psi(
 		Table[i * 3 + 1] = FQ->mult(delta, FQ->power(z2i, m));
 		Table[i * 3 + 2] = 1;
 	}
-	convert_to_ranks(len, Table, Set, verbose_level - 2);
+	convert_to_orthogonal_ranks(len, Table, Set, verbose_level - 2);
 
 	if (f_vvv) {
 		cout << "created the following psi-orbit:" << endl;

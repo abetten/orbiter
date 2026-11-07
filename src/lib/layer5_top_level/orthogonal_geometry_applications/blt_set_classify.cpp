@@ -520,9 +520,17 @@ void blt_set_classify::create_graphs(
 
 	other::data_structures::orbiter_data_file *Orbiter_data_file;
 
+	if (f_v) {
+		cout << "blt_set_classify::create_graphs "
+				"before read_orbiter_file" << endl;
+	}
 	Orbiter_data_file = read_orbiter_file(
 		starter_size,
 		verbose_level);
+	if (f_v) {
+		cout << "blt_set_classify::create_graphs "
+				"after read_orbiter_file" << endl;
+	}
 
 
 
@@ -560,7 +568,7 @@ void blt_set_classify::create_graphs(
 		R = get_orbit_rep_from_file(
 				Orbiter_data_file,
 				orbit, level_of_candidates_file,
-				verbose_level);
+				verbose_level - 2);
 		if (f_v) {
 			cout << "blt_set_classify::create_graphs "
 					"after get_orbit_rep_from_file" << endl;
@@ -579,7 +587,7 @@ void blt_set_classify::create_graphs(
 			f_lexorder_test, f_eliminate_graphs_if_possible, 
 			nb_vertices,
 			CG,  
-			verbose_level - 2);
+			verbose_level - 4);
 		if (f_v) {
 			cout << "blt_set_classify::create_graphs "
 					"after create_graph" << endl;
@@ -1434,25 +1442,56 @@ void blt_set_classify::report2(
 #endif
 
 
-		string label_txt;
-		string label_tex;
 		blt_set_with_action *BA;
 
 
-		label_txt = "BLT_set_q" + std::to_string(q) + "_iso" + std::to_string(h);
-		label_tex = "BLT\\_set\\_q" + std::to_string(q) + "\\_iso" + std::to_string(h);
 
+		geometry::orthogonal_geometry::blt_set *Blt_set;
+
+		Blt_set = NEW_OBJECT(geometry::orthogonal_geometry::blt_set);
+
+
+		Lint_vec_copy(T->Reps[h].data, Blt_set->set, Blt_set_domain_with_action->Blt_set_domain->target_size);
+
+		Blt_set->label_txt = "BLT_set_q" + std::to_string(q) + "_iso" + std::to_string(h);
+		Blt_set->label_tex = "BLT\\_set\\_q" + std::to_string(q) + "\\_iso" + std::to_string(h);
+
+
+		if (f_v) {
+			cout << "blt_set_classify::report2 "
+					"before Blt_set->compute_properties" << endl;
+		}
+		Blt_set->compute_properties(true /* f_invariants */, verbose_level);
+		if (f_v) {
+			cout << "blt_set_classify::report2 "
+					"after Blt_set->compute_properties" << endl;
+		}
 
 		BA = NEW_OBJECT(blt_set_with_action);
+
+		if (f_v) {
+			cout << "blt_set_classify::report2 "
+					"before BA->init_set" << endl;
+		}
 		BA->init_set(
 				A, Blt_set_domain_with_action,
-				T->Reps[h].data,
-				label_txt,
-				label_tex,
+				Blt_set, //T->Reps[h].data,
 				T->Reps[h].Strong_gens,
-				true /* f_invariants */,
 				verbose_level);
+		if (f_v) {
+			cout << "blt_set_classify::report2 "
+					"after BA->init_set" << endl;
+		}
+
+		if (f_v) {
+			cout << "blt_set_classify::report2 "
+					"before BA->Blt_set_group_properties->print_automorphism_group" << endl;
+		}
 		BA->Blt_set_group_properties->print_automorphism_group(ost);
+		if (f_v) {
+			cout << "blt_set_classify::report2 "
+					"after BA->Blt_set_group_properties->print_automorphism_group" << endl;
+		}
 
 		FREE_OBJECT(BA);
 	}
@@ -1462,10 +1501,18 @@ void blt_set_classify::report2(
 
 	label_of_structure_plural.assign("BLT-Sets");
 
+	if (f_v) {
+		cout << "blt_set_classify::report2 "
+				"before T->export_data_in_source_code_inside_tex" << endl;
+	}
 	T->export_data_in_source_code_inside_tex(
 			Blt_set_domain->prefix,
 			label_of_structure_plural, ost,
 			verbose_level);
+	if (f_v) {
+		cout << "blt_set_classify::report2 "
+				"after T->export_data_in_source_code_inside_tex" << endl;
+	}
 
 
 	L.foot(ost);

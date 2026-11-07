@@ -1687,7 +1687,9 @@ void linear_algebra::exterior_square(
 	}
 
 
-	n2 = (n * (n - 1)) >> 1;
+	n2 = BINOMIAL2(n);
+	//n2 = (n * (n - 1)) >> 1;
+
 	// (i,j) = row index
 	for (i = 0; i < n; i++) {
 		for (j = i + 1; j < n; j++) {

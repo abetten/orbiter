@@ -438,6 +438,7 @@ public:
 			std::string &prefix,
 			std::string &label_of_structure, std::ostream &ost,
 			int verbose_level);
+
 };
 
 

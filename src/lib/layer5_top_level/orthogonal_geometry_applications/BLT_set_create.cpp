@@ -24,32 +24,48 @@ BLT_set_create::BLT_set_create()
 	Descr = NULL;
 
 	//std::string prefix;
+
 	//std::string label_txt;
 	//std::string label_tex;
 
 	OA = NULL;
-	set = NULL;
-	ABC = NULL;
+
+	Blt_set = NULL;
+
+	//set = NULL;
+	//ABC = NULL;
+
+
 	f_has_group = false;
 	Sg = NULL;
 	Blt_set_domain_with_action = NULL;
 	BA = NULL;
+
+	FQ = NULL;
+	q = 0;
+	Q = 0;
+
+	U = NULL;
 }
 
 BLT_set_create::~BLT_set_create()
 {
 	Record_death();
-	if (set) {
-		FREE_lint(set);
-	}
-	if (ABC) {
-		FREE_int(ABC);
+
+	if (Blt_set) {
+		FREE_OBJECT(Blt_set);
 	}
 	if (Sg) {
 		FREE_OBJECT(Sg);
 	}
 	if (BA) {
 		FREE_OBJECT(BA);
+	}
+	if (FQ) {
+		FREE_OBJECT(FQ);
+	}
+	if (U) {
+		FREE_OBJECT(U);
 	}
 }
 
@@ -60,7 +76,6 @@ void BLT_set_create::init(
 {
 	int f_v = (verbose_level >= 1);
 	algebra::number_theory::number_theory_domain NT;
-	other::data_structures::string_tools ST;
 	
 	if (f_v) {
 		cout << "BLT_set_create::init" << endl;
@@ -75,222 +90,33 @@ void BLT_set_create::init(
 	}
 
 
+	Blt_set = NEW_OBJECT(geometry::orthogonal_geometry::blt_set);
+
 	
+	if (f_v) {
+		cout << "BLT_set_create::init "
+				"before Blt_set->init" << endl;
+	}
+	Blt_set->init(
+			Blt_set_domain_with_action->Blt_set_domain,
+			verbose_level - 2);
+	if (f_v) {
+		cout << "BLT_set_create::init "
+				"after Blt_set->init" << endl;
+	}
+
 
 	if (Descr->f_family) {
+
 		if (f_v) {
 			cout << "BLT_set_create::init "
-					"family_name=" << Descr->family_name << endl;
+					"before create_family" << endl;
 		}
-
-		string str;
-		string str_q;
-		f_has_group = false;
-		geometry::orthogonal_geometry::orthogonal_global OG;
-
-		if (ST.stringcmp(Descr->family_name, "Linear") == 0) {
-			if (f_v) {
-				cout << "BLT_set_create::init "
-						"creating object of family Linear" << endl;
-			}
-			set = NEW_lint(OA->Descr->F->q + 1);
-			ABC = NEW_int(3 * (OA->Descr->F->q + 1));
-
-			geometry::orthogonal_geometry::orthogonal_global OG;
-			algebra::field_theory::finite_field *FQ;
-			int q, Q;
-
-			FQ = NEW_OBJECT(algebra::field_theory::finite_field);
-			q = OA->Descr->F->q;
-			Q = q * q;
-			if (f_v) {
-				cout << "BLT_set_create::init "
-						"before FQ->finite_field_init_small_order Q=" << Q << endl;
-			}
-			FQ->finite_field_init_small_order(Q,
-					false /* f_without_tables */,
-					false /* f_compute_related_fields */,
-					verbose_level);
-			if (f_v) {
-				cout << "BLT_set_create::init "
-						"after FQ->finite_field_init_small_order Q=" << Q << endl;
-			}
-
-			OG.create_Linear_BLT_set(set, ABC,
-							FQ, OA->Descr->F, verbose_level);
-
-			FREE_OBJECT(FQ);
-			str = "Linear";
-			str_q = "q" + std::to_string(OA->Descr->F->q);
-
+		create_family(verbose_level - 2);
+		if (f_v) {
+			cout << "BLT_set_create::init "
+					"after create_family" << endl;
 		}
-
-		else if (ST.stringcmp(Descr->family_name, "Fisher") == 0) {
-			if (f_v) {
-				cout << "BLT_set_create::init "
-						"creating object of family Fisher" << endl;
-			}
-			set = NEW_lint(OA->Descr->F->q + 1);
-			ABC = NEW_int(3 * (OA->Descr->F->q + 1));
-
-			geometry::orthogonal_geometry::orthogonal_global OG;
-			algebra::field_theory::finite_field *FQ;
-			int q, Q;
-
-			FQ = NEW_OBJECT(algebra::field_theory::finite_field);
-			q = OA->Descr->F->q;
-			Q = q * q;
-			FQ->finite_field_init_small_order(Q,
-					false /* f_without_tables */,
-					false /* f_compute_related_fields */,
-					0 /* verbose_level */);
-
-			OG.create_Fisher_BLT_set(set, ABC,
-							FQ, OA->Descr->F, verbose_level);
-
-			FREE_OBJECT(FQ);
-			str = "Fisher";
-			str_q = "q" + std::to_string(OA->Descr->F->q);
-
-		}
-
-		else if (ST.stringcmp(Descr->family_name, "Mondello") == 0) {
-			if (f_v) {
-				cout << "BLT_set_create::init "
-						"creating object of family Mondello" << endl;
-			}
-			set = NEW_lint(OA->Descr->F->q + 1);
-			ABC = NEW_int(3 * (OA->Descr->F->q + 1));
-
-			geometry::orthogonal_geometry::orthogonal_global OG;
-			algebra::field_theory::finite_field *FQ;
-			int q, Q;
-
-			FQ = NEW_OBJECT(algebra::field_theory::finite_field);
-			q = OA->Descr->F->q;
-			Q = q * q;
-			FQ->finite_field_init_small_order(Q,
-					false /* f_without_tables */,
-					false /* f_compute_related_fields */,
-					0 /* verbose_level */);
-
-			OG.create_Mondello_BLT_set(set, ABC,
-							FQ, OA->Descr->F, verbose_level);
-
-			FREE_OBJECT(FQ);
-			str = "Mondello";
-			str_q = "q" + std::to_string(OA->Descr->F->q);
-
-		}
-
-
-		else if (ST.stringcmp(Descr->family_name, "FTWKB") == 0) {
-			if (f_v) {
-				cout << "BLT_set_create::init "
-						"creating object of family FTWKB" << endl;
-			}
-			set = NEW_lint(OA->Descr->F->q + 1);
-			ABC = NEW_int(3 * (OA->Descr->F->q + 1));
-
-			OG.create_FTWKB_flock_and_BLT_set(OA->O, set, ABC, verbose_level);
-			// for q congruent 2 mod 3
-			// a(t)= t, b(t) = 3*t^2, c(t) = 3*t^3, all t \in GF(q)
-			// together with the point (0, 0, 0, 1, 0)
-
-			str = "FTWKB";
-			str_q = "q" + std::to_string(OA->Descr->F->q);
-
-		}
-		else if (ST.stringcmp(Descr->family_name, "Kantor1") == 0) {
-			if (f_v) {
-				cout << "BLT_set_create::init "
-						"creating object of family Kantor1" << endl;
-			}
-			set = NEW_lint(OA->Descr->F->q + 1);
-			ABC = NEW_int(3 * (OA->Descr->F->q + 1));
-
-			OG.create_K1_flock_and_BLT_set(OA->O, set, ABC, verbose_level);
-			// for a non-square m, and q=p^e
-			// a(t)= t, b(t) = 0, c(t) = -m*t^p, all t \in GF(q)
-			// together with the point (0, 0, 0, 1, 0)
-
-			str = "Kantor1";
-			str_q = "q" + std::to_string(OA->Descr->F->q);
-		}
-		else if (ST.stringcmp(Descr->family_name, "Kantor2") == 0) {
-			if (f_v) {
-				cout << "BLT_set_create::init "
-						"creating object of family Kantor2" << endl;
-			}
-			set = NEW_lint(OA->Descr->F->q + 1);
-			ABC = NEW_int(3 * (OA->Descr->F->q + 1));
-
-			OG.create_K2_flock_and_BLT_set(OA->O, set, ABC, verbose_level);
-			// for q congruent 2 or 3 mod 5
-			// a(t)= t, b(t) = 5*t^3, c(t) = 5*t^5, all t \in GF(q)
-			// together with the point (0, 0, 0, 1, 0)
-
-			str = "Kantor2";
-			str_q = "q" + std::to_string(OA->Descr->F->q);
-		}
-		else if (ST.stringcmp(Descr->family_name, "LP_37_72") == 0) {
-			if (f_v) {
-				cout << "BLT_set_create::init "
-						"creating object LP_37_72" << endl;
-			}
-			set = NEW_lint(OA->Descr->F->q + 1);
-
-			OG.create_LP_37_72_BLT_set(OA->O, set, verbose_level);
-
-			str = "LP_ago72";
-			str_q = "q" + std::to_string(OA->Descr->F->q);
-		}
-		else if (ST.stringcmp(Descr->family_name, "LP_37_4a") == 0) {
-			if (f_v) {
-				cout << "BLT_set_create::init "
-						"creating object LP_37_4a" << endl;
-			}
-			set = NEW_lint(OA->Descr->F->q + 1);
-
-			OG.create_LP_37_4a_BLT_set(OA->O, set, verbose_level);
-
-			str = "LP_ago4a";
-			str_q = "q" + std::to_string(OA->Descr->F->q);
-		}
-		else if (ST.stringcmp(Descr->family_name, "LP_37_4b") == 0) {
-			if (f_v) {
-				cout << "BLT_set_create::init "
-						"creating object LP_37_4b" << endl;
-			}
-			set = NEW_lint(OA->Descr->F->q + 1);
-
-			OG.create_LP_37_4b_BLT_set(OA->O, set, verbose_level);
-
-			str = "LP_ago4b";
-			str_q = "q" + std::to_string(OA->Descr->F->q);
-		}
-		else if (ST.stringcmp(Descr->family_name, "LP_71") == 0) {
-			if (f_v) {
-				cout << "BLT_set_create::init "
-						"creating object LP_71" << endl;
-			}
-			set = NEW_lint(OA->Descr->F->q + 1);
-
-			OG.create_Law_71_BLT_set(OA->O, set, verbose_level);
-
-			str = "LP";
-			str_q = "q" + std::to_string(OA->Descr->F->q);
-		}
-		else {
-			cout << "BLT_set_create::init family name is not recognized" << endl;
-			exit(1);
-		}
-
-		prefix.assign(str);
-
-		label_txt = prefix + "_" + str_q;
-
-		label_tex = prefix + "\\_" + str_q;
 
 	}
 	else if (Descr->f_flock) {
@@ -301,10 +127,10 @@ void BLT_set_create::init(
 		f_has_group = false;
 		geometry::orthogonal_geometry::orthogonal_global OG;
 
-		int *ABC;
+		int *ABC_matrix;
 		int m, n;
 
-		Get_matrix(Descr->flock_label, ABC, m, n);
+		Get_matrix(Descr->flock_label, ABC_matrix, m, n);
 		if (m != OA->Descr->F->q) {
 			cout << "BLT_set_create::init m != OA->Descr->F->q" << endl;
 			exit(1);
@@ -315,10 +141,20 @@ void BLT_set_create::init(
 		}
 		if (f_v) {
 			cout << "BLT_set_create::init flock:" << endl;
-			Int_matrix_print(ABC, OA->Descr->F->q, 3);
+			Int_matrix_print(ABC_matrix, OA->Descr->F->q, 3);
 		}
 
-		set = NEW_lint(OA->Descr->F->q + 1);
+		Blt_set = NEW_OBJECT(geometry::orthogonal_geometry::blt_set);
+
+		//set = NEW_lint(OA->Descr->F->q + 1);
+
+		Int_vec_copy(ABC_matrix, Blt_set->ABC, m * n);
+
+		FREE_int(ABC_matrix);
+
+
+		// creates the points (c/2,-c^2/4-ab,1,b,a) : (a,b,c) \in FLock.
+
 
 		if (f_v) {
 			cout << "BLT_set_create::init "
@@ -326,7 +162,7 @@ void BLT_set_create::init(
 		}
 		OG.create_BLT_set_from_flock(
 				OA->O,
-				set, ABC, verbose_level - 2);
+				Blt_set->set, Blt_set->ABC, verbose_level - 2);
 		if (f_v) {
 			cout << "BLT_set_create::init "
 					"after create_BLT_set_from_flock" << endl;
@@ -338,8 +174,8 @@ void BLT_set_create::init(
 		str_q = "q" + std::to_string(OA->Descr->F->q);
 		prefix = Descr->flock_label;
 
-		label_txt = prefix + "_" + str_q;
-		label_tex = prefix + "\\_" + str_q;
+		Blt_set->label_txt = prefix + "_" + str_q;
+		Blt_set->label_tex = prefix + "\\_" + str_q;
 
 	}
 
@@ -348,115 +184,16 @@ void BLT_set_create::init(
 		if (f_v) {
 			cout << "BLT_set_create::init BLT set from catalogue" << endl;
 		}
-		int nb_iso;
-		combinatorics::knowledge_base::knowledge_base K;
-
-		nb_iso = K.BLT_nb_reps(OA->Descr->F->q);
-		if (Descr->iso >= nb_iso) {
-			cout << "BLT_set_create::init iso >= nb_iso, "
-					"this BLT set does not exist" << endl;
-			exit(1);
-		}
-
-		set = NEW_lint(OA->Descr->F->q + 1);
-		Lint_vec_copy(
-				K.BLT_representative(OA->Descr->F->q, Descr->iso),
-				set, OA->Descr->F->q + 1);
-
-
-
-		data_structures_groups::vector_ge *gens;
-		std::string target_go_text;
-
-		gens = NEW_OBJECT(data_structures_groups::vector_ge);
 
 		if (f_v) {
-			cout << "BLT_set_create::init before "
-					"gens->stab_BLT_set_from_catalogue" << endl;
+			cout << "BLT_set_create::init before make_from_catalogue" << endl;
 		}
-		gens->stab_BLT_set_from_catalogue(
-				OA->A,
-				OA->Descr->F, Descr->iso,
-				target_go_text,
+		make_from_catalogue(
 				verbose_level - 2);
 		if (f_v) {
-			cout << "BLT_set_create::init after "
-					"gens->stab_BLT_set_from_catalogue" << endl;
+			cout << "BLT_set_create::init after make_from_catalogue" << endl;
 		}
 
-		int c;
-
-		c = gens->test_if_in_set_stabilizer(
-				OA->A,
-				set, OA->Descr->F->q + 1, verbose_level);
-
-		if (c) {
-			if (f_v) {
-				cout << "BLT_set_create::init the generators "
-					"stabilize the given BLT set, good" << endl;
-			}
-		}
-		else {
-			cout << "BLT_set_create::init the generators "
-					"do not stabilize the given BLT set, bad!" << endl;
-
-			int i;
-
-			for (i = 0; i < gens->len; i++) {
-				cout << "checking generator " << i << " / " << gens->len << endl;
-				OA->A->Group_element->check_if_in_set_stabilizer_debug(
-						gens->ith(i),
-						OA->Descr->F->q + 1, set, verbose_level);
-			}
-			exit(1);
-		}
-
-
-
-		algebra::ring_theory::longinteger_object target_go;
-
-		target_go.create_from_base_10_string(target_go_text);
-		if (f_v) {
-			cout << "BLT_set_create::init "
-					"target_go = " << target_go << endl;
-		}
-
-
-		if (f_v) {
-			cout << "BLT_set_create::init "
-					"before generators_to_strong_generators" << endl;
-		}
-		OA->A->generators_to_strong_generators(
-			true /* f_target_go */, target_go,
-			gens, Sg,
-			verbose_level - 3);
-
-		if (f_v) {
-			cout << "BLT_set_create::init "
-					"after generators_to_strong_generators" << endl;
-		}
-
-
-		f_has_group = true;
-
-		string str_q;
-
-		str_q = std::to_string(OA->Descr->F->q);
-
-		string str_iso;
-
-		str_iso = std::to_string(Descr->iso);
-
-
-		prefix = "catalogue_q" + str_q + "_iso" + str_iso;
-
-		label_txt = "catalogue_q" + str_q + "_iso" + str_iso;
-		label_tex = "catalogue\\_q" + str_q + "\\_iso" + str_iso;
-
-		if (f_v) {
-			cout << "BLT_set_create::init after "
-					"Sg->BLT_set_from_catalogue_stabilizer" << endl;
-		}
 	}
 	else {
 		cout << "BLT_set_create::init we do not recognize "
@@ -467,9 +204,24 @@ void BLT_set_create::init(
 
 	if (f_v) {
 		cout << "BLT_set_create::init set = ";
-		Lint_vec_print(cout, set, OA->Descr->F->q + 1);
+		Lint_vec_print(cout, Blt_set->set, OA->Descr->F->q + 1);
 		cout << endl;
 	}
+
+
+	if (f_v) {
+		cout << "BLT_set_create::init "
+				"before Blt_set->compute_properties" << endl;
+	}
+	Blt_set->compute_properties(
+			Descr->f_invariants,
+			verbose_level - 2);
+	if (f_v) {
+		cout << "BLT_set_create::init "
+				"after Blt_set->compute_properties" << endl;
+	}
+
+
 
 	if (f_has_group) {
 		cout << "BLT_set_create::init the stabilizer is:" << endl;
@@ -486,12 +238,10 @@ void BLT_set_create::init(
 	BA->init_set(
 			OA->A,
 			Blt_set_domain_with_action,
-			set,
-			label_txt,
-			label_tex,
+			Blt_set,
 			Sg,
-			Descr->f_invariants,
-			verbose_level - 1);
+			//Descr->f_invariants,
+			verbose_level - 2);
 	if (f_v) {
 		cout << "BLT_set_create::init after BA->init_set" << endl;
 	}
@@ -501,6 +251,422 @@ void BLT_set_create::init(
 
 	if (f_v) {
 		cout << "BLT_set_create::init done" << endl;
+	}
+}
+
+void BLT_set_create::create_family(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "BLT_set_create::create_family" << endl;
+	}
+
+	if (f_v) {
+		cout << "BLT_set_create::create_family "
+				"family_name=" << Descr->family_name << endl;
+	}
+
+	string str;
+	string str_q;
+	f_has_group = false;
+
+	other::data_structures::string_tools ST;
+
+
+	if (ST.stringcmp(Descr->family_name, "Linear") == 0) {
+
+		if (f_v) {
+			cout << "BLT_set_create::create_family "
+					"creating object of family Linear" << endl;
+		}
+
+
+		if (f_v) {
+			cout << "BLT_set_create::create_family "
+					"before create_quadratic_field_extension" << endl;
+		}
+		create_quadratic_field_extension(verbose_level - 2);
+		if (f_v) {
+			cout << "BLT_set_create::create_family "
+					"after create_quadratic_field_extension" << endl;
+		}
+
+
+		U = NEW_OBJECT(geometry::orthogonal_geometry::unusual_model);
+
+
+		U->setup(FQ, OA->Descr->F, verbose_level);
+
+		U->create_Linear_BLT_set(Blt_set->set, Blt_set->ABC, verbose_level);
+
+
+
+		str = "Linear";
+		str_q = "q" + std::to_string(OA->Descr->F->q);
+
+	}
+
+	else if (ST.stringcmp(Descr->family_name, "Fisher") == 0) {
+		if (f_v) {
+			cout << "BLT_set_create::create_family "
+					"creating object of family Fisher" << endl;
+		}
+
+		if (f_v) {
+			cout << "BLT_set_create::create_family "
+					"before create_quadratic_field_extension" << endl;
+		}
+		create_quadratic_field_extension(verbose_level - 2);
+		if (f_v) {
+			cout << "BLT_set_create::create_family "
+					"after create_quadratic_field_extension" << endl;
+		}
+
+
+		U = NEW_OBJECT(geometry::orthogonal_geometry::unusual_model);
+
+		U->setup(FQ, OA->Descr->F, verbose_level);
+
+		U->create_Fisher_BLT_set(Blt_set->set, Blt_set->ABC, verbose_level);
+
+
+		str = "Fisher";
+		str_q = "q" + std::to_string(OA->Descr->F->q);
+
+	}
+
+	else if (ST.stringcmp(Descr->family_name, "Mondello") == 0) {
+		if (f_v) {
+			cout << "BLT_set_create::create_family "
+					"creating object of family Mondello" << endl;
+		}
+
+
+		if (f_v) {
+			cout << "BLT_set_create::create_family "
+					"before create_quadratic_field_extension" << endl;
+		}
+		create_quadratic_field_extension(verbose_level - 2);
+		if (f_v) {
+			cout << "BLT_set_create::create_family "
+					"after create_quadratic_field_extension" << endl;
+		}
+
+
+		U = NEW_OBJECT(geometry::orthogonal_geometry::unusual_model);
+
+		U->setup(FQ, OA->Descr->F, verbose_level);
+
+		U->create_Mondello_BLT_set(Blt_set->set, Blt_set->ABC, verbose_level);
+
+
+		str = "Mondello";
+		str_q = "q" + std::to_string(OA->Descr->F->q);
+
+	}
+
+
+	else if (ST.stringcmp(Descr->family_name, "FTWKB") == 0) {
+		if (f_v) {
+			cout << "BLT_set_create::create_family "
+					"creating object of family FTWKB" << endl;
+		}
+
+		geometry::orthogonal_geometry::orthogonal_global OG;
+
+		OG.create_FTWKB_flock_and_BLT_set(
+				OA->O,
+				Blt_set->set, Blt_set->ABC,
+				verbose_level);
+		// for q congruent 2 mod 3
+		// a(t)= t, b(t) = 3*t^2, c(t) = 3*t^3, all t \in GF(q)
+		// together with the point (0, 0, 0, 1, 0)
+
+		str = "FTWKB";
+		str_q = "q" + std::to_string(OA->Descr->F->q);
+
+	}
+	else if (ST.stringcmp(Descr->family_name, "Kantor1") == 0) {
+		if (f_v) {
+			cout << "BLT_set_create::create_family "
+					"creating object of family Kantor1" << endl;
+		}
+
+		geometry::orthogonal_geometry::orthogonal_global OG;
+
+		OG.create_K1_flock_and_BLT_set(
+				OA->O,
+				Blt_set->set, Blt_set->ABC,
+				verbose_level);
+		// for a non-square m, and q=p^e
+		// a(t)= t, b(t) = 0, c(t) = -m*t^p, all t \in GF(q)
+		// together with the point (0, 0, 0, 1, 0)
+
+		str = "Kantor1";
+		str_q = "q" + std::to_string(OA->Descr->F->q);
+	}
+	else if (ST.stringcmp(Descr->family_name, "Kantor2") == 0) {
+		if (f_v) {
+			cout << "BLT_set_create::create_family "
+					"creating object of family Kantor2" << endl;
+		}
+
+
+		geometry::orthogonal_geometry::orthogonal_global OG;
+
+		OG.create_K2_flock_and_BLT_set(
+				OA->O,
+				Blt_set->set, Blt_set->ABC,
+				verbose_level);
+		// for q congruent 2 or 3 mod 5
+		// a(t)= t, b(t) = 5*t^3, c(t) = 5*t^5, all t \in GF(q)
+		// together with the point (0, 0, 0, 1, 0)
+
+		str = "Kantor2";
+		str_q = "q" + std::to_string(OA->Descr->F->q);
+	}
+	else if (ST.stringcmp(Descr->family_name, "LP_37_72") == 0) {
+		if (f_v) {
+			cout << "BLT_set_create::create_family "
+					"creating object LP_37_72" << endl;
+		}
+
+		geometry::orthogonal_geometry::orthogonal_global OG;
+
+		OG.create_LP_37_72_BLT_set(
+				OA->O,
+				Blt_set->set,
+				verbose_level);
+
+		str = "LP_ago72";
+		str_q = "q" + std::to_string(OA->Descr->F->q);
+	}
+	else if (ST.stringcmp(Descr->family_name, "LP_37_4a") == 0) {
+		if (f_v) {
+			cout << "BLT_set_create::create_family "
+					"creating object LP_37_4a" << endl;
+		}
+
+		geometry::orthogonal_geometry::orthogonal_global OG;
+
+		OG.create_LP_37_4a_BLT_set(
+				OA->O,
+				Blt_set->set,
+				verbose_level);
+
+		str = "LP_ago4a";
+		str_q = "q" + std::to_string(OA->Descr->F->q);
+	}
+	else if (ST.stringcmp(Descr->family_name, "LP_37_4b") == 0) {
+		if (f_v) {
+			cout << "BLT_set_create::create_family "
+					"creating object LP_37_4b" << endl;
+		}
+
+		geometry::orthogonal_geometry::orthogonal_global OG;
+
+		OG.create_LP_37_4b_BLT_set(
+				OA->O,
+				Blt_set->set,
+				verbose_level);
+
+		str = "LP_ago4b";
+		str_q = "q" + std::to_string(OA->Descr->F->q);
+	}
+	else if (ST.stringcmp(Descr->family_name, "LP_71") == 0) {
+		if (f_v) {
+			cout << "BLT_set_create::create_family "
+					"creating object LP_71" << endl;
+		}
+
+		geometry::orthogonal_geometry::orthogonal_global OG;
+
+		OG.create_Law_71_BLT_set(
+				OA->O,
+				Blt_set->set,
+				verbose_level);
+
+		str = "LP";
+		str_q = "q" + std::to_string(OA->Descr->F->q);
+	}
+	else {
+		cout << "BLT_set_create::create_family family name is not recognized" << endl;
+		exit(1);
+	}
+
+	prefix.assign(str);
+
+	Blt_set->label_txt = prefix + "_" + str_q;
+	Blt_set->label_tex = prefix + "\\_" + str_q;
+
+	if (f_v) {
+		cout << "BLT_set_create::create_family done" << endl;
+	}
+}
+
+void BLT_set_create::make_from_catalogue(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "BLT_set_create::make_from_catalogue" << endl;
+	}
+	int nb_iso;
+	combinatorics::knowledge_base::knowledge_base K;
+
+	nb_iso = K.BLT_nb_reps(OA->Descr->F->q);
+
+	if (Descr->iso >= nb_iso) {
+		cout << "BLT_set_create::make_from_catalogue "
+				"iso >= nb_iso, index is out of range" << endl;
+		exit(1);
+	}
+
+
+	//set = NEW_lint(OA->Descr->F->q + 1);
+	Lint_vec_copy(
+			K.BLT_representative(OA->Descr->F->q, Descr->iso),
+			Blt_set->set,
+			OA->Descr->F->q + 1);
+
+
+
+	data_structures_groups::vector_ge *gens;
+	std::string target_go_text;
+
+	gens = NEW_OBJECT(data_structures_groups::vector_ge);
+
+	if (f_v) {
+		cout << "BLT_set_create::make_from_catalogue "
+				"gens->stab_BLT_set_from_catalogue" << endl;
+	}
+	gens->stab_BLT_set_from_catalogue(
+			OA->A,
+			OA->Descr->F, Descr->iso,
+			target_go_text,
+			verbose_level - 2);
+	if (f_v) {
+		cout << "BLT_set_create::make_from_catalogue after "
+				"gens->stab_BLT_set_from_catalogue" << endl;
+	}
+
+	int c;
+
+	if (f_v) {
+		cout << "BLT_set_create::make_from_catalogue "
+				"before gens->test_if_in_set_stabilizer" << endl;
+	}
+	c = gens->test_if_in_set_stabilizer(
+			OA->A,
+			Blt_set->set, OA->Descr->F->q + 1, verbose_level);
+	if (f_v) {
+		cout << "BLT_set_create::make_from_catalogue "
+				"after gens->test_if_in_set_stabilizer" << endl;
+	}
+
+	if (c) {
+		if (f_v) {
+			cout << "BLT_set_create::make_from_catalogue the generators "
+				"stabilize the given BLT set, good" << endl;
+		}
+	}
+	else {
+		cout << "BLT_set_create::make_from_catalogue the generators "
+				"do not stabilize the given BLT set, bad!" << endl;
+
+		int i;
+
+		for (i = 0; i < gens->len; i++) {
+			cout << "BLT_set_create::make_from_catalogue "
+					"checking generator " << i << " / " << gens->len << endl;
+			OA->A->Group_element->check_if_in_set_stabilizer_debug(
+					gens->ith(i),
+					OA->Descr->F->q + 1, Blt_set->set, verbose_level);
+		}
+		exit(1);
+	}
+
+
+
+	algebra::ring_theory::longinteger_object target_go;
+
+	target_go.create_from_base_10_string(target_go_text);
+	if (f_v) {
+		cout << "BLT_set_create::make_from_catalogue "
+				"target_go = " << target_go << endl;
+	}
+
+
+	if (f_v) {
+		cout << "BLT_set_create::make_from_catalogue "
+				"before generators_to_strong_generators" << endl;
+	}
+	OA->A->generators_to_strong_generators(
+		true /* f_target_go */, target_go,
+		gens, Sg,
+		verbose_level - 3);
+
+	if (f_v) {
+		cout << "BLT_set_create::make_from_catalogue "
+				"after generators_to_strong_generators" << endl;
+	}
+
+
+	f_has_group = true;
+
+	string str_q;
+
+	str_q = std::to_string(OA->Descr->F->q);
+
+	string str_iso;
+
+	str_iso = std::to_string(Descr->iso);
+
+
+	prefix = "catalogue_q" + str_q + "_iso" + str_iso;
+
+	Blt_set->label_txt = "catalogue_q" + str_q + "_iso" + str_iso;
+	Blt_set->label_tex = "catalogue\\_q" + str_q + "\\_iso" + str_iso;
+
+	if (f_v) {
+		cout << "BLT_set_create::make_from_catalogue done" << endl;
+	}
+
+}
+
+void BLT_set_create::create_quadratic_field_extension(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "BLT_set_create::create_quadratic_field_extension done" << endl;
+	}
+
+	FQ = NEW_OBJECT(algebra::field_theory::finite_field);
+
+	q = OA->Descr->F->q;
+	Q = q * q;
+
+	if (f_v) {
+		cout << "BLT_set_create::create_quadratic_field_extension "
+				"before FQ->finite_field_init_small_order Q=" << Q << endl;
+	}
+	FQ->finite_field_init_small_order(
+			Q,
+			false /* f_without_tables */,
+			false /* f_compute_related_fields */,
+			verbose_level);
+	if (f_v) {
+		cout << "BLT_set_create::create_quadratic_field_extension "
+				"after FQ->finite_field_init_small_order Q=" << Q << endl;
+	}
+
+	if (f_v) {
+		cout << "BLT_set_create::create_quadratic_field_extension done" << endl;
 	}
 }
 
@@ -526,7 +692,7 @@ void BLT_set_create::report(
 
 	string fname;
 
-	fname = "BLT_" + label_txt + ".tex";
+	fname = "BLT_" + Blt_set->label_txt + ".tex";
 	ofstream ost(fname);
 
 	report2(ost, verbose_level);
@@ -548,7 +714,7 @@ void BLT_set_create::export_gap(
 
 	string fname;
 
-	fname = "BLT_" + label_txt + ".gap";
+	fname = "BLT_" + Blt_set->label_txt + ".gap";
 
 	ofstream ost(fname);
 
@@ -595,12 +761,12 @@ void BLT_set_create::export_gap(
 		}
 		GAP.export_BLT_set(
 				ost,
-				label_txt,
+				Blt_set->label_txt,
 				f_has_group,
 				Sg,
 				OA->A,
 				Blt_set_domain_with_action->Blt_set_domain,
-				set, verbose_level);
+				Blt_set->set, verbose_level);
 		if (f_v) {
 			cout << "BLT_set_create::export_gap "
 					"before GAP.export_BLT_set" << endl;
@@ -627,15 +793,18 @@ void BLT_set_create::create_flock(
 	}
 
 
-	flock_from_blt_set *Flock;
+	geometry::orthogonal_geometry::flock_from_blt_set *Flock;
 
-	Flock = NEW_OBJECT(flock_from_blt_set);
+	Flock = NEW_OBJECT(geometry::orthogonal_geometry::flock_from_blt_set);
 
 	if (f_v) {
 		cout << "BLT_set_create::create_flock "
 				"before Flock->init" << endl;
 	}
-	Flock->init(BA, point_idx, verbose_level);
+	Flock->init(
+			BA->Blt_set,
+			point_idx,
+			verbose_level);
 	if (f_v) {
 		cout << "BLT_set_create::create_flock "
 				"after Flock->init" << endl;
@@ -647,7 +816,7 @@ void BLT_set_create::create_flock(
 
 
 	str = "_flock_pt" + std::to_string(point_idx) + ".csv";
-	fname_csv = BA->label_txt + str;
+	fname_csv = BA->Blt_set->label_txt + str;
 
 	Fio.Csv_file_support->int_matrix_write_csv(
 			fname_csv, Flock->Table_of_ABC->M, Flock->q, 3);
@@ -701,7 +870,7 @@ void BLT_set_create::BLT_test(
 	}
 	ret = Blt_set_domain_with_action->Blt_set_domain->check_conditions(
 			Blt_set_domain_with_action->Blt_set_domain->target_size,
-			set,
+			Blt_set->set,
 			verbose_level);
 	if (f_v) {
 		cout << "BLT_set_create::BLT_test "
@@ -720,63 +889,6 @@ void BLT_set_create::BLT_test(
 	}
 }
 
-void BLT_set_create::export_set_in_PG(
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "BLT_set_create::export_set_in_PG" << endl;
-	}
-	int sz;
-	int i;
-	long int j;
-	int v[5];
-	long int *Pts;
-	algebra::field_theory::finite_field *F;
-
-	sz = Blt_set_domain_with_action->Blt_set_domain->target_size;
-
-	F = Blt_set_domain_with_action->Blt_set_domain->O->F;
-
-	Pts = NEW_lint(sz);
-	for (i = 0; i < sz; i++) {
-
-		Blt_set_domain_with_action->Blt_set_domain->O->Hyperbolic_pair->unrank_point(
-				v,
-				1, set[i],
-				0 /*verbose_level - 1*/);
-
-		F->Projective_space_basic->PG_element_rank_modified(
-				v, 1, 5, j);
-
-		Pts[i] = j;
-
-		if (f_v) {
-			cout << setw(4) << i << " : ";
-			Int_vec_print(cout, v, 5);
-			cout << " : " << setw(5) << j << endl;
-		}
-	}
-
-	string fname_csv;
-	other::orbiter_kernel_system::file_io Fio;
-
-
-	fname_csv = label_txt + "_in_PG.csv";
-
-	Fio.Csv_file_support->lint_matrix_write_csv(
-			fname_csv, Pts, sz, 1);
-	cout << "written file " << fname_csv << " of size "
-			<< Fio.file_size(fname_csv) << endl;
-
-
-	FREE_lint(Pts);
-
-	if (f_v) {
-		cout << "BLT_set_create::export_set_in_PG done" << endl;
-	}
-}
 
 void BLT_set_create::plane_invariant(
 		int verbose_level)
@@ -799,7 +911,7 @@ void BLT_set_create::plane_invariant(
 
 	PI->init(
 			Blt_set_domain_with_action->Blt_set_domain->O,
-		sz, set,
+		sz, Blt_set->set,
 		verbose_level - 2);
 
 	if (f_v) {
@@ -830,7 +942,7 @@ void BLT_set_create::report2(
 	int f_pagenumbers = true;
 	other::l1_interfaces::latex_interface L;
 
-	str = "BLT-set " + label_tex;
+	str = "BLT-set " + Blt_set->label_tex;
 	title = str;
 	author.assign("Orbiter");
 
@@ -847,11 +959,11 @@ void BLT_set_create::report2(
 
 	OA->O->Quadratic_form->report_quadratic_form(ost, verbose_level - 1);
 
-	if (ABC) {
-		print_set_of_points_with_ABC(ost, set, OA->O->F->q + 1);
+	if (Blt_set->ABC) {
+		print_set_of_points_with_ABC(ost, Blt_set->set, OA->O->F->q + 1);
 	}
 	else {
-		print_set_of_points(ost, set, OA->O->F->q + 1);
+		print_set_of_points(ost, Blt_set->set, OA->O->F->q + 1);
 	}
 
 	BA->report(ost, verbose_level);
@@ -920,9 +1032,9 @@ void BLT_set_create::print_set_of_points_with_ABC(
 
 				OA->O->Hyperbolic_pair->unrank_point(v, 1, Pts[I * 40 + h], 0 /* verbose_level */);
 
-				a = ABC[3 * (I * 40 + h) + 0];
-				b = ABC[3 * (I * 40 + h) + 1];
-				c = ABC[3 * (I * 40 + h) + 2];
+				a = Blt_set->ABC[3 * (I * 40 + h) + 0];
+				b = Blt_set->ABC[3 * (I * 40 + h) + 1];
+				c = Blt_set->ABC[3 * (I * 40 + h) + 2];
 
 				ost << I * 40 + h << " & " << Pts[I * 40 + h] << " & ";
 				Int_vec_print(ost, v, n + 1);

@@ -379,6 +379,7 @@ void combinatorial_object_with_properties::latex_report(
 	}
 	Sch = A_perm->Strong_gens->compute_all_point_orbits_schreier(
 			A_perm,
+			A_perm,
 			verbose_level);
 	if (f_v) {
 		cout << "combinatorial_object_with_properties::latex_report "

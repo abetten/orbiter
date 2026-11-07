@@ -812,7 +812,8 @@ int orthogonal_global::BLT_test(
 					"the set of points is:" << endl;
 			for (i = 0; i < size; i++) {
 				O->Hyperbolic_pair->unrank_point(
-						O->Hyperbolic_pair->v1, 1, set[i], 0 /*verbose_level - 1*/);
+						O->Hyperbolic_pair->v1, 1, set[i],
+						0 /*verbose_level - 1*/);
 				cout << i << " : " << set[i] << " : ";
 				Int_vec_print(cout, O->Hyperbolic_pair->v1, O->Quadratic_form->n);
 				cout << endl;
@@ -902,10 +903,12 @@ int orthogonal_global::BLT_test(
 		if (f_vv) {
 			l2 = O->F->log_alpha(fxy);
 			l3 = O->F->log_alpha(fyz);
-			cout << "i=" << i << " fxy=" << fxy << " (log=" << l2
-				<< ") fyz=" << fyz << " (log=" << l3
-				<< ") a=" << a << " log=" << O->F->log_alpha(a)
-				<< " is_minus_square=" << O->SN->f_is_minus_square[a] << endl;
+			cout << "i=" << i << " fxy=" << fxy
+				<< " (log=" << l2 << ") "
+				"fyz=" << fyz << " (log=" << l3 << ") a=" << a
+				<< " log=" << O->F->log_alpha(a)
+				<< " is_minus_square=" << O->SN->f_is_minus_square[a]
+				<< endl;
 		}
 
 
@@ -916,8 +919,9 @@ int orthogonal_global::BLT_test(
 				l2 = O->F->log_alpha(fxy);
 				l3 = O->F->log_alpha(fyz);
 				cout << "not OK; i=" << i << endl;
-				cout << "{x,y,z}={" << x << "," << y
-						<< "," << z << "}" << endl;
+				cout << "{x,y,z}="
+						"{" << x << "," << y << "," << z << "}"
+						<< endl;
 				Int_vec_print(cout, O->Hyperbolic_pair->v1, O->Quadratic_form->n);
 				cout << endl;
 				Int_vec_print(cout, O->Hyperbolic_pair->v2, O->Quadratic_form->n);
@@ -1003,8 +1007,7 @@ int orthogonal_global::collinearity_test(
 			f_OK = false;
 			if (f_v) {
 				cout << "not OK; ";
-				cout << "{x,y}={" << x << "," << y
-						<< "} are collinear" << endl;
+				cout << "{x,y}={" << x << "," << y << "} are collinear" << endl;
 				Int_vec_print(cout, O->Hyperbolic_pair->v1, 5);
 				cout << endl;
 				Int_vec_print(cout, O->Hyperbolic_pair->v2, 5);
@@ -1025,7 +1028,7 @@ int orthogonal_global::collinearity_test(
 }
 
 
-
+#if 0
 void orthogonal_global::create_Fisher_BLT_set(
 		long int *Fisher_BLT, int *ABC,
 		algebra::field_theory::finite_field *FQ,
@@ -1088,6 +1091,7 @@ void orthogonal_global::create_Mondello_BLT_set(
 	}
 
 }
+#endif
 
 
 }}}}

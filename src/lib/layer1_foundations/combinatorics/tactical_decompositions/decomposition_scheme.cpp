@@ -196,7 +196,6 @@ void decomposition_scheme::init_row_scheme(
 	RC->init_from_partitionstack(
 			Decomposition->Stack,
 			verbose_level);
-
 	if (f_v) {
 		cout << "decomposition_scheme::init_row_scheme "
 				"after RC->init_from_partitionstack" << endl;
@@ -213,7 +212,8 @@ void decomposition_scheme::init_row_scheme(
 	}
 	Decomposition->get_row_decomposition_scheme(
 		RC,
-		row_scheme, verbose_level);
+		row_scheme,
+		verbose_level);
 	if (f_v) {
 		cout << "decomposition_scheme::init_row_scheme "
 				"after Decomposition->get_row_decomposition_scheme" << endl;
@@ -636,8 +636,10 @@ void decomposition_scheme::stringify_col_scheme(
 
 
 void decomposition_scheme::write_csv(
-		std::string &fname_row, std::string &fname_col,
-		std::string &fname_row_classes, std::string &fname_col_classes,
+		std::string &fname_row,
+		std::string &fname_col,
+		std::string &fname_row_classes,
+		std::string &fname_col_classes,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

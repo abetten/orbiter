@@ -764,6 +764,7 @@ void surface_object_with_group::recognize_Fabcd(
 	Transporter = NEW_int(Surf_A->A->elt_size_in_int);
 
 	Surf_A->A->Strong_gens->make_element_which_moves_a_point_from_A_to_B(
+			Surf_A->A,
 			Surf_A->A_on_planes,
 			plane1, plane2, Transporter,
 			0 /*verbose_level*/);

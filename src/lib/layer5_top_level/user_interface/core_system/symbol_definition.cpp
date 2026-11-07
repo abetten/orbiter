@@ -3076,7 +3076,7 @@ void symbol_definition::definition_of_BLT_set(
 
 	if (f_v) {
 		cout << "symbol_definition::definition_of_BLT_set "
-				"we created a BLT-set called " << BC->label_txt << endl;
+				"we created a BLT-set called " << BC->Blt_set->label_txt << endl;
 
 	}
 

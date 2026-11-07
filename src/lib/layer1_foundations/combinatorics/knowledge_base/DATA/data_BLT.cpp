@@ -36,6 +36,7 @@
 
 
 
+#if 0
 static int BLT_3_size = 4;
 static int BLT_3_nb_reps = 1;
 static long int BLT_3_reps[] = {
@@ -58,7 +59,6 @@ static int BLT_3_make_element_size = 25;
 
 
 
-#if 0
 static int BLT_5_size = 6;
 static int BLT_5_nb_reps = 2;
 static long int BLT_5_reps[] = {

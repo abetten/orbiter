@@ -731,12 +731,14 @@ public:
 			int verbose_level);
 
 	void point_stabilizer_any_point(
+			action *A_base,
 			action *A,
 			int &pt,
 			groups::schreier *&Sch, groups::sims *&Stab,
 			groups::strong_generators *&stab_gens,
 		int verbose_level);
 	void point_stabilizer_any_point_with_given_group(
+			action *A_base,
 			action *A,
 			groups::strong_generators *input_gens,
 		int &pt,

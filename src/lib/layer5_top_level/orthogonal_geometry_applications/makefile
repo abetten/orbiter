@@ -13,7 +13,6 @@ MODULES = \
 	blt_set_domain_with_action.o \
 	blt_set_group_properties.o \
 	blt_set_with_action.o \
-	flock_from_blt_set.o \
 	orthogonal_space_with_action_description.o \
 	orthogonal_space_with_action.o \
 	table_of_blt_sets.o 

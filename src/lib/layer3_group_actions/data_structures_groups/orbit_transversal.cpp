@@ -51,7 +51,8 @@ void orbit_transversal::init_from_schreier(
 	nb_orbits = Sch->Forest->nb_orbits;
 	Reps = NEW_OBJECTS(set_and_stabilizer, nb_orbits);
 	for (orbit_idx = 0; orbit_idx < nb_orbits; orbit_idx++) {
-		Sch->get_orbit_rep_to(default_action,
+		Sch->get_orbit_rep_to(
+				default_action,
 				full_group_order,
 				orbit_idx,
 				Reps + orbit_idx,
@@ -193,13 +194,17 @@ void orbit_transversal::read_from_file(
 		gens = NEW_OBJECT(groups::strong_generators);
 
 		s.assign(Aut_ascii[i]);
-		gens->init_from_ascii_coding(A,
-				s, 0 /* verbose_level */);
+		gens->init_from_ascii_coding(
+				A,
+				s,
+				0 /* verbose_level */);
 		
 		set = NEW_lint(Set_sizes[i]);
 		Lint_vec_copy(Sets[i], set, Set_sizes[i]);
-		Reps[i].init_everything(A, A2, set, Set_sizes[i], 
-			gens, 0 /* verbose_level */);
+		Reps[i].init_everything(
+				A, A2, set, Set_sizes[i],
+				gens,
+				0 /* verbose_level */);
 
 		FREE_OBJECT(Reps[i].Stab);
 		Reps[i].Stab = NULL;
