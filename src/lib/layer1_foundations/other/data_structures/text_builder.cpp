@@ -58,6 +58,30 @@ void text_builder::init(
 		}
 
 	}
+	else if (Descr->f_from_file) {
+		if (f_v) {
+			cout << "text_builder::init -from_file" << endl;
+		}
+
+		string fname;
+
+		fname = Descr->from_file_fname;
+
+
+
+
+
+		f_has_text = true;
+
+
+
+
+		if (f_v) {
+			cout << "text_builder::init" << endl;
+		}
+
+	}
+
 
 	if (f_v) {
 		if (f_has_text) {

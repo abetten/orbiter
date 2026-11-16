@@ -101,10 +101,12 @@ public:
 			const char * data, int len);
 	uint32_t SuperFastHash_uint(
 			const unsigned int * p, int sz);
+
 	void union_of_sets(
 			std::string &fname_set_of_sets,
 			std::string &fname_input,
 			std::string &fname_output, int verbose_level);
+
 	void dot_product_of_columns(
 			std::string &label, int verbose_level);
 	void dot_product_of_rows(
@@ -1794,6 +1796,11 @@ public:
 			void *evaluate_data,
 			int verbose_level);
 	int find_smallest_class();
+	int search(
+			long int *search_set, int search_set_sz,
+			int &idx,
+			int verbose_level);
+
 };
 
 
@@ -2545,6 +2552,8 @@ public:
 			std::string &str_to_find, int &pos);
 	std::string texify(
 			std::string &input_string);
+	std::string convert_from_makefile(
+			std::string &p);
 
 
 };
@@ -2881,6 +2890,9 @@ public:
 
 	int f_here;
 	std::string here_text;
+
+	int f_from_file;
+	std::string from_file_fname;
 
 	// TABLES/text_builder.tex
 

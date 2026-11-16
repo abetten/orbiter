@@ -919,7 +919,8 @@ void poset_classification::housekeeping_no_data_file(
 		cout << "######################################################"
 				"############################################" << endl;
 		cout << "depth " << i << " completed, found " 
-			<< get_Poo()->nb_orbits_at_level(i) << " orbits" << endl;
+			<< get_Poo()->nb_orbits_at_level(i)
+			<< " orbits" << endl;
 
 
 		if (f_v5) {
@@ -943,7 +944,8 @@ void poset_classification::housekeeping_no_data_file(
 
 		string s_ago;
 
-		s_ago = PCG.compute_and_stringify_automorphism_group_orders(i, verbose_level - 2);
+		s_ago = PCG.compute_and_stringify_automorphism_group_orders(
+				i, verbose_level - 2);
 
 		cout << s_ago << endl;
 
@@ -1054,10 +1056,11 @@ void poset_classification::read_sv_level_file_binary(
 	{
 		ifstream fp(fname, ios::binary);
 
-		Poo->read_sv_level_file_binary2(level, fp,
-			f_split, split_mod, split_case,
-			f_recreate_extensions, f_dont_keep_sv,
-			verbose_level - 1);
+		Poo->read_sv_level_file_binary2(
+				level, fp,
+				f_split, split_mod, split_case,
+				f_recreate_extensions, f_dont_keep_sv,
+				verbose_level - 1);
 	}
 
 }
@@ -1082,9 +1085,10 @@ void poset_classification::write_sv_level_file_binary(
 	{
 		ofstream fp(fname, ios::binary);
 
-		Poo->write_sv_level_file_binary2(level, fp,
-			f_split, split_mod, split_case,
-			verbose_level);
+		Poo->write_sv_level_file_binary2(
+				level, fp,
+				f_split, split_mod, split_case,
+				verbose_level);
 	}
 
 	if (f_v) {

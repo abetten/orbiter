@@ -1622,7 +1622,8 @@ void poset_of_orbits::log_nodes_for_treefile(
 		return; // !!!
 	}
 
-	node->log_current_node(PC, depth, f,
+	node->log_current_node(
+			PC, depth, f,
 			false /* f_with_strong_generators */, 0);
 
 	if (f_recurse) {
@@ -1662,13 +1663,15 @@ void poset_of_orbits::make_table_of_orbit_reps(
 	}
 
 	nb_rows = Nb_orbits;
-	nb_cols = 8;
+	nb_cols = 10;
 
+
+#if 0
 
 	if (PC->get_control()->f_substructure_invariant) {
 		nb_cols++;
 	}
-
+#endif
 
 	Table = new string [nb_rows * nb_cols];
 
@@ -1683,10 +1686,12 @@ void poset_of_orbits::make_table_of_orbit_reps(
 	Headings[5] = "StabOrder";
 	Headings[6] = "OrbitLength";
 	Headings[7] = "SV_length";
+	Headings[8] = "NA";
 
 	if (PC->get_control()->f_substructure_invariant) {
 		Headings[8] = "SubInv";
 	}
+	Headings[9] = "StabGensCoded";
 
 
 	cur = 0;
@@ -1746,6 +1751,11 @@ void poset_of_orbits::make_table_of_orbit_reps(
 
 				}
 			}
+			Table[cur * nb_cols + 9] = "\"" + O->get_stabilizer_coding(
+					PC,
+					level,
+					0 /* verbose_level */) + "\"";
+
 
 			//Text_level[first + i] = std::to_string(level);
 

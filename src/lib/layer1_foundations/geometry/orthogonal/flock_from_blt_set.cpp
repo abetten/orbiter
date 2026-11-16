@@ -83,8 +83,6 @@ flock_from_blt_set::~flock_from_blt_set()
 
 void flock_from_blt_set::init(
 		geometry::orthogonal_geometry::blt_set *Blt_set,
-		//blt_set_domain *BLT_set,
-		//long int *Pi_ij,
 		int point_idx,
 		int verbose_level)
 {

@@ -25,6 +25,9 @@ text_builder_description::text_builder_description()
 	f_here = false;
 	//std::string here_text;
 
+	f_from_file = false;
+	//std::string from_file_fname;
+
 }
 
 text_builder_description::~text_builder_description()
@@ -53,6 +56,13 @@ int text_builder_description::read_arguments(
 			here_text.assign(argv[++i]);
 			if (f_v) {
 				cout << "-here " << here_text << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-from_file") == 0) {
+			f_from_file = true;
+			from_file_fname.assign(argv[++i]);
+			if (f_v) {
+				cout << "-from_file " << from_file_fname << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-end") == 0) {

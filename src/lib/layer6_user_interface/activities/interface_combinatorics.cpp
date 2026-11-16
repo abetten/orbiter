@@ -92,9 +92,12 @@ interface_combinatorics::interface_combinatorics()
 	//std::string domino_portrait_fname;
 	domino_portrait_draw_options = NULL;
 
+
+#if 0
 	f_read_solutions_and_tally = false;
 	//read_solutions_and_tally_fname
 	read_solutions_and_tally_sz = 0;
+#endif
 
 
 	f_make_elementary_symmetric_functions = false;
@@ -570,7 +573,7 @@ void interface_combinatorics::read_arguments(
 	// Section 12.1
 	// TABLES/combinatorics_2.csv
 
-
+#if 0
 	else if (ST.stringcmp(argv[i], "-read_solutions_and_tally") == 0) {
 		f_read_solutions_and_tally = true;
 		read_solutions_and_tally_fname.assign(argv[++i]);
@@ -580,6 +583,7 @@ void interface_combinatorics::read_arguments(
 				<< " " << read_solutions_and_tally_sz << endl;
 		}
 	}
+#endif
 
 	else if (ST.stringcmp(argv[i], "-make_elementary_symmetric_functions") == 0) {
 		f_make_elementary_symmetric_functions = true;
@@ -833,11 +837,13 @@ void interface_combinatorics::print()
 		//Rls_descr->print();
 	}
 #endif
+#if 0
 	if (f_read_solutions_and_tally) {
 		cout << "-read_solutions_and_tally "
 				<< read_solutions_and_tally_fname
 				<< " " << read_solutions_and_tally_sz << endl;
 	}
+#endif
 
 	if (f_make_elementary_symmetric_functions) {
 		cout << "-make_elementary_symmetric_functions "
@@ -1087,6 +1093,7 @@ void interface_combinatorics::worker(
 
 	}
 #endif
+#if 0
 	else if (f_read_solutions_and_tally) {
 
 		other::orbiter_kernel_system::file_io Fio;
@@ -1097,6 +1104,7 @@ void interface_combinatorics::worker(
 				verbose_level);
 
 	}
+#endif
 	else if (f_make_elementary_symmetric_functions) {
 
 		combinatorics::other_combinatorics::combinatorics_domain Combi;

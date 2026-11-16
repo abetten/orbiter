@@ -342,6 +342,9 @@ void group_container::code_ascii(
 
 	ascii_coding.assign(p0);
 	f_has_ascii_coding = true;
+
+	FREE_char(p0);
+
 	if (f_v) {
 		cout << "group_container::code_ascii " << ascii_coding << endl;
 	}

@@ -1581,6 +1581,10 @@ public:
 	void log_current_node_without_group(
 			poset_classification *gen,
 		int s, std::ostream &f, int verbose_level);
+	std::string get_stabilizer_coding(
+			poset_classification *gen,
+			int level,
+			int verbose_level);
 	void log_current_node(
 			poset_classification *gen,
 			int s,

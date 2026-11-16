@@ -100,6 +100,10 @@ public:
 			std::ostream &ost,
 			long int *Pts, int nb_pts,
 			int verbose_level);
+	void move_BLT_set(
+			long int pt_from, long int pt_to,
+			long int *BLT_set_in, long int *BLT_set_out,
+			int verbose_level);
 	void compute_adjacency_list_fast(
 			int first_point_of_starter,
 		long int *points, int nb_points, int *point_color,

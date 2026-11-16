@@ -1443,9 +1443,9 @@ void substructure_lifting_data::count_solutions_in_list_of_files(
 
 	if (f_v) {
 		cout << "substructure_lifting_data::count_solutions_in_list_of_files "
-				"before Fio.count_solutions_in_list_of_files" << endl;
+				"before Fio.Csv_file_support->count_solutions_in_list_of_files" << endl;
 	}
-	Fio.count_solutions_in_list_of_files(
+	Fio.Csv_file_support->count_solutions_in_list_of_files(
 			nb_files, fname, col_label,
 			//List_of_cases,
 			Nb_sol_per_file,
@@ -1456,7 +1456,7 @@ void substructure_lifting_data::count_solutions_in_list_of_files(
 			verbose_level);
 	if (f_v) {
 		cout << "substructure_lifting_data::count_solutions_in_list_of_files "
-				"after Fio.count_solutions_in_list_of_files" << endl;
+				"after Fio.Csv_file_support->count_solutions_in_list_of_files" << endl;
 	}
 
 	for (i = 0; i < nb_files; i++) {
@@ -1682,6 +1682,7 @@ void substructure_lifting_data::init_solutions(
 	}
 }
 
+#if 0
 void substructure_lifting_data::count_solutions_from_clique_finder_case_by_case(
 		int nb_files,
 		long int *list_of_cases, std::string *fname,
@@ -1933,6 +1934,7 @@ void substructure_lifting_data::read_solutions_from_clique_finder_case_by_case(
 				"done" << endl;
 	}
 }
+#endif
 
 
 void substructure_lifting_data::read_solutions_from_clique_finder(
@@ -2016,7 +2018,7 @@ void substructure_lifting_data::read_solutions_from_clique_finder(
 #endif
 
 
-		Fio.read_solutions_from_csv_file(
+		Fio.Csv_file_support->read_solutions_from_csv_file(
 				fname[i], solution_col_label,
 				nb_solutions, Solutions, solution_size,
 				verbose_level);

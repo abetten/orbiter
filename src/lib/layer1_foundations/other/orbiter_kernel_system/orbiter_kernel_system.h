@@ -505,6 +505,16 @@ public:
 			data_structures::ancestry_family **Family,
 		int verbose_level);
 
+	void count_solutions_in_list_of_files(
+			int nb_files, std::string *fname,
+			std::string &col_label,
+			int *&Nb_sol_per_file,
+			int verbose_level);
+	void read_solutions_from_csv_file(
+			std::string &fname, std::string &col_label,
+		int &nb_solutions, long int *&Solutions, int &solution_size,
+		int verbose_level);
+	// called from substructure_lifting_data::read_solutions_from_clique_finder
 
 
 
@@ -538,32 +548,22 @@ public:
 
 	// solution file support:
 
-	void count_solutions_in_list_of_files(
-			int nb_files, std::string *fname,
-			std::string &col_label,
-			//int *List_of_cases,
-			int *&Nb_sol_per_file,
-#if 0
-			int solution_size,
-			int f_has_final_test_function,
-			int (*final_test_function)(long int *data, int sz,
-					void *final_test_data, int verbose_level),
-			void *final_test_data,
-#endif
-			int verbose_level);
 	void count_number_of_solutions_in_file_and_get_solution_size(
 			std::string &fname,
 		int &nb_solutions, int &solution_size,
 		int verbose_level);
+	// ToDo using buf
 	void count_number_of_solutions_in_file(
 			std::string &fname,
 		int &nb_solutions,
 		int verbose_level);
+	// ToDo using buf
 
 	void count_number_of_solutions_in_file_by_case(
 			std::string &fname,
 		int *&nb_solutions, int *&case_nb, int &nb_cases,
 		int verbose_level);
+	// ToDo using buf
 	// called from orbiter::layer4_classification::isomorph::substructure_lifting_data::count_solutions_from_clique_finder
 
 
@@ -572,11 +572,14 @@ public:
 		int &nb_solutions, long int *&Solutions, int &solution_size,
 		int verbose_level);
 
+#if 0
 	void read_solution_file(
 			std::string &fname,
 		int *Inc, int nb_rows, int nb_cols,
 		int *&Solutions, int &sol_length, int &nb_sol,
 		int verbose_level);
+#endif
+
 	void read_solutions_from_file_and_get_solution_size(
 			std::string &fname,
 		int &nb_solutions, long int *&Solutions, int &solution_size,
@@ -586,11 +589,14 @@ public:
 			std::string &fname,
 		int &nb_solutions, long int *&Solutions, int solution_size,
 		int verbose_level);
+
 	void read_solutions_from_file_size_is_known(
 			std::string &fname,
 		std::vector<std::vector<long int> > &Solutions,
 		int solution_size,
 		int verbose_level);
+
+#if 0
 	void read_solutions_from_file_by_case(
 			std::string &fname,
 		int *nb_solutions, int *case_nb, int nb_cases,
@@ -598,6 +604,7 @@ public:
 		int verbose_level);
 	void read_solutions_and_tally(
 			std::string &fname, int sz, int verbose_level);
+#endif
 
 
 
@@ -620,35 +627,52 @@ public:
 	void int_matrix_read_text(
 			std::string &fname,
 		int *&M, int &m, int &n);
+
+	int count_number_of_lines_in_file(
+			std::string &fname, int verbose_level);
+	// ToDo using buf
+
+
+	// orbiter data files:
 	void parse_sets(
 			int nb_cases, char **data, int f_casenumbers,
 		int *&Set_sizes, long int **&Sets,
 		char **&Ago_ascii, char **&Aut_ascii,
 		int *&Casenumbers,
 		int verbose_level);
+
 	void parse_sets_and_check_sizes_easy(
 			int len, int nb_cases,
 		char **data, long int **&sets);
+
 	void parse_line(
 			char *line, int &len, long int *&set,
 		char *ago_ascii, char *aut_ascii);
+
 	int count_number_of_orbits_in_file(
 			std::string &fname, int verbose_level);
-	int count_number_of_lines_in_file(
-			std::string &fname, int verbose_level);
+	// ToDo using buf
+
 	int try_to_read_file(
 			std::string &fname, int &nb_cases,
 		char **&data,
 		int verbose_level);
+	// ToDo using buf
+	// -1 at the beginning of a line is the end of file marker
+	// called from orbiter_data_file::load
+
 	void read_and_parse_data_file(
 			std::string &fname, int &nb_cases,
 		char **&data, long int **&sets, int *&set_sizes,
 		int verbose_level);
+	// called from orbiter::layer4_classification::poset_classification::poset_of_orbits::read_level_file
+
 	void free_data_fancy(
 			int nb_cases,
 		int *Set_sizes, long int **Sets,
 		char **Ago_ascii, char **Aut_ascii,
 		int *Casenumbers);
+
 	void read_and_parse_data_file_fancy(
 			std::string &fname,
 		int f_casenumbers,
@@ -657,6 +681,10 @@ public:
 		char **&Ago_ascii, char **&Aut_ascii,
 		int *&Casenumbers,
 		int verbose_level);
+	// called from orbiter_data_file::init_from_file
+
+
+
 	void read_set_from_file(
 			std::string &fname,
 		long int *&the_set, int &set_size, int verbose_level);
@@ -684,6 +712,9 @@ public:
 	void read_k_th_set_from_file(
 			std::string &fname, int k,
 		int *&the_set, int &set_size, int verbose_level);
+
+
+	// incidence files:
 	void write_incidence_matrix_to_file(
 			std::string &fname,
 		int *Inc, int m, int n, int verbose_level);
@@ -704,8 +735,13 @@ public:
 			std::vector<std::vector<int> > &Geos,
 			int &m, int &n, int &r,
 			std::string &inc_file_name, int verbose_level);
+#if 0
 	int inc_file_get_number_of_geometries(
 			std::string &inc_file_name, int verbose_level);
+#endif
+
+
+
 	long int file_size(
 			std::string &fname);
 	long int file_size(
@@ -722,10 +758,13 @@ public:
 	void fread_uchars(
 			FILE *fp, unsigned char *p, int len);
 
+#if 0
 	void read_ascii_set_of_sets_constant_size(
 			std::string &fname_ascii,
 			int *&Sets, int &nb_sets, int &set_size,
 			int verbose_level);
+#endif
+
 	void write_decomposition_stack(
 			std::string &fname, int m, int n,
 			int *v, int *b, int *aij, int verbose_level);
@@ -754,6 +793,7 @@ public:
 			int f_tail, std::string &tail,
 			std::vector<std::string> &text,
 			int verbose_level);
+	// ToDo using buf
 	void file_edit(
 			std::string &fname_in,
 			std::string &fname_out_mask,
@@ -771,6 +811,8 @@ public:
 			std::string &fname,
 		std::vector<std::string> &Lines,
 		int verbose_level);
+
+
 	void serialize_file_names(
 		std::string &fname_list_of_file,
 		std::string &output_mask,
@@ -830,6 +872,7 @@ public:
 		int &cnt_total,
 		std::vector<int> missing_idx,
 		int verbose_level);
+	// ToDo using buf
 	void concatenate_files_into(
 			std::string &fname_in_mask, int N,
 		std::ofstream &fp_out, std::string &EOF_marker,
@@ -837,6 +880,7 @@ public:
 		int &cnt_total,
 		std::vector<int> &missing_idx,
 		int verbose_level);
+	// ToDo using buf
 
 	void poset_classification_read_candidates_of_orbit(
 			std::string &fname, int orbit_at_level,
@@ -857,10 +901,11 @@ public:
 			std::string &prefix,
 			int level_of_candidates_file, long int *starter,
 			int verbose_level);
+#if 0
 	void write_exact_cover_problem_to_file(
 			int *Inc, int nb_rows,
 		int nb_cols, std::string &fname);
-
+#endif
 
 
 
@@ -1401,23 +1446,36 @@ public:
 
 
 
-//! read output files from the poset classification
+//! read output files from the poset classification, used in ovoid_classify::create_graph
 
 
 
 class orbiter_data_file {
 public:
 	int nb_cases;
-	long int **sets;
-	int *set_sizes;
-	char **Ago_ascii;
-	char **Aut_ascii;
+
+	data_structures::set_of_sets *Orbit_reps;
+
+	//long int **sets;
+	//int *set_sizes;
+
+	std::string *Ago_text;
+	std::string *Aut_text;
+
 	int *Casenumbers;
 	
 	orbiter_data_file();
 	~orbiter_data_file();
 	void load(
 			std::string &fname, int verbose_level);
+	void load_orbiter_file_csv_format(
+			std::string &fname, int verbose_level);
+	int search(
+			long int *search_set, int search_set_sz,
+			int &idx,
+			int verbose_level);
+
+
 };
 
 

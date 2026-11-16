@@ -201,7 +201,7 @@ int knowledge_base::quartic_curves_nb_reps(
 		cout << "knowledge_base::quartic_curves_nb_reps q=" << q
 				<< " I don't have information for this case" << endl;
 		exit(1);
-		}
+	}
 	return nb;
 }
 
@@ -558,129 +558,129 @@ int knowledge_base::cubic_surface_nb_reps(
 
 	if (q == 4) {
 		nb = surface_4_nb_reps;
-		}
+	}
 	else if (q == 7) {
 		nb = surface_7_nb_reps;
-		}
+	}
 	else if (q == 8) {
 		nb = surface_8_nb_reps;
-		}
+	}
 	else if (q == 9) {
 		nb = surface_9_nb_reps;
-		}
+	}
 	else if (q == 11) {
 		nb = surface_11_nb_reps;
-		}
+	}
 	else if (q == 13) {
 		nb = surface_13_nb_reps;
-		}
+	}
 	else if (q == 16) {
 		nb = surface_16_nb_reps;
-		}
+	}
 	else if (q == 17) {
 		nb = surface_17_nb_reps;
-		}
+	}
 	else if (q == 19) {
 		nb = surface_19_nb_reps;
-		}
+	}
 	else if (q == 23) {
 		nb = surface_23_nb_reps;
-		}
+	}
 	else if (q == 25) {
 		nb = surface_25_nb_reps;
-		}
+	}
 	else if (q == 27) {
 		nb = surface_27_nb_reps;
-		}
+	}
 	else if (q == 29) {
 		nb = surface_29_nb_reps;
-		}
+	}
 	else if (q == 31) {
 		nb = surface_31_nb_reps;
-		}
+	}
 	else if (q == 32) {
 		nb = surface_32_nb_reps;
-		}
+	}
 	else if (q == 37) {
 		nb = surface_37_nb_reps;
-		}
+	}
 	else if (q == 41) {
 		nb = surface_41_nb_reps;
-		}
+	}
 	else if (q == 43) {
 		nb = surface_43_nb_reps;
-		}
+	}
 	else if (q == 47) {
 		nb = surface_47_nb_reps;
-		}
+	}
 	else if (q == 49) {
 		nb = surface_49_nb_reps;
-		}
+	}
 	else if (q == 53) {
 		nb = surface_53_nb_reps;
-		}
+	}
 	else if (q == 59) {
 		nb = surface_59_nb_reps;
-		}
+	}
 	else if (q == 61) {
 		nb = surface_61_nb_reps;
-		}
+	}
 	else if (q == 64) {
 		nb = surface_64_nb_reps;
-		}
+	}
 	else if (q == 67) {
 		nb = surface_67_nb_reps;
-		}
+	}
 	else if (q == 71) {
 		nb = surface_71_nb_reps;
-		}
+	}
 	else if (q == 73) {
 		nb = surface_73_nb_reps;
-		}
+	}
 	else if (q == 79) {
 		nb = surface_79_nb_reps;
-		}
+	}
 	else if (q == 81) {
 		nb = surface_81_nb_reps;
-		}
+	}
 	else if (q == 83) {
 		nb = surface_83_nb_reps;
-		}
+	}
 	else if (q == 89) {
 		nb = surface_89_nb_reps;
-		}
+	}
 	else if (q == 97) {
 		nb = surface_97_nb_reps;
-		}
+	}
 	else if (q == 101) {
 		nb = surface_101_nb_reps;
-		}
+	}
 	else if (q == 103) {
 		nb = surface_103_nb_reps;
-		}
+	}
 	else if (q == 107) {
 		nb = surface_107_nb_reps;
-		}
+	}
 	else if (q == 109) {
 		nb = surface_109_nb_reps;
-		}
+	}
 	else if (q == 113) {
 		nb = surface_113_nb_reps;
-		}
+	}
 	else if (q == 121) {
 		nb = surface_121_nb_reps;
-		}
+	}
 	else if (q == 127) {
 		nb = surface_127_nb_reps;
-		}
+	}
 	else if (q == 128) {
 		nb = surface_128_nb_reps;
-		}
+	}
 	else {
 		cout << "knowledge_base::cubic_surface_nb_reps q=" << q
 				<< " I don't have information for this case" << endl;
 		exit(1);
-		}
+	}
 	return nb;
 }
 
@@ -693,217 +693,217 @@ int *knowledge_base::cubic_surface_representative(
 		p = surface_4_reps;
 		nb = surface_4_nb_reps;
 		sz = surface_4_size;
-		}
+	}
 	else if (q == 7) {
 		p = surface_7_reps;
 		nb = surface_7_nb_reps;
 		sz = surface_7_size;
-		}
+	}
 	else if (q == 8) {
 		p = surface_8_reps;
 		nb = surface_8_nb_reps;
 		sz = surface_8_size;
-		}
+	}
 	else if (q == 9) {
 		p = surface_9_reps;
 		nb = surface_9_nb_reps;
 		sz = surface_9_size;
-		}
+	}
 	else if (q == 11) {
 		p = surface_11_reps;
 		nb = surface_11_nb_reps;
 		sz = surface_11_size;
-		}
+	}
 	else if (q == 13) {
 		p = surface_13_reps;
 		nb = surface_13_nb_reps;
 		sz = surface_13_size;
-		}
+	}
 	else if (q == 16) {
 		p = surface_16_reps;
 		nb = surface_16_nb_reps;
 		sz = surface_16_size;
-		}
+	}
 	else if (q == 17) {
 		p = surface_17_reps;
 		nb = surface_17_nb_reps;
 		sz = surface_17_size;
-		}
+	}
 	else if (q == 19) {
 		p = surface_19_reps;
 		nb = surface_19_nb_reps;
 		sz = surface_19_size;
-		}
+	}
 	else if (q == 23) {
 		p = surface_23_reps;
 		nb = surface_23_nb_reps;
 		sz = surface_23_size;
-		}
+	}
 	else if (q == 25) {
 		p = surface_25_reps;
 		nb = surface_25_nb_reps;
 		sz = surface_25_size;
-		}
+	}
 	else if (q == 27) {
 		p = surface_27_reps;
 		nb = surface_27_nb_reps;
 		sz = surface_27_size;
-		}
+	}
 	else if (q == 29) {
 		p = surface_29_reps;
 		nb = surface_29_nb_reps;
 		sz = surface_29_size;
-		}
+	}
 	else if (q == 31) {
 		p = surface_31_reps;
 		nb = surface_31_nb_reps;
 		sz = surface_31_size;
-		}
+	}
 	else if (q == 32) {
 		p = surface_32_reps;
 		nb = surface_32_nb_reps;
 		sz = surface_32_size;
-		}
+	}
 	else if (q == 37) {
 		p = surface_37_reps;
 		nb = surface_37_nb_reps;
 		sz = surface_37_size;
-		}
+	}
 	else if (q == 41) {
 		p = surface_41_reps;
 		nb = surface_41_nb_reps;
 		sz = surface_41_size;
-		}
+	}
 	else if (q == 43) {
 		p = surface_43_reps;
 		nb = surface_43_nb_reps;
 		sz = surface_43_size;
-		}
+	}
 	else if (q == 47) {
 		p = surface_47_reps;
 		nb = surface_47_nb_reps;
 		sz = surface_47_size;
-		}
+	}
 	else if (q == 49) {
 		p = surface_49_reps;
 		nb = surface_49_nb_reps;
 		sz = surface_49_size;
-		}
+	}
 	else if (q == 53) {
 		p = surface_53_reps;
 		nb = surface_53_nb_reps;
 		sz = surface_53_size;
-		}
+	}
 	else if (q == 59) {
 		p = surface_59_reps;
 		nb = surface_59_nb_reps;
 		sz = surface_59_size;
-		}
+	}
 	else if (q == 61) {
 		p = surface_61_reps;
 		nb = surface_61_nb_reps;
 		sz = surface_61_size;
-		}
+	}
 	else if (q == 64) {
 		p = surface_64_reps;
 		nb = surface_64_nb_reps;
 		sz = surface_64_size;
-		}
+	}
 	else if (q == 67) {
 		p = surface_67_reps;
 		nb = surface_67_nb_reps;
 		sz = surface_67_size;
-		}
+	}
 	else if (q == 71) {
 		p = surface_71_reps;
 		nb = surface_71_nb_reps;
 		sz = surface_71_size;
-		}
+	}
 	else if (q == 73) {
 		p = surface_73_reps;
 		nb = surface_73_nb_reps;
 		sz = surface_73_size;
-		}
+	}
 	else if (q == 79) {
 		p = surface_79_reps;
 		nb = surface_79_nb_reps;
 		sz = surface_79_size;
-		}
+	}
 	else if (q == 81) {
 		p = surface_81_reps;
 		nb = surface_81_nb_reps;
 		sz = surface_81_size;
-		}
+	}
 	else if (q == 83) {
 		p = surface_83_reps;
 		nb = surface_83_nb_reps;
 		sz = surface_83_size;
-		}
+	}
 	else if (q == 89) {
 		p = surface_89_reps;
 		nb = surface_89_nb_reps;
 		sz = surface_89_size;
-		}
+	}
 	else if (q == 97) {
 		p = surface_97_reps;
 		nb = surface_97_nb_reps;
 		sz = surface_97_size;
-		}
+	}
 	else if (q == 101) {
 		p = surface_101_reps;
 		nb = surface_101_nb_reps;
 		sz = surface_101_size;
-		}
+	}
 	else if (q == 103) {
 		p = surface_103_reps;
 		nb = surface_103_nb_reps;
 		sz = surface_103_size;
-		}
+	}
 	else if (q == 107) {
 		p = surface_107_reps;
 		nb = surface_107_nb_reps;
 		sz = surface_107_size;
-		}
+	}
 	else if (q == 109) {
 		p = surface_109_reps;
 		nb = surface_109_nb_reps;
 		sz = surface_109_size;
-		}
+	}
 	else if (q == 113) {
 		p = surface_113_reps;
 		nb = surface_113_nb_reps;
 		sz = surface_113_size;
-		}
+	}
 	else if (q == 121) {
 		p = surface_121_reps;
 		nb = surface_121_nb_reps;
 		sz = surface_121_size;
-		}
+	}
 	else if (q == 127) {
 		p = surface_127_reps;
 		nb = surface_127_nb_reps;
 		sz = surface_127_size;
-		}
+	}
 	else if (q == 128) {
 		p = surface_128_reps;
 		nb = surface_128_nb_reps;
 		sz = surface_128_size;
-		}
+	}
 	else {
 		cout << "knowledge_base::cubic_surface_representative q=" << q
 				<< " I don't have information for this case" << endl;
 		exit(1);
-		}
+	}
 	if (i < 0) {
 		cout << "knowledge_base::cubic_surface_representative q=" << q << " i=" << i
 				<< " but i must be at least 0 (numbering starts at 0)" << endl;
 		exit(1);
-		}
+	}
 	if (i >= nb) {
 		cout << "knowledge_base::cubic_surface_representative q=" << q << " i=" << i
 				<< " but I have only " << nb << " representatives" << endl;
 		exit(1);
-		}
+	}
 	p += i * sz;
 	return p;
 }
@@ -924,7 +924,7 @@ void knowledge_base::cubic_surface_stab_gens(
 		f = surface_4_stab_gens_fst[i];
 		l = surface_4_stab_gens_len[i];
 		stab_order = surface_4_stab_order[i];
-		}
+	}
 	else if (q == 7) {
 		Reps = surface_7_stab_gens;
 		nb = surface_7_nb_reps;
@@ -932,7 +932,7 @@ void knowledge_base::cubic_surface_stab_gens(
 		f = surface_7_stab_gens_fst[i];
 		l = surface_7_stab_gens_len[i];
 		stab_order = surface_7_stab_order[i];
-		}
+	}
 	else if (q == 8) {
 		Reps = surface_8_stab_gens;
 		nb = surface_8_nb_reps;
@@ -940,7 +940,7 @@ void knowledge_base::cubic_surface_stab_gens(
 		f = surface_8_stab_gens_fst[i];
 		l = surface_8_stab_gens_len[i];
 		stab_order = surface_8_stab_order[i];
-		}
+	}
 	else if (q == 9) {
 		Reps = surface_9_stab_gens;
 		nb = surface_9_nb_reps;
@@ -948,7 +948,7 @@ void knowledge_base::cubic_surface_stab_gens(
 		f = surface_9_stab_gens_fst[i];
 		l = surface_9_stab_gens_len[i];
 		stab_order = surface_9_stab_order[i];
-		}
+	}
 	else if (q == 11) {
 		Reps = surface_11_stab_gens;
 		nb = surface_11_nb_reps;
@@ -956,7 +956,7 @@ void knowledge_base::cubic_surface_stab_gens(
 		f = surface_11_stab_gens_fst[i];
 		l = surface_11_stab_gens_len[i];
 		stab_order = surface_11_stab_order[i];
-		}
+	}
 	else if (q == 13) {
 		Reps = surface_13_stab_gens;
 		nb = surface_13_nb_reps;
@@ -964,7 +964,7 @@ void knowledge_base::cubic_surface_stab_gens(
 		f = surface_13_stab_gens_fst[i];
 		l = surface_13_stab_gens_len[i];
 		stab_order = surface_13_stab_order[i];
-		}
+	}
 	else if (q == 16) {
 		Reps = surface_16_stab_gens;
 		nb = surface_16_nb_reps;
@@ -972,7 +972,7 @@ void knowledge_base::cubic_surface_stab_gens(
 		f = surface_16_stab_gens_fst[i];
 		l = surface_16_stab_gens_len[i];
 		stab_order = surface_16_stab_order[i];
-		}
+	}
 	else if (q == 17) {
 		Reps = surface_17_stab_gens;
 		nb = surface_17_nb_reps;
@@ -980,7 +980,7 @@ void knowledge_base::cubic_surface_stab_gens(
 		f = surface_17_stab_gens_fst[i];
 		l = surface_17_stab_gens_len[i];
 		stab_order = surface_17_stab_order[i];
-		}
+	}
 	else if (q == 19) {
 		Reps = surface_19_stab_gens;
 		nb = surface_19_nb_reps;
@@ -988,7 +988,7 @@ void knowledge_base::cubic_surface_stab_gens(
 		f = surface_19_stab_gens_fst[i];
 		l = surface_19_stab_gens_len[i];
 		stab_order = surface_19_stab_order[i];
-		}
+	}
 	else if (q == 23) {
 		Reps = surface_23_stab_gens;
 		nb = surface_23_nb_reps;
@@ -996,7 +996,7 @@ void knowledge_base::cubic_surface_stab_gens(
 		f = surface_23_stab_gens_fst[i];
 		l = surface_23_stab_gens_len[i];
 		stab_order = surface_23_stab_order[i];
-		}
+	}
 	else if (q == 25) {
 		Reps = surface_25_stab_gens;
 		nb = surface_25_nb_reps;
@@ -1004,7 +1004,7 @@ void knowledge_base::cubic_surface_stab_gens(
 		f = surface_25_stab_gens_fst[i];
 		l = surface_25_stab_gens_len[i];
 		stab_order = surface_25_stab_order[i];
-		}
+	}
 	else if (q == 27) {
 		Reps = surface_27_stab_gens;
 		nb = surface_27_nb_reps;
@@ -1012,7 +1012,7 @@ void knowledge_base::cubic_surface_stab_gens(
 		f = surface_27_stab_gens_fst[i];
 		l = surface_27_stab_gens_len[i];
 		stab_order = surface_27_stab_order[i];
-		}
+	}
 	else if (q == 29) {
 		Reps = surface_29_stab_gens;
 		nb = surface_29_nb_reps;
@@ -1020,7 +1020,7 @@ void knowledge_base::cubic_surface_stab_gens(
 		f = surface_29_stab_gens_fst[i];
 		l = surface_29_stab_gens_len[i];
 		stab_order = surface_29_stab_order[i];
-		}
+	}
 	else if (q == 31) {
 		Reps = surface_31_stab_gens;
 		nb = surface_31_nb_reps;
@@ -1028,7 +1028,7 @@ void knowledge_base::cubic_surface_stab_gens(
 		f = surface_31_stab_gens_fst[i];
 		l = surface_31_stab_gens_len[i];
 		stab_order = surface_31_stab_order[i];
-		}
+	}
 	else if (q == 32) {
 		Reps = surface_32_stab_gens;
 		nb = surface_32_nb_reps;
@@ -1036,7 +1036,7 @@ void knowledge_base::cubic_surface_stab_gens(
 		f = surface_32_stab_gens_fst[i];
 		l = surface_32_stab_gens_len[i];
 		stab_order = surface_32_stab_order[i];
-		}
+	}
 	else if (q == 37) {
 		Reps = surface_37_stab_gens;
 		nb = surface_37_nb_reps;
@@ -1044,7 +1044,7 @@ void knowledge_base::cubic_surface_stab_gens(
 		f = surface_37_stab_gens_fst[i];
 		l = surface_37_stab_gens_len[i];
 		stab_order = surface_37_stab_order[i];
-		}
+	}
 	else if (q == 41) {
 		Reps = surface_41_stab_gens;
 		nb = surface_41_nb_reps;
@@ -1052,7 +1052,7 @@ void knowledge_base::cubic_surface_stab_gens(
 		f = surface_41_stab_gens_fst[i];
 		l = surface_41_stab_gens_len[i];
 		stab_order = surface_41_stab_order[i];
-		}
+	}
 	else if (q == 43) {
 		Reps = surface_43_stab_gens;
 		nb = surface_43_nb_reps;
@@ -1060,7 +1060,7 @@ void knowledge_base::cubic_surface_stab_gens(
 		f = surface_43_stab_gens_fst[i];
 		l = surface_43_stab_gens_len[i];
 		stab_order = surface_43_stab_order[i];
-		}
+	}
 	else if (q == 47) {
 		Reps = surface_47_stab_gens;
 		nb = surface_47_nb_reps;
@@ -1068,7 +1068,7 @@ void knowledge_base::cubic_surface_stab_gens(
 		f = surface_47_stab_gens_fst[i];
 		l = surface_47_stab_gens_len[i];
 		stab_order = surface_47_stab_order[i];
-		}
+	}
 	else if (q == 49) {
 		Reps = surface_49_stab_gens;
 		nb = surface_49_nb_reps;
@@ -1076,7 +1076,7 @@ void knowledge_base::cubic_surface_stab_gens(
 		f = surface_49_stab_gens_fst[i];
 		l = surface_49_stab_gens_len[i];
 		stab_order = surface_49_stab_order[i];
-		}
+	}
 	else if (q == 53) {
 		Reps = surface_53_stab_gens;
 		nb = surface_53_nb_reps;
@@ -1084,7 +1084,7 @@ void knowledge_base::cubic_surface_stab_gens(
 		f = surface_53_stab_gens_fst[i];
 		l = surface_53_stab_gens_len[i];
 		stab_order = surface_53_stab_order[i];
-		}
+	}
 	else if (q == 59) {
 		Reps = surface_59_stab_gens;
 		nb = surface_59_nb_reps;
@@ -1092,7 +1092,7 @@ void knowledge_base::cubic_surface_stab_gens(
 		f = surface_59_stab_gens_fst[i];
 		l = surface_59_stab_gens_len[i];
 		stab_order = surface_59_stab_order[i];
-		}
+	}
 	else if (q == 61) {
 		Reps = surface_61_stab_gens;
 		nb = surface_61_nb_reps;
@@ -1100,7 +1100,7 @@ void knowledge_base::cubic_surface_stab_gens(
 		f = surface_61_stab_gens_fst[i];
 		l = surface_61_stab_gens_len[i];
 		stab_order = surface_61_stab_order[i];
-		}
+	}
 	else if (q == 64) {
 		Reps = surface_64_stab_gens;
 		nb = surface_64_nb_reps;
@@ -1108,7 +1108,7 @@ void knowledge_base::cubic_surface_stab_gens(
 		f = surface_64_stab_gens_fst[i];
 		l = surface_64_stab_gens_len[i];
 		stab_order = surface_64_stab_order[i];
-		}
+	}
 	else if (q == 67) {
 		Reps = surface_67_stab_gens;
 		nb = surface_67_nb_reps;
@@ -1116,7 +1116,7 @@ void knowledge_base::cubic_surface_stab_gens(
 		f = surface_67_stab_gens_fst[i];
 		l = surface_67_stab_gens_len[i];
 		stab_order = surface_67_stab_order[i];
-		}
+	}
 	else if (q == 71) {
 		Reps = surface_71_stab_gens;
 		nb = surface_71_nb_reps;
@@ -1124,7 +1124,7 @@ void knowledge_base::cubic_surface_stab_gens(
 		f = surface_71_stab_gens_fst[i];
 		l = surface_71_stab_gens_len[i];
 		stab_order = surface_71_stab_order[i];
-		}
+	}
 	else if (q == 73) {
 		Reps = surface_73_stab_gens;
 		nb = surface_73_nb_reps;
@@ -1132,7 +1132,7 @@ void knowledge_base::cubic_surface_stab_gens(
 		f = surface_73_stab_gens_fst[i];
 		l = surface_73_stab_gens_len[i];
 		stab_order = surface_73_stab_order[i];
-		}
+	}
 	else if (q == 79) {
 		Reps = surface_79_stab_gens;
 		nb = surface_79_nb_reps;
@@ -1140,7 +1140,7 @@ void knowledge_base::cubic_surface_stab_gens(
 		f = surface_79_stab_gens_fst[i];
 		l = surface_79_stab_gens_len[i];
 		stab_order = surface_79_stab_order[i];
-		}
+	}
 	else if (q == 81) {
 		Reps = surface_81_stab_gens;
 		nb = surface_81_nb_reps;
@@ -1148,7 +1148,7 @@ void knowledge_base::cubic_surface_stab_gens(
 		f = surface_81_stab_gens_fst[i];
 		l = surface_81_stab_gens_len[i];
 		stab_order = surface_81_stab_order[i];
-		}
+	}
 	else if (q == 83) {
 		Reps = surface_83_stab_gens;
 		nb = surface_83_nb_reps;
@@ -1156,7 +1156,7 @@ void knowledge_base::cubic_surface_stab_gens(
 		f = surface_83_stab_gens_fst[i];
 		l = surface_83_stab_gens_len[i];
 		stab_order = surface_83_stab_order[i];
-		}
+	}
 	else if (q == 89) {
 		Reps = surface_89_stab_gens;
 		nb = surface_89_nb_reps;
@@ -1164,7 +1164,7 @@ void knowledge_base::cubic_surface_stab_gens(
 		f = surface_89_stab_gens_fst[i];
 		l = surface_89_stab_gens_len[i];
 		stab_order = surface_89_stab_order[i];
-		}
+	}
 	else if (q == 97) {
 		Reps = surface_97_stab_gens;
 		nb = surface_97_nb_reps;
@@ -1172,7 +1172,7 @@ void knowledge_base::cubic_surface_stab_gens(
 		f = surface_97_stab_gens_fst[i];
 		l = surface_97_stab_gens_len[i];
 		stab_order = surface_97_stab_order[i];
-		}
+	}
 	else if (q == 101) {
 		Reps = surface_101_stab_gens;
 		nb = surface_101_nb_reps;
@@ -1180,7 +1180,7 @@ void knowledge_base::cubic_surface_stab_gens(
 		f = surface_101_stab_gens_fst[i];
 		l = surface_101_stab_gens_len[i];
 		stab_order = surface_101_stab_order[i];
-		}
+	}
 	else if (q == 103) {
 		Reps = surface_103_stab_gens;
 		nb = surface_103_nb_reps;
@@ -1188,7 +1188,7 @@ void knowledge_base::cubic_surface_stab_gens(
 		f = surface_103_stab_gens_fst[i];
 		l = surface_103_stab_gens_len[i];
 		stab_order = surface_103_stab_order[i];
-		}
+	}
 	else if (q == 107) {
 		Reps = surface_107_stab_gens;
 		nb = surface_107_nb_reps;
@@ -1196,7 +1196,7 @@ void knowledge_base::cubic_surface_stab_gens(
 		f = surface_107_stab_gens_fst[i];
 		l = surface_107_stab_gens_len[i];
 		stab_order = surface_107_stab_order[i];
-		}
+	}
 	else if (q == 109) {
 		Reps = surface_109_stab_gens;
 		nb = surface_109_nb_reps;
@@ -1204,7 +1204,7 @@ void knowledge_base::cubic_surface_stab_gens(
 		f = surface_109_stab_gens_fst[i];
 		l = surface_109_stab_gens_len[i];
 		stab_order = surface_109_stab_order[i];
-		}
+	}
 	else if (q == 113) {
 		Reps = surface_113_stab_gens;
 		nb = surface_113_nb_reps;
@@ -1212,7 +1212,7 @@ void knowledge_base::cubic_surface_stab_gens(
 		f = surface_113_stab_gens_fst[i];
 		l = surface_113_stab_gens_len[i];
 		stab_order = surface_113_stab_order[i];
-		}
+	}
 	else if (q == 121) {
 		Reps = surface_121_stab_gens;
 		nb = surface_121_nb_reps;
@@ -1220,7 +1220,7 @@ void knowledge_base::cubic_surface_stab_gens(
 		f = surface_121_stab_gens_fst[i];
 		l = surface_121_stab_gens_len[i];
 		stab_order = surface_121_stab_order[i];
-		}
+	}
 	else if (q == 127) {
 		Reps = surface_127_stab_gens;
 		nb = surface_127_nb_reps;
@@ -1228,7 +1228,7 @@ void knowledge_base::cubic_surface_stab_gens(
 		f = surface_127_stab_gens_fst[i];
 		l = surface_127_stab_gens_len[i];
 		stab_order = surface_127_stab_order[i];
-		}
+	}
 	else if (q == 128) {
 		Reps = surface_128_stab_gens;
 		nb = surface_128_nb_reps;
@@ -1236,22 +1236,22 @@ void knowledge_base::cubic_surface_stab_gens(
 		f = surface_128_stab_gens_fst[i];
 		l = surface_128_stab_gens_len[i];
 		stab_order = surface_128_stab_order[i];
-		}
+	}
 	else {
 		cout << "knowledge_base::cubic_surface_stab_gens q=" << q
 				<< " I don't have information for this field order" << endl;
 		exit(1);
-		}
+	}
 	if (i < 0) {
 		cout << "knowledge_base::cubic_surface_stab_gens q=" << q << " i=" << i
 				<< " but i must be at least 0 (numbering starts at 0)" << endl;
 		exit(1);
-		}
+	}
 	if (i >= nb) {
 		cout << "knowledge_base::cubic_surface_stab_gens q=" << q << " i=" << i
 				<< " but I have only " << nb << " representatives" << endl;
 		exit(1);
-		}
+	}
 	nb_gens = l;
 	data_size = make_element_size;
 	data = Reps + f * make_element_size;
@@ -1267,217 +1267,217 @@ int knowledge_base::cubic_surface_nb_Eckardt_points(
 		p = surface_4_nb_E;
 		nb = surface_4_nb_reps;
 		//sz = surface_4_size;
-		}
+	}
 	else if (q == 7) {
 		p = surface_7_nb_E;
 		nb = surface_7_nb_reps;
 		//sz = surface_7_size;
-		}
+	}
 	else if (q == 8) {
 		p = surface_8_nb_E;
 		nb = surface_8_nb_reps;
 		//sz = surface_8_size;
-		}
+	}
 	else if (q == 9) {
 		p = surface_9_nb_E;
 		nb = surface_9_nb_reps;
 		//sz = surface_9_size;
-		}
+	}
 	else if (q == 11) {
 		p = surface_11_nb_E;
 		nb = surface_11_nb_reps;
 		//sz = surface_11_size;
-		}
+	}
 	else if (q == 13) {
 		p = surface_13_nb_E;
 		nb = surface_13_nb_reps;
 		//sz = surface_13_size;
-		}
+	}
 	else if (q == 16) {
 		p = surface_16_nb_E;
 		nb = surface_16_nb_reps;
 		//sz = surface_16_size;
-		}
+	}
 	else if (q == 17) {
 		p = surface_17_nb_E;
 		nb = surface_17_nb_reps;
 		//sz = surface_17_size;
-		}
+	}
 	else if (q == 19) {
 		p = surface_19_nb_E;
 		nb = surface_19_nb_reps;
 		//sz = surface_19_size;
-		}
+	}
 	else if (q == 23) {
 		p = surface_23_nb_E;
 		nb = surface_23_nb_reps;
 		//sz = surface_23_size;
-		}
+	}
 	else if (q == 25) {
 		p = surface_25_nb_E;
 		nb = surface_25_nb_reps;
 		//sz = surface_25_size;
-		}
+	}
 	else if (q == 27) {
 		p = surface_27_nb_E;
 		nb = surface_27_nb_reps;
 		//sz = surface_27_size;
-		}
+	}
 	else if (q == 29) {
 		p = surface_29_nb_E;
 		nb = surface_29_nb_reps;
 		//sz = surface_29_size;
-		}
+	}
 	else if (q == 31) {
 		p = surface_31_nb_E;
 		nb = surface_31_nb_reps;
 		//sz = surface_31_size;
-		}
+	}
 	else if (q == 32) {
 		p = surface_32_nb_E;
 		nb = surface_32_nb_reps;
 		//sz = surface_32_size;
-		}
+	}
 	else if (q == 37) {
 		p = surface_37_nb_E;
 		nb = surface_37_nb_reps;
 		//sz = surface_37_size;
-		}
+	}
 	else if (q == 41) {
 		p = surface_41_nb_E;
 		nb = surface_41_nb_reps;
 		//sz = surface_41_size;
-		}
+	}
 	else if (q == 43) {
 		p = surface_43_nb_E;
 		nb = surface_43_nb_reps;
 		//sz = surface_43_size;
-		}
+	}
 	else if (q == 47) {
 		p = surface_47_nb_E;
 		nb = surface_47_nb_reps;
 		//sz = surface_47_size;
-		}
+	}
 	else if (q == 49) {
 		p = surface_49_nb_E;
 		nb = surface_49_nb_reps;
 		//sz = surface_49_size;
-		}
+	}
 	else if (q == 53) {
 		p = surface_53_nb_E;
 		nb = surface_53_nb_reps;
 		//sz = surface_53_size;
-		}
+	}
 	else if (q == 59) {
 		p = surface_59_nb_E;
 		nb = surface_59_nb_reps;
 		//sz = surface_59_size;
-		}
+	}
 	else if (q == 61) {
 		p = surface_61_nb_E;
 		nb = surface_61_nb_reps;
 		//sz = surface_61_size;
-		}
+	}
 	else if (q == 64) {
 		p = surface_64_nb_E;
 		nb = surface_64_nb_reps;
 		//sz = surface_64_size;
-		}
+	}
 	else if (q == 67) {
 		p = surface_67_nb_E;
 		nb = surface_67_nb_reps;
 		//sz = surface_67_size;
-		}
+	}
 	else if (q == 71) {
 		p = surface_71_nb_E;
 		nb = surface_71_nb_reps;
 		//sz = surface_71_size;
-		}
+	}
 	else if (q == 73) {
 		p = surface_73_nb_E;
 		nb = surface_73_nb_reps;
 		//sz = surface_73_size;
-		}
+	}
 	else if (q == 79) {
 		p = surface_79_nb_E;
 		nb = surface_79_nb_reps;
 		//sz = surface_79_size;
-		}
+	}
 	else if (q == 81) {
 		p = surface_81_nb_E;
 		nb = surface_81_nb_reps;
 		//sz = surface_81_size;
-		}
+	}
 	else if (q == 83) {
 		p = surface_83_nb_E;
 		nb = surface_83_nb_reps;
 		//sz = surface_83_size;
-		}
+	}
 	else if (q == 89) {
 		p = surface_89_nb_E;
 		nb = surface_89_nb_reps;
 		//sz = surface_89_size;
-		}
+	}
 	else if (q == 97) {
 		p = surface_97_nb_E;
 		nb = surface_97_nb_reps;
 		//sz = surface_97_size;
-		}
+	}
 	else if (q == 101) {
 		p = surface_101_nb_E;
 		nb = surface_101_nb_reps;
 		//sz = surface_101_size;
-		}
+	}
 	else if (q == 103) {
 		p = surface_103_nb_E;
 		nb = surface_103_nb_reps;
 		//sz = surface_103_size;
-		}
+	}
 	else if (q == 107) {
 		p = surface_107_nb_E;
 		nb = surface_107_nb_reps;
 		//sz = surface_107_size;
-		}
+	}
 	else if (q == 109) {
 		p = surface_109_nb_E;
 		nb = surface_109_nb_reps;
 		//sz = surface_109_size;
-		}
+	}
 	else if (q == 113) {
 		p = surface_113_nb_E;
 		nb = surface_113_nb_reps;
 		//sz = surface_113_size;
-		}
+	}
 	else if (q == 121) {
 		p = surface_121_nb_E;
 		nb = surface_121_nb_reps;
 		//sz = surface_121_size;
-		}
+	}
 	else if (q == 127) {
 		p = surface_127_nb_E;
 		nb = surface_127_nb_reps;
 		//sz = surface_127_size;
-		}
+	}
 	else if (q == 128) {
 		p = surface_128_nb_E;
 		nb = surface_128_nb_reps;
 		//sz = surface_128_size;
-		}
+	}
 	else {
 		cout << "knowledge_base::cubic_surface_nb_Eckardt_points q=" << q
 				<< " I don't have information for this case" << endl;
 		exit(1);
-		}
+	}
 	if (i < 0) {
 		cout << "knowledge_base::cubic_surface_nb_Eckardt_points q=" << q << " i=" << i
 				<< " but i must be at least 0 (numbering starts at 0)" << endl;
 		exit(1);
-		}
+	}
 	if (i >= nb) {
 		cout << "knowledge_base::cubic_surface_nb_Eckardt_points q=" << q << " i=" << i
 				<< " but I have only " << nb << " representatives" << endl;
 		exit(1);
-		}
+	}
 	return p[i];
 }
 
@@ -1490,178 +1490,178 @@ long int *knowledge_base::cubic_surface_Lines(
 	if (q == 4) {
 		p = surface_4_Lines;
 		nb = surface_4_nb_reps;
-		}
+	}
 	else if (q == 7) {
 		p = surface_7_Lines;
 		nb = surface_7_nb_reps;
-		}
+	}
 	else if (q == 8) {
 		p = surface_8_Lines;
 		nb = surface_8_nb_reps;
-		}
+	}
 	else if (q == 9) {
 		p = surface_9_Lines;
 		nb = surface_9_nb_reps;
-		}
+	}
 	else if (q == 11) {
 		p = surface_11_Lines;
 		nb = surface_11_nb_reps;
-		}
+	}
 	else if (q == 13) {
 		p = surface_13_Lines;
 		nb = surface_13_nb_reps;
-		}
+	}
 	else if (q == 16) {
 		p = surface_16_Lines;
 		nb = surface_16_nb_reps;
-		}
+	}
 	else if (q == 17) {
 		p = surface_17_Lines;
 		nb = surface_17_nb_reps;
-		}
+	}
 	else if (q == 19) {
 		p = surface_19_Lines;
 		nb = surface_19_nb_reps;
-		}
+	}
 	else if (q == 23) {
 		p = surface_23_Lines;
 		nb = surface_23_nb_reps;
-		}
+	}
 	else if (q == 25) {
 		p = surface_25_Lines;
 		nb = surface_25_nb_reps;
-		}
+	}
 	else if (q == 27) {
 		p = surface_27_Lines;
 		nb = surface_27_nb_reps;
-		}
+	}
 	else if (q == 29) {
 		p = surface_29_Lines;
 		nb = surface_29_nb_reps;
-		}
+	}
 	else if (q == 31) {
 		p = surface_31_Lines;
 		nb = surface_31_nb_reps;
-		}
+	}
 	else if (q == 32) {
 		p = surface_32_Lines;
 		nb = surface_32_nb_reps;
-		}
+	}
 	else if (q == 37) {
 		p = surface_37_Lines;
 		nb = surface_37_nb_reps;
-		}
+	}
 	else if (q == 41) {
 		p = surface_41_Lines;
 		nb = surface_41_nb_reps;
-		}
+	}
 	else if (q == 43) {
 		p = surface_43_Lines;
 		nb = surface_43_nb_reps;
-		}
+	}
 	else if (q == 47) {
 		p = surface_47_Lines;
 		nb = surface_47_nb_reps;
-		}
+	}
 	else if (q == 49) {
 		p = surface_49_Lines;
 		nb = surface_49_nb_reps;
-		}
+	}
 	else if (q == 53) {
 		p = surface_53_Lines;
 		nb = surface_53_nb_reps;
-		}
+	}
 	else if (q == 59) {
 		p = surface_59_Lines;
 		nb = surface_59_nb_reps;
-		}
+	}
 	else if (q == 61) {
 		p = surface_61_Lines;
 		nb = surface_61_nb_reps;
-		}
+	}
 	else if (q == 64) {
 		p = surface_64_Lines;
 		nb = surface_64_nb_reps;
-		}
+	}
 	else if (q == 67) {
 		p = surface_67_Lines;
 		nb = surface_67_nb_reps;
-		}
+	}
 	else if (q == 71) {
 		p = surface_71_Lines;
 		nb = surface_71_nb_reps;
-		}
+	}
 	else if (q == 73) {
 		p = surface_73_Lines;
 		nb = surface_73_nb_reps;
-		}
+	}
 	else if (q == 79) {
 		p = surface_79_Lines;
 		nb = surface_79_nb_reps;
-		}
+	}
 	else if (q == 81) {
 		p = surface_81_Lines;
 		nb = surface_81_nb_reps;
-		}
+	}
 	else if (q == 83) {
 		p = surface_83_Lines;
 		nb = surface_83_nb_reps;
-		}
+	}
 	else if (q == 89) {
 		p = surface_89_Lines;
 		nb = surface_89_nb_reps;
-		}
+	}
 	else if (q == 97) {
 		p = surface_97_Lines;
 		nb = surface_97_nb_reps;
-		}
+	}
 	else if (q == 101) {
 		p = surface_101_Lines;
 		nb = surface_101_nb_reps;
-		}
+	}
 	else if (q == 103) {
 		p = surface_103_Lines;
 		nb = surface_103_nb_reps;
-		}
+	}
 	else if (q == 107) {
 		p = surface_107_Lines;
 		nb = surface_107_nb_reps;
-		}
+	}
 	else if (q == 109) {
 		p = surface_109_Lines;
 		nb = surface_109_nb_reps;
-		}
+	}
 	else if (q == 113) {
 		p = surface_113_Lines;
 		nb = surface_113_nb_reps;
-		}
+	}
 	else if (q == 121) {
 		p = surface_121_Lines;
 		nb = surface_121_nb_reps;
-		}
+	}
 	else if (q == 127) {
 		p = surface_127_Lines;
 		nb = surface_127_nb_reps;
-		}
+	}
 	else if (q == 128) {
 		p = surface_128_Lines;
 		nb = surface_128_nb_reps;
-		}
+	}
 	else {
 		cout << "knowledge_base::cubic_surface_Lines q=" << q
 				<< " I don't have information for this case" << endl;
 		exit(1);
-		}
+	}
 	if (i < 0) {
 		cout << "knowledge_base::cubic_surface_Lines q=" << q << " i=" << i
 				<< " but i must be at least 0 (numbering starts at 0)" << endl;
 		exit(1);
-		}
+	}
 	if (i >= nb) {
 		cout << "knowledge_base::cubic_surface_Lines q=" << q << " i=" << i
 				<< " but I have only " << nb << " representatives" << endl;
 		exit(1);
-		}
+	}
 	return p + i * 27;
 }
 
@@ -1679,18 +1679,18 @@ int knowledge_base::hyperoval_nb_reps(
 
 	if (q == 8) {
 		nb = arcs_8_10_nb_reps;
-		}
+	}
 	else if (q == 16) {
 		nb = arcs_16_18_nb_reps;
-		}
+	}
 	else if (q == 32) {
 		nb = arcs_32_34_nb_reps;
-		}
+	}
 	else {
 		cout << "knowledge_base::hyperoval_nb_reps q=" << q
 				<< " I don't have information for this case" << endl;
 		exit(1);
-		}
+	}
 	return nb;
 }
 
@@ -1703,32 +1703,32 @@ int *knowledge_base::hyperoval_representative(
 		p = arcs_8_10_reps;
 		nb = arcs_8_10_nb_reps;
 		sz = arcs_8_10_size;
-		}
+	}
 	else if (q == 16) {
 		p = arcs_16_18_reps;
 		nb = arcs_16_18_nb_reps;
 		sz = arcs_16_18_size;
-		}
+	}
 	else if (q == 32) {
 		p = arcs_32_34_reps;
 		nb = arcs_32_34_nb_reps;
 		sz = arcs_32_34_size;
-		}
+	}
 	else {
 		cout << "knowledge_base::hyperovals_representative q=" << q
 				<< " I don't have information for this case" << endl;
 		exit(1);
-		}
+	}
 	if (i < 0) {
 		cout << "knowledge_base::hyperoval_representative q=" << q << " i=" << i
 				<< " but i must be at least 0 (numbering starts at 0)" << endl;
 		exit(1);
-		}
+	}
 	if (i >= nb) {
 		cout << "knowledge_base::hyperoval_representative q=" << q << " i=" << i
 				<< " but I have only " << nb << " representatives" << endl;
 		exit(1);
-		}
+	}
 	p += i * sz;
 	return p;
 }
@@ -1749,7 +1749,7 @@ void knowledge_base::hyperoval_gens(
 		f = arcs_8_10_stab_gens_fst[i];
 		l = arcs_8_10_stab_gens_len[i];
 		stab_order = arcs_8_10_stab_order[i];
-		}
+	}
 	else if (q == 16) {
 		Reps = arcs_16_18_stab_gens;
 		nb = arcs_16_18_nb_reps;
@@ -1757,7 +1757,7 @@ void knowledge_base::hyperoval_gens(
 		f = arcs_16_18_stab_gens_fst[i];
 		l = arcs_16_18_stab_gens_len[i];
 		stab_order = arcs_16_18_stab_order[i];
-		}
+	}
 	else if (q == 32) {
 		Reps = arcs_32_34_stab_gens;
 		nb = arcs_32_34_nb_reps;
@@ -1765,22 +1765,22 @@ void knowledge_base::hyperoval_gens(
 		f = arcs_32_34_stab_gens_fst[i];
 		l = arcs_32_34_stab_gens_len[i];
 		stab_order = arcs_32_34_stab_order[i];
-		}
+	}
 	else {
 		cout << "knowledge_base::hyperoval_representative q=" << q
 				<< " I don't have information for this field order" << endl;
 		exit(1);
-		}
+	}
 	if (i < 0) {
 		cout << "knowledge_base::hyperoval_representative q=" << q << " i=" << i
 				<< " but i must be at least 0 (numbering starts at 0)" << endl;
 		exit(1);
-		}
+	}
 	if (i >= nb) {
 		cout << "knowledge_base::hyperoval_representative q=" << q << " i=" << i
 				<< " but I have only " << nb << " representatives" << endl;
 		exit(1);
-		}
+	}
 	nb_gens = l;
 	data_size = make_element_size;
 	data = Reps + f * make_element_size;
@@ -1804,15 +1804,15 @@ int knowledge_base::DH_nb_reps(
 
 	if (k == 4 && n == 7) {
 		nb = DH_4_7_nb_reps;
-		}
+	}
 	else if (k == 4 && n == 8) {
 		nb = DH_4_8_nb_reps;
-		}
+	}
 	else {
 		cout << "knowledge_base::DH_nb_reps k=" << k << " n=" << n
 				<< " I don't have information for this case" << endl;
 		exit(1);
-		}
+	}
 	return nb;
 }
 
@@ -1825,27 +1825,27 @@ long int *knowledge_base::DH_representative(
 		p = DH_4_7_reps;
 		nb = DH_4_7_nb_reps;
 		sz = DH_4_7_size;
-		}
+	}
 	else if (k == 4 && n == 8) {
 		p = DH_4_8_reps;
 		nb = DH_4_8_nb_reps;
 		sz = DH_4_8_size;
-		}
+	}
 	else {
 		cout << "knowledge_base::DH_representative k=" << k << " n=" << n
 				<< " I don't have information for this case" << endl;
 		exit(1);
-		}
+	}
 	if (i < 0) {
 		cout << "knowledge_base::DH_representative k=" << k << " n=" << n << " i=" << i
 				<< " but i must be at least 0 (numbering starts at 0)" << endl;
 		exit(1);
-		}
+	}
 	if (i >= nb) {
 		cout << "knowledge_base::DH_representative k=" << k << " n=" << n << " i=" << i
 				<< " but I have only " << nb << " representatives" << endl;
 		exit(1);
-		}
+	}
 	p += i * sz;
 	return p;
 }
@@ -1866,7 +1866,7 @@ void knowledge_base::DH_stab_gens(
 		f = DH_4_7_stab_gens_fst[i];
 		l = DH_4_7_stab_gens_len[i];
 		stab_order = DH_4_7_stab_order[i];
-		}
+	}
 	else if (k == 4 && n == 8) {
 		Reps = DH_4_8_stab_gens;
 		nb = DH_4_8_nb_reps;
@@ -1874,22 +1874,22 @@ void knowledge_base::DH_stab_gens(
 		f = DH_4_8_stab_gens_fst[i];
 		l = DH_4_8_stab_gens_len[i];
 		stab_order = DH_4_8_stab_order[i];
-		}
+	}
 	else {
 		cout << "knowledge_base::DH_representative k=" << k << " n=" << n
 				<< " I don't have information for this field order" << endl;
 		exit(1);
-		}
+	}
 	if (i < 0) {
 		cout << "knowledge_base::DH_representative k=" << k << " n=" << n << " i=" << i
 				<< " but i must be at least 0 (numbering starts at 0)" << endl;
 		exit(1);
-		}
+	}
 	if (i >= nb) {
 		cout << "knowledge_base::DH_representative k=" << k << " n=" << n << " i=" << i
 				<< " but I have only " << nb << " representatives" << endl;
 		exit(1);
-		}
+	}
 	nb_gens = l;
 	data_size = make_element_size;
 	data = Reps + f * make_element_size;
@@ -1914,27 +1914,27 @@ int knowledge_base::Spread_nb_reps(
 
 	if (q == 2 && k == 2) {
 		nb = Spreads_2_2_nb_reps;
-		}
+	}
 	else if (q == 3 && k == 2) {
 		nb = Spreads_3_2_nb_reps;
-		}
+	}
 	else if (q == 2 && k == 4) {
 		nb = Spreads_2_4_nb_reps;
-		}
+	}
 	else if (q == 4 && k == 2) {
 		nb = Spreads_4_2_nb_reps;
-		}
+	}
 	else if (q == 5 && k == 2) {
 		nb = Spreads_5_2_nb_reps;
-		}
+	}
 	else if (q == 3 && k == 3) {
 		nb = Spreads_3_3_nb_reps;
-		}
+	}
 	else {
 		cout << "knowledge_base::Spread_nb_reps q=" << q << " k=" << k
 				<< " I don't have information for this case" << endl;
 		exit(1);
-		}
+	}
 	return nb;
 }
 
@@ -1949,47 +1949,47 @@ long int *knowledge_base::Spread_representative(
 		p = Spreads_2_2_reps;
 		nb = Spreads_2_2_nb_reps;
 		sz = Spreads_2_2_size;
-		}
+	}
 	else if (q == 3 && k == 2) {
 		p = Spreads_3_2_reps;
 		nb = Spreads_3_2_nb_reps;
 		sz = Spreads_3_2_size;
-		}
+	}
 	else if (q == 2 && k == 4) {
 		p = Spreads_2_4_reps;
 		nb = Spreads_2_4_nb_reps;
 		sz = Spreads_2_4_size;
-		}
+	}
 	else if (q == 4 && k == 2) {
 		p = Spreads_4_2_reps;
 		nb = Spreads_4_2_nb_reps;
 		sz = Spreads_4_2_size;
-		}
+	}
 	else if (q == 5 && k == 2) {
 		p = Spreads_5_2_reps;
 		nb = Spreads_5_2_nb_reps;
 		sz = Spreads_5_2_size;
-		}
+	}
 	else if (q == 3 && k == 3) {
 		p = Spreads_3_3_reps;
 		nb = Spreads_3_3_nb_reps;
 		sz = Spreads_3_3_size;
-		}
+	}
 	else {
 		cout << "knowledge_base::Spread_representative q=" << q << " k=" << k
 				<< " I don't have information for this field order" << endl;
 		exit(1);
-		}
+	}
 	if (i < 0) {
 		cout << "knowledge_base::Spread_representative q=" << q << " k=" << k << " i=" << i
 				<< " but i must be at least 0 (numbering starts at 0)" << endl;
 		exit(1);
-		}
+	}
 	if (i >= nb) {
 		cout << "knowledge_base::Spread_representative q=" << q << " k=" << k << " i=" << i
 				<< " but I have only " << nb << " representatives" << endl;
 		exit(1);
-		}
+	}
 	p += i * sz;
 	return p;
 }
@@ -2010,7 +2010,7 @@ void knowledge_base::Spread_stab_gens(
 		f = Spreads_2_2_stab_gens_fst[i];
 		l = Spreads_2_2_stab_gens_len[i];
 		stab_order = Spreads_2_2_stab_order[i];
-		}
+	}
 	else if (q == 3 && k == 2) {
 		Reps = Spreads_3_2_stab_gens;
 		nb = Spreads_3_2_nb_reps;
@@ -2018,7 +2018,7 @@ void knowledge_base::Spread_stab_gens(
 		f = Spreads_3_2_stab_gens_fst[i];
 		l = Spreads_3_2_stab_gens_len[i];
 		stab_order = Spreads_3_2_stab_order[i];
-		}
+	}
 	else if (q == 2 && k == 4) {
 		Reps = Spreads_2_4_stab_gens;
 		nb = Spreads_2_4_nb_reps;
@@ -2026,7 +2026,7 @@ void knowledge_base::Spread_stab_gens(
 		f = Spreads_2_4_stab_gens_fst[i];
 		l = Spreads_2_4_stab_gens_len[i];
 		stab_order = Spreads_2_4_stab_order[i];
-		}
+	}
 	else if (q == 4 && k == 2) {
 		Reps = Spreads_4_2_stab_gens;
 		nb = Spreads_4_2_nb_reps;
@@ -2034,7 +2034,7 @@ void knowledge_base::Spread_stab_gens(
 		f = Spreads_4_2_stab_gens_fst[i];
 		l = Spreads_4_2_stab_gens_len[i];
 		stab_order = Spreads_4_2_stab_order[i];
-		}
+	}
 	else if (q == 5 && k == 2) {
 		Reps = Spreads_5_2_stab_gens;
 		nb = Spreads_5_2_nb_reps;
@@ -2042,7 +2042,7 @@ void knowledge_base::Spread_stab_gens(
 		f = Spreads_5_2_stab_gens_fst[i];
 		l = Spreads_5_2_stab_gens_len[i];
 		stab_order = Spreads_5_2_stab_order[i];
-		}
+	}
 	else if (q == 3 && k == 3) {
 		Reps = Spreads_3_3_stab_gens;
 		nb = Spreads_3_3_nb_reps;
@@ -2050,22 +2050,22 @@ void knowledge_base::Spread_stab_gens(
 		f = Spreads_3_3_stab_gens_fst[i];
 		l = Spreads_3_3_stab_gens_len[i];
 		stab_order = Spreads_3_3_stab_order[i];
-		}
+	}
 	else {
 		cout << "knowledge_base::Spread_representative q=" << q << " k=" << k
 				<< " I don't have information for this field order" << endl;
 		exit(1);
-		}
+	}
 	if (i < 0) {
 		cout << "knowledge_base::Spread_representative q=" << q << " k=" << k << " i=" << i
 				<< " but i must be at least 0 (numbering starts at 0)" << endl;
 		exit(1);
-		}
+	}
 	if (i >= nb) {
 		cout << "knowledge_base::Spread_representative q=" << q << " k=" << k << " i=" << i
 				<< " but I have only " << nb << " representatives" << endl;
 		exit(1);
-		}
+	}
 	nb_gens = l;
 	data_size = make_element_size;
 	data = Reps + f * make_element_size;
@@ -2087,81 +2087,81 @@ int knowledge_base::BLT_nb_reps(
 
 	if (q == 3) {
 		nb = BLT_q3_nb_reps;
-		}
+	}
 	else if (q == 5) {
 		nb = BLT_q5_nb_reps;
-		}
+	}
 	else if (q == 7) {
 		nb = BLT_q7_nb_reps;
-		}
+	}
 	else if (q == 9) {
 		nb = BLT_q9_nb_reps;
-		}
+	}
 	else if (q == 11) {
 		nb = BLT_q11_nb_reps;
-		}
+	}
 	else if (q == 13) {
 		nb = BLT_q13_nb_reps;
-		}
+	}
 	else if (q == 17) {
 		nb = BLT_q17_nb_reps;
-		}
+	}
 	else if (q == 19) {
 		nb = BLT_q19_nb_reps;
-		}
+	}
 	else if (q == 23) {
 		nb = BLT_q23_nb_reps;
-		}
+	}
 	else if (q == 25) {
 		nb = BLT_q25_nb_reps;
-		}
+	}
 	else if (q == 27) {
 		nb = BLT_q27_nb_reps;
-		}
+	}
 	else if (q == 29) {
 		nb = BLT_q29_nb_reps;
-		}
+	}
 	else if (q == 31) {
 		nb = BLT_q31_nb_reps;
-		}
+	}
 	else if (q == 37) {
 		nb = BLT_q37_nb_reps;
-		}
+	}
 	else if (q == 41) {
 		nb = BLT_q41_nb_reps;
-		}
+	}
 	else if (q == 43) {
 		nb = BLT_q43_nb_reps;
-		}
+	}
 	else if (q == 47) {
 		nb = BLT_q47_nb_reps;
-		}
+	}
 	else if (q == 49) {
 		nb = BLT_q49_nb_reps;
-		}
+	}
 	else if (q == 53) {
 		nb = BLT_q53_nb_reps;
-		}
+	}
 	else if (q == 59) {
 		nb = BLT_59_nb_reps;
-		}
+	}
 	else if (q == 61) {
 		nb = BLT_61_nb_reps;
-		}
+	}
 	else if (q == 67) {
 		nb = BLT_67_nb_reps;
-		}
+	}
 	else if (q == 71) {
 		nb = BLT_71_nb_reps;
-		}
+	}
 	else if (q == 73) {
 		nb = BLT_73_nb_reps;
-		}
+	}
 	else {
 		cout << "knowledge_base::BLT_nb_reps q=" << q
 				<< " I don't have information for this order" << endl;
 		exit(1);
-		}
+	}
 	return nb;
 }
 
@@ -2176,137 +2176,137 @@ long int *knowledge_base::BLT_representative(
 		p = BLT_q3_reps;
 		nb = BLT_q3_nb_reps;
 		sz = BLT_q3_size;
-		}
+	}
 	else if (q == 5) {
 		p = BLT_q5_reps;
 		nb = BLT_q5_nb_reps;
 		sz = BLT_q5_size;
-		}
+	}
 	else if (q == 7) {
 		p = BLT_q7_reps;
 		nb = BLT_q7_nb_reps;
 		sz = BLT_q7_size;
-		}
+	}
 	else if (q == 9) {
 		p = BLT_q9_reps;
 		nb = BLT_q9_nb_reps;
 		sz = BLT_q9_size;
-		}
+	}
 	else if (q == 11) {
 		p = BLT_q11_reps;
 		nb = BLT_q11_nb_reps;
 		sz = BLT_q11_size;
-		}
+	}
 	else if (q == 13) {
 		p = BLT_q13_reps;
 		nb = BLT_q13_nb_reps;
 		sz = BLT_q13_size;
-		}
+	}
 	else if (q == 17) {
 		p = BLT_q17_reps;
 		nb = BLT_q17_nb_reps;
 		sz = BLT_q17_size;
-		}
+	}
 	else if (q == 19) {
 		p = BLT_q19_reps;
 		nb = BLT_q19_nb_reps;
 		sz = BLT_q19_size;
-		}
+	}
 	else if (q == 23) {
 		p = BLT_q23_reps;
 		nb = BLT_q23_nb_reps;
 		sz = BLT_q23_size;
-		}
+	}
 	else if (q == 25) {
 		p = BLT_q25_reps;
 		nb = BLT_q25_nb_reps;
 		sz = BLT_q25_size;
-		}
+	}
 	else if (q == 27) {
 		p = BLT_q27_reps;
 		nb = BLT_q27_nb_reps;
 		sz = BLT_q27_size;
-		}
+	}
 	else if (q == 29) {
 		p = BLT_q29_reps;
 		nb = BLT_q29_nb_reps;
 		sz = BLT_q29_size;
-		}
+	}
 	else if (q == 31) {
 		p = BLT_q31_reps;
 		nb = BLT_q31_nb_reps;
 		sz = BLT_q31_size;
-		}
+	}
 	else if (q == 37) {
 		p = BLT_q37_reps;
 		nb = BLT_q37_nb_reps;
 		sz = BLT_q37_size;
-		}
+	}
 	else if (q == 41) {
 		p = BLT_q41_reps;
 		nb = BLT_q41_nb_reps;
 		sz = BLT_q41_size;
-		}
+	}
 	else if (q == 43) {
 		p = BLT_q43_reps;
 		nb = BLT_q43_nb_reps;
 		sz = BLT_q43_size;
-		}
+	}
 	else if (q == 47) {
 		p = BLT_q47_reps;
 		nb = BLT_q47_nb_reps;
 		sz = BLT_q47_size;
-		}
+	}
 	else if (q == 49) {
 		p = BLT_q49_reps;
 		nb = BLT_q49_nb_reps;
 		sz = BLT_q49_size;
-		}
+	}
 	else if (q == 53) {
 		p = BLT_q53_reps;
 		nb = BLT_q53_nb_reps;
 		sz = BLT_q53_size;
-		}
+	}
 	else if (q == 59) {
 		p = BLT_59_reps;
 		nb = BLT_59_nb_reps;
 		sz = BLT_59_size;
-		}
+	}
 	else if (q == 61) {
 		p = BLT_61_reps;
 		nb = BLT_61_nb_reps;
 		sz = BLT_61_size;
-		}
+	}
 	else if (q == 67) {
 		p = BLT_67_reps;
 		nb = BLT_67_nb_reps;
 		sz = BLT_67_size;
-		}
+	}
 	else if (q == 71) {
 		p = BLT_71_reps;
 		nb = BLT_71_nb_reps;
 		sz = BLT_71_size;
-		}
+	}
 	else if (q == 73) {
 		p = BLT_73_reps;
 		nb = BLT_73_nb_reps;
 		sz = BLT_73_size;
-		}
+	}
 	else {
 		cout << "knowledge_base::BLT_representative q=" << q
 				<< " I don't have information for this field order" << endl;
 		exit(1);
-		}
+	}
 	if (no < 0) {
 		cout << "knowledge_base::BLT_representative q=" << q << " no=" << no
 				<< " but i must be at least 0 (numbering starts at 0)" << endl;
 		exit(1);
-		}
+	}
 	if (no >= nb) {
 		cout << "knowledge_base::BLT_representative q=" << q << " no=" << no
 				<< " but I have only " << nb << " representatives" << endl;
 		exit(1);
-		}
+	}
 	p += no * sz;
 	return p;
 }
@@ -2327,7 +2327,7 @@ void knowledge_base::BLT_stab_gens(
 		f = BLT_q3_stab_gens_fst[no];
 		l = BLT_q3_stab_gens_len[no];
 		stab_order = BLT_q3_stab_order[no];
-		}
+	}
 	else if (q == 5) {
 		Reps = BLT_q5_stab_gens;
 		nb = BLT_q5_nb_reps;
@@ -2335,7 +2335,7 @@ void knowledge_base::BLT_stab_gens(
 		f = BLT_q5_stab_gens_fst[no];
 		l = BLT_q5_stab_gens_len[no];
 		stab_order = BLT_q5_stab_order[no];
-		}
+	}
 	else if (q == 7) {
 		Reps = BLT_q7_stab_gens;
 		nb = BLT_q7_nb_reps;
@@ -2343,7 +2343,7 @@ void knowledge_base::BLT_stab_gens(
 		f = BLT_q7_stab_gens_fst[no];
 		l = BLT_q7_stab_gens_len[no];
 		stab_order = BLT_q7_stab_order[no];
-		}
+	}
 	else if (q == 9) {
 		Reps = BLT_q9_stab_gens;
 		nb = BLT_q9_nb_reps;
@@ -2351,7 +2351,7 @@ void knowledge_base::BLT_stab_gens(
 		f = BLT_q9_stab_gens_fst[no];
 		l = BLT_q9_stab_gens_len[no];
 		stab_order = BLT_q9_stab_order[no];
-		}
+	}
 	else if (q == 11) {
 		Reps = BLT_q11_stab_gens;
 		nb = BLT_q11_nb_reps;
@@ -2359,7 +2359,7 @@ void knowledge_base::BLT_stab_gens(
 		f = BLT_q11_stab_gens_fst[no];
 		l = BLT_q11_stab_gens_len[no];
 		stab_order = BLT_q11_stab_order[no];
-		}
+	}
 	else if (q == 13) {
 		Reps = BLT_q13_stab_gens;
 		nb = BLT_q13_nb_reps;
@@ -2367,7 +2367,7 @@ void knowledge_base::BLT_stab_gens(
 		f = BLT_q13_stab_gens_fst[no];
 		l = BLT_q13_stab_gens_len[no];
 		stab_order = BLT_q13_stab_order[no];
-		}
+	}
 	else if (q == 17) {
 		Reps = BLT_q17_stab_gens;
 		nb = BLT_q17_nb_reps;
@@ -2375,7 +2375,7 @@ void knowledge_base::BLT_stab_gens(
 		f = BLT_q17_stab_gens_fst[no];
 		l = BLT_q17_stab_gens_len[no];
 		stab_order = BLT_q17_stab_order[no];
-		}
+	}
 	else if (q == 19) {
 		Reps = BLT_q19_stab_gens;
 		nb = BLT_q19_nb_reps;
@@ -2383,7 +2383,7 @@ void knowledge_base::BLT_stab_gens(
 		f = BLT_q19_stab_gens_fst[no];
 		l = BLT_q19_stab_gens_len[no];
 		stab_order = BLT_q19_stab_order[no];
-		}
+	}
 	else if (q == 23) {
 		Reps = BLT_q23_stab_gens;
 		nb = BLT_q23_nb_reps;
@@ -2391,7 +2391,7 @@ void knowledge_base::BLT_stab_gens(
 		f = BLT_q23_stab_gens_fst[no];
 		l = BLT_q23_stab_gens_len[no];
 		stab_order = BLT_q23_stab_order[no];
-		}
+	}
 	else if (q == 25) {
 		Reps = BLT_q25_stab_gens;
 		nb = BLT_q25_nb_reps;
@@ -2399,7 +2399,7 @@ void knowledge_base::BLT_stab_gens(
 		f = BLT_q25_stab_gens_fst[no];
 		l = BLT_q25_stab_gens_len[no];
 		stab_order = BLT_q25_stab_order[no];
-		}
+	}
 	else if (q == 27) {
 		Reps = BLT_q27_stab_gens;
 		nb = BLT_q27_nb_reps;
@@ -2407,7 +2407,7 @@ void knowledge_base::BLT_stab_gens(
 		f = BLT_q27_stab_gens_fst[no];
 		l = BLT_q27_stab_gens_len[no];
 		stab_order = BLT_q27_stab_order[no];
-		}
+	}
 	else if (q == 29) {
 		Reps = BLT_q29_stab_gens;
 		nb = BLT_q29_nb_reps;
@@ -2415,7 +2415,7 @@ void knowledge_base::BLT_stab_gens(
 		f = BLT_q29_stab_gens_fst[no];
 		l = BLT_q29_stab_gens_len[no];
 		stab_order = BLT_q29_stab_order[no];
-		}
+	}
 	else if (q == 31) {
 		Reps = BLT_q31_stab_gens;
 		nb = BLT_q31_nb_reps;
@@ -2423,7 +2423,7 @@ void knowledge_base::BLT_stab_gens(
 		f = BLT_q31_stab_gens_fst[no];
 		l = BLT_q31_stab_gens_len[no];
 		stab_order = BLT_q31_stab_order[no];
-		}
+	}
 	else if (q == 37) {
 		Reps = BLT_q37_stab_gens;
 		nb = BLT_q37_nb_reps;
@@ -2431,7 +2431,7 @@ void knowledge_base::BLT_stab_gens(
 		f = BLT_q37_stab_gens_fst[no];
 		l = BLT_q37_stab_gens_len[no];
 		stab_order = BLT_q37_stab_order[no];
-		}
+	}
 	else if (q == 41) {
 		Reps = BLT_q41_stab_gens;
 		nb = BLT_q41_nb_reps;
@@ -2439,7 +2439,7 @@ void knowledge_base::BLT_stab_gens(
 		f = BLT_q41_stab_gens_fst[no];
 		l = BLT_q41_stab_gens_len[no];
 		stab_order = BLT_q41_stab_order[no];
-		}
+	}
 	else if (q == 43) {
 		Reps = BLT_q43_stab_gens;
 		nb = BLT_q43_nb_reps;
@@ -2447,7 +2447,7 @@ void knowledge_base::BLT_stab_gens(
 		f = BLT_q43_stab_gens_fst[no];
 		l = BLT_q43_stab_gens_len[no];
 		stab_order = BLT_q43_stab_order[no];
-		}
+	}
 	else if (q == 47) {
 		Reps = BLT_q47_stab_gens;
 		nb = BLT_q47_nb_reps;
@@ -2455,7 +2455,7 @@ void knowledge_base::BLT_stab_gens(
 		f = BLT_q47_stab_gens_fst[no];
 		l = BLT_q47_stab_gens_len[no];
 		stab_order = BLT_q47_stab_order[no];
-		}
+	}
 	else if (q == 49) {
 		Reps = BLT_q49_stab_gens;
 		nb = BLT_q49_nb_reps;
@@ -2463,7 +2463,7 @@ void knowledge_base::BLT_stab_gens(
 		f = BLT_q49_stab_gens_fst[no];
 		l = BLT_q49_stab_gens_len[no];
 		stab_order = BLT_q49_stab_order[no];
-		}
+	}
 	else if (q == 53) {
 		Reps = BLT_q53_stab_gens;
 		nb = BLT_q53_nb_reps;
@@ -2471,7 +2471,7 @@ void knowledge_base::BLT_stab_gens(
 		f = BLT_q53_stab_gens_fst[no];
 		l = BLT_q53_stab_gens_len[no];
 		stab_order = BLT_q53_stab_order[no];
-		}
+	}
 	else if (q == 59) {
 		Reps = BLT_59_stab_gens;
 		nb = BLT_59_nb_reps;
@@ -2479,7 +2479,7 @@ void knowledge_base::BLT_stab_gens(
 		f = BLT_59_stab_gens_fst[no];
 		l = BLT_59_stab_gens_len[no];
 		stab_order = BLT_59_stab_order[no];
-		}
+	}
 	else if (q == 61) {
 		Reps = BLT_61_stab_gens;
 		nb = BLT_61_nb_reps;
@@ -2487,7 +2487,7 @@ void knowledge_base::BLT_stab_gens(
 		f = BLT_61_stab_gens_fst[no];
 		l = BLT_61_stab_gens_len[no];
 		stab_order = BLT_61_stab_order[no];
-		}
+	}
 	else if (q == 67) {
 		Reps = BLT_67_stab_gens;
 		nb = BLT_67_nb_reps;
@@ -2495,7 +2495,7 @@ void knowledge_base::BLT_stab_gens(
 		f = BLT_67_stab_gens_fst[no];
 		l = BLT_67_stab_gens_len[no];
 		stab_order = BLT_67_stab_order[no];
-		}
+	}
 	else if (q == 71) {
 		Reps = BLT_71_stab_gens;
 		nb = BLT_71_nb_reps;
@@ -2503,7 +2503,7 @@ void knowledge_base::BLT_stab_gens(
 		f = BLT_71_stab_gens_fst[no];
 		l = BLT_71_stab_gens_len[no];
 		stab_order = BLT_71_stab_order[no];
-		}
+	}
 	else if (q == 73) {
 		Reps = BLT_73_stab_gens;
 		nb = BLT_73_nb_reps;
@@ -2511,22 +2511,22 @@ void knowledge_base::BLT_stab_gens(
 		f = BLT_73_stab_gens_fst[no];
 		l = BLT_73_stab_gens_len[no];
 		stab_order = BLT_73_stab_order[no];
-		}
+	}
 	else {
 		cout << "knowledge_base::BLT_representative q=" << q << " I don't have "
 				"information for this field order" << endl;
 		exit(1);
-		}
+	}
 	if (no < 0) {
 		cout << "knowledge_base::BLT_representative q=" << q << " no=" << no
 				<< " but i must be at least 0 (numbering starts at 0)" << endl;
 		exit(1);
-		}
+	}
 	if (no >= nb) {
 		cout << "knowledge_base::BLT_representative q=" << q << " no=" << no
 				<< " but I have only " << nb << " representatives" << endl;
 		exit(1);
-		}
+	}
 	nb_gens = l;
 	data_size = make_element_size;
 	data = Reps + f * make_element_size;
@@ -2547,32 +2547,32 @@ void knowledge_base::override_polynomial_subfield(
 		cout << "knowledge_base::override_polynomial_subfield "
 				"q is not a prime power" << endl;
 		exit(1);
-		}
+	}
 	if (h == 1) {
 		poly.assign("");
 		return;
-		}
+	}
 	if (q == 8) {
 		override_poly = "13"; // Warning !!!
-		}
+	}
 	else if (q == 9) {
 		override_poly = "17";
-		}
+	}
 	else if (q == 25) {
 		override_poly = "47";
-		}
+	}
 	else if (q == 27) {
 		override_poly = "34";
-		}
+	}
 	else if (q == 49) {
 		override_poly = "94";
-		}
+	}
 	else if (q == 81) {
 		override_poly = "89";
-		}
+	}
 	else if (q == 121) {
 		override_poly = "200";
-		}
+	}
 	if (override_poly == NULL) {
 		cout << "knowledge_base::override_polynomial_subfield, "
 				"do not have a polynomial for q=" << q << endl;
@@ -2597,7 +2597,7 @@ void knowledge_base::override_polynomial_subfield(
 			}
 #endif
 		//return NULL;
-		}
+	}
 	poly.assign(override_poly);
 }
 
@@ -3040,7 +3040,7 @@ void knowledge_base::retrieve_BLT_set_from_database(
 
 
 // #############################################################################
-// small generating sets:
+// small generating sets for PGGL(n,q):
 // #############################################################################
 
 
@@ -3077,6 +3077,7 @@ int knowledge_base::get_small_generating_set_PGL(
 	int ret = false;
 
 	if (n == 3) {
+
 		other::data_structures::sorting Sorting;
 		int idx;
 
@@ -3101,6 +3102,7 @@ int knowledge_base::get_small_generating_set_PGL(
 		}
 	}
 	else if (n == 4) {
+
 		other::data_structures::sorting Sorting;
 		int idx;
 

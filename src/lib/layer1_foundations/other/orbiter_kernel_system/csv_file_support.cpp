@@ -5094,6 +5094,236 @@ std::vector<int> topo_downlink;
 #endif
 
 
+void csv_file_support::count_solutions_in_list_of_files(
+		int nb_files, std::string *fname,
+		std::string &col_label,
+		int *&Nb_sol_per_file,
+		int verbose_level)
+// called from substructure_lifting_data::count_solutions
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
+
+
+
+	if (f_v) {
+		cout << "csv_file_support::count_solutions_in_list_of_files: "
+				"reading " << nb_files << " files" << endl;
+		cout << "col_label = " << col_label << endl;
+		cout << "verbose_level = " << verbose_level << endl;
+	}
+
+
+	int i, l, j, line_number;
+
+	if (f_vv) {
+		cout << "csv_file_support::count_solutions_in_list_of_files: the file names are:" << endl;
+		for (i = 0; i < nb_files; i++) {
+			cout << fname[i] << endl;
+		}
+	}
+
+
+	Nb_sol_per_file = NEW_int(nb_files);
+
+	for (i = 0; i < nb_files; i++) {
+		if (f_vv) {
+			cout << "csv_file_support::count_solutions_in_list_of_files: "
+					"reading file number " << i << " / " << nb_files << " which is " << fname[i] << endl;
+		}
+
+
+		Nb_sol_per_file[i] = read_column_and_count_nb_sets(
+				fname[i], col_label,
+				verbose_level - 2);
+
+
+		if (f_vv) {
+			cout << "csv_file_support::count_solutions_in_list_of_files: "
+					"reading file number " << i << " / " << nb_files << " which is " << fname[i]
+					<< " nb_sol=" << Nb_sol_per_file[i] << endl;
+		}
+
+	}
+
+
+#if 0
+	long int *data;
+	int nb_fail = 0;
+	data_structures::string_tools ST;
+
+
+
+
+	data = NEW_lint(solution_size);
+	Nb_sol_per_file = NEW_int(nb_files);
+
+	for (i = 0; i < nb_files; i++) {
+
+		int the_case;
+
+		the_case = List_of_cases[i];
+		Nb_sol_per_file[i] = 0;
+
+		{
+			ifstream f(fname[i]);
+			char *buf;
+			long int a;
+			char *p_buf;
+
+			if (f_v) {
+				cout << "reading file " << fname[i]
+					<< " the_case = " << the_case << " of size "
+					<< file_size(fname[i]) << endl;
+			}
+			if (file_size(fname[i]) <= 0) {
+				cout << "file " << fname[i] << " does not exist" << endl;
+				exit(1);
+			}
+			line_number = 0;
+			while (true) {
+
+				if (f.eof()) {
+					break;
+				}
+				{
+					string S;
+					getline(f, S);
+
+					l = S.length();
+
+
+					buf = NEW_char(l + 1);
+
+					//cout << "read line of length " << l << " : " << S << endl;
+					for (j = 0; j < l; j++) {
+						buf[j] = S[j];
+					}
+					buf[l] = 0;
+				}
+				if (false) {
+					cout << "line " << line_number << " read: " << buf << endl;
+				}
+
+				p_buf = buf;
+
+
+				ST.s_scan_lint(&p_buf, &a);
+
+				// size of the set
+
+				if (a == -1) {
+					break;
+				}
+
+				for (j = 0; j < solution_size; j++) {
+					ST.s_scan_lint(&p_buf, &a);
+					data[j] = a;
+				}
+
+
+				if (f_has_final_test_function) {
+					if (!(*final_test_function)(data, solution_size,
+							final_test_data, verbose_level - 1)) {
+						if (f_vvv) {
+							cout << "file_io::count_solutions_in_list_of_files "
+									"solution fails the final test, "
+									"skipping" << endl;
+						}
+						nb_fail++;
+						continue;
+					}
+				}
+
+				FREE_char(buf);
+				Nb_sol_per_file[i]++;
+
+			}
+
+		} // while
+
+		if (f_v) {
+			cout << "file " << fname[i] << " has " << Nb_sol_per_file[i]
+				<< " solutions and " << nb_fail
+				<< " false positives" << endl;
+		}
+
+	} // next i
+
+	FREE_lint(data);
+#endif
+
+
+
+	if (f_v) {
+		cout << "csv_file_support::count_solutions_in_list_of_files done" << endl;
+	}
+}
+
+
+void csv_file_support::read_solutions_from_csv_file(
+		std::string &fname, std::string &col_label,
+	int &nb_solutions, long int *&Solutions, int &solution_size,
+	int verbose_level)
+// called from substructure_lifting_data::read_solutions_from_clique_finder
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "csv_file_support::read_solutions_from_csv_file" << endl;
+		cout << "csv_file_support::read_solutions_from_csv_file trying to read file "
+			<< fname << " of size " << Fio->file_size(fname) << endl;
+	}
+
+	if (Fio->file_size(fname) < 0) {
+		cout << "csv_file_support::read_solutions_from_csv_file "
+				"the file " << fname << " does not exist" << endl;
+		return;
+	}
+
+
+
+
+
+	data_structures::set_of_sets *SoS;
+
+	read_column_as_set_of_sets(
+			fname, col_label,
+			SoS,
+			verbose_level - 2);
+
+
+	nb_solutions = SoS->nb_sets;
+
+
+	if (SoS->nb_sets == 0) {
+		Solutions = NULL;
+		solution_size = 0;
+
+	}
+	else {
+
+		int i;
+
+		Solutions = NEW_lint(nb_solutions * solution_size);
+
+		solution_size = SoS->Set_size[0];
+		Solutions = NEW_lint(nb_solutions * solution_size);
+		for (i = 0; i < nb_solutions; i++) {
+			Lint_vec_copy(SoS->Sets[i], Solutions + i * solution_size, solution_size);
+		}
+	}
+
+	FREE_OBJECT(SoS);
+
+	if (f_v) {
+		cout << "csv_file_support::read_solutions_from_csv_file done" << endl;
+	}
+}
+
+
+
 
 
 }}}}

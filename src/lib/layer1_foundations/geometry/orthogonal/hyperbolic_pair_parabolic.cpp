@@ -2295,13 +2295,15 @@ long int hyperbolic_pair::parabolic_rank_line_L3(
 
 	parabolic_normalize_point_wrt_subspace(v2, 1);
 	if (f_v) {
-		cout << "after parabolic_normalize_point_wrt_subspace ";
+		cout << "hyperbolic_pair::parabolic_rank_line_L3 "
+				"after parabolic_normalize_point_wrt_subspace ";
 		Int_vec_print(cout, v2, n);
 		cout << endl;
 	}
 	field = v2[n - 1];
 	if (f_v) {
-		cout << "field=" << field << endl;
+		cout << "hyperbolic_pair::parabolic_rank_line_L3 "
+				"field=" << field << endl;
 	}
 	v2[n - 1] = 0;
 	rk2 = rank_point(v2, 1, verbose_level - 1);
@@ -2327,46 +2329,55 @@ long int hyperbolic_pair::parabolic_rank_line_L3(
 	O->Orthogonal_group->Siegel_move_backward(
 			v1, v2, v4, v3, verbose_level);
 	if (f_v) {
-		cout << "after Siegel_move_backward" << endl;
+		cout << "hyperbolic_pair::parabolic_rank_line_L3 "
+				"after Siegel_move_backward" << endl;
 		Int_vec_print(cout, v3, n); cout << endl;
 		Int_vec_print(cout, v4, n); cout << endl;
 	}
 	a = O->subspace->Quadratic_form->evaluate_bilinear_form(v1, v3, 1);
 	b = O->subspace->Quadratic_form->evaluate_bilinear_form(v2, v4, 1);
 	if (f_v) {
-		cout << "a=" << a << " b=" << b << endl;
+		cout << "hyperbolic_pair::parabolic_rank_line_L3 "
+				"a=" << a << " b=" << b << endl;
 	}
 	if (a != b) {
 		if (a == 0) {
-			cout << "a != b but a = 0" << endl;
+			cout << "hyperbolic_pair::parabolic_rank_line_L3 "
+					"a != b but a = 0" << endl;
 			exit(1);
 		}
 		if (b == 0) {
-			cout << "a != b but b = 0" << endl;
+			cout << "hyperbolic_pair::parabolic_rank_line_L3 "
+					"a != b but b = 0" << endl;
 			exit(1);
 		}
 		multiplier = F->mult(b, F->inverse(a));
 		if (f_v) {
-			cout << "multiplier=" << multiplier << endl;
+			cout << "hyperbolic_pair::parabolic_rank_line_L3 "
+					"multiplier=" << multiplier << endl;
 		}
 		for (i = 0; i < n - 2; i++) {
 			v3[i] = F->mult(v3[i], multiplier);
 		}
 		if (f_v) {
-			cout << "after scaling" << endl;
+			cout << "hyperbolic_pair::parabolic_rank_line_L3 "
+					"after scaling" << endl;
 			Int_vec_print(cout, v3, n); cout << endl;
 		}
 		c = O->subspace->Quadratic_form->evaluate_bilinear_form(v1, v3, 1);
 		if (f_v) {
-			cout << "c=" << c << endl;
+			cout << "hyperbolic_pair::parabolic_rank_line_L3 "
+					"c=" << c << endl;
 		}
 		if (c != b) {
-			cout << "c != a" << endl;
+			cout << "hyperbolic_pair::parabolic_rank_line_L3 "
+					"c != a" << endl;
 			exit(1);
 		}
 	}
 	if (f_v) {
-		cout << "after scaling" << endl;
+		cout << "hyperbolic_pair::parabolic_rank_line_L3 "
+				"after scaling" << endl;
 		Int_vec_print(cout, v3, n); cout << endl;
 		Int_vec_print(cout, v4, n); cout << endl;
 	}
@@ -3121,20 +3132,25 @@ long int hyperbolic_pair::find_root_parabolic(
 	if (f_v) {
 		cout << "hyperbolic_pair::find_root_parabolic rk2=" << rk2 << endl;
 	}
+
 	if (rk2 == 0) {
 		cout << "hyperbolic_pair::find_root_parabolic: rk2 must not be 0" << endl;
 		exit(1);
 	}
+
 #if 0
 	if (m == 1) {
 		cout << "find_root_parabolic: m must not be 1" << endl;
 		exit(1);
 	}
 #endif
-	find_root_parabolic_xyz(rk2,
+
+	find_root_parabolic_xyz(
+			rk2,
 			O->Orthogonal_group->find_root_x,
 			O->Orthogonal_group->find_root_y,
 			O->Orthogonal_group->find_root_z, verbose_level);
+
 	if (f_v) {
 		cout << "found root: ";
 		Int_vec_print(cout, O->Orthogonal_group->find_root_x, n);
@@ -3142,6 +3158,9 @@ long int hyperbolic_pair::find_root_parabolic(
 		Int_vec_print(cout, O->Orthogonal_group->find_root_z, n);
 		cout << endl;
 	}
+
+	// check that the dot products are nonzero:
+	// check that <x,z> \neq 0
 	u = O->Quadratic_form->evaluate_parabolic_bilinear_form(
 			O->Orthogonal_group->find_root_z,
 			O->Orthogonal_group->find_root_x, 1, m);
@@ -3149,6 +3168,9 @@ long int hyperbolic_pair::find_root_parabolic(
 		cout << "hyperbolic_pair::find_root_parabolic u=" << u << endl;
 		exit(1);
 	}
+
+	// check that <y,z> \neq 0
+
 	v = O->Quadratic_form->evaluate_parabolic_bilinear_form(
 			O->Orthogonal_group->find_root_z,
 			O->Orthogonal_group->find_root_y, 1, m);
@@ -3156,7 +3178,10 @@ long int hyperbolic_pair::find_root_parabolic(
 		cout << "hyperbolic_pair::find_root_parabolic v=" << v << endl;
 		exit(1);
 	}
+
+	// z is the desired root:
 	root = rank_point(O->Orthogonal_group->find_root_z, 1, verbose_level - 1);
+
 	if (f_v) {
 		cout << "hyperbolic_pair::find_root_parabolic root=" << root << endl;
 	}

@@ -163,7 +163,7 @@ void dd_search_singletons::search_case_singletons_recursion(
 
 
 		DD->increase_orbit_covering_firm(
-				DD_lifting->ODF->sets[orbit_idx],
+				DD_lifting->ODF->Orbit_reps->Sets[orbit_idx],
 				DD->Descr->singletons_starter_size,
 				c);
 		DD->increase_orbit_covering_firm(chosen_set, level, c);
@@ -186,7 +186,7 @@ void dd_search_singletons::search_case_singletons_recursion(
 			d = Live_points->Sets[level][h];
 
 			flag = DD->try_to_increase_orbit_covering_based_on_two_sets(
-					DD_lifting->ODF->sets[orbit_idx],
+					DD_lifting->ODF->Orbit_reps->Sets[orbit_idx],
 					DD->Descr->singletons_starter_size,
 					chosen_set, level + 1,
 					d);
@@ -203,7 +203,7 @@ void dd_search_singletons::search_case_singletons_recursion(
 		c = chosen_set[level]; // redundant
 
 		DD->decrease_orbit_covering(
-				DD_lifting->ODF->sets[orbit_idx],
+				DD_lifting->ODF->Orbit_reps->Sets[orbit_idx],
 				DD->Descr->singletons_starter_size,
 				c);
 		DD->decrease_orbit_covering(chosen_set, level, c);

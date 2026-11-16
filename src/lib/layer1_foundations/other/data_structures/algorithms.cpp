@@ -753,7 +753,7 @@ uint32_t algorithms::SuperFastHash_uint(
 }
 
 
-
+#if 1
 void algorithms::union_of_sets(
 		std::string &fname_set_of_sets,
 		std::string &fname_input,
@@ -854,6 +854,7 @@ void algorithms::union_of_sets(
 	}
 
 }
+#endif
 
 void algorithms::dot_product_of_columns(
 		std::string &label, int verbose_level)

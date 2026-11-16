@@ -15,6 +15,8 @@ namespace layer1_foundations {
 namespace other {
 namespace data_structures {
 
+static int set_of_sets_search_compare_with(
+		void *data, void *entry, int j, void *extra_data);
 static int set_of_sets_compare_func(
 		void *data, int i, int j, void *extra_data);
 static void set_of_sets_swap_func(
@@ -1828,9 +1830,61 @@ int set_of_sets::find_smallest_class()
 	return idx;
 }
 
+int set_of_sets::search(
+		long int *search_set, int search_set_sz,
+		int &idx,
+		int verbose_level)
+{
+	int ret;
+
+	data_structures::sorting Sorting;
+
+	ret = Sorting.vec_search_general(
+			Sets,
+			set_of_sets_search_compare_with,
+			this,
+			search_set_sz, search_set, idx,
+			0 /* verbose_level*/);
+
+#if 0
+
+	int sorting::vec_search_general(
+			void *vec,
+		int (*compare_func)(void *vec,
+				void *a, int b, void *data_for_compare),
+		void *data_for_compare,
+		int len, void *a, int &idx, int verbose_level)
+
+
+
+	int sorting::vec_search_general(void *vec,
+		int (*compare_func)(void *vec, void *a, int b, void *data_for_compare),
+		void *data_for_compare,
+		int len, void *a, int &idx, int verbose_level)
+#endif
+
+	return ret;
+}
+
+
 // #############################################################################
 // global functions:
 // #############################################################################
+
+
+
+static int set_of_sets_search_compare_with(
+		void *data, void *entry, int j, void *extra_data)
+{
+	set_of_sets *SoS = (set_of_sets *) extra_data;
+	int ret;
+	data_structures::sorting Sorting;
+
+	ret = Sorting.lint_vec_compare((long int *)entry, SoS->Sets[j], SoS->Set_size[j]) * -1;
+
+	return ret;
+
+}
 
 
 static int set_of_sets_compare_func(

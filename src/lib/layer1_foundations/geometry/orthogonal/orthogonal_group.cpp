@@ -110,14 +110,16 @@ void orthogonal_group::init(
 	int i;
 
 	if (f_v) {
-		cout << "orthogonal_group::init creating Quadratic_form_stack" << endl;
+		cout << "orthogonal_group::init "
+				"creating Quadratic_form_stack" << endl;
 	}
 	Quadratic_form_stack = NEW_OBJECTS(quadratic_form, O->Quadratic_form->m + 1);
 	for (i = 1; i <= O->Quadratic_form->m; i++) {
 		Quadratic_form_stack[i].init(1, 2 * i, O->F, verbose_level);
 	}
 	if (f_v) {
-		cout << "orthogonal_group::init creating Quadratic_form_stack finished" << endl;
+		cout << "orthogonal_group::init "
+				"creating Quadratic_form_stack finished" << endl;
 	}
 
 	find_root_x = NEW_int(O->Quadratic_form->n);
@@ -155,16 +157,16 @@ long int orthogonal_group::find_root(
 	if (O->Quadratic_form->epsilon == 1) {
 		ret = O->Hyperbolic_pair->find_root_hyperbolic(
 				rk2, O->Quadratic_form->m, verbose_level);
-		}
+	}
 	else if (O->Quadratic_form->epsilon == 0) {
 		ret = O->Hyperbolic_pair->find_root_parabolic(
 				rk2, verbose_level);
-		}
+	}
 	else {
 		cout << "orthogonal_group::find_root "
 				"epsilon = " << O->Quadratic_form->epsilon << endl;
 		exit(1);
-		}
+	}
 	if (f_v) {
 		cout << "orthogonal_group::find_root done" << endl;
 	}
@@ -182,7 +184,8 @@ void orthogonal_group::Siegel_map_between_singular_points(
 	if (f_v) {
 		cout << "orthogonal_group::Siegel_map_between_singular_points" << endl;
 	}
-	O->Quadratic_form->Siegel_map_between_singular_points(T,
+	O->Quadratic_form->Siegel_map_between_singular_points(
+			T,
 		rk_from, rk_to, root,
 		//O->Quadratic_form->epsilon, O->Quadratic_form->n,
 		//O->Quadratic_form->form_c1, O->Quadratic_form->form_c2, O->Quadratic_form->form_c3,
@@ -218,7 +221,8 @@ void orthogonal_group::Siegel_map_between_singular_points_hyperbolic(
 		cout << "orthogonal_group::Siegel_map_between_singular_points_hyperbolic "
 				"before Quadratic_form_stack[m].Siegel_map_between_singular_points" << endl;
 	}
-	Quadratic_form_stack[m].Siegel_map_between_singular_points(T,
+	Quadratic_form_stack[m].Siegel_map_between_singular_points(
+			T,
 			rk_from, rk_to, root, verbose_level);
 	if (f_v) {
 		cout << "orthogonal_group::Siegel_map_between_singular_points_hyperbolic "
@@ -250,7 +254,8 @@ void orthogonal_group::Siegel_Transformation(
 		cout << "orthogonal_group::Siegel_Transformation "
 				"before Siegel_Transformation2" << endl;
 	}
-	Siegel_Transformation2(T,
+	Siegel_Transformation2(
+			T,
 		rk_from, rk_to, root,
 		STr_B, STr_Bv, STr_w, STr_z, STr_x,
 		verbose_level);
@@ -300,7 +305,8 @@ void orthogonal_group::Siegel_Transformation2(
 		cout << "orthogonal_group::Siegel_Transformation2 "
 				"before Siegel_Transformation3" << endl;
 	}
-	Siegel_Transformation3(T,
+	Siegel_Transformation3(
+			T,
 		From, To, Root,
 		B, Bv, w, z, x,
 		verbose_level - 1);
@@ -373,13 +379,16 @@ void orthogonal_group::Siegel_Transformation3(
 		cout << endl;
 	}
 
-	a = O->Quadratic_form->evaluate_bilinear_form(B, B + O->Quadratic_form->n, 1);
-	b = O->Quadratic_form->evaluate_bilinear_form(B, w, 1);
+	a = O->Quadratic_form->evaluate_bilinear_form(
+			B, B + O->Quadratic_form->n, 1);
+	b = O->Quadratic_form->evaluate_bilinear_form(
+			B, w, 1);
 	av = O->F->inverse(a);
 	bv = O->F->inverse(b);
 
 	for (i = 0; i < O->Quadratic_form->n; i++) {
-		B[O->Quadratic_form->n + i] = O->F->mult(B[O->Quadratic_form->n + i], av);
+		B[O->Quadratic_form->n + i] =
+				O->F->mult(B[O->Quadratic_form->n + i], av);
 		w[i] = O->F->mult(w[i], bv);
 	}
 
@@ -391,7 +400,8 @@ void orthogonal_group::Siegel_Transformation3(
 
 	if (f_vv) {
 		cout << "before perp, the matrix B is:" << endl;
-		Int_vec_print_integer_matrix(cout,
+		Int_vec_print_integer_matrix(
+				cout,
 				B, O->Quadratic_form->n, O->Quadratic_form->n);
 	}
 	O->F->Linear_algebra->perp(
@@ -399,14 +409,16 @@ void orthogonal_group::Siegel_Transformation3(
 			0 /* verbose_level */);
 	if (f_vv) {
 		cout << "the matrix B is:" << endl;
-		Int_vec_print_integer_matrix(cout,
+		Int_vec_print_integer_matrix(
+				cout,
 				B, O->Quadratic_form->n, O->Quadratic_form->n);
 	}
 	O->F->Linear_algebra->invert_matrix(
 			B, Bv, O->Quadratic_form->n, 0 /* verbose_level */);
 	if (f_vv) {
 		cout << "the matrix Bv is:" << endl;
-		Int_vec_print_integer_matrix(cout,
+		Int_vec_print_integer_matrix(
+				cout,
 				B, O->Quadratic_form->n, O->Quadratic_form->n);
 	}
 	O->F->Linear_algebra->mult_matrix_matrix(
@@ -414,14 +426,16 @@ void orthogonal_group::Siegel_Transformation3(
 			0 /* verbose_level */);
 	if (f_vv) {
 		cout << "the coefficient vector z is:" << endl;
-		Int_vec_print_integer_matrix(cout,
+		Int_vec_print_integer_matrix(
+				cout,
 				z, 1, O->Quadratic_form->n);
 	}
 	z[0] = 0;
 	z[1] = 0;
 	if (f_vv) {
 		cout << "the coefficient vector z is:" << endl;
-		Int_vec_print_integer_matrix(cout,
+		Int_vec_print_integer_matrix(
+				cout,
 				z, 1, O->Quadratic_form->n);
 	}
 	O->F->Linear_algebra->mult_matrix_matrix(
@@ -429,7 +443,8 @@ void orthogonal_group::Siegel_Transformation3(
 			0 /* verbose_level */);
 	if (f_vv) {
 		cout << "the vector x is:" << endl;
-		Int_vec_print_integer_matrix(cout,
+		Int_vec_print_integer_matrix(
+				cout,
 				x, 1, O->Quadratic_form->n);
 	}
 	minus_one = O->F->negate(1);
@@ -438,7 +453,8 @@ void orthogonal_group::Siegel_Transformation3(
 	}
 	if (f_vv) {
 		cout << "the vector -x is:" << endl;
-		Int_vec_print_integer_matrix(cout,
+		Int_vec_print_integer_matrix(
+				cout,
 				x, 1, O->Quadratic_form->n);
 	}
 	make_Siegel_Transformation(
@@ -447,7 +463,8 @@ void orthogonal_group::Siegel_Transformation3(
 			false);
 	if (f_vv) {
 		cout << "the Siegel transformation is:" << endl;
-		Int_vec_print_integer_matrix(cout,
+		Int_vec_print_integer_matrix(
+				cout,
 				T, O->Quadratic_form->n, O->Quadratic_form->n);
 	}
 	if (f_v) {
@@ -1681,10 +1698,12 @@ void orthogonal_group::move_points(
 	if (pt_from != 0) {
 
 		tmp_coords = NEW_int(O->Quadratic_form->n * nb);
+
 		root = find_root(
 				pt_from, verbose_level - 2);
 
-		Siegel_Transformation(T,
+		Siegel_Transformation(
+				T,
 				pt_from /* from */,
 				0 /* to */,
 				root /* root */,
@@ -1715,7 +1734,8 @@ void orthogonal_group::move_points(
 		cout << "orthogonal_group::move_points "
 				"before Siegel_Transformation" << endl;
 	}
-	Siegel_Transformation(T,
+	Siegel_Transformation(
+			T,
 			0 /* from */,
 			pt_to /* to */,
 			root /* root */,

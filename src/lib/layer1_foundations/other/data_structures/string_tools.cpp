@@ -2306,6 +2306,29 @@ std::string string_tools::texify(
 	return output;
 }
 
+
+std::string string_tools::convert_from_makefile(
+		std::string &p)
+{
+	int i, l;
+	string q;
+
+	l = p.length();
+	for (i = 0; i < l; i++) {
+		if (i == l - 1 && p[i] == '\\') {
+		}
+		else if (p[i] == '\t') {
+			q += "  ";
+		}
+		else {
+			q += p.substr(i, 1);
+		}
+	}
+	return q;
+}
+
+
+
 //#############################################################################
 
 

@@ -149,16 +149,16 @@ void dd_lifting::perform_lifting(
 		}
 		if (f_vv) {
 			cout << "dd_lifting::perform_lifting " << orbit_idx << " / " << ODF->nb_cases << " : ";
-			Lint_vec_print(cout, ODF->sets[orbit_idx],
-					ODF->set_sizes[orbit_idx]);
-			cout << " : " << ODF->Ago_ascii[orbit_idx] << " : "
-					<< ODF->Aut_ascii[orbit_idx] << endl;
+			Lint_vec_print(cout, ODF->Orbit_reps->Sets[orbit_idx],
+					ODF->Orbit_reps->Set_size[orbit_idx]);
+			cout << " : " << ODF->Ago_text[orbit_idx] << " : "
+					<< ODF->Aut_text[orbit_idx] << endl;
 		}
 
 		long int *line0;
 
-		line0 = ODF->sets[orbit_idx];
-		if (ODF->set_sizes[orbit_idx] != level) {
+		line0 = ODF->Orbit_reps->Sets[orbit_idx];
+		if (ODF->Orbit_reps->Set_size[orbit_idx] != level) {
 			cout << "ODF->set_sizes[orbit_idx] != level" << endl;
 			exit(1);
 		}
@@ -366,8 +366,8 @@ void dd_lifting::search_case_singletons_and_count(
 	int level = DD->Descr->singletons_starter_size;
 	long int *line0;
 
-	line0 = ODF->sets[orbit_idx];
-	if (ODF->set_sizes[orbit_idx] != level) {
+	line0 = ODF->Orbit_reps->Sets[orbit_idx];
+	if (ODF->Orbit_reps->Set_size[orbit_idx] != level) {
 		cout << "dd_lifting::search_case_singletons_and_count "
 				"ODF->set_sizes[orbit_idx] != level" << endl;
 		exit(1);

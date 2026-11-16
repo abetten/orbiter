@@ -411,7 +411,7 @@ void ovoid_classify::make_graphs(
 		cout << "ovoid_classify::make_graphs" << endl;
 	}
 
-	level = ODF->set_sizes[0];
+	level = ODF->Orbit_reps->Set_size[0];
 
 	for (orbit_idx = 0; orbit_idx < ODF->nb_cases; orbit_idx++) {
 
@@ -422,10 +422,10 @@ void ovoid_classify::make_graphs(
 		}
 		if (f_v) {
 			cout << orbit_idx << " / " << ODF->nb_cases << " : ";
-			Lint_vec_print(cout, ODF->sets[orbit_idx],
-					ODF->set_sizes[orbit_idx]);
-			cout << " : " << ODF->Ago_ascii[orbit_idx]
-					<< " : " << ODF->Aut_ascii[orbit_idx] << endl;
+			Lint_vec_print(cout, ODF->Orbit_reps->Sets[orbit_idx],
+					ODF->Orbit_reps->Set_size[orbit_idx]);
+			cout << " : " << ODF->Ago_text[orbit_idx]
+					<< " : " << ODF->Aut_text[orbit_idx] << endl;
 		}
 
 		fname_graph = ST.printf_d(fname_mask, orbit_idx);
@@ -444,11 +444,12 @@ void ovoid_classify::make_graphs(
 			cout << "ovoid_classify::make_graphs before read_candidates_"
 				"for_one_orbit_from_file prefix=" << prefix << endl;
 		}
-		Fio.read_candidates_for_one_orbit_from_file(prefix,
+		Fio.read_candidates_for_one_orbit_from_file(
+				prefix,
 				level,
 				orbit_idx,
 				level - 1 /* level_of_candidates_file */,
-				ODF->sets[orbit_idx],
+				ODF->Orbit_reps->Sets[orbit_idx],
 				ovoid_classify_early_test_func_callback,
 				this,
 				candidates,
@@ -465,7 +466,7 @@ void ovoid_classify::make_graphs(
 
 
 
-		if (strcmp(ODF->Ago_ascii[orbit_idx], "1") != 0) {
+		if (ODF->Ago_text[orbit_idx] != "1") {
 
 
 			int max_starter;
@@ -479,14 +480,14 @@ void ovoid_classify::make_graphs(
 
 			string s;
 
-			s.assign(ODF->Aut_ascii[orbit_idx]);
+			s.assign(ODF->Aut_text[orbit_idx]);
 
 			SG->decode_ascii_coding(
 					s, 0 /* verbose_level */);
 			SG->group_order(go);
 
-			max_starter = ODF->sets[orbit_idx]
-						[ODF->set_sizes[orbit_idx] - 1];
+			max_starter = ODF->Orbit_reps->Sets[orbit_idx]
+						[ODF->Orbit_reps->Set_size[orbit_idx] - 1];
 
 			if (f_v) {
 				cout << "max_starter=" << max_starter << endl;
@@ -566,7 +567,7 @@ void ovoid_classify::make_one_graph(
 		cout << "ovoid_classify::make_one_graph" << endl;
 	}
 
-	level = ODF->set_sizes[0];
+	level = ODF->Orbit_reps->Set_size[0];
 
 
 	long int *candidates;
@@ -580,7 +581,7 @@ void ovoid_classify::make_one_graph(
 	Fio.read_candidates_for_one_orbit_from_file(
 			prefix,
 			level, orbit_idx, level - 1 /* level_of_candidates_file */,
-			ODF->sets[orbit_idx],
+			ODF->Orbit_reps->Sets[orbit_idx],
 			ovoid_classify_early_test_func_callback,
 			this,
 			candidates,
@@ -600,7 +601,7 @@ void ovoid_classify::make_one_graph(
 #endif
 
 
-	if (strcmp(ODF->Ago_ascii[orbit_idx], "1") != 0) {
+	if (ODF->Ago_text[orbit_idx] != "1") {
 
 
 		int max_starter;
@@ -614,11 +615,11 @@ void ovoid_classify::make_one_graph(
 
 		string s;
 
-		s.assign(ODF->Aut_ascii[orbit_idx]);
+		s = ODF->Aut_text[orbit_idx];
 		SG->decode_ascii_coding(s, 0 /* verbose_level */);
 		SG->group_order(go);
 
-		max_starter = ODF->sets[orbit_idx][ODF->set_sizes[orbit_idx] - 1];
+		max_starter = ODF->Orbit_reps->Sets[orbit_idx][ODF->Orbit_reps->Set_size[orbit_idx] - 1];
 
 		if (f_v) {
 			cout << "max_starter=" << max_starter << endl;
@@ -655,7 +656,8 @@ void ovoid_classify::make_one_graph(
 
 
 
-	create_graph(ODF,
+	create_graph(
+			ODF,
 			orbit_idx,
 			candidates, nb_candidates,
 			CG,
@@ -700,7 +702,7 @@ void ovoid_classify::create_graph(
 				<< orbit_idx << " nb_points = " << nb_points << endl;
 	}
 
-	starter_size = ODF->set_sizes[orbit_idx];
+	starter_size = ODF->Orbit_reps->Set_size[orbit_idx];
 
 	other::data_structures::bitvector *Bitvec;
 
@@ -727,13 +729,17 @@ void ovoid_classify::create_graph(
 	}
 
 	point_color = NEW_int(nb_points);
+	Int_vec_zero(point_color, nb_points);
+#if 0
 	for (i = 0; i < nb_points; i++) {
 		point_color[i] = 0;
 	}
+#endif
 
 	if (Descr->epsilon == 1 && Descr->d == 6) {
 
-		compute_coloring(ODF->sets[orbit_idx], starter_size,
+		compute_coloring(
+				ODF->Orbit_reps->Sets[orbit_idx], starter_size,
 				candidates, nb_points, point_color,
 				nb_colors_used, verbose_level);
 
@@ -777,7 +783,7 @@ void ovoid_classify::create_graph(
 		// the adjacency becomes part of the colored_graph object
 
 	Lint_vec_copy(candidates, CG->points, nb_candidates);
-	CG->init_user_data(ODF->sets[orbit_idx],
+	CG->init_user_data(ODF->Orbit_reps->Sets[orbit_idx],
 			starter_size, verbose_level - 2);
 
 	CG->fname_base.assign(label);
@@ -874,7 +880,8 @@ static void ovoid_classify_early_test_func_callback(
 		Lint_vec_print(cout, S, len);
 		cout << endl;
 	}
-	Gen->early_test_func(S, len,
+	Gen->early_test_func(
+			S, len,
 		candidates, nb_candidates,
 		good_candidates, nb_good_candidates,
 		verbose_level - 2);

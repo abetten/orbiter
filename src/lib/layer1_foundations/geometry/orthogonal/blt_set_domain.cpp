@@ -426,8 +426,64 @@ void blt_set_domain::report_given_point_set(
 
 
 
+void blt_set_domain::move_BLT_set(
+		long int pt_from, long int pt_to,
+		long int *BLT_set_in, long int *BLT_set_out,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "blt_set_domain::move_BLT_set" << endl;
+	}
+
+	int i;
+
+	int *input_coords;
+	int *output_coords;
+
+	input_coords = NEW_int(target_size * 5);
+	output_coords = NEW_int(target_size * 5);
 
 
+	for (i = 0; i < target_size; i++) {
+		O->Hyperbolic_pair->unrank_point(
+				input_coords + i * 5, 1, BLT_set_in[i],
+				0 /*verbose_level*/);
+
+	}
+
+	if (f_v) {
+		cout << "blt_set_domain::move_BLT_set "
+				"before O->Orthogonal_group->move_points" << endl;
+	}
+
+	O->Orthogonal_group->move_points(
+			pt_from, pt_to,
+			target_size /* nb */, input_coords, output_coords,
+			verbose_level - 2);
+
+	if (f_v) {
+		cout << "blt_set_domain::move_BLT_set "
+				"after O->Orthogonal_group->move_points" << endl;
+	}
+
+	for (i = 0; i < target_size; i++) {
+
+		BLT_set_out[i] = O->Hyperbolic_pair->rank_point(
+				output_coords + i * 5, 1,
+				0 /*verbose_level*/);
+
+	}
+
+
+	FREE_int(input_coords);
+	FREE_int(output_coords);
+
+	if (f_v) {
+		cout << "blt_set_domain::move_BLT_set done" << endl;
+	}
+}
 
 
 
@@ -439,6 +495,11 @@ void blt_set_domain::compute_adjacency_list_fast(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
+
+	if (f_v) {
+		cout << "blt_set_domain::compute_adjacency_list_fast" << endl;
+	}
+
 	long int L;
 	long int L100;
 	long int i, j, k;
@@ -452,10 +513,6 @@ void blt_set_domain::compute_adjacency_list_fast(
 	int two;
 	int *Pi, *Pj;
 	combinatorics::other_combinatorics::combinatorics_domain Combi;
-
-	if (f_v) {
-		cout << "blt_set_domain::compute_adjacency_list_fast" << endl;
-	}
 
 	L = ((long int) nb_points * ((long int) nb_points - 1)) >> 1;
 	L100 = (L / 100) + 1;

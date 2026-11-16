@@ -1219,6 +1219,8 @@ public:
 			long int **Solutions,
 		int *Nb_sol, int verbose_level);
 	// Solutions[nb_starter], Nb_sol[nb_starter]
+
+#if 0
 	void count_solutions_from_clique_finder_case_by_case(
 			int nb_files,
 		long int *list_of_cases, std::string *fname,
@@ -1231,12 +1233,15 @@ public:
 			int nb_files,
 		long int *list_of_cases, std::string *fname,
 		int verbose_level);
+#endif
+
 	void read_solutions_from_clique_finder(
 			int nb_files,
 			std::string *fname,
 			std::string &solution_col_label,
 			int *substructure_case_number, int *Nb_sol_per_file,
 			int verbose_level);
+
 	void build_up_database(
 			int nb_files,
 			std::string *fname,

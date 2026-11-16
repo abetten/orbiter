@@ -488,6 +488,53 @@ void poset_orbit_node::log_current_node_without_group(
 #endif
 }
 
+std::string poset_orbit_node::get_stabilizer_coding(
+		poset_classification *gen,
+		int level,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "poset_orbit_node::get_stabilizer_coding node="
+				<< node << " at level " << level << endl;
+	}
+
+	string s;
+
+	if (nb_strong_generators) {
+
+		data_structures_groups::group_container G;
+
+		algebra::ring_theory::longinteger_object go;
+
+		G.init(gen->get_poset()->A, verbose_level - 2);
+
+
+
+		get_stabilizer(
+			gen,
+			G, go,
+			verbose_level);
+
+
+		G.code_ascii(false);
+		s = G.ascii_coding;
+	}
+	else {
+		s = "";
+	}
+	if (f_v) {
+		cout << "poset_orbit_node::get_stabilizer_coding s=" << s << endl;
+	}
+	if (f_v) {
+		cout << "poset_orbit_node::get_stabilizer_coding done" << endl;
+	}
+	return s;
+}
+
+
+
 void poset_orbit_node::log_current_node(
 		poset_classification *gen,
 		int s,

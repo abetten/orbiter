@@ -21,9 +21,12 @@ echo "[# LINES] => [FILE]"
 echo $LINE
 for f in $(find . -name 'makefile' ); do
 	tmp=$(grep $1 < $f | wc -l ); 
-	echo "$tmp => $f";
+	if [ $tmp -ne 0 ] ; then
+		echo "$tmp => $f";
+	fi
 	COUNT=$[COUNT+tmp]; 
 done
 echo $LINE
 echo -e "${GREEN}Total number of lines of code is $COUNT${NONE}"
 echo $LINE
+

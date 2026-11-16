@@ -55,180 +55,6 @@ file_io::~file_io()
 
 
 
-void file_io::count_solutions_in_list_of_files(
-		int nb_files, std::string *fname,
-		std::string &col_label,
-		//int *List_of_cases,
-		int *&Nb_sol_per_file,
-#if 0
-		int solution_size,
-		int f_has_final_test_function,
-		int (*final_test_function)(long int *data, int sz,
-				void *final_test_data, int verbose_level),
-		void *final_test_data,
-#endif
-		int verbose_level)
-// called from substructure_lifting_data::count_solutions
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	int f_vvv = (verbose_level >= 3);
-
-
-
-	if (f_v) {
-		cout << "file_io::count_solutions_in_list_of_files: "
-				"reading " << nb_files << " files" << endl;
-		cout << "col_label = " << col_label << endl;
-		cout << "verbose_level = " << verbose_level << endl;
-	}
-
-
-	int i, l, j, line_number;
-
-	if (f_vv) {
-		cout << "file_io::count_solutions_in_list_of_files: the file names are:" << endl;
-		for (i = 0; i < nb_files; i++) {
-			cout << fname[i] << endl;
-		}
-	}
-
-
-	Nb_sol_per_file = NEW_int(nb_files);
-
-	for (i = 0; i < nb_files; i++) {
-		if (f_vv) {
-			cout << "file_io::count_solutions_in_list_of_files: "
-					"reading file number " << i << " / " << nb_files << " which is " << fname[i] << endl;
-		}
-
-
-		Nb_sol_per_file[i] = Csv_file_support->read_column_and_count_nb_sets(
-				fname[i], col_label,
-				verbose_level - 2);
-
-
-		if (f_vv) {
-			cout << "file_io::count_solutions_in_list_of_files: "
-					"reading file number " << i << " / " << nb_files << " which is " << fname[i]
-					<< " nb_sol=" << Nb_sol_per_file[i] << endl;
-		}
-
-	}
-
-
-#if 0
-	long int *data;
-	int nb_fail = 0;
-	data_structures::string_tools ST;
-
-
-
-
-	data = NEW_lint(solution_size);
-	Nb_sol_per_file = NEW_int(nb_files);
-
-	for (i = 0; i < nb_files; i++) {
-
-		int the_case;
-
-		the_case = List_of_cases[i];
-		Nb_sol_per_file[i] = 0;
-
-		{
-			ifstream f(fname[i]);
-			char *buf;
-			long int a;
-			char *p_buf;
-
-			if (f_v) {
-				cout << "reading file " << fname[i]
-					<< " the_case = " << the_case << " of size "
-					<< file_size(fname[i]) << endl;
-			}
-			if (file_size(fname[i]) <= 0) {
-				cout << "file " << fname[i] << " does not exist" << endl;
-				exit(1);
-			}
-			line_number = 0;
-			while (true) {
-
-				if (f.eof()) {
-					break;
-				}
-				{
-					string S;
-					getline(f, S);
-
-					l = S.length();
-
-
-					buf = NEW_char(l + 1);
-
-					//cout << "read line of length " << l << " : " << S << endl;
-					for (j = 0; j < l; j++) {
-						buf[j] = S[j];
-					}
-					buf[l] = 0;
-				}
-				if (false) {
-					cout << "line " << line_number << " read: " << buf << endl;
-				}
-
-				p_buf = buf;
-
-
-				ST.s_scan_lint(&p_buf, &a);
-
-				// size of the set
-
-				if (a == -1) {
-					break;
-				}
-
-				for (j = 0; j < solution_size; j++) {
-					ST.s_scan_lint(&p_buf, &a);
-					data[j] = a;
-				}
-
-
-				if (f_has_final_test_function) {
-					if (!(*final_test_function)(data, solution_size,
-							final_test_data, verbose_level - 1)) {
-						if (f_vvv) {
-							cout << "file_io::count_solutions_in_list_of_files "
-									"solution fails the final test, "
-									"skipping" << endl;
-						}
-						nb_fail++;
-						continue;
-					}
-				}
-
-				FREE_char(buf);
-				Nb_sol_per_file[i]++;
-
-			}
-
-		} // while
-
-		if (f_v) {
-			cout << "file " << fname[i] << " has " << Nb_sol_per_file[i]
-				<< " solutions and " << nb_fail
-				<< " false positives" << endl;
-		}
-
-	} // next i
-
-	FREE_lint(data);
-#endif
-
-
-
-	if (f_v) {
-		cout << "file_io::count_solutions_in_list_of_files done" << endl;
-	}
-}
 
 
 
@@ -240,6 +66,7 @@ void file_io::count_number_of_solutions_in_file_and_get_solution_size(
 		std::string &fname,
 	int &nb_solutions, int &solution_size,
 	int verbose_level)
+// ToDo using buf
 {
 	int f_v = (verbose_level >= 1);
 	char *buf;
@@ -328,6 +155,7 @@ void file_io::count_number_of_solutions_in_file(
 		std::string &fname,
 	int &nb_solutions,
 	int verbose_level)
+// ToDo using buf
 {
 	int f_v = (verbose_level >= 1);
 	char *buf;
@@ -395,6 +223,7 @@ void file_io::count_number_of_solutions_in_file_by_case(
 		std::string &fname,
 	int *&nb_solutions, int *&case_nb, int &nb_cases,
 	int verbose_level)
+// ToDo using buf
 // called from orbiter::layer4_classification::isomorph::substructure_lifting_data::count_solutions_from_clique_finder
 {
 	int f_v = (verbose_level >= 1);
@@ -503,66 +332,7 @@ void file_io::count_number_of_solutions_in_file_by_case(
 
 
 
-void file_io::read_solutions_from_csv_file(
-		std::string &fname, std::string &col_label,
-	int &nb_solutions, long int *&Solutions, int &solution_size,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "file_io::read_solutions_from_csv_file" << endl;
-		cout << "file_io::read_solutions_from_csv_file trying to read file "
-			<< fname << " of size " << file_size(fname) << endl;
-	}
-
-	if (file_size(fname) < 0) {
-		cout << "file_io::read_solutions_from_csv_file "
-				"the file " << fname << " does not exist" << endl;
-		return;
-	}
-
-
-
-
-
-	data_structures::set_of_sets *SoS;
-
-	Csv_file_support->read_column_as_set_of_sets(
-			fname, col_label,
-			SoS,
-			verbose_level - 2);
-
-
-	nb_solutions = SoS->nb_sets;
-
-
-	if (SoS->nb_sets == 0) {
-		Solutions = NULL;
-		solution_size = 0;
-
-	}
-	else {
-
-		int i;
-
-		Solutions = NEW_lint(nb_solutions * solution_size);
-
-		solution_size = SoS->Set_size[0];
-		Solutions = NEW_lint(nb_solutions * solution_size);
-		for (i = 0; i < nb_solutions; i++) {
-			Lint_vec_copy(SoS->Sets[i], Solutions + i * solution_size, solution_size);
-		}
-	}
-
-	FREE_OBJECT(SoS);
-
-	if (f_v) {
-		cout << "file_io::read_solutions_from_csv_file done" << endl;
-	}
-}
-
-
+#if 0
 void file_io::read_solution_file(
 		std::string &fname,
 	int *Inc, int nb_rows, int nb_cols,
@@ -687,6 +457,7 @@ void file_io::read_solution_file(
 	}
 }
 
+#endif
 
 
 
@@ -712,7 +483,8 @@ void file_io::read_solutions_from_file_and_get_solution_size(
 		return;
 	}
 
-	count_number_of_solutions_in_file_and_get_solution_size(fname,
+	count_number_of_solutions_in_file_and_get_solution_size(
+			fname,
 		nb_solutions, solution_size,
 		verbose_level - 2);
 
@@ -811,7 +583,8 @@ void file_io::read_solutions_from_file(
 
 	buf = NEW_char(sz + 1);
 
-	count_number_of_solutions_in_file(fname,
+	count_number_of_solutions_in_file(
+			fname,
 		nb_solutions,
 		verbose_level - 2);
 	if (f_v) {
@@ -858,7 +631,6 @@ void file_io::read_solutions_from_file(
 		cout << "file_io::read_solutions_from_file done" << endl;
 	}
 }
-
 
 void file_io::read_solutions_from_file_size_is_known(
 		std::string &fname,
@@ -923,11 +695,13 @@ void file_io::read_solutions_from_file_size_is_known(
 }
 
 
+#if 0
 void file_io::read_solutions_from_file_by_case(
 		std::string &fname,
 	int *nb_solutions, int *case_nb, int nb_cases,
 	long int **&Solutions, int solution_size,
 	int verbose_level)
+// ToDo using buf
 {
 	int f_v = (verbose_level >= 1);
 	char *buf;
@@ -1097,6 +871,7 @@ void file_io::read_solutions_and_tally(
 
 }
 
+#endif
 
 
 
@@ -1234,6 +1009,62 @@ void file_io::int_matrix_read_text(
 }
 
 
+
+
+int file_io::count_number_of_lines_in_file(
+		std::string &fname, int verbose_level)
+// ToDo using buf
+{
+	int f_v = (verbose_level >= 1);
+	char *buf;
+	int nb_lines;
+	long int sz;
+
+	if (f_v) {
+		cout << "file_io::count_number_of_lines_in_file " << fname << endl;
+		cout << "trying to read file " << fname << " of size "
+			<< file_size(fname) << endl;
+	}
+
+	sz = file_size(fname);
+	if (sz < 0) {
+		cout << "file_io::count_number_of_lines_in_file "
+				"file size is -1" << endl;
+		return 0;
+	}
+
+	buf = NEW_char(sz + 1);
+
+
+
+	{
+		ifstream fp(fname);
+
+
+		nb_lines = 0;
+		while (true) {
+			if (fp.eof()) {
+				break;
+			}
+
+			//cout << "count_number_of_lines_in_file "
+			// "reading line, nb_sol = " << nb_sol << endl;
+			fp.getline(buf, sz, '\n'); // ToDo
+			nb_lines++;
+		}
+	}
+	FREE_char(buf);
+
+	return nb_lines;
+}
+
+
+
+
+// orbiter data files:
+
+
+
 // ToDo please eliminate this:
 
 #define MY_OWN_BUFSIZE 1000000
@@ -1338,6 +1169,8 @@ void file_io::parse_line(
 
 int file_io::count_number_of_orbits_in_file(
 		std::string &fname, int verbose_level)
+// ToDo using buf
+// called by data_input_stream::count_number_of_objects_to_test
 {
 	int f_v = (verbose_level >= 1);
 	char *buf, *p_buf;
@@ -1415,56 +1248,15 @@ int file_io::count_number_of_orbits_in_file(
 	return ret;
 }
 
-int file_io::count_number_of_lines_in_file(
-		std::string &fname, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	char *buf;
-	int nb_lines;
-	long int sz;
-
-	if (f_v) {
-		cout << "file_io::count_number_of_lines_in_file " << fname << endl;
-		cout << "trying to read file " << fname << " of size "
-			<< file_size(fname) << endl;
-	}
-
-	sz = file_size(fname);
-	if (sz < 0) {
-		cout << "file_io::count_number_of_lines_in_file "
-				"file size is -1" << endl;
-		return 0;
-	}
-
-	buf = NEW_char(sz + 1);
-
-
-
-	{
-		ifstream fp(fname);
-
-
-		nb_lines = 0;
-		while (true) {
-			if (fp.eof()) {
-				break;
-			}
-
-			//cout << "count_number_of_lines_in_file "
-			// "reading line, nb_sol = " << nb_sol << endl;
-			fp.getline(buf, sz, '\n'); // ToDo
-			nb_lines++;
-		}
-	}
-	FREE_char(buf);
-
-	return nb_lines;
-}
 
 int file_io::try_to_read_file(
 		std::string &fname,
 	int &nb_cases, char **&data,
 	int verbose_level)
+// ToDo using buf
+// -1 at the beginning of a line is the end of file marker
+// skip over lines that start with a '#' character.
+// called from orbiter_data_file::load
 {
 	int f_v = (verbose_level >= 1);
 	//int n1;
@@ -1599,10 +1391,13 @@ return_false:
 	return false;
 }
 
+
+
 void file_io::read_and_parse_data_file(
 	std::string &fname, int &nb_cases,
 	char **&data, long int **&sets, int *&set_sizes,
 	int verbose_level)
+// called from orbiter::layer4_classification::poset_classification::poset_of_orbits::read_level_file
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -1753,6 +1548,7 @@ void file_io::read_and_parse_data_file_fancy(
 	char **&Aut_ascii,
 	int *&Casenumbers,
 	int verbose_level)
+// called from orbiter_data_file::init_from_file
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -1815,6 +1611,11 @@ void file_io::read_and_parse_data_file_fancy(
 		cout << "file_io::read_and_parse_data_file_fancy done" << endl;
 	}
 }
+
+
+
+
+
 
 void file_io::read_set_from_file(
 		std::string &fname,
@@ -2745,7 +2546,7 @@ void file_io::read_incidence_by_row_ranks_file(
 }
 
 
-
+#if 0
 int file_io::inc_file_get_number_of_geometries(
 	std::string &inc_file_name, int verbose_level)
 // this function is not used
@@ -2838,6 +2639,7 @@ int file_io::inc_file_get_number_of_geometries(
 	FREE_char(buf);
 	return cnt;
 }
+#endif
 
 long int file_io::file_size(
 		std::string &fname)
@@ -2922,7 +2724,7 @@ void file_io::fread_uchars(
 	fread(p, 1 /* size */, len /* items */, fp);
 }
 
-
+#if 0
 void file_io::read_ascii_set_of_sets_constant_size(
 		std::string &fname_ascii,
 		int *&Sets, int &nb_sets, int &set_size,
@@ -3012,6 +2814,7 @@ void file_io::read_ascii_set_of_sets_constant_size(
 				"reading ascii file " << fname_ascii << " done" << endl;
 		}
 }
+#endif
 
 void file_io::write_decomposition_stack(
 		std::string &fname, int m, int n,
@@ -3575,6 +3378,7 @@ void file_io::extract_from_makefile(
 		int f_tail, std::string &tail,
 		std::vector<std::string> &text,
 		int verbose_level)
+// ToDo using buf
 {
 	int f_v = (verbose_level >= 1);
 	char *buf;
@@ -4585,6 +4389,7 @@ void file_io::concatenate_files(
 	int &cnt_total,
 	vector<int> missing_idx,
 	int verbose_level)
+// ToDo using buf
 {
 	int f_v = (verbose_level >= 1);
 	int h, cnt;
@@ -4690,6 +4495,7 @@ void file_io::concatenate_files_into(
 	int &cnt_total,
 	vector<int> &missing_idx,
 	int verbose_level)
+// ToDo using buf
 {
 	int f_v = (verbose_level >= 1);
 	int h, cnt;
@@ -4855,6 +4661,7 @@ void file_io::read_candidates_for_one_orbit_from_file(
 		long int *&candidates,
 		int &nb_candidates,
 		int verbose_level)
+// used in ovoid_classify::make_one_graph
 {
 	int f_v = (verbose_level >= 1);
 	int h, orbit_idx;
@@ -4869,7 +4676,8 @@ void file_io::read_candidates_for_one_orbit_from_file(
 				<< level_of_candidates_file << endl;
 	}
 
-	orbit_idx = find_orbit_index_in_data_file(prefix,
+	orbit_idx = find_orbit_index_in_data_file(
+			prefix,
 			level_of_candidates_file, S,
 			verbose_level);
 
@@ -4888,7 +4696,8 @@ void file_io::read_candidates_for_one_orbit_from_file(
 
 	poset_classification_read_candidates_of_orbit(
 		fname2, orbit_idx,
-		candidates1, nb_candidates1, verbose_level - 1);
+		candidates1, nb_candidates1,
+		verbose_level - 1);
 
 
 	for (h = level_of_candidates_file; h < level; h++) {
@@ -4903,7 +4712,8 @@ void file_io::read_candidates_for_one_orbit_from_file(
 		}
 		candidates2 = NEW_lint(nb_candidates1);
 
-		(*early_test_func_callback)(S, h + 1,
+		(*early_test_func_callback)(
+				S, h + 1,
 			candidates1, nb_candidates1,
 			candidates2, nb_candidates2,
 			early_test_func_callback_data, 0 /*verbose_level - 1*/);
@@ -4936,6 +4746,7 @@ int file_io::find_orbit_index_in_data_file(
 		std::string &prefix,
 		int level_of_candidates_file, long int *starter,
 		int verbose_level)
+// used by file_io::read_candidates_for_one_orbit_from_file
 {
 	int f_v = (verbose_level >= 1);
 	string fname;
@@ -5028,7 +4839,7 @@ int file_io::find_orbit_index_in_data_file(
 	return orbit_idx;
 }
 
-
+#if 0
 void file_io::write_exact_cover_problem_to_file(
 		int *Inc,
 		int nb_rows, int nb_cols, std::string &fname)
@@ -5058,6 +4869,7 @@ void file_io::write_exact_cover_problem_to_file(
 		<< fname << " of size " << file_size(fname) << endl;
 }
 
+#endif
 
 
 

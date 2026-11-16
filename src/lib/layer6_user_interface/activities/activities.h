@@ -345,11 +345,12 @@ class interface_combinatorics {
 #endif
 
 
+#if 0
 	// undocumented:
 	int f_read_solutions_and_tally;
 	std::string read_solutions_and_tally_fname;
 	int read_solutions_and_tally_sz;
-
+#endif
 
 	int f_make_elementary_symmetric_functions;
 	int make_elementary_symmetric_functions_n;

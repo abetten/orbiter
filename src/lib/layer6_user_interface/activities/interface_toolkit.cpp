@@ -2980,6 +2980,21 @@ int interface_toolkit::worker3(
 		for (i = 0; i < text.size(); i++) {
 			cout << i << " : " << text[i] << endl;
 		}
+
+
+		other::data_structures::string_tools ST;
+
+		for (i = 0; i < text.size(); i++) {
+
+			std::string s;
+
+
+			s = ST.convert_from_makefile(text[i]);
+
+			text[i] = s;
+		}
+
+
 		{
 			std::ofstream fp_out(
 					extract_from_file_with_tail_target_fname);
