@@ -5,6 +5,7 @@ ROW,C1,C2,C3
 1,"\verb'-label_tex' "," label "," Choose a tex-label of the object. "
 1,"\verb'-managed_variables' "," list "," A comma-separated list of managed variables may be given. The manage variables can later be matched to the variables of a polynomial ring. The other variables can be used as parameters. "
 1,"\verb'-text' "," text ","A comma separated sequence of algebraic expressions in text format. "
+1,"\verb'-commutative' ","  ","Flag the ring as commutative. "
 1,"\verb'-noncommutative' ","  ","Flag the ring as noncommutative. "
 1,"\verb'-file' "," filename "," Same as \verb'-text', but the input is read from the given file instead. "
 1,"\verb'-file_specific_line' "," filename line "," Same as \verb'-text', but the input is read from the given file instead. The command only reads the line whose number is given. "

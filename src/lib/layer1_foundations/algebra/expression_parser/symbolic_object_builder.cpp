@@ -59,10 +59,16 @@ void symbolic_object_builder::init(
 	//string managed_variables;
 
 
+	if (Descr->f_noncommutative && Descr->f_commutative) {
+		cout << "symbolic_object_builder::init -noncommutative "
+				"and -commutative cannot both be given" << endl;
+		exit(1);
+	}
+
 	if (Descr->f_noncommutative) {
 		f_is_commutative = false;
 	}
-	else {
+	if (Descr->f_commutative) {
 		f_is_commutative = true;
 	}
 
@@ -1102,6 +1108,7 @@ void symbolic_object_builder::do_expand(
 			O_source->Formula_vector,
 			Fq,
 			label, label,
+			f_is_commutative,
 			Descr->f_managed_variables,
 			Descr->managed_variables,
 			Descr->f_write_trees_during_expand,
@@ -1472,6 +1479,7 @@ void symbolic_object_builder::do_multiply_2x2_from_the_left(
 			Formula_vector_tmp,
 			Fq,
 			label, label,
+			f_is_commutative,
 			Descr->f_managed_variables,
 			Descr->managed_variables,
 			Descr->f_write_trees_during_expand,

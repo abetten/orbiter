@@ -2236,7 +2236,7 @@ void quartic_curve_create::print_general(
 			std::stringstream orbit_type_on_pts;
 
 			QOG->Aut_gens->orbits_on_set_with_given_action_after_restriction(
-					PA->A, QO->get_points(), QO->get_nb_points(),
+					PA->A, PA->A, QO->get_points(), QO->get_nb_points(),
 					orbit_type_on_pts,
 					0 /*verbose_level */);
 
@@ -2252,7 +2252,7 @@ void quartic_curve_create::print_general(
 					cout << "quartic_curve_create::print_general computing orbits on bitangents" << endl;
 				}
 				QOG->Aut_gens->orbits_on_set_with_given_action_after_restriction(
-						PA->A_on_lines, QO->get_lines(), QO->get_nb_lines(),
+						PA->A, PA->A_on_lines, QO->get_lines(), QO->get_nb_lines(),
 						orbit_type_on_bitangents,
 						verbose_level);
 				if (f_v) {
@@ -2268,7 +2268,7 @@ void quartic_curve_create::print_general(
 					std::stringstream orbit_type_on_Kovalevski;
 
 					QOG->Aut_gens->orbits_on_set_with_given_action_after_restriction(
-							PA->A, QO->QP->Kovalevski->Kovalevski_points, QO->QP->Kovalevski->nb_Kovalevski,
+							PA->A, PA->A, QO->QP->Kovalevski->Kovalevski_points, QO->QP->Kovalevski->nb_Kovalevski,
 							orbit_type_on_Kovalevski,
 							0 /*verbose_level */);
 

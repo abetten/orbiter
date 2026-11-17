@@ -2554,6 +2554,12 @@ public:
 			std::string &input_string);
 	std::string convert_from_makefile(
 			std::string &p);
+	void convert_to_python(
+			int indent,
+			std::vector<std::string> &text,
+			std::string &label,
+			std::vector<std::string> &text_py);
+	// Note: text_py may have a different length than text.
 
 
 };

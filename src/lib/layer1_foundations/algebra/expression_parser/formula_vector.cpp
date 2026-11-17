@@ -113,6 +113,11 @@ void formula_vector::init_from_text(
 		}
 	}
 
+	if (f_v) {
+		cout << "formula_vector::init_from_text "
+				"before init_and_allocate" << endl;
+	}
+
 	init_and_allocate(
 			label_txt,
 			label_tex,
@@ -120,6 +125,12 @@ void formula_vector::init_from_text(
 			managed_variables_text,
 			input.size(),
 			verbose_level - 2);
+
+	if (f_v) {
+		cout << "formula_vector::init_from_text "
+				"after init_and_allocate" << endl;
+	}
+
 
 	if (f_v) {
 		cout << "formula_vector::init_from_text "
@@ -1377,6 +1388,7 @@ void formula_vector::expand(
 		algebra::field_theory::finite_field *Fq,
 		std::string &label_txt,
 		std::string &label_tex,
+		int f_is_commutative,
 		int f_has_managed_variables,
 		std::string &managed_variables,
 		int f_write_trees,
@@ -1387,6 +1399,9 @@ void formula_vector::expand(
 	if (f_v) {
 		cout << "formula_vector::expand" << endl;
 	}
+
+	formula_vector::f_is_commutative = f_is_commutative;
+
 	if (f_v) {
 		cout << "formula_vector::expand "
 				"before init_and_allocate" << endl;

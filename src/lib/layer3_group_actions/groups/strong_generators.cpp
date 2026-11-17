@@ -2447,6 +2447,7 @@ void strong_generators::orbits_on_points(
 }
 
 void strong_generators::orbits_on_set_with_given_action_after_restriction(
+		actions::action *A_base,
 		actions::action *A_given,
 		long int *Set, int set_sz,
 		std::stringstream &orbit_type,
@@ -2457,6 +2458,8 @@ void strong_generators::orbits_on_set_with_given_action_after_restriction(
 	if (f_v) {
 		cout << "strong_generators::orbits_on_set_with_given_action_after_restriction" << endl;
 		cout << "action=" << A->label << endl;
+		cout << "A_base=" << A_base->label << endl;
+		cout << "A_given=" << A_given->label << endl;
 		//A->print_info();
 		cout << "strong_generators::orbits_on_set_with_given_action_after_restriction set=";
 		Lint_vec_print(cout, Set, set_sz);
@@ -2500,7 +2503,7 @@ void strong_generators::orbits_on_set_with_given_action_after_restriction(
 	}
 
 	Orb->init(
-			A_given,
+			A_base,
 			Ar,
 			this,
 			false /* f_load_save */,

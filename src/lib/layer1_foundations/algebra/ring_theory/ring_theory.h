@@ -1146,12 +1146,14 @@ public:
 			std::string &equation_parameters,
 			std::string &equation_parameters_tex,
 			std::string &equation_parameter_values,
+			int f_commutative,
 			int *&coeffs,
 			int verbose_level);
 	void parse_equation(
 			ring_theory::homogeneous_polynomial_domain *Poly,
 			std::string &name_of_formula,
 			std::string &name_of_formula_tex,
+			int f_is_commutative,
 			int f_has_managed_variables,
 			std::string &managed_variables,
 			std::string &equation_text,
@@ -1164,6 +1166,7 @@ public:
 			ring_theory::homogeneous_polynomial_domain *Poly,
 			std::string &name_of_formula,
 			std::string &name_of_formula_tex,
+			int f_is_commutative,
 			int f_has_managed_variables,
 			std::string &managed_variables,
 			algebra::expression_parser::formula_vector *Formula_vector_after_sub,

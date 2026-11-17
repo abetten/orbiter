@@ -2327,6 +2327,92 @@ std::string string_tools::convert_from_makefile(
 	return q;
 }
 
+void string_tools::convert_to_python(
+		int indent,
+		std::vector<std::string> &text,
+		std::string &label,
+		std::vector<std::string> &text_py)
+// Note: text_py may have a different length than text.
+{
+
+	int l;
+
+	l = text.size();
+
+	text_py.resize(0);
+
+	if (l == 2) {
+
+		std::string s;
+		int j;
+
+
+		for (j = 0; j < indent; j++) {
+			s += " ";
+		}
+		s += "'" + label + "': ";
+		s += "'" + text[1] + "',";
+		text_py.push_back(s);
+
+	}
+	else {
+
+
+		{
+			std::string s;
+			int j;
+
+
+			for (j = 0; j < indent; j++) {
+				s += " ";
+			}
+			s += "'" + label + "': (";
+			text_py.push_back(s);
+		}
+
+		int i;
+		int nb_spaces;
+
+		for (nb_spaces = 0; nb_spaces < text[2].length(); nb_spaces++) {
+			if (text[2][nb_spaces] != ' ') {
+				break;
+			}
+		}
+		for (i = 2; i < l; i++) {
+
+			std::string s;
+			int j;
+
+
+			for (j = 0; j < indent; j++) {
+				s += " ";
+			}
+			if (i == l - 1) {
+				s += "'" + text[i].substr(nb_spaces) + "'";
+			}
+			else {
+				s += "'" + text[i].substr(nb_spaces) + "\\n'";
+
+			}
+			text_py.push_back(s);
+
+		}
+
+		{
+			std::string s;
+			int j;
+
+			for (j = 0; j < indent; j++) {
+				s += " ";
+			}
+			s += "),";
+			text_py.push_back(s);
+		}
+
+	}
+}
+
+
 
 
 //#############################################################################

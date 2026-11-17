@@ -41,6 +41,8 @@ symbolic_object_builder_description::symbolic_object_builder_description()
 	f_text = false;
 	//std::string text_txt;
 
+	f_commutative = false;
+
 	f_noncommutative = false;
 
 	f_file = false;
@@ -211,10 +213,10 @@ int symbolic_object_builder_description::read_arguments(
 				cout << "-text " << text_txt << endl;
 			}
 		}
-		else if (ST.stringcmp(argv[i], "-noncommutative") == 0) {
-			f_noncommutative = true;
+		else if (ST.stringcmp(argv[i], "-commutative") == 0) {
+			f_commutative = true;
 			if (f_v) {
-				cout << "-noncommutative " << endl;
+				cout << "-commutative " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-noncommutative") == 0) {
@@ -567,6 +569,9 @@ void symbolic_object_builder_description::print()
 	}
 	if (f_text) {
 		cout << "-text " << text_txt << endl;
+	}
+	if (f_commutative) {
+		cout << "-commutative " << endl;
 	}
 	if (f_noncommutative) {
 		cout << "-noncommutative " << endl;

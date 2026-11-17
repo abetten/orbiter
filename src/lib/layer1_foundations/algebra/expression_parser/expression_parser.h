@@ -215,6 +215,7 @@ public:
 			algebra::field_theory::finite_field *Fq,
 			std::string &label_txt,
 			std::string &label_tex,
+			int f_is_commutative,
 			int f_has_managed_variables,
 			std::string &managed_variables,
 			int f_write_trees,
@@ -487,6 +488,8 @@ public:
 
 	int f_text;
 	std::string text_txt;
+
+	int f_commutative;
 
 	int f_noncommutative;
 

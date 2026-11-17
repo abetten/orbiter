@@ -2994,6 +2994,16 @@ int interface_toolkit::worker3(
 			text[i] = s;
 		}
 
+		int indent = 5;
+
+		std::vector<std::string> text_py;
+
+		ST.convert_to_python(
+				indent,
+				text,
+				extract_from_file_with_tail_label,
+				text_py);
+
 
 		{
 			std::ofstream fp_out(
@@ -3002,10 +3012,26 @@ int interface_toolkit::worker3(
 				fp_out << text[i] << endl;
 			}
 		}
+
+		string extract_from_file_with_tail_target_py_fname;
+
+		extract_from_file_with_tail_target_py_fname = extract_from_file_with_tail_target_fname + ".py";
+
+		{
+			std::ofstream fp_out(
+					extract_from_file_with_tail_target_py_fname);
+			for (i = 0; i < text_py.size(); i++) {
+				fp_out << text_py[i] << endl;
+			}
+		}
 		cout << "Written file "
 				<< extract_from_file_with_tail_target_fname
 				<< " of size "
 				<< Fio.file_size(extract_from_file_with_tail_target_fname) << endl;
+		cout << "Written file "
+				<< extract_from_file_with_tail_target_py_fname
+				<< " of size "
+				<< Fio.file_size(extract_from_file_with_tail_target_py_fname) << endl;
 
 	}
 	else if (f_serialize_file_names) {

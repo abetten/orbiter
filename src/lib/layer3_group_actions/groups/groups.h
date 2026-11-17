@@ -2095,6 +2095,7 @@ public:
 			int &nb_orbits, int *&orbit_reps,
 		int verbose_level);
 	void orbits_on_set_with_given_action_after_restriction(
+			actions::action *A_base,
 			actions::action *A_given,
 			long int *Set, int set_sz,
 			std::stringstream &orbit_type,

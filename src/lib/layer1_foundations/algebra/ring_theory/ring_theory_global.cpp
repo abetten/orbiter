@@ -3070,9 +3070,14 @@ void ring_theory_global::parse_equation_easy(
 				"managed_variables = " << managed_variables << endl;
 	}
 
-	parse_equation(Poly,
+	int f_commutative = true;
+
+
+	parse_equation(
+			Poly,
 			name_of_formula,
 			name_of_formula_tex,
+			f_commutative,
 			f_has_managed_variables,
 			managed_variables,
 			equation_text,
@@ -3100,6 +3105,7 @@ void ring_theory_global::parse_equation_with_parameters(
 		std::string &equation_parameters,
 		std::string &equation_parameters_tex,
 		std::string &equation_parameter_values,
+		int f_commutative,
 		int *&coeffs,
 		int verbose_level)
 {
@@ -3126,9 +3132,11 @@ void ring_theory_global::parse_equation_with_parameters(
 				"managed_variables = " << managed_variables << endl;
 	}
 
-	parse_equation(Poly,
+	parse_equation(
+			Poly,
 			name_of_formula,
 			name_of_formula_tex,
+			f_commutative,
 			f_has_managed_variables,
 			managed_variables,
 			equation_text,
@@ -3153,6 +3161,7 @@ void ring_theory_global::parse_equation(
 		ring_theory::homogeneous_polynomial_domain *Poly,
 		std::string &name_of_formula,
 		std::string &name_of_formula_tex,
+		int f_is_commutative,
 		int f_has_managed_variables,
 		std::string &managed_variables,
 		std::string &equation_text,
@@ -3170,6 +3179,8 @@ void ring_theory_global::parse_equation(
 				"name_of_formula=" << name_of_formula << endl;
 		cout << "ring_theory_global::parse_equation "
 				"name_of_formula_tex=" << name_of_formula_tex << endl;
+		cout << "ring_theory_global::parse_equation "
+				"f_is_commutative=" << f_is_commutative << endl;
 		cout << "ring_theory_global::parse_equation "
 				"f_has_managed_variables=" << f_has_managed_variables << endl;
 		cout << "ring_theory_global::parse_equation "
@@ -3201,6 +3212,12 @@ void ring_theory_global::parse_equation(
 	Descr1->field_pointer = Poly->get_F();
 	Descr1->f_text = true;
 	Descr1->text_txt = equation_text;
+	if (f_is_commutative) {
+		Descr1->f_commutative = true;
+	}
+	else {
+		Descr1->f_noncommutative = true;
+	}
 	Descr1->f_managed_variables = f_has_managed_variables;
 	Descr1->managed_variables = managed_variables;
 
@@ -3297,6 +3314,7 @@ void ring_theory_global::parse_equation(
 			Poly,
 			name_of_formula,
 			name_of_formula_tex,
+			f_is_commutative,
 			f_has_managed_variables,
 			managed_variables,
 			Formula_vector_after_sub,
@@ -3368,6 +3386,7 @@ void ring_theory_global::simplify_and_expand(
 		ring_theory::homogeneous_polynomial_domain *Poly,
 		std::string &name_of_formula,
 		std::string &name_of_formula_tex,
+		int f_is_commutative,
 		int f_has_managed_variables,
 		std::string &managed_variables,
 		algebra::expression_parser::formula_vector *Formula_vector_after_sub,
@@ -3422,6 +3441,7 @@ void ring_theory_global::simplify_and_expand(
 			Formula_vector_after_sub,
 			Poly->get_F(),
 			name_of_formula, name_of_formula_tex,
+			f_is_commutative,
 			f_has_managed_variables,
 			managed_variables,
 			f_write_trees_during_expand,

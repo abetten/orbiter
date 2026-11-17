@@ -1804,6 +1804,7 @@ void surface_create::create_surface_by_equation(
 			Ring,
 			name_of_formula,
 			name_of_formula_tex,
+			true /* f_commutative */,
 			f_has_managed_variables,
 			managed_variables,
 			equation_text,

@@ -573,6 +573,8 @@ void variety_object::parse_equation_in_algebraic_form_with_parameters(
 				"equation = " << equation_txt << endl;
 	}
 
+	int f_commutative = true;
+
 	//if (std::isalpha(equation_txt[0])) {
 
 	if (f_v) {
@@ -594,6 +596,7 @@ void variety_object::parse_equation_in_algebraic_form_with_parameters(
 			equation_parameters,
 			equation_parameters_tex,
 			equation_parameter_values,
+			f_commutative,
 			coeffs,
 			verbose_level - 2);
 
