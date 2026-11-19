@@ -74,6 +74,7 @@ quartic_curve_create_description::quartic_curve_create_description()
 	//std::string override_group_gens;
 
 
+
 	//std::vector<std::string> transform_coeffs;
 	//std::vector<int> f_inverse_transform;
 
@@ -331,6 +332,7 @@ void quartic_curve_create_description::print()
 			cout << "-transform " << transform_coeffs[i] << endl;
 		}
 	}
+
 
 }
 

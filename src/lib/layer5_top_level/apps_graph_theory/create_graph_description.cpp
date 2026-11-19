@@ -37,7 +37,10 @@ create_graph_description::create_graph_description()
 	load_adjacency_matrix_from_csv_and_select_value_value = 0;
 
 	f_load_dimacs = false;
-	//std::string load_dimacs_fname;
+	//std::string 	f_load_dimacs = false;
+	
+	f_complete = false;
+	complete_n = 0;
 
 	f_load_Brouwer = false;
 	//std::string load_Brouwer_fname;
@@ -129,6 +132,8 @@ create_graph_description::create_graph_description()
 	//std::string adjacency_bitvector_data_text;
 	adjacency_bitvector_N = 0;
 
+	f_double_cover = false;
+
 	f_Cayley_graph = false;
 	//std::string Cayley_graph_group;
 	//std::string Cayley_graph_gens;
@@ -197,7 +202,13 @@ int create_graph_description::read_arguments(
 				cout << "-load_dimacs " << load_dimacs_fname << endl;
 			}
 		}
-
+		else if (ST.stringcmp(argv[i], "-complete") == 0) {
+			f_complete = true;
+			complete_n = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-complete " << complete_n << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-load_Brouwer") == 0) {
 			f_load_Brouwer = true;
 			load_Brouwer_fname.assign(argv[++i]);
@@ -412,6 +423,13 @@ int create_graph_description::read_arguments(
 						<< endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-double_cover") == 0) {
+			f_double_cover = true;
+			double_cover_graph_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-double_cover " << double_cover_graph_label << endl;
+			}
+		}
 
 		else if (ST.stringcmp(argv[i], "-Cayley_graph") == 0) {
 			f_Cayley_graph = true;
@@ -471,6 +489,9 @@ void create_graph_description::print()
 	}
 	if (f_load_dimacs) {
 		cout << "-load_dimacs " << load_dimacs_fname << endl;
+	}
+	if (f_complete) {
+		cout << "-complete " << complete_n << endl;
 	}
 	if (f_load_Brouwer) {
 		cout << "-load_Brouwer " << load_Brouwer_fname << endl;
@@ -564,6 +585,9 @@ void create_graph_description::print()
 				<< " " << adjacency_bitvector_data_text
 				<< " " << adjacency_bitvector_N
 				<< endl;
+	}
+	if (f_double_cover) {
+		cout << "-double_cover " << double_cover_graph_label << endl;
 	}
 	if (f_Cayley_graph) {
 		cout << "-Cayley_graph " << Cayley_graph_group << " " << Cayley_graph_gens << endl;

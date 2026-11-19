@@ -89,7 +89,6 @@ public:
 	std::vector<int> f_inverse_transform;
 
 
-
 	quartic_curve_create_description();
 	~quartic_curve_create_description();
 	int read_arguments(
@@ -216,6 +215,8 @@ public:
 	void export_something(
 			std::string &what, int verbose_level);
 	void do_report(
+			int verbose_level);
+	void do_bitmap(
 			int verbose_level);
 	void report(
 			std::ostream &ost, int verbose_level);

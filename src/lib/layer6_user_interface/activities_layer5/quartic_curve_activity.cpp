@@ -321,6 +321,21 @@ void quartic_curve_activity::perform_activity(
 	}
 
 
+	if (Descr->f_draw_bitmap || Descr->f_bitmap) {
+
+		if (f_v) {
+			cout << "quartic_curve_activity::perform_activity "
+					"before QC->do_bitmap" << endl;
+		}
+		QC->do_bitmap(verbose_level);
+		if (f_v) {
+			cout << "quartic_curve_activity::perform_activity "
+					"after QC->do_bitmap" << endl;
+		}
+
+	}
+
+
 	if (f_v) {
 		cout << "quartic_curve_activity::perform_activity done" << endl;
 	}
